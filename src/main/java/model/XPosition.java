@@ -17,7 +17,7 @@ public class XPosition {
         }
     }
 
-    public XPosition(final int xPosition) {
+    private XPosition(final int xPosition) {
         this.xPosition = xPosition;
     }
 
