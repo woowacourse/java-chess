@@ -1,2 +1,7 @@
 # java-chess
-체스 게임 구현을 위한 저장소
+###Todo
+* Board 초기화
+
+* 체스 말 만들기
+    * Rook, Knight, Bishop, Queen, King, Pawn
+###Done
