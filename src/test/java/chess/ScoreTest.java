@@ -25,6 +25,6 @@ public class ScoreTest {
 
 	@Test
 	void 점수가_같은_경우() {
-		assertThat(score.compare(new Score(20))).isEqualTo(Result.LOSE);
+		assertThat(score.compare(new Score(20))).isEqualTo(Result.DRAW);
 	}
 }
