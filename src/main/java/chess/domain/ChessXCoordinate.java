@@ -1,6 +1,9 @@
 package chess.domain;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum ChessXCoordinate {
     A("a", 0),
@@ -44,5 +47,19 @@ public enum ChessXCoordinate {
 
     public String getSymbol() {
         return symbol;
+    }
+
+    public static List<ChessXCoordinate> getAscendingCoordinates(ChessXCoordinate from) {
+        return Arrays.stream(values())
+                .filter(coord -> coord.index > from.index)
+                .sorted(Comparator.comparingInt(c -> c.index))
+                .collect(Collectors.toList());
+    }
+
+    public static List<ChessXCoordinate> getDescendingCoordinates(ChessXCoordinate from) {
+        return Arrays.stream(values())
+                .filter(coord -> coord.index < from.index)
+                .sorted(Comparator.comparingInt(ChessXCoordinate::getIndex).reversed())
+                .collect(Collectors.toList());
     }
 }

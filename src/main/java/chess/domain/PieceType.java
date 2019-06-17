@@ -1,8 +1,8 @@
 package chess.domain;
 
-import static chess.domain.BoardCellState.CellStateGroup.*;
+import static chess.domain.Team.*;
 
-public enum  BoardCellState {
+public enum PieceType {
     PAWN_BLACK(BLACK),
     ROOK_BLACK(BLACK),
     KNIGHT_BLACK(BLACK),
@@ -17,17 +17,13 @@ public enum  BoardCellState {
     KING_WHITE(WHITE),
     NONE(NEUTRAL);
 
-    private final CellStateGroup group;
+    private final Team group;
 
-    BoardCellState(final CellStateGroup group) {
+    PieceType(final Team group) {
         this.group = group;
     }
 
-    enum CellStateGroup{
-        BLACK,WHITE,NEUTRAL;
-    }
-
-    public CellStateGroup getGroup() {
+    public Team getTeam() {
         return group;
     }
 }

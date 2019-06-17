@@ -28,11 +28,20 @@ public class ChessCoordinate {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
     }
 
+    public static ChessCoordinate valueOf(ChessXCoordinate x, ChessYCoordinate y) {
+        return valueOf(x.getSymbol() + y.getSymbol());
+    }
+
     public ChessXCoordinate getX() {
         return x;
     }
 
     public ChessYCoordinate getY() {
         return y;
+    }
+
+    @Override
+    public String toString() {
+        return x.getSymbol() + y.getSymbol();
     }
 }

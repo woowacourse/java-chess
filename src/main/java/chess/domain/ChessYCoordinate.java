@@ -1,6 +1,9 @@
 package chess.domain;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum ChessYCoordinate {
     RANK_1("1", 7),
@@ -44,5 +47,19 @@ public enum ChessYCoordinate {
 
     public int getIndex() {
         return index;
+    }
+
+    public static List<ChessYCoordinate> getAscendingCoordinates(ChessYCoordinate from) {
+        return Arrays.stream(values())
+                .filter(coord -> coord.index > from.index)
+                .sorted(Comparator.comparingInt(c -> c.index))
+                .collect(Collectors.toList());
+    }
+
+    public static List<ChessYCoordinate> getDescendingCoordinates(ChessYCoordinate from) {
+        return Arrays.stream(values())
+                .filter(coord -> coord.index < from.index)
+                .sorted(Comparator.comparingInt(ChessYCoordinate::getIndex).reversed())
+                .collect(Collectors.toList());
     }
 }
