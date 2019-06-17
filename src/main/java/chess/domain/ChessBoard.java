@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.exception.AllyExistException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,5 +55,26 @@ public class ChessBoard {
         return boardState.stream()
                 .map(ArrayList::new)
                 .collect(Collectors.toList());
+    }
+
+    public void move(ChessCoordinate from, ChessCoordinate to) {
+        BoardCellState srcState = this.boardState.get(from.getY().getIndex())
+                .get(from.getX().getIndex());
+        BoardCellState toState = this.boardState.get(to.getY().getIndex())
+                .get(to.getX().getIndex());
+
+        assertNotAlly(srcState, toState);
+
+        this.boardState.get(to.getY().getIndex())
+                .set(to.getX().getIndex(), srcState);
+
+        this.boardState.get(from.getY().getIndex())
+                .set(from.getX().getIndex(), NONE);
+    }
+
+    private void assertNotAlly(BoardCellState srcState, BoardCellState toState) {
+        if (srcState.getGroup() == toState.getGroup()) {
+            throw new AllyExistException("같은편의 위치로는 이동할 수 없습니다.");
+        }
     }
 }

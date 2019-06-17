@@ -1,17 +1,33 @@
 package chess.domain;
 
+import static chess.domain.BoardCellState.CellStateGroup.*;
+
 public enum  BoardCellState {
-    PAWN_BLACK,
-    ROOK_BLACK,
-    KNIGHT_BLACK,
-    BISHOP_BLACK,
-    QUEEN_BLACK,
-    KING_BLACK,
-    PAWN_WHITE,
-    ROOK_WHITE,
-    KNIGHT_WHITE,
-    BISHOP_WHITE,
-    QUEEN_WHITE,
-    KING_WHITE,
-    NONE;
+    PAWN_BLACK(BLACK),
+    ROOK_BLACK(BLACK),
+    KNIGHT_BLACK(BLACK),
+    BISHOP_BLACK(BLACK),
+    QUEEN_BLACK(BLACK),
+    KING_BLACK(BLACK),
+    PAWN_WHITE(WHITE),
+    ROOK_WHITE(WHITE),
+    KNIGHT_WHITE(WHITE),
+    BISHOP_WHITE(WHITE),
+    QUEEN_WHITE(WHITE),
+    KING_WHITE(WHITE),
+    NONE(NEUTRAL);
+
+    private final CellStateGroup group;
+
+    BoardCellState(final CellStateGroup group) {
+        this.group = group;
+    }
+
+    enum CellStateGroup{
+        BLACK,WHITE,NEUTRAL;
+    }
+
+    public CellStateGroup getGroup() {
+        return group;
+    }
 }
