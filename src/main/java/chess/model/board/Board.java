@@ -35,17 +35,31 @@ public class Board {
         lines.put(row, rank);
     }
 
-    public Piece getPiece(Column column, Row row) {
-        final Piece piece = lines.get(row).getPiece(column);
-        if (piece == null) {
+    public Piece getPiece(final Column column, final Row row) {
+        try {
+            final Piece piece = lines.get(row).getPiece(column);
+            if (piece == null) {
+                throw new Exception();
+            }
+            return piece;
+        } catch (Exception e) {
             throw new IllegalArgumentException(EMPTY_SQUARE);
         }
-        return piece;
     }
 
-    public void setPiece(Column column, Row row, Piece piece) {
-        final Rank line = lines.get(row);
+    public void setPiece(final Column column, final Row row, final Piece piece) {
+        final Rank line = lines.getOrDefault(row, new Rank());
         line.setPiece(column, piece);
         lines.put(row, line);
+    }
+
+    public void removePiece(final Column column, final Row row) {
+        try {
+            final Rank line = lines.get(row);
+            line.removePiece(column);
+            lines.put(row, line);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException(EMPTY_SQUARE);
+        }
     }
 }

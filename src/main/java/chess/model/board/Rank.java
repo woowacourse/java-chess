@@ -41,4 +41,8 @@ class Rank {
     void setPiece(final Column column, final Piece piece) {
         oneLine.put(column, piece);
     }
+
+    void removePiece(final Column column) {
+        oneLine.remove(column);
+    }
 }

@@ -1,5 +1,7 @@
 package chess.model.unit;
 
+import java.util.Objects;
+
 public abstract class Piece {
     private final UnitClass unitClass;
     private final Side side;
@@ -15,5 +17,19 @@ public abstract class Piece {
 
     public Side getSide() {
         return side;
+    }
+
+    @Override
+    public boolean equals(Object another) {
+        if (this == another) return true;
+        if (!(another instanceof Piece)) return false;
+        final Piece piece = (Piece) another;
+        return unitClass == piece.unitClass &&
+                side == piece.side;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(unitClass, side);
     }
 }
