@@ -1,4 +1,4 @@
-package chess.model.unit;
+package chess.model;
 
 public enum Row {
     _1("1", 0),
@@ -9,6 +9,8 @@ public enum Row {
     _6("6", 5),
     _7("7", 6),
     _8("8", 7);
+
+    private static final String NO_SUCH_VALUE = "존재하지 않는 Row 값입니다.";
 
     private String name;
     private int rowIndex;
@@ -24,6 +26,15 @@ public enum Row {
                 return value.rowIndex;
             }
         }
-        throw new IllegalArgumentException("존재하지 않는 Row 값입니다.");
+        throw new IllegalArgumentException(NO_SUCH_VALUE);
+    }
+
+    public String getNameByIndex(final int rowIndex) {
+        for (Row value : Row.values()) {
+            if (value.rowIndex == rowIndex) {
+                return value.name;
+            }
+        }
+        throw new IllegalArgumentException(NO_SUCH_VALUE);
     }
 }

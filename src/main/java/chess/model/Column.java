@@ -1,4 +1,4 @@
-package chess.model.unit;
+package chess.model;
 
 public enum Column {
     A("A", 0),
@@ -9,6 +9,8 @@ public enum Column {
     F("F", 5),
     G("G", 6),
     H("H", 7);
+
+    private static final String NO_SUCH_VALUE = "존재하지 않는 Column 값입니다.";
 
     private String name;
     private int columnIndex;
@@ -24,6 +26,15 @@ public enum Column {
                 return value.columnIndex;
             }
         }
-        throw new IllegalArgumentException("존재하지 않는 Column 값입니다.");
+        throw new IllegalArgumentException(NO_SUCH_VALUE);
+    }
+
+    public String getNameByIndex(final int columnIndex) {
+        for (Column value : Column.values()) {
+            if (value.columnIndex == columnIndex) {
+                return value.name;
+            }
+        }
+        throw new IllegalArgumentException(NO_SUCH_VALUE);
     }
 }
