@@ -28,6 +28,10 @@ public class Row {
         return optRow.orElseThrow(IllegalArgumentException::new);
     }
 
+    public int calculateAbsolute(final Row row) {
+        return Math.abs(this.row - row.row);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

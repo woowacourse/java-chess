@@ -3,6 +3,10 @@ package chess.domain;
 import java.util.Objects;
 
 public class Position {
+    private static final int DIAGONAL_INCLINATION = 1;
+    private static final int RIGHT_INCLINATION = 0;
+    private static final int ZERO = 0;
+
     private final Row row;
     private final Column column;
 
@@ -13,6 +17,27 @@ public class Position {
 
     public static Position of(final Row row, final Column column) {
         return new Position(row, column);
+    }
+
+    public static Position of(final String row, final String column) {
+        return Position.of(Row.from(row), Column.from(column));
+    }
+
+    public boolean isDiagonal(final Position target) {
+        int height = this.row.calculateAbsolute(target.row);
+        int width = this.column.calculateAbsolute(target.column);
+        if (width == ZERO) {
+            return false;
+        }
+        return Math.abs(height / width) == DIAGONAL_INCLINATION;
+    }
+
+    public boolean isPerpendicular(final Position target) {
+        return this.column.calculateAbsolute(target.column) == RIGHT_INCLINATION;
+    }
+
+    public boolean isLevel(final Position target) {
+        return this.row.calculateAbsolute(target.row) == RIGHT_INCLINATION;
     }
 
     @Override
@@ -28,4 +53,6 @@ public class Position {
     public int hashCode() {
         return Objects.hash(row, column);
     }
+
+
 }

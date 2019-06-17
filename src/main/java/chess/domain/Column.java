@@ -14,7 +14,7 @@ public class Column {
 
 
     static {
-        for (int i = MIN; i < MAX; i++) {
+        for (int i = MIN; i <= MAX; i++) {
             String columnName = String.valueOf((char) i);
             COLUMNS.put(columnName, new Column(i));
         }
@@ -27,6 +27,10 @@ public class Column {
     static Column from(final String column) {
         Optional<Column> optColumn = Optional.ofNullable(COLUMNS.get(column));
         return optColumn.orElseThrow(IllegalArgumentException::new);
+    }
+
+    public int calculateAbsolute(final Column column) {
+        return Math.abs(this.column - column.column);
     }
 
     @Override
