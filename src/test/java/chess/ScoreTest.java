@@ -27,4 +27,9 @@ public class ScoreTest {
 	void 점수가_같은_경우() {
 		assertThat(score.compare(new Score(20))).isEqualTo(Result.DRAW);
 	}
+
+	@Test
+	void 점수_더하기() {
+		assertThat(score.add(new Score(10))).isEqualTo(new Score(30));
+	}
 }
