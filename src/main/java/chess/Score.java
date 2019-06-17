@@ -3,10 +3,15 @@ package chess;
 import java.util.Objects;
 
 public class Score {
-	private final int score;
+	private final int ROUNDING_CRITERION = 10;
+	private final double score;
 
-	public Score(final int score) {
-		this.score = score;
+	public Score(final double score) {
+		this.score = round(score);
+	}
+
+	private double round(double score) {
+		return Math.round(score * ROUNDING_CRITERION) / (double) ROUNDING_CRITERION;
 	}
 
 	public Result compare(final Score score) {
@@ -32,7 +37,8 @@ public class Score {
 			return false;
 		}
 		final Score score1 = (Score) o;
-		return score == score1.score;
+
+		return Double.compare(score1.score, score) == 0;
 	}
 
 	@Override
