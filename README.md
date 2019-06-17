@@ -17,10 +17,12 @@
 4. Path
     + 좌표 A부터 B까지의 경로 저장
 5. Coordinate
-    + x, y 위치 값 저장
-6. Player
+    + 좌표 값 저장
+6. Position
+    + x,y 좌표 저장 
+7. Player
     + 플레이어 차례 저장
-7. PlayerScore
+8. PlayerScore
     + 플레이어의 점수 저장
     
     
