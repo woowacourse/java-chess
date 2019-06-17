@@ -1,41 +1,60 @@
 package chess.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ChessBoard {
-    private List<List<String>> board;
+    private List<Position> board;
 
     public ChessBoard() {
         board = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            List<String> row = new ArrayList<>();
-            for (int j = 0; j < 8; j++) {
-                row.add(".");
-            }
-            board.add(row);
+        for (int i = 0; i < 64; i++) {
+            board.add(new Position(ChessTeam.BLANK, new BlankPiece()));
         }
         setMal();
     }
 
     public void setMal() {
-        board.set(0, Arrays.asList("RNBQKBNR".split("")));
-        board.set(1, Arrays.asList("PPPPPPPP".split("")));
-        board.set(6, Arrays.asList("pppppppp".split("")));
-        board.set(7, Arrays.asList("RNBQKBNR".toLowerCase().split("")));
+        setBlack();
+        setWhite();
     }
 
-    public String malStatus() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (List<String> strings : board) {
-            stringBuilder.append(String.join("", strings)).append("\n");
+    private void setBlack() {
+        String Mal = "RNBQKBNR";
+        for (int i = 0; i < 8; i++) {
+            board.set(i, new Position(ChessTeam.BLACK, new QueenPiece(String.valueOf(Mal.charAt(i)))));
         }
-        return stringBuilder.toString();
+        for (int i = 8; i < 16; i++) {
+            board.set(i, new Position(ChessTeam.BLACK, new QueenPiece("P")));
+        }
+    }
+
+    private void setWhite() {
+        String Mal = "RNBQKBNR";
+        for (int i = 56; i < 64; i++) {
+            board.set(i, new Position(ChessTeam.WHITE, new QueenPiece(String.valueOf(Mal.charAt(i - 56)).toLowerCase())));
+        }
+        for (int i = 48; i < 56; i++) {
+            board.set(i, new Position(ChessTeam.WHITE, new QueenPiece("p")));
+        }
+    }
+
+    public Position access(String destination) {
+        String rowIndex = "abcdefgh";
+        int index = 8 * (8 - Integer.parseInt(String.valueOf(destination.charAt(1))));
+        index += rowIndex.indexOf(destination.charAt(0));
+        return board.get(index);
     }
 
     public String status() {
-        return malStatus();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                stringBuilder.append(board.get(8*i+j));
+            }
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
     }
 
     public void move(String from, String to) {

@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ChessBoardTest {
+
     @Test
-    void 체스판() {
+    void status() {
         ChessBoard chessBoard = new ChessBoard();
+        chessBoard.status();
         assertEquals("RNBQKBNR\n" +
                 "PPPPPPPP\n" +
                 "........\n" +
@@ -40,5 +42,23 @@ class ChessBoardTest {
     void move_테스트4() {
         ChessBoard chessBoard = new ChessBoard();
         assertThrows(IllegalArgumentException.class, () -> chessBoard.move("j3", "p7"));
+    }
+
+    @Test
+    void access() {
+        ChessBoard chessBoard = new ChessBoard();
+        assertEquals(new Position(ChessTeam.WHITE, new QueenPiece("p")), chessBoard.access("b2"));
+    }
+
+    @Test
+    void access2() {
+        ChessBoard chessBoard = new ChessBoard();
+        assertEquals(new Position(ChessTeam.BLACK, new QueenPiece("R")), chessBoard.access("a8"));
+    }
+
+    @Test
+    void access3() {
+        ChessBoard chessBoard = new ChessBoard();
+        assertEquals(new Position(ChessTeam.WHITE, new QueenPiece("r")), chessBoard.access("h1"));
     }
 }
