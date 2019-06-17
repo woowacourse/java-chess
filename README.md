@@ -18,11 +18,17 @@
     + 좌표 A부터 B까지의 경로 저장
 5. Coordinate
     + 좌표 값 저장
+    + (예외) 1보다 작거나 8보다 큰 경우
 6. Position
     + x,y 좌표 저장 
-7. Player
-    + 플레이어 차례 저장
+7. Player (enum)
+    + 플레이어 차례
 8. PlayerScore
     + 플레이어의 점수 저장
+9. Score
+    + 점수 저장
+    + 다른 점수와 비교하여 Result 반환
+10. Result (enum)
+    + 승, 패, 무
     
     
