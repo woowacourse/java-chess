@@ -10,17 +10,17 @@ public class Column {
     static final char MIN = 'a';
     static final char MAX = 'h';
 
-    private final String column;
+    private final int column;
 
 
     static {
         for (int i = MIN; i < MAX; i++) {
             String columnName = String.valueOf((char) i);
-            COLUMNS.put(columnName, new Column(columnName));
+            COLUMNS.put(columnName, new Column(i));
         }
     }
 
-    private Column(final String column) {
+    private Column(final int column) {
         this.column = column;
     }
 
@@ -34,7 +34,7 @@ public class Column {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Column column1 = (Column) o;
-        return Objects.equals(column, column1.column);
+        return column == column1.column;
     }
 
     @Override

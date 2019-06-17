@@ -6,25 +6,25 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Row {
-    private static final Map<String, Row> ROWS = new HashMap<>();
+    private static final Map<Integer, Row> ROWS = new HashMap<>();
     static final int MIN = 1;
     static final int MAX = 8;
 
-    private final String row;
+    private final int row;
 
     static {
         for (int i = MIN; i <= MAX; i++) {
-            String rowName = Integer.toString(i);
-            ROWS.put(rowName, new Row(rowName));
+            ROWS.put(i, new Row(i));
         }
     }
 
-    private Row(final String row) {
+    private Row(final int row) {
         this.row = row;
     }
 
     static Row from(final String row) {
-        Optional<Row> optRow = Optional.ofNullable(ROWS.get(row));
+        final int key = Integer.parseInt(row);
+        Optional<Row> optRow = Optional.ofNullable(ROWS.get(key));
         return optRow.orElseThrow(IllegalArgumentException::new);
     }
 
@@ -33,7 +33,7 @@ public class Row {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Row row1 = (Row) o;
-        return Objects.equals(row, row1.row);
+        return row == row1.row;
     }
 
     @Override
