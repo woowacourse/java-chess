@@ -12,7 +12,7 @@ public class ChessGame {
         if (!split[0].equals("move")) {
             throw new IllegalArgumentException();
         }
-        board.move(parse(split[1]), parse(split[2]));
+        board.play(parse(split[1]), parse(split[2]));
     }
 
     private Point parse(String destination) {
