@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Row {
+public class Row implements Comparable<Row> {
     private static final Map<Integer, Row> ROWS = new HashMap<>();
     static final int MIN = 1;
     static final int MAX = 8;
@@ -30,6 +30,11 @@ public class Row {
 
     public int calculateAbsolute(final Row row) {
         return Math.abs(this.row - row.row);
+    }
+
+    @Override
+    public int compareTo(final Row o) {
+        return o.row - this.row;
     }
 
     @Override

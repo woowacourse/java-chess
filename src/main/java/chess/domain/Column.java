@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Column {
+public class Column implements Comparable<Column>{
     private static final Map<String, Column> COLUMNS = new HashMap<>();
     static final char MIN = 'a';
     static final char MAX = 'h';
@@ -31,6 +31,11 @@ public class Column {
 
     public int calculateAbsolute(final Column column) {
         return Math.abs(this.column - column.column);
+    }
+
+    @Override
+    public int compareTo(final Column o) {
+        return this.column - o.column;
     }
 
     @Override

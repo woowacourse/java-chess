@@ -2,7 +2,7 @@ package chess.domain;
 
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
     private static final int DIAGONAL_INCLINATION = 1;
     private static final int RIGHT_INCLINATION = 0;
     private static final int ZERO = 0;
@@ -41,6 +41,17 @@ public class Position {
     }
 
     @Override
+    public int compareTo(final Position o) {
+       int result = this.row.compareTo(o.row);
+
+       if(result == 0){
+           result = this.column.compareTo(o.column);
+       }
+
+       return result;
+    }
+
+    @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -53,6 +64,4 @@ public class Position {
     public int hashCode() {
         return Objects.hash(row, column);
     }
-
-
 }
