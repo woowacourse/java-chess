@@ -1,4 +1,4 @@
-package chess.domain.PieceImpl;
+package chess.domain.RuleImpl;
 
 import chess.domain.Piece;
 import chess.domain.Position;
@@ -11,7 +11,7 @@ class RookTest {
     void isValidMoveTest() {
         Position origin = Position.of("1", "a");
         Position target = Position.of("8", "a");
-        Piece piece = Rook.getInstance();
+        Piece piece = Piece.of(Piece.Color.WHITE, Rook.getInstance());
         assertTrue(piece.isValidMove(origin, target));
 
     }

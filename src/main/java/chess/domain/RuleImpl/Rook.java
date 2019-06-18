@@ -1,15 +1,18 @@
-package chess.domain.PieceImpl;
+package chess.domain.RuleImpl;
 
 import chess.domain.Position;
 
-public class Rook extends AbstractPiece {
+public class Rook implements Rule {
+
+    private static Rook INSTANCE = new Rook();
+
 
     private Rook() {
 
     }
 
     public static Rook getInstance() {
-        return new Rook();
+        return INSTANCE;
     }
 
     @Override

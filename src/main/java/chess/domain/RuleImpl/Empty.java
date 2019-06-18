@@ -1,8 +1,8 @@
-package chess.domain.PieceImpl;
+package chess.domain.RuleImpl;
 
 import chess.domain.Position;
 
-public class Empty extends AbstractPiece {
+public class Empty implements Rule {
     private static Empty INSTANCE = new Empty();
 
     private Empty() {
