@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public abstract class AbstractPiece implements Piece {
     protected final String name;
-    private final ChessTeam team;
+    protected final ChessTeam team;
 
     protected AbstractPiece(String name, ChessTeam team) {
         this.name = name;

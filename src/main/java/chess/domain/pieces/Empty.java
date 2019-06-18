@@ -4,8 +4,6 @@ import chess.domain.ChessTeam;
 import chess.domain.Direction;
 import chess.domain.Point;
 
-import java.util.List;
-
 public class Empty extends AbstractPiece {
 
     public Empty() {
@@ -13,7 +11,12 @@ public class Empty extends AbstractPiece {
     }
 
     @Override
-    public List<Direction> range(Point p1, Point p2, Piece piece) {
+    public Direction move(Point p1, Point p2) {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public Direction attack(Point p1, Point p2) {
         throw new IllegalArgumentException();
     }
 }
