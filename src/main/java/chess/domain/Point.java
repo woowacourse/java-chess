@@ -24,12 +24,8 @@ public class Point {
         return new Point(direction.xPoint(x), direction.yPoint(y));
     }
 
-    public int xDistance(Point point) {
-        return x - point.x;
-    }
-
-    public int yDistance(Point point) {
-        return y - point.y;
+    public Direction direction(Point p2) {
+        return new Direction(p2.x - x, p2.y - y);
     }
 
     @Override
@@ -45,5 +41,4 @@ public class Point {
     public int hashCode() {
         return Objects.hash(x, y);
     }
-
 }
