@@ -68,8 +68,8 @@ class ChessBoardTest {
         );
 
         ChessBoard board = new ChessBoard(boardState);
-        ChessCoordinate from = ChessCoordinate.valueOf("a1");
-        ChessCoordinate to = ChessCoordinate.valueOf("a8");
+        ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
+        ChessCoordinate to = ChessCoordinate.valueOf("a8").get();
         board.move(from, to);
         assertThat(board.getBoard()).isEqualTo(new ChessBoard(toBoardState).getBoard());
     }
@@ -77,6 +77,6 @@ class ChessBoardTest {
     @Test
     void 같은_색_이동_X() {
 //        ChessBoard board = new ChessBoard();
-//        assertThrows(AllyExistException.class, () -> board.move(ChessCoordinate.valueOf("b2"), ChessCoordinate.valueOf("b1")));
+//        assertThrows(AllyExistException.class, () -> board.move(ChessCoordinate.valueOf("b2").get(), ChessCoordinate.valueOf("b1").get()));
     }
 }

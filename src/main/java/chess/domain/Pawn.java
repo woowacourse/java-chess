@@ -27,45 +27,37 @@ public class Pawn extends ChessPiece {
         }
 
         if (getType().getTeam() == Team.WHITE) {
-            getIfEmpty(pieceTeamProvider, from.getX(), from.getY().move(1)).ifPresent(candidates::add);
+            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(1).get())).ifPresent(candidates::add);
 
-            createXCoordinate(from.getX(), -1)
-                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, x, from.getY().move(1))
+            from.getX().move(-1)
+                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(1).get()))
                             .ifPresent(candidates::add));
-            createXCoordinate(from.getX(), 1)
-                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, x, from.getY().move(1))
+            from.getX().move(1)
+                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(1).get()))
                             .ifPresent(candidates::add));
 
 
             if (from.getY() == ChessYCoordinate.RANK_2) {
-                getIfEmpty(pieceTeamProvider, from.getX(), from.getY().move(2)).ifPresent(candidates::add);
+                getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(2).get())).ifPresent(candidates::add);
             }
             return candidates;
         }
 
         if (getType().getTeam() == Team.BLACK) {
-            getIfEmpty(pieceTeamProvider, from.getX(), from.getY().move(-1)).ifPresent(candidates::add);
+            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(-1).get())).ifPresent(candidates::add);
 
-            createXCoordinate(from.getX(), -1)
-                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, x, from.getY().move(-1))
+            from.getX().move(-1)
+                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(-1).get()))
                             .ifPresent(candidates::add));
-            createXCoordinate(from.getX(), 1)
-                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, x, from.getY().move(1))
+            from.getX().move(1)
+                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(1).get()))
                             .ifPresent(candidates::add));
             if (from.getY() == ChessYCoordinate.RANK_7) {
-                getIfEmpty(pieceTeamProvider, from.getX(), from.getY().move(-2)).ifPresent(candidates::add);
+                getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(-2).get())).ifPresent(candidates::add);
             }
             return candidates;
         }
 
         return candidates;
-    }
-
-    private Optional<ChessXCoordinate> createXCoordinate(ChessXCoordinate from, int deltaX) {
-        try {
-            return Optional.of(from.move(deltaX));
-        } catch (IllegalArgumentException e) {
-            return Optional.empty();
-        }
     }
 }

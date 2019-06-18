@@ -17,24 +17,36 @@ public abstract class ChessPiece {
 
     abstract List<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from);
 
-    protected Optional<ChessCoordinate> getIfEmpty(PieceTeamProvider pieceTeamProvider, ChessXCoordinate x, ChessYCoordinate y) {
-        if (pieceTeamProvider.getTeamAt(x, y) == Team.NEUTRAL) {
-            return Optional.of(ChessCoordinate.valueOf(x, y));
+    protected Optional<ChessCoordinate> getIfEmpty(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
+        if (!maybeCoord.isPresent()) {
+            return Optional.empty();
+        }
+        ChessCoordinate coord = maybeCoord.get();
+        if (pieceTeamProvider.getTeamAt(coord.getX(), coord.getY()) == Team.NEUTRAL) {
+            return maybeCoord;
         }
         return Optional.empty();
     }
 
-    protected Optional<ChessCoordinate> getIfEnemy(PieceTeamProvider pieceTeamProvider, ChessXCoordinate x, ChessYCoordinate y) {
-        Team targetTeam = pieceTeamProvider.getTeamAt(x, y);
+    protected Optional<ChessCoordinate> getIfEnemy(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
+        if (!maybeCoord.isPresent()) {
+            return Optional.empty();
+        }
+        ChessCoordinate coord = maybeCoord.get();
+        Team targetTeam = pieceTeamProvider.getTeamAt(coord.getX(), coord.getY());
 
         if ((getType().getTeam() == Team.BLACK && targetTeam == Team.WHITE) ||
                 (getType().getTeam() == Team.WHITE && targetTeam == Team.BLACK)) {
-            return Optional.of(ChessCoordinate.valueOf(x, y));
+            return maybeCoord;
         }
         return Optional.empty();
     }
 
-    protected Optional<ChessCoordinate> getIfAlly(PieceTeamProvider pieceTeamProvider, ChessCoordinate coord) {
+    protected Optional<ChessCoordinate> getIfAlly(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
+        if (!maybeCoord.isPresent()) {
+            return Optional.empty();
+        }
+        ChessCoordinate coord = maybeCoord.get();
         if (getType().getTeam() == pieceTeamProvider.getTeamAt(coord.getX(), coord.getY())) {
             return Optional.of(coord);
         }
@@ -44,8 +56,8 @@ public abstract class ChessPiece {
     protected List<ChessCoordinate> probeHorizon(PieceTeamProvider pieceTeamProvider, ChessXCoordinate fromX, List<ChessYCoordinate> ascendingCoordinates) {
         List<ChessCoordinate> movableCoords = new ArrayList<>();
         for (ChessYCoordinate y : ascendingCoordinates) {
-            getIfEmpty(pieceTeamProvider, fromX, y).ifPresent(movableCoords::add);
-            Optional<ChessCoordinate> maybeEnemyLocation = getIfEnemy(pieceTeamProvider, fromX, y);
+            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(fromX, y)).ifPresent(movableCoords::add);
+            Optional<ChessCoordinate> maybeEnemyLocation = getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(fromX, y));
             if (maybeEnemyLocation.isPresent()) {
                 movableCoords.add(maybeEnemyLocation.get());
                 break;
@@ -61,8 +73,8 @@ public abstract class ChessPiece {
     protected List<ChessCoordinate> probeVertical(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> ascendingCoordinates, ChessYCoordinate fromY) {
         List<ChessCoordinate> movableCoords = new ArrayList<>();
         for (ChessXCoordinate x : ascendingCoordinates) {
-            getIfEmpty(pieceTeamProvider, x, fromY).ifPresent(movableCoords::add);
-            Optional<ChessCoordinate> maybeEnemyLocation = getIfEnemy(pieceTeamProvider, x, fromY);
+            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(x, fromY)).ifPresent(movableCoords::add);
+            Optional<ChessCoordinate> maybeEnemyLocation = getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, fromY));
             if (maybeEnemyLocation.isPresent()) {
                 movableCoords.add(maybeEnemyLocation.get());
                 break;
@@ -79,8 +91,8 @@ public abstract class ChessPiece {
         List<ChessCoordinate> movableCoords = new ArrayList<>();
 
         for (int i = 0; i < Math.min(xCoords.size(), yCoords.size()); i++) {
-            getIfEmpty(pieceTeamProvider, xCoords.get(i), yCoords.get(i)).ifPresent(movableCoords::add);
-            Optional<ChessCoordinate> maybeEnemyLocation = getIfEnemy(pieceTeamProvider, xCoords.get(i), yCoords.get(i));
+            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(xCoords.get(i), yCoords.get(i))).ifPresent(movableCoords::add);
+            Optional<ChessCoordinate> maybeEnemyLocation = getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(xCoords.get(i), yCoords.get(i)));
             if (maybeEnemyLocation.isPresent()) {
                 movableCoords.add(maybeEnemyLocation.get());
                 break;

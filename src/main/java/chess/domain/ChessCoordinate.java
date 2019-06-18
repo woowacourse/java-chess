@@ -23,12 +23,11 @@ public class ChessCoordinate {
         this.y = y;
     }
 
-    public static ChessCoordinate valueOf(String symbol) {
-        return Optional.ofNullable(coordinateMap.get(symbol))
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
+    public static Optional<ChessCoordinate> valueOf(String symbol) {
+        return Optional.ofNullable(coordinateMap.get(symbol));
     }
 
-    public static ChessCoordinate valueOf(ChessXCoordinate x, ChessYCoordinate y) {
+    public static Optional<ChessCoordinate> valueOf(ChessXCoordinate x, ChessYCoordinate y) {
         return valueOf(x.getSymbol() + y.getSymbol());
     }
 

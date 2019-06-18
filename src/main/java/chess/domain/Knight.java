@@ -25,45 +25,29 @@ public class Knight extends ChessPiece {
 
         List<ChessCoordinate> candidates = new ArrayList<>();
 
-        Optional<ChessXCoordinate> maybeXCandPos = createXCoordinate(from.getX(), 2);
-        if (maybeXCandPos.isPresent()) {
-            createYCoordinate(from.getY(), 1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(maybeXCandPos.get(), y)));
-            createYCoordinate(from.getY(), -1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(maybeXCandPos.get(), y)));
-        }
-        Optional<ChessXCoordinate> maybeXCandNeg = createXCoordinate(from.getX(), -2);
-        if (maybeXCandNeg.isPresent()) {
-            createYCoordinate(from.getY(), 1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(maybeXCandNeg.get(), y)));
-            createYCoordinate(from.getY(), -1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(maybeXCandNeg.get(), y)));
-        }
-        Optional<ChessYCoordinate> maybeYCandPos = createYCoordinate(from.getY(), 2);
-        if (maybeYCandPos.isPresent()) {
-            createXCoordinate(from.getX(), 1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, maybeYCandPos.get())));
-            createXCoordinate(from.getX(), -1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, maybeYCandPos.get())));
-        }
-        Optional<ChessYCoordinate> maybeYCandNeg = createYCoordinate(from.getY(), -2);
-        if (maybeYCandNeg.isPresent()) {
-            createXCoordinate(from.getX(), 1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, maybeYCandNeg.get())));
-            createXCoordinate(from.getX(), -1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, maybeYCandNeg.get())));
-        }
+        from.getX().move(2)
+                .ifPresent((x) -> {
+                    from.getY().move(1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                    from.getY().move(-1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                });
+        from.getX().move(-2)
+                .ifPresent((x) -> {
+                    from.getY().move(1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                    from.getY().move(-1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                });
+        from.getY().move(2)
+                .ifPresent((y) -> {
+                    from.getX().move(1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                    from.getX().move(-1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                });
+        from.getY().move(-2)
+                .ifPresent((y) -> {
+                    from.getX().move(1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                    from.getX().move(-1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                });
 
         return candidates.stream()
                 .filter((coord) -> pieceTeamProvider.getTeamAt(coord.getX(), coord.getY()) != getType().getTeam())
                 .collect(Collectors.toList());
-    }
-
-    private Optional<ChessXCoordinate> createXCoordinate(ChessXCoordinate from, int deltaX) {
-        try {
-            return Optional.of(from.move(deltaX));
-        } catch (IllegalArgumentException e) {
-            return Optional.empty();
-        }
-    }
-
-    private Optional<ChessYCoordinate> createYCoordinate(ChessYCoordinate from, int deltaY) {
-        try {
-            return Optional.of(from.move(deltaY));
-        } catch (IllegalArgumentException e) {
-            return Optional.empty();
-        }
     }
 }

@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public enum ChessYCoordinate {
@@ -23,22 +24,20 @@ public enum ChessYCoordinate {
         this.index = index;
     }
 
-    public ChessYCoordinate move(int n) {
+    public Optional<ChessYCoordinate> move(int n) {
         return valueOf(index - n);
     }
 
-    public static ChessYCoordinate valueOf(int index) {
+    public static Optional<ChessYCoordinate> valueOf(int index) {
         return Arrays.stream(values())
                 .filter(coord -> coord.index == index)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 인덱스입니다: " + index));
+                .findFirst();
     }
 
-    public static ChessYCoordinate of(String symbol) {
+    public static Optional<ChessYCoordinate> of(String symbol) {
         return Arrays.stream(values())
                 .filter(coord -> coord.symbol.equals(symbol))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 기호입니다."));
+                .findFirst();
     }
 
     public String getSymbol() {

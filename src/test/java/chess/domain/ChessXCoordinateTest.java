@@ -10,12 +10,12 @@ public class ChessXCoordinateTest {
 
     @Test
     void movePositive() {
-        assertThat(ChessXCoordinate.A.move(3)).isEqualTo(ChessXCoordinate.D);
+        assertThat(ChessXCoordinate.A.move(3).get()).isEqualTo(ChessXCoordinate.D);
     }
 
     @Test
     void moveNegative() {
-        assertThat(ChessXCoordinate.D.move(-2)).isEqualTo(ChessXCoordinate.B);
+        assertThat(ChessXCoordinate.D.move(-2).get()).isEqualTo(ChessXCoordinate.B);
     }
 
     @Test
