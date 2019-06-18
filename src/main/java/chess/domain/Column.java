@@ -50,4 +50,9 @@ public class Column implements Comparable<Column>{
     public int hashCode() {
         return Objects.hash(column);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf((char)column);
+    }
 }

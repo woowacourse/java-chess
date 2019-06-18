@@ -49,4 +49,9 @@ public class Row implements Comparable<Row> {
     public int hashCode() {
         return Objects.hash(row);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(row);
+    }
 }
