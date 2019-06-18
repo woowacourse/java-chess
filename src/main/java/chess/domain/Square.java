@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.PieceImpl.Empty;
+
 import java.util.Objects;
 
 public class Square {
@@ -41,7 +43,7 @@ public class Square {
         final Square square = (Square) o;
         boolean b = Objects.equals(position, square.position);
         final boolean c = Objects.equals(piece, square.piece);
-        return b&&c;
+        return b && c;
     }
 
     @Override

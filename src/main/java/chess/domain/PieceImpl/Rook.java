@@ -1,6 +1,8 @@
-package chess.domain;
+package chess.domain.PieceImpl;
 
-public class Rook implements Piece {
+import chess.domain.Position;
+
+public class Rook extends AbstractPiece {
 
     private Rook() {
 
@@ -14,4 +16,5 @@ public class Rook implements Piece {
     public boolean isValidMove(final Position origin, final Position target) {
         return origin.isLevel(target) || origin.isPerpendicular(target);
     }
+
 }

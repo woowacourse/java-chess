@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.PieceImpl.Empty;
+import chess.domain.PieceImpl.Rook;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

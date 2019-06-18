@@ -42,13 +42,13 @@ public class Position implements Comparable<Position> {
 
     @Override
     public int compareTo(final Position o) {
-       int result = this.row.compareTo(o.row);
+        int result = this.row.compareTo(o.row);
 
-       if(result == 0){
-           result = this.column.compareTo(o.column);
-       }
+        if (result == 0) {
+            result = this.column.compareTo(o.column);
+        }
 
-       return result;
+        return result;
     }
 
     @Override

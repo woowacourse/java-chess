@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.PieceImpl;
 
+import chess.domain.Piece;
+import chess.domain.Position;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,5 +13,6 @@ class RookTest {
         Position target = Position.of("8", "a");
         Piece piece = Rook.getInstance();
         assertTrue(piece.isValidMove(origin, target));
+
     }
 }

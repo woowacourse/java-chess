@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Column implements Comparable<Column>{
+public class Column implements Comparable<Column> {
     private static final Map<String, Column> COLUMNS = new HashMap<>();
     static final char MIN = 'a';
     static final char MAX = 'h';
@@ -53,6 +53,6 @@ public class Column implements Comparable<Column>{
 
     @Override
     public String toString() {
-        return String.valueOf((char)column);
+        return String.valueOf((char) column);
     }
 }
