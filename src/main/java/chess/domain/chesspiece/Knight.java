@@ -1,12 +1,24 @@
 package chess.domain.chesspiece;
 
-import chess.domain.ChessPoint;
-import chess.domain.RelativeChessPoint;
+import chess.domain.chesspoint.ChessPoint;
+import chess.domain.chesspoint.RelativeChessPoint;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Knight implements ChessPiece {
+    private static Knight knight = null;
+
+    private Knight() {
+    }
+
+    public static Knight getInstance() {
+        if (knight == null) {
+            knight = new Knight();
+        }
+        return knight;
+    }
+
     private static final List<RelativeChessPoint> DIRECTIONS = Arrays.asList(
             RelativeChessPoint.of(2, 1), RelativeChessPoint.of(1, 2)
             , RelativeChessPoint.of(-1, 2), RelativeChessPoint.of(-2, 1)

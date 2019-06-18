@@ -1,6 +1,6 @@
 package chess.domain.chesspiece;
 
-import chess.domain.ChessPoint;
+import chess.domain.chesspoint.ChessPoint;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +11,7 @@ class KnightTest {
         ChessPoint sourcePoint = ChessPoint.of(1, 1);
         ChessPoint targetPoint = ChessPoint.of(2, 3);
 
-        Knight knight = new Knight();
+        Knight knight = Knight.getInstance();
 
         assertThat(knight.checkRule(sourcePoint, targetPoint)).isTrue();
     }
@@ -21,7 +21,7 @@ class KnightTest {
         ChessPoint sourcePoint = ChessPoint.of(1, 1);
         ChessPoint targetPoint = ChessPoint.of(1, 3);
 
-        Knight knight = new Knight();
+        Knight knight = Knight.getInstance();
 
         assertThat(knight.checkRule(sourcePoint, targetPoint)).isFalse();
     }
