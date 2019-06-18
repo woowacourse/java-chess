@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Objects;
+
 public class Point {
     public static final char X_START = 'a';
     public static final char X_END = 'h';
@@ -7,6 +9,10 @@ public class Point {
     public static final char Y_END = '8';
     private final int positionX;
     private final int positionY;
+
+    public Point(String position) {
+        this(position.charAt(0), position.charAt(1));
+    }
 
     public Point(char positionX, char positionY) {
         checkPositionX(positionX);
@@ -32,4 +38,18 @@ public class Point {
     }
 
     private int changeTypeY(char y){ return y - Y_START; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return positionX == point.positionX &&
+                positionY == point.positionY;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(positionX, positionY);
+    }
 }
