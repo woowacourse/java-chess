@@ -17,39 +17,6 @@ public class ChessBoard {
         this.boardState = initialBoardState;
     }
 
-    private List<List<PieceType>> initChessBoard() {
-        List<List<PieceType>> initState = new ArrayList<>();
-//        initState.addAll(initBlackState());
-//        initState.addAll(initNoneState());
-//        initState.addAll(initWhiteState());
-
-        return initState;
-    }
-
-//    private List<List<PieceType>> initWhiteState() {
-//        return Arrays.asList(
-//                Arrays.asList(PAWN_WHITE, PAWN_WHITE, PAWN_WHITE, PAWN_WHITE, PAWN_WHITE, PAWN_WHITE, PAWN_WHITE, PAWN_WHITE),
-//                Arrays.asList(ROOK_WHITE, KNIGHT_WHITE, BISHOP_WHITE, QUEEN_WHITE, KING_WHITE, BISHOP_WHITE, KNIGHT_WHITE, ROOK_WHITE)
-//        );
-//    }
-
-//    private List<List<PieceType>> initNoneState() {
-//        return Arrays.asList(
-//                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
-//                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
-//                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
-//                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE)
-//        );
-//    }
-
-//    private List<List<PieceType>> initBlackState() {
-//        return Arrays.asList(
-//                Arrays.asList(ROOK_BLACK, KNIGHT_BLACK, BISHOP_BLACK, QUEEN_BLACK, KING_BLACK, BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK),
-//                Arrays.asList(PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK)
-//        );
-//
-//    }
-
     public List<List<PieceType>> getBoard() {
         return boardState.stream()
                 .map(row -> row.stream()
@@ -64,7 +31,7 @@ public class ChessBoard {
         ChessPiece toState = this.boardState.get(to.getY().getIndex())
                 .get(to.getX().getIndex());
 
-        List<ChessCoordinate> movableList = srcState.getMovableCoordinates(this, from);
+        List<ChessCoordinate> movableList = srcState.getMovableCoordinates(this::getTeamAt, from);
 
         movableList.stream()
                 .filter(coord -> coord.getX() == to.getX())
