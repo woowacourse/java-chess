@@ -1,7 +1,7 @@
 package chess.domain;
 
 public class ChessGame {
-    ChessBoard chessBoard = new ChessBoard();
+    Board board = new Board();
     boolean turn = false;
 
     public void play(String input) {
@@ -9,9 +9,16 @@ public class ChessGame {
         if (split.length != 3) {
             throw new IllegalArgumentException();
         }
-
-        if(!split[0].equals("play")){
+        if (!split[0].equals("move")) {
             throw new IllegalArgumentException();
         }
+        board.move(parse(split[1]), parse(split[2]));
+    }
+
+    private Point parse(String destination) {
+        String axis = "abcdefgh";
+        int x = axis.indexOf(destination.charAt(0));
+        int y = Integer.parseInt(String.valueOf(destination.charAt(1)));
+        return new Point(x, y);
     }
 }
