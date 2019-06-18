@@ -40,6 +40,30 @@ public class Position implements Comparable<Position> {
         return this.row.calculateAbsolute(target.row) == RIGHT_INCLINATION;
     }
 
+    public boolean isMoveAnyWhereSum(final Position position, int distance) {
+        return sumRowAndColumn(position) == distance;
+    }
+
+    public boolean isMoveAnyWhereSub(final Position position, int distance) {
+        return subRowAndColumn(position) == distance;
+    }
+
+    public int subRowAndColumn(final Position target) {
+        return Math.abs(this.distanceOfRow(target) - this.distanceOfColumn(target));
+    }
+
+    public int sumRowAndColumn(final Position target) {
+        return Math.abs(this.distanceOfRow(target) + this.distanceOfColumn(target));
+    }
+
+    private int distanceOfRow(final Position target) {
+        return this.row.calculateAbsolute(target.row);
+    }
+
+    private int distanceOfColumn(final Position target) {
+        return this.column.calculateAbsolute(target.column);
+    }
+
     @Override
     public int compareTo(final Position o) {
         int result = this.row.compareTo(o.row);
