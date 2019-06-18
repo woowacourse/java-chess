@@ -18,10 +18,4 @@ public class King implements ChessPiece {
         RelativeChessPoint direction = target.minus(source);
         return DIRECTIONS.stream().anyMatch(d -> d.equals(direction));
     }
-
-    @Override
-    public RelativeChessPoint calculateUnitDirection(ChessPoint source, ChessPoint target) {
-        RelativeChessPoint relativePoint = target.minus(source);
-        return relativePoint.toUnit();
-    }
 }

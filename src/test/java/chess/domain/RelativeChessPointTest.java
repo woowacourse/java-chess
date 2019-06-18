@@ -65,4 +65,20 @@ class RelativeChessPointTest {
                 .isEqualTo(RelativeChessPoint.of(-1, -2));
 
     }
+
+    @Test
+    void calculateUnitDirection_위로_1칸() {
+        ChessPoint sourcePoint = ChessPoint.of(1, 1);
+        ChessPoint targetPoint = ChessPoint.of(2, 1);
+
+        assertThat(RelativeChessPoint.calculateUnitDirection(sourcePoint, targetPoint)).isEqualTo(RelativeChessPoint.of(1, 0));
+    }
+
+    @Test
+    void calculateUnitDirection_오른쪽으로_2칸() {
+        ChessPoint sourcePoint = ChessPoint.of(1, 1);
+        ChessPoint targetPoint = ChessPoint.of(1, 3);
+
+        assertThat(RelativeChessPoint.calculateUnitDirection(sourcePoint, targetPoint)).isEqualTo(RelativeChessPoint.of(0, 1));
+    }
 }

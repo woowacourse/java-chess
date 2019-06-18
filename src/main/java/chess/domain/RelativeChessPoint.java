@@ -33,6 +33,11 @@ public class RelativeChessPoint {
         return RelativeChessPoint.of(relativeRow / number, relativeColumn / number);
     }
 
+    public static RelativeChessPoint calculateUnitDirection(ChessPoint source, ChessPoint target) {
+        RelativeChessPoint relativePoint = target.minus(source);
+        return relativePoint.toUnit();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

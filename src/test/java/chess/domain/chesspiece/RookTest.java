@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class QueenTest {
+class RookTest {
     @Test
     void checkRule_위로_1칸() {
         ChessPoint sourcePoint = ChessPoint.of(1, 1);
         ChessPoint targetPoint = ChessPoint.of(2, 1);
 
-        Queen queen = new Queen();
+        Rook rook = new Rook();
 
-        assertThat(queen.checkRule(sourcePoint, targetPoint)).isTrue();
+        assertThat(rook.checkRule(sourcePoint, targetPoint)).isTrue();
     }
 
     @Test
@@ -21,18 +21,18 @@ class QueenTest {
         ChessPoint sourcePoint = ChessPoint.of(1, 1);
         ChessPoint targetPoint = ChessPoint.of(1, 3);
 
-        Queen queen = new Queen();
+        Rook rook = new Rook();
 
-        assertThat(queen.checkRule(sourcePoint, targetPoint)).isTrue();
+        assertThat(rook.checkRule(sourcePoint, targetPoint)).isTrue();
     }
 
     @Test
     void checkRule_위로_1칸_오른쪽으로_2칸() {
         ChessPoint sourcePoint = ChessPoint.of(1, 1);
-        ChessPoint targetPoint = ChessPoint.of(2, 3);
+        ChessPoint targetPoint = ChessPoint.of(2, 2);
 
-        Queen queen = new Queen();
+        Rook rook = new Rook();
 
-        assertThat(queen.checkRule(sourcePoint, targetPoint)).isFalse();
+        assertThat(rook.checkRule(sourcePoint, targetPoint)).isFalse();
     }
 }
