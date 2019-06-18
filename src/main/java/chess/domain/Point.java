@@ -1,7 +1,10 @@
 package chess.domain;
 
 public class Point {
-
+    public static final char X_START = 'a';
+    public static final char X_END = 'h';
+    public static final char Y_START = '1';
+    public static final char Y_END = '8';
     private final int positionX;
     private final int positionY;
 
@@ -13,22 +16,20 @@ public class Point {
     }
 
     private void checkPositionX(char positionX) {
-        if (positionX < 'a' || positionX > 'h') {
-            throw new IllegalArgumentException("X 좌표는 a부터 h까지만 허용합니다.");
+        if (positionX < X_START || positionX > X_END) {
+            throw new IllegalArgumentException("Y 좌표는 " + X_START + "부터 " + X_END + "까지만 허용합니다.");
         }
     }
 
     private void checkPositionY(char positionY) {
-        if (positionY < '1' || positionY > '8') {
-            throw new IllegalArgumentException("Y 좌표는 1부터 8까지만 허용합니다.");
+        if (positionY < Y_START || positionY > Y_END) {
+            throw new IllegalArgumentException("Y 좌표는 " + Y_START + "부터 " + Y_END + "까지만 허용합니다.");
         }
     }
 
     private int changeTypeX(char x){
-        return x - 'a';
+        return x - X_START;
     }
 
-    private int changeTypeY(char y){
-        return y - '1';
-    }
+    private int changeTypeY(char y){ return y - Y_START; }
 }
