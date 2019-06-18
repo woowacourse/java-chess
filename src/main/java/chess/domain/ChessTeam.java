@@ -11,7 +11,7 @@ public enum ChessTeam {
         this.color = color;
     }
 
-    public boolean match(ChessTeam chessTeam) {
-        return this.color == chessTeam.color;
+    public int color() {
+        return this.color;
     }
 }
