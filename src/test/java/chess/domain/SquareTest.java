@@ -1,7 +1,6 @@
 package chess.domain;
 
-import chess.domain.PieceImpl.Empty;
-import chess.domain.PieceImpl.Rook;
+import chess.domain.RuleImpl.Rook;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,7 +9,7 @@ public class SquareTest {
     @Test
     public void 동치성_테스트() {
         Position position = Position.of("1", "a");
-        Piece rook = Empty.getInstance();
+        Piece rook = Piece.of(Piece.Color.WHITE, Rook.getInstance());
         Square square1 = Square.of(position, rook);
         Square square2 = Square.of(position, rook);
 
@@ -20,11 +19,11 @@ public class SquareTest {
     @Test
     public void 룩에서_빈칸_이동_테스트() {
         Position position1 = Position.of("1", "a");
-        Piece rook = Rook.getInstance();
+        Piece rook = Piece.of(Piece.Color.WHITE, Rook.getInstance());
         Square origin = Square.of(position1, rook);
 
         Position position2 = Position.of("1", "h");
-        Piece empty = Empty.getInstance();
+        Piece empty = Piece.empty();
         Square target = Square.of(position2, empty);
 
         Square expectedOrigin = Square.of(position1, empty);
@@ -39,7 +38,7 @@ public class SquareTest {
     @Test
     public void 빈칸에서_빈칸으로_이동할때_false반환_확인() {
         Position position1 = Position.of("1", "a");
-        Piece empty = Empty.getInstance();
+        Piece empty = Piece.empty();
         Square origin = Square.of(position1, empty);
 
         Position position2 = Position.of("1", "h");
@@ -54,11 +53,11 @@ public class SquareTest {
     @Test
     public void 말의_이동_규칙을_위배했을떄() {
         Position position1 = Position.of("1", "a");
-        Piece rook = Rook.getInstance();
+        Piece rook = Piece.of(Piece.Color.WHITE, Rook.getInstance());
         Square origin = Square.of(position1, rook);
 
         Position position2 = Position.of("2", "h");
-        Piece empty = Empty.getInstance();
+        Piece empty = Piece.empty();
         Square target = Square.of(position2, empty);
 
         Square expectedOrigin = Square.of(position1, rook);

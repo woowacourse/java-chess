@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.domain.PieceImpl.Empty;
-
 import java.util.Objects;
 
 public class Square {
@@ -17,20 +15,11 @@ public class Square {
         return new Square(position, piece);
     }
 
-//    public Optional<Square> movePiece(final Square target) {
-//        if (piece.isValidMove(this.position, target.position)) {
-//            Optional<Square> square = Optional.of(new Square(this.position, this.piece));
-//            this.piece = Empty.getInstance();
-//            return square;
-//        }
-//        return Optional.empty();
-//    }
-
     // TODO target이 빈 칸인 경우
     public boolean movePiece(final Square target) {
         if (piece.isValidMove(this.position, target.position)) {
             target.piece = this.piece;
-            this.piece = Empty.getInstance();
+            this.piece = Piece.empty();
             return true;
         }
         return false;
