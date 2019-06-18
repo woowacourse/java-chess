@@ -1,24 +1,13 @@
 package chess.domain;
 
-import java.util.Objects;
+public class Bishop extends Piece {
+    private static final String NAME = "b";
 
-public class Bishop {
-    private boolean life;
-
-    public Bishop() {
-        this.life = true;
+    public Bishop(Team team) {
+        super(team);
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final Bishop rook = (Bishop) o;
-        return life == rook.life;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(life);
+    public String getName() {
+        return NAME;
     }
 }
