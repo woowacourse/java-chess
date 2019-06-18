@@ -15,6 +15,15 @@ public class Coordinate {
 		this.coordinate = coordinate;
 	}
 
+	public Coordinate move(int direction) {
+		return new Coordinate(coordinate + direction);
+	}
+
+	public boolean canMove(int direction) {
+		int nextCoordinate = coordinate + direction;
+		return nextCoordinate >= MIN_BOUND && nextCoordinate <= MAX_BOUND;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -30,5 +39,12 @@ public class Coordinate {
 	@Override
 	public int hashCode() {
 		return Objects.hash(coordinate);
+	}
+
+	@Override
+	public String toString() {
+		return "Coordinate{" +
+				"coordinate=" + coordinate +
+				'}';
 	}
 }
