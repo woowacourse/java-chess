@@ -15,6 +15,24 @@ public class RelativeChessPoint {
         return new RelativeChessPoint(relativeRow, relativeColumn);
     }
 
+    public RelativeChessPoint toUnit() {
+        if (relativeRow == 0 && relativeColumn == 0) {
+            return this;
+        }
+
+        int positiveGcd = Math.abs(calcGCD(relativeRow, relativeColumn));
+
+        return divideBy(positiveGcd);
+    }
+
+    private int calcGCD(int a, int b) {
+        return a == 0 ? b : calcGCD(b % a, a);
+    }
+
+    private RelativeChessPoint divideBy(int number) {
+        return RelativeChessPoint.of(relativeRow / number, relativeColumn / number);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

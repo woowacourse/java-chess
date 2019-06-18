@@ -35,4 +35,12 @@ class ChessPointTest {
     void of_캐시여부() {
         assertThat(ChessPoint.of(1, 1) == ChessPoint.of(1, 1)).isTrue();
     }
+
+    @Test
+    void minus_() {
+        ChessPoint sourcePoint = ChessPoint.of(1, 1);
+        ChessPoint targetPoint = ChessPoint.of(2, 3);
+
+        assertThat(targetPoint.minus(sourcePoint)).isEqualTo(RelativeChessPoint.of(1, 2));
+    }
 }

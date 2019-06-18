@@ -1,0 +1,27 @@
+package chess.domain.chesspiece;
+
+import chess.domain.ChessPoint;
+import chess.domain.RelativeChessPoint;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class King implements ChessPiece {
+    private static final List<RelativeChessPoint> DIRECTIONS = Arrays.asList(
+            RelativeChessPoint.of(1, 0), RelativeChessPoint.of(1, 1)
+            , RelativeChessPoint.of(0, 1), RelativeChessPoint.of(-1, 1)
+            , RelativeChessPoint.of(-1, 0), RelativeChessPoint.of(-1, -1)
+            , RelativeChessPoint.of(0, -1), RelativeChessPoint.of(1, -1));
+
+    @Override
+    public boolean checkRule(ChessPoint source, ChessPoint target) {
+        RelativeChessPoint direction = target.minus(source);
+        return DIRECTIONS.stream().anyMatch(d -> d.equals(direction));
+    }
+
+    @Override
+    public RelativeChessPoint calculateUnitDirection(ChessPoint source, ChessPoint target) {
+        RelativeChessPoint relativePoint = target.minus(source);
+        return relativePoint.toUnit();
+    }
+}

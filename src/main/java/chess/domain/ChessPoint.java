@@ -50,6 +50,10 @@ public class ChessPoint {
         return row * BASE_FOR_DECIMAL_NUMBER_IN_HASH_FUNC + column;
     }
 
+    public RelativeChessPoint minus(ChessPoint source) {
+        return RelativeChessPoint.of(row - source.row, column - source.column);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
