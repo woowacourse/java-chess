@@ -2,6 +2,7 @@ package chess.model.board;
 
 import chess.model.Column;
 import chess.model.Row;
+import chess.model.Square;
 import chess.model.unit.Piece;
 import chess.model.unit.Side;
 
@@ -35,7 +36,9 @@ public class Board {
         lines.put(row, rank);
     }
 
-    public Piece getPiece(final Column column, final Row row) {
+    public Piece getPiece(final Square square) {
+        final Column column = square.getColumn();
+        final Row row = square.getRow();
         try {
             final Piece piece = lines.get(row).getPiece(column);
             if (piece == null) {
@@ -47,13 +50,17 @@ public class Board {
         }
     }
 
-    public void setPiece(final Column column, final Row row, final Piece piece) {
+    public void setPiece(final Square square, final Piece piece) {
+        final Column column = square.getColumn();
+        final Row row = square.getRow();
         final Rank line = lines.getOrDefault(row, new Rank());
         line.setPiece(column, piece);
         lines.put(row, line);
     }
 
-    public void removePiece(final Column column, final Row row) {
+    public void removePiece(final Square square) {
+        final Column column = square.getColumn();
+        final Row row = square.getRow();
         try {
             final Rank line = lines.get(row);
             line.removePiece(column);

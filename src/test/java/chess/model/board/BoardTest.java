@@ -2,6 +2,7 @@ package chess.model.board;
 
 import chess.model.Column;
 import chess.model.Row;
+import chess.model.Square;
 import chess.model.unit.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class BoardTest {
+    private Square square;
     private Board board;
     private Piece piece;
 
@@ -20,42 +22,44 @@ class BoardTest {
 
     @Test
     void getPiece() {
-        piece = board.getPiece(Column.A, Row._1);
+        square = new Square(Column.A, Row._1);
+        piece = board.getPiece(square);
         assertThat(piece).isEqualTo(new Rook(Side.WHITE));
 
-        piece = board.getPiece(Column.D, Row._1);
+        square = new Square(Column.D, Row._1);
+        piece = board.getPiece(square);
         assertThat(piece).isEqualTo(new Queen(Side.WHITE));
 
-        piece = board.getPiece(Column.E, Row._7);
+        square = new Square(Column.E, Row._7);
+        piece = board.getPiece(square);
         assertThat(piece).isEqualTo(new Pawn(Side.BLACK));
 
-        piece = board.getPiece(Column.G, Row._8);
+        square = new Square(Column.G, Row._8);
+        piece = board.getPiece(square);
         assertThat(piece).isEqualTo(new Knight(Side.BLACK));
     }
 
     @Test
     void getPieceBlank() {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            board.getPiece(Column.C, Row._3);
+            board.getPiece(new Square(Column.C, Row._3));
         });
     }
 
     @Test
     void setPiece() {
-        Column column = Column.C;
-        Row row = Row._4;
+        square = new Square(Column.C, Row._4);
         piece = new Pawn(Side.WHITE);
-        board.setPiece(column, row, piece);
-        assertThat(board.getPiece(column, row)).isEqualTo(piece);
+        board.setPiece(square, piece);
+        assertThat(board.getPiece(square)).isEqualTo(piece);
     }
 
     @Test
     void removePiece() {
-        Column column = Column.H;
-        Row row = Row._8;
-        board.removePiece(column, row);
+        square = new Square(Column.H, Row._8);
+        board.removePiece(square);
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            board.getPiece(column, row);
+            board.getPiece(square);
         });
     }
 }

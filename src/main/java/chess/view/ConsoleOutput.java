@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.model.Column;
 import chess.model.Row;
+import chess.model.Square;
 import chess.model.board.Board;
 import chess.model.unit.Piece;
 import chess.model.unit.Side;
@@ -23,10 +24,10 @@ public class ConsoleOutput {
         PIECE_SYMBOL.put(UnitClass.PAWN, "P");
     }
 
-    private static String getPieceSymbol(final Board board, final Column column, final Row row) {
+    private static String getPieceSymbol(final Board board, final Square square) {
         String symbol = EMPTY_SQUARE;
         try {
-            final Piece piece = board.getPiece(column, row);
+            final Piece piece = board.getPiece(square);
             symbol = getSymbolBySide(piece);
         } catch (Exception e) {
             // pass
@@ -57,9 +58,11 @@ public class ConsoleOutput {
     }
 
     private static StringBuilder boardRow(final Board board, final Row row) {
+        Square square;
         StringBuilder sb = new StringBuilder();
         for (Column column : Column.values()) {
-            sb.append(getPieceSymbol(board, column, row));
+            square = new Square(column, row);
+            sb.append(getPieceSymbol(board, square));
         }
         return sb;
     }
