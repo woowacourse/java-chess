@@ -43,4 +43,30 @@ class RookTest {
                 ChessCoordinate.valueOf("g1")
         );
     }
+
+    @Test
+    void ally_block() {
+        Rook rook = new Rook(Team.WHITE);
+
+        ChessPiece empty = EmptyCell.getInstance();
+        List<List<ChessPiece>> boardState = Arrays.asList(
+                Arrays.asList(new Rook(Team.BLACK), empty, empty, empty, empty, empty, empty, new Rook(Team.BLACK)),
+                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+                Arrays.asList(new Rook(Team.WHITE), empty, empty, empty, empty, empty, empty, empty),
+                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+                Arrays.asList(rook, empty, empty, new Rook(Team.WHITE), empty, empty, empty, new Rook(Team.WHITE))
+        );
+
+        ChessCoordinate from = ChessCoordinate.valueOf("a1");
+
+        assertThat(rook.getMovableCoordinates(new ChessBoard(boardState)::getTeamAt, from)).containsExactlyInAnyOrder(
+                ChessCoordinate.valueOf("a2"),
+                ChessCoordinate.valueOf("a3"),
+                ChessCoordinate.valueOf("b1"),
+                ChessCoordinate.valueOf("c1")
+        );
+    }
 }

@@ -27,33 +27,17 @@ public class Bishop extends ChessPiece {
         List<ChessXCoordinate> xCoords = ChessXCoordinate.getDescendingCoordinates(from.getX());
         List<ChessYCoordinate> yCoords = ChessYCoordinate.getDescendingCoordinates(from.getY());
 
-        movableCoords.addAll(probe(pieceTeamProvider, xCoords, yCoords));
+        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
 
         yCoords = ChessYCoordinate.getAscendingCoordinates(from.getY());
-        movableCoords.addAll(probe(pieceTeamProvider, xCoords, yCoords));
+        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
 
         xCoords = ChessXCoordinate.getAscendingCoordinates(from.getX());
-        movableCoords.addAll(probe(pieceTeamProvider, xCoords, yCoords));
+        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
 
         yCoords = ChessYCoordinate.getDescendingCoordinates(from.getY());
-        movableCoords.addAll(probe(pieceTeamProvider, xCoords, yCoords));
+        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
 
         return movableCoords;
     }
-
-    private List<ChessCoordinate> probe(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> xCoords, List<ChessYCoordinate> yCoords) {
-        List<ChessCoordinate> movableCoords = new ArrayList<>();
-
-        for (int i = 0; i < Math.min(xCoords.size(), yCoords.size()); i++) {
-            getIfEmpty(pieceTeamProvider, xCoords.get(i), yCoords.get(i)).ifPresent(movableCoords::add);
-            Optional<ChessCoordinate> maybeEnemyLocation = getIfEnemy(pieceTeamProvider, xCoords.get(i), yCoords.get(i));
-            if (maybeEnemyLocation.isPresent()) {
-                movableCoords.add(maybeEnemyLocation.get());
-                break;
-            }
-        }
-        return movableCoords;
-    }
-
-
 }
