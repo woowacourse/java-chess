@@ -5,11 +5,9 @@ public class Knight implements Piece {
     private static final double SCORE = 2.5;
 
     private final Aliance aliance;
-    private Position position;
 
-    public Knight(Aliance aliance, Position position) {
+    public Knight(Aliance aliance) {
         this.aliance = aliance;
-        this.position = position;
     }
 
     @Override

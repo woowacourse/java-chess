@@ -5,11 +5,9 @@ public class Rook implements Piece {
     private static final double SCORE = 5;
 
     private final Aliance aliance;
-    private Position position;
 
-    public Rook(Aliance aliance, Position position) {
+    public Rook(Aliance aliance) {
         this.aliance = aliance;
-        this.position = position;
     }
 
     @Override

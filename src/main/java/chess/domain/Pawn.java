@@ -5,11 +5,9 @@ public class Pawn implements Piece {
     private static final double SCORE = 1;
 
     private final Aliance aliance;
-    private Position position;
 
-    public Pawn(Aliance aliance, Position position) {
+    public Pawn(Aliance aliance) {
         this.aliance = aliance;
-        this.position = position;
     }
 
     @Override

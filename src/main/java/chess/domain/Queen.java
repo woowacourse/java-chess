@@ -5,11 +5,9 @@ public class Queen implements Piece {
     private static final double SCORE = 9;
 
     private final Aliance aliance;
-    private Position position;
 
-    public Queen(Aliance aliance, Position position) {
+    public Queen(Aliance aliance) {
         this.aliance = aliance;
-        this.position = position;
     }
 
     @Override

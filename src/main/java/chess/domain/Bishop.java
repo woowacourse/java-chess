@@ -5,11 +5,9 @@ public class Bishop implements Piece {
     private static final double SCORE = 3;
 
     private final Aliance aliance;
-    private Position position;
 
-    public Bishop(Aliance aliance, Position position) {
+    public Bishop(Aliance aliance) {
         this.aliance = aliance;
-        this.position = position;
     }
 
     @Override
@@ -24,5 +22,6 @@ public class Bishop implements Piece {
         }
         return NAME.toLowerCase();
     }
+
 }
 

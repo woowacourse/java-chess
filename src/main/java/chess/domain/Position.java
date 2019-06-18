@@ -1,10 +1,10 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Position {
-    private static final List<String> positions = new ArrayList<>();
+    private static final Map<String, Position> positions = new HashMap<>();
 
     private final Row row;
     private final Column column;
@@ -15,21 +15,24 @@ public class Position {
 
         for (Column column : columns) {
             for (Row row : rows) {
-                positions.add(column.toString() + row.toString());
+                positions.put(column.toString() + row.toString(), new Position(row, column));
             }
         }
     }
 
-    public Position(Row row, Column column) {
+    private Position(Row row, Column column) {
         this.row = row;
         this.column = column;
     }
 
-    public static boolean isValidPostion(String position) {
-        return positions.contains(position);
+    public static Position valueOf(String position) {
+        return positions.get(position);
     }
 
-    public static List<String> getPositions() {
-        return positions;
+    public static List<Position> getRow(String rowName) {
+        return positions.values()
+                .stream()
+                .filter(v -> v.row == Row.valueOf(rowName))
+                .collect(Collectors.toList());
     }
 }
