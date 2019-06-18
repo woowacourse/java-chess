@@ -1,7 +1,7 @@
 package chess.domain;
 
-import java.util.List;
+import java.util.Map;
 
 public interface Initializer {
-    List<Unit> create();
+    Map<Position, Unit> create();
 }

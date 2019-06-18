@@ -1,83 +1,63 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class ChessBoardInitializer implements Initializer {
-
     @Override
-    public List<Unit> create() {
-        List<Unit> units = new ArrayList<>();
-        units.addAll(createSingleTeam(Team.BLACK));
-        units.addAll(createSingleTeam(Team.WHITE));
-
+    public Map<Position, Unit> create() {
+        Map<Position, Unit> units = new HashMap<>();
+        createSingleTeam(units, Team.BLACK);
+        createSingleTeam(units, Team.WHITE);
 
         return units;
     }
 
-    private List<Unit> createSingleTeam(Team team) {
-        List<Unit> units = new ArrayList<>();
+    private void createSingleTeam(Map<Position, Unit> map, Team team) {
 
         if (team.equals(Team.BLACK)) {
-            units.addAll(initPawn(1, Team.BLACK));
-            units.addAll(initRook(0,team));
-            units.addAll(initKnights(0,team));
-            units.addAll(initBishop(0,team));
-            units.addAll(initKingQueen(0,team));
-            return units;
+            initPawn(map,1, team);
+            initRook(map,0,team);
+            initKnights(map,0,team);
+            initBishop(map,0,team);
+            initKingQueen(map,0,team);
         }
-
-        units.addAll(initPawn(6, Team.WHITE));
-        units.addAll(initRook(7,team));
-        units.addAll(initKnights(7,team));
-        units.addAll(initBishop(7,team));
-        units.addAll(initKingQueen(7, team));
-        return units;
+        initPawn(map,6, Team.WHITE);
+        initRook(map,7,team);
+        initKnights(map,7,team);
+        initBishop(map,7,team);
+        initKingQueen(map,7, team);
     }
 
-    private List<Unit> initKingQueen(int row, Team team) {
-        List<Unit> units = new ArrayList<>();
+    private void initKingQueen(Map<Position, Unit> map,int row, Team team) {
+        
+        map.put(new Position(3, row), new King(team));
+        map.put(new Position(4, row), new Queen(team));
 
-        units.add(new King(new Position(3, row), team));
-        units.add(new Queen(new Position(4, row), team));
-
-        return units;
     }
 
-    private List<Unit> initBishop(int row, Team team) {
-        List<Unit> units = new ArrayList<>();
+    private void initBishop(Map<Position, Unit> map, int row, Team team) {
+        
+        map.put(new Position(2, row), new Bishop(team));
+        map.put(new Position(5, row), new Bishop(team));
 
-        units.add(new Bishop(new Position(2, row), team));
-        units.add(new Bishop(new Position(5, row), team));
-
-        return units;
     }
 
-    private List<Unit> initKnights(int row, Team team) {
-        List<Unit> units = new ArrayList<>();
-
-        units.add(new Rook(new Position(1, row), team));
-        units.add(new Rook(new Position(6, row), team));
-
-        return units;
+    private void initKnights(Map<Position, Unit> map, int row, Team team) {
+        map.put(new Position(1, row), new Knight(team));
+        map.put(new Position(6, row), new Knight(team));
     }
 
-    private List<Unit> initRook(int row, Team team) {
-        List<Unit> units = new ArrayList<>();
+    private void initRook(Map<Position, Unit> map, int row, Team team) {
+        map.put(new Position(0, row), new Rook(team));
+        map.put(new Position(7, row), new Rook(team));
 
-        units.add(new Rook(new Position(0, row), team));
-        units.add(new Rook(new Position(7, row), team));
-
-        return units;
+        
     }
 
-    private List<Unit> initPawn(int row, Team team) {
-        List<Unit> pawns = new ArrayList<>();
+    private void initPawn(Map<Position, Unit> map, int row, Team team) {
         for (int i = Position.MIN_POSITION; i < Position.MAX_POSITION; i++) {
-            pawns.add(new Pawn(new Position(i, row), team));
-
+            map.put(new Position(i, row), new Pawn(team));
+            map.put(new Position(i, row), new Pawn(team));
         }
-        return pawns;
     }
 }

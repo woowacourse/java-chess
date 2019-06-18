@@ -2,11 +2,13 @@ package chess.domain;
 
 
 public class Unit {
-    private Position position;
     private Team team;
 
-    public Unit(Position position, Team team) {
-        this.position = position;
+    public Unit(Team team) {
         this.team = team;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 }
