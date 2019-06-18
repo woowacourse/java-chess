@@ -1,4 +1,4 @@
-package domain;
+package domain.movepatterns;
 
 import chess.domain.movepatterns.KingPattern;
 import chess.domain.movepatterns.MovePattern;

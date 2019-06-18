@@ -17,6 +17,18 @@ public class Point {
         return y;
     }
 
+    public boolean isEqualsX(Point another) {
+        return this.x == another.x;
+    }
+
+    public boolean isEqualsY(Point another) {
+        return this.y == another.y;
+    }
+
+    public double calculateIncline(Point another) {
+        return Math.abs((this.y - another.y) / (this.x - another.x));
+    }
+
     @Override
     public String toString() {
         return "x: " + x + " y: " + y;
