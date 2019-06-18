@@ -13,8 +13,11 @@ public abstract class AbstractPiece implements Piece {
         this.team = team;
     }
 
-    protected boolean isAlly(AbstractPiece piece) {
-        return this.team == piece.team;
+    @Override
+    public boolean isAlly(Piece piece) {
+        if (piece == null || getClass() != piece.getClass()) throw new IllegalArgumentException();
+        AbstractPiece that = (AbstractPiece) piece;
+        return this.team == that.team;
     }
 
     @Override
@@ -29,5 +32,10 @@ public abstract class AbstractPiece implements Piece {
     @Override
     public int hashCode() {
         return Objects.hash(name, team);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

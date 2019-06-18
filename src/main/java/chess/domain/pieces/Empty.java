@@ -19,4 +19,6 @@ public class Empty extends AbstractPiece {
     public Direction attack(Point p1, Point p2) {
         throw new IllegalArgumentException();
     }
+
+
 }
