@@ -20,6 +20,10 @@ public class Coordinate {
         this.coordinate = converted;
     }
 
+    public int subtract(Coordinate other) {
+        return this.coordinate - other.coordinate;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

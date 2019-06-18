@@ -11,6 +11,10 @@ public class Position {
         this.y = y;
     }
 
+    public Direction distance(Position position) {
+        return Direction.valueOf(x.subtract(position.x), y.subtract(position.y));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

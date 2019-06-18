@@ -6,14 +6,28 @@ public abstract class Piece {
     private static final String NAME = "r";
     private boolean life;
     private final Team team;
+    private MoveRule moveRule;
 
-    public Piece(Team team) {
+    public Piece(Team team, MoveRule moveRule) {
         this.life = true;
         this.team = team;
+        this.moveRule = moveRule;
     }
 
-    public Team getTeam() {
-        return this.team;
+    public boolean isLife() {
+        return this.life;
+    }
+
+    public boolean isBlackTeam() {
+        return this.team == Team.BLACK;
+    }
+
+    public boolean isSameTeam(Piece piece) {
+        return this.team == piece.team;
+    }
+
+    public boolean canMove(Position source, Position target) {
+        return moveRule.check(source, target);
     }
 
     public abstract String getName();

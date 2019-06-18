@@ -4,7 +4,7 @@ public class Rook extends Piece {
     private static final String NAME = "r";
 
     public Rook(Team team) {
-        super(team);
+        super(team, (a, b) -> false);
     }
 
     @Override

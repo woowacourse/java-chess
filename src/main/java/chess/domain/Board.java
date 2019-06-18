@@ -42,9 +42,27 @@ public class Board {
 
         Piece piece = board.get(position);
 
-        if (piece.getTeam() == Team.BLACK) {
-            return piece.getName().toUpperCase();
+        if (!piece.isLife()) {
+            return ".";
         }
-        return piece.getName();
+
+        if (piece.isBlackTeam()) {
+            return piece.getName();
+        }
+        return piece.getName().toUpperCase();
+    }
+
+    public static void move(Position source, Position target) {
+        if (!board.containsKey(source)) {
+            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
+        }
+
+        Piece sourcePiece = board.get(source);
+
+        if (board.containsKey(target) && sourcePiece.isSameTeam(board.get(target))) {
+            throw new IllegalArgumentException("같은 팀이 있는 위치로 이동이 불가능합니다.");
+        }
+
+        board.put(target, sourcePiece);
     }
 }
