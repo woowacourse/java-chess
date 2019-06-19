@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.pieces.Empty;
 import chess.domain.pieces.Pawn;
+import chess.domain.pieces.Rook;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,6 +58,23 @@ class BoardTest {
         board.set(new Point(2, 2), new Pawn(ChessTeam.WHITE));
         board.set(new Point(3, 3), new Pawn(ChessTeam.WHITE));
 
-        assertThrows(IllegalArgumentException.class, () -> board.play(new Point(2, 2), new Point(2, 3)));
+        assertThrows(IllegalArgumentException.class, () -> board.play(new Point(2, 2), new Point(3, 3)));
+    }
+
+    @Test
+    void ROOK_플레이_테스트() {
+        Board board = new Board();
+        board.set(new Point(2, 2), new Rook(ChessTeam.WHITE));
+        board.play(new Point(2, 2), new Point(8, 2));
+        assertEquals(new Rook(ChessTeam.WHITE), board.get(new Point(8, 2)));
+    }
+
+    @Test
+    void ROOK_플레이_테스트2() {
+        Board board = new Board();
+        board.set(new Point(2, 2), new Rook(ChessTeam.WHITE));
+        board.set(new Point(8, 2), new Pawn(ChessTeam.BLACK));
+        board.play(new Point(2, 2), new Point(8, 2));
+        assertEquals(new Rook(ChessTeam.WHITE), board.get(new Point(8, 2)));
     }
 }
