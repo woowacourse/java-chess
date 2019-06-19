@@ -4,6 +4,7 @@ import chess.domain.*;
 import chess.view.InputView;
 import chess.view.OutputVIew;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,49 @@ public class CUIChessApp {
 
     public static void main(String[] args) {
         OutputVIew.printInputGuide();
+        String input = InputView.promptUserSelection();
 
+        while (!handleUserSelection(input)) {
+            input = InputView.promptUserSelection();
+
+        }
+    }
+
+    private static boolean handleUserSelection(String input) {
+        String[] tokens = input.split(" ");
+        if (tokens[0].equals("start")) {
+            initBoard();
+            OutputVIew.printBoardState(chessBoard.getBoard());
+            return false;
+        }
+
+        if (tokens[0].equals("end")) {
+            System.exit(0);
+            return true;
+        }
+
+        if (tokens[0].equals("status")) {
+            assertStarted();
+
+            List<PieceType> pieceTypesOnBoard = new ArrayList<>();
+            chessBoard.getBoard().forEach(pieceTypesOnBoard::addAll);
+            ChessScoreCount scoreCount = new ChessScoreCount(pieceTypesOnBoard);
+            OutputVIew.printScore(scoreCount.getScore(WHITE), scoreCount.getScore(BLACK));
+            return false;
+        }
+
+        if (tokens[0].equals("move")) {
+            assertStarted();
+
+            handleMoveCommand(tokens);
+            OutputVIew.printBoardState(chessBoard.getBoard());
+            return checkResult();
+        }
+
+        throw new IllegalArgumentException("알 수 없는 명령입니다");
+    }
+
+    private static void initBoard() {
         ChessPiece empty = EmptyCell.getInstance();
 
         List<List<ChessPiece>> boardState = Arrays.asList(
@@ -31,33 +74,17 @@ public class CUIChessApp {
                 Arrays.asList(Rook.getInstance(WHITE), Knight.getInstance(WHITE), Bishop.getInstance(WHITE), Queen.getInstance(WHITE),
                         King.getInstance(WHITE), Bishop.getInstance(WHITE), Knight.getInstance(WHITE), Rook.getInstance(WHITE))
         );
-
         chessBoard = new ChessBoard(boardState);
-
-        String input = InputView.promptUserSelection();
-        while (!handleUserSelection(input)) {
-            input = InputView.promptUserSelection();
-
-        }
     }
 
-    private static boolean handleUserSelection(String input) {
-        String[] tokens = input.split(" ");
-        if (tokens[0].equals("start")) {
-            OutputVIew.printBoardState(chessBoard.getBoard());
+    private static boolean checkResult() {
+        List<PieceType> pieceTypesOnBoard = new ArrayList<>();
+        chessBoard.getBoard().forEach(pieceTypesOnBoard::addAll);
+        ChessResult result = ChessResult.judge(pieceTypesOnBoard);
+        if (result == ChessResult.KEEP) {
             return false;
         }
-        if (tokens[0].equals("end")) {
-            System.exit(0);
-            return true;
-        }
-        if (tokens[0].equals("move")) {
-            handleMoveCommand(tokens);
-            OutputVIew.printBoardState(chessBoard.getBoard());
-            return false;
-        }
-
-        throw new IllegalArgumentException("알 수 없는 명령입니다");
+        return true;
     }
 
     private static void handleMoveCommand(String[] tokens) {
@@ -71,6 +98,12 @@ public class CUIChessApp {
 
         } catch (IllegalArgumentException e) {
             OutputVIew.printError(e.getMessage());
+        }
+    }
+
+    private static void assertStarted() {
+        if (chessBoard == null) {
+            throw new IllegalArgumentException("start를 먼저 해주세요");
         }
     }
 }

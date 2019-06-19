@@ -84,4 +84,8 @@ public class OutputVIew {
     public static void printError(String message) {
         System.out.println(message);
     }
+
+    public static void printScore(double white, double black) {
+        System.out.println("W " + white + " : B " + black);
+    }
 }
