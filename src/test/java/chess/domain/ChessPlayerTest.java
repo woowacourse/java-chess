@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChessPlayerTest {
     @Test
@@ -38,5 +39,33 @@ class ChessPlayerTest {
         ChessPlayer chessPlayer = ChessPlayer.from(chessPieces);
 
         assertThat(chessPlayer.contains(notContainedPoint)).isFalse();
+    }
+
+    @Test
+    void delete_말이_존재하는_경우() {
+        ChessPoint containedPoint = ChessPoint.of(1, 1);
+
+        Map<ChessPoint, ChessPiece> chessPieces = ChessPairsBuilder.build(Arrays.asList(
+                ChessPair.of(containedPoint, King.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 2), Bishop.getInstance())
+        ));
+        ChessPlayer chessPlayer = ChessPlayer.from(chessPieces);
+
+        chessPlayer.delete(containedPoint);
+
+        assertThat(chessPlayer.contains(containedPoint)).isFalse();
+    }
+
+    @Test
+    void delete_말이_존재하지_않는_경우() {
+        ChessPoint notContainedPoint = ChessPoint.of(5, 5);
+
+        Map<ChessPoint, ChessPiece> chessPieces = ChessPairsBuilder.build(Arrays.asList(
+                ChessPair.of(ChessPoint.of(1, 1), King.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 2), Bishop.getInstance())
+        ));
+        ChessPlayer chessPlayer = ChessPlayer.from(chessPieces);
+
+        assertThrows(IllegalArgumentException.class, () -> chessPlayer.delete(notContainedPoint));
     }
 }

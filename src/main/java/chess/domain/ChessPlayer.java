@@ -25,6 +25,9 @@ public class ChessPlayer {
     }
 
     public void delete(ChessPoint target) {
-
+        ChessPiece removedChessPiece = chessPieces.remove(target);
+        if (removedChessPiece == null) {
+            throw new IllegalArgumentException("");
+        }
     }
 }
