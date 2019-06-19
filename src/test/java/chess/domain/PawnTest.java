@@ -17,12 +17,10 @@ public class PawnTest {
     }
 
     @Test
-    void 상하좌우_이동_여부_테스트() {
+    void 상하_이동_여부_테스트() {
         Position base = new Position(new Coordinate('b'), new Coordinate(2));
         assertTrue(piece.canMove(base, new Position(new Coordinate('b'), new Coordinate(3))));
         assertTrue(piece.canMove(base, new Position(new Coordinate('b'), new Coordinate(1))));
-        assertTrue(piece.canMove(base, new Position(new Coordinate('a'), new Coordinate(2))));
-        assertTrue(piece.canMove(base, new Position(new Coordinate('c'), new Coordinate(2))));
     }
 
     @Test

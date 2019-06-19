@@ -7,7 +7,7 @@ import static chess.domain.Direction.*;
 
 public class Pawn extends Piece {
     private static final String NAME = "p";
-    private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, E, S, W);
+    private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, S);
 
     public Pawn(Team team) {
         super(team, (source, target) -> {
