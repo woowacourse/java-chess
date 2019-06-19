@@ -1,6 +1,5 @@
 package chess.model.board;
 
-import chess.model.Column;
 import chess.model.unit.*;
 
 import java.util.HashMap;

@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.model.Column;
-import chess.model.Row;
-import chess.model.Square;
 import chess.model.board.Board;
+import chess.model.board.Column;
+import chess.model.board.Row;
+import chess.model.board.Square;
 import chess.model.unit.Piece;
 import chess.model.unit.Side;
 import chess.model.unit.UnitClass;

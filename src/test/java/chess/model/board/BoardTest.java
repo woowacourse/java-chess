@@ -1,8 +1,5 @@
 package chess.model.board;
 
-import chess.model.Column;
-import chess.model.Row;
-import chess.model.Square;
 import chess.model.unit.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

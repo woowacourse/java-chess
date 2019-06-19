@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.board;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,23 +32,6 @@ public enum Column {
         return map;
     }
 
-    //    public int getIndexByName(final String name) {
-    //        for (Column value : Column.values()) {
-    //            if (value.name.toUpperCase().equals(name)) {
-    //                return value.columnIndex;
-    //            }
-    //        }
-    //        throw new IllegalArgumentException(NO_SUCH_VALUE);
-    //    }
-    //
-    //    public String getNameByIndex(final int columnIndex) {
-    //        for (Column value : Column.values()) {
-    //            if (value.columnIndex == columnIndex) {
-    //                return value.name;
-    //            }
-    //        }
-    //        throw new IllegalArgumentException(NO_SUCH_VALUE);
-    //    }
     public static Column getByIndex(final int columnIndex) {
         final Column value = map.get(columnIndex);
         if (value == null) {

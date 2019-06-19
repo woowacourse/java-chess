@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.board;
 
 import java.util.Objects;
 import java.util.function.Function;
@@ -15,12 +15,16 @@ public class Square {
         this.row = row;
     }
 
-    public Column getColumn() {
-        return column;
+    private static Square getDiagonalOneNeighbor(final Square square, final Function<Square, Square> getHorizontal, final Function<Square, Square> getVertical) {
+        final Square horizontal = getHorizontal.apply(square);
+        if (horizontal == null) {
+            return null;
+        }
+        return getVertical.apply(horizontal);
     }
 
-    public Row getRow() {
-        return row;
+    Column getColumn() {
+        return column;
     }
 
     private static Square getHorizontalOneNeighbor(final Square square, final int prevOrNext) {
@@ -43,6 +47,10 @@ public class Square {
         return new Square(square.getColumn(), newRow);
     }
 
+    Row getRow() {
+        return row;
+    }
+
     public static Square getLeftOneNeighbor(final Square square) {
         return getHorizontalOneNeighbor(square, PREV);
     }
@@ -57,14 +65,6 @@ public class Square {
 
     public static Square getDownOneNeighbor(final Square square) {
         return getVerticalOneNeighbor(square, PREV);
-    }
-
-    private static Square getDiagonalOneNeighbor(final Square square, final Function<Square, Square> getHorizontal, final Function<Square, Square> getVertical) {
-        final Square horizontal = getHorizontal.apply(square);
-        if (horizontal == null) {
-            return null;
-        }
-        return getVertical.apply(horizontal);
     }
 
     public static Square getUpperLeftOneNeighbor(final Square square) {
