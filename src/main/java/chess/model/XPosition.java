@@ -11,12 +11,12 @@ public class XPosition {
     private final int xPosition;
 
     static {
-        for (int i = MIN_X; i < MAX_X; i++) {
+        for (int i = MIN_X; i <= MAX_X; i++) {
             xPositions.put(i, new XPosition(i));
         }
     }
 
-    public XPosition(final int xPosition) {
+    private XPosition(final int xPosition) {
         this.xPosition = xPosition;
     }
 

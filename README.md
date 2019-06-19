@@ -4,9 +4,9 @@
 ## 기능 구현 목록
 
 ### 도메인 모델
-- 각 축의 좌표 구현
+- ~~각 축의 좌표 구현~~
     - ~~XPosition~~
-    - YPosition
+    - ~~YPosition~~
 - 체스말의 위치를 나타내는 Point 구현
 - 체스말의 타입을 나타내는 열거형 ChessPieceType 구현
 - 체스말의 색상을 나타내는 열거형 ChessColor 구현
