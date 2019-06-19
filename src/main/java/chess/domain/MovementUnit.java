@@ -15,11 +15,14 @@ public enum MovementUnit {
         this.y = y;
     }
 
+    //TODO 리팩토링
     public static MovementUnit direction(Spot spotA, Spot spotB) {
-        int tempX = spotA.getX(spotB);
-        int tempY = spotA.getY(spotB);
-        tempX /= Math.abs(tempX);
-        tempY /= Math.abs(tempY);
+        int tempX = Math.abs(spotA.getX(spotB));
+        int tempY = Math.abs(spotA.getY(spotB));
+
+        if (spotA.equals(spotB)) {
+            throw new IllegalArgumentException("올바른 움직임을 입력하세요");
+        }
 
         if (tempX == 0) {
             return RIGHT;
@@ -42,7 +45,7 @@ public enum MovementUnit {
         }
 
         throw new IllegalArgumentException("올바른 점들을 입력해주세요");
-        //TODO 리팩토링
+
 //        for (MovementUnit value : values()) {
 //
 //        }
