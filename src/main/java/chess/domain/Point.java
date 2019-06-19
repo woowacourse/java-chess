@@ -24,6 +24,11 @@ public class Point {
         this.positionY = changeTypeY(positionY);
     }
 
+    public Point(int positionX, int positionY) {
+        this.positionX = positionX;
+        this.positionY = positionY;
+    }
+
     private void checkPositionX(char positionX) {
         if (positionX < X_START || positionX > X_END) {
             throw new IllegalArgumentException("Y 좌표는 " + X_START + "부터 " + X_END + "까지만 허용합니다.");
@@ -58,6 +63,25 @@ public class Point {
 
     private int subtractY(Point end) {
         return positionY - end.positionY;
+    }
+
+    public boolean isSameCoordinate(Point end) {
+        if (calDistance(end) == 0) {
+            return false;
+        }
+        if (positionX == end.positionX || positionY == end.positionY) {
+            return true;
+        }
+        return false;
+    }
+
+    public Point calDirection(Point end) {
+        int subX = subtractX(end);
+        int subY = subtractY(end);
+        double scalar = Math.sqrt(square(subX) + square(subY)) * (-1);
+        double unitX = subX / scalar;
+        double unitY = subY / scalar;
+        return new Point((int) unitX, (int) unitY);
     }
 
     @Override

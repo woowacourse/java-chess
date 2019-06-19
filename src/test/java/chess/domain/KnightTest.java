@@ -15,13 +15,13 @@ public class KnightTest {
     }
 
     @Test
-    void 나이트_이동() {
+    void 이동() {
         Knight knight = new Knight(true);
         assertThat(knight.getCandidatePoints(new Point("a1"), new Point("b3"))).isEqualTo(Arrays.asList(new Point("b3")));
     }
 
     @Test
-    void 나이트_이동_불가() {
+    void 이동_불가() {
         Knight knight = new Knight(true);
         assertThat(knight.getCandidatePoints(new Point("a1"), new Point("b4"))).isEqualTo(new ArrayList<>());
     }
