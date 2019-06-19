@@ -15,13 +15,13 @@ public class Tile {
     private static final Map<Pair<Column, Row>, Tile> TILE_POOL;
     private static final Pattern tilePattern = Pattern.compile("^(.)(.)$");
 
-    static{
+    static {
         TILE_POOL = new HashMap();
         Row.stream()
                 .forEach(row ->
                         Column.stream()
-                        .forEach(column ->
-                                TILE_POOL.put(Pair.of(column, row), new Tile(column, row))));
+                                .forEach(column ->
+                                        TILE_POOL.put(Pair.of(column, row), new Tile(column, row))));
     }
 
     private final Row row;
@@ -64,5 +64,13 @@ public class Tile {
     @Override
     public int hashCode() {
         return Objects.hash(row, column);
+    }
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "row=" + row +
+                ", column=" + column +
+                '}';
     }
 }

@@ -36,6 +36,6 @@ class TileTest {
 
     @Test
     void Tile_객체_캐싱_확인() {
-        assertThat(Tile.of("a1")==Tile.of(Column.of('a'), Row.of(1)));
+        assertThat(Tile.of("a1") == Tile.of(Column.of('a'), Row.of(1)));
     }
 }

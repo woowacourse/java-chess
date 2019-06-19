@@ -3,7 +3,7 @@ package chess.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RowTest {
     @Test
@@ -12,12 +12,14 @@ class RowTest {
                 Row.of("0")
         );
     }
+
     @Test
     void 범위_벗어나는_값2() {
         assertThrows(InvalidRowException.class, () ->
                 Row.of("9")
         );
     }
+
     @Test
     void 범위_벗어나는_값3() {
         assertThrows(InvalidRowException.class, () ->
