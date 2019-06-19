@@ -1,12 +1,22 @@
 package chess.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class King extends ChessPiece {
+    private static Map<Team, King> kings = new HashMap<>();
 
-    protected King(Team team) {
+    public static King getInstance(Team team) {
+        if (!kings.containsKey(team)) {
+            kings.put(team, new King(team));
+        }
+        return kings.get(team);
+    }
+
+    private King(Team team) {
         super(getPieceTypeByTeam(team));
     }
 

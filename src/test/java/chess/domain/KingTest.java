@@ -12,17 +12,17 @@ class KingTest {
 
     @Test
     void getMovable() {
-        King king = new King(Team.WHITE);
+        King king = King.getInstance(Team.WHITE);
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(new Rook(Team.BLACK), empty, new Bishop(Team.BLACK), empty, empty, new Bishop(Team.BLACK), empty, new Rook(Team.BLACK)),
+                Arrays.asList(Rook.getInstance(Team.BLACK), empty, Bishop.getInstance(Team.BLACK), empty, empty, Bishop.getInstance(Team.BLACK), empty, Rook.getInstance(Team.BLACK)),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, new Pawn(Team.WHITE), empty, empty, empty, empty),
-                Arrays.asList(empty, new Pawn(Team.BLACK), empty, empty, empty, new Pawn(Team.BLACK), empty, empty),
-                Arrays.asList(empty, new Pawn(Team.WHITE), empty, empty, empty, empty, empty, empty),
-                Arrays.asList(new Rook(Team.WHITE), empty, new Bishop(Team.WHITE), new Queen(Team.WHITE), king, empty, empty, new Rook(Team.WHITE))
+                Arrays.asList(empty, empty, empty, Pawn.getInstance(Team.WHITE), empty, empty, empty, empty),
+                Arrays.asList(empty, Pawn.getInstance(Team.BLACK), empty, empty, empty, Pawn.getInstance(Team.BLACK), empty, empty),
+                Arrays.asList(empty, Pawn.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty),
+                Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), Queen.getInstance(Team.WHITE), king, empty, empty, Rook.getInstance(Team.WHITE))
         );
         ChessBoard board = new ChessBoard(boardState);
         assertThat(king.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("e1").get()))

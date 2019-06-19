@@ -1,12 +1,19 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Knight extends ChessPiece {
-    protected Knight(Team team) {
+    private static Map<Team, Knight> knights = new HashMap<>();
+
+    public static Knight getInstance(Team team) {
+        if (!knights.containsKey(team)) {
+            knights.put(team, new Knight(team));
+        }
+        return knights.get(team);
+    }
+
+    private Knight(Team team) {
         super(getPieceTypeByTeam(team));
     }
 

@@ -1,12 +1,18 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Rook extends ChessPiece {
+    private static Map<Team, Rook> rooks = new HashMap<>();
 
-    public Rook(Team team) {
+    public static Rook getInstance(Team team) {
+        if (!rooks.containsKey(team)) {
+            rooks.put(team, new Rook(team));
+        }
+        return rooks.get(team);
+    }
+
+    private Rook(Team team) {
         super(getPieceTypeByTeam(team));
     }
 

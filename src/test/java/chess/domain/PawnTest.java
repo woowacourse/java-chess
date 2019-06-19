@@ -12,17 +12,17 @@ class PawnTest {
 
     @Test
     void getMovable() {
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = Pawn.getInstance(Team.WHITE);
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(new Rook(Team.BLACK), empty, new Bishop(Team.BLACK), empty, empty, new Bishop(Team.BLACK), empty, new Rook(Team.BLACK)),
+                Arrays.asList(Rook.getInstance(Team.BLACK), empty, Bishop.getInstance(Team.BLACK), empty, empty, Bishop.getInstance(Team.BLACK), empty, Rook.getInstance(Team.BLACK)),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, pawn, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(new Rook(Team.WHITE), empty, new Bishop(Team.WHITE), empty, empty, new Bishop(Team.WHITE), empty, new Rook(Team.WHITE))
+                Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
         ChessBoard board = new ChessBoard(boardState);
 
@@ -35,17 +35,17 @@ class PawnTest {
 
     @Test
     void frontIsNotEmpty() {
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = Pawn.getInstance(Team.WHITE);
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(new Rook(Team.BLACK), empty, new Bishop(Team.BLACK), empty, empty, new Bishop(Team.BLACK), empty, new Rook(Team.BLACK)),
+                Arrays.asList(Rook.getInstance(Team.BLACK), empty, Bishop.getInstance(Team.BLACK), empty, empty, Bishop.getInstance(Team.BLACK), empty, Rook.getInstance(Team.BLACK)),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, new Pawn(Team.BLACK), empty, empty, empty, empty, empty, empty),
+                Arrays.asList(empty, Pawn.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, pawn, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(new Rook(Team.WHITE), empty, new Bishop(Team.WHITE), empty, empty, new Bishop(Team.WHITE), empty, new Rook(Team.WHITE))
+                Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
         ChessBoard board = new ChessBoard(boardState);
 
@@ -54,17 +54,17 @@ class PawnTest {
 
     @Test
     void getMovable_enemy() {
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = Pawn.getInstance(Team.WHITE);
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(new Rook(Team.BLACK), empty, new Bishop(Team.BLACK), empty, empty, new Bishop(Team.BLACK), empty, new Rook(Team.BLACK)),
+                Arrays.asList(Rook.getInstance(Team.BLACK), empty, Bishop.getInstance(Team.BLACK), empty, empty, Bishop.getInstance(Team.BLACK), empty, Rook.getInstance(Team.BLACK)),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(new Pawn(Team.BLACK), new Pawn(Team.BLACK), new Pawn(Team.BLACK), empty, empty, empty, empty, empty),
+                Arrays.asList(Pawn.getInstance(Team.BLACK), Pawn.getInstance(Team.BLACK), Pawn.getInstance(Team.BLACK), empty, empty, empty, empty, empty),
                 Arrays.asList(empty, pawn, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(new Rook(Team.WHITE), empty, new Bishop(Team.WHITE), empty, empty, new Bishop(Team.WHITE), empty, new Rook(Team.WHITE))
+                Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
         ChessBoard board = new ChessBoard(boardState);
 

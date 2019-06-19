@@ -11,18 +11,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class RookTest {
     @Test
     void getMovable() {
-        Rook rook = new Rook(Team.WHITE);
+        Rook rook = Rook.getInstance(Team.WHITE);
 
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(new Rook(Team.BLACK), empty, empty, empty, empty, empty, empty, new Rook(Team.BLACK)),
+                Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(rook, empty, empty, empty, empty, empty, empty, new Rook(Team.WHITE))
+                Arrays.asList(rook, empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
         ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
@@ -46,18 +46,18 @@ class RookTest {
 
     @Test
     void ally_block() {
-        Rook rook = new Rook(Team.WHITE);
+        Rook rook = Rook.getInstance(Team.WHITE);
 
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(new Rook(Team.BLACK), empty, empty, empty, empty, empty, empty, new Rook(Team.BLACK)),
+                Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(new Rook(Team.WHITE), empty, empty, empty, empty, empty, empty, empty),
+                Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(rook, empty, empty, new Rook(Team.WHITE), empty, empty, empty, new Rook(Team.WHITE))
+                Arrays.asList(rook, empty, empty, Rook.getInstance(Team.WHITE), empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
         ChessCoordinate from = ChessCoordinate.valueOf("a1").get();

@@ -17,14 +17,14 @@ class ChessBoardTest {
     void initBoard() {
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(new Rook(Team.BLACK), empty, empty, empty, empty, empty, empty, new Rook(Team.BLACK)),
+                Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(new Rook(Team.WHITE), empty, empty, empty, empty, empty, empty, new Rook(Team.WHITE))
+                Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
         List<List<PieceType>> expectedBoardState = Arrays.asList(
@@ -46,25 +46,25 @@ class ChessBoardTest {
     void move() {
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(new Rook(Team.BLACK), empty, empty, empty, empty, empty, empty, new Rook(Team.BLACK)),
+                Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(new Rook(Team.WHITE), empty, empty, empty, empty, empty, empty, new Rook(Team.WHITE))
+                Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
         List<List<ChessPiece>> toBoardState = Arrays.asList(
-                Arrays.asList(new Rook(Team.WHITE), empty, empty, empty, empty, empty, empty, new Rook(Team.BLACK)),
+                Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, new Rook(Team.WHITE))
+                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
         ChessBoard board = new ChessBoard(boardState);

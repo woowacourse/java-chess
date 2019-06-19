@@ -1,12 +1,18 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Bishop extends ChessPiece {
+    private static Map<Team, Bishop> bishops = new HashMap<>();
 
-    protected Bishop(Team team) {
+    public static Bishop getInstance(Team team) {
+        if (!bishops.containsKey(team)) {
+            bishops.put(team, new Bishop(team));
+        }
+        return bishops.get(team);
+    }
+
+    private Bishop(Team team) {
         super(getPieceTypeByTeam(team));
     }
 

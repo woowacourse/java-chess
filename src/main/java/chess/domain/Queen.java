@@ -1,10 +1,21 @@
 package chess.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class Queen extends ChessPiece{
-    protected Queen(Team team) {
+public class Queen extends ChessPiece {
+    private static Map<Team, Queen> queens = new HashMap<>();
+
+    public static Queen getInstance(Team team) {
+        if (!queens.containsKey(team)) {
+            queens.put(team, new Queen(team));
+        }
+        return queens.get(team);
+    }
+
+    private Queen(Team team) {
         super(getPieceTypeByTeam(team));
     }
 
@@ -44,7 +55,7 @@ public class Queen extends ChessPiece{
 
         yCoords = ChessYCoordinate.getDescendingCoordinates(fromY);
         movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-        
+
         return movableCoords;
     }
 }

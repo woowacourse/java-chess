@@ -1,11 +1,18 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Pawn extends ChessPiece {
-    protected Pawn(Team team) {
+    private static Map<Team, Pawn> pawns = new HashMap<>();
+
+    public static Pawn getInstance(Team team) {
+        if (!pawns.containsKey(team)) {
+            pawns.put(team, new Pawn(team));
+        }
+        return pawns.get(team);
+    }
+
+    private Pawn(Team team) {
         super(getPieceTypeByTeam(team));
     }
 

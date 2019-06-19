@@ -45,6 +45,14 @@ public class ChessBoard {
         assertNotAlly(srcState, toState);
     }
 
+    public List<List<PieceType>> getBoardState() {
+        return boardState.stream()
+                .map(row -> row.stream()
+                        .map(ChessPiece::getType)
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+    }
+
     private void assertNotAlly(ChessPiece srcState, ChessPiece toState) {
         if (srcState.getType().getTeam() == toState.getType().getTeam()) {
             throw new AllyExistException("같은편의 위치로는 이동할 수 없습니다.");
