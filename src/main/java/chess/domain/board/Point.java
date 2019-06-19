@@ -43,6 +43,6 @@ public class Point {
         if (this.x == end.x) {
             return Double.MAX_VALUE;
         }
-        return ((double) this.y.calculateDistance(end.y)) / this.x.calculateDistance(end.x);
+        return ((double) this.y.calculateDistance(end.y)) / ((double) this.x.calculateDistance(end.x));
     }
 }
