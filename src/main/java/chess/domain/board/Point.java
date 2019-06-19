@@ -37,4 +37,11 @@ public class Point {
     public int getY() {
         return y.getCoordinate();
     }
+
+    public double calculateGradient(Point end) {
+        if(this.x == end.x){
+            return Double.MAX_VALUE;
+        }
+        return this.y.calculateDistance(end.y) / this.x.calculateDistance(end.x);
+    }
 }

@@ -2,11 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.board.Point;
 
-public class Pawn {
-    private boolean isFirst;
-
+public class Pawn implements Piece {
     public Pawn() {
-        this.isFirst = true;
     }
 
     public boolean isMovable(Point prev, Point next) {

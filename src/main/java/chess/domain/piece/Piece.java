@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.board.Point;
+
 public interface Piece {
-    public boolean isMovable();
+    boolean isMovable(Point prev, Point next);
 }
