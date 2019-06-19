@@ -101,6 +101,19 @@ class ChessPlayerTest {
     }
 
     @Test
+    void move_현재_위치의_말이_도달할_수_없는_target인_경우() {
+        ChessPoint source = ChessPoint.of(1, 1);
+        ChessPoint target = ChessPoint.of(1, 3);
+        Map<ChessPoint, ChessPiece> chessPieces = ChessPairsBuilder.build(Arrays.asList(
+                ChessPair.of(source, King.getInstance())
+        ));
+        ChessPlayer currentPlayer = ChessPlayer.from(chessPieces);
+        ChessPlayer opponentPlayer = ChessPlayer.from(ChessPairsBuilder.build(Collections.emptyList()));
+
+        assertThrows(IllegalArgumentException.class, () -> currentPlayer.move(source, target, opponentPlayer));
+    }
+
+    @Test
     void move_이동_경로에_아군이_있는_경우() {
         ChessPoint source = ChessPoint.of(1, 1);
         ChessPoint middle = ChessPoint.of(1, 2);

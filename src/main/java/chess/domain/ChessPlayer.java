@@ -43,8 +43,14 @@ public class ChessPlayer {
         }
     }
 
-    private void assertEmptyOn(ChessPoint currentPoint) {
+    public void assertEmptyOn(ChessPoint currentPoint) {
         if (contains(currentPoint)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public void assertExistenceOn(ChessPoint currentPoint) {
+        if (!contains(currentPoint)) {
             throw new IllegalArgumentException();
         }
     }
