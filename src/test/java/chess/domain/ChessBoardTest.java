@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ChessBoardTest {
@@ -45,8 +45,8 @@ public class ChessBoardTest {
 
     @Test
     void 말_이동_테스트() {
-        Position target = new Position(new Coordinate('b'), new Coordinate(6));
-        board.move(new Position(new Coordinate('b'), new Coordinate(7)), target);// Team.WHITE Pawn
+        Position target = new Position(new Coordinate('b'), new Coordinate(3));
+        board.move(new Position(new Coordinate('b'), new Coordinate(2)), target); // Team.WHITE Pawn
 
         assertThat(board.at(target)).isEqualTo(new Pawn(Team.WHITE));
     }
@@ -72,12 +72,55 @@ public class ChessBoardTest {
     }
 
     @Test
-    void 같은_팀이_아닌_말의_위치로_이동_테스트() {
+    void 룩_경로에_말이_있는지_테스트() {
         Position source = new Position(new Coordinate('a'), new Coordinate(8)); // Team.WHITE Rook
         Position target = new Position(new Coordinate('a'), new Coordinate(1));
 
-        board.move(source, target);
-        assertNull(board.at(source));
-        assertThat(board.at(target)).isEqualTo(new Rook(Team.WHITE));
+        assertThrows(IllegalArgumentException.class, () -> {
+            board.move(source, target);
+        });
+    }
+
+    @Test
+    void 비숍_경로에_말이_있는지_테스트() {
+        Position source = new Position(new Coordinate('c'), new Coordinate(1)); // Team.WHITE Bishop
+        Position target = new Position(new Coordinate('e'), new Coordinate(3));
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            board.move(source, target);
+        });
+    }
+
+    @Test
+    void 퀸_경로에_말이_있는지_테스트() {
+        Position source = new Position(new Coordinate('d'), new Coordinate(1)); // Team.WHITE Queen
+        Position target = new Position(new Coordinate('d'), new Coordinate(3));
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            board.move(source, target);
+        });
+    }
+
+    @Test
+    void 연속으로_같은_팀이_진행하는_경우_테스트() {
+        Position source1 = new Position(new Coordinate('b'), new Coordinate(2)); // Team.WHITE Rook
+        Position target1 = new Position(new Coordinate('b'), new Coordinate(3));
+        Position source2 = new Position(new Coordinate('c'), new Coordinate(2)); // Team.WHITE Rook
+        Position target2 = new Position(new Coordinate('c'), new Coordinate(3));
+
+        board.move(source1, target1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            board.move(source2, target2);
+        });
+    }
+
+    @Test
+    void 선공이_아닌_black팀이_먼저_진행하는_경우_테스트() {
+        Position source = new Position(new Coordinate('b'), new Coordinate(7)); // Team.BLACK Rook
+        Position target = new Position(new Coordinate('b'), new Coordinate(6));
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            board.move(source, target);
+        });
     }
 }

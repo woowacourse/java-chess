@@ -1,15 +1,20 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.Direction;
+import chess.domain.Piece;
+import chess.domain.Team;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static chess.domain.Direction.*;
+import static chess.domain.Direction.W;
 
-public class Pawn extends Piece {
-    private static final String NAME = "p";
-    private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, S);
+public class King extends Piece {
+    private static final String NAME = "k";
+    private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, NE, E, SE, S, SW, W, NW);
 
-    public Pawn(Team team) {
+    public King(Team team) {
         super(team, (source, target) -> {
             Direction direction = source.direction(target);
 
@@ -25,7 +30,6 @@ public class Pawn extends Piece {
         });
     }
 
-    @Override
     public String getName() {
         return NAME;
     }

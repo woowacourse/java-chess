@@ -12,7 +12,7 @@ public class Position {
     }
 
     public Direction direction(Position position) {
-        return Direction.valueOf(x.subtract(position.x), y.subtract(position.y));
+        return Direction.valueOf(position.x.subtract(x), position.y.subtract(y));
     }
 
     public int distance(Position target, Direction direction) {
@@ -32,6 +32,10 @@ public class Position {
 
     private int distanceCross(Position target) {
         return Math.abs(x.subtract(target.x) + y.subtract(target.y));
+    }
+
+    public Position add(Direction operand) {
+        return new Position(new Coordinate(x.add(operand.getX())), new Coordinate(y.add(operand.getY())));
     }
 
     @Override

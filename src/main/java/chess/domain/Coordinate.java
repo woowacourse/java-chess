@@ -20,6 +20,10 @@ public class Coordinate {
         this.coordinate = converted;
     }
 
+    public int add(int operand) {
+        return this.coordinate + operand;
+    }
+
     public int subtract(Coordinate other) {
         return this.coordinate - other.coordinate;
     }

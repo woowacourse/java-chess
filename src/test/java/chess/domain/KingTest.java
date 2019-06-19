@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.King;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

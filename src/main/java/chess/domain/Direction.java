@@ -29,6 +29,14 @@ public enum Direction {
         return this == NE || this == SE || this == SW || this == NW;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public static Direction valueOf(int x, int y) {
         for (Direction direction : Direction.values()) {
             if (direction.moveCheck.check(x, y)) {

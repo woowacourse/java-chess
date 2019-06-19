@@ -1,16 +1,20 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.Direction;
+import chess.domain.Piece;
+import chess.domain.Team;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static chess.domain.Direction.*;
-import static chess.domain.Direction.NW;
+import static chess.domain.Direction.W;
 
-public class Queen extends Piece {
-    private static final String NAME = "q";
-    private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, NE, E, SE, S, SW, W, NW);
+public class Rook extends Piece {
+    private static final String NAME = "r";
+    private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, E, S, W);
 
-    public Queen(Team team) {
+    public Rook(Team team) {
         super(team, (source, target) -> {
             Direction direction = source.direction(target);
 
@@ -22,6 +26,7 @@ public class Queen extends Piece {
         });
     }
 
+    @Override
     public String getName() {
         return NAME;
     }

@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.*;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -25,12 +27,12 @@ public class Board {
         );
 
         for (int i = 0; i < aToH.size(); i++) {
-            board.put(new Position(new Coordinate(aToH.get(i)), new Coordinate(1)), piecesTeamBlack.get(i));
-            board.put(new Position(new Coordinate(aToH.get(i)), new Coordinate(8)), piecesTeamWhite.get(i));
+            board.put(new Position(new Coordinate(aToH.get(i)), new Coordinate(8)), piecesTeamBlack.get(i));
+            board.put(new Position(new Coordinate(aToH.get(i)), new Coordinate(1)), piecesTeamWhite.get(i));
         }
 
-        aToH.forEach(character -> board.put(new Position(new Coordinate(character), new Coordinate(2)), new Pawn(Team.BLACK)));
-        aToH.forEach(character -> board.put(new Position(new Coordinate(character), new Coordinate(7)), new Pawn(Team.WHITE)));
+        aToH.forEach(character -> board.put(new Position(new Coordinate(character), new Coordinate(7)), new Pawn(Team.BLACK)));
+        aToH.forEach(character -> board.put(new Position(new Coordinate(character), new Coordinate(2)), new Pawn(Team.WHITE)));
     }
 
 
@@ -71,6 +73,13 @@ public class Board {
 
         if (board.containsKey(target) && sourcePiece.isSameTeam(board.get(target))) {
             throw new IllegalArgumentException("같은 팀이 있는 위치로 이동이 불가능합니다.");
+        }
+
+        Direction direction = source.direction(target);
+        for (Position checking = source.add(direction); !checking.equals(target); checking = checking.add(direction)) {
+            if (this.at(checking) != null) {
+                throw new IllegalArgumentException("경로에 말이 존재합니다.");
+            }
         }
 
         sourcePiece.canMove(source, target);
