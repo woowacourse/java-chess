@@ -16,31 +16,28 @@ public enum MovementUnit {
     }
 
     //TODO 리팩토링
-    public static MovementUnit direction(Spot spotA, Spot spotB) {
-        int tempX = Math.abs(spotA.getX(spotB));
-        int tempY = Math.abs(spotA.getY(spotB));
-
-        if (spotA.equals(spotB)) {
+    public static MovementUnit direction(int x, int y) {
+        if (x == 0 && y == 0) {
             throw new IllegalArgumentException("올바른 움직임을 입력하세요");
         }
 
-        if (tempX == 0) {
+        if (x == 0) {
             return RIGHT;
         }
 
-        if (tempY == 0) {
+        if (y == 0) {
             return UP;
         }
 
-        if (tempX == tempY) {
+        if (x == y) {
             return DIAGNOAL;
         }
 
-        if (tempX == 2 && tempY == 1) {
+        if (x == 2 && y == 1) {
             return KNIGHT_MOVE_ONE;
         }
 
-        if (tempX == 1 && tempY == 2) {
+        if (x == 1 && y == 2) {
             return KNIGHT_MOVE_TWO;
         }
 
