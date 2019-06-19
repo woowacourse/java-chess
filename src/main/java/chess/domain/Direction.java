@@ -8,7 +8,8 @@ public enum Direction {
     S(0, -1, (x, y) -> x == 0 && y < 0),
     SW(-1, -1, (x, y) -> x < 0 && y < 0 && isAbsEqual(x, y)),
     W(-1, 0, (x, y) -> x < 0 && y == 0),
-    NW(-1, 1, (x, y) -> x < 0 && y > 0 && isAbsEqual(x, y));
+    NW(-1, 1, (x, y) -> x < 0 && y > 0 && isAbsEqual(x, y)),
+    OTHER(100, 100, (x, y) -> Math.abs(x) + Math.abs(y) == 3); // TODO: 이동 체크 전략 활용방안 생각
 
     private static boolean isAbsEqual(final int x, final int y) {
         return Math.abs(x) == Math.abs(y);
@@ -34,6 +35,6 @@ public enum Direction {
                 return direction;
             }
         }
-        throw new IllegalArgumentException("적절한 방향이 아닙니다.");
+        return OTHER;
     }
 }
