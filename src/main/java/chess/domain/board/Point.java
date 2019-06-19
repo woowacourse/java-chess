@@ -27,10 +27,11 @@ public class Point {
         return TABLE.get(Coordinate.of(x), Coordinate.of(y));
     }
 
-    public int xDistance(Point end){
+    public int xDistance(Point end) {
         return this.x.calculateDistance(end.x);
     }
-    public int yDistance(Point end){
+
+    public int yDistance(Point end) {
         return this.y.calculateDistance(end.y);
     }
 
@@ -39,9 +40,9 @@ public class Point {
     }
 
     public double calculateGradient(Point end) {
-        if(this.x == end.x){
+        if (this.x == end.x) {
             return Double.MAX_VALUE;
         }
-        return this.y.calculateDistance(end.y) / this.x.calculateDistance(end.x);
+        return ((double) this.y.calculateDistance(end.y)) / this.x.calculateDistance(end.x);
     }
 }
