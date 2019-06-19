@@ -5,8 +5,8 @@ import chess.domain.Point;
 public class PawnPattern implements MovePattern {
 
     private static final int ZERO = 0;
-    private static final int ONE = 0;
-    private static final int TWO = 0;
+    private static final int ONE = 1;
+    private static final int TWO = 2;
 
     @Override
     public boolean canMove(Point source, Point target) {
