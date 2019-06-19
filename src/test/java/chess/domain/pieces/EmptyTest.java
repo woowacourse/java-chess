@@ -9,6 +9,6 @@ class EmptyTest {
 
     @Test
     void 빈_공간_움직임_에러() {
-        assertThrows(IllegalArgumentException.class, () -> new Empty().move(new Point(1, 1), new Point(1, 2)));
+        assertThrows(IllegalArgumentException.class, () -> new Empty().move(Point.get(1, 1), Point.get(1, 2)));
     }
 }

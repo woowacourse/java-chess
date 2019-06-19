@@ -1,21 +1,47 @@
 package chess.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Point {
+    public static final int MAX_AXIS = 8;
+    public static final int MIN_AXIS = 1;
+    private static Set<Point> points;
+
+    static {
+        points = new HashSet<>();
+        for (int i = 1; i <= 8; i++) {
+            for (int j = 1; j <= 8; j++) {
+                points.add(new Point(i, j));
+            }
+        }
+    }
+
     private final int x;
     private final int y;
 
 
-    public Point(int x, int y) {
+    private Point(int x, int y) {
         validate(x);
         validate(y);
         this.x = x;
         this.y = y;
     }
 
-    private void validate(int point) {
-        if (point > 8 || point < 0) {
+    public static Point get(int xAxis, int yAxis) {
+        validate(xAxis);
+        validate(yAxis);
+        return points.stream()
+                .filter(point -> point.x == xAxis)
+                .filter(point -> point.y == yAxis)
+                .findFirst()
+                .get();
+
+    }
+
+    private static void validate(int point) {
+        if (point > MAX_AXIS || point < MIN_AXIS) {
             throw new IllegalArgumentException("범위가 잘 못 되었습니다.");
         }
     }

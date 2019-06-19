@@ -14,20 +14,20 @@ class KingTest {
     void move() {
         King king = new King(ChessTeam.WHITE);
         assertEquals(new Direction(1, 1),
-                king.move(new Point(1, 1), new Point(2, 2)));
+                king.move(Point.get(1, 1), Point.get(2, 2)));
     }
 
     @Test
     void attack() {
         King king = new King(ChessTeam.WHITE);
         assertEquals(new Direction(0, 1),
-                king.attack(new Point(1, 1), new Point(1, 2)));
+                king.attack(Point.get(1, 1), Point.get(1, 2)));
     }
 
     @Test
     void 이동_불가_테스트() {
         King king = new King(ChessTeam.WHITE);
         assertThrows(IllegalArgumentException.class,
-                () -> king.move(new Point(1, 1), new Point(5, 3)));
+                () -> king.move(Point.get(1, 1), Point.get(5, 3)));
     }
 }

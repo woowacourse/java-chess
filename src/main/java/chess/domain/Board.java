@@ -3,19 +3,13 @@ package chess.domain;
 import chess.domain.pieces.Empty;
 import chess.domain.pieces.Piece;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
     private Map<Point, Piece> board;
 
-    public Board() {
-        board = new HashMap<>();
-        for (int i = 1; i <= 8; i++) {
-            for (int j = 1; j <= 8; j++) {
-                board.put(new Point(i, j), new Empty());
-            }
-        }
+    public Board(Map<Point, Piece> board) {
+        this.board = board;
     }
 
     public void set(Point point, Piece piece) {

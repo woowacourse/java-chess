@@ -1,8 +1,12 @@
 package chess.domain;
 
 public class ChessGame {
-    Board board = new Board();
-    boolean turn = false;
+    private Board board;
+    private boolean turn = false;
+
+    public ChessGame() {
+        board = BoardCreator.create();
+    }
 
     public void play(String input) {
         String[] split = input.split(" ");
@@ -19,6 +23,6 @@ public class ChessGame {
         String axis = "abcdefgh";
         int x = axis.indexOf(destination.charAt(0));
         int y = Integer.parseInt(String.valueOf(destination.charAt(1)));
-        return new Point(x, y);
+        return Point.get(x, y);
     }
 }
