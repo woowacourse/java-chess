@@ -2,6 +2,8 @@ package chess.domain;
 
 import java.util.Objects;
 
+import static chess.domain.Direction.N;
+
 public class Position {
     private final Coordinate x;
     private final Coordinate y;
@@ -15,7 +17,18 @@ public class Position {
         return Direction.valueOf(x.subtract(position.x), y.subtract(position.y));
     }
 
-    public int distance(Position target) {
+    public int distance(Position target, Direction direction) {
+        if (direction.isDiagonal()) {
+            return distanceDiagonal(target);
+        }
+        return distanceCross(target);
+    }
+
+    private int distanceDiagonal(Position target) {
+        return (Math.abs(x.subtract(target.x)) + Math.abs(y.subtract(target.y))) / 2;
+    }
+
+    private int distanceCross(Position target) {
         return Math.abs(x.subtract(target.x) + y.subtract(target.y));
     }
 

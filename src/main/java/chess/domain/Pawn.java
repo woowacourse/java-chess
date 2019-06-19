@@ -17,7 +17,7 @@ public class Pawn extends Piece {
                 throw new IllegalArgumentException("움직일 수 있는 방향이 아닙니다.");
             }
 
-            if (source.distance(target) != 1) {
+            if (source.distance(target, direction) != 1) {
                 throw new IllegalArgumentException("움직일 수 있는 거리가 아닙니다.");
             }
 
