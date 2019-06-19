@@ -1,5 +1,8 @@
 package chess.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Row {
     _1("1", 0),
     _2("2", 1),
@@ -11,6 +14,7 @@ public enum Row {
     _8("8", 7);
 
     private static final String NO_SUCH_VALUE = "존재하지 않는 Row 값입니다.";
+    private static final Map<Integer, Row> map = initializeMap();
 
     private String name;
     private int rowIndex;
@@ -20,21 +24,54 @@ public enum Row {
         this.rowIndex = rowIndex;
     }
 
-    public int getIndexByName(final String name) {
-        for (Row value : Row.values()) {
-            if (value.name.equals(name)) {
-                return value.rowIndex;
-            }
+    private static Map<Integer, Row> initializeMap() {
+        final Map<Integer, Row> map = new HashMap<>();
+        for (Row value : values()) {
+            map.put(value.rowIndex, value);
         }
-        throw new IllegalArgumentException(NO_SUCH_VALUE);
+        return map;
     }
 
-    public String getNameByIndex(final int rowIndex) {
-        for (Row value : Row.values()) {
-            if (value.rowIndex == rowIndex) {
-                return value.name;
-            }
+    //    public int getIndexByName(final String name) {
+    //        for (Row value : Row.values()) {
+    //            if (value.name.equals(name)) {
+    //                return value.rowIndex;
+    //            }
+    //        }
+    //        throw new IllegalArgumentException(NO_SUCH_VALUE);
+    //    }
+    //
+    //    public String getNameByIndex(final int rowIndex) {
+    //        for (Row value : Row.values()) {
+    //            if (value.rowIndex == rowIndex) {
+    //                return value.name;
+    //            }
+    //        }
+    //        throw new IllegalArgumentException(NO_SUCH_VALUE);
+    //    }
+    //
+    public static Row getByIndex(final int rowIndex) {
+        final Row value = map.get(rowIndex);
+        if (value == null) {
+            throw new IllegalArgumentException(NO_SUCH_VALUE);
         }
-        throw new IllegalArgumentException(NO_SUCH_VALUE);
+        return value;
+    }
+
+    public int getRowIndex() {
+        return rowIndex;
+    }
+
+    public boolean isFirst() {
+        return this == Row._1;
+    }
+
+    public boolean isLast() {
+        return this == Row._8;
+    }
+
+    @Override
+    public String toString() {
+        return "Row " + this.name;
     }
 }
