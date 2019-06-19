@@ -7,6 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Knight implements ChessPiece {
+    private static final List<RelativeChessPoint> UNIT_DIRECTIONS = Arrays.asList(
+            RelativeChessPoint.of(2, 1), RelativeChessPoint.of(1, 2)
+            , RelativeChessPoint.of(-1, 2), RelativeChessPoint.of(-2, 1)
+            , RelativeChessPoint.of(-2, -1), RelativeChessPoint.of(-1, -2)
+            , RelativeChessPoint.of(1, -2), RelativeChessPoint.of(2, -1));
     private static Knight knight = null;
 
     private Knight() {
@@ -19,15 +24,9 @@ public class Knight implements ChessPiece {
         return knight;
     }
 
-    private static final List<RelativeChessPoint> DIRECTIONS = Arrays.asList(
-            RelativeChessPoint.of(2, 1), RelativeChessPoint.of(1, 2)
-            , RelativeChessPoint.of(-1, 2), RelativeChessPoint.of(-2, 1)
-            , RelativeChessPoint.of(-2, -1), RelativeChessPoint.of(-1, -2)
-            , RelativeChessPoint.of(1, -2), RelativeChessPoint.of(2, -1));
-
     @Override
-    public boolean checkRule(ChessPoint source, ChessPoint target) {
+    public boolean checkRule(ChessPoint source, ChessPoint target, boolean opponentPieceOnTarget) {
         RelativeChessPoint direction = target.minus(source);
-        return DIRECTIONS.stream().anyMatch(d -> d.equals(direction));
+        return UNIT_DIRECTIONS.stream().anyMatch(d -> d.equals(direction));
     }
 }

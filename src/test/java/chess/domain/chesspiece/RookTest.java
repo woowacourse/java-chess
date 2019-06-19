@@ -13,7 +13,7 @@ class RookTest {
 
         Rook rook = Rook.getInstance();
 
-        assertThat(rook.checkRule(sourcePoint, targetPoint)).isTrue();
+        assertThat(rook.checkRule(sourcePoint, targetPoint, true)).isTrue();
     }
 
     @Test
@@ -23,7 +23,7 @@ class RookTest {
 
         Rook rook = Rook.getInstance();
 
-        assertThat(rook.checkRule(sourcePoint, targetPoint)).isTrue();
+        assertThat(rook.checkRule(sourcePoint, targetPoint, true)).isTrue();
     }
 
     @Test
@@ -33,6 +33,6 @@ class RookTest {
 
         Rook rook = Rook.getInstance();
 
-        assertThat(rook.checkRule(sourcePoint, targetPoint)).isFalse();
+        assertThat(rook.checkRule(sourcePoint, targetPoint, true)).isFalse();
     }
 }

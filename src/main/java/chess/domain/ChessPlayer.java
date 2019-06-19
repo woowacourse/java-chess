@@ -7,10 +7,10 @@ import chess.domain.chesspoint.RelativeChessPoint;
 import java.util.Map;
 
 public class ChessPlayer {
-    public static final String ERROR_VIOLATED_BY_RULE_MESSAGE = "현재의 말이 도달할 수 없는 위치입니다.";
-    public static final String ERROR_INVALID_EXISTENCE_MESSAGE = "현재 위치에 말이 존재합니다.";
-    public static final String ERROR_INVALID_EMPTY_MESSAGE = "현재 위치에 말이 존재하지 않습니다.";
-    public static final String ERROR_CANNOT_DELETE_MESSAGE = "존재하지 않는 말을 삭제할 수 없습니다.";
+    private static final String ERROR_VIOLATED_BY_RULE_MESSAGE = "현재의 말이 도달할 수 없는 위치입니다.";
+    private static final String ERROR_INVALID_EXISTENCE_MESSAGE = "현재 위치에 말이 존재합니다.";
+    private static final String ERROR_INVALID_EMPTY_MESSAGE = "현재 위치에 말이 존재하지 않습니다.";
+    private static final String ERROR_CANNOT_DELETE_MESSAGE = "존재하지 않는 말을 삭제할 수 없습니다.";
     private Map<ChessPoint, ChessPiece> chessPieces;
 
     private ChessPlayer(Map<ChessPoint, ChessPiece> chessPieces) {
@@ -26,13 +26,18 @@ public class ChessPlayer {
     }
 
     public void move(ChessPoint source, ChessPoint target, ChessPlayer opponentPlayer) {
-        if (isViolatedByRule(source, target)) {
+        if (isViolatedByRule(source, target, opponentPlayer.contains(target))) {
             throw new InvalidChessPositionException(ERROR_VIOLATED_BY_RULE_MESSAGE);
         }
 
         checkMiddlePoints(source, target, opponentPlayer);
 
         moveChessPiece(source, target);
+    }
+
+    private boolean isViolatedByRule(ChessPoint source, ChessPoint target, boolean opponentPieceOnTarget) {
+        ChessPiece sourceChessPiece = chessPieces.get(source);
+        return !sourceChessPiece.checkRule(source, target, opponentPieceOnTarget);
     }
 
     private void checkMiddlePoints(ChessPoint source, ChessPoint target, ChessPlayer opponentPlayer) {
@@ -57,11 +62,6 @@ public class ChessPlayer {
         if (!contains(currentPoint)) {
             throw new InvalidChessPositionException(ERROR_INVALID_EMPTY_MESSAGE);
         }
-    }
-
-    private boolean isViolatedByRule(ChessPoint source, ChessPoint target) {
-        ChessPiece sourceChessPiece = chessPieces.get(source);
-        return !sourceChessPiece.checkRule(source, target);
     }
 
     private void moveChessPiece(ChessPoint source, ChessPoint target) {

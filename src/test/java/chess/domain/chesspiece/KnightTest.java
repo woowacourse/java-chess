@@ -13,7 +13,7 @@ class KnightTest {
 
         Knight knight = Knight.getInstance();
 
-        assertThat(knight.checkRule(sourcePoint, targetPoint)).isTrue();
+        assertThat(knight.checkRule(sourcePoint, targetPoint, true)).isTrue();
     }
 
     @Test
@@ -23,6 +23,6 @@ class KnightTest {
 
         Knight knight = Knight.getInstance();
 
-        assertThat(knight.checkRule(sourcePoint, targetPoint)).isFalse();
+        assertThat(knight.checkRule(sourcePoint, targetPoint, true)).isFalse();
     }
 }

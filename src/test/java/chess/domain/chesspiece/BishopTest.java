@@ -13,7 +13,7 @@ class BishopTest {
 
         Bishop bishop = Bishop.getInstance();
 
-        assertThat(bishop.checkRule(sourcePoint, targetPoint)).isTrue();
+        assertThat(bishop.checkRule(sourcePoint, targetPoint, true)).isTrue();
     }
 
     @Test
@@ -23,7 +23,7 @@ class BishopTest {
 
         Bishop bishop = Bishop.getInstance();
 
-        assertThat(bishop.checkRule(sourcePoint, targetPoint)).isTrue();
+        assertThat(bishop.checkRule(sourcePoint, targetPoint, true)).isTrue();
     }
 
     @Test
@@ -33,6 +33,6 @@ class BishopTest {
 
         Bishop bishop = Bishop.getInstance();
 
-        assertThat(bishop.checkRule(sourcePoint, targetPoint)).isFalse();
+        assertThat(bishop.checkRule(sourcePoint, targetPoint, true)).isFalse();
     }
 }
