@@ -15,7 +15,7 @@ public abstract class AbstractPiece implements Piece {
 
     @Override
     public boolean isAlly(Piece piece) {
-        if (piece == null || getClass() != piece.getClass()) throw new IllegalArgumentException();
+        if (piece == null) throw new IllegalArgumentException();
         AbstractPiece that = (AbstractPiece) piece;
         return this.team == that.team;
     }
