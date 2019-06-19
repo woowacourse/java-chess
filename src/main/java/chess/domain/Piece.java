@@ -23,18 +23,19 @@ public class Piece {
         return rule.isValidMove(origin, target);
     }
 
+    public static Piece empty() {
+        return EMPTY;
+    }
+
     public enum Color {
         WHITE(1),
-        BLACK(2);
+        BLACK(2),
+        EMPTY(3);
 
-        private int index;
-
+        private final int index;
         Color(final int index) {
             this.index = index;
         }
-    }
 
-    public static Piece empty() {
-        return EMPTY;
     }
 }
