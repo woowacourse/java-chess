@@ -65,7 +65,7 @@ class ChessPlayerTest {
         ));
         ChessPlayer chessPlayer = ChessPlayer.from(chessPieces);
 
-        assertThrows(IllegalArgumentException.class, () -> chessPlayer.delete(notContainedPoint));
+        assertThrows(InvalidChessPositionException.class, () -> chessPlayer.delete(notContainedPoint));
     }
 
     @Test
@@ -110,7 +110,7 @@ class ChessPlayerTest {
         ChessPlayer currentPlayer = ChessPlayer.from(chessPieces);
         ChessPlayer opponentPlayer = ChessPlayer.from(ChessPairsBuilder.build(Collections.emptyList()));
 
-        assertThrows(IllegalArgumentException.class, () -> currentPlayer.move(source, target, opponentPlayer));
+        assertThrows(InvalidChessPositionException.class, () -> currentPlayer.move(source, target, opponentPlayer));
     }
 
     @Test
@@ -125,7 +125,7 @@ class ChessPlayerTest {
         ChessPlayer currentPlayer = ChessPlayer.from(chessPieces);
         ChessPlayer opponentPlayer = ChessPlayer.from(ChessPairsBuilder.build(Collections.emptyList()));
 
-        assertThrows(IllegalArgumentException.class, () -> currentPlayer.move(source, target, opponentPlayer));
+        assertThrows(InvalidChessPositionException.class, () -> currentPlayer.move(source, target, opponentPlayer));
     }
 
     @Test
@@ -144,6 +144,6 @@ class ChessPlayerTest {
         ));
         ChessPlayer opponentPlayer = ChessPlayer.from(opponentChessPieces);
 
-        assertThrows(IllegalArgumentException.class, () -> currentPlayer.move(source, target, opponentPlayer));
+        assertThrows(InvalidChessPositionException.class, () -> currentPlayer.move(source, target, opponentPlayer));
     }
 }

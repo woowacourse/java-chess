@@ -74,7 +74,7 @@ class ChessRoundTest {
 
         ChessRound round = ChessRound.of(currentPlayer, opponentPlayer);
 
-        assertThrows(IllegalArgumentException.class, () -> round.move(source, target));
+        assertThrows(InvalidChessPositionException.class, () -> round.move(source, target));
     }
 
     @Test
@@ -92,7 +92,7 @@ class ChessRoundTest {
 
         ChessRound round = ChessRound.of(currentPlayer, opponentPlayer);
 
-        assertThrows(IllegalArgumentException.class, () -> round.move(source, target));
+        assertThrows(InvalidChessPositionException.class, () -> round.move(source, target));
     }
 
     @Test
@@ -111,6 +111,6 @@ class ChessRoundTest {
 
         ChessRound round = ChessRound.of(currentPlayer, opponentPlayer);
 
-        assertThrows(IllegalArgumentException.class, () -> round.move(source, target));
+        assertThrows(InvalidChessPositionException.class, () -> round.move(source, target));
     }
 }
