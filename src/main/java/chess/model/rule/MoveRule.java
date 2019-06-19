@@ -3,11 +3,16 @@ package chess.model.rule;
 import chess.model.board.Board;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
+import chess.model.unit.UnitClass;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 abstract class MoveRule {
+    private Map<UnitClass, MoveRule> map = new HashMap<>();
+
     private Piece piece;
 
     MoveRule(final Piece piece) {

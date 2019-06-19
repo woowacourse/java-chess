@@ -21,6 +21,10 @@ public class Square {
         return column;
     }
 
+    Row getRow() {
+        return row;
+    }
+
     private static Square getDiagonalOneNeighbor(final Square square, final Function<Square, Square> getHorizontal, final Function<Square, Square> getVertical) {
         final Square horizontal = getHorizontal.apply(square);
         if (horizontal == null) {
@@ -59,10 +63,6 @@ public class Square {
         return result;
     }
 
-    public static List<Square> getLeftNeighbors(final Square square) {
-        return getNeighbors(square, Square::getLeftOneNeighbor);
-    }
-
     public static Square getLeftOneNeighbor(final Square square) {
         return getHorizontalOneNeighbor(square, PREV);
     }
@@ -95,6 +95,10 @@ public class Square {
         return getDiagonalOneNeighbor(square, Square::getRightOneNeighbor, Square::getDownOneNeighbor);
     }
 
+    public static List<Square> getLeftNeighbors(final Square square) {
+        return getNeighbors(square, Square::getLeftOneNeighbor);
+    }
+
     public static List<Square> getRightNeighbors(final Square square) {
         return getNeighbors(square, Square::getRightOneNeighbor);
     }
@@ -121,10 +125,6 @@ public class Square {
 
     public static List<Square> getLowerRightNeighbors(final Square square) {
         return getNeighbors(square, Square::getLowerRightOneNeighbor);
-    }
-
-    Row getRow() {
-        return row;
     }
 
     @Override
