@@ -19,14 +19,25 @@ public class Row implements Comparable<Row> {
         this.row = row;
     }
 
-    static Row from(final String row) {
-        final int key = Integer.parseInt(row);
-        Optional<Row> optRow = Optional.ofNullable(ROWS.get(key));
+    static Row from(final int row) {
+        Optional<Row> optRow = Optional.ofNullable(ROWS.get(row));
         return optRow.orElseThrow(IllegalArgumentException::new);
     }
 
-    public int calculateAbsolute(final Row row) {
-        return Math.abs(this.row - row.row);
+    static Row from(final String row) {
+        return from(Integer.parseInt(row));
+    }
+
+    public Row next(int delta) {
+        return ROWS.get(row + delta);
+    }
+
+    public int calculateAbsolute(final Row other) {
+        return Math.abs(this.row - other.row);
+    }
+
+    public int calculateSubtraction(final Row other) {
+        return this.row - other.row;
     }
 
     public static List<Row> values() {

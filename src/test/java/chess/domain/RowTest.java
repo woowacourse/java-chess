@@ -23,6 +23,13 @@ public class RowTest {
     }
 
     @Test
+    public void 숫자로_생성할때_테스트() {
+        Row actual = Row.from("1");
+        Row expected = Row.from(1);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
     public void 범위_유효성_테스트() {
         String lessThanMin = String.valueOf(Row.MIN - 1);
         assertThrows(IllegalArgumentException.class, () -> Row.from(lessThanMin));

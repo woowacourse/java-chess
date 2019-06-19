@@ -24,9 +24,22 @@ public class ColumnTest {
     }
 
     @Test
+    public void 숫자로_생성할때_테스트() {
+        Column actual = Column.from("a");
+        Column expected = Column.from(97);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void 문자로_생성할때_테스트() {
+        Column actual = Column.from("a");
+        Column expected = Column.from('a');
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
     public void 범위_유효성_테스트() {
         String overThanMax = String.valueOf(Column.MAX + 1);
         assertThrows(IllegalArgumentException.class, () -> Column.from(overThanMax));
     }
-
 }

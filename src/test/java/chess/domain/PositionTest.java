@@ -2,7 +2,13 @@ package chess.domain;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PositionTest {
@@ -82,4 +88,74 @@ public class PositionTest {
 
         assertThat(position1.isDiagonal(position2)).isFalse();
     }
+
+
+    @Test
+    public void 이동경로가_세로인_아래에서_위로_경우_받환_테스트() {
+        Position origin = Position.of("1", "a");
+        Position target = Position.of("8", "a");
+
+        List<Position> actual = new ArrayList<>();
+        for (int i = 2; i <= 8; i++) {
+            actual.add(Position.of(String.valueOf(i), "a"));
+        }
+
+        List<Position> expected = origin.findRoutes(target);
+
+        assertTrue(actual.containsAll(expected));
+    }
+
+    @Test
+    public void 이동경로가_세로인_위에서_아래_경우_받환_테스트() {
+        Position origin = Position.of("8", "a");
+        Position target = Position.of("1", "a");
+
+        List<Position> actual = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            actual.add(Position.of(String.valueOf(i), "a"));
+        }
+
+        List<Position> expected = origin.findRoutes(target);
+
+        assertTrue(actual.containsAll(expected));
+    }
+
+    @Test
+    public void 이동경로가_가로인_왼쪽에서_오른쪽_경우_받환_테스트() {
+        String row = "1";
+        char originCol = 'a';
+        char targetCol = 'e';
+        Position origin = Position.of(row, String.valueOf(originCol));
+        Position target = Position.of(row, String.valueOf(targetCol));
+
+        List<Position> actual = new ArrayList<>();
+        for (int i = originCol + 1; i <= targetCol; i++) {
+            Position position = Position.of(row, String.valueOf((char) i));
+            actual.add(position);
+        }
+
+        List<Position> expected = origin.findRoutes(target);
+
+        assertTrue(actual.containsAll(expected));
+    }
+
+    @Test
+    public void 이동경로가_가로인_오른쪽에서_왼쪽_경우_받환_테스트() {
+        String row = "1";
+        char originCol = 'e';
+        char targetCol = 'a';
+        Position origin = Position.of(row, String.valueOf(originCol));
+        Position target = Position.of(row, String.valueOf(targetCol));
+
+        List<Position> actual = new ArrayList<>();
+        for (int i = originCol + 1; i >= targetCol; i--) {
+            Position position = Position.of(row, String.valueOf((char) i));
+            actual.add(position);
+        }
+
+        List<Position> expected = origin.findRoutes(target);
+
+        assertTrue(actual.containsAll(expected));
+    }
+
 }

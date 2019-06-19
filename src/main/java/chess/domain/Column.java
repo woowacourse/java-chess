@@ -20,13 +20,25 @@ public class Column implements Comparable<Column> {
         this.column = column;
     }
 
+    static Column from(final int column) {
+        return from(String.valueOf((char) column));
+    }
+
     static Column from(final String column) {
         Optional<Column> optColumn = Optional.ofNullable(COLUMNS.get(column));
         return optColumn.orElseThrow(IllegalArgumentException::new);
     }
 
-    public int calculateAbsolute(final Column column) {
-        return Math.abs(this.column - column.column);
+    public Column next(final int delta) {
+        return Column.from(this.column + delta);
+    }
+
+    public int calculateAbsolute(final Column other) {
+        return Math.abs(this.column - other.column);
+    }
+
+    public int calculateSubtraction(final Column other) {
+        return this.column - other.column;
     }
 
     public static List<Column> values() {
