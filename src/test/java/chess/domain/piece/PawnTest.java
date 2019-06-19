@@ -27,5 +27,4 @@ public class PawnTest {
         Pawn pawn = new Pawn();
         assertThat(pawn.isMovable(Point.of(1,1),Point.of(1,3))).isTrue();
     }
-
 }

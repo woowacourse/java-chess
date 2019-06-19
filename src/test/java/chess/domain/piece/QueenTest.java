@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-class QueenTest {
+public class QueenTest {
     @Test
     void isMovable_AbsoluteGradient1_True() {
         Queen queen = new Queen();
