@@ -1,8 +1,11 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Knight implements Piece{
+    public static final int MOVABLE_DISTANCE = 5;
     private final boolean teamColor;
 
     public Knight(boolean teamColor) {
@@ -20,5 +23,14 @@ public class Knight implements Piece{
     @Override
     public int hashCode() {
         return Objects.hash(teamColor);
+    }
+
+    @Override
+    public List<Point> getCandidatePoints(Point start, Point end) {
+        List<Point> points = new ArrayList<>();
+        if (start.calDistance(end) == MOVABLE_DISTANCE) {
+            points.add(end);
+        }
+        return points;
     }
 }

@@ -3,15 +3,18 @@ package chess.domain;
 import java.util.Objects;
 
 public class Point {
-    public static final char X_START = 'a';
-    public static final char X_END = 'h';
-    public static final char Y_START = '1';
-    public static final char Y_END = '8';
+    private static final char X_START = 'a';
+    private static final char X_END = 'h';
+    private static final char Y_START = '1';
+    private static final char Y_END = '8';
+    private static final int EXPONENT = 2;
+    private static final int X_INDEX = 0;
+    private static final int Y_INDEX = 1;
     private final int positionX;
     private final int positionY;
 
     public Point(String position) {
-        this(position.charAt(0), position.charAt(1));
+        this(position.charAt(X_INDEX), position.charAt(Y_INDEX));
     }
 
     public Point(char positionX, char positionY) {
@@ -38,6 +41,24 @@ public class Point {
     }
 
     private int changeTypeY(char y){ return y - Y_START; }
+
+
+    public int calDistance(Point end) {
+        double result = square(subtractX(end)) + square(subtractY(end));
+        return (int) result;
+    }
+
+    private double square(int value) {
+        return Math.pow(value, EXPONENT);
+    }
+
+    private int subtractX(Point end) {
+        return positionX - end.positionX;
+    }
+
+    private int subtractY(Point end) {
+        return positionY - end.positionY;
+    }
 
     @Override
     public boolean equals(Object o) {
