@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.exceptions.CoordinateRangeException;
+
 import java.util.Objects;
 
 public class Coordinate {
@@ -7,7 +9,7 @@ public class Coordinate {
 
     public Coordinate(int coordinate) {
         if (coordinate < 1 || coordinate > 8) {
-            throw new IllegalArgumentException("세로 범위는 1~8입니다.");
+            throw new CoordinateRangeException("세로 범위는 1~8입니다.");
         }
         this.coordinate = coordinate;
     }
@@ -15,7 +17,7 @@ public class Coordinate {
     public Coordinate(char coordinate) {
         int converted = coordinate - 96;
         if (converted < 1 || converted > 8) {
-            throw new IllegalArgumentException("세로 범위는 1~8입니다.");
+            throw new CoordinateRangeException("세로 범위는 1~8입니다.");
         }
         this.coordinate = converted;
     }

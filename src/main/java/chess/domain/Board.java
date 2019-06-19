@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.exceptions.IllegalSourceException;
+import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.piece.*;
 
 import java.util.Arrays;
@@ -63,22 +65,22 @@ public class Board {
 
     public void move(Position source, Position target) {
         if (!board.containsKey(source)) {
-            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
+            throw new IllegalSourceException("해당 위치에 말이 없습니다.");
         }
 
         Piece sourcePiece = board.get(source);
         if (!sourcePiece.isSameTeam(turn)) {
-            throw new IllegalArgumentException("당신의 턴이 아닙니다. 기다리세요.");
+            throw new IllegalSourceException("당신의 턴이 아닙니다. 기다리세요.");
         }
 
         if (board.containsKey(target) && sourcePiece.isSameTeam(board.get(target))) {
-            throw new IllegalArgumentException("같은 팀이 있는 위치로 이동이 불가능합니다.");
+            throw new IllegalTargetException("같은 팀이 있는 위치로 이동이 불가능합니다.");
         }
 
         Direction direction = source.direction(target);
         for (Position checking = source.add(direction); !checking.equals(target); checking = checking.add(direction)) {
             if (this.at(checking) != null) {
-                throw new IllegalArgumentException("경로에 말이 존재합니다.");
+                throw new IllegalTargetException("경로에 말이 존재합니다.");
             }
         }
 
