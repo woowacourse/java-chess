@@ -26,7 +26,7 @@ public class ChessRound {
         }
 
         // 타겟이 적군이 경우
-        currentPlayer.move(source, target);
+        currentPlayer.move(source, target, opponentPlayer);
         if (opponentPlayer.contains(target)) {
             opponentPlayer.delete(target);
         }

@@ -38,6 +38,14 @@ public class RelativeChessPoint {
         return relativePoint.toUnit();
     }
 
+    public int getRelativeRow() {
+        return relativeRow;
+    }
+
+    public int getRelativeColumn() {
+        return relativeColumn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

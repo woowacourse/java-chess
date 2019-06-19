@@ -1,7 +1,5 @@
-package chess.domain;
+package chess.domain.chesspoint;
 
-import chess.domain.chesspoint.ChessPoint;
-import chess.domain.chesspoint.RelativeChessPoint;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,10 +37,18 @@ class ChessPointTest {
     }
 
     @Test
-    void minus_() {
+    void minus() {
         ChessPoint sourcePoint = ChessPoint.of(1, 1);
         ChessPoint targetPoint = ChessPoint.of(2, 3);
 
         assertThat(targetPoint.minus(sourcePoint)).isEqualTo(RelativeChessPoint.of(1, 2));
+    }
+
+    @Test
+    void moveBy() {
+        ChessPoint sourcePoint = ChessPoint.of(1, 1);
+        RelativeChessPoint relativePoint = RelativeChessPoint.of(1, 2);
+
+        assertThat(sourcePoint.moveBy(relativePoint)).isEqualTo(ChessPoint.of(2, 3));
     }
 }

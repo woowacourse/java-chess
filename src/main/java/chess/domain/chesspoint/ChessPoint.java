@@ -54,6 +54,10 @@ public class ChessPoint {
         return RelativeChessPoint.of(row - source.row, column - source.column);
     }
 
+    public ChessPoint moveBy(RelativeChessPoint relativePoint) {
+        return ChessPoint.of(row + relativePoint.getRelativeRow(), column + relativePoint.getRelativeColumn());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
