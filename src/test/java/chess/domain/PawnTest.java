@@ -3,15 +3,17 @@ package chess.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PawnTest {
 
     Piece piece;
+    Position base;
+
     @BeforeEach
     void setUp() {
         piece = new Pawn(Team.BLACK);
+        base = new Position(new Coordinate('b'), new Coordinate(2));
     }
 
     @Test
@@ -25,7 +27,17 @@ public class PawnTest {
 
     @Test
     void 대각선_이동_여부_테스트() {
-        assertFalse(piece.canMove(new Position(new Coordinate('a'), new Coordinate(1)),
-                new Position(new Coordinate('b'), new Coordinate(2))));
+        assertThrows(IllegalArgumentException.class, () -> {
+            piece.canMove(new Position(new Coordinate('a'), new Coordinate(1)),
+                    new Position(new Coordinate('b'), new Coordinate(2)));
+        });
+    }
+
+    @Test
+    void 거리가_제한에_위반되는_경우_에외_테스트() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            piece.canMove(new Position(new Coordinate('a'), new Coordinate(1)),
+                    new Position(new Coordinate('a'), new Coordinate(3)));
+        });
     }
 }

@@ -11,8 +11,12 @@ public class Position {
         this.y = y;
     }
 
-    public Direction distance(Position position) {
+    public Direction direction(Position position) {
         return Direction.valueOf(x.subtract(position.x), y.subtract(position.y));
+    }
+
+    public int distance(Position target) {
+        return Math.abs(x.subtract(target.x) + y.subtract(target.y));
     }
 
     @Override

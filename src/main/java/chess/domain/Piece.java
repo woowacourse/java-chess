@@ -3,7 +3,6 @@ package chess.domain;
 import java.util.Objects;
 
 public abstract class Piece {
-    private static final String NAME = "r";
     private boolean life;
     private final Team team;
     private MoveRule moveRule;
