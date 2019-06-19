@@ -13,6 +13,9 @@ public class Direction {
     }
 
     private void validate(int xVector, int yVector) {
+        if (xVector == 0 && yVector == 0) {
+            throw new IllegalArgumentException();
+        }
         validate(xVector);
         validate(yVector);
     }
@@ -30,6 +33,22 @@ public class Direction {
 
     public int yPoint(int yPoint) {
         return yPoint + yVector;
+    }
+
+    public Direction vector() {
+        if (xVector * yVector == 0 || Math.abs(xVector) == Math.abs(yVector)) {
+            int x = convert(xVector);
+            int y = convert(yVector);
+            return new Direction(x, y);
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private int convert(int vector) {
+        if (vector == 0) {
+            return 0;
+        }
+        return vector / Math.abs(vector);
     }
 
     @Override
