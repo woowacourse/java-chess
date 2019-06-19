@@ -50,4 +50,19 @@ public class PointTest {
         Point end = new Point("a2");
         assertThat(start.calDirection(end)).isEqualTo(new Point(0, 1));
     }
+
+    @Test
+    void 방향_더하기() {
+        Point point = new Point("b2");
+        assertThat(point.move(Direction.NORTH)).isEqualTo(new Point("b3"));
+        assertThat(point.move(Direction.SOUTH)).isEqualTo(new Point("b1"));
+        assertThat(point.move(Direction.EAST)).isEqualTo(new Point("c2"));
+        assertThat(point.move(Direction.WEST)).isEqualTo(new Point("a2"));
+    }
+
+    @Test
+    void 경계선_이탈() {
+        Point point = new Point("a1");
+        assertThrows(IllegalArgumentException.class, () -> point.move(Direction.SOUTH));
+    }
 }

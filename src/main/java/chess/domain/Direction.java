@@ -25,4 +25,8 @@ public enum Direction {
         }
         return NOT_FIND;
     }
+
+    public Point getPosition() {
+        return position;
+    }
 }

@@ -97,4 +97,11 @@ public class Point {
     public int hashCode() {
         return Objects.hash(positionX, positionY);
     }
+
+    public Point move(Direction direction) {
+        Point directionPoint = direction.getPosition();
+        char X = (char) (positionX + directionPoint.positionX + X_START);
+        char Y = (char) (positionY + directionPoint.positionY + Y_START);
+        return new Point(X, Y);
+    }
 }
