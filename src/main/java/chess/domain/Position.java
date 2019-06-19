@@ -98,7 +98,6 @@ public class Position implements Comparable<Position> {
         if (isDiagonal(target)) {
 
         }
-        positions.add(target);
         return positions;
 
     }

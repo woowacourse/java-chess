@@ -4,7 +4,7 @@ import chess.domain.RuleImpl.Empty;
 import chess.domain.RuleImpl.Rule;
 
 public class Piece {
-    private static final Piece EMPTY = new Piece(Color.WHITE, Empty.getInstance());
+    private static final Piece EMPTY = new Piece(Color.EMPTY, Empty.getInstance());
 
     private Color color;
     private Rule rule;
@@ -19,12 +19,20 @@ public class Piece {
         return new Piece(color, rule);
     }
 
+    public static Piece empty() {
+        return EMPTY;
+    }
+
     public boolean isValidMove(final Position origin, final Position target) {
         return rule.isValidMove(origin, target);
     }
 
-    public static Piece empty() {
-        return EMPTY;
+    public boolean isEmpty() {
+        return Color.EMPTY == color;
+    }
+
+    public boolean isSameTeam(final Piece other) {
+        return this.color == other.color;
     }
 
     public enum Color {
