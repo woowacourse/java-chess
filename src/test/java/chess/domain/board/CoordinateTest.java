@@ -12,12 +12,12 @@ public class CoordinateTest {
     }
 
     @Test
-    void of_LessThan1_IllegalArgumentException() {
-        assertThatThrownBy(() -> Coordinate.of(0)).isInstanceOf(IllegalArgumentException.class);
+    void of_LessThan0_IllegalArgumentException() {
+        assertThatThrownBy(() -> Coordinate.of(-1)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void of_OverThan8_IllegalArgumentException() {
-        assertThatThrownBy(() -> Coordinate.of(9)).isInstanceOf(IllegalArgumentException.class);
+    void of_OverThan7_IllegalArgumentException() {
+        assertThatThrownBy(() -> Coordinate.of(8)).isInstanceOf(IllegalArgumentException.class);
     }
 }

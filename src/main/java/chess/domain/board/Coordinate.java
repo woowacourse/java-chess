@@ -7,13 +7,13 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public class Coordinate {
-    private static final int MIN = 1;
-    private static final int MAX = 8;
+    public static final int MIN_COORDINATE = 0;
+    public static final int MAX_COORDINATE = 7;
 
     private static Map<Integer, Coordinate> COORDINATE_POOL;
 
     static {
-        COORDINATE_POOL = IntStream.rangeClosed(MIN, MAX)
+        COORDINATE_POOL = IntStream.rangeClosed(MIN_COORDINATE, MAX_COORDINATE)
                 .boxed()
                 .collect(toMap(identity(), Coordinate::new));
     }
@@ -30,7 +30,7 @@ public class Coordinate {
     }
 
     private static void validateBoundary(int coordinate) {
-        if (coordinate < MIN || coordinate > MAX) {
+        if (coordinate < MIN_COORDINATE || coordinate > MAX_COORDINATE) {
             throw new IllegalArgumentException();
         }
     }

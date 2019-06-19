@@ -6,13 +6,12 @@ import static org.assertj.core.api.Java6Assertions.assertThatThrownBy;
 
 public class PointTest {
     @Test
-    void create_LessThan1_ThrownIllegalArgument() {
-        assertThatThrownBy(() -> new Point(0, 5)).isInstanceOf(IllegalArgumentException.class);
+    void create_LessThan0_ThrownIllegalArgument() {
+        assertThatThrownBy(() -> Point.of(-1, 5)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void create_OverThan8_ThrownIllegalArgument() {
-        assertThatThrownBy(() -> new Point(9, 4)).isInstanceOf(IllegalArgumentException.class);
+    void create_OverThan7_ThrownIllegalArgument() {
+        assertThatThrownBy(() -> Point.of(8, 4)).isInstanceOf(IllegalArgumentException.class);
     }
-
 }

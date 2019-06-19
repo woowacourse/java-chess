@@ -16,9 +16,10 @@ public enum PieceType {
 
     public static PieceType of(String piece) {
         return Arrays.stream(values())
-                .filter(x -> x.piece.equals(piece))
+                // TODO method 분리
+                .filter(x -> x.piece.equals(piece.toLowerCase()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("aa"));
+                .orElseThrow(() -> new IllegalArgumentException(""));
     }
 
     public Piece create() {
