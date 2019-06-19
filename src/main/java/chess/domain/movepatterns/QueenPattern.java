@@ -10,6 +10,6 @@ public class QueenPattern implements MovePattern {
     public boolean canMove(Point source, Point target) {
         if (source.isEqualsX(target) || source.isEqualsY(target))
             return true;
-        return source.calculateIncline(target) == VALID_INCLINE;
+        return Math.abs(source.calculateIncline(target)) == VALID_INCLINE;
     }
 }

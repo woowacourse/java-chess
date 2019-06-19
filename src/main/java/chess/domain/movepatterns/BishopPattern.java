@@ -8,6 +8,6 @@ public class BishopPattern implements MovePattern {
 
     @Override
     public boolean canMove(Point source, Point target) {
-        return source.calculateIncline(target) == VALID_INCLIE;
+        return Math.abs(source.calculateIncline(target)) == VALID_INCLIE;
     }
 }

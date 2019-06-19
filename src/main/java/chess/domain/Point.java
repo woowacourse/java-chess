@@ -26,7 +26,15 @@ public class Point {
     }
 
     public double calculateIncline(Point another) {
-        return Math.abs((this.y - another.y) / (this.x - another.x));
+        return minusY(another) / minusX(another);
+    }
+
+    public int minusX(Point another) {
+        return this.x - another.x;
+    }
+
+    public int minusY(Point another) {
+        return this.y - another.y;
     }
 
     @Override
