@@ -25,6 +25,10 @@ public abstract class Piece {
         return this.team == piece.team;
     }
 
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
+
     public boolean canMove(Position source, Position target) {
         return moveRule.check(source, target);
     }

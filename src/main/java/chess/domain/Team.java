@@ -1,5 +1,12 @@
 package chess.domain;
 
 public enum Team {
-    BLACK, WHITE
+    BLACK, WHITE;
+
+    public Team turnChanged() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }

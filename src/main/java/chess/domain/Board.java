@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private static Map<Position, Piece> board;
+    private Team turn;
+    private final Map<Position, Piece> board;
 
-    static {
+    private Board() {
+        turn = Team.WHITE;
         board = new HashMap<>();
         List<Character> aToH = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
         List<Piece> piecesTeamBlack = Arrays.asList(
@@ -31,11 +33,16 @@ public class Board {
         aToH.forEach(character -> board.put(new Position(new Coordinate(character), new Coordinate(7)), new Pawn(Team.WHITE)));
     }
 
-    public static Piece at(final Position position) {
+
+    public static Board init() {
+        return new Board();
+    }
+
+    public Piece at(final Position position) {
         return board.get(position);
     }
 
-    public static String boardAt(final Position position) {
+    public String boardAt(final Position position) {
         if (!board.containsKey(position)) {
             return ".";
         }
@@ -52,17 +59,23 @@ public class Board {
         return piece.getName().toUpperCase();
     }
 
-    public static void move(Position source, Position target) {
+    public void move(Position source, Position target) {
         if (!board.containsKey(source)) {
             throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
         }
 
         Piece sourcePiece = board.get(source);
+        if (!sourcePiece.isSameTeam(turn)) {
+            throw new IllegalArgumentException("당신의 턴이 아닙니다. 기다리세요.");
+        }
 
         if (board.containsKey(target) && sourcePiece.isSameTeam(board.get(target))) {
             throw new IllegalArgumentException("같은 팀이 있는 위치로 이동이 불가능합니다.");
         }
 
+        sourcePiece.canMove(source, target);
+        board.remove(source);
         board.put(target, sourcePiece);
+        turn = turn.turnChanged();
     }
 }
