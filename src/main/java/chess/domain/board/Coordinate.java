@@ -10,6 +10,10 @@ public class Coordinate {
     public static final int MIN_COORDINATE = 0;
     public static final int MAX_COORDINATE = 7;
 
+    public int getCoordinate() {
+        return coordinate;
+    }
+
     private static Map<Integer, Coordinate> COORDINATE_POOL;
 
     static {
@@ -33,5 +37,9 @@ public class Coordinate {
         if (coordinate < MIN_COORDINATE || coordinate > MAX_COORDINATE) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public int calculateDistance (Coordinate end){
+        return this.coordinate - end.coordinate;
     }
 }

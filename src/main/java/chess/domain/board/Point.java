@@ -27,4 +27,14 @@ public class Point {
         return TABLE.get(Coordinate.of(x), Coordinate.of(y));
     }
 
+    public int xDistance(Point end){
+        return this.x.calculateDistance(end.x);
+    }
+    public int yDistance(Point end){
+        return this.y.calculateDistance(end.y);
+    }
+
+    public int getY() {
+        return y.getCoordinate();
+    }
 }
