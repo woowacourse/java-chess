@@ -1,33 +1,36 @@
-package chess.model.piece;
+package chess.model;
 
+import chess.model.piece.EmptyPiece;
+import chess.model.piece.Pawn;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class TileTest {
     @Test
     void 생성자_오류확인_null이_입력된_경우() {
         assertThatExceptionOfType(NullPointerException.class)
-                .isThrownBy(() -> new Tile(null, new Pawn()));
+                .isThrownBy(() -> new Tile(null, new Pawn("white")));
     }
 
     @Test
     void 생성자_오류확인_좌표길이가_올바르지_않을_경우() {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tile("123", new Pawn()));
+                .isThrownBy(() -> new Tile("123", new Pawn("white")));
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tile("1", new Pawn()));
+                .isThrownBy(() -> new Tile("1", new Pawn("white")));
     }
 
     @Test
     void 생성자_오류확인_행이_범위를_벗어날_경우() {
-        assertThat(new Tile("12", new Pawn())).isEqualTo(new Tile("12", new Pawn()));
-        assertThat(new Tile("12", new Pawn())).isNotNull();
+        assertThat(new Tile("12", new Pawn("white"))).isEqualTo(new Tile("12", new Pawn("white")));
+        assertThat(new Tile("12", new Pawn("whtie"))).isNotNull();
     }
 
     @Test
     void 기물이_타일안에_있는지_확인() {
-        Tile tile = new Tile("12", new Pawn());
+        Tile tile = new Tile("12", new Pawn("white"));
         assertThat(tile.isPiecePresent()).isTrue();
     }
 

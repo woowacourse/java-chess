@@ -1,4 +1,4 @@
-package chess.model.piece;
+package chess.model;
 
 import java.util.*;
 import java.util.function.Function;
@@ -27,5 +27,9 @@ public class Coordinate {
             throw new IllegalArgumentException("범위를 벗어났습니다");
         }
         return coordinates.get(position);
+    }
+
+    public int calculateDistance(Coordinate targetCoordinate) {
+        return Math.subtractExact(this.coordinate, targetCoordinate.coordinate);
     }
 }

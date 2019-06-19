@@ -1,4 +1,7 @@
-package chess.model.piece;
+package chess.model;
+
+import chess.model.piece.EmptyPiece;
+import chess.model.piece.Piece;
 
 import java.util.Objects;
 
