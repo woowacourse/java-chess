@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>체스 방</title>
+</head>
+
+<body>
+    <div>
+        방 번호 : {{rno}}
+        방 이름 : {{title}}
+    </div>
+
+    <div>
+        <textarea name="" id="game-board" cols="20" rows="10" readonly></textarea>
+        from : <input type="text" id="from" />
+        to : <input type="text" id="to" />
+        <button id="btn_move">이동</button>
+    </div>
+
+    <script>
+        function stateToString(pieceType) {
+            if (pieceType == "NONE") {
+                return ".";
+            }
+            if (pieceType == "ROOK_WHITE") {
+                return "r";
+            }
+            if (pieceType == "KNIGHT_WHITE") {
+                return "n";
+            }
+            if (pieceType == "BISHOP_WHITE") {
+                return "b";
+            }
+            if (pieceType == "QUEEN_WHITE") {
+                return "q";
+            }
+            if (pieceType == "KING_WHITE") {
+                return "k";
+            }
+            if (pieceType == "PAWN_WHITE") {
+                return "p";
+            }
+            if (pieceType == "ROOK_BLACK") {
+                return "R";
+            }
+            if (pieceType == "KNIGHT_BLACK") {
+                return "N";
+            }
+            if (pieceType == "BISHOP_BLACK") {
+                return "B";
+            }
+            if (pieceType == "QUEEN_BLACK") {
+                return "Q";
+            }
+            if (pieceType == "KING_BLACK") {
+                return "K";
+            }
+            if (pieceType == "PAWN_BLACK") {
+                return "P";
+            }
+        }
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", drawBoard);
+        xhr.open("GET", "/board");
+        xhr.send();
+
+        document.getElementById("btn_move").addEventListener("click", function () {
+            let from = document.getElementById("from").value;
+            let to = document.getElementById("to").value;
+
+            xhr.addEventListener("load", drawBoard);
+            xhr.open("PUT", "/move-piece?from=" + from + "&to=" + to);
+            xhr.send();
+
+        });
+
+        function drawBoard() {
+                const states = JSON.parse(xhr.response);
+                document.getElementById("game-board").value = states.map(row =>
+                    row.map(col => stateToString(col)).join("") + "\n").join("");
+            }
+
+    </script>
+</body>
+
+</html>
