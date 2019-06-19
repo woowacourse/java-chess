@@ -1,11 +1,14 @@
 package chess.domain;
 
+import chess.domain.pieces.Piece;
+
 public class ChessGame {
     private Board board;
-    private boolean turn = false;
+    private ChessTeam turn = ChessTeam.WHITE;
 
     public ChessGame() {
         board = BoardCreator.create();
+        turn = ChessTeam.WHITE;
     }
 
     public void play(String input) {
@@ -16,13 +19,19 @@ public class ChessGame {
         if (!split[0].equals("move")) {
             throw new IllegalArgumentException();
         }
-        board.play(parse(split[1]), parse(split[2]));
+
+        board.play(parse(split[1]), parse(split[2]), turn);
+        turn = turn.change();
     }
 
     private Point parse(String destination) {
         String axis = "abcdefgh";
-        int x = axis.indexOf(destination.charAt(0));
+        int x = axis.indexOf(destination.charAt(0)) + 1;
         int y = Integer.parseInt(String.valueOf(destination.charAt(1)));
         return Point.get(x, y);
+    }
+
+    public Piece get(Point point) {
+        return board.get(point);
     }
 }

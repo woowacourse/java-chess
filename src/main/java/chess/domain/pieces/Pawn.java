@@ -7,12 +7,12 @@ import chess.domain.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends AbstractPiece {
+public class Pawn extends AbstractSingleMovePiece {
     private List<Direction> moveDirection;
     private List<Direction> attackDirection;
 
     public Pawn(ChessTeam team) {
-        super("pawn", team);
+        super("Pawn", team, null);
         moveDirection = new ArrayList<>();
         moveDirection.add(new Direction(0, 1 * team.color()));
         moveDirection.add(new Direction(0, 2 * team.color()));
@@ -46,10 +46,5 @@ public class Pawn extends AbstractPiece {
         if (moveDirection.size() == 2) {
             moveDirection.remove(1);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "P";
     }
 }

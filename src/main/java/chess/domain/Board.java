@@ -12,8 +12,19 @@ public class Board {
         this.board = board;
     }
 
-    public void set(Point point, Piece piece) {
-        board.put(point, piece);
+    public void play(Point p1, Point p2, ChessTeam team) {
+        if (!board.get(p1).isTurn(team)) {
+            throw new IllegalArgumentException();
+        }
+        if (board.get(p1).isAlly(board.get(p2))) {
+            throw new IllegalArgumentException();
+        }
+        if (board.get(p2).equals(new Empty())) {
+            move(p1, p2);
+            return;
+        }
+        attack(p1, p2);
+
     }
 
     public void play(Point p1, Point p2) {

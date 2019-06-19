@@ -11,8 +11,8 @@ public class Point {
 
     static {
         points = new HashSet<>();
-        for (int i = 1; i <= 8; i++) {
-            for (int j = 1; j <= 8; j++) {
+        for (int i = MIN_AXIS; i <= MAX_AXIS; i++) {
+            for (int j = MIN_AXIS; j <= MAX_AXIS; j++) {
                 points.add(new Point(i, j));
             }
         }
@@ -37,7 +37,6 @@ public class Point {
                 .filter(point -> point.y == yAxis)
                 .findFirst()
                 .get();
-
     }
 
     private static void validate(int point) {

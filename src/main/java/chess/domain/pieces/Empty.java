@@ -4,10 +4,10 @@ import chess.domain.ChessTeam;
 import chess.domain.Direction;
 import chess.domain.Point;
 
-public class Empty extends AbstractPiece {
+public class Empty extends AbstractSingleMovePiece {
 
     public Empty() {
-        super(".", ChessTeam.EMPTY);
+        super(".", ChessTeam.EMPTY, null);
     }
 
     @Override
@@ -19,6 +19,4 @@ public class Empty extends AbstractPiece {
     public Direction attack(Point p1, Point p2) {
         throw new IllegalArgumentException();
     }
-
-
 }

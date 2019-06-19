@@ -11,6 +11,13 @@ public enum ChessTeam {
         this.color = color;
     }
 
+    public ChessTeam change() {
+        if (color == 1) {
+            return BLACK;
+        }
+        return WHITE;
+    }
+
     public int color() {
         return this.color;
     }
