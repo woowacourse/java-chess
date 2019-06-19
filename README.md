@@ -7,8 +7,14 @@
 - ~~각 축의 좌표 구현~~
     - ~~XPosition~~
     - ~~YPosition~~
+
 - 체스말의 위치를 나타내는 Point 구현
+    - xPosition과 yPosition을 가지고 체스말의 위치를 나타낸다.
+
 - 체스말의 타입을 나타내는 열거형 ChessPieceType 구현
+    - ChessPiece가 갖는 QUEEN, KING, ROOK, PAWN, KNIGHT, BISHOP의 상수값을 나타낸다.
+    - ChessPiece의 타입을 제한한다.
+
 - 체스말의 색상을 나타내는 열거형 ChessColor 구현
 - 체스말의 추상클래스 ChessPiece 구현
 - 체스말의 구현클래스 구현
