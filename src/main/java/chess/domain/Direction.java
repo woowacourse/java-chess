@@ -20,7 +20,7 @@ public enum Direction {
         return direction;
     }
 
-    public Direction of(Point source, Point target) {
+    public static Direction of(Point source, Point target) {
         int gapX = target.minusX(source);
         int gapY = target.minusY(source);
 

@@ -29,12 +29,24 @@ public class Point {
         return minusY(another) / minusX(another);
     }
 
+    public int plusX(Point another) {
+        return this.x + another.x;
+    }
+
+    public int plusY(Point another) {
+        return this.y + another.y;
+    }
+
     public int minusX(Point another) {
         return this.x - another.x;
     }
 
     public int minusY(Point another) {
         return this.y - another.y;
+    }
+
+    public Point plusPoint(Point direction) {
+        return PointFactory.of(this.x + direction.x, this.y + direction.y);
     }
 
     @Override
