@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 
-public class Tile {
+public class Tile implements Comparable<Tile> {
     private static final Map<Pair<Column, Row>, Tile> TILE_POOL;
     private static final Pattern tilePattern = Pattern.compile("^(.)(.)$");
 
@@ -24,12 +24,12 @@ public class Tile {
                                         TILE_POOL.put(Pair.of(column, row), new Tile(column, row))));
     }
 
-    private final Row row;
     private final Column column;
+    private final Row row;
 
     private Tile(Column column, Row row) {
-        this.row = row;
         this.column = column;
+        this.row = row;
     }
 
     public static Tile of(Column column, Row row) {
@@ -67,10 +67,18 @@ public class Tile {
     }
 
     @Override
+    public int compareTo(Tile o) {
+        if (row.equals(o.row)) {
+            return column.compareTo(o.column);
+        }
+        return row.compareTo(o.row);
+    }
+
+    @Override
     public String toString() {
         return "Tile{" +
-                "row=" + row +
-                ", column=" + column +
+                "column=" + column +
+                ", row=" + row +
                 '}';
     }
 }

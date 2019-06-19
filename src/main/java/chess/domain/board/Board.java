@@ -12,9 +12,10 @@ public class Board {
 
     public Board(Map<Tile, ChessPiece> boardState) {
         board = new HashMap<>();
-        Tile.stream().forEach(tile ->
-                board.put(tile, getState(boardState, tile))
-        );
+        Tile.stream()
+                .forEach(tile ->
+                        board.put(tile, getState(boardState, tile))
+                );
     }
 
     private Optional<ChessPiece> getState(Map<Tile, ChessPiece> board, Tile tile) {

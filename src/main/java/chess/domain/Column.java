@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Column {
+public class Column implements Comparable<Column> {
     private static final List<Column> COLUMN_POOL;
     private static final char MIN_COLUMN_SIZE = 'a';
     private static final char MAX_COLUMN_SIZE = 'h';
@@ -49,5 +49,10 @@ public class Column {
         return "Column{" +
                 "column=" + column +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Column o) {
+        return this.column - o.column;
     }
 }

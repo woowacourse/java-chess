@@ -35,7 +35,7 @@ class RowTest {
     }
 
     @Test
-    void column_객체_캐싱_확인() {
+    void row_객체_캐싱_확인() {
         assertThat(Row.of("1") == Row.of(1)).isTrue();
     }
 }
