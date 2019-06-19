@@ -28,16 +28,16 @@ public class PawnTest {
     @Test
     void 대각선_이동_여부_테스트() {
         assertThrows(IllegalArgumentException.class, () -> {
-            piece.canMove(new Position(new Coordinate('a'), new Coordinate(1)),
-                    new Position(new Coordinate('b'), new Coordinate(2)));
+            piece.canMove(base,
+                    new Position(new Coordinate('c'), new Coordinate(3)));
         });
     }
 
     @Test
     void 거리가_제한에_위반되는_경우_에외_테스트() {
         assertThrows(IllegalArgumentException.class, () -> {
-            piece.canMove(new Position(new Coordinate('a'), new Coordinate(1)),
-                    new Position(new Coordinate('a'), new Coordinate(3)));
+            piece.canMove(base,
+                    new Position(new Coordinate('b'), new Coordinate(4)));
         });
     }
 }

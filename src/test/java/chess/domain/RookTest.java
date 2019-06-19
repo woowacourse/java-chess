@@ -41,8 +41,8 @@ class RookTest {
     @Test
     void 대각선_이동_여부_테스트() {
         assertThrows(IllegalArgumentException.class, () -> {
-            piece.canMove(new Position(new Coordinate('a'), new Coordinate(1)),
-                    new Position(new Coordinate('b'), new Coordinate(2)));
+            piece.canMove(base,
+                    new Position(new Coordinate('c'), new Coordinate(5)));
         });
     }
 }
