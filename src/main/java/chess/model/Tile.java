@@ -1,18 +1,18 @@
 package chess.model;
 
-import chess.model.piece.EmptyPiece;
 import chess.model.piece.Piece;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class Tile {
     private static final int COORDINATE_LENGTH = 2;
     // TODO: 2019-06-18 인스턴스 변수 줄이기
     private Coordinate xCoordinate;
     private Coordinate yCoordinate;
-    private Piece piece;
+    private Optional<Piece> piece;
 
-    public Tile(String coordinates, Piece piece) {
+    public Tile(String coordinates, Optional<Piece> piece) {
         validateInput(coordinates);
         String firstCoordinate = coordinates.substring(0, 1);
         String secondCoordinate = coordinates.substring(1, 2);
@@ -32,8 +32,7 @@ public class Tile {
     }
 
     public boolean isPiecePresent() {
-//        return EmptyPiece != Pawn;
-        return !(piece instanceof EmptyPiece);
+        return piece.isPresent();
     }
 
     @Override
