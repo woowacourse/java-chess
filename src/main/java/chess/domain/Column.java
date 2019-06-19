@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Column implements Comparable<Column> {
     private static final Map<String, Column> COLUMNS = new HashMap<>();
@@ -11,7 +8,6 @@ public class Column implements Comparable<Column> {
     static final char MAX = 'h';
 
     private final int column;
-
 
     static {
         for (int i = MIN; i <= MAX; i++) {
@@ -31,6 +27,10 @@ public class Column implements Comparable<Column> {
 
     public int calculateAbsolute(final Column column) {
         return Math.abs(this.column - column.column);
+    }
+
+    public static List<Column> values() {
+        return new ArrayList<>(COLUMNS.values());
     }
 
     @Override

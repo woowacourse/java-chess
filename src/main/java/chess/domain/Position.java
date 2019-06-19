@@ -1,11 +1,24 @@
 package chess.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position implements Comparable<Position> {
+    private static final Map<String, Position> POSITIONS = new HashMap<>();
+
     private static final int DIAGONAL_INCLINATION = 1;
     private static final int RIGHT_INCLINATION = 0;
     private static final int ZERO = 0;
+
+    static {
+        for (final Column column : Column.values()) {
+            for (final Row row : Row.values()) {
+                String key = column.toString() + row.toString();
+                POSITIONS.put(key, new Position(row, column));
+            }
+        }
+    }
 
     private final Row row;
     private final Column column;
@@ -16,7 +29,8 @@ public class Position implements Comparable<Position> {
     }
 
     public static Position of(final Row row, final Column column) {
-        return new Position(row, column);
+        String key = column.toString() + row.toString();
+        return POSITIONS.get(key);
     }
 
     public static Position of(final String row, final String column) {

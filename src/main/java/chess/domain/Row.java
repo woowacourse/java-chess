@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Row implements Comparable<Row> {
     private static final Map<Integer, Row> ROWS = new HashMap<>();
@@ -30,6 +27,10 @@ public class Row implements Comparable<Row> {
 
     public int calculateAbsolute(final Row row) {
         return Math.abs(this.row - row.row);
+    }
+
+    public static List<Row> values() {
+        return new ArrayList<>(ROWS.values());
     }
 
     @Override
