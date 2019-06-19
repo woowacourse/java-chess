@@ -29,12 +29,11 @@ public class RookPattern implements Pattern {
 	private Path getPath(final Position start, final Position end, final Direction direction) {
 		List<Position> path = new ArrayList<>();
 
-		Position next = start;
+		Position next = start.move(direction);
 		while (!next.equals(end)) {
 			path.add(next);
 			next = next.move(direction);
 		}
-		path.add(next);
 		return new Path(path);
 	}
 }

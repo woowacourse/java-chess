@@ -23,8 +23,23 @@ public abstract class Piece {
 		return pattern.move(this.currentPosition, position);
 	}
 
+	public boolean isMine(Player player) {
+		return this.player.equals(player);
+	}
+
 	public boolean isSamePosition(Piece piece) {
 		return this.currentPosition.equals(piece.currentPosition);
 	}
 
+	public boolean isSamePosition(Position position) {
+		return this.currentPosition.equals(position);
+	}
+
+	public Score getScore() {
+		return score;
+	}
+
+	public void changePosition(Position newPosition) {
+		this.currentPosition = newPosition;
+	}
 }

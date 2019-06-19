@@ -7,8 +7,23 @@ import java.util.Objects;
 public class Path {
 	private final List<Position> path;
 
+	private int index;
+
 	public Path(final List<Position> path) {
 		this.path = new ArrayList<>(path);
+		this.index = 0;
+	}
+
+	public Position getCurrentPosition() {
+		return path.get(index);
+	}
+
+	public boolean next() {
+		if (index + 1 < path.size()) {
+			index += 1;
+			return true;
+		}
+		return false;
 	}
 
 	@Override

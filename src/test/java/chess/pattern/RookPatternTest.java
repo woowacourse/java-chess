@@ -1,5 +1,6 @@
 package chess.pattern;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import chess.Path;
@@ -24,7 +25,7 @@ class RookPatternTest {
 		Position start = new Position(1, 1);
 		Position end = new Position(1, 2);
 
-		Path path = new Path(Arrays.asList(start, end));
+		Path path = new Path(new ArrayList<>());
 
 		assertThat(rookPattern.move(start, end)).isEqualTo(path);
 	}
