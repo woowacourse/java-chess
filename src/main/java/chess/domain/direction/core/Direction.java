@@ -4,6 +4,7 @@ import chess.domain.piece.core.Square;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public enum Direction {
     UP(new Square(0, -1), (x, y) -> new Square(x, y - 1)),
@@ -24,6 +25,7 @@ public enum Direction {
     DOUBLE_RIGHT_DOWN(new Square(2, 1), (x, y) -> new Square(x + 2, y + 1));
 
     Square unit;
+    Function<Square, Square> moveStrategy;
     BiFunction<Integer, Integer, Square> strategy;
 
     Direction(Square unit, BiFunction<Integer, Integer, Square> strategy) {
@@ -31,8 +33,8 @@ public enum Direction {
         this.unit = unit;
     }
 
-    Square move(int x, int y) {
-        return strategy.apply(x, y);
+    public Square move(Square square) {
+        return strategy.apply(square.getX(), square.getY());
     }
 
     public static Direction valuesOf(Square source, Square target) {
