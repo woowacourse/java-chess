@@ -1,6 +1,10 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.piece.Rook;
+import chess.domain.AbstractPiece;
+import chess.domain.Coordinate;
+import chess.domain.Position;
+import chess.domain.Team;
+import chess.domain.exceptions.InvalidDirectionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +45,7 @@ class RookTest {
 
     @Test
     void 대각선_이동_여부_테스트() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidDirectionException.class, () -> {
             abstractPiece.canMove(base,
                     new Position(new Coordinate('c'), new Coordinate(5)));
         });

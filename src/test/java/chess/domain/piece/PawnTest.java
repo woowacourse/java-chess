@@ -1,10 +1,16 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.piece.Pawn;
+import chess.domain.AbstractPiece;
+import chess.domain.Coordinate;
+import chess.domain.Position;
+import chess.domain.Team;
+import chess.domain.exceptions.InvalidDirectionException;
+import chess.domain.exceptions.InvalidDistanceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PawnTest {
 
@@ -26,7 +32,7 @@ public class PawnTest {
 
     @Test
     void 대각선_이동_여부_테스트() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidDirectionException.class, () -> {
             abstractPiece.canMove(base,
                     new Position(new Coordinate('c'), new Coordinate(3)));
         });
@@ -34,7 +40,7 @@ public class PawnTest {
 
     @Test
     void 거리가_제한에_위반되는_경우_에외_테스트() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidDistanceException.class, () -> {
             abstractPiece.canMove(base,
                     new Position(new Coordinate('b'), new Coordinate(4)));
         });

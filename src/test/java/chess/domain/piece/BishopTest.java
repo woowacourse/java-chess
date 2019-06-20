@@ -1,6 +1,10 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.piece.Bishop;
+import chess.domain.AbstractPiece;
+import chess.domain.Coordinate;
+import chess.domain.Position;
+import chess.domain.Team;
+import chess.domain.exceptions.InvalidDirectionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +44,7 @@ class BishopTest {
 
     @Test
     void 상하좌우_이동_여부_예외_테스트() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidDirectionException.class, () -> {
             abstractPiece.canMove(base,
                     new Position(new Coordinate('e'), new Coordinate(4)));
         });

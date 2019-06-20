@@ -1,10 +1,13 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.piece.Queen;
+import chess.domain.AbstractPiece;
+import chess.domain.Coordinate;
+import chess.domain.Position;
+import chess.domain.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class QueenTest {
 
