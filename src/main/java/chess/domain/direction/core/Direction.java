@@ -1,40 +1,35 @@
 package chess.domain.direction.core;
 
-import chess.domain.piece.core.Square;
-
 import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public enum Direction {
-    UP(new Square(0, -1), (x, y) -> new Square(x, y - 1)),
-    DOWN(new Square(0, 1), (x, y) -> new Square(x, y + 1)),
-    LEFT(new Square(-1, 0), (x, y) -> new Square(x - 1, y)),
-    RIGHT(new Square(1, 0), (x, y) -> new Square(x + 1, y)),
-    UP_LEFT(new Square(-1, -1), (x, y) -> new Square(x - 1, y - 1)),
-    UP_RIGHT(new Square(1, -1), (x, y) -> new Square(x + 1, y - 1)),
-    DOWN_LEFT(new Square(-1, 1), (x, y) -> new Square(x - 1, y + 1)),
-    DOWN_RIGHT(new Square(1, 1), (x, y) -> new Square(x + 1, y + 1)),
-    DOUBLE_UP_LEFT(new Square(-1, -2), (x, y) -> new Square(x - 1, y - 2)),
-    DOUBLE_UP_RIGHT(new Square(1, -2), (x, y) -> new Square(x + 1, y - 2)),
-    DOUBLE_DOWN_LEFT(new Square(-1, 2), (x, y) -> new Square(x - 1, y + 2)),
-    DOUBLE_DOWN_RIGHT(new Square(1, 2), (x, y) -> new Square(x + 1, y + 2)),
-    DOUBLE_LEFT_UP(new Square(-2, -1), (x, y) -> new Square(x - 2, y - 1)),
-    DOUBLE_LEFT_DOWN(new Square(-2, 1), (x, y) -> new Square(x - 2, y + 1)),
-    DOUBLE_RIGHT_UP(new Square(2, -1), (x, y) -> new Square(x + 2, y - 1)),
-    DOUBLE_RIGHT_DOWN(new Square(2, 1), (x, y) -> new Square(x + 2, y + 1));
+    UP(Square.of(0, -1)),
+    DOWN(Square.of(0, 1)),
+    LEFT(Square.of(-1, 0)),
+    RIGHT(Square.of(1, 0)),
+    UP_LEFT(Square.of(-1, -1)),
+    UP_RIGHT(Square.of(1, -1)),
+    DOWN_LEFT(Square.of(-1, 1)),
+    DOWN_RIGHT(Square.of(1, 1)),
+    DOUBLE_UP_LEFT(Square.of(-1, -2)),
+    DOUBLE_UP_RIGHT(Square.of(1, -2)),
+    DOUBLE_DOWN_LEFT(Square.of(-1, 2)),
+    DOUBLE_DOWN_RIGHT(Square.of(1, 2)),
+    DOUBLE_LEFT_UP(Square.of(-2, -1)),
+    DOUBLE_LEFT_DOWN(Square.of(-2, 1)),
+    DOUBLE_RIGHT_UP(Square.of(2, -1)),
+    DOUBLE_RIGHT_DOWN(Square.of(2, 1));
 
     Square unit;
-    Function<Square, Square> moveStrategy;
-    BiFunction<Integer, Integer, Square> strategy;
 
-    Direction(Square unit, BiFunction<Integer, Integer, Square> strategy) {
-        this.strategy = strategy;
+    Direction(Square unit) {
         this.unit = unit;
     }
 
     public Square move(Square square) {
-        return strategy.apply(square.getX(), square.getY());
+        return Square.of(square.getX() + unit.getX(), square.getY() + unit.getY());
     }
 
     public static Direction valuesOf(Square source, Square target) {

@@ -1,7 +1,7 @@
 package chess.domain.direction;
 
 import chess.domain.direction.core.Direction;
-import chess.domain.piece.core.Square;
+import chess.domain.direction.core.Square;
 
 import java.util.ArrayList;
 import java.util.List;
