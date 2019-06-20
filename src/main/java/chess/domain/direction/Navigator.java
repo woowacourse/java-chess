@@ -1,6 +1,5 @@
 package chess.domain.direction;
 
-import chess.domain.direction.core.Direction;
 import chess.domain.direction.core.Square;
 
 import java.util.List;

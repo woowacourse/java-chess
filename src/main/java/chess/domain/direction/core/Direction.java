@@ -1,8 +1,6 @@
 package chess.domain.direction.core;
 
 import java.util.Arrays;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public enum Direction {
     UP(Square.of(0, -1)),

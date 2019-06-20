@@ -1,7 +1,5 @@
 package chess.domain.piece.core;
 
-import java.util.function.BiFunction;
-
 public enum Type {
     KING("k"),
     QUEEN("q"),

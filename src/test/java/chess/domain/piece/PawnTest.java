@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -51,6 +50,11 @@ public class PawnTest {
 
     @Test
     void 대각선_캐치_테스트() {
-        assertThat(pawn.getRoute(Square.of(3,2), Square.of(2,1)).isCatch()).isTrue();
+        assertThat(pawn.getRoute(Square.of(3, 2), Square.of(2, 1)).isCatch()).isTrue();
+    }
+
+    @Test
+    void 위_이동_캐치_낫_테스트() {
+        assertThat(pawn.getRoute(Square.of(3, 2), Square.of(3, 1)).isCatch()).isFalse();
     }
 }

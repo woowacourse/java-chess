@@ -11,10 +11,6 @@ import java.util.Arrays;
 
 public class Bishop extends Piece {
 
-    public Bishop() {
-        this(Team.WHITE);
-    }
-
     public Bishop(Team team) {
         super(team, Type.BISHOP, new Navigator(
                 Arrays.asList(
