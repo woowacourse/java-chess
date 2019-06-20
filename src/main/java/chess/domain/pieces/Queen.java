@@ -9,4 +9,10 @@ public class Queen extends Piece {
     public Queen(Position position, Team team) {
         super(position, team);
     }
+
+    public boolean canMove(Position position) {
+        return this.position.canMoveBackAndForth(position)
+                || this.position.canMoveSideToSide(position)
+                || this.position.canMoveDiagonally(position);
+    }
 }
