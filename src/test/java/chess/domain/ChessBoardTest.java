@@ -1,7 +1,7 @@
 package chess.domain;
 
+import chess.domain.exceptions.InvalidRouteException;
 import chess.domain.exceptions.IllegalSourceException;
-import chess.domain.exceptions.IllegalTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +40,7 @@ public class ChessBoardTest {
         Position source = new Position(new Coordinate('a'), new Coordinate(1)); // Team.WHITE Rook
         Position target = new Position(new Coordinate('a'), new Coordinate(8));
 
-        assertThrows(IllegalTargetException.class, () -> {
+        assertThrows(InvalidRouteException.class, () -> {
             chessBoard.move(source, target);
         });
     }
@@ -50,7 +50,7 @@ public class ChessBoardTest {
         Position source = new Position(new Coordinate('c'), new Coordinate(1)); // Team.WHITE Bishop
         Position target = new Position(new Coordinate('e'), new Coordinate(3));
 
-        assertThrows(IllegalTargetException.class, () -> {
+        assertThrows(InvalidRouteException.class, () -> {
             chessBoard.move(source, target);
         });
     }
@@ -60,7 +60,7 @@ public class ChessBoardTest {
         Position source = new Position(new Coordinate('d'), new Coordinate(1)); // Team.WHITE Queen
         Position target = new Position(new Coordinate('d'), new Coordinate(3));
 
-        assertThrows(IllegalTargetException.class, () -> {
+        assertThrows(InvalidRouteException.class, () -> {
             chessBoard.move(source, target);
         });
     }

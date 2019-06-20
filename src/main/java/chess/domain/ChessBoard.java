@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.exceptions.IllegalRouteException;
+import chess.domain.exceptions.InvalidRouteException;
 import chess.domain.exceptions.IllegalSourceException;
 import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.piece.King;
@@ -12,8 +12,8 @@ public class ChessBoard {
 
     public ChessBoard() {
         this.turn = Turn.init();
-        this.board = Board.getInstance();
-        this.resultCounter = ResultCounter.getInstance();
+        this.board = Board.init();
+        this.resultCounter = ResultCounter.init();
     }
 
     public boolean move(Position source, Position target) {
@@ -26,7 +26,7 @@ public class ChessBoard {
         sourcePiece.canMove(source, target);
         board.move(source, target, sourcePiece);
         resultCounter.addCount(targetPiece);
-        turn = turn.turnChanged();
+        turn.turnChanged();
         return gameEnd(targetPiece);
     }
 
@@ -56,7 +56,7 @@ public class ChessBoard {
 
     private void validRoute(final Position source, final Position target, final Direction direction) {
         if (!isValidRoute(source, target, direction)) {
-            throw new IllegalRouteException("경로에 말이 존재합니다.");
+            throw new InvalidRouteException("경로에 말이 존재합니다.");
         }
     }
 

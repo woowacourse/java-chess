@@ -11,7 +11,7 @@ public class ResultCounterTest {
 
     @BeforeEach
     void setUp() {
-        resultCounter = ResultCounter.getInstance();
+        resultCounter = ResultCounter.init();
     }
 
     @Test

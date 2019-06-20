@@ -33,14 +33,8 @@ public class Board {
         );
     }
 
-    private static Board instance;
-
-    public static Board getInstance() {
-        if (instance == null) {
-            instance = new Board();
-        }
-
-        return instance;
+    public static Board init() {
+        return new Board();
     }
 
     public AbstractPiece at(final Position position) {

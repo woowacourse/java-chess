@@ -15,7 +15,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.getInstance();
+        board = Board.init();
     }
 
     @Test
