@@ -3,13 +3,10 @@ package chess.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoardTest {
-    Map<Position, Square> map;
     Board board;
 
     @BeforeEach
@@ -61,6 +58,18 @@ public class BoardTest {
     }
 
     @Test
+    public void 타겟에_다른팀이_있을때_이동후_공격() {
+        Position origin = Position.of("6", "h");
+        Position target = Position.of("5", "g");
+
+        assertTrue(board.action(origin, target));
+
+        origin = Position.of("5", "g");
+        target = Position.of("7", "e");
+        assertTrue(board.action(origin, target));
+    }
+
+    @Test
     public void 두번째_폰의_이동_공격_가능한지_테스트() {
         Position origin = Position.of("4", "d");
         Position target = Position.of("5", "d");
@@ -73,6 +82,7 @@ public class BoardTest {
         Position target = Position.of("6", "d");
         assertFalse(board.action(origin, target));
     }
+
     @Test
     public void 첫번째_폰이_공격후에_두번쨰_폰으로_바뀌는지() {
         Position origin = Position.of("4", "d");
@@ -94,6 +104,4 @@ public class BoardTest {
         target = Position.of("3", "d");
         assertFalse(board.action(origin, target));
     }
-
-
 }

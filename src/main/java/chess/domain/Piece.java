@@ -48,7 +48,7 @@ public class Piece {
         if (this.rule == Pawn.FIRST_TOP) {
             return Piece.of(this.color, Pawn.SECOND_TOP);
         }
-        return this;
+        return Piece.of(this.color, this.rule);
     }
 
     @Override
