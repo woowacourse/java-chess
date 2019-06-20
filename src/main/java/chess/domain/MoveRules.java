@@ -7,23 +7,24 @@ import java.util.Arrays;
 import java.util.List;
 
 import static chess.domain.Direction.*;
-import static chess.domain.Direction.NW;
 
 public class MoveRules {
     private static final List<Direction> PAWN_DIRECTION = Arrays.asList(N, S);
     private static final List<Direction> DIAGONAL_DIRECTION = Arrays.asList(NE, SE, SW, NW);
     private static final List<Direction> CROSS_DIRECTION = Arrays.asList(N, E, S, W);
     private static final List<Direction> ALL_DIRECTION = Arrays.asList(N, NE, E, SE, S, SW, W, NW);
+    private static final int LIMIT_DISTANCE_ONE = 1;
+    private static final int LIMIT_DISTANCE_KINGHT = 3;
 
     public static boolean pawn(Position source, Position target) {
         Direction direction = source.direction(target);
         validDirection(PAWN_DIRECTION, direction);
-        validDistance(source.distance(target, direction));
+        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
         return true;
     }
 
-    private static void validDistance(final int distance) {
-        if (distance != 1) {
+    private static void validDistance(final int distance, final int limit) {
+        if (distance != limit) {
             throw new InvalidDistanceException("움직일 수 있는 거리가 아닙니다.");
         }
     }
@@ -37,7 +38,7 @@ public class MoveRules {
     public static boolean king(Position source, Position target) {
         Direction direction = source.direction(target);
         validDirection(ALL_DIRECTION, direction);
-        validDistance(source.distance(target, direction));
+        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
         return true;
     }
 
@@ -62,16 +63,15 @@ public class MoveRules {
 
     public static boolean knight(Position source, Position target) {
         Direction direction = source.direction(target);
+        validNightDirection(direction);
+        validDistance(source.distance(target), LIMIT_DISTANCE_KINGHT);
+        return true;
+    }
 
+    private static void validNightDirection(final Direction direction) {
         if (ALL_DIRECTION.stream().anyMatch(movable -> movable == direction)) {
             throw new InvalidDirectionException("움직일 수 있는 방향이 아닙니다.");
         }
-
-        if (source.distance(target) != 3) {
-            throw new InvalidDistanceException("움직일 수 있는 거리가 아닙니다.");
-        }
-
-        return true;
     }
 
 }
