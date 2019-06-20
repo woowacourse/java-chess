@@ -1,9 +1,18 @@
 package chess.domain.piece;
 
 import chess.domain.Spot;
+import chess.domain.Team;
 
-public interface Piece {
-    boolean isSameTeam(Piece piece);
+public abstract class Piece {
+    Team team;
 
-    boolean isMovable(Spot spot);
+    public Piece(Team team) {
+        this.team = team;
+    }
+
+    public abstract boolean isMovable(Spot startSpot, Spot endSpot);
+
+    public boolean canAttack(Piece piece) {
+        return team != piece.team;
+    }
 }
