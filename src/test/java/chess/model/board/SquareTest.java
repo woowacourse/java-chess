@@ -60,7 +60,7 @@ class SquareTest {
     @Test
     void getDownOneNeighborNull() {
         square1 = new Square(Column.D, Row._1);
-        square2 = Square.getUpOneNeighbor(square1);
+        square2 = Square.getDownOneNeighbor(square1);
         assertThat(square2).isNull();
     }
 
@@ -100,11 +100,11 @@ class SquareTest {
         assertThat(square2).isNull();
 
         square1 = new Square(Column.H, Row._7);
-        square2 = Square.getUpperLeftOneNeighbor(square1);
+        square2 = Square.getUpperRightOneNeighbor(square1);
         assertThat(square2).isNull();
 
         square1 = new Square(Column.G, Row._8);
-        square2 = Square.getUpperLeftOneNeighbor(square1);
+        square2 = Square.getUpperRightOneNeighbor(square1);
         assertThat(square2).isNull();
     }
 

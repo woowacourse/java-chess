@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Rule {
-    ; // Empty enum
+    ; // Empty enum for static methods.
 
     private static Map<UnitClass, MoveRule> moveRuleMap = new HashMap<>();
 
@@ -19,7 +19,7 @@ public enum Rule {
         moveRuleMap.put(UnitClass.BISHOP, new Bishop());
         moveRuleMap.put(UnitClass.KNIGHT, new Knight());
         moveRuleMap.put(UnitClass.ROOK, new Rook());
-        moveRuleMap.put(UnitClass.PAWN, new Pawn());
+        moveRuleMap.put(UnitClass.PAWN, new PawnMove());
     }
 
     static Piece getPiece(final Board board, final Square square) {

@@ -9,15 +9,21 @@ import chess.model.unit.Side;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends MoveRule {
-    Pawn() {}
+import static chess.model.rule.Rule.getPiece;
+
+class PawnMove extends MoveRule {
+    PawnMove() {
+        super();
+    }
 
     @Override
     List<Square> getMovableSquares(Board board, final Square square, final Piece piece) {
         final List<Square> candidate = new ArrayList<>();
-        candidate.add(forward(square, piece));
-        if (isFirstPosition(square, piece)) {
-            candidate.add(forward(forward(square, piece), piece));
+        final Square forwarded = forward(square, piece);
+        final Piece maybeNull = getPiece(board, forwarded);
+        candidate.add(forwarded);
+        if (maybeNull == null && isFirstPosition(square, piece)) {
+            candidate.add(forward(forwarded, piece));
         }
         return candidate;
     }

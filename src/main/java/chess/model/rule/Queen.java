@@ -7,7 +7,7 @@ import chess.model.unit.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen extends MoveRule {
+class Queen extends MoveRule {
     Queen() {
         super();
     }

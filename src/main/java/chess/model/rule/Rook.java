@@ -7,7 +7,7 @@ import chess.model.unit.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends MoveRule {
+class Rook extends MoveRule {
     Rook() {
         super();
     }
