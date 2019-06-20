@@ -3,39 +3,27 @@ package chess.model.rule;
 import chess.model.board.Board;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
-import chess.model.unit.UnitClass;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static chess.model.rule.Rule.getPiece;
+
 abstract class MoveRule {
-    private Map<UnitClass, MoveRule> map = new HashMap<>();
+    abstract List<Square> getMovableSquares(final Board board, final Square square, final Piece piece);
 
-    protected Piece piece;
-
-    MoveRule(final Piece piece) {
-        this.piece = piece;
-    }
-
-    abstract List<Square> getMovableSquares(final Board board, final Square square);
-
-    private List<Square> getOccupiedSquares(final Board board, final List<Square> squaresCandidate, final Piece piece) {
-        return squaresCandidate.stream()
-                .filter(square -> getPiece(board, square) != null)
-                .filter(square -> getPiece(board, square).getSide() == piece.getSide())
+    private List<Square> getOccupiedSquares(final Board board, final List<Square> candidatedSquares, final Piece piece) {
+        return candidatedSquares.stream()
+                .filter(square -> {
+                    final Piece occupiedPiece = getPiece(board, square);
+                    if (occupiedPiece != null) {
+                        return occupiedPiece.getSide() == piece.getSide();
+                    }
+                    return false;
+                })
                 .collect(Collectors.toList());
-    }
-
-    private Piece getPiece(final Board board, final Square square) {
-        try {
-            return board.getPiece(square);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
     }
 
     List<Square> getNonBlockedNeighbors(final Board board, final Square square, final Function<Square, Square> getNeighbors) {
@@ -47,5 +35,9 @@ abstract class MoveRule {
         return squareList;
     }
 
-    //    public abstract boolean isValidMove(final Board board, final Square checkTarget, final Square destination);
+    boolean isValidMove(final Board board, final Piece piece, final Square checkTarget, final Square destination) {
+        final List<Square> candidateList = getMovableSquares(board, checkTarget, piece);
+        final List<Square> occupiedList = getOccupiedSquares(board, candidateList, piece);
+        return candidateList.contains(destination) && !occupiedList.contains(destination);
+    }
 }

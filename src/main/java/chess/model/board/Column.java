@@ -44,14 +44,6 @@ public enum Column {
         return columnIndex;
     }
 
-    public boolean isFirst() {
-        return this == Column.A;
-    }
-
-    public boolean isLast() {
-        return this == Column.H;
-    }
-
     @Override
     public String toString() {
         return "Column " + this.name;

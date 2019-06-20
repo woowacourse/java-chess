@@ -11,20 +11,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Knight extends MoveRule {
-    Knight(final Piece piece) {
-        super(piece);
+    Knight() {
+        super();
     }
 
     @Override
-    List<Square> getMovableSquares(Board board, final Square square) {
+    List<Square> getMovableSquares(Board board, final Square square, Piece piece) {
         final List<Square> candidate = new ArrayList<>();
         candidate.addAll(Diagonal.UPPER_LEFT.getSquares(square));
         candidate.addAll(Diagonal.UPPER_RIGHT.getSquares(square));
         candidate.addAll(Diagonal.LOWER_LEFT.getSquares(square));
         candidate.addAll(Diagonal.LOWER_RIGHT.getSquares(square));
-        return candidate.stream()
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        return candidate;
     }
 
     enum Diagonal {
@@ -47,11 +45,13 @@ public class Knight extends MoveRule {
             try {
                 diagonal = square2.apply(square1.apply(square));
             } catch (NullPointerException e) {
-                return null;
+                return squares;
             }
             squares.add(square1.apply(diagonal));
             squares.add(square2.apply(diagonal));
-            return squares;
+            return squares.stream()
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
         }
     }
 }

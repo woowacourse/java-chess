@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends MoveRule {
-    Rook(final Piece piece) {
-        super(piece);
+    Rook() {
+        super();
     }
 
     @Override
-    List<Square> getMovableSquares(Board board, final Square square) {
+    List<Square> getMovableSquares(Board board, final Square square, Piece piece) {
         final List<Square> candidate = new ArrayList<>();
         candidate.addAll(getNonBlockedNeighbors(board, square, Square::getLeftOneNeighbor));
         candidate.addAll(getNonBlockedNeighbors(board, square, Square::getRightOneNeighbor));

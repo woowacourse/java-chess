@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends MoveRule {
-    Bishop(final Piece piece) {
-        super(piece);
+    Bishop() {
+        super();
     }
 
     @Override
-    List<Square> getMovableSquares(Board board, final Square square) {
+    List<Square> getMovableSquares(Board board, final Square square, Piece piece) {
         final List<Square> candidate = new ArrayList<>();
         candidate.addAll(getNonBlockedNeighbors(board, square, Square::getUpperLeftOneNeighbor));
         candidate.addAll(getNonBlockedNeighbors(board, square, Square::getUpperRightOneNeighbor));

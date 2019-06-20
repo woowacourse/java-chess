@@ -16,7 +16,7 @@ public class Board {
         this.lines = new HashMap<>();
     }
 
-    private static Board makeEmptyBoard() {
+    public static Board makeEmptyBoard() {
         return new Board();
     }
 
@@ -34,9 +34,9 @@ public class Board {
     }
 
     public Piece getPiece(final Square square) {
-        final Column column = square.getColumn();
-        final Row row = square.getRow();
         try {
+            final Column column = square.getColumn();
+            final Row row = square.getRow();
             final Piece piece = lines.get(row).getPiece(column);
             if (piece == null) {
                 throw new Exception();

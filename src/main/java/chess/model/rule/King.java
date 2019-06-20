@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 class King extends MoveRule {
-    King(final Piece piece) {
-        super(piece);
+    King() {
+        super();
     }
 
     @Override
-    List<Square> getMovableSquares(Board board, final Square square) {
+    List<Square> getMovableSquares(Board board, final Square square, Piece piece) {
         final List<Square> candidate = new ArrayList<>();
         candidate.add(Square.getLeftOneNeighbor(square));
         candidate.add(Square.getRightOneNeighbor(square));

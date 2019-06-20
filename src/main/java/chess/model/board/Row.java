@@ -44,14 +44,6 @@ public enum Row {
         return rowIndex;
     }
 
-    public boolean isFirst() {
-        return this == Row._1;
-    }
-
-    public boolean isLast() {
-        return this == Row._8;
-    }
-
     @Override
     public String toString() {
         return "Row " + this.name;
