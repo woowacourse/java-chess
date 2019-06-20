@@ -19,7 +19,7 @@ public class BoardFactory {
         for (int i = 0; i <= Coordinate.MAX_COORDINATE; i++) {
             String[] row = arrange.get(i).split("");
             for (int j = 0; j <= Coordinate.MAX_COORDINATE; j++) {
-                points.put(Point.of(i, j), PieceType.of(row[j]).create());
+                points.put(Point.of(i, j), PieceType.of(row[j]).create(PlayerType.of(row[j])));
             }
         }
         return new Board(points);

@@ -32,6 +32,4 @@ public class BoardTest {
                 .orElseThrow(IllegalArgumentException::new))
                 .isInstanceOf(Rook.class);
     }
-
-
 }

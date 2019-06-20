@@ -1,8 +1,14 @@
 package chess.domain.piece;
 
+import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
 public class Knight implements Piece {
+    private PlayerType playerType;
+
+    public Knight(PlayerType playerType) {
+        this.playerType = playerType;
+    }
 
     @Override
     public boolean isMovable(Point prev, Point next) {
