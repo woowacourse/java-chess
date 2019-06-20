@@ -56,6 +56,14 @@ public class Square {
         return piece.getScore();
     }
 
+    public boolean isPawn() {
+        return piece.isPawn();
+    }
+
+    public boolean isSameColumn(final Column other) {
+        return this.position.isSameColumn(other);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

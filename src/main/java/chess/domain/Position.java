@@ -98,6 +98,14 @@ public class Position implements Comparable<Position> {
         return positions;
     }
 
+    public int vectorOfRow(final Position target) {
+        return target.row.vectorOf(this.row);
+    }
+
+    public boolean isSameColumn(final Column other) {
+        return this.column.equals(other);
+    }
+
     @Override
     public int compareTo(final Position o) {
         int result = this.row.compareTo(o.row);
@@ -129,9 +137,5 @@ public class Position implements Comparable<Position> {
                 "row=" + row +
                 ", column=" + column +
                 '}';
-    }
-
-    public int vectorOfRow(final Position target) {
-        return target.row.vectorOf(this.row);
     }
 }

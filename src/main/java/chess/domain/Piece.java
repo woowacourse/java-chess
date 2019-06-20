@@ -4,6 +4,7 @@ import chess.domain.RuleImpl.Empty;
 import chess.domain.RuleImpl.Pawn;
 import chess.domain.RuleImpl.Rule;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Piece {
@@ -57,6 +58,15 @@ public class Piece {
 
     public double getScore() {
         return rule.getScore();
+    }
+
+    public boolean isPawn() {
+        for (Rule rule : Pawn.values()) {
+            if (this.rule == rule) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
