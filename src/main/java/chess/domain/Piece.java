@@ -34,6 +34,7 @@ public abstract class Piece {
     }
 
     public abstract String getName();
+    public abstract double getScore();
 
     @Override
     public boolean equals(final Object o) {

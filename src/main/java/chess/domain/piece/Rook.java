@@ -13,6 +13,7 @@ import static chess.domain.Direction.W;
 
 public class Rook extends Piece {
     private static final String NAME = "r";
+    private static final double SCORE = 5;
     private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, E, S, W);
 
     public Rook(Team team) {
@@ -30,5 +31,10 @@ public class Rook extends Piece {
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

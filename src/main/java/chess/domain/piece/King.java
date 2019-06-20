@@ -14,6 +14,7 @@ import static chess.domain.Direction.W;
 
 public class King extends Piece {
     private static final String NAME = "k";
+    private static final double SCORE = 0;
     private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, NE, E, SE, S, SW, W, NW);
 
     public King(Team team) {
@@ -32,7 +33,13 @@ public class King extends Piece {
         });
     }
 
+    @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

@@ -13,6 +13,7 @@ import static chess.domain.Direction.*;
 
 public class Pawn extends Piece {
     private static final String NAME = "p";
+    private static final int SCORE = 1;
     private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, S);
 
     public Pawn(Team team) {
@@ -34,5 +35,10 @@ public class Pawn extends Piece {
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

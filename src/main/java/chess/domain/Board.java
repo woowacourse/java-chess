@@ -78,15 +78,28 @@ public class Board {
         }
 
         Direction direction = source.direction(target);
-        for (Position checking = source.add(direction); !checking.equals(target); checking = checking.add(direction)) {
-            if (this.at(checking) != null) {
-                throw new IllegalTargetException("경로에 말이 존재합니다.");
-            }
+        if (!validRoute(source, target, direction)) {
+            throw new IllegalTargetException("경로에 말이 존재합니다."); // todo: Exception 이름 변경
         }
 
         sourcePiece.canMove(source, target);
         board.remove(source);
+        // todo: 상대방 말이 있는데 상대방 말이 무엇인지
         board.put(target, sourcePiece);
         turn = turn.turnChanged();
+    }
+
+    private boolean validRoute(final Position source, final Position target, final Direction direction) {
+        if (direction == Direction.OTHER) {
+            return true;
+        }
+
+        for (Position checking = source.add(direction); !checking.equals(target); checking = checking.add(direction)) {
+            if (this.at(checking) != null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
