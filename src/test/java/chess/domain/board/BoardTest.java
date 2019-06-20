@@ -11,6 +11,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class BoardTest {
     private List<String> basicArrange;
+
     @BeforeEach
     void setUp() {
         basicArrange = Arrays.asList(

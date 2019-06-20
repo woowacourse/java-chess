@@ -39,7 +39,7 @@ public class Coordinate {
         }
     }
 
-    public int calculateDistance (Coordinate end){
+    public int calculateDistance(Coordinate end) {
         return this.coordinate - end.coordinate;
     }
 }

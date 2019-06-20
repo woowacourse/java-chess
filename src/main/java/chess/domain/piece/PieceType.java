@@ -17,9 +17,9 @@ public enum PieceType {
 
 
     private String piece;
-    private Function<PlayerType,Optional<Piece>> create;
+    private Function<PlayerType, Optional<Piece>> create;
 
-    PieceType(String piece, Function<PlayerType,Optional<Piece>> create) {
+    PieceType(String piece, Function<PlayerType, Optional<Piece>> create) {
         this.piece = piece;
         this.create = create;
     }

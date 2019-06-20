@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
-public class Rook implements Piece{
+public class Rook implements Piece {
     private PlayerType playerType;
 
     public Rook(PlayerType playerType) {
