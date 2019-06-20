@@ -28,6 +28,7 @@ public abstract class AbstractPiece implements Piece {
     }
 
     public abstract String getName();
+
     public abstract double getScore();
 
     @Override

@@ -14,7 +14,7 @@ public class MoveRules {
     private static final List<Direction> CROSS_DIRECTION = Arrays.asList(N, E, S, W);
     private static final List<Direction> ALL_DIRECTION = Arrays.asList(N, NE, E, SE, S, SW, W, NW);
     private static final int LIMIT_DISTANCE_ONE = 1;
-    private static final int LIMIT_DISTANCE_KINGHT = 3;
+    private static final int LIMIT_DISTANCE_KNIGHT = 3;
 
     public static boolean pawn(Position source, Position target) {
         Direction direction = source.direction(target);
@@ -64,7 +64,7 @@ public class MoveRules {
     public static boolean knight(Position source, Position target) {
         Direction direction = source.direction(target);
         validNightDirection(direction);
-        validDistance(source.distance(target), LIMIT_DISTANCE_KINGHT);
+        validDistance(source.distance(target), LIMIT_DISTANCE_KNIGHT);
         return true;
     }
 

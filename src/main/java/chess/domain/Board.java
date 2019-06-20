@@ -47,18 +47,19 @@ public class Board {
         return board.get(position);
     }
 
-    public String boardAt(final Position position) {
-        if (!board.containsKey(position)) {
-            return ".";
-        }
-
-        AbstractPiece abstractPiece = board.get(position);
-
-        if (abstractPiece.isBlackTeam()) {
-            return abstractPiece.getName();
-        }
-        return abstractPiece.getName().toUpperCase();
-    }
+// FIXME: OutputView 관련
+//    public String boardAt(final Position position) {
+//        if (!board.containsKey(position)) {
+//            return ".";
+//        }
+//
+//        AbstractPiece abstractPiece = board.get(position);
+//
+//        if (abstractPiece.isBlackTeam()) {
+//            return abstractPiece.getName();
+//        }
+//        return abstractPiece.getName().toUpperCase();
+//    }
 
     public void move(Position source, Position target, AbstractPiece sourceAbstractPiece) {
         board.remove(source);

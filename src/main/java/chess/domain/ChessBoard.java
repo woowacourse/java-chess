@@ -79,8 +79,8 @@ public class ChessBoard {
         }
         return true;
     }
-
-    public Board getBoard() {
-        return this.board;
-    }
+// FIXME: OutputView 관련 메서드
+//    public Board getBoard() {
+//        return this.board;
+//    }
 }
