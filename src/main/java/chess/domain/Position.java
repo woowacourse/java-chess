@@ -3,6 +3,8 @@ package chess.domain;
 import java.util.Objects;
 
 public class Position {
+    private static final int DIAGONAL_DIVIDER = 2;
+
     private final Coordinate x;
     private final Coordinate y;
 
@@ -27,7 +29,7 @@ public class Position {
     }
 
     private int distanceDiagonal(Position target) {
-        return (Math.abs(x.subtract(target.x)) + Math.abs(y.subtract(target.y))) / 2;
+        return (Math.abs(x.subtract(target.x)) + Math.abs(y.subtract(target.y))) / DIAGONAL_DIVIDER;
     }
 
     private int distanceCross(Position target) {
