@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.List;
+
 public class Navigator {
     private final Direction direction;
 
@@ -8,7 +10,7 @@ public class Navigator {
         this.direction = Direction.findDirection(directionPoint);
     }
 
-    public Direction getDirection() {
-        return direction;
+    public Direction getDirection(List<Direction> directions) {
+        return directions.contains(direction) ? direction : Direction.NOT_FIND;
     }
 }
