@@ -1,8 +1,10 @@
 package chess.domain;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ChessCoordinate {
     private final ChessXCoordinate x;
@@ -29,6 +31,12 @@ public class ChessCoordinate {
 
     public static Optional<ChessCoordinate> valueOf(ChessXCoordinate x, ChessYCoordinate y) {
         return valueOf(x.getSymbol() + y.getSymbol());
+    }
+
+    public static void forEachCoordinate(Consumer<ChessCoordinate> consumer) {
+        List<ChessXCoordinate> xAxis = ChessXCoordinate.allAscendingCoordinates();
+        List<ChessYCoordinate> yAxis = ChessYCoordinate.allAscendingCoordinates();
+        yAxis.forEach(y -> xAxis.forEach(x -> consumer.accept(valueOf(x, y).get())));
     }
 
     public ChessXCoordinate getX() {

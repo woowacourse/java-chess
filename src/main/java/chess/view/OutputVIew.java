@@ -17,8 +17,8 @@ public class OutputVIew {
     }
 
     public static void printBoardState(Map<ChessCoordinate, PieceType> board) {
-        List<ChessXCoordinate> xAxis = ChessXCoordinate.getAscendingCoordinates(ChessXCoordinate.A);
-        List<ChessYCoordinate> yAxis = ChessYCoordinate.getDescendingCoordinates(ChessYCoordinate.RANK_8);
+        List<ChessXCoordinate> xAxis = ChessXCoordinate.allAscendingCoordinates();
+        List<ChessYCoordinate> yAxis = ChessYCoordinate.allAscendingCoordinates();
         yAxis.forEach(y -> {
             xAxis.forEach(x -> System.out.print(getStateToString(board.get(ChessCoordinate.valueOf(x, y)))));
             System.out.println();

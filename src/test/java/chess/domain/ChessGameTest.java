@@ -37,12 +37,9 @@ class ChessGameTest {
         );
 
         ChessGame chessGame = new ChessGame(new TestStateInitiatorFactory(boardState));
-        ChessYCoordinate.allAscendingCoordinates()
-                .forEach(y ->
-                        ChessXCoordinate.allAscendingCoordinates().forEach(x -> {
-                            assertThat(chessGame.getBoard().get(ChessCoordinate.valueOf(x, y).get()))
-                                    .isEqualTo(expectedBoardState.get(y.getIndex()).get(x.getIndex()));
-                        }));
+
+        ChessCoordinate.forEachCoordinate(coord -> assertThat(chessGame.getBoard().get(coord))
+                .isEqualTo(expectedBoardState.get(coord.getY().getIndex()).get(coord.getX().getIndex())));
     }
 
     @Test
@@ -77,9 +74,4 @@ class ChessGameTest {
         assertThat(board.getBoard()).isEqualTo(new ChessGame(new TestStateInitiatorFactory(toBoardState)).getBoard());
     }
 
-    @Test
-    void 같은_색_이동_X() {
-//        ChessGame board = new ChessGame();
-//        assertThrows(AllyExistException.class, () -> board.move(ChessCoordinate.valueOf("b2").get(), ChessCoordinate.valueOf("b1").get()));
-    }
 }

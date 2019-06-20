@@ -11,13 +11,8 @@ public class StateInitiatorFactory implements AbstractStateInitiatorFactory {
     @Override
     public Map<ChessCoordinate, ChessPiece> create() {
         AbstractChessPieceFactory factory = new ChessPieceFactory();
-        List<ChessXCoordinate> xAxis = ChessXCoordinate.allAscendingCoordinates();
-        List<ChessYCoordinate> yAxis = ChessYCoordinate.allAscendingCoordinates();
         Map<ChessCoordinate, ChessPiece> board = new HashMap<>();
-        yAxis.forEach(y ->
-                xAxis.forEach(x ->
-                        board.put(ChessCoordinate.valueOf(x, y).get(), factory.create(PieceType.NONE))
-                ));
+        ChessCoordinate.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
 
         board.put(ChessCoordinate.valueOf("a1").get(), factory.create(ROOK_WHITE));
         board.put(ChessCoordinate.valueOf("b1").get(), factory.create(KNIGHT_WHITE));

@@ -76,13 +76,8 @@ public class ChessService {
     public Map<ChessCoordinate, ChessPiece> findBoardStatesByRoomId(Long roomId) {
         try {
             AbstractChessPieceFactory factory = new ChessPieceFactory();
-            List<ChessXCoordinate> xAxis = ChessXCoordinate.allAscendingCoordinates();
-            List<ChessYCoordinate> yAxis = ChessYCoordinate.allAscendingCoordinates();
             Map<ChessCoordinate, ChessPiece> board = new HashMap<>();
-            yAxis.forEach(y ->
-                    xAxis.forEach(x ->
-                            board.put(ChessCoordinate.valueOf(x, y).get(), factory.create(PieceType.NONE))
-                    ));
+            ChessCoordinate.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
 
             boardStateDao.findByRoomId(roomId).forEach(dto ->
                     board.put(ChessCoordinate.valueOf(dto.getCoordX() + dto.getCoordY()).get(),
