@@ -27,6 +27,10 @@ public class YPosition {
         return yPositions.get(yPosition);
     }
 
+    public int calculateYsDiff(final YPosition target) {
+        return Math.abs(this.yPosition - target.yPosition);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -39,4 +43,5 @@ public class YPosition {
     public int hashCode() {
         return Objects.hash(yPosition);
     }
+
 }

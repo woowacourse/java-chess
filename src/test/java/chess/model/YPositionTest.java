@@ -20,4 +20,13 @@ public class YPositionTest {
     void Y_equals_테스트() {
         assertThat(YPosition.valueOf(1)).isEqualTo(YPosition.valueOf(1));
     }
+
+    @Test
+    void source_target의_x값_차의_절대값_비교() {
+        YPosition source = YPosition.valueOf(1);
+        YPosition target = YPosition.valueOf(7);
+
+        int actual = source.calculateYsDiff(target);
+        assertThat(actual).isEqualTo(6);
+    }
 }
