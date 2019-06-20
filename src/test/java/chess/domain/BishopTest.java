@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 public class BishopTest {
     @Test
     void 생성() {
-        assertDoesNotThrow(() -> new Bishop(true));
+        assertDoesNotThrow(() -> new Bishop(Team.WHITE));
     }
 
     @Test
     void 이동() {
-        Piece bishop = new Bishop(true);
+        Piece bishop = new Bishop(Team.WHITE);
         List<Point> points = new ArrayList<>();
         for (int i = 1; i < 3; i++) {
             points.add(new Point((char)('a' + i), (char)('1'+ i)));
@@ -26,7 +26,7 @@ public class BishopTest {
 
     @Test
     void 이동_불가능() {
-        Piece bishop = new Bishop(true);
+        Piece bishop = new Bishop(Team.WHITE);
         assertThat(bishop.getCandidatePoints(new Point("a1"), new Point("a2")).size()).isEqualTo(0);
     }
 }

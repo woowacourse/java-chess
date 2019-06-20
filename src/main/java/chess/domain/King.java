@@ -1,15 +1,14 @@
 package chess.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class King implements Piece {
-    private final boolean teamColor;
+    private final Team team;
 
-    public King(boolean teamColor) {
-        this.teamColor = teamColor;
+    public King(Team team) {
+        this.team = team;
     }
 
     @Override
@@ -28,11 +27,11 @@ public class King implements Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         King king = (King) o;
-        return teamColor == king.teamColor;
+        return team == king.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(teamColor);
+        return Objects.hash(team);
     }
 }

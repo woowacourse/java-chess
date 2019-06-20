@@ -4,14 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 class PieceFactory {
-    static List<Piece> generateFirstPieces(boolean teamColor) {
-        return Arrays.asList(new Rook(teamColor),
-                new Knight(teamColor),
-                new Bishop(teamColor),
-                new Queen(teamColor),
-                new King(teamColor),
-                new Bishop(teamColor),
-                new Knight(teamColor),
-                new Rook(teamColor));
+    static List<Piece> generateFirstPieces(Team team) {
+        return Arrays.asList(new Rook(team),
+                new Knight(team),
+                new Bishop(team),
+                new Queen(team),
+                new King(team),
+                new Bishop(team),
+                new Knight(team),
+                new Rook(team));
     }
 }

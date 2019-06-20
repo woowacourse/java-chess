@@ -6,10 +6,10 @@ import java.util.Objects;
 
 public class Knight implements Piece {
     private static final int MOVABLE_DISTANCE = 5;
-    private final boolean teamColor;
+    private final Team team;
 
-    public Knight(boolean teamColor) {
-        this.teamColor = teamColor;
+    public Knight(Team team) {
+        this.team = team;
     }
 
     @Override
@@ -26,11 +26,11 @@ public class Knight implements Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Knight knight = (Knight) o;
-        return teamColor == knight.teamColor;
+        return team == knight.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(teamColor);
+        return Objects.hash(team);
     }
 }

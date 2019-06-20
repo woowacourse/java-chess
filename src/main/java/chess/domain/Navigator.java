@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Navigator {
-    public static final int ROUNDING_DIGIT = 100;
+    private static final int ROUNDING_DIGIT = 100;
     private final Point start;
     private final Point end;
 

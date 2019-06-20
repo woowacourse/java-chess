@@ -8,11 +8,11 @@ import java.util.Objects;
 import static chess.domain.Direction.*;
 
 public class Queen implements Piece{
-    private final boolean teamColor;
+    private final Team team;
     private final List<Direction> candidateDirection;
 
-    public Queen(boolean teamColor) {
-        this.teamColor = teamColor;
+    public Queen(Team team) {
+        this.team = team;
         this.candidateDirection = Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
     }
 
@@ -35,11 +35,12 @@ public class Queen implements Piece{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Queen queen = (Queen) o;
-        return teamColor == queen.teamColor;
+        return team == queen.team &&
+                Objects.equals(candidateDirection, queen.candidateDirection);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(teamColor);
+        return Objects.hash(team, candidateDirection);
     }
 }

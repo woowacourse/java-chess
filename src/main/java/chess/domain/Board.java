@@ -13,8 +13,8 @@ public class Board {
 
     private Map<Point, Piece> init() {
         Map<Point, Piece> pieces = new HashMap<>();
-        List<Piece> white = PieceFactory.generateFirstPieces(true);
-        List<Piece> black = PieceFactory.generateFirstPieces(false);
+        List<Piece> white = PieceFactory.generateFirstPieces(Team.WHITE);
+        List<Piece> black = PieceFactory.generateFirstPieces(Team.BLACK);
         for (int i = 0; i < 8; i++) {
             pieces.put(new Point((char) ('a' + i), '1'), white.get(i));
             pieces.put(new Point((char) ('a' + i), '2'), new Pawn(Team.WHITE));

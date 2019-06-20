@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 public class RookTest {
     @Test
     void 생성() {
-        assertDoesNotThrow(() -> new Rook(true));
+        assertDoesNotThrow(() -> new Rook(Team.WHITE));
     }
 
     @Test
     void 이동() {
-        Rook rook = new Rook(true);
+        Rook rook = new Rook(Team.WHITE);
         List<Point> points = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             points.add(new Point('a', (char)('1'+ i)));
@@ -26,7 +26,7 @@ public class RookTest {
 
     @Test
     void 이동_불가능() {
-        Rook rook = new Rook(true);
+        Rook rook = new Rook(Team.WHITE);
         assertThat(rook.getCandidatePoints(new Point("a1"), new Point("b2")).size()).isEqualTo(0);
     }
 }

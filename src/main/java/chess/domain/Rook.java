@@ -7,11 +7,11 @@ import java.util.Objects;
 
 import static chess.domain.Direction.*;
 public class Rook implements Piece{
-    private final boolean teamColor;
+    private final Team team;
     private final List<Direction> candidateDirection;
 
-    public Rook(boolean teamColor) {
-        this.teamColor = teamColor;
+    public Rook(Team team) {
+        this.team = team;
         this.candidateDirection = Arrays.asList(NORTH, EAST, SOUTH, WEST);
     }
 
@@ -34,11 +34,12 @@ public class Rook implements Piece{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rook rook = (Rook) o;
-        return teamColor == rook.teamColor;
+        return team == rook.team &&
+                Objects.equals(candidateDirection, rook.candidateDirection);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(teamColor);
+        return Objects.hash(team, candidateDirection);
     }
 }
