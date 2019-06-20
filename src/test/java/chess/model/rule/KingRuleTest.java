@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RuleTest {
+class KingRuleTest {
     private Board board;
     private Square checkTarget;
     private Square destination;
@@ -26,7 +26,7 @@ class RuleTest {
     }
 
     @Test
-    void validMoveKing1() {
+    void 팔방을_한칸씩_자유자재로_이동() {
         checkTarget = new Square(Column.D, Row._5);
         piece = new King(Side.WHITE);
         board.setPiece(checkTarget, piece);
@@ -65,7 +65,7 @@ class RuleTest {
     }
 
     @Test
-    void validMoveKing2() {
+    void 좌측_상단_끄트머리() {
         checkTarget = new Square(Column.A, Row._8);
         piece = new King(Side.BLACK);
         board.setPiece(checkTarget, piece);
@@ -84,7 +84,7 @@ class RuleTest {
     }
 
     @Test
-    void validMoveKing3() {
+    void 우측_하단_끄트머리() {
         checkTarget = new Square(Column.H, Row._1);
         piece = new King(Side.WHITE);
         board.setPiece(checkTarget, piece);
@@ -103,7 +103,7 @@ class RuleTest {
     }
 
     @Test
-    void validMoveKing4() {
+    void 한번_이동가능거리_초과시() {
         checkTarget = new Square(Column.D, Row._5);
         piece = new King(Side.BLACK);
         board.setPiece(checkTarget, piece);
@@ -122,7 +122,7 @@ class RuleTest {
     }
 
     @Test
-    void validMoveKing5() {
+    void 한번_이동가능거리_초과시_좌상단끄트머리() {
         checkTarget = new Square(Column.A, Row._8);
         piece = new King(Side.WHITE);
         board.setPiece(checkTarget, piece);
@@ -145,7 +145,7 @@ class RuleTest {
     }
 
     @Test
-    void validMoveKing6() {
+    void 한번_이동가능거리_초과시_우하단끄트머리() {
         checkTarget = new Square(Column.H, Row._1);
         piece = new King(Side.WHITE);
         board.setPiece(checkTarget, piece);
@@ -168,7 +168,7 @@ class RuleTest {
     }
 
     @Test
-    void validMoveKing7() {
+    void 같은편에_길막당했을때() {
         checkTarget = new Square(Column.D, Row._5);
         piece = new King(Side.BLACK);
         board.setPiece(checkTarget, piece);

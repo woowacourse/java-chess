@@ -32,23 +32,21 @@ public class Square {
     }
 
     private static Square getHorizontalOneNeighbor(final Square square, final int prevOrNext) {
-        final Column column = square.getColumn();
-        final int index = column.getColumnIndex();
         try {
-            final Column newColumn = Column.getByIndex(index + prevOrNext);
+            final Column column = square.getColumn();
+            final Column newColumn = Column.getByIndex(column.getColumnIndex() + prevOrNext);
             return new Square(newColumn, square.getRow());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             return null;
         }
     }
 
     private static Square getVerticalOneNeighbor(final Square square, final int prevOrNext) {
-        final Row row = square.getRow();
-        final int index = row.getRowIndex();
         try {
-            final Row newRow = Row.getByIndex(index + prevOrNext);
+            final Row row = square.getRow();
+            final Row newRow = Row.getByIndex(row.getRowIndex() + prevOrNext);
             return new Square(square.getColumn(), newRow);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             return null;
         }
     }

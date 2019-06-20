@@ -29,8 +29,9 @@ abstract class MoveRule {
     List<Square> getNonBlockedNeighbors(final Board board, final Square square, final Function<Square, Square> getNeighbors) {
         final List<Square> squareList = new ArrayList<>();
         Square nextSquare = getNeighbors.apply(square);
-        while (getPiece(board, nextSquare) == null) {
+        while (nextSquare != null) {
             squareList.add(nextSquare);
+            nextSquare = getNeighbors.apply(nextSquare);
         }
         return squareList;
     }
