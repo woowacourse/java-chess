@@ -13,12 +13,12 @@ class MovementUnitTest {
 
     @Test
     void 가로_계산() {
-        assertThat(MovementUnit.direction(3, 0)).isEqualTo(MovementUnit.UP);
+        assertThat(MovementUnit.direction(3, 0)).isEqualTo(MovementUnit.RIGHT);
     }
 
     @Test
     void 세로_계산() {
-        assertThat(MovementUnit.direction(0, 3)).isEqualTo(MovementUnit.RIGHT);
+        assertThat(MovementUnit.direction(0, 3)).isEqualTo(MovementUnit.UP);
     }
 
     @Test

@@ -1,8 +1,8 @@
 package chess.domain;
 
 public enum MovementUnit {
-    UP(1, 0),
-    RIGHT(0, 1),
+    UP(0, 1),
+    RIGHT(1, 0),
     DIAGNOAL(1, 1),
     KNIGHT_MOVE_ONE(2, 1),
     KNIGHT_MOVE_TWO(1, 2);
@@ -22,11 +22,11 @@ public enum MovementUnit {
         }
 
         if (x == 0) {
-            return RIGHT;
+            return UP;
         }
 
         if (y == 0) {
-            return UP;
+            return RIGHT;
         }
 
         if (x == y) {
