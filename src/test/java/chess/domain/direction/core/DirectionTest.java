@@ -1,9 +1,11 @@
-package chess.domain;
+package chess.domain.direction.core;
 
+import chess.domain.direction.core.Direction;
+import chess.domain.piece.core.Square;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static chess.domain.Direction.valuesOf;
+import static chess.domain.direction.core.Direction.valuesOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DirectionTest {
@@ -26,13 +28,13 @@ public class DirectionTest {
             "DOUBLE_RIGHT_UP,3,2,5,1",
             "DOUBLE_UP_RIGHT,3,2,4,0"})
     void check_direction_true_test(Direction direction, int sourceX, int sourceY, int targetX, int targetY) {
-        assertThat(direction.check(new Square(sourceX, sourceY), new Square(targetX,targetY))).isTrue();
+        assertThat(direction.checkDirection(new Square(sourceX, sourceY), new Square(targetX,targetY))).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource({"UP,3,2,3,1",
-            "DOWN,3,2,3,3",
-            "LEFT,3,2,2,2",
+    @CsvSource({"UP,0,1,0,0",
+            "DOWN,0,0,0,1",
+            "LEFT,1,0,0,0",
             "RIGHT,3,2,4,2",
             "DOWN_LEFT,3,2,2,3",
             "DOWN_RIGHT,3,2,4,3",
