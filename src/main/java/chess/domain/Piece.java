@@ -4,7 +4,6 @@ import chess.domain.RuleImpl.Empty;
 import chess.domain.RuleImpl.Pawn;
 import chess.domain.RuleImpl.Rule;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Piece {

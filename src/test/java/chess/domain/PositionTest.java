@@ -3,12 +3,9 @@ package chess.domain;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PositionTest {
@@ -131,7 +128,7 @@ public class PositionTest {
         Position target = Position.of(row, String.valueOf(targetCol));
 
         List<Position> actual = new ArrayList<>();
-        for (int i = originCol+1 ; i < targetCol; i++) {
+        for (int i = originCol + 1; i < targetCol; i++) {
             Position position = Position.of(row, String.valueOf((char) i));
             actual.add(position);
         }
