@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +14,13 @@ public class King implements Piece {
 
     @Override
     public List<Point> getCandidatePoints(Point start, Point end) {
-        return null;
+        List<Point> points = new ArrayList<>();
+        Point vector = start.makeVector(end);
+        Direction foundDirection = Direction.findDirection(vector);
+        if(foundDirection != Direction.NOT_FIND) {
+            points.add(end);
+        }
+        return points;
     }
 
     @Override
