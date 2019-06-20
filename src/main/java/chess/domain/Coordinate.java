@@ -5,6 +5,10 @@ import chess.domain.exceptions.CoordinateRangeException;
 import java.util.Objects;
 
 public class Coordinate {
+    private static final int LOWER_BOUND = 1;
+    private static final int UPPER_BOUND = 8;
+    private static final int ASCII_FACTOR = 96;
+
     private final int coordinate;
 
     public Coordinate(int coordinate) {
@@ -13,13 +17,13 @@ public class Coordinate {
     }
 
     private void validCoordinate(final int coordinate) {
-        if (coordinate < 1 || coordinate > 8) {
+        if (coordinate < LOWER_BOUND || coordinate > UPPER_BOUND) {
             throw new CoordinateRangeException("좌표 범위는 1~8입니다.");
         }
     }
 
     public Coordinate(char coordinate) {
-        int converted = coordinate - 96;
+        int converted = coordinate - ASCII_FACTOR;
         validCoordinate(converted);
         this.coordinate = converted;
     }

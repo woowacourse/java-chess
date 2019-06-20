@@ -3,10 +3,11 @@ package chess.domain;
 import java.util.Objects;
 
 public class Count {
+    private static final int COUNT_UNIT = 1;
     private int count;
 
     public Count add() {
-        count += 1;
+        count += COUNT_UNIT;
         return this;
     }
 
