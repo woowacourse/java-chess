@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.RuleImpl.Empty;
+import chess.domain.RuleImpl.Pawn;
 import chess.domain.RuleImpl.Rule;
 
 import java.util.Objects;
@@ -25,7 +26,6 @@ public class Piece {
     }
 
     public boolean isValidMove(final Position origin, final Position target) {
-
         return rule.isValidMove(origin, target);
     }
 
@@ -39,6 +39,16 @@ public class Piece {
 
     public boolean isSameTeam(final Piece other) {
         return this.color == other.color;
+    }
+
+    public Piece orElseFirstPawn() {
+        if (this.rule == Pawn.FIRST_BOTTOM) {
+            return Piece.of(this.color, Pawn.SECOND_BOTTOM);
+        }
+        if (this.rule == Pawn.FIRST_TOP) {
+            return Piece.of(this.color, Pawn.SECOND_TOP);
+        }
+        return this;
     }
 
     @Override
@@ -69,6 +79,7 @@ public class Piece {
         EMPTY(3);
 
         private final int index;
+
         Color(final int index) {
             this.index = index;
         }

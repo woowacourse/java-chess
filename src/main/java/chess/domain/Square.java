@@ -32,7 +32,7 @@ public class Square {
 
     public boolean movePiece(final Square target) {
         if (piece.isValidMove(this.position, target.position)) {
-            target.piece = this.piece;
+            target.piece = piece.orElseFirstPawn();
             this.piece = Piece.empty();
             return true;
         }
@@ -40,7 +40,7 @@ public class Square {
     }
 
     public void attackPiece(final Square target) {
-        target.piece = this.piece;
+        target.piece = piece.orElseFirstPawn();
         this.piece = Piece.empty();
     }
 
