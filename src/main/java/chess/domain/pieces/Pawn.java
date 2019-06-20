@@ -12,7 +12,7 @@ public class Pawn extends AbstractSingleMovePiece {
     private List<Direction> attackDirection;
 
     public Pawn(ChessTeam team) {
-        super("Pawn", team, null);
+        super(team, PieceInfo.Pawn, null);
         moveDirection = new ArrayList<>();
         moveDirection.add(new Direction(0, 1 * team.color()));
         moveDirection.add(new Direction(0, 2 * team.color()));

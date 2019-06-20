@@ -22,6 +22,6 @@ public class Queen extends AbstractRangeMovePiece {
     }
 
     public Queen(ChessTeam team) {
-        super("Queen", team, directions);
+        super(team, PieceInfo.Queen, directions);
     }
 }

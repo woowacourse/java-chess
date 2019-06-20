@@ -22,6 +22,6 @@ public class Knight extends AbstractSingleMovePiece {
     }
 
     public Knight(ChessTeam team) {
-        super("Knight", team, directions);
+        super(team, PieceInfo.Knight, directions);
     }
 }

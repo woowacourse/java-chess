@@ -9,12 +9,12 @@ import java.util.Objects;
 
 public abstract class AbstractRangeMovePiece implements Piece {
     final ChessTeam team;
-    private final String name;
     private final List<Direction> directions;
+    private PieceInfo info;
 
-    public AbstractRangeMovePiece(String name, ChessTeam team, List<Direction> directions) {
-        this.name = name;
+    public AbstractRangeMovePiece(ChessTeam team, PieceInfo info, List<Direction> directions) {
         this.team = team;
+        this.info = info;
         this.directions = directions;
     }
 
@@ -42,27 +42,27 @@ public abstract class AbstractRangeMovePiece implements Piece {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractRangeMovePiece that = (AbstractRangeMovePiece) o;
-        return team == that.team &&
-                name.equals(that.name) &&
-                Objects.equals(directions, that.directions);
-    }
-
-    @Override
     public boolean isTurn(ChessTeam team) {
         return this.team == team;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractRangeMovePiece that = (AbstractRangeMovePiece) o;
+        return team == that.team &&
+                Objects.equals(directions, that.directions) &&
+                info == that.info;
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(team, name, directions);
+        return Objects.hash(team, directions, info);
     }
 
     @Override
     public String toString() {
-        return name;
+        return info.toString();
     }
 }

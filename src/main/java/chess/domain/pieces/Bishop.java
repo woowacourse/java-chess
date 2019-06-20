@@ -18,6 +18,6 @@ public class Bishop extends AbstractRangeMovePiece {
     }
 
     public Bishop(ChessTeam team) {
-        super("Bishop", team, directions);
+        super(team, PieceInfo.Bishop, directions);
     }
 }

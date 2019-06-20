@@ -4,10 +4,12 @@ import chess.domain.ChessTeam;
 import chess.domain.Direction;
 import chess.domain.Point;
 
+import java.util.ArrayList;
+
 public class Empty extends AbstractSingleMovePiece {
 
     public Empty() {
-        super(".", ChessTeam.EMPTY, null);
+        super(ChessTeam.EMPTY, PieceInfo.Empty, new ArrayList<>());
     }
 
     @Override

@@ -19,6 +19,6 @@ public class Rook extends AbstractRangeMovePiece {
 
 
     public Rook(ChessTeam team) {
-        super("Rook", team, directions);
+        super(team, PieceInfo.Rook, directions);
     }
 }
