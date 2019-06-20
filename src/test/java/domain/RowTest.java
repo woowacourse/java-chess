@@ -33,4 +33,12 @@ public class RowTest {
     void 이전_행_반환_확인() {
         assertThat(Row.valueOf("3").moveRow(-1)).isEqualTo("2");
     }
+
+    @Test
+    void 행_차이() {
+        Row row = Row.valueOf("1");
+        assertThat(row.getDifference(Row.valueOf("5"))).isEqualTo(-4);
+    }
+
+
 }

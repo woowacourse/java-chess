@@ -11,4 +11,9 @@ public class VerticalDirection implements Direction {
         }
         return position.movePosition(1,0);
     }
+
+    @Override
+    public int matchMoveCount(int rowDifference, int columnDifference) {
+        return columnDifference;
+    }
 }

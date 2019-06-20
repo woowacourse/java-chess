@@ -10,4 +10,9 @@ public class HorizonLeftKnightDirection implements Direction {
         }
         return position.movePosition(1,2);
     }
+
+    @Override
+    public int matchMoveCount(int rowDifference, int columnDifference) {
+        return rowDifference;
+    }
 }

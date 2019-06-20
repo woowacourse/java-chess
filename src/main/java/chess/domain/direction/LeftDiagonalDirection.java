@@ -10,4 +10,9 @@ public class LeftDiagonalDirection implements Direction{
         }
         return position.movePosition(1,-1);
     }
+
+    @Override
+    public int matchMoveCount(int rowDifference, int columnDifference) {
+        return rowDifference;
+    }
 }

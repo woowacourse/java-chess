@@ -10,4 +10,9 @@ public class VerticalRightKnightDirection implements Direction {
         }
         return position.movePosition(2,1);
     }
+
+    @Override
+    public int matchMoveCount(int rowDifference, int columnDifference) {
+        return columnDifference;
+    }
 }

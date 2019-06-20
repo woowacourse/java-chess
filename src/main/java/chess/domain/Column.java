@@ -36,4 +36,8 @@ public class Column {
     public String toString() {
         return column;
     }
+
+    public int getDifference(Column anotherColumn) {
+        return column.charAt(0) - anotherColumn.toString().charAt(0);
+    }
 }

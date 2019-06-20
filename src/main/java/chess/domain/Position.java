@@ -44,4 +44,13 @@ public class Position {
                 .filter(v -> v.row == Row.valueOf(rowName))
                 .collect(Collectors.toList());
     }
+
+    public int getRowDifference(Position anotherPosition) {
+        return this.row.getDifference(anotherPosition.row);
+    }
+
+
+    public int getColumnDifference(Position anotherPosition) {
+        return this.column.getDifference(anotherPosition.column);
+    }
 }

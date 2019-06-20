@@ -42,4 +42,8 @@ public class Row {
     public String toString() {
         return row;
     }
+
+    public int getDifference(Row anotherRow) {
+        return row.charAt(0) - anotherRow.toString().charAt(0);
+    }
 }

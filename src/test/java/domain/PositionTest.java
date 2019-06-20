@@ -22,4 +22,6 @@ public class PositionTest {
     void 이동된_포지션_반환_확인() {
         assertThat(Position.valueOf("a1").movePosition(2, 3)).isEqualTo(Position.valueOf("d3"));
     }
+
+
 }
