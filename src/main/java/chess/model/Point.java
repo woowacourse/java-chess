@@ -7,9 +7,17 @@ public class Point {
     private final XPosition xPosition;
     private final YPosition yPosition;
 
-    public Point(XPosition xPosition, YPosition yPosition) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+    public Point(int xPosition, int yPosition) {
+        this.xPosition = XPosition.valueOf(xPosition);
+        this.yPosition = YPosition.valueOf(yPosition);
+    }
+
+    public int calculateXsDiff(final Point target) {
+        return this.xPosition.calculateXsDiff(target.xPosition);
+    }
+
+    public int calculateYsDiff(final Point target) {
+        return this.yPosition.calculateYsDiff(target.yPosition);
     }
 
     @Override
@@ -25,4 +33,5 @@ public class Point {
     public int hashCode() {
         return Objects.hash(xPosition, yPosition);
     }
+
 }
