@@ -7,7 +7,6 @@
 
 ### 말 객체 생성하기
 
-- 상태가 없기 때문에 Enum으로 구현
 - 각각의 말은 이동 규칙에 대한 메소드를 갖는다.  
 
 - 이동 규칙
@@ -29,18 +28,22 @@
 - String 문자열을 받아서 x좌표와 y좌표을 구한다.  
 - 생성 시에 x, y를 1 ~ 8 사이의 숫자로 변환한다.  
 - static factory method로 Point를 생성하고, static Map(혹은 Pool)의 형태로 Point를 캐싱한다.  
-
 - Point에서 RelativePoint를 받아서 연산하는 메소드  
+
+- 예외 처리 
+
+```markdown
+- 범위를 벗어난 경우 예외처리
+```
 
 
 ### RelativePoint 객체 생성하기
 
-- UnitRelativePoint 구하는 메소드
+- unit direction을 구하는 메소드
 
 
-### User 객체 생성하기
+### Player 객체 생성하기
 
-- black팀과 white팀을 가질 수 있다.  
 - 각 팀의 현재 살아있는 말들을 가지고 있다.  
 - 해당 Point에 말을 갖고 있는지 조회하는 메소드  
 - 현재 Point와 목적 Point를 받아 말을 이동하는 메소드  
@@ -53,6 +56,28 @@
 		- 아군일 경우 FAIL
 		- 적군일 경우 SUCCESS. 적군의 해당 Point의 말을 제거한다. 
 - 해당 Point의 말을 제거하는 메소드  
+- King 을 확인하는 메소드
+- 현재 상황의 점수를 계산하는 메소드
+	- pawn의 경우 다른 pawn들의 위치까지 고려하여 계산  
+
+
+### 체스 게임을 의미하는 Round 객체
+
+- black팀과 white팀을 가질 수 있다.  
+- 현재 차례의 플레이어가 누군지 기억할 수 있어야 한다.  
+- move
+	- source에 해당 팀의 말이 있는지 체크
+	- target에 해당 팀의 말이 없는지 체크
+	- Player 안에 있는 말 이동 로직을 호출
+	- 차례를 상대방에게 넘김  
+
+- 게임 진행을 끝내는 메소드  
+
+
+### 체스 말을 초기화하는 ChessPiecesBuilder
+
+- 게임이 시작되면 초기화된 말들을 생성하여 Map의 형태로 반환한다.
+- DB에서 가져온 진행중인 게임도 Map의 형태로 만들어서 반환해준다.  
 
 
 
