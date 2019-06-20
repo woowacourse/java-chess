@@ -12,4 +12,6 @@ public interface Piece {
     boolean isAlly(Piece piece);
 
     boolean isTurn(ChessTeam team);
+
+    double score();
 }

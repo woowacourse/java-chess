@@ -3,7 +3,9 @@ package chess.domain;
 import chess.domain.pieces.Empty;
 import chess.domain.pieces.Piece;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private Map<Point, Piece> board;
@@ -67,8 +69,19 @@ public class Board {
     }
 
     public boolean check(ChessTeam team) {
+        return pieceOf(team).stream()
+                .noneMatch(piece -> piece.toString().equals("King"));
+    }
+
+    public List<Piece> pieceOf(ChessTeam team) {
         return board.values().stream()
                 .filter(piece -> piece.isTurn(team))
-                .noneMatch(piece -> piece.toString().equals("King"));
+                .collect(Collectors.toList());
+    }
+
+    public Map<Point, Piece> result(ChessTeam team) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isTurn(team))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

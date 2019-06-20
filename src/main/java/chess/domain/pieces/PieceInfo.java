@@ -10,16 +10,16 @@ public enum PieceInfo {
     Empty("Empty", 0.0);
 
     private String name;
-    private double point;
+    private double score;
 
-    PieceInfo(String name, double point) {
+    PieceInfo(String name, double score) {
         this.name = name;
-        this.point = point;
+        this.score = score;
     }
 
-//    public double point() {
-//        return point;
-//    }
+    public double score() {
+        return score;
+    }
 
     @Override
     public String toString() {

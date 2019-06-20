@@ -4,7 +4,7 @@ import chess.domain.pieces.Piece;
 
 public class ChessGame {
     private Board board;
-    private ChessTeam turn = ChessTeam.WHITE;
+    private ChessTeam turn;
 
     public ChessGame() {
         board = BoardCreator.create();
@@ -38,5 +38,9 @@ public class ChessGame {
 
     public Piece get(Point point) {
         return board.get(point);
+    }
+
+    public ChessResult result(ChessTeam white) {
+        return new ChessResult(board.result(white));
     }
 }

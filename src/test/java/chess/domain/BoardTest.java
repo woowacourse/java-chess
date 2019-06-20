@@ -69,4 +69,22 @@ class BoardTest {
         board.play(Point.get(3, 2), Point.get(3, 3), ChessTeam.WHITE);
         assertFalse(board.check(ChessTeam.BLACK));
     }
+
+    @Test
+    void 움직이고_나서() {
+        board.result(ChessTeam.WHITE).put(Point.get(1, 1), new Empty());
+        assertNotEquals(new Empty(), board.get(Point.get(1, 1)));
+    }
+
+    @Test
+    void result() {
+        assertEquals(16, board.result(ChessTeam.BLACK).size());
+        board.play(Point.get(3, 2), Point.get(3, 3), ChessTeam.WHITE);
+        board.play(Point.get(4, 7), Point.get(4, 6), ChessTeam.BLACK);
+        board.play(Point.get(4, 1), Point.get(1, 4), ChessTeam.WHITE);
+        board.play(Point.get(2, 8), Point.get(1, 6), ChessTeam.BLACK);
+        board.play(Point.get(1, 4), Point.get(5, 8), ChessTeam.WHITE);
+        assertEquals(15, board.result(ChessTeam.BLACK).size());
+        assertEquals(16, board.result(ChessTeam.WHITE).size());
+    }
 }

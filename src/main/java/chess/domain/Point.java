@@ -53,6 +53,10 @@ public class Point {
         return new Direction(p2.x - x, p2.y - y);
     }
 
+    public int getX() {
+        return this.x;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

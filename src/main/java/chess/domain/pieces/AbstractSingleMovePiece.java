@@ -47,6 +47,11 @@ public abstract class AbstractSingleMovePiece implements Piece {
     }
 
     @Override
+    public double score() {
+        return info.score();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
