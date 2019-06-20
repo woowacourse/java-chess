@@ -1,18 +1,19 @@
-package chess.domain;
+package chess.domain.piece;
 
-public class Rook implements Piece {
+import chess.domain.Aliance;
+import chess.domain.Position;
+
+public class Rook extends Piece {
     private static final String NAME = "R";
     private static final double SCORE = 5;
 
-    private final Aliance aliance;
-
     public Rook(Aliance aliance) {
-        this.aliance = aliance;
+        super(aliance);
     }
 
     @Override
-    public void move() {
-
+    public Position isPossibleMove() {
+        return null;
     }
 
     @Override

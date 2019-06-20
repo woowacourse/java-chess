@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RowTest {
@@ -21,5 +22,15 @@ public class RowTest {
         }
 
         assertTrue(rows.containsAll(Row.getRows()));
+    }
+
+    @Test
+    void 다음_행_반환_확인() {
+        assertThat(Row.valueOf("1").moveRow(3)).isEqualTo("4");
+    }
+
+    @Test
+    void 이전_행_반환_확인() {
+        assertThat(Row.valueOf("3").moveRow(-1)).isEqualTo("2");
     }
 }

@@ -1,18 +1,19 @@
-package chess.domain;
+package chess.domain.piece;
 
-public class Bishop implements Piece {
+import chess.domain.Aliance;
+import chess.domain.Position;
+
+public class Bishop extends Piece {
     private static final String NAME = "B";
     private static final double SCORE = 3;
 
-    private final Aliance aliance;
-
     public Bishop(Aliance aliance) {
-        this.aliance = aliance;
+        super(aliance);
     }
 
     @Override
-    public void move() {
-
+    public Position isPossibleMove() {
+        return null;
     }
 
     @Override
@@ -22,6 +23,5 @@ public class Bishop implements Piece {
         }
         return NAME.toLowerCase();
     }
-
 }
 

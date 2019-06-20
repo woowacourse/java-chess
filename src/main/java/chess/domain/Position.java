@@ -1,13 +1,12 @@
 package chess.domain;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Position {
     private static final Map<String, Position> positions = new HashMap<>();
-
-    private final Row row;
-    private final Column column;
 
     static {
         List<Row> rows = Row.getRows();
@@ -20,6 +19,9 @@ public class Position {
         }
     }
 
+    private final Row row;
+    private final Column column;
+
     private Position(Row row, Column column) {
         this.row = row;
         this.column = column;
@@ -29,7 +31,14 @@ public class Position {
         return positions.get(position);
     }
 
-    public static List<Position> getRow(String rowName) {
+    public Position movePosition(int rowDistance, int columnDistance) {
+        String movedRow = row.moveRow(rowDistance);
+        String movedColumn = column.moveColumn(columnDistance);
+
+        return positions.get(movedColumn + movedRow);
+    }
+
+    public static List<Position> getRowPositions(String rowName) {
         return positions.values()
                 .stream()
                 .filter(v -> v.row == Row.valueOf(rowName))

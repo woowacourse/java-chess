@@ -1,18 +1,19 @@
-package chess.domain;
+package chess.domain.piece;
 
-public class King implements Piece {
+import chess.domain.Aliance;
+import chess.domain.Position;
+
+public class King extends Piece {
     private static final String NAME = "K";
     private static final double SCORE = 0;
 
-    private final Aliance aliance;
-
     public King(Aliance aliance) {
-        this.aliance = aliance;
+        super(aliance);
     }
 
     @Override
-    public void move() {
-
+    public Position isPossibleMove() {
+        return null;
     }
 
     @Override

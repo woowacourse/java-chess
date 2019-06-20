@@ -1,18 +1,19 @@
-package chess.domain;
+package chess.domain.piece;
 
-public class Pawn implements Piece {
+import chess.domain.Aliance;
+import chess.domain.Position;
+
+public class Pawn extends Piece {
     private static final String NAME = "P";
     private static final double SCORE = 1;
 
-    private final Aliance aliance;
-
     public Pawn(Aliance aliance) {
-        this.aliance = aliance;
+        super(aliance);
     }
 
     @Override
-    public void move() {
-
+    public Position isPossibleMove() {
+        return null;
     }
 
     @Override
