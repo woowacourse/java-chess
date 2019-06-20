@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ResultCounter {
-    private final Map<Piece, Count> resultCounter;
+    private final Map<AbstractPiece, Count> resultCounter;
 
-    private List<Piece> pieces = Arrays.asList(
+    private List<AbstractPiece> abstractPieces = Arrays.asList(
             new Pawn(Team.BLACK),
             new Rook(Team.BLACK),
             new Bishop(Team.BLACK),
@@ -29,7 +29,7 @@ public class ResultCounter {
 
     private ResultCounter() {
         resultCounter = new HashMap<>();
-        pieces.forEach(piece -> resultCounter.put(piece, new Count()));
+        abstractPieces.forEach(piece -> resultCounter.put(piece, new Count()));
     }
 
     public static ResultCounter getInstance() {
@@ -39,19 +39,19 @@ public class ResultCounter {
         return instance;
     }
 
-    public Count pieceCount(final Piece piece) {
-        return resultCounter.get(piece);
+    public Count pieceCount(final AbstractPiece abstractPiece) {
+        return resultCounter.get(abstractPiece);
     }
 
-    public void addCount(final Piece piece) {
-        if (piece != null) {
-            resultCounter.get(piece).add();
+    public void addCount(final AbstractPiece abstractPiece) {
+        if (abstractPiece != null) {
+            resultCounter.get(abstractPiece).add();
         }
 
     }
 
     public double totalScore(final Team team) {
-        return pieces.stream()
+        return abstractPieces.stream()
                 .filter(piece -> piece.isSameTeam(team))
                 .mapToDouble(piece -> resultCounter.get(piece).score(piece))
                 .sum();

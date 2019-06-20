@@ -30,9 +30,9 @@ public class BoardTest {
 
     @Test
     void 초기_체스판_폰_이외의_말_위치_확인() {
-        List<Piece> piecesTeamBlack = Arrays.asList(new Rook(Team.BLACK), new Knight(Team.BLACK), new Bishop(Team.BLACK), new Queen(Team.BLACK),
+        List<AbstractPiece> piecesTeamBlack = Arrays.asList(new Rook(Team.BLACK), new Knight(Team.BLACK), new Bishop(Team.BLACK), new Queen(Team.BLACK),
                 new King(Team.BLACK), new Bishop(Team.BLACK), new Knight(Team.BLACK), new Rook(Team.BLACK));
-        List<Piece> piecesTeamWhite = Arrays.asList(new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE), new Queen(Team.WHITE),
+        List<AbstractPiece> piecesTeamWhite = Arrays.asList(new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE), new Queen(Team.WHITE),
                 new King(Team.WHITE), new Bishop(Team.WHITE), new Knight(Team.WHITE), new Rook(Team.WHITE));
         for (int i = 0; i < aToH.size(); i++) {
             assertThat(board.at(new Position(new Coordinate(aToH.get(i)), new Coordinate(1))))

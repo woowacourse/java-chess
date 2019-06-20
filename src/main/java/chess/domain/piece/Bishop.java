@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.Piece;
+import chess.domain.AbstractPiece;
 import chess.domain.Team;
 import chess.domain.exceptions.InvalidDirectionException;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 import static chess.domain.Direction.*;
 
-public class Bishop extends Piece {
+public class Bishop extends AbstractPiece {
     private static final String NAME = "b";
     private static final double SCORE = 3;
     private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(NE, SE, SW, NW);

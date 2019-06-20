@@ -10,8 +10,8 @@ public class Count {
         return this;
     }
 
-    public double score(final Piece piece) {
-        return count * piece.getScore();
+    public double score(final AbstractPiece abstractPiece) {
+        return count * abstractPiece.getScore();
     }
 
     @Override

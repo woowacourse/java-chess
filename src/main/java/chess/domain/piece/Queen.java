@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.Piece;
+import chess.domain.AbstractPiece;
 import chess.domain.Team;
 import chess.domain.exceptions.InvalidDirectionException;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import static chess.domain.Direction.*;
 import static chess.domain.Direction.NW;
 
-public class Queen extends Piece {
+public class Queen extends AbstractPiece {
     private static final String NAME = "q";
     private static final double SCORE = 9;
     private static final List<Direction> MOVABLE_DIRECTION = Arrays.asList(N, NE, E, SE, S, SW, W, NW);

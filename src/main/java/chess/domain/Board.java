@@ -8,17 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private final Map<Position, Piece> board;
+    private final Map<Position, AbstractPiece> board;
 
     private Board() {
         board = new HashMap<>();
         List<Character> aToH = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
-        List<Piece> piecesTeamBlack = Arrays.asList(
+        List<AbstractPiece> piecesTeamBlack = Arrays.asList(
                 new Rook(Team.BLACK), new Knight(Team.BLACK), new Bishop(Team.BLACK),
                 new Queen(Team.BLACK), new King(Team.BLACK), new Bishop(Team.BLACK),
                 new Knight(Team.BLACK), new Rook(Team.BLACK)
         );
-        List<Piece> piecesTeamWhite = Arrays.asList(
+        List<AbstractPiece> piecesTeamWhite = Arrays.asList(
                 new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE),
                 new Queen(Team.WHITE), new King(Team.WHITE), new Bishop(Team.WHITE),
                 new Knight(Team.WHITE), new Rook(Team.WHITE)
@@ -43,7 +43,7 @@ public class Board {
         return instance;
     }
 
-    public Piece at(final Position position) {
+    public AbstractPiece at(final Position position) {
         return board.get(position);
     }
 
@@ -52,16 +52,16 @@ public class Board {
             return ".";
         }
 
-        Piece piece = board.get(position);
+        AbstractPiece abstractPiece = board.get(position);
 
-        if (piece.isBlackTeam()) {
-            return piece.getName();
+        if (abstractPiece.isBlackTeam()) {
+            return abstractPiece.getName();
         }
-        return piece.getName().toUpperCase();
+        return abstractPiece.getName().toUpperCase();
     }
 
-    public void move(Position source, Position target, Piece sourcePiece) {
+    public void move(Position source, Position target, AbstractPiece sourceAbstractPiece) {
         board.remove(source);
-        board.put(target, sourcePiece);
+        board.put(target, sourceAbstractPiece);
     }
 }
