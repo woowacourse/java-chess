@@ -26,6 +26,15 @@ class RookTest {
     }
 
     @Test
+    void 대각선_이동_불가() {
+        Spot startSpot = Spot.valueOf(1, 3);
+        Spot endSpot = Spot.valueOf(2, 4);
+
+        Rook rook = new Rook(Team.BLACK);
+        assertThat(rook.isMovable(startSpot, endSpot)).isFalse();
+    }
+
+    @Test
     void 공격_가능() {
         Rook rookA = new Rook(Team.BLACK);
         Rook rookB = new Rook(Team.BLACK);
