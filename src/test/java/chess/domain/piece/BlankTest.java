@@ -11,7 +11,7 @@ class BlankTest {
         Spot startSpot = Spot.valueOf(1, 3);
         Spot endSpot = Spot.valueOf(2, 5);
 
-        Blank blank = new Blank();
+        Blank blank = Blank.getInstance();
         assertThat(blank.isMovable(startSpot, endSpot)).isFalse();
     }
 }

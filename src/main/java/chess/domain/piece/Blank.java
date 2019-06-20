@@ -4,8 +4,17 @@ import chess.domain.Spot;
 import chess.domain.Team;
 
 public class Blank extends Piece {
-    public Blank() {
+    private static Blank blank;
+
+    private Blank() {
         super(Team.BLANK);
+    }
+
+    public static Blank getInstance() {
+        if (blank == null) {
+            return new Blank();
+        }
+        return blank;
     }
 
     @Override
