@@ -84,4 +84,9 @@ public class Board {
                 .filter(entry -> entry.getValue().isTurn(team))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
+
+    public Map<String, String> status() {
+        return board.entrySet().stream()
+                .collect(Collectors.toMap(e -> e.getKey().toString(), e -> e.getValue().toString()));
+    }
 }

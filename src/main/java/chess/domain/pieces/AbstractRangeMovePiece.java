@@ -68,6 +68,6 @@ public abstract class AbstractRangeMovePiece implements Piece {
 
     @Override
     public String toString() {
-        return info.toString();
+        return team.color() + "-" + info.toString();
     }
 }

@@ -2,6 +2,8 @@ package chess.domain;
 
 import chess.domain.pieces.Piece;
 
+import java.util.Map;
+
 public class ChessGame {
     private Board board;
     private ChessTeam turn;
@@ -29,6 +31,10 @@ public class ChessGame {
         return board.check(turn);
     }
 
+    public ChessResult winner() {
+        return result(turn.change());
+    }
+
     private Point parse(String destination) {
         String axis = "abcdefgh";
         int x = axis.indexOf(destination.charAt(0)) + 1;
@@ -42,5 +48,9 @@ public class ChessGame {
 
     public ChessResult result(ChessTeam white) {
         return new ChessResult(board.result(white));
+    }
+
+    public Map<String, String> status() {
+        return board.status();
     }
 }
