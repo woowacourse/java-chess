@@ -12,6 +12,7 @@ public class Way {
 
     private Direction direction;
     private int step;
+    private boolean isCatch;
 
     public Way(Direction direction) {
         this.direction = direction;
@@ -19,24 +20,29 @@ public class Way {
     }
 
     public Way(Direction direction, int step) {
+        this(direction, step, true);
+    }
+
+    public Way(Direction direction, int step, boolean isCatch) {
         this.direction = direction;
         this.step = step;
+        this.isCatch = isCatch;
     }
 
-    Square move(Square startSquare) {
-        return move(startSquare, 0);
-    }
-
-    private Square move(Square currentSquare, int count) {
-        if (count == this.step) {
-            return currentSquare;
-        }
-        return move(direction.move(currentSquare), count++);
-    }
+    //    Square move(Square startSquare) {
+//        return move(startSquare, 0);
+//    }
+//
+//    private Square move(Square currentSquare, int count) {
+//        if (count == this.step) {
+//            return currentSquare;
+//        }
+//        return move(direction.move(currentSquare), count++);
+//    }
 
     boolean isGo(Square source, Square target) {
         return isInfinity() && direction.checkDirection(source, target) ||
-            direction.checkDirection(source, target) && direction.calculateStep(source, target) == step;
+                direction.checkDirection(source, target) && direction.calculateStep(source, target) == step;
     }
 
     private boolean isInfinity() {
@@ -44,16 +50,16 @@ public class Way {
     }
 
     Route generateRoute(Square source, Square target) {
-        if(!isGo(source, target)){
-            throw new IllegalArgumentException("ss");
+        if (!isGo(source, target)) {
+            throw new IllegalArgumentException();
         }
         List<Square> squares = new ArrayList<>();
         squares.add(source);
         for (int i = 1; i <= direction.calculateStep(source, target); i++) {
-            Square prevSquare = squares.get(i-1);
+            Square prevSquare = squares.get(i - 1);
             squares.add(direction.move(prevSquare));
         }
-        return new Route(squares);
+        return new Route(squares, isCatch);
     }
 
     @Override

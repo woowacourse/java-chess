@@ -17,9 +17,9 @@ public class RouteTest {
     @BeforeEach
     void setUp() {
         this.squares = Arrays.asList(
-                Square.of(3,2),
-                Square.of(3,1),
-                Square.of(3,0)
+                Square.of(3, 2),
+                Square.of(3, 1),
+                Square.of(3, 0)
         );
         this.route = new Route(squares);
     }
@@ -27,9 +27,9 @@ public class RouteTest {
     @Test
     void Route객체_생성_테스트() {
         assertThat(this.route).isEqualTo(new Route(Arrays.asList(
-                Square.of(3,2),
-                Square.of(3,1),
-                Square.of(3,0)
+                Square.of(3, 2),
+                Square.of(3, 1),
+                Square.of(3, 0)
         )));
     }
 
@@ -40,7 +40,7 @@ public class RouteTest {
 
     @Test
     void squares_반환하기_테스트() {
-        assertThat(this.route.get(1)).isEqualTo(Square.of(3,1));
+        assertThat(this.route.get(1)).isEqualTo(Square.of(3, 1));
     }
 
     @AfterEach

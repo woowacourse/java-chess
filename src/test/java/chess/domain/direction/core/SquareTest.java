@@ -1,6 +1,5 @@
 package chess.domain.direction.core;
 
-import chess.domain.direction.core.Square;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

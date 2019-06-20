@@ -8,9 +8,15 @@ import java.util.Objects;
 
 public class Route {
     private List<Square> squares;
+    private boolean isCatch;
 
     public Route(List<Square> squares) {
+        this(squares, true);
+    }
+
+    public Route(List<Square> squares, boolean isCatch) {
         this.squares = squares;
+        this.isCatch = isCatch;
     }
 
     int size() {
@@ -19,6 +25,10 @@ public class Route {
 
     Square get(int i) {
         return squares.get(i);
+    }
+
+    public boolean isCatch() {
+        return isCatch;
     }
 
     @Override

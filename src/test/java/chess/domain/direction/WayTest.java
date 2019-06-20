@@ -18,27 +18,27 @@ class WayTest {
 
     @Test
     void Way를_통해_해당_좌표로_갈수_있는지_테스트() {
-         assertThat(new Way(Direction.DOWN, 1)
-                 .isGo(Square.of(3,2), Square.of(3,3))).isTrue();
+        assertThat(new Way(Direction.DOWN, 1)
+                .isGo(Square.of(3, 2), Square.of(3, 3))).isTrue();
     }
 
     @Test
     void Way를_통해_갈수가_없는지_테스트() {
         assertThat(new Way(Direction.DOWN, 1)
-                .isGo(Square.of(3,2), Square.of(3,4))).isFalse();
+                .isGo(Square.of(3, 2), Square.of(3, 4))).isFalse();
     }
 
     @Test
     void Way를_통해_경로_생성하기_테스트() {
-        assertThat(new Way(Direction.DOWN).generateRoute(Square.of(3,2), Square.of(3,8)))
+        assertThat(new Way(Direction.DOWN).generateRoute(Square.of(3, 2), Square.of(3, 8)))
                 .isEqualTo(new Route(Arrays.asList(
-                        Square.of(3,2),
-                        Square.of(3,3),
-                        Square.of(3,4),
-                        Square.of(3,5),
-                        Square.of(3,6),
-                        Square.of(3,7),
-                        Square.of(3,8)
+                        Square.of(3, 2),
+                        Square.of(3, 3),
+                        Square.of(3, 4),
+                        Square.of(3, 5),
+                        Square.of(3, 6),
+                        Square.of(3, 7),
+                        Square.of(3, 8)
                 )));
     }
 }

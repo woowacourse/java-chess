@@ -9,48 +9,42 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class PawnTest {
-
-    private Piece pawn;
+class QueenTest {
+    private Piece queen;
 
     @BeforeEach
     void setUp() {
-        pawn = new Pawn(Team.WHITE);
+        queen = new Queen(Team.WHITE);
     }
 
     @Test
-    void 위로_갈수_있는지_테스트() {
-        assertThat(pawn.getRoute(Square.of(1, 7), Square.of(1, 6)))
+    void 위_왼쪽_대각선으로_갈수_있는지_테스트() {
+        assertThat(queen.getRoute(Square.of(3, 2), Square.of(1, 0)))
                 .isEqualTo(new Route(Arrays.asList(
-                        Square.of(1, 7),
-                        Square.of(1, 6)
+                        Square.of(3, 2),
+                        Square.of(2, 1),
+                        Square.of(1, 0)
                 )));
     }
 
     @Test
     void 갈수_없는_경로_테스트() {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> pawn.getRoute(Square.of(1, 7), Square.of(1, 4)))
+                .isThrownBy(() -> queen.getRoute(Square.of(3, 2), Square.of(0, 0)))
                 .withMessage("갈 수 없습니다.");
     }
 
     @Test
     void 폰_탐_반환_테스트() {
-        assertThat(pawn.getTeam()).isEqualTo(Team.WHITE);
+        assertThat(queen.getTeam()).isEqualTo(Team.WHITE);
     }
 
     @Test
     void 폰_타입_반환_테스트() {
-        assertThat(pawn.getType()).isEqualTo(Type.PAWN);
-    }
-
-    @Test
-    void 대각선_캐치_테스트() {
-        assertThat(pawn.getRoute(Square.of(3,2), Square.of(2,1)).isCatch()).isTrue();
+        assertThat(queen.getType()).isEqualTo(Type.QUEEN);
     }
 }

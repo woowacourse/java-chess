@@ -26,7 +26,7 @@ public class DirectionTest {
             "DOUBLE_RIGHT_UP,3,2,5,1",
             "DOUBLE_UP_RIGHT,3,2,4,0"})
     void check_direction_true_test(Direction direction, int sourceX, int sourceY, int targetX, int targetY) {
-        assertThat(direction.checkDirection(Square.of(sourceX, sourceY), Square.of(targetX,targetY))).isTrue();
+        assertThat(direction.checkDirection(Square.of(sourceX, sourceY), Square.of(targetX, targetY))).isTrue();
     }
 
     @ParameterizedTest
@@ -47,6 +47,6 @@ public class DirectionTest {
             "DOUBLE_RIGHT_UP,3,2,5,1",
             "DOUBLE_UP_RIGHT,3,2,4,0"})
     void 현재(Direction direction, int sourceX, int sourceY, int targetX, int targetY) {
-        assertThat(valuesOf(Square.of(sourceX,sourceY), Square.of(targetX,targetY))).isEqualTo(direction);
+        assertThat(valuesOf(Square.of(sourceX, sourceY), Square.of(targetX, targetY))).isEqualTo(direction);
     }
 }

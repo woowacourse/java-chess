@@ -1,10 +1,13 @@
 package chess.domain.direction;
 
+import chess.domain.direction.core.Direction;
 import chess.domain.direction.core.Square;
 
 import java.util.List;
 
 public class Navigator {
+    private static final int FIRST_MOVED = 0;
+
     private List<Way> wayList;
 
     public Navigator(List<Way> wayList) {
@@ -19,5 +22,7 @@ public class Navigator {
                 .orElse(null);
     }
 
-
+    public void firstRemove() {
+        wayList.remove(FIRST_MOVED);
+    }
 }
