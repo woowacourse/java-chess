@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class King extends ChessPiece {
@@ -31,7 +28,7 @@ public class King extends ChessPiece {
     }
 
     @Override
-    List<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
         List<ChessCoordinate> candidates = new ArrayList<>();
 
         from.getX().move(-1)
@@ -51,7 +48,7 @@ public class King extends ChessPiece {
         from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y).get()));
 
         return candidates.stream()
-                .filter((coord) -> pieceTeamProvider.getTeamAt(coord.getX(), coord.getY()) != getType().getTeam())
-                .collect(Collectors.toList());
+                .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())
+                .collect(Collectors.toSet());
     }
 }

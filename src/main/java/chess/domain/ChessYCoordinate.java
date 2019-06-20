@@ -55,6 +55,12 @@ public enum ChessYCoordinate {
                 .collect(Collectors.toList());
     }
 
+    public static List<ChessYCoordinate> allAscendingCoordinates() {
+        return Arrays.stream(values())
+                .sorted(Comparator.comparingInt(ChessYCoordinate::getIndex))
+                .collect(Collectors.toList());
+    }
+
     public static List<ChessYCoordinate> getDescendingCoordinates(ChessYCoordinate from) {
         return Arrays.stream(values())
                 .filter(coord -> coord.index < from.index)

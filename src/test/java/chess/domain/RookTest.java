@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RookTest {
     @Test
@@ -27,7 +26,7 @@ class RookTest {
 
         ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
 
-        assertThat(rook.getMovableCoordinates(new ChessBoard(boardState)::getTeamAt, from)).containsExactlyInAnyOrder(
+        assertThat(rook.getMovableCoordinates(new ChessGame(boardState)::getTeamAt, from)).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("a2").get(),
                 ChessCoordinate.valueOf("a3").get(),
                 ChessCoordinate.valueOf("a4").get(),
@@ -62,7 +61,7 @@ class RookTest {
 
         ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
 
-        assertThat(rook.getMovableCoordinates(new ChessBoard(boardState)::getTeamAt, from)).containsExactlyInAnyOrder(
+        assertThat(rook.getMovableCoordinates(new ChessGame(boardState)::getTeamAt, from)).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("a2").get(),
                 ChessCoordinate.valueOf("a3").get(),
                 ChessCoordinate.valueOf("b1").get(),

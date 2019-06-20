@@ -27,8 +27,8 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    List<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        List<ChessCoordinate> movableCoords = new ArrayList<>();
+    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
 
         List<ChessXCoordinate> xCoords = ChessXCoordinate.getDescendingCoordinates(from.getX());
         List<ChessYCoordinate> yCoords = ChessYCoordinate.getDescendingCoordinates(from.getY());

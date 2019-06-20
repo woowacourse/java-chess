@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.exception.AllyExistException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -8,10 +7,9 @@ import java.util.List;
 
 import static chess.domain.PieceType.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 
-class ChessBoardTest {
+class ChessGameTest {
 
     @Test
     void initBoard() {
@@ -29,17 +27,22 @@ class ChessBoardTest {
 
         List<List<PieceType>> expectedBoardState = Arrays.asList(
                 Arrays.asList(ROOK_BLACK, NONE, NONE, NONE, NONE, NONE, NONE, ROOK_BLACK),
-                Arrays.asList(NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE),
-                Arrays.asList(NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE),
-                Arrays.asList(NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE),
-                Arrays.asList(NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE),
-                Arrays.asList(NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE),
-                Arrays.asList(NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE),
+                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
+                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
+                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
+                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
+                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
+                Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
                 Arrays.asList(ROOK_WHITE, NONE, NONE, NONE, NONE, NONE, NONE, ROOK_WHITE)
         );
 
-        ChessBoard chessBoard = new ChessBoard(boardState);
-        assertThat(chessBoard.getBoard()).isEqualTo(expectedBoardState);
+        ChessGame chessGame = new ChessGame(boardState);
+        ChessYCoordinate.allAscendingCoordinates()
+                .forEach(y ->
+                        ChessXCoordinate.allAscendingCoordinates().forEach(x -> {
+                            assertThat(chessGame.getBoard().get(ChessCoordinate.valueOf(x, y).get()))
+                                    .isEqualTo(expectedBoardState.get(y.getIndex()).get(x.getIndex()));
+                        }));
     }
 
     @Test
@@ -67,16 +70,16 @@ class ChessBoardTest {
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
-        ChessBoard board = new ChessBoard(boardState);
+        ChessGame board = new ChessGame(boardState);
         ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
         ChessCoordinate to = ChessCoordinate.valueOf("a8").get();
         board.move(from, to);
-        assertThat(board.getBoard()).isEqualTo(new ChessBoard(toBoardState).getBoard());
+        assertThat(board.getBoard()).isEqualTo(new ChessGame(toBoardState).getBoard());
     }
 
     @Test
     void 같은_색_이동_X() {
-//        ChessBoard board = new ChessBoard();
+//        ChessGame board = new ChessGame();
 //        assertThrows(AllyExistException.class, () -> board.move(ChessCoordinate.valueOf("b2").get(), ChessCoordinate.valueOf("b1").get()));
     }
 }

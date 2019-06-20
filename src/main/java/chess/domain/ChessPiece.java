@@ -1,8 +1,6 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public abstract class ChessPiece {
     private PieceType type;
@@ -15,14 +13,14 @@ public abstract class ChessPiece {
         return type;
     }
 
-    abstract List<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from);
+    abstract Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from);
 
     protected Optional<ChessCoordinate> getIfEmpty(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
         if (!maybeCoord.isPresent()) {
             return Optional.empty();
         }
         ChessCoordinate coord = maybeCoord.get();
-        if (pieceTeamProvider.getTeamAt(coord.getX(), coord.getY()) == Team.NEUTRAL) {
+        if (pieceTeamProvider.getTeamAt(coord) == Team.NEUTRAL) {
             return maybeCoord;
         }
         return Optional.empty();
@@ -33,7 +31,7 @@ public abstract class ChessPiece {
             return Optional.empty();
         }
         ChessCoordinate coord = maybeCoord.get();
-        Team targetTeam = pieceTeamProvider.getTeamAt(coord.getX(), coord.getY());
+        Team targetTeam = pieceTeamProvider.getTeamAt(coord);
 
         if ((getType().getTeam() == Team.BLACK && targetTeam == Team.WHITE) ||
                 (getType().getTeam() == Team.WHITE && targetTeam == Team.BLACK)) {
@@ -47,14 +45,14 @@ public abstract class ChessPiece {
             return Optional.empty();
         }
         ChessCoordinate coord = maybeCoord.get();
-        if (getType().getTeam() == pieceTeamProvider.getTeamAt(coord.getX(), coord.getY())) {
+        if (getType().getTeam() == pieceTeamProvider.getTeamAt(coord)) {
             return Optional.of(coord);
         }
         return Optional.empty();
     }
 
-    protected List<ChessCoordinate> probeHorizon(PieceTeamProvider pieceTeamProvider, ChessXCoordinate fromX, List<ChessYCoordinate> ascendingCoordinates) {
-        List<ChessCoordinate> movableCoords = new ArrayList<>();
+    protected Set<ChessCoordinate> probeHorizon(PieceTeamProvider pieceTeamProvider, ChessXCoordinate fromX, List<ChessYCoordinate> ascendingCoordinates) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
         for (ChessYCoordinate y : ascendingCoordinates) {
             getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(fromX, y)).ifPresent(movableCoords::add);
             Optional<ChessCoordinate> maybeEnemyLocation = getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(fromX, y));
@@ -70,8 +68,8 @@ public abstract class ChessPiece {
         return movableCoords;
     }
 
-    protected List<ChessCoordinate> probeVertical(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> ascendingCoordinates, ChessYCoordinate fromY) {
-        List<ChessCoordinate> movableCoords = new ArrayList<>();
+    protected Set<ChessCoordinate> probeVertical(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> ascendingCoordinates, ChessYCoordinate fromY) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
         for (ChessXCoordinate x : ascendingCoordinates) {
             getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(x, fromY)).ifPresent(movableCoords::add);
             Optional<ChessCoordinate> maybeEnemyLocation = getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, fromY));
@@ -87,8 +85,8 @@ public abstract class ChessPiece {
         return movableCoords;
     }
 
-    protected List<ChessCoordinate> probeDiagonal(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> xCoords, List<ChessYCoordinate> yCoords) {
-        List<ChessCoordinate> movableCoords = new ArrayList<>();
+    protected Set<ChessCoordinate> probeDiagonal(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> xCoords, List<ChessYCoordinate> yCoords) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
 
         for (int i = 0; i < Math.min(xCoords.size(), yCoords.size()); i++) {
             getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(xCoords.get(i), yCoords.get(i))).ifPresent(movableCoords::add);

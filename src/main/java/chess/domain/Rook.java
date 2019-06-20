@@ -27,8 +27,8 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public List<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        List<ChessCoordinate> movableCoords = new ArrayList<>();
+    public Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
 
         ChessXCoordinate fromX = from.getX();
         ChessYCoordinate fromY = from.getY();

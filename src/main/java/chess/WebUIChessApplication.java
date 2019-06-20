@@ -15,7 +15,7 @@ import static chess.domain.Team.WHITE;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static ChessBoard chessBoard;
+    private static ChessGame chessGame;
 
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().create();
@@ -63,13 +63,14 @@ public class WebUIChessApplication {
         get("/board", (req, res) -> {
             initBoard();
 
-            return chessBoard.getBoard();
+
+            return chessGame.getBoard();
         }, gson::toJson);
 
         put("/move-piece", (req, res) -> {
             initBoard();
-            chessBoard.move(ChessCoordinate.valueOf(req.queryParams("from")).get(), ChessCoordinate.valueOf(req.queryParams("to")).get());
-            return chessBoard.getBoard();
+            chessGame.move(ChessCoordinate.valueOf(req.queryParams("from")).get(), ChessCoordinate.valueOf(req.queryParams("to")).get());
+            return chessGame.getBoard();
         }, gson::toJson);
 
 
@@ -96,6 +97,6 @@ public class WebUIChessApplication {
                 Arrays.asList(Rook.getInstance(WHITE), Knight.getInstance(WHITE), Bishop.getInstance(WHITE), Queen.getInstance(WHITE),
                         King.getInstance(WHITE), Bishop.getInstance(WHITE), Knight.getInstance(WHITE), Rook.getInstance(WHITE))
         );
-        chessBoard = new ChessBoard(boardState);
+        chessGame = new ChessGame(boardState);
     }
 }

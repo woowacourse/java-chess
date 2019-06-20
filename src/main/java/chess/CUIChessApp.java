@@ -4,14 +4,13 @@ import chess.domain.*;
 import chess.view.InputView;
 import chess.view.OutputVIew;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static chess.domain.Team.*;
 
 public class CUIChessApp {
-    private static ChessBoard chessBoard;
+    private static ChessGame chessGame;
 
     public static void main(String[] args) {
         OutputVIew.printInputGuide();
@@ -27,7 +26,7 @@ public class CUIChessApp {
         String[] tokens = input.split(" ");
         if (tokens[0].equals("start")) {
             initBoard();
-            OutputVIew.printBoardState(chessBoard.getBoard());
+            OutputVIew.printBoardState(chessGame.getBoard());
             return false;
         }
 
@@ -39,9 +38,9 @@ public class CUIChessApp {
         if (tokens[0].equals("status")) {
             assertStarted();
 
-            List<PieceType> pieceTypesOnBoard = new ArrayList<>();
-            chessBoard.getBoard().forEach(pieceTypesOnBoard::addAll);
-            ChessScoreCount scoreCount = new ChessScoreCount(pieceTypesOnBoard);
+            ChessScoreCount scoreCount = new ChessScoreCount(chessGame.getBoard().entrySet().stream()
+                    .map(Map.Entry::getValue)
+                    .collect(Collectors.toSet()));
             OutputVIew.printScore(scoreCount.getScore(WHITE), scoreCount.getScore(BLACK));
             return false;
         }
@@ -50,7 +49,7 @@ public class CUIChessApp {
             assertStarted();
 
             handleMoveCommand(tokens);
-            OutputVIew.printBoardState(chessBoard.getBoard());
+            OutputVIew.printBoardState(chessGame.getBoard());
             return checkResult();
         }
 
@@ -74,13 +73,13 @@ public class CUIChessApp {
                 Arrays.asList(Rook.getInstance(WHITE), Knight.getInstance(WHITE), Bishop.getInstance(WHITE), Queen.getInstance(WHITE),
                         King.getInstance(WHITE), Bishop.getInstance(WHITE), Knight.getInstance(WHITE), Rook.getInstance(WHITE))
         );
-        chessBoard = new ChessBoard(boardState);
+        chessGame = new ChessGame(boardState);
     }
 
     private static boolean checkResult() {
-        List<PieceType> pieceTypesOnBoard = new ArrayList<>();
-        chessBoard.getBoard().forEach(pieceTypesOnBoard::addAll);
-        ChessResult result = ChessResult.judge(pieceTypesOnBoard);
+        ChessResult result = ChessResult.judge(chessGame.getBoard().entrySet().stream()
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toSet()));
         if (result == ChessResult.KEEP) {
             return false;
         }
@@ -89,7 +88,7 @@ public class CUIChessApp {
 
     private static void handleMoveCommand(String[] tokens) {
         try {
-            chessBoard.move(
+            chessGame.move(
                     ChessCoordinate.valueOf(tokens[1])
                             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다.")),
                     ChessCoordinate.valueOf(tokens[2])
@@ -102,7 +101,7 @@ public class CUIChessApp {
     }
 
     private static void assertStarted() {
-        if (chessBoard == null) {
+        if (chessGame == null) {
             throw new IllegalArgumentException("start를 먼저 해주세요");
         }
     }

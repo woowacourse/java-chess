@@ -27,8 +27,8 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    List<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        List<ChessCoordinate> candidates = new ArrayList<>();
+    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+        Set<ChessCoordinate> candidates = new HashSet<>();
         if (from.getY() == ChessYCoordinate.RANK_1 || from.getY() == ChessYCoordinate.RANK_8) {
             return candidates;
         }

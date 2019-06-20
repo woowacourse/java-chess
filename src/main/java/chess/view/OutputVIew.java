@@ -1,10 +1,11 @@
 package chess.view;
 
 
-import chess.domain.PieceType;
-import chess.domain.Team;
+import chess.domain.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class OutputVIew {
 
@@ -15,13 +16,13 @@ public class OutputVIew {
         System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoardState(List<List<PieceType>> board) {
-        board.forEach(
-                row -> {
-                    row.forEach(
-                            col -> System.out.print(getStateToString(col)));
-                    System.out.println();
-                });
+    public static void printBoardState(Map<ChessCoordinate, PieceType> board) {
+        List<ChessXCoordinate> xAxis = ChessXCoordinate.getAscendingCoordinates(ChessXCoordinate.A);
+        List<ChessYCoordinate> yAxis = ChessYCoordinate.getDescendingCoordinates(ChessYCoordinate.RANK_8);
+        yAxis.forEach(y -> {
+            xAxis.forEach(x -> System.out.print(getStateToString(board.get(ChessCoordinate.valueOf(x, y)))));
+            System.out.println();
+        });
     }
 
     private static String getStateToString(PieceType pieceType) {

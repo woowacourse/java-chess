@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Queen extends ChessPiece {
     private static Map<Team, Queen> queens = new HashMap<>();
@@ -30,8 +27,8 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    List<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        List<ChessCoordinate> movableCoords = new ArrayList<>();
+    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
 
         ChessXCoordinate fromX = from.getX();
         ChessYCoordinate fromY = from.getY();

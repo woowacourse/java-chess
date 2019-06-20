@@ -28,7 +28,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    List<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
 
         List<ChessCoordinate> candidates = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class Knight extends ChessPiece {
                 });
 
         return candidates.stream()
-                .filter((coord) -> pieceTeamProvider.getTeamAt(coord.getX(), coord.getY()) != getType().getTeam())
-                .collect(Collectors.toList());
+                .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())
+                .collect(Collectors.toSet());
     }
 }

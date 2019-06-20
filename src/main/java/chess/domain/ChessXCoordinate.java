@@ -34,7 +34,7 @@ public enum ChessXCoordinate {
                .findFirst();
     }
 
-    private static Optional<ChessXCoordinate> valueOf(int index) {
+    public static Optional<ChessXCoordinate> valueOf(int index) {
         return Arrays.stream(values())
                 .filter(coord -> coord.index == index)
                 .findFirst();
@@ -52,6 +52,12 @@ public enum ChessXCoordinate {
         return Arrays.stream(values())
                 .filter(coord -> coord.index > from.index)
                 .sorted(Comparator.comparingInt(c -> c.index))
+                .collect(Collectors.toList());
+    }
+
+    public static List<ChessXCoordinate> allAscendingCoordinates() {
+        return Arrays.stream(values())
+                .sorted(Comparator.comparingInt(ChessXCoordinate::getIndex))
                 .collect(Collectors.toList());
     }
 

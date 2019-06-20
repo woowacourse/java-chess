@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class KingTest {
 
@@ -24,7 +23,7 @@ class KingTest {
                 Arrays.asList(empty, Pawn.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty),
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), Queen.getInstance(Team.WHITE), king, empty, empty, Rook.getInstance(Team.WHITE))
         );
-        ChessBoard board = new ChessBoard(boardState);
+        ChessGame board = new ChessGame(boardState);
         assertThat(king.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("e1").get()))
                 .containsExactlyInAnyOrder(
                         ChessCoordinate.valueOf("d2").get(),

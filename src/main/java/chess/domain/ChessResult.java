@@ -1,11 +1,12 @@
 package chess.domain;
 
 import java.util.List;
+import java.util.Set;
 
 public enum  ChessResult {
     BLACK_WIN,WHITE_WIN,KEEP;
 
-    public static ChessResult judge(List<PieceType> livingPieces) {
+    public static ChessResult judge(Set<PieceType> livingPieces) {
         boolean isBlackKingLiving = livingPieces.contains(PieceType.KING_BLACK);
         boolean isWhiteKingLiving = livingPieces.contains(PieceType.KING_WHITE);
 

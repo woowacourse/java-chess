@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PawnTest {
 
@@ -24,7 +23,7 @@ class PawnTest {
                 Arrays.asList(empty, pawn, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
-        ChessBoard board = new ChessBoard(boardState);
+        ChessGame board = new ChessGame(boardState);
 
         assertThat(pawn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b2").get())).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("b3").get(),
@@ -47,7 +46,7 @@ class PawnTest {
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
-        ChessBoard board = new ChessBoard(boardState);
+        ChessGame board = new ChessGame(boardState);
 
         assertThat(pawn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b4").get())).isEmpty();
     }
@@ -66,7 +65,7 @@ class PawnTest {
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
-        ChessBoard board = new ChessBoard(boardState);
+        ChessGame board = new ChessGame(boardState);
 
         assertThat(pawn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b4").get())).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("a5").get(),
