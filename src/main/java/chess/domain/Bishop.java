@@ -1,16 +1,16 @@
 package chess.domain;
 
+import chess.domain.movepatterns.BishopPattern;
 import chess.domain.movepatterns.MovePattern;
-import chess.domain.movepatterns.QueenPattern;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen {
-    private final MovePattern movePattern = new QueenPattern();
+public class Bishop {
+    private final MovePattern movePattern = new BishopPattern();
     private final Integer color;
 
-    public Queen(Integer color) {
+    public Bishop(Integer color) {
         this.color = color;
     }
 
