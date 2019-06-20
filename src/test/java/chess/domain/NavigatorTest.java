@@ -17,6 +17,7 @@ public class NavigatorTest {
     @BeforeEach
     void setUp() {
         directions = Arrays.stream(Direction.values()).collect(Collectors.toList());
+        directions.remove(NOT_FIND);
     }
 
     @Test

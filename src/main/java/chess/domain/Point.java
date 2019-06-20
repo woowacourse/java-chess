@@ -55,7 +55,7 @@ public class Point {
         return (int) result;
     }
 
-    private double square(int value) { //TODO 단순히 제곱 (수학?)
+    private double square(int value) {
         return Math.pow(value, EXPONENT);
     }
 
@@ -81,13 +81,18 @@ public class Point {
         return new Point(X, Y);
     }
 
-    public Point calDirection(Point end) {
+    public Point makeVector(Point end) {
         int subX = subtractX(end);
         int subY = subtractY(end);
-        double scalar = Math.sqrt(square(subX) + square(subY)) * (-1);
-        double unitX = Math.round(subX / scalar);
-        double unitY = Math.round(subY / scalar);
-        return new Point((int) unitX, (int) unitY);
+        return new Point(-subX,-subY);
+    }
+
+    int dotProduct(Point end) {
+        return (positionX * end.positionX) + (positionY * end.positionY);
+    }
+
+    double calScalar() {
+        return Math.sqrt(square(positionX) + square(positionY));
     }
 
     @Override

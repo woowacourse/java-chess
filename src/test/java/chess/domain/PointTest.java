@@ -45,10 +45,10 @@ public class PointTest {
     }
 
     @Test
-    void 방향_구하기() {
+    void 방향벡터_구하기() {
         Point start = new Point("a1");
         Point end = new Point("a2");
-        assertThat(start.calDirection(end)).isEqualTo(new Point(0, 1));
+        assertThat(start.makeVector(end)).isEqualTo(new Point(0, 1));
     }
 
     @Test
