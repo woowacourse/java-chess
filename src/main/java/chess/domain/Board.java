@@ -7,30 +7,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static chess.domain.Team.*;
+
 public class Board {
     private final Map<Position, AbstractPiece> board;
 
     private Board() {
         board = new HashMap<>();
-        List<Character> aToH = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
-        List<AbstractPiece> piecesTeamBlack = Arrays.asList(
-                new Rook(Team.BLACK), new Knight(Team.BLACK), new Bishop(Team.BLACK),
-                new Queen(Team.BLACK), new King(Team.BLACK), new Bishop(Team.BLACK),
-                new Knight(Team.BLACK), new Rook(Team.BLACK)
-        );
-        List<AbstractPiece> piecesTeamWhite = Arrays.asList(
-                new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE),
-                new Queen(Team.WHITE), new King(Team.WHITE), new Bishop(Team.WHITE),
-                new Knight(Team.WHITE), new Rook(Team.WHITE)
-        );
+        List<Character> columnName = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
 
-        for (int i = 0; i < aToH.size(); i++) {
-            board.put(new Position(new Coordinate(aToH.get(i)), new Coordinate(8)), piecesTeamBlack.get(i));
-            board.put(new Position(new Coordinate(aToH.get(i)), new Coordinate(1)), piecesTeamWhite.get(i));
+        for (int i = 0; i < columnName.size(); i++) {
+            board.put(new Position(new Coordinate(columnName.get(i)), new Coordinate(8)), chessPieces(BLACK).get(i));
+            board.put(new Position(new Coordinate(columnName.get(i)), new Coordinate(1)), chessPieces(WHITE).get(i));
         }
 
-        aToH.forEach(character -> board.put(new Position(new Coordinate(character), new Coordinate(7)), new Pawn(Team.BLACK)));
-        aToH.forEach(character -> board.put(new Position(new Coordinate(character), new Coordinate(2)), new Pawn(Team.WHITE)));
+        columnName.forEach(character -> board.put(new Position(new Coordinate(character), new Coordinate(7)), new Pawn(BLACK)));
+        columnName.forEach(character -> board.put(new Position(new Coordinate(character), new Coordinate(2)), new Pawn(WHITE)));
+    }
+
+    private List<AbstractPiece> chessPieces(final Team team) {
+        return Arrays.asList(
+                new Rook(team), new Knight(team), new Bishop(team),
+                new Queen(team), new King(team), new Bishop(team),
+                new Knight(team), new Rook(team)
+        );
     }
 
     private static Board instance;

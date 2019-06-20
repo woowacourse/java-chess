@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.exceptions.IllegalRouteException;
 import chess.domain.exceptions.IllegalSourceException;
 import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.piece.King;
@@ -16,31 +17,47 @@ public class ChessBoard {
     }
 
     public boolean move(Position source, Position target) {
-        AbstractPiece sourceAbstractPiece = board.at(source);
-        AbstractPiece targetAbstractPiece = board.at(target);
+        AbstractPiece sourcePiece = board.at(source);
+        AbstractPiece targetPiece = board.at(target);
 
-        if (sourceAbstractPiece == null) {
+        validSourceTarget(sourcePiece, targetPiece);
+        validRoute(source, target, source.direction(target));
+
+        sourcePiece.canMove(source, target);
+        board.move(source, target, sourcePiece);
+        resultCounter.addCount(targetPiece);
+        turn = turn.turnChanged();
+        return gameEnd(targetPiece);
+    }
+
+    private void validSourceTarget(final AbstractPiece sourcePiece, final AbstractPiece targetPiece) {
+        validSourcePiece(sourcePiece);
+        validTurn(sourcePiece);
+        validTargetPosition(sourcePiece, targetPiece);
+    }
+
+    private void validSourcePiece(final AbstractPiece sourcePiece) {
+        if (sourcePiece == null) {
             throw new IllegalSourceException("해당 위치에 말이 없습니다.");
         }
+    }
 
-        if (!sourceAbstractPiece.isSameTeam(turn)) {
+    private void validTurn(final AbstractPiece sourcePiece) {
+        if (!sourcePiece.isSameTeam(turn)) {
             throw new IllegalSourceException("당신의 말이 이동할 수 있는 턴이 아닙니다.");
         }
+    }
 
-        if (targetAbstractPiece != null && sourceAbstractPiece.isSameTeam(targetAbstractPiece)) {
+    private void validTargetPosition(final AbstractPiece sourcePiece, final AbstractPiece targetPiece) {
+        if (targetPiece != null && sourcePiece.isSameTeam(targetPiece)) {
             throw new IllegalTargetException("같은 팀이 있는 위치로 이동이 불가능합니다.");
         }
+    }
 
-        Direction direction = source.direction(target);
-        if (!validRoute(source, target, direction)) {
-            throw new IllegalTargetException("경로에 말이 존재합니다."); // todo: Exception 이름 변경
+    private void validRoute(final Position source, final Position target, final Direction direction) {
+        if (!isValidRoute(source, target, direction)) {
+            throw new IllegalRouteException("경로에 말이 존재합니다.");
         }
-
-        sourceAbstractPiece.canMove(source, target);
-        board.move(source, target, sourceAbstractPiece);
-        resultCounter.addCount(targetAbstractPiece);
-        turn = turn.turnChanged();
-        return gameEnd(targetAbstractPiece);
     }
 
     private boolean gameEnd(AbstractPiece abstractPiece) {
@@ -51,7 +68,7 @@ public class ChessBoard {
         return resultCounter.totalScore(team);
     }
 
-    private boolean validRoute(final Position source, final Position target, final Direction direction) {
+    private boolean isValidRoute(final Position source, final Position target, final Direction direction) {
         if (direction == Direction.OTHER) {
             return true;
         }
