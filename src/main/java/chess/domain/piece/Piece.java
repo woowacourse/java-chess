@@ -6,7 +6,7 @@ import chess.domain.Team;
 public abstract class Piece {
     Team team;
 
-    public Piece(Team team) {
+    Piece(Team team) {
         this.team = team;
     }
 
