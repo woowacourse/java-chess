@@ -25,13 +25,18 @@ public class ResultCounter {
             new King(Team.WHITE)
     );
 
+    private static ResultCounter instance;
+
     private ResultCounter() {
         resultCounter = new HashMap<>();
         pieces.forEach(piece -> resultCounter.put(piece, new Count()));
     }
 
-    public static ResultCounter init() {
-        return new ResultCounter();
+    public static ResultCounter getInstance() {
+        if (instance == null) {
+            instance = new ResultCounter();
+        }
+        return instance;
     }
 
     public Count pieceCount(final Piece piece) {
@@ -39,7 +44,10 @@ public class ResultCounter {
     }
 
     public void addCount(final Piece piece) {
-        resultCounter.get(piece).add();
+        if (piece != null) {
+            resultCounter.get(piece).add();
+        }
+
     }
 
     public double totalScore(final Team team) {

@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResultCounterTest {
-    ResultCounter resultCounter;
+    private ResultCounter resultCounter;
 
     @BeforeEach
     void setUp() {
-        resultCounter = ResultCounter.init();
+        resultCounter = ResultCounter.getInstance();
     }
 
     @Test
@@ -52,6 +52,5 @@ public class ResultCounterTest {
         resultCounter.addCount(new Knight(Team.BLACK)); // ignored
 
         assertThat(resultCounter.totalScore(Team.WHITE)).isEqualTo(4);
-
     }
 }

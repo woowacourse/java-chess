@@ -37,4 +37,6 @@ public class Rook extends Piece {
     public double getScore() {
         return SCORE;
     }
+
+
 }
