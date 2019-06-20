@@ -5,7 +5,7 @@ import chess.domain.Position;
 public class Rook implements Rule {
 
     private static Rook INSTANCE = new Rook();
-
+    private static final double SCORE = 5;
 
     private Rook() {
 
@@ -25,4 +25,9 @@ public class Rook implements Rule {
         return isValidMove(origin, target);
     }
 
+
+    @Override
+    public double getScore() {
+        return SCORE;
+    }
 }

@@ -9,6 +9,8 @@ public enum Pawn implements Rule {
     SECOND_BOTTOM(1);
 
     public static final int ZERO_VECTOR = 0;
+    private static final double SCORE = 1;
+
 
     private final int distance;
 
@@ -43,4 +45,9 @@ public enum Pawn implements Rule {
         return Integer.compare(0, this.distance) == Integer.compare(0, vector);
     }
 
+
+    @Override
+    public double getScore() {
+        return SCORE;
+    }
 }

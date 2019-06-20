@@ -1,6 +1,8 @@
 package chess.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -46,5 +48,20 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public ScoreCalculator createScoreCalculator() {
+        List<Square> whites = new ArrayList<>();
+        List<Square> blacks = new ArrayList<>();
+
+        for (final Square square : map.values()) {
+            if (square.isSameColor(Piece.Color.WHITE)) {
+                whites.add(square);
+            }
+            if (square.isSameColor(Piece.Color.BLACK)) {
+                blacks.add(square);
+            }
+        }
+        return new ScoreCalculator(whites, blacks);
     }
 }

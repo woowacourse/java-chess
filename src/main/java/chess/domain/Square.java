@@ -48,6 +48,14 @@ public class Square {
         return piece.isEmpty();
     }
 
+    public boolean isSameColor(final Piece.Color other) {
+        return this.piece.isSameColor(other);
+    }
+
+    public double getScore() {
+        return piece.getScore();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

@@ -4,6 +4,7 @@ import chess.domain.Position;
 
 public class Empty implements Rule {
     private static Empty INSTANCE = new Empty();
+    private static final double SCORE = 0;
 
     private Empty() {
 
@@ -21,5 +22,10 @@ public class Empty implements Rule {
     @Override
     public boolean isValidAttack(final Position origin, final Position target) {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

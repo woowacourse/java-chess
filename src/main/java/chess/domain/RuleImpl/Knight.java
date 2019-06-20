@@ -4,6 +4,7 @@ import chess.domain.Position;
 
 public class Knight implements Rule {
     private static Knight INSTANCE = new Knight();
+    private static final double SCORE = 2.5;
 
     private Knight() {
 
@@ -21,5 +22,10 @@ public class Knight implements Rule {
     @Override
     public boolean isValidAttack(final Position origin, final Position target) {
         return isValidMove(origin, target);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

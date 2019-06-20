@@ -25,6 +25,10 @@ public class Piece {
         return EMPTY;
     }
 
+    public boolean isSameColor(final Color other) {
+        return color == other;
+    }
+
     public boolean isValidMove(final Position origin, final Position target) {
         return rule.isValidMove(origin, target);
     }
@@ -49,6 +53,10 @@ public class Piece {
             return Piece.of(this.color, Pawn.SECOND_TOP);
         }
         return Piece.of(this.color, this.rule);
+    }
+
+    public double getScore() {
+        return rule.getScore();
     }
 
     @Override

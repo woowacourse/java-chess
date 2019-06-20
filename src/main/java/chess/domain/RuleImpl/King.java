@@ -4,6 +4,7 @@ import chess.domain.Position;
 
 public class King implements Rule {
     private static King INSTANCE = new King();
+    private static final double SCORE = 0;
 
     private King() {
 
@@ -29,5 +30,10 @@ public class King implements Rule {
     @Override
     public boolean isValidAttack(final Position origin, final Position target) {
         return isValidMove(origin, target);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }
