@@ -40,6 +40,10 @@ public class Row implements Comparable<Row> {
         return this.row - other.row;
     }
 
+    public int vectorOf(final Row other) {
+        return this.row - other.row;
+    }
+
     public static List<Row> values() {
         return new ArrayList<>(ROWS.values());
     }

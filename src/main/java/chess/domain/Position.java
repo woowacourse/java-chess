@@ -130,4 +130,8 @@ public class Position implements Comparable<Position> {
                 ", column=" + column +
                 '}';
     }
+
+    public int vectorOfRow(final Position target) {
+        return target.row.vectorOf(this.row);
+    }
 }
