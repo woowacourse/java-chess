@@ -1,11 +1,13 @@
-package chess.domain;
+package chess.domain.chessround;
 
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chesspoint.RelativeChessPoint;
+import chess.domain.util.Counter;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class ChessPlayer {
     private static final String ERROR_VIOLATED_BY_RULE_MESSAGE = "현재의 말이 도달할 수 없는 위치입니다.";
@@ -105,5 +107,13 @@ public class ChessPlayer {
             sum += chessPiece.getScore(pawnCounter, column);
         }
         return sum;
+    }
+
+    public Set<ChessPoint> getAllChessPoints() {
+        return chessPieces.keySet();
+    }
+
+    public ChessPiece get(ChessPoint point) {
+        return chessPieces.get(point);
     }
 }

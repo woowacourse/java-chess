@@ -58,6 +58,10 @@ public class ChessPoint {
         return ChessPoint.of(row + relativePoint.getRelativeRow(), column + relativePoint.getRelativeColumn());
     }
 
+    public int getRow() {
+        return row;
+    }
+
     public int getColumn() {
         return column;
     }

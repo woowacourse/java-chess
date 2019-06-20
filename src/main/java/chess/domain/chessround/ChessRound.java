@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.chessround;
 
 import chess.domain.chesspoint.ChessPoint;
 
@@ -36,5 +36,17 @@ public class ChessRound {
 
     private ChessPlayer getOpponentPlayer() {
         return currentPlayer == whitePlayer ? blackPlayer : whitePlayer;
+    }
+
+    public ChessPlayer getWhitePlayer() {
+        return whitePlayer;
+    }
+
+    public ChessPlayer getBlackPlayer() {
+        return blackPlayer;
+    }
+
+    public ChessPlayer getCurrentPlayer() {
+        return currentPlayer;
     }
 }

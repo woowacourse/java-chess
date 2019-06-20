@@ -1,8 +1,8 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Counter;
 import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chesspoint.RelativeChessPoint;
+import chess.domain.util.Counter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +14,7 @@ public class King implements ChessPiece {
             , RelativeChessPoint.of(0, 1), RelativeChessPoint.of(-1, 1)
             , RelativeChessPoint.of(-1, 0), RelativeChessPoint.of(-1, -1)
             , RelativeChessPoint.of(0, -1), RelativeChessPoint.of(1, -1));
+    private static final String NAME = "K";
     private static King king = null;
 
     private King() {
@@ -40,5 +41,10 @@ public class King implements ChessPiece {
     @Override
     public double getScore(Counter<Integer> pawnCounter, int column) {
         return SCORE;
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }

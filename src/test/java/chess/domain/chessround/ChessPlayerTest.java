@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.chessround;
 
 import chess.domain.chesspiece.*;
 import chess.domain.chesspoint.ChessPoint;

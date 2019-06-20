@@ -1,7 +1,7 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Counter;
 import chess.domain.chesspoint.ChessPoint;
+import chess.domain.util.Counter;
 
 public interface ChessPiece {
     boolean checkRule(ChessPoint source, ChessPoint target, boolean opponentPieceOnTarget);
@@ -9,4 +9,6 @@ public interface ChessPiece {
     Counter<Integer> countPiecesOnSameColumn(Counter<Integer> pawnCounter, int column);
 
     double getScore(Counter<Integer> pawnCounter, int column);
+
+    String getName();
 }
