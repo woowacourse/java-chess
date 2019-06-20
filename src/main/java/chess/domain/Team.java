@@ -1,5 +1,20 @@
 package chess.domain;
 
+import java.util.function.Function;
+
 public enum Team {
-    BLACK, WHITE
+    BLACK((string) -> string),
+    WHITE((string) -> string.toLowerCase());
+
+    private Function<String, String> teamIdentifier;
+
+
+    Team(Function<String, String> teamIdentifier) {
+        this.teamIdentifier = teamIdentifier;
+
+    }
+
+    public Function<String, String> getFunction() {
+        return teamIdentifier;
+    }
 }

@@ -1,11 +1,12 @@
 package view;
 
-import chess.domain.*;
+import chess.domain.Team;
+import chess.domain.Unit;
 
 public class UnitMapper {
     public static String map(Unit unit) {
         if (unit.getTeam() == Team.BLACK)
-            return unit.getClass().getSimpleName().substring(0,1);
-        return unit.getClass().getSimpleName().substring(0,1).toLowerCase();
+            return unit.getClass().getSimpleName().substring(0, 1);
+        return unit.getClass().getSimpleName().substring(0, 1).toLowerCase();
     }
 }

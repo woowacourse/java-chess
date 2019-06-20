@@ -2,25 +2,95 @@ package chess.domain;
 
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class KingTest {
     @Test
-    void 상으로_한_칸() {
+    void 우() {
+        Unit king = new King(Team.WHITE);
+
+        assertThat(king.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(2,1))))
+                .isEqualTo(true);
 
     }
 
     @Test
-    void 좌로_한_칸() {
+    void 우상() {
+        Unit king = new King(Team.WHITE);
+
+        assertThat(king.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(2,2))))
+                .isEqualTo(true);
+    }
+
+    @Test
+    void 상() {
+        Unit king = new King(Team.WHITE);
+
+        assertThat(king.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(1,2))))
+                .isEqualTo(true);
 
     }
 
     @Test
-    void 대각선_한_칸() {
+    void 좌상() {
+        Unit king = new King(Team.WHITE);
 
+        assertThat(king.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(0,2))))
+                .isEqualTo(true);
 
     }
 
     @Test
-    void 범위를_벗어난_경우() {
+    void 좌() {
+        Unit king = new King(Team.WHITE);
+
+        assertThat(king.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(0,1))))
+                .isEqualTo(true);
+
+    }
+
+    @Test
+    void 좌하() {
+        Unit king = new King(Team.WHITE);
+
+        assertThat(king.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(0,0))))
+                .isEqualTo(true);
+
+    }
+
+    @Test
+    void 하() {
+        Unit king = new King(Team.WHITE);
+
+        assertThat(king.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(1,0))))
+                .isEqualTo(true);
+
+    }
+
+    @Test
+    void 우하() {
+        Unit king = new King(Team.WHITE);
+
+        assertThat(king.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(2,0))))
+                .isEqualTo(true);
+
+    }
+
+    @Test
+    void 두칸_범위를_벗어난_경우() {
+        Unit king = new King(Team.WHITE);
+
+        assertThat(king.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(1,3))))
+                .isEqualTo(false);
 
 
     }

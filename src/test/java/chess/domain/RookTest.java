@@ -2,25 +2,54 @@ package chess.domain;
 
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class RookTest {
 
     @Test
-    void 앞으로_세_칸() {
+    void 상() {
+        Unit rook = new Rook(Team.WHITE);
 
-
-
+        assertThat(rook.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(1,3))))
+                .isEqualTo(true);
     }
 
 
     @Test
-    void 좌로_네_칸() {
+    void 하() {
+        Unit rook = new Rook(Team.WHITE);
 
-
+        assertThat(rook.validateDirection(Vector.of(Position.create(1,3)
+                , Position.create(1,1))))
+                .isEqualTo(true);
     }
 
     @Test
-    void 대각선() {
+    void 좌() {
+        Unit rook = new Rook(Team.WHITE);
 
+        assertThat(rook.validateDirection(Vector.of(Position.create(3,1)
+                , Position.create(1,1))))
+                .isEqualTo(true);
+    }
+
+    @Test
+    void 우() {
+        Unit rook = new Rook(Team.WHITE);
+
+        assertThat(rook.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(3,1))))
+                .isEqualTo(true);
+    }
+
+    @Test
+    void 경로_벗어남() {
+        Unit rook = new Rook(Team.WHITE);
+
+        assertThat(rook.validateDirection(Vector.of(Position.create(1,1)
+                , Position.create(3,7))))
+                .isEqualTo(false);
 
     }
 }

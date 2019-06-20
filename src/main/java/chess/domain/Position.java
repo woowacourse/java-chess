@@ -1,17 +1,44 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
     public static final int MIN_POSITION = 0;
     public static final int MAX_POSITION = 8;
+    private static final List<List<Position>> positions;
+
+    static {
+        positions = new ArrayList<>();
+
+        for (int i = MIN_POSITION; i < MAX_POSITION; i++) {
+            List<Position> row = new ArrayList<>();
+            for (int j = MIN_POSITION; j < MAX_POSITION; j++) {
+                row.add(new Position(i, j));
+            }
+            positions.add(row);
+        }
+    }
 
     private final int x;
     private final int y;
 
-    public Position(int x, int y) {
+    private Position(final int x, final int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public static Position create(final int x, final int y) {
+        return positions.get(x).get(y);
+    }
+
+    public int calculateXDistance(Position position) {
+        return this.x - position.x;
+    }
+
+    public int calculateYDistance(Position position) {
+        return this.y - position.y;
     }
 
     @Override
@@ -26,5 +53,9 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    public int getY() {
+        return y;
     }
 }

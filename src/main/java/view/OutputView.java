@@ -1,6 +1,8 @@
 package view;
 
-import chess.domain.*;
+import chess.domain.ChessBoard;
+import chess.domain.Position;
+import chess.domain.Unit;
 
 import java.util.Optional;
 
@@ -19,7 +21,7 @@ public class OutputView {
 
     private static void printCheckBoardRow(ChessBoard chessBoard, int i) {
         for (int j = Position.MIN_POSITION; j < Position.MAX_POSITION; j++) {
-            Optional<Unit> optional = chessBoard.getUnit(new Position(Position.MAX_POSITION -1 - j,i));
+            Optional<Unit> optional = chessBoard.getUnit(Position.create(Position.MAX_POSITION - 1 - j, i));
             System.out.print(printUnit(optional));
         }
     }

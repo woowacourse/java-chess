@@ -1,7 +1,8 @@
 package chess.domain;
 
+import java.util.List;
 
-public class Unit {
+abstract public class Unit {
     private Team team;
 
     public Unit(Team team) {
@@ -11,4 +12,10 @@ public class Unit {
     public Team getTeam() {
         return team;
     }
+
+    public abstract boolean validateDirection(Vector vector);
+
+    public boolean isEqualTeam(Unit unit) {
+        return this.team.equals(unit.team);
+    };
 }

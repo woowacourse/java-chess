@@ -13,7 +13,7 @@ public class ConsoleChessApplication {
         ChessBoard chessBoard = new ChessBoard(initializer);
         OutputView.printInitialStatement();
 
-        while(!InputView.getStartOrEnd().equals("end")) {
+        while (!InputView.getStartOrEnd().equals("end")) {
             OutputView.printCheckBoard(chessBoard);
         }
     }
