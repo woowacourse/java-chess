@@ -6,6 +6,7 @@ import chess.domain.piece.PieceType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class BoardFactory {
     private BoardFactory() {
@@ -13,7 +14,7 @@ public class BoardFactory {
     }
 
     public static Board create(List<String> arrange) {
-        Map<Point, Piece> points = new HashMap<>();
+        Map<Point, Optional<Piece>> points = new HashMap<>();
 
         for (int i = 0; i <= Coordinate.MAX_COORDINATE; i++) {
             String[] row = arrange.get(i).split("");
