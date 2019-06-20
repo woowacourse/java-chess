@@ -8,8 +8,8 @@ import java.util.Optional;
 public class Tile {
     private static final int COORDINATE_LENGTH = 2;
     // TODO: 2019-06-18 인스턴스 변수 줄이기
-    private Coordinate xCoordinate;
-    private Coordinate yCoordinate;
+    private Coordinate CoordinateX;
+    private Coordinate CoordinateY;
     private Optional<Piece> piece;
 
     public Tile(String coordinates, Optional<Piece> piece) {
@@ -17,8 +17,8 @@ public class Tile {
         String firstCoordinate = coordinates.substring(0, 1);
         String secondCoordinate = coordinates.substring(1, 2);
 
-        this.xCoordinate = Coordinate.valueOf(Integer.parseInt(firstCoordinate));
-        this.yCoordinate = Coordinate.valueOf(Integer.parseInt(secondCoordinate));
+        this.CoordinateX = Coordinate.valueOf(Integer.parseInt(firstCoordinate));
+        this.CoordinateY = Coordinate.valueOf(Integer.parseInt(secondCoordinate));
         this.piece = piece;
     }
 
@@ -40,12 +40,12 @@ public class Tile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tile tile = (Tile) o;
-        return Objects.equals(xCoordinate, tile.xCoordinate) &&
-                Objects.equals(yCoordinate, tile.yCoordinate);
+        return Objects.equals(CoordinateX, tile.CoordinateX) &&
+                Objects.equals(CoordinateY, tile.CoordinateY);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(xCoordinate, yCoordinate);
+        return Objects.hash(CoordinateX, CoordinateY);
     }
 }

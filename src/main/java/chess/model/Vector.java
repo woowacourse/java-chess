@@ -2,6 +2,7 @@ package chess.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Vector {
     private Direction direction;
@@ -21,5 +22,9 @@ public class Vector {
 
     public Magnitude getMagnitude() {
         return magnitude;
+    }
+
+    public boolean isMatch(Set<Direction> movableDirections) {
+        return movableDirections.contains(direction);
     }
 }

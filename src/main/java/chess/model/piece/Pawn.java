@@ -1,60 +1,169 @@
 package chess.model.piece;
 
 import chess.model.Coordinate;
+import chess.model.Direction;
+import chess.model.Route;
+import chess.model.Vector;
 
-import java.util.List;
+import java.util.*;
 
 public class Pawn implements Piece {
+    private static final Set<Direction> movableDirectionsForWhiteTeam;
+    private static final Set<Direction> movableDirectionsForBlackTeam;
+
+    static {
+        movableDirectionsForWhiteTeam = new HashSet<>();
+        movableDirectionsForWhiteTeam.add(Direction.NORTH);
+        movableDirectionsForWhiteTeam.add(Direction.NORTHEAST);
+        movableDirectionsForWhiteTeam.add(Direction.NORTHWEST);
+
+        movableDirectionsForBlackTeam = new HashSet<>();
+        movableDirectionsForBlackTeam.add(Direction.SOUTH);
+        movableDirectionsForBlackTeam.add(Direction.SOUTHEAST);
+        movableDirectionsForBlackTeam.add(Direction.SOUTHWEST);
+    }
+
     private boolean isNotMoved;
     private String team;
 
     public Pawn(String team) {
-        if (!team.equals("white") && !team.equals("black")) {
-            throw new IllegalArgumentException("없는 팀입니다!");
-        }
+        validateInput(team);
+
         this.isNotMoved = true;
         this.team = team;
     }
 
+    private void validateInput(String team) {
+        if (Objects.isNull(team)) {
+            throw new NullPointerException();
+        }
+        if (!team.equals("white") && !team.equals("black")) {
+            throw new IllegalArgumentException("없는 팀입니다!");
+        }
+    }
+
     @Override
-    public boolean isMovePossible(List<Coordinate> coordinates) {
-        Coordinate sourceCoordinateX = coordinates.get(0);
-        Coordinate sourceCoordinateY = coordinates.get(1);
-        Coordinate targetCoordinateX = coordinates.get(2);
-        Coordinate targetCoordinateY = coordinates.get(3);
+    public Route produceRoute(List<Coordinate> coordinates, Vector vector) {
+        validateInput(coordinates, vector);
 
-        if (team.equals("white")) { // 아래 팀인 경우
-            if ((targetCoordinateX.calculateDistance(sourceCoordinateX) == 0)) {
-                if (targetCoordinateY.calculateDistance(sourceCoordinateY) == 1) {
-                    return true;
-                }
-                if (targetCoordinateY.calculateDistance(sourceCoordinateY) == 2 && isNotMoved) {
-                    return true;
-                }
+        List<String> route = new ArrayList<>();
+        if ("white".equals(team)) {
+            if (vector.isMatch(movableDirectionsForWhiteTeam)) {
+                addWhenMagnitude2(coordinates, vector, route);
+                addWhenMagnitude1(coordinates, vector, route);
 
+                return new Route(route);
             }
-            if (Math.abs(targetCoordinateX.calculateDistance(sourceCoordinateX)) == 1
-                    && targetCoordinateY.calculateDistance(sourceCoordinateY) == 1) {
-                return true;
-            }
+            throw new IllegalArgumentException("백팀 폰은 이 방향으로 움직일 수 없습니다");
         }
 
-        if (team.equals("black")) {
-            if (sourceCoordinateX.calculateDistance(targetCoordinateX) == 0) {
-                if (sourceCoordinateY.calculateDistance(targetCoordinateY) == 1) {
-                    return true;
-                }
-                if (sourceCoordinateY.calculateDistance(targetCoordinateY) == 2 && isNotMoved) {
-                    return true;
-                }
+        if ("black".equals(team)) {
+            if (vector.isMatch(movableDirectionsForBlackTeam)) {
+                addWhenMagnitude2(coordinates, vector, route);
+                addWhenMagnitude1(coordinates, vector, route);
+
+                return new Route(route);
             }
-            if (Math.abs(sourceCoordinateX.calculateDistance(targetCoordinateX)) == 1
-                    && sourceCoordinateY.calculateDistance(targetCoordinateY) == 1) {
-                return true;
-            }
+            throw new IllegalArgumentException("흑팀 폰은 이 방향으로 움직일 수 없습니다");
         }
 
-        return false;
+        return new Route(route);
+    }
+
+    private void validateInput(List<Coordinate> coordinates, Vector vector) {
+        if (Objects.isNull(coordinates) || coordinates.isEmpty()) {
+            throw new NullPointerException();
+        }
+        if (Objects.isNull(vector)) {
+            throw new NullPointerException();
+        }
+    }
+
+    private void addWhenMagnitude2(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getMagnitude().getMagnitude() == 2 && isNotMoved) {
+            addWhenNorthGivenMagnitude2(coordinates, vector, route);
+            addWhenSouthGivenMagnitude2(coordinates, vector, route);
+        }
+    }
+
+
+    private void addWhenNorthGivenMagnitude2(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getDirection() == Direction.NORTH) {
+            Coordinate coordinateX = coordinates.get(0);
+            Coordinate coordinateY = coordinates.get(1);
+
+            route.add(coordinateX.convertToString(0).concat(coordinateY.convertToString(1)));
+            route.add(coordinateX.convertToString(0).concat(coordinateY.convertToString(2)));
+        }
+    }
+
+    private void addWhenSouthGivenMagnitude2(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getDirection() == Direction.SOUTH) {
+            Coordinate coordinateX = coordinates.get(0);
+            Coordinate coordinateY = coordinates.get(1);
+
+            route.add(coordinateX.convertToString(0).concat(coordinateY.convertToString(-1)));
+            route.add(coordinateX.convertToString(0).concat(coordinateY.convertToString(-2)));
+        }
+    }
+
+    private void addWhenMagnitude1(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getMagnitude().getMagnitude() == 1) {
+            addWhenSouthWest(coordinates, vector, route);
+            addWhenSouthEast(coordinates, vector, route);
+            addWhenNorthEast(coordinates, vector, route);
+            addWhenNorthWest(coordinates, vector, route);
+            addWhenNorthGivenMagnitude1(coordinates, vector, route);
+            addWhenSouthGivenMagnitude1(coordinates, vector, route);
+        }
+    }
+
+    private void addWhenSouthWest(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getDirection() == Direction.SOUTHWEST) {
+            Coordinate coordinateX = coordinates.get(0);
+            Coordinate coordinateY = coordinates.get(1);
+            route.add(coordinateX.convertToString(-1).concat(coordinateY.convertToString(-1)));
+        }
+    }
+
+    private void addWhenSouthEast(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getDirection() == Direction.SOUTHEAST) {
+            Coordinate coordinateX = coordinates.get(0);
+            Coordinate coordinateY = coordinates.get(1);
+            route.add(coordinateX.convertToString(1).concat(coordinateY.convertToString(-1)));
+        }
+    }
+
+    private void addWhenNorthEast(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getDirection() == Direction.NORTHEAST) {
+            Coordinate coordinateX = coordinates.get(0);
+            Coordinate coordinateY = coordinates.get(1);
+            route.add(coordinateX.convertToString(1).concat(coordinateY.convertToString(1)));
+        }
+    }
+
+    private void addWhenNorthWest(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getDirection() == Direction.NORTHWEST) {
+            Coordinate coordinateX = coordinates.get(0);
+            Coordinate coordinateY = coordinates.get(1);
+            route.add(coordinateX.convertToString(-1).concat(coordinateY.convertToString(1)));
+        }
+    }
+
+    private void addWhenNorthGivenMagnitude1(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getDirection() == Direction.NORTH) {
+            Coordinate coordinateX = coordinates.get(0);
+            Coordinate coordinateY = coordinates.get(1);
+            route.add(coordinateX.convertToString(0).concat(coordinateY.convertToString(1)));
+        }
+    }
+
+    private void addWhenSouthGivenMagnitude1(List<Coordinate> coordinates, Vector vector, List<String> route) {
+        if (vector.getDirection() == Direction.SOUTH) {
+            Coordinate coordinateX = coordinates.get(0);
+            Coordinate coordinateY = coordinates.get(1);
+            route.add(coordinateX.convertToString(0).concat(coordinateY.convertToString(-1)));
+        }
     }
 
     @Override

@@ -1,14 +1,17 @@
 package chess.model.piece;
 
 import chess.model.Coordinate;
+import chess.model.Route;
+import chess.model.Vector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
 
+// TODO: 2019-06-20 signalMoved 테스트코드 작성
 public class PawnTest {
     private Piece whitePawn;
     private Piece blackPawn;
@@ -25,64 +28,243 @@ public class PawnTest {
     }
 
     @Test
-    void 백팀일_경우_한칸_움직일_수_있는지_확인() {
-        boolean path = whitePawn.isMovePossible(Arrays.asList(Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(3)));
-        assertThat(path).isTrue();
+    void 경로확인오류_coordinates가_null일_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(6);
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(NullPointerException.class)
+                .isThrownBy(() -> whitePawn.produceRoute(null, vector));
     }
 
     @Test
-    void 백팀일_경우_두칸_움직일_수_있는지_확인() {
-        boolean path = whitePawn.isMovePossible(Arrays.asList(Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(4)));
-        assertThat(path).isTrue();
+    void 경로확인오류_coordinates가_비어있을_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(6);
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(NullPointerException.class)
+                .isThrownBy(() -> whitePawn.produceRoute(Collections.emptyList(), vector));
     }
 
     @Test
-    void 백팀일_경우_대각선_움직일_수_있는지_확인() {
-        boolean path = whitePawn.isMovePossible(Arrays.asList(Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(3), Coordinate.valueOf(3)));
-        assertThat(path).isTrue();
+    void 경로확인오류_vector가_null인_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+
+        assertThatExceptionOfType(NullPointerException.class)
+                .isThrownBy(() -> whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), null));
     }
 
     @Test
-    void 백팀일_경우_대각선_움직일_수_있는지_확인2() {
-        boolean path = whitePawn.isMovePossible(Arrays.asList(Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(1), Coordinate.valueOf(3)));
-        assertThat(path).isTrue();
+    void 경로확인_백팀_북방향_크기1() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(6);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        Route route = whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector);
+        assertThat(route).isEqualTo(new Route(Arrays.asList("56")));
     }
 
     @Test
-    void 백팀일_경우_두칸_움직일_수_없는지_확인() {
-        whitePawn.signalMoved();
-        boolean path = whitePawn.isMovePossible(Arrays.asList(Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(4)));
-        assertThat(path).isFalse();
+    void 경로확인_백팀_북방향_크기2() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(7);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        Route route = whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector);
+        assertThat(route).isEqualTo(new Route(Arrays.asList("56", "57")));
     }
 
     @Test
-    void 흑팀일_경우_한칸_움직일_수_있는지_확인() {
-        boolean path = blackPawn.isMovePossible(Arrays.asList(Coordinate.valueOf(3), Coordinate.valueOf(3), Coordinate.valueOf(3), Coordinate.valueOf(2)));
-        assertThat(path).isTrue();
+    void 경로확인_백팀_북동방향_크기1() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(6);
+        Coordinate targetCoordinateY = Coordinate.valueOf(6);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        Route route = whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector);
+        assertThat(route).isEqualTo(new Route(Arrays.asList("66")));
     }
 
     @Test
-    void 흑팀일_경우_두칸_움직일_수_있는지_확인() {
-        boolean path = blackPawn.isMovePossible(Arrays.asList(Coordinate.valueOf(3), Coordinate.valueOf(3), Coordinate.valueOf(3), Coordinate.valueOf(1)));
-        assertThat(path).isTrue();
+    void 경로확인_백팀_북서방향_크기1() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(4);
+        Coordinate targetCoordinateY = Coordinate.valueOf(6);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        Route route = whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector);
+        assertThat(route).isEqualTo(new Route(Arrays.asList("46")));
     }
 
     @Test
-    void 흑팀일_경우_대각선_움직일_수_있는지_확인() {
-        boolean path = blackPawn.isMovePossible(Arrays.asList(Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(3), Coordinate.valueOf(1)));
-        assertThat(path).isTrue();
+    void 경로확인_흑팀_남방향_크기1() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(4);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        Route route = blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector);
+        assertThat(route).isEqualTo(new Route(Arrays.asList("54")));
     }
 
     @Test
-    void 흑팀일_경우_대각선_움직일_수_있는지_확인2() {
-        boolean path = blackPawn.isMovePossible(Arrays.asList(Coordinate.valueOf(2), Coordinate.valueOf(2), Coordinate.valueOf(1), Coordinate.valueOf(1)));
-        assertThat(path).isTrue();
+    void 경로확인_흑팀_남방향_크기2() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(3);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        Route route = blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector);
+        assertThat(route).isEqualTo(new Route(Arrays.asList("54", "53")));
     }
 
     @Test
-    void 흑팀일_경우_두칸_움직일_수_없는지_확인() {
-        blackPawn.signalMoved();
-        boolean path = blackPawn.isMovePossible(Arrays.asList(Coordinate.valueOf(2), Coordinate.valueOf(3), Coordinate.valueOf(2), Coordinate.valueOf(1)));
-        assertThat(path).isFalse();
+    void 경로확인_흑팀_남동방향_크기1() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(6);
+        Coordinate targetCoordinateY = Coordinate.valueOf(4);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        Route route = blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector);
+        assertThat(route).isEqualTo(new Route(Arrays.asList("64")));
+    }
+
+    @Test
+    void 경로확인_흑팀_남서방향_크기1() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(4);
+        Coordinate targetCoordinateY = Coordinate.valueOf(4);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        Route route = blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector);
+        assertThat(route).isEqualTo(new Route(Arrays.asList("44")));
+    }
+
+    @Test
+    void 경로오류_확인_백팀이_남방향으로_1칸_이동할_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(4);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
+    }
+
+    @Test
+    void 경로오류_확인_백팀이_남방향으로_2칸_이동할_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(3);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
+    }
+
+    @Test
+    void 경로오류_확인_백팀이_남동방향으로_1칸_이동할_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(6);
+        Coordinate targetCoordinateY = Coordinate.valueOf(4);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
+    }
+
+    @Test
+    void 경로오류_확인_백팀이_남서방향으로_1칸_이동할_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(4);
+        Coordinate targetCoordinateY = Coordinate.valueOf(4);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
+    }
+
+    @Test
+    void 경로오류_확인_흑팀이_북방향으로_1칸_이동할_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(6);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
+    }
+
+    @Test
+    void 경로오류_확인_흑팀이_북방향으로_2칸_이동할_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(7);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
+    }
+
+    @Test
+    void 경로오류_확인_흑팀이_북동방향으로_1칸_이동할_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(6);
+        Coordinate targetCoordinateY = Coordinate.valueOf(6);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
+    }
+
+    @Test
+    void 경로오류_확인_흑팀이_북서방향으로_1칸_이동할_경우() {
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(4);
+        Coordinate targetCoordinateY = Coordinate.valueOf(6);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
     }
 }

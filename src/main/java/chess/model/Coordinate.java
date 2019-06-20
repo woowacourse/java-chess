@@ -32,4 +32,8 @@ public class Coordinate {
     public int calculateDistance(Coordinate targetCoordinate) {
         return Math.subtractExact(this.coordinate, targetCoordinate.coordinate);
     }
+
+    public String convertToString(int addition) {
+        return String.valueOf(this.coordinate + addition);
+    }
 }
