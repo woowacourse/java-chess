@@ -68,54 +68,34 @@ public class Position implements Comparable<Position> {
         return Math.abs(this.distanceOfRow(target) + this.distanceOfColumn(target));
     }
 
-    public List<Position> findRoutes(Position target) {
-        int gapOfRow = this.row.calculateSubtraction(target.row);
-        int gapOfColumn = this.column.calculateSubtraction(target.column);
-
-        List<Position> positions = new ArrayList<>();
-        // 나이트 같은 대각선, 가로, 세로 아닌 경우
-
-        // 세로
-        if (isPerpendicular(target)) {
-            int delta = gapOfRow < 0 ? +1 : -1;
-            Row current = this.row.next(delta);
-            while (!current.equals(target.row)) {
-                positions.add(Position.of(current, this.column));
-                current = current.next(delta);
-            }
-        }
-        // 가로
-        if (isLevel(target)) {
-            int delta = gapOfColumn < 0 ? +1 : -1;
-            Column current = this.column.next(delta);
-            while (!current.equals(target.column)) {
-                positions.add(Position.of(this.row, current));
-                current = current.next(delta);
-            }
-        }
-
-        // 대각선
-        if (isDiagonal(target)) {
-
-        }
-        return positions;
-
-    }
-
-//    private Position plus(final Position target) {
-////        this.row.add()
-//    }
-//
-//    private Position minus(final Position target) {
-//
-//    }
-
     private int distanceOfRow(final Position target) {
         return this.row.calculateAbsolute(target.row);
     }
 
     private int distanceOfColumn(final Position target) {
         return this.column.calculateAbsolute(target.column);
+    }
+
+    public List<Position> findRoutes(Position target) {
+        if (!(isLevel(target) || isDiagonal(target) || isPerpendicular(target))) {
+            return Collections.emptyList();
+        }
+
+        int gapOfRow = this.row.calculateSubtraction(target.row);
+        int gapOfColumn = this.column.calculateSubtraction(target.column);
+
+        int deltaOfRow = Integer.compare(0, gapOfRow);
+        int deltaOfColumn = Integer.compare(0, gapOfColumn);
+
+        List<Position> positions = new ArrayList<>();
+
+        Position current = Position.of(this.row.next(deltaOfRow), this.column.next(deltaOfColumn));
+
+        while (!current.equals(target)) {
+            positions.add(current);
+            current = Position.of(current.row.next(deltaOfRow), current.column.next(deltaOfColumn));
+        }
+        return positions;
     }
 
     @Override

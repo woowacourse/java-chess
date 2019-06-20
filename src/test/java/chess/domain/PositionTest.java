@@ -91,37 +91,39 @@ public class PositionTest {
 
 
     @Test
-    public void 이동경로가_세로인_아래에서_위로_경우_받환_테스트() {
+    public void 세로_이동_위쪽_방향() {
         Position origin = Position.of("1", "a");
         Position target = Position.of("8", "a");
 
         List<Position> actual = new ArrayList<>();
-        for (int i = 2; i <= 8; i++) {
+        for (int i = 2; i < 8; i++) {
             actual.add(Position.of(String.valueOf(i), "a"));
         }
 
         List<Position> expected = origin.findRoutes(target);
 
         assertTrue(actual.containsAll(expected));
+        assertTrue(expected.containsAll(actual));
     }
 
     @Test
-    public void 이동경로가_세로인_위에서_아래_경우_받환_테스트() {
+    public void 세로_이동_아래쪽_방향() {
         Position origin = Position.of("8", "a");
         Position target = Position.of("1", "a");
 
         List<Position> actual = new ArrayList<>();
-        for (int i = 1; i <= 7; i++) {
+        for (int i = 2; i < 8; i++) {
             actual.add(Position.of(String.valueOf(i), "a"));
         }
 
         List<Position> expected = origin.findRoutes(target);
 
         assertTrue(actual.containsAll(expected));
+        assertTrue(expected.containsAll(actual));
     }
 
     @Test
-    public void 이동경로가_가로인_왼쪽에서_오른쪽_경우_받환_테스트() {
+    public void 가로_이동_오른쪽_방향() {
         String row = "1";
         char originCol = 'a';
         char targetCol = 'e';
@@ -129,7 +131,7 @@ public class PositionTest {
         Position target = Position.of(row, String.valueOf(targetCol));
 
         List<Position> actual = new ArrayList<>();
-        for (int i = originCol + 1; i <= targetCol; i++) {
+        for (int i = originCol+1 ; i < targetCol; i++) {
             Position position = Position.of(row, String.valueOf((char) i));
             actual.add(position);
         }
@@ -137,10 +139,11 @@ public class PositionTest {
         List<Position> expected = origin.findRoutes(target);
 
         assertTrue(actual.containsAll(expected));
+        assertTrue(expected.containsAll(actual));
     }
 
     @Test
-    public void 이동경로가_가로인_오른쪽에서_왼쪽_경우_받환_테스트() {
+    public void 가로_이동_왼쪽_방향() {
         String row = "1";
         char originCol = 'e';
         char targetCol = 'a';
@@ -148,7 +151,7 @@ public class PositionTest {
         Position target = Position.of(row, String.valueOf(targetCol));
 
         List<Position> actual = new ArrayList<>();
-        for (int i = originCol + 1; i >= targetCol; i--) {
+        for (int i = originCol - 1; i > targetCol; i--) {
             Position position = Position.of(row, String.valueOf((char) i));
             actual.add(position);
         }
@@ -156,6 +159,96 @@ public class PositionTest {
         List<Position> expected = origin.findRoutes(target);
 
         assertTrue(actual.containsAll(expected));
+        assertTrue(expected.containsAll(actual));
     }
 
+    @Test
+    public void 대각선_이동_왼쪽_위_방향() {
+        String originRow = "5";
+        String targetRow = "2";
+        char originCol = 'c';
+        char targetCol = 'f';
+        Position origin = Position.of(originRow, String.valueOf(originCol));
+        Position target = Position.of(targetRow, String.valueOf(targetCol));
+
+        List<Position> actual = new ArrayList<>();
+        actual.add(Position.of("4", "d"));
+        actual.add(Position.of("3", "e"));
+
+        List<Position> expected = origin.findRoutes(target);
+
+        assertTrue(actual.containsAll(expected));
+        assertTrue(expected.containsAll(actual));
+    }
+
+    @Test
+    public void 대각선_이동_왼쪽_아래_방향() {
+        String originRow = "3";
+        String targetRow = "6";
+        char originCol = 'c';
+        char targetCol = 'f';
+        Position origin = Position.of(originRow, String.valueOf(originCol));
+        Position target = Position.of(targetRow, String.valueOf(targetCol));
+
+        List<Position> actual = new ArrayList<>();
+        actual.add(Position.of("4", "d"));
+        actual.add(Position.of("5", "e"));
+
+        List<Position> expected = origin.findRoutes(target);
+
+        assertTrue(actual.containsAll(expected));
+        assertTrue(expected.containsAll(actual));
+    }
+
+    @Test
+    public void 대각선_이동_오른쪽_위_방향() {
+        String originRow = "4";
+        String targetRow = "1";
+        char originCol = 'd';
+        char targetCol = 'a';
+        Position origin = Position.of(originRow, String.valueOf(originCol));
+        Position target = Position.of(targetRow, String.valueOf(targetCol));
+
+        List<Position> actual = new ArrayList<>();
+        actual.add(Position.of("3", "c"));
+        actual.add(Position.of("2", "b"));
+
+        List<Position> expected = origin.findRoutes(target);
+
+        assertTrue(actual.containsAll(expected));
+        assertTrue(expected.containsAll(actual));
+    }
+
+    @Test
+    public void 대각선_이동_오른쪽_아래_방향() {
+        String originRow = "4";
+        String targetRow = "7";
+        char originCol = 'd';
+        char targetCol = 'a';
+        Position origin = Position.of(originRow, String.valueOf(originCol));
+        Position target = Position.of(targetRow, String.valueOf(targetCol));
+
+        List<Position> actual = new ArrayList<>();
+        actual.add(Position.of("5", "c"));
+        actual.add(Position.of("6", "b"));
+
+        List<Position> expected = origin.findRoutes(target);
+
+        assertTrue(actual.containsAll(expected));
+        assertTrue(expected.containsAll(actual));
+    }
+
+    @Test
+    void 이동_나이트같은_경우() {
+        String originRow = "1";
+        String targetRow = "3";
+        char originCol = 'b';
+        char targetCol = 'c';
+        Position origin = Position.of(originRow, String.valueOf(originCol));
+        Position target = Position.of(targetRow, String.valueOf(targetCol));
+
+        List<Position> expected = origin.findRoutes(target);
+
+        assertTrue(expected.isEmpty());
+    }
 }
