@@ -9,4 +9,8 @@ public class Bishop extends Piece {
     public Bishop(Position position, Team team) {
         super(position, team);
     }
+
+    boolean canMove(Position position) {
+        return this.position.canMoveDiagonally(position);
+    }
 }
