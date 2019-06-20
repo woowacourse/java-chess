@@ -7,11 +7,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PositionTest {
-
     @Test
     public void create() {
         Position position = Position.of("11");
-        assertThat(position).isEqualTo(Position.of("11"));
+        assertThat(position == Position.of("11")).isTrue();
     }
 
     @Test
