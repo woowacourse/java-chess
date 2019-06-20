@@ -9,4 +9,9 @@ public class Rook extends Piece {
     public Rook(Position position, Team team) {
         super(position, team);
     }
+
+    public boolean canMove(Position position) {
+        return this.position.canMoveBackAndForth(position)
+                || this.position.canMoveSideToSide(position);
+    }
 }
