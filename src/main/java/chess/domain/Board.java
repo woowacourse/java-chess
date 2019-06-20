@@ -61,8 +61,8 @@ public class Board {
 //        return abstractPiece.getName().toUpperCase();
 //    }
 
-    public void move(Position source, Position target, AbstractPiece sourceAbstractPiece) {
+    public void move(Position source, Position target, AbstractPiece sourcePiece) {
         board.remove(source);
-        board.put(target, sourceAbstractPiece);
+        board.put(target, sourcePiece);
     }
 }

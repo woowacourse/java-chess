@@ -10,17 +10,17 @@ public abstract class AbstractPiece implements Piece {
         this.team = team;
         this.moveRule = moveRule;
     }
-
-    public boolean isBlackTeam() {
-        return this.team == Team.BLACK;
-    }
+// FIXME: OutputView 관련 로직
+//    public boolean isBlackTeam() {
+//        return this.team == Team.BLACK;
+//    }
 
     public boolean isSameTeam(AbstractPiece abstractPiece) {
         return this.team == abstractPiece.team;
     }
 
-    public boolean isSameTeam(Team team) {
-        return this.team == team;
+    public boolean isTurn(Turn turn) {
+        return turn.isTurn(team);
     }
 
     public boolean canMove(Position source, Position target) {

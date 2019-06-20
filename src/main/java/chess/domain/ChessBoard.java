@@ -6,12 +6,12 @@ import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.piece.King;
 
 public class ChessBoard {
-    private Team turn;
+    private Turn turn;
     private Board board;
     private ResultCounter resultCounter;
 
     public ChessBoard() {
-        this.turn = Team.WHITE;
+        this.turn = Turn.init();
         this.board = Board.getInstance();
         this.resultCounter = ResultCounter.getInstance();
     }
@@ -43,7 +43,7 @@ public class ChessBoard {
     }
 
     private void validTurn(final AbstractPiece sourcePiece) {
-        if (!sourcePiece.isSameTeam(turn)) {
+        if (!sourcePiece.isTurn(turn)) {
             throw new IllegalSourceException("당신의 말이 이동할 수 있는 턴이 아닙니다.");
         }
     }
