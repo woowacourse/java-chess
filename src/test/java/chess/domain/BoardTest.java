@@ -5,6 +5,8 @@ import chess.domain.pieces.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
@@ -86,5 +88,13 @@ class BoardTest {
         board.play(Point.get(1, 4), Point.get(5, 8), ChessTeam.WHITE);
         assertEquals(15, board.result(ChessTeam.BLACK).size());
         assertEquals(16, board.result(ChessTeam.WHITE).size());
+    }
+
+    @Test
+    void status_테스트() {
+        Map<String, String> status = board.status();
+        for (String s : status.keySet()) {
+            System.out.println(s + " : " + status.get(s));
+        }
     }
 }
