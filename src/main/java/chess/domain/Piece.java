@@ -1,9 +1,11 @@
 package chess.domain;
 
 import chess.domain.RuleImpl.Empty;
+import chess.domain.RuleImpl.King;
 import chess.domain.RuleImpl.Pawn;
 import chess.domain.RuleImpl.Rule;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Piece {
@@ -37,10 +39,6 @@ public class Piece {
         return rule.isValidAttack(origin, target);
     }
 
-    public boolean isEmpty() {
-        return Color.EMPTY == color;
-    }
-
     public boolean isSameTeam(final Piece other) {
         return this.color == other.color;
     }
@@ -59,6 +57,10 @@ public class Piece {
         return rule.getScore();
     }
 
+    public boolean isEmpty() {
+        return Color.EMPTY == color;
+    }
+
     public boolean isPawn() {
         for (Rule rule : Pawn.values()) {
             if (this.rule == rule) {
@@ -66,6 +68,10 @@ public class Piece {
             }
         }
         return false;
+    }
+
+    public boolean isKing() {
+        return this.rule == King.getInstance();
     }
 
     @Override

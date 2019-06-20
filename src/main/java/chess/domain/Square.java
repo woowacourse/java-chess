@@ -40,6 +40,9 @@ public class Square {
     }
 
     public void attackPiece(final Square target) {
+        if(target.piece.isKing()){
+            throw new ExitException("attacked King");
+        }
         target.piece = piece.orElseFirstPawn();
         this.piece = Piece.empty();
     }

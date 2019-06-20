@@ -1,9 +1,12 @@
 package chess.domain;
 
+import chess.domain.RuleImpl.King;
 import chess.domain.RuleImpl.Rook;
+import chess.domain.RuleImpl.Rule;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SquareTest {
     @Test
@@ -67,5 +70,18 @@ public class SquareTest {
         assertThat(origin.movePiece(target)).isFalse();
         assertThat(origin.equals(expectedOrigin)).isTrue();
         assertThat(target.equals(expectedTarget)).isTrue();
+    }
+
+    @Test
+    public void 킹이_잡혔을떄_예외발생() {
+        Position position1 = Position.of("1", "a");
+        Rule king = King.getInstance();
+        Square target = Square.of(position1, Piece.of(Piece.Color.BLACK, king));
+
+        Position position2 = Position.of("2", "a");
+        Rule rook = Rook.getInstance();
+        Square origin = Square.of(position2, Piece.of(Piece.Color.BLACK, rook));
+
+        assertThrows(ExitException.class, () -> origin.attackPiece(target));
     }
 }
