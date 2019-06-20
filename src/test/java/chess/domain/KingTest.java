@@ -29,6 +29,12 @@ public class KingTest {
     }
 
     @Test
+    void 점프() {
+        Piece king = new King(true);
+        assertThat(king.getCandidatePoints(new Point("a1"), new Point("a7")).size()).isEqualTo(0);
+    }
+
+    @Test
     void 두칸_이동_불가능() {
         Piece king = new King(true);
         assertThat(king.getCandidatePoints(new Point("a1"), new Point("a3")).size()).isEqualTo(0);
