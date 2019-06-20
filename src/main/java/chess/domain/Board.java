@@ -65,4 +65,10 @@ public class Board {
     public Piece get(Point point) {
         return board.get(point);
     }
+
+    public boolean check(ChessTeam team) {
+        return board.values().stream()
+                .filter(piece -> piece.isTurn(team))
+                .noneMatch(piece -> piece.toString().equals("King"));
+    }
 }

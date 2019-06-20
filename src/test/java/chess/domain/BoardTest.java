@@ -5,8 +5,7 @@ import chess.domain.pieces.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
     Board board;
@@ -53,5 +52,21 @@ class BoardTest {
     void 어택_불가_테스트() {
         board.play(Point.get(2, 2), Point.get(2, 3));
         assertThrows(IllegalArgumentException.class, () -> board.play(Point.get(1, 2), Point.get(2, 3)));
+    }
+
+    @Test
+    void Black왕이_죽었는지_테스트() {
+        board.play(Point.get(3, 2), Point.get(3, 3), ChessTeam.WHITE);
+        board.play(Point.get(4, 7), Point.get(4, 6), ChessTeam.BLACK);
+        board.play(Point.get(4, 1), Point.get(1, 4), ChessTeam.WHITE);
+        board.play(Point.get(2, 8), Point.get(1, 6), ChessTeam.BLACK);
+        board.play(Point.get(1, 4), Point.get(5, 8), ChessTeam.WHITE);
+        assertTrue(board.check(ChessTeam.BLACK));
+    }
+
+    @Test
+    void Black왕이_죽었는지_테스트2() {
+        board.play(Point.get(3, 2), Point.get(3, 3), ChessTeam.WHITE);
+        assertFalse(board.check(ChessTeam.BLACK));
     }
 }

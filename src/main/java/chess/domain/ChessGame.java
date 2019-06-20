@@ -11,7 +11,7 @@ public class ChessGame {
         turn = ChessTeam.WHITE;
     }
 
-    public void play(String input) {
+    public boolean play(String input) {
         String[] split = input.split(" ");
         if (split.length != 3) {
             throw new IllegalArgumentException();
@@ -22,6 +22,11 @@ public class ChessGame {
 
         board.play(parse(split[1]), parse(split[2]), turn);
         turn = turn.change();
+        return checkKing();
+    }
+
+    private boolean checkKing() {
+        return board.check(turn);
     }
 
     private Point parse(String destination) {
