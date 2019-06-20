@@ -1,7 +1,6 @@
 package chess.domain;
 
 public class Navigator {
-
     private final Direction direction;
 
     public Navigator(Point start, Point end) {

@@ -12,19 +12,6 @@ public class Rook implements Piece{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Rook rook = (Rook) o;
-        return teamColor == rook.teamColor;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(teamColor);
-    }
-
-    @Override
     public List<Point> getCandidatePoints(Point start, Point end) {
         List<Point> points = new ArrayList<>();
         Navigator navigator = new Navigator(start, end);
@@ -36,5 +23,18 @@ public class Rook implements Piece{
             points.add(point);
         }
         return points;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rook rook = (Rook) o;
+        return teamColor == rook.teamColor;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(teamColor);
     }
 }

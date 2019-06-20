@@ -10,6 +10,7 @@ public class Point {
     private static final int EXPONENT = 2;
     private static final int X_INDEX = 0;
     private static final int Y_INDEX = 1;
+
     private final int positionX;
     private final int positionY;
 
@@ -31,7 +32,7 @@ public class Point {
 
     private void checkPositionX(char positionX) {
         if (positionX < X_START || positionX > X_END) {
-            throw new IllegalArgumentException("Y 좌표는 " + X_START + "부터 " + X_END + "까지만 허용합니다.");
+            throw new IllegalArgumentException("X 좌표는 " + X_START + "부터 " + X_END + "까지만 허용합니다.");
         }
     }
 
@@ -41,19 +42,20 @@ public class Point {
         }
     }
 
-    private int changeTypeX(char x){
+    private int changeTypeX(char x) {
         return x - X_START;
     }
 
-    private int changeTypeY(char y){ return y - Y_START; }
-
+    private int changeTypeY(char y) {
+        return y - Y_START;
+    }
 
     public int calDistance(Point end) {
         double result = square(subtractX(end)) + square(subtractY(end));
         return (int) result;
     }
 
-    private double square(int value) {
+    private double square(int value) { //TODO 단순히 제곱 (수학?)
         return Math.pow(value, EXPONENT);
     }
 
@@ -69,18 +71,22 @@ public class Point {
         if (calDistance(end) == 0) {
             return false;
         }
-        if (positionX == end.positionX || positionY == end.positionY) {
-            return true;
-        }
-        return false;
+        return (positionX == end.positionX || positionY == end.positionY);
+    }
+
+    public Point move(Direction direction) {
+        Point directionPoint = direction.getPosition();
+        char X = (char) (positionX + directionPoint.positionX + X_START);
+        char Y = (char) (positionY + directionPoint.positionY + Y_START);
+        return new Point(X, Y);
     }
 
     public Point calDirection(Point end) {
         int subX = subtractX(end);
         int subY = subtractY(end);
         double scalar = Math.sqrt(square(subX) + square(subY)) * (-1);
-        double unitX = subX / scalar;
-        double unitY = subY / scalar;
+        double unitX = Math.round(subX / scalar);
+        double unitY = Math.round(subY / scalar);
         return new Point((int) unitX, (int) unitY);
     }
 
@@ -96,12 +102,5 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(positionX, positionY);
-    }
-
-    public Point move(Direction direction) {
-        Point directionPoint = direction.getPosition();
-        char X = (char) (positionX + directionPoint.positionX + X_START);
-        char Y = (char) (positionY + directionPoint.positionY + Y_START);
-        return new Point(X, Y);
     }
 }

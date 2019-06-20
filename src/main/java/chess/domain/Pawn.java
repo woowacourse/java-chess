@@ -11,6 +11,11 @@ public class Pawn implements Piece{
     }
 
     @Override
+    public List<Point> getCandidatePoints(Point start, Point end) {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -21,10 +26,5 @@ public class Pawn implements Piece{
     @Override
     public int hashCode() {
         return Objects.hash(teamColor);
-    }
-
-    @Override
-    public List<Point> getCandidatePoints(Point start, Point end) {
-        return null;
     }
 }
