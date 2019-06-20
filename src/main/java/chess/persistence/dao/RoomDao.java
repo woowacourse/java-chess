@@ -4,6 +4,8 @@ import chess.persistence.dto.RoomDto;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class RoomDao {
@@ -60,6 +62,20 @@ public class RoomDao {
         }
     }
 
+    public List<RoomDto> findLatestN(int topN) throws SQLException {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_LATEST_N)) {
+            query.setInt(1, topN);
+            try (ResultSet rs = query.executeQuery()) {
+                List<RoomDto> findRooms = new ArrayList<>();
+                while (rs.next()) {
+                    findRooms.add(mapResult(rs));
+                }
+                return findRooms;
+            }
+        }
+    }
+
     public int deleteById(long id) throws SQLException {
         try (Connection conn = dataSource.getConnection();
             PreparedStatement query = conn.prepareStatement(RoomDaoSql.DELETE_BY_ID)) {
@@ -72,6 +88,7 @@ public class RoomDao {
         private static final String INSERT = "INSERT INTO room(title) VALUES(?)";
         private static final String SELECT_BY_ID = "SELECT id, title FROM room WHERE id=?";
         private static final String SELECT_BY_TITLE = "SELECT id, title FROM room WHERE title=?";
+        private static final String SELECT_LATEST_N = "SELECT id, title FROM room ORDER BY id DESC LIMIT ?";
         private static final String DELETE_BY_ID = "DELETE FROM room WHERE id=?";
     }
 }

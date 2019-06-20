@@ -1,15 +1,14 @@
 package chess;
 
 import chess.domain.*;
+import chess.persistence.dto.RoomDto;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
@@ -20,27 +19,45 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().create();
-
+        ChessService chessService = new ChessService();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
+        get("/rooms", (req, res) -> {
+
+            return chessService.findLatestNRooms(5);
+        }, gson::toJson);
+
         post("/create-room", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("rno", 1);
-            model.put("title", req.queryParams("title"));
+            RoomDto roomDto = new RoomDto();
+            roomDto.setTitle(req.queryParams("title"));
+            chessService.createRoom(roomDto);
 
-            return model;
+            Optional<RoomDto> maybeFound = chessService.findRoomByTitle(req.queryParams("title"));
+
+            if (maybeFound.isPresent()) {
+                model.put("id", maybeFound.get().getId());
+                return model;
+            }
+
+            return model.put("result", "fail");
         }, gson::toJson);
 
         get("/room", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("rno", 1);
-            model.put("title", "누구나");
+            Optional<RoomDto> maybeFound = chessService.findById(Long.parseLong(req.queryParams("id")));
 
-            return render(model, "room.html");
+            if (maybeFound.isPresent()) {
+                model.put("id", maybeFound.get().getId());
+                model.put("title", maybeFound.get().getTitle());
+
+                return render(model, "room.html");
+            }
+            return render(model, "error.html");
         });
 
         get("/board", (req, res) -> {

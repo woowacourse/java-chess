@@ -1,32 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>체스</title>
 </head>
+
 <body>
 
-<button id="create_room">방 생성</button>
+    <button id="create_room">방 생성</button>
 
-<button id="refresh_room">새로 고침</button>
+    <button id="refresh_room">새로 고침</button>
 
-<div id="rooms">
-
-</div>
+    <div id="rooms">
+        
+    </div>
 
 </body>
 
 <script>
-    document.getElementById("create_room").addEventListener("click", function() {
+
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", function () {
+        console.log(xhr.response);
+        let obj = JSON.parse(xhr.response);
+        console.log(obj);
+    
+        obj.forEach(element => {
+            let child = document.createElement('div');
+            child.innerHTML = '<a href="/room?id='+ element.id +'">'+ element.title +'</a>'
+            document.getElementById("rooms").append(child);
+        });
+
+    });
+    xhr.open("GET", "/rooms");
+    xhr.send();
+
+    document.getElementById("create_room").addEventListener("click", function () {
         let title = prompt("방이름 입력");
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("load", function () {
             console.log(xhr.response);
             let obj = JSON.parse(xhr.response);
-            location.href = "/room?rno=" + obj.rno;
+            location.href = "/room?id=" + obj.id;
         });
         xhr.open("POST", "/create-room?title=" + title);
         xhr.send();
     });
 </script>
+
 </html>
