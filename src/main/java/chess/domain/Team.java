@@ -4,9 +4,6 @@ public enum Team {
     BLACK, WHITE;
 
     public Team turnChanged() {
-        if (this == BLACK) {
-            return WHITE;
-        }
-        return BLACK;
+        return this == BLACK ? WHITE : BLACK;
     }
 }
