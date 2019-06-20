@@ -3,18 +3,12 @@ package chess.domain;
 import java.util.Objects;
 
 public abstract class Piece {
-    private boolean life;
     private final Team team;
     private MoveRule moveRule;
 
     public Piece(Team team, MoveRule moveRule) {
-        this.life = true;
         this.team = team;
         this.moveRule = moveRule;
-    }
-
-    public boolean isLife() {
-        return this.life;
     }
 
     public boolean isBlackTeam() {
@@ -41,11 +35,12 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Piece piece = (Piece) o;
-        return life == piece.life;
+        return team == piece.team &&
+                Objects.equals(moveRule, piece.moveRule);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(life);
+        return Objects.hash(team, moveRule);
     }
 }

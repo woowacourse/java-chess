@@ -53,10 +53,6 @@ public class Board {
 
         Piece piece = board.get(position);
 
-        if (!piece.isLife()) {
-            return ".";
-        }
-
         if (piece.isBlackTeam()) {
             return piece.getName();
         }
