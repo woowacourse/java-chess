@@ -19,7 +19,7 @@ public enum Pawn implements Rule {
     @Override
     public boolean isValidMove(final Position origin, final Position target) {
         final int vector = origin.vectorOfRow(target);
-        return isBottomMovable(vector) || isTopMovable(vector) && origin.isPerpendicular(target);
+        return origin.isPerpendicular(target) && (isBottomMovable(vector) || isTopMovable(vector));
     }
 
     private boolean isTopMovable(final int vector) {
@@ -28,6 +28,19 @@ public enum Pawn implements Rule {
 
     private boolean isBottomMovable(final int vector) {
         return this.distance >= vector && vector > ZERO_VECTOR;
+    }
+
+    @Override
+    public boolean isValidAttack(final Position origin, final Position target) {
+        if (!origin.isDiagonal(target)) {
+            return false;
+        }
+        final int vector = origin.vectorOfRow(target);
+        return origin.sumRowAndColumn(target) == 2 && isSameSign(vector);
+    }
+
+    private boolean isSameSign(final int vector) {
+        return Integer.compare(0, this.distance) == Integer.compare(0, vector);
     }
 
 }

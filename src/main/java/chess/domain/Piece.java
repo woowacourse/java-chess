@@ -9,7 +9,6 @@ public class Piece {
     private Color color;
     private Rule rule;
 
-
     private Piece(final Color color, final Rule rule) {
         this.color = color;
         this.rule = rule;
@@ -24,7 +23,12 @@ public class Piece {
     }
 
     public boolean isValidMove(final Position origin, final Position target) {
+
         return rule.isValidMove(origin, target);
+    }
+
+    public boolean isValidAttack(final Position origin, final Position target) {
+        return rule.isValidAttack(origin, target);
     }
 
     public boolean isEmpty() {
@@ -33,6 +37,14 @@ public class Piece {
 
     public boolean isSameTeam(final Piece other) {
         return this.color == other.color;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                ", rule=" + rule +
+                '}';
     }
 
     public enum Color {

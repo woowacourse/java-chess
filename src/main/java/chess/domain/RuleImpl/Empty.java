@@ -17,4 +17,9 @@ public class Empty implements Rule {
     public boolean isValidMove(final Position origin, final Position target) {
         return false;
     }
+
+    @Override
+    public boolean isValidAttack(final Position origin, final Position target) {
+        return false;
+    }
 }

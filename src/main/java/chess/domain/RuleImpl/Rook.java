@@ -20,4 +20,9 @@ public class Rook implements Rule {
         return origin.isLevel(target) || origin.isPerpendicular(target);
     }
 
+    @Override
+    public boolean isValidAttack(final Position origin, final Position target) {
+        return isValidMove(origin, target);
+    }
+
 }

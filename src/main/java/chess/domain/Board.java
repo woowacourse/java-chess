@@ -13,27 +13,29 @@ public class Board {
         if (hasObstacle(origin, target)) {
             return false;
         }
+        //장애물 있으면 못움직임
 
         Square originSquare = map.get(origin);
         Square targetSquare = map.get(target);
 
-        if (originSquare.isSameTeam(targetSquare)) {
-            return false;
+        if (targetSquare.isEmpty()) {
+            return isValidMove(originSquare, targetSquare);
         }
-//        else if (targetSquare.isEmpty()) {
-        return isMovable(originSquare, targetSquare);
-//        }
-//        return isAttackAble(originSquare, targetSquare);
+        return isValidAttack(originSquare, targetSquare);
     }
 
-//    private boolean isAttackAble(final Square origin, final Square target) {
-//        if (origin.isAttackAble(target)) {
-//
-//        }
-//    }
-
-    public boolean isMovable(final Square origin, final Square target) {
-        if (!origin.isMovable(target)) {
+    public boolean isValidAttack(final Square origin, final Square target) {
+        if (!origin.isValidAttack(target)) {
+            return false;
+        }
+        origin.attackPiece(target);
+        return true;
+    }
+    // 움직일 수 있니 물어보고
+    //변환하고
+    //true반환
+    public boolean isValidMove(final Square origin, final Square target) {
+        if (!origin.isValidMove(target)) {
             return false;
         }
         origin.movePiece(target);
@@ -42,14 +44,15 @@ public class Board {
 
     private boolean hasObstacle(final Position origin, final Position target) {
         for (Position route : origin.findRoutes(target)) {
-            if (!map.get(route).isEmpty()) {
+            final boolean empty = map.get(route).isEmpty();
+            if (!empty) {
                 return true;
             }
         }
         return false;
     }
 
-//    public boolean isMovable(Square origin, Square target) {
+//    public boolean isValidMove(Square origin, Square target) {
 //        return getMovableLiss(origin).contains(target.getPosition());
 //    }
 //

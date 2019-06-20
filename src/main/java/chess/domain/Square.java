@@ -15,10 +15,21 @@ public class Square {
         return new Square(position, piece);
     }
 
-    public boolean isMovable(final Square target) {
+    public boolean isValidMove(final Square target) {
         return piece.isValidMove(this.position, target.position);
     }
     // TODO target이 빈 칸인 경우
+
+    public boolean isValidAttack(final Square target) {
+        if (isSameTeam(target)) {
+            return false;
+        }
+        return this.piece.isValidAttack(this.position, target.position);
+    }
+
+    private boolean isSameTeam(final Square target) {
+        return this.piece.isSameTeam(target.piece);
+    }
 
     public boolean movePiece(final Square target) {
         if (piece.isValidMove(this.position, target.position)) {
@@ -29,8 +40,13 @@ public class Square {
         return false;
     }
 
-    public boolean isSameTeam(final Square target) {
-        return this.piece.isSameTeam(target.piece);
+    public void attackPiece(final Square target) {
+        target.piece = this.piece;
+        this.piece = Piece.empty();
+    }
+
+    public boolean isEmpty() {
+        return piece.isEmpty();
     }
 
     @Override
@@ -54,9 +70,5 @@ public class Square {
                 "position=" + position +
                 ", piece=" + piece +
                 '}';
-    }
-
-    public boolean isEmpty() {
-        return piece.isEmpty();
     }
 }

@@ -17,4 +17,9 @@ public class Knight implements Rule {
     public boolean isValidMove(final Position origin, final Position target) {
         return origin.isMoveAnyWhereSum(target, 3) && origin.isMoveAnyWhereSub(target, 1);
     }
+
+    @Override
+    public boolean isValidAttack(final Position origin, final Position target) {
+        return isValidMove(origin, target);
+    }
 }

@@ -17,4 +17,9 @@ public class Queen implements Rule {
     public boolean isValidMove(final Position origin, final Position target) {
         return origin.isDiagonal(target) || origin.isPerpendicular(target) || origin.isLevel(target);
     }
+
+    @Override
+    public boolean isValidAttack(final Position origin, final Position target) {
+        return isValidMove(origin, target);
+    }
 }

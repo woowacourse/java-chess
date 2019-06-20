@@ -25,4 +25,9 @@ public class King implements Rule {
     private boolean isLengthTwo(final Position origin, final Position target) {
         return origin.isMoveAnyWhereSum(target, 2) && origin.isMoveAnyWhereSub(target, 0);
     }
+
+    @Override
+    public boolean isValidAttack(final Position origin, final Position target) {
+        return isValidMove(origin, target);
+    }
 }
