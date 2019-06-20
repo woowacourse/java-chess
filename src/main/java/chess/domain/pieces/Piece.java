@@ -11,4 +11,6 @@ public abstract class Piece {
         this.position = position;
         this.team = team;
     }
+
+    abstract boolean canMove(Position position);
 }

@@ -10,6 +10,7 @@ public class Queen extends Piece {
         super(position, team);
     }
 
+    @Override
     public boolean canMove(Position position) {
         return this.position.canMoveBackAndForth(position)
                 || this.position.canMoveSideToSide(position)

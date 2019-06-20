@@ -12,6 +12,7 @@ public class King extends Piece {
         super(position, team);
     }
 
+    @Override
     boolean canMove(Position position) {
         return this.position.getDistanceSquare(position) == DISTANCE_FOR_FOUR_DIRECTION
                 || this.position.getDistanceSquare(position) == DISTANCE_FOR_DIAGONAL_DIRECTION;

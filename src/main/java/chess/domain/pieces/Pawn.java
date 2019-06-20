@@ -13,16 +13,17 @@ public class Pawn extends Piece {
         super(position, team);
     }
 
+    @Override
     public boolean canMove(Position position) {
         return isPossibleDistance(position) && isPossibleDirection(position);
     }
 
-    public boolean isPossibleDistance(Position position) {
+    private boolean isPossibleDistance(Position position) {
         return (this.position.getDistanceSquare(position) == DISTANCE_FOR_ALL_DIRECTION)
                 || (this.position.isInStartingPosition() && this.position.getDistanceSquare(position) == DISTANCE_FOR_STARTING_POSITION);
     }
 
-    public boolean isPossibleDirection(Position position) {
+    private boolean isPossibleDirection(Position position) {
         return team.equals(Team.WHITE) && this.position.subtractRow(position) < STANDARD_DIRECTION_VALUE
                 || team.equals(Team.BLACK) && this.position.subtractRow(position) > STANDARD_DIRECTION_VALUE;
     }
