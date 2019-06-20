@@ -20,4 +20,13 @@ public class XPositionTest {
     void X_equals_테스트() {
         assertThat(XPosition.valueOf(1)).isEqualTo(XPosition.valueOf(1));
     }
+
+    @Test
+    void source_target의_x값_차의_절대값_비교() {
+        XPosition source = XPosition.valueOf(3);
+        XPosition target = XPosition.valueOf(6);
+
+        int actual = source.calculateXsDiff(target);
+        assertThat(actual).isEqualTo(3);
+    }
 }

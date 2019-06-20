@@ -39,4 +39,8 @@ public class XPosition {
     public int hashCode() {
         return Objects.hash(xPosition);
     }
+
+    public int calculateXsDiff(final XPosition target) {
+        return Math.abs(this.xPosition - target.xPosition);
+    }
 }
