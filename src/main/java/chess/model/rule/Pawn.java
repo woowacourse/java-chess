@@ -1,5 +1,6 @@
 package chess.model.rule;
 
+import chess.model.board.Board;
 import chess.model.board.Row;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
@@ -14,7 +15,7 @@ public class Pawn extends MoveRule {
     }
 
     @Override
-    List<Square> getMovableSquares(final Square square) {
+    List<Square> getMovableSquares(Board board, final Square square) {
         final List<Square> candidate = new ArrayList<>();
         candidate.add(forward(square));
         if (isFirstPosition(square)) {

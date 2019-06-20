@@ -1,5 +1,6 @@
 package chess.model.rule;
 
+import chess.model.board.Board;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
 
@@ -12,12 +13,12 @@ public class Rook extends MoveRule {
     }
 
     @Override
-    List<Square> getMovableSquares(final Square square) {
+    List<Square> getMovableSquares(Board board, final Square square) {
         final List<Square> candidate = new ArrayList<>();
-        candidate.addAll(Square.getLeftNeighbors(square));
-        candidate.addAll(Square.getRightNeighbors(square));
-        candidate.addAll(Square.getUpNeighbors(square));
-        candidate.addAll(Square.getDownNeighbors(square));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getLeftOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getRightOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getUpOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getDownOneNeighbor));
         return candidate;
     }
 }

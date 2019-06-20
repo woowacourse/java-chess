@@ -1,5 +1,6 @@
 package chess.model.rule;
 
+import chess.model.board.Board;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
 
@@ -12,12 +13,12 @@ public class Bishop extends MoveRule {
     }
 
     @Override
-    List<Square> getMovableSquares(final Square square) {
+    List<Square> getMovableSquares(Board board, final Square square) {
         final List<Square> candidate = new ArrayList<>();
-        candidate.addAll(Square.getUpperLeftNeighbors(square));
-        candidate.addAll(Square.getUpperRightNeighbors(square));
-        candidate.addAll(Square.getLowerLeftNeighbors(square));
-        candidate.addAll(Square.getLowerRightNeighbors(square));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getUpperLeftOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getUpperRightOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getLowerLeftOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getLowerRightOneNeighbor));
         return candidate;
     }
 }

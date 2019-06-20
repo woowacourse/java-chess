@@ -1,7 +1,5 @@
 package chess.model.board;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -53,16 +51,6 @@ public class Square {
         return new Square(square.getColumn(), newRow);
     }
 
-    private static List<Square> getNeighbors(final Square square, final Function<Square, Square> getDirection) {
-        final List<Square> result = new ArrayList<>();
-        Square nextSquare = getDirection.apply(square);
-        while (nextSquare != null) {
-            result.add(nextSquare);
-            nextSquare = getDirection.apply(nextSquare);
-        }
-        return result;
-    }
-
     public static Square getLeftOneNeighbor(final Square square) {
         return getHorizontalOneNeighbor(square, PREV);
     }
@@ -93,38 +81,6 @@ public class Square {
 
     public static Square getLowerRightOneNeighbor(final Square square) {
         return getDiagonalOneNeighbor(square, Square::getRightOneNeighbor, Square::getDownOneNeighbor);
-    }
-
-    public static List<Square> getLeftNeighbors(final Square square) {
-        return getNeighbors(square, Square::getLeftOneNeighbor);
-    }
-
-    public static List<Square> getRightNeighbors(final Square square) {
-        return getNeighbors(square, Square::getRightOneNeighbor);
-    }
-
-    public static List<Square> getUpNeighbors(final Square square) {
-        return getNeighbors(square, Square::getUpOneNeighbor);
-    }
-
-    public static List<Square> getDownNeighbors(final Square square) {
-        return getNeighbors(square, Square::getDownOneNeighbor);
-    }
-
-    public static List<Square> getUpperLeftNeighbors(final Square square) {
-        return getNeighbors(square, Square::getUpperLeftOneNeighbor);
-    }
-
-    public static List<Square> getUpperRightNeighbors(final Square square) {
-        return getNeighbors(square, Square::getUpperRightOneNeighbor);
-    }
-
-    public static List<Square> getLowerLeftNeighbors(final Square square) {
-        return getNeighbors(square, Square::getLowerLeftOneNeighbor);
-    }
-
-    public static List<Square> getLowerRightNeighbors(final Square square) {
-        return getNeighbors(square, Square::getLowerRightOneNeighbor);
     }
 
     @Override
