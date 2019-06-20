@@ -8,24 +8,38 @@ import java.util.Objects;
 import static chess.domain.Direction.*;
 
 public class Pawn implements Piece{
-    private final boolean teamColor;
+    private final Team team;
     private final List<Direction> candidateDirection;
 
-    public Pawn(boolean teamColor) {
-        this.teamColor = teamColor;
-        this.candidateDirection = (teamColor) ? Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST) :
+    public Pawn(Team team) {
+        this.team = team;
+        this.candidateDirection = (team == Team.WHITE) ? Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST) :
                 Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
     }
 
     @Override
     public List<Point> getCandidatePoints(Point start, Point end) {
         List<Point> points = new ArrayList<>();
-        Point vector = start.makeVector(end);
-        Direction foundDirection = Direction.findDirection(vector);
-        if(candidateDirection.contains(foundDirection)){
-            points.add(end);
+        Navigator navigator = new Navigator(start, end);
+        Direction foundDirection = navigator.getDirection(candidateDirection);
+        if (isTwoStep(start, end, foundDirection)) {
+            return Arrays.asList(start.move(foundDirection), end);
+        }
+        if (isOneStep(start, end, foundDirection)) {
+            points.add(start.move(foundDirection));
         }
         return points;
+    }
+
+    private boolean isOneStep(Point start, Point end, Direction foundDirection) {
+        return candidateDirection.contains(foundDirection) &&
+                start.isStep(end, 1);
+    }
+
+    private boolean isTwoStep(Point start, Point end, Direction foundDirection) {
+        return foundDirection.equals(team.getDirection()) &&
+                start.isSameY(team.getFirstIndex()) &&
+                start.isStep(end, 2);
     }
 
     @Override
@@ -33,11 +47,11 @@ public class Pawn implements Piece{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pawn pawn = (Pawn) o;
-        return teamColor == pawn.teamColor;
+        return team == pawn.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(teamColor);
+        return Objects.hash(team);
     }
 }

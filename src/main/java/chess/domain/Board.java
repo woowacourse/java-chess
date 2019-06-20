@@ -17,8 +17,8 @@ public class Board {
         List<Piece> black = PieceFactory.generateFirstPieces(false);
         for (int i = 0; i < 8; i++) {
             pieces.put(new Point((char) ('a' + i), '1'), white.get(i));
-            pieces.put(new Point((char) ('a' + i), '2'), new Pawn(true));
-            pieces.put(new Point((char) ('a' + i), '7'), new Pawn(false));
+            pieces.put(new Point((char) ('a' + i), '2'), new Pawn(Team.WHITE));
+            pieces.put(new Point((char) ('a' + i), '7'), new Pawn(Team.BLACK));
             pieces.put(new Point((char) ('a' + i), '8'), black.get(i));
         }
         return pieces;

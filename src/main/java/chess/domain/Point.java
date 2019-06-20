@@ -95,6 +95,14 @@ public class Point {
         return Math.sqrt(square(positionX) + square(positionY));
     }
 
+    public boolean isSameY(int positionY) {
+        return this.positionY == positionY;
+    }
+
+    public boolean isStep(Point end, int difference) {
+        return Math.abs(end.positionY - positionY) == difference;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
