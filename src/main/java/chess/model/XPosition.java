@@ -27,6 +27,10 @@ public class XPosition {
         return xPositions.get(xPos);
     }
 
+    public int calculateXsDiff(final XPosition target) {
+        return Math.abs(this.xPosition - target.xPosition);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -40,7 +44,4 @@ public class XPosition {
         return Objects.hash(xPosition);
     }
 
-    public int calculateXsDiff(final XPosition target) {
-        return Math.abs(this.xPosition - target.xPosition);
-    }
 }
