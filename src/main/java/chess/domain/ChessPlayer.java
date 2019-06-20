@@ -5,6 +5,7 @@ import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chesspoint.RelativeChessPoint;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class ChessPlayer {
     private static final String ERROR_VIOLATED_BY_RULE_MESSAGE = "현재의 말이 도달할 수 없는 위치입니다.";
@@ -74,5 +75,35 @@ public class ChessPlayer {
         if (removedChessPiece == null) {
             throw new InvalidChessPositionException(ERROR_CANNOT_DELETE_MESSAGE);
         }
+    }
+
+    public double calculateScore() {
+        Counter<Integer> pawnCounter = Counter.create();
+        pawnCounter = initializeCounter(pawnCounter);
+
+        return calculateScoreBy(pawnCounter);
+    }
+
+    private Counter<Integer> initializeCounter(Counter<Integer> pawnCounter) {
+        for (Entry<ChessPoint, ChessPiece> entry : chessPieces.entrySet()) {
+            ChessPoint chessPoint = entry.getKey();
+            ChessPiece chessPiece = entry.getValue();
+
+            int column = chessPoint.getColumn();
+            pawnCounter = chessPiece.countPiecesOnSameColumn(pawnCounter, column);
+        }
+        return pawnCounter;
+    }
+
+    private double calculateScoreBy(Counter<Integer> pawnCounter) {
+        double sum = 0;
+        for (Entry<ChessPoint, ChessPiece> entry : chessPieces.entrySet()) {
+            ChessPoint chessPoint = entry.getKey();
+            ChessPiece chessPiece = entry.getValue();
+
+            int column = chessPoint.getColumn();
+            sum += chessPiece.getScore(pawnCounter, column);
+        }
+        return sum;
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.chesspiece;
 
+import chess.domain.Counter;
 import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chesspoint.RelativeChessPoint;
 
@@ -7,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WhitePawn implements ChessPiece {
+    public static final double SCORE = 1.0;
     private static final List<RelativeChessPoint> UNIT_DIRECTION_EMPTY_ON_TARGET = Arrays.asList(
             RelativeChessPoint.of(1, 0));
     private static final List<RelativeChessPoint> UNIT_DIRECTIONS_OPPONENT_ON_TARGET = Arrays.asList(
@@ -30,5 +32,16 @@ public class WhitePawn implements ChessPiece {
         return opponentPieceOnTarget
                 ? UNIT_DIRECTIONS_OPPONENT_ON_TARGET.stream().anyMatch(d -> d.equals(direction))
                 : UNIT_DIRECTION_EMPTY_ON_TARGET.stream().anyMatch(d -> d.equals(direction));
+    }
+
+    @Override
+    public Counter<Integer> countPiecesOnSameColumn(Counter<Integer> pawnCounter, int column) {
+        pawnCounter.increase(column);
+        return pawnCounter;
+    }
+
+    @Override
+    public double getScore(Counter<Integer> pawnCounter, int column) {
+        return (1 < pawnCounter.count(column)) ? SCORE / 2 : SCORE;
     }
 }

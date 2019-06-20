@@ -58,6 +58,10 @@ public class ChessPoint {
         return ChessPoint.of(row + relativePoint.getRelativeRow(), column + relativePoint.getRelativeColumn());
     }
 
+    public int getColumn() {
+        return column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

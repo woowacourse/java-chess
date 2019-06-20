@@ -146,4 +146,44 @@ class ChessPlayerTest {
 
         assertThrows(InvalidChessPositionException.class, () -> currentPlayer.move(source, target, opponentPlayer));
     }
+
+    @Test
+    void calculateScore_동일_column에_겹치는_Pawn이_없는_경우() {
+        Map<ChessPoint, ChessPiece> chessPieces = ChessPairsBuilder.build(Arrays.asList(
+                ChessPair.of(ChessPoint.of(1, 1), Rook.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 2), Knight.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 3), Bishop.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 4), King.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 5), Queen.getInstance())
+                , ChessPair.of(ChessPoint.of(2, 1), WhitePawn.getInstance())
+        ));
+        ChessPlayer player = ChessPlayer.from(chessPieces);
+        double expectedScore = Rook.SCORE + Knight.SCORE + Bishop.SCORE + King.SCORE + Queen.SCORE + WhitePawn.SCORE;
+
+        assertThat(player.calculateScore()).isEqualTo(expectedScore);
+    }
+
+    @Test
+    void calculateScore_동일_column에_겹치는_Pawn이_있는_경우() {
+        Map<ChessPoint, ChessPiece> chessPieces = ChessPairsBuilder.build(Arrays.asList(
+                ChessPair.of(ChessPoint.of(1, 1), Rook.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 2), Knight.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 3), Bishop.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 4), King.getInstance())
+                , ChessPair.of(ChessPoint.of(1, 5), Queen.getInstance())
+
+                , ChessPair.of(ChessPoint.of(2, 2), WhitePawn.getInstance())
+
+                , ChessPair.of(ChessPoint.of(2, 1), WhitePawn.getInstance())
+                , ChessPair.of(ChessPoint.of(3, 1), WhitePawn.getInstance())
+                , ChessPair.of(ChessPoint.of(4, 1), WhitePawn.getInstance())
+        ));
+        ChessPlayer player = ChessPlayer.from(chessPieces);
+        double expectedScore = Rook.SCORE + Knight.SCORE + Bishop.SCORE + King.SCORE + Queen.SCORE
+                + WhitePawn.SCORE
+                + 0.5 * (WhitePawn.SCORE + WhitePawn.SCORE + WhitePawn.SCORE);
+        System.out.println(expectedScore);
+
+        assertThat(player.calculateScore()).isEqualTo(expectedScore);
+    }
 }
