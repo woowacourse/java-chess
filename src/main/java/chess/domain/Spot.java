@@ -45,6 +45,14 @@ public class Spot {
         return this.y - spot.y;
     }
 
+    //TODO 생각해보자...getter를 안쓰는 방법을..
+    public Spot nextSpot(MovementUnit movementUnit) {
+        int nextSpotX = this.x + movementUnit.getX();
+        int nextSpotY = this.y + movementUnit.getY();
+
+        return Spot.valueOf(nextSpotX, nextSpotY);
+    }
+
     private static class SpotCache {
         private static List<Spot> spotsCache = new ArrayList<>();
 

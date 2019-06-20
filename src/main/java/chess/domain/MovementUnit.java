@@ -15,8 +15,19 @@ public enum MovementUnit {
         this.y = y;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     //TODO 리팩토링
     public static MovementUnit direction(int x, int y) {
+        x = Math.abs(x);
+        y = Math.abs(y);
+
         if (x == 0 && y == 0) {
             throw new IllegalArgumentException("올바른 움직임을 입력하세요");
         }
