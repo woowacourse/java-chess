@@ -1,28 +1,13 @@
 package chess.domain;
 
-import chess.exception.AllyExistException;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class ChessGame {
     private final Map<ChessCoordinate, ChessPiece> boardState;
 
-    public ChessGame(List<List<ChessPiece>> initialBoardState) {
-        this.boardState = initBoard(initialBoardState);
-    }
-
-    private Map<ChessCoordinate, ChessPiece> initBoard(List<List<ChessPiece>> initialBoardState) {
-        Map<ChessCoordinate, ChessPiece> board = new HashMap<>();
-        List<ChessYCoordinate> yAxis = ChessYCoordinate.getAscendingCoordinates(ChessYCoordinate.RANK_8);
-        yAxis.add(0, ChessYCoordinate.RANK_8);
-        List<ChessXCoordinate> xAxis = ChessXCoordinate.getAscendingCoordinates(ChessXCoordinate.A);
-        xAxis.add(0, ChessXCoordinate.A);
-        xAxis.stream()
-                .forEach(x -> yAxis.forEach(y -> board.put(ChessCoordinate.valueOf(x, y).get(),
-                        initialBoardState.get(y.getIndex()).get(x.getIndex()))));
-        return board;
+    public ChessGame(AbstractStateInitiatorFactory stateInitiatorFactory) {
+        this.boardState = stateInitiatorFactory.create();
     }
 
     public Map<ChessCoordinate, PieceType> getBoard() {

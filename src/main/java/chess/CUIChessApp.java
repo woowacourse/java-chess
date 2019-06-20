@@ -57,23 +57,10 @@ public class CUIChessApp {
     }
 
     private static void initBoard() {
-        ChessPiece empty = EmptyCell.getInstance();
+        AbstractChessPieceFactory factory = new ChessPieceFactory();
+        ChessPiece empty = factory.create(PieceType.NONE);
 
-        List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(Rook.getInstance(BLACK), Knight.getInstance(BLACK), Bishop.getInstance(BLACK), Queen.getInstance(BLACK),
-                        King.getInstance(BLACK), Bishop.getInstance(BLACK), Knight.getInstance(BLACK), Rook.getInstance(BLACK)),
-                Arrays.asList(Pawn.getInstance(BLACK), Pawn.getInstance(BLACK), Pawn.getInstance(BLACK), Pawn.getInstance(BLACK),
-                        Pawn.getInstance(BLACK), Pawn.getInstance(BLACK), Pawn.getInstance(BLACK), Pawn.getInstance(BLACK)),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(Pawn.getInstance(WHITE), Pawn.getInstance(WHITE), Pawn.getInstance(WHITE), Pawn.getInstance(WHITE),
-                        Pawn.getInstance(WHITE), Pawn.getInstance(WHITE), Pawn.getInstance(WHITE), Pawn.getInstance(WHITE)),
-                Arrays.asList(Rook.getInstance(WHITE), Knight.getInstance(WHITE), Bishop.getInstance(WHITE), Queen.getInstance(WHITE),
-                        King.getInstance(WHITE), Bishop.getInstance(WHITE), Knight.getInstance(WHITE), Rook.getInstance(WHITE))
-        );
-        chessGame = new ChessGame(boardState);
+        chessGame = new ChessGame(new StateInitiatorFactory());
     }
 
     private static boolean checkResult() {

@@ -23,7 +23,7 @@ class PawnTest {
                 Arrays.asList(empty, pawn, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
-        ChessGame board = new ChessGame(boardState);
+        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
 
         assertThat(pawn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b2").get())).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("b3").get(),
@@ -46,7 +46,7 @@ class PawnTest {
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
-        ChessGame board = new ChessGame(boardState);
+        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
 
         assertThat(pawn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b4").get())).isEmpty();
     }
@@ -65,7 +65,7 @@ class PawnTest {
                 Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
-        ChessGame board = new ChessGame(boardState);
+        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
 
         assertThat(pawn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b4").get())).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("a5").get(),

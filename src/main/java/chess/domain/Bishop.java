@@ -5,7 +5,7 @@ import java.util.*;
 public class Bishop extends ChessPiece {
     private static Map<Team, Bishop> bishops = new HashMap<>();
 
-    public static Bishop getInstance(Team team) {
+    static Bishop getInstance(Team team) {
         if (!bishops.containsKey(team)) {
             bishops.put(team, new Bishop(team));
         }

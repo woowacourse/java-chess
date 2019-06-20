@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.domain.*;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
 import chess.persistence.dao.RoomDao;
@@ -8,10 +9,7 @@ import chess.persistence.dto.RoomDto;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessService {
@@ -34,7 +32,7 @@ public class ChessService {
         return Optional.empty();
     }
 
-    public Optional<RoomDto> findById(long id) {
+    public Optional<RoomDto> findRoomById(long id) {
         try {
             return roomDao.findById(id);
         } catch (SQLException e) {
@@ -60,4 +58,62 @@ public class ChessService {
         }
         return Collections.EMPTY_LIST;
     }
+
+    public List<Optional<Long>> createBoardState(Map<ChessCoordinate, PieceType> boardState, long roomId) {
+        return boardState.entrySet().stream()
+                .map(entry -> {
+                    BoardStateDto dto = new BoardStateDto();
+                    dto.setRoomId(roomId);
+                    dto.setCoordX(entry.getKey().getX().name());
+                    dto.setCoordY(entry.getKey().getY().name());
+                    dto.setType(entry.getValue().name());
+                    return dto;
+                })
+                .map(this::tryInsertBoardState)
+                .collect(Collectors.toList());
+    }
+
+    public Map<ChessCoordinate, ChessPiece> findBoardStatesByRoomId(Long roomId) {
+        try {
+            AbstractChessPieceFactory factory = new ChessPieceFactory();
+            List<ChessXCoordinate> xAxis = ChessXCoordinate.allAscendingCoordinates();
+            List<ChessYCoordinate> yAxis = ChessYCoordinate.allAscendingCoordinates();
+            Map<ChessCoordinate, ChessPiece> board = new HashMap<>();
+            yAxis.forEach(y ->
+                    xAxis.forEach(x ->
+                            board.put(ChessCoordinate.valueOf(x, y).get(), factory.create(PieceType.NONE))
+                    ));
+
+            boardStateDao.findByRoomId(roomId).forEach(dto ->
+                    board.put(ChessCoordinate.valueOf(dto.getCoordX() + dto.getCoordY()).get(),
+                            factory.create(PieceType.valueOf(dto.getType()))));
+            return board;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyMap();
+    }
+
+
+    private BoardStateDto createBoardStateDtoWithType(PieceType type) {
+        BoardStateDto stateDto = new BoardStateDto();
+        stateDto.setType(type.name());
+        return stateDto;
+    }
+
+    private Optional<Long> tryInsertBoardState(BoardStateDto dto) {
+        try {
+            return Optional.of(boardStateDao.addState(dto));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+
+    public int updateChessPiecePosition(ChessCoordinate from, ChessCoordinate to, long roomId) {
+        // TODO:
+        return -1;
+    }
+
 }

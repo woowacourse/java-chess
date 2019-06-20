@@ -15,7 +15,6 @@ import static chess.domain.Team.WHITE;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static ChessGame chessGame;
 
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().create();
@@ -49,7 +48,7 @@ public class WebUIChessApplication {
 
         get("/room", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Optional<RoomDto> maybeFound = chessService.findById(Long.parseLong(req.queryParams("id")));
+            Optional<RoomDto> maybeFound = chessService.findRoomById(Long.parseLong(req.queryParams("id")));
 
             if (maybeFound.isPresent()) {
                 model.put("id", maybeFound.get().getId());
@@ -61,42 +60,24 @@ public class WebUIChessApplication {
         });
 
         get("/board", (req, res) -> {
-            initBoard();
+            ChessGame chessGame = new ChessGame(new StateInitiatorFactory());
+            chessService.createBoardState(chessGame.getBoard(), Long.parseLong(req.queryParams("id")));
 
+            chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
 
             return chessGame.getBoard();
         }, gson::toJson);
 
         put("/move-piece", (req, res) -> {
-            initBoard();
+            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
+
             chessGame.move(ChessCoordinate.valueOf(req.queryParams("from")).get(), ChessCoordinate.valueOf(req.queryParams("to")).get());
             return chessGame.getBoard();
         }, gson::toJson);
-
 
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    private static void initBoard() {
-        ChessPiece empty = EmptyCell.getInstance();
-
-        List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(Rook.getInstance(BLACK), Knight.getInstance(BLACK), Bishop.getInstance(BLACK), Queen.getInstance(BLACK),
-                        King.getInstance(BLACK), Bishop.getInstance(BLACK), Knight.getInstance(BLACK), Rook.getInstance(BLACK)),
-                Arrays.asList(Pawn.getInstance(BLACK), Pawn.getInstance(BLACK), Pawn.getInstance(BLACK), Pawn.getInstance(BLACK),
-                        Pawn.getInstance(BLACK), Pawn.getInstance(BLACK), Pawn.getInstance(BLACK), Pawn.getInstance(BLACK)),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(Pawn.getInstance(WHITE), Pawn.getInstance(WHITE), Pawn.getInstance(WHITE), Pawn.getInstance(WHITE),
-                        Pawn.getInstance(WHITE), Pawn.getInstance(WHITE), Pawn.getInstance(WHITE), Pawn.getInstance(WHITE)),
-                Arrays.asList(Rook.getInstance(WHITE), Knight.getInstance(WHITE), Bishop.getInstance(WHITE), Queen.getInstance(WHITE),
-                        King.getInstance(WHITE), Bishop.getInstance(WHITE), Knight.getInstance(WHITE), Rook.getInstance(WHITE))
-        );
-        chessGame = new ChessGame(boardState);
     }
 }

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class Knight extends ChessPiece {
     private static Map<Team, Knight> knights = new HashMap<>();
 
-    public static Knight getInstance(Team team) {
+    static Knight getInstance(Team team) {
         if (!knights.containsKey(team)) {
             knights.put(team, new Knight(team));
         }

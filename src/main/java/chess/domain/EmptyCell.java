@@ -11,7 +11,7 @@ public class EmptyCell extends ChessPiece {
         super(PieceType.NONE);
     }
 
-    public static EmptyCell getInstance() {
+    static EmptyCell getInstance() {
         if (instance == null) {
             instance = new EmptyCell();
         }

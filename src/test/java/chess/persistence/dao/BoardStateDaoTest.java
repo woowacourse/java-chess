@@ -72,10 +72,14 @@ public class BoardStateDaoTest {
 
     @Test
     void updateCoordById() throws SQLException {
+        RoomDto room = new RoomDto();
+        room.setTitle("abcdafds");
+        room.setId(roomDao.addRoom(room));
         BoardStateDto state = new BoardStateDto();
         state.setType(PieceType.ROOK_WHITE.name());
         state.setCoordX(ChessXCoordinate.B.getSymbol());
         state.setCoordY(ChessYCoordinate.RANK_4.getSymbol());
+        state.setRoomId(room.getId());
         long insertedId = boardStateDao.addState(state);
         state.setId(insertedId);
         state.setCoordY(ChessYCoordinate.RANK_6.getSymbol());
@@ -84,6 +88,6 @@ public class BoardStateDaoTest {
         assertThat(found.getType()).isEqualTo(state.getType());
         assertThat(found.getCoordX()).isEqualTo(state.getCoordX());
         assertThat(found.getCoordY()).isEqualTo(state.getCoordY());
-        boardStateDao.deleteById(insertedId);
+        roomDao.deleteById(room.getId());
     }
 }
