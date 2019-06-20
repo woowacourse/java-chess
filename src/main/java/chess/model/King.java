@@ -14,10 +14,6 @@ public class King {
         int xDiff = source.calculateXsDiff(target);
         int yDiff = source.calculateYsDiff(target);
 
-        if (xDiff <= STEP_SIZE && yDiff <= STEP_SIZE) {
-            return true;
-        }
-
-        return false;
+        return (xDiff <= STEP_SIZE && yDiff <= STEP_SIZE);
     }
 }

@@ -10,9 +10,6 @@ public class Rook {
     }
 
     public boolean canMove(final Point source, final Point target) {
-        if (source.calculateXsDiff(target) == 0 || source.calculateYsDiff(target) == 0) {
-            return true;
-        }
-        return false;
+        return (source.calculateXsDiff(target) == 0 || source.calculateYsDiff(target) == 0);
     }
 }

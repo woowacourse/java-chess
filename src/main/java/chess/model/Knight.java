@@ -15,10 +15,6 @@ public class Knight {
         int xDiff = source.calculateXsDiff(target);
         int yDiff = source.calculateYsDiff(target);
 
-        if (Math.pow(xDiff, SQUARE) + Math.pow(yDiff, SQUARE) == MOVABLE_DISTANCE) {
-            return true;
-        }
-
-        return false;
+        return (Math.pow(xDiff, SQUARE) + Math.pow(yDiff, SQUARE) == MOVABLE_DISTANCE);
     }
 }
