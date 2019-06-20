@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 abstract class MoveRule {
     private Map<UnitClass, MoveRule> map = new HashMap<>();
 
-    private Piece piece;
+    protected Piece piece;
 
     MoveRule(final Piece piece) {
         this.piece = piece;
     }
 
-    abstract List<Square> getMovableSquares(final Board board, final Square square);
+    abstract List<Square> getMovableSquares(final Square square);
 
     private List<Square> getOccupiedSquares(final Board board, final List<Square> squaresCandidate, final Piece piece) {
         return squaresCandidate.stream()

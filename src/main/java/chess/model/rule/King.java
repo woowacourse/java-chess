@@ -1,6 +1,5 @@
 package chess.model.rule;
 
-import chess.model.board.Board;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
 
@@ -13,7 +12,7 @@ class King extends MoveRule {
     }
 
     @Override
-    List<Square> getMovableSquares(final Board board, final Square square) {
+    List<Square> getMovableSquares(final Square square) {
         final List<Square> candidate = new ArrayList<>();
         candidate.add(Square.getLeftOneNeighbor(square));
         candidate.add(Square.getRightOneNeighbor(square));

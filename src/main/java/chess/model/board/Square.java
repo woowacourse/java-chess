@@ -17,11 +17,11 @@ public class Square {
         this.row = row;
     }
 
-    Column getColumn() {
+    public Column getColumn() {
         return column;
     }
 
-    Row getRow() {
+    public Row getRow() {
         return row;
     }
 
