@@ -3,6 +3,8 @@ package chess.domain;
 import chess.domain.RuleImpl.Empty;
 import chess.domain.RuleImpl.Rule;
 
+import java.util.Objects;
+
 public class Piece {
     private static final Piece EMPTY = new Piece(Color.EMPTY, Empty.getInstance());
 
@@ -37,6 +39,20 @@ public class Piece {
 
     public boolean isSameTeam(final Piece other) {
         return this.color == other.color;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Piece piece = (Piece) o;
+        return color == piece.color &&
+                Objects.equals(rule, piece.rule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, rule);
     }
 
     @Override

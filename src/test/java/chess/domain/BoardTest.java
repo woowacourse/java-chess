@@ -1,18 +1,12 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.Empty;
-import chess.domain.RuleImpl.Knight;
-import chess.domain.RuleImpl.Pawn;
-import chess.domain.RuleImpl.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoardTest {
     Map<Position, Square> map;
@@ -20,46 +14,15 @@ public class BoardTest {
 
     @BeforeEach
     public void setUp() {
-//        Position position1 = Position.of("1", "a");
-//        Position position2 = Position.of("2", "a");
-//        Position position2 = Position.of("2", "a");
-//        Position position2 = Position.of("2", "a");
-//        Position position2 = Position.of("2", "a");
-//
-//        Position position3 = Position.of("6", "a");
-//        Position position4 = Position.of("7", "a");
+        board = new Board(BoardGenerator.generate());
 
-        List<Position> positions = new ArrayList<>();
-        List<Square> squares = new ArrayList<>();
+        Position origin = Position.of("2", "d");
+        Position target = Position.of("4", "d");
+        board.action(origin, target);
+        origin = Position.of("1", "c");
+        target = Position.of("6", "h");
+        board.action(origin, target);
 
-        for (int i = 1; i <= 8; i++) {
-            Position position = Position.of(String.valueOf(i), "a");
-            positions.add(position);
-        }
-
-        Square square1 = Square.of(positions.get(0), Piece.of(Piece.Color.WHITE, Rook.getInstance()));
-        Square square2 = Square.of(positions.get(1), Piece.of(Piece.Color.WHITE, Pawn.FIRST_BOTTOM));
-
-        squares.add(square1);
-        squares.add(square2);
-        for (int i = 3; i <= 6; i++) {
-            Square square = Square.of(positions.get(i-1), Piece.of(Piece.Color.EMPTY, Empty.getInstance()));
-            squares.add(square);
-        }
-        Square square3 = Square.of(positions.get(6), Piece.of(Piece.Color.BLACK, Rook.getInstance()));
-//        Square square4 = Square.of(positions.get(7), Piece.of(Piece.Color.BLACK, Pawn.FIRST_TOP));
-        Square square4 = Square.of(positions.get(7), Piece.of(Piece.Color.BLACK, Rook.getInstance()));
-        squares.add(square3);
-        squares.add(square4);
-
-        map = new HashMap<>();
-
-
-        for (int i = 0; i < 8; i++) {
-            map.put(positions.get(i), squares.get(i));
-        }
-
-        board = new Board(map);
     }
 
 
@@ -89,9 +52,24 @@ public class BoardTest {
 
     @Test
     public void 타겟에_다른팀이_있을때_공격() {
-        Position origin = Position.of("7", "a");
-        Position target = Position.of("2", "a");
+        Position origin = Position.of("6", "h");
+        Position target = Position.of("7", "g");
 
+        assertTrue(board.action(origin, target));
+
+        origin = Position.of("8", "f");
+        target = Position.of("7", "g");
+        assertTrue(board.action(origin, target));
+    }
+
+    @Test
+    public void 이동_후에_공격_테스트() {
+        Position origin = Position.of("6", "h");
+        Position target = Position.of("5", "g");
+        assertTrue(board.action(origin, target));
+
+        origin = Position.of("5", "g");
+        target = Position.of("7", "e");
         assertTrue(board.action(origin, target));
     }
 }

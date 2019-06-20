@@ -18,7 +18,6 @@ public class Square {
     public boolean isValidMove(final Square target) {
         return piece.isValidMove(this.position, target.position);
     }
-    // TODO target이 빈 칸인 경우
 
     public boolean isValidAttack(final Square target) {
         if (isSameTeam(target)) {

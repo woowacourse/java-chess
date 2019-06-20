@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.*;
 
 public class Position implements Comparable<Position> {
-    private static final Map<String, Position> POSITIONS = new HashMap<>();
+    private static final Map<String, Position> POSITIONS = new TreeMap<>();
 
     private static final int DIAGONAL_INCLINATION = 1;
     private static final int RIGHT_INCLINATION = 0;

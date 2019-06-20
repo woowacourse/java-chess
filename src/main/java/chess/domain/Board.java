@@ -1,12 +1,13 @@
 package chess.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
     private final Map<Position, Square> map;
 
     public Board(final Map<Position, Square> map) {
-        this.map = map;
+        this.map = new HashMap<>(map);
     }
 
     public boolean action(final Position origin, final Position target) {
