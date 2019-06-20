@@ -8,17 +8,19 @@ public class Coordinate {
     private final int coordinate;
 
     public Coordinate(int coordinate) {
-        if (coordinate < 1 || coordinate > 8) {
-            throw new CoordinateRangeException("세로 범위는 1~8입니다.");
-        }
+        validCoordinate(coordinate);
         this.coordinate = coordinate;
+    }
+
+    private void validCoordinate(final int coordinate) {
+        if (coordinate < 1 || coordinate > 8) {
+            throw new CoordinateRangeException("좌표 범위는 1~8입니다.");
+        }
     }
 
     public Coordinate(char coordinate) {
         int converted = coordinate - 96;
-        if (converted < 1 || converted > 8) {
-            throw new CoordinateRangeException("세로 범위는 1~8입니다.");
-        }
+        validCoordinate(converted);
         this.coordinate = converted;
     }
 
