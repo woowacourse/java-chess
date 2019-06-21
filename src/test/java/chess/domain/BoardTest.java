@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
-    List<Character> aToH = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g');
     Board board;
 
     @BeforeEach
@@ -20,26 +20,32 @@ public class BoardTest {
 
     @Test
     void 초기_체스판_폰위치_확인() {
-        for (char chr : aToH) {
-            assertThat(board.at(new Position(new Coordinate(chr), new Coordinate(2)))) // Team.WHITE Pawns
-                    .isEqualTo(new Pawn(Team.WHITE));
-            assertThat(board.at(new Position(new Coordinate(chr), new Coordinate(7)))) // Team.BLACK Pawns
-                    .isEqualTo(new Pawn(Team.BLACK));
-        }
+        IntStream.rangeClosed(1, 8)
+                .forEach(i -> {
+                    assertThat(board.at(new Position(new Coordinate(i), new Coordinate(2)))) // Team.WHITE Pawns
+                            .isEqualTo(new Pawn(Team.WHITE));
+                    assertThat(board.at(new Position(new Coordinate(i), new Coordinate(7)))) // Team.BLACK Pawns
+                            .isEqualTo(new Pawn(Team.BLACK));
+                });
     }
 
     @Test
     void 초기_체스판_폰_이외의_말_위치_확인() {
-        List<AbstractPiece> piecesTeamBlack = Arrays.asList(new Rook(Team.BLACK), new Knight(Team.BLACK), new Bishop(Team.BLACK), new Queen(Team.BLACK),
-                new King(Team.BLACK), new Bishop(Team.BLACK), new Knight(Team.BLACK), new Rook(Team.BLACK));
-        List<AbstractPiece> piecesTeamWhite = Arrays.asList(new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE), new Queen(Team.WHITE),
-                new King(Team.WHITE), new Bishop(Team.WHITE), new Knight(Team.WHITE), new Rook(Team.WHITE));
-        for (int i = 0; i < aToH.size(); i++) {
-            assertThat(board.at(new Position(new Coordinate(aToH.get(i)), new Coordinate(1))))
-                    .isEqualTo(piecesTeamWhite.get(i));
-            assertThat(board.at(new Position(new Coordinate(aToH.get(i)), new Coordinate(8))))
-                    .isEqualTo(piecesTeamBlack.get(i));
-        }
+        List<AbstractPiece> piecesTeamBlack = Arrays.asList(
+                new Rook(Team.BLACK), new Knight(Team.BLACK), new Bishop(Team.BLACK), new Queen(Team.BLACK),
+                new King(Team.BLACK), new Bishop(Team.BLACK), new Knight(Team.BLACK), new Rook(Team.BLACK)
+        );
+        List<AbstractPiece> piecesTeamWhite = Arrays.asList(
+                new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE), new Queen(Team.WHITE),
+                new King(Team.WHITE), new Bishop(Team.WHITE), new Knight(Team.WHITE), new Rook(Team.WHITE)
+        );
+        IntStream.rangeClosed(1, 8)
+                .forEach(i -> {
+                    assertThat(board.at(new Position(new Coordinate(i), new Coordinate(1))))
+                            .isEqualTo(piecesTeamWhite.get(i - 1));
+                    assertThat(board.at(new Position(new Coordinate(i), new Coordinate(8))))
+                            .isEqualTo(piecesTeamBlack.get(i - 1));
+                });
     }
 
     @Test

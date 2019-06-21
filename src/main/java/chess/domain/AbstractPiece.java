@@ -10,10 +10,6 @@ public abstract class AbstractPiece implements Piece {
         this.team = team;
         this.moveRule = moveRule;
     }
-// FIXME: OutputView 관련 로직
-//    public boolean isBlackTeam() {
-//        return this.team == Team.BLACK;
-//    }
 
     public boolean isSameTeam(AbstractPiece abstractPiece) {
         return this.team == abstractPiece.team;
@@ -25,6 +21,10 @@ public abstract class AbstractPiece implements Piece {
 
     public boolean canMove(Position source, Position target) {
         return moveRule.check(source, target);
+    }
+
+    public double score(final int count) {
+        return count * getScore();
     }
 
     public abstract String getName();
