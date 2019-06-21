@@ -4,6 +4,8 @@ import chess.domain.direction.Navigator;
 import chess.domain.direction.Route;
 import chess.domain.direction.core.Square;
 
+import java.util.Objects;
+
 public abstract class Piece {
     Team team;
     Type type;
@@ -35,4 +37,18 @@ public abstract class Piece {
         return type;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return team == piece.team &&
+                type == piece.type &&
+                Objects.equals(navigator, piece.navigator);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team, type, navigator);
+    }
 }
