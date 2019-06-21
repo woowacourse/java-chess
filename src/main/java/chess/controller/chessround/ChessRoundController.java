@@ -1,0 +1,36 @@
+package chess.controller.chessround;
+
+import chess.application.chessround.ChessRoundService;
+import chess.domain.chessround.dto.ChessPlayerDTO;
+import spark.ModelAndView;
+import spark.Route;
+import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ChessRoundController {
+    public static final String PATH_CHESS_ROUND = "/chess-round";
+
+    public static final Route fetchChessRound = (req, res) -> {
+        Map<String, Object> model = new HashMap<>();
+
+        ChessBoard chessBoard = ChessBoard.createEmpty();
+
+        ChessRoundService chessRoundService = ChessRoundService.getInstance();
+
+        ChessPlayerDTO whitePlayerDTO = chessRoundService.fetchWhitePlayer();
+        chessBoard.fillWhiteChessPiecesOfPlayer(whitePlayerDTO);
+
+        ChessPlayerDTO blackPlayerDTO = chessRoundService.fetchBlackPlayer();
+        chessBoard.fillBlackChessPiecesOfPlayer(blackPlayerDTO);
+
+        model.put("chess-blocks", chessBoard);
+        return new HandlebarsTemplateEngine().render(
+                new ModelAndView(model, "index.hbs")
+        );
+    };
+
+    private ChessRoundController() {
+    }
+}

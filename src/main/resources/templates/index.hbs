@@ -22,15 +22,15 @@
     
     <div style="padding-top: 15px; padding-bottom: 15px;" id="manual-chess-section">
         <div id="manual-chess-buttons" style="text-align: center;">
-	          {{#pieces}}
+	          {{#chess-blocks}}
             <div>
 	              {{#.}}
-                <button type="button" class="btn btn-outline-dark btn-sm btn-chess" data-toggle="button"
-                        aria-pressed="false">{{.}}
+                <button id="{{id}}" type="button" class="btn btn-outline-dark btn-sm btn-chess" data-toggle="button"
+                        aria-pressed="false">{{symbol}}
                 </button>
 	              {{/.}}
             </div>
-	          {{/pieces}}
+	          {{/chess-blocks}}
         </div>
     </div>
     

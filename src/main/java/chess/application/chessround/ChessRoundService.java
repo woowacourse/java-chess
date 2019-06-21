@@ -20,18 +20,26 @@ public class ChessRoundService {
     }
 
     public void start() {
-//        chessRound = ChessRound.of()
+        // TODO : Round 생성 및 초기화
     }
 
     public ChessPlayerDTO fetchWhitePlayer() {
-        // whiltePlayer
+        // TODO : round에서 whitePlayer를 가져온다.
 
-
-        // ChessPlayer whitePlayer = chessRound.getWhitePlayer();
-
+        // TODO : white test
         ChessPlayer whitePlayer = ChessPlayer.from(ChessPiecesBuilder.initializeWhiteChessPieces());
 
         ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
         return chessRoundAssembler.makeChessPlayerDTO(whitePlayer);
+    }
+
+    public ChessPlayerDTO fetchBlackPlayer() {
+        // TODO : round에서 blackPlayer를 가져온다.
+
+        // TODO : black test
+        ChessPlayer blackPlayer = ChessPlayer.from(ChessPiecesBuilder.initializeBlackChessPieces());
+
+        ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
+        return chessRoundAssembler.makeChessPlayerDTO(blackPlayer);
     }
 }
