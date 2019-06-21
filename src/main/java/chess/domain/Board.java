@@ -44,4 +44,8 @@ public class Board {
         board.remove(source);
         board.put(target, sourcePiece);
     }
+
+    public Map<Position, AbstractPiece> getBoard() {
+        return board;
+    }
 }

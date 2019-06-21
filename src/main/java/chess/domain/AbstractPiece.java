@@ -15,6 +15,10 @@ public abstract class AbstractPiece implements Piece {
         return this.team == abstractPiece.team;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
     public boolean isTurn(Turn turn) {
         return turn.isTurn(team);
     }

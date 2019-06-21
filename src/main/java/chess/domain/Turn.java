@@ -29,4 +29,8 @@ public class Turn {
     public boolean isTurn(Team team) {
         return this.team == team;
     }
+
+    public Team getTeam() {
+        return team;
+    }
 }

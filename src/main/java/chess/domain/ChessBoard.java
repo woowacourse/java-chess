@@ -4,6 +4,11 @@ import chess.domain.exceptions.InvalidRouteException;
 import chess.domain.exceptions.IllegalSourceException;
 import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.piece.King;
+import chess.view.WebUtil;
+import javafx.geometry.Pos;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChessBoard {
     private Turn turn;
@@ -78,5 +83,25 @@ public class ChessBoard {
             }
         }
         return true;
+    }
+
+    public Map<Position, AbstractPiece> getBoard() {
+        return board.getBoard();
+    }
+
+    public Map<String, String> getBoard2() {
+        Map<String, String> result = new HashMap<>();
+        board.getBoard().forEach((key, value) -> {
+            String resultValue = value.getName();
+            if (value.getTeam() == Team.BLACK) {
+                resultValue = resultValue.toUpperCase();
+            }
+            result.put(WebUtil.positionParser(key), resultValue);
+        });
+        return result;
+    }
+
+    public Team getWinner() {
+        return turn.getTeam();
     }
 }

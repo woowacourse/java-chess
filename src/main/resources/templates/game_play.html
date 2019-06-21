@@ -11,8 +11,9 @@
             border-collapse: collapse;
         }
         td.chessboard {
-            width: 70px; height: 70px;
-            border: 2px solid #333;
+            width: 70px;
+            height: 70px;
+            text-align: center;
         }
         tr.chessboard:nth-child(odd) td.chessboard:nth-child(even),
         tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
@@ -107,7 +108,7 @@
 </div>
 <div>
     <div>
-        <form action="/move" method="POST">
+        <form action="/game_play" method="POST">
             <div class="row">
                 <input type="text" name="source">
                 <input type="text" name="target">
@@ -125,17 +126,33 @@
             <button type="submit">status</button>
         </form>
     </div>
-    {{#a1}}
-        {{# x }}
-            {{ coordinate }}
-        {{/ x }}
-        {{# y }}
-            {{ coordinate }}
-        {{/ y}}
-    {{/a1}}
 </div>
 <script>
+    const url = "/img/";
+    const pieceNames = {
+        p: 'pawn_white',
+        P: 'pawn',
+        r: 'rook_white',
+        R: 'rook',
+        b: 'bishop_white',
+        B: 'bishop',
+        q: 'queen_white',
+        Q: 'queen',
+        k: 'king_white',
+        K: 'king',
+        n: 'knight_white',
+        N: 'knight'
+    };
 
+    fetch("/status", {method: "POST"})
+        .then(data => data.json())
+        .then(json => {
+            console.log(json);
+            Object.keys(json).forEach(key => {
+                document.getElementById(key).innerHTML = `<img src="${url + pieceNames[json[key]]}.png"  alt="error"/>`
+            })
+        })
+        .catch(err => console.log(err));
 </script>
 </body>
 </html>
