@@ -1,10 +1,10 @@
 package chess.model.rule;
 
+import chess.model.Side;
 import chess.model.board.Board;
 import chess.model.board.Row;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
-import chess.model.unit.Side;
 import chess.model.unit.UnitClass;
 
 import java.util.ArrayList;
@@ -12,11 +12,11 @@ import java.util.List;
 
 import static chess.model.rule.Rule.getPiece;
 
-class Pawn extends PieceRule {
+class PawnRule extends PieceRule {
     private static final double HALF_SCORE = 0.5;
     private static final double FULL_SCORE = 1;
 
-    Pawn() {
+    PawnRule() {
         super();
     }
 

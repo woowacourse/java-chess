@@ -7,8 +7,8 @@ import chess.model.unit.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-class Bishop extends PieceRule {
-    Bishop() {
+class BishopRule extends PieceRule {
+    BishopRule() {
         super();
         pieceScore = 3;
     }

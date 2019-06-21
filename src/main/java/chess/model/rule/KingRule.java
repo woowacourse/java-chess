@@ -7,8 +7,8 @@ import chess.model.unit.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-class King extends PieceRule {
-    King() {
+class KingRule extends PieceRule {
+    KingRule() {
         super();
     }
 

@@ -10,8 +10,8 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-class Knight extends PieceRule {
-    Knight() {
+class KnightRule extends PieceRule {
+    KnightRule() {
         super();
         pieceScore = 2.5;
     }

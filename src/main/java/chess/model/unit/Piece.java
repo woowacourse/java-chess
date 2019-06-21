@@ -1,5 +1,7 @@
 package chess.model.unit;
 
+import chess.model.Side;
+
 import java.util.Objects;
 
 public abstract class Piece {

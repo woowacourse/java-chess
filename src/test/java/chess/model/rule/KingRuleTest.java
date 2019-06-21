@@ -1,5 +1,6 @@
 package chess.model.rule;
 
+import chess.model.Side;
 import chess.model.board.Board;
 import chess.model.board.Column;
 import chess.model.board.Row;
@@ -7,7 +8,6 @@ import chess.model.board.Square;
 import chess.model.unit.King;
 import chess.model.unit.Pawn;
 import chess.model.unit.Piece;
-import chess.model.unit.Side;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

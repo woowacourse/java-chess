@@ -1,4 +1,4 @@
-package chess.model.unit;
+package chess.model;
 
 public enum Side {
     WHITE, BLACK

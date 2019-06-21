@@ -7,10 +7,10 @@ import chess.model.unit.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-class Rook extends PieceRule {
-    Rook() {
+class QueenRule extends PieceRule {
+    QueenRule() {
         super();
-        pieceScore = 5;
+        pieceScore = 9;
     }
 
     @Override
@@ -20,6 +20,10 @@ class Rook extends PieceRule {
         candidate.addAll(getNonBlockedNeighbors(board, square, Square::getRightOneNeighbor));
         candidate.addAll(getNonBlockedNeighbors(board, square, Square::getUpOneNeighbor));
         candidate.addAll(getNonBlockedNeighbors(board, square, Square::getDownOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getUpperLeftOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getUpperRightOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getLowerLeftOneNeighbor));
+        candidate.addAll(getNonBlockedNeighbors(board, square, Square::getLowerRightOneNeighbor));
         return candidate;
     }
 }

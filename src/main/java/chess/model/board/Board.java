@@ -1,7 +1,7 @@
 package chess.model.board;
 
+import chess.model.Side;
 import chess.model.unit.Piece;
-import chess.model.unit.Side;
 
 import java.util.HashMap;
 import java.util.Map;

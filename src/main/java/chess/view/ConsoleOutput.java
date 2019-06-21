@@ -1,11 +1,11 @@
 package chess.view;
 
+import chess.model.Side;
 import chess.model.board.Board;
 import chess.model.board.Column;
 import chess.model.board.Row;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
-import chess.model.unit.Side;
 import chess.model.unit.UnitClass;
 
 import java.util.*;
