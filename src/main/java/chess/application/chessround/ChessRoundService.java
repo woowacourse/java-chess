@@ -1,5 +1,6 @@
 package chess.application.chessround;
 
+import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chessround.ChessPiecesBuilder;
 import chess.domain.chessround.ChessPlayer;
 import chess.domain.chessround.ChessRound;
@@ -7,9 +8,11 @@ import chess.domain.chessround.dto.ChessPlayerDTO;
 
 public class ChessRoundService {
     private static ChessRoundService chessRoundService = null;
-    private static ChessRound chessRound;
+    private ChessRound chessRound;
 
     private ChessRoundService() {
+        // TODO : index controller에서 하는 일을 여기서 임시로 해준다.
+        start();
     }
 
     public static ChessRoundService getInstance() {
@@ -20,26 +23,36 @@ public class ChessRoundService {
     }
 
     public void start() {
-        // TODO : Round 생성 및 초기화
+        ChessPiecesBuilder chessPiecesBuilder = ChessPiecesBuilder.getInstance();
+        ChessPlayer whitePlayer = ChessPlayer.from(chessPiecesBuilder.initializeWhiteChessPieces());
+        ChessPlayer blackPlayer = ChessPlayer.from(chessPiecesBuilder.initializeBlackChessPieces());
+
+        chessRound = ChessRound.of(whitePlayer, blackPlayer);
     }
 
     public ChessPlayerDTO fetchWhitePlayer() {
-        // TODO : round에서 whitePlayer를 가져온다.
-
-        // TODO : white test
-        ChessPlayer whitePlayer = ChessPlayer.from(ChessPiecesBuilder.initializeWhiteChessPieces());
+        ChessPlayer whitePlayer = chessRound.getWhitePlayer();
 
         ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
         return chessRoundAssembler.makeChessPlayerDTO(whitePlayer);
     }
 
     public ChessPlayerDTO fetchBlackPlayer() {
-        // TODO : round에서 blackPlayer를 가져온다.
-
-        // TODO : black test
-        ChessPlayer blackPlayer = ChessPlayer.from(ChessPiecesBuilder.initializeBlackChessPieces());
+        ChessPlayer blackPlayer = chessRound.getBlackPlayer();
 
         ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
         return chessRoundAssembler.makeChessPlayerDTO(blackPlayer);
+    }
+
+    public void move(String sourceId, String targetId) {
+        ChessPoint source = parseChessPoint(sourceId);
+        ChessPoint target = parseChessPoint(targetId);
+        chessRound.move(source, target);
+    }
+
+    private ChessPoint parseChessPoint(String pointId) {
+        int row = Integer.parseInt(pointId.substring(0, 1));
+        int column = Integer.parseInt(pointId.substring(1, 2));
+        return ChessPoint.of(row, column);
     }
 }

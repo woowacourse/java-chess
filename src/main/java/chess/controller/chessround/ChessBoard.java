@@ -4,9 +4,10 @@ import chess.domain.chessround.dto.ChessPieceDTO;
 import chess.domain.chessround.dto.ChessPlayerDTO;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-class ChessBoard {
+class ChessBoard implements Iterable<RowOfChessBlocks> {
     static final int LENGTH_OF_CHESS_BOARD_SIDE = 8;
     private List<RowOfChessBlocks> chessRows;
 
@@ -45,5 +46,10 @@ class ChessBoard {
 
     private int remapBlockRowFrom(int row) {
         return LENGTH_OF_CHESS_BOARD_SIDE - row;
+    }
+
+    @Override
+    public Iterator<RowOfChessBlocks> iterator() {
+        return chessRows.iterator();
     }
 }

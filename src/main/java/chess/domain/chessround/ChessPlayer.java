@@ -68,8 +68,9 @@ public class ChessPlayer {
     }
 
     private void moveChessPiece(ChessPoint source, ChessPoint target) {
+        ChessPiece chessPiece = chessPieces.get(source);
+        chessPieces.put(target, chessPiece);
         chessPieces.remove(source);
-        chessPieces.put(target, chessPieces.get(source));
     }
 
     public void delete(ChessPoint target) {

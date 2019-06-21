@@ -3,9 +3,10 @@ package chess.controller.chessround;
 import chess.domain.chessround.dto.ChessPieceDTO;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-class RowOfChessBlocks {
+class RowOfChessBlocks implements Iterable<ChessBlock> {
     private List<ChessBlock> chessBlocks;
 
     private RowOfChessBlocks(List<ChessBlock> chessBlocks) {
@@ -42,5 +43,10 @@ class RowOfChessBlocks {
 
     private int remapBlockColumnFrom(int column) {
         return column - 1;
+    }
+
+    @Override
+    public Iterator<ChessBlock> iterator() {
+        return chessBlocks.iterator();
     }
 }

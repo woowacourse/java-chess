@@ -31,6 +31,17 @@ public class ChessRoundController {
         );
     };
 
+    public static final Route handleChessMove = (req, res) -> {
+        String sourceId = req.queryParams("source-id");
+        String targetId = req.queryParams("target-id");
+
+        ChessRoundService chessRoundService = ChessRoundService.getInstance();
+        chessRoundService.move(sourceId, targetId);
+
+        res.redirect("/chess-round");
+        return null;
+    };
+
     private ChessRoundController() {
     }
 }

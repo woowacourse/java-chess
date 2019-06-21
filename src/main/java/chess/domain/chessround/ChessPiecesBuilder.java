@@ -19,7 +19,7 @@ public class ChessPiecesBuilder {
         return builder;
     }
 
-    public static Map<ChessPoint, ChessPiece> initializeWhiteChessPieces() {
+    public Map<ChessPoint, ChessPiece> initializeWhiteChessPieces() {
         Map<ChessPoint, ChessPiece> chessPieces = new HashMap<>();
 
         chessPieces.put(ChessPoint.of(1, 1), Rook.getInstance());
@@ -38,7 +38,7 @@ public class ChessPiecesBuilder {
         return chessPieces;
     }
 
-    public static Map<ChessPoint, ChessPiece> initializeBlackChessPieces() {
+    public Map<ChessPoint, ChessPiece> initializeBlackChessPieces() {
         Map<ChessPoint, ChessPiece> chessPieces = new HashMap<>();
 
         chessPieces.put(ChessPoint.of(8, 1), Rook.getInstance());

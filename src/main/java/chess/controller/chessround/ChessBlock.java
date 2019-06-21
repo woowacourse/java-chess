@@ -1,6 +1,6 @@
 package chess.controller.chessround;
 
-class ChessBlock {
+public class ChessBlock {
     private String id;
     private String symbol;
 
@@ -9,11 +9,11 @@ class ChessBlock {
         this.symbol = symbol;
     }
 
-    String getId() {
+    public String getId() {
         return id;
     }
 
-    String getSymbol() {
+    public String getSymbol() {
         return symbol;
     }
 

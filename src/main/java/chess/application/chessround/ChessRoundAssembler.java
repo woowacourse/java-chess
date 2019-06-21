@@ -27,6 +27,9 @@ class ChessRoundAssembler {
 
         for (ChessPoint point : whitePlayer.getAllChessPoints()) {
             ChessPiece chessPiece = whitePlayer.get(point);
+            System.out.println("##############################################" + point.getRow());
+            System.out.println("##############################################" + point.getColumn());
+            System.out.println("##############################################" + chessPiece.getName());
             ChessPieceDTO chessPieceDTO = new ChessPieceDTO(point.getRow(), point.getColumn(), chessPiece.getName());
             chessPieceDTOs.add(chessPieceDTO);
         }

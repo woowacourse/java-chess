@@ -1,44 +1,49 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
-    <style type="text/css">
-        .btn-chess {
-            width: 35px;
-        }
-    </style>
-    
-    <title>chess</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<style type="text/css">
+		.btn-chess {
+			width: 35px;
+		}
+	</style>
+
+	<title>chess</title>
 </head>
 <body>
 <div style="padding-left: 25%; padding-right: 25%">
-    
-    <div style="padding-top: 15px; padding-bottom: 15px;" id="manual-chess-section">
-        <div id="manual-chess-buttons" style="text-align: center;">
-	          {{#chess-blocks}}
-            <div>
-	              {{#.}}
-                <button id="{{id}}" type="button" class="btn btn-outline-dark btn-sm btn-chess" data-toggle="button"
-                        aria-pressed="false">{{symbol}}
-                </button>
-	              {{/.}}
-            </div>
-	          {{/chess-blocks}}
-        </div>
-    </div>
-    
-    
-    <div style="padding-top: 15px; padding-bottom: 15px;">
-        <div id="team-message" style="text-align: center;">It's White Turn!</div>
-    </div>
+
+	<div style="padding-top: 15px; padding-bottom: 15px;" id="manual-chess-section">
+		<div id="manual-chess-buttons" style="text-align: center;">
+			{{#chess-blocks}}
+				<div>
+					{{#.}}
+						<button id="{{id}}" type="button" class="btn btn-outline-dark btn-sm btn-chess" data-toggle="button"
+						        aria-pressed="false">{{symbol}}
+						</button>
+					{{/.}}
+				</div>
+			{{/chess-blocks}}
+		</div>
+	</div>
+
+
+	<div style="padding-top: 15px; padding-bottom: 15px;">
+		<div id="team-message" style="text-align: center;">It's White Turn!</div>
+	</div>
 </div>
+
+<form id="chess-move-form" method="post" action="/chess-round">
+	<input id="source-id" name="source-id" type="hidden">
+	<input id="target-id" name="target-id" type="hidden">
+</form>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -54,8 +59,27 @@
 
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+	var firstCheckedButton = null;
 
+		{{#chess-blocks}}
+			{{#.}}
+			document.getElementById("{{id}}").addEventListener("click", function () {
+				if (firstCheckedButton === null) {
+					firstCheckedButton = this;
+					return;
+				}
 
+				if (firstCheckedButton === this) {
+					firstCheckedButton = null;
+					return;
+				}
+
+				document.getElementById("source-id").value = firstCheckedButton.id;
+				document.getElementById("target-id").value = this.id;
+				document.getElementById("chess-move-form").submit();
+			});
+			{{/.}}
+		{{/chess-blocks}}
 
 </script>
 
