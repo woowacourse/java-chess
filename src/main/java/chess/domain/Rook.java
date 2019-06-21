@@ -6,8 +6,15 @@ import java.util.Objects;
 import static chess.domain.Direction.*;
 
 public class Rook extends Piece {
+    private static final double SCORE = 5.0;
+
     public Rook(Team team) {
         super(team, Arrays.asList(NORTH, EAST, SOUTH, WEST));
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

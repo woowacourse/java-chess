@@ -8,9 +8,16 @@ import java.util.Objects;
 import static chess.domain.Direction.*;
 
 public class Pawn extends Piece {
+    private static final double SCORE = 1.0;
+
     public Pawn(Team team) {
         super(team, (team == Team.WHITE) ? Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST) :
                 Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST));
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

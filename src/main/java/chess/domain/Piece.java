@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Piece {
+public abstract class Piece {
     protected final Team team;
     protected final List<Direction> candidateDirection;
 
@@ -25,7 +25,13 @@ public class Piece {
         return points;
     }
 
-    boolean isSameTeam(Piece endPiece) {
+    abstract public double getScore();
+
+    boolean isSameTeamPiece(Piece endPiece) {
         return this.team == endPiece.team;
+    }
+
+    boolean isSameTeam(Team team) {
+        return this.team == team;
     }
 }

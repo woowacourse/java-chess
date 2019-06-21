@@ -103,5 +103,9 @@ public class GameTest {
         assertThat(game.getBoard().get(end)).isEqualTo(new Knight(Team.WHITE));
     }
 
-
+    @Test
+    void 현재_점수_계산() {
+        Game game = new Game(BoardFactory.init());
+        assertThat(game.calculateScore(Team.WHITE)).isEqualTo(38.0);
+    }
 }

@@ -32,7 +32,7 @@ public class Game {
             Piece startPiece = board.get(start);
             Piece endPiece = board.get(end);
             checkSameTeam(startPiece, endPiece);
-            kill(!startPiece.isSameTeam(endPiece), end);
+            kill(!startPiece.isSameTeamPiece(endPiece), end);
         }
     }
 
@@ -43,7 +43,7 @@ public class Game {
     }
 
     private void checkSameTeam(Piece startPiece, Piece endPiece) {
-        if (startPiece.isSameTeam(endPiece)) {
+        if (startPiece.isSameTeamPiece(endPiece)) {
             throw new IllegalArgumentException("이동 불가능 합니다.3");
         }
     }
@@ -64,5 +64,12 @@ public class Game {
 
     public Map<Point, Piece> getBoard() {
         return board;
+    }
+
+    public double calculateScore(Team team) {
+        return board.values().stream()
+                .filter(d -> d.isSameTeam(team))
+                .mapToDouble(Piece::getScore)
+                .sum();
     }
 }

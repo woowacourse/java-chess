@@ -6,8 +6,15 @@ import java.util.Objects;
 import static chess.domain.Direction.*;
 
 public class Bishop extends Piece {
+    private static final double SCORE = 3.0;
+
     public Bishop(Team team) {
         super(team, Arrays.asList(NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST));
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

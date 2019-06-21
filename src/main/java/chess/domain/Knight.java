@@ -7,9 +7,16 @@ import java.util.Objects;
 
 public class Knight extends Piece {
     private static final int MOVABLE_DISTANCE = 5;
+    private static final double SCORE = 2.5;
+
 
     public Knight(Team team) {
         super(team, Arrays.asList(Direction.NOT_FIND));
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

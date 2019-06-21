@@ -6,8 +6,15 @@ import java.util.Objects;
 import static chess.domain.Direction.*;
 
 public class Queen extends Piece {
+    private static final double SCORE = 9.0;
+
     public Queen(Team team) {
         super(team, Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST));
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
