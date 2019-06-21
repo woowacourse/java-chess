@@ -1,13 +1,15 @@
 package chess.domain.movepatterns;
 
 import chess.domain.Point;
+import chess.domain.pieces.Direction;
+
+import java.util.List;
 
 public class BishopPattern implements MovePattern {
 
-    private static final int VALID_INCLIE = 1;
-
     @Override
     public boolean canMove(Point source, Point target) {
-        return Math.abs(source.calculateIncline(target)) == VALID_INCLIE;
+        List<Direction> bishopDirections = Direction.diagonalDirection();
+        return bishopDirections.contains(Direction.of(source, target));
     }
 }

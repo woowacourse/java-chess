@@ -1,6 +1,11 @@
 package chess.domain;
 
+import chess.domain.pieces.Direction;
+
 public class Point {
+
+    private static final int MIN_POINT = 1;
+    private static final int MAX_POINT = 8;
     private final int x;
     private final int y;
 
@@ -15,6 +20,11 @@ public class Point {
 
     public int getY() {
         return y;
+    }
+
+    public boolean isValid(int x, int y) {
+        return (x >= MIN_POINT && x <= MAX_POINT)
+                && (y >= MIN_POINT && y <= MAX_POINT);
     }
 
     public boolean isEqualsX(Point another) {
@@ -45,8 +55,11 @@ public class Point {
         return this.y - another.y;
     }
 
-    public Point plusPoint(Point direction) {
-        return PointFactory.of(this.x + direction.x, this.y + direction.y);
+    public Point plusPoint(Direction direction) {
+        if (isValid(this.x + direction.getXDegree(), this.y + direction.getYDegree())) {
+            return PointFactory.of(this.x + direction.getXDegree(), this.y + direction.getYDegree());
+        }
+        return PointFactory.getInvalidPoint();
     }
 
     @Override

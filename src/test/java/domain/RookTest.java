@@ -2,7 +2,8 @@ package domain;
 
 import chess.domain.Point;
 import chess.domain.PointFactory;
-import chess.domain.Rook;
+import chess.domain.pieces.Color;
+import chess.domain.pieces.Rook;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public class RookTest {
 
     @Test
     void 정상_생성_Test() {
-        assertDoesNotThrow(() -> new Rook(0));
+        assertDoesNotThrow(() -> new Rook(Color.WHITE));
     }
 
     @Test
@@ -23,6 +24,6 @@ public class RookTest {
         List<Point> path = Arrays.asList(PointFactory.of("a2"), PointFactory.of("a3"));
         Point source = PointFactory.of("a1");
         Point target = PointFactory.of("a4");
-        assertThat(new Rook(1).makePath(source, target)).isEqualTo(path);
+        assertThat(new Rook(Color.WHITE).makePath(source, target)).isEqualTo(path);
     }
 }

@@ -3,6 +3,7 @@ package domain;
 import chess.domain.ChessBoard;
 import chess.domain.Point;
 import chess.domain.PointFactory;
+import chess.domain.pieces.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,28 +28,28 @@ public class ChessBoardTest {
     void Knight_정상_이동_Test() {
         Point source = PointFactory.of("b1");
         Point target = PointFactory.of("c3");
-        assertTrue(chessBoard.playOneStep(0, source, target));
+        assertTrue(chessBoard.playOneStep(Color.WHITE, source, target));
     }
 
     @Test
     void Bishop_정상_이동_Test() {
         Point source = PointFactory.of("c1");
         Point target = PointFactory.of("e3");
-        assertTrue(chessBoard.playOneStep(0, source, target));
+        assertTrue(chessBoard.playOneStep(Color.WHITE, source, target));
     }
 
     @Test
     void King_정상_이동_Test() {
         Point source = PointFactory.of("e1");
         Point target = PointFactory.of("e2");
-        assertTrue(chessBoard.playOneStep(0, source, target));
+        assertTrue(chessBoard.playOneStep(Color.WHITE, source, target));
     }
 
     @Test
     void Queen_정상_이동_Test() {
         Point source = PointFactory.of("d1");
         Point target = PointFactory.of("d5");
-        assertTrue(chessBoard.playOneStep(0, source, target));
+        assertTrue(chessBoard.playOneStep(Color.WHITE, source, target));
     }
 
 //    @Test

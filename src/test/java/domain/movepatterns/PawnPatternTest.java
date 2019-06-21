@@ -4,6 +4,7 @@ import chess.domain.Point;
 import chess.domain.PointFactory;
 import chess.domain.movepatterns.MovePattern;
 import chess.domain.movepatterns.PawnPattern;
+import chess.domain.pieces.Color;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PawnPatternTest {
 
-    MovePattern pawnPattern = new PawnPattern();
+    MovePattern pawnPattern = new PawnPattern(Color.WHITE);
 
     @Test
     void 한_칸_정상이동_Test() {

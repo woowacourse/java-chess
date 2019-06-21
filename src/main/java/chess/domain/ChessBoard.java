@@ -1,22 +1,24 @@
 package chess.domain;
 
+import chess.domain.pieces.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
 
-    Map<Point, Unit> points = new HashMap<>();
+    Map<Point, Piece> points = new HashMap<>();
 
     public ChessBoard() {
-        points.put(PointFactory.of("a1"), new Rook(0));
-        points.put(PointFactory.of("b1"), new Knight(0));
-        points.put(PointFactory.of("c1"), new Bishop(0));
-        points.put(PointFactory.of("d1"), new Queen(0));
-        points.put(PointFactory.of("e1"), new King(0));
-        points.put(PointFactory.of("f1"), new Bishop(0));
-        points.put(PointFactory.of("g1"), new Knight(0));
-        points.put(PointFactory.of("h1"), new Rook(0));
+        points.put(PointFactory.of("a1"), new Rook(Color.WHITE));
+        points.put(PointFactory.of("b1"), new Knight(Color.WHITE));
+        points.put(PointFactory.of("c1"), new Bishop(Color.WHITE));
+        points.put(PointFactory.of("d1"), new Queen(Color.WHITE));
+        points.put(PointFactory.of("e1"), new King(Color.WHITE));
+        points.put(PointFactory.of("f1"), new Bishop(Color.WHITE));
+        points.put(PointFactory.of("g1"), new Knight(Color.WHITE));
+        points.put(PointFactory.of("h1"), new Rook(Color.WHITE));
 //        for (int i = 1; i <= 8; ++i) {
 //            points.put(PointFactory.of(i, 2), new Pawn(0));
 //        }
@@ -28,28 +30,27 @@ public class ChessBoard {
 //        for (int i = 1; i <= 8; ++i) {
 //            points.put(PointFactory.of(i, 7), new Pawn(1));
 //        }
-        points.put(PointFactory.of("a8"), new Rook(1));
-        points.put(PointFactory.of("b8"), new Knight(1));
-        points.put(PointFactory.of("c8"), new Bishop(1));
-        points.put(PointFactory.of("d8"), new Queen(1));
-        points.put(PointFactory.of("e8"), new King(1));
-        points.put(PointFactory.of("f8"), new Bishop(1));
-        points.put(PointFactory.of("g8"), new Knight(1));
-        points.put(PointFactory.of("h8"), new Rook(1));
+        points.put(PointFactory.of("a8"), new Rook(Color.BLACK));
+        points.put(PointFactory.of("b8"), new Knight(Color.BLACK));
+        points.put(PointFactory.of("c8"), new Bishop(Color.BLACK));
+        points.put(PointFactory.of("d8"), new Queen(Color.BLACK));
+        points.put(PointFactory.of("e8"), new King(Color.BLACK));
+        points.put(PointFactory.of("f8"), new Bishop(Color.BLACK));
+        points.put(PointFactory.of("g8"), new Knight(Color.BLACK));
+        points.put(PointFactory.of("h8"), new Rook(Color.BLACK));
     }
 
-
-    public boolean playOneStep(Integer color, Point source, Point target) {
-        Unit currentUnit = points.get(source);
-        if (currentUnit == null || !currentUnit.isSameColor(color)) {
+    public boolean playOneStep(Color color, Point source, Point target) {
+        Piece currentPiece = points.get(source);
+        if (currentPiece == null || !currentPiece.isSameColor(color)) {
             return false;
         }
 
-        if (!currentUnit.isValidMovePattern(source, target)) {
+        if (!currentPiece.isValidMovePattern(source, target)) {
             return false;
         }
 
-        List<Point> path = currentUnit.makePath(source, target);
+        List<Point> path = currentPiece.makePath(source, target);
         for (Point point : path) {
             if (points.get(point) != null)
                 return false;
@@ -59,8 +60,8 @@ public class ChessBoard {
     }
 
     private void updateUnitLocation(Point source, Point target) {
-        Unit currentUnit = points.get(source);
-        points.put(target, currentUnit);
+        Piece currentPiece = points.get(source);
+        points.put(target, currentPiece);
         points.put(source, null);
     }
 }

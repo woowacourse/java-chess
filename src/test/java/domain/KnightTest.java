@@ -1,6 +1,7 @@
 package domain;
 
-import chess.domain.Knight;
+import chess.domain.pieces.Color;
+import chess.domain.pieces.Knight;
 import chess.domain.Point;
 import chess.domain.PointFactory;
 import org.junit.jupiter.api.Test;
@@ -12,13 +13,13 @@ public class KnightTest {
 
     @Test
     void 정상_생성_Test() {
-        assertDoesNotThrow(() -> new Knight(0));
+        assertDoesNotThrow(() -> new Knight(Color.WHITE));
     }
 
     @Test
     void Knight_경로_확인_Test() {
         Point source = PointFactory.of("a1");
         Point target = PointFactory.of("b3");
-        assertTrue(new Knight(1).makePath(source, target).isEmpty());
+        assertTrue(new Knight(Color.WHITE).makePath(source, target).isEmpty());
     }
 }

@@ -1,13 +1,15 @@
-package chess.domain;
+package chess.domain.pieces;
 
-import chess.domain.movepatterns.PawnPattern;
+import chess.domain.Point;
+import chess.domain.movepatterns.KnightPattern;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends Unit {
-    public Pawn(Integer color) {
-        super(color, new PawnPattern());
+public class Knight extends Piece {
+
+    public Knight(Color color) {
+        super(color, new KnightPattern());
     }
 
     @Override

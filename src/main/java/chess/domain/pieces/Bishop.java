@@ -1,12 +1,13 @@
-package chess.domain;
+package chess.domain.pieces;
 
+import chess.domain.Point;
 import chess.domain.movepatterns.BishopPattern;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bishop extends Unit {
-    public Bishop(Integer color) {
+public class Bishop extends Piece {
+    public Bishop(Color color) {
         super(color, new BishopPattern());
     }
 
@@ -20,10 +21,10 @@ public class Bishop extends Unit {
         List<Point> path = new ArrayList<>();
         Direction direction = Direction.of(source, target);
 
-        Point nextPoint = source.plusPoint(direction.getDirection());
+        Point nextPoint = source.plusPoint(direction);
         while (!nextPoint.equals(target)) {
             path.add(nextPoint);
-            nextPoint = nextPoint.plusPoint(direction.getDirection());
+            nextPoint = nextPoint.plusPoint(direction);
         }
 
         return path;

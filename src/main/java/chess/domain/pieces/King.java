@@ -1,13 +1,14 @@
-package chess.domain;
+package chess.domain.pieces;
 
+import chess.domain.Point;
 import chess.domain.movepatterns.KingPattern;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class King extends Unit {
+public class King extends Piece {
 
-    public King(Integer color) {
+    public King(Color color) {
         super(color, new KingPattern());
     }
 

@@ -2,7 +2,8 @@ package domain;
 
 import chess.domain.Point;
 import chess.domain.PointFactory;
-import chess.domain.Queen;
+import chess.domain.pieces.Color;
+import chess.domain.pieces.Queen;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public class QueenTest {
 
     @Test
     void 정상_생성_Test() {
-        assertDoesNotThrow(() -> new Queen(0));
+        assertDoesNotThrow(() -> new Queen(Color.WHITE));
     }
 
     @Test
@@ -23,7 +24,7 @@ public class QueenTest {
         List<Point> path = Arrays.asList(PointFactory.of("a2"), PointFactory.of("a3"));
         Point source = PointFactory.of("a1");
         Point target = PointFactory.of("a4");
-        assertThat(new Queen(1).makePath(source, target)).isEqualTo(path);
+        assertThat(new Queen(Color.WHITE).makePath(source, target)).isEqualTo(path);
     }
 
     @Test
@@ -31,6 +32,6 @@ public class QueenTest {
         List<Point> path = Arrays.asList(PointFactory.of("b2"), PointFactory.of("c3"));
         Point source = PointFactory.of("a1");
         Point target = PointFactory.of("d4");
-        assertThat(new Queen(1).makePath(source, target)).isEqualTo(path);
+        assertThat(new Queen(Color.WHITE).makePath(source, target)).isEqualTo(path);
     }
 }
