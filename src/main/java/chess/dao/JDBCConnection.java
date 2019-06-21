@@ -5,32 +5,38 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCConnection {
-    private static final String server = "localhost";
-    private static final String database = "chess";
-    private static final String userName = "root";
-    private static final String password = "fantasy7";
-
     private static Connection connection;
 
-    public static Connection start() throws SQLException {
+    public static Connection start() {
         if (connection == null) {
             connection = connect();
         }
         return connection;
     }
 
-    private static Connection connect() throws SQLException {
-        loadDriver();
-        return DriverManager.getConnection("jdbc:mysql://" + server + "/" + database
-                + "?useSSL=false&serverTimezone=UTC", userName, password);
-    }
+    private static Connection connect() {
+        Connection con = null;
+        String server = "localhost";
+        String database = "chess";
+        String userName = "luffy";
+        String password = "159456";
 
-    private static void loadDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.err.println(" !! JDBC Dirver load 오류 : " + e.getMessage());
+            e.printStackTrace();
         }
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + "?useSSL=false&serverTimezone=UTC", userName, password);
+            System.out.println("정상적으로 연결되었습니다.");
+        } catch (SQLException e) {
+            System.err.println("연결 오류 : " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return con;
     }
 
     public static void end() {

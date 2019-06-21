@@ -1,5 +1,11 @@
 package chess.domain;
 
 public enum Team {
-    BLACK, WHITE
+    BLACK, WHITE;
+
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

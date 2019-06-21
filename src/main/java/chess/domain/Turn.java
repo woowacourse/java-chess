@@ -33,4 +33,9 @@ public class Turn {
     public Team getTeam() {
         return team;
     }
+
+    @Override
+    public String toString() {
+        return team.toString();
+    }
 }

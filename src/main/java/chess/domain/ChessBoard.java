@@ -6,6 +6,7 @@ import chess.domain.exceptions.InvalidRouteException;
 import chess.domain.piece.King;
 import chess.view.WebUtil;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,11 +85,8 @@ public class ChessBoard {
         return true;
     }
 
-    public Map<Position, AbstractPiece> getBoard() {
-        return board.getBoard();
-    }
-
-    public Map<String, String> getBoard2() {
+    // TODO: Refactoring 해야함
+    public Map<String, String> getBoard() {
         Map<String, String> result = new HashMap<>();
         board.getBoard().forEach((key, value) -> {
             String resultValue = value.getName();
@@ -102,5 +100,9 @@ public class ChessBoard {
 
     public Team getWinner() {
         return turn.getTeam();
+    }
+
+    public Turn getTurn() {
+        return this.turn;
     }
 }

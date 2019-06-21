@@ -48,8 +48,8 @@ public class Position {
         return y;
     }
 
-    public char getX2() {
-        return (char)(x.getCoordinate() + 96);
+    public String getX2() {
+        return String.valueOf((char)(x.getCoordinate() + 96));
     }
 
     public String getY2() {
