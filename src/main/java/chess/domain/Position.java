@@ -133,9 +133,6 @@ public class Position implements Comparable<Position> {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "row=" + row +
-                ", column=" + column +
-                '}';
+        return column.toString().concat(row.toString());
     }
 }
