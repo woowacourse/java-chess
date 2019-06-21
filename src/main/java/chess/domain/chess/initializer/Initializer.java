@@ -1,7 +1,7 @@
-package chess.domain;
+package chess.domain.chess.initializer;
 
 import chess.domain.geometric.Position;
-import chess.domain.unit.Unit;
+import chess.domain.chess.unit.Unit;
 
 import java.util.Map;
 

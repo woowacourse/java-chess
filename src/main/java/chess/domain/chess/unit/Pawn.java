@@ -1,6 +1,6 @@
-package chess.domain.unit;
+package chess.domain.chess.unit;
 
-import chess.domain.*;
+import chess.domain.chess.Team;
 import chess.domain.geometric.Direction;
 import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;

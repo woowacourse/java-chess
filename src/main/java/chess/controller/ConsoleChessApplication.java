@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
-import chess.domain.ChessBoardInitializer;
-import chess.domain.Initializer;
+import chess.domain.chess.ChessBoard;
+import chess.domain.chess.initializer.ChessBoardInitializer;
+import chess.domain.chess.initializer.Initializer;
 import view.InputView;
 import view.OutputView;
 

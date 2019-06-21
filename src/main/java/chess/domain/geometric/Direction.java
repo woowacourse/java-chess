@@ -1,6 +1,6 @@
 package chess.domain.geometric;
 
-import chess.domain.exception.IllegalDirectionException;
+import chess.domain.chess.exception.IllegalDirectionException;
 
 public enum Direction {
     EAST(Vector.of(1, 0)),

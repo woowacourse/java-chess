@@ -1,9 +1,10 @@
 package chess.domain;
 
+import chess.domain.chess.Team;
 import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;
-import chess.domain.unit.Bishop;
-import chess.domain.unit.Unit;
+import chess.domain.chess.unit.Bishop;
+import chess.domain.chess.unit.Unit;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

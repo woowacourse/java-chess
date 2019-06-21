@@ -1,8 +1,8 @@
 package view;
 
-import chess.domain.ChessBoard;
+import chess.domain.chess.ChessBoard;
 import chess.domain.geometric.Position;
-import chess.domain.unit.Unit;
+import chess.domain.chess.unit.Unit;
 
 import java.util.Optional;
 

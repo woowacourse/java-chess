@@ -1,7 +1,7 @@
 package view;
 
-import chess.domain.Team;
-import chess.domain.unit.Unit;
+import chess.domain.chess.Team;
+import chess.domain.chess.unit.Unit;
 
 public class UnitMapper {
     public static String map(Unit unit) {

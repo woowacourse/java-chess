@@ -1,7 +1,8 @@
 package chess.domain;
 
+import chess.domain.chess.Team;
 import chess.domain.geometric.Position;
-import chess.domain.unit.Pawn;
+import chess.domain.chess.unit.Pawn;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

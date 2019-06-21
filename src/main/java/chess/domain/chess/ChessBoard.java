@@ -1,12 +1,13 @@
-package chess.domain;
+package chess.domain.chess;
 
-import chess.domain.exception.*;
+import chess.domain.chess.exception.*;
 import chess.domain.geometric.Direction;
 import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;
-import chess.domain.unit.Knight;
-import chess.domain.unit.Pawn;
-import chess.domain.unit.Unit;
+import chess.domain.chess.initializer.Initializer;
+import chess.domain.chess.unit.Knight;
+import chess.domain.chess.unit.Pawn;
+import chess.domain.chess.unit.Unit;
 
 import java.util.Map;
 import java.util.Optional;
@@ -71,7 +72,7 @@ public class ChessBoard {
         while (position.equals(target) == false) {
             position = direction.apply(position);
             Optional<Unit> unit = Optional.ofNullable(units.get(position));
-            if (unit.isPresent()) {
+            if (unit.isPresent() && (target.equals(position) == false)) {
                 throw new UnitInterceptionAlongPathException();
             }
         }
