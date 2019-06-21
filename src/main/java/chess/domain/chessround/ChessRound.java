@@ -57,4 +57,8 @@ public class ChessRound {
     public double getBlackPlayerScore() {
         return blackPlayer.calculateScore();
     }
+
+    public boolean isWhiteTurn() {
+        return currentPlayer == whitePlayer;
+    }
 }

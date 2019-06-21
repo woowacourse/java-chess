@@ -63,4 +63,8 @@ public class ChessRoundService {
     public double getBlackPlayerScore() {
         return chessRound.getBlackPlayerScore();
     }
+
+    public boolean isWhiteTurn() {
+        return chessRound.isWhiteTurn();
+    }
 }

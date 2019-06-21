@@ -26,6 +26,7 @@ public class ChessRoundController {
         chessBoard.fillBlackChessPiecesOfPlayer(blackPlayerDTO);
 
         model.put("chess-blocks", chessBoard);
+        model.put("current-turn", chessRoundService.isWhiteTurn() ? "White" : "Black");
         model.put("white-score", chessRoundService.getWhitePlayerScore());
         model.put("black-score", chessRoundService.getBlackPlayerScore());
         return new HandlebarsTemplateEngine().render(
