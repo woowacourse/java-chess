@@ -2,7 +2,6 @@ package chess.persistence.dao;
 
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dto.RoomDto;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
