@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.unit;
 
+import chess.domain.Team;
+import chess.domain.geometric.Vector;
 import chess.util.DoubleCompare;
 
 public class Knight extends Unit {

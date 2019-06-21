@@ -1,6 +1,7 @@
-package chess.domain;
+package chess.domain.unit;
 
-import java.util.List;
+import chess.domain.Team;
+import chess.domain.geometric.Vector;
 
 abstract public class Unit {
     private Team team;

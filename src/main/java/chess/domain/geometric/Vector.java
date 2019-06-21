@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.geometric;
 
 import chess.util.DoubleCompare;
 
@@ -60,5 +60,13 @@ public class Vector {
 
     public boolean validateDistance(double another) {
         return DoubleCompare.deltaCompare(calculateDistance(), another);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

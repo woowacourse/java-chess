@@ -1,4 +1,9 @@
-package chess.domain;
+package chess.domain.unit;
+
+import chess.domain.*;
+import chess.domain.geometric.Direction;
+import chess.domain.geometric.Position;
+import chess.domain.geometric.Vector;
 
 import java.util.ArrayList;
 import java.util.List;

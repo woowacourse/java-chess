@@ -1,5 +1,13 @@
 package chess.domain;
 
+import chess.domain.exception.PawnIllegalMovingRuleException;
+import chess.domain.exception.SameTeamTargetUnitException;
+import chess.domain.exception.UnitInterceptionAlongPathException;
+import chess.domain.geometric.Position;
+import chess.domain.unit.Bishop;
+import chess.domain.unit.Pawn;
+import chess.domain.unit.Rook;
+import chess.domain.unit.Unit;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -102,6 +110,20 @@ public class ChessBoardTest {
 
     @Test
     void 비숍_경로_중간에_유닛_있음() {
+        Map<Position, Unit> map = new HashMap<>();
+        map.put(Position.create(1, 1), new Bishop(Team.WHITE));
+        map.put(Position.create(2, 2), new Bishop(Team.BLACK));
+        map.put(Position.create(3, 3), new Rook(Team.BLACK));
+
+        Initializer testInitializer = mock(ChessBoardInitializer.class);
+        when(testInitializer.create()).thenReturn(map);
+
+        ChessBoard chessBoard = new ChessBoard(testInitializer);
+
+
+        assertThrows(UnitInterceptionAlongPathException.class, () -> {
+            chessBoard.validateMove(Position.create(1,1), Position.create(3,3));
+        });
 
     }
 

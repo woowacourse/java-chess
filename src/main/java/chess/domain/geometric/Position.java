@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.geometric;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +53,11 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+
+    public int getX() {
+        return x;
     }
 
     public int getY() {
