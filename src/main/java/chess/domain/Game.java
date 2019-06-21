@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Game {
     private Map<Point, Piece> board;
@@ -71,5 +72,12 @@ public class Game {
                 .filter(d -> d.isSameTeam(team))
                 .mapToDouble(Piece::getScore)
                 .sum();
+    }
+
+    public boolean isKingAlive() {
+        List<Piece> pieces = board.values().stream()
+                .filter(d -> d instanceof King)
+                .collect(Collectors.toList());
+        return pieces.size() == 2;
     }
 }

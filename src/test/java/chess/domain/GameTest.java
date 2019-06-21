@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
     @Test
@@ -107,5 +106,19 @@ public class GameTest {
     void 현재_점수_계산() {
         Game game = new Game(BoardFactory.init());
         assertThat(game.calculateScore(Team.WHITE)).isEqualTo(38.0);
+    }
+
+    @Test
+    void 킹이_두명_살아있음() {
+        Game game = new Game(BoardFactory.init());
+        assertTrue(game.isKingAlive());
+    }
+
+    @Test
+    void 킹이_한명_죽어있음() {
+        Map<Point, Piece> board = new HashMap<>();
+        board.put(new Point("a1"), new King(Team.WHITE));
+        Game game = new Game(board);
+        assertFalse(game.isKingAlive());
     }
 }
