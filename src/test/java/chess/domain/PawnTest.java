@@ -87,4 +87,10 @@ public class PawnTest {
         points.add(new Point("a5"));
         assertThat(pawn.getCandidatePoints(new Point("a7"), new Point("a5"))).isEqualTo(points);
     }
+
+    @Test
+    void 검은색팀_두칸_이동_불가능한데_이동() {
+        Piece pawn = new Pawn(Team.BLACK);
+        assertThat(pawn.getCandidatePoints(new Point("a6"), new Point("a4")).size()).isEqualTo(0);
+    }
 }
