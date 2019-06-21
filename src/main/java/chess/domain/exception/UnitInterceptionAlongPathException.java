@@ -1,4 +1,4 @@
 package chess.domain.exception;
 
-public class UnitInterceptionAlongPathException extends RuntimeException {
+public class UnitInterceptionAlongPathException extends ChessMovingException {
 }

@@ -1,4 +1,4 @@
 package chess.domain.exception;
 
-public class IllegalMovingRuleException extends RuntimeException {
+public class IllegalMovingRuleException extends ChessMovingException {
 }

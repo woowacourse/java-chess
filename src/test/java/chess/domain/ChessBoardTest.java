@@ -112,8 +112,8 @@ public class ChessBoardTest {
     void 비숍_경로_중간에_유닛_있음() {
         Map<Position, Unit> map = new HashMap<>();
         map.put(Position.create(1, 1), new Bishop(Team.WHITE));
-        map.put(Position.create(2, 2), new Bishop(Team.BLACK));
-        map.put(Position.create(3, 3), new Rook(Team.BLACK));
+        map.put(Position.create(3, 3), new Bishop(Team.BLACK));
+        map.put(Position.create(5, 5), new Rook(Team.BLACK));
 
         Initializer testInitializer = mock(ChessBoardInitializer.class);
         when(testInitializer.create()).thenReturn(map);
@@ -122,7 +122,7 @@ public class ChessBoardTest {
 
 
         assertThrows(UnitInterceptionAlongPathException.class, () -> {
-            chessBoard.validateMove(Position.create(1,1), Position.create(3,3));
+            chessBoard.move(Position.create(1,1), Position.create(5,5));
         });
 
     }

@@ -70,8 +70,8 @@ public class ChessBoard {
         Position position = source;
         while (position.equals(target) == false) {
             position = direction.apply(position);
-            Optional<Unit> unit = Optional.of(units.get(position));
-            if (unit.isPresent() == false) {
+            Optional<Unit> unit = Optional.ofNullable(units.get(position));
+            if (unit.isPresent()) {
                 throw new UnitInterceptionAlongPathException();
             }
         }

@@ -1,6 +1,6 @@
 package chess.domain.exception;
 
-public class SourceUnitNotPresentException extends RuntimeException {
+public class SourceUnitNotPresentException extends ChessMovingException {
 
 
 }
