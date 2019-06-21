@@ -51,7 +51,21 @@ public abstract class ChessPiece {
         return Optional.empty();
     }
 
-    protected Set<ChessCoordinate> probeHorizon(PieceTeamProvider pieceTeamProvider, ChessXCoordinate fromX, List<ChessYCoordinate> ascendingCoordinates) {
+    protected Set<ChessCoordinate> probCross(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
+
+        ChessXCoordinate fromX = from.getX();
+        ChessYCoordinate fromY = from.getY();
+
+        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getAscendingCoordinates(fromX), fromY));
+        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getDescendingCoordinates(fromX), fromY));
+
+        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getAscendingCoordinates(fromY)));
+        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getDescendingCoordinates(fromY)));
+        return movableCoords;
+    }
+
+    private Set<ChessCoordinate> probeHorizon(PieceTeamProvider pieceTeamProvider, ChessXCoordinate fromX, List<ChessYCoordinate> ascendingCoordinates) {
         Set<ChessCoordinate> movableCoords = new HashSet<>();
         for (ChessYCoordinate y : ascendingCoordinates) {
             getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(fromX, y)).ifPresent(movableCoords::add);
@@ -68,7 +82,7 @@ public abstract class ChessPiece {
         return movableCoords;
     }
 
-    protected Set<ChessCoordinate> probeVertical(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> ascendingCoordinates, ChessYCoordinate fromY) {
+    private Set<ChessCoordinate> probeVertical(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> ascendingCoordinates, ChessYCoordinate fromY) {
         Set<ChessCoordinate> movableCoords = new HashSet<>();
         for (ChessXCoordinate x : ascendingCoordinates) {
             getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(x, fromY)).ifPresent(movableCoords::add);

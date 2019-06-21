@@ -28,19 +28,11 @@ public class Queen extends ChessPiece {
 
     @Override
     Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        Set<ChessCoordinate> movableCoords = new HashSet<>();
-
-        ChessXCoordinate fromX = from.getX();
-        ChessYCoordinate fromY = from.getY();
-
-        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getAscendingCoordinates(fromX), fromY));
-        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getDescendingCoordinates(fromX), fromY));
-
-        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getAscendingCoordinates(fromY)));
-        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getDescendingCoordinates(fromY)));
+        Set<ChessCoordinate> movableCoords = probCross(pieceTeamProvider, from);
 
         movableCoords.addAll(probeAllDiagonal(pieceTeamProvider, from));
 
         return movableCoords;
     }
+
 }
