@@ -40,6 +40,8 @@ public class WebUIChessApplication {
 
             if (maybeFound.isPresent()) {
                 model.put("id", maybeFound.get().getId());
+                ChessGame chessGame = new ChessGame(new StateInitiatorFactory());
+                chessService.createBoardState(chessGame.getBoard(), maybeFound.get().getId());
                 return model;
             }
 
@@ -60,10 +62,7 @@ public class WebUIChessApplication {
         });
 
         get("/board", (req, res) -> {
-            ChessGame chessGame = new ChessGame(new StateInitiatorFactory());
-            chessService.createBoardState(chessGame.getBoard(), Long.parseLong(req.queryParams("id")));
-
-            chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
+            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
 
             return chessGame.getBoard();
         }, gson::toJson);

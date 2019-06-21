@@ -63,7 +63,7 @@
         }
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("load", drawBoard);
-        xhr.open("GET", "/board");
+        xhr.open("GET", "/board?id =" + id);
         xhr.send();
 
         document.getElementById("btn_move").addEventListener("click", function () {
