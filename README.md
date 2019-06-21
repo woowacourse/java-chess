@@ -9,7 +9,7 @@
 
 ## DB TABLE
 - ROUND (id, 상태)
-- COMMAND (id, round_id, from, to)
+- COMMAND (id, round_id, target, origin)
 
 ##말 이동의 경우의 수
 
