@@ -22,8 +22,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1,1), Position.create(1,2));
 
-        assertThat(map.get(Position.create(1, 2)))
-                .isEqualTo(chessBoard.getUnit(Position.create(1, 2)).get());
+        assertThat(map.get(Position.create(1, 2))).isInstanceOf(Pawn.class);
     }
 
     @Test
@@ -37,8 +36,8 @@ public class ChessBoardTest {
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
-        assertThrows(Exception.class, () -> {
-            chessBoard.canMove(Position.create(1,1), Position.create(1,2));
+        assertThrows(SameTeamTargetUnitException.class, () -> {
+            chessBoard.validateMove(Position.create(1,1), Position.create(1,2));
         });
     }
 
@@ -53,7 +52,7 @@ public class ChessBoardTest {
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
-        assertThrows(Exception.class, () -> {
+        assertThrows(PawnIllegalMovingRuleException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(1,2));
         });
     }
@@ -69,8 +68,8 @@ public class ChessBoardTest {
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
-        assertThrows(Exception.class, () -> {
-            chessBoard.canMove(Position.create(1,1), Position.create(2,2));
+        assertThrows(SameTeamTargetUnitException.class, () -> {
+            chessBoard.validateMove(Position.create(1,1), Position.create(2,2));
         });
     }
 
@@ -86,8 +85,8 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
         chessBoard.move(Position.create(1,1), Position.create(2,2));
-        assertThat(map.get(Position.create(2, 2)))
-                .isEqualTo(chessBoard.getUnit(Position.create(2, 2)).get());
+        assertThat(map.get(Position.create(2, 2)).getTeam())
+                .isEqualTo(Team.WHITE);
     }
 
     @Test

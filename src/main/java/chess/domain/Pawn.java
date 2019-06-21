@@ -1,10 +1,7 @@
 package chess.domain;
 
-import chess.util.DoubleCompare;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Pawn extends Unit {
     private static List<Direction> whitePawnAttack = new ArrayList<>();
@@ -29,9 +26,7 @@ public class Pawn extends Unit {
     @Override
     public boolean validateDirection(Vector vector) {
         return false;
-
     }
-
 
     public boolean validateDirection(Position source, Position target, boolean isEnemyPresent) {
         Vector vector = Vector.of(source, target);
@@ -42,7 +37,7 @@ public class Pawn extends Unit {
             }
         }
 
-        if(isEnemyPresent == false) {
+        if (isEnemyPresent == false) {
             if (getTeam() == Team.WHITE) {
                 return whitePawnMove.stream()
                         .anyMatch(direction -> direction.isEqualTo(vector));
@@ -61,6 +56,6 @@ public class Pawn extends Unit {
         }
 
         return false;
-
     }
 }
+

@@ -21,41 +21,38 @@ public class ChessBoard {
         return Optional.ofNullable(units.get(position));
     }
 
-    public boolean canMove(Position source, Position target) throws Exception {
+    public void validateMove(Position source, Position target) throws Exception {
         Optional<Unit> targetUnit = Optional.ofNullable(units.get(target));
         Optional<Unit> sourceUnit = Optional.ofNullable(units.get(source));
         Vector vector = Vector.of(source, target);
 
         if (sourceUnit.isPresent() == false) {
-            throw new Exception();
+            throw new SourceUnitNotPresentException();
         }
 
         if (targetUnit.isPresent()) {
             if (sourceUnit.get().isEqualTeam(targetUnit.get())) {
-                throw new Exception();
+                throw new SameTeamTargetUnitException();
             }
         }
 
         if (sourceUnit.get() instanceof Pawn) {
             Pawn pawn = (Pawn) sourceUnit.get();
             if (!pawn.validateDirection(source, target, targetUnit.isPresent())) {
-                throw new Exception();
+                throw new PawnIllegalMovingRuleException();
             }
+            return;
         }
 
         if (isPathOpened(source, target) == false && !(sourceUnit.get() instanceof Knight) ) {
-            return false;
+
         }
 
-        if (targetUnit.isPresent() == false) {
-            return sourceUnit.get().validateDirection(vector);
+        if ((targetUnit.isPresent() == false) || (targetUnit.get().getTeam() != sourceUnit.get().getTeam())) {
+            if (sourceUnit.get().validateDirection(vector) == false) {
+                throw new IllegalMovingRuleException();
+            }
         }
-
-        if (targetUnit.get().getTeam() != sourceUnit.get().getTeam()) {
-            return sourceUnit.get().validateDirection(vector);
-        }
-
-        return false;
     }
 
     private boolean isPathOpened(Position source, Position target) {
@@ -63,9 +60,8 @@ public class ChessBoard {
     }
 
     public void move(Position source, Position target) throws Exception {
-        if (canMove(source, target)) {
-            units.put(target, units.get(source));
-            units.remove(source);
-        }
+        validateMove(source, target);
+        units.put(target, units.get(source));
+        units.remove(source);
     }
 }
