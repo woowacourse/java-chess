@@ -53,14 +53,14 @@
 
     게임 시작 버튼으로 게임 play 페이지로 이동할 수 있도록 구현
     
-2. game_play.html
+2. game_play.html (/game_play)
 
     게임을 실제로 진행하는 페이지
     - move 버튼
     - end 버튼
     - status 버튼
 
-3. result.html
+3. result.html (/result)
     
     최종 게임의 결과를 보여주는 페이지
     
