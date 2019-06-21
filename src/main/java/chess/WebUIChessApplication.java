@@ -10,8 +10,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.*;
 
-import static chess.domain.Team.BLACK;
-import static chess.domain.Team.WHITE;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
@@ -68,10 +66,17 @@ public class WebUIChessApplication {
         }, gson::toJson);
 
         put("/move-piece", (req, res) -> {
-            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
+            long roomId = Long.parseLong(req.queryParams("id"));
 
-            chessGame.move(ChessCoordinate.valueOf(req.queryParams("from")).get(), ChessCoordinate.valueOf(req.queryParams("to")).get());
-            return chessGame.getBoard();
+            ChessCoordinate from = ChessCoordinate.valueOf(req.queryParams("from")).get();
+            ChessCoordinate to = ChessCoordinate.valueOf(req.queryParams("to")).get();
+
+            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId));
+            chessGame.move(from, to);
+
+            chessService.updateChessPiecePosition(from, to, roomId);
+
+            return new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId)).getBoard();
         }, gson::toJson);
 
     }

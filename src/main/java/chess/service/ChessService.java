@@ -64,8 +64,8 @@ public class ChessService {
                 .map(entry -> {
                     BoardStateDto dto = new BoardStateDto();
                     dto.setRoomId(roomId);
-                    dto.setCoordX(entry.getKey().getX().name());
-                    dto.setCoordY(entry.getKey().getY().name());
+                    dto.setCoordX(entry.getKey().getX().getSymbol());
+                    dto.setCoordY(entry.getKey().getY().getSymbol());
                     dto.setType(entry.getValue().name());
                     return dto;
                 })
@@ -89,13 +89,6 @@ public class ChessService {
         return Collections.emptyMap();
     }
 
-
-    private BoardStateDto createBoardStateDtoWithType(PieceType type) {
-        BoardStateDto stateDto = new BoardStateDto();
-        stateDto.setType(type.name());
-        return stateDto;
-    }
-
     private Optional<Long> tryInsertBoardState(BoardStateDto dto) {
         try {
             return Optional.of(boardStateDao.addState(dto));
@@ -106,9 +99,34 @@ public class ChessService {
     }
 
 
-    public int updateChessPiecePosition(ChessCoordinate from, ChessCoordinate to, long roomId) {
-        // TODO:
-        return -1;
+    public void updateChessPiecePosition(ChessCoordinate from, ChessCoordinate to, long roomId) {
+        try {
+            List<BoardStateDto> boardStates = boardStateDao.findByRoomId(roomId);
+
+            boardStates.stream().filter(dto -> dto.getCoordX().equals(to.getX().getSymbol()))
+                    .filter(dto -> dto.getCoordY().equals(to.getY().getSymbol())).findFirst().ifPresent(dto -> {
+                        try {
+                            boardStateDao.deleteById(dto.getId());
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+            });
+
+            boardStates.stream()
+                    .filter(dto -> dto.getCoordX().equals(from.getX().getSymbol()))
+                    .filter(dto -> dto.getCoordY().equals(from.getY().getSymbol())).findFirst().ifPresent(dto -> {
+                dto.setCoordX(to.getX().getSymbol());
+                dto.setCoordY(to.getY().getSymbol());
+                try {
+                    boardStateDao.updateCoordById(dto);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

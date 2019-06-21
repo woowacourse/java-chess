@@ -13,7 +13,7 @@
     </div>
 
     <div>
-        <textarea name="" id="game-board" cols="20" rows="10" readonly></textarea>
+        <textarea name="" id="game-board" cols="20" rows="10" data-id="{{id}}" readonly></textarea>
         from : <input type="text" id="from" />
         to : <input type="text" id="to" />
         <button id="btn_move">이동</button>
@@ -61,9 +61,10 @@
                 return "P";
             }
         }
+        let id = document.getElementById("game-board").getAttribute("data-id");
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("load", drawBoard);
-        xhr.open("GET", "/board?id =" + id);
+        xhr.open("GET", "/board?id=" + id);
         xhr.send();
 
         document.getElementById("btn_move").addEventListener("click", function () {
@@ -71,15 +72,25 @@
             let to = document.getElementById("to").value;
 
             xhr.addEventListener("load", drawBoard);
-            xhr.open("PUT", "/move-piece?from=" + from + "&to=" + to);
+            xhr.open("PUT", "/move-piece?id="+ id + "&from=" + from + "&to=" + to);
             xhr.send();
 
         });
 
+        let xAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
+        let yAxis = [8, 7, 6, 5, 4, 3, 2, 1];
+
         function drawBoard() {
                 const states = JSON.parse(xhr.response);
-                document.getElementById("game-board").value = states.map(row =>
-                    row.map(col => stateToString(col)).join("") + "\n").join("");
+                console.log(states);
+                let str = "";
+                yAxis.forEach(y => {
+                    xAxis.forEach(x => {
+                        str += stateToString(states[x + y]);
+                    });
+                    str += '\n';
+                });
+                document.getElementById("game-board").value = str;
             }
 
     </script>
