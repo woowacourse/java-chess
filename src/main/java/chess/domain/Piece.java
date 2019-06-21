@@ -97,15 +97,20 @@ public class Piece {
     }
 
     public enum Color {
-        WHITE(1),
-        BLACK(2),
-        EMPTY(3);
+        WHITE(1,"WHITE"),
+        BLACK(2,"BLACK"),
+        EMPTY(3,"EMPTY");
 
         private final int index;
+        private final String name;
 
-        Color(final int index) {
+        Color(final int index, final String name) {
             this.index = index;
+            this.name = name;
         }
 
+        public String getName() {
+            return name;
+        }
     }
 }

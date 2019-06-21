@@ -12,6 +12,10 @@ public class Board {
         this.map = new HashMap<>(map);
     }
 
+    public boolean isSameColor(final Position origin, Piece.Color color){
+        return map.get(origin).isSameColor(color);
+    }
+
     public boolean action(final Position origin, final Position target) {
         if (hasObstacle(origin, target)) {
             return false;
