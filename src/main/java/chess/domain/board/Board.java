@@ -17,21 +17,29 @@ public class Board {
         return points.get(point);
     }
 
-//    public void tryMove(Point prev, Point next) {
-//        Optional<Piece> piece = points.get(prev);
-//        if (piece.isPresent()) {
-//            if(piece.get().isMovable(prev, next) && isPieceInWay(prev,next)){
-//                move(prev,next);
-//            }
-//        }
-//    }
+    public boolean canMove(Point prev, Point next) {
+        DirectionType direction = DirectionType.valueOf(prev, next);
+        int size = next.maxAbsoluteValue(prev);
+
+        for (int i = 1; i < size - 1; i++) {
+            Point moving = prev.moveOneStep(direction, i);
+            if (points.get(moving).isPresent()) {
+                return false;
+            }
+        }
+
+        // TODO pawn
+        Optional<Piece> nextPiece = points.get(next);
+        if (nextPiece.isPresent() && points.get(prev).get().isSamePlayerType(nextPiece.get())) {
+            return false;
+        }
+        return true;
+    }
 
     public void move(Point prev, Point next) {
-        points.put(next, points.get(prev));
-        points.put(prev, Optional.empty());
+        if (canMove(prev, next) && points.get(prev).get().isMovable(prev, next)) {
+            points.put(next, points.get(prev));
+            points.put(prev, Optional.empty());
+        }
     }
-//    private boolean isPieceInWay(Point prev, Point next){
-//        if()
-//    }
-
 }

@@ -35,14 +35,26 @@ public class Point {
         return this.y.calculateDistance(end.y);
     }
 
-    public int getY() {
-        return y.getCoordinate();
-    }
-
     public double calculateGradient(Point end) {
         if (this.x == end.x) {
             return Double.MAX_VALUE;
         }
         return ((double) this.y.calculateDistance(end.y)) / ((double) this.x.calculateDistance(end.x));
+    }
+
+    public int maxAbsoluteValue(Point end) {
+        int xDistance = this.xDistance(end);
+        int yDistance = this.yDistance(end);
+        return (xDistance != 0) ? Math.abs(xDistance) : Math.abs(yDistance);
+    }
+
+    public Point moveOneStep(DirectionType directionType, int size) {
+        // TODO: 2019-06-21 so loooooooong
+        return Point.of(this.x.getCoordinate() + directionType.getxDegree() * size,
+                this.y.getCoordinate() + directionType.getyDegree() * size);
+    }
+
+    public int getY() {
+        return y.getCoordinate();
     }
 }

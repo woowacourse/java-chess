@@ -23,7 +23,7 @@ public enum DirectionType {
     public static DirectionType valueOf(Point prev, Point next) {
         int xDistance = next.xDistance(prev);
         int yDistance = next.yDistance(prev);
-        int size = (xDistance != 0) ? Math.abs(xDistance) : Math.abs(yDistance);
+        int size = prev.maxAbsoluteValue(next);
 
         return Arrays.stream(values())
                 .filter(value -> value.xDegree == xDistance / size)
@@ -32,4 +32,11 @@ public enum DirectionType {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
+    public int getxDegree() {
+        return xDegree;
+    }
+
+    public int getyDegree() {
+        return yDegree;
+    }
 }
