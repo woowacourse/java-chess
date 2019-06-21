@@ -23,7 +23,7 @@ public class StateInitiatorFactory implements AbstractStateInitiatorFactory {
         board.put(ChessCoordinate.valueOf("g1").get(), factory.create(KNIGHT_WHITE));
         board.put(ChessCoordinate.valueOf("h1").get(), factory.create(ROOK_WHITE));
         ChessXCoordinate.allAscendingCoordinates()
-                .forEach(x -> board.put(ChessCoordinate.valueOf(x + "2").get(), factory.create(PAWN_WHITE)));
+                .forEach(x -> board.put(ChessCoordinate.valueOf(x.getSymbol() + "2").get(), factory.create(PAWN_WHITE)));
 
         board.put(ChessCoordinate.valueOf("a8").get(), factory.create(ROOK_BLACK));
         board.put(ChessCoordinate.valueOf("b8").get(), factory.create(KNIGHT_BLACK));
@@ -34,7 +34,7 @@ public class StateInitiatorFactory implements AbstractStateInitiatorFactory {
         board.put(ChessCoordinate.valueOf("g8").get(), factory.create(KNIGHT_BLACK));
         board.put(ChessCoordinate.valueOf("h8").get(), factory.create(ROOK_BLACK));
         ChessXCoordinate.allAscendingCoordinates()
-                .forEach(x -> board.put(ChessCoordinate.valueOf(x + "7").get(), factory.create(PAWN_BLACK)));
+                .forEach(x -> board.put(ChessCoordinate.valueOf(x.getSymbol() + "7").get(), factory.create(PAWN_BLACK)));
 
         return board;
     }

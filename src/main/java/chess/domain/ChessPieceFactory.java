@@ -1,10 +1,11 @@
 package chess.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessPieceFactory implements AbstractChessPieceFactory {
 
-    private static Map<PieceType, ChessPiece> mapper;
+    private static Map<PieceType, ChessPiece> mapper = new HashMap<>();
 
     static {
         mapper.put(PieceType.ROOK_WHITE, Rook.getInstance(Team.WHITE));
