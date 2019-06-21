@@ -11,7 +11,6 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.*;
 
-// TODO: 2019-06-20 signalMoved 테스트코드 작성
 public class PawnTest {
     private Piece whitePawn;
     private Piece blackPawn;
@@ -266,5 +265,33 @@ public class PawnTest {
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
+    }
+
+    @Test
+    void 백팀일때_한번이라도_움직였을_경우_빈_경로_반환_확인() {
+        whitePawn.signalMoved();
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(7);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThat(whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
+
+    }
+
+    @Test
+    void 흑팀일때_한번이라도_움직였을_경우_빈_경로_반환_확인() {
+        blackPawn.signalMoved();
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(3);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+
+        assertThat(blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
+
     }
 }
