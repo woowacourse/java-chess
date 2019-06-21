@@ -12,14 +12,14 @@ public class Navigator {
     private static final Map<Double, Direction> DIRECTIONS = new HashMap<>();
 
     static {
-        DIRECTIONS.put(Double.POSITIVE_INFINITY, new VerticalDirection());
-        DIRECTIONS.put(0.0, new HorizonDirection());
-        DIRECTIONS.put(1.0, new RithtDiagonalDirection());
-        DIRECTIONS.put(-1.0, new LeftDiagonalDirection());
-        DIRECTIONS.put(2.0, new VerticalRightKnightDirection());
-        DIRECTIONS.put(-2.0, new VerticalLeftKnightDirection());
-        DIRECTIONS.put(0.5, new HorizonLeftKnightDirection());
-        DIRECTIONS.put(-0.5, new HorizonRightKnightDirection());
+        DIRECTIONS.put(Double.POSITIVE_INFINITY, VerticalDirection.getInstance());
+        DIRECTIONS.put(0.0, HorizonDirection.getInstance());
+        DIRECTIONS.put(1.0, RightDiagonalDirection.getInstance());
+        DIRECTIONS.put(-1.0, LeftDiagonalDirection.getInstance());
+        DIRECTIONS.put(2.0, VerticalRightKnightDirection.getInstance());
+        DIRECTIONS.put(-2.0, VerticalLeftKnightDirection.getInstance());
+        DIRECTIONS.put(0.5, HorizonLeftKnightDirection.getInstance());
+        DIRECTIONS.put(-0.5, HorizonRightKnightDirection.getInstance());
     }
 
     public Navigator(Position startPosition, Position endPosition) {
@@ -43,5 +43,27 @@ public class Navigator {
             return DIRECTIONS.get(inclination);
         }
         throw new IllegalArgumentException("불가능한 움직임입니다.");
+    }
+
+    public Position simulateMove(Board board, Position startPosition) {
+        Position endPosition = startPosition;
+
+        for (int i = 0; i < Math.abs(moveCount)-1; i++) {
+            endPosition = direction.simulateUnitMove(board, startPosition, isReverse(moveCount));
+        }
+
+        return endPosition;
+    }
+
+    private boolean isReverse(int moveCount) {
+        return moveCount < 0;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public int getMoveCount() {
+        return moveCount;
     }
 }

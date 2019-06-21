@@ -50,12 +50,6 @@ public class Board {
         return pieces.get(Position.valueOf(position));
     }
 
-    public void checkValidPosition(String position) {
-        if (Position.valueOf(position) == null) {
-            throw new IllegalArgumentException("유효하지 않은 위치입니다.");
-        }
-    }
-
     public Aliance switchTurn() {
         if (thisTurn == Aliance.WHITE) {
             thisTurn = Aliance.BLACK;
@@ -65,14 +59,46 @@ public class Board {
         return thisTurn;
     }
 
-    public void checkOccupiedPosition(String position) {
-        if (pieceValueOf(position) == null) {
-            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
-        }
+    public void movePiece(String start, String end) {
+        checkValidPosition(start);
+        checkValidPosition(end);
+
+        checkOccupiedPosition(start);
+
+        Position startPosition = Position.valueOf(start);
+        Position endPosition = Position.valueOf(end);
+
+        Piece piece = pieces.get(startPosition);
+        checkProperTeam(piece);
+
+        Navigator navigator = new Navigator(startPosition, endPosition);
+        piece.checkPossibleMove(this, startPosition, navigator);
+        navigator.simulateMove(this, startPosition);
+
+        pieces.remove(startPosition);
+        pieces.put(endPosition, piece);
 
     }
 
-    public void checkProperTeam(Piece piece) {
+    private void checkValidPosition(String position) {
+        if (Position.valueOf(position) == null) {
+            throw new IllegalArgumentException("유효하지 않은 위치입니다.");
+        }
+    }
+
+    private void checkOccupiedPosition(String position) {
+        if (pieceValueOf(position) == null) {
+            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
+        }
+    }
+
+    public void checkUnOccupiedPosition(String position){
+        if (pieceValueOf(position) != null) {
+            throw new IllegalArgumentException("이동경로에 다른 말이 있습니다.");
+        }
+    }
+
+    private void checkProperTeam(Piece piece) {
         if (piece.isDifferentTeam(thisTurn)) {
             throw new IllegalArgumentException("상대팀 말은 움직일 수 없습니다.");
         }

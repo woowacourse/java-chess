@@ -53,4 +53,9 @@ public class Position {
     public int getColumnDifference(Position anotherPosition) {
         return this.column.getDifference(anotherPosition.column);
     }
+
+    @Override
+    public String toString() {
+        return column.toString() + row.toString();
+    }
 }

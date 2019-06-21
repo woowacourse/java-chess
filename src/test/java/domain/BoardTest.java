@@ -1,7 +1,6 @@
 package domain;
 
 import chess.domain.*;
-import chess.domain.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,18 +16,18 @@ public class BoardTest {
     }
 
     @Test
-    void 입력받은_위치에_말이_있는_경우_말_반환_확인() {
+    void 입력받은_위치가_유효한_위치가_아닌_경우(){
+        assertThrows(IllegalArgumentException.class, () ->board.movePiece("k3","a1"));
+    }
+
+    @Test
+    void 입력받은_위치에_말이있는_경우_말_반환_확인() {
         assertThat(board.pieceValueOf("a1").toString()).isEqualTo("r");
     }
 
     @Test
     void 입력받은_위치에_말이_없는_경우() {
-        assertThat(board.pieceValueOf("c3")).isEqualTo(null);
-    }
-
-    @Test
-    void 입력받은_위치가_유효한_위치가_아닌_경우(){
-        assertThrows(IllegalArgumentException.class, () ->board.checkValidPosition("k3"));
+        assertThat(board.pieceValueOf("a3")).isEqualTo(null);
     }
 
     @Test
@@ -38,12 +37,39 @@ public class BoardTest {
 
     @Test
     void 입력받은_위치에_말이_없는_경우_예외_반환_확인() {
-        assertThrows(IllegalArgumentException.class, () -> board.checkOccupiedPosition("a3"));
+        assertThrows(IllegalArgumentException.class, () -> board.movePiece("a4","a5"));
     }
 
     @Test
-    void 입력받은_위치에_말이_있는_경우_같은_팀인지_확인() {
-        Piece piece = board.pieceValueOf("a7");
-        assertThrows(IllegalArgumentException.class, () -> board.checkProperTeam(piece));
+    void 같은_팀이_아닌_경우_예외반환_확인() {
+        assertThrows(IllegalArgumentException.class, () -> board.movePiece("a7","a6"));
+    }
+
+    @Test
+    void 폰_잘못된_방향인_경우_예외반환() {
+        assertThrows(IllegalArgumentException.class, () -> board.movePiece("a2","b4"));
+    }
+
+    @Test
+    void 폰_이동횟수_초과한_경우_예외반환() {
+        assertThrows(IllegalArgumentException.class, () -> board.movePiece("a2","a5"));
+    }
+
+    @Test
+    void 폰_이동이_잘_되었는지_확인() {
+        board.movePiece("a2", "a3");
+        assertThat(board.pieceValueOf("a3").toString()).isEqualTo("p");
+    }
+
+    @Test
+    void 폰_처음_이동시_두칸_이동이_가능한지_확인() {
+        board.movePiece("a2", "a4");
+        assertThat(board.pieceValueOf("a4").toString()).isEqualTo("p");
+    }
+
+    @Test
+    void 나이트_이동이_잘_되는지_확인() {
+        board.movePiece("b1", "c3");
+        assertThat(board.pieceValueOf("c3").toString()).isEqualTo("n");
     }
 }

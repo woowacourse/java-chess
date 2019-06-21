@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Aliance;
+import chess.domain.Board;
+import chess.domain.Navigator;
 import chess.domain.Position;
 
 public abstract class Piece {
@@ -10,9 +12,10 @@ public abstract class Piece {
         this.aliance = aliance;
     }
 
-    public abstract Position isPossibleMove();
+    public abstract void checkPossibleMove(Board board, Position startPosition, Navigator navigator);
 
     public boolean isDifferentTeam(Aliance thisTurn) {
         return aliance != thisTurn;
     }
+
 }
