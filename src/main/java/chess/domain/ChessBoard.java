@@ -1,11 +1,10 @@
 package chess.domain;
 
-import chess.domain.exceptions.InvalidRouteException;
 import chess.domain.exceptions.IllegalSourceException;
 import chess.domain.exceptions.IllegalTargetException;
+import chess.domain.exceptions.InvalidRouteException;
 import chess.domain.piece.King;
 import chess.view.WebUtil;
-import javafx.geometry.Pos;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +65,7 @@ public class ChessBoard {
     }
 
     private boolean gameEnd(AbstractPiece abstractPiece) {
-        return !(abstractPiece instanceof King);
+        return abstractPiece instanceof King;
     }
 
     public double totalScore(Team team) {
