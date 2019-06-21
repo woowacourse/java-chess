@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Knight implements Piece {
+public class Knight extends Piece {
     private static final int MOVABLE_DISTANCE = 5;
-    private final Team team;
 
     public Knight(Team team) {
-        this.team = team;
+        super(team);
     }
 
     @Override

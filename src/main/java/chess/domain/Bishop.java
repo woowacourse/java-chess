@@ -7,13 +7,12 @@ import java.util.Objects;
 
 import static chess.domain.Direction.*;
 
-public class Bishop implements Piece {
-    private final Team team;
+public class Bishop extends Piece {
     private final List<Direction> candidateDirection;
 
     public Bishop(Team team) {
-        this.team = team;
-        this.candidateDirection = Arrays.asList(NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
+        super(team);
+        candidateDirection = Arrays.asList(NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
     }
 
     @Override

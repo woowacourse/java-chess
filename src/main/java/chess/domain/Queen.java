@@ -7,12 +7,11 @@ import java.util.Objects;
 
 import static chess.domain.Direction.*;
 
-public class Queen implements Piece{
-    private final Team team;
+public class Queen extends Piece{
     private final List<Direction> candidateDirection;
 
     public Queen(Team team) {
-        this.team = team;
+        super(team);
         this.candidateDirection = Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
     }
 

@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class King implements Piece {
-    private final Team team;
-
+public class King extends Piece {
     public King(Team team) {
-        this.team = team;
+        super(team);
     }
 
     @Override

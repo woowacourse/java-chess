@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Objects;
 
 import static chess.domain.Direction.*;
-public class Rook implements Piece{
-    private final Team team;
+public class Rook extends Piece{
     private final List<Direction> candidateDirection;
 
     public Rook(Team team) {
-        this.team = team;
+        super(team);
         this.candidateDirection = Arrays.asList(NORTH, EAST, SOUTH, WEST);
     }
 
