@@ -73,6 +73,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return x + "," + y;
+        return (char) (x + 96) + String.valueOf(y);
     }
 }
