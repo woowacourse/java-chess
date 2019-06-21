@@ -28,31 +28,8 @@ public class Queen extends ChessPiece {
 
     @Override
     Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        Set<ChessCoordinate> movableCoords = new HashSet<>();
-
-        ChessXCoordinate fromX = from.getX();
-        ChessYCoordinate fromY = from.getY();
-
-        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getAscendingCoordinates(fromX), fromY));
-        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getDescendingCoordinates(fromX), fromY));
-
-        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getAscendingCoordinates(fromY)));
-        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getDescendingCoordinates(fromY)));
-
-        List<ChessXCoordinate> xCoords = ChessXCoordinate.getDescendingCoordinates(fromX);
-        List<ChessYCoordinate> yCoords = ChessYCoordinate.getDescendingCoordinates(fromY);
-
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        yCoords = ChessYCoordinate.getAscendingCoordinates(fromY);
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        xCoords = ChessXCoordinate.getAscendingCoordinates(fromX);
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        yCoords = ChessYCoordinate.getDescendingCoordinates(fromY);
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
+        Set<ChessCoordinate> movableCoords = probeVerticalAndHorizaon(pieceTeamProvider, from);
+        movableCoords.addAll(probeDiagonal(pieceTeamProvider, from));
         return movableCoords;
     }
 }

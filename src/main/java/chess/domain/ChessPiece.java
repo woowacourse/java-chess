@@ -15,7 +15,20 @@ public abstract class ChessPiece {
 
     abstract Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from);
 
-    protected Optional<ChessCoordinate> getIfEmpty(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
+    protected Set<ChessCoordinate> probeVerticalAndHorizaon(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
+        ChessXCoordinate fromX = from.getX();
+        ChessYCoordinate fromY = from.getY();
+
+        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getAscendingCoordinates(fromX), fromY));
+        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getDescendingCoordinates(fromX), fromY));
+
+        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getAscendingCoordinates(fromY)));
+        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getDescendingCoordinates(fromY)));
+        return movableCoords;
+    }
+
+    private Optional<ChessCoordinate> getIfEmpty(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
         if (!maybeCoord.isPresent()) {
             return Optional.empty();
         }
@@ -26,7 +39,7 @@ public abstract class ChessPiece {
         return Optional.empty();
     }
 
-    protected Optional<ChessCoordinate> getIfEnemy(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
+    private Optional<ChessCoordinate> getIfEnemy(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
         if (!maybeCoord.isPresent()) {
             return Optional.empty();
         }
@@ -40,7 +53,7 @@ public abstract class ChessPiece {
         return Optional.empty();
     }
 
-    protected Optional<ChessCoordinate> getIfAlly(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
+    private Optional<ChessCoordinate> getIfAlly(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
         if (!maybeCoord.isPresent()) {
             return Optional.empty();
         }
@@ -51,7 +64,7 @@ public abstract class ChessPiece {
         return Optional.empty();
     }
 
-    protected Set<ChessCoordinate> probeHorizon(PieceTeamProvider pieceTeamProvider, ChessXCoordinate fromX, List<ChessYCoordinate> ascendingCoordinates) {
+    private Set<ChessCoordinate> probeHorizon(PieceTeamProvider pieceTeamProvider, ChessXCoordinate fromX, List<ChessYCoordinate> ascendingCoordinates) {
         Set<ChessCoordinate> movableCoords = new HashSet<>();
         for (ChessYCoordinate y : ascendingCoordinates) {
             getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(fromX, y)).ifPresent(movableCoords::add);
@@ -68,7 +81,7 @@ public abstract class ChessPiece {
         return movableCoords;
     }
 
-    protected Set<ChessCoordinate> probeVertical(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> ascendingCoordinates, ChessYCoordinate fromY) {
+    private Set<ChessCoordinate> probeVertical(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> ascendingCoordinates, ChessYCoordinate fromY) {
         Set<ChessCoordinate> movableCoords = new HashSet<>();
         for (ChessXCoordinate x : ascendingCoordinates) {
             getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(x, fromY)).ifPresent(movableCoords::add);
@@ -85,7 +98,25 @@ public abstract class ChessPiece {
         return movableCoords;
     }
 
-    protected Set<ChessCoordinate> probeDiagonal(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> xCoords, List<ChessYCoordinate> yCoords) {
+    protected Set<ChessCoordinate> probeDiagonal(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
+        List<ChessXCoordinate> xCoords = ChessXCoordinate.getDescendingCoordinates(from.getX());
+        List<ChessYCoordinate> yCoords = ChessYCoordinate.getDescendingCoordinates(from.getY());
+
+        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
+
+        yCoords = ChessYCoordinate.getAscendingCoordinates(from.getY());
+        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
+
+        xCoords = ChessXCoordinate.getAscendingCoordinates(from.getX());
+        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
+
+        yCoords = ChessYCoordinate.getDescendingCoordinates(from.getY());
+        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
+        return movableCoords;
+    }
+
+    private Set<ChessCoordinate> probeDiagonal(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> xCoords, List<ChessYCoordinate> yCoords) {
         Set<ChessCoordinate> movableCoords = new HashSet<>();
 
         for (int i = 0; i < Math.min(xCoords.size(), yCoords.size()); i++) {

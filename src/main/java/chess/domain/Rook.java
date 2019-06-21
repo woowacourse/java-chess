@@ -28,18 +28,6 @@ public class Rook extends ChessPiece {
 
     @Override
     public Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        Set<ChessCoordinate> movableCoords = new HashSet<>();
-
-        ChessXCoordinate fromX = from.getX();
-        ChessYCoordinate fromY = from.getY();
-
-        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getAscendingCoordinates(fromX), fromY));
-        movableCoords.addAll(probeVertical(pieceTeamProvider, ChessXCoordinate.getDescendingCoordinates(fromX), fromY));
-
-        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getAscendingCoordinates(fromY)));
-        movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getDescendingCoordinates(fromY)));
-
-        return movableCoords;
+        return probeVerticalAndHorizaon(pieceTeamProvider, from);
     }
-
 }
