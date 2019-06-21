@@ -3,6 +3,7 @@ package chess.model;
 import chess.model.piece.Pawn;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,5 +40,17 @@ public class TileTest {
     void 기물이_타일에_없을_경우() {
         Tile tile = new Tile("12", Optional.ofNullable(null));
         assertThat(tile.isPiecePresent()).isFalse();
+    }
+
+    @Test
+    void 경로확인() {
+        Tile tile = new Tile("55", Optional.ofNullable(new Pawn("white")));
+        Coordinate sourceCoordinateX = Coordinate.valueOf(5);
+        Coordinate sourceCoordinateY = Coordinate.valueOf(5);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(6);
+
+        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+        assertThat(tile.findRouteFromPiece(vector)).isEqualTo(new Route(Arrays.asList("56")));
     }
 }
