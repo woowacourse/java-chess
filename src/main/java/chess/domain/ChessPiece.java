@@ -85,7 +85,23 @@ public abstract class ChessPiece {
         return movableCoords;
     }
 
-    protected Set<ChessCoordinate> probeDiagonal(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> xCoords, List<ChessYCoordinate> yCoords) {
+    protected Set<ChessCoordinate> probeAllDiagonal(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+        Set<ChessCoordinate> movableCoords = new HashSet<>();
+
+        List<ChessXCoordinate> xDescendCoords = ChessXCoordinate.getDescendingCoordinates(from.getX());
+        List<ChessYCoordinate> yDescendCoords = ChessYCoordinate.getDescendingCoordinates(from.getY());
+        List<ChessXCoordinate> xAscendCoords = ChessXCoordinate.getAscendingCoordinates(from.getX());
+        List<ChessYCoordinate> yAscendCoords = ChessYCoordinate.getAscendingCoordinates(from.getY());
+
+        for (List<ChessXCoordinate> xCoord : Arrays.asList(xDescendCoords, xAscendCoords)) {
+            for (List<ChessYCoordinate> yCoord : Arrays.asList(yDescendCoords, yAscendCoords)) {
+                movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoord, yCoord));
+            }
+        }
+        return movableCoords;
+    }
+
+    private Set<ChessCoordinate> probeDiagonal(PieceTeamProvider pieceTeamProvider, List<ChessXCoordinate> xCoords, List<ChessYCoordinate> yCoords) {
         Set<ChessCoordinate> movableCoords = new HashSet<>();
 
         for (int i = 0; i < Math.min(xCoords.size(), yCoords.size()); i++) {

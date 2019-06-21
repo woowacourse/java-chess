@@ -39,19 +39,7 @@ public class Queen extends ChessPiece {
         movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getAscendingCoordinates(fromY)));
         movableCoords.addAll(probeHorizon(pieceTeamProvider, fromX, ChessYCoordinate.getDescendingCoordinates(fromY)));
 
-        List<ChessXCoordinate> xCoords = ChessXCoordinate.getDescendingCoordinates(fromX);
-        List<ChessYCoordinate> yCoords = ChessYCoordinate.getDescendingCoordinates(fromY);
-
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        yCoords = ChessYCoordinate.getAscendingCoordinates(fromY);
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        xCoords = ChessXCoordinate.getAscendingCoordinates(fromX);
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        yCoords = ChessYCoordinate.getDescendingCoordinates(fromY);
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
+        movableCoords.addAll(probeAllDiagonal(pieceTeamProvider, from));
 
         return movableCoords;
     }

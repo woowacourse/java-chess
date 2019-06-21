@@ -28,22 +28,8 @@ public class Bishop extends ChessPiece {
 
     @Override
     Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        Set<ChessCoordinate> movableCoords = new HashSet<>();
 
-        List<ChessXCoordinate> xCoords = ChessXCoordinate.getDescendingCoordinates(from.getX());
-        List<ChessYCoordinate> yCoords = ChessYCoordinate.getDescendingCoordinates(from.getY());
-
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        yCoords = ChessYCoordinate.getAscendingCoordinates(from.getY());
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        xCoords = ChessXCoordinate.getAscendingCoordinates(from.getX());
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        yCoords = ChessYCoordinate.getDescendingCoordinates(from.getY());
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, xCoords, yCoords));
-
-        return movableCoords;
+        return probeAllDiagonal(pieceTeamProvider, from);
     }
+
 }
