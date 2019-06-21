@@ -69,7 +69,7 @@ public class Board {
         }
     }
 
-    List<Position> getAllPositions() {
+    public List<Position> getAllPositions() {
         final List<Position> allPositions = new ArrayList<>();
         for (Map.Entry<Row, Rank> line : lines.entrySet()) {
             allPositions.addAll(line.getValue().getRankPositions(line.getKey()));

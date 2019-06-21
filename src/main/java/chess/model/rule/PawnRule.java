@@ -2,6 +2,7 @@ package chess.model.rule;
 
 import chess.model.Side;
 import chess.model.board.Board;
+import chess.model.board.Position;
 import chess.model.board.Row;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
@@ -21,10 +22,10 @@ class PawnRule extends PieceRule {
     }
 
     @Override
-    double getPieceScore(final Board board, final Square square) {
-        final Piece piece = getPiece(board, square);
-        final List<Square> squareList = getNonBlockedNeighbors(board, square, Square::getUpOneNeighbor);
-        squareList.addAll(getNonBlockedNeighbors(board, square, Square::getDownOneNeighbor));
+    double getPieceScore(final Board board, final Position position) {
+        final Piece piece = position.getPiece();
+        final List<Square> squareList = getNonBlockedNeighbors(board, position.getSquare(), Square::getUpOneNeighbor);
+        squareList.addAll(getNonBlockedNeighbors(board, position.getSquare(), Square::getDownOneNeighbor));
         final boolean isAnotherMyPawnInVertical = squareList.stream()
                 .anyMatch(neighbor -> isMyPawn(board, neighbor, piece));
         return isAnotherMyPawnInVertical ? HALF_SCORE : FULL_SCORE;

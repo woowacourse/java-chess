@@ -1,6 +1,7 @@
 package chess.model.rule;
 
 import chess.model.board.Board;
+import chess.model.board.Position;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
 
@@ -14,7 +15,7 @@ import static chess.model.rule.Rule.getPiece;
 abstract class PieceRule {
     double pieceScore = 0;
 
-    double getPieceScore(final Board board, final Square square) {
+    double getPieceScore(final Board board, final Position position) {
         return pieceScore;
     }
 
