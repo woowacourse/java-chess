@@ -3,11 +3,10 @@ package chess.domain.piece;
 import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
-public class King implements Piece {
-    private PlayerType playerType;
+public class King extends Piece {
 
     public King(PlayerType playerType) {
-        this.playerType = playerType;
+        super(playerType);
     }
 
     @Override

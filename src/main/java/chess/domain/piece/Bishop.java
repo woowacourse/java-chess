@@ -3,11 +3,9 @@ package chess.domain.piece;
 import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
-public class Bishop implements Piece {
-    private PlayerType playerType;
-
+public class Bishop extends Piece {
     public Bishop(PlayerType playerType) {
-        this.playerType = playerType;
+        super(playerType);
     }
 
     @Override
