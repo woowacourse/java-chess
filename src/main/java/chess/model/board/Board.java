@@ -3,7 +3,9 @@ package chess.model.board;
 import chess.model.Side;
 import chess.model.unit.Piece;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -65,5 +67,13 @@ public class Board {
         } catch (NullPointerException e) {
             throw new IllegalArgumentException(EMPTY_SQUARE);
         }
+    }
+
+    List<Position> getAllPositions() {
+        final List<Position> allPositions = new ArrayList<>();
+        for (Map.Entry<Row, Rank> line : lines.entrySet()) {
+            allPositions.addAll(line.getValue().getRankPositions(line.getKey()));
+        }
+        return allPositions;
     }
 }

@@ -3,7 +3,9 @@ package chess.model.board;
 import chess.model.Side;
 import chess.model.unit.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 class Rank {
@@ -44,5 +46,14 @@ class Rank {
 
     void removePiece(final Column column) {
         oneLine.remove(column);
+    }
+
+    List<Position> getRankPositions(final Row row) {
+        List<Position> positions = new ArrayList<>();
+        for (Map.Entry<Column, Piece> pieceEntry : oneLine.entrySet()) {
+            final Square square = new Square(pieceEntry.getKey(), row);
+            positions.add(new Position(square, pieceEntry.getValue()));
+        }
+        return positions;
     }
 }

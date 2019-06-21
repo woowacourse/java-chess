@@ -40,6 +40,10 @@ public enum Column {
         return value;
     }
 
+    public String getColumnName() {
+        return name;
+    }
+
     public int getColumnIndex() {
         return columnIndex;
     }

@@ -40,6 +40,10 @@ public enum Row {
         return value;
     }
 
+    public String getRowName() {
+        return name;
+    }
+
     public int getRowIndex() {
         return rowIndex;
     }
