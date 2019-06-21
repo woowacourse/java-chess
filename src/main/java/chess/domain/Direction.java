@@ -21,7 +21,7 @@ public enum Direction {
         this.position = new Point(positionX, positionY);
     }
 
-    public static Direction findDirection (Point point) {
+    public static Direction findDirection(Point point) {
         List<Direction> directions = Arrays.stream(values())
                 .filter(d -> d.position.equals(point)).collect(Collectors.toList());
         if (directions.size() != 0) {

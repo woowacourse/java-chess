@@ -7,13 +7,10 @@ import java.util.Objects;
 
 import static chess.domain.Direction.*;
 
-public class Pawn extends Piece{
-    private final List<Direction> candidateDirection;
-
+public class Pawn extends Piece {
     public Pawn(Team team) {
-        super(team);
-        this.candidateDirection = (team == Team.WHITE) ? Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST) :
-                Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
+        super(team, (team == Team.WHITE) ? Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST) :
+                Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ public class Knight extends Piece {
     private static final int MOVABLE_DISTANCE = 5;
 
     public Knight(Team team) {
-        super(team);
+        super(team, Arrays.asList(Direction.NOT_FIND));
     }
 
     @Override

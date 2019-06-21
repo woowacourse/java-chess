@@ -84,7 +84,7 @@ public class Point {
     public Point makeVector(Point end) {
         int subX = subtractX(end);
         int subY = subtractY(end);
-        return new Point(-subX,-subY);
+        return new Point(-subX, -subY);
     }
 
     int dotProduct(Point end) {
