@@ -10,9 +10,10 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-class Knight extends MoveRule {
+class Knight extends PieceRule {
     Knight() {
         super();
+        pieceScore = 2.5;
     }
 
     @Override

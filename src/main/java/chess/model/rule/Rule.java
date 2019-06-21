@@ -11,7 +11,7 @@ import java.util.Map;
 public enum Rule {
     ; // Empty enum for static methods.
 
-    private static Map<UnitClass, MoveRule> moveRuleMap = new HashMap<>();
+    private static Map<UnitClass, PieceRule> moveRuleMap = new HashMap<>();
 
     static {
         moveRuleMap.put(UnitClass.KING, new King());
@@ -19,7 +19,7 @@ public enum Rule {
         moveRuleMap.put(UnitClass.BISHOP, new Bishop());
         moveRuleMap.put(UnitClass.KNIGHT, new Knight());
         moveRuleMap.put(UnitClass.ROOK, new Rook());
-        moveRuleMap.put(UnitClass.PAWN, new PawnMove());
+        moveRuleMap.put(UnitClass.PAWN, new Pawn());
     }
 
     static Piece getPiece(final Board board, final Square square) {
@@ -35,7 +35,7 @@ public enum Rule {
         if (piece == null) {
             return false;
         }
-        final MoveRule rule = moveRuleMap.get(piece.getUnitClass());
+        final PieceRule rule = moveRuleMap.get(piece.getUnitClass());
         return rule.isValidMove(board, piece, checkTarget, destination);
     }
 }

@@ -5,15 +5,36 @@ import chess.model.board.Row;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
 import chess.model.unit.Side;
+import chess.model.unit.UnitClass;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static chess.model.rule.Rule.getPiece;
 
-class PawnMove extends MoveRule {
-    PawnMove() {
+class Pawn extends PieceRule {
+    private static final double HALF_SCORE = 0.5;
+    private static final double FULL_SCORE = 1;
+
+    Pawn() {
         super();
+    }
+
+    @Override
+    double getPieceScore(final Board board, final Square square) {
+        final Piece piece = getPiece(board, square);
+        final List<Square> squareList = getNonBlockedNeighbors(board, square, Square::getUpOneNeighbor);
+        squareList.addAll(getNonBlockedNeighbors(board, square, Square::getDownOneNeighbor));
+        final boolean isAnotherMyPawnInVertical = squareList.stream()
+                .anyMatch(neighbor -> isMyPawn(board, neighbor, piece));
+        return isAnotherMyPawnInVertical ? HALF_SCORE : FULL_SCORE;
+    }
+
+    private static boolean isMyPawn(final Board board, final Square square, final Piece piece) {
+        final Piece another = getPiece(board, square);
+        if (piece == null || another == null) return false;
+        return another.getUnitClass() == UnitClass.PAWN
+                && another.getSide() == piece.getSide();
     }
 
     @Override

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PawnMoveRuleTest {
+class PawnTest {
     private Board board;
     private Square checkTarget;
     private Square destination;

@@ -7,9 +7,10 @@ import chess.model.unit.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-class Rook extends MoveRule {
+class Rook extends PieceRule {
     Rook() {
         super();
+        pieceScore = 5;
     }
 
     @Override

@@ -11,7 +11,13 @@ import java.util.stream.Collectors;
 
 import static chess.model.rule.Rule.getPiece;
 
-abstract class MoveRule {
+abstract class PieceRule {
+    double pieceScore = 0;
+
+    double getPieceScore(final Board board, final Square square) {
+        return pieceScore;
+    }
+
     abstract List<Square> getMovableSquares(final Board board, final Square square, final Piece piece);
 
     private List<Square> getOccupiedSquares(final Board board, final List<Square> candidatedSquares, final Piece piece) {
