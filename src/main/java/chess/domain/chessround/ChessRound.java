@@ -49,4 +49,12 @@ public class ChessRound {
     public ChessPlayer getCurrentPlayer() {
         return currentPlayer;
     }
+
+    public double getWhitePlayerScore() {
+        return whitePlayer.calculateScore();
+    }
+
+    public double getBlackPlayerScore() {
+        return blackPlayer.calculateScore();
+    }
 }

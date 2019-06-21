@@ -55,4 +55,12 @@ public class ChessRoundService {
         int column = Integer.parseInt(pointId.substring(1, 2));
         return ChessPoint.of(row, column);
     }
+
+    public double getWhitePlayerScore() {
+        return chessRound.getWhitePlayerScore();
+    }
+
+    public double getBlackPlayerScore() {
+        return chessRound.getBlackPlayerScore();
+    }
 }
