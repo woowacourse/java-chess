@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class BoardDao {
 
-    public static void add(BoardDto boardDto) throws SQLException {
+    public void add(BoardDto boardDto) throws SQLException {
         String query = "INSERT INTO board VALUES (?, ?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
@@ -22,7 +22,7 @@ public class BoardDao {
         }
     }
     
-    public static BoardDto findAll() throws SQLException {
+    public BoardDto findAll() throws SQLException {
         String query = "SELECT * FROM board";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
@@ -37,7 +37,7 @@ public class BoardDao {
         return boardDto;
     }
 
-    public static void deleteAll() throws SQLException {
+    public void deleteAll() throws SQLException {
         String query = "DELETE FROM baord";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
         pstmt.executeUpdate();

@@ -3,13 +3,13 @@ package chess.dto;
 import chess.domain.Team;
 
 public class TurnDto {
-    private Team team;
+    private String team;
 
-    public Team getTeam() {
+    public String getTeam() {
         return team;
     }
 
-    public void setTeam(final Team team) {
+    public void setTeam(final String team) {
         this.team = team;
     }
 }

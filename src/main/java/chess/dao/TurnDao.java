@@ -11,23 +11,24 @@ import java.sql.SQLException;
 
 public class TurnDao {
 
-    public static void add(TurnDto turnDto) throws SQLException {
-        String query = "INSERT INTO turn VALUES (?)";
+    public void add(TurnDto turnDto) throws SQLException {
+        String query = "INSERT INTO turn VALUES (?, ?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
-        pstmt.setString(1, turnDto.getTeam().name());
+        pstmt.setInt(1, 1);
+        pstmt.setString(2, turnDto.getTeam());
         pstmt.executeUpdate();
     }
 
-    public static void update(TurnDto turnDto) throws SQLException {
+    public void update(TurnDto turnDto) throws SQLException {
         String query = "UPDATE turn SET team = ? WHERE id = 1";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
-        pstmt.setString(1, turnDto.getTeam().name());
+        pstmt.setString(1, turnDto.getTeam());
         pstmt.executeUpdate();
     }
 
-    public static TurnDto find() throws SQLException {
+    public TurnDto find() throws SQLException {
         String query = "SELECT team FROM turn WHERE id = 1";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
@@ -35,12 +36,12 @@ public class TurnDao {
 
         TurnDto turnDto = new TurnDto();
         if (rs.next()) {
-            turnDto.setTeam(Team.valueOf(rs.getString(1)));
+            turnDto.setTeam(rs.getString(1));
         }
         return turnDto;
     }
 
-    public static void delete() throws SQLException {
+    public void delete() throws SQLException {
         String query = "DELETE FROM turn";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 

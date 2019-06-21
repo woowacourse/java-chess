@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ResultDao {
-    public static void add(ResultDto resultDto) throws SQLException {
+    public void add(ResultDto resultDto) throws SQLException {
         String query = "INSERT INTO result (white, black) VALUES (?, ?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
@@ -18,7 +18,7 @@ public class ResultDao {
         pstmt.executeUpdate();
     }
 
-    public static ResultDto find() throws SQLException {
+    public ResultDto find() throws SQLException {
         String query = "SELECT white, black FROM result";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
@@ -32,7 +32,7 @@ public class ResultDao {
         return resultDto;
     }
 
-    public static void update(ResultDto resultDto) throws SQLException {
+    public void update(ResultDto resultDto) throws SQLException {
         String query = "UPDATE result SET white = ?, black = ? WHERE id = 1";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
