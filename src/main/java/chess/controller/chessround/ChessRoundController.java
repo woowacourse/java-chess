@@ -29,6 +29,7 @@ public class ChessRoundController {
         model.put("current-turn", chessRoundService.isWhiteTurn() ? "White" : "Black");
         model.put("white-score", chessRoundService.getWhitePlayerScore());
         model.put("black-score", chessRoundService.getBlackPlayerScore());
+        model.put("error-message", chessRoundService.getErrorMessage());
         return new HandlebarsTemplateEngine().render(
                 new ModelAndView(model, "index.hbs")
         );

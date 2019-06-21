@@ -4,11 +4,14 @@ import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chessround.ChessPiecesBuilder;
 import chess.domain.chessround.ChessPlayer;
 import chess.domain.chessround.ChessRound;
+import chess.domain.chessround.InvalidChessPositionException;
 import chess.domain.chessround.dto.ChessPlayerDTO;
 
 public class ChessRoundService {
+    private static final String EMPTY = "";
     private static ChessRoundService chessRoundService = null;
     private ChessRound chessRound;
+    private String errorMessage = EMPTY;
 
     private ChessRoundService() {
         // TODO : index controller에서 하는 일을 여기서 임시로 해준다.
@@ -47,7 +50,17 @@ public class ChessRoundService {
     public void move(String sourceId, String targetId) {
         ChessPoint source = parseChessPoint(sourceId);
         ChessPoint target = parseChessPoint(targetId);
-        chessRound.move(source, target);
+
+        try {
+            chessRound.move(source, target);
+            cleanErrorMessage();
+        } catch (InvalidChessPositionException ex) {
+            errorMessage = ex.getMessage();
+        }
+    }
+
+    private void cleanErrorMessage() {
+        errorMessage = EMPTY;
     }
 
     private ChessPoint parseChessPoint(String pointId) {
@@ -66,5 +79,9 @@ public class ChessRoundService {
 
     public boolean isWhiteTurn() {
         return chessRound.isWhiteTurn();
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 }
