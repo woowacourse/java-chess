@@ -40,6 +40,14 @@ public class Position {
         return new Position(new Coordinate(x.add(operand.getX())), new Coordinate(y.add(operand.getY())));
     }
 
+    public Coordinate getX() {
+        return x;
+    }
+
+    public Coordinate getY() {
+        return y;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

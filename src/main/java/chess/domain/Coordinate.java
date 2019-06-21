@@ -28,6 +28,10 @@ public class Coordinate {
         this.coordinate = converted;
     }
 
+    public int getCoordinate() {
+        return coordinate;
+    }
+
     public int add(int operand) {
         return this.coordinate + operand;
     }
