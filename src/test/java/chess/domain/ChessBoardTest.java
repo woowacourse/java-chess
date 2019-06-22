@@ -5,6 +5,7 @@ import chess.domain.chess.Team;
 import chess.domain.chess.exception.PawnIllegalMovingRuleException;
 import chess.domain.chess.exception.SameTeamTargetUnitException;
 import chess.domain.chess.exception.UnitInterceptionAlongPathException;
+import chess.domain.chess.initializer.ChessBoardInitializer;
 import chess.domain.chess.initializer.TestInitializer;
 import chess.domain.chess.unit.*;
 import chess.domain.geometric.Position;
@@ -334,7 +335,35 @@ public class ChessBoardTest {
         assertThrows(UnitInterceptionAlongPathException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(1,5));
         });
+    }
+
+    @Test
+    void 최초_점수_계산() {
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
+        Map<Team, Double> scoreInfo = chessBoard.sumScore();
+
+        assertThat(scoreInfo.get(Team.BLACK)).isEqualTo(38.0);
+    }
+
+    @Test
+    void 수직_폰_점수_계산() {
+        Map<Position, Unit> map = new HashMap<>();
+        map.put(Position.create(1, 1), new Pawn(Team.WHITE));
+        map.put(Position.create(1, 2), new Pawn(Team.WHITE));
+        map.put(Position.create(1, 3), new Pawn(Team.WHITE));
+        map.put(Position.create(2, 2), new Queen(Team.WHITE));
+        map.put(Position.create(3, 1), new Pawn(Team.WHITE));
+        map.put(Position.create(3, 2), new Pawn(Team.WHITE));
+        map.put(Position.create(4, 2), new Pawn(Team.WHITE));
 
 
+        Initializer testInitializer = new TestInitializer(map);
+
+        ChessBoard chessBoard = new ChessBoard(testInitializer);
+        Map<Team, Double> score = chessBoard.sumScore();
+
+
+        assertThat(score.get(Team.WHITE))
+                .isEqualTo(12.5);
     }
 }

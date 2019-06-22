@@ -10,6 +10,8 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class Queen extends Unit {
+    private static final double SCORE = 9;
+
     private static List<Direction> directions;
 
     static {
@@ -25,6 +27,11 @@ public class Queen extends Unit {
     public boolean validateDirection(Vector another) {
         return directions.stream()
                 .anyMatch(direction -> direction.isParallelTo(another));
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     @Override

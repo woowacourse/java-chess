@@ -46,9 +46,13 @@ public enum Direction {
         return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
     }
 
-    public static List<Direction> northDiagonal() { return Arrays.asList(NORTHEAST, NORTHWEST); }
+    public static List<Direction> northDiagonal() {
+        return Arrays.asList(NORTHEAST, NORTHWEST);
+    }
 
-    public static List<Direction> southDiagonal() { return Arrays.asList(SOUTHEAST, SOUTHWEST); }
+    public static List<Direction> southDiagonal() {
+        return Arrays.asList(SOUTHEAST, SOUTHWEST);
+    }
 
     public boolean isParallelTo(Vector another) {
         return this.vector.isParallelTo(another);

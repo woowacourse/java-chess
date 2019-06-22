@@ -9,8 +9,7 @@ import chess.domain.geometric.Direction;
 import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;
 
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ChessBoard {
     private Map<Position, Unit> units;
@@ -73,7 +72,7 @@ public class ChessBoard {
             position = direction.apply(position);
             Optional<Unit> unit = Optional.ofNullable(units.get(position));
             if (unit.isPresent() && (target.equals(position) == false)) {
-                throw new UnitInterceptionAlongPathException();
+                throw new UnitInterceptionAlongPathException("중간 경로에 유닛이 존재합니다.");
             }
         }
     }
@@ -83,5 +82,56 @@ public class ChessBoard {
         validateInterception(source, target);
         units.put(target, units.get(source));
         units.remove(source);
+    }
+
+    public Map<Team, Double> sumScore() {
+        Map<Team, Double> scoreInfo = new HashMap<>();
+        for (Team team : Team.values()) {
+            scoreInfo.put(team, sumScore(team));
+        }
+        return scoreInfo;
+    }
+
+    private Double sumScore(Team team) {
+        double sum = 0;
+        for (Position position : units.keySet()) {
+            if (units.get(position).getTeam() == team &&
+                    ((units.get(position) instanceof  Pawn) == false)) {
+                sum += units.get(position).score();
+            }
+        }
+
+        sum += sumPawnScore(team);
+        return sum;
+    }
+
+    public Double sumPawnScore(Team team) {
+        double sum = 0;
+
+        for (int y = Position.MIN_POSITION; y < Position.MAX_POSITION; y++) {
+            long numOfPawns = getNumberOfPawnsByColumn(y, team);
+            if (numOfPawns < 2) {
+                sum += numOfPawns * 1;
+                continue;
+            }
+            sum += numOfPawns * 0.5;
+        }
+        return sum;
+    }
+
+    private long getNumberOfPawnsByColumn(int x, Team team) {
+        /*int number = 0;
+        for (Position position : units.keySet()) {
+            if (position.getY() == y && (units.get(position) instanceof Pawn)
+                    && (units.get(position).getTeam() == team)) {
+                number += 1;
+            }
+        }
+        return number;*/
+
+        return units.keySet().stream()
+                .filter(key -> key.getX() == x)
+                .filter(key -> units.get(key) instanceof Pawn)
+                .count();
     }
 }
