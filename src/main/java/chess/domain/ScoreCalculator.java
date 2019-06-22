@@ -42,10 +42,8 @@ public class ScoreCalculator {
     }
 
     private double sumOfPawn(final int column, final List<Square> pawns) {
-        //TODO isPawn 지울지 생각해보기
         List<Square> retPawns = pawns.stream()
                 .filter(square -> square.isSameColumn(Column.from(String.valueOf((char) column))))
-                .filter(Square::isPawn)
                 .collect(Collectors.toList());
         if (retPawns.size() >= 2) {
             return retPawns.size() * 0.5;
