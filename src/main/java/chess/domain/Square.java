@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.exception.ExitException;
+
 import java.util.Objects;
 
 public class Square {
