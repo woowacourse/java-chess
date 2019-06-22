@@ -13,26 +13,26 @@ public class TileTest {
     @Test
     void 생성자_오류확인_null이_입력된_경우() {
         assertThatExceptionOfType(NullPointerException.class)
-                .isThrownBy(() -> new Tile(null, Optional.ofNullable(new Pawn("white"))));
+                .isThrownBy(() -> new Tile(null, Optional.ofNullable(new Pawn(true, "white"))));
     }
 
     @Test
     void 생성자_오류확인_좌표길이가_올바르지_않을_경우() {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tile("123", Optional.ofNullable(new Pawn("white"))));
+                .isThrownBy(() -> new Tile("123", Optional.ofNullable(new Pawn(true, "white"))));
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tile("1", Optional.ofNullable(new Pawn("white"))));
+                .isThrownBy(() -> new Tile("1", Optional.ofNullable(new Pawn(true, "white"))));
     }
 
     @Test
     void 생성자_확인_제대로_생성하는지() {
-        assertThat(new Tile("12", Optional.ofNullable(new Pawn("white")))).isEqualTo(new Tile("12", Optional.ofNullable(new Pawn("white"))));
-        assertThat(new Tile("12", Optional.ofNullable(new Pawn("white")))).isNotNull();
+        assertThat(new Tile("12", Optional.ofNullable(new Pawn(true, "white")))).isEqualTo(new Tile("12", Optional.ofNullable(new Pawn(true, "white"))));
+        assertThat(new Tile("12", Optional.ofNullable(new Pawn(true, "white")))).isNotNull();
     }
 
     @Test
     void 기물이_타일안에_있는지_확인() {
-        Tile tile = new Tile("12", Optional.ofNullable(new Pawn("white")));
+        Tile tile = new Tile("12", Optional.ofNullable(new Pawn(true, "white")));
         assertThat(tile.isPiecePresent()).isTrue();
     }
 
@@ -44,7 +44,7 @@ public class TileTest {
 
     @Test
     void 경로확인() {
-        Tile tile = new Tile("55", Optional.ofNullable(new Pawn("white")));
+        Tile tile = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
         Coordinate sourceCoordinateX = Coordinate.valueOf(5);
         Coordinate sourceCoordinateY = Coordinate.valueOf(5);
         Coordinate targetCoordinateX = Coordinate.valueOf(5);

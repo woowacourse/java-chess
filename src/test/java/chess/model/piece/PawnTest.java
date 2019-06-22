@@ -17,13 +17,13 @@ public class PawnTest {
 
     @BeforeEach
     void setUp() {
-        whitePawn = new Pawn("white");
-        blackPawn = new Pawn("black");
+        whitePawn = new Pawn(true,"white");
+        blackPawn = new Pawn(true,"black");
     }
 
     @Test
     void 잘못된_팀을_입력할_경우_확인() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Pawn("purple"));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Pawn(true,"purple"));
     }
 
     @Test
@@ -269,7 +269,7 @@ public class PawnTest {
 
     @Test
     void 백팀일때_한번이라도_움직였을_경우_빈_경로_반환_확인() {
-        whitePawn.signalMoved();
+        Piece clonedPiece = whitePawn.cloneSelf();
         Coordinate sourceCoordinateX = Coordinate.valueOf(5);
         Coordinate sourceCoordinateY = Coordinate.valueOf(5);
         Coordinate targetCoordinateX = Coordinate.valueOf(5);
@@ -277,13 +277,13 @@ public class PawnTest {
 
         Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
 
-        assertThat(whitePawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
+        assertThat(clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
 
     }
 
     @Test
     void 흑팀일때_한번이라도_움직였을_경우_빈_경로_반환_확인() {
-        blackPawn.signalMoved();
+        Piece clonedPiece = blackPawn.cloneSelf();
         Coordinate sourceCoordinateX = Coordinate.valueOf(5);
         Coordinate sourceCoordinateY = Coordinate.valueOf(5);
         Coordinate targetCoordinateX = Coordinate.valueOf(5);
@@ -291,7 +291,7 @@ public class PawnTest {
 
         Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
 
-        assertThat(blackPawn.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
+        assertThat(clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
 
     }
 }

@@ -26,10 +26,10 @@ public class Pawn implements Piece {
     private boolean isNotMoved;
     private String team;
 
-    public Pawn(String team) {
+    public Pawn(boolean isNotMoved, String team) {
         validateInput(team);
 
-        this.isNotMoved = true;
+        this.isNotMoved = isNotMoved;
         this.team = team;
     }
 
@@ -44,7 +44,7 @@ public class Pawn implements Piece {
 
     @Override
     public Pawn cloneSelf() {
-        return new Pawn(team);
+        return new Pawn(false, team);
     }
 
     @Override
@@ -174,11 +174,6 @@ public class Pawn implements Piece {
             Coordinate coordinateY = coordinates.get(1);
             route.add(coordinateX.convertToString(0).concat(coordinateY.convertToString(-1)));
         }
-    }
-
-    @Override
-    public void signalMoved() {
-        this.isNotMoved = false;
     }
 
     @Override

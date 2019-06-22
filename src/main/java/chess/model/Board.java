@@ -21,7 +21,6 @@ public class Board {
         checkMovablePiece(sourceAndTarget, sourcePosition, targetPosition);
 
         Piece clonedPiece = tiles.get(sourcePosition).clonePiece();
-        clonedPiece.signalMoved();
 
         tiles.put(sourcePosition, new Tile(sourcePosition, Optional.ofNullable(null)));
         tiles.put(targetPosition, new Tile(targetPosition, Optional.ofNullable(clonedPiece)));
