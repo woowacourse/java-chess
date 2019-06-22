@@ -8,7 +8,6 @@ import chess.dto.RoomDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -22,6 +21,7 @@ public class RoomDaoTest {
         DbConnector dbConnector = new DbConnector(DataSource.getInstance());
         roomDao = RoomDao.from(dbConnector);
         new TableCreator(dbConnector).create();
+        roomDao.deleteAll();
     }
 
     @Test
@@ -31,13 +31,13 @@ public class RoomDaoTest {
 
     @Test
     public void findByRoomIdTest() {
-        final long id = 1L;
+        roomDao.add();
+        final long id = roomDao.getLatestId().get();
         RoomDto expected = new RoomDto();
         expected.setId(id);
         expected.setStatus(false);
         expected.setWinner(null);
 
-        roomDao.add();
         RoomDto actual = roomDao.findById(id).get();
 
         assertEquals(expected, actual);
@@ -46,32 +46,17 @@ public class RoomDaoTest {
     @Test
     public void findByStatusTest() {
         final boolean status = false;
-
-        List<RoomDto> expected = new ArrayList<>();
-        RoomDto roomDto1 = new RoomDto();
-        roomDto1.setId(1L);
-        roomDto1.setStatus(false);
-        roomDto1.setWinner(null);
-
-        RoomDto roomDto2 = new RoomDto();
-        roomDto2.setId(2L);
-        roomDto2.setStatus(false);
-        roomDto2.setWinner(null);
-
-        expected.add(roomDto1);
-        expected.add(roomDto2);
-
-
         roomDao.add();
         roomDao.add();
         List<RoomDto> actual = roomDao.findAllByStatus(status);
 
-        assertEquals(expected, actual);
+        assertEquals(2, actual.size());
     }
 
     @Test
     public void updateStatusTest() {
-        final long id = 1L;
+        roomDao.add();
+        final long id = roomDao.getLatestId().get();
         final String winner = Piece.Color.WHITE.getName();
 
         RoomDto expected = new RoomDto();
@@ -79,7 +64,6 @@ public class RoomDaoTest {
         expected.setStatus(true);
         expected.setWinner(winner);
 
-        roomDao.add();
         roomDao.updateStatus(id, winner);
         RoomDto actual = roomDao.findById(id).get();
 
@@ -89,9 +73,10 @@ public class RoomDaoTest {
     @Test
     public void getLatestTest() {
         roomDao.add();
+        long id = roomDao.getLatestId().get();
         roomDao.add();
+        long expected = id + 1;
 
-        long expected = 2;
         long actual = roomDao.getLatestId().get();
 
         assertEquals(expected, actual);

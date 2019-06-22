@@ -110,4 +110,17 @@ public class RoomDao {
         }
         return Optional.empty();
     }
+
+    public int deleteAll() {
+        String sql = "DELETE from room";
+        int result = 0;
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            result = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
