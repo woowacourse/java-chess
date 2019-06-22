@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCConnection {
-    private static Connection connection;
+    public static Connection connection;
 
     public static Connection start() {
         if (connection == null) {
