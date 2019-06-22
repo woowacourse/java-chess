@@ -15,12 +15,13 @@ public enum MovementUnit {
         this.y = y;
     }
 
-    public int getX() {
-        return x;
+    //TODO 메서드, 파라미터명 수정
+    public int getX(int xDirection) {
+        return x * xDirection;
     }
 
-    public int getY() {
-        return y;
+    public int getY(int yDirection) {
+        return y * yDirection;
     }
 
     //TODO 리팩토링
