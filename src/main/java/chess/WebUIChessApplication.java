@@ -13,7 +13,6 @@ import chess.service.RoomService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import javax.xml.crypto.Data;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -37,30 +36,37 @@ public class WebUIChessApplication {
         RoomService roomService = new RoomService(roomDao);
 
         ChessController chessController = new ChessController(chessService, roomService);
-        MainController mainController = new MainController();
+        MainController mainController = new MainController(roomService);
 
         get("/", mainController::main);
 
-        get("/chess", chessController::initialize);
+        get("/chess/start", chessController::initialize);
+
+        get("/chess", chessController::show);
 
         post("/chess", chessController::action);
 
         get("/end", chessController::end);
+
+        get("/chess/score", chessController::score);
+
+        get("/chess/load", chessController::load);
 
         exception(ExitException.class, (exception, req, res) -> {
             long roomId = Long.parseLong(req.queryParams("roomId"));
             res.redirect("/end?roomId=" + roomId);
         });
 
-//        exception(Exception.class, (exception, req, res) -> {
-//            String message = null;
-//            try {
-//                message = URLEncoder.encode(exception.getMessage(), "UTF-8");
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-//            res.redirect("/chess/move?message=" + message);
-//        });
+        exception(Exception.class, (exception, req, res) -> {
+            String message = null;
+            String roomId = req.queryParams("roomId");
+            try {
+                message = URLEncoder.encode(exception.getMessage(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            res.redirect("/chess?roomId=" + roomId + "&message=" + message);
+        });
 
     }
 

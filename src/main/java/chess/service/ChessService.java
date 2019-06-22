@@ -4,6 +4,7 @@ import chess.dao.CommandDao;
 import chess.dao.RoomDao;
 import chess.domain.*;
 import chess.dto.CommandDto;
+import chess.utils.PositionConverter;
 
 import java.util.List;
 
@@ -38,4 +39,20 @@ public class ChessService {
     public List<Square> getSquares(final Game game) {
         return game.values();
     }
+
+    public List<CommandDto> findByRoomId(final long roomId) {
+        return commandDao.findByRoomId(roomId);
+    }
+
+    public Game load(final List<CommandDto> commandDtos) {
+        Board board = new Board(BoardGenerator.generate());
+        Game game = Game.from(board);
+        for (final CommandDto commandDto : commandDtos) {
+            Position origin = PositionConverter.convert(commandDto.getOrigin());
+            Position target = PositionConverter.convert(commandDto.getTarget());
+            game.action(origin, target);
+        }
+        return game;
+    }
+
 }

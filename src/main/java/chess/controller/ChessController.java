@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.domain.Game;
-import chess.domain.Position;
-import chess.domain.Square;
+import chess.domain.*;
+import chess.dto.CommandDto;
 import chess.service.ChessService;
 import chess.service.RoomService;
+import chess.utils.PositionConverter;
 import spark.Request;
 import spark.Response;
 
@@ -16,8 +16,6 @@ import java.util.Map;
 import static chess.WebUIChessApplication.render;
 
 public class ChessController {
-    private static final String DELIMITER = "";
-
     private final ChessService chessService;
     private final RoomService roomService;
 
@@ -41,15 +39,12 @@ public class ChessController {
         return render(model, "board.html");
     }
 
-    public Object action(Request req, Response res) {
+    public Object show(final Request req, final Response res) {
         Map<String, Object> model = new HashMap<>();
         Game game = req.session().attribute("game");
 
-        Position origin = toPosition(req.queryParams("origin"));
-        Position target = toPosition(req.queryParams("target"));
         long roomId = Long.parseLong(req.queryParams("roomId"));
 
-        boolean result = chessService.action(game, origin, target, roomId);
         List<Square> squares = chessService.getSquares(game);
 
         model.put("board", squares);
@@ -59,13 +54,19 @@ public class ChessController {
         return render(model, "board.html");
     }
 
-    private Position toPosition(final String input) {
-        String[] position = input.split(DELIMITER);
-        String col = position[0];
-        String row = position[1];
-        return Position.of(row, col);
-    }
+    public Object action(Request req, Response res) {
+        Game game = req.session().attribute("game");
 
+        Position origin = PositionConverter.convert(req.queryParams("origin"));
+        Position target = PositionConverter.convert(req.queryParams("target"));
+        long roomId = Long.parseLong(req.queryParams("roomId"));
+
+        boolean result = chessService.action(game, origin, target, roomId);
+        req.session().attribute("game", game);
+
+        res.redirect("/chess?roomId=" + roomId);
+        return null;
+    }
 
     public Object end(final Request req, final Response res) {
         Map<String, Object> model = new HashMap<>();
@@ -77,5 +78,28 @@ public class ChessController {
 
         model.put("winner", winner);
         return render(model, "end.html");
+    }
+
+    public Object score(final Request req, final Response res) {
+        Map<String, Object> model = new HashMap<>();
+        Game game = req.session().attribute("game");
+
+        ScoreCalculator scoreCalculator = new ScoreCalculator(game.values());
+        model.put("whiteScore", scoreCalculator.getScore(Piece.Color.WHITE));
+        model.put("blackScore", scoreCalculator.getScore(Piece.Color.BLACK));
+        String r = req.queryParams("roomId");
+        model.put("roomId", req.queryParams("roomId"));
+        return render(model, "score.html");
+    }
+
+    public Object load(final Request req, final Response res) {
+        Map<String, Object> model = new HashMap<>();
+        long roomId = Long.parseLong(req.queryParams("roomId"));
+        List<CommandDto> commandDtos = chessService.findByRoomId(roomId);
+        Game game = chessService.load(commandDtos);
+
+        req.session().attribute("game", game);
+        res.redirect("/chess?roomId="+roomId);
+        return null;
     }
 }

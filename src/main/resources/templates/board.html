@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>체스</title>
 
-    <link rel="stylesheet" type="text/css" href="css/board.css">
+    <link rel="stylesheet" type="text/css" href="/css/board.css">
 </head>
 <body>
 
@@ -17,12 +17,20 @@
     </div>
 </main>
 
+<div>
+    <button onclick="location.href='/chess/score?roomId={{roomId}}'">점수보기</button>
+    <button onclick="location.href='/'">메인으로</button>
+</div>
+
+
 <div class="controls">
     <form method="post" action="/chess">
         <input type="hidden" name="roomId" value="{{roomId}}">
-        origin <input type="text" name="origin" placeholder="a8"><br>
-        target <input type="text" name="target" placeholder="b8"><br>
-        <input type="submit" value="이동">
+        <div>
+            origin <input type="text" name="origin" placeholder="a8"><br>
+            target <input type="text" name="target" placeholder="b8"><br>
+            <button type="submit">이동</button>
+        </div>
     </form>
 </div>
 

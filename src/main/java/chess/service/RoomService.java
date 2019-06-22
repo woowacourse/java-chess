@@ -1,8 +1,10 @@
 package chess.service;
 
 import chess.dao.RoomDao;
+import chess.dto.RoomDto;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class RoomService {
     private RoomDao roomDao;
@@ -18,5 +20,9 @@ public class RoomService {
 
     public void updateStatus(final long roomId, final String color) {
         roomDao.updateStatus(roomId, color);
+    }
+
+    public List<RoomDto> findAllByStatus(final boolean status) {
+        return roomDao.findAllByStatus(status);
     }
 }

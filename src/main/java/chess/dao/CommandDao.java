@@ -28,8 +28,8 @@ public class CommandDao {
         String sql = "INSERT INTO command (origin, target, round, room_id) VALUES(?,?,?,?)";
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, commandDto.getTarget());
-            ps.setString(2, commandDto.getOrigin());
+            ps.setString(1, commandDto.getOrigin());
+            ps.setString(2, commandDto.getTarget());
             ps.setLong(3, commandDto.getRound());
             ps.setLong(4, commandDto.getRoom_id());
             ps.executeUpdate();

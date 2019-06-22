@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>체스게임</title>
+    <link rel="stylesheet" type="text/css" href="/css/board.css">
 </head>
 
-<button onclick="location.href='/chess'"> 시작하기 </button>
+<button onclick="location.href='/chess/start'"> 시작하기</button>
+
+<h2>이어하기</h2>
+{{#roomDtos}}
+<button onclick="location.href='/chess/load?roomId={{this.id}}'">{{this.id}}</button><br>
+{{/roomDtos}}
 
 </body>
 </html>
