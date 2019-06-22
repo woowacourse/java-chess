@@ -11,7 +11,7 @@ public abstract class Piece {
     }
 
     public boolean empty() {
-        return team == Team.EMPTY;
+        return team.isEmpty();
     }
 
     public boolean sameTeam(Piece piece) {
