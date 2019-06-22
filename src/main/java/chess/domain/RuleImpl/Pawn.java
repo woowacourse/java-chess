@@ -10,6 +10,7 @@ public enum Pawn implements Rule {
 
     public static final int ZERO_VECTOR = 0;
     private static final double SCORE = 1;
+    public static final double HALF_SCORE = SCORE / 2;
     public static final String NAME = "PAWN";
 
 

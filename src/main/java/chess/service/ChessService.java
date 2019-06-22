@@ -38,7 +38,7 @@ public class ChessService {
     }
 
     public List<Square> getSquares(final Game game) {
-        return game.values();
+        return game.getSquaresExceptEmpty();
     }
 
     public List<CommandDto> findByRoomId(final long roomId) {

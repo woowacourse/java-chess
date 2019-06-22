@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Square> map;
@@ -59,7 +60,9 @@ public class Board {
         return new ScoreCalculator(squares);
     }
 
-    public List<Square> values() {
-        return new ArrayList<>(map.values());
+    public List<Square> getSquaresExceptEmpty() {
+        return map.values().stream()
+                .filter(Square::isEmpty)
+                .collect(Collectors.toList());
     }
 }

@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.domain.*;
 import chess.dto.CommandDto;
-import chess.exception.ExitException;
 import chess.service.ChessService;
 import chess.service.RoomService;
 import chess.utils.PositionConverter;
@@ -84,16 +83,15 @@ public class ChessController {
         Map<String, Object> model = new HashMap<>();
         Game game = req.session().attribute("game");
 
-        ScoreCalculator scoreCalculator = new ScoreCalculator(game.values());
+        ScoreCalculator scoreCalculator = new ScoreCalculator(game.getSquaresExceptEmpty());
         model.put("whiteScore", scoreCalculator.getScore(Piece.Color.WHITE));
         model.put("blackScore", scoreCalculator.getScore(Piece.Color.BLACK));
-        String r = req.queryParams("roomId");
+
         model.put("roomId", req.queryParams("roomId"));
         return render(model, "score.html");
     }
 
     public Object load(final Request req, final Response res) {
-        Map<String, Object> model = new HashMap<>();
         long roomId = Long.parseLong(req.queryParams("roomId"));
         List<CommandDto> commandDtos = chessService.findByRoomId(roomId);
         Game game = chessService.load(commandDtos);

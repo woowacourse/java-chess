@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.RuleImpl.Pawn;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,10 +34,9 @@ public class ScoreCalculator {
         return sum;
     }
 
-
     private double sumOfPawn(List<Square> pawns) {
         double sum = 0;
-        for (int i = 'a'; i <= 'h'; i++) {
+        for (int i = Column.MIN; i <= Column.MAX; i++) {
             sum += sumOfPawn(i, pawns);
         }
         return sum;
@@ -46,7 +47,7 @@ public class ScoreCalculator {
                 .filter(square -> square.isSameColumn(Column.from(String.valueOf((char) column))))
                 .collect(Collectors.toList());
         if (retPawns.size() >= 2) {
-            return retPawns.size() * 0.5;
+            return retPawns.size() * Pawn.HALF_SCORE;
         }
         return retPawns.size();
     }
