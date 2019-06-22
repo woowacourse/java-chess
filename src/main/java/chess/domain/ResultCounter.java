@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ResultCounter {
     private final Map<AbstractPiece, Count> resultCounter;
@@ -27,6 +28,10 @@ public class ResultCounter {
         pieces(Team.BLACK).forEach(piece -> resultCounter.put(piece, new Count()));
     }
 
+    public ResultCounter(Map<AbstractPiece, Count> resultCounter) {
+        this.resultCounter = resultCounter;
+    }
+
     public static ResultCounter init() {
         return new ResultCounter();
     }
@@ -46,5 +51,14 @@ public class ResultCounter {
         return pieces(team).stream()
                 .mapToDouble(piece -> resultCounter.get(piece).score(piece))
                 .sum();
+    }
+
+    public Set<AbstractPiece> keySet() {
+        return resultCounter.keySet();
+    }
+
+
+    public Count get(AbstractPiece key) {
+        return resultCounter.get(key);
     }
 }

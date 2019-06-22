@@ -4,21 +4,22 @@ import chess.domain.exceptions.IllegalSourceException;
 import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.exceptions.InvalidRouteException;
 import chess.domain.piece.King;
-import chess.view.WebUtil;
-
-import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ChessBoard {
-    private Turn turn;
     private Board board;
+    private Turn turn;
     private ResultCounter resultCounter;
 
     public ChessBoard() {
-        this.turn = Turn.init();
         this.board = Board.init();
+        this.turn = Turn.init();
         this.resultCounter = ResultCounter.init();
+    }
+
+    public ChessBoard(Board board, Turn turn, ResultCounter resultCounter) {
+        this.board = board;
+        this.turn = turn;
+        this.resultCounter = resultCounter;
     }
 
     public boolean move(Position source, Position target) {
@@ -85,24 +86,23 @@ public class ChessBoard {
         return true;
     }
 
-    // TODO: Refactoring 해야함
-    public Map<String, String> getBoard() {
-        Map<String, String> result = new HashMap<>();
-        board.getBoard().forEach((key, value) -> {
-            String resultValue = value.getName();
-            if (value.getTeam() == Team.BLACK) {
-                resultValue = resultValue.toUpperCase();
-            }
-            result.put(WebUtil.positionParser(key), resultValue);
-        });
-        return result;
+    public Turn getWinner() {
+        if (turn.getTeam() == Team.BLACK) {
+            return new Turn(Team.WHITE);
+        }
+        return new Turn(Team.WHITE);
     }
 
-    public Team getWinner() {
-        return turn.getTeam();
+    public Board getBoard() {
+        return board;
     }
 
     public Turn getTurn() {
         return this.turn;
     }
+
+    public ResultCounter getResultCounter() {
+        return resultCounter;
+    }
+
 }

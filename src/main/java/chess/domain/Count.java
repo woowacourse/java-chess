@@ -6,6 +6,18 @@ public class Count {
     private static final int COUNT_UNIT = 1;
     private int count;
 
+    public Count() {
+        this.count = 0;
+    }
+
+    public Count(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
     public Count add() {
         count += COUNT_UNIT;
         return this;
@@ -26,5 +38,10 @@ public class Count {
     @Override
     public int hashCode() {
         return Objects.hash(count);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(count);
     }
 }

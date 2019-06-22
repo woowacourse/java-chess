@@ -40,19 +40,11 @@ public class Position {
         return new Position(new Coordinate(x.add(operand.getX())), new Coordinate(y.add(operand.getY())));
     }
 
-    public Coordinate getX() {
-        return x;
-    }
-
-    public Coordinate getY() {
-        return y;
-    }
-
-    public String getX2() {
+    public String getX() {
         return String.valueOf((char)(x.getCoordinate() + 96));
     }
 
-    public String getY2() {
+    public String getY() {
         return String.valueOf(y.getCoordinate());
     }
 

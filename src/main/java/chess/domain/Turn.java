@@ -10,6 +10,10 @@ public class Turn {
         this.team = WHITE;
     }
 
+    public Turn(Team team) {
+        this.team = team;
+    }
+
     public static Turn init() {
         return new Turn();
     }
@@ -31,7 +35,7 @@ public class Turn {
     }
 
     public Team getTeam() {
-        return team;
+        return this.team;
     }
 
     @Override
