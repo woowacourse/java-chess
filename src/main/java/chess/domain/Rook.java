@@ -1,6 +1,9 @@
 package chess.domain;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Rook extends ChessPiece {
     private static Map<Team, Rook> rooks = new HashMap<>();
@@ -27,7 +30,12 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        return probeVerticalAndHorizaon(pieceTeamProvider, from);
+    public Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        Set<CoordinatePair> movableCoordinates = new HashSet<>();
+        movableCoordinates.addAll(probeStraight(pieceTeamProvider, from, Direction.UP));
+        movableCoordinates.addAll(probeStraight(pieceTeamProvider, from, Direction.DOWN));
+        movableCoordinates.addAll(probeStraight(pieceTeamProvider, from, Direction.LEFT));
+        movableCoordinates.addAll(probeStraight(pieceTeamProvider, from, Direction.RIGHT));
+        return movableCoordinates;
     }
 }

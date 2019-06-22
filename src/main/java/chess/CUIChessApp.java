@@ -1,6 +1,9 @@
 package chess;
 
 import chess.domain.*;
+import chess.domain.AbstractChessPieceFactory;
+import chess.domain.ChessPiece;
+import chess.domain.ChessPieceFactory;
 import chess.view.InputView;
 import chess.view.OutputVIew;
 
@@ -76,9 +79,9 @@ public class CUIChessApp {
     private static void handleMoveCommand(String[] tokens) {
         try {
             chessGame.move(
-                    ChessCoordinate.valueOf(tokens[1])
+                    CoordinatePair.valueOf(tokens[1])
                             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다.")),
-                    ChessCoordinate.valueOf(tokens[2])
+                    CoordinatePair.valueOf(tokens[2])
                             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."))
             );
 

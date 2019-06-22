@@ -28,27 +28,12 @@ public class King extends ChessPiece {
     }
 
     @Override
-    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        List<ChessCoordinate> candidates = new ArrayList<>();
-
-        from.getX().move(-1)
-                .ifPresent(x -> {
-                    candidates.add(ChessCoordinate.valueOf(x, from.getY()).get());
-                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y).get()));
-                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y).get()));
-                });
-        from.getX().move(1)
-                .ifPresent(x -> {
-                    candidates.add(ChessCoordinate.valueOf(x, from.getY()).get());
-                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y).get()));
-                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y).get()));
-                });
-
-        from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y).get()));
-        from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y).get()));
-
-        return candidates.stream()
-                .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())
-                .collect(Collectors.toSet());
+    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        return Arrays.stream(Direction.values())
+            .map(direction -> direction.move(from))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())
+            .collect(Collectors.toSet());
     }
 }

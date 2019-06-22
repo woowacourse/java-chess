@@ -1,6 +1,9 @@
 package chess.service;
 
 import chess.domain.*;
+import chess.domain.AbstractChessPieceFactory;
+import chess.domain.ChessPiece;
+import chess.domain.ChessPieceFactory;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
 import chess.persistence.dao.RoomDao;
@@ -59,7 +62,7 @@ public class ChessService {
         return Collections.EMPTY_LIST;
     }
 
-    public List<Optional<Long>> createBoardState(Map<ChessCoordinate, PieceType> boardState, long roomId) {
+    public List<Optional<Long>> createBoardState(Map<CoordinatePair, PieceType> boardState, long roomId) {
         return boardState.entrySet().stream()
                 .map(entry -> {
                     BoardStateDto dto = new BoardStateDto();
@@ -73,14 +76,14 @@ public class ChessService {
                 .collect(Collectors.toList());
     }
 
-    public Map<ChessCoordinate, ChessPiece> findBoardStatesByRoomId(Long roomId) {
+    public Map<CoordinatePair, ChessPiece> findBoardStatesByRoomId(Long roomId) {
         try {
             AbstractChessPieceFactory factory = new ChessPieceFactory();
-            Map<ChessCoordinate, ChessPiece> board = new HashMap<>();
-            ChessCoordinate.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
+            Map<CoordinatePair, ChessPiece> board = new HashMap<>();
+            CoordinatePair.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
 
             boardStateDao.findByRoomId(roomId).forEach(dto ->
-                    board.put(ChessCoordinate.valueOf(dto.getCoordX() + dto.getCoordY()).get(),
+                    board.put(CoordinatePair.valueOf(dto.getCoordX() + dto.getCoordY()).get(),
                             factory.create(PieceType.valueOf(dto.getType()))));
             return board;
         } catch (SQLException e) {
@@ -99,7 +102,7 @@ public class ChessService {
     }
 
 
-    public void updateChessPiecePosition(ChessCoordinate from, ChessCoordinate to, long roomId) {
+    public void updateChessPiecePosition(CoordinatePair from, CoordinatePair to, long roomId) {
         try {
             List<BoardStateDto> boardStates = boardStateDao.findByRoomId(roomId);
 

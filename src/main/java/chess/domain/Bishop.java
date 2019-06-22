@@ -1,6 +1,8 @@
 package chess.domain;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class Bishop extends ChessPiece {
     private static Map<Team, Bishop> bishops = new HashMap<>();
@@ -27,7 +29,11 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        return probeDiagonal(pieceTeamProvider, from);
+    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        Set<CoordinatePair> movableCoordinates = probeStraight(pieceTeamProvider, from, Direction.LEFT_TOP);
+        movableCoordinates.addAll(probeStraight(pieceTeamProvider, from, Direction.RIGHT_TOP));
+        movableCoordinates.addAll(probeStraight(pieceTeamProvider, from, Direction.LEFT_BOTTOM));
+        movableCoordinates.addAll(probeStraight(pieceTeamProvider, from, Direction.RIGHT_BOTTOM));
+        return movableCoordinates;
     }
 }

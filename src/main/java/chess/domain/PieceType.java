@@ -20,7 +20,7 @@ public enum PieceType {
     private final Team group;
     private final double score;
 
-    PieceType(final Team group , final double score) {
+    PieceType(final Team group, final double score) {
         this.group = group;
         this.score = score;
     }

@@ -27,44 +27,72 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        Set<ChessCoordinate> candidates = new HashSet<>();
-        if (from.getY() == ChessYCoordinate.RANK_1 || from.getY() == ChessYCoordinate.RANK_8) {
-            return candidates;
+    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        if (from.getY() == CoordinateY.RANK_1 || from.getY() == CoordinateY.RANK_8) {
+            return Collections.emptySet();
         }
-
         if (getType().getTeam() == Team.WHITE) {
-            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(1).get())).ifPresent(candidates::add);
-
-            from.getX().move(-1)
-                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(1).get()))
-                            .ifPresent(candidates::add));
-            from.getX().move(1)
-                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(1).get()))
-                            .ifPresent(candidates::add));
-
-
-            if (from.getY() == ChessYCoordinate.RANK_2) {
-                getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(2).get())).ifPresent(candidates::add);
-            }
-            return candidates;
+            return handleWhenWhite(pieceTeamProvider, from);
         }
 
-        if (getType().getTeam() == Team.BLACK) {
-            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(-1).get())).ifPresent(candidates::add);
+        return handleWhenBlack(pieceTeamProvider, from);
+    }
 
-            from.getX().move(-1)
-                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(-1).get()))
-                            .ifPresent(candidates::add));
-            from.getX().move(1)
-                    .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(1).get()))
-                            .ifPresent(candidates::add));
-            if (from.getY() == ChessYCoordinate.RANK_7) {
-                getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(-2).get())).ifPresent(candidates::add);
-            }
-            return candidates;
+    private Set<CoordinatePair> handleWhenWhite(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        Set<CoordinatePair> movableCoordinates = new HashSet<>();
+        Direction.UP.move(from)
+            .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEmpty())
+            .ifPresent(movableCoordinates::add);
+        Direction.LEFT_TOP.move(from)
+            .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEnemy(getType().getTeam()))
+            .ifPresent(movableCoordinates::add);
+        Direction.RIGHT_TOP.move(from)
+            .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEnemy(getType().getTeam()))
+            .ifPresent(movableCoordinates::add);
+
+        checkIfWhiteFirstMove(pieceTeamProvider, from)
+            .ifPresent(movableCoordinates::add);
+
+        return movableCoordinates;
+    }
+
+    private Optional<CoordinatePair> checkIfWhiteFirstMove(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        if (getType().getTeam() == Team.WHITE &&
+            from.getY() == CoordinateY.RANK_2) {
+            return move2Cells(pieceTeamProvider, from, Direction.UP);
         }
+        return Optional.empty();
+    }
 
-        return candidates;
+    private Set<CoordinatePair> handleWhenBlack(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        Set<CoordinatePair> movableCoordinates = new HashSet<>();
+        Direction.DOWN.move(from)
+            .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEmpty())
+            .ifPresent(movableCoordinates::add);
+        Direction.LEFT_BOTTOM.move(from)
+            .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEnemy(getType().getTeam()))
+            .ifPresent(movableCoordinates::add);
+        Direction.RIGHT_BOTTOM.move(from)
+            .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEnemy(getType().getTeam()))
+            .ifPresent(movableCoordinates::add);
+
+        checkIfBlackFirstMove(pieceTeamProvider, from)
+            .ifPresent(movableCoordinates::add);
+        return movableCoordinates;
+    }
+
+    private Optional<CoordinatePair> checkIfBlackFirstMove(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        if (getType().getTeam() == Team.BLACK &&
+            from.getY() == CoordinateY.RANK_8) {
+            return move2Cells(pieceTeamProvider, from, Direction.DOWN);
+        }
+        return Optional.empty();
+    }
+
+    private Optional<CoordinatePair> move2Cells(PieceTeamProvider pieceTeamProvider, CoordinatePair from, Direction direction) {
+        return direction.move(from)
+            .map(coordMoved1 -> direction.move(coordMoved1)
+                .filter(coordMoved2 -> pieceTeamProvider.getTeamAt(coordMoved2).isEmpty())
+                .orElse(null));
     }
 }

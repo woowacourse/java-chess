@@ -27,9 +27,13 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-        Set<ChessCoordinate> movableCoords = probeVerticalAndHorizaon(pieceTeamProvider, from);
-        movableCoords.addAll(probeDiagonal(pieceTeamProvider, from));
+    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        Set<CoordinatePair> movableCoords = new HashSet<>();
+//            probeVerticalAndHorizaon(pieceTeamProvider, from);
+//        movableCoords.addAll(probeDiagonal(pieceTeamProvider, from));
+        Arrays.stream(Direction.values())
+            .map(direction -> probeStraight(pieceTeamProvider, from, direction))
+            .forEach(movableCoords::addAll);
         return movableCoords;
     }
 }

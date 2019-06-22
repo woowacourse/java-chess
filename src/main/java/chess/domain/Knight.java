@@ -28,33 +28,66 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-
-        List<ChessCoordinate> candidates = new ArrayList<>();
-
-        from.getX().move(2)
-                .ifPresent((x) -> {
-                    from.getY().move(1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                    from.getY().move(-1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                });
-        from.getX().move(-2)
-                .ifPresent((x) -> {
-                    from.getY().move(1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                    from.getY().move(-1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                });
-        from.getY().move(2)
-                .ifPresent((y) -> {
-                    from.getX().move(1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                    from.getX().move(-1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                });
-        from.getY().move(-2)
-                .ifPresent((y) -> {
-                    from.getX().move(1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                    from.getX().move(-1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                });
-
+    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+        List<CoordinatePair> candidates = new ArrayList<>();
+        candidates.addAll(checkTop(from));
+        candidates.addAll(checkRight(from));
+        candidates.addAll(checkBottom(from));
+        candidates.addAll(checkLeft(from));
         return candidates.stream()
-                .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())
-                .collect(Collectors.toSet());
+            .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())
+            .collect(Collectors.toSet());
+    }
+
+    private Set<CoordinatePair> checkTop(CoordinatePair from) {
+        Optional<CoordinatePair> maybeUp = Direction.UP.move(from);
+        if (!maybeUp.isPresent()) {
+            return Collections.emptySet();
+        }
+        Set<CoordinatePair> movableCoordinates = new HashSet<>();
+        Direction.LEFT_TOP.move(maybeUp.get())
+            .ifPresent(movableCoordinates::add);
+        Direction.RIGHT_TOP.move(maybeUp.get())
+            .ifPresent(movableCoordinates::add);
+        return movableCoordinates;
+    }
+
+    private Set<CoordinatePair> checkRight(CoordinatePair from) {
+        Optional<CoordinatePair> maybeUp = Direction.RIGHT.move(from);
+        if (!maybeUp.isPresent()) {
+            return Collections.emptySet();
+        }
+        Set<CoordinatePair> movableCoordinates = new HashSet<>();
+        Direction.RIGHT_TOP.move(maybeUp.get())
+            .ifPresent(movableCoordinates::add);
+        Direction.RIGHT_BOTTOM.move(maybeUp.get())
+            .ifPresent(movableCoordinates::add);
+        return movableCoordinates;
+    }
+
+    private Set<CoordinatePair> checkBottom(CoordinatePair from) {
+        Optional<CoordinatePair> maybeUp = Direction.DOWN.move(from);
+        if (!maybeUp.isPresent()) {
+            return Collections.emptySet();
+        }
+        Set<CoordinatePair> movableCoordinates = new HashSet<>();
+        Direction.LEFT_BOTTOM.move(maybeUp.get())
+            .ifPresent(movableCoordinates::add);
+        Direction.RIGHT_BOTTOM.move(maybeUp.get())
+            .ifPresent(movableCoordinates::add);
+        return movableCoordinates;
+    }
+
+    private Set<CoordinatePair> checkLeft(CoordinatePair from) {
+        Optional<CoordinatePair> maybeUp = Direction.LEFT.move(from);
+        if (!maybeUp.isPresent()) {
+            return Collections.emptySet();
+        }
+        Set<CoordinatePair> movableCoordinates = new HashSet<>();
+        Direction.LEFT_TOP.move(maybeUp.get())
+            .ifPresent(movableCoordinates::add);
+        Direction.LEFT_BOTTOM.move(maybeUp.get())
+            .ifPresent(movableCoordinates::add);
+        return movableCoordinates;
     }
 }

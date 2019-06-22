@@ -14,32 +14,32 @@ class RookTest {
 
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(rook, empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
+            Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(rook, empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
-        ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
+        CoordinatePair from = CoordinatePair.valueOf("a1").get();
 
         assertThat(rook.getMovableCoordinates(new ChessGame(new TestStateInitiatorFactory(boardState))::getTeamAt, from)).containsExactlyInAnyOrder(
-                ChessCoordinate.valueOf("a2").get(),
-                ChessCoordinate.valueOf("a3").get(),
-                ChessCoordinate.valueOf("a4").get(),
-                ChessCoordinate.valueOf("a5").get(),
-                ChessCoordinate.valueOf("a6").get(),
-                ChessCoordinate.valueOf("a7").get(),
-                ChessCoordinate.valueOf("a8").get(),
-                ChessCoordinate.valueOf("b1").get(),
-                ChessCoordinate.valueOf("c1").get(),
-                ChessCoordinate.valueOf("d1").get(),
-                ChessCoordinate.valueOf("e1").get(),
-                ChessCoordinate.valueOf("f1").get(),
-                ChessCoordinate.valueOf("g1").get()
+            CoordinatePair.valueOf("a2").get(),
+            CoordinatePair.valueOf("a3").get(),
+            CoordinatePair.valueOf("a4").get(),
+            CoordinatePair.valueOf("a5").get(),
+            CoordinatePair.valueOf("a6").get(),
+            CoordinatePair.valueOf("a7").get(),
+            CoordinatePair.valueOf("a8").get(),
+            CoordinatePair.valueOf("b1").get(),
+            CoordinatePair.valueOf("c1").get(),
+            CoordinatePair.valueOf("d1").get(),
+            CoordinatePair.valueOf("e1").get(),
+            CoordinatePair.valueOf("f1").get(),
+            CoordinatePair.valueOf("g1").get()
         );
     }
 
@@ -49,24 +49,24 @@ class RookTest {
 
         ChessPiece empty = EmptyCell.getInstance();
         List<List<ChessPiece>> boardState = Arrays.asList(
-                Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-                Arrays.asList(rook, empty, empty, Rook.getInstance(Team.WHITE), empty, empty, empty, Rook.getInstance(Team.WHITE))
+            Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
+            Arrays.asList(rook, empty, empty, Rook.getInstance(Team.WHITE), empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
-        ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
+        CoordinatePair from = CoordinatePair.valueOf("a1").get();
 
         assertThat(rook.getMovableCoordinates(new ChessGame(new TestStateInitiatorFactory(boardState))::getTeamAt, from))
-                .containsExactlyInAnyOrder(
-                        ChessCoordinate.valueOf("a2").get(),
-                        ChessCoordinate.valueOf("a3").get(),
-                        ChessCoordinate.valueOf("b1").get(),
-                        ChessCoordinate.valueOf("c1").get()
-                );
+            .containsExactlyInAnyOrder(
+                CoordinatePair.valueOf("a2").get(),
+                CoordinatePair.valueOf("a3").get(),
+                CoordinatePair.valueOf("b1").get(),
+                CoordinatePair.valueOf("c1").get()
+            );
     }
 }
