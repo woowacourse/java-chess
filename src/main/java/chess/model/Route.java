@@ -1,5 +1,6 @@
 package chess.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,19 @@ public class Route {
 
     public Route(List<String> route) {
         this.route = route;
+    }
+
+    public List<String> getRoute() {
+        return Collections.unmodifiableList(route);
+    }
+
+    public boolean contains(String coordinates) {
+        String target = route.get(route.size() - 1);
+        if (!coordinates.equals(target)) {
+            return route.contains(coordinates);
+        }
+
+        return false;
     }
 
     @Override
