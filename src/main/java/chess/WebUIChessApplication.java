@@ -4,6 +4,7 @@ import chess.config.DataSource;
 import chess.config.DbConnector;
 import chess.config.TableCreator;
 import chess.controller.ChessController;
+import chess.controller.ErrorController;
 import chess.controller.MainController;
 import chess.dao.CommandDao;
 import chess.dao.RoomDao;
@@ -38,6 +39,7 @@ public class WebUIChessApplication {
 
         ChessController chessController = new ChessController(chessService, roomService);
         MainController mainController = new MainController(roomService);
+        ErrorController errorController = new ErrorController();
 
         get("/", mainController::main);
 
@@ -53,35 +55,34 @@ public class WebUIChessApplication {
 
         get("/chess/load", chessController::load);
 
+        get("/error", errorController::exception);
+
         exception(ExitException.class, (exception, req, res) -> {
             String roomId = req.queryParams("roomId");
             res.redirect("/end?roomId=" + roomId);
         });
 
         exception(PositionException.class, (exception, req, res) -> {
-            String message = null;
             String roomId = req.queryParams("roomId");
-            try {
-                message = URLEncoder.encode(exception.getMessage(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            String message = encode(exception.getMessage());
             res.redirect("/chess?roomId=" + roomId + "&message=" + message);
         });
-/*
 
         exception(Exception.class, (exception, req, res) -> {
-            String message = null;
-            String roomId = req.queryParams("roomId");
-            try {
-                message = URLEncoder.encode(exception.getMessage(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            res.redirect("/chess?roomId=" + roomId + "&message=" + message);
+            String message = encode(exception.getMessage());
+            res.redirect("/eeror?message=" + message);
         });
-*/
 
+    }
+
+    private static String encode(final String message2) {
+        String message = null;
+        try {
+            message = URLEncoder.encode(message2, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return message;
     }
 
     public static String render(Map<String, Object> model, String templatePath) {
