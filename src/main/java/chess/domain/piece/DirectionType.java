@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum DirectionType {
     UP(-1, 0),
     DOWN(1, 0),
@@ -24,5 +27,18 @@ public enum DirectionType {
 
     public int getY() {
         return y;
+    }
+
+    public static List<DirectionType> straightDirections() {
+        return Arrays.asList(DirectionType.UP, DirectionType.DOWN, DirectionType.LEFT, DirectionType.RIGHT);
+    }
+
+    public static List<DirectionType> diagonalStraightDirections() {
+        return Arrays.asList(DirectionType.UP_LEFT, DirectionType.UP_RIGHT, DirectionType.DOWN_LEFT, DirectionType.DOWN_RIGHT);
+    }
+
+    public static List<DirectionType> allDirections() {
+        return Arrays.asList(DirectionType.UP, DirectionType.DOWN, DirectionType.LEFT, DirectionType.RIGHT,
+                DirectionType.UP_LEFT, DirectionType.UP_RIGHT, DirectionType.DOWN_LEFT, DirectionType.DOWN_RIGHT);
     }
 }
