@@ -13,6 +13,15 @@ public class BoardGenerator {
 
     public static Map<Position, Square> generate() {
         Map<Position, Square> map = new TreeMap<>();
+
+        initBlackSquares(map);
+        initEmptySquares(map);
+        initWhiteSquares(map);
+
+        return map;
+    }
+
+    private static void initBlackSquares(final Map<Position, Square> map) {
         List<Position> positions = getColumns(8);
         map.put(positions.get(0), Square.of(positions.get(0), Piece.of(Piece.Color.BLACK, Rook.getInstance())));
         map.put(positions.get(1), Square.of(positions.get(1), Piece.of(Piece.Color.BLACK, Knight.getInstance())));
@@ -23,22 +32,23 @@ public class BoardGenerator {
         map.put(positions.get(6), Square.of(positions.get(6), Piece.of(Piece.Color.BLACK, Knight.getInstance())));
         map.put(positions.get(7), Square.of(positions.get(7), Piece.of(Piece.Color.BLACK, Rook.getInstance())));
 
-        //분리 case2
         positions = getColumns(7);
         for (Position position : positions) {
             map.put(position, Square.of(position, Piece.of(Piece.Color.BLACK, Pawn.FIRST_TOP)));
         }
+    }
 
+    private static void initEmptySquares(final Map<Position, Square> map) {
         for (int i = 6; i >= 3; i--) {
-            positions = getColumns(i);
+            final List<Position> positions = getColumns(i);
             for (Position position : positions) {
                 map.put(position, Square.of(position, Piece.of(Piece.Color.EMPTY, Empty.getInstance())));
             }
         }
+    }
 
-
-        //분리 case2
-        positions = getColumns(2);
+    private static void initWhiteSquares(final Map<Position, Square> map) {
+        List<Position> positions = getColumns(2);
         for (Position position : positions) {
             map.put(position, Square.of(position, Piece.of(Piece.Color.WHITE, Pawn.FIRST_BOTTOM)));
         }
@@ -52,13 +62,11 @@ public class BoardGenerator {
         map.put(positions.get(5), Square.of(positions.get(5), Piece.of(Piece.Color.WHITE, Bishop.getInstance())));
         map.put(positions.get(6), Square.of(positions.get(6), Piece.of(Piece.Color.WHITE, Knight.getInstance())));
         map.put(positions.get(7), Square.of(positions.get(7), Piece.of(Piece.Color.WHITE, Rook.getInstance())));
-
-        return map;
     }
 
     private static List<Position> getColumns(final int rowIndex) {
         List<Position> positions = new ArrayList<>();
-        for (int i = 'a'; i <= 'h'; i++) {
+        for (int i = Column.MIN; i <= Column.MAX; i++) {
             Position position = Position.of(String.valueOf(rowIndex), String.valueOf((char) i));
             positions.add(position);
         }
