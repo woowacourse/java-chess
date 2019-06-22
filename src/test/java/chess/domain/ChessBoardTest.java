@@ -363,6 +363,8 @@ public class ChessBoardTest {
         Map<Team, Double> score = chessBoard.sumScore();
 
 
+        System.out.println(score.get(Team.BLACK));
+
         assertThat(score.get(Team.WHITE))
                 .isEqualTo(12.5);
     }

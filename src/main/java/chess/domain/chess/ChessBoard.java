@@ -120,18 +120,11 @@ public class ChessBoard {
     }
 
     private long getNumberOfPawnsByColumn(int x, Team team) {
-        /*int number = 0;
-        for (Position position : units.keySet()) {
-            if (position.getY() == y && (units.get(position) instanceof Pawn)
-                    && (units.get(position).getTeam() == team)) {
-                number += 1;
-            }
-        }
-        return number;*/
 
         return units.keySet().stream()
                 .filter(key -> key.getX() == x)
                 .filter(key -> units.get(key) instanceof Pawn)
+                .filter(key ->units.get(key).getTeam() == team)
                 .count();
     }
 }
