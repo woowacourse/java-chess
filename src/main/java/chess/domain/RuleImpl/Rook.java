@@ -2,13 +2,13 @@ package chess.domain.RuleImpl;
 
 import chess.domain.Position;
 
-public class Rook implements Rule {
+public class Rook extends AbstractRule {
 
     private static Rook INSTANCE = new Rook();
     private static final double SCORE = 5;
 
     private Rook() {
-
+        super(SCORE);
     }
 
     public static Rook getInstance() {
@@ -18,16 +18,5 @@ public class Rook implements Rule {
     @Override
     public boolean isValidMove(final Position origin, final Position target) {
         return origin.isLevel(target) || origin.isPerpendicular(target);
-    }
-
-    @Override
-    public boolean isValidAttack(final Position origin, final Position target) {
-        return isValidMove(origin, target);
-    }
-
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

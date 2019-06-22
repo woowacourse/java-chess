@@ -2,12 +2,12 @@ package chess.domain.RuleImpl;
 
 import chess.domain.Position;
 
-public class Queen implements Rule {
+public class Queen extends AbstractRule {
     private static Queen INSTANCE = new Queen();
     private static final double SCORE = 9;
 
     private Queen() {
-
+        super(SCORE);
     }
 
     public static Queen getInstance() {
@@ -17,16 +17,5 @@ public class Queen implements Rule {
     @Override
     public boolean isValidMove(final Position origin, final Position target) {
         return origin.isDiagonal(target) || origin.isPerpendicular(target) || origin.isLevel(target);
-    }
-
-    @Override
-    public boolean isValidAttack(final Position origin, final Position target) {
-        return isValidMove(origin, target);
-    }
-
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

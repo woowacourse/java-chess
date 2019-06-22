@@ -2,13 +2,12 @@ package chess.domain.RuleImpl;
 
 import chess.domain.Position;
 
-public class Bishop implements Rule {
-
+public class Bishop extends AbstractRule {
     private static Bishop INSTANCE = new Bishop();
     private static final double SCORE = 3;
 
     private Bishop() {
-
+        super(SCORE);
     }
 
     public static Bishop getInstance() {
@@ -18,15 +17,5 @@ public class Bishop implements Rule {
     @Override
     public boolean isValidMove(final Position origin, final Position target) {
         return origin.isDiagonal(target);
-    }
-
-    @Override
-    public boolean isValidAttack(final Position origin, final Position target) {
-        return isValidMove(origin, target);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

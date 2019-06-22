@@ -45,7 +45,6 @@ public enum Pawn implements Rule {
         return Integer.compare(0, this.distance) == Integer.compare(0, vector);
     }
 
-
     @Override
     public double getScore() {
         return SCORE;

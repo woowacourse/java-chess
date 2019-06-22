@@ -1,31 +1,15 @@
 package chess.domain.RuleImpl;
 
-import chess.domain.Position;
-
-public class Empty implements Rule {
+public class Empty extends AbstractRule {
     private static Empty INSTANCE = new Empty();
     private static final double SCORE = 0;
 
     private Empty() {
-
+        super(SCORE);
     }
 
     public static Empty getInstance() {
         return INSTANCE;
     }
-
-    @Override
-    public boolean isValidMove(final Position origin, final Position target) {
-        return false;
-    }
-
-    @Override
-    public boolean isValidAttack(final Position origin, final Position target) {
-        return false;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
-    }
 }
+
