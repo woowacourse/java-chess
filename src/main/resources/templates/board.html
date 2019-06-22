@@ -8,22 +8,42 @@
 </head>
 <body>
 
-<h3>{{currentColor}}턴 입니다.</h3>
+<div>
+    <ul>
+        <li>8</li>
+        <li>7</li>
+        <li>6</li>
+        <li>5</li>
+        <li>4</li>
+        <li>3</li>
+        <li>2</li>
+        <li>1</li>
+    </ul>
+</div>
+
 <main>
     <div class="grid board">
         {{#board}}
         <div class="grid__item piece">{{this.symbol}}</div>
         {{/board}}
+
+        <div class="grid__item piece">a</div>
+        <div class="grid__item piece">b</div>
+        <div class="grid__item piece">c</div>
+        <div class="grid__item piece">d</div>
+        <div class="grid__item piece">e</div>
+        <div class="grid__item piece">f</div>
+        <div class="grid__item piece">g</div>
+        <div class="grid__item piece">h</div>
     </div>
 </main>
 
 <div>
+    <h3>{{currentColor}}턴 입니다.</h3>
     <button onclick="location.href='/chess/score?roomId={{roomId}}'">점수보기</button>
     <button onclick="location.href='/'">메인으로</button>
-</div>
+    <br><br>
 
-
-<div class="controls">
     <form method="post" action="/chess">
         <input type="hidden" name="roomId" value="{{roomId}}">
         <div>
@@ -33,6 +53,8 @@
         </div>
     </form>
 </div>
+
+
 
 </body>
 </html>

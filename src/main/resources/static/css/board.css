@@ -5,13 +5,13 @@
 
 body {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-align: center;
     align-items: center;
 }
 
 p {
-    line-height: 1.4;
+    line-height: 1.2;
 }
 
 .board {
@@ -90,31 +90,6 @@ main {
     transition: grid-template-rows 0.75s linear;
 }
 
-.move2.active {
-    grid-template-rows: 48vmin 1fr;
-}
-
-.move3 {
-    grid-template-columns: 84vmin 1fr;
-    grid-template-rows: 84vmin 1fr;
-    transition: grid-template-rows 0.75s linear;
-}
-
-.move3.active {
-    grid-template-rows: 60vmin 1fr;
-}
-
-.move4 {
-    grid-template-columns: 48vmin 1fr;
-    grid-template-rows: 12vmin 1fr;
-    transition: grid-template-columns 1.25s linear, grid-template-rows 1.25s linear;
-}
-
-.move4.active {
-    grid-template-columns: 96vmin 1fr;
-    grid-template-rows: 60vmin 1fr;
-}
-
 .controls {
     width: 36vmin;
     display: flex;
@@ -128,4 +103,9 @@ button {
     border: none;
     padding: 0.5em 0.75em;
     cursor: pointer;
+}
+
+ul{
+    list-style:none;
+    font-size: 70px;
 }
