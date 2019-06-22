@@ -45,12 +45,16 @@ public class Spot {
         return this.y - spot.y;
     }
 
-    //TODO 생각해보자...getter를 안쓰는 방법을..
-    public Spot nextSpot(MovementUnit movementUnit) {
-        int nextSpotX = this.x + movementUnit.getX();
-        int nextSpotY = this.y + movementUnit.getY();
+    //TODO 생각해보자...getter를 안쓰는 방법을.., 함수명 변경
+    public Spot nextSpot(MovementUnit movementUnit, int xDirection, int yDirection) {
+        int nextSpotX = this.x + movementUnit.getX(xDirection);
+        int nextSpotY = this.y + movementUnit.getY(yDirection);
 
         return Spot.valueOf(nextSpotX, nextSpotY);
+    }
+
+    public boolean isSameColumn(Integer y) {
+        return this.y == y;
     }
 
     private static class SpotCache {
