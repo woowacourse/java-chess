@@ -1,29 +1,24 @@
 package chess;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Path {
 	private final List<Position> path;
 
-	private int index;
-
-	public Path(final List<Position> path) {
-		this.path = new ArrayList<>(path);
-		this.index = 0;
+	public Path() {
+		path = new ArrayList<>();
 	}
 
-	public Position getCurrentPosition() {
-		return path.get(index);
+	public void add(final Position position) {
+		path.add(position);
 	}
 
-	public boolean next() {
-		if (index + 1 < path.size()) {
-			index += 1;
-			return true;
-		}
-		return false;
+	public boolean contains(Position end) {
+		return path.contains(end);
+	}
+
+	public void removeEndPosition() {
+		path.remove(path.size() - 1);
 	}
 
 	@Override
@@ -41,14 +36,5 @@ public class Path {
 	@Override
 	public int hashCode() {
 		return Objects.hash(path);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-		for(Position position : path) {
-			stringBuilder.append(position);
-		}
-		return stringBuilder.toString();
 	}
 }
