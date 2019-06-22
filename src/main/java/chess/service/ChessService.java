@@ -12,11 +12,9 @@ import java.util.List;
 public class ChessService {
 
     private final CommandDao commandDao;
-    private final RoomDao roomDao;
 
-    public ChessService(final CommandDao commandDao, final RoomDao roomDao) {
+    public ChessService(final CommandDao commandDao) {
         this.commandDao = commandDao;
-        this.roomDao = roomDao;
     }
 
     public Game initGame() {
