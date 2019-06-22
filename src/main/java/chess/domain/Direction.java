@@ -6,16 +6,16 @@ import java.util.function.Function;
 public enum Direction {
     UP(coordinatePair ->
         coordinatePair.getY().move(1)
-            .map(y -> CoordinatePair.valueOf(coordinatePair.getX(), y))
+            .map(y -> CoordinatePair.of(coordinatePair.getX(), y))
     ), DOWN(coordinatePair ->
         coordinatePair.getY().move(-1)
-            .map(y -> CoordinatePair.valueOf(coordinatePair.getX(), y))
+            .map(y -> CoordinatePair.of(coordinatePair.getX(), y))
     ), LEFT(coordinatePair ->
         coordinatePair.getX().move(-1)
-            .map(x -> CoordinatePair.valueOf(x, coordinatePair.getY()))
+            .map(x -> CoordinatePair.of(x, coordinatePair.getY()))
     ), RIGHT(coordinatePair ->
         coordinatePair.getX().move(1)
-            .map(x -> CoordinatePair.valueOf(x, coordinatePair.getY()))
+            .map(x -> CoordinatePair.of(x, coordinatePair.getY()))
     ), LEFT_TOP(coordinatePair ->
         UP.move(coordinatePair)
             .map(coord -> LEFT.move(coord)

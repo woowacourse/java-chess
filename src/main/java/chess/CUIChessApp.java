@@ -1,14 +1,10 @@
 package chess;
 
 import chess.domain.*;
-import chess.domain.AbstractChessPieceFactory;
-import chess.domain.ChessPiece;
-import chess.domain.ChessPieceFactory;
 import chess.view.InputView;
 import chess.view.OutputVIew;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static chess.domain.Team.*;
 
@@ -17,71 +13,62 @@ public class CUIChessApp {
 
     public static void main(String[] args) {
         OutputVIew.printInputGuide();
-        String input = InputView.promptUserSelection();
-
-        while (!handleUserSelection(input)) {
+        String input;
+        GameResult result = GameResult.KEEP;
+        while (result == GameResult.KEEP) {
             input = InputView.promptUserSelection();
-
+            result = handleUserSelection(input);
         }
+
     }
 
-    private static boolean handleUserSelection(String input) {
+    private static GameResult handleUserSelection(String input) {
         String[] tokens = input.split(" ");
         if (tokens[0].equals("start")) {
             initBoard();
-            OutputVIew.printBoardState(chessGame.getBoard());
-            return false;
+            OutputVIew.printBoardState(chessGame.getBoardState());
+            return GameResult.KEEP;
         }
 
         if (tokens[0].equals("end")) {
-            System.exit(0);
-            return true;
+            return GameResult.judgeScore(chessGame.getBoardState());
         }
 
         if (tokens[0].equals("status")) {
             assertStarted();
 
-            ChessScoreCount scoreCount = new ChessScoreCount(chessGame.getBoard().entrySet().stream()
-                    .map(Map.Entry::getValue)
-                    .collect(Collectors.toSet()));
+            ChessScoreCounter scoreCount = new ChessScoreCounter(chessGame.getBoardState());
             OutputVIew.printScore(scoreCount.getScore(WHITE), scoreCount.getScore(BLACK));
-            return false;
+            return GameResult.KEEP;
         }
 
         if (tokens[0].equals("move")) {
             assertStarted();
-
             handleMoveCommand(tokens);
-            OutputVIew.printBoardState(chessGame.getBoard());
+            OutputVIew.printBoardState(chessGame.getBoardState());
             return checkResult();
         }
 
         throw new IllegalArgumentException("알 수 없는 명령입니다");
     }
 
-    private static void initBoard() {
-        AbstractChessPieceFactory factory = new ChessPieceFactory();
-        ChessPiece empty = factory.create(PieceType.NONE);
 
+    private static void initBoard() {
         chessGame = new ChessGame(new StateInitiatorFactory());
     }
 
-    private static boolean checkResult() {
-        ChessResult result = ChessResult.judge(chessGame.getBoard().entrySet().stream()
-                .map(Map.Entry::getValue)
-                .collect(Collectors.toSet()));
-        if (result == ChessResult.KEEP) {
-            return false;
+    private static void assertStarted() {
+        if (chessGame == null) {
+            throw new IllegalArgumentException("start를 먼저 해주세요");
         }
-        return true;
     }
 
     private static void handleMoveCommand(String[] tokens) {
         try {
             chessGame.move(
-                    CoordinatePair.valueOf(tokens[1])
+                    CoordinatePair.from(tokens[1])
                             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다.")),
-                    CoordinatePair.valueOf(tokens[2])
+                    CoordinatePair.from(tokens[2])
                             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."))
             );
 
@@ -90,9 +77,7 @@ public class CUIChessApp {
         }
     }
 
-    private static void assertStarted() {
-        if (chessGame == null) {
-            throw new IllegalArgumentException("start를 먼저 해주세요");
-        }
+    private static GameResult checkResult() {
+        return GameResult.judge(new HashSet<>(chessGame.getBoardState().values()));
     }
 }

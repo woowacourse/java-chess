@@ -39,7 +39,7 @@ public class WebUIChessApplication {
             if (maybeFound.isPresent()) {
                 model.put("id", maybeFound.get().getId());
                 ChessGame chessGame = new ChessGame(new StateInitiatorFactory());
-                chessService.createBoardState(chessGame.getBoard(), maybeFound.get().getId());
+                chessService.createBoardState(chessGame.getBoardState(), maybeFound.get().getId());
                 return model;
             }
 
@@ -62,21 +62,21 @@ public class WebUIChessApplication {
         get("/board", (req, res) -> {
             ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
 
-            return chessGame.getBoard();
+            return chessGame.getBoardState();
         }, gson::toJson);
 
         put("/move-piece", (req, res) -> {
             long roomId = Long.parseLong(req.queryParams("id"));
 
-            CoordinatePair from = CoordinatePair.valueOf(req.queryParams("from")).get();
-            CoordinatePair to = CoordinatePair.valueOf(req.queryParams("to")).get();
+            CoordinatePair from = CoordinatePair.from(req.queryParams("of")).get();
+            CoordinatePair to = CoordinatePair.from(req.queryParams("to")).get();
 
             ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId));
             chessGame.move(from, to);
 
             chessService.updateChessPiecePosition(from, to, roomId);
 
-            return new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId)).getBoard();
+            return new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId)).getBoardState();
         }, gson::toJson);
 
     }

@@ -24,15 +24,15 @@ class QueenTest {
             Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), qn, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
-        assertThat(qn.getMovableCoordinates(board::getTeamAt, CoordinatePair.valueOf("d1").get()))
+        assertThat(qn.getMovableCoordinates(board::getTeamAt, CoordinatePair.from("d1").get()))
             .containsExactlyInAnyOrder(
-                CoordinatePair.valueOf("d2").get(),
-                CoordinatePair.valueOf("d3").get(),
-                CoordinatePair.valueOf("e1").get(),
-                CoordinatePair.valueOf("c2").get(),
-                CoordinatePair.valueOf("b3").get(),
-                CoordinatePair.valueOf("e2").get(),
-                CoordinatePair.valueOf("f3").get()
+                CoordinatePair.from("d2").get(),
+                CoordinatePair.from("d3").get(),
+                CoordinatePair.from("e1").get(),
+                CoordinatePair.from("c2").get(),
+                CoordinatePair.from("b3").get(),
+                CoordinatePair.from("e2").get(),
+                CoordinatePair.from("f3").get()
             );
     }
 }

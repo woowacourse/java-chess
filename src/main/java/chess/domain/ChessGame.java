@@ -13,7 +13,7 @@ public class ChessGame {
         this.boardState = stateInitiatorFactory.create();
     }
 
-    public Map<CoordinatePair, PieceType> getBoard() {
+    public Map<CoordinatePair, PieceType> getBoardState() {
         Map<CoordinatePair, PieceType> state = new HashMap<>();
         boardState.forEach((coord, piece) -> state.put(coord, piece.getType()));
         return state;

@@ -27,17 +27,17 @@ class BishopTest {
         );
 
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
-        assertThat(bishop.getMovableCoordinates(board::getTeamAt, CoordinatePair.valueOf("b4").get()))
+        assertThat(bishop.getMovableCoordinates(board::getTeamAt, CoordinatePair.from("b4").get()))
             .containsExactlyInAnyOrder(
-                CoordinatePair.valueOf("a3").get(),
-                CoordinatePair.valueOf("a5").get(),
-                CoordinatePair.valueOf("c5").get(),
-                CoordinatePair.valueOf("d6").get(),
-                CoordinatePair.valueOf("e7").get(),
-                CoordinatePair.valueOf("f8").get(),
-                CoordinatePair.valueOf("c3").get(),
-                CoordinatePair.valueOf("d2").get(),
-                CoordinatePair.valueOf("e1").get()
+                CoordinatePair.from("a3").get(),
+                CoordinatePair.from("a5").get(),
+                CoordinatePair.from("c5").get(),
+                CoordinatePair.from("d6").get(),
+                CoordinatePair.from("e7").get(),
+                CoordinatePair.from("f8").get(),
+                CoordinatePair.from("c3").get(),
+                CoordinatePair.from("d2").get(),
+                CoordinatePair.from("e1").get()
             );
 
     }

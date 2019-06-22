@@ -19,7 +19,7 @@ public class OutputVIew {
         List<CoordinateX> xAxis = CoordinateX.allAscendingCoordinates();
         List<CoordinateY> yAxis = CoordinateY.allAscendingCoordinates();
         yAxis.forEach(y -> {
-            xAxis.forEach(x -> System.out.print(getStateToString(board.get(CoordinatePair.valueOf(x, y)))));
+            xAxis.forEach(x -> System.out.print(getStateToString(board.get(CoordinatePair.of(x, y)))));
             System.out.println();
         });
     }
@@ -87,5 +87,17 @@ public class OutputVIew {
 
     public static void printScore(double white, double black) {
         System.out.println("W " + white + " : B " + black);
+    }
+
+    public static void printResult(GameResult res) {
+        if (res == GameResult.BLACK_WIN) {
+            System.out.println("흑 승리!");
+        }
+        if (res == GameResult.WHITE_WIN) {
+            System.out.println("백 승리!");
+        }
+        if (res == GameResult.DRAW) {
+            System.out.println("무승부!");
+        }
     }
 }

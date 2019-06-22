@@ -10,9 +10,9 @@ public class CoordinatePair {
     private static Map<String, CoordinatePair> coordinateMap = new HashMap<>();
 
     static {
-        for (CoordinateX xValue : CoordinateX.values()) {
-            for (CoordinateY yValue : CoordinateY.values()) {
-                coordinateMap.put(xValue.getSymbol() + yValue.getSymbol(), new CoordinatePair(xValue, yValue));
+        for (CoordinateX x : CoordinateX.values()) {
+            for (CoordinateY y : CoordinateY.values()) {
+                coordinateMap.put(x.getSymbol() + y.getSymbol(), new CoordinatePair(x, y));
             }
         }
     }
@@ -30,18 +30,20 @@ public class CoordinatePair {
         return y;
     }
 
-    public static Optional<CoordinatePair> valueOf(String symbol) {
+    public static Optional<CoordinatePair> from(String symbol) {
         return Optional.ofNullable(coordinateMap.get(symbol));
     }
 
-    public static CoordinatePair valueOf(CoordinateX x, CoordinateY y) {
-        return valueOf(x.getSymbol() + y.getSymbol()).orElseThrow(() -> new NoSuchElementException("좌표가 캐시에 없습니다: " + x + ", " + y));
+    public static CoordinatePair of(CoordinateX x, CoordinateY y) {
+        return from(x.getSymbol() + y.getSymbol())
+            .orElseThrow(() -> new NoSuchElementException("좌표가 캐시에 없습니다: " + x + ", " + y));
     }
 
     public static void forEachCoordinate(Consumer<CoordinatePair> consumer) {
         List<CoordinateX> xAxis = CoordinateX.allAscendingCoordinates();
         List<CoordinateY> yAxis = CoordinateY.allAscendingCoordinates();
-        yAxis.forEach(y -> xAxis.forEach(x -> consumer.accept(valueOf(x, y))));
+        yAxis.forEach(y ->
+            xAxis.forEach(x -> consumer.accept(of(x, y))));
     }
 
     @Override

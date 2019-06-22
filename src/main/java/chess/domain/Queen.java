@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Queen extends ChessPiece {
     private static Map<Team, Queen> queens = new HashMap<>();
@@ -28,12 +29,8 @@ public class Queen extends ChessPiece {
 
     @Override
     Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
-        Set<CoordinatePair> movableCoords = new HashSet<>();
-//            probeVerticalAndHorizaon(pieceTeamProvider, from);
-//        movableCoords.addAll(probeDiagonal(pieceTeamProvider, from));
-        Arrays.stream(Direction.values())
-            .map(direction -> probeStraight(pieceTeamProvider, from, direction))
-            .forEach(movableCoords::addAll);
-        return movableCoords;
+        return Arrays.stream(Direction.values())
+            .flatMap(direction -> probeStraight(pieceTeamProvider, from, direction).stream())
+            .collect(Collectors.toSet());
     }
 }

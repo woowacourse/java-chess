@@ -38,7 +38,7 @@ class ChessGameTest {
 
         ChessGame chessGame = new ChessGame(new TestStateInitiatorFactory(boardState));
 
-        CoordinatePair.forEachCoordinate(coord -> assertThat(chessGame.getBoard().get(coord))
+        CoordinatePair.forEachCoordinate(coord -> assertThat(chessGame.getBoardState().get(coord))
             .isEqualTo(expectedBoardState.get(coord.getY().getIndex()).get(coord.getX().getIndex())));
     }
 
@@ -68,10 +68,10 @@ class ChessGameTest {
         );
 
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
-        CoordinatePair from = CoordinatePair.valueOf("a1").get();
-        CoordinatePair to = CoordinatePair.valueOf("a8").get();
+        CoordinatePair from = CoordinatePair.from("a1").get();
+        CoordinatePair to = CoordinatePair.from("a8").get();
         board.move(from, to);
-        assertThat(board.getBoard()).isEqualTo(new ChessGame(new TestStateInitiatorFactory(toBoardState)).getBoard());
+        assertThat(board.getBoardState()).isEqualTo(new ChessGame(new TestStateInitiatorFactory(toBoardState)).getBoardState());
     }
 
 }
