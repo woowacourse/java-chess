@@ -7,7 +7,6 @@ import chess.persistence.dto.BoardStateDto;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,23 +30,6 @@ public class GameServiceImpl implements GameService {
         throw new IllegalStateException();
     }
 
-    private Map<CoordinatePair, ChessPiece> findBoardStatesMapByRoomId(long roomId) {
-        try {
-            AbstractChessPieceFactory factory = new ChessPieceFactory();
-            Map<CoordinatePair, ChessPiece> board = new HashMap<>();
-            CoordinatePair.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
-
-            boardStateDao.findByRoomId(roomId)
-                .forEach(dto ->
-                    board.put(CoordinatePair.from(dto.getCoordX() + dto.getCoordY()).get(),
-                        factory.create(PieceType.valueOf(dto.getType()))));
-            return board;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Collections.emptyMap();
-    }
-
     @Override
     public GameResult movePiece(CoordinatePair from, CoordinatePair to, long roomId) {
         try {
@@ -58,6 +40,23 @@ public class GameServiceImpl implements GameService {
             deleteTargetStateIfPresent(to, roomId);
             updateSrcState(from, to, roomId);
             return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalStateException();
+    }
+
+    private GameBoardState findBoardStatesMapByRoomId(long roomId) {
+        try {
+            AbstractChessPieceFactory factory = new ChessPieceFactory();
+            Map<CoordinatePair, ChessPiece> board = new HashMap<>();
+            CoordinatePair.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
+
+            boardStateDao.findByRoomId(roomId)
+                .forEach(dto ->
+                    board.put(CoordinatePair.from(dto.getCoordX() + dto.getCoordY()).get(),
+                        factory.create(PieceType.valueOf(dto.getType()))));
+            return GameBoardState.of(board);
         } catch (SQLException e) {
             e.printStackTrace();
         }

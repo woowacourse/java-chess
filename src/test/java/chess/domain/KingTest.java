@@ -23,7 +23,7 @@ class KingTest {
             Arrays.asList(empty, Pawn.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty),
             Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), Queen.getInstance(Team.WHITE), king, empty, empty, Rook.getInstance(Team.WHITE))
         );
-        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
+        ChessGame board = new ChessGame(new TestBoardStateFactory(boardState));
         assertThat(king.getMovableCoordinates(board::getTeamAt, CoordinatePair.from("e1").get()))
             .containsExactlyInAnyOrder(
                 CoordinatePair.from("d2").get(),

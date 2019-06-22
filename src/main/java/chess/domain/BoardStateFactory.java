@@ -5,10 +5,10 @@ import java.util.Map;
 
 import static chess.domain.PieceType.*;
 
-public class StateInitiatorFactory implements AbstractStateInitiatorFactory {
+public class BoardStateFactory implements AbstractBoardStateFactory {
 
     @Override
-    public Map<CoordinatePair, ChessPiece> create() {
+    public GameBoardState create() {
         AbstractChessPieceFactory factory = new ChessPieceFactory();
         Map<CoordinatePair, ChessPiece> board = new HashMap<>();
         CoordinatePair.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
@@ -35,7 +35,7 @@ public class StateInitiatorFactory implements AbstractStateInitiatorFactory {
         CoordinateX.allAscendingCoordinates()
             .forEach(x -> board.put(CoordinatePair.from(x.getSymbol() + "7").get(), factory.create(PAWN_BLACK)));
 
-        return board;
+        return GameBoardState.of(board);
     }
 
 

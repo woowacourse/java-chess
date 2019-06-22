@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class TestStateInitiatorFactory implements AbstractStateInitiatorFactory {
+public class TestBoardStateFactory implements AbstractBoardStateFactory {
 
     private Map<CoordinatePair, ChessPiece> state;
 
-    public TestStateInitiatorFactory(List<List<ChessPiece>> initiailState) {
+    public TestBoardStateFactory(List<List<ChessPiece>> initiailState) {
         state = new HashMap<>();
         IntStream.range(0, initiailState.size())
             .forEach(y ->
@@ -20,7 +20,7 @@ public class TestStateInitiatorFactory implements AbstractStateInitiatorFactory 
     }
 
     @Override
-    public Map<CoordinatePair, ChessPiece> create() {
-        return new HashMap<>(state);
+    public GameBoardState create() {
+        return GameBoardState.of(new HashMap<>(state));
     }
 }

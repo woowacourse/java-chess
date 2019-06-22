@@ -36,7 +36,7 @@ class ChessGameTest {
             Arrays.asList(ROOK_WHITE, NONE, NONE, NONE, NONE, NONE, NONE, ROOK_WHITE)
         );
 
-        ChessGame chessGame = new ChessGame(new TestStateInitiatorFactory(boardState));
+        ChessGame chessGame = new ChessGame(new TestBoardStateFactory(boardState));
 
         CoordinatePair.forEachCoordinate(coord -> assertThat(chessGame.getBoardState().get(coord))
             .isEqualTo(expectedBoardState.get(coord.getY().getIndex()).get(coord.getX().getIndex())));
@@ -67,11 +67,11 @@ class ChessGameTest {
             Arrays.asList(empty, empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
-        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
+        ChessGame board = new ChessGame(new TestBoardStateFactory(boardState));
         CoordinatePair from = CoordinatePair.from("a1").get();
         CoordinatePair to = CoordinatePair.from("a8").get();
         board.move(from, to);
-        assertThat(board.getBoardState()).isEqualTo(new ChessGame(new TestStateInitiatorFactory(toBoardState)).getBoardState());
+        assertThat(board.getBoardState()).isEqualTo(new ChessGame(new TestBoardStateFactory(toBoardState)).getBoardState());
     }
 
 }

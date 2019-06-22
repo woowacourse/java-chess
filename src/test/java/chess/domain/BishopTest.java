@@ -26,7 +26,7 @@ class BishopTest {
             Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
 
-        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
+        ChessGame board = new ChessGame(new TestBoardStateFactory(boardState));
         assertThat(bishop.getMovableCoordinates(board::getTeamAt, CoordinatePair.from("b4").get()))
             .containsExactlyInAnyOrder(
                 CoordinatePair.from("a3").get(),

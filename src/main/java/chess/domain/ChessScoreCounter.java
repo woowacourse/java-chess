@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessScoreCounter {
-
     private Map<Team, Double> scores;
 
     public ChessScoreCounter(Map<CoordinatePair, PieceType> boardState) {
