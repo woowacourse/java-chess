@@ -1,13 +1,16 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.exception.NotFoundPositionException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Rook implements Piece {
+    private static final Rook BLACK_ROOK = new Rook(TeamType.BLACK);
+    private static final Rook WHITE_ROOK = new Rook(TeamType.WHITE);
     private static final List<DirectionType> directions;
 
     private final TeamType teamType;
@@ -21,8 +24,12 @@ public class Rook implements Piece {
         );
     }
 
-    public Rook(final TeamType teamType) {
+    private Rook(final TeamType teamType) {
         this.teamType = teamType;
+    }
+
+    public static Rook of(TeamType teamType) {
+        return (teamType == TeamType.BLACK) ? BLACK_ROOK : WHITE_ROOK;
     }
 
     @Override
@@ -31,24 +38,34 @@ public class Rook implements Piece {
     }
 
     @Override
-    public List<Position> makePossiblePositions(Board board, Position source) {
+    public List<Position> makePossiblePositions(Position source, PositionChecker positionChecker) {
         List<Position> positions = new ArrayList<>();
 
         for (DirectionType direction : directions) {
             Position nextPosition = source.hopNextPosition(direction);
-
-            positions.addAll(makePossiblePositionsByDirection(board, direction, nextPosition));
+            positions.addAll(makePossiblePositionsByDirection(positionChecker, direction, nextPosition));
         }
         return positions;
     }
 
-    private List<Position> makePossiblePositionsByDirection(Board board, DirectionType direction, Position nextPosition) {
+    // TODO 메소드 길이 리펙토링 필요
+    private List<Position> makePossiblePositionsByDirection(
+            PositionChecker positionChecker, DirectionType direction, Position nextPosition) {
         List<Position> positions = new ArrayList<>();
 
-        while (board.isMovablePosition(this, nextPosition)) {
-            positions.add(nextPosition);
-            nextPosition = nextPosition.hopNextPosition(direction);
+        try {
+            while (Objects.isNull(positionChecker.getPiece(nextPosition))) {
+                positions.add(nextPosition);
+                nextPosition = nextPosition.hopNextPosition(direction);
+            }
+        } catch (NotFoundPositionException e) {
+            return positions;
         }
+
+        if (!positionChecker.getPiece(nextPosition).isSameTeam(this)) {
+            positions.add(nextPosition);
+        }
+
         return positions;
     }
 }
