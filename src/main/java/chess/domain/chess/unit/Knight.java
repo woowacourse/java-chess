@@ -15,4 +15,9 @@ public class Knight extends Unit {
     public boolean validateDirection(Vector vector) {
         return DoubleCompare.deltaCompare(vector.calculateDistance(), KNIGHT_LENGTH);
     }
+
+    @Override
+    public String toString() {
+        return "나이트";
+    }
 }

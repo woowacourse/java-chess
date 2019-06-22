@@ -31,31 +31,31 @@ public class ChessBoard {
     }
 
     public void validateMove(Position source, Position target) {
-        Optional<Unit> targetUnit = Optional.ofNullable(units.get(target));
-        Optional<Unit> sourceUnit = Optional.ofNullable(units.get(source));
+        Optional<Unit> targetUnit = getUnit(target);
+        Optional<Unit> sourceUnit = getUnit(source);
         Vector vector = Vector.of(source, target);
 
-        if (sourceUnit.isPresent() == false) {
-            throw new SourceUnitNotPresentException();
+        if (!sourceUnit.isPresent()) {
+            throw new SourceUnitNotPresentException("해당 위치에는 유닛이 존재하지 않습니다.");
         }
 
         if (targetUnit.isPresent()) {
             if (sourceUnit.get().isEqualTeam(targetUnit.get())) {
-                throw new SameTeamTargetUnitException();
+                throw new SameTeamTargetUnitException("같은 팀을 공격할 수 없습니다.");
             }
         }
 
         if (sourceUnit.get() instanceof Pawn) {
             Pawn pawn = (Pawn) sourceUnit.get();
             if (!pawn.validateDirection(source, target, targetUnit.isPresent())) {
-                throw new PawnIllegalMovingRuleException();
+                throw new PawnIllegalMovingRuleException("폰의 규칙에 어긋납니다.");
             }
             return;
         }
 
-        if ((targetUnit.isPresent() == false) || (targetUnit.get().getTeam() != sourceUnit.get().getTeam())) {
-            if (sourceUnit.get().validateDirection(vector) == false) {
-                throw new IllegalMovingRuleException();
+        if ((!targetUnit.isPresent()) || (sourceUnit.get().isEqualTeam(targetUnit.get()))) {
+            if (!sourceUnit.get().validateDirection(vector)) {
+                throw new IllegalMovingRuleException(sourceUnit.toString() + "의 규칙에 어긋납니다.");
             }
         }
     }

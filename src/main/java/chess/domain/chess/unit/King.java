@@ -26,4 +26,9 @@ public class King extends Unit {
         return directions.stream()
                 .anyMatch(direction -> direction.isEqualTo(another));
     }
+
+    @Override
+    public String toString() {
+        return "킹";
+    }
 }

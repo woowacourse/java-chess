@@ -26,4 +26,9 @@ public class Queen extends Unit {
         return directions.stream()
                 .anyMatch(direction -> direction.isParallelTo(another));
     }
+
+    @Override
+    public String toString() {
+        return "퀸";
+    }
 }

@@ -5,23 +5,15 @@ import chess.domain.geometric.Direction;
 import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Unit {
-    private static List<Direction> whitePawnAttack = new ArrayList<>();
-    private static List<Direction> whitePawnMove = new ArrayList<>();
-
-    private static List<Direction> blackPawnAttack = new ArrayList<>();
-    private static List<Direction> blackPawnMove = new ArrayList<>();
+    private static List<Direction> whiteDirections;
+    private static List<Direction> blackDirections;
 
     static {
-        whitePawnAttack.add(Direction.NORTHEAST);
-        whitePawnAttack.add(Direction.NORTHWEST);
-        whitePawnMove.add(Direction.NORTH);
-        blackPawnAttack.add(Direction.SOUTHWEST);
-        blackPawnAttack.add(Direction.SOUTHEAST);
-        blackPawnMove.add(Direction.SOUTH);
+        whiteDirections = Direction.northDirections();
+        blackDirections = Direction.southDirections();
     }
 
     public Pawn(Team team) {
@@ -37,30 +29,30 @@ public class Pawn extends Unit {
         Vector vector = Vector.of(source, target);
 
         if (vector.validateDistance(2)) {
-            if (source.getY() == 1 || source.getY() == 6) {
-                return true;
-            }
+            return source.getY() == 1 || source.getY() == 6;
         }
 
-        if (isEnemyPresent == false) {
-            if (getTeam() == Team.WHITE) {
-                return whitePawnMove.stream()
-                        .anyMatch(direction -> direction.isEqualTo(vector));
-            }
-            return blackPawnMove.stream()
-                    .anyMatch(direction -> direction.isEqualTo(vector));
+        if (validateDirection(whiteDirections, vector) && getTeam().equals(Team.WHITE)) {
+            return isEnemyPresent ? validateDirection(Direction.northDiagonal(), vector)
+                                  : Direction.NORTH.isEqualTo(vector);
         }
 
-        if (isEnemyPresent) {
-            if (getTeam() == Team.WHITE) {
-                return whitePawnAttack.stream()
-                        .anyMatch(direction -> direction.isEqualTo(vector));
-            }
-            return blackPawnAttack.stream()
-                    .anyMatch(direction -> direction.isEqualTo(vector));
+        if (validateDirection(blackDirections, vector) && getTeam().equals(Team.BLACK)) {
+            return isEnemyPresent ? validateDirection(Direction.southDiagonal(), vector)
+                                  : Direction.SOUTH.isEqualTo(vector);
         }
 
         return false;
+    }
+
+    private boolean validateDirection(List<Direction> directions, Vector vector) {
+        return directions.stream()
+                .anyMatch(direction -> direction.isEqualTo(vector));
+    }
+
+    @Override
+    public String toString() {
+        return "폰";
     }
 }
 

@@ -4,17 +4,13 @@ import chess.domain.chess.Team;
 import chess.domain.geometric.Direction;
 import chess.domain.geometric.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Unit {
-    private static List<Direction> directions = new ArrayList<>();
+    private static List<Direction> directions;
 
     static {
-        directions.add(Direction.NORTHEAST);
-        directions.add(Direction.NORTHWEST);
-        directions.add(Direction.SOUTHEAST);
-        directions.add(Direction.SOUTHWEST);
+        directions = Direction.multiplierShape();
     }
 
     public Bishop(Team team) {
@@ -25,5 +21,10 @@ public class Bishop extends Unit {
     public boolean validateDirection(Vector another) {
         return directions.stream()
                 .anyMatch(direction -> direction.isParallelTo(another));
+    }
+
+    @Override
+    public String toString() {
+        return "비숍";
     }
 }

@@ -26,4 +26,9 @@ public class Rook extends Unit {
         return directions.stream()
                 .anyMatch(vector -> vector.isParallelTo(another));
     }
+
+    @Override
+    public String toString() {
+        return "룩";
+    }
 }
