@@ -32,6 +32,10 @@ public class Game {
         return color.getName();
     }
 
+    public List<Square> getSquares() {
+        return board.values();
+    }
+
     public List<Square> getSquaresExceptEmpty() {
         return board.getSquaresExceptEmpty();
     }

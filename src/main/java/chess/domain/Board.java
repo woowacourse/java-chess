@@ -59,8 +59,12 @@ public class Board {
 
     List<Square> getSquaresExceptEmpty() {
         return map.values().stream()
-                .filter(Square::isEmpty)
+                .filter(square -> !square.isEmpty())
                 .collect(Collectors.toList());
+    }
+
+    List<Square> values() {
+        return new ArrayList<>(map.values());
     }
 
     @Override

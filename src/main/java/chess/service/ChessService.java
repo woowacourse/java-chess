@@ -35,7 +35,7 @@ public class ChessService {
     }
 
     public List<Square> getSquares(final Game game) {
-        return game.getSquaresExceptEmpty();
+        return game.getSquares();
     }
 
     public List<CommandDto> findByRoomId(final long roomId) {
@@ -53,4 +53,7 @@ public class ChessService {
         return game;
     }
 
+    public ScoreCalculator createScoreCalculator(Game game) {
+        return new ScoreCalculator(game.getSquaresExceptEmpty());
+    }
 }

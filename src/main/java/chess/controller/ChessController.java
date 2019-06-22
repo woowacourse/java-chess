@@ -82,8 +82,8 @@ public class ChessController {
     public Object score(final Request req, final Response res) {
         Map<String, Object> model = new HashMap<>();
         Game game = req.session().attribute("game");
+        ScoreCalculator scoreCalculator = chessService.createScoreCalculator(game);
 
-        ScoreCalculator scoreCalculator = new ScoreCalculator(game.getSquaresExceptEmpty());
         model.put("whiteScore", scoreCalculator.getScore(Piece.Color.WHITE));
         model.put("blackScore", scoreCalculator.getScore(Piece.Color.BLACK));
 
