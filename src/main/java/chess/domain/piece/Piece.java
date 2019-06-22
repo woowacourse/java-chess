@@ -4,7 +4,7 @@ import chess.domain.Spot;
 import chess.domain.Team;
 
 public abstract class Piece {
-    Team team;
+    private Team team;
 
     Piece(Team team) {
         this.team = team;
@@ -12,7 +12,6 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Spot startSpot, Spot endSpot);
 
-    public boolean canAttack(Piece piece) {
-        return team != piece.team;
-    }
+    public abstract boolean isAttackable(Spot startSpot, Spot endSpot);
+
 }
