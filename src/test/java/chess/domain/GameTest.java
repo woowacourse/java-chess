@@ -3,6 +3,7 @@ package chess.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,5 +46,10 @@ public class GameTest {
         assertTrue(game.currentColor().equals(Piece.Color.WHITE.getName()));
     }
 
+    @Test
+    public void getSquaresExceptEmptyTest(){
+        int expected = 32;
+        assertEquals(expected, game.getSquaresExceptEmpty().size());
+    }
 
 }
