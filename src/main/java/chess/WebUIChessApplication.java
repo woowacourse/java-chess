@@ -28,7 +28,6 @@ public class WebUIChessApplication {
         DataSource dataSource = DataSource.getInstance();
         DbConnector dbConnector = new DbConnector(dataSource);
         TableCreator tableCreator = new TableCreator(dbConnector);
-
         tableCreator.create();
 
         CommandDao commandDao = CommandDao.from(dbConnector);

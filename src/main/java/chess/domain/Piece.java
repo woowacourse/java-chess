@@ -22,11 +22,11 @@ public class Piece {
         return new Piece(color, rule);
     }
 
-    public static Piece empty() {
+    static Piece empty() {
         return EMPTY;
     }
 
-    public boolean isSameColor(final Color other) {
+    boolean isSameColor(final Color other) {
         return color == other;
     }
 
@@ -34,7 +34,7 @@ public class Piece {
         return rule.isValidMove(origin, target);
     }
 
-    public boolean isValidAttack(final Position origin, final Position target) {
+    boolean isValidAttack(final Position origin, final Position target) {
         return rule.isValidAttack(origin, target);
     }
 
@@ -56,11 +56,11 @@ public class Piece {
         return rule.getScore();
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return Color.EMPTY == color;
     }
 
-    public boolean isPawn() {
+    boolean isPawn() {
         for (Rule rule : Pawn.values()) {
             if (this.rule == rule) {
                 return true;
@@ -69,11 +69,11 @@ public class Piece {
         return false;
     }
 
-    public boolean isKing() {
+    boolean isKing() {
         return this.rule == King.getInstance();
     }
 
-    public String getSymbol() {
+    String getSymbol() {
         return PieceSymbol.getSymbol(this.color, this.rule);
     }
 

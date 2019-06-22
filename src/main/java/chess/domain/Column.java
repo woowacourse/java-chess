@@ -29,19 +29,19 @@ public class Column implements Comparable<Column> {
         return optColumn.orElseThrow(IllegalArgumentException::new);
     }
 
-    public Column next(final int delta) {
+    Column next(final int delta) {
         return Column.from(this.column + delta);
     }
 
-    public int calculateAbsolute(final Column other) {
+    int calculateAbsolute(final Column other) {
         return Math.abs(this.column - other.column);
     }
 
-    public int calculateSubtraction(final Column other) {
+    int calculateSubtraction(final Column other) {
         return this.column - other.column;
     }
 
-    public static List<Column> values() {
+    static List<Column> values() {
         return new ArrayList<>(COLUMNS.values());
     }
 

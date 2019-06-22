@@ -16,7 +16,6 @@ public enum PieceSymbol {
     BLACK_QUEEN(Piece.Color.BLACK, Queen.NAME, "♛"),
     BLACK_ROOK(Piece.Color.BLACK, Rook.NAME, "♜");
 
-
     public static final String EMPTY_SYMBOL = " ";
 
     private final Piece.Color color;

@@ -1,7 +1,6 @@
 package chess.service;
 
 import chess.dao.CommandDao;
-import chess.dao.RoomDao;
 import chess.domain.*;
 import chess.dto.CommandDto;
 import chess.exception.PositionException;

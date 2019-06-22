@@ -30,7 +30,7 @@ public class Board {
         return isValidAttack(originSquare, targetSquare);
     }
 
-    public boolean isValidAttack(final Square origin, final Square target) {
+    boolean isValidAttack(final Square origin, final Square target) {
         if (!origin.isValidAttack(target)) {
             return false;
         }
@@ -55,12 +55,12 @@ public class Board {
         return false;
     }
 
-    public ScoreCalculator createScoreCalculator() {
+    ScoreCalculator createScoreCalculator() {
         List<Square> squares = new ArrayList<>(map.values());
         return new ScoreCalculator(squares);
     }
 
-    public List<Square> getSquaresExceptEmpty() {
+    List<Square> getSquaresExceptEmpty() {
         return map.values().stream()
                 .filter(Square::isEmpty)
                 .collect(Collectors.toList());

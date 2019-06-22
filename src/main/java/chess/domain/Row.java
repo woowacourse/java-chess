@@ -28,23 +28,23 @@ public class Row implements Comparable<Row> {
         return from(Integer.parseInt(row));
     }
 
-    public Row next(int delta) {
+    Row next(int delta) {
         return ROWS.get(row + delta);
     }
 
-    public int calculateAbsolute(final Row other) {
+    int calculateAbsolute(final Row other) {
         return Math.abs(this.row - other.row);
     }
 
-    public int calculateSubtraction(final Row other) {
+    int calculateSubtraction(final Row other) {
         return this.row - other.row;
     }
 
-    public int vectorOf(final Row other) {
+    int vectorOf(final Row other) {
         return this.row - other.row;
     }
 
-    public static List<Row> values() {
+    static List<Row> values() {
         return new ArrayList<>(ROWS.values());
     }
 

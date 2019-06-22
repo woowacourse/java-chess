@@ -35,8 +35,8 @@ public class Position implements Comparable<Position> {
 
     public static Position of(final String row, final String column) {
         try {
-           return Position.of(Row.from(row), Column.from(column));
-        } catch (RuntimeException e){
+            return Position.of(Row.from(row), Column.from(column));
+        } catch (RuntimeException e) {
             throw new PositionException("Postion을 잘못 입력했습니다.");
         }
     }
@@ -66,7 +66,7 @@ public class Position implements Comparable<Position> {
         return subRowAndColumn(position) == distance;
     }
 
-    public int subRowAndColumn(final Position target) {
+    int subRowAndColumn(final Position target) {
         return Math.abs(this.distanceOfRow(target) - this.distanceOfColumn(target));
     }
 
@@ -82,7 +82,7 @@ public class Position implements Comparable<Position> {
         return this.column.calculateAbsolute(target.column);
     }
 
-    public List<Position> findRoutes(Position target) {
+    List<Position> findRoutes(Position target) {
         if (!(isLevel(target) || isDiagonal(target) || isPerpendicular(target))) {
             return Collections.emptyList();
         }
@@ -108,7 +108,7 @@ public class Position implements Comparable<Position> {
         return target.row.vectorOf(this.row);
     }
 
-    public boolean isSameColumn(final Column other) {
+    boolean isSameColumn(final Column other) {
         return this.column.equals(other);
     }
 
