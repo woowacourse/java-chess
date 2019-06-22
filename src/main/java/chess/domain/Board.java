@@ -1,15 +1,12 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
     private final Map<Position, Square> map;
 
     public Board(final Map<Position, Square> map) {
-        this.map = new HashMap<>(map);
+        this.map = new TreeMap<>(map);
     }
 
     public boolean isSameColor(final Position origin, Piece.Color color){
@@ -57,5 +54,9 @@ public class Board {
     public ScoreCalculator createScoreCalculator() {
         List<Square> squares = new ArrayList<>(map.values());
         return new ScoreCalculator(squares);
+    }
+
+    public List<Square> values(){
+        return new ArrayList<>(map.values());
     }
 }

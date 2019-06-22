@@ -3,12 +3,12 @@ package chess.domain.RuleImpl;
 import chess.domain.Position;
 
 public class Rook extends AbstractRule {
-
     private static Rook INSTANCE = new Rook();
     private static final double SCORE = 5;
+    public static final String NAME = "ROOK";
 
     private Rook() {
-        super(SCORE);
+        super(SCORE, NAME);
     }
 
     public static Rook getInstance() {

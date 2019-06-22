@@ -5,9 +5,10 @@ import chess.domain.Position;
 public class Knight extends AbstractRule {
     private static Knight INSTANCE = new Knight();
     private static final double SCORE = 2.5;
+    public static final String NAME = "KNIGHT";
 
     private Knight() {
-        super(SCORE);
+        super(SCORE, NAME);
     }
 
     public static Knight getInstance() {

@@ -1,9 +1,7 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.Empty;
-import chess.domain.RuleImpl.King;
-import chess.domain.RuleImpl.Pawn;
-import chess.domain.RuleImpl.Rule;
+import chess.domain.RuleImpl.*;
+import sun.awt.Symbol;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -74,6 +72,10 @@ public class Piece {
         return this.rule == King.getInstance();
     }
 
+    public String getSymbol() {
+        return PieceSymbol.getSymbol(this.color, this.rule);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -96,10 +98,10 @@ public class Piece {
                 '}';
     }
 
-    public enum Color {
-        WHITE(1,"WHITE"),
-        BLACK(2,"BLACK"),
-        EMPTY(3,"EMPTY");
+    enum Color {
+        WHITE(1, "WHITE"),
+        BLACK(2, "BLACK"),
+        EMPTY(3, "EMPTY");
 
         private final int index;
         private final String name;

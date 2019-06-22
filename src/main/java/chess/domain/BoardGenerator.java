@@ -11,7 +11,7 @@ public class BoardGenerator {
     private BoardGenerator() {
     }
 
-    static Map<Position, Square> generate() {
+    public static Map<Position, Square> generate() {
         Map<Position, Square> map = new TreeMap<>();
         List<Position> positions = getColumns(8);
         map.put(positions.get(0), Square.of(positions.get(0), Piece.of(Piece.Color.BLACK, Rook.getInstance())));

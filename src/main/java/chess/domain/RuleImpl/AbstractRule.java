@@ -3,10 +3,12 @@ package chess.domain.RuleImpl;
 import chess.domain.Position;
 
 public abstract class AbstractRule implements Rule {
-    private double score;
+    private final double score;
+    private final String name;
 
-    AbstractRule(final double score) {
+    AbstractRule(final double score, final String name) {
         this.score = score;
+        this.name = name;
     }
 
     @Override
@@ -22,5 +24,10 @@ public abstract class AbstractRule implements Rule {
     @Override
     public double getScore() {
         return score;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 }

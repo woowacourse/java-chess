@@ -10,6 +10,7 @@ public enum Pawn implements Rule {
 
     public static final int ZERO_VECTOR = 0;
     private static final double SCORE = 1;
+    public static final String NAME = "PAWN";
 
 
     private final int distance;
@@ -48,5 +49,10 @@ public enum Pawn implements Rule {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public String getName(){
+        return NAME;
     }
 }

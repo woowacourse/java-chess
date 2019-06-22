@@ -69,6 +69,10 @@ public class Square {
         return this.position.isSameColumn(other);
     }
 
+    public String getSymbol(){
+        return this.piece.getSymbol();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -82,13 +86,5 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(position, piece);
-    }
-
-    @Override
-    public String toString() {
-        return "Square{" +
-                "position=" + position +
-                ", piece=" + piece +
-                '}';
     }
 }

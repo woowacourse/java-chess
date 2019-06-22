@@ -9,4 +9,6 @@ public interface Rule {
     boolean isValidAttack(final Position origin, final Position target);
 
     double getScore();
+
+    String getName();
 }
