@@ -16,7 +16,7 @@ public class Navigator {
 
     public Route getWay(Square source, Square target) {
         return wayList.stream()
-                .filter(way -> way.isGo(source, target))
+                .filter(way -> way.canMove(source, target))
                 .map(way -> way.generateRoute(source, target))
                 .findAny()
                 .orElse(null);
