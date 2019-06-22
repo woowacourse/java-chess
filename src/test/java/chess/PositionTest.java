@@ -3,8 +3,6 @@ package chess;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PositionTest {
 	@Test
@@ -14,136 +12,26 @@ public class PositionTest {
 	}
 
 	@Test
-	void 왼쪽_위로_갈_수_있는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(1, 5);
-
-		assertTrue(start.canMove(end, Direction.LEFT_TOP));
+	void 이동() {
+		Position start = new Position(1,1);
+		assertThat(start.move(Direction.TOP)).isEqualTo(new Position(1,2));
 	}
 
 	@Test
-	void 왼쪽_위로_갈_수_없는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(2, 5);
-
-		assertFalse(start.canMove(end, Direction.LEFT_TOP));
+	void 위로_이동_가능한_최대_거리_계산() {
+		Position start = new Position(1,1);
+		assertThat(start.getMaxDistance(Direction.TOP)).isEqualTo(7);
 	}
 
 	@Test
-	void 위로_갈_수_있는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(3, 8);
-
-		assertTrue(start.canMove(end, Direction.TOP));
+	void 아래로_이동_가능한_최대_거리_계산() {
+		Position start = new Position(8,5);
+		assertThat(start.getMaxDistance(Direction.BOTTOM)).isEqualTo(4);
 	}
 
 	@Test
-	void 위로_갈_수_없는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(3, 1);
-
-		assertFalse(start.canMove(end, Direction.TOP));
-	}
-
-	@Test
-	void 오른쪽_위로_갈_수_있는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(4, 4);
-
-		assertTrue(start.canMove(end, Direction.RIGHT_TOP));
-	}
-
-	@Test
-	void 오른쪽_위로_갈_수_없는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(2, 4);
-
-		assertFalse(start.canMove(end, Direction.RIGHT_TOP));
-	}
-
-	@Test
-	void 왼쪽으로_갈_수_있는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(1, 3);
-
-		assertTrue(start.canMove(end, Direction.LEFT));
-	}
-
-	@Test
-	void 왼쪽으로_갈_수_없는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(2, 5);
-
-		assertFalse(start.canMove(end, Direction.LEFT));
-	}
-
-	@Test
-	void 오른쪽으로_갈_수_있는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(8, 3);
-
-		assertTrue(start.canMove(end, Direction.RIGHT));
-	}
-
-	@Test
-	void 오른쪽으로_갈_수_없는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(2, 5);
-
-		assertFalse(start.canMove(end, Direction.RIGHT));
-	}
-
-	@Test
-	void 왼쪽_아래로_갈_수_있는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(1, 1);
-
-		assertTrue(start.canMove(end, Direction.LEFT_BOTTOM));
-	}
-
-	@Test
-	void 왼쪽_아래로_갈_수_없는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(2, 5);
-
-		assertFalse(start.canMove(end, Direction.LEFT_BOTTOM));
-	}
-
-	@Test
-	void 아래로_갈_수_있는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(3, 1);
-
-		assertTrue(start.canMove(end, Direction.BOTTOM));
-	}
-
-	@Test
-	void 아래로_갈_수_없는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(2, 5);
-
-		assertFalse(start.canMove(end, Direction.BOTTOM));
-	}
-
-	@Test
-	void 오른쪽_아래로_갈_수_있는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(5, 1);
-
-		assertTrue(start.canMove(end, Direction.RIGHT_BOTTOM));
-	}
-
-	@Test
-	void 오른쪽_아래로_갈_수_없는_경우() {
-		Position start = new Position(3, 3);
-		Position end = new Position(2, 5);
-
-		assertFalse(start.canMove(end, Direction.RIGHT_BOTTOM));
-	}
-
-	@Test
-	void 위로_이동() {
-		Position position = new Position(1,2);
-		assertThat(position.move(Direction.TOP)).isEqualTo(new Position(1,3));
+	void 왼쪽_아래로_이동_가능한_최대_거리_계산() {
+		Position start = new Position(7,8);
+		assertThat(start.getMaxDistance(Direction.LEFT_BOTTOM)).isEqualTo(6);
 	}
 }

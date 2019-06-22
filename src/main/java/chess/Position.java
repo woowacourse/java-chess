@@ -16,27 +16,30 @@ public class Position {
 		this.y = y;
 	}
 
-	public Position move(Direction direction) {
-		return new Position(x.move(direction.getDirectionX()), y.move(direction.getDirectionY()));
+	public Position(Position position) {
+		this.x = position.x;
+		this.y = position.y;
 	}
 
-	public boolean canMove(Position end, Direction direction) {
+	public int getMaxDistance(Direction direction) {
+		int distance = 0;
 		Coordinate currentX = x;
 		Coordinate currentY = y;
+		int directionX = direction.getDirectionX();
+		int directionY = direction.getDirectionY();
 
-		while (currentX.canMove(direction.getDirectionX()) &&
-				currentY.canMove(direction.getDirectionY())) {
-			currentX = currentX.move(direction.getDirectionX());
-			currentY = currentY.move(direction.getDirectionY());
-			if (end.isSamePosition(currentX, currentY)) {
-				return true;
-			}
+		while (currentX.canMove(directionX)
+				&& currentY.canMove(directionY)) {
+			distance++;
+			currentX = currentX.move(directionX);
+			currentY = currentY.move(directionY);
 		}
-		return false;
+		return distance;
 	}
 
-	private boolean isSamePosition(Coordinate x, Coordinate y) {
-		return (this.x.equals(x)) && (this.y.equals(y));
+	public Position move(Direction direction) {
+		return new Position(this.x.move(direction.getDirectionX()),
+				this.y.move(direction.getDirectionY()));
 	}
 
 	@Override
@@ -55,5 +58,10 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
+	}
+
+	@Override
+	public String toString() {
+		return "{" + x + ", " + y + "}\n";
 	}
 }
