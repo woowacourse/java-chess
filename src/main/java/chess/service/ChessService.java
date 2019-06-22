@@ -4,6 +4,7 @@ import chess.dao.CommandDao;
 import chess.dao.RoomDao;
 import chess.domain.*;
 import chess.dto.CommandDto;
+import chess.exception.PositionException;
 import chess.utils.PositionConverter;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class ChessService {
             commandDao.add(commandDto);
             return true;
         }
-        return false;
+        throw new PositionException("잘못 입력했습니다. 다시 입력해주세요.");
     }
 
     public List<Square> getSquares(final Game game) {

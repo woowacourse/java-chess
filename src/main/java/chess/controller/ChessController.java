@@ -29,10 +29,10 @@ public class ChessController {
         Map<String, Object> model = new HashMap<>();
 
         Game game = chessService.initGame();
+        List<Square> squares = chessService.getSquares(game);
         long roomId = roomService.latestId();
 
         req.session().attribute("game", game);
-        List<Square> squares = chessService.getSquares(game);
 
         model.put("currentColor", game.currentColor());
         model.put("board", squares);
@@ -42,11 +42,10 @@ public class ChessController {
 
     public Object show(final Request req, final Response res) {
         Map<String, Object> model = new HashMap<>();
+
         Game game = req.session().attribute("game");
-
-        long roomId = Long.parseLong(req.queryParams("roomId"));
-
         List<Square> squares = chessService.getSquares(game);
+        long roomId = Long.parseLong(req.queryParams("roomId"));
 
         model.put("board", squares);
         model.put("currentColor", game.currentColor());
@@ -61,7 +60,8 @@ public class ChessController {
         Position target = PositionConverter.convert(req.queryParams("target"));
         long roomId = Long.parseLong(req.queryParams("roomId"));
 
-        boolean result = chessService.action(game, origin, target, roomId);
+        chessService.action(game, origin, target, roomId);
+
         req.session().attribute("game", game);
 
         res.redirect("/chess?roomId=" + roomId);
