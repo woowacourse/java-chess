@@ -29,6 +29,14 @@ public abstract class Piece {
         return route;
     }
 
+    public boolean isSameTeam(Piece piece) {
+        return team.equals(piece.team);
+    }
+
+    public boolean isSameType(Piece piece) {
+        return type.equals(piece.type);
+    }
+
     public Team getTeam() {
         return team;
     }

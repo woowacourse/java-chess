@@ -4,6 +4,7 @@ import chess.domain.direction.Navigator;
 import chess.domain.direction.Route;
 import chess.domain.direction.Way;
 import chess.domain.direction.core.Direction;
+import chess.domain.direction.core.MoveStrategy;
 import chess.domain.direction.core.Square;
 import chess.domain.piece.core.Piece;
 import chess.domain.piece.core.Team;
@@ -27,11 +28,10 @@ public class Pawn extends Piece {
     private Navigator generateWhiteNavigator() {
         return new Navigator(new ArrayList<>(
                 Arrays.asList(
-                        new Way(Direction.UP, 2, false),
-                        new Way(Direction.UP, 1, false),
-                        new Way(Direction.UP_LEFT, 1),
-                        new Way(Direction.UP_RIGHT, 1)
-
+                        new Way(Direction.UP, MoveStrategy.ONLY_EMPTY, 2),
+                        new Way(Direction.UP, MoveStrategy.ONLY_EMPTY, 1),
+                        new Way(Direction.UP_LEFT, MoveStrategy.ONLY_ENEMY, 1),
+                        new Way(Direction.UP_RIGHT, MoveStrategy.ONLY_ENEMY, 1)
                 )
         ));
     }
@@ -39,11 +39,10 @@ public class Pawn extends Piece {
     private Navigator generateBlackNavigator() {
         return new Navigator(new ArrayList<>(
                 Arrays.asList(
-                        new Way(Direction.DOWN, 2, false),
-                        new Way(Direction.DOWN, 1, false),
-                        new Way(Direction.DOWN_LEFT, 1),
-                        new Way(Direction.DOWN_RIGHT, 1)
-
+                        new Way(Direction.DOWN, MoveStrategy.ONLY_EMPTY, 2),
+                        new Way(Direction.DOWN, MoveStrategy.ONLY_EMPTY, 1),
+                        new Way(Direction.DOWN_LEFT, MoveStrategy.ONLY_ENEMY, 1),
+                        new Way(Direction.DOWN_RIGHT, MoveStrategy.ONLY_ENEMY, 1)
                 )
         ));
     }
