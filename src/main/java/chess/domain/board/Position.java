@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.DirectionType;
+import chess.domain.piece.pieceinfo.DirectionType;
 import chess.exception.NotFoundPositionException;
 
 import java.util.HashMap;

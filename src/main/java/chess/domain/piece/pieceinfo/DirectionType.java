@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.pieceinfo;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +11,15 @@ public enum DirectionType {
     UP_LEFT(-1, -1),
     UP_RIGHT(-1, 1),
     DOWN_LEFT(1, -1),
-    DOWN_RIGHT(1, 1);
+    DOWN_RIGHT(1, 1),
+    KNIGHT_UP_RIGHT(-2, 1),
+    KNIGHT_UP_LEFT(-2, -1),
+    KNIGHT_RIGHT_UP(-1, 2),
+    KNIGHT_RIGHT_DOWN(1, 2),
+    KNIGHT_DOWN_RIGHT(2, 1),
+    KNIGHT_DOWN_LEFT(2, -1),
+    KNIGHT_LEFT_UP(-1, -2),
+    KNIGHT_LEFT_DOWN(1, -2);
 
     private final int x;
     private final int y;
@@ -40,5 +48,11 @@ public enum DirectionType {
     public static List<DirectionType> allDirections() {
         return Arrays.asList(DirectionType.UP, DirectionType.DOWN, DirectionType.LEFT, DirectionType.RIGHT,
                 DirectionType.UP_LEFT, DirectionType.UP_RIGHT, DirectionType.DOWN_LEFT, DirectionType.DOWN_RIGHT);
+    }
+
+    public static List<DirectionType> knightDirections() {
+        return Arrays.asList(
+                DirectionType.KNIGHT_UP_LEFT, DirectionType.KNIGHT_UP_RIGHT, DirectionType.KNIGHT_DOWN_LEFT, DirectionType.KNIGHT_DOWN_RIGHT,
+                DirectionType.KNIGHT_LEFT_UP, DirectionType.KNIGHT_LEFT_DOWN, DirectionType.KNIGHT_RIGHT_UP, DirectionType.KNIGHT_RIGHT_DOWN);
     }
 }

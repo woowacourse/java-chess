@@ -1,9 +1,16 @@
-package chess.domain.piece;
+package chess.domain.piece.piecefigure;
 
 import chess.domain.board.Position;
+import chess.domain.board.PositionChecker;
+import chess.domain.piece.pieceinfo.DirectionType;
+import chess.domain.piece.pieceinfo.PieceType;
+import chess.domain.piece.pieceinfo.TeamType;
 import chess.exception.NotFoundPositionException;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class ContinuousMovementPiece extends Piece {
     private final List<DirectionType> directions;

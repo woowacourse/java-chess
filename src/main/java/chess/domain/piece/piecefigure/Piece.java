@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.piecefigure;
 
 import chess.domain.board.Position;
+import chess.domain.board.PositionChecker;
+import chess.domain.piece.pieceinfo.PieceType;
+import chess.domain.piece.pieceinfo.TeamType;
 
 import java.util.Set;
 

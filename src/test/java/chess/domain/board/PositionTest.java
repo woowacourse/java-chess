@@ -1,11 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.piece.DirectionType;
+import chess.domain.piece.pieceinfo.DirectionType;
 import chess.exception.NotFoundPositionException;
-import javafx.geometry.Pos;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;

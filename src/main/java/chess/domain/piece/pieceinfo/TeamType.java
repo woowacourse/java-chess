@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.pieceinfo;
 
 public enum TeamType {
     WHITE(-1),

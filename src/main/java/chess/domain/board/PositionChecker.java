@@ -1,6 +1,6 @@
-package chess.domain.piece;
+package chess.domain.board;
 
-import chess.domain.board.Position;
+import chess.domain.piece.piecefigure.Piece;
 
 @FunctionalInterface
 public interface PositionChecker {

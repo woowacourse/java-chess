@@ -1,4 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.piecefigure;
+
+import chess.domain.piece.pieceinfo.DirectionType;
+import chess.domain.piece.pieceinfo.PieceType;
+import chess.domain.piece.pieceinfo.TeamType;
 
 public class Queen extends ContinuousMovementPiece {
     private static final Piece BLACK_QUEEN = new Queen(TeamType.BLACK, PieceType.QUEEN);
