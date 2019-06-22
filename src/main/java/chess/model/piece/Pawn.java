@@ -33,6 +33,11 @@ public class Pawn implements Piece {
         this.team = team;
     }
 
+//    private Pawn(boolean isNotMoved, String team) {
+//        this.isNotMoved = isNotMoved;
+//        this.team = team;
+//    }
+
     private void validateInput(String team) {
         if (Objects.isNull(team)) {
             throw new NullPointerException();
@@ -40,6 +45,11 @@ public class Pawn implements Piece {
         if (!team.equals("white") && !team.equals("black")) {
             throw new IllegalArgumentException("없는 팀입니다!");
         }
+    }
+
+    @Override
+    public Pawn cloneSelf() {
+        return new Pawn(team);
     }
 
     @Override
@@ -169,5 +179,27 @@ public class Pawn implements Piece {
     @Override
     public void signalMoved() {
         this.isNotMoved = false;
+    }
+
+    @Override
+    public String askTeamColor() {
+        if (this.team.equals("white")) {
+            return "white";
+        }
+        return "black";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pawn pawn = (Pawn) o;
+        return isNotMoved == pawn.isNotMoved &&
+                Objects.equals(team, pawn.team);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isNotMoved, team);
     }
 }

@@ -45,17 +45,33 @@ public class Tile {
         return new Route(Collections.emptyList());
     }
 
+    public String askPieceWhichTeam() {
+        if (piece.isPresent()) {
+            return piece.get().askTeamColor();
+        }
+        return "error";
+    }
+
+    public Optional<Piece> getPiece() {
+        return piece;
+    }
+
+    public Piece clonePiece() {
+        return piece.get().cloneSelf();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tile tile = (Tile) o;
         return Objects.equals(coordinateX, tile.coordinateX) &&
-                Objects.equals(coordinateY, tile.coordinateY);
+                Objects.equals(coordinateY, tile.coordinateY) &&
+                Objects.equals(piece, tile.piece);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinateX, coordinateY);
+        return Objects.hash(coordinateX, coordinateY, piece);
     }
 }

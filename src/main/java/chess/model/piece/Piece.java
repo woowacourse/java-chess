@@ -10,4 +10,8 @@ public interface Piece {
     Route produceRoute(List<Coordinate> coordinates, Vector vector);
 
     void signalMoved();
+
+    String askTeamColor();
+
+    Piece cloneSelf();
 }

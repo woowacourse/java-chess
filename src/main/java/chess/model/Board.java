@@ -1,15 +1,42 @@
 package chess.model;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import chess.model.piece.Piece;
+
+import java.util.*;
 
 public class Board {
     private Map<String, Tile> tiles;
 
     public Board(CreateStrategy strategy) {
         this.tiles = strategy.create();
+    }
+
+
+    public void movePiece(List<String> sourceAndTarget) {
+        if (Objects.isNull(sourceAndTarget) || sourceAndTarget.isEmpty()) {
+            throw new NullPointerException();
+        }
+        String sourcePosition = sourceAndTarget.get(0);
+        String targetPosition = sourceAndTarget.get(1);
+
+        checkPiecePresent(sourceAndTarget, sourcePosition, targetPosition);
+
+        Piece clonedPiece = tiles.get(sourcePosition).clonePiece();
+        clonedPiece.signalMoved();
+
+        tiles.put(sourcePosition, new Tile(sourcePosition, Optional.ofNullable(null)));
+        tiles.put(targetPosition, new Tile(targetPosition, Optional.ofNullable(clonedPiece)));
+    }
+
+    private void checkPiecePresent(List<String> sourceAndTarget, String sourcePosition, String targetPosition) {
+        if (checkPiecePresentInRoute(sourceAndTarget)) {
+            throw new IllegalArgumentException("경로에 piece가 있어서 움직일 수 없습니다.");
+        }
+
+        if (checkPiecePresentInTarget(sourcePosition)
+                && askTilePieceWhichTeam(sourcePosition).equals(askTilePieceWhichTeam(targetPosition))) {
+            throw new IllegalArgumentException("같은 팀이 있는 곳으로는 움질일 수 없습니다.");
+        }
     }
 
     // TODO: 2019-06-21 파라미터 이름 변경
@@ -34,6 +61,14 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public boolean checkPiecePresentInTarget(String coordinate) {
+        return tiles.get(coordinate).isPiecePresent();
+    }
+
+    public String askTilePieceWhichTeam(String coordinate) {
+        return tiles.get(coordinate).askPieceWhichTeam();
     }
 
     @Override
