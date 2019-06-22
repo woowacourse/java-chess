@@ -24,13 +24,6 @@ public class CommandDaoTest {
         DbConnector dbConnector = new DbConnector(DataSource.getInstance());
         commandDao = CommandDao.from(dbConnector);
         new TableCreator(dbConnector).create();
-
-        CommandDto commandDto = new CommandDto();
-        commandDto.setTarget("a1");
-        commandDto.setOrigin("a2");
-        commandDto.setRoomId(roomId);
-        commandDto.setRound(100);
-        commandDao.add(commandDto);
     }
 
     @Test
@@ -50,6 +43,13 @@ public class CommandDaoTest {
 
     @Test
     public void findByRoomIdTest() {
+        CommandDto commandDto = new CommandDto();
+        commandDto.setTarget("a1");
+        commandDto.setOrigin("a2");
+        commandDto.setRoomId(roomId);
+        commandDto.setRound(100);
+        commandDao.add(commandDto);
+
         List<CommandDto> commandDtos = commandDao.findByRoomId(roomId);
         assertThat(commandDtos.size()).isEqualTo(1);
     }
