@@ -7,20 +7,22 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public enum PieceType {
-    PAWN("p", (playerType) -> Optional.of(new Pawn(playerType))),
-    ROOK("r", (playerType) -> Optional.of(new Rook(playerType))),
-    KNIGHT("n", (playerType) -> Optional.of(new Knight(playerType))),
-    KING("k", (playerType) -> Optional.of(new King(playerType))),
-    BISHOP("b", (playerType) -> Optional.of(new Bishop(playerType))),
-    QUEEN("q", (playerType) -> Optional.of(new Queen(playerType))),
-    EMPTY(".", (playerType -> Optional.empty()));
+    PAWN("p", 1, (playerType) -> Optional.of(new Pawn(playerType))),
+    ROOK("r", 5, (playerType) -> Optional.of(new Rook(playerType))),
+    KNIGHT("n", 2.5, (playerType) -> Optional.of(new Knight(playerType))),
+    KING("k", 0, (playerType) -> Optional.of(new King(playerType))),
+    BISHOP("b", 3, (playerType) -> Optional.of(new Bishop(playerType))),
+    QUEEN("q", 9, (playerType) -> Optional.of(new Queen(playerType))),
+    EMPTY(".", 0, (playerType -> Optional.empty()));
 
 
     private String piece;
+    private double score;
     private Function<PlayerType, Optional<Piece>> create;
 
-    PieceType(String piece, Function<PlayerType, Optional<Piece>> create) {
+    PieceType(String piece, double score, Function<PlayerType, Optional<Piece>> create) {
         this.piece = piece;
+        this.score = score;
         this.create = create;
     }
 

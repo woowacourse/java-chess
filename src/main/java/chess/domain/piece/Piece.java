@@ -16,4 +16,8 @@ public abstract class Piece {
         return this.playerType.equals(piece.playerType);
     }
 
+    public boolean isSamePlayerType(PlayerType playerType) {
+        return this.playerType.equals(playerType);
+    }
+
 }

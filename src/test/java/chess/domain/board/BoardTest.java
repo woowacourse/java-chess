@@ -35,7 +35,7 @@ public class BoardTest {
                 "........",
                 "........",
                 "........",
-                "........");
+                "....k...");
     }
 
     @Test
@@ -103,5 +103,19 @@ public class BoardTest {
     void canMove_Attack_True() {
         Board board = BoardFactory.create(arrange);
         assertThat(board.canMove(Point.of(4, 3), Point.of(2, 3))).isTrue();
+    }
+
+    @Test
+    void isKingDead_attackKing_True() {
+        Board board = BoardFactory.create(arrange);
+        board.move(Point.of(4, 3), Point.of(4, 7));
+        assertThat(board.isKingDead()).isTrue();
+    }
+
+    @Test
+    void isKingDead_attackKing_False() {
+        Board board = BoardFactory.create(arrange);
+        board.move(Point.of(4, 3), Point.of(4, 6));
+        assertThat(board.isKingDead()).isFalse();
     }
 }
