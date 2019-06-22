@@ -24,4 +24,9 @@ public class Rook extends Piece {
 
         return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
     }
+
+    @Override
+    public boolean isAttackable(Spot startSpot, Spot endSpot) {
+        return isMovable(startSpot, endSpot);
+    }
 }

@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BlankTest {
+class EmptyTest {
     @Test
     void 움직임_불가() {
         Spot startSpot = Spot.valueOf(1, 3);
         Spot endSpot = Spot.valueOf(2, 5);
 
-        Blank blank = Blank.getInstance();
-        assertThat(blank.isMovable(startSpot, endSpot)).isFalse();
+        Empty empty = Empty.getInstance();
+        assertThat(empty.isMovable(startSpot, endSpot)).isFalse();
     }
 }

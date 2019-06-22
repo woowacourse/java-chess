@@ -35,4 +35,9 @@ public class King extends Piece {
     private int getDistance(int distanceX, int distanceY) {
         return distanceX * distanceX + distanceY * distanceY;
     }
+
+    @Override
+    public boolean isAttackable(Spot startSpot, Spot endSpot) {
+        return isMovable(startSpot, endSpot);
+    }
 }

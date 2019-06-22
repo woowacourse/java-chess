@@ -34,19 +34,4 @@ class RookTest {
         assertThat(rook.isMovable(startSpot, endSpot)).isFalse();
     }
 
-    @Test
-    void 공격_가능() {
-        Rook rookA = new Rook(Team.BLACK);
-        Rook rookB = new Rook(Team.BLACK);
-
-        assertThat(rookA.canAttack(rookB)).isFalse();
-    }
-
-    @Test
-    void 공격_불가능() {
-        Rook rookA = new Rook(Team.BLACK);
-        Rook rookB = new Rook(Team.WHITE);
-
-        assertThat(rookA.canAttack(rookB)).isTrue();
-    }
 }

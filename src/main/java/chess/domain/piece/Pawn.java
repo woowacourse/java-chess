@@ -7,27 +7,34 @@ import chess.domain.Team;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Queen extends Piece {
+public class Pawn extends Piece {
     private final Set<MovementUnit> movementUnits;
+    private final int movingDirection;
+    private boolean isFirst;
 
-    public Queen(Team team) {
+    Pawn(Team team) {
         super(team);
+        movingDirection = initDirection(team);
+        isFirst = true;
         movementUnits = new HashSet<>();
-        movementUnits.add(MovementUnit.RIGHT);
-        movementUnits.add(MovementUnit.UP);
         movementUnits.add(MovementUnit.DIAGNOAL);
+        movementUnits.add(MovementUnit.UP);
+    }
+
+    private int initDirection(Team team) {
+        if (team == Team.EMPTY) {
+            return 1;
+        }
+        return -1;
     }
 
     @Override
     public boolean isMovable(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
-
-        return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        return false;
     }
 
     @Override
     public boolean isAttackable(Spot startSpot, Spot endSpot) {
-        return isMovable(startSpot, endSpot);
+        return false;
     }
 }
