@@ -60,6 +60,10 @@ public class Tile {
         return piece.get().cloneSelf();
     }
 
+    public boolean askPieceIfPawn() {
+        return piece.get().isPawn();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

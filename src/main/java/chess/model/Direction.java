@@ -92,4 +92,9 @@ public enum Direction {
         return null;
 
     }
+
+    public static boolean isDiagonal(Direction direction) {
+        return (direction == NORTHEAST) || (direction == NORTHWEST)
+                || (direction == SOUTHEAST) || (direction == SOUTHWEST);
+    }
 }

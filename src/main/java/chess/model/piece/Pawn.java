@@ -33,11 +33,6 @@ public class Pawn implements Piece {
         this.team = team;
     }
 
-//    private Pawn(boolean isNotMoved, String team) {
-//        this.isNotMoved = isNotMoved;
-//        this.team = team;
-//    }
-
     private void validateInput(String team) {
         if (Objects.isNull(team)) {
             throw new NullPointerException();
@@ -50,6 +45,11 @@ public class Pawn implements Piece {
     @Override
     public Pawn cloneSelf() {
         return new Pawn(team);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     @Override

@@ -14,4 +14,6 @@ public interface Piece {
     String askTeamColor();
 
     Piece cloneSelf();
+
+    boolean isPawn();
 }

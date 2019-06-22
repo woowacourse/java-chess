@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class BoardTest {
     @Test
@@ -28,7 +29,13 @@ public class BoardTest {
             return testMap;
         });
 
-        assertThat(board.checkPiecePresentInRoute(Arrays.asList("55", "57"))).isTrue();
+        Vector vector = new Vector(Arrays.asList(
+                Coordinate.valueOf(5),
+                Coordinate.valueOf(5),
+                Coordinate.valueOf(5),
+                Coordinate.valueOf(7)));
+
+        assertThat(board.checkPiecePresentInRoute(Arrays.asList("55", "57"), vector)).isTrue();
     }
 
     @Test
@@ -40,7 +47,13 @@ public class BoardTest {
             return testMap;
         });
 
-        assertThat(board.checkPiecePresentInRoute(Arrays.asList("55", "57"))).isFalse();
+        Vector vector = new Vector(Arrays.asList(
+                Coordinate.valueOf(5),
+                Coordinate.valueOf(5),
+                Coordinate.valueOf(5),
+                Coordinate.valueOf(7)));
+
+        assertThat(board.checkPiecePresentInRoute(Arrays.asList("55", "57"), vector)).isFalse();
     }
 
     @Test
@@ -92,7 +105,7 @@ public class BoardTest {
     }
 
     @Test
-    void piece이동_확인() {
+    void piece이동_확인_pawn이_앞으로_이동_상대팀이_없을_경우() {
         Board board = new Board(() -> {
             Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn("white")));
             Tile testTile2 = new Tile("57", Optional.ofNullable(null));
@@ -101,7 +114,6 @@ public class BoardTest {
             testMap.put("57", testTile2);
             return testMap;
         });
-
 
         Board boardAfterMoved = new Board(() -> {
             Tile testTile1 = new Tile("55", Optional.ofNullable(null));
@@ -116,5 +128,77 @@ public class BoardTest {
         board.movePiece(Arrays.asList("55", "57"));
 
         assertThat(board).isEqualTo(boardAfterMoved);
+    }
+
+    @Test
+    void piece이동_확인_pawn이_앞으로_2칸_이동_상대팀이_있을_경우() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn("white")));
+            Tile testTile2 = new Tile("57", Optional.ofNullable(new Pawn("black")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("57", testTile2);
+            return testMap;
+        });
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> board.movePiece(Arrays.asList("55", "57")));
+    }
+
+    @Test
+    void piece이동_확인_pawn이_앞으로_1칸_이동_상대팀이_있을_경우() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn("white")));
+            Tile testTile2 = new Tile("56", Optional.ofNullable(new Pawn("black")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("56", testTile2);
+            return testMap;
+        });
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> board.movePiece(Arrays.asList("55", "56")));
+    }
+
+    @Test
+    void piece이동_확인_pawn이_대각선으로_이동_상대팀이_있을_경우() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn("white")));
+            Tile testTile2 = new Tile("66", Optional.ofNullable(new Pawn("black")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("66", testTile2);
+            return testMap;
+        });
+
+
+        Board boardAfterMoved = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(null));
+            Tile testTile2 = new Tile("66", Optional.ofNullable(new Pawn("white")));
+            testTile2.getPiece().get().signalMoved();
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("66", testTile2);
+            return testMap;
+        });
+
+        board.movePiece(Arrays.asList("55", "66"));
+
+        assertThat(board).isEqualTo(boardAfterMoved);
+    }
+
+    @Test
+    void piece이동_확인_pawn이_대각선으로_이동_상대팀이_없을_경우() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn("white")));
+            Tile testTile2 = new Tile("66", Optional.ofNullable(null));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("66", testTile2);
+            return testMap;
+        });
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> board.movePiece(Arrays.asList("55", "66")));
     }
 }
