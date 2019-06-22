@@ -6,6 +6,7 @@ public class Point {
 
     private static final int MIN_POINT = 1;
     private static final int MAX_POINT = 8;
+    private static final int DIAGONAL = 1;
     private final int x;
     private final int y;
 
@@ -35,8 +36,8 @@ public class Point {
         return this.y == another.y;
     }
 
-    public double calculateIncline(Point another) {
-        return minusY(another) / minusX(another);
+    public boolean isValidIncline(Point another) {
+        return Math.abs(minusY(another) / minusX(another)) == DIAGONAL;
     }
 
     public int plusX(Point another) {

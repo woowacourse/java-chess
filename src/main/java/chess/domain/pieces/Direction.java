@@ -59,16 +59,19 @@ public enum Direction {
         if (xDegree < 0 && yDegree == 0) {
             return WEST;
         }
-        if (xDegree > 0 && yDegree > 0) {
+        if (source.isValidIncline(target) && xDegree > 0 && yDegree > 0) {
             return NORTHEAST;
         }
-        if (xDegree > 0 && yDegree < 0) {
+        if (source.isValidIncline(target) && xDegree > 0 && yDegree < 0) {
             return SOUTHEAST;
         }
-        if (xDegree < 0 && yDegree < 0) {
+        if (source.isValidIncline(target) && xDegree < 0 && yDegree < 0) {
             return SOUTHWEST;
         }
-        return NORTHWEST;
+        if (source.isValidIncline(target) && xDegree < 0 && yDegree > 0) {
+            return NORTHWEST;
+        }
+        throw new IllegalArgumentException("올바른 방향이 아닙니다!");
     }
 
     public static List<Direction> linearDirection() {
@@ -102,10 +105,24 @@ public enum Direction {
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
     }
 
-    public static Direction pawnFirstTurnDirection(Color color) {
+    public static List<Direction> pawnFirstTurnDirection(Color color) {
         if (color == Color.WHITE) {
-            return WHITEPAWNTWOSTEP;
+            return Arrays.asList(WHITEPAWNTWOSTEP);
         }
-        return BLACKPAWNTWOSTEP;
+        return Arrays.asList(BLACKPAWNTWOSTEP);
+    }
+
+    public static List<Direction> pawnMoveDirection(Color color) {
+        if (color == Color.WHITE) {
+            return Arrays.asList(NORTH);
+        }
+        return Arrays.asList(SOUTH);
+    }
+
+    public static List<Direction> pawnAttackDirection(Color color) {
+        if (color == Color.WHITE) {
+            return Arrays.asList(NORTHEAST, NORTHWEST);
+        }
+        return Arrays.asList(SOUTHEAST, SOUTHWEST);
     }
 }
