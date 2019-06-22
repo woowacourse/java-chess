@@ -43,4 +43,12 @@ public class Square {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    public Square multiply(int scalar) {
+        return Square.of(x * scalar, y * scalar);
+    }
+
+    public Square add(Square square) {
+        return Square.of(x + square.x, y + square.y);
+    }
 }

@@ -1,5 +1,6 @@
 package chess.domain.direction.core;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -48,5 +49,11 @@ public class DirectionTest {
             "DOUBLE_UP_RIGHT,3,2,4,0"})
     void 현재(Direction direction, int sourceX, int sourceY, int targetX, int targetY) {
         assertThat(valuesOf(Square.of(sourceX, sourceY), Square.of(targetX, targetY))).isEqualTo(direction);
+    }
+
+    @Test
+    void 기존_Square에서_Step만큼의_Square구하기() {
+        assertThat(Direction.DOUBLE_DOWN_LEFT.calculateSquare(Square.of(3, 2), 2))
+                .isEqualTo(Square.of(1, 6));
     }
 }

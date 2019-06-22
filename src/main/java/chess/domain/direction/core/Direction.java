@@ -51,4 +51,8 @@ public enum Direction {
 
         return unit.getX() != 0 ? vectorX * 1.0 / unit.getX() : vectorY * 1.0 / unit.getY();
     }
+
+    public Square calculateSquare(Square source, int step) {
+        return source.add(unit.multiply(step));
+    }
 }
