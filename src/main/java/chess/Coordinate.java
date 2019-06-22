@@ -1,18 +1,31 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Coordinate {
 	private static final int MIN_BOUND = 1;
 	private static final int MAX_BOUND = 8;
+	private static final List<Coordinate> coordinates = new ArrayList<>();
 
 	private final int coordinate;
 
-	public Coordinate(final int coordinate) {
+	static {
+		for (int i = MIN_BOUND; i <= MAX_BOUND; ++i) {
+			coordinates.add(new Coordinate(i));
+		}
+	}
+
+	private Coordinate(final int coordinate) {
+		this.coordinate = coordinate;
+	}
+
+	public static Coordinate getCoordinate(final int coordinate) {
 		if (coordinate < MIN_BOUND || coordinate > MAX_BOUND) {
 			throw new IllegalArgumentException("좌표 범위를 벗어났습니다.");
 		}
-		this.coordinate = coordinate;
+		return coordinates.get(coordinate - 1);
 	}
 
 	public Coordinate move(int direction) {
@@ -22,6 +35,10 @@ public class Coordinate {
 	public boolean canMove(int direction) {
 		int nextCoordinate = coordinate + direction;
 		return nextCoordinate >= MIN_BOUND && nextCoordinate <= MAX_BOUND;
+	}
+
+	public boolean isSame(int coordinate) {
+		return this.coordinate == coordinate;
 	}
 
 	@Override
@@ -47,4 +64,5 @@ public class Coordinate {
 				"coordinate=" + coordinate +
 				'}';
 	}
+
 }

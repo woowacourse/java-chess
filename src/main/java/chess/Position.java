@@ -1,14 +1,23 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
+	private static final int MIN_BOUND = 1;
+	private static final int MAX_BOUND = 8;
+	private static final List<Position> positions = new ArrayList<>();
+
 	private final Coordinate x;
 	private final Coordinate y;
 
-	public Position(final int x, final int y) {
-		this.x = new Coordinate(x);
-		this.y = new Coordinate(y);
+	static {
+		for (int i = MIN_BOUND; i <= MAX_BOUND; i++) {
+			for (int j = MIN_BOUND; j <= MAX_BOUND; ++j) {
+				positions.add(new Position(Coordinate.getCoordinate(i), Coordinate.getCoordinate(j)));
+			}
+		}
 	}
 
 	private Position(final Coordinate x, final Coordinate y) {
@@ -16,9 +25,12 @@ public class Position {
 		this.y = y;
 	}
 
-	public Position(Position position) {
-		this.x = position.x;
-		this.y = position.y;
+	public static Position getPosition(final int x, final int y) {
+		return positions.stream()
+				.filter(position -> position.x.isSame(x) && position.y.isSame(y))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("해당 위치를 찾을 수 없습니다."))
+				;
 	}
 
 	public int getMaxDistance(Direction direction) {
