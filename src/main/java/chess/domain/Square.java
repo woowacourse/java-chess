@@ -42,7 +42,7 @@ public class Square {
     }
 
     public void attackPiece(final Square target) {
-        if(target.piece.isKing()){
+        if (target.piece.isKing()) {
             throw new ExitException("attacked King");
         }
         target.piece = piece.orElseFirstPawn();
@@ -69,7 +69,7 @@ public class Square {
         return this.position.isSameColumn(other);
     }
 
-    public String getSymbol(){
+    public String getSymbol() {
         return this.piece.getSymbol();
     }
 

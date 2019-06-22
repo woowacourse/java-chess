@@ -1,6 +1,9 @@
 package chess.domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Board {
     private final Map<Position, Square> map;
@@ -9,7 +12,7 @@ public class Board {
         this.map = new TreeMap<>(map);
     }
 
-    public boolean isSameColor(final Position origin, Piece.Color color){
+    public boolean isSameColor(final Position origin, Piece.Color color) {
         return map.get(origin).isSameColor(color);
     }
 
@@ -56,7 +59,7 @@ public class Board {
         return new ScoreCalculator(squares);
     }
 
-    public List<Square> values(){
+    public List<Square> values() {
         return new ArrayList<>(map.values());
     }
 }

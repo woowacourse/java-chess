@@ -6,7 +6,7 @@ public class Empty extends AbstractRule {
     public static final String NAME = "EMPTY";
 
     private Empty() {
-        super(SCORE,NAME);
+        super(SCORE, NAME);
     }
 
     public static Empty getInstance() {

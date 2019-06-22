@@ -8,7 +8,7 @@ public class Queen extends AbstractRule {
     public static final String NAME = "QUEEN";
 
     private Queen() {
-        super(SCORE,NAME);
+        super(SCORE, NAME);
     }
 
     public static Queen getInstance() {

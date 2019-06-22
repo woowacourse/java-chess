@@ -1,11 +1,5 @@
 package chess.service;
 
-import chess.domain.Position;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 public class ChessServiceTest {
 
 //    private ChessService service;
@@ -20,5 +14,5 @@ public class ChessServiceTest {
 //        Position origin = Position.of("2", "a");
 //        Position target = Position.of("4", "a");
 ////        service.update(origin, target);
-    }
+}
 

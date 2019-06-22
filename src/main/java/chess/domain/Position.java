@@ -26,7 +26,7 @@ public class Position implements Comparable<Position> {
         this.column = column;
     }
 
-    public static Position of(final Row row, final Column column) throws RuntimeException {
+    public static Position of(final Row row, final Column column) {
         String key = column.toString() + row.toString();
         return POSITIONS.get(key);
     }

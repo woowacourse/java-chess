@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.config.DbConnector;
-import chess.domain.Piece;
 import chess.dto.RoomDto;
 
 import java.sql.Connection;
@@ -79,7 +78,7 @@ public class RoomDao {
         return roomDtos;
     }
 
-    private PreparedStatement createPreparedStatementForFindByStatus(final Connection conn, final boolean status) throws SQLException{
+    private PreparedStatement createPreparedStatementForFindByStatus(final Connection conn, final boolean status) throws SQLException {
         String sql = "SELECT * FROM room WHERE status = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setBoolean(1, status);

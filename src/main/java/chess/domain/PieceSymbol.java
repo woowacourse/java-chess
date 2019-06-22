@@ -31,7 +31,7 @@ public enum PieceSymbol {
 
     public static String getSymbol(Piece.Color color, Rule rule) {
         for (final PieceSymbol pieceSymbol : values()) {
-            if(pieceSymbol.color == color && pieceSymbol.name.equals(rule.getName())){
+            if (pieceSymbol.color == color && pieceSymbol.name.equals(rule.getName())) {
                 return pieceSymbol.symbol;
             }
         }

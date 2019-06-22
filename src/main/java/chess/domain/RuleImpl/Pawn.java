@@ -52,7 +52,7 @@ public enum Pawn implements Rule {
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return NAME;
     }
 }

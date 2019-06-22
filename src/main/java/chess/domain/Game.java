@@ -11,7 +11,7 @@ public class Game {
         this.color = Piece.Color.WHITE;
     }
 
-    public static Game from(Board board){
+    public static Game from(Board board) {
         return new Game(board);
     }
 
@@ -31,7 +31,6 @@ public class Game {
         return color.getName();
     }
 
-    //TODO 이름 변경
     public List<Square> values() {
         return board.values();
     }

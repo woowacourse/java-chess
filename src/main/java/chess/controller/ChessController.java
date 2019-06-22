@@ -99,7 +99,7 @@ public class ChessController {
         Game game = chessService.load(commandDtos);
 
         req.session().attribute("game", game);
-        res.redirect("/chess?roomId="+roomId);
+        res.redirect("/chess?roomId=" + roomId);
         return null;
     }
 }

@@ -8,7 +8,7 @@ public class Bishop extends AbstractRule {
     public static final String NAME = "BISHOP";
 
     private Bishop() {
-        super(SCORE,NAME);
+        super(SCORE, NAME);
     }
 
     public static Bishop getInstance() {
