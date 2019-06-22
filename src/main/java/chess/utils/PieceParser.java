@@ -14,7 +14,7 @@ import chess.domain.piece.Rook;
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 
-public class PieceProcessor {
+public class PieceParser {
     private static Map<String, AbstractPiece> pieceCreator;
 
     static {
@@ -34,7 +34,7 @@ public class PieceProcessor {
         pieceCreator.put("B", new Bishop(BLACK));
     }
 
-    public static AbstractPiece get(String name) {
+    public static AbstractPiece parse(String name) {
         return pieceCreator.get(name);
     }
 }

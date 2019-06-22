@@ -1,4 +1,4 @@
-package chess.utils;
+package chess.web;
 
 import java.sql.SQLException;
 import java.util.HashMap;

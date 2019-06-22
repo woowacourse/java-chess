@@ -9,7 +9,6 @@ import java.util.Map;
 import chess.domain.AbstractPiece;
 import chess.domain.Count;
 import chess.domain.ResultCounter;
-import chess.dto.BoardDTO;
 import chess.dto.ResultCounterDTO;
 import chess.utils.DataParser;
 import chess.utils.WebUtils;

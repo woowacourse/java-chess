@@ -9,13 +9,14 @@ import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.dto.BoardDTO;
+import chess.dto.ChessBoardDTO;
 import chess.dto.ResultCounterDTO;
 import chess.dto.TemplateEngine;
 import chess.dto.TurnDTO;
 import chess.utils.DataParser;
-import chess.utils.Model;
 import chess.utils.QueryParser;
 import chess.view.JsonTransformer;
+import chess.web.Model;
 
 import static spark.Spark.exception;
 import static spark.Spark.get;
@@ -23,9 +24,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 public class WebUIChessApplication {
-    private static BoardDTO boardDTO;
-    private static TurnDTO turnDTO;
-    private static ResultCounterDTO resultCounterDTO;
+    private static ChessBoardDTO chessBoardDTO;
 
     public static void main(String[] args) {
         staticFiles.location("/assets");
@@ -37,13 +36,10 @@ public class WebUIChessApplication {
         // 게임을 처음 시작할 때 진입점
         get("/game_play", (req, res) -> {
             daoDeleteHandler();
-            dtoInstantiation();
-
+            chessBoardDTO = initChessBoardDTO();
             ChessBoard chessBoard = new ChessBoard();
-
-            dtoChessBoard(chessBoard);
-            daoAddHandler();
-
+            chessBoardDTO = setChessBoardDTO(chessBoard);
+            daoAddHandler(chessBoardDTO);
             return TemplateEngine.render(Model.turn(chessBoard), "game_play.html");
         });
 
@@ -59,8 +55,8 @@ public class WebUIChessApplication {
             ChessBoard chessBoard = dtoChessBoard();
             boolean isKingDead = chessBoard.move(source, target);
 
-            dtoChessBoard(chessBoard);
-            daoMoveHandler(boardDTO, turnDTO, resultCounterDTO);
+            chessBoardDTO = setChessBoardDTO(chessBoard);
+            daoMoveHandler(chessBoardDTO);
 
             if (isKingDead) {
                 return TemplateEngine.render(Model.result(chessBoard), "result.html");
@@ -97,41 +93,52 @@ public class WebUIChessApplication {
         });
     }
 
-    private static void daoMoveHandler(BoardDTO boardDTO, TurnDTO turnDTO, ResultCounterDTO resultCounterDTO) throws SQLException {
-        BoardDAO.afterMove(boardDTO);
-        TurnDAO.afterMove(turnDTO);
-        ResultCounterDAO.afterMove(resultCounterDTO);
+    private static void daoMoveHandler(ChessBoardDTO chessBoardDTO) throws SQLException {
+        BoardDAO.afterMove(chessBoardDTO.getBoardDTO());
+        TurnDAO.afterMove(chessBoardDTO.getTurnDTO());
+        ResultCounterDAO.afterMove(chessBoardDTO.getResultCounterDTO());
     }
 
+    // 독립 가능
     private static void daoDeleteHandler() throws SQLException {
         BoardDAO.deleteAll();
         TurnDAO.deleteAll();
         ResultCounterDAO.deleteAll();
     }
 
+    // 독립 가능
     private static ChessBoard dtoChessBoard() throws SQLException {
-        boardDTO = BoardDAO.selectAll();
-        turnDTO = TurnDAO.selectLastTurn();
-        resultCounterDTO = ResultCounterDAO.selectAll();
-
+        BoardDTO boardDTO = BoardDAO.selectAll();
+        TurnDTO turnDTO = TurnDAO.selectLastTurn();
+        ResultCounterDTO resultCounterDTO = ResultCounterDAO.selectAll();
         return new ChessBoard(boardDTO.getBoard(), turnDTO.getTurn(), resultCounterDTO.getResultCounter());
     }
 
-    private static void daoAddHandler() throws SQLException {
-        BoardDAO.add(boardDTO);
-        TurnDAO.add(turnDTO);
-        ResultCounterDAO.add(resultCounterDTO);
+    private static void daoAddHandler(ChessBoardDTO chessBoardDTO) throws SQLException {
+        BoardDAO.add(chessBoardDTO.getBoardDTO());
+        TurnDAO.add(chessBoardDTO.getTurnDTO());
+        ResultCounterDAO.add(chessBoardDTO.getResultCounterDTO());
     }
 
-    private static void dtoInstantiation() {
-        boardDTO = new BoardDTO();
-        turnDTO = new TurnDTO();
-        resultCounterDTO = new ResultCounterDTO();
+    private static ChessBoardDTO initChessBoardDTO() {
+        ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
+        chessBoardDTO.setBoardDTO(new BoardDTO());
+        chessBoardDTO.setTurnDTO(new TurnDTO());
+        chessBoardDTO.setResultCounterDTO(new ResultCounterDTO());
+        return chessBoardDTO;
     }
 
-    private static void dtoChessBoard(ChessBoard chessBoard) {
+    private static ChessBoardDTO setChessBoardDTO(ChessBoard chessBoard) {
+        BoardDTO boardDTO = new BoardDTO();
+        TurnDTO turnDTO = new TurnDTO();
+        ResultCounterDTO resultCounterDTO = new ResultCounterDTO();
         boardDTO.setBoard(chessBoard.getBoard());
         turnDTO.setTurn(chessBoard.getTurn());
         resultCounterDTO.setResultCounter(chessBoard.getResultCounter());
+        ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
+        chessBoardDTO.setBoardDTO(boardDTO);
+        chessBoardDTO.setTurnDTO(turnDTO);
+        chessBoardDTO.setResultCounterDTO(resultCounterDTO);
+        return chessBoardDTO;
     }
 }

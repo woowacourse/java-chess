@@ -12,7 +12,7 @@ import chess.domain.Team;
 
 public class DataParser {
     public static AbstractPiece piece(String name) {
-        return PieceProcessor.get(name);
+        return PieceParser.parse(name);
     }
 
     public static Map<String, String> board(Board board) {

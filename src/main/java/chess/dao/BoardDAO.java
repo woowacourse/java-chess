@@ -9,7 +9,6 @@ import java.util.Map;
 import chess.domain.AbstractPiece;
 import chess.domain.Board;
 import chess.domain.Position;
-import chess.domain.Team;
 import chess.dto.BoardDTO;
 import chess.utils.DataParser;
 import chess.utils.WebUtils;
