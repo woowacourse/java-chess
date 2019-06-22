@@ -20,7 +20,7 @@ public class Pawn extends Piece {
     private final Set<MovementUnit> attackUnits;
     private final int movingDirection;
 
-    Pawn(Team team) {
+    public Pawn(Team team) {
         super(team);
         movingDirection = initDirection(team);
         movementUnits = new HashSet<>();
