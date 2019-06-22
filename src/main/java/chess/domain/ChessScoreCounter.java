@@ -39,11 +39,11 @@ public class ChessScoreCounter {
 
     private int countPawn(Map<CoordinatePair, PieceType> boardState, Team teamToCalculate, CoordinateX x) {
         if (teamToCalculate == Team.WHITE) {
-            return (int)(CoordinateY.allAscendingCoordinates().stream()
+            return (int) (CoordinateY.allAscendingCoordinates().stream()
                 .filter(y -> boardState.get(CoordinatePair.of(x, y)) == PieceType.PAWN_WHITE)
                 .count());
         }
-        return (int)(CoordinateY.allAscendingCoordinates().stream()
+        return (int) (CoordinateY.allAscendingCoordinates().stream()
             .filter(y -> boardState.get(CoordinatePair.of(x, y)) == PieceType.PAWN_BLACK)
             .count());
     }

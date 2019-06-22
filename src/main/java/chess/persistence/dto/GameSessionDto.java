@@ -1,6 +1,6 @@
 package chess.persistence.dto;
 
-public class RoomDto {
+public class GameSessionDto {
     private long id;
     private String title;
 

@@ -1,14 +1,14 @@
 package chess;
 
-import chess.domain.*;
-import chess.persistence.dto.RoomDto;
-import chess.service.ChessService;
+import chess.conroller.ChessGameController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.*;
+import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -16,72 +16,38 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().create();
-        ChessService chessService = new ChessService();
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        // AJAX 요청 시 CORS 적용
+        options("/*", WebUIChessApplication::cors);
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "localhost"));
 
-        get("/rooms", (req, res) -> {
-
-            return chessService.findLatestNRooms(5);
-        }, gson::toJson);
-
-        post("/create-room", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            RoomDto roomDto = new RoomDto();
-            roomDto.setTitle(req.queryParams("title"));
-            chessService.createRoom(roomDto);
-
-            Optional<RoomDto> maybeFound = chessService.findRoomByTitle(req.queryParams("title"));
-
-            if (maybeFound.isPresent()) {
-                model.put("id", maybeFound.get().getId());
-                ChessGame chessGame = new ChessGame(new StateInitiatorFactory());
-                chessService.createBoardState(chessGame.getBoardState(), maybeFound.get().getId());
-                return model;
-            }
-
-            return model.put("result", "fail");
-        }, gson::toJson);
-
-        get("/room", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            Optional<RoomDto> maybeFound = chessService.findRoomById(Long.parseLong(req.queryParams("id")));
-
-            if (maybeFound.isPresent()) {
-                model.put("id", maybeFound.get().getId());
-                model.put("title", maybeFound.get().getTitle());
-
-                return render(model, "room.html");
-            }
-            return render(model, "error.html");
-        });
-
-        get("/board", (req, res) -> {
-            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
-
-            return chessGame.getBoardState();
-        }, gson::toJson);
-
-        put("/move-piece", (req, res) -> {
-            long roomId = Long.parseLong(req.queryParams("id"));
-
-            CoordinatePair from = CoordinatePair.from(req.queryParams("of")).get();
-            CoordinatePair to = CoordinatePair.from(req.queryParams("to")).get();
-
-            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId));
-            chessGame.move(from, to);
-
-            chessService.updateChessPiecePosition(from, to, roomId);
-
-            return new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId)).getBoardState();
-        }, gson::toJson);
+        get("/api/rooms", ChessGameController::retrieveRooms, gson::toJson);
+        get("/api/room/:id", ChessGameController::retrieveRoomById, gson::toJson);
+        post("/api/room", ChessGameController::createRoom, gson::toJson);
+        put("/api/game/move", ChessGameController::movePiece, gson::toJson);
 
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    private static String cors(Request request, Response response) {
+
+        String accessControlRequestHeaders = request
+            .headers("Access-Control-Request-Headers");
+        if (accessControlRequestHeaders != null) {
+            response.header("Access-Control-Allow-Headers",
+                accessControlRequestHeaders);
+        }
+
+        String accessControlRequestMethod = request
+            .headers("Access-Control-Request-Method");
+        if (accessControlRequestMethod != null) {
+            response.header("Access-Control-Allow-Methods",
+                accessControlRequestMethod);
+        }
+
+        return "OK";
     }
 }

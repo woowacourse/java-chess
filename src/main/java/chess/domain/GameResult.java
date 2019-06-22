@@ -1,7 +1,7 @@
 package chess.domain;
 
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 public enum GameResult {
     BLACK_WIN, WHITE_WIN, KEEP, DRAW;
@@ -12,7 +12,7 @@ public enum GameResult {
      * @param livingPieces
      * @return
      */
-    public static GameResult judge(Set<PieceType> livingPieces) {
+    public static GameResult judge(Collection<PieceType> livingPieces) {
         boolean isBlackKingLiving = livingPieces.contains(PieceType.KING_BLACK);
         boolean isWhiteKingLiving = livingPieces.contains(PieceType.KING_WHITE);
 

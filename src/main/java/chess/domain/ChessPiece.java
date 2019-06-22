@@ -11,7 +11,7 @@ public abstract class ChessPiece {
         this.type = type;
     }
 
-    PieceType getType() {
+    public PieceType getType() {
         return type;
     }
 

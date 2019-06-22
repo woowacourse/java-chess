@@ -1,8 +1,7 @@
 package chess.persistence.dao;
 
 import chess.persistence.DataSourceFactory;
-import chess.persistence.dto.RoomDto;
-import org.junit.jupiter.api.BeforeAll;
+import chess.persistence.dto.GameSessionDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,38 +10,38 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RoomDaoTest {
-    RoomDao dao;
+public class GameSessionDaoTest {
+    GameSessionDao dao;
 
     @BeforeEach
     void init() {
-        dao = new RoomDao(new DataSourceFactory().createDataSource());
+        dao = new GameSessionDao(new DataSourceFactory().createDataSource());
     }
 
     @Test
     void insertAndFind() throws SQLException {
-        RoomDto room = new RoomDto();
-        room.setTitle("아무나");
+        GameSessionDto room = new GameSessionDto();
+        room.setTitle("some room");
         long insertedId = dao.addRoom(room);
-        RoomDto found = dao.findById(insertedId).get();
+        GameSessionDto found = dao.findById(insertedId).get();
         assertThat(found.getTitle()).isEqualTo(room.getTitle());
         dao.deleteById(insertedId);
     }
 
     @Test
     void findByTitle() throws SQLException {
-        RoomDto room = new RoomDto();
-        room.setTitle("으어어어");
+        GameSessionDto room = new GameSessionDto();
+        room.setTitle("some other room");
         long insertedId = dao.addRoom(room);
-        Optional<RoomDto> maybeFound = dao.findByTitle("으어어어");
+        Optional<GameSessionDto> maybeFound = dao.findByTitle("some other room");
         assertThat(maybeFound.isPresent()).isTrue();
         dao.deleteById(insertedId);
     }
 
     @Test
     void deleteById() throws SQLException {
-        RoomDto room = new RoomDto();
-        room.setTitle("지워져야함");
+        GameSessionDto room = new GameSessionDto();
+        room.setTitle("some otheeeer room");
         long insertedId = dao.addRoom(room);
         int affected = dao.deleteById(insertedId);
         assertThat(affected).isEqualTo(1);

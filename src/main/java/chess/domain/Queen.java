@@ -1,6 +1,9 @@
 package chess.domain;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Queen extends ChessPiece {

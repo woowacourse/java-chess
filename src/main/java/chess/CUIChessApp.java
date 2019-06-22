@@ -4,9 +4,10 @@ import chess.domain.*;
 import chess.view.InputView;
 import chess.view.OutputVIew;
 
-import java.util.*;
+import java.util.HashSet;
 
-import static chess.domain.Team.*;
+import static chess.domain.Team.BLACK;
+import static chess.domain.Team.WHITE;
 
 public class CUIChessApp {
     private static ChessGame chessGame;
@@ -66,10 +67,10 @@ public class CUIChessApp {
     private static void handleMoveCommand(String[] tokens) {
         try {
             chessGame.move(
-                    CoordinatePair.from(tokens[1])
-                            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다.")),
-                    CoordinatePair.from(tokens[2])
-                            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."))
+                CoordinatePair.from(tokens[1])
+                    .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다.")),
+                CoordinatePair.from(tokens[2])
+                    .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."))
             );
 
         } catch (IllegalArgumentException e) {

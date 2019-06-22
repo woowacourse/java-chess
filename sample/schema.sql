@@ -1,19 +1,29 @@
-create database wtc_chess_db char set utf8mb4 collate utf8mb4_general_ci;
+CREATE DATABASE wtc_chess_db CHAR SET UTF8MB4 COLLATE UTF8MB4_GENERAL_CI;
 
-use wtc_chess_db;
+USE wtc_chess_db;
 
-create table room(
-	id int not null auto_increment,
-    title varchar(255) not null,
-    primary key(id)
+CREATE TABLE game_session(
+	id INT NOT NULL AUTO_INCREMENT,
+	title VARCHAR(255) NOT NULL,
+	reg_date TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY(id)
 );
 
-create table board_state(
-	id int not null auto_increment,
-    type varchar(64) not null,
-    loc_x varchar(16) not null,
-    loc_y varchar(16) not null,
-    room_id int not null,
-    primary key(id),
-    foreign key(room_id) references room(id) on delete cascade
+CREATE TABLE board_state(
+	id INT NOT NULL AUTO_INCREMENT,
+	piece_type VARCHAR(64) NOT NULL,
+	loc_x VARCHAR(4) NOT NULL,
+	loc_y VARCHAR(4) NOT NULL,
+	reg_date TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE play_in(
+	id INT NOT NULL AUTO_INCREMENT,
+	session_id INT NOT NULL,
+	board_state_id INT NOT NULL,
+	reg_date TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY(id),
+	FOREIGN KEY(session_id) REFERENCES game_session(id) ON DELETE CASCADE,
+	FOREIGN KEY(board_state_id) REFERENCES board_state(id) ON DELETE CASCADE
 );
