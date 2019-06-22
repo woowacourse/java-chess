@@ -8,6 +8,7 @@ import chess.controller.MainController;
 import chess.dao.CommandDao;
 import chess.dao.RoomDao;
 import chess.exception.ExitException;
+import chess.exception.PositionException;
 import chess.service.ChessService;
 import chess.service.RoomService;
 import spark.ModelAndView;
@@ -53,9 +54,21 @@ public class WebUIChessApplication {
         get("/chess/load", chessController::load);
 
         exception(ExitException.class, (exception, req, res) -> {
-            long roomId = Long.parseLong(req.queryParams("roomId"));
+            String roomId = req.queryParams("roomId");
             res.redirect("/end?roomId=" + roomId);
         });
+
+        exception(PositionException.class, (exception, req, res) -> {
+            String message = null;
+            String roomId = req.queryParams("roomId");
+            try {
+                message = URLEncoder.encode(exception.getMessage(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            res.redirect("/chess?roomId=" + roomId + "&message=" + message);
+        });
+/*
 
         exception(Exception.class, (exception, req, res) -> {
             String message = null;
@@ -67,6 +80,7 @@ public class WebUIChessApplication {
             }
             res.redirect("/chess?roomId=" + roomId + "&message=" + message);
         });
+*/
 
     }
 

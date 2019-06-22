@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.exception.PositionException;
+
 import java.util.*;
 
 public class Position implements Comparable<Position> {
@@ -32,7 +34,11 @@ public class Position implements Comparable<Position> {
     }
 
     public static Position of(final String row, final String column) {
-        return Position.of(Row.from(row), Column.from(column));
+        try {
+           return Position.of(Row.from(row), Column.from(column));
+        } catch (RuntimeException e){
+            throw new PositionException("Postion을 잘못 입력했습니다.");
+        }
     }
 
     public boolean isDiagonal(final Position target) {

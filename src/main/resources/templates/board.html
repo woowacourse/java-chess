@@ -47,14 +47,24 @@
     <form method="post" action="/chess">
         <input type="hidden" name="roomId" value="{{roomId}}">
         <div>
-            origin <input type="text" name="origin" placeholder="a8"><br>
-            target <input type="text" name="target" placeholder="b8"><br>
+            origin <input type="text" name="origin" placeholder="a8" required><br>
+            target <input type="text" name="target" placeholder="b8" required><br>
             <button type="submit">이동</button>
         </div>
     </form>
 </div>
 
+<input type="hidden" id="message" value="{{message}}">
 
 
 </body>
+<script>
+    window.onload = function () {
+        const message = document.getElementById("message").value;
+        if(message !== ""){
+            alert(message);
+        }
+
+    }
+</script>
 </html>

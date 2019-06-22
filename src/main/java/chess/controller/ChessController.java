@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.*;
 import chess.dto.CommandDto;
+import chess.exception.ExitException;
 import chess.service.ChessService;
 import chess.service.RoomService;
 import chess.utils.PositionConverter;
@@ -56,7 +57,6 @@ public class ChessController {
 
     public Object action(Request req, Response res) {
         Game game = req.session().attribute("game");
-
         Position origin = PositionConverter.convert(req.queryParams("origin"));
         Position target = PositionConverter.convert(req.queryParams("target"));
         long roomId = Long.parseLong(req.queryParams("roomId"));
