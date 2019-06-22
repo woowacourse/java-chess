@@ -55,7 +55,6 @@ public class Position {
         return Objects.hash(x, y);
     }
 
-
     public int getX() {
         return x;
     }

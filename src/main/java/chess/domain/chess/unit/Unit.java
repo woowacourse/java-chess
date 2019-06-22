@@ -18,5 +18,5 @@ abstract public class Unit {
 
     public boolean isEqualTeam(Unit unit) {
         return this.team.equals(unit.team);
-    };
+    }
 }

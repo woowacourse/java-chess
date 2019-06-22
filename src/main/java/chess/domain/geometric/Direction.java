@@ -16,7 +16,6 @@ public enum Direction {
 
     Direction(Vector vector) {
         this.vector = vector;
-
     }
 
     public static Direction of(Vector vector) throws IllegalDirectionException {

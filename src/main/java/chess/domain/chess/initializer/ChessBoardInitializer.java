@@ -1,8 +1,8 @@
 package chess.domain.chess.initializer;
 
 import chess.domain.chess.Team;
-import chess.domain.geometric.Position;
 import chess.domain.chess.unit.*;
+import chess.domain.geometric.Position;
 
 import java.util.HashMap;
 import java.util.Map;

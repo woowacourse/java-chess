@@ -8,10 +8,8 @@ public enum Team {
 
     private Function<String, String> teamIdentifier;
 
-
     Team(Function<String, String> teamIdentifier) {
         this.teamIdentifier = teamIdentifier;
-
     }
 
     public Function<String, String> getFunction() {

@@ -8,7 +8,6 @@ import chess.domain.chess.exception.UnitInterceptionAlongPathException;
 import chess.domain.chess.initializer.TestInitializer;
 import chess.domain.chess.unit.*;
 import chess.domain.geometric.Position;
-import chess.domain.chess.initializer.ChessBoardInitializer;
 import chess.domain.chess.initializer.Initializer;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +16,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+
 
 public class ChessBoardTest {
     @Test

@@ -1,7 +1,7 @@
 package chess.domain.chess.unit;
 
-import chess.domain.geometric.Direction;
 import chess.domain.chess.Team;
+import chess.domain.geometric.Direction;
 import chess.domain.geometric.Vector;
 
 import java.util.Arrays;
