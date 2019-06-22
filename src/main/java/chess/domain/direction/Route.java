@@ -1,34 +1,45 @@
 package chess.domain.direction;
 
-
+import chess.domain.board.Board;
+import chess.domain.direction.core.MoveStrategy;
 import chess.domain.direction.core.Square;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Route {
     private List<Square> squares;
-    private boolean isCatch;
+    private MoveStrategy moveStrategy;
 
-    public Route(List<Square> squares) {
-        this(squares, true);
-    }
-
-    public Route(List<Square> squares, boolean isCatch) {
+    public Route(List<Square> squares, MoveStrategy moveStrategy) {
         this.squares = squares;
-        this.isCatch = isCatch;
+        this.moveStrategy = moveStrategy;
     }
 
-    int size() {
+    public int size() {
         return squares.size();
     }
 
-    Square get(int i) {
-        return squares.get(i);
+    public Square getSourceSquare() {
+        return squares.get(0);
     }
 
-    public boolean isCatch() {
-        return isCatch;
+    public Square getTargetSquare() {
+        return squares.get(squares.size() - 1);
+    }
+
+    public boolean canMove(Board board) {
+        return moveStrategy.canMove(board.getTargetStatus(getSourceSquare(), getTargetSquare())) &&
+                !isNonePieceInRoute(board);
+    }
+
+    private boolean isNonePieceInRoute(Board board) {
+        // 막힌게 있니? 있어(true)
+        return IntStream.rangeClosed(1, squares.size() - 2)
+                .mapToObj(index -> board.hasPiece(squares.get(index)))
+                .reduce(false, (a, b) -> a && b)
+                ;
     }
 
     @Override
