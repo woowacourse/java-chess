@@ -1,18 +1,27 @@
 package chess.piece;
 
-import chess.Player;
-import chess.Position;
-import chess.Score;
-import chess.pattern.RookPattern;
+import java.util.Arrays;
+import java.util.List;
 
-public class Rook extends Piece {
-	private static final double ROOK_SCORE = 5;
+import chess.*;
 
-	private Rook(Player player, Position currentPosition) {
-		super(player, new Score(ROOK_SCORE), new RookPattern(), currentPosition);
+public class Rook extends NormalPiece {
+	private Rook(Player player, List<MovementInfo> movementInfos, Position currentPosition) {
+		super(player, movementInfos, currentPosition);
 	}
 
 	public static Rook valueOf(Player player, Position currentPosition) {
-		return new Rook(player, currentPosition);
+		List<MovementInfo> movementInfos = Arrays.asList(
+				new MovementInfo(Direction.LEFT, 7),
+				new MovementInfo(Direction.TOP, 7),
+				new MovementInfo(Direction.RIGHT, 7),
+				new MovementInfo(Direction.BOTTOM, 7));
+
+		return new Rook(player, movementInfos, currentPosition);
+	}
+
+	@Override
+	public Path getAttackablePath(Position end) {
+		return getMovablePath(end);
 	}
 }
