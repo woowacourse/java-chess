@@ -36,4 +36,8 @@ public enum PieceSymbol {
         }
         return EMPTY_SYMBOL;
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }
