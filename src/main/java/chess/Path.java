@@ -9,6 +9,10 @@ public class Path {
 		path = new ArrayList<>();
 	}
 
+	public List<Position> getPath() {
+		return Collections.unmodifiableList(path);
+	}
+
 	public void add(final Position position) {
 		path.add(position);
 	}

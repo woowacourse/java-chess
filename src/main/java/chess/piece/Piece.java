@@ -59,6 +59,10 @@ public abstract class Piece {
 		return this.position.equals(position);
 	}
 
+	public boolean isSamePosition(Piece piece) {
+		return this.position.equals(piece.position);
+	}
+
 	public boolean isMine(Player player) {
 		return this.player.equals(player);
 	}
