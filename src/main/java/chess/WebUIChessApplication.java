@@ -48,9 +48,9 @@ public class WebUIChessApplication {
 
         get("/end", chessController::end);
 
-        get("/chess/score", chessController::score);
-
         get("/chess/load", chessController::load);
+
+        get("/chess/score", chessController::score);
 
         exception(ExitException.class, (exception, req, res) -> {
             long roomId = Long.parseLong(req.queryParams("roomId"));

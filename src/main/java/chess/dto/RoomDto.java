@@ -46,4 +46,13 @@ public class RoomDto {
     public int hashCode() {
         return Objects.hash(id, status, winner);
     }
+
+    @Override
+    public String toString() {
+        return "RoomDto{" +
+                "id=" + id +
+                ", status=" + status +
+                ", winner='" + winner + '\'' +
+                '}';
+    }
 }
