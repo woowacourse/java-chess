@@ -1,4 +1,4 @@
-package domain.pieces;
+package chess.domain.pieces;
 
 import chess.domain.Point;
 import chess.domain.PointFactory;

@@ -3,11 +3,12 @@ package chess.domain;
 import chess.domain.pieces.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
 
-    Map<Point, Piece> points = new HashMap<>();
+    private Map<Point, Piece> points = new HashMap<>();
 
     public ChessBoard() {
         points.put(PointFactory.of("a1"), new Rook(Color.WHITE));
@@ -39,6 +40,13 @@ public class ChessBoard {
         points.put(PointFactory.of("h8"), new Rook(Color.BLACK));
     }
 
+//    public void play(Point source, Point target) {
+//        if (points.get(source).equalsType(Type.BLANK)) {
+//            throw new IllegalArgumentException("선택한 위치는 빈 칸입니다!");
+//        }
+//        if (points.get(source).equalsColor())
+//    }
+
 //    public boolean playOneStep(Color color, Point source, Point target) {
 //        Piece currentPiece = points.get(source);
 //        if (currentPiece == null || !currentPiece.isSameColor(color)) {
@@ -62,5 +70,44 @@ public class ChessBoard {
         Piece currentPiece = points.get(source);
         points.put(target, currentPiece);
         points.put(source, null);
+    }
+
+    public void checkSourceAndTarget(Point source, Point target, Color colorOfTurn) {
+        Piece sourcePiece = points.get(source);
+        Piece targetPiece = points.get(target);
+
+        if (!sourcePiece.equalsType(Type.BLANK)) {
+            throw new IllegalArgumentException("말이 없다");
+        }
+        if (!sourcePiece.equalsColor(colorOfTurn)) {
+            throw new IllegalArgumentException("색깔이 다르다");
+        }
+        if (targetPiece.equalsColor(colorOfTurn)) {
+            throw new IllegalArgumentException("source와 target 색이 같다.");
+        }
+    }
+
+    public List<Point> makePath(Point source, Point target) {
+        Piece sourcePiece = points.get(source);
+        Piece targetPiece = points.get(target);
+
+        if (targetPiece.equalsType(Type.BLANK)) {
+            return sourcePiece.move(source, target);
+        }
+        return sourcePiece.attack(source, target);
+    }
+
+    public void checkPath(List<Point> path){
+
+//        for (Point point : path) {
+//            if(!points.get(point).equalsType(Type.BLANK)){
+//                throw new IllegalArgumentException("경로에 다른 말 있음.");
+//            }
+//        }
+        path.stream()
+                .filter(point -> !points.get(point).equalsType(Type.BLANK))
+                .
+
+
     }
 }

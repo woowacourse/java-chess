@@ -10,7 +10,7 @@ public class King extends Piece {
     private static final int EMPTY_SIZE = 0;
 
     public King(Color color) {
-        super(color);
+        super(Type.KING, color);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class Pawn extends Piece {
     private boolean isFirstTurn;
 
     public Pawn(Color color) {
-        super(color);
+        super(Type.PAWN, color);
         isFirstTurn = true;
     }
 
