@@ -10,8 +10,12 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public boolean isSameTeam(Piece piece) {
-        return this.team == piece.team;
+    public boolean empty() {
+        return team == Team.EMPTY;
+    }
+
+    public boolean sameTeam(Piece piece) {
+        return team.isSameTeam(piece.team);
     }
 
     public abstract boolean isMovable(Spot startSpot, Spot endSpot);
