@@ -12,7 +12,7 @@ public class King extends Piece {
 
     private final Set<MovementUnit> movementUnits;
 
-    King(Team team) {
+    public King(Team team) {
         super(team);
         movementUnits = new HashSet<>();
         movementUnits.add(MovementUnit.RIGHT);

@@ -10,7 +10,7 @@ import java.util.Set;
 public class Bishop extends Piece {
     private final Set<MovementUnit> movementUnits;
 
-    Bishop(Team team) {
+    public Bishop(Team team) {
         super(team);
         movementUnits = new HashSet<>();
         movementUnits.add(MovementUnit.DIAGNOAL);
