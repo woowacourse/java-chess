@@ -98,7 +98,7 @@ public class Piece {
                 '}';
     }
 
-    enum Color {
+    public enum Color {
         WHITE(1, "WHITE"),
         BLACK(2, "BLACK"),
         EMPTY(3, "EMPTY");

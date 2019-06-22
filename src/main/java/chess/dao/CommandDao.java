@@ -12,6 +12,7 @@ import java.util.List;
 
 public class CommandDao {
 
+    public static final int DEFAULT_START_ROUND = 1;
     private final DbConnector dbConnector;
 
     private CommandDao(final DbConnector dbConnector) {
@@ -35,14 +36,13 @@ public class CommandDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
-    public List<CommandDto> findByRoomId(final long room_id) {
+    public List<CommandDto> findByRoomId(final long roomId) {
         ArrayList<CommandDto> commandDtos = new ArrayList<>();
 
         try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = createPreparedStatement(conn, room_id);
+             PreparedStatement ps = createPreparedStatementForFindByRoomId(conn, roomId);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 CommandDto commandDto = new CommandDto();
@@ -57,11 +57,30 @@ public class CommandDao {
         return commandDtos;
     }
 
-    private PreparedStatement createPreparedStatement(final Connection conn, final long room_id) throws SQLException {
+    private PreparedStatement createPreparedStatementForFindByRoomId(final Connection conn, final long roomId) throws SQLException {
         String sql = "SELECT * FROM command WHERE room_id = ? ORDER BY round";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setLong(1, room_id);
+        ps.setLong(1, roomId);
         return ps;
     }
 
+    public long findLatestRoundByRoomId(final long roomId) {
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement ps = createPreparedStatement(conn, roomId);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getLong("round");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return DEFAULT_START_ROUND;
+    }
+
+    private PreparedStatement createPreparedStatement(final Connection conn, final long roomId) throws SQLException {
+        String sql = "SELECT round FROM command WHERE room_id = ? ORDER BY round DESC LIMIT 1";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setLong(1, roomId);
+        return ps;
+    }
 }

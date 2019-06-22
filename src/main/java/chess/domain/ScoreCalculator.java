@@ -41,15 +41,16 @@ public class ScoreCalculator {
         return sum;
     }
 
-    private double sumOfPawn(int column, List<Square> pawns) {
-        List<Square> test = pawns.stream()
+    private double sumOfPawn(final int column, final List<Square> pawns) {
+        //TODO isPawn 지울지 생각해보기
+        List<Square> retPawns = pawns.stream()
                 .filter(square -> square.isSameColumn(Column.from(String.valueOf((char) column))))
                 .filter(Square::isPawn)
                 .collect(Collectors.toList());
-        if (test.size() >= 2) {
-            return test.size() * 0.5;
+        if (retPawns.size() >= 2) {
+            return retPawns.size() * 0.5;
         }
-        return test.size();
+        return retPawns.size();
     }
 }
 

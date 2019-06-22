@@ -1,37 +1,70 @@
 package chess;
 
-import chess.domain.Board;
-import chess.domain.BoardGenerator;
+import chess.config.DataSource;
+import chess.config.DbConnector;
+import chess.config.TableCreator;
+import chess.controller.ChessController;
+import chess.controller.MainController;
+import chess.dao.CommandDao;
+import chess.dao.RoomDao;
+import chess.exception.ExitException;
+import chess.service.ChessService;
+import chess.service.RoomService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
+import javax.xml.crypto.Data;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
-import static spark.Spark.externalStaticFileLocation;
-import static spark.Spark.get;
-import static spark.Spark.port;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    public static void main(String[] args) {
-        externalStaticFileLocation("src/main/resources/templates");
+    public static void main(String[] args) throws Exception {
+        staticFiles.location("/static");
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "main.html");
+        DataSource dataSource = DataSource.getInstance();
+        DbConnector dbConnector = new DbConnector(dataSource);
+        TableCreator tableCreator = new TableCreator(dbConnector);
+
+        tableCreator.create();
+
+        CommandDao commandDao = CommandDao.from(dbConnector);
+        RoomDao roomDao = RoomDao.from(dbConnector);
+
+        ChessService chessService = new ChessService(commandDao, roomDao);
+        RoomService roomService = new RoomService(roomDao);
+
+        ChessController chessController = new ChessController(chessService, roomService);
+        MainController mainController = new MainController();
+
+        get("/", mainController::main);
+
+        get("/chess", chessController::initialize);
+
+        post("/chess", chessController::action);
+
+        get("/end", chessController::end);
+
+        exception(ExitException.class, (exception, req, res) -> {
+            long roomId = Long.parseLong(req.queryParams("roomId"));
+            res.redirect("/end?roomId=" + roomId);
         });
 
-        get("/chess", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            Board board = new Board(BoardGenerator.generate());
+//        exception(Exception.class, (exception, req, res) -> {
+//            String message = null;
+//            try {
+//                message = URLEncoder.encode(exception.getMessage(), "UTF-8");
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//            res.redirect("/chess/move?message=" + message);
+//        });
 
-            model.put("board", board.values());
-
-            return render(model, "board.html");
-        });
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    public static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.List;
+
 public class Game {
     private final Board board;
     private Piece.Color color;
@@ -27,5 +29,10 @@ public class Game {
 
     public String currentColor() {
         return color.getName();
+    }
+
+    //TODO 이름 변경
+    public List<Square> values() {
+        return board.values();
     }
 }
