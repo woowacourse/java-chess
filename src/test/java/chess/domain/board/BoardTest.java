@@ -7,6 +7,7 @@ import chess.domain.piece.*;
 import chess.domain.piece.core.Piece;
 import chess.domain.piece.core.Team;
 import chess.domain.piece.core.Type;
+import com.google.common.collect.Maps;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -15,7 +16,6 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
-
     @Test
     void 보드_초기화_테스트() {
         assertThat(Board.drawBoard()).isEqualTo(testInitBoard());
@@ -29,28 +29,23 @@ class BoardTest {
     }
 
     @Test
-    void 보드_움직이기_테스트() {
-        Board board = Board.drawBoard();
-        Piece piece = board.getPiece(Square.of(0, 6));
-        Route route = piece.getRoute(Square.of(0, 6), Square.of(0, 4));
-        Board changedBoard = board.changeBoard(route);
-        assertThat(changedBoard.getBoard()).isEqualTo(testChangedBoard().getBoard());
-    }
-
-    @Test
     void 목적지_확인_테스트() {
         Board board = Board.drawBoard();
         assertThat(board.getTargetStatus(Square.of(0, 6), Square.of(0, 4))).isEqualTo(TargetStatus.EMPTY);
     }
 
     @Test
-    void 내용물_같은지_확인() {
-        assertThat(Board.drawBoard().getBoard()).isEqualTo(testInitBoard().getBoard());
-        assertThat(testChangedBoard().getBoard()).isEqualTo(testChangedBoard().getBoard());
+    void 보드_움직이기_테스트() {
+        Board board = Board.drawBoard();
+        Piece piece = board.getPiece(Square.of(6, 7));
+        Route route = piece.getRoute(Square.of(6, 7), Square.of(5, 5));
+        Board changedBoard = board.changeBoard(route);
+        assertThat(board == changedBoard).isFalse();
+        assertThat(changedBoard).isEqualTo(testChangedBoard());
     }
 
-    private Board testInitBoard(){
-        Map<Square, Piece> testBoard = new HashMap<>();
+    private Board testInitBoard() {
+        Map<Square, Piece> testBoard = Maps.newHashMap();
         testBoard.put(Square.of(0, 0), new Rook(Team.BLACK));
         testBoard.put(Square.of(1, 0), new Knight(Team.BLACK));
         testBoard.put(Square.of(2, 0), new Bishop(Team.BLACK));
@@ -87,11 +82,11 @@ class BoardTest {
         testBoard.put(Square.of(6, 6), new Pawn(Team.WHITE));
         testBoard.put(Square.of(7, 6), new Pawn(Team.WHITE));
 
-        return new Board(testBoard);
+        return Board.drawBoard(testBoard);
     }
 
-    private Board testChangedBoard(){
-        Map<Square, Piece> testBoard = new HashMap<>();
+    private Board testChangedBoard() {
+        Map<Square, Piece> testBoard = Maps.newHashMap();
         testBoard.put(Square.of(0, 0), new Rook(Team.BLACK));
         testBoard.put(Square.of(1, 0), new Knight(Team.BLACK));
         testBoard.put(Square.of(2, 0), new Bishop(Team.BLACK));
@@ -116,10 +111,10 @@ class BoardTest {
         testBoard.put(Square.of(3, 7), new Queen(Team.WHITE));
         testBoard.put(Square.of(4, 7), new King(Team.WHITE));
         testBoard.put(Square.of(5, 7), new Bishop(Team.WHITE));
-        testBoard.put(Square.of(6, 7), new Knight(Team.WHITE));
+        testBoard.put(Square.of(5, 5), new Knight(Team.WHITE));
         testBoard.put(Square.of(7, 7), new Rook(Team.WHITE));
 
-        testBoard.put(Square.of(0, 4), new Pawn(Team.WHITE));
+        testBoard.put(Square.of(0, 6), new Pawn(Team.WHITE));
         testBoard.put(Square.of(1, 6), new Pawn(Team.WHITE));
         testBoard.put(Square.of(2, 6), new Pawn(Team.WHITE));
         testBoard.put(Square.of(3, 6), new Pawn(Team.WHITE));
@@ -128,6 +123,6 @@ class BoardTest {
         testBoard.put(Square.of(6, 6), new Pawn(Team.WHITE));
         testBoard.put(Square.of(7, 6), new Pawn(Team.WHITE));
 
-        return new Board(testBoard);
+        return Board.drawBoard(testBoard);
     }
 }
