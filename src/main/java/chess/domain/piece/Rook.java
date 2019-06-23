@@ -4,7 +4,7 @@ import chess.domain.Range;
 import chess.domain.board.Tile;
 
 public class Rook extends Piece {
-    public Rook(PieceColor color) {
+    Rook(PieceColor color) {
         super(color);
     }
 
@@ -12,5 +12,4 @@ public class Rook extends Piece {
     protected Range getRange(boolean isTargetEmpty, Tile current) {
         return Range.ROOK_RANGE;
     }
-
 }

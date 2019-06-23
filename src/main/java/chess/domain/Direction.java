@@ -30,11 +30,16 @@ public enum Direction {
     }
 
     public boolean isSameDirection(int columnDiff, int rowDiff) {
-        if ((columnDiff * x < 0) || (rowDiff * y < 0)) {
-            return false;
-        }
+        return checkRate(columnDiff, rowDiff)
+                && checkSign(columnDiff, rowDiff);
+    }
 
-        return (x * rowDiff == y * columnDiff);
+    private boolean checkRate(int columnDiff, int rowDiff) {
+        return x * rowDiff == y * columnDiff;
+    }
+
+    private boolean checkSign(int columnDiff, int rowDiff) {
+        return (columnDiff * x >= 0) && (rowDiff * y >= 0);
     }
 
     public Tile nextTile(Tile current) {

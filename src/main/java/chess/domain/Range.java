@@ -28,7 +28,7 @@ public enum Range {
         this.max = max;
     }
 
-    public Direction isAvailable(int columnDiff, int rowDiff) {
+    public Direction getProperDirection(int columnDiff, int rowDiff) {
         int distance = Math.max(Math.abs(columnDiff), Math.abs(rowDiff));
         if (distance > max) {
             throw new IllegalArgumentException("거리 초과");

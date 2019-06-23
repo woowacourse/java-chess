@@ -16,7 +16,7 @@ public abstract class Piece {
     }
 
     public List<Tile> pathOf(Tile current, Tile target, boolean isTargetEmpty) {
-        Direction direction = getRange(isTargetEmpty, current).isAvailable(target.getWidthDiff(current), target.getHeightDiff(current));
+        Direction direction = getRange(isTargetEmpty, current).getProperDirection(target.getWidthDiff(current), target.getHeightDiff(current));
 
         List<Tile> possiblePath = new ArrayList<>();
         Tile nextTile = direction.nextTile(current);

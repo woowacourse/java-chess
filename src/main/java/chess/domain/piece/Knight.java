@@ -4,7 +4,7 @@ import chess.domain.Range;
 import chess.domain.board.Tile;
 
 public class Knight extends Piece{
-    public Knight(PieceColor color) {
+    Knight(PieceColor color) {
         super(color);
     }
 

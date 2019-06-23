@@ -5,7 +5,7 @@ import chess.domain.board.BoardInitializer;
 import chess.domain.board.Tile;
 
 public class Pawn extends Piece{
-    public Pawn(PieceColor color) {
+    Pawn(PieceColor color) {
         super(color);
     }
 
