@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.RuleImpl.Rook;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PieceSymbolTest {
     @Test

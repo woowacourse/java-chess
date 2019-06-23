@@ -1,17 +1,10 @@
 package chess.dao;
 
 import chess.config.DataSource;
-import chess.config.DbConnector;
 import chess.config.JdbcTemplate;
-import chess.config.RowMapper;
 import chess.dto.CommandDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

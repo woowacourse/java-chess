@@ -2,11 +2,8 @@ package chess.dao;
 
 import chess.config.DataSource;
 import chess.config.JdbcTemplate;
-import chess.config.RowMapper;
 import chess.dto.RoomDto;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 public class RoomDao {

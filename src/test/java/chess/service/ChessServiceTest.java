@@ -1,7 +1,6 @@
 package chess.service;
 
 import chess.config.DataSource;
-import chess.config.DbConnector;
 import chess.dao.CommandDao;
 import chess.domain.Board;
 import chess.domain.BoardGenerator;
@@ -15,9 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ChessServiceTest {
     private ChessService chessService;

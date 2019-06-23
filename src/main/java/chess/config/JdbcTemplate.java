@@ -15,9 +15,13 @@ public class JdbcTemplate {
     }
 
     public int executeUpdate(String sql) {
+        return executeUpdate(sql, Collections.emptyList());
+    }
+
+    public int executeUpdate(final String sql, final List<Object> params) {
         int result = 0;
         try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = createPrepareStatement(conn, sql, params)) {
             result = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,16 +51,5 @@ public class JdbcTemplate {
             ps.setObject(index++, param);
         }
         return ps;
-    }
-
-    public int executeUpdate(final String sql, final List<Object> params) {
-        int result = 0;
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = createPrepareStatement(conn, sql, params)) {
-            result = ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 }

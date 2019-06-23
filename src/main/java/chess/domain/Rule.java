@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.domain.Position;
-
 public interface Rule {
 
     boolean isValidMove(final Position origin, final Position target);
