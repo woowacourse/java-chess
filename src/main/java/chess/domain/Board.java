@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -56,6 +57,15 @@ public class Board {
         return true;
     }
 
+    public Map<Spot, Piece> getPieces(Team team) {
+        Map<Spot, Piece> selectedPieces = new HashMap<>();
+        pieces.forEach((spot, piece) -> {
+            if (piece.checkTeam(team)) {
+                selectedPieces.put(spot, piece);
+            }
+        });
+        return selectedPieces;
+    }
 
     //TODO 파라미터의 갯수를 늘리지 않고 재귀로 할 수 있는 방법이 있을까?
 //    public boolean checkPath(Spot startSpot, Spot endSpot, MovementUnit movementUnit) {
