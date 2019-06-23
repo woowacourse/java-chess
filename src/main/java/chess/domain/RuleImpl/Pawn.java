@@ -13,7 +13,6 @@ public enum Pawn implements Rule {
     public static final double HALF_SCORE = SCORE / 2;
     public static final String NAME = "PAWN";
 
-
     private final int distance;
 
     Pawn(final int distance) {

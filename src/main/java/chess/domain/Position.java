@@ -66,7 +66,7 @@ public class Position implements Comparable<Position> {
         return subRowAndColumn(position) == distance;
     }
 
-    int subRowAndColumn(final Position target) {
+    private int subRowAndColumn(final Position target) {
         return Math.abs(this.distanceOfRow(target) - this.distanceOfColumn(target));
     }
 

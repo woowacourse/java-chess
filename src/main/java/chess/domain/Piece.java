@@ -30,6 +30,10 @@ public class Piece {
         return color == other;
     }
 
+    boolean isSameColor(final Piece other) {
+        return this.color == other.color;
+    }
+
     public boolean isValidMove(final Position origin, final Position target) {
         return rule.isValidMove(origin, target);
     }
@@ -38,17 +42,14 @@ public class Piece {
         return rule.isValidAttack(origin, target);
     }
 
-    public boolean isSameTeam(final Piece other) {
-        return this.color == other.color;
-    }
-
-    public Piece orElseFirstPawn() {
+    Piece get() {
         if (this.rule == Pawn.FIRST_BOTTOM) {
             return Piece.of(this.color, Pawn.SECOND_BOTTOM);
         }
         if (this.rule == Pawn.FIRST_TOP) {
             return Piece.of(this.color, Pawn.SECOND_TOP);
         }
+
         return Piece.of(this.color, this.rule);
     }
 
@@ -100,15 +101,13 @@ public class Piece {
     }
 
     public enum Color {
-        WHITE(1, "WHITE"),
-        BLACK(2, "BLACK"),
-        EMPTY(3, "EMPTY");
+        WHITE("WHITE"),
+        BLACK("BLACK"),
+        EMPTY("EMPTY");
 
-        private final int index;
         private final String name;
 
-        Color(final int index, final String name) {
-            this.index = index;
+        Color(final String name) {
             this.name = name;
         }
 

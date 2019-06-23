@@ -10,11 +10,11 @@ public class Board {
         this.map = new TreeMap<>(map);
     }
 
-    public boolean isSameColor(final Position origin, Piece.Color color) {
+    boolean isSameColor(final Position origin, Piece.Color color) {
         return map.get(origin).isSameColor(color);
     }
 
-    public boolean action(final Position origin, final Position target) {
+    boolean action(final Position origin, final Position target) {
         if (hasObstacle(origin, target)) {
             return false;
         }
@@ -27,7 +27,7 @@ public class Board {
         return isValidAttack(originSquare, targetSquare);
     }
 
-    boolean isValidAttack(final Square origin, final Square target) {
+    private boolean isValidAttack(final Square origin, final Square target) {
         if (!origin.isValidAttack(target)) {
             return false;
         }
