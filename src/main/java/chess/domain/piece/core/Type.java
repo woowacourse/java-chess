@@ -5,23 +5,29 @@ import chess.domain.piece.*;
 import java.util.function.Function;
 
 public enum Type {
-    KING("k", King::new),
-    QUEEN("q", Queen::new),
-    BISHOP("b", Bishop::new),
-    KNIGHT("N", Knight::new),
-    ROOK("r", Rook::new),
-    PAWN("p", Pawn::new);
+    KING("k", 0, King::new),
+    QUEEN("q", 9, Queen::new),
+    BISHOP("b", 3, Bishop::new),
+    KNIGHT("N", 2.5, Knight::new),
+    ROOK("r", 5, Rook::new),
+    PAWN("p", 1, Pawn::new);
 
     String type;
+    double score;
     Function<Team, Piece> creator;
 
-    Type(String type, Function<Team, Piece> creator) {
+    Type(String type, double score, Function<Team, Piece> creator) {
         this.type = type;
+        this.score = score;
         this.creator = creator;
     }
 
     public String getType() {
         return type;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     public Piece create(Team team) {
