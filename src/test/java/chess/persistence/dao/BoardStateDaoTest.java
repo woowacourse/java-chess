@@ -32,7 +32,7 @@ public class BoardStateDaoTest {
     void insertAndFindAndDelete() throws SQLException {
         GameSessionDto room = new GameSessionDto();
         room.setTitle("room for board state insert test");
-        room.setId(gameSessionDao.addRoom(room));
+        room.setId(gameSessionDao.addSession(room));
         BoardStateDto state = new BoardStateDto();
         state.setGameSessionId(room.getId());
         state.setType(PieceType.ROOK_WHITE.name());
@@ -53,7 +53,7 @@ public class BoardStateDaoTest {
     void findByRoomId() throws SQLException {
         GameSessionDto room = new GameSessionDto();
         room.setTitle("room for find board states test");
-        room.setId(gameSessionDao.addRoom(room));
+        room.setId(gameSessionDao.addSession(room));
         BoardStateDto state1 = new BoardStateDto();
         state1.setGameSessionId(room.getId());
         state1.setType(PieceType.ROOK_WHITE.name());
@@ -66,7 +66,7 @@ public class BoardStateDaoTest {
         state2.setGameSessionId(room.getId());
         state1.setId(boardStateDao.addState(state1));
         state2.setId(boardStateDao.addState(state2));
-        List<BoardStateDto> founds = boardStateDao.findByRoomId(room.getId());
+        List<BoardStateDto> founds = boardStateDao.findBySessionId(room.getId());
         assertThat(founds).hasSize(2);
         gameSessionDao.deleteById(room.getId());
     }
@@ -75,7 +75,7 @@ public class BoardStateDaoTest {
     void updateCoordById() throws SQLException {
         GameSessionDto room = new GameSessionDto();
         room.setTitle("room for update coordinate test");
-        room.setId(gameSessionDao.addRoom(room));
+        room.setId(gameSessionDao.addSession(room));
         BoardStateDto state = new BoardStateDto();
         state.setType(PieceType.ROOK_WHITE.name());
         state.setCoordX(CoordinateX.B.getSymbol());
@@ -96,7 +96,7 @@ public class BoardStateDaoTest {
     void findByRoomIdAndCoordinate() throws SQLException {
         GameSessionDto room = new GameSessionDto();
         room.setTitle("room for delete state test");
-        room.setId(gameSessionDao.addRoom(room));
+        room.setId(gameSessionDao.addSession(room));
         BoardStateDto state = new BoardStateDto();
         state.setType(PieceType.ROOK_WHITE.name());
         state.setCoordX(CoordinateX.B.getSymbol());

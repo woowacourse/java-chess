@@ -74,7 +74,7 @@ public class BoardStateDao {
         return state;
     }
 
-    public List<BoardStateDto> findByRoomId(long sessionId) throws SQLException {
+    public List<BoardStateDto> findBySessionId(long sessionId) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement query = connection.prepareStatement(BoardStateDaoSql.SELECT_BY_SESSION_ID)) {
             query.setLong(1, sessionId);
@@ -94,7 +94,7 @@ public class BoardStateDao {
 
     public Optional<BoardStateDto> findByRoomIdAndCoordinate(long sessionId, String coordX, String coordY) throws SQLException {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.SELECT_BY_ROOM_ID_AND_COORDINATE)) {
+             PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.SELECT_BY_SESSION_ID_AND_COORDINATE)) {
             query.setLong(1, sessionId);
             query.setString(2, coordX);
             query.setString(3, coordY);
@@ -133,7 +133,7 @@ public class BoardStateDao {
             "WHERE session_id=?";
         private static final String UPDATE_COORD_BY_ID = "UPDATE board_state SET loc_x=?, loc_y=? WHERE id=?";
         private static final String DELETE_BY_ID = "DELETE FROM board_state WHERE id=?";
-        private static final String SELECT_BY_ROOM_ID_AND_COORDINATE = "SELECT bs.id, loc_x, loc_y, piece_type, bs.reg_date, session_id FROM board_state bs\n" +
+        private static final String SELECT_BY_SESSION_ID_AND_COORDINATE = "SELECT bs.id, loc_x, loc_y, piece_type, bs.reg_date, session_id FROM board_state bs\n" +
             "JOIN play_in p\n" +
             "ON bs.id = p.board_state_id\n" +
             "WHERE SESSION_id=? AND\n" +

@@ -4,12 +4,14 @@ import chess.domain.*;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
 import chess.persistence.dto.BoardStateDto;
+import chess.service.dto.CoordinatePairDto;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameServiceImpl implements GameService {
 
@@ -21,9 +23,9 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<BoardStateDto> findBoardStatesByRoomId(long roomId) {
+    public List<BoardStateDto> findBoardStatesByRoomId(long sessionId) {
         try {
-            return boardStateDao.findByRoomId(roomId);
+            return boardStateDao.findBySessionId(sessionId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -31,15 +33,14 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameResult movePiece(CoordinatePair from, CoordinatePair to, long roomId) {
+    public GameResult movePiece(CoordinatePair from, CoordinatePair to, long sessionId) {
         try {
-            ChessGame game = new ChessGame(() -> findBoardStatesMapByRoomId(roomId));
-            GameResult result = GameResult.judge(game.getBoardState().values());
+            ChessGame game = new ChessGame(() -> findBoardStatesMapByRoomId(sessionId));
             game.move(from, to);
 
-            deleteTargetStateIfPresent(to, roomId);
-            updateSrcState(from, to, roomId);
-            return result;
+            deleteTargetStateIfPresent(to, sessionId);
+            updateSrcState(from, to, sessionId);
+            return GameResult.judge(game.getBoardState().values());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -52,7 +53,7 @@ public class GameServiceImpl implements GameService {
             Map<CoordinatePair, ChessPiece> board = new HashMap<>();
             CoordinatePair.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
 
-            boardStateDao.findByRoomId(roomId)
+            boardStateDao.findBySessionId(roomId)
                 .forEach(dto ->
                     board.put(CoordinatePair.from(dto.getCoordX() + dto.getCoordY()).get(),
                         factory.create(PieceType.valueOf(dto.getType()))));
@@ -71,6 +72,7 @@ public class GameServiceImpl implements GameService {
     private void tryDeleteBoardStateById(long id) {
         try {
             boardStateDao.deleteById(id);
+            return;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,5 +96,18 @@ public class GameServiceImpl implements GameService {
             e.printStackTrace();
         }
         throw new IllegalStateException();
+    }
+
+    @Override
+    public List<CoordinatePairDto> findMovableCoordinates(long sessionId, CoordinatePair from) {
+        GameBoardState state = findBoardStatesMapByRoomId(sessionId);
+        return state.at(from).getMovableCoordinates(coord -> state.at(coord).getType().getTeam(), from).stream()
+            .map(coord -> {
+                CoordinatePairDto dto = new CoordinatePairDto();
+                dto.setX(coord.getX().getSymbol());
+                dto.setY(coord.getY().getSymbol());
+                return dto;
+            })
+            .collect(Collectors.toList());
     }
 }

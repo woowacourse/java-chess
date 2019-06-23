@@ -15,11 +15,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class RoomServiceImpl implements RoomService {
+public class SessionServiceImpl implements SessionService {
     private GameSessionDao gameSessionDao;
     private BoardStateDao boardStateDao;
 
-    public RoomServiceImpl() {
+    public SessionServiceImpl() {
         DataSource ds = new DataSourceFactory().createDataSource();
         gameSessionDao = new GameSessionDao(ds);
         boardStateDao = new BoardStateDao(ds);
@@ -28,7 +28,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public GameSessionDto createRoom(GameSessionDto gameSessionDto) {
         try {
-            GameSessionDto createdRoom = gameSessionDao.findById(gameSessionDao.addRoom(gameSessionDto))
+            GameSessionDto createdRoom = gameSessionDao.findById(gameSessionDao.addSession(gameSessionDto))
                 .orElseThrow(() -> new IllegalStateException("방 생성에 실패했습니다."));
             createBoardState(new BoardStateFactory(), createdRoom.getId());
             return createdRoom;

@@ -31,7 +31,7 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+    public Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         return Arrays.stream(Direction.values())
             .flatMap(direction -> probeStraight(pieceTeamProvider, from, direction).stream())
             .collect(Collectors.toSet());

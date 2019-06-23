@@ -1,16 +1,16 @@
 package chess.conroller.dto;
 
 public class PieceMoveRequestDto {
-    private long roomId;
+    private long sessionId;
     private String from;
     private String to;
 
-    public long getRoomId() {
-        return roomId;
+    public long getSessionId() {
+        return sessionId;
     }
 
-    public void setRoomId(long roomId) {
-        this.roomId = roomId;
+    public void setSessionId(long sessionId) {
+        this.sessionId = sessionId;
     }
 
     public String getFrom() {

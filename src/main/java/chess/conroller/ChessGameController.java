@@ -1,27 +1,29 @@
 package chess.conroller;
 
 import chess.conroller.dto.PieceMoveRequestDto;
-import chess.conroller.dto.RoomCreationRequestDto;
+import chess.conroller.dto.SessionCreationRequestDto;
 import chess.domain.CoordinatePair;
 import chess.domain.GameResult;
 import chess.persistence.dto.GameSessionDto;
 import chess.service.GameService;
 import chess.service.GameServiceImpl;
-import chess.service.RoomService;
-import chess.service.RoomServiceImpl;
+import chess.service.SessionService;
+import chess.service.SessionServiceImpl;
+import chess.service.dto.CoordinatePairDto;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessGameController {
-    private static final RoomService ROOM_SERVICE;
+    private static final SessionService ROOM_SERVICE;
     private static final GameService GAME_SERVICE;
 
     static {
-        ROOM_SERVICE = new RoomServiceImpl();
+        ROOM_SERVICE = new SessionServiceImpl();
         GAME_SERVICE = new GameServiceImpl();
     }
 
@@ -46,7 +48,7 @@ public class ChessGameController {
     public static Map<String, Object> createRoom(Request req, Response res) {
         Map<String, Object> resMap;
         try {
-            RoomCreationRequestDto body = new Gson().fromJson(req.body(), RoomCreationRequestDto.class);
+            SessionCreationRequestDto body = new Gson().fromJson(req.body(), SessionCreationRequestDto.class);
             GameSessionDto room = new GameSessionDto();
             room.setTitle(body.getTitle());
             room = ROOM_SERVICE.createRoom(room);
@@ -122,11 +124,38 @@ public class ChessGameController {
     }
 
     /**
+     * 현재 상태에서 말이 이동 가능한 좌표를 조회
+     *
+     * @param req 요청 쿼리 문자열:
+     *            sessionId: 게임 세션 ID
+     *            from: 현재 위치
+     * @param res
+     * @return
+     */
+    public static Map<String, Object> movableCoordinates(Request req, Response res) {
+        Map<String, Object> resMap;
+        try {
+            List<CoordinatePairDto> coords = GAME_SERVICE.findMovableCoordinates(Long.valueOf(req.queryParams("sessionId")),
+                CoordinatePair.from(req.queryParams("from"))
+                    .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다: " + req.queryParams("from"))));
+            resMap = ResultState.OK.createResMap("");
+            resMap.put("movableCoordinates", coords);
+        } catch(NumberFormatException e) {
+            resMap = ResultState.FAIL.createResMap("숫자로 변환할 수 없는 인자가 있습니다.");
+        } catch (IllegalArgumentException e) {
+            resMap = ResultState.FAIL.createResMap(e.getMessage());
+        } catch (Exception e) {
+            resMap = ResultState.ERROR.createResMap(e.getMessage());
+        }
+        return resMap;
+    }
+
+    /**
      * 체스 말 이동을 요청
      *
      * @param req JSON 요청 예시:
      *            {
-     *            "roomId": 12,
+     *            "sessionId": 12,
      *            "from": "b2",
      *            "to": "b3"
      *            }
@@ -151,11 +180,11 @@ public class ChessGameController {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다: " + body.getFrom()));
             CoordinatePair coordTo = CoordinatePair.from(body.getTo())
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다: " + body.getTo()));
-            GameResult result = GAME_SERVICE.movePiece(coordFrom, coordTo, body.getRoomId());
+            GameResult result = GAME_SERVICE.movePiece(coordFrom, coordTo, body.getSessionId());
             resMap = ResultState.OK.createResMap("");
             Map<String, Object> stateMap = new HashMap<>();
             stateMap.put("result", result.name());
-            stateMap.put("board", GAME_SERVICE.findBoardStatesByRoomId(body.getRoomId()));
+            stateMap.put("board", GAME_SERVICE.findBoardStatesByRoomId(body.getSessionId()));
             resMap.put("state", stateMap);
         } catch (IllegalArgumentException e) {
             resMap = ResultState.FAIL.createResMap(e.getMessage());

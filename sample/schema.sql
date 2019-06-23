@@ -5,6 +5,7 @@ USE wtc_chess_db;
 CREATE TABLE game_session(
 	id INT NOT NULL AUTO_INCREMENT,
 	title VARCHAR(255) NOT NULL,
+	state VARCHAR(64) NOT NULL,
 	reg_date TIMESTAMP DEFAULT NOW(),
 	PRIMARY KEY(id)
 );

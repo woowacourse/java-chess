@@ -15,7 +15,7 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
         MysqlDataSource ds = new MysqlDataSource();
         ds.setUser(USER);
         ds.setPassword(PASSWORD);
-        ds.setUrl("jdbc:mysql://" + HOST + "/" + DB_NAME + "?serverTimezone=UTC&useSSL=false");
+        ds.setUrl("jdbc:mysql://" + HOST + "/" + DB_NAME + "?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false");
         return ds;
     }
 }

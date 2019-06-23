@@ -15,7 +15,7 @@ public abstract class ChessPiece {
         return type;
     }
 
-    abstract Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from);
+    public abstract Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from);
 
     /**
      * 인자로 명시된 방향으로 상대편, 아군 말 혹은 게임판의 끝까지 탐색

@@ -16,10 +16,11 @@ public class GameSessionDao {
         this.dataSource = ds;
     }
 
-    public long addRoom(GameSessionDto room) throws SQLException {
+    public long addSession(GameSessionDto sess) throws SQLException {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
-            query.setString(1, room.getTitle());
+            query.setString(1, sess.getTitle());
+            query.setString(2, sess.getState());
             return getGeneratedKey(query);
         }
     }
@@ -50,10 +51,11 @@ public class GameSessionDao {
     }
 
     private GameSessionDto mapResult(ResultSet rs) throws SQLException {
-        GameSessionDto room = new GameSessionDto();
-        room.setId(rs.getLong("id"));
-        room.setTitle(rs.getString("title"));
-        return room;
+        GameSessionDto sess = new GameSessionDto();
+        sess.setId(rs.getLong("id"));
+        sess.setTitle(rs.getString("title"));
+        sess.setState(rs.getString("state"));
+        return sess;
     }
 
     public Optional<GameSessionDto> findByTitle(String title) throws SQLException {
@@ -91,10 +93,10 @@ public class GameSessionDao {
     }
 
     private static class GameSessionDaoSql {
-        private static final String INSERT = "INSERT INTO game_session(title) VALUES(?)";
-        private static final String SELECT_BY_ID = "SELECT id, title FROM game_session WHERE id=?";
-        private static final String SELECT_BY_TITLE = "SELECT id, title FROM game_session WHERE title=?";
-        private static final String SELECT_LATEST_N = "SELECT id, title FROM game_session ORDER BY id DESC LIMIT ?";
+        private static final String INSERT = "INSERT INTO game_session(title, state) VALUES(?, ?)";
+        private static final String SELECT_BY_ID = "SELECT id, title, state FROM game_session WHERE id=?";
+        private static final String SELECT_BY_TITLE = "SELECT id, title, state FROM game_session WHERE title=?";
+        private static final String SELECT_LATEST_N = "SELECT id, title, state FROM game_session ORDER BY id DESC LIMIT ?";
         private static final String DELETE_BY_ID = "DELETE FROM game_session WHERE id=?";
     }
 }

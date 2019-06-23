@@ -1,6 +1,6 @@
 package chess.conroller.dto;
 
-public class RoomCreationRequestDto {
+public class SessionCreationRequestDto {
     public String getTitle() {
         return title;
     }

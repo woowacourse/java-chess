@@ -27,7 +27,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+    public Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         if (from.getY() == CoordinateY.RANK_1 || from.getY() == CoordinateY.RANK_8) {
             return Collections.emptySet();
         }
@@ -83,7 +83,7 @@ public class Pawn extends ChessPiece {
 
     private Optional<CoordinatePair> checkIfBlackFirstMove(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         if (getType().getTeam() == Team.BLACK &&
-            from.getY() == CoordinateY.RANK_8) {
+            from.getY() == CoordinateY.RANK_7) {
             return move2Cells(pieceTeamProvider, from, Direction.DOWN);
         }
         return Optional.empty();

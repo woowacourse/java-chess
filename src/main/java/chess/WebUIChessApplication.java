@@ -19,11 +19,12 @@ public class WebUIChessApplication {
 
         // AJAX 요청 시 CORS 적용
         options("/*", WebUIChessApplication::cors);
-        before((request, response) -> response.header("Access-Control-Allow-Origin", "localhost"));
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
-        get("/api/rooms", ChessGameController::retrieveRooms, gson::toJson);
-        get("/api/room/:id", ChessGameController::retrieveRoomById, gson::toJson);
-        post("/api/room", ChessGameController::createRoom, gson::toJson);
+        get("/api/sessions", ChessGameController::retrieveRooms, gson::toJson);
+        get("/api/session/:id", ChessGameController::retrieveRoomById, gson::toJson);
+        post("/api/session", ChessGameController::createRoom, gson::toJson);
+        get("/api/game/movable", ChessGameController::movableCoordinates, gson::toJson);
         put("/api/game/move", ChessGameController::movePiece, gson::toJson);
 
     }

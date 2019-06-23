@@ -2,6 +2,7 @@ package chess.persistence.dto;
 
 public class GameSessionDto {
     private long id;
+    private String state;
     private String title;
 
     public long getId() {
@@ -10,6 +11,14 @@ public class GameSessionDto {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getTitle() {

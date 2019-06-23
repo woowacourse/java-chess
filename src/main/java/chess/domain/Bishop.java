@@ -29,7 +29,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+    public Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         Set<CoordinatePair> movableCoordinates = probeStraight(pieceTeamProvider, from, Direction.LEFT_TOP);
         movableCoordinates.addAll(probeStraight(pieceTeamProvider, from, Direction.RIGHT_TOP));
         movableCoordinates.addAll(probeStraight(pieceTeamProvider, from, Direction.LEFT_BOTTOM));

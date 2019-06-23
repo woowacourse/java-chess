@@ -1,5 +1,6 @@
 package chess.persistence.dao;
 
+import chess.domain.GameResult;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dto.GameSessionDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +23,11 @@ public class GameSessionDaoTest {
     void insertAndFind() throws SQLException {
         GameSessionDto room = new GameSessionDto();
         room.setTitle("some room");
-        long insertedId = dao.addRoom(room);
+        room.setState(GameResult.KEEP.name());
+        long insertedId = dao.addSession(room);
         GameSessionDto found = dao.findById(insertedId).get();
         assertThat(found.getTitle()).isEqualTo(room.getTitle());
+        assertThat(found.getState()).isEqualTo(room.getState());
         dao.deleteById(insertedId);
     }
 
@@ -32,7 +35,7 @@ public class GameSessionDaoTest {
     void findByTitle() throws SQLException {
         GameSessionDto room = new GameSessionDto();
         room.setTitle("some other room");
-        long insertedId = dao.addRoom(room);
+        long insertedId = dao.addSession(room);
         Optional<GameSessionDto> maybeFound = dao.findByTitle("some other room");
         assertThat(maybeFound.isPresent()).isTrue();
         dao.deleteById(insertedId);
@@ -42,7 +45,7 @@ public class GameSessionDaoTest {
     void deleteById() throws SQLException {
         GameSessionDto room = new GameSessionDto();
         room.setTitle("some otheeeer room");
-        long insertedId = dao.addRoom(room);
+        long insertedId = dao.addSession(room);
         int affected = dao.deleteById(insertedId);
         assertThat(affected).isEqualTo(1);
         assertThat(dao.findById(insertedId).isPresent()).isFalse();

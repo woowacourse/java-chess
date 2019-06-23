@@ -28,7 +28,7 @@ public class King extends ChessPiece {
     }
 
     @Override
-    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+    public Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         return Arrays.stream(Direction.values())
             .map(direction -> direction.move(from))
             .filter(Optional::isPresent)

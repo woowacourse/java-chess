@@ -18,7 +18,7 @@ public class EmptyCell extends ChessPiece {
     }
 
     @Override
-    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+    public Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         throw new UnsupportedOperationException("이동할 수 없는 타입입니다");
     }
 }

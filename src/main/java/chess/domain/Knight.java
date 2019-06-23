@@ -28,7 +28,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
+    public Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         List<CoordinatePair> candidates = new ArrayList<>();
         candidates.addAll(checkTop(from));
         candidates.addAll(checkRight(from));
