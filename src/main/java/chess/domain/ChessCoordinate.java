@@ -28,7 +28,7 @@ public class ChessCoordinate {
         if (coordinateMap.containsKey(symbol)) {
             return coordinateMap.get(symbol);
         }
-        throw  new IllegalArgumentException("존재하지 않은 좌표입니다.");
+        throw new IllegalArgumentException("존재하지 않은 좌표입니다.");
     }
 
     public static ChessCoordinate valueOf(ChessXCoordinate x, ChessYCoordinate y) {

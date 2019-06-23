@@ -2,14 +2,14 @@ package chess.domain;
 
 import java.util.Set;
 
-public enum  ChessResult {
-    BLACK_WIN,WHITE_WIN,KEEP;
+public enum ChessResult {
+    BLACK_WIN, WHITE_WIN, KEEP;
 
     public static ChessResult judge(Set<PieceType> livingPieces) {
         boolean isBlackKingLiving = livingPieces.contains(PieceType.KING_BLACK);
         boolean isWhiteKingLiving = livingPieces.contains(PieceType.KING_WHITE);
 
-        if ( isBlackKingLiving && isWhiteKingLiving) {
+        if (isBlackKingLiving && isWhiteKingLiving) {
             return KEEP;
         }
         if (isBlackKingLiving) {

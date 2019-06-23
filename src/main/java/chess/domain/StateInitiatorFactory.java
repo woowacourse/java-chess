@@ -37,6 +37,4 @@ public class StateInitiatorFactory implements AbstractStateInitiatorFactory {
 
         return board;
     }
-
-
 }

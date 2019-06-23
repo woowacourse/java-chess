@@ -31,5 +31,4 @@ public class Rook extends ChessPiece {
 
         return probCross(pieceTeamProvider, from);
     }
-
 }

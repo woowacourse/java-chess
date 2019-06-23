@@ -30,7 +30,7 @@ public class RoomDao {
 
     public Optional<RoomDto> findById(long id) throws SQLException {
         try (Connection conn = dataSource.getConnection();
-            PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_BY_ID)) {
+             PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
             try (ResultSet rs = query.executeQuery()) {
                 if (!rs.next()) {
@@ -51,7 +51,7 @@ public class RoomDao {
 
     public Optional<RoomDto> findByTitle(String title) throws SQLException {
         try (Connection conn = dataSource.getConnection();
-            PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_BY_TITLE)) {
+             PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_BY_TITLE)) {
             query.setString(1, title);
             try (ResultSet rs = query.executeQuery()) {
                 if (!rs.next()) {
@@ -78,7 +78,7 @@ public class RoomDao {
 
     public int deleteById(long id) throws SQLException {
         try (Connection conn = dataSource.getConnection();
-            PreparedStatement query = conn.prepareStatement(RoomDaoSql.DELETE_BY_ID)) {
+             PreparedStatement query = conn.prepareStatement(RoomDaoSql.DELETE_BY_ID)) {
             query.setLong(1, id);
             return query.executeUpdate();
         }

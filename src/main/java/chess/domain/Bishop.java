@@ -31,5 +31,4 @@ public class Bishop extends ChessPiece {
 
         return probeAllDiagonal(pieceTeamProvider, from);
     }
-
 }

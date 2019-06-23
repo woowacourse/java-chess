@@ -33,7 +33,7 @@ public class BoardStateDao {
 
     public Optional<BoardStateDto> findById(long id) throws SQLException {
         try (Connection conn = dataSource.getConnection();
-            PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.SELECT_BY_ID)) {
+             PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
             try (ResultSet rs = query.executeQuery()) {
                 if (!rs.next()) {
@@ -57,7 +57,7 @@ public class BoardStateDao {
 
     public List<BoardStateDto> findByRoomId(long roomId) throws SQLException {
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement query = connection.prepareStatement(BoardStateDaoSql.SELECT_BY_ROOM_ID)) {
+             PreparedStatement query = connection.prepareStatement(BoardStateDaoSql.SELECT_BY_ROOM_ID)) {
             query.setLong(1, roomId);
             try (ResultSet rs = query.executeQuery()) {
                 List<BoardStateDto> founds = new ArrayList<>();
@@ -70,8 +70,8 @@ public class BoardStateDao {
     }
 
     public int updateCoordById(BoardStateDto state) throws SQLException {
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.UPDATE_COORD_BY_ID)) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.UPDATE_COORD_BY_ID)) {
             query.setString(1, state.getCoordX());
             query.setString(2, state.getCoordY());
             query.setLong(3, state.getId());
@@ -81,7 +81,7 @@ public class BoardStateDao {
 
     public int deleteById(long id) throws SQLException {
         try (Connection conn = dataSource.getConnection();
-            PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.DELETE_BY_ID)) {
+             PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.DELETE_BY_ID)) {
             query.setLong(1, id);
             return query.executeUpdate();
         }

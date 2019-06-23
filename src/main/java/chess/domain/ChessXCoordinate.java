@@ -42,7 +42,7 @@ public enum ChessXCoordinate {
         return Arrays.stream(values())
                 .filter(coord -> coord.index == index)
                 .findFirst()
-                .orElseThrow(() ->new IllegalArgumentException("지원하지 않는 죄표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("지원하지 않는 죄표입니다."));
     }
 
     public int getIndex() {

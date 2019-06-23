@@ -105,11 +105,11 @@ public class ChessService {
 
             boardStates.stream().filter(dto -> dto.getCoordX().equals(to.getX().getSymbol()))
                     .filter(dto -> dto.getCoordY().equals(to.getY().getSymbol())).findFirst().ifPresent(dto -> {
-                        try {
-                            boardStateDao.deleteById(dto.getId());
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
+                try {
+                    boardStateDao.deleteById(dto.getId());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             });
 
             boardStates.stream()

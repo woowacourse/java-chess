@@ -28,7 +28,6 @@ public class ChessGame {
         boardState.put(from, EmptyCell.getInstance());
     }
 
-
     Team getTeamAt(ChessCoordinate coord) {
         return this.boardState.get(coord).getType().getTeam();
     }
