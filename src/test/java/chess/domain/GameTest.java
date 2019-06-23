@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.pieces.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

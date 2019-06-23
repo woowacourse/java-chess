@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.pieces.Blank;
+import chess.domain.pieces.Piece;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -56,7 +59,7 @@ public class Game {
     }
 
     private boolean isBlank(Point position) {
-        return board.get(position).type.equals(BLANK);
+        return board.get(position).getType().equals(BLANK);
     }
 
     public Map<Point, Piece> getBoard() {
@@ -66,13 +69,13 @@ public class Game {
     public double calculateScore(Team team) {
         return calculatePawnScore(team) + board.values().stream()
                 .filter(piece -> piece.isSameTeam(team))
-                .mapToDouble(piece -> piece.type.getScore())
+                .mapToDouble(piece -> piece.getType().getScore())
                 .sum();
     }
 
     public boolean isKingAlive() {
         List<Piece> pieces = board.values().stream()
-                .filter(piece -> piece.type.equals(KING))
+                .filter(piece -> piece.getType().equals(KING))
                 .collect(Collectors.toList());
         return pieces.size() == KING_COUNT;
     }
@@ -82,8 +85,8 @@ public class Game {
 
         List<Point> pawnPosition = board.keySet().stream()
                 .filter(point -> board.get(point).isSameTeam(team))
-                .filter(point -> board.get(point).type.equals(WHITE_PAWN)
-                        || board.get(point).type.equals(BLACK_PAWN))
+                .filter(point -> board.get(point).getType().equals(WHITE_PAWN)
+                        || board.get(point).getType().equals(BLACK_PAWN))
                 .collect(Collectors.toList());
 
         //TODO: index를 변경 필요

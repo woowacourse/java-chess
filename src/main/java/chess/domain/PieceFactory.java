@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.pieces.*;
+
 import java.util.Arrays;
 import java.util.List;
 

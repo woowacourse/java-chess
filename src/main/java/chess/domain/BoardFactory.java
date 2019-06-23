@@ -1,5 +1,9 @@
 package chess.domain;
 
+import chess.domain.pieces.Blank;
+import chess.domain.pieces.Pawn;
+import chess.domain.pieces.Piece;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

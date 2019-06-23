@@ -1,7 +1,11 @@
-package chess.domain;
+package chess.domain.pieces;
+
+import chess.domain.Direction;
+import chess.domain.Point;
+import chess.domain.Team;
+import chess.domain.Type;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 

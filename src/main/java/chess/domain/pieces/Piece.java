@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.pieces;
+
+import chess.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ public abstract class Piece {
         this.type = type;
     }
 
-    protected List<Point> move(Point start, Point end) {
+    public List<Point> move(Point start, Point end) {
         List<Point> points = new ArrayList<>();
         Navigator navigator = new Navigator(start, end);
         Direction direction = navigator.getDirection(type.getDirections());
@@ -26,16 +28,20 @@ public abstract class Piece {
         return points;
     }
 
-    protected List<Point> attack(Point start, Point end) {
+    public List<Point> attack(Point start, Point end) {
         return move(start, end);
     }
 
-    boolean isSameTeam(Piece endPiece) {
+    public boolean isSameTeam(Piece endPiece) {
         return this.team == endPiece.team;
     }
 
-    boolean isSameTeam(Team team) {
+    public boolean isSameTeam(Team team) {
         return this.team == team;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     @Override

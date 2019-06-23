@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.pieces;
 
+import chess.domain.Point;
+import chess.domain.Team;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
