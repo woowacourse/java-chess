@@ -56,8 +56,8 @@ public class ChessController {
     public Object action(Request req, Response res) {
         Game game = req.session().attribute("game");
 
-        Position origin = PositionConverter.convert(req.queryParams("origin"));
-        Position target = PositionConverter.convert(req.queryParams("target"));
+        String origin = req.queryParams("origin");
+        String target = req.queryParams("target");
         long roomId = Long.parseLong(req.queryParams("roomId"));
 
         chessService.action(game, origin, target, roomId);
@@ -65,18 +65,6 @@ public class ChessController {
 
         res.redirect("/chess/show?roomId=" + roomId);
         return null;
-    }
-
-    public Object end(final Request req, final Response res) {
-        Map<String, Object> model = new HashMap<>();
-        long roomId = Long.parseLong(req.queryParams("roomId"));
-        Game game = req.session().attribute("game");
-        String winner = game.currentColor();
-
-        roomService.updateStatus(roomId, winner);
-
-        model.put("winner", winner);
-        return render(model, "end.html");
     }
 
     public Map<String, Object> end(final Request req) {

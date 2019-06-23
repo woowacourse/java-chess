@@ -23,7 +23,9 @@ public class ChessService {
         return Game.from(board);
     }
 
-    public boolean action(final Game game, final Position origin, final Position target, final long roomId) {
+    public boolean action(final Game game, final String originInput, final String targetInput, final long roomId) {
+        final Position origin = convertToPosition(originInput);
+        final Position target = convertToPosition(targetInput);
         if (game.action(origin, target)) {
             CommandDto commandDto = new CommandDto();
             commandDto.setOrigin(origin.toString());
@@ -36,17 +38,13 @@ public class ChessService {
         return false;
     }
 
-    public List<Square> getSquares(final Game game) {
-        return game.values();
-    }
-
     public Game load(final long roomId) {
         Board board = new Board(BoardGenerator.generate());
         Game game = Game.from(board);
         List<CommandDto> commandDtos = findByRoomId(roomId);
         for (final CommandDto commandDto : commandDtos) {
-            Position origin = PositionConverter.convert(commandDto.getOrigin());
-            Position target = PositionConverter.convert(commandDto.getTarget());
+            Position origin = convertToPosition(commandDto.getOrigin());
+            Position target = convertToPosition(commandDto.getTarget());
             game.action(origin, target);
         }
         return game;
@@ -54,5 +52,13 @@ public class ChessService {
 
     private List<CommandDto> findByRoomId(final long roomId) {
         return commandDao.findByRoomId(roomId);
+    }
+
+    private Position convertToPosition(final String input) {
+        return PositionConverter.convert(input);
+    }
+
+    public List<Square> getSquares(final Game game) {
+        return game.values();
     }
 }
