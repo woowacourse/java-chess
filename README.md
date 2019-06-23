@@ -1,8 +1,7 @@
 # java-chess
 ### Todo
 * 전체적으로 Refactor
-* Move 중복 제거
-* 수학 관련 메소드 분리
+    * Move 중복 제거
 
 ### Done
 * Board 초기화

@@ -142,4 +142,13 @@ public class GameTest {
         Game game = new Game(board);
         assertThat(game.calculateScore(Team.WHITE)).isEqualTo(2.0);
     }
+
+    @Test
+    void 폰_대각선_이동_불가능() {
+        Map<Point, Piece> board = new HashMap<>();
+        board.put(new Point("a2"), new Pawn(Team.WHITE));
+        board.put(new Point("c3"), new Pawn(Team.BLACK));
+        Game game = new Game(board);
+        assertThrows(IllegalArgumentException.class, () -> game.move(new Point("a2"), new Point("c3")));
+    }
 }

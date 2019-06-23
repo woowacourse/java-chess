@@ -32,7 +32,12 @@ public class Pawn extends Piece {
 
     @Override
     public List<Point> attack(Point start, Point end) {
-        return Arrays.asList(end);
+        List<Point> points = new ArrayList<>();
+        Point vector = start.makeVector(end);
+        if (type.getDirections().contains(Direction.findDirection(vector))) {
+            points.add(end);
+        }
+        return points;
     }
 
     private boolean isOneStep(Point start, Point end, Direction foundDirection) {

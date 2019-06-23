@@ -95,4 +95,10 @@ public class PawnTest {
         Piece pawn = new Pawn(Team.BLACK);
         assertThat(pawn.move(new Point("a6"), new Point("a4")).size()).isEqualTo(0);
     }
+
+    @Test
+    void 흰색팀_대각선_이동_불가능() {
+        Piece pawn = new Pawn(Team.WHITE);
+        assertThat(pawn.attack(new Point("a2"), new Point("c3")).size()).isEqualTo(0);
+    }
 }
