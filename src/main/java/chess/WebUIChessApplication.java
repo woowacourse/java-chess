@@ -19,58 +19,60 @@ import java.util.Map;
 
 import static spark.Spark.*;
 
+//TODO Squares DTO 고려
+//TODO 합계 고려
+//TODO 제어 고려
 public class WebUIChessApplication {
-    public static void main(String[] args) throws Exception {
-        staticFiles.location("/static");
+	public static void main(String[] args) throws Exception {
+		staticFiles.location("/static");
 
-        DataSource dataSource = DataSource.getInstance();
-        DbConnector dbConnector = new DbConnector(dataSource);
-        TableCreator tableCreator = new TableCreator(dbConnector);
+		DataSource dataSource = DataSource.getInstance();
+		DbConnector dbConnector = new DbConnector(dataSource);
+		TableCreator tableCreator = new TableCreator(dbConnector);
+		tableCreator.create();
 
-        tableCreator.create();
+		CommandDao commandDao = CommandDao.from(dbConnector);
+		RoomDao roomDao = RoomDao.from(dbConnector);
 
-        CommandDao commandDao = CommandDao.from(dbConnector);
-        RoomDao roomDao = RoomDao.from(dbConnector);
+		ChessService chessService = new ChessService(commandDao, roomDao);
+		RoomService roomService = new RoomService(roomDao);
 
-        ChessService chessService = new ChessService(commandDao, roomDao);
-        RoomService roomService = new RoomService(roomDao);
+		ChessController chessController = new ChessController(chessService, roomService);
+		MainController mainController = new MainController(roomService);
 
-        ChessController chessController = new ChessController(chessService, roomService);
-        MainController mainController = new MainController(roomService);
+		get("/", (req, res) -> render(mainController.processMain(), "main.html"));
 
-        get("/", mainController::main);
+		get("/chess/start", (req, res) ->
+				render(chessController.initialize(req), "board.html")
+		);
 
-        get("/chess/start", chessController::initialize);
+		get("/chess/show", (req, res) ->
+				render(chessController.show(req), "board.html")
+		);
 
-        get("/chess", chessController::show);
+		post("/chess/action", chessController::action);
 
-        post("/chess", chessController::action);
+		get("/end", (req, res) -> render(chessController.end(req), "end.html"));
 
-        get("/end", chessController::end);
+		get("/chess/load", chessController::load);
 
-        get("/chess/load", chessController::load);
+		get("/chess/score", (req, res) ->
+				render(chessController.score(req), "score.html")
+		);
 
-        get("/chess/score", chessController::score);
+		exception(ExitException.class, (exception, req, res) -> {
+			long roomId = Long.parseLong(req.queryParams("roomId"));
+			res.redirect("/end?roomId=" + roomId);
+		});
 
-        exception(ExitException.class, (exception, req, res) -> {
-            long roomId = Long.parseLong(req.queryParams("roomId"));
-            res.redirect("/end?roomId=" + roomId);
-        });
+		exception(Exception.class, (exception, req, res) -> {
+			String roomId = req.queryParams("roomId");
+			res.redirect("/chess/show?roomId=" + roomId);
+		});
 
-        exception(Exception.class, (exception, req, res) -> {
-            String message = null;
-            String roomId = req.queryParams("roomId");
-            try {
-                message = URLEncoder.encode(exception.getMessage(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            res.redirect("/chess?roomId=" + roomId + "&message=" + message);
-        });
+	}
 
-    }
-
-    public static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
+	public static String render(Map<String, Object> model, String templatePath) {
+		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+	}
 }

@@ -8,9 +8,9 @@
 
 <button onclick="location.href='/chess/start'"> 시작하기</button>
 
-<h2>이어하기</h2>
+<h2>진행중인 게임 이어하기</h2>
 {{#roomDtos}}
-<button onclick="location.href='/chess/load?roomId={{this.id}}'">{{this.id}}</button>
+<button onclick="location.href='/chess/load?roomId={{this.id}}'">{{this.id}}회 게임</button>
 <br>
 {{/roomDtos}}
 

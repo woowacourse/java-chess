@@ -1,13 +1,17 @@
 package chess.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ScoreCalculator {
+    private static final char START_COLUMN = 'a';
+    private static final char LAST_COLUMN = 'h';
+
     private final List<Square> squares;
 
     public ScoreCalculator(final List<Square> squares) {
-        this.squares = squares;
+        this.squares = new ArrayList<>(squares);
     }
 
     public double getScore(final Piece.Color color) {
@@ -18,24 +22,27 @@ public class ScoreCalculator {
         return colorScore(temp);
     }
 
-    private double colorScore(List<Square> squares) {
+    private double colorScore(final List<Square> squares) {
         double sum = 0;
-        List<Square> notPawnList = squares.stream()
-                .filter(square -> !square.isPawn())
+        List<Square> pawnList = squares.stream()
+                .filter(square -> square.isPawn())
                 .collect(Collectors.toList());
+        sum += sumOfPawn(squares);
 
-        for (final Square square : notPawnList) {
+        List<Square> others = squares.stream()
+                .filter(square -> !pawnList.contains(square))
+                .collect(Collectors.toList());
+        for (final Square square : others) {
             sum += square.getScore();
         }
-        squares.removeAll(notPawnList);
-        sum += sumOfPawn(squares);
+
         return sum;
     }
 
 
     private double sumOfPawn(List<Square> pawns) {
         double sum = 0;
-        for (int i = 'a'; i <= 'h'; i++) {
+        for (int i = START_COLUMN; i <= LAST_COLUMN; i++) {
             sum += sumOfPawn(i, pawns);
         }
         return sum;

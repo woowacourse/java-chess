@@ -40,13 +40,10 @@ public class ChessService {
         return game.values();
     }
 
-    public List<CommandDto> findByRoomId(final long roomId) {
-        return commandDao.findByRoomId(roomId);
-    }
-
-    public Game load(final List<CommandDto> commandDtos) {
+    public Game load(final long roomId) {
         Board board = new Board(BoardGenerator.generate());
         Game game = Game.from(board);
+        List<CommandDto> commandDtos = findByRoomId(roomId);
         for (final CommandDto commandDto : commandDtos) {
             Position origin = PositionConverter.convert(commandDto.getOrigin());
             Position target = PositionConverter.convert(commandDto.getTarget());
@@ -55,4 +52,7 @@ public class ChessService {
         return game;
     }
 
+    private List<CommandDto> findByRoomId(final long roomId) {
+        return commandDao.findByRoomId(roomId);
+    }
 }

@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandDao {
-
-    public static final int DEFAULT_START_ROUND = 1;
+    private static final int DEFAULT_START_ROUND = 1;
     private final DbConnector dbConnector;
 
     private CommandDao(final DbConnector dbConnector) {
@@ -22,7 +21,6 @@ public class CommandDao {
     public static CommandDao from(final DbConnector dbConnector) {
         return new CommandDao(dbConnector);
     }
-
 
     public void add(final CommandDto commandDto) {
         String sql = "INSERT INTO command (origin, target, round, room_id) VALUES(?,?,?,?)";
@@ -57,7 +55,8 @@ public class CommandDao {
         return commandDtos;
     }
 
-    private PreparedStatement createPreparedStatementForFindByRoomId(final Connection conn, final long roomId) throws SQLException {
+    private PreparedStatement createPreparedStatementForFindByRoomId(
+            final Connection conn, final long roomId) throws SQLException {
         String sql = "SELECT * FROM command WHERE room_id = ? ORDER BY round";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setLong(1, roomId);

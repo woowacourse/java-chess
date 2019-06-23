@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class RoomDao {
-
 	private final DbConnector dbConnector;
 
 	private RoomDao(final DbConnector dbConnector) {
@@ -26,8 +25,8 @@ public class RoomDao {
 	public void add() {
 		String sql = "INSERT INTO room () VALUES()";
 		try (Connection conn = dbConnector.getConnection();
-		     PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.executeUpdate();
+		     PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -36,8 +35,8 @@ public class RoomDao {
 	public Optional<RoomDto> findById(final long id) {
 		RoomDto roomDto = null;
 		try (Connection conn = dbConnector.getConnection();
-		     PreparedStatement pstmt = createPreparedStatementForFindById(conn, id);
-		     ResultSet rs = pstmt.executeQuery()) {
+		     PreparedStatement ps = createPreparedStatementForFindById(conn, id);
+		     ResultSet rs = ps.executeQuery()) {
 			if (rs.next()) {
 				roomDto = new RoomDto();
 				roomDto.setId(rs.getLong("id"));
@@ -50,19 +49,20 @@ public class RoomDao {
 		return Optional.ofNullable(roomDto);
 	}
 
-	private PreparedStatement createPreparedStatementForFindById(final Connection conn, final long id) throws SQLException {
+	private PreparedStatement createPreparedStatementForFindById(
+			final Connection conn, final long id) throws SQLException {
 		String sql = "SELECT * FROM room WHERE id = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setLong(1, id);
-		return pstmt;
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setLong(1, id);
+		return ps;
 	}
 
 	public List<RoomDto> findAllByStatus(final boolean status) {
 		List<RoomDto> roomDtos = new ArrayList<>();
 
 		try (Connection conn = dbConnector.getConnection();
-		     PreparedStatement pstmt = createPreparedStatementForFindByStatus(conn, status);
-		     ResultSet rs = pstmt.executeQuery()) {
+		     PreparedStatement ps = createPreparedStatementForFindByStatus(conn, status);
+		     ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
 				RoomDto roomDto = new RoomDto();
 				roomDto.setId(rs.getLong("id"));
@@ -79,18 +79,18 @@ public class RoomDao {
 	private PreparedStatement createPreparedStatementForFindByStatus(
 			final Connection conn, final boolean status) throws SQLException {
 		String sql = "SELECT * FROM room WHERE status = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setBoolean(1, status);
-		return pstmt;
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setBoolean(1, status);
+		return ps;
 	}
 
 	public void updateStatus(final long id, final String winner) {
 		String sql = "UPDATE room SET status = TRUE, winner = ? WHERE id = ?";
 		try (Connection conn = dbConnector.getConnection();
-		     PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, winner);
-			pstmt.setLong(2, id);
-			pstmt.executeUpdate();
+		     PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, winner);
+			ps.setLong(2, id);
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -99,8 +99,8 @@ public class RoomDao {
 	public Optional<Long> getLatestId() {
 		String sql = "SELECT id FROM room ORDER BY id DESC LIMIT 1";
 		try (Connection conn = dbConnector.getConnection();
-		     PreparedStatement pstmt = conn.prepareStatement(sql);
-		     ResultSet rs = pstmt.executeQuery()) {
+		     PreparedStatement ps = conn.prepareStatement(sql);
+		     ResultSet rs = ps.executeQuery()) {
 			if (rs.next()) {
 				return Optional.of(rs.getLong("id"));
 			}
@@ -113,19 +113,19 @@ public class RoomDao {
 	public void deleteAll() {
 		String sql = "DELETE FROM room";
 		try (Connection conn = dbConnector.getConnection();
-		     PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.executeUpdate();
+		     PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.executeUpdate();
 			initializeIncrement(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void initializeIncrement(final Connection conn)  {
+	public void initializeIncrement(final Connection conn) {
 		String sql = "ALTER TABLE room ALTER COLUMN id RESTART WITH 1";
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.executeUpdate();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

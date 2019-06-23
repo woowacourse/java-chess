@@ -1,38 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>체스</title>
-
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/css/board.css">
 </head>
+
 <body>
-
-<h3>{{currentColor}}턴 입니다.</h3>
-<main>
-    <div class="grid board">
-        {{#board}}
-        <div class="grid__item piece">{{this.symbol}}</div>
-        {{/board}}
-    </div>
-</main>
-
-<div>
-    <button onclick="location.href='/chess/score?roomId={{roomId}}'">점수보기</button>
-    <button onclick="location.href='/'">메인으로</button>
-</div>
-
-
-<div class="controls">
-    <form method="post" action="/chess">
-        <input type="hidden" name="roomId" value="{{roomId}}">
-        <div>
-            origin <input type="text" name="origin" placeholder="a8"><br>
-            target <input type="text" name="target" placeholder="b8"><br>
-            <button type="submit">이동</button>
+    <section>
+            <div class="grid temp">
+                    <div class="grid__item">1</div>
+                    <div class="grid__item">2</div>
+                    <div class="grid__item">3</div>
+                    <div class="grid__item">4</div>
+                    <div class="grid__item">5</div>
+                    <div class="grid__item">6</div>
+                    <div class="grid__item">7</div>
+                    <div class="grid__item">8</div>
+            </div>
+        <div class="grid board">
+            {{#board}}
+            <div class="grid__item piece">{{this.symbol}}</div>
+            {{/board}}
+            <div class="grid__item">a</div>
+            <div class="grid__item">b</div>
+            <div class="grid__item">c</div>
+            <div class="grid__item">d</div>
+            <div class="grid__item">e</div>
+            <div class="grid__item">f</div>
+            <div class="grid__item">g</div>
+            <div class="grid__item">h</div>
         </div>
-    </form>
-</div>
+    </section>
+
+    <div class="below">
+
+        <h3>{{currentColor}}턴 입니다.</h3>
+        <div class="">
+            <button onclick="location.href='/chess/score?roomId={{roomId}}'">점수보기</button>
+            <button onclick="location.href='/'">메인으로</button>
+        </div>
+
+        <div class="controls">
+            <form method="post" action="/chess/action">
+                <input type="hidden" name="roomId" value="{{roomId}}">
+                <div>
+                    from <input type="text" name="origin" placeholder="a8"><br>
+                    to <input type="text" name="target" placeholder="b8"><br>
+                </div>
+                <div>
+                    <button type="submit">이동</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </body>
+
 </html>

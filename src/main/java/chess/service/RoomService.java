@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RoomService {
+    private static final boolean ONGOING_STATUS = false;
     private RoomDao roomDao;
 
     public RoomService(final RoomDao roomDao) {
@@ -22,7 +23,7 @@ public class RoomService {
         roomDao.updateStatus(roomId, color);
     }
 
-    public List<RoomDto> findAllByStatus(final boolean status) {
-        return roomDao.findAllByStatus(status);
+    public List<RoomDto> findAllByOngoing() {
+        return roomDao.findAllByStatus(ONGOING_STATUS);
     }
 }
