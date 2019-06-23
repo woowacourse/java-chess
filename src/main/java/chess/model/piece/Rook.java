@@ -8,27 +8,22 @@ import chess.model.Vector;
 import java.util.*;
 
 import static chess.model.Direction.*;
+import static chess.model.Direction.WEST;
 
-// TODO: 2019-06-22 cloneSelf를 꼭 써야할까?
-public class Queen implements Piece {
+public class Rook implements Piece {
     private static final Set<Direction> movableDirections;
 
     static {
         movableDirections = new HashSet<>();
         movableDirections.add(NORTH);
-        movableDirections.add(NORTHEAST);
-        movableDirections.add(NORTHWEST);
         movableDirections.add(SOUTH);
-        movableDirections.add(SOUTHWEST);
-        movableDirections.add(SOUTHEAST);
         movableDirections.add(EAST);
         movableDirections.add(WEST);
     }
 
     private String team;
 
-    public Queen(String team) {
-        //todo produceRoute 로직 funtional interface로 빼기
+    public Rook(String team) {
         validateInput(team);
         this.team = team;
     }
@@ -41,7 +36,6 @@ public class Queen implements Piece {
             throw new IllegalArgumentException("없는 팀입니다!");
         }
     }
-
 
     @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
@@ -73,26 +67,6 @@ public class Queen implements Piece {
                     routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(0)));
                 }
             }
-            if (vector.getDirection() == SOUTHEAST) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(-i)));
-                }
-            }
-            if (vector.getDirection() == SOUTHWEST) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(-i)));
-                }
-            }
-            if (vector.getDirection() == NORTHEAST) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(i)));
-                }
-            }
-            if (vector.getDirection() == NORTHWEST) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(i)));
-                }
-            }
 
             return new Route(routes);
         }
@@ -120,7 +94,7 @@ public class Queen implements Piece {
 
     @Override
     public Piece cloneSelf() {
-        return new Queen(team);
+        return new Bishop(team);
     }
 
     @Override
@@ -132,8 +106,8 @@ public class Queen implements Piece {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Queen queen = (Queen) o;
-        return Objects.equals(team, queen.team);
+        Rook rook = (Rook) o;
+        return Objects.equals(team, rook.team);
     }
 
     @Override
