@@ -2,6 +2,9 @@ package chess.domain;
 
 import chess.domain.RuleImpl.*;
 
+import java.util.Arrays;
+import java.util.function.Predicate;
+
 public enum PieceSymbol {
 	WHITE_PAWN(Piece.Color.WHITE, Pawn.NAME, "♙"),
 	WHITE_BISHOP(Piece.Color.WHITE, Bishop.NAME, "♗"),
@@ -30,11 +33,22 @@ public enum PieceSymbol {
 	}
 
 	public static String getSymbol(Piece.Color color, Rule rule) {
-		for (final PieceSymbol pieceSymbol : values()) {
-			if (pieceSymbol.color == color && pieceSymbol.name.equals(rule.getName())) {
-				return pieceSymbol.symbol;
-			}
-		}
-		return EMPTY_SYMBOL;
+		return Arrays.asList(values())
+				.stream()
+				.filter(findSymbol(color, rule))
+				.map(pieceSymbol -> pieceSymbol.symbol)
+				.findFirst().orElse(EMPTY_SYMBOL);
+	}
+
+	private static Predicate<PieceSymbol> findSymbol(Piece.Color color, Rule rule) {
+		return symbol -> isSameColor(color, symbol) && isSameName(rule, symbol);
+	}
+
+	private static boolean isSameName(Rule rule, PieceSymbol symbol) {
+		return symbol.name.equals(rule.getName());
+	}
+
+	private static boolean isSameColor(Piece.Color color, PieceSymbol symbol) {
+		return symbol.color == color;
 	}
 }
