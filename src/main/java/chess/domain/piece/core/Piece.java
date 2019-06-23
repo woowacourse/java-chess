@@ -46,7 +46,7 @@ public abstract class Piece {
     }
 
     public boolean isType(Type type) {
-        return thos.type.equals(type);
+        return this.type.equals(type);
     }
 
     public Team getTeam() {
