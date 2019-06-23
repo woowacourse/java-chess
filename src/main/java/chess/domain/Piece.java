@@ -5,6 +5,7 @@ import chess.domain.RuleImpl.King;
 import chess.domain.RuleImpl.Pawn;
 import chess.domain.RuleImpl.Rule;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Piece {
@@ -39,12 +40,7 @@ public class Piece {
 	}
 
 	public boolean isPawn() {
-		for (Rule rule : Pawn.values()) {
-			if (this.rule == rule) {
-				return true;
-			}
-		}
-		return false;
+		return Arrays.asList(Pawn.values()).contains(this.rule);
 	}
 
 	public boolean isValidMove(final Position origin, final Position target) {

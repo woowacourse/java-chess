@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Board {
+	private static final int BOUND_OF_OBSTACLES = 0;
 	private final Map<Position, Square> map;
 
 	public Board(final Map<Position, Square> map) {
@@ -44,15 +45,12 @@ public class Board {
 		return origin.movePiece(target);
 	}
 
-	//TODO 2 -> 1
 	private boolean hasObstacle(final Position origin, final Position target) {
-		for (Position route : origin.findRoutes(target)) {
-			final boolean empty = map.get(route).isEmpty();
-			if (!empty) {
-				return true;
-			}
-		}
-		return false;
+		long test = origin.findRoutes(target).stream()
+				.filter(route -> !map.get(route).isEmpty())
+				.count();
+
+		return (test > BOUND_OF_OBSTACLES);
 	}
 
 	public List<Square> values() {
