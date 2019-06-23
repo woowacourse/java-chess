@@ -36,7 +36,7 @@ class RookTest {
     }
 
     @Test
-    void 흰색_폰_대각선_전진_에러() {
+    void 룩_대각선_전진_에러() {
         assertThrows(RuntimeException.class, () ->
                 rook.pathOf(Tile.of("d4"), Tile.of("e5"), false)
         );
