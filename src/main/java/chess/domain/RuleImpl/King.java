@@ -21,10 +21,10 @@ public class King extends AbstractRule {
 	}
 
 	private boolean isLengthOne(final Position origin, final Position target) {
-		return origin.isMoveAnyWhereSum(target, 1);
+		return origin.isSameSumOfPosition(target, 1);
 	}
 
 	private boolean isLengthTwo(final Position origin, final Position target) {
-		return origin.isMoveAnyWhereSum(target, 2) && origin.isMoveAnyWhereSub(target, 0);
+		return origin.isSameSumOfPosition(target, 2) && origin.isSameSubOfPosition(target, 0);
 	}
 }

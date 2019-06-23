@@ -38,7 +38,8 @@ public enum Pawn implements Rule {
 			return false;
 		}
 		final int vector = origin.vectorOfRow(target);
-		return origin.sumRowAndColumn(target) == 2 && isSameSign(vector);
+//		return origin.sumRowAndColumn(target) == 2 && isSameSign(vector);
+		return origin.isSameSumOfPosition(target, 2) && isSameSign(vector);
 	}
 
 	private boolean isSameSign(final int vector) {

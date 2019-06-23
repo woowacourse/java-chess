@@ -17,6 +17,6 @@ public class Knight extends AbstractRule {
 
 	@Override
 	public boolean isValidMove(final Position origin, final Position target) {
-		return origin.isMoveAnyWhereSum(target, 3) && origin.isMoveAnyWhereSub(target, 1);
+		return origin.isSameSumOfPosition(target, 3) && origin.isSameSubOfPosition(target, 1);
 	}
 }
