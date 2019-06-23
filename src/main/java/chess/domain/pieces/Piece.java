@@ -40,8 +40,12 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public Type getType() {
-        return type;
+    public double getScore() {
+        return type.getScore();
+    }
+
+    public boolean isSameType(Type type) {
+        return this.type == type;
     }
 
     @Override
