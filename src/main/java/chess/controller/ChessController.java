@@ -75,6 +75,8 @@ public class ChessController {
 		roomService.updateStatus(roomId, winner);
 
 		model.put("winner", winner);
+		model.put("whiteScore", game.scoreOfColor(Piece.Color.WHITE));
+		model.put("blackScore", game.scoreOfColor(Piece.Color.BLACK));
 		return model;
 	}
 

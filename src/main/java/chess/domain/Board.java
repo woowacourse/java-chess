@@ -44,6 +44,7 @@ public class Board {
 		return origin.movePiece(target);
 	}
 
+	//TODO 2 -> 1
 	private boolean hasObstacle(final Position origin, final Position target) {
 		for (Position route : origin.findRoutes(target)) {
 			final boolean empty = map.get(route).isEmpty();
