@@ -4,6 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <title>체스 방</title>
+
+    <style>
+        .board_b {
+            background-color: brown;
+            width: 45px;
+            height: 45px;
+            display: inline-block;
+        }
+
+        .board_w {
+            background-color: burlywood;
+            width: 45px;
+            height: 45px;
+            display: inline-block;
+        }
+    </style>
+
+
+
 </head>
 
 <body>
@@ -13,52 +32,52 @@
     </div>
 
     <div>
-        <textarea name="" id="game-board" cols="20" rows="10" data-id="{{id}}" readonly></textarea>
         from : <input type="text" id="from" />
         to : <input type="text" id="to" />
         <button id="btn_move">이동</button>
+        <div id="board"></div>
     </div>
 
     <script>
         function stateToString(pieceType) {
             if (pieceType == "NONE") {
-                return ".";
+                return "/images/empty.png";
             }
             if (pieceType == "ROOK_WHITE") {
-                return "r";
+                return "/images/rook_w.png";
             }
             if (pieceType == "KNIGHT_WHITE") {
-                return "n";
+                return "/images/knight_w.png";
             }
             if (pieceType == "BISHOP_WHITE") {
-                return "b";
+                return "/images/bishop_w.png";
             }
             if (pieceType == "QUEEN_WHITE") {
-                return "q";
+                return "/images/queen_w.png";
             }
             if (pieceType == "KING_WHITE") {
-                return "k";
+                return "/images/king_w.png";
             }
             if (pieceType == "PAWN_WHITE") {
-                return "p";
+                return "/images/pawn_w.png";
             }
             if (pieceType == "ROOK_BLACK") {
-                return "R";
+                return "/images/rook_b.png";
             }
             if (pieceType == "KNIGHT_BLACK") {
-                return "N";
+                return "/images/knight_b.png";
             }
             if (pieceType == "BISHOP_BLACK") {
-                return "B";
+                return "/images/bishop_b.png";
             }
             if (pieceType == "QUEEN_BLACK") {
-                return "Q";
+                return "/images/queen_b.png";
             }
             if (pieceType == "KING_BLACK") {
-                return "K";
+                return "/images/king_b.png";
             }
             if (pieceType == "PAWN_BLACK") {
-                return "P";
+                return "/images/pawn_b.png";
             }
         }
         let id = document.getElementById("game-board").getAttribute("data-id");
@@ -72,7 +91,7 @@
             let to = document.getElementById("to").value;
 
             xhr.addEventListener("load", drawBoard);
-            xhr.open("PUT", "/move-piece?id="+ id + "&from=" + from + "&to=" + to);
+            xhr.open("PUT", "/move-piece?id=" + id + "&from=" + from + "&to=" + to);
             xhr.send();
 
         });
@@ -81,17 +100,44 @@
         let yAxis = [8, 7, 6, 5, 4, 3, 2, 1];
 
         function drawBoard() {
-                const states = JSON.parse(xhr.response);
-                console.log(states);
-                let str = "";
-                yAxis.forEach(y => {
-                    xAxis.forEach(x => {
-                        str += stateToString(states[x + y]);
-                    });
-                    str += '\n';
+            const states = JSON.parse(xhr.response);
+            console.log(states);
+            let board = document.querySelector("#board");
+            board.innerHTML = "";
+
+            let str = "";
+            let state = true;
+            let child;
+            yAxis.forEach(y => {
+                xAxis.forEach(x => {
+                    str = stateToString(states[x + y]);
+
+                    if (state) {
+                        child = '<img class="' + 'board board_w' + '" src="' + str + '" data-coord="' + x + y + '"/>';
+                        state = false;
+                    } else {
+                        child = '<img class="' + 'board board_b' + '" src="' + str + '" data-coord="' + x + y + '"/>';
+                        state = true;
+                    }
+                    board.innerHTML += child;
                 });
-                document.getElementById("game-board").value = str;
-            }
+                board.innerHTML += "<div></div>";
+                if (state) {
+                    state = false;
+                } else {
+                    state = true;
+                }
+            });
+
+            addEvent();
+        }
+        function addEvent() {
+            document.querySelectorAll(".board").forEach(element => {
+                element.addEventListener("click", function () {
+                    console.log(this.getAttribute("data-coord"));
+                })
+            });
+        }
 
     </script>
 </body>

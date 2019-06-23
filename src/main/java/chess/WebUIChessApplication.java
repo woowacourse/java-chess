@@ -6,6 +6,7 @@ import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
+import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.*;
@@ -17,6 +18,8 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().create();
         ChessService chessService = new ChessService();
+        Spark.staticFiles.location("/templates");
+
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

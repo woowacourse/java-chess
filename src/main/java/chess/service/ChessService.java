@@ -103,30 +103,36 @@ public class ChessService {
         try {
             List<BoardStateDto> boardStates = boardStateDao.findByRoomId(roomId);
 
-            boardStates.stream().filter(dto -> dto.getCoordX().equals(to.getX().getSymbol()))
-                    .filter(dto -> dto.getCoordY().equals(to.getY().getSymbol())).findFirst().ifPresent(dto -> {
-                try {
-                    boardStateDao.deleteById(dto.getId());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            });
-
-            boardStates.stream()
-                    .filter(dto -> dto.getCoordX().equals(from.getX().getSymbol()))
-                    .filter(dto -> dto.getCoordY().equals(from.getY().getSymbol())).findFirst().ifPresent(dto -> {
-                dto.setCoordX(to.getX().getSymbol());
-                dto.setCoordY(to.getY().getSymbol());
-                try {
-                    boardStateDao.updateCoordById(dto);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            });
-
+            deleteBoardStateByTo(to, boardStates);
+            updateBoardState(from, to, boardStates);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateBoardState(ChessCoordinate from, ChessCoordinate to, List<BoardStateDto> boardStates) {
+        boardStates.stream()
+                .filter(dto -> dto.getCoordX().equals(from.getX().getSymbol()))
+                .filter(dto -> dto.getCoordY().equals(from.getY().getSymbol())).findFirst().ifPresent(dto -> {
+            dto.setCoordX(to.getX().getSymbol());
+            dto.setCoordY(to.getY().getSymbol());
+            try {
+                boardStateDao.updateCoordById(dto);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void deleteBoardStateByTo(ChessCoordinate to, List<BoardStateDto> boardStates) {
+        boardStates.stream().filter(dto -> dto.getCoordX().equals(to.getX().getSymbol()))
+                .filter(dto -> dto.getCoordY().equals(to.getY().getSymbol())).findFirst().ifPresent(dto -> {
+            try {
+                boardStateDao.deleteById(dto.getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 }

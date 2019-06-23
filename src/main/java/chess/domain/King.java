@@ -35,10 +35,8 @@ public class King extends ChessPiece {
         from.getX().move(-1).ifPresent(proveYSide(from, candidates));
         from.getX().move(1).ifPresent(proveYSide(from, candidates));
 
-        from.getX().move(1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, from.getY())));
-        from.getX().move(-1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, from.getY())));
-        from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y)));
-        from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y)));
+        proveXSide(from, candidates).accept(from.getY());
+        proveYSide(from, candidates).accept(from.getX());
 
         return candidates.stream()
                 .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())
