@@ -3,11 +3,14 @@ package chess.domain;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
+
+import static chess.domain.Type.*;
 
 public class Game {
     private static final int KING_COUNT = 2;
+    public static final int MAX_BOARD_SIZE = 8;
+    public static final int PAWN_ONE_BY_ONELINE = 1;
     private Map<Point, Piece> board;
 
     public Game(Map<Point, Piece> board) {
@@ -16,44 +19,30 @@ public class Game {
 
     public void move(Point start, Point end) {
         checkBlank(start);
-        List<Point> candidatePoints = board.get(start).getCandidatePoints(start, end);
+        Piece startPiece = board.get(start);
+        Piece endPiece = board.get(end);
+        checkSameTeam(startPiece, endPiece);
+
+        List<Point> candidatePoints = isBlank(end) ? startPiece.move(start, end) : startPiece.attack(start, end);
         checkMove(candidatePoints);
-        for (Point candidatePoint : candidatePoints) {
-            checkRoute(end, candidatePoint);
-        }
-        checkDestination(start, end);
+        candidatePoints.forEach(candidatePoint -> checkRoute(end, candidatePoint));
         movePiece(start, end);
     }
 
     private void movePiece(Point start, Point end) {
         Piece piece = board.get(start);
         board.put(end, piece);
-        board.remove(start);
-    }
-
-    private void checkDestination(Point start, Point end) {
-        if (board.containsKey(end)) {
-            Piece startPiece = board.get(start);
-            Piece endPiece = board.get(end);
-            checkSameTeam(startPiece, endPiece);
-            kill(!startPiece.isSameTeamPiece(endPiece), end);
-        }
-    }
-
-    private void kill(boolean canKill, Point end) {
-        if (canKill) {
-            board.remove(end);
-        }
+        board.put(start, new Blank());
     }
 
     private void checkSameTeam(Piece startPiece, Piece endPiece) {
-        if (startPiece.isSameTeamPiece(endPiece)) {
+        if (startPiece.isSameTeam(endPiece)) {
             throw new IllegalArgumentException("이동 불가능 합니다.3");
         }
     }
 
     private void checkRoute(Point end, Point candidatePoint) {
-        if (board.containsKey(candidatePoint) && !candidatePoint.equals(end)) {
+        if (!isBlank(candidatePoint) && !candidatePoint.equals(end)) {
             throw new IllegalArgumentException("이동 불가능 합니다.2");
         }
     }
@@ -63,7 +52,11 @@ public class Game {
     }
 
     private void checkBlank(Point start) {
-        if (!board.containsKey(start)) throw new IllegalArgumentException("말이 없습니다.");
+        if (isBlank(start)) throw new IllegalArgumentException("말이 없습니다.");
+    }
+
+    private boolean isBlank(Point position) {
+        return board.get(position).type.equals(BLANK);
     }
 
     public Map<Point, Piece> getBoard() {
@@ -72,14 +65,14 @@ public class Game {
 
     public double calculateScore(Team team) {
         return calculatePawnScore(team) + board.values().stream()
-                .filter(d -> d.isSameTeam(team))
-                .mapToDouble(Piece::getScore)
+                .filter(piece -> piece.isSameTeam(team))
+                .mapToDouble(piece -> piece.type.getScore())
                 .sum();
     }
 
     public boolean isKingAlive() {
         List<Piece> pieces = board.values().stream()
-                .filter(d -> d instanceof King)
+                .filter(piece -> piece.type.equals(KING))
                 .collect(Collectors.toList());
         return pieces.size() == KING_COUNT;
     }
@@ -88,14 +81,20 @@ public class Game {
         double sub = 0;
 
         List<Point> pawnPosition = board.keySet().stream()
-                .filter(d -> board.get(d).isSameTeam(team))
-                .filter(d -> board.get(d) instanceof Pawn)
+                .filter(point -> board.get(point).isSameTeam(team))
+                .filter(point -> board.get(point).type.equals(WHITE_PAWN)
+                        || board.get(point).type.equals(BLACK_PAWN))
                 .collect(Collectors.toList());
 
-        for (int i = 0; i < 8; i++) {
-            int a = i;
-            long count = pawnPosition.stream().filter(p -> p.getPositionX() == a).count();
-            sub -= LongStream.of(count).mapToDouble(d -> d > 1 ? count * 0.5 : 0).sum();
+        //TODO: index를 변경 필요
+        for (int i = 0; i < MAX_BOARD_SIZE; i++) {
+            int index = i;
+            long count = pawnPosition.stream()
+                    .filter(p -> p.getPositionX() == index)
+                    .count();
+            sub -= LongStream.of(count)
+                    .mapToDouble(d -> d > PAWN_ONE_BY_ONELINE ? count * 0.5 : 0)
+                    .sum();
         }
 
         return sub;

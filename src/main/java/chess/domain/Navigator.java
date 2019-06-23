@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 public class Navigator {
     private static final int ROUNDING_DIGIT = 100;
+    private static final int FIRST_INDEX = 0;
+
     private final Point start;
     private final Point end;
 
@@ -15,9 +17,9 @@ public class Navigator {
 
     public Direction getDirection(List<Direction> directions) {
         List<Direction> filteredDirection = directions.stream()
-                .filter(d -> isParallel(d))
+                .filter(this::isParallel)
                 .collect(Collectors.toList());
-        return filteredDirection.size() == 0 ? Direction.NOT_FIND : filteredDirection.get(0);
+        return filteredDirection.isEmpty() ? Direction.NOT_FIND : filteredDirection.get(FIRST_INDEX);
     }
 
     private boolean isParallel(Direction direction) {

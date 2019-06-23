@@ -13,8 +13,18 @@ public enum Direction {
     SOUTH_WEST(-1, -1),
     NORTH_EAST(1, 1),
     NORTH_WEST(-1, 1),
-    NOT_FIND(0, 0);
+    NOT_FIND(0, 0),
 
+    NNE(1, 2),
+    NNW(-1, 2),
+    SSE(1, -2),
+    SSW(-1, -2),
+    EEN(2, 1),
+    EES(2, -1),
+    WWN(-2, 1),
+    WWS(-2, -1);
+
+    private static final int FIRST_VALUE = 0;
     private Point position;
 
     Direction(int positionX, int positionY) {
@@ -23,14 +33,41 @@ public enum Direction {
 
     public static Direction findDirection(Point point) {
         List<Direction> directions = Arrays.stream(values())
-                .filter(d -> d.position.equals(point)).collect(Collectors.toList());
-        if (directions.size() != 0) {
-            return directions.get(0);
-        }
-        return NOT_FIND;
+                .filter(direction -> direction.position.equals(point))
+                .collect(Collectors.toList());
+
+        return (directions.isEmpty()) ? NOT_FIND : directions.get(FIRST_VALUE);
     }
 
     public Point getPosition() {
         return position;
+    }
+
+    public static List<Direction> linearDirection() {
+        return Arrays.asList(NORTH, EAST, SOUTH, WEST);
+    }
+
+    public static List<Direction> diagonalDirection() {
+        return Arrays.asList(NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
+    }
+
+    public static List<Direction> everyDirection() {
+        return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
+    }
+
+    public static List<Direction> knightDirection() {
+        return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
+    }
+
+    public static List<Direction> blankDirection() {
+        return Arrays.asList(NOT_FIND);
+    }
+
+    public static List<Direction> whitePawnDirection() {
+        return Arrays.asList(NORTH);
+    }
+
+    public static List<Direction> blackPawnDirection() {
+        return Arrays.asList(SOUTH);
     }
 }

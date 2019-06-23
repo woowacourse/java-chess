@@ -2,7 +2,7 @@ package chess.domain;
 
 import java.util.Objects;
 
-public class Point {
+public class Point { //TODO : 수학 추출
     private static final char X_START = 'a';
     private static final char X_END = 'h';
     private static final char Y_START = '1';

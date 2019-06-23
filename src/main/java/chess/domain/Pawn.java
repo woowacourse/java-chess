@@ -3,28 +3,22 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-
-import static chess.domain.Direction.*;
 
 public class Pawn extends Piece {
-    private static final double SCORE = 1.0;
+
+    private static final int ONE_STEP = 1;
+    private static final int TWO_STEP = 2;
 
     public Pawn(Team team) {
-        super(team, (team == Team.WHITE) ? Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST) :
-                Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST));
+        super(team, (team == Team.WHITE) ? Type.WHITE_PAWN : Type.BLACK_PAWN);
     }
 
+    //TODO : 리팩토링 필요
     @Override
-    public double getScore() {
-        return SCORE;
-    }
-
-    @Override
-    public List<Point> getCandidatePoints(Point start, Point end) {
+    public List<Point> move(Point start, Point end) {
         List<Point> points = new ArrayList<>();
         Navigator navigator = new Navigator(start, end);
-        Direction foundDirection = navigator.getDirection(candidateDirection);
+        Direction foundDirection = navigator.getDirection(type.getDirections());
         if (isTwoStep(start, end, foundDirection)) {
             return Arrays.asList(start.move(foundDirection), end);
         }
@@ -34,27 +28,19 @@ public class Pawn extends Piece {
         return points;
     }
 
+    @Override
+    public List<Point> attack(Point start, Point end) {
+        return Arrays.asList(end);
+    }
+
     private boolean isOneStep(Point start, Point end, Direction foundDirection) {
-        return candidateDirection.contains(foundDirection) &&
-                start.isStep(end, 1);
+        return type.getDirections().contains(foundDirection) &&
+                start.isStep(end, ONE_STEP);
     }
 
     private boolean isTwoStep(Point start, Point end, Direction foundDirection) {
         return foundDirection.equals(team.getDirection()) &&
                 start.isSameY(team.getFirstIndex()) &&
-                start.isStep(end, 2);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pawn pawn = (Pawn) o;
-        return team == pawn.team;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(team);
+                start.isStep(end, TWO_STEP);
     }
 }

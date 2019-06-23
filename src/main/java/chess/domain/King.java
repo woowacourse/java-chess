@@ -6,23 +6,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class King extends Piece {
-    private static final double SCORE = 0.0;
-
     public King(Team team) {
-        super(team, Arrays.asList(Direction.NOT_FIND));
+        super(team, Type.KING);
     }
 
     @Override
-    public double getScore() {
-        return SCORE;
-    }
-
-    @Override
-    public List<Point> getCandidatePoints(Point start, Point end) {
+    public List<Point> move(Point start, Point end) {
         List<Point> points = new ArrayList<>();
         Point vector = start.makeVector(end);
-        Direction foundDirection = Direction.findDirection(vector);
-        if (foundDirection != Direction.NOT_FIND) {
+        if (type.getDirections().contains(Direction.findDirection(vector))) {
             points.add(end);
         }
         return points;

@@ -21,12 +21,12 @@ public class BishopTest {
         for (int i = 1; i < 3; i++) {
             points.add(new Point((char)('a' + i), (char)('1'+ i)));
         }
-        assertThat(bishop.getCandidatePoints(new Point("a1"), new Point("c3"))).isEqualTo(points);
+        assertThat(bishop.move(new Point("a1"), new Point("c3"))).isEqualTo(points);
     }
 
     @Test
     void 이동_불가능() {
         Piece bishop = new Bishop(Team.WHITE);
-        assertThat(bishop.getCandidatePoints(new Point("a1"), new Point("a2")).size()).isEqualTo(0);
+        assertThat(bishop.move(new Point("a1"), new Point("a2")).size()).isEqualTo(0);
     }
 }

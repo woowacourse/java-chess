@@ -1,43 +1,21 @@
 package chess.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Knight extends Piece {
-    private static final int MOVABLE_DISTANCE = 5;
-    private static final double SCORE = 2.5;
-
-
     public Knight(Team team) {
-        super(team, Arrays.asList(Direction.NOT_FIND));
+        super(team, Type.KNIGHT);
     }
 
+    //TODO: King Knight 중복 제거
     @Override
-    public double getScore() {
-        return SCORE;
-    }
-
-    @Override
-    public List<Point> getCandidatePoints(Point start, Point end) {
+    public List<Point> move(Point start, Point end) {
         List<Point> points = new ArrayList<>();
-        if (start.calDistance(end) == MOVABLE_DISTANCE) {
+        Point vector = start.makeVector(end);
+        if (type.getDirections().contains(Direction.findDirection(vector))) {
             points.add(end);
         }
         return points;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Knight knight = (Knight) o;
-        return team == knight.team;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(team);
     }
 }

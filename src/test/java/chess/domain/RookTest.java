@@ -21,12 +21,12 @@ public class RookTest {
         for (int i = 1; i < 5; i++) {
             points.add(new Point('a', (char)('1'+ i)));
         }
-        assertThat(rook.getCandidatePoints(new Point("a1"), new Point("a5"))).isEqualTo(points);
+        assertThat(rook.move(new Point("a1"), new Point("a5"))).isEqualTo(points);
     }
 
     @Test
     void 이동_불가능() {
         Rook rook = new Rook(Team.WHITE);
-        assertThat(rook.getCandidatePoints(new Point("a1"), new Point("b2")).size()).isEqualTo(0);
+        assertThat(rook.move(new Point("a1"), new Point("b2")).size()).isEqualTo(0);
     }
 }

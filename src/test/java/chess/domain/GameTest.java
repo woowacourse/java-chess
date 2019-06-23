@@ -42,6 +42,7 @@ public class GameTest {
     void 나이트_이동() {
         Map<Point, Piece> board = new HashMap<>();
         board.put(new Point("a1"), new Knight(Team.WHITE));
+        board.put(new Point("b3"), new Blank());
         Game game = new Game(board);
         Point start = new Point("a1");
         Point end = new Point("b3");
@@ -56,6 +57,7 @@ public class GameTest {
         board.put(new Point("a2"), new Pawn(Team.WHITE));
         board.put(new Point("b2"), new Pawn(Team.WHITE));
         board.put(new Point("b1"), new Pawn(Team.WHITE));
+        board.put(new Point("b3"), new Blank());
         Game game = new Game(board);
         Point start = new Point("a1");
         Point end = new Point("b3");

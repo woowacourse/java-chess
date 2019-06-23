@@ -19,24 +19,24 @@ public class KingTest {
         Piece king = new King(Team.WHITE);
         List<Point> points = new ArrayList<>();
         points.add(new Point("a2"));
-        assertThat(king.getCandidatePoints(new Point("a1"), new Point("a2"))).isEqualTo(points);
+        assertThat(king.move(new Point("a1"), new Point("a2"))).isEqualTo(points);
     }
 
     @Test
     void 이동_불가능() {
         Piece king = new King(Team.WHITE);
-        assertThat(king.getCandidatePoints(new Point("a1"), new Point("h3")).size()).isEqualTo(0);
+        assertThat(king.move(new Point("a1"), new Point("h3")).size()).isEqualTo(0);
     }
 
     @Test
     void 점프() {
         Piece king = new King(Team.WHITE);
-        assertThat(king.getCandidatePoints(new Point("a1"), new Point("a7")).size()).isEqualTo(0);
+        assertThat(king.move(new Point("a1"), new Point("a7")).size()).isEqualTo(0);
     }
 
     @Test
     void 두칸_이동_불가능() {
         Piece king = new King(Team.WHITE);
-        assertThat(king.getCandidatePoints(new Point("a1"), new Point("a3")).size()).isEqualTo(0);
+        assertThat(king.move(new Point("a1"), new Point("a3")).size()).isEqualTo(0);
     }
 }

@@ -20,7 +20,7 @@ public class QueenTest {
         for (int i = 1; i < 3; i++) {
             points.add(new Point((char)('a' + i), (char)('1'+ i)));
         }
-        assertThat(queen.getCandidatePoints(new Point("a1"), new Point("c3"))).isEqualTo(points);
+        assertThat(queen.move(new Point("a1"), new Point("c3"))).isEqualTo(points);
     }
 
     @Test
@@ -30,13 +30,13 @@ public class QueenTest {
         for (int i = 1; i < 3; i++) {
             points.add(new Point('a', (char)('1'+ i)));
         }
-        assertThat(queen.getCandidatePoints(new Point("a1"), new Point("a3"))).isEqualTo(points);
+        assertThat(queen.move(new Point("a1"), new Point("a3"))).isEqualTo(points);
     }
 
 
     @Test
     void 이동_불가능() {
         Piece queen = new Queen(Team.WHITE);
-        assertThat(queen.getCandidatePoints(new Point("a1"), new Point("h3")).size()).isEqualTo(0);
+        assertThat(queen.move(new Point("a1"), new Point("h3")).size()).isEqualTo(0);
     }
 }
