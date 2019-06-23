@@ -40,38 +40,6 @@ public class ChessBoard {
         points.put(PointFactory.of("h8"), new Rook(Color.BLACK));
     }
 
-//    public void play(Point source, Point target) {
-//        if (points.get(source).equalsType(Type.BLANK)) {
-//            throw new IllegalArgumentException("선택한 위치는 빈 칸입니다!");
-//        }
-//        if (points.get(source).equalsColor())
-//    }
-
-//    public boolean playOneStep(Color color, Point source, Point target) {
-//        Piece currentPiece = points.get(source);
-//        if (currentPiece == null || !currentPiece.isSameColor(color)) {
-//            return false;
-//        }
-//
-//        if (!currentPiece.isValidDirection(source, target)) {
-//            return false;
-//        }
-//
-//        List<Point> path = currentPiece.makePath(source, target);
-//        for (Point point : path) {
-//            if (points.get(point) != null)
-//                return false;
-//        }
-//        updateUnitLocation(source, target);
-//        return true;
-//    }
-
-    private void updateUnitLocation(Point source, Point target) {
-        Piece currentPiece = points.get(source);
-        points.put(target, currentPiece);
-        points.put(source, null);
-    }
-
     public void checkSourceAndTarget(Point source, Point target, Color colorOfTurn) {
         Piece sourcePiece = points.get(source);
         Piece targetPiece = points.get(target);
@@ -97,17 +65,18 @@ public class ChessBoard {
         return sourcePiece.attack(source, target);
     }
 
-    public void checkPath(List<Point> path){
+    public void checkPath(List<Point> path) {
+        boolean hasBlank = path.stream()
+                .anyMatch(point -> !points.get(point).equalsType(Type.BLANK));
 
-//        for (Point point : path) {
-//            if(!points.get(point).equalsType(Type.BLANK)){
-//                throw new IllegalArgumentException("경로에 다른 말 있음.");
-//            }
-//        }
-        path.stream()
-                .filter(point -> !points.get(point).equalsType(Type.BLANK))
-                .
+        if (hasBlank) {
+            throw new IllegalArgumentException("경로에 다른 말 있음.");
+        }
+    }
 
-
+    private void updateUnitLocation(Point source, Point target) {
+        Piece currentPiece = points.get(source);
+        points.put(target, currentPiece);
+        points.put(source, null);
     }
 }
