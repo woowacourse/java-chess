@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,7 +37,7 @@ public class Column implements Comparable<Column> {
         if (StringUtils.isEmpty(columnText)) {
             throw new InvalidColumnException("불가능한 Column 형식입니다.");
         }
-        return of(columnText.charAt(0));
+        return of(columnText.toLowerCase().charAt(0));
     }
 
     public static Stream<Column> stream() {
@@ -54,5 +54,13 @@ public class Column implements Comparable<Column> {
     @Override
     public int compareTo(Column o) {
         return this.column - o.column;
+    }
+
+    public int getDiff(Column column) {
+        return this.column - column.column;
+    }
+
+    public Column next(int columnDiff) {
+        return of((char) (column + columnDiff));
     }
 }

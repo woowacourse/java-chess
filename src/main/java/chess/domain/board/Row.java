@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public class Row implements Comparable<Row> {
     private static final List<Row> ROW_POOL;
     private static final int MIN_ROW_SIZE = 1;
-    private static final int MAX_ROW_SIZE = 8;
+    static final int MAX_ROW_SIZE = 8;
 
     static {
         ROW_POOL = Collections.unmodifiableList(
@@ -49,6 +49,10 @@ public class Row implements Comparable<Row> {
         return ROW_POOL.stream();
     }
 
+    public int getDiff(Row row) {
+        return this.row - row.row;
+    }
+
     @Override
     public String toString() {
         return "Row{" +
@@ -59,5 +63,9 @@ public class Row implements Comparable<Row> {
     @Override
     public int compareTo(Row o) {
         return row - o.row;
+    }
+
+    public Row next(int rowDiff) {
+        return of(row + rowDiff);
     }
 }

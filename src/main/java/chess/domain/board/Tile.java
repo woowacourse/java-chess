@@ -1,13 +1,14 @@
-package chess.domain;
+package chess.domain.board;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -16,12 +17,16 @@ public class Tile implements Comparable<Tile> {
     private static final Pattern tilePattern = Pattern.compile("^(.)(.)$");
 
     static {
-        TILE_POOL = new HashMap();
-        Row.stream()
-                .forEach(row ->
-                        Column.stream()
-                                .forEach(column ->
-                                        TILE_POOL.put(Pair.of(column, row), new Tile(column, row))));
+        TILE_POOL = Collections.unmodifiableMap(
+                Column.stream()
+                        .flatMap(Tile::tilesOf)
+                        .collect(Collectors.toMap(tile -> Pair.of(tile.column, tile.row), tile -> tile))
+        );
+    }
+
+    private static Stream<Tile> tilesOf(Column column) {
+        return Row.stream()
+                .map(row -> new Tile(column, row));
     }
 
     private final Column column;
@@ -50,6 +55,22 @@ public class Tile implements Comparable<Tile> {
 
     public static Stream<Tile> stream() {
         return TILE_POOL.values().stream();
+    }
+
+    public int getHeightDiff(Tile tile) {
+        return row.getDiff(tile.row);
+    }
+
+    public int getWidthDiff(Tile tile) {
+        return column.getDiff(tile.column);
+    }
+
+    public boolean isEqualRow(Row row) {
+        return this.row == row;
+    }
+
+    public Tile next(int columnDiff, int rowDiff) {
+        return of(column.next(columnDiff), row.next(rowDiff));
     }
 
     @Override
