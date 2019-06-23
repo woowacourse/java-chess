@@ -27,11 +27,11 @@ class KnightTest {
 
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
 
-        assertThat(knight.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b3").get())).containsExactlyInAnyOrder(
-                ChessCoordinate.valueOf("d2").get(),
-                ChessCoordinate.valueOf("d4").get(),
-                ChessCoordinate.valueOf("c5").get(),
-                ChessCoordinate.valueOf("a5").get()
+        assertThat(knight.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b3"))).containsExactlyInAnyOrder(
+                ChessCoordinate.valueOf("d2"),
+                ChessCoordinate.valueOf("d4"),
+                ChessCoordinate.valueOf("c5"),
+                ChessCoordinate.valueOf("a5")
         );
 
     }
@@ -53,13 +53,13 @@ class KnightTest {
 
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
 
-        assertThat(knight.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b6").get())).containsExactlyInAnyOrder(
-                ChessCoordinate.valueOf("a8").get(),
-                ChessCoordinate.valueOf("c8").get(),
-                ChessCoordinate.valueOf("d7").get(),
-                ChessCoordinate.valueOf("d5").get(),
-                ChessCoordinate.valueOf("a4").get(),
-                ChessCoordinate.valueOf("c4").get()
+        assertThat(knight.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b6"))).containsExactlyInAnyOrder(
+                ChessCoordinate.valueOf("a8"),
+                ChessCoordinate.valueOf("c8"),
+                ChessCoordinate.valueOf("d7"),
+                ChessCoordinate.valueOf("d5"),
+                ChessCoordinate.valueOf("a4"),
+                ChessCoordinate.valueOf("c4")
         );
 
     }

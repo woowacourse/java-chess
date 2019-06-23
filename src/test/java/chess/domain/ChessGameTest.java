@@ -68,8 +68,8 @@ class ChessGameTest {
         );
 
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
-        ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
-        ChessCoordinate to = ChessCoordinate.valueOf("a8").get();
+        ChessCoordinate from = ChessCoordinate.valueOf("a1");
+        ChessCoordinate to = ChessCoordinate.valueOf("a8");
         board.move(from, to);
         assertThat(board.getBoard()).isEqualTo(new ChessGame(new TestStateInitiatorFactory(toBoardState)).getBoard());
     }

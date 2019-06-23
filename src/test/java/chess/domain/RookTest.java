@@ -24,22 +24,22 @@ class RookTest {
                 Arrays.asList(rook, empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
-        ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
+        ChessCoordinate from = ChessCoordinate.valueOf("a1");
 
         assertThat(rook.getMovableCoordinates(new ChessGame(new TestStateInitiatorFactory(boardState))::getTeamAt, from)).containsExactlyInAnyOrder(
-                ChessCoordinate.valueOf("a2").get(),
-                ChessCoordinate.valueOf("a3").get(),
-                ChessCoordinate.valueOf("a4").get(),
-                ChessCoordinate.valueOf("a5").get(),
-                ChessCoordinate.valueOf("a6").get(),
-                ChessCoordinate.valueOf("a7").get(),
-                ChessCoordinate.valueOf("a8").get(),
-                ChessCoordinate.valueOf("b1").get(),
-                ChessCoordinate.valueOf("c1").get(),
-                ChessCoordinate.valueOf("d1").get(),
-                ChessCoordinate.valueOf("e1").get(),
-                ChessCoordinate.valueOf("f1").get(),
-                ChessCoordinate.valueOf("g1").get()
+                ChessCoordinate.valueOf("a2"),
+                ChessCoordinate.valueOf("a3"),
+                ChessCoordinate.valueOf("a4"),
+                ChessCoordinate.valueOf("a5"),
+                ChessCoordinate.valueOf("a6"),
+                ChessCoordinate.valueOf("a7"),
+                ChessCoordinate.valueOf("a8"),
+                ChessCoordinate.valueOf("b1"),
+                ChessCoordinate.valueOf("c1"),
+                ChessCoordinate.valueOf("d1"),
+                ChessCoordinate.valueOf("e1"),
+                ChessCoordinate.valueOf("f1"),
+                ChessCoordinate.valueOf("g1")
         );
     }
 
@@ -59,14 +59,14 @@ class RookTest {
                 Arrays.asList(rook, empty, empty, Rook.getInstance(Team.WHITE), empty, empty, empty, Rook.getInstance(Team.WHITE))
         );
 
-        ChessCoordinate from = ChessCoordinate.valueOf("a1").get();
+        ChessCoordinate from = ChessCoordinate.valueOf("a1");
 
         assertThat(rook.getMovableCoordinates(new ChessGame(new TestStateInitiatorFactory(boardState))::getTeamAt, from))
                 .containsExactlyInAnyOrder(
-                        ChessCoordinate.valueOf("a2").get(),
-                        ChessCoordinate.valueOf("a3").get(),
-                        ChessCoordinate.valueOf("b1").get(),
-                        ChessCoordinate.valueOf("c1").get()
+                        ChessCoordinate.valueOf("a2"),
+                        ChessCoordinate.valueOf("a3"),
+                        ChessCoordinate.valueOf("b1"),
+                        ChessCoordinate.valueOf("c1")
                 );
     }
 }

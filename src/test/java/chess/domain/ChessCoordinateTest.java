@@ -9,6 +9,6 @@ public class ChessCoordinateTest {
 
     @Test
     void invalidSymbol() {
-        assertThat(ChessCoordinate.valueOf("z1").isPresent()).isFalse();
+        assertThrows(IllegalArgumentException.class, () -> ChessCoordinate.valueOf("z1"));
     }
 }

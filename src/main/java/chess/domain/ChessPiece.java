@@ -15,36 +15,24 @@ public abstract class ChessPiece {
 
     abstract Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from);
 
-    protected Optional<ChessCoordinate> getIfEmpty(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
-        if (!maybeCoord.isPresent()) {
-            return Optional.empty();
-        }
-        ChessCoordinate coord = maybeCoord.get();
+    protected Optional<ChessCoordinate> getIfEmpty(PieceTeamProvider pieceTeamProvider, ChessCoordinate coord) {
         if (pieceTeamProvider.getTeamAt(coord) == Team.NEUTRAL) {
-            return maybeCoord;
+            return Optional.of(coord);
         }
         return Optional.empty();
     }
 
-    protected Optional<ChessCoordinate> getIfEnemy(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
-        if (!maybeCoord.isPresent()) {
-            return Optional.empty();
-        }
-        ChessCoordinate coord = maybeCoord.get();
+    protected Optional<ChessCoordinate> getIfEnemy(PieceTeamProvider pieceTeamProvider, ChessCoordinate coord) {
         Team targetTeam = pieceTeamProvider.getTeamAt(coord);
 
         if ((getType().getTeam() == Team.BLACK && targetTeam == Team.WHITE) ||
                 (getType().getTeam() == Team.WHITE && targetTeam == Team.BLACK)) {
-            return maybeCoord;
+            return Optional.of(coord);
         }
         return Optional.empty();
     }
 
-    protected Optional<ChessCoordinate> getIfAlly(PieceTeamProvider pieceTeamProvider, Optional<ChessCoordinate> maybeCoord) {
-        if (!maybeCoord.isPresent()) {
-            return Optional.empty();
-        }
-        ChessCoordinate coord = maybeCoord.get();
+    protected Optional<ChessCoordinate> getIfAlly(PieceTeamProvider pieceTeamProvider, ChessCoordinate coord) {
         if (getType().getTeam() == pieceTeamProvider.getTeamAt(coord)) {
             return Optional.of(coord);
         }

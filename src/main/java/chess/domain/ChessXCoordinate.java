@@ -24,20 +24,25 @@ public enum ChessXCoordinate {
         this.index = index;
     }
 
-    public Optional<ChessXCoordinate> move(int n) {
-        return valueOf(index + n);
+    protected Optional<ChessXCoordinate> move(int n) {
+        try {
+            return Optional.of(valueOf(index + n));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 
     public static Optional<ChessXCoordinate> of(String symbol) {
-       return Arrays.stream(values())
-               .filter( coord -> coord.symbol.equals(symbol))
-               .findFirst();
+        return Arrays.stream(values())
+                .filter(coord -> coord.symbol.equals(symbol))
+                .findFirst();
     }
 
-    public static Optional<ChessXCoordinate> valueOf(int index) {
+    public static ChessXCoordinate valueOf(int index) {
         return Arrays.stream(values())
                 .filter(coord -> coord.index == index)
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() ->new IllegalArgumentException("지원하지 않는 죄표입니다."));
     }
 
     public int getIndex() {

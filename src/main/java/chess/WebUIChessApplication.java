@@ -68,8 +68,8 @@ public class WebUIChessApplication {
         put("/move-piece", (req, res) -> {
             long roomId = Long.parseLong(req.queryParams("id"));
 
-            ChessCoordinate from = ChessCoordinate.valueOf(req.queryParams("from")).get();
-            ChessCoordinate to = ChessCoordinate.valueOf(req.queryParams("to")).get();
+            ChessCoordinate from = ChessCoordinate.valueOf(req.queryParams("from"));
+            ChessCoordinate to = ChessCoordinate.valueOf(req.queryParams("to"));
 
             ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId));
             chessGame.move(from, to);

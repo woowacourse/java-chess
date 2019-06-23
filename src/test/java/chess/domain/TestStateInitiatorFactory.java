@@ -15,7 +15,7 @@ public class TestStateInitiatorFactory implements AbstractStateInitiatorFactory 
                 .forEach(y ->
                         IntStream.range(0, initiailState.get(y).size())
                                 .forEach(x ->
-                                        state.put(ChessCoordinate.valueOf(ChessXCoordinate.valueOf(x).get(), ChessYCoordinate.valueOf(y).get()).get(),
+                                        state.put(ChessCoordinate.valueOf(ChessXCoordinate.valueOf(x), ChessYCoordinate.valueOf(y)),
                                                 initiailState.get(y).get(x))));
     }
 

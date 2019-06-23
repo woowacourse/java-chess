@@ -24,12 +24,12 @@ class KingTest {
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), Queen.getInstance(Team.WHITE), king, empty, empty, Rook.getInstance(Team.WHITE))
         );
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
-        assertThat(king.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("e1").get()))
+        assertThat(king.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("e1")))
                 .containsExactlyInAnyOrder(
-                        ChessCoordinate.valueOf("d2").get(),
-                        ChessCoordinate.valueOf("e2").get(),
-                        ChessCoordinate.valueOf("f2").get(),
-                        ChessCoordinate.valueOf("f1").get()
+                        ChessCoordinate.valueOf("d2"),
+                        ChessCoordinate.valueOf("e2"),
+                        ChessCoordinate.valueOf("f2"),
+                        ChessCoordinate.valueOf("f1")
                 );
     }
 }

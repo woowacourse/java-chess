@@ -75,13 +75,7 @@ public class CUIChessApp {
 
     private static void handleMoveCommand(String[] tokens) {
         try {
-            chessGame.move(
-                    ChessCoordinate.valueOf(tokens[1])
-                            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다.")),
-                    ChessCoordinate.valueOf(tokens[2])
-                            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."))
-            );
-
+            chessGame.move(ChessCoordinate.valueOf(tokens[1]), ChessCoordinate.valueOf(tokens[2]));
         } catch (IllegalArgumentException e) {
             OutputVIew.printError(e.getMessage());
         }

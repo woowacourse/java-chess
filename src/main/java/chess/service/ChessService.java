@@ -80,7 +80,7 @@ public class ChessService {
             ChessCoordinate.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
 
             boardStateDao.findByRoomId(roomId).forEach(dto ->
-                    board.put(ChessCoordinate.valueOf(dto.getCoordX() + dto.getCoordY()).get(),
+                    board.put(ChessCoordinate.valueOf(dto.getCoordX() + dto.getCoordY()),
                             factory.create(PieceType.valueOf(dto.getType()))));
             return board;
         } catch (SQLException e) {

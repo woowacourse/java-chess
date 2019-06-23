@@ -46,13 +46,13 @@ public class Pawn extends ChessPiece {
     private Set<ChessCoordinate> provePawn(PieceTeamProvider pieceTeamProvider, ChessCoordinate from, ChessYCoordinate yCoord, int sign) {
         Set<ChessCoordinate> candidates = new HashSet<>();
 
-        getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(sign * 1).get())).ifPresent(candidates::add);
+        getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(sign).get())).ifPresent(candidates::add);
 
         from.getX().move(-1)
-                .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(sign * 1).get()))
+                .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(sign).get()))
                         .ifPresent(candidates::add));
         from.getX().move(1)
-                .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(sign * 1).get()))
+                .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(sign).get()))
                         .ifPresent(candidates::add));
 
         if (from.getY() == yCoord) {

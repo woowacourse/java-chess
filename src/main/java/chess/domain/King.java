@@ -33,19 +33,19 @@ public class King extends ChessPiece {
 
         from.getX().move(-1)
                 .ifPresent(x -> {
-                    candidates.add(ChessCoordinate.valueOf(x, from.getY()).get());
-                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y).get()));
-                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y).get()));
+                    candidates.add(ChessCoordinate.valueOf(x, from.getY()));
+                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
+                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
                 });
         from.getX().move(1)
                 .ifPresent(x -> {
-                    candidates.add(ChessCoordinate.valueOf(x, from.getY()).get());
-                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y).get()));
-                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y).get()));
+                    candidates.add(ChessCoordinate.valueOf(x, from.getY()));
+                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
+                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
                 });
 
-        from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y).get()));
-        from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y).get()));
+        from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y)));
+        from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y)));
 
         return candidates.stream()
                 .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())

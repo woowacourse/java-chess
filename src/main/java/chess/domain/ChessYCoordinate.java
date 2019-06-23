@@ -25,13 +25,18 @@ public enum ChessYCoordinate {
     }
 
     public Optional<ChessYCoordinate> move(int n) {
-        return valueOf(index - n);
+        try {
+            return Optional.of(valueOf(index - n));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 
-    public static Optional<ChessYCoordinate> valueOf(int index) {
+    public static ChessYCoordinate valueOf(int index) {
         return Arrays.stream(values())
                 .filter(coord -> coord.index == index)
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() ->new IllegalArgumentException("지원하지 않는 죄표입니다."));
     }
 
     public static Optional<ChessYCoordinate> of(String symbol) {

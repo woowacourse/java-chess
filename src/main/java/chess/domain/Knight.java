@@ -34,23 +34,23 @@ public class Knight extends ChessPiece {
 
         from.getX().move(2)
                 .ifPresent((x) -> {
-                    from.getY().move(1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                    from.getY().move(-1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
+                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
                 });
         from.getX().move(-2)
                 .ifPresent((x) -> {
-                    from.getY().move(1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                    from.getY().move(-1).ifPresent(y -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
+                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
                 });
         from.getY().move(2)
                 .ifPresent((y) -> {
-                    from.getX().move(1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                    from.getX().move(-1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                    from.getX().move(1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
+                    from.getX().move(-1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
                 });
         from.getY().move(-2)
                 .ifPresent((y) -> {
-                    from.getX().move(1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
-                    from.getX().move(-1).ifPresent(x -> ChessCoordinate.valueOf(x, y).ifPresent(candidates::add));
+                    from.getX().move(1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
+                    from.getX().move(-1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
                 });
 
         return candidates.stream()
