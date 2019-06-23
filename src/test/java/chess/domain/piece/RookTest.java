@@ -37,16 +37,14 @@ class RookTest {
     @Test
     void 같은_팀_검사() {
         Rook rookA = new Rook(Team.BLACK);
-        Rook rookB = new Rook(Team.BLACK);
 
-        assertThat(rookA.isSameTeam(rookB)).isTrue();
+        assertThat(rookA.checkTeam(Team.BLACK)).isTrue();
     }
 
     @Test
     void 다른_팀_검사() {
         Rook rookA = new Rook(Team.BLACK);
-        Rook rookB = new Rook(Team.WHITE);
 
-        assertThat(rookA.isSameTeam(rookB)).isFalse();
+        assertThat(rookA.checkTeam(Team.WHITE)).isFalse();
     }
 }

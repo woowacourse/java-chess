@@ -12,6 +12,7 @@ public class Knight extends Piece {
 
     public Knight(Team team) {
         super(team);
+        this.score = 2.5;
         movementUnits = new HashSet<>();
         movementUnits.add(MovementUnit.KNIGHT_MOVE_ONE);
         movementUnits.add(MovementUnit.KNIGHT_MOVE_TWO);

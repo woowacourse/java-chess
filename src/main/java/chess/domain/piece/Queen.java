@@ -12,6 +12,7 @@ public class Queen extends Piece {
 
     public Queen(Team team) {
         super(team);
+        this.score = 9;
         movementUnits = new HashSet<>();
         movementUnits.add(MovementUnit.RIGHT);
         movementUnits.add(MovementUnit.UP);

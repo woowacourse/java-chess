@@ -5,6 +5,7 @@ import chess.domain.Team;
 
 public abstract class Piece {
     private Team team;
+    double score;
 
     Piece(Team team) {
         this.team = team;
@@ -12,6 +13,14 @@ public abstract class Piece {
 
     public boolean empty() {
         return team.isEmpty();
+    }
+
+    public boolean checkTeam(Team team) {
+        return this.team == team;
+    }
+
+    public double score() {
+        return score;
     }
 
     public boolean sameTeam(Piece piece) {

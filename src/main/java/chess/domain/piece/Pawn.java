@@ -22,6 +22,7 @@ public class Pawn extends Piece {
 
     public Pawn(Team team) {
         super(team);
+        this.score = 1;
         movingDirection = initDirection(team);
         movementUnits = new HashSet<>();
         attackUnits = new HashSet<>();
@@ -31,25 +32,25 @@ public class Pawn extends Piece {
 
     private int initDirection(Team team) {
         if (team == Team.BLACK) {
-            return 1;
+            return -1;
         }
-        return -1;
+        return 1;
     }
 
+    //TODO 리팩토링
     @Override
     public boolean isMovable(Spot startSpot, Spot endSpot) {
         int distanceX = startSpot.getX(endSpot);
         int distanceY = startSpot.getY(endSpot);
-        boolean isFirst = PAWN_START_COLUMN.stream().anyMatch(y -> startSpot.isSameColumn(y));
-
-        //TODO 리팩토링
+        boolean isFirst = PAWN_START_COLUMN.stream().anyMatch(startSpot::checkColumn);
+        int maxDistance = 1;
         if (isFirst) {
-            if (movingDirection * distanceY > 0 && distanceY <= 2) {
-                return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
-            }
-            return false;
+            maxDistance = 2;
         }
-        return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        if (movingDirection * distanceY > 0 && Math.abs(distanceY) <= maxDistance) {
+            return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        }
+        return false;
     }
 
     @Override
@@ -57,6 +58,9 @@ public class Pawn extends Piece {
         int distanceX = startSpot.getX(endSpot);
         int distanceY = startSpot.getY(endSpot);
 
-        return attackUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        if (distanceY * movingDirection == 1) {
+            return attackUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        }
+        return false;
     }
 }

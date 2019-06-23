@@ -12,6 +12,7 @@ public class Rook extends Piece {
 
     public Rook(Team team) {
         super(team);
+        this.score = 5;
         this.movementUnits = new HashSet<>();
         movementUnits.add(MovementUnit.UP);
         movementUnits.add(MovementUnit.RIGHT);

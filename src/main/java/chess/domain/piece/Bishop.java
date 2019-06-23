@@ -12,6 +12,7 @@ public class Bishop extends Piece {
 
     public Bishop(Team team) {
         super(team);
+        this.score = 3;
         movementUnits = new HashSet<>();
         movementUnits.add(MovementUnit.DIAGNOAL);
     }
