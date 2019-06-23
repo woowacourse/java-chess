@@ -55,4 +55,14 @@ public enum DirectionType {
                 DirectionType.KNIGHT_UP_LEFT, DirectionType.KNIGHT_UP_RIGHT, DirectionType.KNIGHT_DOWN_LEFT, DirectionType.KNIGHT_DOWN_RIGHT,
                 DirectionType.KNIGHT_LEFT_UP, DirectionType.KNIGHT_LEFT_DOWN, DirectionType.KNIGHT_RIGHT_UP, DirectionType.KNIGHT_RIGHT_DOWN);
     }
+
+    public static List<DirectionType> attackWhitePawnDirections() {
+        return Arrays.asList(
+                DirectionType.UP_LEFT, DirectionType.UP_RIGHT);
+    }
+
+    public static List<DirectionType> attackBlackPawnDirections() {
+        return Arrays.asList(
+                DirectionType.DOWN_LEFT, DirectionType.DOWN_RIGHT);
+    }
 }
