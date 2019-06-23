@@ -103,6 +103,14 @@ public class Point {
         return Math.abs(end.positionY - positionY) == difference;
     }
 
+    public int getPositionX() {
+        return positionX;
+    }
+
+    public int getPositionY() {
+        return positionY;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

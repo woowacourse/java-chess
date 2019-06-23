@@ -3,8 +3,11 @@ package chess.domain;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 public class Game {
+    private static final int KING_COUNT = 2;
     private Map<Point, Piece> board;
 
     public Game(Map<Point, Piece> board) {
@@ -68,7 +71,7 @@ public class Game {
     }
 
     public double calculateScore(Team team) {
-        return board.values().stream()
+        return calculatePawnScore(team) + board.values().stream()
                 .filter(d -> d.isSameTeam(team))
                 .mapToDouble(Piece::getScore)
                 .sum();
@@ -78,6 +81,23 @@ public class Game {
         List<Piece> pieces = board.values().stream()
                 .filter(d -> d instanceof King)
                 .collect(Collectors.toList());
-        return pieces.size() == 2;
+        return pieces.size() == KING_COUNT;
+    }
+
+    private double calculatePawnScore(Team team) {
+        double sub = 0;
+
+        List<Point> pawnPosition = board.keySet().stream()
+                .filter(d -> board.get(d).isSameTeam(team))
+                .filter(d -> board.get(d) instanceof Pawn)
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < 8; i++) {
+            int a = i;
+            long count = pawnPosition.stream().filter(p -> p.getPositionX() == a).count();
+            sub -= LongStream.of(count).mapToDouble(d -> d > 1 ? count * 0.5 : 0).sum();
+        }
+
+        return sub;
     }
 }

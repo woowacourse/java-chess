@@ -1,7 +1,6 @@
 # java-chess
 ### Todo
-* 점수 계산 (status)
-    * Pawn 점수 0.5점 체크
+* 전체적으로 Refactor
 * Pawn 대각선 이동일 때 상대팀 말 있어야 이동 가능
     * 상대팀 말 없으면 이동 불가
 
@@ -21,3 +20,5 @@
 * 점수 계산 (status)
     * 일반적 계산
 * 죽은 말이 King인지 체크
+* 점수 계산 (status)
+    * Pawn 점수 0.5점 체크

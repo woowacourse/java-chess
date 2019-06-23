@@ -121,4 +121,22 @@ public class GameTest {
         Game game = new Game(board);
         assertFalse(game.isKingAlive());
     }
+
+    @Test
+    void 폰_세로_두개_점수계산() {
+        Map<Point, Piece> board = new HashMap<>();
+        board.put(new Point("a1"), new Pawn(Team.WHITE));
+        board.put(new Point("a2"), new Pawn(Team.WHITE));
+        Game game = new Game(board);
+        assertThat(game.calculateScore(Team.WHITE)).isEqualTo(1.0);
+    }
+
+    @Test
+    void 폰_가로_두개_점수계산() {
+        Map<Point, Piece> board = new HashMap<>();
+        board.put(new Point("a1"), new Pawn(Team.WHITE));
+        board.put(new Point("b1"), new Pawn(Team.WHITE));
+        Game game = new Game(board);
+        assertThat(game.calculateScore(Team.WHITE)).isEqualTo(2.0);
+    }
 }
