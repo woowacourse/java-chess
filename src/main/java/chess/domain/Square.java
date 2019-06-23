@@ -22,19 +22,19 @@ public class Square {
     }
 
     boolean isValidAttack(final Square target) {
-        if (isSameTeam(target)) {
+        if (isSameColor(target)) {
             return false;
         }
         return this.piece.isValidAttack(this.position, target.position);
     }
 
-    private boolean isSameTeam(final Square target) {
-        return this.piece.isSameTeam(target.piece);
+    private boolean isSameColor(final Square target) {
+        return this.piece.isSameColor(target.piece);
     }
 
     boolean movePiece(final Square target) {
         if (piece.isValidMove(this.position, target.position)) {
-            target.piece = piece.orElseFirstPawn();
+            target.piece = this.piece.get();
             this.piece = Piece.empty();
             return true;
         }
@@ -45,7 +45,7 @@ public class Square {
         if (target.piece.isKing()) {
             throw new ExitException("attacked King");
         }
-        target.piece = piece.orElseFirstPawn();
+        target.piece = piece.get();
         this.piece = Piece.empty();
     }
 
