@@ -48,15 +48,24 @@ public abstract class Piece {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Piece)) return false;
         Piece piece = (Piece) o;
-        return team == piece.team &&
-                type == piece.type &&
+        return getTeam() == piece.getTeam() &&
+                getType() == piece.getType() &&
                 Objects.equals(navigator, piece.navigator);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(team, type, navigator);
+        return Objects.hash(getTeam(), getType(), navigator);
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "team=" + team +
+                ", type=" + type +
+                ", navigator=" + navigator +
+                '}';
     }
 }

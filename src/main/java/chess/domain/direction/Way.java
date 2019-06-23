@@ -49,14 +49,15 @@ public class Way {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Way)) return false;
         Way way = (Way) o;
         return step == way.step &&
-                direction == way.direction;
+                direction == way.direction &&
+                moveStrategy == way.moveStrategy;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(direction, step);
+        return Objects.hash(direction, moveStrategy, step);
     }
 }

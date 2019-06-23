@@ -31,27 +31,27 @@ public class Route {
 
     public boolean canMove(Board board) {
         return moveStrategy.canMove(board.getTargetStatus(getSourceSquare(), getTargetSquare())) &&
-                !isNonePieceInRoute(board);
+                !isPieceInRoute(board);
     }
 
-    private boolean isNonePieceInRoute(Board board) {
-        // 막힌게 있니? 있어(true)
+    private boolean isPieceInRoute(Board board) {
         return IntStream.rangeClosed(1, squares.size() - 2)
                 .mapToObj(index -> board.hasPiece(squares.get(index)))
-                .reduce(false, (a, b) -> a && b)
+                .reduce(false, (a, b) -> a || b)
                 ;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Route)) return false;
         Route route = (Route) o;
-        return Objects.equals(squares, route.squares);
+        return Objects.equals(squares, route.squares) &&
+                moveStrategy == route.moveStrategy;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(squares);
+        return Objects.hash(squares, moveStrategy);
     }
 }

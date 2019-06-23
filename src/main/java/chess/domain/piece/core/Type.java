@@ -27,4 +27,12 @@ public enum Type {
     public Piece create(Team team) {
         return creator.apply(team);
     }
+
+    @Override
+    public String toString() {
+        return "Type{" +
+                "type='" + type + '\'' +
+                ", creator=" + creator +
+                '}';
+    }
 }

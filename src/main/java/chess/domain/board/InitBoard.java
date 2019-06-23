@@ -23,19 +23,9 @@ public enum InitBoard {
         this.typeList = typeList;
     }
 
-    int size() {
-        return typeList.size();
-    }
-
-    Type get(int index) {
-        return typeList.get(index);
-    }
-
-
-    Map<Square, Piece> genertate(int rank, Team team) {
+    Map<Square, Piece> generate(int rank, Team team) {
         return IntStream.range(0, typeList.size())
                 .boxed()
                 .collect(Collectors.toMap(index -> Square.of(index, rank), index -> typeList.get(index).create(team)));
-
     }
 }

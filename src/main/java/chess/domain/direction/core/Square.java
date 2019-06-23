@@ -14,11 +14,11 @@ public class Square {
         this.y = y;
     }
 
-    public int getX() {
+    int getX() {
         return x;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
@@ -30,25 +30,33 @@ public class Square {
         return squareMap.get(key);
     }
 
+    Square multiply(int scalar) {
+        return Square.of(x * scalar, y * scalar);
+    }
+
+    Square add(Square square) {
+        return Square.of(x + square.x, y + square.y);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Square)) return false;
         Square square = (Square) o;
-        return x == square.x &&
-                y == square.y;
+        return getX() == square.getX() &&
+                getY() == square.getY();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(getX(), getY());
     }
 
-    public Square multiply(int scalar) {
-        return Square.of(x * scalar, y * scalar);
-    }
-
-    public Square add(Square square) {
-        return Square.of(x + square.x, y + square.y);
+    @Override
+    public String toString() {
+        return "Square{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

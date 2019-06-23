@@ -13,4 +13,11 @@ public enum Team {
     public String getTeam() {
         return team;
     }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "team='" + team + '\'' +
+                '}';
+    }
 }

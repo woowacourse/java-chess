@@ -18,7 +18,7 @@ public class Pawn extends Piece {
 
     public Pawn(Team team) {
         super(team, Type.PAWN);
-        this.navigator = generateNavigator(team);
+        navigator = generateNavigator(team);
     }
 
     private Navigator generateNavigator(Team team) {
@@ -46,7 +46,6 @@ public class Pawn extends Piece {
                 )
         ));
     }
-
 
     @Override
     public Route getRoute(Square source, Square target) {

@@ -4,12 +4,12 @@ import chess.domain.direction.Route;
 import chess.domain.direction.core.Square;
 import chess.domain.direction.core.TargetStatus;
 import chess.domain.piece.core.Piece;
-import chess.domain.piece.core.Team;
 import chess.domain.piece.core.Type;
+import com.google.common.collect.Maps;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static chess.domain.board.InitBoard.GENERAL;
 import static chess.domain.board.InitBoard.SOLDIER;
@@ -25,17 +25,13 @@ public class Board {
     }
 
     public static Board drawBoard() {
-        Map<Square, Piece> board = new HashMap<>();
-        board.putAll(GENERAL.genertate(0, BLACK));
-        board.putAll(SOLDIER.genertate(1, BLACK));
-        board.putAll(SOLDIER.genertate(6,WHITE));
-        board.putAll(GENERAL.genertate(7,WHITE));
+        Map<Square, Piece> board = Maps.newHashMap();
+        board.putAll(GENERAL.generate(0, BLACK));
+        board.putAll(SOLDIER.generate(1, BLACK));
+        board.putAll(SOLDIER.generate(6, WHITE));
+        board.putAll(GENERAL.generate(7, WHITE));
 
-        return new Board(board);
-    }
-
-    public Map<Square, Piece> getBoard() {
-        return board;
+        return drawBoard(board);
     }
 
     public static Board drawBoard(Map<Square, Piece> board) {
@@ -62,13 +58,12 @@ public class Board {
     }
 
     Board movePiece(Square source, Square target) {
-        Map<Square, Piece> board = new HashMap<>();
-        board.putAll(this.board);
+        Map<Square, Piece> copyBoard = board.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        copyBoard.put(target, copyBoard.get(source));
+        copyBoard.remove(source);
 
-        board.put(target, this.board.get(source));
-        board.remove(source);
-
-        return drawBoard(board);
+        return drawBoard(copyBoard);
     }
 
     public boolean gameOver() {
@@ -93,7 +88,7 @@ public class Board {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Board)) return false;
         Board board1 = (Board) o;
         return Objects.equals(board, board1.board);
     }
