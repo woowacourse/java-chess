@@ -17,13 +17,13 @@ public class PawnTest {
 
     @BeforeEach
     void setUp() {
-        whitePawn = new Pawn(true,"white");
-        blackPawn = new Pawn(true,"black");
+        whitePawn = new Pawn(true, "white");
+        blackPawn = new Pawn(true, "black");
     }
 
     @Test
     void 잘못된_팀을_입력할_경우_확인() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Pawn(true,"purple"));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Pawn(true, "purple"));
     }
 
     @Test
@@ -277,7 +277,9 @@ public class PawnTest {
 
         Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
 
-        assertThat(clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
+//        assertThat(clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
 
     }
 
@@ -291,7 +293,28 @@ public class PawnTest {
 
         Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
 
-        assertThat(clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
+//        assertThat(clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
+    }
 
+    @Test
+    void 팀_확인_white팀일_경우() {
+        assertThat(whitePawn.askTeamColor()).isEqualTo("white");
+    }
+
+    @Test
+    void 팀_확인_black팀일_경우() {
+        assertThat(blackPawn.askTeamColor()).isEqualTo("black");
+    }
+
+    @Test
+    void pawn인지_확인() {
+        assertThat(whitePawn.isPawn()).isTrue();
+    }
+
+    @Test
+    void clone_확인() {
+        assertThat(whitePawn.cloneSelf()).isEqualTo(new Pawn(false, "white"));
     }
 }

@@ -127,17 +127,4 @@ public class Queen implements Piece {
     public boolean isPawn() {
         return false;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Queen queen = (Queen) o;
-        return Objects.equals(team, queen.team);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(team);
-    }
 }

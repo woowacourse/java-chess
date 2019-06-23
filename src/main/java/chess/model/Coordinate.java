@@ -33,7 +33,11 @@ public class Coordinate {
         return Math.subtractExact(this.coordinate, targetCoordinate.coordinate);
     }
 
-    public String convertToString(int addition) {
-        return String.valueOf(this.coordinate + addition);
+    public String addCoordinate(int coordinate) {
+        int addedCoordinate = this.coordinate + coordinate;
+        if (addedCoordinate > MAX_RANGE) {
+            throw new IllegalArgumentException("범위를 벗어났습니다.");
+        }
+        return String.valueOf(addedCoordinate);
     }
 }

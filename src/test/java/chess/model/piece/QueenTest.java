@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.*;
 
 
 public class QueenTest {
-    private Queen queen;
+    private Piece queen;
 
     @BeforeEach
     void setUp() {
@@ -208,7 +208,7 @@ public class QueenTest {
 
     @Test
     void 팀_확인_black팀일_경우() {
-        Queen blackQueen = new Queen("black");
+        Piece blackQueen = new Queen("black");
         assertThat(blackQueen.askTeamColor()).isEqualTo("black");
     }
 

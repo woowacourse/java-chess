@@ -111,7 +111,7 @@ public class BishopTest {
     }
 
     @Test
-    void 경로오류_확인_퀸이_같은_자리로_이동한_경우() {
+    void 경로오류_확인_비숍이_같은_자리로_이동한_경우() {
         Coordinate sourceCoordinateX = Coordinate.valueOf(5);
         Coordinate sourceCoordinateY = Coordinate.valueOf(5);
         Coordinate targetCoordinateX = Coordinate.valueOf(5);
@@ -124,7 +124,7 @@ public class BishopTest {
     }
 
     @Test
-    void 경로오류_확인_퀸의_이동방향이_나이트의_이동방향인_경우() {
+    void 경로오류_확인_비숍의_이동방향이_나이트의_이동방향인_경우() {
         Coordinate sourceCoordinateX = Coordinate.valueOf(5);
         Coordinate sourceCoordinateY = Coordinate.valueOf(5);
         Coordinate targetCoordinateX = Coordinate.valueOf(6);
@@ -137,11 +137,11 @@ public class BishopTest {
     }
 
     @Test
-    void 경로오류_확인_퀸의_이동방향이_정의된_방향이_아닐_경우() {
+    void 경로오류_확인_비숍의_이동방향이_정의된_방향이_아닐_경우() {
         Coordinate sourceCoordinateX = Coordinate.valueOf(5);
         Coordinate sourceCoordinateY = Coordinate.valueOf(5);
-        Coordinate targetCoordinateX = Coordinate.valueOf(6);
-        Coordinate targetCoordinateY = Coordinate.valueOf(8);
+        Coordinate targetCoordinateX = Coordinate.valueOf(5);
+        Coordinate targetCoordinateY = Coordinate.valueOf(7);
 
         Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
 

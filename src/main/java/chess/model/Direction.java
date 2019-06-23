@@ -5,7 +5,8 @@ import java.util.List;
 public enum Direction {
     NORTH, SOUTH, WEST, EAST, NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST,
     KNIGHT_NORTHWEST, KNIGHT_NORTHEAST, KNIGHT_EASTNORTH, KNIGHT_EASTSOUTH,
-    KNIGHT_SOUTHWEST, KNIGHT_SOUTHEAST, KNIGHT_WESTNORTH, KNIGHT_WESTSOUTH;
+    KNIGHT_SOUTHWEST, KNIGHT_SOUTHEAST, KNIGHT_WESTNORTH, KNIGHT_WESTSOUTH,
+    FAULT_DIRECTION;
 
     public static Direction findDirection(List<Coordinate> coordinates) {
         Coordinate sourceCoordinateX = coordinates.get(0);
@@ -13,83 +14,74 @@ public enum Direction {
         Coordinate targetCoordinateX = coordinates.get(2);
         Coordinate targetCoordinateY = coordinates.get(3);
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) == -1)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) == 2) {
+        int distanceX = targetCoordinateX.calculateDistance(sourceCoordinateX);
+        int distanceY = targetCoordinateY.calculateDistance(sourceCoordinateY);
+
+        if ((distanceX == -1) && (distanceY == 2)) {
             return KNIGHT_NORTHWEST;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) == 1)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) == 2) {
+        if ((distanceX == 1) && (distanceY == 2)) {
             return KNIGHT_NORTHEAST;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) == 2)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) == 1) {
+        if ((distanceX == 2) && (distanceY == 1)) {
             return KNIGHT_EASTNORTH;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) == 2)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) == -1) {
+        if ((distanceX == 2) && (distanceY == -1)) {
             return KNIGHT_EASTSOUTH;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) == 1)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) == -2) {
+        if ((distanceX == 1) && (distanceY == -2)) {
             return KNIGHT_SOUTHEAST;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) == -1)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) == -2) {
+        if ((distanceX == -1) && (distanceY == -2)) {
             return KNIGHT_SOUTHWEST;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) == -2)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) == -1) {
+        if ((distanceX == -2) && (distanceY == -1)) {
             return KNIGHT_WESTSOUTH;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) == -2)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) == 1) {
+        if ((distanceX == -2) && (distanceY == 1)) {
             return KNIGHT_WESTNORTH;
         }
 
-        if ((sourceCoordinateX == targetCoordinateX) && (targetCoordinateY.calculateDistance(sourceCoordinateY) > 0)) {
+        if ((sourceCoordinateX == targetCoordinateX) && (distanceY > 0)) {
             return NORTH;
         }
 
-        if ((sourceCoordinateX == targetCoordinateX) && (targetCoordinateY.calculateDistance(sourceCoordinateY) < 0)) {
+        if ((sourceCoordinateX == targetCoordinateX) && (distanceY < 0)) {
             return SOUTH;
         }
 
-        if ((sourceCoordinateY == targetCoordinateY) && (targetCoordinateX.calculateDistance(sourceCoordinateX) < 0)) {
+        if ((sourceCoordinateY == targetCoordinateY) && (distanceX < 0)) {
             return WEST;
         }
 
-        if ((sourceCoordinateY == targetCoordinateY) && (targetCoordinateX.calculateDistance(sourceCoordinateX)) > 0) {
+        if ((sourceCoordinateY == targetCoordinateY) && (distanceX) > 0) {
             return EAST;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) < 0)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) > 0) {
+        if ((distanceX < 0) && (distanceY > 0) && (Math.abs(distanceX) == Math.abs(distanceY))) {
             return NORTHWEST;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) > 0)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) > 0) {
+        if ((distanceX > 0) && (distanceY > 0) && (Math.abs(distanceX) == Math.abs(distanceY))) {
             return NORTHEAST;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) < 0)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) < 0) {
+        if ((distanceX < 0) && (distanceY < 0) && (Math.abs(distanceX) == Math.abs(distanceY))) {
             return SOUTHWEST;
         }
 
-        if ((targetCoordinateX.calculateDistance(sourceCoordinateX) > 0)
-                && targetCoordinateY.calculateDistance(sourceCoordinateY) < 0) {
+        if ((distanceX > 0) && (distanceY < 0) && (Math.abs(distanceX) == Math.abs(distanceY))) {
             return SOUTHEAST;
         }
 
-        return null;
+        return FAULT_DIRECTION;
 
     }
 
