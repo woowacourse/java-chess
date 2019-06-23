@@ -7,10 +7,7 @@ import chess.domain.piece.pieceinfo.PieceType;
 import chess.domain.piece.pieceinfo.TeamType;
 import chess.exception.NotFoundPositionException;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Pawn extends Piece {
     private static final int FIRST_MOVEMENT_COUNT = 2;
@@ -31,44 +28,59 @@ public class Pawn extends Piece {
                 : DirectionType.attackBlackPawnDirections();
 
         for (DirectionType direction : directions) {
-            positions.addAll(makeAttackablePositionsByDirection(positionChecker, direction, source));
+            positions.addAll(attackablePositionByDirection(positionChecker, direction, source));
         }
-        positions.addAll(makeMovablePositionsByDirection(positionChecker, source));
+        positions.addAll(movablePositionsByDirection(positionChecker, source));
         return positions;
     }
 
-    private Set<Position> makeAttackablePositionsByDirection(
+    private Set<Position> attackablePositionByDirection(
             PositionChecker positionChecker, DirectionType direction, Position source) {
         Set<Position> position = new HashSet<>();
 
         try {
-            Position nextPosition = source.hopNextPosition(direction);
-            if (!Objects.isNull(positionChecker.getPiece(nextPosition))
-                    && !positionChecker.getPiece(nextPosition).isSameTeam(this)) {
-                position.add(nextPosition);
-            }
+            position.addAll(validAttackablePositionByDirection(positionChecker, direction, source));
         } catch (NotFoundPositionException e) {
             return position;
         }
         return position;
     }
 
-    // TODO 리팩토링 필요함
-    private Set<Position> makeMovablePositionsByDirection(PositionChecker positionChecker, Position source) {
+    private Set<Position> validAttackablePositionByDirection(
+            PositionChecker positionChecker, DirectionType direction, Position source) {
+
+        Position nextPosition = source.hopNextPosition(direction);
+
+        if (isAttackablePosition(positionChecker, nextPosition)) {
+            return new HashSet<>(Collections.singletonList(nextPosition));
+        }
+        return new HashSet<>();
+    }
+
+    private boolean isAttackablePosition(PositionChecker positionChecker, Position nextPosition) {
+        return !Objects.isNull(positionChecker.getPiece(nextPosition))
+                && !positionChecker.getPiece(nextPosition).isSameTeam(this);
+    }
+
+    private Set<Position> movablePositionsByDirection(PositionChecker positionChecker, Position source) {
         Set<Position> position = new HashSet<>();
         DirectionType direction = (isSameTeam(WhitePawn.of())) ? DirectionType.UP : DirectionType.DOWN;
         int movementCount = (isFirstMove(source)) ? FIRST_MOVEMENT_COUNT : NOT_FIRST_MOVEMENT_COUNT;
 
         try {
             Position nextPosition = source.hopNextPosition(direction);
-            for (int i = 0; i < movementCount && Objects.isNull(positionChecker.getPiece(nextPosition)); i++) {
+            for (int i = 0; i < movementCount && isMovablePosition(positionChecker, nextPosition); i++) {
                 position.add(nextPosition);
                 nextPosition = nextPosition.hopNextPosition(direction);
             }
+            return position;
         } catch (NotFoundPositionException e) {
             return position;
         }
-        return position;
+    }
+
+    private boolean isMovablePosition(PositionChecker positionChecker, Position nextPosition) {
+        return Objects.isNull(positionChecker.getPiece(nextPosition));
     }
 
     private boolean isFirstMove(Position source) {

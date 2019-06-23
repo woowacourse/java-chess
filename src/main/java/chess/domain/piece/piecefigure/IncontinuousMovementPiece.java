@@ -7,10 +7,7 @@ import chess.domain.piece.pieceinfo.PieceType;
 import chess.domain.piece.pieceinfo.TeamType;
 import chess.exception.NotFoundPositionException;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class IncontinuousMovementPiece extends Piece {
     private final List<DirectionType> directions;
@@ -25,24 +22,37 @@ public class IncontinuousMovementPiece extends Piece {
         Set<Position> positions = new HashSet<>();
 
         for (DirectionType direction : directions) {
-            if (makePossiblePositionByDirection(positionChecker, direction, source)) {
-                positions.add(source.hopNextPosition(direction));
-            }
+            positions.addAll(possiblePositionByDirection(positionChecker, direction, source));
         }
         return positions;
     }
 
-    // TODO 메소드 길이 리펙토링 필요
-    private boolean makePossiblePositionByDirection(PositionChecker positionChecker, DirectionType direction, Position source) {
+    private Set<Position> possiblePositionByDirection(
+            PositionChecker positionChecker, DirectionType direction, Position source) {
+
+        Set<Position> position = new HashSet<>();
+
         try {
-            Position nextPosition = source.hopNextPosition(direction);
-            if (Objects.isNull(positionChecker.getPiece(nextPosition)) ||
-                    !positionChecker.getPiece(nextPosition).isSameTeam(this)) {
-                return true;
-            }
+            position.addAll(validPositionByDirection(positionChecker, direction, source));
         } catch (NotFoundPositionException e) {
-            e.getMessage();
+            return position;
         }
-        return false;
+        return position;
+    }
+
+    private Set<Position> validPositionByDirection(
+            PositionChecker positionChecker, DirectionType direction, Position source) {
+
+        Position nextPosition = source.hopNextPosition(direction);
+
+        if (isMovablePosition(positionChecker, nextPosition)) {
+            return new HashSet<>(Collections.singletonList(nextPosition));
+        }
+        return new HashSet<>();
+    }
+
+    private boolean isMovablePosition(PositionChecker positionChecker, Position nextPosition) {
+        return (Objects.isNull(positionChecker.getPiece(nextPosition))
+                || !positionChecker.getPiece(nextPosition).isSameTeam(this));
     }
 }

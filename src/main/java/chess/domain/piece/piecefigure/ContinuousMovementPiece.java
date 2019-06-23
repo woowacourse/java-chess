@@ -7,10 +7,7 @@ import chess.domain.piece.pieceinfo.PieceType;
 import chess.domain.piece.pieceinfo.TeamType;
 import chess.exception.NotFoundPositionException;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class ContinuousMovementPiece extends Piece {
     private final List<DirectionType> directions;
@@ -25,18 +22,19 @@ public class ContinuousMovementPiece extends Piece {
         Set<Position> positions = new HashSet<>();
 
         for (DirectionType direction : directions) {
-            Position nextPosition = source.hopNextPosition(direction);
-            positions.addAll(makePossiblePositionsByDirection(positionChecker, direction, nextPosition));
+            positions.addAll(possiblePositionsByDirection(positionChecker, direction, source));
         }
         return positions;
     }
 
-    // TODO 메소드 길이 리펙토링 필요
-    private Set<Position> makePossiblePositionsByDirection(
-            PositionChecker positionChecker, DirectionType direction, Position nextPosition) {
+    private Set<Position> possiblePositionsByDirection(
+            PositionChecker positionChecker, DirectionType direction, Position source) {
+
         Set<Position> positions = new HashSet<>();
+        Position nextPosition;
 
         try {
+            nextPosition = source.hopNextPosition(direction);
             while (Objects.isNull(positionChecker.getPiece(nextPosition))) {
                 positions.add(nextPosition);
                 nextPosition = nextPosition.hopNextPosition(direction);
@@ -44,11 +42,15 @@ public class ContinuousMovementPiece extends Piece {
         } catch (NotFoundPositionException e) {
             return positions;
         }
+        return checkLastPosition(positionChecker, positions, nextPosition);
+    }
 
-        if (!positionChecker.getPiece(nextPosition).isSameTeam(this)) {
-            positions.add(nextPosition);
+    private Set<Position> checkLastPosition(
+            PositionChecker positionChecker, Set<Position> positions, Position lastPosition) {
+
+        if (!positionChecker.getPiece(lastPosition).isSameTeam(this)) {
+            positions.add(lastPosition);
         }
-
         return positions;
     }
 }
