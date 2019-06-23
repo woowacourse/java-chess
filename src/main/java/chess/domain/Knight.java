@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Knight extends ChessPiece {
@@ -29,32 +30,17 @@ public class Knight extends ChessPiece {
 
     @Override
     Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
-
         List<ChessCoordinate> candidates = new ArrayList<>();
 
-        from.getX().move(2)
-                .ifPresent((x) -> {
-                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                });
-        from.getX().move(-2)
-                .ifPresent((x) -> {
-                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                });
-        from.getY().move(2)
-                .ifPresent((y) -> {
-                    from.getX().move(1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                    from.getX().move(-1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                });
-        from.getY().move(-2)
-                .ifPresent((y) -> {
-                    from.getX().move(1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                    from.getX().move(-1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                });
+        from.getX().move(2).ifPresent(proveYSide(from, candidates));
+        from.getX().move(-2).ifPresent(proveYSide(from, candidates));
+
+        from.getY().move(2).ifPresent(proveXSide(from, candidates));
+        from.getY().move(-2).ifPresent(proveXSide(from, candidates));
 
         return candidates.stream()
                 .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())
                 .collect(Collectors.toSet());
     }
+
 }

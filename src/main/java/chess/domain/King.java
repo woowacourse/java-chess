@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class King extends ChessPiece {
@@ -31,19 +32,11 @@ public class King extends ChessPiece {
     Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
         List<ChessCoordinate> candidates = new ArrayList<>();
 
-        from.getX().move(-1)
-                .ifPresent(x -> {
-                    candidates.add(ChessCoordinate.valueOf(x, from.getY()));
-                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                });
-        from.getX().move(1)
-                .ifPresent(x -> {
-                    candidates.add(ChessCoordinate.valueOf(x, from.getY()));
-                    from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                    from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
-                });
+        from.getX().move(-1).ifPresent(proveYSide(from, candidates));
+        from.getX().move(1).ifPresent(proveYSide(from, candidates));
 
+        from.getX().move(1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, from.getY())));
+        from.getX().move(-1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, from.getY())));
         from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y)));
         from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(from.getX(), y)));
 
@@ -51,4 +44,5 @@ public class King extends ChessPiece {
                 .filter((coord) -> pieceTeamProvider.getTeamAt(coord) != getType().getTeam())
                 .collect(Collectors.toSet());
     }
+
 }
