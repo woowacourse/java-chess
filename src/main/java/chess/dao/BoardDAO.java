@@ -27,11 +27,14 @@ public class BoardDAO {
         }
     }
 
-
     public static BoardDTO selectAll() throws SQLException {
         String query = "SELECT x, y, piece FROM board";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
+        Map<Position, AbstractPiece> queryResult = loadData(pstmt);
+        return dataLoadedDTO(queryResult);
+    }
 
+    private static Map<Position, AbstractPiece> loadData(PreparedStatement pstmt) throws SQLException {
         Map<Position, AbstractPiece> queryResult = new HashMap<>();
         ResultSet rs = pstmt.executeQuery();
         while(rs.next()) {
@@ -40,6 +43,10 @@ public class BoardDAO {
                     DataParser.piece(rs.getString(3))
             );
         }
+        return queryResult;
+    }
+
+    private static BoardDTO dataLoadedDTO(Map<Position, AbstractPiece> queryResult) {
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setBoard(new Board(queryResult));
         return boardDTO;

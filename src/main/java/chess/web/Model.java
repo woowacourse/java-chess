@@ -43,13 +43,12 @@ public class Model {
     }
 
     private static String calculateWinner(Double whiteScore, Double blackScore) {
-        String winner = "NONE";
         if (whiteScore > blackScore) {
             return "WHITE";
         }
         if (whiteScore < blackScore) {
             return "BLACK";
         }
-        return winner;
+        return "NONE";
     }
 }

@@ -17,14 +17,17 @@ public class DataParser {
 
     public static Map<String, String> board(Board board) {
         Map<String, String> result = new HashMap<>();
-        board.getBoard().forEach((key, value) -> {
-            String resultValue = value.getName();
-            if (value.getTeam() == Team.BLACK) {
-                resultValue = resultValue.toUpperCase();
-            }
-            result.put(WebUtils.positionParser(key), resultValue);
-        });
+        board.getBoard()
+                .forEach((key, value) -> result.put(WebUtils.positionParser(key), toPieceName(value)));
         return result;
+    }
+
+    private static String toPieceName(AbstractPiece value) {
+        String resultValue = value.getName();
+        if (value.getTeam() == Team.BLACK) {
+            resultValue = resultValue.toUpperCase();
+        }
+        return resultValue;
     }
 
     public static Position position(String x, String y) {

@@ -1,8 +1,8 @@
 package chess;
 
-import chess.api.ChessGameAPI;
-import chess.api.ExceptionAPI;
-import chess.view.JsonTransformer;
+import chess.api.ChessGameController;
+import chess.api.ExceptionController;
+import chess.utils.JsonTransformer;
 
 import static spark.Spark.exception;
 import static spark.Spark.get;
@@ -13,20 +13,20 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/assets");
 
-        get("/", ChessGameAPI::index);
+        get("/", (req, res) -> ChessGameController.index());
 
-        get("/game_play", ChessGameAPI::gamePlayGet);
+        get("/game_play", (req, res) -> ChessGameController.playGet());
 
-        get("/game_continue", ChessGameAPI::continueGame);
+        get("/game_continue", (req, res) -> ChessGameController.continueGame());
 
-        post("/game_play", ChessGameAPI::gamePlayPost);
+        post("/game_play", (req, res) -> ChessGameController.playPost(req));
 
-        post("/status", ChessGameAPI::status, new JsonTransformer());
+        post("/status", (req, res) -> ChessGameController.status(), new JsonTransformer());
 
-        get("/result", ChessGameAPI::result);
+        get("/result", (req, res) -> ChessGameController.result());
 
-        get("/end", ChessGameAPI::end);
+        get("/end", (req, res) -> ChessGameController.end());
 
-        exception(RuntimeException.class, ExceptionAPI::exception);
+        exception(RuntimeException.class, ExceptionController::exception);
     }
 }

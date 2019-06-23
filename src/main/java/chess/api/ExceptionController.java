@@ -3,7 +3,7 @@ package chess.api;
 import spark.Request;
 import spark.Response;
 
-public class ExceptionAPI {
+public class ExceptionController {
     public static void exception(RuntimeException e, Request req, Response res) {
         res.status(404);
         res.body(

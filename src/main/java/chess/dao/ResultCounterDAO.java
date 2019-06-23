@@ -26,19 +26,26 @@ public class ResultCounterDAO {
         }
     }
 
-
     public static ResultCounterDTO selectAll() throws SQLException {
         String query = "SELECT name, count FROM result";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
+        Map<AbstractPiece, Count> queryResult = loadData(pstmt);
+        return dataLoadedDTO(queryResult);
+    }
 
+    private static Map<AbstractPiece, Count> loadData(PreparedStatement pstmt) throws SQLException {
         Map<AbstractPiece, Count> queryResult = new HashMap<>();
         ResultSet rs = pstmt.executeQuery();
-        while(rs.next()) {
+        while (rs.next()) {
             queryResult.put(
                     DataParser.piece(rs.getString(1)),
                     DataParser.count(rs.getInt(2))
             );
         }
+        return queryResult;
+    }
+
+    private static ResultCounterDTO dataLoadedDTO(Map<AbstractPiece, Count> queryResult) {
         ResultCounterDTO resultCounterDTO = new ResultCounterDTO();
         resultCounterDTO.setResultCounter(new ResultCounter(queryResult));
         return resultCounterDTO;

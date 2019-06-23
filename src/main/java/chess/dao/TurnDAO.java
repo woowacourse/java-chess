@@ -25,7 +25,6 @@ public class TurnDAO {
         ResultSet rs = pstmt.executeQuery();
         TurnDTO turnDTO = new TurnDTO();
         if (rs.next()) {
-            System.out.println(rs.getObject(1));
             turnDTO.setTurn(new Turn(Team.valueOf(rs.getString(1))));
         }
         return turnDTO;
