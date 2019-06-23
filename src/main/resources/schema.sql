@@ -16,6 +16,8 @@ CREATE TABLE room (
 
   INSERT INTO command(origin, target, round, room_id) VALUES ('a2', 'a4', 1, 1);
   INSERT INTO command(origin, target, round, room_id) VALUES ('h7', 'h6', 2, 1);
-
+  INSERT INTO command(origin, target, round, room_id) VALUES ('a4', 'a5', 3, 1);
+  INSERT INTO command(origin, target, round, room_id) VALUES ('b7', 'b6', 4, 1);
+  INSERT INTO command(origin, target, round, room_id) VALUES ('a5', 'b6', 5, 1);
 
 

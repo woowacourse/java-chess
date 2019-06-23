@@ -4,11 +4,11 @@ import chess.domain.Position;
 
 public interface Rule {
 
-    boolean isValidMove(final Position origin, final Position target);
+	boolean isValidMove(final Position origin, final Position target);
 
-    boolean isValidAttack(final Position origin, final Position target);
+	boolean isValidAttack(final Position origin, final Position target);
 
-    double getScore();
+	double getScore();
 
-    String getName();
+	String getName();
 }
