@@ -21,33 +21,46 @@ public class GameSessionDaoTest {
 
     @Test
     void insertAndFind() throws SQLException {
-        GameSessionDto room = new GameSessionDto();
-        room.setTitle("some room");
-        room.setState(GameResult.KEEP.name());
-        long insertedId = dao.addSession(room);
+        GameSessionDto sess = new GameSessionDto();
+        sess.setTitle("some sess");
+        sess.setState(GameResult.KEEP.name());
+        long insertedId = dao.addSession(sess);
         GameSessionDto found = dao.findById(insertedId).get();
-        assertThat(found.getTitle()).isEqualTo(room.getTitle());
-        assertThat(found.getState()).isEqualTo(room.getState());
+        assertThat(found.getTitle()).isEqualTo(sess.getTitle());
+        assertThat(found.getState()).isEqualTo(sess.getState());
         dao.deleteById(insertedId);
     }
 
     @Test
     void findByTitle() throws SQLException {
-        GameSessionDto room = new GameSessionDto();
-        room.setTitle("some other room");
-        long insertedId = dao.addSession(room);
-        Optional<GameSessionDto> maybeFound = dao.findByTitle("some other room");
+        GameSessionDto sess = new GameSessionDto();
+        sess.setTitle("some other sess");
+        sess.setState(GameResult.KEEP.name());
+        long insertedId = dao.addSession(sess);
+        Optional<GameSessionDto> maybeFound = dao.findByTitle("some other sess");
         assertThat(maybeFound.isPresent()).isTrue();
         dao.deleteById(insertedId);
     }
 
     @Test
     void deleteById() throws SQLException {
-        GameSessionDto room = new GameSessionDto();
-        room.setTitle("some otheeeer room");
-        long insertedId = dao.addSession(room);
+        GameSessionDto sess = new GameSessionDto();
+        sess.setTitle("some otheeeer sess");
+        sess.setState(GameResult.KEEP.name());
+        long insertedId = dao.addSession(sess);
         int affected = dao.deleteById(insertedId);
         assertThat(affected).isEqualTo(1);
         assertThat(dao.findById(insertedId).isPresent()).isFalse();
+    }
+
+    @Test
+    void updateState() throws SQLException {
+        GameSessionDto sess = new GameSessionDto();
+        sess.setTitle("choboman");
+        sess.setState(GameResult.KEEP.name());
+        sess.setId(dao.addSession(sess));
+        sess.setState(GameResult.BLACK_WIN.name());
+        dao.updateSession(sess);
+        assertThat(dao.findById(sess.getId()).get().getState()).isEqualTo(GameResult.BLACK_WIN.name());
     }
 }

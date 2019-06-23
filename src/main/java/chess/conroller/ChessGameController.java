@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGameController {
-    private static final SessionService ROOM_SERVICE;
+    private static final SessionService SESSION_SERVICE;
     private static final GameService GAME_SERVICE;
 
     static {
-        ROOM_SERVICE = new SessionServiceImpl();
+        SESSION_SERVICE = new SessionServiceImpl();
         GAME_SERVICE = new GameServiceImpl();
     }
 
@@ -38,22 +38,22 @@ public class ChessGameController {
      *            {
      *            "result": "ok",
      *            "message": "",
-     *            "room": {
+     *            "session": {
      *            "id": 47,
      *            "title": "아무나 오세요!!!"
      *            }
      *            }
      * @return
      */
-    public static Map<String, Object> createRoom(Request req, Response res) {
+    public static Map<String, Object> createSession(Request req, Response res) {
         Map<String, Object> resMap;
         try {
             SessionCreationRequestDto body = new Gson().fromJson(req.body(), SessionCreationRequestDto.class);
-            GameSessionDto room = new GameSessionDto();
-            room.setTitle(body.getTitle());
-            room = ROOM_SERVICE.createRoom(room);
+            GameSessionDto session = new GameSessionDto();
+            session.setTitle(body.getTitle());
+            session = SESSION_SERVICE.createSession(session);
             resMap = ResultState.OK.createResMap("");
-            resMap.put("room", room);
+            resMap.put("session", session);
         } catch (IllegalArgumentException e) {
             resMap = ResultState.FAIL.createResMap(e.getMessage());
             e.printStackTrace();
@@ -70,7 +70,7 @@ public class ChessGameController {
      * @param res 응답 JSON 예시:
      *            {
      *            "result": "ok",
-     *            "rooms": [
+     *            "sessions": [
      *            {
      *            "id": 47,
      *            "title": "아무나 오세요!!!"
@@ -80,11 +80,11 @@ public class ChessGameController {
      *            }
      * @return
      */
-    public static Map<String, Object> retrieveRooms(Request req, Response res) {
+    public static Map<String, Object> retrieveSessions(Request req, Response res) {
         Map<String, Object> resMap;
         try {
             resMap = ResultState.OK.createResMap("");
-            resMap.put("rooms", ROOM_SERVICE.findLatestRooms(getOrDefaultLimit(req.queryParams("limit"))));
+            resMap.put("sessions", SESSION_SERVICE.findLatestSessions(getOrDefaultLimit(req.queryParams("limit"))));
         } catch (NumberFormatException e) {
             resMap = ResultState.FAIL.createResMap("숫자로 변환할 수 없는 인자가 있습니다.");
         } catch (IllegalArgumentException e) {
@@ -104,13 +104,13 @@ public class ChessGameController {
         return Integer.valueOf(limit);
     }
 
-    public static Map<String, Object> retrieveRoomById(Request req, Response res) {
+    public static Map<String, Object> retrieveSessionById(Request req, Response res) {
         Map<String, Object> resMap;
         try {
-            long roomId = Long.valueOf(req.params("id"));
+            long sessId = Long.valueOf(req.params("id"));
             resMap = ResultState.OK.createResMap("");
-            resMap.put("room", ROOM_SERVICE.findRoomById(roomId));
-            resMap.put("states", GAME_SERVICE.findBoardStatesByRoomId(roomId));
+            resMap.put("session", SESSION_SERVICE.findSessionById(sessId));
+            resMap.put("states", GAME_SERVICE.findBoardStatesBySessionId(sessId));
         } catch (NumberFormatException e) {
             resMap = ResultState.FAIL.createResMap("숫자로 변환할 수 없는 인자가 있습니다.");
         } catch (IllegalArgumentException e) {
@@ -184,7 +184,7 @@ public class ChessGameController {
             resMap = ResultState.OK.createResMap("");
             Map<String, Object> stateMap = new HashMap<>();
             stateMap.put("result", result.name());
-            stateMap.put("board", GAME_SERVICE.findBoardStatesByRoomId(body.getSessionId()));
+            stateMap.put("board", GAME_SERVICE.findBoardStatesBySessionId(body.getSessionId()));
             resMap.put("state", stateMap);
         } catch (IllegalArgumentException e) {
             resMap = ResultState.FAIL.createResMap(e.getMessage());

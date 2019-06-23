@@ -3,7 +3,9 @@ package chess.service;
 import chess.domain.*;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
+import chess.persistence.dao.GameSessionDao;
 import chess.persistence.dto.BoardStateDto;
+import chess.persistence.dto.GameSessionDto;
 import chess.service.dto.CoordinatePairDto;
 
 import javax.sql.DataSource;
@@ -14,16 +16,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameServiceImpl implements GameService {
-
+    private GameSessionDao sessionDao;
     private BoardStateDao boardStateDao;
 
     public GameServiceImpl() {
         DataSource ds = new DataSourceFactory().createDataSource();
+        sessionDao = new GameSessionDao(ds);
         boardStateDao = new BoardStateDao(ds);
     }
 
     @Override
-    public List<BoardStateDto> findBoardStatesByRoomId(long sessionId) {
+    public List<BoardStateDto> findBoardStatesBySessionId(long sessionId) {
         try {
             return boardStateDao.findBySessionId(sessionId);
         } catch (SQLException e) {
@@ -40,7 +43,11 @@ public class GameServiceImpl implements GameService {
 
             deleteTargetStateIfPresent(to, sessionId);
             updateSrcState(from, to, sessionId);
-            return GameResult.judge(game.getBoardState().values());
+            GameResult result = GameResult.judge(game.getBoardState().values());
+            GameSessionDto sess = sessionDao.findById(sessionId).orElseThrow(() -> new IllegalStateException("결과를 반영할 세션을 찾을 수 없습니다."));
+            sess.setState(result.name());
+            sessionDao.updateSession(sess);
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
         }

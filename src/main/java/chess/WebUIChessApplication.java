@@ -21,9 +21,9 @@ public class WebUIChessApplication {
         options("/*", WebUIChessApplication::cors);
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
-        get("/api/sessions", ChessGameController::retrieveRooms, gson::toJson);
-        get("/api/session/:id", ChessGameController::retrieveRoomById, gson::toJson);
-        post("/api/session", ChessGameController::createRoom, gson::toJson);
+        get("/api/sessions", ChessGameController::retrieveSessions, gson::toJson);
+        get("/api/session/:id", ChessGameController::retrieveSessionById, gson::toJson);
+        post("/api/session", ChessGameController::createSession, gson::toJson);
         get("/api/game/movable", ChessGameController::movableCoordinates, gson::toJson);
         put("/api/game/move", ChessGameController::movePiece, gson::toJson);
 

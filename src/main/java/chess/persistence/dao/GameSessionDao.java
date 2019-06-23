@@ -92,11 +92,22 @@ public class GameSessionDao {
         }
     }
 
+    public int updateSession(GameSessionDto sess) throws SQLException {
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.UPDATE)) {
+            query.setString(1, sess.getTitle());
+            query.setString(2, sess.getState());
+            query.setLong(3, sess.getId());
+            return query.executeUpdate();
+        }
+    }
+
     private static class GameSessionDaoSql {
         private static final String INSERT = "INSERT INTO game_session(title, state) VALUES(?, ?)";
         private static final String SELECT_BY_ID = "SELECT id, title, state FROM game_session WHERE id=?";
         private static final String SELECT_BY_TITLE = "SELECT id, title, state FROM game_session WHERE title=?";
         private static final String SELECT_LATEST_N = "SELECT id, title, state FROM game_session ORDER BY id DESC LIMIT ?";
+        private static final String UPDATE = "UPDATE game_session SET title=?, state=? WHERE id=?";
         private static final String DELETE_BY_ID = "DELETE FROM game_session WHERE id=?";
     }
 }

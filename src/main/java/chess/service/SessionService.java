@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SessionService {
-    GameSessionDto createRoom(GameSessionDto gameSessionDto);
+    GameSessionDto createSession(GameSessionDto gameSessionDto);
 
-    Optional<GameSessionDto> findRoomById(long id);
+    Optional<GameSessionDto> findSessionById(long id);
 
     Optional<GameSessionDto> findRoomByTitle(String title);
 
-    List<GameSessionDto> findLatestRooms(int limit);
+    List<GameSessionDto> findLatestSessions(int limit);
 }

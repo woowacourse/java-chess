@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.domain.AbstractBoardStateFactory;
 import chess.domain.BoardStateFactory;
+import chess.domain.GameResult;
 import chess.domain.PieceType;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
@@ -26,8 +27,9 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public GameSessionDto createRoom(GameSessionDto gameSessionDto) {
+    public GameSessionDto createSession(GameSessionDto gameSessionDto) {
         try {
+            gameSessionDto.setState(GameResult.KEEP.name());
             GameSessionDto createdRoom = gameSessionDao.findById(gameSessionDao.addSession(gameSessionDto))
                 .orElseThrow(() -> new IllegalStateException("방 생성에 실패했습니다."));
             createBoardState(new BoardStateFactory(), createdRoom.getId());
@@ -61,7 +63,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Optional<GameSessionDto> findRoomById(long id) {
+    public Optional<GameSessionDto> findSessionById(long id) {
         try {
             return gameSessionDao.findById(id);
         } catch (SQLException e) {
@@ -81,7 +83,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public List<GameSessionDto> findLatestRooms(int limit) {
+    public List<GameSessionDto> findLatestSessions(int limit) {
         try {
             return gameSessionDao.findLatestSessions(limit);
         } catch (SQLException e) {

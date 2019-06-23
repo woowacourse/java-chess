@@ -8,7 +8,7 @@ import chess.service.dto.CoordinatePairDto;
 import java.util.List;
 
 public interface GameService {
-    List<BoardStateDto> findBoardStatesByRoomId(long sessionId);
+    List<BoardStateDto> findBoardStatesBySessionId(long sessionId);
 
     GameResult movePiece(CoordinatePair from, CoordinatePair to, long sessionId);
 
