@@ -18,8 +18,6 @@ import java.util.Map;
 import static spark.Spark.*;
 
 //TODO Squares DTO 고려
-//TODO 합계 고려
-//TODO 제어 고려
 public class WebUIChessApplication {
 	public static void main(String[] args) throws Exception {
 		staticFiles.location("/static");

@@ -30,16 +30,29 @@ public class Piece {
 		return color == other;
 	}
 
+	public boolean isSameTeam(final Piece other) {
+		return this.color == other.color;
+	}
+
+	public boolean isEmpty() {
+		return Color.EMPTY == color;
+	}
+
+	public boolean isPawn() {
+		for (Rule rule : Pawn.values()) {
+			if (this.rule == rule) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean isValidMove(final Position origin, final Position target) {
 		return rule.isValidMove(origin, target);
 	}
 
 	public boolean isValidAttack(final Position origin, final Position target) {
 		return rule.isValidAttack(origin, target);
-	}
-
-	public boolean isSameTeam(final Piece other) {
-		return this.color == other.color;
 	}
 
 	public Piece orElseFirstPawn() {
@@ -54,19 +67,6 @@ public class Piece {
 
 	public double getScore() {
 		return rule.getScore();
-	}
-
-	public boolean isEmpty() {
-		return Color.EMPTY == color;
-	}
-
-	public boolean isPawn() {
-		for (Rule rule : Pawn.values()) {
-			if (this.rule == rule) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public boolean isKing() {

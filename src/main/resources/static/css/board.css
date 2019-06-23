@@ -5,7 +5,7 @@
 
 body {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-align: center;
     align-items: center;
 }
@@ -46,7 +46,7 @@ footer {
     font-family: "Emoji";
 }
 
-section {
+main {
     position: relative;
     height: 96vmin;
     width: 96vmin;
@@ -55,6 +55,10 @@ section {
 .grid {
     display: grid;
     position: absolute;
+}
+
+.grid_row {
+    display: grid;
 }
 
 .board .grid__item {
@@ -82,7 +86,7 @@ button {
     cursor: pointer;
 }
 
-.below {
+.side {
     margin : 50px;
     float : right;
 }

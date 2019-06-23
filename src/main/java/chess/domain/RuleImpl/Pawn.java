@@ -12,11 +12,10 @@ public enum Pawn implements Rule {
 	private static final double SCORE = 1;
 	public static final String NAME = "PAWN";
 
+	private final int vector;
 
-	private final int distance;
-
-	Pawn(final int distance) {
-		this.distance = distance;
+	Pawn(final int vector) {
+		this.vector = vector;
 	}
 
 	@Override
@@ -26,11 +25,11 @@ public enum Pawn implements Rule {
 	}
 
 	private boolean isTopMovable(final int vector) {
-		return this.distance <= vector && vector < ZERO_VECTOR;
+		return this.vector <= vector && vector < ZERO_VECTOR;
 	}
 
 	private boolean isBottomMovable(final int vector) {
-		return this.distance >= vector && vector > ZERO_VECTOR;
+		return this.vector >= vector && vector > ZERO_VECTOR;
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public enum Pawn implements Rule {
 	}
 
 	private boolean isSameSign(final int vector) {
-		return Integer.compare(0, this.distance) == Integer.compare(0, vector);
+		return Integer.compare(0, this.vector) == Integer.compare(0, vector);
 	}
 
 	@Override
