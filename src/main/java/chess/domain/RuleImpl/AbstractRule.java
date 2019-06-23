@@ -1,6 +1,7 @@
 package chess.domain.RuleImpl;
 
 import chess.domain.Position;
+import chess.domain.Rule;
 
 public abstract class AbstractRule implements Rule {
     private final double score;

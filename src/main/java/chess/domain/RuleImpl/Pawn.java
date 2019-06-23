@@ -1,6 +1,7 @@
 package chess.domain.RuleImpl;
 
 import chess.domain.Position;
+import chess.domain.Rule;
 
 public enum Pawn implements Rule {
     FIRST_TOP(-2),

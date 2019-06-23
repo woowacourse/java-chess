@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.RuleImpl.Rook;
-import chess.domain.RuleImpl.Rule;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

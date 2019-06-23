@@ -1,4 +1,4 @@
-package chess.domain.RuleImpl;
+package chess.domain;
 
 import chess.domain.Position;
 

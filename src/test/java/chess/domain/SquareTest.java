@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.RuleImpl.King;
 import chess.domain.RuleImpl.Rook;
-import chess.domain.RuleImpl.Rule;
 import chess.exception.ExitException;
 import org.junit.jupiter.api.Test;
 

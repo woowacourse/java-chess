@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.RuleImpl.Empty;
 import chess.domain.RuleImpl.King;
 import chess.domain.RuleImpl.Pawn;
-import chess.domain.RuleImpl.Rule;
 
 import java.util.Objects;
 
@@ -42,21 +41,6 @@ public class Piece {
         return rule.isValidAttack(origin, target);
     }
 
-    Piece get() {
-        if (this.rule == Pawn.FIRST_BOTTOM) {
-            return Piece.of(this.color, Pawn.SECOND_BOTTOM);
-        }
-        if (this.rule == Pawn.FIRST_TOP) {
-            return Piece.of(this.color, Pawn.SECOND_TOP);
-        }
-
-        return Piece.of(this.color, this.rule);
-    }
-
-    public double getScore() {
-        return rule.getScore();
-    }
-
     boolean isEmpty() {
         return Color.EMPTY == color;
     }
@@ -72,6 +56,20 @@ public class Piece {
 
     boolean isKing() {
         return this.rule == King.getInstance();
+    }
+
+    Piece get() {
+        if (this.rule == Pawn.FIRST_BOTTOM) {
+            return Piece.of(this.color, Pawn.SECOND_BOTTOM);
+        }
+        if (this.rule == Pawn.FIRST_TOP) {
+            return Piece.of(this.color, Pawn.SECOND_TOP);
+        }
+        return Piece.of(this.color, this.rule);
+    }
+
+    public double getScore() {
+        return rule.getScore();
     }
 
     String getSymbol() {
