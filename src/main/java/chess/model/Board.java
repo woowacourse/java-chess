@@ -4,6 +4,8 @@ import chess.model.piece.Piece;
 
 import java.util.*;
 
+import static chess.model.Direction.*;
+
 public class Board {
     private Map<String, Tile> tiles;
 
@@ -68,7 +70,7 @@ public class Board {
     }
 
     private void checkWhenVertical(String targetPosition, Vector vector) {
-        if ((vector.getDirection() == Direction.NORTH) || (vector.getDirection() == Direction.SOUTH)) {
+        if ((vector.getDirection() == NORTH) || (vector.getDirection() == SOUTH)) {
             checkPiecePresentWhenVertical(targetPosition);
         }
     }
