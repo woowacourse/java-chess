@@ -8,7 +8,7 @@ import chess.domain.BoardGenerator;
 import chess.domain.Game;
 import chess.domain.Position;
 import chess.dto.CommandDto;
-import chess.exception.PositionException;
+import chess.exception.PositionIllegalArgumentException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +36,7 @@ public class ChessServiceTest {
         Position origin = Position.of("2", "a");
         Position target = Position.of("5", "a");
 
-        assertThrows(PositionException.class, () -> chessService.action(game, origin, target, 1));
+        assertThrows(PositionIllegalArgumentException.class, () -> chessService.action(game, origin, target, 1));
     }
 
     @Test

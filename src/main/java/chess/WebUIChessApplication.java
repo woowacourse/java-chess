@@ -9,7 +9,7 @@ import chess.controller.MainController;
 import chess.dao.CommandDao;
 import chess.dao.RoomDao;
 import chess.exception.ExitException;
-import chess.exception.PositionException;
+import chess.exception.PositionIllegalArgumentException;
 import chess.service.ChessService;
 import chess.service.RoomService;
 import spark.ModelAndView;
@@ -61,7 +61,7 @@ public class WebUIChessApplication {
             res.redirect("/end?roomId=" + roomId);
         });
 
-        exception(PositionException.class, (exception, req, res) -> {
+        exception(PositionIllegalArgumentException.class, (exception, req, res) -> {
             String roomId = req.queryParams("roomId");
             String message = encode(exception.getMessage());
             res.redirect("/chess?roomId=" + roomId + "&message=" + message);

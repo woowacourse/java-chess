@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.exception.PositionException;
+import chess.exception.PositionIllegalArgumentException;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class Position implements Comparable<Position> {
         try {
             return Position.of(Row.from(row), Column.from(column));
         } catch (RuntimeException e) {
-            throw new PositionException("Postion을 잘못 입력했습니다.");
+            throw new PositionIllegalArgumentException("Postion을 잘못 입력했습니다.");
         }
     }
 

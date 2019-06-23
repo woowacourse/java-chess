@@ -32,7 +32,6 @@ public class RoomDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public Optional<RoomDto> findById(final long id) {
