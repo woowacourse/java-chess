@@ -8,6 +8,9 @@ public class PositionConverter {
 
 	public static Position convert(final String input) {
 		String[] position = input.split(DELIMITER);
+		if (position.length != 2) {
+			throw new IllegalArgumentException();
+		}
 		String col = position[0];
 		String row = position[1];
 		return Position.of(row, col);

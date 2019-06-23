@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Board {
 	private static final int BOUND_OF_OBSTACLES = 0;
@@ -49,11 +46,23 @@ public class Board {
 		long test = origin.findRoutes(target).stream()
 				.filter(route -> !map.get(route).isEmpty())
 				.count();
-
 		return (test > BOUND_OF_OBSTACLES);
 	}
 
 	public List<Square> values() {
 		return new ArrayList<>(map.values());
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Board board = (Board) o;
+		return Objects.equals(map, board.map);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(map);
 	}
 }

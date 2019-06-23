@@ -5,57 +5,57 @@
     <meta charset="UTF-8">
     <title>체스</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
-        type="text/css" />
+          type="text/css"/>
     <link rel="stylesheet" type="text/css" href="/css/board.css">
 </head>
 
 <body>
-    <div class="grid_row temp">
-        <div class="grid__item"><h1>8</h1></div>
-        <div class="grid__item"><h1>7</h1></div>
-        <div class="grid__item"><h1>6</h1></div>
-        <div class="grid__item"><h1>5</h1></div>
-        <div class="grid__item"><h1>4</h1></div>
-        <div class="grid__item"><h1>3</h1></div>
-        <div class="grid__item"><h1>2</h1></div>
-        <div class="grid__item"><h1>1</h1></div>
+<div class="grid_row temp">
+    <div class="grid__item"><h1>8</h1></div>
+    <div class="grid__item"><h1>7</h1></div>
+    <div class="grid__item"><h1>6</h1></div>
+    <div class="grid__item"><h1>5</h1></div>
+    <div class="grid__item"><h1>4</h1></div>
+    <div class="grid__item"><h1>3</h1></div>
+    <div class="grid__item"><h1>2</h1></div>
+    <div class="grid__item"><h1>1</h1></div>
+</div>
+<main>
+    <div class="grid board">
+        {{#board}}
+        <div class="grid__item piece">{{this.symbol}}</div>
+        {{/board}}
+        <div class="grid__item"><h1>a</h1></div>
+        <div class="grid__item"><h1>b</h1></div>
+        <div class="grid__item"><h1>c</h1></div>
+        <div class="grid__item"><h1>d</h1></div>
+        <div class="grid__item"><h1>e</h1></div>
+        <div class="grid__item"><h1>f</h1></div>
+        <div class="grid__item"><h1>g</h1></div>
+        <div class="grid__item"><h1>h</h1></div>
     </div>
-    <main>
-        <div class="grid board">
-            {{#board}}
-            <div class="grid__item piece">{{this.symbol}}</div>
-            {{/board}}
-            <div class="grid__item"><h1>a</h1></div>
-            <div class="grid__item"><h1>b</h1></div>
-            <div class="grid__item"><h1>c</h1></div>
-            <div class="grid__item"><h1>d</h1></div>
-            <div class="grid__item"><h1>e</h1></div>
-            <div class="grid__item"><h1>f</h1></div>
-            <div class="grid__item"><h1>g</h1></div>
-            <div class="grid__item"><h1>h</h1></div>
-        </div>
-    </main>
+</main>
 
-    <div class="side">
-        <h3>{{currentColor}}턴 입니다.</h3>
-        <div>
-            <button onclick="location.href='/chess/score?roomId={{roomId}}'">점수보기</button>
-            <button onclick="location.href='/'">메인으로</button>
-        </div>
-
-        <div class="controls">
-            <form method="post" action="/chess/action">
-                <input type="hidden" name="roomId" value="{{roomId}}">
-                <div>
-                    from <input type="text" name="origin" placeholder="a8"><br>
-                    to <input type="text" name="target" placeholder="b8"><br>
-                </div>
-                <div>
-                    <button type="submit">이동</button>
-                </div>
-            </form>
-        </div>
+<div class="side">
+    <h3>{{currentColor}}턴 입니다.</h3>
+    <div>
+        <button onclick="location.href='/chess/score?roomId={{roomId}}'">점수보기</button>
+        <button onclick="location.href='/'">메인으로</button>
     </div>
+
+    <div class="controls">
+        <form method="post" action="/chess/action">
+            <input type="hidden" name="roomId" value="{{roomId}}">
+            <div>
+                from <input type="text" name="origin" placeholder="a8"><br>
+                to <input type="text" name="target" placeholder="b8"><br>
+            </div>
+            <div>
+                <button type="submit">이동</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 </body>
 

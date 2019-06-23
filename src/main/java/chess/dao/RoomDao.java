@@ -121,7 +121,7 @@ public class RoomDao {
 		}
 	}
 
-	public void initializeIncrement(final Connection conn) {
+	private void initializeIncrement(final Connection conn) {
 		String sql = "ALTER TABLE room ALTER COLUMN id RESTART WITH 1";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);

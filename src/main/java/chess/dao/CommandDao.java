@@ -82,4 +82,25 @@ public class CommandDao {
 		ps.setLong(1, roomId);
 		return ps;
 	}
+
+	public void deleteAll() {
+		String sql = "DELETE FROM command";
+		try (Connection conn = dbConnector.getConnection();
+		     PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.executeUpdate();
+			initializeIncrement(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void initializeIncrement(final Connection conn) {
+		String sql = "ALTER TABLE command ALTER COLUMN id RESTART WITH 1";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

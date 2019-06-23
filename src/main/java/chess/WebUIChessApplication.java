@@ -30,7 +30,7 @@ public class WebUIChessApplication {
 		CommandDao commandDao = CommandDao.from(dbConnector);
 		RoomDao roomDao = RoomDao.from(dbConnector);
 
-		ChessService chessService = new ChessService(commandDao, roomDao);
+		ChessService chessService = new ChessService(commandDao);
 		RoomService roomService = new RoomService(roomDao);
 
 		ChessController chessController = new ChessController(chessService, roomService);

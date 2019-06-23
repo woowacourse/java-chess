@@ -19,13 +19,17 @@ public class Row implements Comparable<Row> {
 		this.row = row;
 	}
 
+	static Row from(final String row) {
+		try {
+			return from(Integer.parseInt(row));
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("숫자를 행으로 입력하세요");
+		}
+	}
+
 	static Row from(final int row) {
 		Optional<Row> optRow = Optional.ofNullable(ROWS.get(row));
 		return optRow.orElseThrow(IllegalArgumentException::new);
-	}
-
-	static Row from(final String row) {
-		return from(Integer.parseInt(row));
 	}
 
 	public Row next(int delta) {

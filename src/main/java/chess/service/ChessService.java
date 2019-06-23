@@ -1,7 +1,6 @@
 package chess.service;
 
 import chess.dao.CommandDao;
-import chess.dao.RoomDao;
 import chess.domain.*;
 import chess.dto.CommandDto;
 import chess.utils.PositionConverter;
@@ -9,13 +8,10 @@ import chess.utils.PositionConverter;
 import java.util.List;
 
 public class ChessService {
-
 	private final CommandDao commandDao;
-	private final RoomDao roomDao;
 
-	public ChessService(final CommandDao commandDao, final RoomDao roomDao) {
+	public ChessService(final CommandDao commandDao) {
 		this.commandDao = commandDao;
-		this.roomDao = roomDao;
 	}
 
 	public Game initGame() {
@@ -56,6 +52,10 @@ public class ChessService {
 
 	private Position convertToPosition(final String input) {
 		return PositionConverter.convert(input);
+	}
+
+	public void deleteAll() {
+		commandDao.deleteAll();
 	}
 
 	public List<Square> getSquares(final Game game) {
