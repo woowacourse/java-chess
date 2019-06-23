@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.dao.TurnDAO;
+import chess.dao.TurnDao;
 import chess.domain.ChessBoard;
 import chess.domain.Team;
 
@@ -21,7 +21,7 @@ public class Model {
 
     public static Map<String, Object> turn() throws SQLException {
         Map<String, Object> model = new HashMap<>();
-        model.put("turn", TurnDAO.selectLastTurn().getTurn());
+        model.put("turn", TurnDao.selectLastTurn().getTurn());
         return model;
     }
 

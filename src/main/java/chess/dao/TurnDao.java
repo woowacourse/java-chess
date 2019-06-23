@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 import chess.domain.Team;
 import chess.domain.Turn;
-import chess.dto.TurnDTO;
+import chess.dto.TurnDto;
 
-public class TurnDAO {
-    public static void add(TurnDTO turnDTO) throws SQLException {
+public class TurnDao {
+    public static void add(TurnDto turnDTO) throws SQLException {
         String query = "INSERT turn(team) VALUES(?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
@@ -18,12 +18,12 @@ public class TurnDAO {
         pstmt.executeUpdate();
     }
 
-    public static TurnDTO selectLastTurn() throws SQLException {
+    public static TurnDto selectLastTurn() throws SQLException {
         String query = "SELECT team FROM turn ORDER BY id DESC LIMIT 0, 1";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
         ResultSet rs = pstmt.executeQuery();
-        TurnDTO turnDTO = new TurnDTO();
+        TurnDto turnDTO = new TurnDto();
         if (rs.next()) {
             turnDTO.setTurn(new Turn(Team.valueOf(rs.getString(1))));
         }
@@ -36,7 +36,7 @@ public class TurnDAO {
         pstmt.execute();
     }
 
-    public static void afterMove(TurnDTO turnDTO) throws SQLException {
+    public static void afterMove(TurnDto turnDTO) throws SQLException {
         deleteAll();
         add(turnDTO);
     }

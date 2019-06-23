@@ -2,6 +2,8 @@ package chess.domain;
 
 import java.util.Objects;
 
+import chess.domain.piece.AbstractPiece;
+
 public class Count {
     private static final int COUNT_UNIT = 1;
     private int count;

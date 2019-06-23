@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.AbstractPiece;
 import chess.domain.MoveRules;
 import chess.domain.Team;
 

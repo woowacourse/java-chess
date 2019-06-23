@@ -2,7 +2,7 @@ package chess.dto;
 
 import chess.domain.Board;
 
-public class BoardDTO {
+public class BoardDto {
     private Board board;
 
     public Board getBoard() {

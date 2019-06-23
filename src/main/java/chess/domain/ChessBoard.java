@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.exceptions.IllegalSourceException;
 import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.exceptions.InvalidRouteException;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.King;
 
 public class ChessBoard {

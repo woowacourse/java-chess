@@ -2,7 +2,7 @@ package chess.dto;
 
 import chess.domain.Turn;
 
-public class TurnDTO {
+public class TurnDto {
     private Turn turn;
 
     public Turn getTurn() {

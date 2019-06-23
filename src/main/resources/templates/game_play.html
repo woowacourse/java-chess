@@ -168,17 +168,6 @@
         N: 'knight'
     };
 
-    // try {
-    //     const response = fetch("/status", {method: "POST"})
-    //     console.log(response.data)
-    //     const jsonData = response.data
-    //     Object.keys(jsonData).forEach(key => {
-    //         document.getElementById(key).innerHTML = imageMaker(jsonData, pieceNames)
-    //     })
-    // } catch (err) {
-    //     console.log(err)
-    // }
-
     fetch("/status", {method: "POST"})
         .then(data => data.json())
         .then(json => {
@@ -187,10 +176,6 @@
             })
         })
         .catch(err => console.log(err));
-
-    // const imageMaker = (json, pieceName) => {
-    //     return `<img src="${url + pieceNames[json[pieceName]]}.png"  alt="error"/>`
-    // }
 </script>
 </body>
 </html>

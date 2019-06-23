@@ -6,15 +6,15 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.AbstractPiece;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.Board;
 import chess.domain.Position;
-import chess.dto.BoardDTO;
-import chess.utils.DataParser;
+import chess.dto.BoardDto;
+import chess.utils.DataProcessor;
 import chess.utils.WebUtils;
 
-public class BoardDAO {
-    public static void add(BoardDTO boardDTO) throws SQLException {
+public class BoardDao {
+    public static void add(BoardDto boardDTO) throws SQLException {
         String query = "INSERT board(x, y, piece) VALUES(?, ?, ?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
@@ -27,7 +27,7 @@ public class BoardDAO {
         }
     }
 
-    public static BoardDTO selectAll() throws SQLException {
+    public static BoardDto selectAll() throws SQLException {
         String query = "SELECT x, y, piece FROM board";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
         Map<Position, AbstractPiece> queryResult = loadData(pstmt);
@@ -39,15 +39,15 @@ public class BoardDAO {
         ResultSet rs = pstmt.executeQuery();
         while(rs.next()) {
             queryResult.put(
-                    DataParser.position(rs.getString(1), rs.getString(2)),
-                    DataParser.piece(rs.getString(3))
+                    DataProcessor.position(rs.getString(1), rs.getString(2)),
+                    DataProcessor.piece(rs.getString(3))
             );
         }
         return queryResult;
     }
 
-    private static BoardDTO dataLoadedDTO(Map<Position, AbstractPiece> queryResult) {
-        BoardDTO boardDTO = new BoardDTO();
+    private static BoardDto dataLoadedDTO(Map<Position, AbstractPiece> queryResult) {
+        BoardDto boardDTO = new BoardDto();
         boardDTO.setBoard(new Board(queryResult));
         return boardDTO;
     }
@@ -58,7 +58,7 @@ public class BoardDAO {
         pstmt.execute();
     }
 
-    public static void afterMove(BoardDTO boardDTO) throws SQLException {
+    public static void afterMove(BoardDto boardDTO) throws SQLException {
         deleteAll();
         add(boardDTO);
     }

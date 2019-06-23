@@ -3,18 +3,19 @@ package chess.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.AbstractPiece;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.utils.exceptions.InvalidPieceNameException;
 
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 
-public class PieceParser {
+class PieceParser {
     private static Map<String, AbstractPiece> pieceCreator;
 
     static {
@@ -34,7 +35,14 @@ public class PieceParser {
         pieceCreator.put("B", new Bishop(BLACK));
     }
 
-    public static AbstractPiece parse(String name) {
+    static AbstractPiece parse(String name) {
+        validPieceName(name);
         return pieceCreator.get(name);
+    }
+
+    private static void validPieceName(String name) {
+        if (!pieceCreator.containsKey(name)) {
+            throw new InvalidPieceNameException("그런 말은 존재하지 않습니다.");
+        }
     }
 }

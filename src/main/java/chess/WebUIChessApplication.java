@@ -13,19 +13,19 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/assets");
 
-        get("/", (req, res) -> ChessGameController.index());
+        get("/", ChessGameController::index);
 
-        get("/game_play", (req, res) -> ChessGameController.playGet());
+        get("/game_play", ChessGameController::playGet);
 
-        get("/game_continue", (req, res) -> ChessGameController.continueGame());
+        get("/game_continue", ChessGameController::continueGame);
 
-        post("/game_play", (req, res) -> ChessGameController.playPost(req));
+        post("/game_play", ChessGameController::playPost);
 
-        post("/status", (req, res) -> ChessGameController.status(), new JsonTransformer());
+        post("/status", ChessGameController::status, new JsonTransformer());
 
-        get("/result", (req, res) -> ChessGameController.result());
+        get("/result", ChessGameController::result);
 
-        get("/end", (req, res) -> ChessGameController.end());
+        get("/end", ChessGameController::end);
 
         exception(RuntimeException.class, ExceptionController::exception);
     }

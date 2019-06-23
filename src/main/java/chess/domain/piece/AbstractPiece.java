@@ -1,6 +1,11 @@
-package chess.domain;
+package chess.domain.piece;
 
 import java.util.Objects;
+
+import chess.domain.MoveRule;
+import chess.domain.Position;
+import chess.domain.Team;
+import chess.domain.Turn;
 
 public abstract class AbstractPiece implements Piece {
     private final Team team;
