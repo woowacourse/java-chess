@@ -52,7 +52,7 @@ public class IncontinuousMovementPiece extends Piece {
     }
 
     private boolean isMovablePosition(PositionChecker positionChecker, Position nextPosition) {
-        return (Objects.isNull(positionChecker.getPiece(nextPosition))
+        return (positionChecker.getPiece(nextPosition).isSameTeam(Blank.of())
                 || !positionChecker.getPiece(nextPosition).isSameTeam(this));
     }
 }

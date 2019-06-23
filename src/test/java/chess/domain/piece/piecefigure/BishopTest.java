@@ -1,6 +1,8 @@
 package chess.domain.piece.piecefigure;
 
+import chess.domain.board.BoardInputForTest;
 import chess.domain.board.Board;
+import chess.domain.board.BoardGenerator;
 import chess.domain.board.Position;
 import chess.domain.piece.pieceinfo.TeamType;
 import org.junit.jupiter.api.AfterEach;
@@ -14,16 +16,13 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BishopTest {
-    private static final String START_POSITION = "11";
+    private static final String START_POSITION = "72";
 
-    private Set<Position> positions;
     private Piece bishop;
 
     @BeforeEach
     public void setUp() {
-        positions = new HashSet<>(Arrays.asList(
-                Position.of("00"), Position.of("22"), Position.of("33"), Position.of("44"), Position.of("55"), Position.of("66"), Position.of("77"),
-                Position.of("02"), Position.of("20")));
+
         bishop = Bishop.of(TeamType.WHITE);
     }
 
@@ -44,10 +43,13 @@ public class BishopTest {
 
     @Test
     public void 이동가능한_모든_경로를_반환하는지_테스트() {
-        Board board = new Board();
+        Board board = BoardGenerator.createBoard(BoardInputForTest.EXAMPLE_BOARD);
         Set<Position> positions = bishop.makePossiblePositions(Position.of(START_POSITION), board::getCurrentPiece);
+        Set<Position> expectedPositions = new HashSet<>(Arrays.asList(
+                Position.of("63"), Position.of("54"), Position.of("45"),
+                Position.of("36"), Position.of("27")));
 
-        assertThat(positions).isEqualTo(this.positions);
+        assertThat(positions).isEqualTo(expectedPositions);
     }
 
     @AfterEach

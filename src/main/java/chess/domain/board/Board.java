@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class Board {
-    private final Map<Position, Piece> pieces = new HashMap<>();
+    private final Map<Position, Piece> pieces;
 
-    public Board() {
-
+    public Board(final Map<Position, Piece> pieces) {
+        this.pieces = pieces;
     }
 
     public boolean isMovableDestination(Position source, Position destination) {

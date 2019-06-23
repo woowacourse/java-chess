@@ -35,7 +35,7 @@ public class ContinuousMovementPiece extends Piece {
 
         try {
             nextPosition = source.hopNextPosition(direction);
-            while (Objects.isNull(positionChecker.getPiece(nextPosition))) {
+            while (positionChecker.getPiece(nextPosition).isSameTeam(Blank.of())) {
                 positions.add(nextPosition);
                 nextPosition = nextPosition.hopNextPosition(direction);
             }
@@ -47,7 +47,6 @@ public class ContinuousMovementPiece extends Piece {
 
     private Set<Position> checkLastPosition(
             PositionChecker positionChecker, Set<Position> positions, Position lastPosition) {
-
         if (!positionChecker.getPiece(lastPosition).isSameTeam(this)) {
             positions.add(lastPosition);
         }

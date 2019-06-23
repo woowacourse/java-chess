@@ -28,7 +28,7 @@ public class Position {
         });
     }
 
-    private static String makeKey(int x, int y) {
+    public static String makeKey(int x, int y) {
         return STRING_MAKER + x + y;
     }
 

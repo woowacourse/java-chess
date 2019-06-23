@@ -1,6 +1,8 @@
 package chess.domain.piece.piecefigure;
 
+import chess.domain.board.BoardInputForTest;
 import chess.domain.board.Board;
+import chess.domain.board.BoardGenerator;
 import chess.domain.board.Position;
 import chess.domain.piece.pieceinfo.TeamType;
 import org.junit.jupiter.api.AfterEach;
@@ -14,16 +16,12 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RookTest {
-    private static final String START_POSITION = "11";
+    private static final String START_POSITION = "70";
 
-    private Set<Position> positions;
     private Piece rook;
 
     @BeforeEach
     public void setUp() {
-        positions = new HashSet<>(Arrays.asList(
-                Position.of("01"), Position.of("21"), Position.of("31"), Position.of("41"), Position.of("51"), Position.of("61"), Position.of("71"),
-                Position.of("10"), Position.of("12"), Position.of("13"), Position.of("14"), Position.of("15"), Position.of("16"), Position.of("17")));
         rook = Rook.of(TeamType.WHITE);
     }
 
@@ -44,10 +42,12 @@ public class RookTest {
 
     @Test
     public void 이동가능한_모든_경로를_반환하는지_테스트() {
-        Board board = new Board();
+        Board board = BoardGenerator.createBoard(BoardInputForTest.EXAMPLE_BOARD);
         Set<Position> positions = rook.makePossiblePositions(Position.of(START_POSITION), board::getCurrentPiece);
+        Set<Position> expectedPositions = new HashSet<>(Arrays.asList(
+                Position.of("60"), Position.of("50"), Position.of("71")));
 
-        assertThat(positions).isEqualTo(this.positions);
+        assertThat(positions).isEqualTo(expectedPositions);
     }
 
     @AfterEach

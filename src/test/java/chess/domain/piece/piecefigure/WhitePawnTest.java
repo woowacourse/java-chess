@@ -6,10 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,14 +29,14 @@ class WhitePawnTest {
     @Test
     public void 이동할_수_있는_모든위치를_반환하는지_테스트() {
         Set<Position> positions = new HashSet<>(Collections.singletonList(Position.of("01")));
-        assertThat(whitePawn.makePossiblePositions(Position.of(START_POSITION), new Board()::getCurrentPiece))
+        assertThat(whitePawn.makePossiblePositions(Position.of(START_POSITION), new Board(new HashMap<>())::getCurrentPiece))
                 .isEqualTo(positions);
     }
 
     @Test
     public void 첫_번째_이동하는_경우의_모든위치를_반환하는지_테스트() {
         Set<Position> positions = new HashSet<>(Arrays.asList(Position.of("50"), Position.of("40")));
-        assertThat(whitePawn.makePossiblePositions(Position.of(DEFAULT_START_POSITION), new Board()::getCurrentPiece))
+        assertThat(whitePawn.makePossiblePositions(Position.of(DEFAULT_START_POSITION), new Board(new HashMap<>())::getCurrentPiece))
                 .isEqualTo(positions);
     }
 
