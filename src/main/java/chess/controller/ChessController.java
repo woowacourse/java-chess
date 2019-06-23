@@ -8,7 +8,6 @@ import chess.service.RoomService;
 import spark.Request;
 import spark.Response;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +21,11 @@ public class ChessController {
 		this.roomService = roomService;
 	}
 
-	public Map<String, Object> initialize(Request req) throws SQLException {
+	public Map<String, Object> initialize(Request req) {
 		Map<String, Object> model = new HashMap<>();
 
 		Game game = chessService.initGame();
+		roomService.openRoom();
 		long roomId = roomService.latestId();
 
 		req.session().attribute("game", game);
@@ -69,6 +69,7 @@ public class ChessController {
 	public Map<String, Object> end(final Request req) {
 		Map<String, Object> model = new HashMap<>();
 		long roomId = Long.parseLong(req.queryParams("roomId"));
+
 		Game game = req.session().attribute("game");
 		String winner = game.currentColor();
 

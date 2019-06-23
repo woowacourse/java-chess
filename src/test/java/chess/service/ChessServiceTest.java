@@ -15,8 +15,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ChessServiceTest {
-	ChessService chessService;
-	Board board;
+	private ChessService chessService;
+	private Board board;
 
 	@BeforeEach
 	public void setUp() throws Exception {
@@ -47,7 +47,7 @@ public class ChessServiceTest {
 	}
 
 	@Test
-	public void 틀린_문자열을_입력_이동_테스트() {
+	public void 틀린_문자열을_입력_이동_예외발생_테스트() {
 		Game game = Game.from(board);
 		assertThrows(RuntimeException.class, () ->
 				chessService.action(game, "2a", "3a", 1)
@@ -55,7 +55,7 @@ public class ChessServiceTest {
 	}
 
 	@Test
-	public void 빈칸을_입력_이동_테스트() {
+	public void 빈칸을_입력_이동_예외발생_테스트() {
 		Game game = Game.from(board);
 		assertThrows(RuntimeException.class, () ->
 				chessService.action(game, "", "", 1)
@@ -63,7 +63,7 @@ public class ChessServiceTest {
 	}
 
 	@Test
-	public void 세글자를_입력_이동_테스트() {
+	public void 세글자를_입력_이동_예외발생_테스트() {
 		Game game = Game.from(board);
 		assertThrows(RuntimeException.class, () ->
 				chessService.action(game, "a23", "a32", 1)
@@ -71,7 +71,7 @@ public class ChessServiceTest {
 	}
 
 	@Test
-	public void 한글자를_입력_이동_테스트() {
+	public void 한글자를_입력_이동_예외발생_테스트() {
 		Game game = Game.from(board);
 		assertThrows(RuntimeException.class, () ->
 				chessService.action(game, "2", "3", 1)
@@ -79,7 +79,7 @@ public class ChessServiceTest {
 	}
 
 	@Test
-	public void load() {
+	public void loadTest() {
 		final long roomId = 1;
 		Game expected = Game.from(board);
 		Position origin = Position.of("2", "b");
@@ -95,7 +95,7 @@ public class ChessServiceTest {
 	}
 
 	@Test
-	public void getSquares() {
+	public void getSquaresTest() {
 		Game game = Game.from(board);
 		List<Square> expected = board.values();
 		List<Square> actual = chessService.getSquares(game);
