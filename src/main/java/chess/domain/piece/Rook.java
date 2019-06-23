@@ -1,16 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
 import chess.domain.AbstractPiece;
 import chess.domain.MoveRules;
 import chess.domain.Team;
-import chess.domain.exceptions.InvalidDirectionException;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static chess.domain.Direction.*;
-import static chess.domain.Direction.W;
 
 public class Rook extends AbstractPiece {
     private static final String NAME = "r";
