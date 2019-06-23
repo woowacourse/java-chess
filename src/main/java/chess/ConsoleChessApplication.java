@@ -67,7 +67,7 @@ public class ConsoleChessApplication {
             final Square destination = parseSquare(arguments.get(SECOND));
             play.movePieceAndTurnSide(target, destination);
             ConsoleOutput.board(play.getBoard());
-            ConsoleOutput.side(play.getSide());
+            kingCheck(arguments);
         } catch (Exception e) {
             System.err.println(INVALID_MOVE);
         }
@@ -85,5 +85,14 @@ public class ConsoleChessApplication {
         final double blackScore = play.calcScore(Side.BLACK);
         ConsoleOutput.status(Side.WHITE, whiteScore);
         ConsoleOutput.status(Side.BLACK, blackScore);
+    }
+
+    private void kingCheck(final List<String> placeholder) {
+        if (play.isKingDead(Side.WHITE) || play.isKingDead(Side.BLACK)) {
+            ConsoleOutput.endMessage();
+            end(placeholder);
+            return;
+        }
+        ConsoleOutput.side(play.getSide());
     }
 }

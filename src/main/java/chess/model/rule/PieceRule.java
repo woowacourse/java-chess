@@ -1,5 +1,6 @@
 package chess.model.rule;
 
+import chess.model.Side;
 import chess.model.board.Board;
 import chess.model.board.Position;
 import chess.model.board.Square;
@@ -33,14 +34,26 @@ abstract class PieceRule {
                 .collect(Collectors.toList());
     }
 
-    List<Square> getNonBlockedNeighbors(final Board board, final Square square, final Function<Square, Square> getNeighbors) {
+    List<Square> getNonBlockedNeighbors(final Board board, final Square square, final Function<Square, Square> getNeighbor) {
         final List<Square> squareList = new ArrayList<>();
-        Square nextSquare = getNeighbors.apply(square);
+        final Side side = getPiece(board, square).getSide();
+        Square nextSquare = getNeighbor.apply(square);
         while (nextSquare != null && getPiece(board, nextSquare) == null) {
             squareList.add(nextSquare);
-            nextSquare = getNeighbors.apply(nextSquare);
+            nextSquare = getNeighbor.apply(nextSquare);
+        }
+        if (checkNextSquareInEnemy(board, nextSquare, side)) {
+            squareList.add(nextSquare);
         }
         return squareList;
+    }
+
+    private boolean checkNextSquareInEnemy(final Board board, final Square nextSquare, final Side side) {
+        if (nextSquare != null) {
+            final Piece piece = getPiece(board, nextSquare);
+            return piece != null && piece.getSide() != side;
+        }
+        return false;
     }
 
     boolean isValidMove(final Board board, final Piece piece, final Square checkTarget, final Square destination) {

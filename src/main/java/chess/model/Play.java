@@ -5,6 +5,7 @@ import chess.model.board.Position;
 import chess.model.board.Square;
 import chess.model.rule.Rule;
 import chess.model.unit.Piece;
+import chess.model.unit.UnitClass;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public class Play {
 
     private List<Position> getSidePositions(final Side side) {
         return getAllPositions().stream()
-                .filter(pos -> pos.getPiece().getSide() == side)
+                .filter(position -> position.getPiece().getSide() == side)
                 .collect(Collectors.toList());
     }
 
@@ -70,5 +71,10 @@ public class Play {
             score += Rule.getPieceScore(board, position);
         }
         return score;
+    }
+
+    public boolean isKingDead(final Side side) {
+        return getSidePositions(side).stream()
+                .noneMatch(position -> position.getPiece().getUnitClass() == UnitClass.KING);
     }
 }

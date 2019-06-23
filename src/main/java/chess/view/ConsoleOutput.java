@@ -21,6 +21,7 @@ public class ConsoleOutput {
     private static final String COLON;
     private static final String SCORE;
     private static final String MESSAGE_START;
+    private static final String MESSAGE_END;
     private static final DecimalFormat FORMAT;
 
     static {
@@ -37,6 +38,7 @@ public class ConsoleOutput {
                         "> 게임 시작 : start\n" +
                         "> 게임 종료 : end\n" +
                         "> 게임 이동 : move source위치 target위치 (예시 : move b2 b3)";
+        MESSAGE_END = "체스 게임이 끝났습니다.";
     }
 
     static {
@@ -97,6 +99,10 @@ public class ConsoleOutput {
 
     public static void startMessage() {
         System.out.println(MESSAGE_START);
+    }
+
+    public static void endMessage() {
+        System.out.println(MESSAGE_END);
     }
 
     public static void side(final Side side) {
