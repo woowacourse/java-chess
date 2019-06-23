@@ -1,6 +1,9 @@
 package chess.dao;
 
+import chess.config.DataSource;
 import chess.config.DbConnector;
+import chess.config.JdbcTemplate;
+import chess.config.RowMapper;
 import chess.dto.CommandDto;
 
 import java.sql.Connection;
@@ -8,42 +11,40 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandDao {
+    private static final int DEFAULT_START_ROUND = 1;
 
-    public static final int DEFAULT_START_ROUND = 1;
-    private final DbConnector dbConnector;
+    private JdbcTemplate jdbcTemplate;
 
-    private CommandDao(final DbConnector dbConnector) {
-        this.dbConnector = dbConnector;
+    private CommandDao(final DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public static CommandDao from(final DbConnector dbConnector) {
-        return new CommandDao(dbConnector);
+    public static CommandDao from(final DataSource dataSource) {
+        return new CommandDao(dataSource);
     }
-
 
     public void add(final CommandDto commandDto) {
         String sql = "INSERT INTO command (origin, target, round, room_id) VALUES(?,?,?,?)";
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, commandDto.getOrigin());
-            ps.setString(2, commandDto.getTarget());
-            ps.setLong(3, commandDto.getRound());
-            ps.setLong(4, commandDto.getRoom_id());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        List<Object> params = new ArrayList<>();
+        params.add(commandDto.getOrigin());
+        params.add(commandDto.getTarget());
+        params.add(commandDto.getRound());
+        params.add(commandDto.getRoom_id());
+
+        jdbcTemplate.executeUpdate(sql, params);
     }
 
     public List<CommandDto> findByRoomId(final long roomId) {
-        ArrayList<CommandDto> commandDtos = new ArrayList<>();
+        String sql = "SELECT * FROM command WHERE room_id = ? ORDER BY round";
+        List<Object> params = Collections.singletonList(roomId);
 
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = createPreparedStatementForFindByRoomId(conn, roomId);
-             ResultSet rs = ps.executeQuery()) {
+        return jdbcTemplate.executeQuery(sql, params, rs -> {
+            ArrayList<CommandDto> commandDtos = new ArrayList<>();
             while (rs.next()) {
                 CommandDto commandDto = new CommandDto();
                 commandDto.setOrigin(rs.getString("origin"));
@@ -51,36 +52,13 @@ public class CommandDao {
                 commandDto.setRound(rs.getLong("round"));
                 commandDtos.add(commandDto);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return commandDtos;
-    }
-
-    private PreparedStatement createPreparedStatementForFindByRoomId(final Connection conn, final long roomId) throws SQLException {
-        String sql = "SELECT * FROM command WHERE room_id = ? ORDER BY round";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setLong(1, roomId);
-        return ps;
+            return commandDtos;
+        });
     }
 
     public long findLatestRoundByRoomId(final long roomId) {
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = createPreparedStatement(conn, roomId);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getLong("round");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return DEFAULT_START_ROUND;
-    }
-
-    private PreparedStatement createPreparedStatement(final Connection conn, final long roomId) throws SQLException {
         String sql = "SELECT round FROM command WHERE room_id = ? ORDER BY round DESC LIMIT 1";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setLong(1, roomId);
-        return ps;
+        List<Object> params = Collections.singletonList(roomId);
+        return jdbcTemplate.executeQuery(sql, params, rs -> rs.next() ? rs.getLong("round") : DEFAULT_START_ROUND);
     }
 }

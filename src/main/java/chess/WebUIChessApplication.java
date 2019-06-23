@@ -30,8 +30,8 @@ public class WebUIChessApplication {
         TableCreator tableCreator = new TableCreator(dbConnector);
         tableCreator.create();
 
-        CommandDao commandDao = CommandDao.from(dbConnector);
-        RoomDao roomDao = RoomDao.from(dbConnector);
+        CommandDao commandDao = CommandDao.from(dataSource);
+        RoomDao roomDao = RoomDao.from(dataSource);
 
         ChessService chessService = new ChessService(commandDao);
         RoomService roomService = new RoomService(roomDao);

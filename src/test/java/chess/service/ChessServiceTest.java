@@ -25,7 +25,7 @@ public class ChessServiceTest {
 
     @BeforeEach
     public void setUp() {
-        final CommandDao commandDao = CommandDao.from(new DbConnector(DataSource.getInstance()));
+        final CommandDao commandDao = CommandDao.from(DataSource.getInstance());
         chessService = new ChessService(commandDao);
         Board board = new Board(BoardGenerator.generate());
         game = Game.from(board);

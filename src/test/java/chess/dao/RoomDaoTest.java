@@ -19,7 +19,7 @@ public class RoomDaoTest {
     @BeforeEach
     public void setUp() throws Exception {
         DbConnector dbConnector = new DbConnector(DataSource.getInstance());
-        roomDao = RoomDao.from(dbConnector);
+        roomDao = RoomDao.from(DataSource.getInstance());
         new TableCreator(dbConnector).create();
         roomDao.deleteAll();
     }

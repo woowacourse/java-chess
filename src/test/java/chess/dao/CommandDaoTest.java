@@ -20,7 +20,7 @@ public class CommandDaoTest {
     @BeforeEach
     public void setUp() throws Exception {
         DbConnector dbConnector = new DbConnector(DataSource.getInstance());
-        commandDao = CommandDao.from(dbConnector);
+        commandDao = CommandDao.from(DataSource.getInstance());
         new TableCreator(dbConnector).create();
     }
 

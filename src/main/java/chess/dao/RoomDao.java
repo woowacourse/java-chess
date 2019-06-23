@@ -1,69 +1,54 @@
 package chess.dao;
 
-import chess.config.DbConnector;
+import chess.config.DataSource;
+import chess.config.JdbcTemplate;
+import chess.config.RowMapper;
 import chess.dto.RoomDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class RoomDao {
+    private JdbcTemplate jdbcTemplate;
 
-    private final DbConnector dbConnector;
-
-    private RoomDao(final DbConnector dbConnector) {
-        this.dbConnector = dbConnector;
+    private RoomDao(final DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public static RoomDao from(final DbConnector dbConnector) {
-        return new RoomDao(dbConnector);
+    public static RoomDao from(final DataSource dataSource) {
+        return new RoomDao(dataSource);
     }
 
-
-    public void add() {
+    public int add() {
         String sql = "INSERT INTO room () VALUES()";
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return jdbcTemplate.executeUpdate(sql);
     }
 
     public Optional<RoomDto> findById(final long id) {
-        RoomDto roomDto = null;
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = createPreparedStatementForFindById(conn, id);
-             ResultSet rs = ps.executeQuery()) {
+        String sql = "SELECT * FROM room WHERE id = ?";
+        List<Object> params = Collections.singletonList(id);
+
+        RoomDto roomDto = jdbcTemplate.executeQuery(sql, params, rs -> {
             if (rs.next()) {
-                roomDto = new RoomDto();
-                roomDto.setId(rs.getLong("id"));
-                roomDto.setStatus(rs.getBoolean("status"));
-                roomDto.setWinner(rs.getString("winner"));
+                RoomDto roomDto1 = new RoomDto();
+                roomDto1.setId(rs.getLong("id"));
+                roomDto1.setStatus(rs.getBoolean("status"));
+                roomDto1.setWinner(rs.getString("winner"));
+                return roomDto1;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            return null;
+        });
+
         return Optional.ofNullable(roomDto);
     }
 
-    private PreparedStatement createPreparedStatementForFindById(final Connection conn, final long id) throws SQLException {
-        String sql = "SELECT * FROM room WHERE id = ?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setLong(1, id);
-        return ps;
-    }
-
     public List<RoomDto> findAllByStatus(final boolean status) {
-        List<RoomDto> roomDtos = new ArrayList<>();
+        String sql = "SELECT * FROM room WHERE status = ?";
+        List<Object> params = Collections.singletonList(status);
 
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = createPreparedStatementForFindByStatus(conn, status);
-             ResultSet rs = ps.executeQuery()) {
+        return jdbcTemplate.executeQuery(sql, params, rs -> {
+            List<RoomDto> roomDtos = new ArrayList<>();
             while (rs.next()) {
                 RoomDto roomDto = new RoomDto();
                 roomDto.setId(rs.getLong("id"));
@@ -71,55 +56,24 @@ public class RoomDao {
                 roomDto.setWinner(rs.getString("winner"));
                 roomDtos.add(roomDto);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return roomDtos;
+            return roomDtos;
+        });
     }
 
-    private PreparedStatement createPreparedStatementForFindByStatus(final Connection conn, final boolean status) throws SQLException {
-        String sql = "SELECT * FROM room WHERE status = ?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setBoolean(1, status);
-        return ps;
-    }
-
-    public void updateStatus(final long id, final String winner) {
+    public int updateStatus(final long id, final String winner) {
         String sql = "UPDATE room SET status = TRUE, winner = ? WHERE id = ?";
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, winner);
-            ps.setLong(2, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        List<Object> params = Arrays.asList(winner, id);
+        return jdbcTemplate.executeUpdate(sql, params);
     }
 
     public Optional<Long> getLatestId() {
         String sql = "SELECT id FROM room ORDER BY id DESC LIMIT 1";
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return Optional.of(rs.getLong("id"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
+        Long id = jdbcTemplate.executeQuery(sql, rs -> rs.next() ? rs.getLong("id") : null);
+        return Optional.ofNullable(id);
     }
 
     public int deleteAll() {
         String sql = "DELETE from room";
-        int result = 0;
-
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            result = ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
+        return jdbcTemplate.executeUpdate(sql);
     }
 }
