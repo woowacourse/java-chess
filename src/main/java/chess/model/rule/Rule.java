@@ -41,7 +41,7 @@ public enum Rule {
     }
 
     public static double getPieceScore(final Board board, final Position position) {
-        final PieceRule rule = ruleMap.get(position.getPiece());
+        final PieceRule rule = ruleMap.get(position.getPiece().getUnitClass());
         return rule.getPieceScore(board, position);
     }
 }

@@ -1,6 +1,7 @@
 package chess;
 
 import chess.model.Play;
+import chess.model.Side;
 import chess.model.board.Board;
 import chess.model.board.Column;
 import chess.model.board.Row;
@@ -27,6 +28,7 @@ public class ConsoleChessApplication {
         commandMap.put("start", this::start);
         commandMap.put("end", this::end);
         commandMap.put("move", this::move);
+        commandMap.put("status", this::status);
     }
 
     public static void main(final String[] args) {
@@ -55,6 +57,7 @@ public class ConsoleChessApplication {
     }
 
     private void end(final List<String> placeholder) {
+        status(placeholder);
         isPlaying = false;
     }
 
@@ -75,5 +78,12 @@ public class ConsoleChessApplication {
         final Column col = Column.valueOf(args[FIRST]);
         final Row row = Row.valueOf(UNDER_BAR + args[SECOND]);
         return new Square(col, row);
+    }
+
+    private void status(final List<String> placeholder) {
+        final double whiteScore = play.calcScore(Side.WHITE);
+        final double blackScore = play.calcScore(Side.BLACK);
+        ConsoleOutput.status(Side.WHITE, whiteScore);
+        ConsoleOutput.status(Side.BLACK, blackScore);
     }
 }

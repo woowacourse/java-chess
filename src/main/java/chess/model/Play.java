@@ -63,7 +63,7 @@ public class Play {
                 .collect(Collectors.toList());
     }
 
-    public double calcScore(final Board board, final Side side) {
+    public double calcScore(final Side side) {
         final List<Position> sidePositions = getSidePositions(side);
         double score = 0;
         for (Position position : sidePositions) {

@@ -8,6 +8,7 @@ import chess.model.board.Square;
 import chess.model.unit.Piece;
 import chess.model.unit.UnitClass;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class ConsoleOutput {
@@ -17,19 +18,25 @@ public class ConsoleOutput {
     private static final String BLACK;
     private static final String WHITE;
     private static final String TURN;
+    private static final String COLON;
+    private static final String SCORE;
     private static final String MESSAGE_START;
+    private static final DecimalFormat FORMAT;
 
     static {
+        FORMAT = new DecimalFormat("0.#");
         NEW_LINE = "\n";
         EMPTY_SQUARE = ".";
+        COLON = " : ";
+        SCORE = "점";
         BLACK = "흑";
         WHITE = "백";
         TURN = "이 움직일 차례.";
         MESSAGE_START =
                 "> 체스 게임을 시작합니다.\n" +
-                "> 게임 시작 : start\n" +
-                "> 게임 종료 : end\n" +
-                "> 게임 이동 : move source위치 target위치 (예시 : move b2 b3)";
+                        "> 게임 시작 : start\n" +
+                        "> 게임 종료 : end\n" +
+                        "> 게임 이동 : move source위치 target위치 (예시 : move b2 b3)";
     }
 
     static {
@@ -95,5 +102,10 @@ public class ConsoleOutput {
     public static void side(final Side side) {
         final String sideTurn = side == Side.WHITE ? WHITE : BLACK;
         System.out.println(sideTurn + TURN);
+    }
+
+    public static void status(final Side side, final double score) {
+        final String sideTurn = side == Side.WHITE ? WHITE : BLACK;
+        System.out.println(sideTurn + COLON + FORMAT.format(score) + SCORE);
     }
 }
