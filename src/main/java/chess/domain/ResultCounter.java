@@ -37,14 +37,18 @@ public class ResultCounter {
 
     public void addCount(final AbstractPiece abstractPiece) {
         if (abstractPiece != null) {
-            resultCounter.get(abstractPiece).add();
+            pieceCount(abstractPiece).add();
         }
-
     }
 
     public double totalScore(final Team team) {
         return pieces(team).stream()
-                .mapToDouble(piece -> resultCounter.get(piece).score(piece))
+                .mapToDouble(this::pieceScore)
                 .sum();
+    }
+
+    private double pieceScore(final AbstractPiece piece) {
+        Count count = pieceCount(piece);
+        return count.score(piece);
     }
 }
