@@ -7,6 +7,7 @@ import chess.model.rule.Rule;
 import chess.model.unit.Piece;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Play {
     private static final String SIDE_MISMATCH = "자신의 말이 아닙니다.";
@@ -19,7 +20,7 @@ public class Play {
         this.board = board;
     }
 
-    public void movePieceAndTurnSide(final Side side, final Square target, final Square destination) throws IllegalArgumentException {
+    public void movePieceAndTurnSide(final Square target, final Square destination) throws IllegalArgumentException {
         movePiece(side, target, destination);
         turnSide();
     }
@@ -54,5 +55,20 @@ public class Play {
 
     public List<Position> getAllPositions() {
         return board.getAllPositions();
+    }
+
+    private List<Position> getSidePositions(final Side side) {
+        return getAllPositions().stream()
+                .filter(pos -> pos.getPiece().getSide() == side)
+                .collect(Collectors.toList());
+    }
+
+    public double calcScore(final Board board, final Side side) {
+        final List<Position> sidePositions = getSidePositions(side);
+        double score = 0;
+        for (Position position : sidePositions) {
+            score += Rule.getPieceScore(board, position);
+        }
+        return score;
     }
 }

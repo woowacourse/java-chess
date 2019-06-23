@@ -14,11 +14,17 @@ public class ConsoleOutput {
     private static final Map<UnitClass, String> PIECE_SYMBOL = new HashMap<>();
     private static final String EMPTY_SQUARE;
     private static final String NEW_LINE;
+    private static final String BLACK;
+    private static final String WHITE;
+    private static final String TURN;
     private static final String MESSAGE_START;
 
     static {
         NEW_LINE = "\n";
         EMPTY_SQUARE = ".";
+        BLACK = "흑";
+        WHITE = "백";
+        TURN = "이 움직일 차례.";
         MESSAGE_START =
                 "> 체스 게임을 시작합니다.\n" +
                 "> 게임 시작 : start\n" +
@@ -68,6 +74,10 @@ public class ConsoleOutput {
         return result.toString();
     }
 
+    public static void board(final Board board) {
+        System.out.println(getBoardString(board));
+    }
+
     private static StringBuilder boardRow(final Board board, final Row row) {
         Square square;
         StringBuilder sb = new StringBuilder();
@@ -80,5 +90,10 @@ public class ConsoleOutput {
 
     public static void startMessage() {
         System.out.println(MESSAGE_START);
+    }
+
+    public static void side(final Side side) {
+        final String sideTurn = side == Side.WHITE ? WHITE : BLACK;
+        System.out.println(sideTurn + TURN);
     }
 }

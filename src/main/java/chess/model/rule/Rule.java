@@ -1,6 +1,7 @@
 package chess.model.rule;
 
 import chess.model.board.Board;
+import chess.model.board.Position;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
 import chess.model.unit.UnitClass;
@@ -37,5 +38,10 @@ public enum Rule {
         }
         final PieceRule rule = ruleMap.get(piece.getUnitClass());
         return rule.isValidMove(board, piece, checkTarget, destination);
+    }
+
+    public static double getPieceScore(final Board board, final Position position) {
+        final PieceRule rule = ruleMap.get(position.getPiece());
+        return rule.getPieceScore(board, position);
     }
 }
