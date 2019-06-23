@@ -53,7 +53,11 @@ public class Spot {
         return Spot.valueOf(nextSpotX, nextSpotY);
     }
 
-    public boolean isSameColumn(Integer y) {
+    public boolean isSameRaw(Spot spot) {
+        return this.x == spot.x;
+    }
+
+    public boolean checkColumn(int y) {
         return this.y == y;
     }
 
@@ -62,12 +66,13 @@ public class Spot {
 
         //TODO 이중 for 문 리팩토링하기
         static {
-            for (int i = 1; i <= 8; i++) {
-                for (int j = 1; j <= 8; j++) {
+            for (int i = MIN_COLUMN; i <= MAX_COLUMN; i++) {
+                for (int j = MIN_ROW; j <= MAX_ROW; j++) {
                     spotsCache.add(new Spot(i, j));
                 }
             }
         }
-
     }
+
+
 }
