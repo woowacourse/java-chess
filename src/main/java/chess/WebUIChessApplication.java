@@ -8,7 +8,7 @@ import chess.controller.ErrorController;
 import chess.controller.MainController;
 import chess.dao.CommandDao;
 import chess.dao.RoomDao;
-import chess.exception.ExitException;
+import chess.exception.DiedKingException;
 import chess.exception.PositionIllegalArgumentException;
 import chess.service.ChessService;
 import chess.service.RoomService;
@@ -56,7 +56,7 @@ public class WebUIChessApplication {
 
         get("/error", errorController::exception);
 
-        exception(ExitException.class, (exception, req, res) -> {
+        exception(DiedKingException.class, (exception, req, res) -> {
             String roomId = req.queryParams("roomId");
             res.redirect("/end?roomId=" + roomId);
         });

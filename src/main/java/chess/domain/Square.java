@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.exception.ExitException;
+import chess.exception.DiedKingException;
 
 import java.util.Objects;
 
@@ -43,7 +43,7 @@ public class Square {
 
     void attackPiece(final Square target) {
         if (target.piece.isKing()) {
-            throw new ExitException("attacked King");
+            throw new DiedKingException("attacked King");
         }
         target.piece = piece.get();
         this.piece = Piece.empty();
