@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Queen;
 import org.junit.jupiter.api.Test;
@@ -279,5 +280,70 @@ public class BoardTest {
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> board.movePiece(Arrays.asList("55", "73")));
+    }
+
+    @Test
+    void piece이동_확인_knight가_남동쪽으로_이동_상대팀이_있을_경우() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Knight("white")));
+            Tile testTile2 = new Tile("63", Optional.ofNullable(new Queen("black")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("63", testTile2);
+            return testMap;
+        });
+
+        Board boardAfterMoved = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(null));
+            Tile testTile2 = new Tile("63", Optional.ofNullable(new Knight("white")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("63", testTile2);
+            return testMap;
+        });
+
+        board.movePiece(Arrays.asList("55", "63"));
+
+        assertThat(board).isEqualTo(boardAfterMoved);
+    }
+
+    @Test
+    void piece이동_확인_knight가_남동쪽으로_이동_상대팀이_없을_경우() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Knight("white")));
+            Tile testTile2 = new Tile("63", Optional.ofNullable(null));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("63", testTile2);
+            return testMap;
+        });
+
+        Board boardAfterMoved = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(null));
+            Tile testTile2 = new Tile("63", Optional.ofNullable(new Knight("white")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("63", testTile2);
+            return testMap;
+        });
+
+        board.movePiece(Arrays.asList("55", "63"));
+
+        assertThat(board).isEqualTo(boardAfterMoved);
+    }
+
+    @Test
+    void piece이동_확인_knight가_남동쪽으로_이동_같은_팀이_있을_경우() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Knight("white")));
+            Tile testTile2 = new Tile("63", Optional.ofNullable(new Queen("white")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("63", testTile2);
+            return testMap;
+        });
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> board.movePiece(Arrays.asList("55", "63")));
     }
 }

@@ -8,7 +8,6 @@ import chess.model.Vector;
 import java.util.*;
 
 import static chess.model.Direction.*;
-import static chess.model.Direction.WEST;
 
 public class Rook implements Piece {
     private static final Set<Direction> movableDirections;

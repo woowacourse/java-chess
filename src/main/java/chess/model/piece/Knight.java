@@ -9,20 +9,24 @@ import java.util.*;
 
 import static chess.model.Direction.*;
 
-public class Bishop implements Piece {
+public class Knight implements Piece {
     private static Set<Direction> movableDirections;
 
     static {
         movableDirections = new HashSet<>();
-        movableDirections.add(SOUTHEAST);
-        movableDirections.add(SOUTHWEST);
-        movableDirections.add(NORTHWEST);
-        movableDirections.add(NORTHEAST);
+        movableDirections.add(KNIGHT_EASTNORTH);
+        movableDirections.add(KNIGHT_EASTSOUTH);
+        movableDirections.add(KNIGHT_NORTHEAST);
+        movableDirections.add(KNIGHT_NORTHWEST);
+        movableDirections.add(KNIGHT_SOUTHEAST);
+        movableDirections.add(KNIGHT_SOUTHWEST);
+        movableDirections.add(KNIGHT_WESTNORTH);
+        movableDirections.add(KNIGHT_WESTSOUTH);
     }
 
     private String team;
 
-    public Bishop(String team) {
+    public Knight(String team) {
         validateInput(team);
         this.team = team;
     }
@@ -46,25 +50,29 @@ public class Bishop implements Piece {
             Coordinate coordinateX = sourceCoordinates.get(0);
             Coordinate coordinateY = sourceCoordinates.get(1);
 
-            if (vector.getDirection() == SOUTHEAST) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(-i)));
-                }
+            if (vector.getDirection() == KNIGHT_EASTNORTH) {
+                routes.add(coordinateX.addCoordinate(2).concat(coordinateY.addCoordinate(1)));
             }
-            if (vector.getDirection() == SOUTHWEST) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(-i)));
-                }
+            if (vector.getDirection() == KNIGHT_EASTSOUTH) {
+                routes.add(coordinateX.addCoordinate(2).concat(coordinateY.addCoordinate(-1)));
             }
-            if (vector.getDirection() == NORTHEAST) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(i)));
-                }
+            if (vector.getDirection() == KNIGHT_NORTHEAST) {
+                routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(2)));
             }
-            if (vector.getDirection() == NORTHWEST) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(i)));
-                }
+            if (vector.getDirection() == KNIGHT_NORTHWEST) {
+                routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(2)));
+            }
+            if (vector.getDirection() == KNIGHT_SOUTHEAST) {
+                routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(-2)));
+            }
+            if (vector.getDirection() == KNIGHT_SOUTHWEST) {
+                routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(-2)));
+            }
+            if (vector.getDirection() == KNIGHT_WESTNORTH) {
+                routes.add(coordinateX.addCoordinate(-2).concat(coordinateY.addCoordinate(1)));
+            }
+            if (vector.getDirection() == KNIGHT_WESTSOUTH) {
+                routes.add(coordinateX.addCoordinate(-2).concat(coordinateY.addCoordinate(-1)));
             }
 
             return new Route(routes);
@@ -93,7 +101,7 @@ public class Bishop implements Piece {
 
     @Override
     public Piece cloneSelf() {
-        return new Bishop(team);
+        return new Knight(team);
     }
 
     @Override
@@ -105,8 +113,8 @@ public class Bishop implements Piece {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Bishop bishop = (Bishop) o;
-        return Objects.equals(team, bishop.team);
+        Knight knight = (Knight) o;
+        return Objects.equals(team, knight.team);
     }
 
     @Override
