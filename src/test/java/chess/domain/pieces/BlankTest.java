@@ -2,8 +2,6 @@ package chess.domain.pieces;
 
 import chess.domain.Point;
 import chess.domain.PointFactory;
-import chess.domain.pieces.Blank;
-import chess.domain.pieces.Color;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -21,7 +19,7 @@ public class BlankTest {
         Blank blank = new Blank(Color.NONE);
         Point source = PointFactory.of("d5");
         Point target = PointFactory.of("h1");
-        assertThrows(IllegalArgumentException.class, () -> blank.move(source, target));
+        assertThrows(IllegalArgumentException.class, () -> blank.action(source, target, false));
     }
 
     @Test
@@ -29,6 +27,6 @@ public class BlankTest {
         Blank blank = new Blank(Color.NONE);
         Point source = PointFactory.of("d5");
         Point target = PointFactory.of("h1");
-        assertThrows(IllegalArgumentException.class, () -> blank.attack(source, target));
+        assertThrows(IllegalArgumentException.class, () -> blank.action(source, target, true));
     }
 }

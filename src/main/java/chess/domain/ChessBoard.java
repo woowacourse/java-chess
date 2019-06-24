@@ -70,12 +70,6 @@ public class ChessBoard {
     public List<Point> makePath(Point source, Point target) {
         Piece sourcePiece = points.get(source);
         Piece targetPiece = points.get(target);
-
-//        if (targetPiece.equalsType(Type.BLANK)) {
-//            return sourcePiece.move(source, target);
-//        }
-//        return sourcePiece.attack(source, target);
-
         return sourcePiece.action(source, target, !targetPiece.equalsType(Type.BLANK));
     }
 
@@ -119,5 +113,4 @@ public class ChessBoard {
 
         return totalScore;
     }
-
 }

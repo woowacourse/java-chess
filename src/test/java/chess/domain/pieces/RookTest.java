@@ -2,8 +2,6 @@ package chess.domain.pieces;
 
 import chess.domain.Point;
 import chess.domain.PointFactory;
-import chess.domain.pieces.Color;
-import chess.domain.pieces.Rook;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -29,7 +27,7 @@ public class RookTest {
                 PointFactory.of("d4"),
                 PointFactory.of("d3"),
                 PointFactory.of("d2"));
-        assertThat(path).isEqualTo(rook.move(source, target));
+        assertThat(path).isEqualTo(rook.action(source, target, false));
     }
 
     @Test
@@ -37,6 +35,6 @@ public class RookTest {
         Rook rook = new Rook(Color.BLACK);
         Point source = PointFactory.of("d5");
         Point target = PointFactory.of("f7");
-        assertThrows(IllegalArgumentException.class, () -> rook.move(source, target));
+        assertThrows(IllegalArgumentException.class, () -> rook.action(source, target, false));
     }
 }

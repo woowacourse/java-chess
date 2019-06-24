@@ -2,8 +2,6 @@ package chess.domain.pieces;
 
 import chess.domain.Point;
 import chess.domain.PointFactory;
-import chess.domain.pieces.Color;
-import chess.domain.pieces.King;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ public class KingTest {
         King king = new King(Color.BLACK);
         Point source = PointFactory.of("e1");
         Point target = PointFactory.of("e2");
-        assertThat(new ArrayList<>()).isEqualTo(king.move(source, target));
+        assertThat(new ArrayList<>()).isEqualTo(king.action(source, target, false));
     }
 
     @Test
@@ -32,6 +30,6 @@ public class KingTest {
         King king = new King(Color.BLACK);
         Point source = PointFactory.of("e1");
         Point target = PointFactory.of("e3");
-        assertThrows(IllegalArgumentException.class, () -> king.move(source, target));
+        assertThrows(IllegalArgumentException.class, () -> king.action(source, target, false));
     }
 }

@@ -2,8 +2,6 @@ package chess.domain.pieces;
 
 import chess.domain.Point;
 import chess.domain.PointFactory;
-import chess.domain.pieces.Color;
-import chess.domain.pieces.Queen;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -29,7 +27,7 @@ public class QueenTest {
                 PointFactory.of("d2"),
                 PointFactory.of("d3"),
                 PointFactory.of("d4"));
-        assertThat(path).isEqualTo(queen.move(source, target));
+        assertThat(path).isEqualTo(queen.action(source, target, false));
     }
 
     @Test
@@ -37,6 +35,6 @@ public class QueenTest {
         Queen queen = new Queen(Color.BLACK);
         Point source = PointFactory.of("d4");
         Point target = PointFactory.of("e6");
-        assertThrows(IllegalArgumentException.class, () -> queen.move(source, target));
+        assertThrows(IllegalArgumentException.class, () -> queen.action(source, target, false));
     }
 }

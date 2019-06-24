@@ -2,8 +2,6 @@ package chess.domain.pieces;
 
 import chess.domain.Point;
 import chess.domain.PointFactory;
-import chess.domain.pieces.Bishop;
-import chess.domain.pieces.Color;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -29,7 +27,7 @@ public class BishopTest {
                 PointFactory.of("e4"),
                 PointFactory.of("f3"),
                 PointFactory.of("g2"));
-        assertThat(path).isEqualTo(bishop.move(source, target));
+        assertThat(path).isEqualTo(bishop.action(source, target,false));
     }
 
     @Test
@@ -37,6 +35,6 @@ public class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK);
         Point source = PointFactory.of("d5");
         Point target = PointFactory.of("a5");
-        assertThrows(IllegalArgumentException.class, () -> bishop.move(source, target));
+        assertThrows(IllegalArgumentException.class, () -> bishop.action(source, target,false));
     }
 }

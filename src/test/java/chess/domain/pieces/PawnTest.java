@@ -27,7 +27,7 @@ public class PawnTest {
         List<Point> path = Arrays.asList(
                 PointFactory.of("d6"),
                 PointFactory.of("d5"));
-        assertThat(path).isEqualTo(pawn.move(source, target));
+        assertThat(path).isEqualTo(pawn.action(source, target, false));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class PawnTest {
         Point target = PointFactory.of("d6");
         List<Point> path = Arrays.asList(
                 PointFactory.of("d6"));
-        assertThat(path).isEqualTo(pawn.move(source, target));
+        assertThat(path).isEqualTo(pawn.action(source, target, false));
     }
 
     @Test
@@ -46,11 +46,11 @@ public class PawnTest {
         Point source = PointFactory.of("d7");
         Point target = PointFactory.of("d6");
         // 첫 턴 이동
-        pawn.move(source, target);
+        pawn.action(source, target, false);
         // 첫 턴 이후
         List<Point> path = Arrays.asList(
                 PointFactory.of("d6"));
-        assertThat(path).isEqualTo(pawn.move(source, target));
+        assertThat(path).isEqualTo(pawn.action(source, target, false));
     }
 
     @Test
@@ -59,9 +59,9 @@ public class PawnTest {
         Point source = PointFactory.of("d7");
         Point target = PointFactory.of("d5");
         // 첫 턴 이동
-        pawn.move(source, target);
+        pawn.action(source, target, false);
         // 첫 턴 이후
-        assertThrows(IllegalArgumentException.class, () -> pawn.move(source, target));
+        assertThrows(IllegalArgumentException.class, () -> pawn.action(source, target, false));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
         Point source = PointFactory.of("d7");
         Point target = PointFactory.of("d4");
-        assertThrows(IllegalArgumentException.class, () -> pawn.move(source, target));
+        assertThrows(IllegalArgumentException.class, () -> pawn.action(source, target, false));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
         Point source = PointFactory.of("d7");
         Point target = PointFactory.of("c6");
-        assertThat(new ArrayList<>()).isEqualTo(pawn.attack(source, target));
+        assertThat(new ArrayList<>()).isEqualTo(pawn.action(source, target, true));
     }
 
     @Test
@@ -85,6 +85,6 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
         Point source = PointFactory.of("d7");
         Point target = PointFactory.of("b5");
-        assertThrows(IllegalArgumentException.class, () -> pawn.attack(source, target));
+        assertThrows(IllegalArgumentException.class, () -> pawn.action(source, target, true));
     }
 }
