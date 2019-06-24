@@ -4,8 +4,10 @@ import chess.domain.*;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
 import chess.persistence.dao.RoomDao;
+import chess.persistence.dao.TurnDao;
 import chess.persistence.dto.BoardStateDto;
 import chess.persistence.dto.RoomDto;
+import chess.persistence.dto.TurnDto;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -16,11 +18,13 @@ public class ChessService {
 
     private RoomDao roomDao;
     private BoardStateDao boardStateDao;
+    private TurnDao turnDao;
 
     public ChessService() {
         DataSource ds = new DataSourceFactory().createDataSource();
         roomDao = new RoomDao(ds);
         boardStateDao = new BoardStateDao(ds);
+        turnDao = new TurnDao(ds);
     }
 
     public Optional<Long> createRoom(RoomDto room) {
@@ -134,4 +138,34 @@ public class ChessService {
         });
     }
 
+    public void createTurn(Team team, long id) {
+        try {
+            TurnDto turn = new TurnDto();
+            turn.setCurrent(team.toString());
+            turn.setRoomId(id);
+            turnDao.addTurn(turn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Optional<TurnDto> findTurnByRoomId(long id) {
+        try {
+            return turnDao.findById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    public void updateTurnByRoomId(Team team, long roomId) {
+        try {
+            TurnDto turn = new TurnDto();
+            turn.setCurrent(team.name());
+            turn.setRoomId(roomId);
+            turnDao.updateCoordById(turn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

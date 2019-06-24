@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 
 public class ChessGame {
     private final Map<ChessCoordinate, ChessPiece> boardState;
+    private Turn turn;
 
-    public ChessGame(AbstractStateInitiatorFactory stateInitiatorFactory) {
+    public ChessGame(AbstractStateInitiatorFactory stateInitiatorFactory, Turn turn) {
         this.boardState = stateInitiatorFactory.create();
+        this.turn = turn;
     }
 
     public Map<ChessCoordinate, PieceType> getBoard() {
@@ -18,7 +20,11 @@ public class ChessGame {
     }
 
     public void move(ChessCoordinate from, ChessCoordinate to) {
-        Set<ChessCoordinate> movableCoordinates = boardState.get(from).getMovableCoordinates(this::getTeamAt, from);
+        ChessPiece fromPiece = boardState.get(from);
+
+        validateTurn(fromPiece);
+
+        Set<ChessCoordinate> movableCoordinates = fromPiece.getMovableCoordinates(this::getTeamAt, from);
 
         movableCoordinates.stream()
                 .filter(coord -> coord.equals(to))
@@ -27,6 +33,14 @@ public class ChessGame {
 
         boardState.put(to, boardState.get(from));
         boardState.put(from, EmptyCell.getInstance());
+
+        this.turn = turn.nextTurn();
+    }
+
+    private void validateTurn(ChessPiece fromPiece) {
+        if (fromPiece.getType().getTeam() != turn.getCurrent()) {
+            throw new IllegalArgumentException("해당 팀의 차례가 아닙니다.");
+        }
     }
 
     public Set<String> getMovable(ChessCoordinate from) {
@@ -36,6 +50,10 @@ public class ChessGame {
 
     Team getTeamAt(ChessCoordinate coord) {
         return this.boardState.get(coord).getType().getTeam();
+    }
+
+    public Team getTurn() {
+        return turn.getCurrent();
     }
 
     @Override

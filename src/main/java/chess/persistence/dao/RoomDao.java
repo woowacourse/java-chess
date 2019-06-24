@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class RoomDao {
+    private static class RoomDaoSql {
+        private static final String INSERT = "INSERT INTO room(title) VALUES(?)";
+        private static final String SELECT_BY_ID = "SELECT id, title FROM room WHERE id=?";
+        private static final String SELECT_BY_TITLE = "SELECT id, title FROM room WHERE title=?";
+        private static final String SELECT_LATEST_N = "SELECT id, title FROM room ORDER BY id DESC LIMIT ?";
+        private static final String DELETE_BY_ID = "DELETE FROM room WHERE id=?";
+    }
 
     private DataSource dataSource;
 
@@ -82,13 +89,5 @@ public class RoomDao {
             query.setLong(1, id);
             return query.executeUpdate();
         }
-    }
-
-    private static class RoomDaoSql {
-        private static final String INSERT = "INSERT INTO room(title) VALUES(?)";
-        private static final String SELECT_BY_ID = "SELECT id, title FROM room WHERE id=?";
-        private static final String SELECT_BY_TITLE = "SELECT id, title FROM room WHERE title=?";
-        private static final String SELECT_LATEST_N = "SELECT id, title FROM room ORDER BY id DESC LIMIT ?";
-        private static final String DELETE_BY_ID = "DELETE FROM room WHERE id=?";
     }
 }

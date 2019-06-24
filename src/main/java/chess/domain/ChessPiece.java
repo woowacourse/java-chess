@@ -9,7 +9,6 @@ public abstract class ChessPiece {
     protected final static int INCREASE_TWO = 2;
     protected final static int DECREASE_TWO = -2;
 
-
     private PieceType type;
 
     protected ChessPiece(PieceType type) {

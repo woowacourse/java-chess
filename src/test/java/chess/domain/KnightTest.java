@@ -25,7 +25,7 @@ class KnightTest {
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
 
-        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
+        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn());
 
         assertThat(knight.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b3"))).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("d2"),
@@ -51,7 +51,7 @@ class KnightTest {
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), empty, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
 
-        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
+        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn());
 
         assertThat(knight.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b6"))).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("a8"),

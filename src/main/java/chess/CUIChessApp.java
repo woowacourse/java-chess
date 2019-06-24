@@ -60,7 +60,7 @@ public class CUIChessApp {
         AbstractChessPieceFactory factory = new ChessPieceFactory();
         ChessPiece empty = factory.create(PieceType.NONE);
 
-        chessGame = new ChessGame(new StateInitiatorFactory());
+        chessGame = new ChessGame(new StateInitiatorFactory(), Turn.firstTurn());
     }
 
     private static boolean checkResult() {

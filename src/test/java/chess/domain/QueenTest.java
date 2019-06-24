@@ -23,7 +23,7 @@ class QueenTest {
                 Arrays.asList(empty, Pawn.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty),
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), qn, empty, Bishop.getInstance(Team.WHITE), empty, Rook.getInstance(Team.WHITE))
         );
-        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState));
+        ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn());
         assertThat(qn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("d1")))
                 .containsExactlyInAnyOrder(
                         ChessCoordinate.valueOf("d2"),

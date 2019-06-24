@@ -2,10 +2,12 @@ package chess;
 
 import chess.domain.*;
 import chess.persistence.dto.RoomDto;
+import chess.persistence.dto.TurnDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
+import spark.Request;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -41,8 +43,11 @@ public class WebUIChessApplication {
 
             if (maybeFound.isPresent()) {
                 model.put("id", maybeFound.get().getId());
-                ChessGame chessGame = new ChessGame(new StateInitiatorFactory());
+                ChessGame chessGame = new ChessGame(new StateInitiatorFactory(), Turn.firstTurn());
+
                 chessService.createBoardState(chessGame.getBoard(), maybeFound.get().getId());
+                chessService.createTurn(chessGame.getTurn(), maybeFound.get().getId());
+
                 return model;
             }
 
@@ -63,9 +68,13 @@ public class WebUIChessApplication {
         });
 
         get("/board", (req, res) -> {
-            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
+            Optional<ChessGame> maybeChessGame = getChessGame(chessService, req);
 
-            return chessGame.getBoard();
+            if (maybeChessGame.isPresent()) {
+                return maybeChessGame.get().getBoard();
+            }
+
+            return render(Collections.EMPTY_MAP, "error.html");
         }, gson::toJson);
 
         put("/move-piece", (req, res) -> {
@@ -74,18 +83,35 @@ public class WebUIChessApplication {
             ChessCoordinate from = ChessCoordinate.valueOf(req.queryParams("from"));
             ChessCoordinate to = ChessCoordinate.valueOf(req.queryParams("to"));
 
-            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId));
-            chessGame.move(from, to);
+            Optional<ChessGame> maybeChessGame = getChessGame(chessService, req);
+            if (maybeChessGame.isPresent()) {
+                ChessGame chessGame = maybeChessGame.get();
+                chessGame.move(from, to);
+                chessService.updateChessPiecePosition(from, to, roomId);
+                chessService.updateTurnByRoomId(chessGame.getTurn(), roomId);
+            }
 
-            chessService.updateChessPiecePosition(from, to, roomId);
-
-            return new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId)).getBoard();
+            return getChessGame(chessService, req).get().getBoard();
         }, gson::toJson);
 
         get("/movable", (req, res) -> {
-            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
+            ChessGame chessGame = getChessGame(chessService, req).get();
             return chessGame.getMovable(ChessCoordinate.valueOf(req.queryParams("from")));
         }, gson::toJson);
+    }
+
+    private static Optional<ChessGame> getChessGame(ChessService chessService, Request req) {
+        Optional<TurnDto> maybeFound = chessService.findTurnByRoomId(Long.parseLong(req.queryParams("id")));
+
+        if (maybeFound.isPresent()) {
+            Team team = Team.valueOf(maybeFound.get().getCurrent());
+
+            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))),
+                    Turn.valueOf(team));
+
+            return Optional.of(chessGame);
+        }
+        return Optional.empty();
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

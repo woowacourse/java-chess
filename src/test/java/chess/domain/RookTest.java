@@ -26,7 +26,7 @@ class RookTest {
 
         ChessCoordinate from = ChessCoordinate.valueOf("a1");
 
-        assertThat(rook.getMovableCoordinates(new ChessGame(new TestStateInitiatorFactory(boardState))::getTeamAt, from)).containsExactlyInAnyOrder(
+        assertThat(rook.getMovableCoordinates(new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn())::getTeamAt, from)).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("a2"),
                 ChessCoordinate.valueOf("a3"),
                 ChessCoordinate.valueOf("a4"),
@@ -61,7 +61,7 @@ class RookTest {
 
         ChessCoordinate from = ChessCoordinate.valueOf("a1");
 
-        assertThat(rook.getMovableCoordinates(new ChessGame(new TestStateInitiatorFactory(boardState))::getTeamAt, from))
+        assertThat(rook.getMovableCoordinates(new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn())::getTeamAt, from))
                 .containsExactlyInAnyOrder(
                         ChessCoordinate.valueOf("a2"),
                         ChessCoordinate.valueOf("a3"),

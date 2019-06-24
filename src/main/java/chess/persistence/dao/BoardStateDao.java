@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class BoardStateDao {
+    private static class BoardStateDaoSql {
+        private static final String INSERT = "INSERT INTO board_state(type, loc_x, loc_y, room_id) VALUES(?, ?, ?, ?)";
+        private static final String SELECT_BY_ID = "SELECT id, type, loc_x, loc_y, room_id FROM board_state WHERE id=?";
+        private static final String SELECT_BY_ROOM_ID = "SELECT id, type, loc_x, loc_y, room_id FROM board_state WHERE room_id=?";
+        private static final String UPDATE_COORD_BY_ID = "UPDATE board_state SET loc_x=?, loc_y=? WHERE id=?";
+        private static final String DELETE_BY_ID = "DELETE FROM board_state WHERE id=?";
+    }
 
     private DataSource dataSource;
 
@@ -85,13 +92,5 @@ public class BoardStateDao {
             query.setLong(1, id);
             return query.executeUpdate();
         }
-    }
-
-    private static class BoardStateDaoSql {
-        private static final String INSERT = "INSERT INTO board_state(type, loc_x, loc_y, room_id) VALUES(?, ?, ?, ?)";
-        private static final String SELECT_BY_ID = "SELECT id, type, loc_x, loc_y, room_id FROM board_state WHERE id=?";
-        private static final String SELECT_BY_ROOM_ID = "SELECT id, type, loc_x, loc_y, room_id FROM board_state WHERE room_id=?";
-        private static final String UPDATE_COORD_BY_ID = "UPDATE board_state SET loc_x=?, loc_y=? WHERE id=?";
-        private static final String DELETE_BY_ID = "DELETE FROM board_state WHERE id=?";
     }
 }
