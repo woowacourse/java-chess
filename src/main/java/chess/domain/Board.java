@@ -22,12 +22,12 @@ public class Board {
 		Square targetSquare = map.get(target);
 
 		if (targetSquare.isEmpty()) {
-			return isValidMove(originSquare, targetSquare);
+			return move(originSquare, targetSquare);
 		}
-		return isValidAttack(originSquare, targetSquare);
+		return attack(originSquare, targetSquare);
 	}
 
-	public boolean isValidAttack(final Square origin, final Square target) {
+	public boolean attack(final Square origin, final Square target) {
 		if (!origin.isValidAttack(target)) {
 			return false;
 		}
@@ -35,7 +35,7 @@ public class Board {
 		return true;
 	}
 
-	public boolean isValidMove(final Square origin, final Square target) {
+	public boolean move(final Square origin, final Square target) {
 		if (!origin.isValidMove(target)) {
 			return false;
 		}

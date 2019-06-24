@@ -5,8 +5,6 @@ import java.util.stream.Collectors;
 
 public class ScoreCalculator {
 	private static final ScoreCalculator INSTANCE = new ScoreCalculator();
-	private static final char START_COLUMN = 'a';
-	private static final char LAST_COLUMN = 'h';
 	private static final int BOUND_OF_PAWNS = 2;
 	private static final double SCORE_OF_PAWN_IF_SAME_COLUMN = 0.5;
 
@@ -48,7 +46,7 @@ public class ScoreCalculator {
 
 	private double sumOfPawns(final List<Square> pawns) {
 		double sum = 0;
-		for (int i = START_COLUMN; i <= LAST_COLUMN; i++) {
+		for (int i = Column.MIN; i <= Column.MAX; i++) {
 			sum += sumOfPawnByColumn(pawns, i);
 		}
 		return sum;

@@ -64,6 +64,12 @@ public class BoardGenerator {
 		}
 	}
 
+	private static void putPawns(Map<Position, Square> map, List<Position> positions, Piece piece) {
+		for (Position position : positions) {
+			map.put(position, Square.of(position, piece));
+		}
+	}
+
 	private static List<Position> getColumnsOfRow(final int rowIndex) {
 		List<Position> positions = new ArrayList<>();
 		for (int i = Column.MIN; i <= Column.MAX; i++) {
@@ -71,11 +77,5 @@ public class BoardGenerator {
 			positions.add(position);
 		}
 		return positions;
-	}
-
-	private static void putPawns(Map<Position, Square> map, List<Position> positions, Piece piece) {
-		for (Position position : positions) {
-			map.put(position, Square.of(position, piece));
-		}
 	}
 }

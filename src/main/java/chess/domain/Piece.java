@@ -13,6 +13,24 @@ public class Piece {
 	private final Color color;
 	private final MoveRule moveRule;
 
+	public enum Color {
+		WHITE(1, "WHITE"),
+		BLACK(2, "BLACK"),
+		EMPTY(3, "EMPTY");
+
+		private final int index;
+		private final String name;
+
+		Color(final int index, final String name) {
+			this.index = index;
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+	}
+
 	private Piece(final Color color, final MoveRule moveRule) {
 		this.color = color;
 		this.moveRule = moveRule;
@@ -31,7 +49,7 @@ public class Piece {
 	}
 
 	public boolean isSameName(final String name) {
-		return moveRule.getName() == name;
+		return moveRule.getName().equals(name);
 	}
 
 	public boolean isSameTeam(final Piece other) {
@@ -96,23 +114,5 @@ public class Piece {
 				"color=" + color +
 				", moveRule=" + moveRule +
 				'}';
-	}
-
-	public enum Color {
-		WHITE(1, "WHITE"),
-		BLACK(2, "BLACK"),
-		EMPTY(3, "EMPTY");
-
-		private final int index;
-		private final String name;
-
-		Color(final int index, final String name) {
-			this.index = index;
-			this.name = name;
-		}
-
-		public String getName() {
-			return name;
-		}
 	}
 }
