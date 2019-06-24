@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import java.util.Objects;
 
@@ -14,14 +14,11 @@ public class Score {
 		return Math.round(score * ROUNDING_CRITERION) / (double) ROUNDING_CRITERION;
 	}
 
-	public Result compare(final Score score) {
+	public Boolean isHigher(final Score score) {
 		if (this.score > score.score) {
-			return Result.WIN;
+			return true;
 		}
-		if (this.score < score.score) {
-			return Result.LOSE;
-		}
-		return Result.DRAW;
+		return false;
 	}
 
 	public Score add(Score score) {
@@ -37,12 +34,20 @@ public class Score {
 			return false;
 		}
 		final Score score1 = (Score) o;
-
-		return Double.compare(score1.score, score) == 0;
+		return ROUNDING_CRITERION == score1.ROUNDING_CRITERION &&
+				Double.compare(score1.score, score) == 0;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(score);
+		return Objects.hash(ROUNDING_CRITERION, score);
+	}
+
+	@Override
+	public String toString() {
+		return "Score{" +
+				"ROUNDING_CRITERION=" + ROUNDING_CRITERION +
+				", score=" + score +
+				'}';
 	}
 }

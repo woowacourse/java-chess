@@ -1,9 +1,11 @@
 package chess;
 
+import chess.domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreTest {
 	private Score score;
@@ -15,17 +17,17 @@ public class ScoreTest {
 
 	@Test
 	void 자기_점수가_더_높은_경우() {
-		assertThat(score.compare(new Score(19.9))).isEqualTo(Result.WIN);
+		assertTrue(score.isHigher(new Score(19.9)));
 	}
 
 	@Test
 	void 자기_점수가_더_낮은_경우() {
-		assertThat(score.compare(new Score(20.2))).isEqualTo(Result.LOSE);
+		assertFalse(score.isHigher(new Score(20.2)));
 	}
 
 	@Test
 	void 점수가_같은_경우() {
-		assertThat(score.compare(new Score(20.1))).isEqualTo(Result.DRAW);
+		assertEquals(score, new Score(20.1));
 	}
 
 	@Test
