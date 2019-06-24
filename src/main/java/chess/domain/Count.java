@@ -6,6 +6,13 @@ public class Count {
     private static final int COUNT_UNIT = 1;
     private int count;
 
+    public Count() {
+    }
+
+    public Count(final int count) {
+        this.count = count;
+    }
+
     public Count add() {
         count += COUNT_UNIT;
         return this;
