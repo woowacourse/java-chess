@@ -20,5 +20,9 @@ public abstract class Piece {
         return this.teamType == piece.teamType;
     }
 
+    public PieceType getPieceType() {
+        return this.pieceType;
+    }
+
     public abstract Set<Position> makePossiblePositions(Position source, PositionChecker positionChecker);
 }

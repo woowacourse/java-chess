@@ -26,11 +26,11 @@ public enum PieceType {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public double getPoint() {
-        return point;
+        return this.point;
     }
 
     public static Piece getPiece(String type, TeamType teamType) {
