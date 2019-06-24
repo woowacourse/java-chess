@@ -19,3 +19,22 @@
     - 게임이 종료될 경우 현재 점수를 출력한 후 콘솔을 종료한다.
 
 - 명령어 'status'를 입력한 경우 현재 상태의 점수를 출력한다.
+
+
+## 데이터베이스 스키마
+
+CREATE DATABASE chess DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE game (
+    id INT NOT NULL,
+    turn VARCHAR(10) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE piece (
+    id INT NOT NULL,
+    point VARCHAR(10) NOT NULL,
+    color VARCHAR(10) NOT NULL,
+    type VARCHAR(10) NOT NULL,
+    PRIMARY KEY (id)
+);
