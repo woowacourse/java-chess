@@ -2,6 +2,7 @@ package chess.domain.RuleImpl;
 
 import chess.domain.Piece;
 import chess.domain.Position;
+import chess.domain.rule.Rook;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

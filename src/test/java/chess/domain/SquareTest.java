@@ -1,7 +1,7 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.King;
-import chess.domain.RuleImpl.Rook;
+import chess.domain.rule.King;
+import chess.domain.rule.Rook;
 import chess.exception.DiedKingException;
 import org.junit.jupiter.api.Test;
 

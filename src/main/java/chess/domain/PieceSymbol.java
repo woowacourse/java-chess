@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.RuleImpl.*;
+import chess.domain.rule.*;
 
 public enum PieceSymbol {
     WHITE_PAWN(Piece.Color.WHITE, Pawn.NAME, "♙"),

@@ -1,6 +1,7 @@
 package chess.domain.RuleImpl;
 
 import chess.domain.Position;
+import chess.domain.rule.Pawn;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

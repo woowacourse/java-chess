@@ -1,8 +1,8 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.Empty;
-import chess.domain.RuleImpl.King;
-import chess.domain.RuleImpl.Pawn;
+import chess.domain.rule.Empty;
+import chess.domain.rule.King;
+import chess.domain.rule.Pawn;
 
 import java.util.Objects;
 

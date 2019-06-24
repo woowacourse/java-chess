@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.Pawn;
+import chess.domain.rule.Pawn;
 
 import java.util.List;
 import java.util.stream.Collectors;
