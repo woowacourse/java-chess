@@ -128,6 +128,13 @@ public class Board {
                 .reduce((long) 0, (a, b) -> a + b);
     }
 
+    public boolean isKingAlive(Aliance aliance){
+        return pieces.values().stream()
+                .filter(p -> p.getAliance() == aliance)
+                .filter(p -> p.getPieceValue().getName() == "K")
+                .count() != 0;
+    }
+
     public static void main(String[] args) {
         Board board = new Board();
         board.getDuplicatePawnCount(Aliance.WHITE);
