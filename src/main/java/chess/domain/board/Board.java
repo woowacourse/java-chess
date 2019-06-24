@@ -53,6 +53,12 @@ public class Board {
         return board.containsKey(source) && getPiece(source).isTeam(team) && getPiece(source).isType(type);
     }
 
+    public boolean hasPiece(Team team, Type type) {
+        return board.entrySet().stream()
+                .filter(e -> e.getValue().isTeam(team) && e.getValue().isType(type))
+                .count() > 0;
+    }
+
     public Piece getPiece(Square source) {
         return board.get(source);
     }

@@ -17,6 +17,17 @@ public class ChessGame {
         return new ChessRound(calculateScore(Team.WHITE), calculateScore(Team.BLACK));
     }
 
+    public boolean isGameOver() {
+        return !board.hasPiece(Team.WHITE, Type.KING) || !board.hasPiece(Team.BLACK, Type.KING);
+    }
+
+    public Team findWinner() {
+        if (!isGameOver()) {
+            throw new IllegalArgumentException("게임이 아직 진행 중 입니다.");
+        }
+        return board.hasPiece(Team.WHITE, Type.KING) ? Team.WHITE : Team.BLACK;
+    }
+
     double calculateScore(Team team) {
         return IntStream.range(Board.MIN_SIZE, Board.MAX_SIZE)
                 .mapToObj(column -> this.calculateScore(team, column))
