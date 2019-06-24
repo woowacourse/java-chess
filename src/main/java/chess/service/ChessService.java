@@ -98,7 +98,6 @@ public class ChessService {
         return Optional.empty();
     }
 
-
     public void updateChessPiecePosition(ChessCoordinate from, ChessCoordinate to, long roomId) {
         try {
             List<BoardStateDto> boardStates = boardStateDao.findByRoomId(roomId);

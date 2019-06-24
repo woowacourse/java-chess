@@ -19,6 +19,10 @@
             height: 45px;
             display: inline-block;
         }
+
+        .board_movable {
+            border : 1px solid black;
+        }
     </style>
 
 
@@ -35,7 +39,7 @@
         from : <input type="text" id="from" />
         to : <input type="text" id="to" />
         <button id="btn_move">이동</button>
-        <div id="board"></div>
+        <div id="board" data-id="{{id}}" }></div>
     </div>
 
     <script>
@@ -80,34 +84,40 @@
                 return "/images/pawn_b.png";
             }
         }
-        let id = document.getElementById("game-board").getAttribute("data-id");
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener("load", drawBoard);
-        xhr.open("GET", "/board?id=" + id);
-        xhr.send();
+
+        let id = document.getElementById("board").getAttribute("data-id");
+
+        initBoard();
+
+        function initBoard() {
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener("load", drawBoard);
+            xhr.open("GET", "/board?id=" + id);
+            xhr.send();
+        }
 
         document.getElementById("btn_move").addEventListener("click", function () {
             let from = document.getElementById("from").value;
             let to = document.getElementById("to").value;
-
-            xhr.addEventListener("load", drawBoard);
-            xhr.open("PUT", "/move-piece?id=" + id + "&from=" + from + "&to=" + to);
-            xhr.send();
-
+            
+            const moveXhr = new XMLHttpRequest();
+            moveXhr.addEventListener("load", drawBoard);
+            moveXhr.open("PUT", "/move-piece?id=" + id + "&from=" + from + "&to=" + to);
+            moveXhr.send();
         });
 
         let xAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
         let yAxis = [8, 7, 6, 5, 4, 3, 2, 1];
 
         function drawBoard() {
-            const states = JSON.parse(xhr.response);
+            const states = JSON.parse(this.response);
             console.log(states);
             let board = document.querySelector("#board");
             board.innerHTML = "";
 
             let str = "";
             let state = true;
-            let child;
+            let child = "";
             yAxis.forEach(y => {
                 xAxis.forEach(x => {
                     str = stateToString(states[x + y]);
@@ -131,12 +141,58 @@
 
             addEvent();
         }
+
         function addEvent() {
             document.querySelectorAll(".board").forEach(element => {
-                element.addEventListener("click", function () {
-                    console.log(this.getAttribute("data-coord"));
-                })
+                element.addEventListener("click", drowMovable);
             });
+        }
+
+        let from;
+
+        function drowMovable() {
+            console.log(this.getAttribute("data-coord"));
+            from = this.getAttribute("data-coord");
+            const movableXhr = new XMLHttpRequest();
+            movableXhr.addEventListener("load", drawMovableItem);
+            movableXhr.open("GET", "/movable?id=" + id + "&from=" + from);
+            movableXhr.send();
+        }
+
+        function drawMovableItem() {
+            const states = JSON.parse(this.response);
+            console.log(states);
+
+            states.forEach(element => {
+                document.querySelectorAll('.board').forEach(img => {
+                    img.classList.remove('board_movable');
+                });
+            });
+
+            states.forEach(element => {
+                document.querySelectorAll('.board').forEach(img => {
+                    if (img.getAttribute('data-coord') === element) {
+                        img.classList.add('board_movable');
+                    } 
+                });
+            });
+
+            addToCilckEvent();
+        }
+
+        function addToCilckEvent() {
+            document.querySelectorAll(".board_movable").forEach(element => {
+                element.removeEventListener("click", drowMovable);
+                element.addEventListener("click", moveFromTo);
+            });
+        }
+
+        function moveFromTo() {
+            let to =this.getAttribute("data-coord");            
+            const moveXhr = new XMLHttpRequest();
+            moveXhr.addEventListener("load", drawBoard);
+            moveXhr.open("PUT", "/move-piece?id=" + id + "&from=" + from + "&to=" + to);
+            moveXhr.send();
         }
 
     </script>

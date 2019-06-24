@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class ChessGame {
@@ -26,6 +27,11 @@ public class ChessGame {
 
         boardState.put(to, boardState.get(from));
         boardState.put(from, EmptyCell.getInstance());
+    }
+
+    public Set<String> getMovable(ChessCoordinate from) {
+        return boardState.get(from).getMovableCoordinates(this::getTeamAt, from).stream()
+                .map(coord -> coord.toString()).collect(Collectors.toSet());
     }
 
     Team getTeamAt(ChessCoordinate coord) {

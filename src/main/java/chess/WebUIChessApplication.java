@@ -82,6 +82,10 @@ public class WebUIChessApplication {
             return new ChessGame(() -> chessService.findBoardStatesByRoomId(roomId)).getBoard();
         }, gson::toJson);
 
+        get("/movable", (req, res) -> {
+            ChessGame chessGame = new ChessGame(() -> chessService.findBoardStatesByRoomId(Long.parseLong(req.queryParams("id"))));
+            return chessGame.getMovable(ChessCoordinate.valueOf(req.queryParams("from")));
+        }, gson::toJson);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
