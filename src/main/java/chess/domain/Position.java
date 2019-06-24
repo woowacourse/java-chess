@@ -48,14 +48,6 @@ public class Position {
         return y;
     }
 
-    public char getX2() {
-        return (char)(x.getCoordinate() + 96);
-    }
-
-    public String getY2() {
-        return String.valueOf(y.getCoordinate());
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
