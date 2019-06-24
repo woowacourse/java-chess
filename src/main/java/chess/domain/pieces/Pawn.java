@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final int EMPTY = 0;
     private static final int ONE_STEP = 1;
     private static final int TWO_STEP = 2;
 
@@ -52,9 +53,15 @@ public class Pawn extends Piece {
     }
 
     private List<Point> calculateAttackPath(Point source, Point target, Direction direction) {
-        List<Point> path = this.makePathIncludedTarget(source, target, direction);
+        List<Point> path = new ArrayList<>();
+        Point nextPoint = source.plusPoint(direction);
 
-        if (path.size() > ONE_STEP) {
+        while (!nextPoint.equals(target)) {
+            path.add(nextPoint);
+            nextPoint = nextPoint.plusPoint(direction);
+        }
+
+        if (path.size() > EMPTY) {
             throw new IllegalArgumentException("갈 수 없는 위치입니다.");
         }
 

@@ -2,15 +2,21 @@ package chess.domain;
 
 import chess.domain.pieces.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
 
-    private Map<Point, Piece> points = new HashMap<>();
+    private Map<Point, Piece> points;
 
     public ChessBoard() {
+        this.points = initialize();
+    }
+
+    private Map<Point, Piece> initialize() {
+        Map<Point, Piece> points = new HashMap<>();
         points.put(PointFactory.of("a1"), new Rook(Color.WHITE));
         points.put(PointFactory.of("b1"), new Knight(Color.WHITE));
         points.put(PointFactory.of("c1"), new Bishop(Color.WHITE));
@@ -38,13 +44,19 @@ public class ChessBoard {
         points.put(PointFactory.of("f8"), new Bishop(Color.BLACK));
         points.put(PointFactory.of("g8"), new Knight(Color.BLACK));
         points.put(PointFactory.of("h8"), new Rook(Color.BLACK));
+        return points;
+    }
+
+    public boolean hasPiece(Point point, Piece piece) {
+        Piece pointPiece = points.get(point);
+        return pointPiece.equals(piece);
     }
 
     public void checkSourceAndTarget(Point source, Point target, Color colorOfTurn) {
         Piece sourcePiece = points.get(source);
         Piece targetPiece = points.get(target);
 
-        if (!sourcePiece.equalsType(Type.BLANK)) {
+        if (sourcePiece.equalsType(Type.BLANK)) {
             throw new IllegalArgumentException("말이 없다");
         }
         if (!sourcePiece.equalsColor(colorOfTurn)) {
@@ -74,9 +86,34 @@ public class ChessBoard {
         }
     }
 
-    private void updateUnitLocation(Point source, Point target) {
+    public void updatePieceLocation(Point source, Point target) {
         Piece currentPiece = points.get(source);
         points.put(target, currentPiece);
-        points.put(source, null);
+        points.put(source, new Blank(Color.NONE));
     }
+
+    public double calculateScore(Color color) {
+        List<Integer> numberOfPawnInColumn = Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0);
+
+        points.entrySet().stream()
+                .filter(pointPieceEntry -> pointPieceEntry.getValue().equalsColor(color))
+                .filter(pointPieceEntry -> pointPieceEntry.getValue().equalsType(Type.PAWN))
+                .forEach(entry -> {
+                    int columnIndex = entry.getKey().getX() - 1;
+                    numberOfPawnInColumn.set(columnIndex, numberOfPawnInColumn.get(columnIndex) + 1);
+                });
+
+        double totalScore = points.values().stream()
+                .filter(piece -> piece.equalsColor(color))
+                .filter(piece -> !piece.equalsType(Type.PAWN))
+                .mapToDouble(Piece::getScore)
+                .sum();
+
+        totalScore += numberOfPawnInColumn.stream()
+                .mapToDouble(numberOfPawn -> (numberOfPawn > 1) ? numberOfPawn * 0.5 : numberOfPawn)
+                .sum();
+
+        return totalScore;
+    }
+
 }

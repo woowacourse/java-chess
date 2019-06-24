@@ -6,8 +6,8 @@ import java.util.List;
 
 public abstract class Piece {
 
-    private final Type type;
     protected final Color color;
+    private final Type type;
 
     Piece(Type type, Color color) {
         this.type = type;
@@ -24,6 +24,10 @@ public abstract class Piece {
 
     public boolean equalsColor(Color another) {
         return this.color == another;
+    }
+
+    public double getScore() {
+        return type.getScore();
     }
 
     @Override

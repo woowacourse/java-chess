@@ -2,10 +2,9 @@ package chess.domain.pieces;
 
 import chess.domain.Point;
 import chess.domain.PointFactory;
-import chess.domain.pieces.Color;
-import chess.domain.pieces.Pawn;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -78,9 +77,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
         Point source = PointFactory.of("d7");
         Point target = PointFactory.of("c6");
-        List<Point> path = Arrays.asList(
-                PointFactory.of("c6"));
-        assertThat(path).isEqualTo(pawn.attack(source, target));
+        assertThat(new ArrayList<>()).isEqualTo(pawn.attack(source, target));
     }
 
     @Test
