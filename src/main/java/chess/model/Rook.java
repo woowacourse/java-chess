@@ -1,15 +1,12 @@
 package chess.model;
 
-public class Rook {
-    private final ChessPieceType type;
-    private final ChessPieceColor color;
-
+public class Rook extends AbstractRangeChessPiece {
     public Rook(final ChessPieceColor color) {
-        this.type = ChessPieceType.ROOK;
-        this.color = color;
+        super(ChessPieceType.ROOK, color);
     }
 
-    public boolean canMove(final Point source, final Point target) {
+    public boolean canMove(final Point source, final Point target, AbstractBoardNavigator navigator) {
+        if (isObstacleBetween(source, target, navigator)) return false;
         return (source.calculateXsDiff(target) == 0 || source.calculateYsDiff(target) == 0);
     }
 }
