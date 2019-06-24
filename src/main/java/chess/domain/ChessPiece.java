@@ -4,6 +4,12 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public abstract class ChessPiece {
+    protected final static int INCREASE_ONE = 1;
+    protected final static int DECREASE_ONE = -1;
+    protected final static int INCREASE_TWO = 2;
+    protected final static int DECREASE_TWO = -2;
+
+
     private PieceType type;
 
     protected ChessPiece(PieceType type) {
@@ -124,15 +130,15 @@ public abstract class ChessPiece {
 
     protected Consumer<ChessXCoordinate> proveYSide(ChessCoordinate from, List<ChessCoordinate> candidates) {
         return x -> {
-            from.getY().move(-1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
-            from.getY().move(1).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
+            from.getY().move(DECREASE_ONE).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
+            from.getY().move(INCREASE_ONE).ifPresent(y -> candidates.add(ChessCoordinate.valueOf(x, y)));
         };
     }
 
     protected Consumer<ChessYCoordinate> proveXSide(ChessCoordinate from, List<ChessCoordinate> candidates) {
         return (y) -> {
-            from.getX().move(1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
-            from.getX().move(-1).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
+            from.getX().move(DECREASE_ONE).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
+            from.getX().move(INCREASE_ONE).ifPresent(x -> candidates.add(ChessCoordinate.valueOf(x, y)));
         };
     }
 }

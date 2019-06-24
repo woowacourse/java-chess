@@ -33,11 +33,11 @@ public class Pawn extends ChessPiece {
         }
 
         if (getType().getTeam() == Team.WHITE) {
-            return provePawn(pieceTeamProvider, from, ChessYCoordinate.RANK_2, 1);
+            return provePawn(pieceTeamProvider, from, ChessYCoordinate.RANK_2, INCREASE_ONE);
         }
 
         if (getType().getTeam() == Team.BLACK) {
-            return provePawn(pieceTeamProvider, from, ChessYCoordinate.RANK_7, -1);
+            return provePawn(pieceTeamProvider, from, ChessYCoordinate.RANK_7, DECREASE_ONE);
         }
 
         throw new IllegalArgumentException("사용할 수 없는 말입니다.");
@@ -48,15 +48,15 @@ public class Pawn extends ChessPiece {
 
         getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(sign).get())).ifPresent(candidates::add);
 
-        from.getX().move(-1)
+        from.getX().move(DECREASE_ONE)
                 .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(sign).get()))
                         .ifPresent(candidates::add));
-        from.getX().move(1)
+        from.getX().move(INCREASE_ONE)
                 .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(sign).get()))
                         .ifPresent(candidates::add));
 
         if (from.getY() == yCoord) {
-            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(sign * 2).get())).ifPresent(candidates::add);
+            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(sign * INCREASE_TWO).get())).ifPresent(candidates::add);
         }
         return candidates;
     }

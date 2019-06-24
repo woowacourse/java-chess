@@ -32,8 +32,8 @@ public class King extends ChessPiece {
     Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
         List<ChessCoordinate> candidates = new ArrayList<>();
 
-        from.getX().move(-1).ifPresent(proveYSide(from, candidates));
-        from.getX().move(1).ifPresent(proveYSide(from, candidates));
+        from.getX().move(DECREASE_ONE).ifPresent(proveYSide(from, candidates));
+        from.getX().move(INCREASE_ONE).ifPresent(proveYSide(from, candidates));
 
         proveXSide(from, candidates).accept(from.getY());
         proveYSide(from, candidates).accept(from.getX());

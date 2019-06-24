@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class ChessScoreCount {
-
     private Map<Team, Double> scores;
 
     public ChessScoreCount(Set<PieceType> chessPieces) {
