@@ -3,6 +3,9 @@ package chess.domain;
 import java.util.Objects;
 
 public class Direction {
+    public static final int MAXIMUM_RANGE = 7;
+    public static final int MINIMUM_RANGE = -7;
+    public static final int ZERO = 0;
     private final int xVector;
     private final int yVector;
 
@@ -21,7 +24,7 @@ public class Direction {
     }
 
     private void validate(int vector) {
-        if (vector > 7 || vector < -7) {
+        if (vector > MAXIMUM_RANGE || vector < MINIMUM_RANGE) {
             throw new IllegalArgumentException();
         }
     }
@@ -45,8 +48,8 @@ public class Direction {
     }
 
     private int convert(int vector) {
-        if (vector == 0) {
-            return 0;
+        if (vector == ZERO) {
+            return ZERO;
         }
         return vector / Math.abs(vector);
     }

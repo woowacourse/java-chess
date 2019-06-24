@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessResult {
+    public static final String TEAM = "team";
+    public static final String SCORE = "score";
     private static final double PAWN_BALANCE_POINT = 0.5;
     private final Map<Point, Piece> result;
     private final ChessTeam team;
@@ -36,8 +38,8 @@ public class ChessResult {
 
     public Map<String, String> status() {
         Map<String, String> status = new HashMap<>();
-        status.put("team", team.name());
-        status.put("score", String.valueOf(score()));
+        status.put(TEAM, team.name());
+        status.put(SCORE, String.valueOf(score()));
         return status;
     }
 }

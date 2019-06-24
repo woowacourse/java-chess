@@ -7,6 +7,7 @@ import java.util.Set;
 public class Point {
     public static final int MAX_AXIS = 8;
     public static final int MIN_AXIS = 1;
+    public static final int ASCHII_CODE_NUMBER = 96;
     private static Set<Point> points;
 
     static {
@@ -73,6 +74,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return (char) (x + 96) + String.valueOf(y);
+        return (char) (x + ASCHII_CODE_NUMBER) + String.valueOf(y);
     }
 }

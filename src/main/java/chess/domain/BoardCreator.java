@@ -4,8 +4,11 @@ import chess.domain.pieces.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class BoardCreator {
+    private static final int MIN_RANGE = 1;
+    private static final int MAX_RANGE = 8;
 
     private BoardCreator() {
 
@@ -13,11 +16,10 @@ public class BoardCreator {
 
     public static Board create() {
         Map<Point, Piece> board = new HashMap<>();
-        for (int i = 1; i <= 8; i++) {
-            for (int j = 1; j <= 8; j++) {
-                board.put(Point.get(i, j), new Empty());
-            }
-        }
+        IntStream.rangeClosed(MIN_RANGE, MAX_RANGE)
+                .forEach(i ->
+                        IntStream.rangeClosed(MIN_RANGE, MAX_RANGE)
+                                .forEach(j -> board.put(Point.get(i, j), new Empty())));
         white(board);
         black(board);
         return new Board(board);
@@ -36,7 +38,7 @@ public class BoardCreator {
     }
 
     private static void pawn(Map<Point, Piece> board, ChessTeam team, int position) {
-        for (int i = 1; i <= 8; i++) {
+        for (int i = MIN_RANGE; i <= MAX_RANGE; i++) {
             board.put(Point.get(i, position), new Pawn(team));
         }
     }

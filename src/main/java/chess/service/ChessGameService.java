@@ -11,16 +11,21 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGameService {
+    public static final String SESSION_ID = "-game";
+    public static final String FROM = "from";
+    public static final String TO = "to";
     private static final ChessGameDAO CHESS_GAME_DAO = ChessGameDAO.getInstance();
     private static final ChessLogDAO CHESS_LOG_DAO = ChessLogDAO.getInstance();
 
-    public static ChessGame findGameByGameId(String gameId) {
-        List<List<String>> chessLog = CHESS_LOG_DAO.findGameLogById(gameId);
+    public static Map<String, String> findGameByGameId(Request request) {
+        String gameId = request.splat()[0];
+        List<List<String>> chessLogs = CHESS_LOG_DAO.findGameLogById(gameId);
         ChessGame chessGame = new ChessGame();
-        for (List<String> move : chessLog) {
-            chessGame.play("move " + move.get(0) + " " + move.get(1));
+        for (List<String> chessLog : chessLogs) {
+            chessGame.play(chessLog.get(0), chessLog.get(1));
         }
-        return chessGame;
+        request.session().attribute(gameId + SESSION_ID, chessGame);
+        return status(chessGame);
     }
 
     public static List<Integer> findPreviousGamesById(String name) {
@@ -29,14 +34,13 @@ public class ChessGameService {
 
     public static Map<String, String> playGame(Request req) {
         String gameId = req.splat()[0];
-        ChessGame game = req.session().attribute(gameId + "-game");
-        String from = req.queryParams("from");
-        String to = req.queryParams("to");
-        String move = "move " + from + " " + to;
+        ChessGame game = req.session().attribute(gameId + SESSION_ID);
+        String from = req.queryParams(FROM);
+        String to = req.queryParams(TO);
 
-        game.play(move);
+        game.play(from, to);
         CHESS_LOG_DAO.insertLog(from, to, gameId);
-        req.session().attribute(gameId + "-game", game);
+        req.session().attribute(gameId + SESSION_ID, game);
         return status(game);
     }
 

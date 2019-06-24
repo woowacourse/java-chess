@@ -5,6 +5,13 @@ import chess.domain.pieces.Piece;
 import java.util.Map;
 
 public class ChessGame {
+    private static final int COMMAND_POSITION = 0;
+    private static final int COMMAND_FROM_POSITION = 1;
+    private static final int COMMAND_TO_POSITION = 2;
+    private static final String MOVE_COMMAND = "move";
+    private static final String DELIMITER = " ";
+    private static final String X_AXIS_REFERENCE = "abcdefgh";
+    private static final int COMMAND_SIZE = 3;
     private Board board;
     private ChessTeam turn;
 
@@ -13,16 +20,21 @@ public class ChessGame {
         turn = ChessTeam.WHITE;
     }
 
+    public void play(String from, String to) {
+        String command = MOVE_COMMAND + DELIMITER + from + DELIMITER + to;
+        play(command);
+    }
+
     public void play(String input) {
-        String[] split = input.split(" ");
-        if (split.length != 3) {
+        String[] split = input.split(DELIMITER);
+        if (split.length != COMMAND_SIZE) {
             throw new IllegalArgumentException();
         }
-        if (!split[0].equals("move")) {
+        if (!split[COMMAND_POSITION].equals(MOVE_COMMAND)) {
             throw new IllegalArgumentException();
         }
 
-        board.play(parse(split[1]), parse(split[2]), turn);
+        board.play(parse(split[COMMAND_FROM_POSITION]), parse(split[COMMAND_TO_POSITION]), turn);
         turn = turn.change();
     }
 
@@ -35,9 +47,8 @@ public class ChessGame {
     }
 
     private Point parse(String destination) {
-        String axis = "abcdefgh";
-        int x = axis.indexOf(destination.charAt(0)) + 1;
-        int y = Integer.parseInt(String.valueOf(destination.charAt(1)));
+        int x = X_AXIS_REFERENCE.indexOf(destination.charAt(COMMAND_FROM_POSITION - 1)) + 1;
+        int y = Integer.parseInt(String.valueOf(destination.charAt(COMMAND_TO_POSITION - 1)));
         return Point.get(x, y);
     }
 
