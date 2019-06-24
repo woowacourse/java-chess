@@ -7,13 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Queen extends Piece {
-    private static final String NAME = "Q";
-    private static final double SCORE = 9;
-
     private final MoveRule rule;
 
-    public Queen(Aliance aliance) {
-        super(aliance);
+    public Queen(Aliance aliance, PieceValue pieceValue) {
+        super(aliance, pieceValue);
 
         List<Direction> possibleDirections = Arrays.asList(VerticalDirection.getInstance(), HorizonDirection.getInstance(),
                 RightDiagonalDirection.getInstance(), LeftDiagonalDirection.getInstance());
@@ -28,9 +25,10 @@ public class Queen extends Piece {
     @Override
     public String toString() {
         if (aliance == Aliance.BLACK) {
-            return NAME;
+            return pieceValue.getName();
         }
-        return NAME.toLowerCase();
+        return pieceValue.getName().toLowerCase();
+
     }
 }
 

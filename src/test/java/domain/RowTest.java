@@ -39,6 +39,4 @@ public class RowTest {
         Row row = Row.valueOf("1");
         assertThat(row.getDifference(Row.valueOf("5"))).isEqualTo(-4);
     }
-
-
 }

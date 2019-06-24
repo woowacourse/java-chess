@@ -9,13 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Bishop extends Piece {
-    private static final String NAME = "B";
-    private static final double SCORE = 3;
-
     private final MoveRule rule;
 
-    public Bishop(Aliance aliance) {
-        super(aliance);
+    public Bishop(Aliance aliance, PieceValue pieceValue) {
+        super(aliance, pieceValue);
 
         List<Direction> possibleDirections = Arrays.asList(RightDiagonalDirection.getInstance(), LeftDiagonalDirection.getInstance());
         this.rule = new MoveRule(possibleDirections, 7);
@@ -29,9 +26,9 @@ public class Bishop extends Piece {
     @Override
     public String toString() {
         if (aliance == Aliance.BLACK) {
-            return NAME;
+            return pieceValue.getName();
         }
-        return NAME.toLowerCase();
+        return pieceValue.getName().toLowerCase();
     }
 }
 

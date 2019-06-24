@@ -7,13 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Knight extends Piece {
-    private static final String NAME = "N";
-    private static final double SCORE = 2.5;
-
     private final MoveRule rule;
 
-    public Knight(Aliance aliance) {
-        super(aliance);
+    public Knight(Aliance aliance, PieceValue pieceValue) {
+        super(aliance, pieceValue);
 
         List<Direction> possibleDirections = Arrays.asList(HorizonRightKnightDirection.getInstance(), HorizonLeftKnightDirection.getInstance(),
                                                             VerticalRightKnightDirection.getInstance(), VerticalLeftKnightDirection.getInstance());
@@ -28,9 +25,9 @@ public class Knight extends Piece {
     @Override
     public String toString() {
         if (aliance == Aliance.BLACK) {
-            return NAME;
+            return pieceValue.getName();
         }
-        return NAME.toLowerCase();
+        return pieceValue.getName().toLowerCase();
     }
 }
 

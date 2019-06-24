@@ -10,15 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Pawn extends Piece {
-    private static final String NAME = "P";
-    private static final double SCORE = 1;
-
     private final MoveRule rule;
     private final MoveRule firstRule;
     private final MoveRule attactRule;
 
-    public Pawn(Aliance aliance) {
-        super(aliance);
+    public Pawn(Aliance aliance, PieceValue pieceValue) {
+        super(aliance, pieceValue);
 
         List<Direction> possibleDirections = Arrays.asList(VerticalDirection.getInstance());
         List<Direction> attackDirections = Arrays.asList(RightDiagonalDirection.getInstance(), LeftDiagonalDirection.getInstance());
@@ -60,9 +57,10 @@ public class Pawn extends Piece {
     @Override
     public String toString() {
         if (aliance == Aliance.BLACK) {
-            return NAME;
+            return pieceValue.getName();
         }
-        return NAME.toLowerCase();
+        return pieceValue.getName().toLowerCase();
     }
+
 }
 

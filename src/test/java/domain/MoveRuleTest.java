@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MoveRuleTest {
     @Test
-    void 불가능한_방향인_경우() {
+    void 불가능한_방향인_경우_예외_반환() {
         List<Direction> possibleDirection = Arrays.asList(HorizonDirection.getInstance(), VerticalDirection.getInstance());
         MoveRule moveRule = new MoveRule(possibleDirection, 2);
 
@@ -24,7 +24,7 @@ public class MoveRuleTest {
     }
 
     @Test
-    void 불가능한_이동_횟수인_경우() {
+    void 불가능한_이동_횟수인_경우_예외_반환() {
         List<Direction> possibleDirection = Arrays.asList(HorizonDirection.getInstance(), VerticalDirection.getInstance());
         MoveRule moveRule = new MoveRule(possibleDirection, 2);
 

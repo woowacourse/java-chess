@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DirectionTest {
@@ -26,7 +27,7 @@ public class DirectionTest {
     }
 
     @Test
-    void 위쪽방향_아래방향_장애물_있는_경우() {
+    void 위쪽방향_아래방향_장애물_있는_경우_예외_반환() {
         direction = VerticalDirection.getInstance();
         assertThrows(IllegalArgumentException.class, () -> direction.simulateUnitMove(board, Position.valueOf("b2"),true));
     }
@@ -39,6 +40,12 @@ public class DirectionTest {
     }
 
     @Test
+    void 오른쪽방향_왼쪽방향_장애물_있는_경우_예외_반환() {
+        direction = HorizonDirection.getInstance();
+        assertThrows(IllegalArgumentException.class, () -> direction.simulateUnitMove(board, Position.valueOf("b2"),true));
+    }
+
+    @Test
     void 오른대각선방향() {
         direction = RightDiagonalDirection.getInstance();
         assertThat(direction.simulateUnitMove(board, Position.valueOf("b2"),false)).isEqualTo(Position.valueOf("c3"));
@@ -46,10 +53,22 @@ public class DirectionTest {
     }
 
     @Test
+    void 오른대각선방향_장애물_있는_경우_예외_반환() {
+        direction = RightDiagonalDirection.getInstance();
+        assertThrows(IllegalArgumentException.class, () -> direction.simulateUnitMove(board, Position.valueOf("b2"),true));
+    }
+
+    @Test
     void 왼대각선방향() {
         direction = LeftDiagonalDirection.getInstance();
         assertThat(direction.simulateUnitMove(board, Position.valueOf("b2"),false)).isEqualTo(Position.valueOf("a3"));
         //assertThat(direction.simulateUnitMove(board, Position.valueOf("b2"),true)).isEqualTo(Position.valueOf("c1"));
+    }
+
+    @Test
+    void 왼대각선방향_장애물_있는_경우_예외_반환() {
+        direction = LeftDiagonalDirection.getInstance();
+        assertThrows(IllegalArgumentException.class, () -> direction.simulateUnitMove(board, Position.valueOf("b2"),true));
     }
 
     @Test
@@ -78,5 +97,11 @@ public class DirectionTest {
         direction = HorizonLeftKnightDirection.getInstance();
         assertThat(direction.simulateUnitMove(board, Position.valueOf("d2"),false)).isEqualTo(Position.valueOf("f3"));
         //assertThat(direction.simulateUnitMove(board, Position.valueOf("d4"),true)).isEqualTo(Position.valueOf("b3"));
+    }
+
+    @Test
+    void 나이트방향_중간에_장애물_있는_경우_확인() {
+        direction = VerticalRightKnightDirection.getInstance();
+        assertDoesNotThrow(() -> direction.simulateUnitMove(board, Position.valueOf("b1"),false));
     }
 }

@@ -28,7 +28,14 @@ public class Position {
     }
 
     public static Position valueOf(String position) {
+        checkValidPosition(position);
         return positions.get(position);
+    }
+
+    private static void checkValidPosition(String position) {
+        if (positions.get(position) == null) {
+            throw new IllegalArgumentException("유효하지 않은 위치입니다.");
+        }
     }
 
     public Position movePosition(int rowDistance, int columnDistance) {

@@ -16,12 +16,7 @@ public class BoardTest {
     }
 
     @Test
-    void 입력받은_위치가_유효한_위치가_아닌_경우(){
-        assertThrows(IllegalArgumentException.class, () ->board.movePiece("k3","a1"));
-    }
-
-    @Test
-    void 입력받은_위치에_말이있는_경우_말_반환_확인() {
+    void 입력받은_위치에_말이_있는_경우_말_반환_확인() {
         assertThat(board.pieceValueOf("a1").toString()).isEqualTo("r");
     }
 
@@ -36,27 +31,32 @@ public class BoardTest {
     }
 
     @Test
-    void 입력받은_위치에_말이_없는_경우_예외_반환_확인() {
+    void 입력받은_위치가_유효한_위치가_아닌_경우_예외_반환(){
+        assertThrows(IllegalArgumentException.class, () ->board.movePiece("k3","a1"));
+    }
+
+    @Test
+    void 입력받은_위치에_말이_없는_경우_예외_반환() {
         assertThrows(IllegalArgumentException.class, () -> board.movePiece("a4","a5"));
     }
 
     @Test
-    void 같은_팀이_아닌_경우_예외반환_확인() {
+    void 같은_팀이_아닌_경우_예외_반환() {
         assertThrows(IllegalArgumentException.class, () -> board.movePiece("a7","a6"));
     }
 
     @Test
-    void 폰_잘못된_방향인_경우_예외반환() {
+    void 폰_잘못된_방향인_경우_예외_반환() {
         assertThrows(IllegalArgumentException.class, () -> board.movePiece("a2","b4"));
     }
 
     @Test
-    void 폰_이동횟수_초과한_경우_예외반환() {
+    void 폰_이동횟수_초과한_경우_예외_반환() {
         assertThrows(IllegalArgumentException.class, () -> board.movePiece("a2","a5"));
     }
 
     @Test
-    void 폰_이동이_잘_되었는지_확인() {
+    void 폰_이동_확인() {
         board.movePiece("a2", "a3");
         assertThat(board.pieceValueOf("a3").toString()).isEqualTo("p");
     }
@@ -68,8 +68,21 @@ public class BoardTest {
     }
 
     @Test
-    void 나이트_이동이_잘_되는지_확인() {
+    void 나이트_이동_확인() {
         board.movePiece("b1", "c3");
         assertThat(board.pieceValueOf("c3").toString()).isEqualTo("n");
+    }
+
+    @Test
+    void 도착지에_같은팀_말이_있는_경우_예외_반환() {
+        assertThrows(IllegalArgumentException.class, ()->board.movePiece("b1", "d2"));
+    }
+
+    @Test
+    void 도착지에_다른팀_말이_있는_경우_확인() {
+        board.movePiece("b1","c3");
+        board.movePiece("c3","d5");
+        board.movePiece("d5","e7");
+        assertThat(board.pieceValueOf("e7").toString()).isEqualTo("n");
     }
 }

@@ -7,13 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends Piece {
-    private static final String NAME = "R";
-    private static final double SCORE = 5;
-
     private final MoveRule rule;
 
-    public Rook(Aliance aliance) {
-        super(aliance);
+    public Rook(Aliance aliance, PieceValue pieceValue) {
+        super(aliance, pieceValue);
 
         List<Direction> possibleDirections = Arrays.asList(VerticalDirection.getInstance(), HorizonDirection.getInstance());
         this.rule = new MoveRule(possibleDirections, 7);
@@ -24,13 +21,13 @@ public class Rook extends Piece {
         rule.judge(navigator);
     }
 
-
     @Override
     public String toString() {
         if (aliance == Aliance.BLACK) {
-            return NAME;
+            return pieceValue.getName();
         }
-        return NAME.toLowerCase();
+        return pieceValue.getName().toLowerCase();
     }
+
 }
 
