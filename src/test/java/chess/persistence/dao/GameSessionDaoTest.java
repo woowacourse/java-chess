@@ -16,30 +16,26 @@ public class GameSessionDaoTest {
 
     @BeforeEach
     void init() {
-        dao = new GameSessionDao(new DataSourceFactory().createDataSource());
+        dao = new GameSessionDao(DataSourceFactory.getInstance().createDataSource());
     }
 
     @Test
     void insertAndFind() throws SQLException {
-        GameSessionDto sess = new GameSessionDto();
-        sess.setTitle("some sess");
-        sess.setState(GameResult.KEEP.name());
-        long insertedId = dao.addSession(sess);
-        GameSessionDto found = dao.findById(insertedId).get();
+        GameSessionDto sess = GameSessionDto.of(0, GameResult.KEEP.name(), "some sess");
+        sess.setId(dao.addSession(sess));
+        GameSessionDto found = dao.findById(sess.getId()).get();
         assertThat(found.getTitle()).isEqualTo(sess.getTitle());
         assertThat(found.getState()).isEqualTo(sess.getState());
-        dao.deleteById(insertedId);
+        dao.deleteById(sess.getId());
     }
 
     @Test
     void findByTitle() throws SQLException {
-        GameSessionDto sess = new GameSessionDto();
-        sess.setTitle("some other sess");
-        sess.setState(GameResult.KEEP.name());
-        long insertedId = dao.addSession(sess);
+        GameSessionDto sess = GameSessionDto.of(0, GameResult.KEEP.name(), "some other sess");
+        sess.setId(dao.addSession(sess));
         Optional<GameSessionDto> maybeFound = dao.findByTitle("some other sess");
         assertThat(maybeFound.isPresent()).isTrue();
-        dao.deleteById(insertedId);
+        dao.deleteById(sess.getId());
     }
 
     @Test
@@ -62,5 +58,6 @@ public class GameSessionDaoTest {
         sess.setState(GameResult.BLACK_WIN.name());
         dao.updateSession(sess);
         assertThat(dao.findById(sess.getId()).get().getState()).isEqualTo(GameResult.BLACK_WIN.name());
+        dao.deleteById(sess.getId());
     }
 }

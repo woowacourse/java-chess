@@ -20,7 +20,7 @@ public class GameServiceImpl implements GameService {
     private BoardStateDao boardStateDao;
 
     public GameServiceImpl() {
-        DataSource ds = new DataSourceFactory().createDataSource();
+        DataSource ds = DataSourceFactory.getInstance().createDataSource();
         sessionDao = new GameSessionDao(ds);
         boardStateDao = new BoardStateDao(ds);
     }

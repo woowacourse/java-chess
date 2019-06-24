@@ -140,7 +140,7 @@ public class ChessGameController {
                     .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다: " + req.queryParams("from"))));
             resMap = ResultState.OK.createResMap("");
             resMap.put("movableCoordinates", coords);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             resMap = ResultState.FAIL.createResMap("숫자로 변환할 수 없는 인자가 있습니다.");
         } catch (IllegalArgumentException e) {
             resMap = ResultState.FAIL.createResMap(e.getMessage());

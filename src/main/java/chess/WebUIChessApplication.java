@@ -8,6 +8,7 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.Collections;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -17,6 +18,7 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().create();
 
+        staticFiles.location("/public");
         // AJAX 요청 시 CORS 적용
         options("/*", WebUIChessApplication::cors);
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
@@ -27,6 +29,7 @@ public class WebUIChessApplication {
         get("/api/game/movable", ChessGameController::movableCoordinates, gson::toJson);
         put("/api/game/move", ChessGameController::movePiece, gson::toJson);
 
+        get("/*", (req, res) -> render(Collections.emptyMap(), "index.html"));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

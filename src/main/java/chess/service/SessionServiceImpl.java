@@ -21,7 +21,7 @@ public class SessionServiceImpl implements SessionService {
     private BoardStateDao boardStateDao;
 
     public SessionServiceImpl() {
-        DataSource ds = new DataSourceFactory().createDataSource();
+        DataSource ds = DataSourceFactory.getInstance().createDataSource();
         gameSessionDao = new GameSessionDao(ds);
         boardStateDao = new BoardStateDao(ds);
     }
@@ -40,23 +40,22 @@ public class SessionServiceImpl implements SessionService {
         return null;
     }
 
-    private void createBoardState(AbstractBoardStateFactory boardStateFactory, long roomId) {
+    private void createBoardState(AbstractBoardStateFactory boardStateFactory, long sessionId) {
         boardStateFactory.create().entryStream()
             .filter(entry -> entry.getValue().getType() != PieceType.NONE)
             .map(entry -> {
                 BoardStateDto dto = new BoardStateDto();
-                dto.setGameSessionId(roomId);
                 dto.setCoordX(entry.getKey().getX().getSymbol());
                 dto.setCoordY(entry.getKey().getY().getSymbol());
                 dto.setType(entry.getValue().getType().name());
                 return dto;
             })
-            .forEach(this::tryInsertBoardState);
+            .forEach(dto -> tryInsertBoardState(dto, sessionId));
     }
 
-    private void tryInsertBoardState(BoardStateDto dto) {
+    private void tryInsertBoardState(BoardStateDto dto, long sessionId) {
         try {
-            boardStateDao.addState(dto);
+            boardStateDao.addState(dto, sessionId);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -51,11 +51,11 @@ public class GameSessionDao {
     }
 
     private GameSessionDto mapResult(ResultSet rs) throws SQLException {
-        GameSessionDto sess = new GameSessionDto();
-        sess.setId(rs.getLong("id"));
-        sess.setTitle(rs.getString("title"));
-        sess.setState(rs.getString("state"));
-        return sess;
+        return GameSessionDto.of(
+            rs.getLong("id"),
+            rs.getString("state"),
+            rs.getString("title")
+        );
     }
 
     public Optional<GameSessionDto> findByTitle(String title) throws SQLException {
@@ -94,7 +94,7 @@ public class GameSessionDao {
 
     public int updateSession(GameSessionDto sess) throws SQLException {
         try (Connection conn = dataSource.getConnection();
-        PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.UPDATE)) {
+             PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.UPDATE)) {
             query.setString(1, sess.getTitle());
             query.setString(2, sess.getState());
             query.setLong(3, sess.getId());

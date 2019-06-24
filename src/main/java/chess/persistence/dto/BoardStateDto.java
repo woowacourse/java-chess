@@ -2,10 +2,18 @@ package chess.persistence.dto;
 
 public class BoardStateDto {
     private long id;
-    private long gameSessionId;
     private String type;
     private String coordX;
     private String coordY;
+
+    public static BoardStateDto of(long id, String type, String coordX, String coordY) {
+        BoardStateDto dto = new BoardStateDto();
+        dto.setId(id);
+        dto.setType(type);
+        dto.setCoordX(coordX);
+        dto.setCoordY(coordY);
+        return dto;
+    }
 
     public long getId() {
         return id;
@@ -13,14 +21,6 @@ public class BoardStateDto {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getGameSessionId() {
-        return gameSessionId;
-    }
-
-    public void setGameSessionId(long gameSessionId) {
-        this.gameSessionId = gameSessionId;
     }
 
     public String getType() {

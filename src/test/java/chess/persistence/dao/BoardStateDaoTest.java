@@ -24,51 +24,35 @@ public class BoardStateDaoTest {
 
     @BeforeEach
     void init() {
-        DataSource ds = new DataSourceFactory().createDataSource();
+        DataSource ds = DataSourceFactory.getInstance().createDataSource();
         boardStateDao = new BoardStateDao(ds);
         gameSessionDao = new GameSessionDao(ds);
     }
 
     @Test
     void insertAndFindAndDelete() throws SQLException {
-        GameSessionDto sess = new GameSessionDto();
-        sess.setTitle("room for board state insert test");
-        sess.setState(GameResult.KEEP.name());
+        GameSessionDto sess = GameSessionDto.of(0, GameResult.KEEP.name(), "room1");
         sess.setId(gameSessionDao.addSession(sess));
-        BoardStateDto state = new BoardStateDto();
-        state.setGameSessionId(sess.getId());
-        state.setType(PieceType.ROOK_WHITE.name());
-        state.setCoordX(CoordinateX.B.getSymbol());
-        state.setCoordY(CoordinateY.RANK_4.getSymbol());
-        long insertedId = boardStateDao.addState(state);
-        BoardStateDto found = boardStateDao.findById(insertedId).get();
+        BoardStateDto state = BoardStateDto.of(0, PieceType.ROOK_WHITE.name(), CoordinateX.B.getSymbol(), CoordinateY.RANK_4.getSymbol());
+        state.setId(boardStateDao.addState(state, sess.getId()));
+        BoardStateDto found = boardStateDao.findById(state.getId()).get();
         assertThat(found.getType()).isEqualTo(state.getType());
         assertThat(found.getCoordX()).isEqualTo(state.getCoordX());
         assertThat(found.getCoordY()).isEqualTo(state.getCoordY());
-        assertThat(boardStateDao.deleteById(insertedId)).isEqualTo(1);
-        assertThat(boardStateDao.findById(insertedId).isPresent()).isFalse();
-        boardStateDao.deleteById(insertedId);
+        assertThat(boardStateDao.deleteById(state.getId())).isEqualTo(1);
+        assertThat(boardStateDao.findById(state.getId()).isPresent()).isFalse();
+        boardStateDao.deleteById(state.getId());
         gameSessionDao.deleteById(sess.getId());
     }
 
     @Test
     void findByRoomId() throws SQLException {
-        GameSessionDto sess = new GameSessionDto();
-        sess.setTitle("room for find board states test");
-        sess.setState(GameResult.KEEP.name());
+        GameSessionDto sess = GameSessionDto.of(0, GameResult.KEEP.name(), "room2");
+        BoardStateDto state1 = BoardStateDto.of(0, PieceType.ROOK_WHITE.name(), "b", "2");
+        BoardStateDto state2 = BoardStateDto.of(0, PieceType.ROOK_BLACK.name(), "a", "8");
         sess.setId(gameSessionDao.addSession(sess));
-        BoardStateDto state1 = new BoardStateDto();
-        state1.setGameSessionId(sess.getId());
-        state1.setType(PieceType.ROOK_WHITE.name());
-        state1.setCoordX("b");
-        state1.setCoordY("2");
-        BoardStateDto state2 = new BoardStateDto();
-        state2.setType(PieceType.ROOK_BLACK.name());
-        state2.setCoordX("a");
-        state2.setCoordY("8");
-        state2.setGameSessionId(sess.getId());
-        state1.setId(boardStateDao.addState(state1));
-        state2.setId(boardStateDao.addState(state2));
+        state1.setId(boardStateDao.addState(state1, sess.getId()));
+        state2.setId(boardStateDao.addState(state2, sess.getId()));
         List<BoardStateDto> founds = boardStateDao.findBySessionId(sess.getId());
         assertThat(founds).hasSize(2);
         gameSessionDao.deleteById(sess.getId());
@@ -76,20 +60,13 @@ public class BoardStateDaoTest {
 
     @Test
     void updateCoordById() throws SQLException {
-        GameSessionDto sess = new GameSessionDto();
-        sess.setTitle("room for update coordinate test");
-        sess.setState(GameResult.KEEP.name());
+        GameSessionDto sess = GameSessionDto.of(0, GameResult.KEEP.name(), "room3");
         sess.setId(gameSessionDao.addSession(sess));
-        BoardStateDto state = new BoardStateDto();
-        state.setType(PieceType.ROOK_WHITE.name());
-        state.setCoordX(CoordinateX.B.getSymbol());
-        state.setCoordY(CoordinateY.RANK_4.getSymbol());
-        state.setGameSessionId(sess.getId());
-        long insertedId = boardStateDao.addState(state);
-        state.setId(insertedId);
-        state.setCoordY(CoordinateY.RANK_6.getSymbol());
+        BoardStateDto state = BoardStateDto.of(0, PieceType.ROOK_WHITE.name(), "b", "2");
+        state.setId(boardStateDao.addState(state, sess.getId()));
+        state.setCoordY("4");
         assertThat(boardStateDao.updateCoordById(state)).isEqualTo(1);
-        BoardStateDto found = boardStateDao.findById(insertedId).get();
+        BoardStateDto found = boardStateDao.findById(state.getId()).get();
         assertThat(found.getType()).isEqualTo(state.getType());
         assertThat(found.getCoordX()).isEqualTo(state.getCoordX());
         assertThat(found.getCoordY()).isEqualTo(state.getCoordY());
@@ -98,20 +75,13 @@ public class BoardStateDaoTest {
 
     @Test
     void findByRoomIdAndCoordinate() throws SQLException {
-        GameSessionDto sess = new GameSessionDto();
-        sess.setTitle("room for delete state test");
-        sess.setState(GameResult.KEEP.name());
+        GameSessionDto sess = GameSessionDto.of(0, GameResult.KEEP.name(), "room4");
         sess.setId(gameSessionDao.addSession(sess));
-        BoardStateDto state = new BoardStateDto();
-        state.setType(PieceType.ROOK_WHITE.name());
-        state.setCoordX(CoordinateX.B.getSymbol());
-        state.setCoordY(CoordinateY.RANK_4.getSymbol());
-        state.setGameSessionId(sess.getId());
-        long insertedId = boardStateDao.addState(state);
-        state.setId(insertedId);
+        BoardStateDto state = BoardStateDto.of(0, PieceType.ROOK_WHITE.name(), "b", "4");
+        state.setId(boardStateDao.addState(state, sess.getId()));
         Optional<BoardStateDto> found = boardStateDao.findByRoomIdAndCoordinate(sess.getId(), state.getCoordX(), state.getCoordY());
         assertThat(found.isPresent()).isTrue();
-        assertThat(found.get().getId()).isEqualTo(insertedId);
+        assertThat(found.get().getId()).isEqualTo(state.getId());
         gameSessionDao.deleteById(sess.getId());
     }
 }

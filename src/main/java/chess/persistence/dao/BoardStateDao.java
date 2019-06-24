@@ -16,7 +16,7 @@ public class BoardStateDao {
         this.dataSource = ds;
     }
 
-    public long addState(BoardStateDto state) throws SQLException {
+    public long addState(BoardStateDto state, long sessionId) throws SQLException {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             conn.setAutoCommit(false);
@@ -25,7 +25,7 @@ public class BoardStateDao {
             query.setString(3, state.getCoordY());
             query.executeUpdate();
             state.setId(getGeneratedKey(query));
-            addPlayIn(state, conn);
+            addPlayIn(state, sessionId, conn);
             conn.commit();
             return state.getId();
         }
@@ -38,9 +38,9 @@ public class BoardStateDao {
         }
     }
 
-    private void addPlayIn(BoardStateDto dto, Connection conn) throws SQLException {
+    private void addPlayIn(BoardStateDto dto, long sessionId, Connection conn) throws SQLException {
         try (PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.INSERT_PLAY_IN)) {
-            query.setLong(1, dto.getGameSessionId());
+            query.setLong(1, sessionId);
             query.setLong(2, dto.getId());
             query.executeUpdate();
         }
@@ -65,13 +65,12 @@ public class BoardStateDao {
     }
 
     private BoardStateDto mapResult(ResultSet rs) throws SQLException {
-        BoardStateDto state = new BoardStateDto();
-        state.setId(rs.getLong("id"));
-        state.setType(rs.getString("piece_type"));
-        state.setCoordX(rs.getString("loc_x"));
-        state.setCoordY(rs.getString("loc_y"));
-        state.setGameSessionId(rs.getLong("session_id"));
-        return state;
+        return BoardStateDto.of(
+            rs.getLong("id"),
+            rs.getString("piece_type"),
+            rs.getString("loc_x"),
+            rs.getString("loc_y")
+        );
     }
 
     public List<BoardStateDto> findBySessionId(long sessionId) throws SQLException {
@@ -123,17 +122,17 @@ public class BoardStateDao {
     private static class BoardStateDaoSql {
         private static final String INSERT = "INSERT INTO board_state(piece_type, loc_x, loc_y) VALUES(?, ?, ?)";
         private static final String INSERT_PLAY_IN = "INSERT INTO play_in(session_id, board_state_id) VALUES(?, ?)";
-        private static final String SELECT_BY_ID = "SELECT bs.id, loc_x, loc_y, piece_type, bs.reg_date, session_id FROM board_state bs\n" +
+        private static final String SELECT_BY_ID = "SELECT bs.id, loc_x, loc_y, piece_type, bs.reg_date FROM board_state bs\n" +
             "JOIN play_in p\n" +
             "ON bs.id = p.board_state_id\n" +
             "WHERE bs.id=?";
-        private static final String SELECT_BY_SESSION_ID = "SELECT bs.id, loc_x, loc_y, piece_type, bs.reg_date, session_id FROM board_state bs\n" +
+        private static final String SELECT_BY_SESSION_ID = "SELECT bs.id, loc_x, loc_y, piece_type, bs.reg_date FROM board_state bs\n" +
             "JOIN play_in p\n" +
             "ON bs.id = p.board_state_id\n" +
             "WHERE session_id=?";
         private static final String UPDATE_COORD_BY_ID = "UPDATE board_state SET loc_x=?, loc_y=? WHERE id=?";
         private static final String DELETE_BY_ID = "DELETE FROM board_state WHERE id=?";
-        private static final String SELECT_BY_SESSION_ID_AND_COORDINATE = "SELECT bs.id, loc_x, loc_y, piece_type, bs.reg_date, session_id FROM board_state bs\n" +
+        private static final String SELECT_BY_SESSION_ID_AND_COORDINATE = "SELECT bs.id, loc_x, loc_y, piece_type, bs.reg_date FROM board_state bs\n" +
             "JOIN play_in p\n" +
             "ON bs.id = p.board_state_id\n" +
             "WHERE SESSION_id=? AND\n" +

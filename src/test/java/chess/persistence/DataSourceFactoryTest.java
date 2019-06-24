@@ -8,6 +8,6 @@ public class DataSourceFactoryTest {
 
     @Test
     void create() {
-        assertDoesNotThrow(() -> new DataSourceFactory().createDataSource());
+        assertDoesNotThrow(() -> DataSourceFactory.getInstance().createDataSource());
     }
 }

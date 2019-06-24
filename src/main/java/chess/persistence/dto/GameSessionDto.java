@@ -5,6 +5,14 @@ public class GameSessionDto {
     private String state;
     private String title;
 
+    public static GameSessionDto of(long id, String state, String title) {
+        GameSessionDto dto = new GameSessionDto();
+        dto.setId(id);
+        dto.setState(state);
+        dto.setTitle(title);
+        return dto;
+    }
+
     public long getId() {
         return id;
     }
