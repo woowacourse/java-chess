@@ -20,4 +20,9 @@ public class Rook extends Piece {
         }
         return false;
     }
+
+    @Override
+    public String pieceToString() {
+        return isWhite() ? "r" : "R";
+    }
 }

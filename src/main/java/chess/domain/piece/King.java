@@ -24,4 +24,9 @@ public class King extends Piece {
         }
         return false;
     }
+
+    @Override
+    public String pieceToString() {
+        return isWhite() ? "k" : "K";
+    }
 }

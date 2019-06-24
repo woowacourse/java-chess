@@ -16,4 +16,9 @@ public class Bishop extends Piece {
         }
         return false;
     }
+
+    @Override
+    public String pieceToString() {
+        return isWhite() ? "b" : "B";
+    }
 }

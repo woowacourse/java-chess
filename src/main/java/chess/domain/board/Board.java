@@ -1,14 +1,17 @@
 package chess.domain.board;
 
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.IntStream;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.*;
 
 public class Board {
+    private static final int BOUNDARY = 8;
+    private static final String EMPTY = ".";
     private Map<Point, Optional<Piece>> points;
     private boolean isKingDead;
 
@@ -30,8 +33,13 @@ public class Board {
 
         DirectionType direction = DirectionType.valueOf(prev, next);
 
-        if (!DirectionType.getKnightDirection().contains(direction)) {
-            int size = next.maxAbsoluteValue(prev);
+
+        if (!PieceType.of(prevPiece.get().pieceToString()).isKnight()) {
+            int size = next.calculateMaxAbsoluteDistance(prev);
+
+//            IntStream.range(1, size - 1)
+//                    .mapToObj(i -> prev.moveOneStep(direction, i))
+//                    .anyMatch(movedPoint -> points.get(movedPoint).isPresent());
 
             for (int i = 1; i < size - 1; i++) {
                 Point moving = prev.moveOneStep(direction, i);
@@ -41,9 +49,8 @@ public class Board {
             }
         }
 
-        // TODO pawn
         Optional<Piece> nextPiece = points.get(next);
-        if (nextPiece.isPresent() && prevPiece.get() instanceof Pawn) {
+        if (nextPiece.isPresent() && PieceType.of(prevPiece.get().pieceToString()).isPawn()) {
             // TODO: 2019-06-22 대각선 -> 직선으로
             if (!DirectionType.diagonalDirection().contains(direction)) {
                 return false;
@@ -59,7 +66,7 @@ public class Board {
     public void move(Point prev, Point next) {
         if (canMove(prev, next) && points.get(prev).get().isMovable(prev, next)) {
             Optional<Piece> nextPiece = points.get(next);
-            if (nextPiece.isPresent() && nextPiece.get() instanceof King) {
+            if (nextPiece.isPresent() && PieceType.of(nextPiece.get().pieceToString()).isKing()) {
                 isKingDead = true;
             }
             points.put(next, points.get(prev));
@@ -69,12 +76,51 @@ public class Board {
 
 
     public boolean isOwnPiece(Point prev, PlayerType playerType) {
-        return points.get(prev).orElseThrow(IllegalArgumentException::new).isSamePlayerType(playerType);
+        return points.get(prev)
+                .orElseThrow(IllegalArgumentException::new)
+                .isSamePlayerType(playerType);
     }
 
     public boolean isKingDead() {
         return isKingDead;
     }
 
+    public double calculateScore(PlayerType playerType) {
+        double score = 0;
+        for (int i = 0; i < BOUNDARY; i++) {
+            int row = i;
+            Map<PieceType, Long> columnScore = IntStream.range(0, BOUNDARY)
+                    .mapToObj(column -> Point.of(row, column))
+                    .map(points::get)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .filter(piece -> piece.isSamePlayerType(playerType))
+                    .map(Piece::pieceToString)
+                    .map(PieceType::of)
+                    .collect(groupingBy(identity(),
+                            () -> new EnumMap<>(PieceType.class),
+                            counting()));
 
+            score += columnScore.keySet().stream()
+                    .mapToDouble(key -> key.calculateScore(columnScore.get(key)))
+                    .sum();
+        }
+
+        return score;
+    }
+
+    // TODO: 2019-06-23 Rename this method!!
+    public List<String> mappingBoardToString() {
+        return IntStream.range(0, BOUNDARY)
+                .mapToObj(column -> IntStream.range(0, BOUNDARY)
+                        .mapToObj(row -> Point.of(row, column))
+                        .map(points::get)
+                        .map(this::pieceToString)
+                        .collect(joining()))
+                .collect(toList());
+    }
+
+    private String pieceToString(Optional<Piece> piece) {
+        return piece.isPresent() ? piece.get().pieceToString() : EMPTY;
+    }
 }

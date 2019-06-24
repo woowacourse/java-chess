@@ -11,16 +11,7 @@ public enum DirectionType {
     SOUTH(0, 1),
     SOUTHWEST(-1, 1),
     NORTH(0, -1),
-    NORTHEAST(1, -1),
-
-    NNE(1, 2),
-    NNW(-1, 2),
-    SSE(1, -2),
-    SSW(-1, -2),
-    EEN(2, 1),
-    EES(2, -1),
-    WWN(-2, 1),
-    WWS(-2, -1);
+    NORTHEAST(1, -1);
 
     private int xDegree;
     private int yDegree;
@@ -33,17 +24,13 @@ public enum DirectionType {
     public static DirectionType valueOf(Point prev, Point next) {
         int xDistance = next.xDistance(prev);
         int yDistance = next.yDistance(prev);
-        int size = prev.maxAbsoluteValue(next);
+        int size = prev.calculateMaxAbsoluteDistance(next);
 
         return Arrays.stream(values())
                 .filter(value -> value.xDegree == xDistance / size)
                 .filter(value -> value.yDegree == yDistance / size)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
-    }
-
-    public static List<DirectionType> getKnightDirection() {
-        return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }
 
     public static List<DirectionType> diagonalDirection() {

@@ -25,7 +25,7 @@ public class BoardTest {
                 "........",
                 "........",
                 "pppppppp",
-                "rnbkqbkr");
+                "rnbkqbnr");
 
         arrange = Arrays.asList(
                 "....R...",
@@ -117,5 +117,33 @@ public class BoardTest {
         Board board = BoardFactory.create(arrange);
         board.move(Point.of(4, 3), Point.of(4, 6));
         assertThat(board.isKingDead()).isFalse();
+    }
+
+    @Test
+    void test() {
+        List<String> list = Arrays.asList(
+                "..Kk....",
+                "........",
+                "........",
+                "........",
+                "...P....",
+                "....p...",
+                "........",
+                "........");
+        Board board = BoardFactory.create(list);
+        board.move(Point.of(4,5), Point.of(3, 4));
+        board.mappingBoardToString().forEach(System.out::println);
+    }
+
+    @Test
+    void calculateScore() {
+        Board board = BoardFactory.create(basicArrange);
+        assertThat(board.calculateScore(PlayerType.WHITE)).isEqualTo(38);
+    }
+
+    @Test
+    void convert() {
+        Board board = BoardFactory.create(basicArrange);
+        board.mappingBoardToString().forEach(System.out::println);
     }
 }

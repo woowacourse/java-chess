@@ -24,4 +24,9 @@ public class Knight extends Piece {
         }
         return false;
     }
+
+    @Override
+    public String pieceToString() {
+        return isWhite() ? "n" : "N";
+    }
 }

@@ -42,7 +42,7 @@ public class Point {
         return ((double) this.y.calculateDistance(end.y)) / ((double) this.x.calculateDistance(end.x));
     }
 
-    public int maxAbsoluteValue(Point end) {
+    public int calculateMaxAbsoluteDistance(Point end) {
         int xDistance = this.xDistance(end);
         int yDistance = this.yDistance(end);
         return (xDistance != 0) ? Math.abs(xDistance) : Math.abs(yDistance);

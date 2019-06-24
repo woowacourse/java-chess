@@ -65,6 +65,7 @@ public class DirectionTypeTest {
 
     @Test
     void valueOf_NotExistValue_IllegalArgumentException() {
-        assertThatThrownBy(() -> valueOf(Point.of(1, 1), Point.of(2, 3))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> valueOf(Point.of(1, 1), Point.of(2, 4)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
