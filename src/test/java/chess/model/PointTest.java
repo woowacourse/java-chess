@@ -37,4 +37,58 @@ public class PointTest {
         int actual = source.calculateYsDiff(target);
         assertThat(actual).isEqualTo(4);
     }
+
+    @Test
+    void N_움직임() {
+        Point source = new Point(3, 3);
+        assertThat(source.moveOneStep(Direction.N)).isEqualTo(new Point(3, 4));
+    }
+
+    @Test
+    void NE_움직임() {
+        Point source = new Point(3, 3);
+        assertThat(source.moveOneStep(Direction.NE)).isEqualTo(new Point(4, 4));
+    }
+
+    @Test
+    void E_움직임() {
+        Point source = new Point(3, 3);
+        assertThat(source.moveOneStep(Direction.E)).isEqualTo(new Point(4, 3));
+    }
+
+    @Test
+    void SE_움직임() {
+        Point source = new Point(3, 3);
+        assertThat(source.moveOneStep(Direction.SE)).isEqualTo(new Point(4, 2));
+    }
+
+    @Test
+    void S_움직임() {
+        Point source = new Point(3, 3);
+        assertThat(source.moveOneStep(Direction.S)).isEqualTo(new Point(3, 2));
+    }
+
+    @Test
+    void SW_움직임() {
+        Point source = new Point(3, 3);
+        assertThat(source.moveOneStep(Direction.SW)).isEqualTo(new Point(2, 2));
+    }
+
+    @Test
+    void W_움직임() {
+        Point source = new Point(3, 3);
+        assertThat(source.moveOneStep(Direction.W)).isEqualTo(new Point(2, 3));
+    }
+
+    @Test
+    void NW_움직임() {
+        Point source = new Point(3, 3);
+        assertThat(source.moveOneStep(Direction.NW)).isEqualTo(new Point(2, 4));
+    }
+
+    @Test
+    void UNDEFINED_움직임() {
+        Point source = new Point(3, 3);
+        assertThat(source.moveOneStep(Direction.UNDEFINED)).isEqualTo(new Point(3, 3));
+    }
 }

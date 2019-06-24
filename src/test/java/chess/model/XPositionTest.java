@@ -26,7 +26,7 @@ public class XPositionTest {
         XPosition source = XPosition.valueOf(3);
         XPosition target = XPosition.valueOf(6);
 
-        int actual = source.calculateXsDiff(target);
+        int actual = source.calculateDiff(target);
         assertThat(actual).isEqualTo(3);
     }
 }

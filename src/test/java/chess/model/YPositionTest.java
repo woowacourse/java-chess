@@ -26,7 +26,7 @@ public class YPositionTest {
         YPosition source = YPosition.valueOf(1);
         YPosition target = YPosition.valueOf(7);
 
-        int actual = source.calculateYsDiff(target);
+        int actual = source.calculateDiff(target);
         assertThat(actual).isEqualTo(6);
     }
 }

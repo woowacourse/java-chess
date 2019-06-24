@@ -27,7 +27,7 @@ public class XPosition {
         return xPositions.get(xPos);
     }
 
-    public int calculateXsDiff(final XPosition target) {
+    public int calculateDiff(final XPosition target) {
         return Math.abs(this.xPosition - target.xPosition);
     }
 
@@ -44,4 +44,11 @@ public class XPosition {
         return Objects.hash(xPosition);
     }
 
+    public int calculateSub(final XPosition another) {
+        return xPosition - another.xPosition;
+    }
+
+    public XPosition add(final int deltaX) {
+        return XPosition.valueOf(xPosition + deltaX);
+    }
 }

@@ -1,15 +1,23 @@
 package chess.model;
 
 public enum Direction {
-    E,
-    NE,
-    N,
-    NW,
-    W,
-    SW,
-    S,
-    SE,
-    UNDEFINED;
+    E(1, 0),
+    NE(1, 1),
+    N(0, 1),
+    NW(-1, 1),
+    W(-1, 0),
+    SW(-1, -1),
+    S(0, -1),
+    SE(1, -1),
+    UNDEFINED(0, 0);
+
+    private final int deltaX;
+    private final int deltaY;
+
+    Direction(int deltaX, int deltaY) {
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
+    }
 
     public static Direction valueOf (Point source, Point target) {
         String result = "";
@@ -37,5 +45,13 @@ public enum Direction {
         }
 
         return Direction.valueOf(result);
+    }
+
+    public int getDeltaX() {
+        return deltaX;
+    }
+
+    public int getDeltaY() {
+        return deltaY;
     }
 }

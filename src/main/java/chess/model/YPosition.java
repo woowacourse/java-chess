@@ -27,7 +27,7 @@ public class YPosition {
         return yPositions.get(yPosition);
     }
 
-    public int calculateYsDiff(final YPosition target) {
+    public int calculateDiff(final YPosition target) {
         return Math.abs(this.yPosition - target.yPosition);
     }
 
@@ -44,4 +44,11 @@ public class YPosition {
         return Objects.hash(yPosition);
     }
 
+    public int calculateSub(final YPosition another) {
+        return yPosition - another.yPosition;
+    }
+
+    public YPosition add(final int deltaY) {
+        return YPosition.valueOf(yPosition + deltaY);
+    }
 }
