@@ -1,15 +1,16 @@
 package chess.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Game {
 	private final Board board;
-	private Piece.Color color;
+	private Piece.Color currentColor;
 
 	private Game(final Board board) {
 		this.board = board;
-		this.color = Piece.Color.WHITE;
+		this.currentColor = Piece.Color.WHITE;
 	}
 
 	public static Game from(Board board) {
@@ -17,19 +18,19 @@ public class Game {
 	}
 
 	public boolean action(Position origin, Position target) {
-		if (board.isSameColor(origin, color) && board.action(origin, target)) {
-			color = changeColor();
+		if (board.isSameColor(origin, currentColor) && board.action(origin, target)) {
+			currentColor = changeColor();
 			return true;
 		}
 		return false;
 	}
 
 	private Piece.Color changeColor() {
-		return color == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
+		return currentColor == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
 	}
 
 	public Piece.Color currentColor() {
-		return color;
+		return currentColor;
 	}
 
 	public double scoreOfColor(final Piece.Color color) {
@@ -38,7 +39,7 @@ public class Game {
 	}
 
 	public List<Square> values() {
-		return board.values();
+		return new ArrayList<>(board.values());
 	}
 
 	@Override
@@ -47,11 +48,11 @@ public class Game {
 		if (o == null || getClass() != o.getClass()) return false;
 		Game game = (Game) o;
 		return Objects.equals(board, game.board) &&
-				color == game.color;
+				currentColor == game.currentColor;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(board, color);
+		return Objects.hash(board, currentColor);
 	}
 }

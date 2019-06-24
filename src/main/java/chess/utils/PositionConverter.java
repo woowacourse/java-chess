@@ -1,10 +1,10 @@
 package chess.utils;
 
 import chess.domain.Position;
+import chess.exception.PositionConvertException;
 
 public class PositionConverter {
-
-	public static final String DELIMITER = "";
+	private static final String DELIMITER = "";
 
 	public static Position convert(final String input) {
 		String[] position = input.split(DELIMITER);
