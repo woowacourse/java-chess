@@ -10,7 +10,30 @@ import java.util.Map;
 public class ResultCounter {
     private final Map<AbstractPiece, Count> resultCounter;
 
-    private List<AbstractPiece> pieces(Team team) {
+    private ResultCounter(final Map<AbstractPiece, Count> resultCounter) {
+        this.resultCounter = resultCounter;
+    }
+
+    public static ResultCounter init() {
+        Map<AbstractPiece, Count> resultCounter = new HashMap<>();
+        pieces(Team.WHITE).forEach(piece -> resultCounter.put(piece, new Count()));
+        pieces(Team.BLACK).forEach(piece -> resultCounter.put(piece, new Count()));
+
+        return new ResultCounter(resultCounter);
+    }
+
+    public static ResultCounter load(Map<AbstractPiece, Count> existCounter) {
+        Map<AbstractPiece, Count> resultCounter = new HashMap<>(existCounter);
+        pieces(Team.WHITE).stream()
+                .filter(piece -> !resultCounter.containsKey(piece))
+                .forEach(piece -> resultCounter.put(piece, new Count()));
+        pieces(Team.BLACK).stream()
+                .filter(piece -> !resultCounter.containsKey(piece))
+                .forEach(piece -> resultCounter.put(piece, new Count()));
+        return new ResultCounter(resultCounter);
+    }
+
+    private static List<AbstractPiece> pieces(Team team) {
         return Arrays.asList(
                 new Pawn(team),
                 new Rook(team),
@@ -19,16 +42,6 @@ public class ResultCounter {
                 new Queen(team),
                 new King(team)
         );
-    }
-
-    public ResultCounter() {
-        resultCounter = new HashMap<>();
-        init();
-    }
-
-    private void init() {
-        pieces(Team.WHITE).forEach(piece -> resultCounter.put(piece, new Count()));
-        pieces(Team.BLACK).forEach(piece -> resultCounter.put(piece, new Count()));
     }
 
     public Count pieceCount(final AbstractPiece abstractPiece) {

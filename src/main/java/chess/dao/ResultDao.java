@@ -5,6 +5,8 @@ import chess.dto.ResultDto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResultDao {
 
@@ -12,6 +14,7 @@ public class ResultDao {
 
     private ResultDao() {
     }
+
     public static ResultDao getInstance() {
         if (instance == null) {
             instance = new ResultDao();
@@ -20,11 +23,12 @@ public class ResultDao {
     }
 
     public void add(ResultDto resultDto) throws SQLException {
-        String query = "INSERT INTO result VALUES (1, ?, ?)";
+        String query = "INSERT INTO result VALUES (?, ?, ?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
-        pstmt.setDouble(1, resultDto.getWhiteScore());
-        pstmt.setDouble(2, resultDto.getBlackScore());
+        pstmt.setString(1, resultDto.getName());
+        pstmt.setString(2, resultDto.getTeam());
+        pstmt.setInt(3, resultDto.getCount());
 
         try {
             pstmt.executeUpdate();
@@ -33,26 +37,43 @@ public class ResultDao {
         }
     }
 
-    public ResultDto find() throws SQLException {
-        String query = "SELECT white, black FROM result";
+    public List<ResultDto> find() throws SQLException {
+        String query = "SELECT * FROM result";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
 
-        ResultDto resultDto = new ResultDto();
-        if (rs.next()) {
-            resultDto.setWhiteScore(rs.getDouble(1));
-            resultDto.setBlackScore(rs.getDouble(2));
+        List<ResultDto> resultDtos = new ArrayList<>();
+        while (rs.next()) {
+            ResultDto resultDto = new ResultDto();
+            resultDto.setName(rs.getString(1));
+            resultDto.setTeam(rs.getString(2));
+            resultDto.setCount(rs.getInt(3));
+
+            resultDtos.add(resultDto);
         }
 
-        return resultDto;
+        return resultDtos;
     }
 
     public void update(ResultDto resultDto) throws SQLException {
-        String query = "UPDATE result SET white = ?, black = ? WHERE id = 1";
+        if (resultDto.getName() == null && resultDto.getTeam() == null) {
+            add(resultDto);
+            return;
+        }
+
+        String query = "UPDATE result SET count = count + 1 WHERE name = ? and team = ?";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
-        pstmt.setDouble(1, resultDto.getWhiteScore());
-        pstmt.setDouble(2, resultDto.getBlackScore());
+        pstmt.setString(1, resultDto.getName());
+        pstmt.setString(2, resultDto.getTeam());
+
+        pstmt.executeUpdate();
+    }
+
+    public void delete() throws SQLException {
+        String query = "DELETE FROM result";
+        PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
+
         pstmt.executeUpdate();
     }
 }

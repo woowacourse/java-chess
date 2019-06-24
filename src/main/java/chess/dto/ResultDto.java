@@ -1,22 +1,40 @@
 package chess.dto;
 
 public class ResultDto {
-    private double whiteScore;
-    private double blackScore;
+    private String name;
+    private String team;
+    private int count;
 
-    public double getWhiteScore() {
-        return whiteScore;
+    public ResultDto() {
     }
 
-    public void setWhiteScore(final double whiteScore) {
-        this.whiteScore = whiteScore;
+    public ResultDto(final String name, final String team, final int count) {
+        this.name = name;
+        this.team = team;
+        this.count = count;
     }
 
-    public double getBlackScore() {
-        return blackScore;
+    public String getName() {
+        return name;
     }
 
-    public void setBlackScore(final double blackScore) {
-        this.blackScore = blackScore;
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(final String team) {
+        this.team = team;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(final int count) {
+        this.count = count;
     }
 }
