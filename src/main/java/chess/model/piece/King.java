@@ -12,6 +12,7 @@ import static chess.model.Direction.*;
 // TODO: 2019-06-22 cloneSelf를 꼭 써야할까?
 public class King implements Piece {
     private static final Set<Direction> movableDirections;
+    private static final double SCORE = 0.0;
 
     static {
         movableDirections = new HashSet<>();
@@ -110,6 +111,11 @@ public class King implements Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

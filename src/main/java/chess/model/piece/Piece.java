@@ -14,4 +14,6 @@ public interface Piece {
     Piece cloneSelf();
 
     boolean isPawn();
+
+    double getScore();
 }

@@ -11,6 +11,7 @@ import static chess.model.Direction.*;
 
 public class Bishop implements Piece {
     private static Set<Direction> movableDirections;
+    private static final double SCORE = 3.0;
 
     static {
         movableDirections = new HashSet<>();
@@ -99,6 +100,11 @@ public class Bishop implements Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

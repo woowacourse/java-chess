@@ -346,4 +346,52 @@ public class BoardTest {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> board.movePiece(Arrays.asList("55", "63")));
     }
+
+    @Test
+    void 점수계산을_위한_ScoreResult_생성_테스트() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile2 = new Tile("63", Optional.ofNullable(new Pawn(true, "black")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("63", testTile2);
+            return testMap;
+        });
+
+        ScoreResult result = board.makeScoreResult();
+        assertThat(result).isEqualTo(new ScoreResult(1.0, 1.0));
+    }
+
+    @Test
+    void 점수계산을_위한_ScoreResult_생성_테스트_같은_색이_세로선에_있을_경우() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile2 = new Tile("53", Optional.ofNullable(new Pawn(true, "white")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("53", testTile2);
+            return testMap;
+        });
+
+        ScoreResult result = board.makeScoreResult();
+        assertThat(result).isEqualTo(new ScoreResult(1.0, 0.0));
+    }
+
+    @Test
+    void 점수계산을_위한_ScoreResult_생성_테스트_pawn과_퀸이_공존할_경우() {
+        Board board = new Board(() -> {
+            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile2 = new Tile("53", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile3 = new Tile("11", Optional.ofNullable(new Queen("black")));
+            Map<String, Tile> testMap = new HashMap<>();
+            testMap.put("55", testTile1);
+            testMap.put("53", testTile2);
+            testMap.put("11", testTile3);
+            return testMap;
+        });
+
+        ScoreResult result = board.makeScoreResult();
+        assertThat(result).isEqualTo(new ScoreResult(1.0, 9.0));
+    }
+
 }

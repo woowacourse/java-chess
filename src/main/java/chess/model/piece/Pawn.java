@@ -12,6 +12,7 @@ import static chess.model.Direction.*;
 public class Pawn implements Piece {
     private static final Set<Direction> movableDirectionsForWhiteTeam;
     private static final Set<Direction> movableDirectionsForBlackTeam;
+    public static final double SCORE = 1.0;
 
     static {
         movableDirectionsForWhiteTeam = new HashSet<>();
@@ -52,6 +53,11 @@ public class Pawn implements Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

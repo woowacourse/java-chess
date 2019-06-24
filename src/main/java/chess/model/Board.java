@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 
 import java.util.*;
@@ -55,7 +56,6 @@ public class Board {
             checkWhenVertical(targetPosition, vector);
         }
     }
-
 
     private void checkWhenDiagonal(String targetPosition, Vector vector) {
         if (Direction.isDiagonal(vector.getDirection())) {
@@ -117,5 +117,72 @@ public class Board {
     @Override
     public int hashCode() {
         return Objects.hash(tiles);
+    }
+
+    public ScoreResult makeScoreResult() {
+        List<String> locationsOfWhitePawns = new ArrayList<>();
+        List<String> locationsOfBlackPawns = new ArrayList<>();
+        double scoreOfWhite = 0;
+        double scoreOfBlack = 0;
+
+        // 폰 탐색
+        for (String currentLocation : tiles.keySet()) {
+            if (tiles.get(currentLocation).askPieceIfPawn() && tiles.get(currentLocation).askPieceWhichTeam().equals("white")) {
+                locationsOfWhitePawns.add(currentLocation);
+            }
+            if (tiles.get(currentLocation).askPieceIfPawn() && tiles.get(currentLocation).askPieceWhichTeam().equals("black")) {
+                locationsOfBlackPawns.add(currentLocation);
+            }
+        }
+
+
+        // 폰 점수 계산
+        for (int i = 1; i <= 8; i++) {
+
+            // white팀 폰 점수 계산
+            int count = 0;
+            for (String location : locationsOfWhitePawns) {
+                if (location.substring(0, 1).equals(String.valueOf(i))) {
+                    count++;
+                }
+            }
+
+            if (count > 1) {
+                scoreOfWhite += (count * (Pawn.SCORE / 2));
+            } else {
+                scoreOfWhite += (count * Pawn.SCORE);
+            }
+
+            // black팀 폰 점수 계산
+            count = 0;
+            for (String location : locationsOfBlackPawns) {
+                if (location.substring(0, 1).equals(String.valueOf(i))) {
+                    count++;
+                }
+            }
+
+            if (count > 1) {
+                scoreOfBlack += (count * (Pawn.SCORE / 2));
+            } else {
+                scoreOfBlack += (count * Pawn.SCORE);
+            }
+        }
+
+
+        // 폰 이외의 말 점수계산
+        for (String location : tiles.keySet()) {
+            if (tiles.get(location).isPiecePresent()) {
+                Piece piece = tiles.get(location).getPiece().get();
+                if (!piece.isPawn() && piece.askTeamColor().equals("white")) {
+                    scoreOfWhite += piece.getScore();
+                }
+
+                if (!piece.isPawn() && piece.askTeamColor().equals("black")) {
+                    scoreOfBlack += piece.getScore();
+                }
+            }
+        }
+
+        return new ScoreResult(scoreOfWhite, scoreOfBlack);
     }
 }
