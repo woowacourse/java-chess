@@ -3,16 +3,22 @@ package chess.domain.chess;
 import java.util.function.Function;
 
 public enum Team {
-    BLACK((string) -> string),
-    WHITE((string) -> string.toLowerCase());
+    WHITE(1, String::toLowerCase),
+    BLACK(2, String::toUpperCase);
 
-    private Function<String, String> teamIdentifier;
+    private int teamId;
+    private Function<String, String> function;
 
-    Team(Function<String, String> teamIdentifier) {
-        this.teamIdentifier = teamIdentifier;
+    Team(int teamId, Function<String, String> function) {
+        this.teamId = teamId;
+        this.function = function;
     }
 
-    public Function<String, String> getFunction() {
-        return teamIdentifier;
+    public String getUnitName(String name) {
+        return this.function.apply(name);
+    }
+
+    public int getTeamId() {
+        return teamId;
     }
 }

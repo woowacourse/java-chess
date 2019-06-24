@@ -28,7 +28,7 @@ public class OutputView {
 
     private static String printUnit(Optional<Unit> optional) {
         if (optional.isPresent()) {
-            return ChessBoard.map(optional.get());
+            return optional.get().toString();
         }
         return ".";
     }

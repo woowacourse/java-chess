@@ -35,6 +35,6 @@ public class King extends Unit {
 
     @Override
     public String toString() {
-        return "킹";
+        return getTeam().getUnitName("K");
     }
 }

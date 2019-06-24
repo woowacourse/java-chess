@@ -13,16 +13,10 @@ import java.util.*;
 
 public class ChessBoard {
     private Map<Position, Unit> units;
+    private Team present;
 
     public ChessBoard(Initializer initializer) {
         this.units = initializer.create();
-    }
-
-    public static String map(Unit unit) {
-        if (unit.getTeam() == Team.BLACK) {
-            return unit.getClass().getSimpleName().substring(0, 1);
-        }
-        return unit.getClass().getSimpleName().substring(0, 1).toLowerCase();
     }
 
     public Optional<Unit> getUnit(Position position) {

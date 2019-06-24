@@ -36,6 +36,6 @@ public class Queen extends Unit {
 
     @Override
     public String toString() {
-        return "퀸";
+        return getTeam().getUnitName("Q");
     }
 }

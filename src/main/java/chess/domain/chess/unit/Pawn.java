@@ -59,7 +59,7 @@ public class Pawn extends Unit {
 
     @Override
     public String toString() {
-        return "폰";
+        return getTeam().getUnitName("P");
     }
 }
 

@@ -33,6 +33,6 @@ public class Rook extends Unit {
 
     @Override
     public String toString() {
-        return "룩";
+        return getTeam().getUnitName("R");
     }
 }

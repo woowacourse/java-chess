@@ -1,14 +1,18 @@
 package chess.controller;
 
+import chess.util.DBConnection;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
 
 public class WebUIChessApplication {
+    Connection dbConnection = DBConnection.getConnection();
+
     public static void main(String[] args) {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
