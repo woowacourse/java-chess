@@ -71,10 +71,12 @@ public class ChessBoard {
         Piece sourcePiece = points.get(source);
         Piece targetPiece = points.get(target);
 
-        if (targetPiece.equalsType(Type.BLANK)) {
-            return sourcePiece.move(source, target);
-        }
-        return sourcePiece.attack(source, target);
+//        if (targetPiece.equalsType(Type.BLANK)) {
+//            return sourcePiece.move(source, target);
+//        }
+//        return sourcePiece.attack(source, target);
+
+        return sourcePiece.action(source, target, !targetPiece.equalsType(Type.BLANK));
     }
 
     public void checkPath(List<Point> path) {
@@ -110,7 +112,9 @@ public class ChessBoard {
                 .sum();
 
         totalScore += numberOfPawnInColumn.stream()
-                .mapToDouble(numberOfPawn -> (numberOfPawn > 1) ? numberOfPawn * 0.5 : numberOfPawn)
+                .mapToDouble(numberOfPawn -> (numberOfPawn > 1)
+                        ? Type.PAWN.getScore() * numberOfPawn * 0.5
+                        : Type.PAWN.getScore() * numberOfPawn)
                 .sum();
 
         return totalScore;

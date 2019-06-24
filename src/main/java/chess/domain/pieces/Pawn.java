@@ -19,18 +19,22 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Point> move(Point source, Point target) {
-        Direction currentDirection = calculateDirection(source, target);
-        return calculatePath(source, target, currentDirection);
+    public List<Point> action(Point source, Point target, boolean hasEnemy) {
+//        if (hasEnemy) {
+//            Direction currentDirection = calculateDirection(source, target);
+//            return calculatePath(source, target, currentDirection);
+//        }
+//        Direction currentDirection = calculateAttackDirection(source, target);
+//        return calculateAttackPath(source, target, currentDirection);
+        Direction currentDirection = hasEnemy
+                ? calculateAttackDirection(source, target)
+                : calculateMoveDirection(source, target);
+        return hasEnemy
+                ? calculateAttackPath(source, target, currentDirection)
+                : calculateMovePath(source, target, currentDirection);
     }
 
-    @Override
-    public List<Point> attack(Point source, Point target) {
-        Direction currentDirection = calculateAttackDirection(source, target);
-        return calculateAttackPath(source, target, currentDirection);
-    }
-
-    private List<Point> calculatePath(Point source, Point target, Direction direction) {
+    private List<Point> calculateMovePath(Point source, Point target, Direction direction) {
         List<Point> path = this.makePathIncludedTarget(source, target, direction);
 
         if ((isFirstTurn && path.size() == TWO_STEP) || (path.size() == ONE_STEP)) {
@@ -41,7 +45,7 @@ public class Pawn extends Piece {
         throw new IllegalArgumentException("갈 수 없는 위치입니다.");
     }
 
-    private Direction calculateDirection(Point source, Point target) {
+    private Direction calculateMoveDirection(Point source, Point target) {
         List<Direction> pawnDirections = Direction.pawnMoveDirection(color);
         Direction direction = Direction.of(source, target);
 

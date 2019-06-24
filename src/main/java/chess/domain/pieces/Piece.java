@@ -14,9 +14,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    abstract public List<Point> move(Point source, Point target);
-
-    abstract public List<Point> attack(Point source, Point target);
+    abstract public List<Point> action(Point source, Point target, boolean hasEnemy);
 
     public boolean equalsType(Type another) {
         return this.type == another;

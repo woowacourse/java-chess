@@ -12,14 +12,9 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Point> move(Point source, Point target) {
+    public List<Point> action(Point source, Point target, boolean hasEnemy) {
         Direction currentDirection = calculateDirection(source, target);
         return calculatePath(source, target, currentDirection);
-    }
-
-    @Override
-    public List<Point> attack(Point source, Point target) throws IllegalArgumentException {
-        return move(source, target);
     }
 
     private List<Point> calculatePath(Point source, Point target, Direction direction) {

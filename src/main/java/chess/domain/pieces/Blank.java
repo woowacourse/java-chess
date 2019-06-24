@@ -11,12 +11,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public List<Point> move(Point source, Point target) throws IllegalArgumentException {
-       throw new IllegalArgumentException("빈 칸은 이동할 수 없습니다!");
-    }
-
-    @Override
-    public List<Point> attack(Point source, Point target) throws IllegalArgumentException {
+    public List<Point> action(Point source, Point target, boolean hasEnemy) {
         throw new IllegalArgumentException("빈 칸은 공격할 수 없습니다!");
     }
 }
