@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.domain.GameResult;
 import chess.persistence.dto.GameSessionDto;
 
 import java.util.List;
@@ -10,7 +11,9 @@ public interface SessionService {
 
     Optional<GameSessionDto> findSessionById(long id);
 
-    Optional<GameSessionDto> findRoomByTitle(String title);
+    Optional<GameSessionDto> findSessionByTitle(String title);
 
     List<GameSessionDto> findLatestSessions(int limit);
+
+    void updateSessionState(long id, GameResult stateTo);
 }

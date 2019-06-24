@@ -3,10 +3,10 @@ package chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessScoreCounter {
+public class ScoreCounter {
     private Map<Team, Double> scores;
 
-    public ChessScoreCounter(Map<CoordinatePair, PieceType> boardState) {
+    public ScoreCounter(Map<CoordinatePair, PieceType> boardState) {
         scores = new HashMap<>();
         scores.put(Team.BLACK, calculateScoreByTeam(boardState, Team.BLACK));
         scores.put(Team.WHITE, calculateScoreByTeam(boardState, Team.WHITE));

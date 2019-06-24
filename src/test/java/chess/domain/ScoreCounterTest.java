@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ChessScoreCounterTest {
+class ScoreCounterTest {
 
     @Test
     void calculate() {
@@ -24,7 +24,7 @@ class ChessScoreCounterTest {
         );
         ChessGame board = new ChessGame(new TestBoardStateFactory(boardState));
 
-        ChessScoreCounter scoreCounter = new ChessScoreCounter(board.getBoardState());
+        ScoreCounter scoreCounter = new ScoreCounter(board.getBoardState());
         assertThat(scoreCounter.getScore(Team.BLACK)).isEqualTo(19);
         assertThat(scoreCounter.getScore(Team.WHITE)).isEqualTo(16);
     }

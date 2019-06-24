@@ -72,7 +72,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Optional<GameSessionDto> findRoomByTitle(String title) {
+    public Optional<GameSessionDto> findSessionByTitle(String title) {
         try {
             return gameSessionDao.findByTitle(title);
         } catch (SQLException e) {
@@ -89,5 +89,17 @@ public class SessionServiceImpl implements SessionService {
             e.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public void updateSessionState(long id, GameResult stateTo) {
+        try {
+            GameSessionDto session = gameSessionDao.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게임 세션을 찾을 수 없습니다: " + id));
+            session.setState(stateTo.name());
+            gameSessionDao.updateSession(session);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -36,7 +36,7 @@ public enum GameResult {
      * @return
      */
     public static GameResult judgeScore(Map<CoordinatePair, PieceType> boardState) {
-        ChessScoreCounter counter = new ChessScoreCounter(boardState);
+        ScoreCounter counter = new ScoreCounter(boardState);
         double blackScore = counter.getScore(Team.BLACK);
         double whiteScore = counter.getScore(Team.WHITE);
         if (blackScore > whiteScore) {

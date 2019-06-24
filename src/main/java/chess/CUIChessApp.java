@@ -38,7 +38,7 @@ public class CUIChessApp {
         if (tokens[0].equals("status")) {
             assertStarted();
 
-            ChessScoreCounter scoreCount = new ChessScoreCounter(chessGame.getBoardState());
+            ScoreCounter scoreCount = new ScoreCounter(chessGame.getBoardState());
             OutputVIew.printScore(scoreCount.getScore(WHITE), scoreCount.getScore(BLACK));
             return GameResult.KEEP;
         }

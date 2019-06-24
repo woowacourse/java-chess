@@ -38,7 +38,7 @@ public class GameServiceImpl implements GameService {
     @Override
     public GameResult movePiece(CoordinatePair from, CoordinatePair to, long sessionId) {
         try {
-            ChessGame game = new ChessGame(() -> findBoardStatesMapByRoomId(sessionId));
+            ChessGame game = new ChessGame(() -> findBoardStatesMapBySessionId(sessionId));
             game.move(from, to);
 
             deleteTargetStateIfPresent(to, sessionId);
@@ -54,7 +54,7 @@ public class GameServiceImpl implements GameService {
         throw new IllegalStateException();
     }
 
-    private GameBoardState findBoardStatesMapByRoomId(long roomId) {
+    private GameBoardState findBoardStatesMapBySessionId(long roomId) {
         try {
             AbstractChessPieceFactory factory = new ChessPieceFactory();
             Map<CoordinatePair, ChessPiece> board = new HashMap<>();
@@ -107,7 +107,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<CoordinatePairDto> findMovableCoordinates(long sessionId, CoordinatePair from) {
-        GameBoardState state = findBoardStatesMapByRoomId(sessionId);
+        GameBoardState state = findBoardStatesMapBySessionId(sessionId);
         return state.at(from).getMovableCoordinates(coord -> state.at(coord).getType().getTeam(), from).stream()
             .map(coord -> {
                 CoordinatePairDto dto = new CoordinatePairDto();
@@ -116,5 +116,17 @@ public class GameServiceImpl implements GameService {
                 return dto;
             })
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public ScoreCounter calculateScore(long sessionId) {
+        ChessGame game = new ChessGame(() -> findBoardStatesMapBySessionId(sessionId));
+        return new ScoreCounter(game.getBoardState());
+    }
+
+    @Override
+    public GameResult judgeResult(long sessionId) {
+        ChessGame game = new ChessGame(() -> findBoardStatesMapBySessionId(sessionId));
+        return GameResult.judgeScore(game.getBoardState());
     }
 }

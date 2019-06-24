@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.domain.ScoreCounter;
 import chess.domain.CoordinatePair;
 import chess.domain.GameResult;
 import chess.persistence.dto.BoardStateDto;
@@ -13,4 +14,8 @@ public interface GameService {
     GameResult movePiece(CoordinatePair from, CoordinatePair to, long sessionId);
 
     List<CoordinatePairDto> findMovableCoordinates(long sessionId, CoordinatePair from);
+
+    ScoreCounter calculateScore(long sessionId);
+
+    GameResult judgeResult(long sessionId);
 }

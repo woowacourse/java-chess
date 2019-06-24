@@ -28,6 +28,8 @@ public class WebUIChessApplication {
         post("/api/session", ChessGameController::createSession, gson::toJson);
         get("/api/game/movable", ChessGameController::movableCoordinates, gson::toJson);
         put("/api/game/move", ChessGameController::movePiece, gson::toJson);
+        get("/api/game/score", ChessGameController::retrieveScore, gson::toJson);
+        post("/api/game/end", ChessGameController::endGame, gson::toJson);
 
         get("/*", (req, res) -> render(Collections.emptyMap(), "index.html"));
     }
