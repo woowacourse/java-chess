@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import chess.domain.Score;
 import org.junit.jupiter.api.BeforeEach;

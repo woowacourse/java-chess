@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 public class MovementInfo {
 	private final Direction direction;
