@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece {
+public class Piece {
     protected final Team team;
     protected final Type type;
 
@@ -46,6 +46,14 @@ public abstract class Piece {
 
     public boolean isSameType(Type type) {
         return this.type == type;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     @Override
