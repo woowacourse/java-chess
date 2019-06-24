@@ -70,7 +70,7 @@ public class Board {
 
     public boolean check(ChessTeam team) {
         return pieceOf(team).stream()
-                .noneMatch(piece -> piece.toString().equals("King"));
+                .noneMatch(piece -> piece.toString().contains("King"));
     }
 
     public List<Piece> pieceOf(ChessTeam team) {
