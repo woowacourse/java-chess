@@ -10,7 +10,8 @@ public enum Type {
     BISHOP("b", 3, Bishop::new),
     KNIGHT("N", 2.5, Knight::new),
     ROOK("r", 5, Rook::new),
-    PAWN("p", 1, Pawn::new);
+    PAWN("p", 1, Pawn::new),
+    MOVEDPAWN("mp",1,MovedPawn::new);
 
     String type;
     double score;

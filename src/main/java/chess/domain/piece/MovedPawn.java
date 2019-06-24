@@ -11,11 +11,9 @@ import chess.domain.piece.core.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static chess.domain.piece.core.Type.MOVEDPAWN;
+public class MovedPawn extends Piece {
 
-public class Pawn extends Piece {
-
-    public Pawn(Team team) {
+    public MovedPawn(Team team) {
         super(team, Type.PAWN);
         navigator = generateNavigator(team);
     }
@@ -27,7 +25,6 @@ public class Pawn extends Piece {
     private Navigator generateWhiteNavigator() {
         return new Navigator(new ArrayList<>(
                 Arrays.asList(
-                        new Way(Direction.UP, MoveStrategy.ONLY_EMPTY, 2),
                         new Way(Direction.UP, MoveStrategy.ONLY_EMPTY, 1),
                         new Way(Direction.UP_LEFT, MoveStrategy.ONLY_ENEMY, 1),
                         new Way(Direction.UP_RIGHT, MoveStrategy.ONLY_ENEMY, 1)
@@ -38,16 +35,10 @@ public class Pawn extends Piece {
     private Navigator generateBlackNavigator() {
         return new Navigator(new ArrayList<>(
                 Arrays.asList(
-                        new Way(Direction.DOWN, MoveStrategy.ONLY_EMPTY, 2),
                         new Way(Direction.DOWN, MoveStrategy.ONLY_EMPTY, 1),
                         new Way(Direction.DOWN_LEFT, MoveStrategy.ONLY_ENEMY, 1),
                         new Way(Direction.DOWN_RIGHT, MoveStrategy.ONLY_ENEMY, 1)
                 )
         ));
-    }
-
-    @Override
-    public Piece move() {
-        return MOVEDPAWN.create(super.getTeam());
     }
 }
