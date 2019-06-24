@@ -21,7 +21,7 @@
         }
 
         .board_movable {
-            border : 1px solid black;
+            padding: 1px solid black;
         }
     </style>
 
@@ -36,11 +36,10 @@
     </div>
 
     <div>
-        from : <input type="text" id="from" />
-        to : <input type="text" id="to" />
-        <button id="btn_move">이동</button>
+        <div>현재 턴</div>
+        <div id="turn"></div>
         <div id="board" data-id="{{id}}" }></div>
-    </div>
+    </div<>
 
     <script>
         function stateToString(pieceType) {
@@ -96,15 +95,14 @@
             xhr.send();
         }
 
-        document.getElementById("btn_move").addEventListener("click", function () {
-            let from = document.getElementById("from").value;
-            let to = document.getElementById("to").value;
-            
-            const moveXhr = new XMLHttpRequest();
-            moveXhr.addEventListener("load", drawBoard);
-            moveXhr.open("PUT", "/move-piece?id=" + id + "&from=" + from + "&to=" + to);
-            moveXhr.send();
-        });
+        function initTurn() {
+            const xhrTurn = new XMLHttpRequest();
+            xhrTurn.addEventListener("load", function() {
+                document.getElementById('turn').innerHTML = xhrTurn.response;
+            });
+            xhrTurn.open("GET", "/currentTune?id=" + id);
+            xhrTurn.send();
+        }
 
         let xAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
         let yAxis = [8, 7, 6, 5, 4, 3, 2, 1];
@@ -140,6 +138,7 @@
             });
 
             addEvent();
+            initTurn();
         }
 
         function addEvent() {
@@ -166,6 +165,7 @@
             states.forEach(element => {
                 document.querySelectorAll('.board').forEach(img => {
                     img.classList.remove('board_movable');
+                    img.setAttribute('src', "");
                 });
             });
 
@@ -173,6 +173,7 @@
                 document.querySelectorAll('.board').forEach(img => {
                     if (img.getAttribute('data-coord') === element) {
                         img.classList.add('board_movable');
+                        img.setAttribute('src', "/images/movable.png");
                     } 
                 });
             });

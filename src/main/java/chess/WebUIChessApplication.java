@@ -98,6 +98,15 @@ public class WebUIChessApplication {
             ChessGame chessGame = getChessGame(chessService, req).get();
             return chessGame.getMovable(ChessCoordinate.valueOf(req.queryParams("from")));
         }, gson::toJson);
+
+        get("/currentTune", (req, res) -> {
+            Optional<TurnDto> maybeTurn = chessService.findTurnByRoomId(Long.parseLong(req.queryParams("id")));
+            if (maybeTurn.isPresent()) {
+                return maybeTurn.get().getCurrent();
+            }
+            return "error";
+        }, gson::toJson);
+
     }
 
     private static Optional<ChessGame> getChessGame(ChessService chessService, Request req) {
