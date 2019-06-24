@@ -22,11 +22,11 @@ public class BoardDao {
     }
 
     public void add(BoardDto boardDto) throws SQLException {
-        String query = "INSERT INTO board VALUES (?, ?)";
+        String query = "INSERT INTO board VALUES (?, ?, ?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
-
         pstmt.setString(1, boardDto.getPosition());
         pstmt.setString(2, boardDto.getPieceName());
+        pstmt.setString(3, boardDto.getTeam());
 
         pstmt.executeUpdate();
     }
@@ -44,7 +44,11 @@ public class BoardDao {
 
         List<BoardDto> result = new ArrayList<>();
         while(rs.next()) {
-            BoardDto boardDto = new BoardDto(rs.getString(1), rs.getString(2));
+            BoardDto boardDto = new BoardDto(
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3)
+            );
             result.add(boardDto);
         }
 

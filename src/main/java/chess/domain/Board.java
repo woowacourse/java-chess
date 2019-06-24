@@ -1,11 +1,10 @@
 package chess.domain;
 
 import chess.domain.piece.*;
+import chess.dto.BoardDto;
+import chess.view.WebUtil;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static chess.domain.Team.BLACK;
@@ -53,5 +52,18 @@ public class Board {
 
     public Map<Position, AbstractPiece> getBoard() {
         return board;
+    }
+
+    public List<BoardDto> toDto() {
+        List<BoardDto> boardDtos = new ArrayList<>();
+        board.forEach((position, piece) -> {
+            BoardDto boardDto = new BoardDto();
+            boardDto.setPieceName(piece.getName());
+            boardDto.setTeam(piece.getTeam().name());
+            boardDto.setPosition(WebUtil.positionParser(position));
+
+            boardDtos.add(boardDto);
+        });
+        return boardDtos;
     }
 }
