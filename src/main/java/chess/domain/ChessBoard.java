@@ -17,7 +17,13 @@ public class ChessBoard {
     public ChessBoard() {
         this.turn = Turn.init();
         this.board = Board.init();
-        this.resultCounter = ResultCounter.init();
+        this.resultCounter = new ResultCounter();
+    }
+
+    public ChessBoard(Board board, Turn turn) {
+        this.turn = turn;
+        this.board = board;
+        this.resultCounter = new ResultCounter();
     }
 
     public boolean move(Position source, Position target) {
@@ -73,7 +79,7 @@ public class ChessBoard {
     }
 
     private boolean isValidRoute(final Position source, final Position target, final Direction direction) {
-        if (direction == Direction.OTHER) {
+        if (direction == Direction.KNIGHT) {
             return true;
         }
         for (Position checking = source.add(direction); !checking.equals(target); checking = checking.add(direction)) {
@@ -84,10 +90,7 @@ public class ChessBoard {
         return true;
     }
 
-    public Map<Position, AbstractPiece> getBoard() {
-        return board.getBoard();
-    }
-
+    // TODO: dto를 사용해서 값을 변환하도록 변경
     public Map<String, String> getBoard2() {
         Map<String, String> result = new HashMap<>();
         board.getBoard().forEach((key, value) -> {
