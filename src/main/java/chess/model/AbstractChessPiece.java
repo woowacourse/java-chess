@@ -4,7 +4,7 @@ public abstract class AbstractChessPiece {
     private ChessPieceType type;
     private ChessPieceColor color;
 
-    protected AbstractPiece(ChessPieceType type, ChessPieceColor color) {
+    protected AbstractChessPiece(ChessPieceType type, ChessPieceColor color) {
         this.type = type;
         this.color = color;
     }
