@@ -48,12 +48,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Route getRoute(Square source, Square target) {
-        Route route = super.getRoute(source, target);
+    public Piece move() {
         if (!isFirstMoved) {
             navigator.firstRemove();
             isFirstMoved = true;
         }
-        return route;
+        return this;
     }
 }

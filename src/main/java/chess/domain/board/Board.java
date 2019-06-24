@@ -4,6 +4,7 @@ import chess.domain.direction.Route;
 import chess.domain.direction.core.Square;
 import chess.domain.direction.core.TargetStatus;
 import chess.domain.piece.core.Piece;
+import chess.domain.piece.core.Team;
 import chess.domain.piece.core.Type;
 import com.google.common.collect.Maps;
 
@@ -18,6 +19,8 @@ import static chess.domain.piece.core.Team.WHITE;
 
 public class Board {
     private Map<Square, Piece> board;
+    static final int MIN_SIZE = 0;
+    static final int MAX_SIZE = 8;
 //    private Team team;
 
     public Board(Map<Square, Piece> board) {
@@ -42,6 +45,14 @@ public class Board {
         return board.containsKey(source);
     }
 
+    public boolean hasPiece(Square source, Team team) {
+        return board.containsKey(source) && getPiece(source).isTeam(team);
+    }
+
+    public boolean hasPiece(Square source, Team team, Type type) {
+        return board.containsKey(source) && getPiece(source).isTeam(team) && getPiece(source).isType(type);
+    }
+
     public Piece getPiece(Square source) {
         return board.get(source);
     }
@@ -60,7 +71,7 @@ public class Board {
     Board movePiece(Square source, Square target) {
         Map<Square, Piece> copyBoard = board.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        copyBoard.put(target, copyBoard.get(source));
+        copyBoard.put(target, copyBoard.get(source).move());
         copyBoard.remove(source);
 
         return drawBoard(copyBoard);

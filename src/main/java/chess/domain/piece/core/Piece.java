@@ -29,12 +29,24 @@ public abstract class Piece {
         return route;
     }
 
-    public boolean isSameTeam(Piece piece) {
+    public Piece move() {
+        return this;
+    }
+
+    public boolean isTeam(Piece piece) {
         return team.equals(piece.team);
     }
 
-    public boolean isSameType(Piece piece) {
+    public boolean isType(Piece piece) {
         return type.equals(piece.type);
+    }
+
+    public boolean isTeam(Team team) {
+        return this.team.equals(team);
+    }
+
+    public boolean isType(Type type) {
+        return this.type.equals(type);
     }
 
     public Team getTeam() {
@@ -43,6 +55,10 @@ public abstract class Piece {
 
     public Type getType(){
         return type;
+    }
+
+    public double getScore() {
+        return type.score;
     }
 
     @Override

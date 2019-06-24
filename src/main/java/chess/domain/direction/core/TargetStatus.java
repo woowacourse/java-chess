@@ -7,7 +7,7 @@ import java.util.function.BiFunction;
 
 public enum TargetStatus {
     EMPTY((source, target) -> target == null),
-    ENEMY((source, target) -> !source.isSameTeam(target));
+    ENEMY((source, target) -> !source.isTeam(target));
 
     BiFunction<Piece, Piece, Boolean> checkStatus;
 
