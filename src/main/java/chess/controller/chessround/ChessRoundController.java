@@ -1,7 +1,7 @@
 package chess.controller.chessround;
 
 import chess.application.chessround.ChessRoundService;
-import chess.domain.chessround.dto.ChessPlayerDTO;
+import chess.application.chessround.dto.ChessPlayerDTO;
 import spark.ModelAndView;
 import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;

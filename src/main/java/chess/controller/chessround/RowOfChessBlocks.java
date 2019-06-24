@@ -1,6 +1,6 @@
 package chess.controller.chessround;
 
-import chess.domain.chessround.dto.ChessPieceDTO;
+import chess.application.chessround.dto.ChessPieceDTO;
 
 import java.util.ArrayList;
 import java.util.Iterator;

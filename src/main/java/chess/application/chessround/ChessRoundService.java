@@ -5,7 +5,7 @@ import chess.domain.chessround.ChessPiecesBuilder;
 import chess.domain.chessround.ChessPlayer;
 import chess.domain.chessround.ChessRound;
 import chess.domain.chessround.InvalidChessPositionException;
-import chess.domain.chessround.dto.ChessPlayerDTO;
+import chess.application.chessround.dto.ChessPlayerDTO;
 
 public class ChessRoundService {
     private static final String EMPTY = "";

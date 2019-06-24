@@ -1,7 +1,7 @@
 package chess.controller.chessround;
 
-import chess.domain.chessround.dto.ChessPieceDTO;
-import chess.domain.chessround.dto.ChessPlayerDTO;
+import chess.application.chessround.dto.ChessPieceDTO;
+import chess.application.chessround.dto.ChessPlayerDTO;
 
 import java.util.ArrayList;
 import java.util.Iterator;

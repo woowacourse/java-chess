@@ -3,8 +3,8 @@ package chess.application.chessround;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chessround.ChessPlayer;
-import chess.domain.chessround.dto.ChessPieceDTO;
-import chess.domain.chessround.dto.ChessPlayerDTO;
+import chess.application.chessround.dto.ChessPieceDTO;
+import chess.application.chessround.dto.ChessPlayerDTO;
 
 import java.util.ArrayList;
 import java.util.List;

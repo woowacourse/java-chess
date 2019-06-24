@@ -1,4 +1,4 @@
-package chess.domain.chessround.dto;
+package chess.application.chessround.dto;
 
 public class ChessPieceDTO {
     private int row;

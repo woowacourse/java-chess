@@ -1,4 +1,4 @@
-package chess.domain.chessround.dto;
+package chess.application.chessround.dto;
 
 import java.util.List;
 
