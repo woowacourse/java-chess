@@ -68,7 +68,7 @@ class BoardTest {
         String current = "a1";
         String target = "a2";
         gameBoard = new Board(new HashMap<Tile, Piece>() {{
-                put(Tile.of(current), queen);
+            put(Tile.of(current), queen);
         }});
 
         assertDoesNotThrow(() -> gameBoard.order(current, target));
@@ -95,8 +95,8 @@ class BoardTest {
     @Test
     void 점수_계산1() {
         Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
-                put(Tile.of("a1"), PieceType.QUEEN.generate(PieceColor.BLACK));
-                put(Tile.of("a2"), PieceType.ROOK.generate(PieceColor.WHITE));
+            put(Tile.of("a1"), PieceType.QUEEN.generate(PieceColor.BLACK));
+            put(Tile.of("a2"), PieceType.ROOK.generate(PieceColor.WHITE));
         }};
         Board board1 = new Board(boardState);
         assertThat(board1.status(PieceColor.BLACK)).isEqualTo(9);
@@ -120,5 +120,18 @@ class BoardTest {
         }};
         Board board1 = new Board(boardState);
         assertThat(board1.status(PieceColor.BLACK)).isEqualTo(1);
+    }
+
+    @Test
+    void 게임_종료() {
+        Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
+            put(Tile.of("a5"), PieceType.QUEEN.generate(PieceColor.BLACK));
+            put(Tile.of("a2"), PieceType.KING.generate(PieceColor.WHITE));
+        }};
+
+        Board board = new Board(boardState);
+        assertThrows(GameOverException.class, () -> {
+            board.order("a5", "a2");
+        });
     }
 }

@@ -56,12 +56,23 @@ public class Board {
     public void order(String currentTileText, String goalTileText) {
         Tile currentTile = Tile.of(currentTileText);
         Tile goalTile = Tile.of(goalTileText);
+        Optional<Piece> removedPiece;
         if (canMove(currentTile, goalTile)) {
-            move(currentTile, goalTile);
+            removedPiece = move(currentTile, goalTile);
+            checkKingDie(removedPiece);
             return;
         }
 
-        throw new IllegalArgumentException("이동 불가능합니다.");
+        throw new InvalidMovingException("이동 불가능합니다.");
+    }
+
+    private void checkKingDie(Optional<Piece> removedPiece) {
+        if (!removedPiece.isPresent()) {
+            return;
+        }
+        if (removedPiece.get().isType(PieceType.KING)) {
+            throw new GameOverException("game over");
+        }
     }
 
     private boolean canMove(Tile currentTile, Tile goalTile) {
@@ -88,9 +99,11 @@ public class Board {
     }
 
 
-    private void move(Tile current, Tile goal) {
+    private Optional<Piece> move(Tile current, Tile goal) {
+        Optional<Piece> pieceOnGoal = board.get(goal);
         board.put(goal, board.get(current));
         board.put(current, Optional.empty());
+        return pieceOnGoal;
     }
 
     private Piece getPieceOnTile(Tile tile) {

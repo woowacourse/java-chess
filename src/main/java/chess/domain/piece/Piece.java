@@ -12,19 +12,10 @@ public abstract class Piece {
     private PieceColor color;
     private PieceType type;
 
-    private boolean hasMoved;
-
     public Piece(PieceColor color, PieceType type) {
-        this(color, type, false);
         this.color = color;
         this.type = type;
 
-    }
-
-    public Piece(PieceColor color, PieceType type, boolean hasMoved) {
-        this.color = color;
-        this.type = type;
-        this.hasMoved = hasMoved;
     }
 
     public List<Tile> pathOf(Tile current, Tile target, boolean isTargetEmpty) {
@@ -43,6 +34,10 @@ public abstract class Piece {
 
     public boolean isSameColorWith(Piece piece) {
         return piece.color == color;
+    }
+
+    public boolean isType(PieceType type){
+        return type == this.type;
     }
 
     public PieceColor getColor() {
