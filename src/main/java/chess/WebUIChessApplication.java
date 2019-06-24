@@ -1,22 +1,29 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.model.Play;
+import chess.model.board.Board;
+import chess.view.JsonOutput;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
+    private static final int SERVICE_PORT = 8080;
+    private static final String STATIC_FILE_LOCATION = "/";
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private Play play;
+    private boolean isPlaying;
+
+    public static void main(final String[] args) {
+        port(SERVICE_PORT);
+        staticFileLocation(STATIC_FILE_LOCATION);
+        init();
+
+        final WebUIChessApplication app = new WebUIChessApplication();
+        app.play = new Play(Board.makeInitialBoard());
+
+        get("/api/board", (req, res) -> {
+            final String boardJson = JsonOutput.board(app.play.getAllPositions());
+            return JsonOutput.responseOk("board", boardJson);
+        });
     }
 }
