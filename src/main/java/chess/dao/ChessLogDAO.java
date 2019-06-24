@@ -41,4 +41,19 @@ public class ChessLogDAO {
         }
         return gameLog;
     }
+
+    public void insertLog(String from, String to, String gameId) {
+        PreparedStatement pstmt = null;
+        try {
+            String query = "insert into game_log(source, destination,game_id) values(?,?,?);";
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, from);
+            pstmt.setString(2, to);
+            pstmt.setString(3, gameId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
