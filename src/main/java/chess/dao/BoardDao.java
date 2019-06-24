@@ -38,7 +38,7 @@ public class BoardDao {
     }
 
     public void deleteAll() throws SQLException {
-        String query = "DELETE FROM baord";
+        String query = "DELETE FROM board";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
         pstmt.executeUpdate();
     }
