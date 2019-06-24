@@ -21,14 +21,14 @@ public class ResultCounter {
         );
     }
 
-    private ResultCounter() {
+    public ResultCounter() {
         resultCounter = new HashMap<>();
-        pieces(Team.WHITE).forEach(piece -> resultCounter.put(piece, new Count()));
-        pieces(Team.BLACK).forEach(piece -> resultCounter.put(piece, new Count()));
+        init();
     }
 
-    public static ResultCounter init() {
-        return new ResultCounter();
+    private void init() {
+        pieces(Team.WHITE).forEach(piece -> resultCounter.put(piece, new Count()));
+        pieces(Team.BLACK).forEach(piece -> resultCounter.put(piece, new Count()));
     }
 
     public Count pieceCount(final AbstractPiece abstractPiece) {
