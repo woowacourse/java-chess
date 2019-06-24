@@ -19,6 +19,11 @@ public abstract class AbstractRangeMovePiece implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public Direction move(Point p1, Point p2) {
         Direction vector = p1.direction(p2).vector();
         if (directions.contains(vector)) {

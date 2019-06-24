@@ -5,8 +5,7 @@ import chess.domain.Direction;
 import chess.domain.Point;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class KingTest {
 
@@ -29,5 +28,11 @@ class KingTest {
         King king = new King(ChessTeam.WHITE);
         assertThrows(IllegalArgumentException.class,
                 () -> king.move(Point.get(1, 1), Point.get(5, 3)));
+    }
+
+    @Test
+    void 킹_확인_테스트() {
+        King king = new King(ChessTeam.BLACK);
+        assertTrue(king.isKing());
     }
 }

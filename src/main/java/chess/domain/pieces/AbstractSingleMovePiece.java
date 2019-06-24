@@ -19,6 +19,11 @@ public abstract class AbstractSingleMovePiece implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public boolean isAlly(Piece piece) {
         if (piece == null) throw new IllegalArgumentException();
         if (piece instanceof AbstractSingleMovePiece) {

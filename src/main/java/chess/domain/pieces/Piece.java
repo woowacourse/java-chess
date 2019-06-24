@@ -13,5 +13,7 @@ public interface Piece {
 
     boolean isTurn(ChessTeam team);
 
+    boolean isKing();
+
     double score();
 }

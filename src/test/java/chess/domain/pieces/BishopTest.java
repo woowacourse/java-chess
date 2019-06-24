@@ -5,8 +5,7 @@ import chess.domain.Direction;
 import chess.domain.Point;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BishopTest {
 
@@ -27,5 +26,11 @@ class BishopTest {
     void 이동_불가_테스트() {
         Bishop bishop = new Bishop(ChessTeam.WHITE);
         assertThrows(IllegalArgumentException.class, () -> bishop.move(Point.get(2, 2), Point.get(4, 2)));
+    }
+
+    @Test
+    void 킹_아님_테스트() {
+        Bishop bishop = new Bishop(ChessTeam.BLACK);
+        assertFalse(bishop.isKing());
     }
 }

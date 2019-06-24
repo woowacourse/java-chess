@@ -24,4 +24,9 @@ public class King extends AbstractSingleMovePiece {
     public King(ChessTeam team) {
         super(team, PieceInfo.King, directions);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

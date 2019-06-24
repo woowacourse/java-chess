@@ -1,0 +1,58 @@
+html {
+    font-size: 16px;
+}
+
+html * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 36rem;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    border: 1px solid gray;
+}
+
+td {
+    width: 68px;
+    height: 68px;
+    border: 1px solid gray;
+    text-align: center;
+}
+
+.odd {
+    background-color: white;
+}
+
+.even {
+    background-color: gray;
+}
+
+.selected {
+    background-color: red;
+}
+
+.black {
+    background-color: black;
+}
+
+.white {
+    background-color: white;
+}
+
+.piece {
+    font-size: 48px;
+}
