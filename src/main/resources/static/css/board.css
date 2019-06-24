@@ -1,0 +1,92 @@
+@font-face {
+    font-family: "Emoji";
+    src: local("Apple Color Emoji"), local("Segoe UI Emoji"), local("Segoe UI Symbol"), local("Noto Color Emoji");
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+}
+
+p {
+    line-height: 1.4;
+}
+
+footer {
+    margin : atuo;
+}
+
+.temp {
+    grid-template-columns: repeat(1, 12vmin);
+    grid-template-rows: repeat(8, 12vmin);
+    float : left;
+}
+
+.board {
+    background-color: #eee;
+    background-image: linear-gradient(45deg, #d18b47 25%, transparent 25%, transparent 75%, #d18b47 75%, #d18b47),
+    linear-gradient(45deg, #d18b47 25%, transparent 25%, transparent 75%, #d18b47 75%, #d18b47);
+    background-size: 24vmin 24vmin;
+    background-position: 0 0, 12vmin 12vmin;
+    width: 96vmin;
+    height: 96vmin;
+    margin: auto;
+    grid-template-columns: repeat(8, 12vmin);
+    grid-template-rows: repeat(8, 12vmin);
+}
+
+.column {
+    font-size : 4vmin;
+}
+
+.piece {
+    font-size: 6vmin;
+    font-family: "Emoji";
+}
+
+main {
+    position: relative;
+    height: 96vmin;
+    width: 96vmin;
+}
+
+.grid {
+    display: grid;
+    position: absolute;
+}
+
+.grid_row {
+    display: grid;
+}
+
+.board .grid__item {
+    margin: auto;
+}
+
+.aside .grid__item {
+    margin : auto;
+}
+
+.controls {
+    float : right;
+    position : relative;
+    width: 36vmin;
+    display: flex;
+    margin-top: 1em;
+    justify-content: space-around;
+}
+
+button {
+    font-size: initial;
+    background-color: #d18b47;
+    border: none;
+    padding: 0.5em 0.75em;
+    cursor: pointer;
+}
+
+.side {
+    margin : 50px;
+    float : right;
+}

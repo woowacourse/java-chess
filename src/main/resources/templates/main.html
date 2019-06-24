@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스게임</title>
+    <link rel="stylesheet" type="text/css" href="/css/board.css">
+</head>
+
+<button onclick="location.href='/chess/start'"> 시작하기</button>
+
+<h2>진행중인 게임 이어하기</h2>
+{{#roomDtos}}
+<button onclick="location.href='/chess/load?roomId={{this.id}}'">{{this.id}}회 게임</button>
+<br>
+{{/roomDtos}}
+
+</body>
+
+<script>
+    const body = document.querySelector("body");
+    body.style.flexDirection = "column";
+
+
+</script>
+</html>
