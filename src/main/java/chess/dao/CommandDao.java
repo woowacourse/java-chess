@@ -27,7 +27,7 @@ public class CommandDao {
         params.add(commandDto.getOrigin());
         params.add(commandDto.getTarget());
         params.add(commandDto.getRound());
-        params.add(commandDto.getRoom_id());
+        params.add(commandDto.getRoomId());
 
         jdbcTemplate.executeUpdate(sql, params);
     }
