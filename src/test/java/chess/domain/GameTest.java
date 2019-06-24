@@ -34,7 +34,7 @@ public class GameTest {
 		Position origin = Position.of("2", "a");
 		Position target = Position.of("4", "a");
 		game.action(origin, target);
-		assertTrue(game.currentColor().equals(Piece.Color.BLACK.getName()));
+		assertTrue(game.currentColor().equals(Piece.Color.BLACK));
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class GameTest {
 		Position origin = Position.of("7", "a");
 		Position target = Position.of("6", "a");
 		game.action(origin, target);
-		assertTrue(game.currentColor().equals(Piece.Color.WHITE.getName()));
+		assertTrue(game.currentColor().equals(Piece.Color.WHITE));
 	}
 
 

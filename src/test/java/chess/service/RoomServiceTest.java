@@ -46,7 +46,7 @@ public class RoomServiceTest {
 	@Test
 	void updateStatusTest() {
 		long roomId = 1;
-		String winner = Piece.Color.BLACK.getName();
+		Piece.Color winner = Piece.Color.BLACK;
 		roomService.openRoom();
 		roomService.updateStatus(roomId, winner);
 
@@ -57,7 +57,7 @@ public class RoomServiceTest {
 	@Test
 	void findAllByOngoing() {
 		long roomId = 1;
-		String winner = Piece.Color.BLACK.getName();
+		Piece.Color winner = Piece.Color.BLACK;
 		roomService.openRoom();
 		roomService.openRoom();
 		roomService.updateStatus(roomId, winner);

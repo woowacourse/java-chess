@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.dao.RoomDao;
+import chess.domain.Piece;
 import chess.dto.RoomDto;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class RoomService {
 		return roomDao.getLatestId().orElseThrow(IllegalArgumentException::new);
 	}
 
-	public void updateStatus(final long roomId, final String color) {
-		roomDao.updateStatus(roomId, color);
+	public void updateStatus(final long roomId, final Piece.Color color) {
+		roomDao.updateStatus(roomId, color.getName());
 	}
 
 	public List<RoomDto> findAllByOngoing() {

@@ -28,8 +28,8 @@ public class Game {
 		return color == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
 	}
 
-	public String currentColor() {
-		return color.getName();
+	public Piece.Color currentColor() {
+		return color;
 	}
 
 	public double scoreOfColor(final Piece.Color color) {

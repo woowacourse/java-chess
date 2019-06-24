@@ -71,7 +71,7 @@ public class ChessController {
 		long roomId = Long.parseLong(req.queryParams("roomId"));
 
 		Game game = req.session().attribute("game");
-		String winner = game.currentColor();
+		Piece.Color winner = game.currentColor();
 
 		roomService.updateStatus(roomId, winner);
 
