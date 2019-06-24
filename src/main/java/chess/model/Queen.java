@@ -1,16 +1,14 @@
 package chess.model;
 
-public class Queen {
-    private final ChessPieceColor color;
-    private final ChessPieceType type;
+public class Queen extends AbstractRangeChessPiece{
 
     public Queen(final ChessPieceColor color) {
-        this.color = color;
-        this.type = ChessPieceType.QUEEN;
+        super(ChessPieceType.QUEEN, color);
     }
 
-
-    public boolean canMove(final Point source, final Point target) {
+    @Override
+    public boolean canMove(final Point source, final Point target, final AbstractBoardNavigator navigator) {
+        if (isObstacleBetween(source, target, navigator)) return false;
         int xDiff = source.calculateXsDiff(target);
         int yDiff = source.calculateYsDiff(target);
 
