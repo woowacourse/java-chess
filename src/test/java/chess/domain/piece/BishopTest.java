@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static chess.domain.piece.PieceType.BISHOP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BishopTest {
-    Piece bishop = new Bishop(PieceColor.WHITE);
+    Piece bishop = BISHOP.generate(PieceColor.WHITE);
 
     @Test
     void 비숍_NE방향_이동_검사() {

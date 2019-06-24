@@ -45,4 +45,12 @@ public enum Direction {
     public Tile nextTile(Tile current) {
         return current.next(x, y);
     }
+
+    public boolean isUpward() {
+        return y > 0;
+    }
+
+    public boolean isDownward() {
+        return y < 0;
+    }
 }

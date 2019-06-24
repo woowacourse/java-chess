@@ -91,4 +91,34 @@ class BoardTest {
         assertThat(gameBoard.at(current)).isEqualTo(Optional.of(bishop));
         assertThat(gameBoard.at(target)).isEqualTo(Optional.empty());
     }
+
+    @Test
+    void 점수_계산1() {
+        Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
+                put(Tile.of("a1"), PieceType.QUEEN.generate(PieceColor.BLACK));
+                put(Tile.of("a2"), PieceType.ROOK.generate(PieceColor.WHITE));
+        }};
+        Board board1 = new Board(boardState);
+        assertThat(board1.status(PieceColor.BLACK)).isEqualTo(9);
+    }
+
+    @Test
+    void 점수_계산2() {
+        Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
+            put(Tile.of("a1"), PieceType.PAWN.generate(PieceColor.BLACK));
+            put(Tile.of("b1"), PieceType.PAWN.generate(PieceColor.BLACK));
+        }};
+        Board board1 = new Board(boardState);
+        assertThat(board1.status(PieceColor.BLACK)).isEqualTo(2);
+    }
+
+    @Test
+    void 점수_계산3() {
+        Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
+            put(Tile.of("a1"), PieceType.PAWN.generate(PieceColor.BLACK));
+            put(Tile.of("a2"), PieceType.PAWN.generate(PieceColor.BLACK));
+        }};
+        Board board1 = new Board(boardState);
+        assertThat(board1.status(PieceColor.BLACK)).isEqualTo(1);
+    }
 }

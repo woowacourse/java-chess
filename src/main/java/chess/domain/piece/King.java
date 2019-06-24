@@ -1,15 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.Range;
+import chess.domain.MovingRange;
 import chess.domain.board.Tile;
 
 public class King extends Piece{
-    King(PieceColor color) {
-        super(color);
+    King(PieceColor color, PieceType type) {
+        super(color, type);
     }
 
     @Override
-    protected Range getRange(boolean isTargetEmpty, Tile current) {
-        return Range.KING_RANGE;
+    protected MovingRange getRange(boolean isTargetEmpty, Tile current) {
+        return MovingRange.KING_RANGE;
     }
 }

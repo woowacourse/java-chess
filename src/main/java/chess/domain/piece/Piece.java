@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.Range;
+import chess.domain.MovingRange;
 import chess.domain.board.Tile;
 
 import java.util.ArrayList;
@@ -10,13 +10,26 @@ import java.util.Objects;
 
 public abstract class Piece {
     private PieceColor color;
+    private PieceType type;
 
-    public Piece(PieceColor color) {
+    private boolean hasMoved;
+
+    public Piece(PieceColor color, PieceType type) {
+        this(color, type, false);
         this.color = color;
+        this.type = type;
+
+    }
+
+    public Piece(PieceColor color, PieceType type, boolean hasMoved) {
+        this.color = color;
+        this.type = type;
+        this.hasMoved = hasMoved;
     }
 
     public List<Tile> pathOf(Tile current, Tile target, boolean isTargetEmpty) {
-        Direction direction = getRange(isTargetEmpty, current).getProperDirection(target.getWidthDiff(current), target.getHeightDiff(current));
+        Direction direction = getRange(isTargetEmpty, current)
+                .getProperDirection(target.getWidthDiff(current), target.getHeightDiff(current));
 
         List<Tile> possiblePath = new ArrayList<>();
         Tile nextTile = direction.nextTile(current);
@@ -36,7 +49,11 @@ public abstract class Piece {
         return color;
     }
 
-    protected abstract Range getRange(boolean isTargetEmpty, Tile current);
+    public PieceType getType() {
+        return type;
+    }
+
+    protected abstract MovingRange getRange(boolean haveTarget, Tile current);
 
     @Override
     public boolean equals(Object o) {

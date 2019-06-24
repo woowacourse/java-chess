@@ -1,22 +1,28 @@
 package chess.domain.piece;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 public enum PieceType {
-    KING(King::new),
-    QUEEN(Queen::new),
-    ROOK(Rook::new),
-    BISHOP(Bishop::new),
-    KNIGHT(Knight::new),
-    PAWN(Pawn::new);
+    KING(King::new, 0),
+    QUEEN(Queen::new, 9),
+    ROOK(Rook::new, 5),
+    BISHOP(Bishop::new, 3),
+    KNIGHT(Knight::new, 2.5),
+    PAWN(Pawn::new, 1);
 
-    private final Function<PieceColor, Piece> generator;
+    private final BiFunction<PieceColor, PieceType, Piece> generator;
+    private final double score;
 
-    PieceType(Function<PieceColor, Piece> generator) {
+    PieceType(BiFunction<PieceColor, PieceType, Piece> generator, double score) {
         this.generator = generator;
+        this.score = score;
+    }
+
+    public static Double getScore(PieceType type) {
+        return type.score;
     }
 
     public Piece generate(PieceColor color) {
-        return generator.apply(color);
+        return generator.apply(color, this);
     }
 }

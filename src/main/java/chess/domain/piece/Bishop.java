@@ -1,15 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.Range;
+import chess.domain.MovingRange;
 import chess.domain.board.Tile;
 
 public class Bishop extends Piece{
-    Bishop(PieceColor color) {
-        super(color);
+    Bishop(PieceColor color, PieceType type) {
+        super(color, type);
     }
 
     @Override
-    protected Range getRange(boolean isTargetEmpty, Tile current) {
-        return Range.BISHOP_RANGE;
+    protected MovingRange getRange(boolean isTargetEmpty, Tile current) {
+        return MovingRange.BISHOP_RANGE;
     }
 }

@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static chess.domain.piece.PieceType.KNIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class KnightTest {
-    Piece knight = new Knight(PieceColor.WHITE);
+    Piece knight = KNIGHT.generate(PieceColor.WHITE);
 
     @Test
     void 나이트_EEN이동_검사() {

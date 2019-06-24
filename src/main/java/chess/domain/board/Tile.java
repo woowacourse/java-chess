@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -19,14 +20,14 @@ public class Tile implements Comparable<Tile> {
     static {
         TILE_POOL = Collections.unmodifiableMap(
                 Column.stream()
-                        .flatMap(Tile::tilesOf)
+                        .flatMap(column -> tilesOf(column, Tile::new))
                         .collect(Collectors.toMap(tile -> Pair.of(tile.column, tile.row), tile -> tile))
         );
     }
 
-    private static Stream<Tile> tilesOf(Column column) {
+    static Stream<Tile> tilesOf(Column column, BiFunction<Column, Row, Tile> t) {
         return Row.stream()
-                .map(row -> new Tile(column, row));
+                .map(row -> t.apply(column, row));
     }
 
     private final Column column;

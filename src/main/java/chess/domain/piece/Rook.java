@@ -1,15 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.Range;
+import chess.domain.MovingRange;
 import chess.domain.board.Tile;
 
 public class Rook extends Piece {
-    Rook(PieceColor color) {
-        super(color);
+    Rook(PieceColor color, PieceType type) {
+        super(color, type);
     }
 
     @Override
-    protected Range getRange(boolean isTargetEmpty, Tile current) {
-        return Range.ROOK_RANGE;
+    protected MovingRange getRange(boolean isTargetEmpty, Tile current) {
+        return MovingRange.ROOK_RANGE;
     }
 }

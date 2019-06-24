@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static chess.domain.piece.PieceType.KING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class KingTest {
-    Piece king = new King(PieceColor.WHITE);
+    Piece king = KING.generate(PieceColor.WHITE);
 
     @Test
     void 킹_오른쪽_이동_검사() {

@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static chess.domain.piece.PieceType.QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class QueenTest {
-    Piece queen = new Queen(PieceColor.WHITE);
+    Piece queen = QUEEN.generate(PieceColor.WHITE);
 
     @Test
     void 퀸_오른쪽_이동_검사() {

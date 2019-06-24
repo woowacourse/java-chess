@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static chess.domain.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RookTest {
-    Piece rook = new Rook(PieceColor.WHITE);
+    Piece rook = ROOK.generate(PieceColor.WHITE);
 
     @Test
     void 룩_오른쪽_이동_검사() {
