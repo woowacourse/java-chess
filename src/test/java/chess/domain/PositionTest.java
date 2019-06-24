@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,18 +20,21 @@ public class PositionTest {
 	@Test
 	void 위로_이동_가능한_최대_거리_계산() {
 		Position start = Position.getPosition(1, 1);
-		assertThat(start.getMaxDistance(Direction.TOP)).isEqualTo(7);
+		Position end = Position.getPosition(1, 5);
+		assertThat(start.getMaxDistance(Direction.TOP, end)).isEqualTo(4);
 	}
 
 	@Test
 	void 아래로_이동_가능한_최대_거리_계산() {
 		Position start = Position.getPosition(8, 5);
-		assertThat(start.getMaxDistance(Direction.BOTTOM)).isEqualTo(4);
+		Position end = Position.getPosition(1, 5);
+		assertThat(start.getMaxDistance(Direction.BOTTOM, end)).isEqualTo(4);
 	}
 
 	@Test
 	void 왼쪽_아래로_이동_가능한_최대_거리_계산() {
 		Position start = Position.getPosition(7, 8);
-		assertThat(start.getMaxDistance(Direction.LEFT_BOTTOM)).isEqualTo(6);
+		Position end = Position.getPosition(1, 5);
+		assertThat(start.getMaxDistance(Direction.LEFT_BOTTOM, end)).isEqualTo(6);
 	}
 }

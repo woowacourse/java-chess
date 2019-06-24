@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class Position {
 				;
 	}
 
-	public int getMaxDistance(Direction direction) {
+	public int getMaxDistance(Direction direction, Position end) {
 		int distance = 0;
 		Coordinate currentX = x;
 		Coordinate currentY = y;
@@ -42,9 +42,12 @@ public class Position {
 
 		while (currentX.canMove(directionX)
 				&& currentY.canMove(directionY)) {
-			distance++;
 			currentX = currentX.move(directionX);
 			currentY = currentY.move(directionY);
+			distance++;
+			if (currentX.equals(end.x) && currentY.equals(end.y)) {
+				break;
+			}
 		}
 		return distance;
 	}
@@ -52,6 +55,10 @@ public class Position {
 	public Position move(Direction direction) {
 		return new Position(this.x.move(direction.getDirectionX()),
 				this.y.move(direction.getDirectionY()));
+	}
+
+	public boolean isSameCoordinateX(int x) {
+		return this.x.equals(Coordinate.getCoordinate(x));
 	}
 
 	@Override
