@@ -151,4 +151,17 @@ public class GameTest {
         Game game = new Game(board);
         assertThrows(IllegalArgumentException.class, () -> game.move(new Point("a2"), new Point("c3")));
     }
+
+    @Test
+    void 턴변경_확인() {
+        Game game = new Game(BoardFactory.init());
+        game.changeTurn();
+        assertThat(game.getTurn()).isEqualTo(Team.BLACK);
+    }
+
+    @Test
+    void 차례가_아닐때_이동() {
+        Game game = new Game(BoardFactory.init()); // White team
+        assertThrows(IllegalArgumentException.class, () -> game.move(new Point("a7"), new Point("a6")));
+    }
 }

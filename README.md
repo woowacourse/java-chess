@@ -2,7 +2,6 @@
 ### Todo
 * 전체적으로 Refactor
     * Move 중복 제거
-* Game에 Turn 추가
 
 ### Done
 * Board 초기화
@@ -25,3 +24,4 @@
 * Pawn 대각선 이동일 때 상대팀 말 있어야 이동 가능
     * 상대팀 말 없으면 이동 불가
 * DB 연동 (DAO, VO)
+* Game에 Turn 추가

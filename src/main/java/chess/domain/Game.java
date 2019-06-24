@@ -16,13 +16,16 @@ public class Game {
     private static final int PAWN_ONE_BY_ONE_LINE = 1;
 
     private Map<Point, Piece> board;
+    private Team turn;
 
     public Game(Map<Point, Piece> board) {
         this.board = board;
+        this.turn = Team.WHITE;
     }
 
     public void move(Point start, Point end) {
         checkBlank(start);
+        checkTurn(start);
         Piece startPiece = board.get(start);
         Piece endPiece = board.get(end);
         checkSameTeam(startPiece, endPiece);
@@ -31,6 +34,12 @@ public class Game {
         checkMove(candidatePoints);
         candidatePoints.forEach(candidatePoint -> checkRoute(end, candidatePoint));
         movePiece(start, end);
+    }
+
+    private void checkTurn(Point start) {
+        if (!board.get(start).isSameTeam(turn)) {
+            throw new IllegalArgumentException("당신 차례가 아닙니다.");
+        }
     }
 
     private void movePiece(Point start, Point end) {
@@ -102,5 +111,13 @@ public class Game {
         }
 
         return sub;
+    }
+
+    public void changeTurn() {
+        this.turn = (this.turn == Team.WHITE) ? Team.BLACK : Team.WHITE;
+    }
+
+    public Team getTurn() {
+        return this.turn;
     }
 }
