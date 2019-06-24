@@ -2,87 +2,80 @@ package chess.domain;
 
 import chess.domain.moverule.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class BoardGenerator {
-	private static final char START_COLUMN = 'a';
-	private static final char LAST_COLUMN = 'h';
+	private static final List<MoveRule> MOVE_RULES;
+	private static final int PAWN_OFFSET = 1;
+	private static final int ROW_OF_TOP_PAWN = Row.MAX - PAWN_OFFSET;
+	private static final int ROW_OF_BOTTOM_PAWN = Row.MIN + PAWN_OFFSET;
+	private static final int EMPTY_OFFSET = 2;
+	private static final int ROW_OF_EMPTY_START = Row.MAX - EMPTY_OFFSET;
+	private static final int ROW_OF_EMPTY_END = Row.MIN + EMPTY_OFFSET;
+
+	static {
+		MOVE_RULES = Arrays.asList(Rook.getInstance(), Knight.getInstance()
+				, Bishop.getInstance(), Queen.getInstance()
+				, King.getInstance(), Bishop.getInstance()
+				, Knight.getInstance(), Rook.getInstance());
+	}
 
 	private BoardGenerator() {
 	}
 
 	public static Map<Position, Square> generate() {
 		Map<Position, Square> map = new TreeMap<>();
-		putBlackPieces(map);
-		putBlackPawns(map);
-
-		putEmptys(map);
-
-		putWhitePawns(map);
-		putWhitePieces(map);
+		putPiecesOfColor(map, Piece.Color.BLACK, Row.MAX);
+		putTopPawnsOfColor(map, Piece.Color.BLACK, ROW_OF_TOP_PAWN);
+		putEmpty(map, ROW_OF_EMPTY_START, ROW_OF_EMPTY_END);
+		putBottomPawnsOfColor(map, Piece.Color.WHITE, ROW_OF_BOTTOM_PAWN);
+		putPiecesOfColor(map, Piece.Color.WHITE, Row.MIN);
 
 		return map;
 	}
 
-	private static void putWhitePieces(Map<Position, Square> map) {
-		List<Position> positions;
-
-		positions = getColumnsOfRow(1);
-		map.put(positions.get(0), Square.of(positions.get(0), Piece.of(Piece.Color.WHITE, Rook.getInstance())));
-		map.put(positions.get(1), Square.of(positions.get(1), Piece.of(Piece.Color.WHITE, Knight.getInstance())));
-		map.put(positions.get(2), Square.of(positions.get(2), Piece.of(Piece.Color.WHITE, Bishop.getInstance())));
-		map.put(positions.get(3), Square.of(positions.get(3), Piece.of(Piece.Color.WHITE, Queen.getInstance())));
-		map.put(positions.get(4), Square.of(positions.get(4), Piece.of(Piece.Color.WHITE, King.getInstance())));
-		map.put(positions.get(5), Square.of(positions.get(5), Piece.of(Piece.Color.WHITE, Bishop.getInstance())));
-		map.put(positions.get(6), Square.of(positions.get(6), Piece.of(Piece.Color.WHITE, Knight.getInstance())));
-		map.put(positions.get(7), Square.of(positions.get(7), Piece.of(Piece.Color.WHITE, Rook.getInstance())));
-	}
-
-	private static void putBlackPieces(Map<Position, Square> map) {
-		List<Position> positions = getColumnsOfRow(8);
-		map.put(positions.get(0), Square.of(positions.get(0), Piece.of(Piece.Color.BLACK, Rook.getInstance())));
-		map.put(positions.get(1), Square.of(positions.get(1), Piece.of(Piece.Color.BLACK, Knight.getInstance())));
-		map.put(positions.get(2), Square.of(positions.get(2), Piece.of(Piece.Color.BLACK, Bishop.getInstance())));
-		map.put(positions.get(3), Square.of(positions.get(3), Piece.of(Piece.Color.BLACK, Queen.getInstance())));
-		map.put(positions.get(4), Square.of(positions.get(4), Piece.of(Piece.Color.BLACK, King.getInstance())));
-		map.put(positions.get(5), Square.of(positions.get(5), Piece.of(Piece.Color.BLACK, Bishop.getInstance())));
-		map.put(positions.get(6), Square.of(positions.get(6), Piece.of(Piece.Color.BLACK, Knight.getInstance())));
-		map.put(positions.get(7), Square.of(positions.get(7), Piece.of(Piece.Color.BLACK, Rook.getInstance())));
-	}
-
-	private static void putBlackPawns(Map<Position, Square> map) {
-		List<Position> positions = getColumnsOfRow(7);
-		for (Position position : positions) {
-			map.put(position, Square.of(position, Piece.of(Piece.Color.BLACK, Pawn.FIRST_TOP)));
+	private static void putPiecesOfColor(final Map<Position, Square> map, final Piece.Color color, final int rowIndex) {
+		List<Position> positions = getColumnsOfRow(rowIndex);
+		final int columnSize = positions.size();
+		for (int i = 0; i < columnSize; i++) {
+			map.put(positions.get(i), Square.of(positions.get(i), Piece.of(color, MOVE_RULES.get(i))));
 		}
 	}
 
-	private static void putEmptys(Map<Position, Square> map) {
+	private static void putTopPawnsOfColor(final Map<Position, Square> map, final Piece.Color color, final int rowIndex) {
+		List<Position> positions = getColumnsOfRow(rowIndex);
+		Piece piece = Piece.of(color, Pawn.FIRST_TOP);
+		putPawns(map, positions, piece);
+	}
+
+	private static void putBottomPawnsOfColor(final Map<Position, Square> map
+			, final Piece.Color color, final int rowIndex) {
+		List<Position> positions = getColumnsOfRow(rowIndex);
+		Piece piece = Piece.of(color, Pawn.FIRST_BOTTOM);
+		putPawns(map, positions, piece);
+	}
+
+	private static void putEmpty(final Map<Position, Square> map, final int from, final int to) {
 		List<Position> positions;
-		for (int i = 6; i >= 3; i--) {
+		Piece piece = Piece.of(Piece.Color.EMPTY, Empty.getInstance());
+		for (int i = from; i >= to; i--) {
 			positions = getColumnsOfRow(i);
-			for (Position position : positions) {
-				map.put(position, Square.of(position, Piece.of(Piece.Color.EMPTY, Empty.getInstance())));
-			}
-		}
-	}
-
-	private static void putWhitePawns(Map<Position, Square> map) {
-		List<Position> positions = getColumnsOfRow(2);
-		for (Position position : positions) {
-			map.put(position, Square.of(position, Piece.of(Piece.Color.WHITE, Pawn.FIRST_BOTTOM)));
+			putPawns(map, positions, piece);
 		}
 	}
 
 	private static List<Position> getColumnsOfRow(final int rowIndex) {
 		List<Position> positions = new ArrayList<>();
-		for (int i = START_COLUMN; i <= LAST_COLUMN; i++) {
+		for (int i = Column.MIN; i <= Column.MAX; i++) {
 			Position position = Position.of(String.valueOf(rowIndex), String.valueOf((char) i));
 			positions.add(position);
 		}
 		return positions;
+	}
+
+	private static void putPawns(Map<Position, Square> map, List<Position> positions, Piece piece) {
+		for (Position position : positions) {
+			map.put(position, Square.of(position, piece));
+		}
 	}
 }
