@@ -22,7 +22,7 @@ public class ChessGameDAO {
         return chessGameDAO;
     }
 
-    public List<Integer> findPreviousGameById(String name) {
+    public List<Integer> findPreviousGamesById(String name) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<Integer> previousGameId = new ArrayList<>();
