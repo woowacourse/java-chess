@@ -1,9 +1,6 @@
 package chess.dao;
 
-import chess.domain.Team;
-import chess.domain.Turn;
 import chess.dto.TurnDto;
-import jdk.nashorn.internal.scripts.JD;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

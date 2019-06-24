@@ -1,7 +1,5 @@
 package chess.dto;
 
-import chess.domain.Team;
-
 public class TurnDto {
     private String team;
 
