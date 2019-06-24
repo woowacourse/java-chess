@@ -1,8 +1,8 @@
-package chess.domain.MoveRule;
+package chess.domain.moverule;
 
 import chess.domain.Position;
 
-public class Queen extends AbstractRule {
+public class Queen extends AbstractMoveRule {
 	private static Queen INSTANCE = new Queen();
 	private static final double SCORE = 9;
 	public static final String NAME = "QUEEN";

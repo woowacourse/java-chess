@@ -1,8 +1,7 @@
 package chess.domain;
 
-import chess.domain.MoveRule.King;
-import chess.domain.MoveRule.Rook;
-import chess.domain.MoveRule.Rule;
+import chess.domain.moverule.King;
+import chess.domain.moverule.Rook;
 import chess.exception.ExitException;
 import org.junit.jupiter.api.Test;
 
@@ -76,11 +75,11 @@ public class SquareTest {
 	@Test
 	public void 킹이_잡혔을떄_예외발생() {
 		Position position1 = Position.of("1", "a");
-		Rule king = King.getInstance();
+        MoveRule king = King.getInstance();
 		Square target = Square.of(position1, Piece.of(Piece.Color.BLACK, king));
 
 		Position position2 = Position.of("2", "a");
-		Rule rook = Rook.getInstance();
+        MoveRule rook = Rook.getInstance();
 		Square origin = Square.of(position2, Piece.of(Piece.Color.BLACK, rook));
 
 		assertThrows(ExitException.class, () -> origin.attackPiece(target));

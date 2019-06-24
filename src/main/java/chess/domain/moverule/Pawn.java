@@ -1,16 +1,19 @@
-package chess.domain.MoveRule;
+package chess.domain.moverule;
 
+import chess.domain.MoveRule;
 import chess.domain.Position;
 
-public enum Pawn implements Rule {
+public enum Pawn implements MoveRule {
 	FIRST_TOP(-2),
 	SECOND_TOP(-1),
 	FIRST_BOTTOM(2),
 	SECOND_BOTTOM(1);
 
-	public static final int ZERO_VECTOR = 0;
-	private static final double SCORE = 1;
 	public static final String NAME = "PAWN";
+	private static final int ZERO_VECTOR = 0;
+	private static final double SCORE = 1;
+	private static final int STANDARD_OF_SIGN = 0;
+	private static final int ATTACK_MOVEMENT_DISTANCE = 2;
 
 	private final int vector;
 
@@ -38,12 +41,16 @@ public enum Pawn implements Rule {
 			return false;
 		}
 		final int vector = origin.vectorOfRow(target);
-//		return origin.sumRowAndColumn(target) == 2 && isSameSign(vector);
-		return origin.isSameSumOfPosition(target, 2) && isSameSign(vector);
+		return origin.isSameSumOfPosition(target, ATTACK_MOVEMENT_DISTANCE) && isSameSign(vector);
 	}
 
 	private boolean isSameSign(final int vector) {
-		return Integer.compare(0, this.vector) == Integer.compare(0, vector);
+		return Integer.compare(STANDARD_OF_SIGN, this.vector) == Integer.compare(STANDARD_OF_SIGN, vector);
+	}
+
+	@Override
+	public boolean isSameName(final String name) {
+		return NAME.equals(name);
 	}
 
 	@Override

@@ -1,9 +1,8 @@
 package chess.domain;
 
-import chess.domain.MoveRule.Empty;
-import chess.domain.MoveRule.King;
-import chess.domain.MoveRule.Pawn;
-import chess.domain.MoveRule.Rule;
+import chess.domain.moverule.Empty;
+import chess.domain.moverule.King;
+import chess.domain.moverule.Pawn;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -11,16 +10,16 @@ import java.util.Objects;
 public class Piece {
 	private static final Piece EMPTY = new Piece(Color.EMPTY, Empty.getInstance());
 
-	private Color color;
-	private Rule rule;
+	private final Color color;
+	private final MoveRule moveRule;
 
-	private Piece(final Color color, final Rule rule) {
+	private Piece(final Color color, final MoveRule moveRule) {
 		this.color = color;
-		this.rule = rule;
+		this.moveRule = moveRule;
 	}
 
-	public static Piece of(final Color color, final Rule rule) {
-		return new Piece(color, rule);
+	public static Piece of(final Color color, final MoveRule moveRule) {
+		return new Piece(color, moveRule);
 	}
 
 	public static Piece empty() {
@@ -29,6 +28,10 @@ public class Piece {
 
 	public boolean isSameColor(final Color other) {
 		return color == other;
+	}
+
+	public boolean isSameName(final String name) {
+		return moveRule.getName() == name;
 	}
 
 	public boolean isSameTeam(final Piece other) {
@@ -40,37 +43,37 @@ public class Piece {
 	}
 
 	public boolean isPawn() {
-		return Arrays.asList(Pawn.values()).contains(this.rule);
+		return Arrays.asList(Pawn.values()).contains(this.moveRule);
 	}
 
 	public boolean isValidMove(final Position origin, final Position target) {
-		return rule.isValidMove(origin, target);
+		return moveRule.isValidMove(origin, target);
 	}
 
 	public boolean isValidAttack(final Position origin, final Position target) {
-		return rule.isValidAttack(origin, target);
+		return moveRule.isValidAttack(origin, target);
 	}
 
 	public Piece orElseFirstPawn() {
-		if (this.rule == Pawn.FIRST_BOTTOM) {
+		if (this.moveRule == Pawn.FIRST_BOTTOM) {
 			return Piece.of(this.color, Pawn.SECOND_BOTTOM);
 		}
-		if (this.rule == Pawn.FIRST_TOP) {
+		if (this.moveRule == Pawn.FIRST_TOP) {
 			return Piece.of(this.color, Pawn.SECOND_TOP);
 		}
-		return Piece.of(this.color, this.rule);
+		return Piece.of(this.color, this.moveRule);
 	}
 
 	public double getScore() {
-		return rule.getScore();
+		return moveRule.getScore();
 	}
 
 	public boolean isKing() {
-		return this.rule == King.getInstance();
+		return this.moveRule == King.getInstance();
 	}
 
 	public String getSymbol() {
-		return PieceSymbol.getSymbol(this.color, this.rule);
+		return PieceSymbol.getSymbol(this);
 	}
 
 	@Override
@@ -79,19 +82,19 @@ public class Piece {
 		if (o == null || getClass() != o.getClass()) return false;
 		final Piece piece = (Piece) o;
 		return color == piece.color &&
-				Objects.equals(rule, piece.rule);
+				Objects.equals(moveRule, piece.moveRule);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(color, rule);
+		return Objects.hash(color, moveRule);
 	}
 
 	@Override
 	public String toString() {
 		return "Piece{" +
 				"color=" + color +
-				", rule=" + rule +
+				", moveRule=" + moveRule +
 				'}';
 	}
 

@@ -1,8 +1,8 @@
-package chess.domain.MoveRule;
+package chess.domain.moverule;
 
 import chess.domain.Position;
 
-public class Knight extends AbstractRule {
+public class Knight extends AbstractMoveRule {
 	private static Knight INSTANCE = new Knight();
 	private static final double SCORE = 2.5;
 	public static final String NAME = "KNIGHT";

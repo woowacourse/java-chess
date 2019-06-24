@@ -1,12 +1,13 @@
-package chess.domain.MoveRule;
+package chess.domain.moverule;
 
+import chess.domain.MoveRule;
 import chess.domain.Position;
 
-public abstract class AbstractRule implements Rule {
+public abstract class AbstractMoveRule implements MoveRule {
 	private final double score;
 	private final String name;
 
-	AbstractRule(final double score, final String name) {
+    AbstractMoveRule(final double score, final String name) {
 		this.score = score;
 		this.name = name;
 	}
@@ -21,7 +22,12 @@ public abstract class AbstractRule implements Rule {
 		return isValidMove(origin, target);
 	}
 
-	@Override
+    @Override
+    public boolean isSameName(final String name) {
+        return this.name.equals(name);
+    }
+
+    @Override
 	public double getScore() {
 		return score;
 	}

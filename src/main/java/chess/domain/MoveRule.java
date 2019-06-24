@@ -1,12 +1,12 @@
-package chess.domain.MoveRule;
+package chess.domain;
 
-import chess.domain.Position;
-
-public interface Rule {
+public interface MoveRule {
 
 	boolean isValidMove(final Position origin, final Position target);
 
 	boolean isValidAttack(final Position origin, final Position target);
+
+	boolean isSameName(final String name);
 
 	double getScore();
 

@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.MoveRule.Pawn;
+import chess.domain.moverule.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

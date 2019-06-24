@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.MoveRule.*;
+import chess.domain.moverule.*;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -19,7 +19,6 @@ public enum PieceSymbol {
 	BLACK_QUEEN(Piece.Color.BLACK, Queen.NAME, "♛"),
 	BLACK_ROOK(Piece.Color.BLACK, Rook.NAME, "♜");
 
-
 	public static final String EMPTY_SYMBOL = " ";
 
 	private final Piece.Color color;
@@ -32,23 +31,15 @@ public enum PieceSymbol {
 		this.symbol = symbol;
 	}
 
-	public static String getSymbol(Piece.Color color, Rule rule) {
+	public static String getSymbol(final Piece piece) {
 		return Arrays.asList(values())
 				.stream()
-				.filter(findSymbol(color, rule))
+				.filter(findSymbol(piece))
 				.map(pieceSymbol -> pieceSymbol.symbol)
 				.findFirst().orElse(EMPTY_SYMBOL);
 	}
 
-	private static Predicate<PieceSymbol> findSymbol(Piece.Color color, Rule rule) {
-		return symbol -> isSameColor(color, symbol) && isSameName(rule, symbol);
-	}
-
-	private static boolean isSameName(Rule rule, PieceSymbol symbol) {
-		return symbol.name.equals(rule.getName());
-	}
-
-	private static boolean isSameColor(Piece.Color color, PieceSymbol symbol) {
-		return symbol.color == color;
+	private static Predicate<PieceSymbol> findSymbol(final Piece piece) {
+		return (symbol -> piece.isSameColor(symbol.color) && piece.isSameName(symbol.name));
 	}
 }
