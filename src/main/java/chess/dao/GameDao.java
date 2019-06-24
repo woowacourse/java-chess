@@ -9,8 +9,8 @@ import java.sql.SQLException;
 public class GameDao {
     private static final String SELECT_TURN_BY_ID = "SELECT turn FROM game WHERE game_id = ?";
     private static final String INSERT_GAME = "INSERT INTO game(game_id) SELECT ifnull(MAX(game_id) + 1, 1) FROM game";
-    public static final String UPDATE_TURN = "UPDATE game SET turn = ? WHERE game_id = ?";
-    public static final String DELETE_BY_ID = "DELETE FROM game WHERE game_id = ?";
+    private static final String UPDATE_TURN = "UPDATE game SET turn = ? WHERE game_id = ?";
+    private static final String DELETE_BY_ID = "DELETE FROM game WHERE game_id = ?";
     private final DataSource dataSource;
 
     public GameDao(DataSource dataSource) {

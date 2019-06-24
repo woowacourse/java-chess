@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PieceDao {
-    private static final String INSERT_PIECE = "INSERT INTO unit(game_id, name, x, y, team) VALUES (?, ?, ?, ?, ?)";
-    private static final String SELECT_PIECE = "SELECT name, x, y, team FROM unit WHERE game_id = ?";
-    public static final String UPDATE_PIECE_BY_POSITION = "UPDATE unit SET x = ?, y = ? WHERE game_id = ? and x = ? and y = ?";
+    private static final String INSERT_PIECE = "INSERT INTO piece(game_id, name, x, y, team) VALUES (?, ?, ?, ?, ?)";
+    private static final String SELECT_PIECE = "SELECT name, x, y, team FROM piece WHERE game_id = ?";
+    private static final String UPDATE_PIECE_BY_POSITION = "UPDATE piece SET x = ?, y = ? WHERE game_id = ? and x = ? and y = ?";
+    private static final String DELETE_PIECE_BY_POSITION = "DELETE FROM piece WHERE game_id = ? and x = ? and y = ?";
     private final DataSource dataSource;
 
     public PieceDao(DataSource dataSource) {
@@ -102,7 +103,7 @@ public class PieceDao {
     }
 
     private void executeDeletePosition(Connection con, int gameId, Point target) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement("DELETE FROM unit WHERE game_id = ? and x = ? and y = ?")) {
+        try (PreparedStatement pstmt = con.prepareStatement(DELETE_PIECE_BY_POSITION)) {
             pstmt.setInt(1, gameId);
             pstmt.setInt(2, target.getPositionX());
             pstmt.setInt(3, target.getPositionY());
