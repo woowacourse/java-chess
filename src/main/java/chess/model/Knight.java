@@ -1,17 +1,15 @@
 package chess.model;
 
-public class Knight {
+public class Knight extends AbstractChessPiece{
     private static final int MOVABLE_DISTANCE = 5;
     private static final int SQUARE = 2;
-    private ChessPieceColor color;
-    private ChessPieceType type;
 
     public Knight(final ChessPieceColor color) {
-        this.color = color;
-        this.type = ChessPieceType.KNIGHT;
+        super(ChessPieceType.KNIGHT, color);
     }
 
-    public boolean canMove(final Point source, final Point target) {
+    @Override
+    public boolean canMove(final Point source, final Point target, final AbstractBoardNavigator navigator) {
         int xDiff = source.calculateXsDiff(target);
         int yDiff = source.calculateYsDiff(target);
 

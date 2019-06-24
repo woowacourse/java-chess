@@ -18,13 +18,13 @@ public class KnightTest {
     void 이동_가능_테스트() {
         Point source = new Point(4, 4);
         Point target = new Point(5, 6);
-        assertThat(knight.canMove(source, target)).isTrue();
+        assertThat(knight.canMove(source, target, null)).isTrue();
     }
 
     @Test
     void 이동_불가능_테스트() {
         Point source = new Point(4, 4);
         Point target = new Point(5, 5);
-        assertThat(knight.canMove(source, target)).isFalse();
+        assertThat(knight.canMove(source, target, null)).isFalse();
     }
 }
