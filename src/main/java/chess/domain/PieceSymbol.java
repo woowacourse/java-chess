@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.*;
+import chess.domain.MoveRule.*;
 
 import java.util.Arrays;
 import java.util.function.Predicate;

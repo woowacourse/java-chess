@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.*;
+import chess.domain.MoveRule.*;
 
 import java.util.ArrayList;
 import java.util.List;

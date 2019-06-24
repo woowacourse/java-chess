@@ -1,8 +1,8 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.King;
-import chess.domain.RuleImpl.Rook;
-import chess.domain.RuleImpl.Rule;
+import chess.domain.MoveRule.King;
+import chess.domain.MoveRule.Rook;
+import chess.domain.MoveRule.Rule;
 import chess.exception.ExitException;
 import org.junit.jupiter.api.Test;
 

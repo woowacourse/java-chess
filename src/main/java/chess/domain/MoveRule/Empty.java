@@ -1,4 +1,4 @@
-package chess.domain.RuleImpl;
+package chess.domain.MoveRule;
 
 public class Empty extends AbstractRule {
 	private static Empty INSTANCE = new Empty();

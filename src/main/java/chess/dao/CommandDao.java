@@ -29,7 +29,7 @@ public class CommandDao {
 			ps.setString(1, commandDto.getOrigin());
 			ps.setString(2, commandDto.getTarget());
 			ps.setLong(3, commandDto.getRound());
-			ps.setLong(4, commandDto.getRoom_id());
+			ps.setLong(4, commandDto.getRoomId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

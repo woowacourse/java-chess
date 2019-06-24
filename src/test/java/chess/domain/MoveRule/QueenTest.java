@@ -1,4 +1,4 @@
-package chess.domain.RuleImpl;
+package chess.domain.MoveRule;
 
 import chess.domain.Position;
 import org.junit.jupiter.api.Test;

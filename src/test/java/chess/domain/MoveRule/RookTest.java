@@ -1,4 +1,4 @@
-package chess.domain.RuleImpl;
+package chess.domain.MoveRule;
 
 import chess.domain.Piece;
 import chess.domain.Position;

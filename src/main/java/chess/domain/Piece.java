@@ -1,9 +1,9 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.Empty;
-import chess.domain.RuleImpl.King;
-import chess.domain.RuleImpl.Pawn;
-import chess.domain.RuleImpl.Rule;
+import chess.domain.MoveRule.Empty;
+import chess.domain.MoveRule.King;
+import chess.domain.MoveRule.Pawn;
+import chess.domain.MoveRule.Rule;
 
 import java.util.Arrays;
 import java.util.Objects;
