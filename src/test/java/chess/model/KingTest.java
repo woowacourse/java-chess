@@ -18,13 +18,13 @@ public class KingTest {
     void canMove_이동_가능_확인() {
         Point source = new Point(4, 4);
         Point target = new Point(3, 4);
-        assertThat(king.canMove(source, target)).isTrue();
+        assertThat(king.canMove(source, target, null)).isTrue();
     }
 
     @Test
     void canMove_이동_불가능_확인() {
         Point source = new Point(4, 4);
         Point target = new Point(3, 6);
-        assertThat(king.canMove(source, target)).isFalse();
+        assertThat(king.canMove(source, target, null)).isFalse();
     }
 }
