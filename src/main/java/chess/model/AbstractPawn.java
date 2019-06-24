@@ -4,6 +4,10 @@ public abstract class AbstractPawn extends AbstractChessPiece {
     public static final int START_POINT_STEP_SIZE = 2;
     public static final int NORMAL_STEP_SIZE = 1;
 
+    public static AbstractPawn getInstance(ChessPieceColor color) {
+        return color.equals(ChessPieceColor.BLACK) ? new BlackPawn() : new WhitePawn();
+    }
+
     public AbstractPawn(final ChessPieceColor color) {
         super(ChessPieceType.PAWN, color);
     }
