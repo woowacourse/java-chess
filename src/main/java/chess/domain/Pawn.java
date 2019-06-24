@@ -3,6 +3,28 @@ package chess.domain;
 import java.util.*;
 
 public class Pawn extends ChessPiece {
+    private enum PawnInfo {
+        BLACK(PieceType.PAWN_BLACK, ChessYCoordinate.RANK_7, -1),
+        WHITE(PieceType.PAWN_WHITE, ChessYCoordinate.RANK_2, 1);
+
+        private PieceType pieceType;
+        private ChessYCoordinate initValue;
+        private int direction;
+
+        PawnInfo(PieceType pieceType, ChessYCoordinate initValue, int direction) {
+            this.pieceType = pieceType;
+            this.initValue = initValue;
+            this.direction = direction;
+        }
+
+        public static PawnInfo valueOf(PieceType pieceType) {
+            return Arrays.stream(values())
+                    .filter(pawnInfo -> pawnInfo.pieceType.equals(pieceType))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("지원하지 않는 죄표입니다."));
+        }
+    }
+
     private static Map<Team, Pawn> pawns = new HashMap<>();
 
     static Pawn getInstance(Team team) {
@@ -32,33 +54,25 @@ public class Pawn extends ChessPiece {
             return Collections.emptySet();
         }
 
-        if (getType().getTeam() == Team.WHITE) {
-            return provePawn(pieceTeamProvider, from, ChessYCoordinate.RANK_2, INCREASE_ONE);
-        }
-
-        if (getType().getTeam() == Team.BLACK) {
-            return provePawn(pieceTeamProvider, from, ChessYCoordinate.RANK_7, DECREASE_ONE);
-        }
-
-        throw new IllegalArgumentException("사용할 수 없는 말입니다.");
+        return provePawn(pieceTeamProvider, from, PawnInfo.valueOf(getType()));
     }
 
-    private Set<ChessCoordinate> provePawn(PieceTeamProvider pieceTeamProvider, ChessCoordinate from, ChessYCoordinate yCoord, int sign) {
+    private Set<ChessCoordinate> provePawn(PieceTeamProvider pieceTeamProvider, ChessCoordinate from, PawnInfo pawnInfo) {
         Set<ChessCoordinate> candidates = new HashSet<>();
 
-        getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(sign).get())).ifPresent(candidates::add);
+        getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(pawnInfo.direction).get())).ifPresent(candidates::add);
 
         from.getX().move(DECREASE_ONE)
-                .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(sign).get()))
-                        .ifPresent(candidates::add));
-        from.getX().move(INCREASE_ONE)
-                .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(sign).get()))
+                .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(pawnInfo.direction).get()))
                         .ifPresent(candidates::add));
 
-        if (from.getY() == yCoord) {
-            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(sign * INCREASE_TWO).get())).ifPresent(candidates::add);
+        from.getX().move(INCREASE_ONE)
+                .ifPresent((x) -> getIfEnemy(pieceTeamProvider, ChessCoordinate.valueOf(x, from.getY().move(pawnInfo.direction).get()))
+                        .ifPresent(candidates::add));
+
+        if (from.getY() == pawnInfo.initValue) {
+            getIfEmpty(pieceTeamProvider, ChessCoordinate.valueOf(from.getX(), from.getY().move(pawnInfo.direction * INCREASE_TWO).get())).ifPresent(candidates::add);
         }
         return candidates;
     }
-
 }
