@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.direction.core.MoveStrategy;
 import chess.domain.direction.core.Square;
 import chess.domain.piece.core.Piece;
-import chess.domain.piece.core.Type;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

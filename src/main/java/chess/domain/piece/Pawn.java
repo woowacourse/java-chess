@@ -1,11 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.direction.Navigator;
-import chess.domain.direction.Route;
 import chess.domain.direction.Way;
 import chess.domain.direction.core.Direction;
 import chess.domain.direction.core.MoveStrategy;
-import chess.domain.direction.core.Square;
 import chess.domain.piece.core.Piece;
 import chess.domain.piece.core.Team;
 import chess.domain.piece.core.Type;
