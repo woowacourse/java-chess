@@ -185,4 +185,8 @@ public class Board {
 
         return new ScoreResult(scoreOfWhite, scoreOfBlack);
     }
+
+    public Tile getTile(String coordinates) {
+        return tiles.get(coordinates);
+    }
 }

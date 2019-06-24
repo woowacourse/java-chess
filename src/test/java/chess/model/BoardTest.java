@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.model.piece.King;
 import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Queen;
@@ -394,4 +395,11 @@ public class BoardTest {
         assertThat(result).isEqualTo(new ScoreResult(1.0, 9.0));
     }
 
+    @Test
+    void 말_초기화_확인() {
+        Board board = new Board(new NormalCreateStrategy());
+        assertThat(board.getTile("12")).isEqualTo(new Tile("12", Optional.ofNullable(new Pawn(true, "white"))));
+        assertThat(board.getTile("55")).isEqualTo(new Tile("55", Optional.ofNullable(null)));
+        assertThat(board.getTile("58")).isEqualTo(new Tile("58", Optional.ofNullable(new King("black"))));
+    }
 }
