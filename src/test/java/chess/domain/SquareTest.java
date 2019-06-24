@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.moverule.King;
 import chess.domain.moverule.Rook;
-import chess.exception.ExitException;
+import chess.exception.GameOverException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -82,6 +82,6 @@ public class SquareTest {
         MoveRule rook = Rook.getInstance();
 		Square origin = Square.of(position2, Piece.of(Piece.Color.BLACK, rook));
 
-		assertThrows(ExitException.class, () -> origin.attackPiece(target));
+		assertThrows(GameOverException.class, () -> origin.attackPiece(target));
 	}
 }

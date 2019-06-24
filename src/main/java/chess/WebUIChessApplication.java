@@ -7,7 +7,7 @@ import chess.controller.ChessController;
 import chess.controller.MainController;
 import chess.dao.CommandDao;
 import chess.dao.RoomDao;
-import chess.exception.ExitException;
+import chess.exception.GameOverException;
 import chess.service.ChessService;
 import chess.service.RoomService;
 import spark.ModelAndView;
@@ -55,7 +55,7 @@ public class WebUIChessApplication {
 				render(chessController.score(req), "score.html")
 		);
 
-		exception(ExitException.class, (exception, req, res) -> {
+        exception(GameOverException.class, (exception, req, res) -> {
 			long roomId = Long.parseLong(req.queryParams("roomId"));
 			res.redirect("/end?roomId=" + roomId);
 		});

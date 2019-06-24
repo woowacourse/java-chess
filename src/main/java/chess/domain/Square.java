@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.exception.ExitException;
+import chess.exception.GameOverException;
 
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public class Square {
 	}
 
 	private boolean isSameTeam(final Square target) {
-		return this.piece.isSameTeam(target.piece);
+        return this.piece.isSameColor(target.piece);
 	}
 
 	public boolean movePiece(final Square target) {
@@ -43,7 +43,7 @@ public class Square {
 
 	public void attackPiece(final Square target) {
 		if (target.piece.isKing()) {
-			throw new ExitException("attacked King");
+            throw new GameOverException("attacked King");
 		}
 		target.piece = piece.orElseFirstPawn();
 		this.piece = Piece.empty();

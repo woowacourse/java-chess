@@ -12,7 +12,7 @@ public enum PieceSymbol {
 	WHITE_KNIGHT(Piece.Color.WHITE, Knight.NAME, "♘"),
 	WHITE_QUEEN(Piece.Color.WHITE, Queen.NAME, "♕"),
 	WHITE_ROOK(Piece.Color.WHITE, Rook.NAME, "♖"),
-	BLACK_PAWN(Piece.Color.BLACK, Pawn.NAME, "♟️"),
+    BLACK_PAWN(Piece.Color.BLACK, Pawn.NAME, "♟"),
 	BLACK_BISHOP(Piece.Color.BLACK, Bishop.NAME, "♝"),
 	BLACK_KING(Piece.Color.BLACK, King.NAME, "♚"),
 	BLACK_KNIGHT(Piece.Color.BLACK, Knight.NAME, "♞"),
@@ -42,4 +42,8 @@ public enum PieceSymbol {
 	private static Predicate<PieceSymbol> findSymbol(final Piece piece) {
 		return (symbol -> piece.isSameColor(symbol.color) && piece.isSameName(symbol.name));
 	}
+
+    public String getSymbol() {
+        return symbol;
+    }
 }

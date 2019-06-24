@@ -48,16 +48,20 @@ public class Piece {
 		return color == other;
 	}
 
+	public boolean isSameColor(final Piece other) {
+		return this.color == other.color;
+	}
+
 	public boolean isSameName(final String name) {
 		return moveRule.getName().equals(name);
 	}
 
-	public boolean isSameTeam(final Piece other) {
-		return this.color == other.color;
-	}
-
 	public boolean isEmpty() {
 		return Color.EMPTY == color;
+	}
+
+	public boolean isKing() {
+		return this.moveRule == King.getInstance();
 	}
 
 	public boolean isPawn() {
@@ -84,10 +88,6 @@ public class Piece {
 
 	public double getScore() {
 		return moveRule.getScore();
-	}
-
-	public boolean isKing() {
-		return this.moveRule == King.getInstance();
 	}
 
 	public String getSymbol() {
