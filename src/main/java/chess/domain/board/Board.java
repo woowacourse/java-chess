@@ -21,10 +21,11 @@ public class Board {
     private Map<Square, Piece> board;
     static final int MIN_SIZE = 0;
     static final int MAX_SIZE = 8;
-//    private Team team;
+    private Team team;
 
-    public Board(Map<Square, Piece> board) {
+    public Board(Map<Square, Piece> board, Team team) {
         this.board = board;
+        this.team = team;
     }
 
     public static Board drawBoard() {
@@ -34,11 +35,11 @@ public class Board {
         board.putAll(SOLDIER.generate(6, WHITE));
         board.putAll(GENERAL.generate(7, WHITE));
 
-        return drawBoard(board);
+        return drawBoard(board, WHITE);
     }
 
-    public static Board drawBoard(Map<Square, Piece> board) {
-        return new Board(board);
+    public static Board drawBoard(Map<Square, Piece> board, Team team) {
+        return new Board(board, team);
     }
 
     public boolean hasPiece(Square source) {
@@ -80,27 +81,8 @@ public class Board {
         copyBoard.put(target, copyBoard.get(source).move());
         copyBoard.remove(source);
 
-        return drawBoard(copyBoard);
+        return drawBoard(copyBoard, team.equals(WHITE) ? BLACK : WHITE);
     }
-
-    public boolean gameOver() {
-        return (int) board.values().stream()
-                .filter(this::hasKing)
-                .count() != 2;
-    }
-
-    private boolean hasKing(Piece piece) {
-        if (piece.getType() == Type.KING) {
-//            team = piece.getTeam();
-            return true;
-        }
-        return false;
-    }
-
-//    public Team getTeam() {
-//        return team;
-//    }
-
 
     @Override
     public boolean equals(Object o) {
