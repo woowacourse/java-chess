@@ -22,6 +22,7 @@
 
         .board_movable {
             padding: 1px solid black;
+            background-image: url("/images/movable.png");
         }
     </style>
 
@@ -39,7 +40,7 @@
         <div>현재 턴</div>
         <div id="turn"></div>
         <div id="board" data-id="{{id}}" }></div>
-    </div<>
+    </div>
 
     <script>
         function stateToString(pieceType) {
@@ -97,7 +98,7 @@
 
         function initTurn() {
             const xhrTurn = new XMLHttpRequest();
-            xhrTurn.addEventListener("load", function() {
+            xhrTurn.addEventListener("load", function () {
                 document.getElementById('turn').innerHTML = xhrTurn.response;
             });
             xhrTurn.open("GET", "/currentTune?id=" + id);
@@ -159,13 +160,11 @@
         }
 
         function drawMovableItem() {
-            const states = JSON.parse(this.response);
-            console.log(states);
+            let states = JSON.parse(this.response);
 
             states.forEach(element => {
                 document.querySelectorAll('.board').forEach(img => {
                     img.classList.remove('board_movable');
-                    img.setAttribute('src', "");
                 });
             });
 
@@ -173,8 +172,7 @@
                 document.querySelectorAll('.board').forEach(img => {
                     if (img.getAttribute('data-coord') === element) {
                         img.classList.add('board_movable');
-                        img.setAttribute('src', "/images/movable.png");
-                    } 
+                    }
                 });
             });
 
@@ -189,7 +187,7 @@
         }
 
         function moveFromTo() {
-            let to =this.getAttribute("data-coord");            
+            let to = this.getAttribute("data-coord");
             const moveXhr = new XMLHttpRequest();
             moveXhr.addEventListener("load", drawBoard);
             moveXhr.open("PUT", "/move-piece?id=" + id + "&from=" + from + "&to=" + to);
