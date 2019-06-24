@@ -18,12 +18,13 @@ public class ChessBoardInitializer implements Initializer {
     }
 
     private void createSingleTeam(Map<Position, Unit> map, Team team) {
-        if (team.equals(Team.BLACK)) {
+        if (team.equals(Team.WHITE)) {
             initPawn(map, 1, team);
             initRook(map, 0, team);
             initKnights(map, 0, team);
             initBishop(map, 0, team);
             initKingQueen(map, 0, team);
+            return;
         }
         initPawn(map, 6, team);
         initRook(map, 7, team);

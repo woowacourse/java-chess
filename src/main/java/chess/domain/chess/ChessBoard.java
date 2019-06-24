@@ -48,7 +48,7 @@ public class ChessBoard {
 
         if ((!targetUnit.isPresent()) || (sourceUnit.get().isEqualTeam(targetUnit.get()))) {
             if (!sourceUnit.get().validateDirection(vector)) {
-                throw new IllegalMovingRuleException(sourceUnit.toString() + "의 규칙에 어긋납니다.");
+                throw new IllegalMovingRuleException(sourceUnit.get().toString() + "의 규칙에 어긋납니다.");
             }
         }
     }

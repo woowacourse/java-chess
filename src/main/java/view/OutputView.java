@@ -17,11 +17,12 @@ public class OutputView {
             printCheckBoardRow(chessBoard, i);
             System.out.println();
         }
+        System.out.println();
     }
 
     private static void printCheckBoardRow(ChessBoard chessBoard, int i) {
         for (int j = Position.MIN_POSITION; j < Position.MAX_POSITION; j++) {
-            Optional<Unit> optional = chessBoard.getUnit(Position.create(Position.MAX_POSITION - 1 - j, i));
+            Optional<Unit> optional = chessBoard.getUnit(Position.create(j, Position.MAX_POSITION - 1 - i));
             System.out.print(printUnit(optional));
         }
     }
