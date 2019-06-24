@@ -40,12 +40,12 @@ public class Position {
         return new Position(new Coordinate(x.add(operand.getX())), new Coordinate(y.add(operand.getY())));
     }
 
-    public Coordinate getX() {
-        return x;
+    public int getXCoordinate() {
+        return x.getCoordinate();
     }
 
-    public Coordinate getY() {
-        return y;
+    public int getYCoordinate() {
+        return y.getCoordinate();
     }
 
     @Override
