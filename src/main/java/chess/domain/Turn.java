@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.dto.TurnDto;
+
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 
@@ -14,8 +16,8 @@ public class Turn {
         return new Turn(WHITE);
     }
 
-    public static Turn load(Team team) {
-        return new Turn(team);
+    public static Turn load(String team) {
+        return new Turn(Team.valueOf(team));
     }
 
     public Turn turnChanged() {
@@ -36,5 +38,12 @@ public class Turn {
 
     public Team getTeam() {
         return team;
+    }
+
+    public TurnDto toDto() {
+        TurnDto turnDto = new TurnDto();
+        turnDto.setTeam(team.name());
+
+        return turnDto;
     }
 }
