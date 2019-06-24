@@ -30,8 +30,14 @@ public class RowTest {
     }
 
     @Test
-    public void 범위_유효성_테스트() {
+    public void 범위_유효성_MIN_테스트() {
         String lessThanMin = String.valueOf(Row.MIN - 1);
+        assertThrows(IllegalArgumentException.class, () -> Row.from(lessThanMin));
+    }
+
+    @Test
+    public void 범위_유효성_MAX_테스트() {
+        String lessThanMin = String.valueOf(Row.MAX + 1);
         assertThrows(IllegalArgumentException.class, () -> Row.from(lessThanMin));
     }
 }

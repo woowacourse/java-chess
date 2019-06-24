@@ -38,7 +38,13 @@ public class ColumnTest {
     }
 
     @Test
-    public void 범위_유효성_테스트() {
+    public void 범위_유효성_MIN_테스트() {
+        String overThanMax = String.valueOf(Column.MIN - 1);
+        assertThrows(IllegalArgumentException.class, () -> Column.from(overThanMax));
+    }
+
+    @Test
+    public void 범위_유효성_MAX_테스트() {
         String overThanMax = String.valueOf(Column.MAX + 1);
         assertThrows(IllegalArgumentException.class, () -> Column.from(overThanMax));
     }
