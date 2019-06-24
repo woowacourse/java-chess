@@ -13,11 +13,7 @@ public class ChessGame {
         turn = ChessTeam.WHITE;
     }
 
-    public ChessGame(Board board) {
-        this.board = board;
-    }
-
-    public boolean play(String input) {
+    public void play(String input) {
         String[] split = input.split(" ");
         if (split.length != 3) {
             throw new IllegalArgumentException();
@@ -28,10 +24,9 @@ public class ChessGame {
 
         board.play(parse(split[1]), parse(split[2]), turn);
         turn = turn.change();
-        return checkKing();
     }
 
-    private boolean checkKing() {
+    public boolean checkEndGame() {
         return board.check(turn);
     }
 
@@ -50,8 +45,8 @@ public class ChessGame {
         return board.get(point);
     }
 
-    public ChessResult result(ChessTeam white) {
-        return new ChessResult(board.result(white));
+    public ChessResult result(ChessTeam team) {
+        return new ChessResult(board.result(team), team);
     }
 
     public Map<String, String> status() {
