@@ -17,12 +17,12 @@ public enum Direction {
 
     private final int x;
     private final int y;
-    private final MoveCheck moveCheck;
+    private final DirectionCheck directionCheck;
 
-    Direction(int x, int y, MoveCheck moveCheck) {
+    Direction(int x, int y, DirectionCheck directionCheck) {
         this.x = x;
         this.y = y;
-        this.moveCheck = moveCheck;
+        this.directionCheck = directionCheck;
     }
 
     public boolean isDiagonal() {
@@ -39,7 +39,7 @@ public enum Direction {
 
     public static Direction valueOf(int x, int y) {
         for (Direction direction : Direction.values()) {
-            if (direction.moveCheck.check(x, y)) {
+            if (direction.directionCheck.check(x, y)) {
                 return direction;
             }
         }

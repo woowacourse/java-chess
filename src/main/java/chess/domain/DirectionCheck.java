@@ -1,5 +1,5 @@
 package chess.domain;
 
-public interface MoveCheck {
+public interface DirectionCheck {
     boolean check(int x, int y);
 }
