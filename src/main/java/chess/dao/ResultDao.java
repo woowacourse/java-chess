@@ -7,6 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ResultDao {
+
+    private static ResultDao instance;
+
+    private ResultDao() {
+    }
+    public static ResultDao getInstance() {
+        if (instance == null) {
+            instance = new ResultDao();
+        }
+        return instance;
+    }
+
     public void add(ResultDto resultDto) throws SQLException {
         String query = "INSERT INTO result VALUES (1, ?, ?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);

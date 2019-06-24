@@ -8,6 +8,17 @@ import java.sql.SQLException;
 
 public class TurnDao {
 
+    private static TurnDao instance;
+
+    private TurnDao() {
+    }
+    public static TurnDao getInstance() {
+        if (instance == null) {
+            instance = new TurnDao();
+        }
+        return instance;
+    }
+
     public void add(TurnDto turnDto) throws SQLException {
         String query = "INSERT INTO turn VALUES (?, ?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);

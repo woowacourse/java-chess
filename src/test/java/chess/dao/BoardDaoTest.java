@@ -15,7 +15,7 @@ public class BoardDaoTest {
 
     @BeforeEach
     void setUp() {
-        boardDao = new BoardDao();
+        boardDao = BoardDao.getInstance();
     }
 
     @Test

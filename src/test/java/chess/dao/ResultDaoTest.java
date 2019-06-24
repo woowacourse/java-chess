@@ -14,7 +14,7 @@ public class ResultDaoTest {
 
     @BeforeEach
     void setUp() {
-        resultDao = new ResultDao();
+        resultDao = ResultDao.getInstance();
     }
 
     @Test

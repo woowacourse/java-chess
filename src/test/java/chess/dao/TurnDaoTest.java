@@ -14,7 +14,7 @@ public class TurnDaoTest {
 
     @BeforeEach
     void setUp() {
-        turnDao = new TurnDao();
+        turnDao = TurnDao.getInstance();
     }
 
     @Test
