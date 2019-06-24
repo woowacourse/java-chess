@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Path;
-import chess.Player;
-import chess.Position;
+import chess.domain.Path;
+import chess.domain.Player;
+import chess.domain.Position;
 import chess.exception.NotFoundPathException;
 import org.junit.jupiter.api.Test;
 

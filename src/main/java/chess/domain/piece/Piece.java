@@ -1,20 +1,22 @@
-package chess.piece;
+package chess.domain.piece;
 
 import java.util.List;
 
-import chess.*;
+import chess.domain.*;
 import chess.exception.NotFoundPathException;
 
 public abstract class Piece {
 	private final Player player;
 	private final List<MovementInfo> movementInfos;
 
+	private Score score;
 	protected Position position;
 
-	public Piece(Player player, List<MovementInfo> movementInfos, Position position) {
+	public Piece(Player player, List<MovementInfo> movementInfos, Position position, Score score) {
 		this.player = player;
 		this.movementInfos = movementInfos;
 		this.position = position;
+		this.score = score;
 	}
 
 	public Path getMovablePath(Position end) {
@@ -23,17 +25,9 @@ public abstract class Piece {
 
 	public abstract Path getAttackablePath(Position end);
 
-	private int getValidDistance(MovementInfo movementInfo, Direction direction) {
-		int distance = movementInfo.getMaxDistance();
-		if (distance > position.getMaxDistance(direction)) {
-			distance = position.getMaxDistance(direction);
-		}
-		return distance;
-	}
-
 	Path getValidPath(Position end, List<MovementInfo> movementInfos) {
 		for (MovementInfo movementInfo : movementInfos) {
-			Path path = getPath(movementInfo);
+			Path path = getPath(movementInfo, end);
 			if (path.contains(end)) {
 				path.removeEndPosition();
 				return path;
@@ -42,17 +36,32 @@ public abstract class Piece {
 		throw new NotFoundPathException();
 	}
 
-	private Path getPath(MovementInfo movementInfo) {
+	private Path getPath(MovementInfo movementInfo, Position end) {
 		Path path = new Path();
 		Direction direction = movementInfo.getDirection();
 		Position currentPosition = position;
-		int validDistance = getValidDistance(movementInfo, direction);
+		int validDistance = getValidDistance(movementInfo, direction, end);
 
 		for (int i = 0; i < validDistance; i++) {
 			currentPosition = currentPosition.move(direction);
 			path.add(currentPosition);
 		}
 		return path;
+	}
+
+	private int getValidDistance(MovementInfo movementInfo, Direction direction, Position end) {
+		int distance = movementInfo.getMaxDistance();
+		if (distance > position.getMaxDistance(direction, end)) {
+			distance = position.getMaxDistance(direction, end);
+		}
+		return distance;
+	}
+
+	public abstract void changePosition(Position position);
+
+	protected void changeMovementInfo(MovementInfo movementInfo) {
+		this.movementInfos.clear();
+		this.movementInfos.add(movementInfo);
 	}
 
 	public boolean isSamePosition(Position position) {
@@ -67,5 +76,13 @@ public abstract class Piece {
 		return this.player.equals(player);
 	}
 
+	public Score getScore() {
+		return score;
+	}
 
+	public abstract boolean isPawn();
+
+	public boolean isSameCoordinateX(int x) {
+		return position.isSameCoordinateX(x);
+	}
 }
