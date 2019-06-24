@@ -6,12 +6,16 @@ import static chess.domain.Team.WHITE;
 public class Turn {
     private Team team;
 
-    private Turn() {
-        this.team = WHITE;
+    public Turn(Team team) {
+        this.team = team;
     }
 
     public static Turn init() {
-        return new Turn();
+        return new Turn(WHITE);
+    }
+
+    public static Turn load(Team team) {
+        return new Turn(team);
     }
 
     public Turn turnChanged() {
