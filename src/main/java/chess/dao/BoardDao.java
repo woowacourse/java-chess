@@ -5,8 +5,8 @@ import chess.dto.BoardDto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoardDao {
 
@@ -14,27 +14,30 @@ public class BoardDao {
         String query = "INSERT INTO board VALUES (?, ?)";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
-        Map<String, String> board = boardDto.getBoard();
-        for (String key : board.keySet()) {
-            pstmt.setString(1, key);
-            pstmt.setString(2, board.get(key));
-            pstmt.executeUpdate();
+        pstmt.setString(1, boardDto.getPosition());
+        pstmt.setString(2, boardDto.getPieceName());
+
+        pstmt.executeUpdate();
+    }
+
+    public void addAll(List<BoardDto> boardDtos) throws SQLException {
+        for (BoardDto boardDto : boardDtos) {
+            add(boardDto);
         }
     }
     
-    public BoardDto findAll() throws SQLException {
+    public List<BoardDto> findAll() throws SQLException {
         String query = "SELECT * FROM board";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
 
-        Map<String, String> board = new HashMap<>();
+        List<BoardDto> result = new ArrayList<>();
         while(rs.next()) {
-            board.put(rs.getString(1), rs.getString(2));
+            BoardDto boardDto = new BoardDto(rs.getString(1), rs.getString(2));
+            result.add(boardDto);
         }
 
-        BoardDto boardDto = new BoardDto();
-        boardDto.setBoard(board);
-        return boardDto;
+        return result;
     }
 
     public void deleteAll() throws SQLException {

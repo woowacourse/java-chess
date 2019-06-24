@@ -1,15 +1,29 @@
 package chess.dto;
 
-import java.util.Map;
-
 public class BoardDto {
-    private Map<String, String> board;
+    private String position;
+    private String pieceName;
 
-    public Map<String, String> getBoard() {
-        return board;
+    public BoardDto() {}
+
+    public BoardDto(final String position, final String pieceName) {
+        this.position = position;
+        this.pieceName = pieceName;
     }
 
-    public void setBoard(final Map<String, String> board) {
-        this.board = board;
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(final String position) {
+        this.position = position;
+    }
+
+    public String getPieceName() {
+        return pieceName;
+    }
+
+    public void setPieceName(final String pieceName) {
+        this.pieceName = pieceName;
     }
 }
