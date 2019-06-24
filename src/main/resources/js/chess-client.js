@@ -1,27 +1,54 @@
-async function fetchJson(url) {
-    const response = await fetch(url);
-    if (response.ok) {
-        const json = await response.json();
-        return json;
-    }
-    throw new Error("Server response status " + response.status);
-}
-
 const chessStart = () => {
-    // board = Chessboard("myBoard", config)
-    fetchJson("/api/board")
-    .then(response => {
-        if (response.queryStatus === "ok") return response.board;
-    }).then(board => {
-        board = Chessboard("myBoard", makeConfig(board));
+    $.ajax({
+        type: "POST",
+        url: "/api/init",
+        success: function(response) {
+            if (response.queryStatus === "ok") {
+                board = Chessboard("myBoard", makeConfig(response.board));
+            };
+        }
     });
 }
 
-const onDrop = (source, target, piece) => {
-    console.log('Source: ' + source)
-    console.log('Target: ' + target)
-    console.log('Piece: ' + piece)
+const pieceMove = (source, target) => {
+    const move = {source, target};
+    return $.ajax({
+        type: "POST",
+        url: "/api/pieceMove",
+        data: JSON.stringify(move),
+        dataType: "json",
+        async: false
+    }).responseJSON;
 };
+
+const onDrop = (source, target) => {
+    const result = pieceMove(source, target);
+    if (result.queryStatus === "ok") {
+        isGameover(result);
+        return;
+    };
+    return "snapback";
+};
+
+const getScores = () => {
+    $.ajax({
+        type: "GET",
+        url: "/api/score",
+        success: function(response) {
+            if (response.queryStatus === "ok") {
+                const message = "백: " + response.score.w + "점\n흑: " + response.score.b + "점";
+                alert(message);
+            }
+        }
+    });
+};
+
+const isGameover = (result) => {
+    if (result.gameover) {
+        alert("게임 종료");
+        getScores();
+    }
+}
 
 const configTemplate = {
     draggable: true,

@@ -1,11 +1,13 @@
 package chess.view;
 
+import chess.model.Play;
 import chess.model.Side;
 import chess.model.board.Position;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
 import chess.model.unit.UnitClass;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ public class JsonOutput {
     private static final String STATUS_OK = "ok";
     private static final String STATUS_FAILED = "failed";
     private static final String ERROR = "error";
+    private static final DecimalFormat decimalFormat = new DecimalFormat("0.#");
     private static final Map<UnitClass, String> UNIT_CLASS_STRING_MAP = new HashMap<>();
 
     static {
@@ -42,6 +45,10 @@ public class JsonOutput {
         );
     }
 
+    public static String responseOk() {
+        return squareBracketWrap(keyAndStringValue(QUERY_STATUS, STATUS_OK));
+    }
+
     public static String responseFailed(final String errorMessage) {
         return squareBracketWrap(
                 keyAndStringValue(QUERY_STATUS, STATUS_FAILED)
@@ -55,6 +62,16 @@ public class JsonOutput {
                 positionList.stream()
                 .map(JsonOutput::positionToJsonKeyValue)
                 .collect(Collectors.joining(COMMA_SEPARATOR))
+        );
+    }
+
+    public static String scoreAll(final Play play) {
+        return squareBracketWrap(
+                keyAndStringValue(PIECE_SIDE_WHITE,
+                        decimalFormat.format(play.calcScore(Side.WHITE)))
+                + COMMA_SEPARATOR
+                + keyAndStringValue(PIECE_SIDE_BLACK,
+                        decimalFormat.format(play.calcScore(Side.BLACK)))
         );
     }
 
