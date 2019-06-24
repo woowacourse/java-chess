@@ -4,10 +4,10 @@ import chess.domain.exceptions.IllegalSourceException;
 import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.exceptions.InvalidRouteException;
 import chess.domain.piece.King;
-import chess.view.WebUtil;
+import chess.dto.BoardDto;
+import chess.dto.TurnDto;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class ChessBoard {
     private Turn turn;
@@ -17,16 +17,16 @@ public class ChessBoard {
     public ChessBoard() {
         this.turn = Turn.init();
         this.board = Board.init();
-        this.resultCounter = new ResultCounter();
+        this.resultCounter = ResultCounter.init();
     }
 
-    public ChessBoard(Board board, Turn turn) {
+    public ChessBoard(Board board, Turn turn, ResultCounter resultCounter) {
         this.turn = turn;
         this.board = board;
-        this.resultCounter = new ResultCounter();
+        this.resultCounter = resultCounter;
     }
 
-    public boolean move(Position source, Position target) {
+    public AbstractPiece move(Position source, Position target) {
         AbstractPiece sourcePiece = board.at(source);
         AbstractPiece targetPiece = board.at(target);
 
@@ -37,7 +37,7 @@ public class ChessBoard {
         board.move(source, target, sourcePiece);
         resultCounter.addCount(targetPiece);
         turn.turnChanged();
-        return gameEnd(targetPiece);
+        return targetPiece;
     }
 
     private void validSourceTarget(final AbstractPiece sourcePiece, final AbstractPiece targetPiece) {
@@ -70,14 +70,6 @@ public class ChessBoard {
         }
     }
 
-    private boolean gameEnd(AbstractPiece abstractPiece) {
-        return abstractPiece instanceof King;
-    }
-
-    public double totalScore(Team team) {
-        return resultCounter.totalScore(team);
-    }
-
     private boolean isValidRoute(final Position source, final Position target, final Direction direction) {
         if (direction == Direction.KNIGHT) {
             return true;
@@ -90,20 +82,19 @@ public class ChessBoard {
         return true;
     }
 
-    // TODO: dto를 사용해서 값을 변환하도록 변경
-    public Map<String, String> getBoard2() {
-        Map<String, String> result = new HashMap<>();
-        board.getBoard().forEach((key, value) -> {
-            String resultValue = value.getName();
-            if (value.getTeam() == Team.BLACK) {
-                resultValue = resultValue.toUpperCase();
-            }
-            result.put(WebUtil.positionParser(key), resultValue);
-        });
-        return result;
+    public double totalScore(Team team) {
+        return resultCounter.totalScore(team);
+    }
+
+    public TurnDto turnToDto() {
+        return turn.toDto();
+    }
+
+    public List<BoardDto> boardToDto() {
+        return board.toDto();
     }
 
     public Team getWinner() {
-        return turn.getTeam();
+        return turn.getTeam() == Team.BLACK ? Team.WHITE : Team.BLACK;
     }
 }
