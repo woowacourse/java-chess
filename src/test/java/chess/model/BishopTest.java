@@ -3,6 +3,9 @@ package chess.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BishopTest {
@@ -16,16 +19,22 @@ public class BishopTest {
 
     @Test
     void 이동_가능_테스트() {
-        Point source = new Point(3, 3);
-        Point target = new Point(8, 8);
-        assertThat(Bishop.canMove(source, target)).isTrue();
+        Map<Point, AbstractChessPiece> board = new HashMap<>();
+        board.put(new Point(8,8), bishop);
+
+        Point source = new Point(8, 8);
+        Point target = new Point(1, 1);
+        assertThat(bishop.canMove(source, target, (Point p) -> board.get(p))).isTrue();
     }
 
     @Test
     void 이동_불가능_테스트() {
-        Point source = new Point(3, 3);
-        Point target = new Point(3, 8);
-        assertThat(Bishop.canMove(source, target)).isFalse();
-    }
+        Map<Point, AbstractChessPiece> board = new HashMap<>();
+        board.put(new Point(8,8), bishop);
+        board.put(new Point(5, 5), new King(ChessPieceColor.WHITE));
 
+        Point source = new Point(8, 8);
+        Point target = new Point(1, 1);
+        assertThat(bishop.canMove(source, target, (Point p) -> board.get(p))).isFalse();
+    }
 }
