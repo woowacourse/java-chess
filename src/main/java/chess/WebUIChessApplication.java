@@ -1,10 +1,9 @@
 package chess;
 
-import chess.domain.Piece;
 import chess.domain.ChessBoard;
+import chess.domain.Piece;
 import chess.domain.Team;
 import chess.domain.exceptions.ChessPlayException;
-import chess.domain.piece.King;
 import chess.domain.utils.InputParser;
 import chess.dto.ResultDto;
 import chess.service.ChessBoardService;
@@ -14,6 +13,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static spark.Spark.*;
 
@@ -47,13 +47,15 @@ public class WebUIChessApplication {
                 res.redirect("/result?winner=" + winner.name());
             }
 
-            ResultDto resultDto = new ResultDto();
+            ResultDto resultDto = null;
             if (targetPiece != null) {
+                resultDto = new ResultDto();
                 resultDto.setName(targetPiece.getName());
-                resultDto.setTeam(targetPiece.getTeam().name());
+                resultDto.setTeam(targetPiece.getEnemy().name());
             }
+            Optional<ResultDto> optionalResultDto = Optional.ofNullable(resultDto);
 
-            chessBoardService.move(chessBoard.boardToDto(), chessBoard.turnToDto(), resultDto);
+            chessBoardService.move(chessBoard.boardToDto(), chessBoard.turnToDto(), optionalResultDto);
             return render(model, "game_play.html");
         });
 
