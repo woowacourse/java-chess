@@ -10,8 +10,6 @@ import java.util.stream.IntStream;
 public class HorizontalMove implements Move {
     private static HorizontalMove horizontalMove;
 
-    private HorizontalMove() {}
-
     public static HorizontalMove getInstance() {
         if (Objects.isNull(horizontalMove))
             return new HorizontalMove();

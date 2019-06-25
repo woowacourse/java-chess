@@ -6,12 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class KingMove implements Move{
+public class KingMove implements Move {
     private static final int MAX_DISTANCE = 2;
 
     private static KingMove kingMove;
-
-    private KingMove() {}
 
     public static KingMove getInstance() {
         if (Objects.isNull(kingMove))

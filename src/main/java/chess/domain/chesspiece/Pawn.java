@@ -22,5 +22,4 @@ public class Pawn extends ChessPiece {
     public List<Position> getRouteOfPiece(Position source, Position target) {
         return movingMap.get("pawn").move(source, target);
     }
-
 }

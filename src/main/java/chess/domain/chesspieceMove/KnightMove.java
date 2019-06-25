@@ -11,9 +11,6 @@ public class KnightMove implements Move {
     private static final int MIN_DISTANCE = 1;
     private static KnightMove knightMove;
 
-    private KnightMove() {
-    }
-
     public static KnightMove getInstance() {
         if (Objects.isNull(knightMove))
             return new KnightMove();

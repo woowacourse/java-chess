@@ -10,14 +10,13 @@ import java.util.stream.IntStream;
 public class VerticalMove implements Move {
     private static VerticalMove verticalMove;
 
-    private VerticalMove() {}
-
     public static VerticalMove getInstance() {
         if (Objects.isNull(verticalMove))
             return new VerticalMove();
 
         return verticalMove;
     }
+
     @Override
     public List<Position> move(Position source, Position target) {
         if (!isInRoute(source, target)) {

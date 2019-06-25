@@ -2,15 +2,13 @@ package chess.domain.chesspieceMove;
 
 import chess.domain.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class DiagonalMove implements Move {
     private static DiagonalMove diagonalMove;
-
-    private DiagonalMove() {
-    }
 
     public static DiagonalMove getInstance() {
         if (Objects.isNull(diagonalMove))
@@ -25,16 +23,13 @@ public class DiagonalMove implements Move {
             throw new IllegalArgumentException();
         }
 
-        List<Position> positions = new ArrayList<>();
-
-        int signX = (target.calculateColumnDistance(source)) % 2;
-        int signY = (target.calculateRowDistance(source)) % 2;
+        int signX = target.calculateColumnDistance(source) / Math.abs(target.calculateColumnDistance(source));
+        int signY = target.calculateRowDistance(source) / Math.abs(target.calculateRowDistance(source));
         int count = Math.abs(source.calculateColumnDistance(target));
 
-        for (int i = 1; i <= count; i++) {
-            positions.add(Position.of(source.getY() + i * signY, source.getX() + i * signX));
-        }
-        return positions;
+        return IntStream.rangeClosed(1, count)
+                .mapToObj(i -> Position.of(source.getY() + i * signY, source.getX() + i * signX))
+                .collect(Collectors.toList());
     }
 
     @Override

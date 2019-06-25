@@ -2,7 +2,6 @@ package chess.domain.chesspiece;
 
 import chess.domain.Position;
 import chess.domain.chesspieceMove.HorizontalMove;
-import chess.domain.chesspieceMove.Move;
 import chess.domain.chesspieceMove.VerticalMove;
 
 import java.util.HashMap;
@@ -24,6 +23,7 @@ public class Rook extends ChessPiece {
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
         String moveName = "horizontal";
+
         if (source.isInLine(target) == 0) {
             moveName = "vertical";
         }

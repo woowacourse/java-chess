@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Knight extends ChessPiece {
-
     public Knight(Team team) {
         super(team);
         initMovingMap();
