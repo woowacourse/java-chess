@@ -24,7 +24,7 @@ class BoardTest {
     public void King을_잡았을때_테스트() {
         Board board = BoardGenerator.createBoard(BoardInputForTest.CHECKMATE_BOARD);
         // pawn(White)
-        boolean result =board.movePiece(
+        boolean result = board.movePiece(
                 Position.of(Position.makeKey(4, 3)), Position.of(Position.makeKey(3, 2)));
 
         assertThat(result).isTrue();
@@ -37,5 +37,11 @@ class BoardTest {
             // Knight(Black)
             board.movePiece(Position.of(Position.makeKey(0, 1)), Position.of(Position.makeKey(1, 3)));
         });
+    }
+
+    @Test
+    public void 점수_계산_테스트() {
+        Board board = BoardGenerator.createBoard(BoardInputForTest.DUPLICATED_PAWN_BOARD);
+        assertThat(board.calculateFinalScore(TeamType.WHITE)).isEqualTo(36.5);
     }
 }

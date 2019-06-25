@@ -21,6 +21,10 @@ public class Position {
         IntStream.rangeClosed(MIN_BOUND, MAX_BOUND).forEach(Position::addPosition);
     }
 
+    Coordinate getCoordinateY() {
+        return coordinateY;
+    }
+
     private static void addPosition(int x) {
         IntStream.rangeClosed(MIN_BOUND, MAX_BOUND).forEach(y -> {
             String key = makeKey(x, y);
