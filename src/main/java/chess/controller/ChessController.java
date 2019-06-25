@@ -31,13 +31,13 @@ public class ChessController {
         Map<String, Object> model = new HashMap<>();
 
         Game game = chessService.initGame();
-        List<Piece> squares = chessService.getPieces(game);
+        List<Piece> pieces = chessService.getPieces(game);
         long roomId = roomService.latestId();
 
         req.session().attribute("game", game);
 
         model.put("currentColor", game.currentColor());
-        model.put("board", squares);
+        model.put("board", pieces);
         model.put("roomId", roomId);
         return render(model, "board.html");
     }
@@ -46,10 +46,10 @@ public class ChessController {
         Map<String, Object> model = new HashMap<>();
 
         Game game = req.session().attribute("game");
-        List<Piece> squares = chessService.getPieces(game);
+        List<Piece> pieces = chessService.getPieces(game);
         long roomId = Long.parseLong(req.queryParams("roomId"));
-
-        model.put("board", squares);
+        System.out.println(pieces.get(1).getSymbol());
+        model.put("board", pieces);
         model.put("currentColor", game.currentColor());
         model.put("message", req.queryParams("message"));
         model.put("roomId", roomId);

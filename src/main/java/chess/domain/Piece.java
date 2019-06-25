@@ -78,14 +78,16 @@ public class Piece {
         return rule.isSameType(other);
     }
 
+    //TODO 리팩토링
     Piece get(final Position position) {
+        Rule rule = this.rule;
         if (this.rule == Pawn.FIRST_BOTTOM) {
-            return Piece.of(position, this.color, Pawn.SECOND_BOTTOM);
+            rule = Pawn.SECOND_BOTTOM;
         }
         if (this.rule == Pawn.FIRST_TOP) {
-            return Piece.of(position, this.color, Pawn.SECOND_TOP);
+            rule = Pawn.SECOND_TOP;
         }
-        return Piece.of(position, this.color, this.rule);
+        return Piece.of(position, this.color, rule);
     }
 
     public double getScore() {
@@ -93,7 +95,7 @@ public class Piece {
     }
 
     //TODO 리팩토링
-    String getSymbol() {
+    public String getSymbol() {
         return PieceSymbol.getSymbol(this);
     }
 
