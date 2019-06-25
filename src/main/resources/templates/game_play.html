@@ -130,27 +130,36 @@
 <script>
     const url = "/img/";
     const pieceNames = {
-        p: 'pawn_white',
-        P: 'pawn',
-        r: 'rook_white',
-        R: 'rook',
-        b: 'bishop_white',
-        B: 'bishop',
-        q: 'queen_white',
-        Q: 'queen',
-        k: 'king_white',
-        K: 'king',
-        n: 'knight_white',
-        N: 'knight'
+        p: 'pawn',
+        r: 'rook',
+        b: 'bishop',
+        q: 'queen',
+        k: 'king',
+        n: 'knight',
     };
 
-    fetch("/status", {method: "POST"})
-        .then(data => data.json())
-        .then(json => {
-            console.log(json);
-            Object.keys(json).forEach(key => {
-                document.getElementById(key).innerHTML = `<img src="${url + pieceNames[json[key]]}.png"  alt="error"/>`
-            })
+    const getBoardData = async () => {
+        return await fetch("/status", {method: "POST"})
+            .then(data => data.json())
+            .catch(err => console.log(err));
+    };
+
+    const convertImgName = (pieceName, team) => {
+        let result = pieceNames[pieceName];
+        if (team === 'WHITE') {
+            result = result + '_white';
+        }
+        return result;
+    };
+
+    const board = getBoardData();
+    board.then(boardData => {
+            for (each of boardData) {
+                const {position, pieceName, team} = each;
+                const tail = document.getElementById(position);
+                const imgName = convertImgName(pieceName, team);
+                tail.innerHTML = `<img src="${url + imgName}.png">`;
+            }
         })
         .catch(err => console.log(err));
 </script>
