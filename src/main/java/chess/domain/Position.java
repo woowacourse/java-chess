@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Objects;
+
 public class Position {
     private static final int MIN_LIMIT = 1;
     private static final int MAX_LIMIT = 8;
@@ -52,5 +54,19 @@ public class Position {
 
     public boolean isInStartingPosition() {
         return this.row == FIRST_ROW_FOR_WHITE_PAWN || this.row == FIRST_ROW_FOR_BLACK_PAWN;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return col == position.col &&
+                row == position.row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(col, row);
     }
 }

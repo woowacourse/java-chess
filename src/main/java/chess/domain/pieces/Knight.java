@@ -12,7 +12,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    boolean canMove(Position position) {
+    public boolean canMove(Position position) {
         return this.position.getDistanceSquare(position) == DISTANCE_FOR_ALL_DIRECTION;
     }
 }

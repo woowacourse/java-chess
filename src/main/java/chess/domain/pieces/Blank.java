@@ -11,7 +11,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    boolean canMove(Position position) {
+    public boolean canMove(Position position) {
         return false;
     }
 }

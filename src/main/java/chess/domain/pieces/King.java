@@ -13,7 +13,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean canMove(Position position) {
+    public boolean canMove(Position position) {
         return this.position.getDistanceSquare(position) == DISTANCE_FOR_FOUR_DIRECTION
                 || this.position.getDistanceSquare(position) == DISTANCE_FOR_DIAGONAL_DIRECTION;
     }

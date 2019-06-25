@@ -3,6 +3,8 @@ package chess.domain.pieces;
 import chess.domain.Position;
 import chess.domain.Team;
 
+import java.util.Objects;
+
 public abstract class Piece {
     protected Position position;
     protected Team team;
@@ -12,5 +14,30 @@ public abstract class Piece {
         this.team = team;
     }
 
-    abstract boolean canMove(Position position);
+    public boolean isSameTeamWith(Piece piece) {
+        return this.team == piece.team;
+    }
+    public boolean isOurPiece(Team team) {
+        return this.team == team;
+    }
+
+    public void move(Position position) {
+        this.position = position;
+    }
+
+    public abstract boolean canMove(Position position);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return Objects.equals(position, piece.position) &&
+                team == piece.team;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, team);
+    }
 }
