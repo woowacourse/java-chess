@@ -182,7 +182,6 @@ class ChessPlayerTest {
         double expectedScore = Rook.SCORE + Knight.SCORE + Bishop.SCORE + King.SCORE + Queen.SCORE
                 + WhitePawn.SCORE
                 + 0.5 * (WhitePawn.SCORE + WhitePawn.SCORE + WhitePawn.SCORE);
-        System.out.println(expectedScore);
 
         assertThat(player.calculateScore()).isEqualTo(expectedScore);
     }
