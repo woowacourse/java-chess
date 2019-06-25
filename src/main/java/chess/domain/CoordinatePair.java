@@ -22,12 +22,24 @@ public class CoordinatePair {
         this.y = y;
     }
 
-    public CoordinateX getX() {
-        return x;
+    public boolean matchX(CoordinateX x) {
+        return this.x == x;
     }
 
-    public CoordinateY getY() {
-        return y;
+    public boolean matchY(CoordinateY y) {
+        return this.y == y;
+    }
+
+    public String getXSymbol() {
+        return x.getSymbol();
+    }
+
+    public String getYSymbol() {
+        return y.getSymbol();
+    }
+
+    public Optional<CoordinatePair> move(Direction direction) {
+        return direction.move(x, y);
     }
 
     public static Optional<CoordinatePair> of(String symbol) {

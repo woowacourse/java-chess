@@ -34,10 +34,10 @@ public abstract class ChessPiece implements Cell {
      */
     Set<CoordinatePair> probeStraight(PieceTeamProvider pieceTeamProvider, CoordinatePair from, Direction direction) {
         Set<CoordinatePair> movableCoordinates = new HashSet<>();
-        Optional<CoordinatePair> maybeNextCoord = direction.move(from);
+        Optional<CoordinatePair> maybeNextCoord = from.move(direction);
         while (maybeNextCoord.isPresent() &&
             !checkCell(pieceTeamProvider.getTeamAt(maybeNextCoord.get()), movableCoordinates, maybeNextCoord.get())) {
-            maybeNextCoord = direction.move(maybeNextCoord.get());
+            maybeNextCoord = maybeNextCoord.get().move(direction);
         }
         return movableCoordinates;
     }

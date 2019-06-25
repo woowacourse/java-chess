@@ -30,7 +30,7 @@ public class Pawn extends ChessPiece {
 
     @Override
     public Set<CoordinatePair> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
-        if (from.getY() == CoordinateY.RANK_1 || from.getY() == CoordinateY.RANK_8) {
+        if (from.matchY(CoordinateY.RANK_1) || from.matchY(CoordinateY.RANK_8)) {
             return Collections.emptySet();
         }
         if (getType().getTeam() == Team.WHITE) {
@@ -42,13 +42,13 @@ public class Pawn extends ChessPiece {
 
     private Set<CoordinatePair> handleWhenWhite(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         Set<CoordinatePair> movableCoordinates = new HashSet<>();
-        Direction.UP.move(from)
+        from.move(Direction.UP)
             .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEmpty())
             .ifPresent(movableCoordinates::add);
-        Direction.LEFT_TOP.move(from)
+        from.move(Direction.LEFT_TOP)
             .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEnemy(getType().getTeam()))
             .ifPresent(movableCoordinates::add);
-        Direction.RIGHT_TOP.move(from)
+        from.move(Direction.RIGHT_TOP)
             .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEnemy(getType().getTeam()))
             .ifPresent(movableCoordinates::add);
 
@@ -60,7 +60,7 @@ public class Pawn extends ChessPiece {
 
     private Optional<CoordinatePair> checkIfWhiteFirstMove(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         if (getType().getTeam() == Team.WHITE &&
-            from.getY() == CoordinateY.RANK_2) {
+            from.matchY(CoordinateY.RANK_2)) {
             return move2Cells(pieceTeamProvider, from, Direction.UP);
         }
         return Optional.empty();
@@ -68,13 +68,13 @@ public class Pawn extends ChessPiece {
 
     private Set<CoordinatePair> handleWhenBlack(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         Set<CoordinatePair> movableCoordinates = new HashSet<>();
-        Direction.DOWN.move(from)
+        from.move(Direction.DOWN)
             .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEmpty())
             .ifPresent(movableCoordinates::add);
-        Direction.LEFT_BOTTOM.move(from)
+        from.move(Direction.LEFT_BOTTOM)
             .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEnemy(getType().getTeam()))
             .ifPresent(movableCoordinates::add);
-        Direction.RIGHT_BOTTOM.move(from)
+        from.move(Direction.RIGHT_BOTTOM)
             .filter(coord -> pieceTeamProvider.getTeamAt(coord).isEnemy(getType().getTeam()))
             .ifPresent(movableCoordinates::add);
 
@@ -85,15 +85,15 @@ public class Pawn extends ChessPiece {
 
     private Optional<CoordinatePair> checkIfBlackFirstMove(PieceTeamProvider pieceTeamProvider, CoordinatePair from) {
         if (getType().getTeam() == Team.BLACK &&
-            from.getY() == CoordinateY.RANK_7) {
+            from.matchY(CoordinateY.RANK_7)) {
             return move2Cells(pieceTeamProvider, from, Direction.DOWN);
         }
         return Optional.empty();
     }
 
     private Optional<CoordinatePair> move2Cells(PieceTeamProvider pieceTeamProvider, CoordinatePair from, Direction direction) {
-        return direction.move(from)
-            .map(coordMoved1 -> direction.move(coordMoved1)
+        return from.move(direction)
+            .map(coordMoved1 -> coordMoved1.move(direction)
                 .filter(coordMoved2 -> pieceTeamProvider.getTeamAt(coordMoved2).isEmpty())
                 .orElse(null));
     }

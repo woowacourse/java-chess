@@ -45,53 +45,53 @@ public class Knight extends ChessPiece {
     }
 
     private Set<CoordinatePair> checkTop(CoordinatePair from) {
-        Optional<CoordinatePair> maybeUp = Direction.UP.move(from);
+        Optional<CoordinatePair> maybeUp = from.move(Direction.UP);
         if (!maybeUp.isPresent()) {
             return Collections.emptySet();
         }
         Set<CoordinatePair> movableCoordinates = new HashSet<>();
-        Direction.LEFT_TOP.move(maybeUp.get())
+        maybeUp.get().move(Direction.LEFT_TOP)
             .ifPresent(movableCoordinates::add);
-        Direction.RIGHT_TOP.move(maybeUp.get())
+        maybeUp.get().move(Direction.RIGHT_TOP)
             .ifPresent(movableCoordinates::add);
         return movableCoordinates;
     }
 
     private Set<CoordinatePair> checkRight(CoordinatePair from) {
-        Optional<CoordinatePair> maybeUp = Direction.RIGHT.move(from);
+        Optional<CoordinatePair> maybeUp = from.move(Direction.RIGHT);
         if (!maybeUp.isPresent()) {
             return Collections.emptySet();
         }
         Set<CoordinatePair> movableCoordinates = new HashSet<>();
-        Direction.RIGHT_TOP.move(maybeUp.get())
+        maybeUp.get().move(Direction.RIGHT_TOP)
             .ifPresent(movableCoordinates::add);
-        Direction.RIGHT_BOTTOM.move(maybeUp.get())
+        maybeUp.get().move(Direction.RIGHT_BOTTOM)
             .ifPresent(movableCoordinates::add);
         return movableCoordinates;
     }
 
     private Set<CoordinatePair> checkBottom(CoordinatePair from) {
-        Optional<CoordinatePair> maybeUp = Direction.DOWN.move(from);
+        Optional<CoordinatePair> maybeUp = from.move(Direction.DOWN);
         if (!maybeUp.isPresent()) {
             return Collections.emptySet();
         }
         Set<CoordinatePair> movableCoordinates = new HashSet<>();
-        Direction.LEFT_BOTTOM.move(maybeUp.get())
+        maybeUp.get().move(Direction.LEFT_BOTTOM)
             .ifPresent(movableCoordinates::add);
-        Direction.RIGHT_BOTTOM.move(maybeUp.get())
+        maybeUp.get().move(Direction.RIGHT_BOTTOM)
             .ifPresent(movableCoordinates::add);
         return movableCoordinates;
     }
 
     private Set<CoordinatePair> checkLeft(CoordinatePair from) {
-        Optional<CoordinatePair> maybeUp = Direction.LEFT.move(from);
+        Optional<CoordinatePair> maybeUp = from.move(Direction.LEFT);
         if (!maybeUp.isPresent()) {
             return Collections.emptySet();
         }
         Set<CoordinatePair> movableCoordinates = new HashSet<>();
-        Direction.LEFT_TOP.move(maybeUp.get())
+        maybeUp.get().move(Direction.LEFT_TOP)
             .ifPresent(movableCoordinates::add);
-        Direction.LEFT_BOTTOM.move(maybeUp.get())
+        maybeUp.get().move(Direction.LEFT_BOTTOM)
             .ifPresent(movableCoordinates::add);
         return movableCoordinates;
     }

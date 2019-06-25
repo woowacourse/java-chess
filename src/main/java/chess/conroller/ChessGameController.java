@@ -8,9 +8,7 @@ import chess.domain.ScoreCounter;
 import chess.domain.Team;
 import chess.persistence.dto.GameSessionDto;
 import chess.service.GameService;
-import chess.service.GameServiceImpl;
 import chess.service.SessionService;
-import chess.service.SessionServiceImpl;
 import chess.service.dto.CoordinatePairDto;
 import com.google.gson.Gson;
 import spark.Request;
@@ -25,8 +23,8 @@ public class ChessGameController {
     private static GameService gameService;
 
     static {
-        sessionService = new SessionServiceImpl();
-        gameService = new GameServiceImpl();
+        sessionService = new SessionService();
+        gameService = new GameService();
     }
 
     /**

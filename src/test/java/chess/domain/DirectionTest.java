@@ -10,81 +10,82 @@ public class DirectionTest {
 
     @Test
     void moveUp() {
-        assertThat(Direction.UP.move(CoordinatePair.of("a1").get()))
+
+        assertThat(CoordinatePair.of("a1").get().move(Direction.UP))
             .isEqualTo(CoordinatePair.of("a2"));
-        assertThat(Direction.UP.move(CoordinatePair.of("a8").get()))
+        assertThat(CoordinatePair.of("a8").get().move(Direction.UP))
             .isEqualTo(Optional.empty());
     }
 
     @Test
     void moveDown() {
-        assertThat(Direction.DOWN.move(CoordinatePair.of("g5").get()))
+        assertThat(CoordinatePair.of("g5").get().move(Direction.DOWN))
             .isEqualTo(CoordinatePair.of("g4"));
-        assertThat(Direction.DOWN.move(CoordinatePair.of("g1").get()))
+        assertThat(CoordinatePair.of("g1").get().move(Direction.DOWN))
             .isEqualTo(Optional.empty());
     }
 
     @Test
     void moveLeft() {
-        assertThat(Direction.LEFT.move(CoordinatePair.of("c2").get()))
+        assertThat(CoordinatePair.of("c2").get().move(Direction.LEFT))
             .isEqualTo(CoordinatePair.of("b2"));
-        assertThat(Direction.LEFT.move(CoordinatePair.of("a1").get()))
+        assertThat(CoordinatePair.of("a1").get().move(Direction.LEFT))
             .isEqualTo(Optional.empty());
     }
 
     @Test
     void moveRight() {
-        assertThat(Direction.RIGHT.move(CoordinatePair.of("d7").get()))
+        assertThat(CoordinatePair.of("d7").get().move(Direction.RIGHT))
             .isEqualTo(CoordinatePair.of("e7"));
-        assertThat(Direction.RIGHT.move(CoordinatePair.of("h7").get()))
+        assertThat(CoordinatePair.of("h7").get().move(Direction.RIGHT))
             .isEqualTo(Optional.empty());
     }
 
     @Test
     void moveLeftTop() {
-        assertThat(Direction.LEFT_TOP.move(CoordinatePair.of("c4").get()))
+        assertThat(CoordinatePair.of("c4").get().move(Direction.LEFT_TOP))
             .isEqualTo(CoordinatePair.of("b5"));
-        assertThat(Direction.LEFT_TOP.move(CoordinatePair.of("a1").get()))
+        assertThat(CoordinatePair.of("a1").get().move(Direction.LEFT_TOP))
             .isEqualTo(Optional.empty());
-        assertThat(Direction.LEFT_TOP.move(CoordinatePair.of("a8").get()))
+        assertThat(CoordinatePair.of("a8").get().move(Direction.LEFT_TOP))
             .isEqualTo(Optional.empty());
-        assertThat(Direction.LEFT_TOP.move(CoordinatePair.of("h8").get()))
+        assertThat(CoordinatePair.of("h8").get().move(Direction.LEFT_TOP))
             .isEqualTo(Optional.empty());
     }
 
     @Test
     void moveRightTop() {
-        assertThat(Direction.RIGHT_TOP.move(CoordinatePair.of("a1").get()))
+        assertThat(CoordinatePair.of("a1").get().move(Direction.RIGHT_TOP))
             .isEqualTo(CoordinatePair.of("b2"));
-        assertThat(Direction.RIGHT_TOP.move(CoordinatePair.of("h8").get()))
+        assertThat(CoordinatePair.of("h8").get().move(Direction.RIGHT_TOP))
             .isEqualTo(Optional.empty());
-        assertThat(Direction.RIGHT_TOP.move(CoordinatePair.of("h1").get()))
+        assertThat(CoordinatePair.of("h1").get().move(Direction.RIGHT_TOP))
             .isEqualTo(Optional.empty());
-        assertThat(Direction.RIGHT_TOP.move(CoordinatePair.of("c8").get()))
+        assertThat(CoordinatePair.of("c8").get().move(Direction.RIGHT_TOP))
             .isEqualTo(Optional.empty());
     }
 
     @Test
     void moveLeftBottom() {
-        assertThat(Direction.LEFT_BOTTOM.move(CoordinatePair.of("d4").get()))
+        assertThat(CoordinatePair.of("d4").get().move(Direction.LEFT_BOTTOM))
             .isEqualTo(CoordinatePair.of("c3"));
-        assertThat(Direction.LEFT_BOTTOM.move(CoordinatePair.of("a1").get()))
+        assertThat(CoordinatePair.of("a1").get().move(Direction.LEFT_BOTTOM))
             .isEqualTo(Optional.empty());
-        assertThat(Direction.LEFT_BOTTOM.move(CoordinatePair.of("h1").get()))
+        assertThat(CoordinatePair.of("h1").get().move(Direction.LEFT_BOTTOM))
             .isEqualTo(Optional.empty());
-        assertThat(Direction.LEFT_BOTTOM.move(CoordinatePair.of("a8").get()))
+        assertThat(CoordinatePair.of("a8").get().move(Direction.LEFT_BOTTOM))
             .isEqualTo(Optional.empty());
     }
 
     @Test
     void moveRightBottom() {
-        assertThat(Direction.RIGHT_BOTTOM.move(CoordinatePair.of("d4").get()))
+        assertThat(CoordinatePair.of("d4").get().move(Direction.RIGHT_BOTTOM))
             .isEqualTo(CoordinatePair.of("e3"));
-        assertThat(Direction.RIGHT_BOTTOM.move(CoordinatePair.of("a1").get()))
+        assertThat(CoordinatePair.of("a1").get().move(Direction.RIGHT_BOTTOM))
             .isEqualTo(Optional.empty());
-        assertThat(Direction.RIGHT_BOTTOM.move(CoordinatePair.of("h1").get()))
+        assertThat(CoordinatePair.of("h1").get().move(Direction.RIGHT_BOTTOM))
             .isEqualTo(Optional.empty());
-        assertThat(Direction.RIGHT_BOTTOM.move(CoordinatePair.of("h8").get()))
+        assertThat(CoordinatePair.of("h8").get().move(Direction.RIGHT_BOTTOM))
             .isEqualTo(Optional.empty());
     }
 }
