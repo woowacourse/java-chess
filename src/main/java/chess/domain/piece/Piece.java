@@ -40,6 +40,10 @@ public abstract class Piece {
         return type == this.type;
     }
 
+    public boolean isColor(PieceColor color) {
+        return color == this.color;
+    }
+
     public PieceColor getColor() {
         return color;
     }
