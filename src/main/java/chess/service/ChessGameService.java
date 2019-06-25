@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGameService {
-    public static final String SESSION_ID = "-game";
-    public static final String FROM = "from";
-    public static final String TO = "to";
+    private static final String SESSION_ID = "-game";
+    private static final String FROM = "from";
+    private static final String TO = "to";
     private static final ChessGameDAO CHESS_GAME_DAO = ChessGameDAO.getInstance();
     private static final ChessLogDAO CHESS_LOG_DAO = ChessLogDAO.getInstance();
 
