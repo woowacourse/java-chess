@@ -24,7 +24,7 @@ public abstract class ChessPiece {
         return type;
     }
 
-    abstract Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from);
+    public abstract Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from);
 
     protected Set<ChessCoordinate> probCross(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
         Set<ChessCoordinate> movableCoords = new HashSet<>();

@@ -30,7 +30,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
+    public Set<ChessCoordinate> getMovableCoordinates(PieceTeamProvider pieceTeamProvider, ChessCoordinate from) {
 
         return probeAllDiagonal(pieceTeamProvider, from);
     }
