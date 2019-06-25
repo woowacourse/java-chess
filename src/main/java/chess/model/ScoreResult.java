@@ -11,6 +11,14 @@ public class ScoreResult {
         this.scoreOfBlack = scoreOfBlack;
     }
 
+    public double getScoreOfWhite() {
+        return scoreOfWhite;
+    }
+
+    public double getScoreOfBlack() {
+        return scoreOfBlack;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

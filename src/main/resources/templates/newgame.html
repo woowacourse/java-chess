@@ -22,6 +22,15 @@
     <input type="text" name="target">
     <button type="submit">SUBMIT</button>
 </form>
+<button type="button" id="statusButton" onclick = "showScore()" >점수보기</button>
 
 </body>
+
+<script>
+    function showScore(){
+        alert("백팀 점수 : " + {{score.scoreOfWhite}} + "\n" + "흑팀 점수 : " + {{score.scoreOfBlack}});
+    }
+
+
+</script>
 </html>

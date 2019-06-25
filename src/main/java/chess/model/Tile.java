@@ -63,7 +63,11 @@ public class Tile {
     }
 
     public boolean askPieceIfPawn() {
-        return piece.get().isPawn();
+        if (piece.isPresent()) {
+            return piece.get().isPawn();
+        }
+
+        return false;
     }
 
     @Override

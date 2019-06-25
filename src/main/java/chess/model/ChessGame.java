@@ -30,4 +30,8 @@ public class ChessGame {
     public List<String> convertToList() {
         return board.convertToList();
     }
+
+    public ScoreResult calculateScore() {
+        return board.makeScoreResult();
+    }
 }

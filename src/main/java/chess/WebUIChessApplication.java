@@ -26,6 +26,9 @@ public class WebUIChessApplication {
 
             ChessGame game = new ChessGame(new NewGameCreateStrategy(), 1);
 
+            ScoreResult scoreResult = game.calculateScore();
+
+            model.put("score", scoreResult);
             req.session().attribute("game", game);
 
             return render(model, "newgame.html");
@@ -36,35 +39,29 @@ public class WebUIChessApplication {
             ChessDAO chessDAO = ChessDAO.getInstance();
             String source = req.queryParams("source");
             String target = req.queryParams("target");
-            System.err.println(source);
+
             ChessGame game;
             game = req.session().attribute("game");
-//            System.err.println(game);
 
             if (!Objects.isNull(source)) { // 이어서하기
-                System.err.println(source);
                 game.movePiece(source, target);
                 BoardDTO boardDTO = new BoardDTO(game.convertToList());
                 chessDAO.updateBoard(boardDTO);
-                // reverse했음
-                Collections.reverse(boardDTO.getPieces());
+
                 model.put("board", boardDTO.getPieces());
             }
             if (Objects.isNull(source)) { // 게임진행
                 BoardDTO boardDTO = chessDAO.selectByTurn(chessDAO.getLatestTurn());
                 game = new ChessGame(new ContinueGameCreateStrategy(boardDTO), chessDAO.getLatestTurn());
 
-                //reverse했음
-//                Collections.reverse(boardDTO.getPieces());
+                Collections.reverse(boardDTO.getPieces());
 
                 model.put("board", boardDTO.getPieces());
             }
-
-//            BoardDTO boardDTO = new BoardDTO(game.convertToList());
-//            chessDAO.updateBoard(boardDTO);
-
-//            model.put("board", boardDTO.getPieces());
             req.session().attribute("game", game);
+
+            ScoreResult scoreResult = game.calculateScore();
+            model.put("score", scoreResult);
 
             return render(model, "game.html");
         });
