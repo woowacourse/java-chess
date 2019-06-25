@@ -189,4 +189,10 @@ public class Board {
     public Tile getTile(String coordinates) {
         return tiles.get(coordinates);
     }
+
+    public boolean isRightTurn(String sourceCoordinate, int turn) {
+        String turnColor = (turn % 2 == 0) ? "white" : "black";
+        return tiles.get(sourceCoordinate).askPieceWhichTeam().equals(turnColor);
+
+    }
 }

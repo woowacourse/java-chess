@@ -402,4 +402,13 @@ public class BoardTest {
         assertThat(board.getTile("55")).isEqualTo(new Tile("55", Optional.ofNullable(null)));
         assertThat(board.getTile("58")).isEqualTo(new Tile("58", Optional.ofNullable(new King("black"))));
     }
+
+    @Test
+    void 턴이_맞는지_확인() {
+        Board board = new Board(new NormalCreateStrategy());
+        assertThat(board.isRightTurn("11", 2)).isTrue();
+        assertThat(board.isRightTurn("18", 2)).isFalse();
+        assertThat(board.isRightTurn("11", 3)).isFalse();
+        assertThat(board.isRightTurn("18", 3)).isTrue();
+    }
 }
