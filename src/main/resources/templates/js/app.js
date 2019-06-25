@@ -59,7 +59,7 @@ const chessGame = {
   },
   score: {
     get white() {
-      return _this.white;
+      return this._white;
     },
     set white(score) {
       this._white = score;
@@ -138,7 +138,17 @@ window.onload = function () {
     console.log('reset');
   });
   btnMove.addEventListener('click', function () {
-    // ajax
+    $.ajax({
+      method: "POST",
+      url: "/move",
+      contentType: 'application/json; charset=utf-8',
+      dataType: "json",
+      data: JSON.stringify(chessGame)
+    })
+        .done(function (data) {
+          outputData = data;
+          console.log(data);
+        });
     console.log('move');
   });
 }
