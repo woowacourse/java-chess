@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,7 +14,7 @@ public class Position {
     private final int x;
     private final int y;
 
-    public Position(int x, int y) {
+    Position(int x, int y) {
         this.x = x;
         this.y = y;
         validatePosition();

@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.position.Position;
+
 public class ChessGame {
     private static Board board = new Board();
     private static Team team = Team.WHITE;

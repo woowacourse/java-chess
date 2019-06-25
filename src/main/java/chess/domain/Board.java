@@ -1,6 +1,8 @@
 package chess.domain;
 
 import chess.domain.pieces.*;
+import chess.domain.position.Position;
+import chess.domain.position.PositionManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,62 +25,62 @@ public class Board {
 
     private void initializeRook() {
         Position position;
-        position = new Position(1, 1);
+        position = PositionManager.getMatchPosition(1, 1);
         boardState.put(position, new Rook(position, Team.WHITE));
-        position = new Position(8, 1);
+        position = PositionManager.getMatchPosition(8, 1);
         boardState.put(position, new Rook(position, Team.WHITE));
-        position = new Position(1, 8);
+        position = PositionManager.getMatchPosition(1, 8);
         boardState.put(position, new Rook(position, Team.BLACK));
-        position = new Position(8, 8);
+        position = PositionManager.getMatchPosition(8, 8);
         boardState.put(position, new Rook(position, Team.BLACK));
     }
 
     private void initializeKnight() {
         Position position;
-        position = new Position(2, 1);
+        position = PositionManager.getMatchPosition(2, 1);
         boardState.put(position, new Knight(position, Team.WHITE));
-        position = new Position(7, 1);
+        position = PositionManager.getMatchPosition(7, 1);
         boardState.put(position, new Knight(position, Team.WHITE));
-        position = new Position(2, 8);
+        position = PositionManager.getMatchPosition(2, 8);
         boardState.put(position, new Knight(position, Team.BLACK));
-        position = new Position(7, 8);
+        position = PositionManager.getMatchPosition(7, 8);
         boardState.put(position, new Knight(position, Team.BLACK));
     }
 
     private void initializeBishop() {
         Position position;
-        position = new Position(3, 1);
+        position = PositionManager.getMatchPosition(3, 1);
         boardState.put(position, new Bishop(position, Team.WHITE));
-        position = new Position(6, 1);
+        position = PositionManager.getMatchPosition(6, 1);
         boardState.put(position, new Bishop(position, Team.WHITE));
-        position = new Position(3, 8);
+        position = PositionManager.getMatchPosition(3, 8);
         boardState.put(position, new Bishop(position, Team.BLACK));
-        position = new Position(6, 8);
+        position = PositionManager.getMatchPosition(6, 8);
         boardState.put(position, new Bishop(position, Team.BLACK));
     }
 
     private void initializeQueen() {
         Position position;
-        position = new Position(4, 1);
+        position = PositionManager.getMatchPosition(4, 1);
         boardState.put(position, new Queen(position, Team.WHITE));
-        position = new Position(4, 8);
+        position = PositionManager.getMatchPosition(4, 8);
         boardState.put(position, new Queen(position, Team.BLACK));
     }
 
     private void initializeKing() {
         Position position;
-        position = new Position(5, 1);
+        position = PositionManager.getMatchPosition(5, 1);
         boardState.put(position, new King(position, Team.WHITE));
-        position = new Position(5, 8);
+        position = PositionManager.getMatchPosition(5, 8);
         boardState.put(position, new King(position, Team.BLACK));
     }
 
     private void initializePawn() {
         Position position;
         for (int i = 1; i <= 8; i++) {
-            position = new Position(i, 2);
+            position = PositionManager.getMatchPosition(i, 2);
             boardState.put(position, new Pawn(position, Team.WHITE));
-            position = new Position(i, 7);
+            position = PositionManager.getMatchPosition(i, 7);
             boardState.put(position, new Pawn(position, Team.BLACK));
         }
     }
@@ -86,7 +88,7 @@ public class Board {
     private void initializeBlank() {
         for (int i = 1; i <= 8; i++) {
             for (int j = 3; j <= 6; j++) {
-                Position position = new Position(i, j);
+                Position position = PositionManager.getMatchPosition(i, j);
                 boardState.put(position, new Blank(position, Team.BLANK));
             }
         }
