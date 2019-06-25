@@ -24,6 +24,10 @@
             padding: 1px solid black;
             background-image: url("/images/movable.png");
         }
+
+        #board {
+            width: 360px;
+        }
     </style>
 
 
@@ -39,7 +43,8 @@
     <div>
         <div>현재 턴</div>
         <div id="turn"></div>
-        <div id="board" data-id="{{id}}" }></div>
+        <div id="score"></div>>
+        <div id="board" data-id="{{id}}"></div>
     </div>
 
     <script>
@@ -96,6 +101,39 @@
             xhr.send();
         }
 
+        function getScore() {
+            const xhrScore = new XMLHttpRequest();
+            xhrScore.addEventListener("load", function () {
+                console.log(xhrScore.response);
+                let score = JSON.parse(xhrScore.response);
+                document.getElementById('score').innerHTML = "SCORE [ black : " + score.BLACK + ", white : " + score.WHITE + " ]";
+            });
+            xhrScore.open("GET", "/getScore?id=" + id);
+            xhrScore.send();
+        }
+
+        function getChessResult() {
+            const xhrChessResult = new XMLHttpRequest();
+            xhrChessResult.addEventListener("load", function () {
+                if ("BLACK_WIN" === JSON.parse(xhrChessResult.response)) {
+                    alert("흑 승리!");
+                    removeEvent();  
+                }
+                if ("WHITE_WIN" === JSON.parse(xhrChessResult.response)) {
+                    alert("백 승리!");
+                    removeEvent();
+                }
+            });
+            xhrChessResult.open("GET", "/getChessResult?id=" + id);
+            xhrChessResult.send();
+        }
+
+        function removeEvent() {
+            document.querySelectorAll(".board").forEach(element => {
+                element.removeEventListener("click", drowMovable);
+            });
+        }
+
         function initTurn() {
             const xhrTurn = new XMLHttpRequest();
             xhrTurn.addEventListener("load", function () {
@@ -130,7 +168,7 @@
                     }
                     board.innerHTML += child;
                 });
-                board.innerHTML += "<div></div>";
+                
                 if (state) {
                     state = false;
                 } else {
@@ -140,6 +178,8 @@
 
             addEvent();
             initTurn();
+            getScore();
+            getChessResult();
         }
 
         function addEvent() {
