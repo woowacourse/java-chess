@@ -14,6 +14,7 @@ public class BoardDao {
 
     private BoardDao() {
     }
+
     public static BoardDao getInstance() {
         if (instance == null) {
             instance = new BoardDao();
@@ -36,14 +37,14 @@ public class BoardDao {
             add(boardDto);
         }
     }
-    
+
     public List<BoardDto> findAll() throws SQLException {
         String query = "SELECT * FROM board";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
 
         List<BoardDto> result = new ArrayList<>();
-        while(rs.next()) {
+        while (rs.next()) {
             BoardDto boardDto = new BoardDto(
                     rs.getString(1),
                     rs.getString(2),

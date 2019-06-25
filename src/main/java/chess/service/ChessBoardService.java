@@ -1,7 +1,6 @@
 package chess.service;
 
 import chess.dao.BoardDao;
-import chess.dao.JDBCConnection;
 import chess.dao.ResultDao;
 import chess.dao.TurnDao;
 import chess.domain.*;
@@ -61,8 +60,8 @@ public class ChessBoardService {
 
         for (BoardDto boardDto : boardDtos) {
             board.put(
-                InputParser.position(boardDto.getPosition()),
-                generatePiece(boardDto.getPieceName(), boardDto.getTeam())
+                    InputParser.position(boardDto.getPosition()),
+                    generatePiece(boardDto.getPieceName(), boardDto.getTeam())
             );
         }
 

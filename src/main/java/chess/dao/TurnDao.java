@@ -12,6 +12,7 @@ public class TurnDao {
 
     private TurnDao() {
     }
+
     public static TurnDao getInstance() {
         if (instance == null) {
             instance = new TurnDao();

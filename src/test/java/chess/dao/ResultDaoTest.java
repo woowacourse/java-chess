@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class ResultDaoTest {
 
     ResultDao resultDao;

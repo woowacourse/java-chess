@@ -10,7 +10,7 @@ public class PositionTest {
     @Test
     void 벗어나는_위치_예외처리() {
         assertThrows(CoordinateRangeException.class, () -> {
-           new Position(new Coordinate('g'), new Coordinate(9));
+            new Position(new Coordinate('g'), new Coordinate(9));
         });
     }
 

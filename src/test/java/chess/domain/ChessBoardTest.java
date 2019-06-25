@@ -1,7 +1,7 @@
 package chess.domain;
 
-import chess.domain.exceptions.InvalidRouteException;
 import chess.domain.exceptions.IllegalSourceException;
+import chess.domain.exceptions.InvalidRouteException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

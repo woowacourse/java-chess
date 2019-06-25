@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.exceptions.IllegalSourceException;
 import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.exceptions.InvalidRouteException;
-import chess.domain.piece.King;
 import chess.dto.BoardDto;
 import chess.dto.TurnDto;
 

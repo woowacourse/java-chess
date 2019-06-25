@@ -5,7 +5,8 @@ public class BoardDto {
     private String pieceName;
     private String team;
 
-    public BoardDto() {}
+    public BoardDto() {
+    }
 
     public BoardDto(final String position, final String pieceName, String team) {
         this.position = position;

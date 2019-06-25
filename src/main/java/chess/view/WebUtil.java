@@ -8,6 +8,6 @@ public class WebUtil {
     }
 
     private static String parseCoordinateX(int x) {
-        return String.valueOf((char)(x + 96));
+        return String.valueOf((char) (x + 96));
     }
 }

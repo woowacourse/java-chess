@@ -11,18 +11,26 @@ public enum Direction {
     NW(-1, 1, (x, y) -> x < 0 && y > 0 && isAbsEqual(x, y)),
     KNIGHT(100, 100, (x, y) -> Math.abs(x) + Math.abs(y) == 3);
 
-    private static boolean isAbsEqual(final int x, final int y) {
-        return Math.abs(x) == Math.abs(y);
-    }
-
     private final int x;
     private final int y;
     private final DirectionCheck directionCheck;
-
     Direction(int x, int y, DirectionCheck directionCheck) {
         this.x = x;
         this.y = y;
         this.directionCheck = directionCheck;
+    }
+
+    private static boolean isAbsEqual(final int x, final int y) {
+        return Math.abs(x) == Math.abs(y);
+    }
+
+    public static Direction valueOf(int x, int y) {
+        for (Direction direction : Direction.values()) {
+            if (direction.directionCheck.check(x, y)) {
+                return direction;
+            }
+        }
+        return KNIGHT;
     }
 
     public boolean isDiagonal() {
@@ -35,14 +43,5 @@ public enum Direction {
 
     public int getY() {
         return y;
-    }
-
-    public static Direction valueOf(int x, int y) {
-        for (Direction direction : Direction.values()) {
-            if (direction.directionCheck.check(x, y)) {
-                return direction;
-            }
-        }
-        return KNIGHT;
     }
 }

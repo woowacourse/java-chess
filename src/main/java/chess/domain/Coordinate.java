@@ -16,16 +16,16 @@ public class Coordinate {
         this.coordinate = coordinate;
     }
 
-    private void validCoordinate(final int coordinate) {
-        if (coordinate < LOWER_BOUND || coordinate > UPPER_BOUND) {
-            throw new CoordinateRangeException("좌표 범위는 1~8입니다.");
-        }
-    }
-
     public Coordinate(char coordinate) {
         int converted = coordinate - ASCII_FACTOR;
         validCoordinate(converted);
         this.coordinate = converted;
+    }
+
+    private void validCoordinate(final int coordinate) {
+        if (coordinate < LOWER_BOUND || coordinate > UPPER_BOUND) {
+            throw new CoordinateRangeException("좌표 범위는 1~8입니다.");
+        }
     }
 
     public int getCoordinate() {

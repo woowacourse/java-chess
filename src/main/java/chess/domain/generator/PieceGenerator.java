@@ -1,7 +1,6 @@
 package chess.domain.generator;
 
 import chess.domain.AbstractPiece;
-import chess.domain.Piece;
 import chess.domain.Team;
 import chess.domain.piece.*;
 
