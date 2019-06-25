@@ -78,6 +78,8 @@ public class Game {
 
     public double calculateScore(Team team) {
         return calculatePawnScore(team) + board.values().stream()
+                .filter(piece -> piece.getType() != BLACK_PAWN)
+                .filter(piece -> piece.getType() != WHITE_PAWN)
                 .filter(piece -> piece.isSameTeam(team))
                 .mapToDouble(Piece::getScore)
                 .sum();
@@ -91,26 +93,12 @@ public class Game {
     }
 
     private double calculatePawnScore(Team team) {
-        double sub = 0;
-
-        List<Point> pawnPosition = board.keySet().stream()
-                .filter(point -> board.get(point).isSameTeam(team))
-                .filter(point -> board.get(point).isSameType(WHITE_PAWN)
-                        || board.get(point).isSameType(BLACK_PAWN))
-                .collect(Collectors.toList());
-
-        //TODO: index를 변경 필요
-        for (int i = 0; i < MAX_BOARD_SIZE; i++) {
-            int index = i;
-            long count = pawnPosition.stream()
-                    .filter(p -> p.getPositionX() == index)
-                    .count();
-            sub -= LongStream.of(count)
-                    .mapToDouble(d -> d > PAWN_ONE_BY_ONE_LINE ? count * 0.5 : 0)
-                    .sum();
-        }
-
-        return sub;
+        return board.entrySet().stream().filter(e -> e.getValue().getTeam() == Team.WHITE)
+                .filter(e -> e.getValue().getType() == Type.BLACK_PAWN || e.getValue().getType() == Type.WHITE_PAWN)
+                .collect(Collectors.groupingBy(e -> e.getKey().getPositionX()))
+                .values()
+                .stream()
+                .mapToDouble(l -> l.size() == 1 ? 1 : 0.5 * l.size()).sum();
     }
 
     public void changeTurn() {
