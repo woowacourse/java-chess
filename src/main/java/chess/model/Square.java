@@ -22,8 +22,20 @@ public class Square {
         this.row = row;
     }
 
-    static Square of(Column column, Row row) {
+    public static Square of(Column column, Row row) {
         return sqaurePool.get(column, row);
+    }
+
+    boolean hasNext(Direction direction) {
+        return column.hasNext(direction) && row.hasNext(direction);
+    }
+
+    Square next(Direction direction) {
+        return of(column.next(direction), row.next(direction));
+    }
+
+    public boolean isAtColumn(Column column){
+        return this.column.equals(column);
     }
 
     @Override

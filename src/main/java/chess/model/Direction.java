@@ -1,5 +1,11 @@
 package chess.model;
 
+import chess.model.unit.Side;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public enum Direction {
     NW(-1, 1),
     N(0, 1),
@@ -32,5 +38,25 @@ public enum Direction {
 
     public int getRowShiftUnit() {
         return rowShiftUnit;
+    }
+
+    public static List<Direction> valueOfDiagonal() {
+        return Arrays.asList(NE, NW, SE, SW);
+    }
+
+    public static List<Direction> valueOfOrthogonal() {
+        return Arrays.asList(N, E, W, S);
+    }
+
+    public static List<Direction> valueOfKnight() {
+        return Arrays.asList(NEE, NWW, SEE, SWW, SSE, SSW, NNW, NNE);
+    }
+
+    public static List<Direction> valueOfPawnMove(Side side) {
+        return side == Side.WHITE ? Collections.singletonList(N) : Collections.singletonList(S);
+    }
+
+    public static List<Direction> valueOfPawnAttack(Side side) {
+        return side == Side.WHITE ? Arrays.asList(NE, NW) : Arrays.asList(SE, SW);
     }
 }

@@ -1,6 +1,10 @@
 package chess.model.unit;
 
+import chess.model.Square;
+import chess.model.SquareNavigator;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -22,5 +26,15 @@ public abstract class Piece {
     Piece(UnitType type, Side side) {
         this.type = type;
         this.side = side;
+    }
+
+    public abstract List<SquareNavigator> findSquareNavigators(Square beginSquare);
+
+    Side getSide() {
+        return side;
+    }
+
+    public boolean isSameSide(Piece piece) {
+        return this.side == piece.side;
     }
 }
