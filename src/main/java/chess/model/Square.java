@@ -23,6 +23,11 @@ public class Square {
         this.row = row;
     }
 
+    public static Square of(String position) {
+        return sqaurePool.get(Column.findBySymbol(position.substring(1, 2))
+                , Row.findBySymbol(position.substring(0, 1)));
+    }
+
     public static Square of(Column column, Row row) {
         return sqaurePool.get(column, row);
     }

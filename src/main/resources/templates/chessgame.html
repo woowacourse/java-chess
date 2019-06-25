@@ -13,19 +13,47 @@
 
 </div>
 <script type="text/javascript">
+    	var qwer;
     	var config = {
     		draggable : true,
     		position : 'start',
     		onDrop : onDrop
     	}
+    	var squares
 		var board1 = Chessboard('board', config)
 
 		function onDrop (source, target) {
-			if(target === 'd6'){
-				return 'snapback'
+			var isSuccess = true
+			squares = {
+				"source" : source,
+				"target" : target
 			}
-			console.log(source + "\n")
-			console.log(target + "\n")
+			$.ajax({
+            url:"move",
+            type:"POST",
+            data:squares,
+            async: false,
+            dataType:'json',
+            error:function(request,status,error){
+            	qwer = status
+            	console.log("Fail")
+            	isSuccess = false
+            },
+            success:function(data){
+            	console.log(data)
+            	qwer = data
+            	if(data.result == true){
+            		console.log("Success - Success")
+            	}
+            	else{
+	            	console.log("Success - Fail")
+	            	isSuccess = false
+	            	}
+        		}
+    		});
+    		if (isSuccess == false) {
+    			return 'snapback'
+    		}
 		}
 
 </script>
