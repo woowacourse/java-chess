@@ -2,6 +2,8 @@ package chess.domain;
 
 import chess.domain.pieces.Piece;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
@@ -26,16 +28,20 @@ public class ChessGame {
     }
 
     public void play(String input) {
-        String[] split = input.split(DELIMITER);
-        if (split.length != COMMAND_SIZE) {
-            throw new IllegalArgumentException();
-        }
-        if (!split[COMMAND_POSITION].equals(MOVE_COMMAND)) {
-            throw new IllegalArgumentException();
-        }
+        List<String> split = Arrays.asList(input.split(DELIMITER));
+        validate(split);
 
-        board.play(parse(split[COMMAND_FROM_POSITION]), parse(split[COMMAND_TO_POSITION]), turn);
+        board.play(parse(split.get(COMMAND_FROM_POSITION)), parse(split.get(COMMAND_TO_POSITION)), turn);
         turn = turn.change();
+    }
+
+    private void validate(List<String> split) {
+        if (split.size() != COMMAND_SIZE) {
+            throw new IllegalArgumentException();
+        }
+        if (!split.get(COMMAND_POSITION).equals(MOVE_COMMAND)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public boolean checkEndGame() {
