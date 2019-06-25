@@ -1,0 +1,22 @@
+body {
+    background: white;
+    padding: 20px;
+}
+
+table {
+    text-align: center;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: saddlebrown;
+}
+td {
+    width: 80px; height: 80px;
+}
+
+tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
+    background: lightsalmon;
+}
+
+img {
+    width : 70px; height: 70px;
+}
