@@ -15,10 +15,10 @@ class BishopTest {
 
     @Test
     void getMovable() {
-        ChessPiece rb = CellFactory.create(PieceType.ROOK_BLACK);
-        ChessPiece bb = CellFactory.create(PieceType.BISHOP_BLACK);
-        ChessPiece rw = CellFactory.create(PieceType.ROOK_WHITE);
-        ChessPiece bw = CellFactory.create(PieceType.BISHOP_WHITE);
+        ChessPiece rb = ChessPieceFactory.create(PieceType.ROOK_BLACK);
+        ChessPiece bb = ChessPieceFactory.create(PieceType.BISHOP_BLACK);
+        ChessPiece rw = ChessPieceFactory.create(PieceType.ROOK_WHITE);
+        ChessPiece bw = ChessPieceFactory.create(PieceType.BISHOP_WHITE);
         Bishop bishop = Bishop.getInstance(Team.WHITE);
         Map<CoordinatePair, ChessPiece> pieces = new HashMap<>();
 

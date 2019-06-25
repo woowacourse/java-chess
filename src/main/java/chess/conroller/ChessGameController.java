@@ -145,6 +145,7 @@ public class ChessGameController {
         } catch (IllegalArgumentException e) {
             resMap = ResultState.FAIL.createResMap(e.getMessage());
         } catch (Exception e) {
+            e.printStackTrace();
             resMap = ResultState.ERROR.createResMap(e.getMessage());
         }
         return resMap;

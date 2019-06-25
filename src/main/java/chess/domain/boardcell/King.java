@@ -19,10 +19,11 @@ public class King extends ChessPiece {
     }
 
     private King(Team team) {
-        super(getPieceTypeByTeam(team));
+        super(team);
     }
 
-    private static PieceType getPieceTypeByTeam(Team team) {
+    @Override
+    PieceType getPieceTypeByTeam(Team team) {
         if (team == Team.BLACK) {
             return PieceType.KING_BLACK;
         }

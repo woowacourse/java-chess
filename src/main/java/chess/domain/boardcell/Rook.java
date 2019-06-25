@@ -21,10 +21,11 @@ public class Rook extends ChessPiece {
     }
 
     private Rook(Team team) {
-        super(getPieceTypeByTeam(team));
+        super(team);
     }
 
-    private static PieceType getPieceTypeByTeam(Team team) {
+    @Override
+    PieceType getPieceTypeByTeam(Team team) {
         if (team == Team.BLACK) {
             return PieceType.ROOK_BLACK;
         }

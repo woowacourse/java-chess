@@ -1,7 +1,7 @@
 package chess.service;
 
 import chess.domain.*;
-import chess.domain.boardcell.CellFactory;
+import chess.domain.boardcell.ChessPieceFactory;
 import chess.domain.boardcell.ChessPiece;
 import chess.domain.boardcell.PieceType;
 import chess.persistence.DataSourceFactory;
@@ -62,7 +62,7 @@ public class GameService {
             boardStateDao.findBySessionId(roomId)
                 .forEach(dto ->
                     board.put(CoordinatePair.of(dto.getCoordX() + dto.getCoordY()).get(),
-                        CellFactory.create(PieceType.valueOf(dto.getType()))));
+                        ChessPieceFactory.create(PieceType.valueOf(dto.getType()))));
             return LivingPieceGroup.of(board);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,8 +105,8 @@ public class GameService {
     }
 
     public List<CoordinatePairDto> findMovableCoordinates(long sessionId, CoordinatePair from) {
-        LivingPieceGroup state = findBoardStatesMapBySessionId(sessionId);
-        return state.at(from).getMovableCoordinates(coord -> state.at(coord).getType().getTeam(), from).stream()
+        ChessGame game = new ChessGame(() -> findBoardStatesMapBySessionId(sessionId));
+        return game.getMovableCoordinates(from).stream()
             .map(coord -> {
                 CoordinatePairDto dto = new CoordinatePairDto();
                 dto.setX(coord.getXSymbol());

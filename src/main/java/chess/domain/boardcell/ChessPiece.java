@@ -9,14 +9,15 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public abstract class ChessPiece implements Cell {
+public abstract class ChessPiece {
     private PieceType type;
 
-    protected ChessPiece(PieceType type) {
-        this.type = type;
+    ChessPiece(Team team) {
+        this.type = getPieceTypeByTeam(team);
     }
 
-    @Override
+    abstract PieceType getPieceTypeByTeam(Team team);
+
     public PieceType getType() {
         return type;
     }

@@ -15,10 +15,11 @@ public class Pawn extends ChessPiece {
     }
 
     private Pawn(Team team) {
-        super(getPieceTypeByTeam(team));
+        super(team);
     }
 
-    private static PieceType getPieceTypeByTeam(Team team) {
+    @Override
+    PieceType getPieceTypeByTeam(Team team) {
         if (team == Team.BLACK) {
             return PieceType.PAWN_BLACK;
         }

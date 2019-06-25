@@ -11,7 +11,7 @@ import java.util.Set;
 public class ChessGame {
     private LivingPieceGroup boardState;
 
-    public ChessGame(AbstractBoardStateFactory stateInitiatorFactory) {
+    public ChessGame(BoardStateFactory stateInitiatorFactory) {
         this.boardState = stateInitiatorFactory.create();
     }
 
@@ -19,6 +19,10 @@ public class ChessGame {
         Map<CoordinatePair, PieceType> typeState = new HashMap<>();
         boardState.entryStream().forEach(entry -> typeState.put(entry.getKey(), entry.getValue().getType()));
         return typeState;
+    }
+
+    public Set<CoordinatePair> getMovableCoordinates(CoordinatePair from) {
+        return boardState.at(from).getMovableCoordinates(this::getTeamAt, from);
     }
 
     public void move(CoordinatePair from, CoordinatePair to) {

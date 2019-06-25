@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class TestBoardStateFactory implements AbstractBoardStateFactory {
+public class TestBoardStateFactory implements BoardStateFactory {
 
     private Map<CoordinatePair, ChessPiece> state;
 

@@ -22,10 +22,6 @@ public class CoordinatePair {
         this.y = y;
     }
 
-    public boolean matchX(CoordinateX x) {
-        return this.x == x;
-    }
-
     public boolean matchY(CoordinateY y) {
         return this.y == y;
     }

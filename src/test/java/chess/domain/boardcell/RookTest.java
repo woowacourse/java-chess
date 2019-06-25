@@ -13,8 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RookTest {
     @Test
     void getMovable() {
-        ChessPiece rb = CellFactory.create(PieceType.ROOK_BLACK);
-        ChessPiece rw = CellFactory.create(PieceType.ROOK_WHITE);
+        ChessPiece rb = ChessPieceFactory.create(PieceType.ROOK_BLACK);
+        ChessPiece rw = ChessPieceFactory.create(PieceType.ROOK_WHITE);
         Map<CoordinatePair, ChessPiece> pieces = new HashMap<>();
         pieces.put(CoordinatePair.of("a8").get(), rb);
         pieces.put(CoordinatePair.of("h8").get(), rb);
@@ -44,8 +44,8 @@ class RookTest {
 
     @Test
     void ally_block() {
-        ChessPiece rb = CellFactory.create(PieceType.ROOK_BLACK);
-        ChessPiece rw = CellFactory.create(PieceType.ROOK_WHITE);
+        ChessPiece rb = ChessPieceFactory.create(PieceType.ROOK_BLACK);
+        ChessPiece rw = ChessPieceFactory.create(PieceType.ROOK_WHITE);
         Map<CoordinatePair, ChessPiece> pieces = new HashMap<>();
         pieces.put(CoordinatePair.of("a8").get(), rb);
         pieces.put(CoordinatePair.of("h8").get(), rb);

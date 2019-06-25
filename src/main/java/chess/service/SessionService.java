@@ -1,7 +1,7 @@
 package chess.service;
 
-import chess.domain.AbstractBoardStateFactory;
 import chess.domain.BoardStateFactory;
+import chess.domain.RegularBoardStateFactory;
 import chess.domain.GameResult;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
@@ -30,7 +30,7 @@ public class SessionService {
             gameSessionDto.setState(GameResult.KEEP.name());
             GameSessionDto createdRoom = gameSessionDao.findById(gameSessionDao.addSession(gameSessionDto))
                 .orElseThrow(() -> new IllegalStateException("방 생성에 실패했습니다."));
-            createBoardState(new BoardStateFactory(), createdRoom.getId());
+            createBoardState(new RegularBoardStateFactory(), createdRoom.getId());
             return createdRoom;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,7 +38,7 @@ public class SessionService {
         return null;
     }
 
-    private void createBoardState(AbstractBoardStateFactory boardStateFactory, long sessionId) {
+    private void createBoardState(BoardStateFactory boardStateFactory, long sessionId) {
         boardStateFactory.create().entryStream()
             .map(entry -> {
                 BoardStateDto dto = new BoardStateDto();

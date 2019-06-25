@@ -20,10 +20,11 @@ public class Bishop extends ChessPiece {
     }
 
     private Bishop(Team team) {
-        super(getPieceTypeByTeam(team));
+        super(team);
     }
 
-    private static PieceType getPieceTypeByTeam(Team team) {
+    @Override
+    PieceType getPieceTypeByTeam(Team team) {
         if (team == Team.BLACK) {
             return PieceType.BISHOP_BLACK;
         }

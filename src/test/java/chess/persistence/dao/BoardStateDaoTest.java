@@ -56,6 +56,8 @@ public class BoardStateDaoTest {
         List<BoardStateDto> founds = boardStateDao.findBySessionId(sess.getId());
         assertThat(founds).hasSize(2);
         gameSessionDao.deleteById(sess.getId());
+        boardStateDao.deleteById(state1.getId());
+        boardStateDao.deleteById(state2.getId());
     }
 
     @Test
@@ -71,6 +73,7 @@ public class BoardStateDaoTest {
         assertThat(found.getCoordX()).isEqualTo(state.getCoordX());
         assertThat(found.getCoordY()).isEqualTo(state.getCoordY());
         gameSessionDao.deleteById(sess.getId());
+        boardStateDao.deleteById(state.getId());
     }
 
     @Test
@@ -83,5 +86,6 @@ public class BoardStateDaoTest {
         assertThat(found.isPresent()).isTrue();
         assertThat(found.get().getId()).isEqualTo(state.getId());
         gameSessionDao.deleteById(sess.getId());
+        boardStateDao.deleteById(state.getId());
     }
 }

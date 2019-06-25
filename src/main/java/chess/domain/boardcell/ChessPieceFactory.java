@@ -5,7 +5,7 @@ import chess.domain.Team;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CellFactory {
+public class ChessPieceFactory {
 
     private static Map<PieceType, ChessPiece> mapper = new HashMap<>();
 
@@ -24,7 +24,7 @@ public class CellFactory {
         mapper.put(PieceType.PAWN_BLACK, Pawn.getInstance(Team.BLACK));
     }
 
-    private CellFactory() {
+    private ChessPieceFactory() {
     }
 
     public static ChessPiece create(PieceType type) {

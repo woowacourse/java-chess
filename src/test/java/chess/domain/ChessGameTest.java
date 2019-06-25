@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.boardcell.CellFactory;
+import chess.domain.boardcell.ChessPieceFactory;
 import chess.domain.boardcell.ChessPiece;
 import chess.domain.boardcell.PieceType;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,8 @@ class ChessGameTest {
     @Test
     void initBoard() {
         Map<CoordinatePair, ChessPiece> pieces = new HashMap<>();
-        ChessPiece rb = CellFactory.create(ROOK_BLACK);
-        ChessPiece rw = CellFactory.create(ROOK_WHITE);
+        ChessPiece rb = ChessPieceFactory.create(ROOK_BLACK);
+        ChessPiece rw = ChessPieceFactory.create(ROOK_WHITE);
         pieces.put(CoordinatePair.of("a8").get(), rb);
         pieces.put(CoordinatePair.of("h8").get(), rb);
         pieces.put(CoordinatePair.of("a1").get(), rw);
@@ -34,8 +34,8 @@ class ChessGameTest {
     @Test
     void move() {
         Map<CoordinatePair, ChessPiece> piecesFrom = new HashMap<>();
-        ChessPiece rb = CellFactory.create(ROOK_BLACK);
-        ChessPiece rw = CellFactory.create(ROOK_WHITE);
+        ChessPiece rb = ChessPieceFactory.create(ROOK_BLACK);
+        ChessPiece rw = ChessPieceFactory.create(ROOK_WHITE);
         piecesFrom.put(CoordinatePair.of("a8").get(), rb);
         piecesFrom.put(CoordinatePair.of("h8").get(), rb);
         piecesFrom.put(CoordinatePair.of("a1").get(), rw);

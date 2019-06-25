@@ -55,7 +55,7 @@ public class CUIChessApp {
 
 
     private static void initBoard() {
-        chessGame = new ChessGame(new BoardStateFactory());
+        chessGame = new ChessGame(new RegularBoardStateFactory());
     }
 
     private static void assertStarted() {

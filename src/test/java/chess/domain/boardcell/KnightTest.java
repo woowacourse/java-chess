@@ -14,11 +14,11 @@ class KnightTest {
 
     @Test
     void getMovable() {
-        ChessPiece rb = CellFactory.create(PieceType.ROOK_BLACK);
-        ChessPiece bb = CellFactory.create(PieceType.BISHOP_BLACK);
-        ChessPiece rw = CellFactory.create(PieceType.ROOK_WHITE);
-        ChessPiece bw = CellFactory.create(PieceType.BISHOP_WHITE);
-        ChessPiece nw = CellFactory.create(PieceType.KNIGHT_WHITE);
+        ChessPiece rb = ChessPieceFactory.create(PieceType.ROOK_BLACK);
+        ChessPiece bb = ChessPieceFactory.create(PieceType.BISHOP_BLACK);
+        ChessPiece rw = ChessPieceFactory.create(PieceType.ROOK_WHITE);
+        ChessPiece bw = ChessPieceFactory.create(PieceType.BISHOP_WHITE);
+        ChessPiece nw = ChessPieceFactory.create(PieceType.KNIGHT_WHITE);
         Map<CoordinatePair, ChessPiece> pieces = new HashMap<>();
         pieces.put(CoordinatePair.of("a8").get(), rb);
         pieces.put(CoordinatePair.of("c8").get(), bb);
@@ -43,11 +43,11 @@ class KnightTest {
 
     @Test
     void getMovable_enemy() {
-        ChessPiece rb = CellFactory.create(PieceType.ROOK_BLACK);
-        ChessPiece bb = CellFactory.create(PieceType.BISHOP_BLACK);
-        ChessPiece rw = CellFactory.create(PieceType.ROOK_WHITE);
-        ChessPiece bw = CellFactory.create(PieceType.BISHOP_WHITE);
-        ChessPiece nw = CellFactory.create(PieceType.KNIGHT_WHITE);
+        ChessPiece rb = ChessPieceFactory.create(PieceType.ROOK_BLACK);
+        ChessPiece bb = ChessPieceFactory.create(PieceType.BISHOP_BLACK);
+        ChessPiece rw = ChessPieceFactory.create(PieceType.ROOK_WHITE);
+        ChessPiece bw = ChessPieceFactory.create(PieceType.BISHOP_WHITE);
+        ChessPiece nw = ChessPieceFactory.create(PieceType.KNIGHT_WHITE);
         Map<CoordinatePair, ChessPiece> pieces = new HashMap<>();
         pieces.put(CoordinatePair.of("a8").get(), rb);
         pieces.put(CoordinatePair.of("c8").get(), bb);
