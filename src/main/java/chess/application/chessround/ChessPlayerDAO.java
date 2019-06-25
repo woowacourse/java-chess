@@ -22,7 +22,7 @@ public class ChessPlayerDAO {
     }
 
     public void deleteChessPiece(ChessPointDTO chessPointDTO, boolean isWhiteTurn) {
-        String query = "DELETE FROM chess_player WHERE row_num=? and column_num=? and is_white_team=?";
+        String query = "DELETE FROM chess_player WHERE row_num=? AND column_num=? AND is_white_team=? AND round=1";
 
         List<Object> queryValues = new ArrayList<>();
         queryValues.add(chessPointDTO.getRow());
@@ -34,7 +34,7 @@ public class ChessPlayerDAO {
     }
 
     public void insertChessPiece(ChessPieceDTO chessPieceDTO, boolean isWhiteTurn) {
-        String query = "INSERT INTO chess_player VALUES(?, ?, ?, ?)";
+        String query = "INSERT INTO chess_player VALUES(?, ?, ?, ?, 1)";
 
         List<Object> queryValues = new ArrayList<>();
         queryValues.add(chessPieceDTO.getRow());
@@ -47,7 +47,7 @@ public class ChessPlayerDAO {
     }
 
     public ChessPieceDTO getChessPiece(ChessPointDTO chessPointDTO, boolean isWhiteTurn) {
-        String query = "SELECT chess_piece FROM chess_player WHERE row_num=? and column_num=? and is_white_team=?";
+        String query = "SELECT chess_piece FROM chess_player WHERE row_num=? AND column_num=? AND is_white_team=? AND round=1";
 
         List<Object> queryValues = new ArrayList<>();
         queryValues.add(chessPointDTO.getRow());
@@ -61,7 +61,7 @@ public class ChessPlayerDAO {
     }
 
     public List<ChessPieceDTO> getAllChessPieces(boolean isWhiteTurn) {
-        String query = "SELECT * FROM chess_player WHERE is_white_team=?";
+        String query = "SELECT * FROM chess_player WHERE is_white_team=? AND round=1";
 
         List<Object> queryValues = new ArrayList<>();
         queryValues.add(isWhiteTurn);
@@ -85,7 +85,7 @@ public class ChessPlayerDAO {
     }
 
     public void clear() {
-        String query = "DELETE FROM chess_player";
+        String query = "DELETE FROM chess_player WHERE round=1";
 
         ChessJDBCTemplate chessJDBCTemplate = ChessJDBCTemplate.getInstance();
         chessJDBCTemplate.executeUpdate(query);
