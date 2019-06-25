@@ -13,6 +13,11 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     public String getName() {
         return NAME;
     }

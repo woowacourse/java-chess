@@ -42,7 +42,7 @@ public class WebUIChessApplication {
 
             Piece targetPiece = chessBoard.move(InputParser.position(source), InputParser.position(target));
 
-            if (targetPiece instanceof King) {
+            if (targetPiece != null && targetPiece.isKing()) {
                 Team winner = chessBoard.getWinner();
                 res.redirect("/result?winner=" + winner.name());
             }

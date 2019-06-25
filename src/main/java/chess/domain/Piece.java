@@ -31,6 +31,10 @@ public abstract class Piece {
         return count * getScore();
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public abstract String getName();
 
     public abstract double getScore();
