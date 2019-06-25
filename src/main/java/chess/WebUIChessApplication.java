@@ -7,12 +7,15 @@ import chess.model.board.Square;
 import chess.view.JsonInput;
 import chess.view.JsonOutput;
 
+import java.sql.SQLException;
+
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
     private static final int SERVICE_PORT = 8080;
     private static final String STATIC_FILE_LOCATION = "/";
     private static final String CONTENT_JSON = "application/json";
+    private static final String EMPTY_JSON = "{}";
 
     private Play play;
 
@@ -21,8 +24,14 @@ public class WebUIChessApplication {
         staticFileLocation(STATIC_FILE_LOCATION);
         init();
 
-        final WebUIChessApplication app = new WebUIChessApplication();
-        app.play = new Play(Board.makeInitialBoard());
+        WebUIChessApplication app = new WebUIChessApplication();
+        BoardDAO boardDAO = new BoardDAO("localhost", "chess", "user", "1234");
+
+        try {
+            app.play = new Play(Board.of(boardDAO.initBoardPositions()));
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
 
         get("/api/board", (request, response) -> {
             response.type(CONTENT_JSON);
@@ -38,7 +47,8 @@ public class WebUIChessApplication {
 
         post("/api/init", (request, response) -> {
             response.type(CONTENT_JSON);
-            app.play = new Play(Board.makeInitialBoard());
+            boardDAO.resetBoard();
+            app.play = new Play(Board.of(boardDAO.initBoardPositions()));
             final String boardJson = JsonOutput.board(app.play.getAllPositions());
             return JsonOutput.responseOk("board", boardJson);
         });
@@ -49,11 +59,12 @@ public class WebUIChessApplication {
             final Square target = JsonInput.getSquareFromJson(request.body(), "target");
             try {
                 app.play.movePieceAndTurnSide(source, target);
+                boardDAO.movePiece(source, target);
             } catch (IllegalArgumentException e) {
                 return JsonOutput.responseFailed(e.getMessage());
             }
             if (app.play.isKingDead(Side.WHITE) || app.play.isKingDead(Side.BLACK)) {
-                return JsonOutput.responseOk("gameover", "{}");
+                return JsonOutput.responseOk("gameover", EMPTY_JSON);
             }
             return JsonOutput.responseOk();
         });

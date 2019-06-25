@@ -31,6 +31,14 @@ public class Board {
         return board;
     }
 
+    public static Board of(final List<Position> positionList) {
+        final Board board = makeEmptyBoard();
+        for (Position position : positionList) {
+            board.setPiece(position.getSquare(), position.getPiece());
+        }
+        return board;
+    }
+
     private void setLine(final Row row, final Rank rank) {
         lines.put(row, rank);
     }

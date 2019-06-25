@@ -6,7 +6,7 @@ public enum UnitClass {
     ROOK("Rook"),
     BISHOP("Bishop"),
     KNIGHT("Knight"),
-    PAWN("PawnMove");
+    PAWN("Pawn");
 
     private final String name;
 

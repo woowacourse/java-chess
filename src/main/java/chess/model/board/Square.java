@@ -83,10 +83,6 @@ public class Square {
         return getDiagonalOneNeighbor(square, Square::getRightOneNeighbor, Square::getDownOneNeighbor);
     }
 
-    public String toPosition() {
-        return column.getColumnName() + row.getRowName();
-    }
-
     @Override
     public boolean equals(Object another) {
         if (this == another) return true;
@@ -97,7 +93,7 @@ public class Square {
 
     @Override
     public String toString() {
-        return column.toString() + ", " + row.toString();
+        return column.getColumnName().toLowerCase() + row.getRowName();
     }
 
     @Override

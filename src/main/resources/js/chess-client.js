@@ -10,6 +10,18 @@ const chessStart = () => {
     });
 }
 
+const chessInit = () => {
+    $.ajax({
+        type: "GET",
+        url: "/api/board",
+        success: function(response) {
+            if (response.queryStatus === "ok") {
+                board = Chessboard("myBoard", makeConfig(response.board));
+            }
+        }
+    });
+};
+
 const pieceMove = (source, target) => {
     const move = {source, target};
     return $.ajax({
@@ -63,3 +75,4 @@ const makeConfig = position => {
 }
 
 let board = Chessboard("myBoard");
+chessInit();

@@ -5,12 +5,9 @@ import chess.model.Side;
 import chess.model.board.Position;
 import chess.model.board.Square;
 import chess.model.unit.Piece;
-import chess.model.unit.UnitClass;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class JsonOutput {
@@ -26,16 +23,7 @@ public class JsonOutput {
     private static final String STATUS_FAILED = "failed";
     private static final String ERROR = "error";
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.#");
-    private static final Map<UnitClass, String> UNIT_CLASS_STRING_MAP = new HashMap<>();
 
-    static {
-        UNIT_CLASS_STRING_MAP.put(UnitClass.KING, "K");
-        UNIT_CLASS_STRING_MAP.put(UnitClass.QUEEN, "Q");
-        UNIT_CLASS_STRING_MAP.put(UnitClass.ROOK, "R");
-        UNIT_CLASS_STRING_MAP.put(UnitClass.BISHOP, "B");
-        UNIT_CLASS_STRING_MAP.put(UnitClass.KNIGHT, "N");
-        UNIT_CLASS_STRING_MAP.put(UnitClass.PAWN, "P");
-    }
 
     public static String responseOk(final String keyName, final String value) {
         return squareBracketWrap(
@@ -78,20 +66,7 @@ public class JsonOutput {
     private static String positionToJsonKeyValue(final Position position) {
         final Square square = position.getSquare();
         final Piece piece = position.getPiece();
-        return keyAndStringValue(squareToString(square), pieceToString(piece));
-    }
-
-    private static String squareToString(final Square square) {
-        return square.getColumn().getColumnName().toLowerCase()
-                + square.getRow().getRowName();
-    }
-
-    private static String pieceToString(final Piece piece) {
-        final String pieceSide = piece.getSide() == Side.WHITE
-                ? PIECE_SIDE_WHITE
-                : PIECE_SIDE_BLACK;
-        final String unitClass = UNIT_CLASS_STRING_MAP.get(piece.getUnitClass());
-        return pieceSide + unitClass;
+        return keyAndStringValue(square.toString(), piece.toString());
     }
 
     private static String quotationWrap(final String string) {
