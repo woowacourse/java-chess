@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
 	private static final int MIN_BOUND = 1;
 	private static final int MAX_BOUND = 8;
 	private static final List<Position> positions = new ArrayList<>();
@@ -82,5 +82,14 @@ public class Position {
 	@Override
 	public String toString() {
 		return "{" + x + ", " + y + "}\n";
+	}
+
+	@Override
+	public int compareTo(Position o) {
+		int result = this.y.compareTo(o.y);
+		if(result == 0) {
+			return this.x.compareTo(o.x);
+		}
+		return result;
 	}
 }
