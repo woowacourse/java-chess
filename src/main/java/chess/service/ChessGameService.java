@@ -11,21 +11,28 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGameService {
-    public static final String SESSION_ID = "-game";
-    public static final String FROM = "from";
-    public static final String TO = "to";
+    private static final String SESSION_ID = "-game";
+    private static final String FROM = "from";
+    private static final String TO = "to";
     private static final ChessGameDAO CHESS_GAME_DAO = ChessGameDAO.getInstance();
     private static final ChessLogDAO CHESS_LOG_DAO = ChessLogDAO.getInstance();
 
     public static Map<String, String> findGameByGameId(Request request) {
-        String gameId = request.splat()[0];
-        List<List<String>> chessLogs = CHESS_LOG_DAO.findGameLogById(gameId);
+        String gameId = gameId(request);
         ChessGame chessGame = new ChessGame();
+        lastStatus(CHESS_LOG_DAO.findGameLogById(gameId), chessGame);
+        request.session().attribute(gameId + SESSION_ID, chessGame);
+        return status(chessGame);
+    }
+
+    private static String gameId(Request request) {
+        return request.splat()[0];
+    }
+
+    private static void lastStatus(List<List<String>> chessLogs, ChessGame chessGame) {
         for (List<String> chessLog : chessLogs) {
             chessGame.play(chessLog.get(0), chessLog.get(1));
         }
-        request.session().attribute(gameId + SESSION_ID, chessGame);
-        return status(chessGame);
     }
 
     public static List<Integer> findPreviousGamesById(String name) {
@@ -33,7 +40,7 @@ public class ChessGameService {
     }
 
     public static Map<String, String> playGame(Request req) {
-        String gameId = req.splat()[0];
+        String gameId = gameId(req);
         ChessGame game = req.session().attribute(gameId + SESSION_ID);
         String from = req.queryParams(FROM);
         String to = req.queryParams(TO);

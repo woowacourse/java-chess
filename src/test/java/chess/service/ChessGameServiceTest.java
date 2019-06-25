@@ -1,6 +1,5 @@
 package chess.service;
 
-import chess.domain.ChessGame;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
