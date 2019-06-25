@@ -15,10 +15,8 @@ public abstract class Piece implements Comparable<Piece> {
     private int totalMoved = 0;
 
     protected Piece(Player owner, Position position) {
-        this.owner = Optional.ofNullable(owner)
-                            .orElseThrow(IllegalArgumentException::new);
-        this.position = Optional.ofNullable(position)
-                            .orElseThrow(IllegalArgumentException::new);
+        this.owner = Optional.ofNullable(owner).orElseThrow(IllegalArgumentException::new);
+        this.position = Optional.ofNullable(position).orElseThrow(IllegalArgumentException::new);
     }
 
     protected Piece(Piece copyFrom) {
@@ -65,10 +63,10 @@ public abstract class Piece implements Comparable<Piece> {
         };
     }
 
-    public Piece move(Position to) {
-        this.position = to;
+    public boolean move(Position to) {
+        this.position = Optional.ofNullable(to).orElseThrow(IllegalArgumentException::new);
         this.totalMoved++;
-        return this;
+        return true;
     }
 
     public boolean isKing() {

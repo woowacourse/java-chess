@@ -49,7 +49,8 @@ class PieceTest {
 
     @Test
     void moveTest() {
-        assertThat(testPiece.move(Position.of("c6")).position()).isEqualTo(Position.of("c6"));
+        testPiece.move(Position.of("c6"));
+        assertThat(testPiece.position()).isEqualTo(Position.of("c6"));
         assertThat(testPiece.hasNotMoved()).isFalse();
     }
 
