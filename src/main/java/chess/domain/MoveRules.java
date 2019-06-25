@@ -9,16 +9,31 @@ import java.util.List;
 import static chess.domain.Direction.*;
 
 public class MoveRules {
-    private static final List<Direction> PAWN_DIRECTION = Arrays.asList(N, S);
+    private static final List<Direction> WHITE_PAWN_DIRECTION = Arrays.asList(N, NE, NW);
+    private static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(S, SE, SW);
     private static final List<Direction> DIAGONAL_DIRECTION = Arrays.asList(NE, SE, SW, NW);
     private static final List<Direction> CROSS_DIRECTION = Arrays.asList(N, E, S, W);
     private static final List<Direction> ALL_DIRECTION = Arrays.asList(N, NE, E, SE, S, SW, W, NW);
     private static final int LIMIT_DISTANCE_ONE = 1;
     private static final int LIMIT_DISTANCE_KNIGHT = 3;
 
-    public static boolean pawn(Position source, Position target) {
+    public static boolean whitePawn(Position source, Position target) {
         Direction direction = source.direction(target);
-        validDirection(PAWN_DIRECTION, direction);
+        validDirection(WHITE_PAWN_DIRECTION, direction);
+        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
+        return true;
+    }
+
+    public static boolean blackPawn(Position source, Position target) {
+        Direction direction = source.direction(target);
+        validDirection(BLACK_PAWN_DIRECTION, direction);
+        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
+        return true;
+    }
+
+    public static boolean king(Position source, Position target) {
+        Direction direction = source.direction(target);
+        validDirection(ALL_DIRECTION, direction);
         validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
         return true;
     }
@@ -33,13 +48,6 @@ public class MoveRules {
         if (movables.stream().noneMatch(movable -> movable == direction)) {
             throw new InvalidDirectionException("움직일 수 있는 방향이 아닙니다.");
         }
-    }
-
-    public static boolean king(Position source, Position target) {
-        Direction direction = source.direction(target);
-        validDirection(ALL_DIRECTION, direction);
-        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
-        return true;
     }
 
     public static boolean queen(Position source, Position target) {

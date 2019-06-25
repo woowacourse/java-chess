@@ -1,15 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.Piece;
-import chess.domain.MoveRules;
-import chess.domain.Team;
+import chess.domain.*;
 
 public class Pawn extends Piece {
     private static final String NAME = "p";
     private static final int SCORE = 1;
 
     public Pawn(Team team) {
-        super(team, MoveRules::pawn);
+        super(team, Team.pawnMoveRule(team));
     }
 
     @Override
