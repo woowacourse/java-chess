@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class BoardDTO {
-    List<String> pieces;
+    private List<String> pieces;
 
     public BoardDTO(List<String> pieces) {
         this.pieces = pieces;

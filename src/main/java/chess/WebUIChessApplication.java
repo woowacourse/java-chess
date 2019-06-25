@@ -1,13 +1,13 @@
 package chess;
 
-import chess.model.BoardDTO;
-import chess.model.ChessDAO;
-import chess.model.ChessGame;
+import chess.model.*;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static spark.Spark.*;
 
@@ -19,33 +19,54 @@ public class WebUIChessApplication {
         });
         get("/newgame.html", (req, res) -> {
             ChessDAO chessDAO = ChessDAO.getInstance();
+            chessDAO.deleteAll();
+            chessDAO.insertInit();
             Map<String, Object> model = new HashMap<>();
             model.put("board", chessDAO.selectByTurn(1).getPieces());
 
-            ChessGame game = new ChessGame();
+            ChessGame game = new ChessGame(new NewGameCreateStrategy(), 1);
 
             req.session().attribute("game", game);
 
             return render(model, "newgame.html");
         });
 
-        post("/newgame.html", (req, res) -> {
+        get("/game.html", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             ChessDAO chessDAO = ChessDAO.getInstance();
             String source = req.queryParams("source");
             String target = req.queryParams("target");
+            System.err.println(source);
+            ChessGame game;
+            game = req.session().attribute("game");
+//            System.err.println(game);
 
-            ChessGame game = req.session().attribute("game");
-            game.movePiece(source, target);
+            if (!Objects.isNull(source)) { // 이어서하기
+                System.err.println(source);
+                game.movePiece(source, target);
+                BoardDTO boardDTO = new BoardDTO(game.convertToList());
+                chessDAO.updateBoard(boardDTO);
+                // reverse했음
+                Collections.reverse(boardDTO.getPieces());
+                model.put("board", boardDTO.getPieces());
+            }
+            if (Objects.isNull(source)) { // 게임진행
+                BoardDTO boardDTO = chessDAO.selectByTurn(chessDAO.getLatestTurn());
+                game = new ChessGame(new ContinueGameCreateStrategy(boardDTO), chessDAO.getLatestTurn());
 
-            System.err.println(game.convertToList().get(0));
-            BoardDTO boardDTO = new BoardDTO(game.convertToList());
+                //reverse했음
+//                Collections.reverse(boardDTO.getPieces());
+
+                model.put("board", boardDTO.getPieces());
+            }
+
+//            BoardDTO boardDTO = new BoardDTO(game.convertToList());
 //            chessDAO.updateBoard(boardDTO);
 
-            model.put("board", boardDTO.getPieces());
+//            model.put("board", boardDTO.getPieces());
             req.session().attribute("game", game);
 
-            return render(model, "newgame.html");
+            return render(model, "game.html");
         });
     }
 

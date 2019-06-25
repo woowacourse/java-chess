@@ -204,9 +204,9 @@ public class Board {
             int coordinateY2 = Integer.parseInt(a2.substring(1, 2));
 
             if (coordinateY1 < coordinateY2) {
-                return -1;
-            } else if (coordinateY1 > coordinateY2) {
                 return 1;
+            } else if (coordinateY1 > coordinateY2) {
+                return -1;
             } else if (coordinateY1 == coordinateY2) {
                 int coordinateX1 = Integer.parseInt(a1.substring(0, 1));
                 int coordinateX2 = Integer.parseInt(a2.substring(0, 1));
@@ -297,9 +297,6 @@ public class Board {
                 row = "";
             }
         }
-
-
-        Collections.reverse(pieces);
 
         return pieces;
     }

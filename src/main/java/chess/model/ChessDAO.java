@@ -65,4 +65,64 @@ public class ChessDAO {
             return new BoardDTO(pieces);
         }
     }
+
+    public void updateBoard(BoardDTO boardDTO) throws SQLException {
+        String query = "INSERT INTO chess_info (row1, row2, row3, row4, row5, row6, row7, row8) VALUES(?,?,?,?,?,?,?,?)";
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, boardDTO.getPieces().get(7));
+            pstmt.setString(2, boardDTO.getPieces().get(6));
+            pstmt.setString(3, boardDTO.getPieces().get(5));
+            pstmt.setString(4, boardDTO.getPieces().get(4));
+            pstmt.setString(5, boardDTO.getPieces().get(3));
+            pstmt.setString(6, boardDTO.getPieces().get(2));
+            pstmt.setString(7, boardDTO.getPieces().get(1));
+            pstmt.setString(8, boardDTO.getPieces().get(0));
+
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void deleteAll() throws SQLException {
+        String query = "DELETE FROM chess_info";
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void insertInit() throws SQLException {
+        initAutoIncrement();
+        String query = "INSERT INTO chess_info VALUES(0," +
+                "'rnbqkbnr','pppppppp','########','########','########','########','PPPPPPPP','RNBQKBNR');";
+
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.executeUpdate();
+        }
+    }
+
+    private void initAutoIncrement() throws SQLException {
+        String query = "ALTER TABLE chess_info AUTO_INCREMENT = 1";
+
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public int getLatestTurn() throws SQLException {
+        String query = "SELECT MAX(turn) AS latest_turn FROM chess_info";
+        int latestTurn = 0;
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                latestTurn = rs.getInt("latest_turn");
+            }
+        }
+
+        return latestTurn;
+    }
 }

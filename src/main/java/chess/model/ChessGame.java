@@ -7,9 +7,9 @@ public class ChessGame {
     private Board board;
     private int turn;
 
-    public ChessGame() {
-        turn = 1;
-        board = new Board(new NormalCreateStrategy());
+    public ChessGame(CreateStrategy strategy, int turn) {
+        this.turn = turn;
+        board = new Board(strategy);
     }
 
     public void movePiece(String sourceCoordinate, String targetCoordinate) {

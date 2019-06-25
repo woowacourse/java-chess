@@ -17,8 +17,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 public class BoardTest {
     @Test
     void 생성자_확인() {
-        Board board = new Board(new NormalCreateStrategy());
-        assertThat(board).isEqualTo(new Board(new NormalCreateStrategy()));
+        Board board = new Board(new NewGameCreateStrategy());
+        assertThat(board).isEqualTo(new Board(new NewGameCreateStrategy()));
     }
 
     @Test
@@ -397,7 +397,7 @@ public class BoardTest {
 
     @Test
     void 말_초기화_확인() {
-        Board board = new Board(new NormalCreateStrategy());
+        Board board = new Board(new NewGameCreateStrategy());
         assertThat(board.getTile("12")).isEqualTo(new Tile("12", Optional.ofNullable(new Pawn(true, "white"))));
         assertThat(board.getTile("55")).isEqualTo(new Tile("55", Optional.ofNullable(null)));
         assertThat(board.getTile("58")).isEqualTo(new Tile("58", Optional.ofNullable(new King("black"))));
@@ -405,7 +405,7 @@ public class BoardTest {
 
     @Test
     void 턴이_맞는지_확인() {
-        Board board = new Board(new NormalCreateStrategy());
+        Board board = new Board(new NewGameCreateStrategy());
         assertThat(board.isRightTurn("11", 3)).isTrue();
         assertThat(board.isRightTurn("18", 3)).isFalse();
         assertThat(board.isRightTurn("11", 2)).isFalse();
