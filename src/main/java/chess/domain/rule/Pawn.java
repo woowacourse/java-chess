@@ -3,20 +3,18 @@ package chess.domain.rule;
 import chess.domain.Position;
 import chess.domain.Rule;
 
-public enum Pawn implements Rule {
-    FIRST_TOP(-2),
-    SECOND_TOP(-1),
-    FIRST_BOTTOM(2),
-    SECOND_BOTTOM(1);
+public class Pawn extends AbstractRule {
+    public static Pawn FIRST_TOP = new Pawn(-2);
+    public static Pawn SECOND_TOP = new Pawn(-1);
+    public static Pawn FIRST_BOTTOM = new Pawn(2);
+    public static Pawn SECOND_BOTTOM = new Pawn(1);
 
-    public static final int ZERO_VECTOR = 0;
-    private static final double SCORE = 1;
-    public static final double HALF_SCORE = SCORE / 2;
-    public static final String NAME = "PAWN";
+    private static final int ZERO_VECTOR = 0;
 
     private final int distance;
 
-    Pawn(final int distance) {
+    private Pawn(final int distance) {
+        super(Type.PAWN);
         this.distance = distance;
     }
 
@@ -45,15 +43,5 @@ public enum Pawn implements Rule {
 
     private boolean isSameSign(final int vector) {
         return Integer.compare(0, this.distance) == Integer.compare(0, vector);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
     }
 }

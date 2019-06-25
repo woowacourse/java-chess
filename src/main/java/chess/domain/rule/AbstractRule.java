@@ -4,12 +4,36 @@ import chess.domain.Position;
 import chess.domain.Rule;
 
 public abstract class AbstractRule implements Rule {
-    private final double score;
-    private final String name;
+    public enum Type {
+        PAWN("Pawn", 1),
+        QUEEN("Queen", 9),
+        ROOK("Rook", 5),
+        KNIGHT("Knight", 2.5),
+        KING("King", 0),
+        EMPTY("Empty", 0),
+        BISHOP("Bishop", 3);
 
-    AbstractRule(final double score, final String name) {
-        this.score = score;
-        this.name = name;
+        private final String name;
+        private final double score;
+
+        Type(final String name, final double score) {
+            this.name = name;
+            this.score = score;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getScore() {
+            return score;
+        }
+    }
+
+    private Type type;
+
+    public AbstractRule(final Type type) {
+        this.type = type;
     }
 
     @Override
@@ -24,11 +48,11 @@ public abstract class AbstractRule implements Rule {
 
     @Override
     public double getScore() {
-        return score;
+        return this.type.score;
     }
 
     @Override
     public String getName() {
-        return this.name;
+        return this.type.name;
     }
 }

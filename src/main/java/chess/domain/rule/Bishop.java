@@ -4,11 +4,9 @@ import chess.domain.Position;
 
 public class Bishop extends AbstractRule {
     private static Bishop INSTANCE = new Bishop();
-    private static final double SCORE = 3;
-    public static final String NAME = "BISHOP";
 
     private Bishop() {
-        super(SCORE, NAME);
+        super(Type.BISHOP);
     }
 
     public static Bishop getInstance() {

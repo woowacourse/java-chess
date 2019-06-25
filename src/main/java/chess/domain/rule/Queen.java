@@ -4,11 +4,9 @@ import chess.domain.Position;
 
 public class Queen extends AbstractRule {
     private static Queen INSTANCE = new Queen();
-    private static final double SCORE = 9;
-    public static final String NAME = "QUEEN";
 
     private Queen() {
-        super(SCORE, NAME);
+        super(Type.QUEEN);
     }
 
     public static Queen getInstance() {

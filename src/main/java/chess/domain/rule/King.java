@@ -3,9 +3,10 @@ package chess.domain.rule;
 import chess.domain.Position;
 
 public class King extends AbstractRule {
-    private static King INSTANCE = new King();z
+    private static King INSTANCE = new King();
+
     private King() {
-        super(SCORE, NAME);
+        super(Type.KING);
     }
 
     public static King getInstance() {

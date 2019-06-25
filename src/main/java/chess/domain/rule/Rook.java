@@ -4,11 +4,9 @@ import chess.domain.Position;
 
 public class Rook extends AbstractRule {
     private static Rook INSTANCE = new Rook();
-    private static final double SCORE = 5;
-    public static final String NAME = "ROOK";
 
     private Rook() {
-        super(SCORE, NAME);
+        super(Type.ROOK);
     }
 
     public static Rook getInstance() {
