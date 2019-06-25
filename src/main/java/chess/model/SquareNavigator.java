@@ -26,7 +26,16 @@ public class SquareNavigator {
             throw new InvalidRangeException(INVALID_RANGE_ERROR_MSG);
     }
 
-    public List<Square> findSquares(Board board) {
+    List<Square> findSquares() {
+        List<Square> squares = new ArrayList<>();
+        Square temp = beginSquare;
+        while (temp.hasNext(direction)) {
+            squares.add(temp = temp.next(direction));
+        }
+        return squares;
+    }
+
+    List<Square> findSquares(Board board) {
         if (!beginSquare.hasNext(direction))
             return new ArrayList<>();
         return calculateUnblockedSquares(board);

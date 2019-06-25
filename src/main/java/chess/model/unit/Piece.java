@@ -41,6 +41,10 @@ public abstract class Piece {
         return this.side == piece.side;
     }
 
+    public boolean isSameSide(Side side) {
+        return this.side == side;
+    }
+
     public String toSymbolString() {
         return side == Side.WHITE ? type.getSymbol().toLowerCase() : type.getSymbol();
     }
@@ -55,6 +59,10 @@ public abstract class Piece {
 
     public boolean compareSide(Side side) {
         return this.side == side;
+    }
+
+    public double getScore() {
+        return type.getScore();
     }
 
     @Override

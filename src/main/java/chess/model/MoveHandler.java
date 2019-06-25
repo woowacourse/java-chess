@@ -11,11 +11,11 @@ import java.util.List;
 public class MoveHandler {
     private Board board;
 
-    public MoveHandler(Board board) {
+    MoveHandler(Board board) {
         this.board = board;
     }
 
-    public boolean move(Square beginSquare, Square endSquare, Side side) {
+    boolean move(Square beginSquare, Square endSquare, Side side) {
         if (isNullPiece(beginSquare) || !isSameSide(beginSquare, side) || isEqualSquare(beginSquare, endSquare))
             return false;
         List<Square> squares = findPossibleSquares(beginSquare, isNullPiece(endSquare));
