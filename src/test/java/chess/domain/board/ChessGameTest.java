@@ -9,12 +9,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
+import static chess.domain.piece.core.Team.BLACK;
+import static chess.domain.piece.core.Team.WHITE;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class ChessGameTest {
     @Test
     void 남은_말_계산_테스트() {
-        assertThat(new ChessGame(testGamingBoard()).calculateScore(Team.BLACK)).isEqualTo(20);
+        assertThat(new ChessGame(testGamingBoard()).calculateScore(BLACK)).isEqualTo(20);
         assertThat(new ChessGame(testGamingBoard()).calculateScore(Team.WHITE)).isEqualTo(19.5);
     }
 
@@ -25,19 +27,19 @@ class ChessGameTest {
 
     @Test
     void 우승자_테스트() {
-        assertThat(new ChessGame(testGameOverBoard()).findWinner()).isEqualTo(Team.BLACK);
+        assertThat(new ChessGame(testGameOverBoard()).findWinner()).isEqualTo(BLACK);
     }
 
     private Board testGamingBoard() {
         Map<Square, Piece> testBoard = Maps.newHashMap();
 
-        testBoard.put(Square.of(1, 0), new King(Team.BLACK));
-        testBoard.put(Square.of(2, 0), new Rook(Team.BLACK));
-        testBoard.put(Square.of(0, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(2, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(3, 1), new Bishop(Team.BLACK));
-        testBoard.put(Square.of(1, 2), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(4, 2), new Queen(Team.BLACK));
+        testBoard.put(Square.of(1, 0), new King(BLACK));
+        testBoard.put(Square.of(2, 0), new Rook(BLACK));
+        testBoard.put(Square.of(0, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(2, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(3, 1), new Bishop(BLACK));
+        testBoard.put(Square.of(1, 2), new Pawn(BLACK));
+        testBoard.put(Square.of(4, 2), new Queen(BLACK));
 
         testBoard.put(Square.of(5, 4), new Knight(Team.WHITE));
         testBoard.put(Square.of(6, 4), new Queen(Team.WHITE));
@@ -48,19 +50,19 @@ class ChessGameTest {
         testBoard.put(Square.of(4, 7), new Rook(Team.WHITE));
         testBoard.put(Square.of(5, 7), new King(Team.WHITE));
 
-        return Board.drawBoard(testBoard);
+        return Board.drawBoard(testBoard, WHITE);
     }
 
     private Board testGameOverBoard() {
         Map<Square, Piece> testBoard = Maps.newHashMap();
 
-        testBoard.put(Square.of(1, 0), new King(Team.BLACK));
-        testBoard.put(Square.of(2, 0), new Rook(Team.BLACK));
-        testBoard.put(Square.of(0, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(2, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(3, 1), new Bishop(Team.BLACK));
-        testBoard.put(Square.of(1, 2), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(4, 2), new Queen(Team.BLACK));
+        testBoard.put(Square.of(1, 0), new King(BLACK));
+        testBoard.put(Square.of(2, 0), new Rook(BLACK));
+        testBoard.put(Square.of(0, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(2, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(3, 1), new Bishop(BLACK));
+        testBoard.put(Square.of(1, 2), new Pawn(BLACK));
+        testBoard.put(Square.of(4, 2), new Queen(BLACK));
 
         testBoard.put(Square.of(5, 4), new Knight(Team.WHITE));
         testBoard.put(Square.of(6, 4), new Queen(Team.WHITE));
@@ -70,6 +72,6 @@ class ChessGameTest {
         testBoard.put(Square.of(6, 6), new Pawn(Team.WHITE));
         testBoard.put(Square.of(4, 7), new Rook(Team.WHITE));
 
-        return Board.drawBoard(testBoard);
+        return Board.drawBoard(testBoard, BLACK);
     }
 }

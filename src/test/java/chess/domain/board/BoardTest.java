@@ -5,13 +5,13 @@ import chess.domain.direction.core.Square;
 import chess.domain.direction.core.TargetStatus;
 import chess.domain.piece.*;
 import chess.domain.piece.core.Piece;
-import chess.domain.piece.core.Team;
 import chess.domain.piece.core.Type;
 import com.google.common.collect.Maps;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
+import static chess.domain.piece.core.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
@@ -23,8 +23,8 @@ class BoardTest {
     @Test
     void 보드에서_말_선택하기() {
         Board board = Board.drawBoard();
-        assertThat(board.getPiece(Square.of(0, 6))).isEqualTo(Type.PAWN.create(Team.WHITE));
-        assertThat(board.getPiece(Square.of(0, 1))).isEqualTo(Type.PAWN.create(Team.BLACK));
+        assertThat(board.getPiece(Square.of(0, 6))).isEqualTo(Type.PAWN.create(WHITE));
+        assertThat(board.getPiece(Square.of(0, 1))).isEqualTo(Type.PAWN.create(BLACK));
     }
 
     @Test
@@ -43,114 +43,85 @@ class BoardTest {
         assertThat(changedBoard).isEqualTo(testChangedBoard());
     }
 
-    @Test
-    void 흰_팀_계산하기_테스트() {
-//        assertThat(testCalculateBoard().calculateWhiteScore()).isEqualTo(12.5);
-    }
-
-    @Test
-    void 검은_팀_계산하기_테스트() {
-//        assertThat(testCalculateBoard().calculateBlackScore()).isEqualTo(10.5);
-    }
-
     private Board testInitBoard() {
         Map<Square, Piece> testBoard = Maps.newHashMap();
-        testBoard.put(Square.of(0, 0), new Rook(Team.BLACK));
-        testBoard.put(Square.of(1, 0), new Knight(Team.BLACK));
-        testBoard.put(Square.of(2, 0), new Bishop(Team.BLACK));
-        testBoard.put(Square.of(3, 0), new Queen(Team.BLACK));
-        testBoard.put(Square.of(4, 0), new King(Team.BLACK));
-        testBoard.put(Square.of(5, 0), new Bishop(Team.BLACK));
-        testBoard.put(Square.of(6, 0), new Knight(Team.BLACK));
-        testBoard.put(Square.of(7, 0), new Rook(Team.BLACK));
+        testBoard.put(Square.of(0, 0), new Rook(BLACK));
+        testBoard.put(Square.of(1, 0), new Knight(BLACK));
+        testBoard.put(Square.of(2, 0), new Bishop(BLACK));
+        testBoard.put(Square.of(3, 0), new Queen(BLACK));
+        testBoard.put(Square.of(4, 0), new King(BLACK));
+        testBoard.put(Square.of(5, 0), new Bishop(BLACK));
+        testBoard.put(Square.of(6, 0), new Knight(BLACK));
+        testBoard.put(Square.of(7, 0), new Rook(BLACK));
 
-        testBoard.put(Square.of(0, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(1, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(2, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(3, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(4, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(5, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(6, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(7, 1), new Pawn(Team.BLACK));
+        testBoard.put(Square.of(0, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(1, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(2, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(3, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(4, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(5, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(6, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(7, 1), new Pawn(BLACK));
 
-        testBoard.put(Square.of(0, 7), new Rook(Team.WHITE));
-        testBoard.put(Square.of(1, 7), new Knight(Team.WHITE));
-        testBoard.put(Square.of(2, 7), new Bishop(Team.WHITE));
-        testBoard.put(Square.of(3, 7), new Queen(Team.WHITE));
-        testBoard.put(Square.of(4, 7), new King(Team.WHITE));
-        testBoard.put(Square.of(5, 7), new Bishop(Team.WHITE));
-        testBoard.put(Square.of(6, 7), new Knight(Team.WHITE));
-        testBoard.put(Square.of(7, 7), new Rook(Team.WHITE));
+        testBoard.put(Square.of(0, 7), new Rook(WHITE));
+        testBoard.put(Square.of(1, 7), new Knight(WHITE));
+        testBoard.put(Square.of(2, 7), new Bishop(WHITE));
+        testBoard.put(Square.of(3, 7), new Queen(WHITE));
+        testBoard.put(Square.of(4, 7), new King(WHITE));
+        testBoard.put(Square.of(5, 7), new Bishop(WHITE));
+        testBoard.put(Square.of(6, 7), new Knight(WHITE));
+        testBoard.put(Square.of(7, 7), new Rook(WHITE));
 
-        testBoard.put(Square.of(0, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(1, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(2, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(3, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(4, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(5, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(6, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(7, 6), new Pawn(Team.WHITE));
+        testBoard.put(Square.of(0, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(1, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(2, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(3, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(4, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(5, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(6, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(7, 6), new Pawn(WHITE));
 
-        return Board.drawBoard(testBoard);
+        return Board.drawBoard(testBoard, WHITE);
     }
 
     private Board testChangedBoard() {
         Map<Square, Piece> testBoard = Maps.newHashMap();
-        testBoard.put(Square.of(0, 0), new Rook(Team.BLACK));
-        testBoard.put(Square.of(1, 0), new Knight(Team.BLACK));
-        testBoard.put(Square.of(2, 0), new Bishop(Team.BLACK));
-        testBoard.put(Square.of(3, 0), new Queen(Team.BLACK));
-        testBoard.put(Square.of(4, 0), new King(Team.BLACK));
-        testBoard.put(Square.of(5, 0), new Bishop(Team.BLACK));
-        testBoard.put(Square.of(6, 0), new Knight(Team.BLACK));
-        testBoard.put(Square.of(7, 0), new Rook(Team.BLACK));
+        testBoard.put(Square.of(0, 0), new Rook(BLACK));
+        testBoard.put(Square.of(1, 0), new Knight(BLACK));
+        testBoard.put(Square.of(2, 0), new Bishop(BLACK));
+        testBoard.put(Square.of(3, 0), new Queen(BLACK));
+        testBoard.put(Square.of(4, 0), new King(BLACK));
+        testBoard.put(Square.of(5, 0), new Bishop(BLACK));
+        testBoard.put(Square.of(6, 0), new Knight(BLACK));
+        testBoard.put(Square.of(7, 0), new Rook(BLACK));
 
-        testBoard.put(Square.of(0, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(1, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(2, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(3, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(4, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(5, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(6, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(7, 1), new Pawn(Team.BLACK));
+        testBoard.put(Square.of(0, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(1, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(2, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(3, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(4, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(5, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(6, 1), new Pawn(BLACK));
+        testBoard.put(Square.of(7, 1), new Pawn(BLACK));
 
-        testBoard.put(Square.of(0, 7), new Rook(Team.WHITE));
-        testBoard.put(Square.of(1, 7), new Knight(Team.WHITE));
-        testBoard.put(Square.of(2, 7), new Bishop(Team.WHITE));
-        testBoard.put(Square.of(3, 7), new Queen(Team.WHITE));
-        testBoard.put(Square.of(4, 7), new King(Team.WHITE));
-        testBoard.put(Square.of(5, 7), new Bishop(Team.WHITE));
-        testBoard.put(Square.of(5, 5), new Knight(Team.WHITE));
-        testBoard.put(Square.of(7, 7), new Rook(Team.WHITE));
+        testBoard.put(Square.of(0, 7), new Rook(WHITE));
+        testBoard.put(Square.of(1, 7), new Knight(WHITE));
+        testBoard.put(Square.of(2, 7), new Bishop(WHITE));
+        testBoard.put(Square.of(3, 7), new Queen(WHITE));
+        testBoard.put(Square.of(4, 7), new King(WHITE));
+        testBoard.put(Square.of(5, 7), new Bishop(WHITE));
+        testBoard.put(Square.of(5, 5), new Knight(WHITE));
+        testBoard.put(Square.of(7, 7), new Rook(WHITE));
 
-        testBoard.put(Square.of(0, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(1, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(2, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(3, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(4, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(5, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(6, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(7, 6), new Pawn(Team.WHITE));
+        testBoard.put(Square.of(0, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(1, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(2, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(3, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(4, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(5, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(6, 6), new Pawn(WHITE));
+        testBoard.put(Square.of(7, 6), new Pawn(WHITE));
 
-        return Board.drawBoard(testBoard);
-    }
-
-    private Board testCalculateBoard(){
-        Map<Square, Piece> testBoard = Maps.newHashMap();
-        testBoard.put(Square.of(0, 0), new Rook(Team.BLACK));
-        testBoard.put(Square.of(1, 0), new Knight(Team.BLACK));
-
-        testBoard.put(Square.of(5, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(6, 1), new Pawn(Team.BLACK));
-        testBoard.put(Square.of(7, 1), new Pawn(Team.BLACK));
-
-        testBoard.put(Square.of(0, 7), new Rook(Team.WHITE));
-        testBoard.put(Square.of(1, 7), new Knight(Team.WHITE));
-        testBoard.put(Square.of(2, 7), new Bishop(Team.WHITE));
-
-        testBoard.put(Square.of(6, 6), new Pawn(Team.WHITE));
-        testBoard.put(Square.of(7, 6), new Pawn(Team.WHITE));
-
-        return Board.drawBoard(testBoard);
+        return Board.drawBoard(testBoard, BLACK);
     }
 }
