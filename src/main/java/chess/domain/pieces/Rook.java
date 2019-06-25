@@ -7,4 +7,9 @@ public class Rook extends Piece {
     public Rook(Team team) {
         super(team, Type.ROOK);
     }
+
+    @Override
+    public String getSymbol() {
+        return team == Team.WHITE ? "&#9814;" : "&#9820;";
+    }
 }

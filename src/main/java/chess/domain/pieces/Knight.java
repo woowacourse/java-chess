@@ -13,6 +13,11 @@ public class Knight extends Piece {
         super(team, Type.KNIGHT);
     }
 
+    @Override
+    public String getSymbol() {
+        return team == Team.WHITE ? "&#9816;" : "&#9822;";
+    }
+
     //TODO: King Knight 중복 제거
     @Override
     public List<Point> move(Point start, Point end) {

@@ -15,7 +15,11 @@ public class Pawn extends Piece {
         super(team, (team == Team.WHITE) ? Type.WHITE_PAWN : Type.BLACK_PAWN);
     }
 
-    //TODO : 리팩토링 필요
+    @Override
+    public String getSymbol() {
+        return team == Team.WHITE ? "&#9817;" : "&#9823;";
+    }
+
     @Override
     public List<Point> move(Point start, Point end) {
         List<Point> points = new ArrayList<>();

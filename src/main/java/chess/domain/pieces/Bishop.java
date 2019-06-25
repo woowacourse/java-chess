@@ -7,4 +7,9 @@ public class Bishop extends Piece {
     public Bishop(Team team) {
         super(team, Type.BISHOP);
     }
+
+    @Override
+    public String getSymbol() {
+        return team == Team.WHITE ? "&#9815;" : "&#9821;";
+    }
 }

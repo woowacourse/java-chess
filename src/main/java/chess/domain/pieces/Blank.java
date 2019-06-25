@@ -7,4 +7,9 @@ public class Blank extends Piece {
     public Blank() {
         super(Team.BLANK, Type.BLANK);
     }
+
+    @Override
+    public String getSymbol() {
+        return "";
+    }
 }

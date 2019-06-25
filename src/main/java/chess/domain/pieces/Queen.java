@@ -7,4 +7,9 @@ public class Queen extends Piece {
     public Queen(Team team) {
         super(team, Type.QUEEN);
     }
+
+    @Override
+    public String getSymbol() {
+        return team == Team.WHITE ? "&#9813;" : "&#9819;";
+    }
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Piece {
+public abstract class Piece {
     protected final Team team;
     protected final Type type;
 
@@ -52,9 +52,7 @@ public class Piece {
         return type;
     }
 
-    public Team getTeam() {
-        return team;
-    }
+    abstract public String getSymbol();
 
     @Override
     public boolean equals(Object o) {
