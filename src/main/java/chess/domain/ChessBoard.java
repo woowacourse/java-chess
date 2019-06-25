@@ -2,12 +2,14 @@ package chess.domain;
 
 import chess.domain.chesspiece.*;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
     private static final int FIRST_BLANK_ROW = 2;
-    private static final int LAST_BLANK_ROW = 6;
+    private static final int LAST_BLANK_ROW = 5;
     private static final int FIRST_COLUMN = 0;
     private static final int LAST_COLUMN = 7;
     private static final int BLACK_TEAM_AREA = 0;
@@ -19,6 +21,36 @@ public class ChessBoard {
 
     public ChessBoard() {
         init();
+    }
+
+    public boolean canMove(Position source, Position target) {
+        ChessPiece sourceChessPiece = chessBoard.get(source);
+        List<Position> route = sourceChessPiece.getRouteOfPiece(source, target);
+
+        if (validExist(source)) {
+            throw new IllegalArgumentException();
+        }
+        if (isSameChessPiece(sourceChessPiece, Pawn.class)) {
+            return canMovePawns(source, target, route);
+        }
+
+        return route.stream()
+                .limit(route.size() - 1)
+                .allMatch(position -> isSameChessPiece(chessBoard.get(position), Blank.class)
+                        && !chessBoard.get(target).isSameTeam(sourceChessPiece));
+    }
+
+    private Boolean canMovePawns(Position source, Position target, List<Position> route) {
+        if (!source.isSameColumn(target)
+                && !chessBoard.get(source).isSameTeam(chessBoard.get(target))) {
+            return true;
+        }
+        return route.stream()
+                .allMatch(position -> isSameChessPiece(chessBoard.get(source), Blank.class));
+    }
+
+    private boolean validExist(Position source) {
+        return !chessBoard.containsKey(source) || isSameChessPiece(chessBoard.get(source), Blank.class);
     }
 
     private void init() {
@@ -56,5 +88,9 @@ public class ChessBoard {
         for (int j = FIRST_COLUMN; j <= LAST_COLUMN; j++) {
             chessBoard.put(Position.of(i, j), new Blank(Team.BLANK));
         }
+    }
+
+    private boolean isSameChessPiece(ChessPiece chessPiece, Type type) {
+        return chessPiece.getClass().getTypeName().equals(type.getTypeName());
     }
 }

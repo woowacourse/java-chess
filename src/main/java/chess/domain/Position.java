@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 public class Position {
     private static final int MIN = 0;
     private static final int MAX = 7;
+    private static final int SQUARE_ROOT = 2;
 
     private final int x;
     private final int y;
@@ -29,5 +30,44 @@ public class Position {
 
     public static Position of(int y, int x) {
         return cacheMap.get(y).get(x);
+    }
+
+    public boolean isSameColumn(Position position) {
+        return this.x == position.x;
+    }
+
+    public int calculateColumnDistance(Position position) {
+        return this.x - position.x;
+    }
+
+    public int calculateRowDistance(Position position) {
+        return this.y - position.y;
+    }
+
+    public double getDistance(Position target) {
+        double calculationX = Math.pow(this.calculateColumnDistance(target), SQUARE_ROOT);
+        double calculationY = Math.pow(this.calculateRowDistance(target), SQUARE_ROOT);
+
+        return Math.sqrt(calculationX + calculationY);
+    }
+
+    public int isInLine(Position target) {
+        if (this.x == target.x) {
+            return 0;
+        }
+
+        if (this.y == target.y) {
+            return 1;
+        }
+
+        return -1;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

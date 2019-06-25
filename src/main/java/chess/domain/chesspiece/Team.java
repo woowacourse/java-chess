@@ -5,10 +5,13 @@ public enum Team {
     WHITE(-1),
     BLANK(0);
 
-
     private int direction;
 
     Team(int direction) {
         this.direction = direction;
+    }
+
+    public int getDirection() {
+        return direction;
     }
 }
