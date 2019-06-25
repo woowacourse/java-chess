@@ -15,14 +15,8 @@ public class ContinueGameCreateStrategy implements CreateStrategy {
     public Map<String, Tile> create() {
         Map<String, Tile> tiles = new HashMap<>();
 
-//        Map<String, Function<String, Piece>> mapper = new HashMap<>() {{
-//            put("k", King::new);
-//        }};
-
-
         List<String> pieces = dto.getPieces();
         Collections.reverse(pieces);
-        System.err.println(pieces);
 
 // TODO: 2018-06-25 stream 사용하기
         for (int i = 7; i >= 0; i--) {
@@ -91,7 +85,6 @@ public class ContinueGameCreateStrategy implements CreateStrategy {
                 }
             }
         }
-        System.err.println(tiles.size());
 
         return tiles;
     }

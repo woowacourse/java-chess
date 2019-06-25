@@ -34,4 +34,15 @@ public class ChessGame {
     public ScoreResult calculateScore() {
         return board.makeScoreResult();
     }
+
+    public boolean checkKingDead() {
+        return !board.checkKingAlive();
+    }
+
+    public String askWinningTeamColor(int latestTurn) {
+        if (latestTurn % 2 != 0) {
+            return "black";
+        }
+        return "white";
+    }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 public class ChessDAO {
     private static ChessDAO CHESS_DAO = new ChessDAO();
 
-
     public static ChessDAO getInstance() {
         return CHESS_DAO;
     }

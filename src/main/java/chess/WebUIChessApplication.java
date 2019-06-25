@@ -47,6 +47,13 @@ public class WebUIChessApplication {
                 game.movePiece(source, target);
                 BoardDTO boardDTO = new BoardDTO(game.convertToList());
                 chessDAO.updateBoard(boardDTO);
+                if (game.checkKingDead()) {
+                    String winningTeamColor = game.askWinningTeamColor(chessDAO.getLatestTurn());
+                    model.put("winner", winningTeamColor);
+                    chessDAO.deleteAll();
+
+                    return render(model, "end.html");
+                }
 
                 model.put("board", boardDTO.getPieces());
             }

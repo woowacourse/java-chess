@@ -84,4 +84,12 @@ public class Tile {
     public int hashCode() {
         return Objects.hash(coordinateX, coordinateY, piece);
     }
+
+    public boolean askIfKing() {
+        if (piece.isPresent()) {
+            return piece.get().isKing();
+        }
+        return false;
+
+    }
 }

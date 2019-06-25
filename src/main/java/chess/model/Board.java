@@ -300,4 +300,18 @@ public class Board {
 
         return pieces;
     }
+
+    public boolean checkKingAlive() {
+        int kingCount = 0;
+        for (String coordinate : tiles.keySet()) {
+            if (tiles.get(coordinate).askIfKing()) {
+                kingCount++;
+            }
+
+        }
+        if (kingCount != 2) {
+            return false;
+        }
+        return true;
+    }
 }
