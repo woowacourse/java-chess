@@ -5,8 +5,8 @@ import java.util.List;
 import chess.domain.*;
 
 public class NormalPiece extends Piece {
-	NormalPiece(Player player, List<MovementInfo> movementInfos, Position position, Score score) {
-		super(player, movementInfos, position, score);
+	NormalPiece(Player player, Type type, List<MovementInfo> movementInfos, Position position, Score score) {
+		super(player, type, movementInfos, position, score);
 	}
 
 	@Override

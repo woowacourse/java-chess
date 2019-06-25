@@ -10,7 +10,7 @@ public class Pawn extends Piece {
 	private final List<MovementInfo> attackMovementInfos;
 
 	private Pawn(Player player, List<MovementInfo> movementInfos, List<MovementInfo> attackMovementInfos, Position position, Score score) {
-		super(player, movementInfos, position, score);
+		super(player, Type.PAWN, movementInfos, position, score);
 		this.attackMovementInfos = attackMovementInfos;
 	}
 

@@ -7,8 +7,8 @@ import java.util.List;
 import chess.domain.*;
 
 public class Bishop extends NormalPiece {
-	private Bishop(Player player, List<MovementInfo> movementInfos, Position currentPosition) {
-		super(player, movementInfos, currentPosition, new Score(3));
+	private Bishop(Player player, Type type, List<MovementInfo> movementInfos, Position currentPosition) {
+		super(player, type, movementInfos, currentPosition, new Score(3));
 	}
 
 	public static Bishop valueOf(Player player, Position currentPosition) {
@@ -18,6 +18,6 @@ public class Bishop extends NormalPiece {
 				new MovementInfo(Direction.RIGHT_BOTTOM, 7),
 				new MovementInfo(Direction.LEFT_BOTTOM, 7)));
 
-		return new Bishop(player, movementInfos, currentPosition);
+		return new Bishop(player, Type.BISHOP, movementInfos, currentPosition);
 	}
 }

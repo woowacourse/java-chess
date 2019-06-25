@@ -7,8 +7,8 @@ import java.util.List;
 import chess.domain.*;
 
 public class Rook extends NormalPiece {
-	private Rook(Player player, List<MovementInfo> movementInfos, Position currentPosition) {
-		super(player, movementInfos, currentPosition, new Score(5));
+	private Rook(Player player, Type type, List<MovementInfo> movementInfos, Position currentPosition) {
+		super(player, type, movementInfos, currentPosition, new Score(5));
 	}
 
 	public static Rook valueOf(Player player, Position currentPosition) {
@@ -18,6 +18,6 @@ public class Rook extends NormalPiece {
 				new MovementInfo(Direction.RIGHT, 7),
 				new MovementInfo(Direction.BOTTOM, 7)));
 
-		return new Rook(player, movementInfos, currentPosition);
+		return new Rook(player, Type.ROOK, movementInfos, currentPosition);
 	}
 }

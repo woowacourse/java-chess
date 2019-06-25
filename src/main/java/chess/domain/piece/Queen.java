@@ -7,8 +7,8 @@ import java.util.List;
 import chess.domain.*;
 
 public class Queen extends NormalPiece {
-	private Queen(Player player, List<MovementInfo> movementInfos, Position currentPosition) {
-		super(player, movementInfos, currentPosition, new Score(9));
+	private Queen(Player player, Type type, List<MovementInfo> movementInfos, Position currentPosition) {
+		super(player, type, movementInfos, currentPosition, new Score(9));
 	}
 
 	public static Queen valueOf(Player player, Position currentPosition) {
@@ -22,6 +22,6 @@ public class Queen extends NormalPiece {
 				new MovementInfo(Direction.BOTTOM, 7),
 				new MovementInfo(Direction.LEFT_BOTTOM, 7)));
 
-		return new Queen(player, movementInfos, currentPosition);
+		return new Queen(player, Type.QUEEN, movementInfos, currentPosition);
 	}
 }

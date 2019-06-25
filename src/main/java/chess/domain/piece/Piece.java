@@ -2,21 +2,33 @@ package chess.domain.piece;
 
 import java.util.List;
 
+import chess.PieceImage;
 import chess.domain.*;
 import chess.exception.NotFoundPathException;
+import com.sun.javafx.iio.ImageStorage;
 
 public abstract class Piece {
 	private final Player player;
+	private final Type type;
 	private final List<MovementInfo> movementInfos;
 
 	private Score score;
 	protected Position position;
 
-	public Piece(Player player, List<MovementInfo> movementInfos, Position position, Score score) {
+	public Piece(Player player, Type type, List<MovementInfo> movementInfos, Position position, Score score) {
 		this.player = player;
+		this.type = type;
 		this.movementInfos = movementInfos;
 		this.position = position;
 		this.score = score;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public PieceImage getPieceImage() {
+		return PieceImage.getPieceImage(this.player, this.type);
 	}
 
 	public Path getMovablePath(Position end) {
