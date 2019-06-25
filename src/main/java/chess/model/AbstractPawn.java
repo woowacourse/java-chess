@@ -31,6 +31,25 @@ public abstract class AbstractPawn extends AbstractChessPiece {
     }
 
     protected abstract boolean isVerticalOneStep(Point source, Point target);
+
     protected abstract boolean isVerticalTwoStep(Point source, Point target);
     protected abstract boolean isDiagonalOneStep(Point source, Point target);
+
+    @Override
+    public double getScore(Point point, final AbstractBoardNavigator navigator) {
+        if (checkPawnExistence(point, navigator, Direction.N) || checkPawnExistence(point, navigator, Direction.S)) return 0.5;
+        return 1;
+    }
+
+    private boolean checkPawnExistence(final Point point, final AbstractBoardNavigator navigator, final Direction direction) {
+        Point tmp;
+        tmp = point;
+        while (tmp.moveOneStep(direction) != null) {
+            tmp = tmp.moveOneStep(direction);
+            if (navigator.getPieceAt(tmp) != null && navigator.getPieceAt(tmp).isType(ChessPieceType.PAWN)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

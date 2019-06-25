@@ -59,4 +59,16 @@ public class ChessBoardTest {
     void isSameType_fail_테스트() {
         assertThat(board.isSameType(new Point(1,1), ChessPieceType.BISHOP)).isFalse();
     }
+
+    @Test
+    void getWhitePiecesTest() {
+        ChessBoard whiteChessBoard = board.getWhite();
+        assertThat(whiteChessBoard.isEmpty(new Point(1, 7))).isTrue();
+    }
+
+    @Test
+    void getBlackPiecesTest() {
+        ChessBoard blackChessBoard = board.getBlack();
+        assertThat(blackChessBoard.isEmpty(new Point(1, 2))).isTrue();
+    }
 }

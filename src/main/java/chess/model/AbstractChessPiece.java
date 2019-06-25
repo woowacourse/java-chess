@@ -18,4 +18,10 @@ public abstract class AbstractChessPiece {
     public boolean isType(ChessPieceType type) {
         return this.type.equals(type);
     }
+
+    public abstract double getScore(Point point, AbstractBoardNavigator navigator);
+
+    public ChessPieceColor getColor() {
+        return color;
+    }
 }

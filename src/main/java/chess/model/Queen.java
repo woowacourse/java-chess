@@ -14,4 +14,9 @@ public class Queen extends AbstractRangeChessPiece{
 
         return ((xDiff == 0 || yDiff == 0) || (xDiff == yDiff));
     }
+
+    @Override
+    public double getScore(Point point, final AbstractBoardNavigator navigator) {
+        return 9;
+    }
 }

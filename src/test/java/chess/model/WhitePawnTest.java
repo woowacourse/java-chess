@@ -64,4 +64,34 @@ public class WhitePawnTest {
         assertThat(whitePawn.canMove(source, target, board::get)).isFalse();
     }
 
+    @Test
+    void 점수_계산_같은_열에_다른_폰_붙어있을때_테스트() {
+        Map<Point, AbstractChessPiece> board = new HashMap<>();
+        Point p1 = new Point(1,1);
+        Point p2 = new Point(1, 2);
+        board.put(p1, whitePawn);
+        board.put(p2, whitePawn);
+        WhitePawn whitePawn = new WhitePawn();
+        assertThat(whitePawn.getScore(p1, (Point point) -> board.get(point))).isEqualTo(0.5);
+    }
+
+    @Test
+    void 점수_계산_같은_열에_다른_폰_떨어져_있을때_테스트() {
+        Map<Point, AbstractChessPiece> board = new HashMap<>();
+        Point p1 = new Point(1,1);
+        Point p2 = new Point(1, 8);
+        board.put(p1, whitePawn);
+        board.put(p2, whitePawn);
+        WhitePawn whitePawn = new WhitePawn();
+        assertThat(whitePawn.getScore(p1, (Point point) -> board.get(point))).isEqualTo(0.5);
+    }
+
+    @Test
+    void 점수_계산_같은_열에_다른_폰_없을때_테스트() {
+        Map<Point, AbstractChessPiece> board = new HashMap<>();
+        Point p1 = new Point(1,1);
+        board.put(p1, whitePawn);
+        WhitePawn whitePawn = new WhitePawn();
+        assertThat(whitePawn.getScore(p1, (Point point) -> board.get(point))).isEqualTo(1);
+    }
 }

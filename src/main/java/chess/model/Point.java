@@ -51,6 +51,10 @@ public class Point {
     }
 
     public Point moveOneStep(final Direction direction) {
-        return new Point(xPosition.add(direction.getDeltaX()), yPosition.add(direction.getDeltaY()));
+        try {
+            return new Point(xPosition.add(direction.getDeltaX()), yPosition.add(direction.getDeltaY()));
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

@@ -9,4 +9,9 @@ public class Bishop extends AbstractRangeChessPiece {
         if (isObstacleBetween(source, target, navigator)) return false;
         return source.calculateYsDiff(target) == source.calculateXsDiff(target);
     }
+
+    @Override
+    public double getScore(Point point, final AbstractBoardNavigator navigator) {
+        return 3;
+    }
 }

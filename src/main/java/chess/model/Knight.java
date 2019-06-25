@@ -15,4 +15,9 @@ public class Knight extends AbstractChessPiece{
 
         return (Math.pow(xDiff, SQUARE) + Math.pow(yDiff, SQUARE) == MOVABLE_DISTANCE);
     }
+
+    @Override
+    public double getScore(Point point, final AbstractBoardNavigator navigator) {
+        return 2.5;
+    }
 }

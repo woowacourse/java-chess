@@ -55,4 +55,24 @@ public class ChessBoard {
     public boolean isSameType(final Point point, final ChessPieceType type) {
         return board.get(point).isType(type);
     }
+
+    public ChessBoard getWhite() {
+        Map<Point, AbstractChessPiece> whitePieces = new HashMap<>();
+        for (Map.Entry<Point, AbstractChessPiece> entry : board.entrySet()) {
+            if (isSameColor(entry.getKey(), ChessPieceColor.WHITE)) {
+                whitePieces.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return new ChessBoard(whitePieces);
+    }
+
+    public ChessBoard getBlack() {
+        Map<Point, AbstractChessPiece> blackPieces = new HashMap<>();
+        for (Map.Entry<Point, AbstractChessPiece> entry : board.entrySet()) {
+            if (isSameColor(entry.getKey(), ChessPieceColor.BLACK)) {
+                blackPieces.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return new ChessBoard(blackPieces);
+    }
 }

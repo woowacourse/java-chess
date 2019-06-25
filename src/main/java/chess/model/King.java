@@ -14,4 +14,9 @@ public class King extends AbstractChessPiece{
 
         return (xDiff <= STEP_SIZE && yDiff <= STEP_SIZE);
     }
+
+    @Override
+    public double getScore(Point point, final AbstractBoardNavigator navigator) {
+        return 0;
+    }
 }
