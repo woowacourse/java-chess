@@ -1,7 +1,6 @@
 package chess.domain.RuleImpl;
 
 import chess.domain.Position;
-import chess.domain.Rule;
 import chess.domain.rule.King;
 import org.junit.jupiter.api.Test;
 

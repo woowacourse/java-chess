@@ -3,7 +3,7 @@ package chess.domain.rule;
 import chess.domain.Position;
 import chess.domain.Rule;
 
-public class Pawn extends AbstractRule {
+public class Pawn extends Rule {
     public static Pawn FIRST_TOP = new Pawn(-2);
     public static Pawn SECOND_TOP = new Pawn(-1);
     public static Pawn FIRST_BOTTOM = new Pawn(2);

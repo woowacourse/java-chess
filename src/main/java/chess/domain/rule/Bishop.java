@@ -1,8 +1,9 @@
 package chess.domain.rule;
 
 import chess.domain.Position;
+import chess.domain.Rule;
 
-public class Bishop extends AbstractRule {
+public class Bishop extends Rule {
     private static Bishop INSTANCE = new Bishop();
 
     private Bishop() {

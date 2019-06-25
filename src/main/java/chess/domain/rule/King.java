@@ -1,8 +1,9 @@
 package chess.domain.rule;
 
 import chess.domain.Position;
+import chess.domain.Rule;
 
-public class King extends AbstractRule {
+public class King extends Rule {
     private static King INSTANCE = new King();
 
     private King() {

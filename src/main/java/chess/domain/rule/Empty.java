@@ -1,6 +1,8 @@
 package chess.domain.rule;
 
-public class Empty extends AbstractRule {
+import chess.domain.Rule;
+
+public class Empty extends Rule {
     private static Empty INSTANCE = new Empty();
 
     private Empty() {
