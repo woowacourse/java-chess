@@ -83,19 +83,21 @@ function pieceHandler(event) {
     console.log(target);
     selects.push(target.id);
     if (selects.length >= 2) {
-        clearSelected(true);
+        console.log(new bodyData(selects[0], selects[1]));
         fetch('/game/1/move', new bodyData(selects[0], selects[1]))
             .then(res => res.json())
             .then(data => {
+                clearSelected(true);
                 refresh(data);
             })
             .catch(err => {
-                console.log(err)
+                console.log(err);
                 alert("실패");
+                clearSelected(true);
             });
 
     } else {
-        event.target.firstChild.classList.add('selected');
+        target.firstChild.classList.add('selected');
     }
 }
 
@@ -109,7 +111,9 @@ function refresh(data) {
     clearBoard();
     console.log(data);
     Object.keys(data)
-        .filter(key => data[key] !== "0,Empty")
+        .filter(key => data[key] !== "0,Empty"
+            && key !== "team"
+            && key !== "score")
         .forEach(key => {
             const target = document.getElementById(key);
             const pieceData = data[key].split(",");
@@ -119,6 +123,17 @@ function refresh(data) {
             element.innerText = pieces[teamToken(pieceData[0]) + "-" + pieceData[1].toLowerCase()];
             target.append(element);
         });
+    Object.keys(data)
+        .filter(key => key === "team")
+        .forEach(key => {
+            document.getElementById("winner").innerText = data[key];
+        });
+    Object.keys(data)
+        .filter(key => key === "score")
+        .forEach(key => {
+            document.getElementById("point").innerText = data[key];
+            Array.from(document.getElementsByTagName('td')).forEach(v => v.removeEventListener('click', pieceHandler))
+        })
 }
 
 function clearBoard() {
@@ -138,3 +153,4 @@ function teamToken(text) {
 
 initBoard()
 fetch('game/1', {method: "POST"}).then(res => res.json()).then(data => refresh(data));
+clickEvent();
