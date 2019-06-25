@@ -10,7 +10,7 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.*;
 
 public class Board {
-    private static final int BOUNDARY = 8;
+    public static final int BOUNDARY = 8;
     private static final String EMPTY = ".";
     private Map<Point, Optional<Piece>> points;
     private boolean isKingDead;
