@@ -141,4 +141,8 @@ public class Position implements Comparable<Position> {
     public String toString() {
         return column.toString().concat(row.toString());
     }
+
+    public boolean isSameRow(final Row other) {
+        return this.row.equals(other);
+    }
 }

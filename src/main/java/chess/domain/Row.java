@@ -19,7 +19,7 @@ public class Row implements Comparable<Row> {
         this.row = row;
     }
 
-    static Row from(final int row) {
+    public static Row from(final int row) {
         Optional<Row> optRow = Optional.ofNullable(ROWS.get(row));
         return optRow.orElseThrow(IllegalArgumentException::new);
     }

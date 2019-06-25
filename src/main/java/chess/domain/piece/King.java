@@ -1,15 +1,19 @@
-package chess.domain.rule;
+package chess.domain.piece;
 
 import chess.domain.Position;
 
-public class King extends AbstractRule {
-    private static King INSTANCE = new King();z
-    private King() {
-        super(SCORE, NAME);
+public class King extends Piece {
+
+    private King(final Color color, final Position position) {
+        super(Type.KING, color, position);
     }
 
-    public static King getInstance() {
-        return INSTANCE;
+    public static King createWhite(final Position position) {
+        return new King(Color.WHITE, position);
+    }
+
+    public static King createBlack(final Position position) {
+        return new King(Color.BLACK, position);
     }
 
     @Override
