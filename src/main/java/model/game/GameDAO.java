@@ -12,6 +12,35 @@ import java.util.*;
 public class GameDAO {
     private static final Queue<LogVO> temp = new LinkedList<>();
 
+    public static List<LogVO> retrieveLog() throws SQLException {
+        createLogTable();
+        try (Connection con = DAO.connect();
+             PreparedStatement pstmt = con.prepareStatement(
+                     "SELECT turn, position_from, position_to FROM chess_log"
+             );
+             ResultSet result = pstmt.executeQuery()) {
+            List<LogVO> log = new ArrayList<>();
+            while (result.next()) {
+                log.add(new LogVO(result.getInt(1), result.getString(2), result.getString(3)));
+            }
+            return log;
+        }
+    }
+
+    private static void createLogTable() throws SQLException {
+        try (Connection con = DAO.connect();
+             PreparedStatement pstmt = con.prepareStatement(
+                     "CREATE TABLE IF NOT EXISTS chess_log("
+                             + "turn INT UNSIGNED NOT NULL PRIMARY KEY,"
+                             + "position_from VARCHAR(2) NOT NULL,"
+                             + "position_to VARCHAR(2) NOT NULL" +
+                             ");"
+             )
+        ) {
+            pstmt.executeUpdate();
+        }
+    }
+
     public static boolean holdAndWriteLog(Turn turn, Position from, Position to) {
         temp.add(new LogVO(turn, from, to));
         try {
@@ -32,18 +61,6 @@ public class GameDAO {
             pstmt.setString(2, log.from().toString());
             pstmt.setString(3, log.to().toString());
             pstmt.executeUpdate();
-        }
-    }
-
-    public static List<LogVO> retrieveLog() throws SQLException {
-        try (Connection con = DAO.connect();
-             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM chess_log");
-             ResultSet result = pstmt.executeQuery()) {
-            List<LogVO> log = new ArrayList<>();
-            while (result.next()) {
-                log.add(new LogVO(result.getInt(1), result.getString(2), result.getString(3)));
-            }
-            return log;
         }
     }
 

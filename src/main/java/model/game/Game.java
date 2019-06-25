@@ -68,8 +68,8 @@ public class Game {
 
     public double getCurrentScore(Player team) {
         return this.board.getPieces()
-                        .filter(p -> p.team() == team)
                         .filter(p -> !p.isPawn())
+                        .filter(p -> p.team() == team)
                         .mapToDouble(Piece::getScore)
                         .sum()
                         + getPawnScore(team);
@@ -77,8 +77,8 @@ public class Game {
 
     private double getPawnScore(Player team) {
         return this.board.getPieces()
-                        .filter(p -> p.team() == team)
                         .filter(p -> p.isPawn())
+                        .filter(p -> p.team() == team)
                         .map(p -> (Pawn) p)
                         .collect(Collectors.groupingBy(Piece::x))
                         .values().stream()
