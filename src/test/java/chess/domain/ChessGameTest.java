@@ -1,11 +1,15 @@
 package chess.domain;
 
+import chess.domain.boardcell.CellFactory;
+import chess.domain.boardcell.ChessPiece;
+import chess.domain.boardcell.PieceType;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import static chess.domain.PieceType.*;
+import static chess.domain.boardcell.PieceType.ROOK_BLACK;
+import static chess.domain.boardcell.PieceType.ROOK_WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -13,65 +17,40 @@ class ChessGameTest {
 
     @Test
     void initBoard() {
-        ChessPiece empty = EmptyCell.getInstance();
-        List<List<ChessPiece>> boardState = Arrays.asList(
-            Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
-        );
+        Map<CoordinatePair, ChessPiece> pieces = new HashMap<>();
+        ChessPiece rb = CellFactory.create(ROOK_BLACK);
+        ChessPiece rw = CellFactory.create(ROOK_WHITE);
+        pieces.put(CoordinatePair.of("a8").get(), rb);
+        pieces.put(CoordinatePair.of("h8").get(), rb);
+        pieces.put(CoordinatePair.of("a1").get(), rw);
+        pieces.put(CoordinatePair.of("h1").get(), rw);
 
-        List<List<PieceType>> expectedBoardState = Arrays.asList(
-            Arrays.asList(ROOK_BLACK, NONE, NONE, NONE, NONE, NONE, NONE, ROOK_BLACK),
-            Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
-            Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
-            Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
-            Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
-            Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
-            Arrays.asList(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE),
-            Arrays.asList(ROOK_WHITE, NONE, NONE, NONE, NONE, NONE, NONE, ROOK_WHITE)
-        );
+        Map<CoordinatePair, PieceType> livings1 = new ChessGame(() -> LivingPieceGroup.of(pieces)).getBoardState();
+        Map<CoordinatePair, PieceType> livings2 = new ChessGame(() -> LivingPieceGroup.of(pieces)).getBoardState();
 
-        ChessGame chessGame = new ChessGame(new TestBoardStateFactory(boardState));
-
-        CoordinatePair.forEachCoordinate(coord -> assertThat(chessGame.getBoardState().get(coord))
-            .isEqualTo(expectedBoardState.get(coord.getY().getIndex()).get(coord.getX().getIndex())));
+        assertThat(livings1).isEqualTo(livings2);
     }
 
     @Test
     void move() {
-        ChessPiece empty = EmptyCell.getInstance();
-        List<List<ChessPiece>> boardState = Arrays.asList(
-            Arrays.asList(Rook.getInstance(Team.BLACK), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
-        );
+        Map<CoordinatePair, ChessPiece> piecesFrom = new HashMap<>();
+        ChessPiece rb = CellFactory.create(ROOK_BLACK);
+        ChessPiece rw = CellFactory.create(ROOK_WHITE);
+        piecesFrom.put(CoordinatePair.of("a8").get(), rb);
+        piecesFrom.put(CoordinatePair.of("h8").get(), rb);
+        piecesFrom.put(CoordinatePair.of("a1").get(), rw);
+        piecesFrom.put(CoordinatePair.of("h1").get(), rw);
 
-        List<List<ChessPiece>> toBoardState = Arrays.asList(
-            Arrays.asList(Rook.getInstance(Team.WHITE), empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.BLACK)),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, empty),
-            Arrays.asList(empty, empty, empty, empty, empty, empty, empty, Rook.getInstance(Team.WHITE))
-        );
+        Map<CoordinatePair, ChessPiece> piecesTo = new HashMap<>();
+        piecesTo.put(CoordinatePair.of("a8").get(), rw);
+        piecesTo.put(CoordinatePair.of("h8").get(), rb);
+        piecesTo.put(CoordinatePair.of("h1").get(), rw);
 
-        ChessGame board = new ChessGame(new TestBoardStateFactory(boardState));
-        CoordinatePair from = CoordinatePair.from("a1").get();
-        CoordinatePair to = CoordinatePair.from("a8").get();
+        ChessGame board = new ChessGame(() -> LivingPieceGroup.of(piecesFrom));
+        CoordinatePair from = CoordinatePair.of("a1").get();
+        CoordinatePair to = CoordinatePair.of("a8").get();
         board.move(from, to);
-        assertThat(board.getBoardState()).isEqualTo(new ChessGame(new TestBoardStateFactory(toBoardState)).getBoardState());
+        assertThat(board).isEqualTo(new ChessGame(() -> LivingPieceGroup.of(piecesTo)));
     }
 
 }

@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.boardcell;
+
+import chess.domain.*;
 
 import java.util.*;
 

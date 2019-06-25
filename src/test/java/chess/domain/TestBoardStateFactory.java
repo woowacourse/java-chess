@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.boardcell.ChessPiece;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +22,7 @@ public class TestBoardStateFactory implements AbstractBoardStateFactory {
     }
 
     @Override
-    public GameBoardState create() {
-        return GameBoardState.of(new HashMap<>(state));
+    public LivingPieceGroup create() {
+        return LivingPieceGroup.of(new HashMap<>(state));
     }
 }

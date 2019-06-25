@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.boardcell.PieceType;
+
 import java.util.Collection;
 import java.util.Map;
 

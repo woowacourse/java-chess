@@ -1,8 +1,8 @@
 package chess.service;
 
-import chess.domain.ScoreCounter;
 import chess.domain.CoordinatePair;
 import chess.domain.GameResult;
+import chess.domain.ScoreCounter;
 import chess.persistence.dto.BoardStateDto;
 import chess.service.dto.CoordinatePairDto;
 

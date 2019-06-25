@@ -3,7 +3,6 @@ package chess.service;
 import chess.domain.AbstractBoardStateFactory;
 import chess.domain.BoardStateFactory;
 import chess.domain.GameResult;
-import chess.domain.PieceType;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
 import chess.persistence.dao.GameSessionDao;
@@ -42,7 +41,6 @@ public class SessionServiceImpl implements SessionService {
 
     private void createBoardState(AbstractBoardStateFactory boardStateFactory, long sessionId) {
         boardStateFactory.create().entryStream()
-            .filter(entry -> entry.getValue().getType() != PieceType.NONE)
             .map(entry -> {
                 BoardStateDto dto = new BoardStateDto();
                 dto.setCoordX(entry.getKey().getX().getSymbol());
@@ -98,7 +96,7 @@ public class SessionServiceImpl implements SessionService {
                 .orElseThrow(() -> new IllegalArgumentException("게임 세션을 찾을 수 없습니다: " + id));
             session.setState(stateTo.name());
             gameSessionDao.updateSession(session);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

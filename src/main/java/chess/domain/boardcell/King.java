@@ -1,4 +1,9 @@
-package chess.domain;
+package chess.domain.boardcell;
+
+import chess.domain.CoordinatePair;
+import chess.domain.Direction;
+import chess.domain.PieceTeamProvider;
+import chess.domain.Team;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,6 +1,9 @@
-package chess.domain;
+package chess.domain.boardcell;
 
-import static chess.domain.Team.*;
+import chess.domain.Team;
+
+import static chess.domain.Team.BLACK;
+import static chess.domain.Team.WHITE;
 
 public enum PieceType {
     PAWN_BLACK(BLACK, 1),
@@ -14,8 +17,7 @@ public enum PieceType {
     KNIGHT_WHITE(WHITE, 2.5),
     BISHOP_WHITE(WHITE, 3),
     QUEEN_WHITE(WHITE, 9),
-    KING_WHITE(WHITE, 0),
-    NONE(NEUTRAL, 0);
+    KING_WHITE(WHITE, 0);
 
     private final Team group;
     private final double score;

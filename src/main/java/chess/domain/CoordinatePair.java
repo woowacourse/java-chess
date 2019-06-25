@@ -30,12 +30,12 @@ public class CoordinatePair {
         return y;
     }
 
-    public static Optional<CoordinatePair> from(String symbol) {
+    public static Optional<CoordinatePair> of(String symbol) {
         return Optional.ofNullable(coordinateMap.get(symbol));
     }
 
     public static CoordinatePair of(CoordinateX x, CoordinateY y) {
-        return from(x.getSymbol() + y.getSymbol())
+        return of(x.getSymbol() + y.getSymbol())
             .orElseThrow(() -> new NoSuchElementException("좌표가 캐시에 없습니다: " + x + ", " + y));
     }
 

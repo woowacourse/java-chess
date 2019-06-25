@@ -8,6 +8,6 @@ public class CoordinatePairTest {
 
     @Test
     void invalidSymbol() {
-        assertThat(CoordinatePair.from("z1").isPresent()).isFalse();
+        assertThat(CoordinatePair.of("z1").isPresent()).isFalse();
     }
 }

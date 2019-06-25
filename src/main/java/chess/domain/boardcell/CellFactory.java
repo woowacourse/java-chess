@@ -1,9 +1,11 @@
-package chess.domain;
+package chess.domain.boardcell;
+
+import chess.domain.Team;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessPieceFactory implements AbstractChessPieceFactory {
+public class CellFactory {
 
     private static Map<PieceType, ChessPiece> mapper = new HashMap<>();
 
@@ -20,11 +22,12 @@ public class ChessPieceFactory implements AbstractChessPieceFactory {
         mapper.put(PieceType.KING_BLACK, King.getInstance(Team.BLACK));
         mapper.put(PieceType.PAWN_WHITE, Pawn.getInstance(Team.WHITE));
         mapper.put(PieceType.PAWN_BLACK, Pawn.getInstance(Team.BLACK));
-        mapper.put(PieceType.NONE, EmptyCell.getInstance());
     }
 
-    @Override
-    public ChessPiece create(PieceType type) {
+    private CellFactory() {
+    }
+
+    public static ChessPiece create(PieceType type) {
         return mapper.get(type);
     }
 }

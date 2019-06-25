@@ -1,41 +1,54 @@
 package chess.domain;
 
+import chess.domain.boardcell.CellFactory;
+import chess.domain.boardcell.ChessPiece;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.domain.PieceType.*;
+import static chess.domain.boardcell.PieceType.*;
 
 public class BoardStateFactory implements AbstractBoardStateFactory {
 
     @Override
-    public GameBoardState create() {
-        AbstractChessPieceFactory factory = new ChessPieceFactory();
+    public LivingPieceGroup create() {
         Map<CoordinatePair, ChessPiece> board = new HashMap<>();
-        CoordinatePair.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
 
-        board.put(CoordinatePair.from("a1").get(), factory.create(ROOK_WHITE));
-        board.put(CoordinatePair.from("b1").get(), factory.create(KNIGHT_WHITE));
-        board.put(CoordinatePair.from("c1").get(), factory.create(BISHOP_WHITE));
-        board.put(CoordinatePair.from("d1").get(), factory.create(QUEEN_WHITE));
-        board.put(CoordinatePair.from("e1").get(), factory.create(KING_WHITE));
-        board.put(CoordinatePair.from("f1").get(), factory.create(BISHOP_WHITE));
-        board.put(CoordinatePair.from("g1").get(), factory.create(KNIGHT_WHITE));
-        board.put(CoordinatePair.from("h1").get(), factory.create(ROOK_WHITE));
+        board.putAll(initWhite());
+
+        board.putAll(initBlack());
+
+        return LivingPieceGroup.of(board);
+    }
+
+    private Map<CoordinatePair, ChessPiece> initBlack() {
+        Map<CoordinatePair, ChessPiece> board = new HashMap<>();
+        board.put(CoordinatePair.of("a8").get(), CellFactory.create(ROOK_BLACK));
+        board.put(CoordinatePair.of("b8").get(), CellFactory.create(KNIGHT_BLACK));
+        board.put(CoordinatePair.of("c8").get(), CellFactory.create(BISHOP_BLACK));
+        board.put(CoordinatePair.of("d8").get(), CellFactory.create(QUEEN_BLACK));
+        board.put(CoordinatePair.of("e8").get(), CellFactory.create(KING_BLACK));
+        board.put(CoordinatePair.of("f8").get(), CellFactory.create(BISHOP_BLACK));
+        board.put(CoordinatePair.of("g8").get(), CellFactory.create(KNIGHT_BLACK));
+        board.put(CoordinatePair.of("h8").get(), CellFactory.create(ROOK_BLACK));
         CoordinateX.allAscendingCoordinates()
-            .forEach(x -> board.put(CoordinatePair.from(x.getSymbol() + "2").get(), factory.create(PAWN_WHITE)));
+            .forEach(x -> board.put(CoordinatePair.of(x.getSymbol() + "7").get(), CellFactory.create(PAWN_BLACK)));
+        return board;
+    }
 
-        board.put(CoordinatePair.from("a8").get(), factory.create(ROOK_BLACK));
-        board.put(CoordinatePair.from("b8").get(), factory.create(KNIGHT_BLACK));
-        board.put(CoordinatePair.from("c8").get(), factory.create(BISHOP_BLACK));
-        board.put(CoordinatePair.from("d8").get(), factory.create(QUEEN_BLACK));
-        board.put(CoordinatePair.from("e8").get(), factory.create(KING_BLACK));
-        board.put(CoordinatePair.from("f8").get(), factory.create(BISHOP_BLACK));
-        board.put(CoordinatePair.from("g8").get(), factory.create(KNIGHT_BLACK));
-        board.put(CoordinatePair.from("h8").get(), factory.create(ROOK_BLACK));
+    private Map<CoordinatePair, ChessPiece> initWhite() {
+        Map<CoordinatePair, ChessPiece> board = new HashMap<>();
+        board.put(CoordinatePair.of("a1").get(), CellFactory.create(ROOK_WHITE));
+        board.put(CoordinatePair.of("b1").get(), CellFactory.create(KNIGHT_WHITE));
+        board.put(CoordinatePair.of("c1").get(), CellFactory.create(BISHOP_WHITE));
+        board.put(CoordinatePair.of("d1").get(), CellFactory.create(QUEEN_WHITE));
+        board.put(CoordinatePair.of("e1").get(), CellFactory.create(KING_WHITE));
+        board.put(CoordinatePair.of("f1").get(), CellFactory.create(BISHOP_WHITE));
+        board.put(CoordinatePair.of("g1").get(), CellFactory.create(KNIGHT_WHITE));
+        board.put(CoordinatePair.of("h1").get(), CellFactory.create(ROOK_WHITE));
         CoordinateX.allAscendingCoordinates()
-            .forEach(x -> board.put(CoordinatePair.from(x.getSymbol() + "7").get(), factory.create(PAWN_BLACK)));
-
-        return GameBoardState.of(board);
+            .forEach(x -> board.put(CoordinatePair.of(x.getSymbol() + "2").get(), CellFactory.create(PAWN_WHITE)));
+        return board;
     }
 
 

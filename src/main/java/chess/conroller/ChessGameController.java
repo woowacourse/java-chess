@@ -130,7 +130,7 @@ public class ChessGameController {
      *
      * @param req 요청 쿼리 문자열:
      *            sessionId: 게임 세션 ID
-     *            from: 현재 위치
+     *            of: 현재 위치
      * @param res
      * @return
      */
@@ -138,8 +138,8 @@ public class ChessGameController {
         Map<String, Object> resMap;
         try {
             List<CoordinatePairDto> coords = gameService.findMovableCoordinates(Long.valueOf(req.queryParams("sessionId")),
-                CoordinatePair.from(req.queryParams("from"))
-                    .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다: " + req.queryParams("from"))));
+                CoordinatePair.of(req.queryParams("of"))
+                    .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다: " + req.queryParams("of"))));
             resMap = ResultState.OK.createResMap("");
             resMap.put("movableCoordinates", coords);
         } catch (NumberFormatException e) {
@@ -158,7 +158,7 @@ public class ChessGameController {
      * @param req JSON 요청 예시:
      *            {
      *            "sessionId": 12,
-     *            "from": "b2",
+     *            "of": "b2",
      *            "to": "b3"
      *            }
      * @param res JSON 응답 예시:
@@ -178,9 +178,9 @@ public class ChessGameController {
         Map<String, Object> resMap;
         try {
             PieceMoveRequestDto body = new Gson().fromJson(req.body(), PieceMoveRequestDto.class);
-            CoordinatePair coordFrom = CoordinatePair.from(body.getFrom())
+            CoordinatePair coordFrom = CoordinatePair.of(body.getFrom())
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다: " + body.getFrom()));
-            CoordinatePair coordTo = CoordinatePair.from(body.getTo())
+            CoordinatePair coordTo = CoordinatePair.of(body.getTo())
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다: " + body.getTo()));
             GameResult result = gameService.movePiece(coordFrom, coordTo, body.getSessionId());
             resMap = ResultState.OK.createResMap("");

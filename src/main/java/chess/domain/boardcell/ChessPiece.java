@@ -1,16 +1,22 @@
-package chess.domain;
+package chess.domain.boardcell;
+
+import chess.domain.CoordinatePair;
+import chess.domain.Direction;
+import chess.domain.PieceTeamProvider;
+import chess.domain.Team;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Cell {
     private PieceType type;
 
     protected ChessPiece(PieceType type) {
         this.type = type;
     }
 
+    @Override
     public PieceType getType() {
         return type;
     }

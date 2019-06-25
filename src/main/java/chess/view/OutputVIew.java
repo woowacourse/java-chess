@@ -2,6 +2,7 @@ package chess.view;
 
 
 import chess.domain.*;
+import chess.domain.boardcell.PieceType;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class OutputVIew {
     }
 
     private static String getStateToString(PieceType pieceType) {
-        if (pieceType == PieceType.NONE) {
+        if (pieceType == null) {
             return ".";
         }
         if (pieceType.getTeam() == Team.BLACK) {

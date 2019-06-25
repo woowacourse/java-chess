@@ -3,7 +3,7 @@ package chess.persistence.dao;
 import chess.domain.CoordinateX;
 import chess.domain.CoordinateY;
 import chess.domain.GameResult;
-import chess.domain.PieceType;
+import chess.domain.boardcell.PieceType;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dto.BoardStateDto;
 import chess.persistence.dto.GameSessionDto;
