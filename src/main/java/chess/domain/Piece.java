@@ -19,6 +19,10 @@ public abstract class Piece {
         return team;
     }
 
+    public Team getEnemy() {
+        return team.enemy();
+    }
+
     public boolean isTurn(Turn turn) {
         return turn.isTurn(team);
     }

@@ -57,15 +57,15 @@ public class ResultDao {
 
     public void update(ResultDto resultDto) throws SQLException {
         if (resultDto.getName() == null && resultDto.getTeam() == null) {
-            add(resultDto);
             return;
         }
 
-        String query = "UPDATE result SET count = count + 1 WHERE name = ? and team = ?";
+        String query = "INSERT INTO result VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE count = count + 1";
         PreparedStatement pstmt = JDBCConnection.start().prepareStatement(query);
 
         pstmt.setString(1, resultDto.getName());
         pstmt.setString(2, resultDto.getTeam());
+        pstmt.setInt(3, 1);
 
         pstmt.executeUpdate();
     }

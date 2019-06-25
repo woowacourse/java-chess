@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static chess.domain.generator.PieceGenerator.generatePiece;
 
@@ -81,11 +82,13 @@ public class ChessBoardService {
         return ResultCounter.load(counter);
     }
 
-    public void move(List<BoardDto> boardDtos, TurnDto turnDto, ResultDto resultDto) throws SQLException {
+    public void move(List<BoardDto> boardDtos, TurnDto turnDto, Optional<ResultDto> optionalResultDto) throws SQLException {
         boardDao.deleteAll();
         boardDao.addAll(boardDtos);
         turnDao.update(turnDto);
-        resultDao.update(resultDto);
+        if (optionalResultDto.isPresent()) {
+            resultDao.update(optionalResultDto.get());
+        }
     }
 
     public void gameEnd() throws SQLException {

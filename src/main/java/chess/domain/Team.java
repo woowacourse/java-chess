@@ -9,4 +9,8 @@ public enum Team {
         }
         return MoveRules::whitePawn;
     }
+
+    public Team enemy() {
+        return this == BLACK ? WHITE : BLACK;
+    }
 }
