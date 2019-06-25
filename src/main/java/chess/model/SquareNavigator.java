@@ -7,14 +7,23 @@ import java.util.List;
 import java.util.Objects;
 
 public class SquareNavigator {
+    private static final int MIN_DISTANCE = 1;
+    private static final String INVALID_RANGE_ERROR_MSG = "거리는 " + MIN_DISTANCE + "보다 크거나 같아야 합니다.";
+
     private final Direction direction;
     private final Square beginSquare;
     private int distance;
 
     public SquareNavigator(Direction direction, Square beginSquare, int distance) {
+        validateDistance(distance);
         this.direction = direction;
         this.beginSquare = beginSquare;
         this.distance = distance;
+    }
+
+    private void validateDistance(int distance) {
+        if (distance < MIN_DISTANCE)
+            throw new InvalidRangeException(INVALID_RANGE_ERROR_MSG);
     }
 
     public List<Square> findSquares(Board board) {

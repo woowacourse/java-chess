@@ -10,8 +10,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SquareNavigatorTest {
+    @Test
+    void 최소거리_값을_입력했을때_에러가_발생하지_않는지_테스트() {
+        assertDoesNotThrow(() -> new SquareNavigator(Direction.NW, Square.of(Column._5, Row.D), 1));
+    }
+
+    @Test
+    void 최소거리보다_작은_값을_입력했을때_에러_테스트() {
+        assertThrows(InvalidRangeException.class, () -> new SquareNavigator(Direction.NW, Square.of(Column._5, Row.D), 0));
+    }
+
     @Test
     void 한_방향으로_더이상_갈수_없는_좌표일때_빈_리스트를_반환하는지_테스트() {
         Board board = new Board();

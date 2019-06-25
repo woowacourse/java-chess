@@ -6,6 +6,7 @@ import chess.model.SquareNavigator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 public abstract class Piece {
@@ -48,7 +49,25 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public boolean compareSide(Side side) {
         return this.side == side;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return type == piece.type &&
+                side == piece.side;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, side);
     }
 }

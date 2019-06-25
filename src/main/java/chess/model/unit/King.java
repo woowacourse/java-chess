@@ -21,4 +21,9 @@ public class King extends Piece {
                 .map(direction -> new SquareNavigator(direction, beginSquare, 1))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

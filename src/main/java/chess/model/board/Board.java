@@ -4,7 +4,10 @@ import chess.model.Square;
 import chess.model.unit.Piece;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Board {
     private Map<Square, Piece> board = new HashMap<>();
@@ -29,5 +32,9 @@ public class Board {
         if (!isNullPiece(beginSquare) && !isNullPiece(endSquare))
             return board.get(beginSquare).isSameSide(board.get(endSquare));
         return false;
+    }
+
+    public List<Piece> getPieces(Predicate<Piece> pieceCondition) {
+        return board.values().stream().filter(pieceCondition).collect(Collectors.toList());
     }
 }
