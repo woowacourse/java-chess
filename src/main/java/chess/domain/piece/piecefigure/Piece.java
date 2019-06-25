@@ -16,7 +16,7 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    boolean isSameTeam(Piece piece) {
+    public boolean isSameTeam(Piece piece) {
         return this.teamType == piece.teamType;
     }
 
