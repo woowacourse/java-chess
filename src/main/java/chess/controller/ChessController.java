@@ -1,6 +1,9 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.domain.Game;
+import chess.domain.Piece;
+import chess.domain.Position;
+import chess.domain.ScoreCalculator;
 import chess.dto.CommandDto;
 import chess.service.ChessService;
 import chess.service.RoomService;
@@ -28,7 +31,7 @@ public class ChessController {
         Map<String, Object> model = new HashMap<>();
 
         Game game = chessService.initGame();
-        List<Square> squares = chessService.getSquares(game);
+        List<Piece> squares = chessService.getPieces(game);
         long roomId = roomService.latestId();
 
         req.session().attribute("game", game);
@@ -43,7 +46,7 @@ public class ChessController {
         Map<String, Object> model = new HashMap<>();
 
         Game game = req.session().attribute("game");
-        List<Square> squares = chessService.getSquares(game);
+        List<Piece> squares = chessService.getPieces(game);
         long roomId = Long.parseLong(req.queryParams("roomId"));
 
         model.put("board", squares);

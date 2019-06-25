@@ -10,10 +10,12 @@ class PieceSymbolTest {
     void Symbol_리턴_테스트() {
         Rule rule = Rook.getInstance();
         Piece.Color color = Piece.Color.WHITE;
+        Position position = Position.of("1", "a");
 
         String actual = PieceSymbol.WHITE_ROOK.getSymbol();
 
-        String expected = PieceSymbol.getSymbol(color, rule);
+        Piece piece = Piece.of(position, color, rule);
+        String expected = PieceSymbol.getSymbol(piece);
 
         assertEquals(expected, actual);
     }
@@ -22,10 +24,12 @@ class PieceSymbolTest {
     void Symbol_EMPTY_리턴_테스트() {
         Rule rule = Rook.getInstance();
         Piece.Color color = Piece.Color.EMPTY;
+        Position position = Position.of("1", "a");
 
         String actual = PieceSymbol.EMPTY_SYMBOL;
 
-        String expected = PieceSymbol.getSymbol(color, rule);
+        Piece piece = Piece.of(position, color, rule);
+        String expected = PieceSymbol.getSymbol(piece);
 
         assertEquals(expected, actual);
     }

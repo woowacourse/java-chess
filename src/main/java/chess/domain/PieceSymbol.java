@@ -1,36 +1,34 @@
 package chess.domain;
 
-import chess.domain.rule.*;
-
 public enum PieceSymbol {
-    WHITE_PAWN(Piece.Color.WHITE, Pawn.NAME, "♙"),
-    WHITE_BISHOP(Piece.Color.WHITE, Bishop.NAME, "♗"),
-    WHITE_KING(Piece.Color.WHITE, King.NAME, "♔"),
-    WHITE_KNIGHT(Piece.Color.WHITE, Knight.NAME, "♘"),
-    WHITE_QUEEN(Piece.Color.WHITE, Queen.NAME, "♕"),
-    WHITE_ROOK(Piece.Color.WHITE, Rook.NAME, "♖"),
-    BLACK_PAWN(Piece.Color.BLACK, Pawn.NAME, "♟️"),
-    BLACK_BISHOP(Piece.Color.BLACK, Bishop.NAME, "♝"),
-    BLACK_KING(Piece.Color.BLACK, King.NAME, "♚"),
-    BLACK_KNIGHT(Piece.Color.BLACK, Knight.NAME, "♞"),
-    BLACK_QUEEN(Piece.Color.BLACK, Queen.NAME, "♛"),
-    BLACK_ROOK(Piece.Color.BLACK, Rook.NAME, "♜");
+    WHITE_PAWN(Piece.Color.WHITE, Rule.Type.PAWN, "♙"),
+    WHITE_BISHOP(Piece.Color.WHITE, Rule.Type.BISHOP, "♗"),
+    WHITE_KING(Piece.Color.WHITE, Rule.Type.KING, "♔"),
+    WHITE_KNIGHT(Piece.Color.WHITE, Rule.Type.KNIGHT, "♘"),
+    WHITE_QUEEN(Piece.Color.WHITE, Rule.Type.QUEEN, "♕"),
+    WHITE_ROOK(Piece.Color.WHITE, Rule.Type.ROOK, "♖"),
+    BLACK_PAWN(Piece.Color.BLACK, Rule.Type.PAWN, "♟️"),
+    BLACK_BISHOP(Piece.Color.BLACK, Rule.Type.BISHOP, "♝"),
+    BLACK_KING(Piece.Color.BLACK, Rule.Type.KING, "♚"),
+    BLACK_KNIGHT(Piece.Color.BLACK, Rule.Type.KNIGHT, "♞"),
+    BLACK_QUEEN(Piece.Color.BLACK, Rule.Type.QUEEN, "♛"),
+    BLACK_ROOK(Piece.Color.BLACK, Rule.Type.ROOK, "♜");
 
     public static final String EMPTY_SYMBOL = " ";
 
     private final Piece.Color color;
-    private final String name;
+    private final Rule.Type type;
     private final String symbol;
 
-    PieceSymbol(final Piece.Color color, final String name, final String symbol) {
+    PieceSymbol(final Piece.Color color, final Rule.Type type, final String symbol) {
         this.color = color;
-        this.name = name;
+        this.type = type;
         this.symbol = symbol;
     }
 
-    public static String getSymbol(Piece.Color color, Rule rule) {
+    public static String getSymbol(Piece piece) {
         for (final PieceSymbol pieceSymbol : values()) {
-            if (pieceSymbol.color == color && pieceSymbol.name.equals(rule.getName())) {
+            if (piece.isSameColor(pieceSymbol.color) && piece.isSameType(pieceSymbol.type)) {
                 return pieceSymbol.symbol;
             }
         }

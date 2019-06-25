@@ -45,14 +45,14 @@ public class GameTest {
     }
 
     @Test
-    public void getSquaresTest() {
+    public void getPiecesTest() {
         int expected = 64;
-        assertEquals(expected, game.getSquares().size());
+        assertEquals(expected, game.getPieces().size());
     }
 
     @Test
-    public void getSquaresExceptEmptyTest() {
+    public void getPiecesExceptEmptyTest() {
         int expected = 32;
-        assertEquals(expected, game.getSquaresExceptEmpty().size());
+        assertEquals(expected, game.getPiecesExceptEmpty().size());
     }
 }

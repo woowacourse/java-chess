@@ -19,15 +19,15 @@ public class ScoreCalculatorTest {
 
     @Test
     public void 세로_겹칠_떄() {
-        Map<Position, Square> map = new HashMap<>();
+        Map<Position, Piece> map = new HashMap<>();
         Position position = Position.of("2", "a");
-        map.put(position, Square.of(position, Piece.of(Piece.Color.WHITE, Pawn.FIRST_BOTTOM)));
+        map.put(position, Piece.of(position,Piece.Color.WHITE, Pawn.FIRST_BOTTOM));
         position = Position.of("3", "a");
-        map.put(position, Square.of(position, Piece.of(Piece.Color.WHITE, Pawn.FIRST_BOTTOM)));
+        map.put(position, Piece.of(position, Piece.Color.WHITE, Pawn.FIRST_BOTTOM));
         position = Position.of("4", "a");
-        map.put(position, Square.of(position, Piece.of(Piece.Color.WHITE, Pawn.FIRST_BOTTOM)));
+        map.put(position, Piece.of(position, Piece.Color.WHITE, Pawn.FIRST_BOTTOM));
         position = Position.of("2", "b");
-        map.put(position, Square.of(position, Piece.of(Piece.Color.WHITE, Pawn.FIRST_BOTTOM)));
+        map.put(position, Piece.of(position, Piece.Color.WHITE, Pawn.FIRST_BOTTOM));
 
         Board board = new Board(map);
         ScoreCalculator scoreCalculator = board.createScoreCalculator();

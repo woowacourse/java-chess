@@ -1,12 +1,14 @@
 package chess.domain;
 
+import chess.exception.DiedKingException;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
-    private final Map<Position, Square> map;
+    private final Map<Position, Piece> map;
 
-    public Board(final Map<Position, Square> map) {
+    public Board(final Map<Position, Piece> map) {
         this.map = new TreeMap<>(map);
     }
 
@@ -18,28 +20,36 @@ public class Board {
         if (hasObstacle(origin, target)) {
             return false;
         }
-        Square originSquare = map.get(origin);
-        Square targetSquare = map.get(target);
+        Piece originPiece = map.get(origin);
+        Piece targetPiece = map.get(target);
 
-        if (targetSquare.isEmpty()) {
-            return move(originSquare, targetSquare);
+        if (targetPiece.isEmpty()) {
+            return move(originPiece, targetPiece);
         }
-        return attack(originSquare, targetSquare);
+        return attack(originPiece, targetPiece);
     }
 
-    private boolean attack(final Square origin, final Square target) {
+    private boolean attack(final Piece origin, final Piece target) {
         if (!origin.isValidAttack(target)) {
             return false;
         }
-        origin.attackPiece(target);
+        if (target.isKing()) {
+            throw new DiedKingException("attacked King");
+        }
+        //TODO 공통 코드 추출하기
+        map.put(target.getPosition(), origin.get(target.getPosition()));
+        map.put(origin.getPosition(), Piece.empty(origin.getPosition()));
         return true;
     }
 
-    public boolean move(final Square origin, final Square target) {
-        if (!origin.isValidMove(target)) {
-            return false;
+    public boolean move(final Piece origin, final Piece target) {
+        if (origin.isValidMove(target)) {
+            map.put(target.getPosition(), origin.get(target.getPosition()));
+            map.put(origin.getPosition(), Piece.empty(origin.getPosition()));
+            return true;
+
         }
-        return origin.movePiece(target);
+        return false;
     }
 
     private boolean hasObstacle(final Position origin, final Position target) {
@@ -53,17 +63,17 @@ public class Board {
     }
 
     ScoreCalculator createScoreCalculator() {
-        List<Square> squares = new ArrayList<>(map.values());
-        return new ScoreCalculator(squares);
+        List<Piece> pieces = new ArrayList<>(map.values());
+        return new ScoreCalculator(pieces);
     }
 
-    List<Square> getSquaresExceptEmpty() {
+    List<Piece> getPiecesExceptEmpty() {
         return map.values().stream()
-                .filter(square -> !square.isEmpty())
+                .filter(piece -> !piece.isEmpty())
                 .collect(Collectors.toList());
     }
 
-    List<Square> values() {
+    List<Piece> values() {
         return new ArrayList<>(map.values());
     }
 

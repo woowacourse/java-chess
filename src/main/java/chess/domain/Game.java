@@ -32,12 +32,12 @@ public class Game {
         return color.getName();
     }
 
-    public List<Square> getSquares() {
+    public List<Piece> getPieces() {
         return board.values();
     }
 
-    public List<Square> getSquaresExceptEmpty() {
-        return board.getSquaresExceptEmpty();
+    public List<Piece> getPiecesExceptEmpty() {
+        return board.getPiecesExceptEmpty();
     }
 
     @Override

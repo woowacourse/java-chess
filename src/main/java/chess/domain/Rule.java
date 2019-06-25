@@ -17,14 +17,6 @@ public abstract class Rule {
             this.name = name;
             this.score = score;
         }
-
-        public String getName() {
-            return name;
-        }
-
-        public double getScore() {
-            return score;
-        }
     }
 
     private Type type;
@@ -49,7 +41,7 @@ public abstract class Rule {
         return this.type.name;
     }
 
-    public Type getType() {
-        return type;
+    public boolean isSameType(Type other) {
+        return this.type == other;
     }
 }

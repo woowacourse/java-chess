@@ -1,6 +1,7 @@
 package chess.domain.RuleImpl;
 
 import chess.domain.Position;
+import chess.domain.Rule;
 import chess.domain.rule.Queen;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class QueenTest {
-    private final Rule rule = Queen.getInstance();
+    Rule rule = Queen.getInstance();
 
     @Test
     public void 정상_대각선_이동_테스트() {

@@ -1,40 +1,40 @@
 package chess.domain;
 
-import chess.domain.rule.Pawn;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ScoreCalculator {
-    private final List<Square> squares;
+    private static final double HALF_SCORE = 0.5;
 
-    public ScoreCalculator(final List<Square> squares) {
-        this.squares = squares;
+    private final List<Piece> pieces;
+
+    public ScoreCalculator(final List<Piece> pieces) {
+        this.pieces = pieces;
     }
 
     public double getScore(final Piece.Color color) {
-        List<Square> temp = squares.stream()
-                .filter(square -> square.isSameColor(color))
+        List<Piece> temp = pieces.stream()
+                .filter(piece -> piece.isSameColor(color))
                 .collect(Collectors.toList());
 
         return colorScore(temp);
     }
 
-    private double colorScore(List<Square> squares) {
+    private double colorScore(List<Piece> pieces) {
         double sum = 0;
-        List<Square> notPawnList = squares.stream()
-                .filter(square -> !square.isPawn())
+        List<Piece> notPawnList = pieces.stream()
+                .filter(piece -> !piece.isPawn())
                 .collect(Collectors.toList());
 
-        for (final Square square : notPawnList) {
-            sum += square.getScore();
+        for (final Piece piece : notPawnList) {
+            sum += piece.getScore();
         }
-        squares.removeAll(notPawnList);
-        sum += sumOfPawn(squares);
+        pieces.removeAll(notPawnList);
+        sum += sumOfPawn(pieces);
         return sum;
     }
 
-    private double sumOfPawn(List<Square> pawns) {
+    private double sumOfPawn(List<Piece> pawns) {
         double sum = 0;
         for (int i = Column.MIN; i <= Column.MAX; i++) {
             sum += sumOfPawn(i, pawns);
@@ -42,12 +42,12 @@ public class ScoreCalculator {
         return sum;
     }
 
-    private double sumOfPawn(final int column, final List<Square> pawns) {
-        List<Square> retPawns = pawns.stream()
-                .filter(square -> square.isSameColumn(Column.from(String.valueOf((char) column))))
+    private double sumOfPawn(final int column, final List<Piece> pawns) {
+        List<Piece> retPawns = pawns.stream()
+                .filter(piece -> piece.isSameColumn(Column.from(String.valueOf((char) column))))
                 .collect(Collectors.toList());
         if (retPawns.size() >= 2) {
-            return retPawns.size() * Pawn.HALF_SCORE;
+            return retPawns.size() * HALF_SCORE;
         }
         return retPawns.size();
     }

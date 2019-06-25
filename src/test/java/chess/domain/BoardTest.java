@@ -70,14 +70,14 @@ public class BoardTest {
     }
 
     @Test
-    public void 두번째_폰의_이동_공격_가능한지_테스트() {
+    public void 두번째_폰의_이동_가능한지_테스트() {
         Position origin = Position.of("4", "d");
         Position target = Position.of("5", "d");
         assertTrue(board.action(origin, target));
     }
 
     @Test
-    public void 두번째_폰의_이동_공격_불가능한지_테스트() {
+    public void 두번째_폰의_공격_불가능한지_테스트() {
         Position origin = Position.of("4", "d");
         Position target = Position.of("6", "d");
         assertFalse(board.action(origin, target));

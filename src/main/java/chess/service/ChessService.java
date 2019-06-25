@@ -34,8 +34,8 @@ public class ChessService {
         throw new PositionIllegalArgumentException("잘못 입력했습니다. 다시 입력해주세요.");
     }
 
-    public List<Square> getSquares(final Game game) {
-        return game.getSquares();
+    public List<Piece> getPieces(final Game game) {
+        return game.getPieces();
     }
 
     public List<CommandDto> findByRoomId(final long roomId) {
@@ -54,6 +54,6 @@ public class ChessService {
     }
 
     public ScoreCalculator createScoreCalculator(Game game) {
-        return new ScoreCalculator(game.getSquaresExceptEmpty());
+        return new ScoreCalculator(game.getPiecesExceptEmpty());
     }
 }
