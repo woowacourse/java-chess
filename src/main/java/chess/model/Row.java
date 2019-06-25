@@ -1,5 +1,7 @@
 package chess.model;
 
+import java.util.Arrays;
+
 public enum Row {
     A("a"),
     B("b"),
@@ -10,10 +12,27 @@ public enum Row {
     G("g"),
     H("h");
 
+    private static final String INVALID_RANGE_ERROR_MSG = "원하는 방향의 행 좌표가 없습니다.";
+
     private String symbol;
 
     Row(final String symbol) {
         this.symbol = symbol;
+    }
+
+    boolean hasNext(Direction direction) {
+        return this.calculateAscii() + direction.getRowShiftUnit() >= A.calculateAscii()
+                && this.calculateAscii() + direction.getRowShiftUnit() <= H.calculateAscii();
+    }
+
+    Row next(Direction direction) {
+        return Arrays.stream(Row.values())
+                .filter(r -> this.calculateAscii() + direction.getRowShiftUnit() == r.calculateAscii())
+                .findAny().orElseThrow(() -> new InvalidRangeException(INVALID_RANGE_ERROR_MSG));
+    }
+
+    private int calculateAscii() {
+        return (int) symbol.charAt(0);
     }
 
     @Override
