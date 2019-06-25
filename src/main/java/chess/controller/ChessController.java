@@ -28,18 +28,13 @@ public class ChessController {
     }
 
     public Object initialize(Request req, Response res) throws SQLException {
-        Map<String, Object> model = new HashMap<>();
-
         Game game = chessService.initGame();
-        List<Piece> pieces = chessService.getPieces(game);
         long roomId = roomService.latestId();
 
         req.session().attribute("game", game);
 
-        model.put("currentColor", game.currentColor());
-        model.put("board", pieces);
-        model.put("roomId", roomId);
-        return render(model, "board.html");
+        res.redirect("/chess?roomId=" + roomId);
+        return null;
     }
 
     public Object show(final Request req, final Response res) {
@@ -48,7 +43,6 @@ public class ChessController {
         Game game = req.session().attribute("game");
         List<Piece> pieces = chessService.getPieces(game);
         long roomId = Long.parseLong(req.queryParams("roomId"));
-        System.out.println(pieces.get(1).getSymbol());
         model.put("board", pieces);
         model.put("currentColor", game.currentColor());
         model.put("message", req.queryParams("message"));
