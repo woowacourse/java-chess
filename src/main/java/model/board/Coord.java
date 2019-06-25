@@ -39,11 +39,6 @@ public class Coord implements Comparable<Coord> {
     }
 
     @Override
-    public int compareTo(Coord rhs) {
-        return this.val - rhs.val;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -53,6 +48,11 @@ public class Coord implements Comparable<Coord> {
         }
         Coord rhs = (Coord) o;
         return val == rhs.val;
+    }
+
+    @Override
+    public int compareTo(Coord rhs) {
+        return this.val - rhs.val;
     }
 
     @Override

@@ -41,14 +41,14 @@ class CoordTest {
     }
 
     @Test
+    void equalityTest() {
+        assertThat(Coord.of(7) == Coord.of(7));
+    }
+
+    @Test
     void sortTest() {
         List<Coord> testList = Arrays.asList(Coord.of(5), Coord.of(2), Coord.of(3));
         Collections.sort(testList);
         assertThat(testList).isEqualTo(Arrays.asList(Coord.of(2), Coord.of(3), Coord.of(5)));
-    }
-
-    @Test
-    void equalityTest() {
-        assertThat(Coord.of(7) == Coord.of(7));
     }
 }
