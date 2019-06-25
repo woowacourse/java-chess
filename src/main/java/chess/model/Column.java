@@ -12,7 +12,7 @@ public enum Column {
     _7("7"),
     _8("8");
 
-    private static final String INVALID_RANGE_ERROR_MSG = "원하는 방향의 행 좌표가 없습니다.";
+    private static final String INVALID_ELEMENT_ERROR_MSG = "원하는 방향의 행 좌표가 없습니다.";
 
     private String symbol;
 
@@ -28,7 +28,7 @@ public enum Column {
     Column next(Direction direction) {
         return Arrays.stream(Column.values())
                 .filter(c -> this.calculateAscii() + direction.getColumnShiftUnit() == c.calculateAscii())
-                .findAny().orElseThrow(() -> new InvalidRangeException(INVALID_RANGE_ERROR_MSG));
+                .findAny().orElseThrow(() -> new InvalidElementException(INVALID_ELEMENT_ERROR_MSG));
     }
 
     private int calculateAscii() {
