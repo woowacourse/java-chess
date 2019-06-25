@@ -84,6 +84,10 @@ public class Board {
         return drawBoard(copyBoard, team.equals(WHITE) ? BLACK : WHITE);
     }
 
+    public Map<Square, Piece> getBoard() {
+        return board;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
