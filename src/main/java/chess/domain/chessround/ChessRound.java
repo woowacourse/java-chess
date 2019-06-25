@@ -29,17 +29,17 @@ public class ChessRound {
         currentPlayer.assertExistenceOn(source);
         currentPlayer.assertEmptyOn(target);
 
-        moveBy(source, target);
+        ChessPlayer opponentPlayer = getOpponentPlayer();
+        currentPlayer.move(source, target, opponentPlayer);
 
+        if (isOpponentPieceOn(target, opponentPlayer)) {
+            opponentPlayer.delete(target);
+        }
         currentPlayer = getOpponentPlayer();
     }
 
-    private void moveBy(ChessPoint source, ChessPoint target) {
-        ChessPlayer opponentPlayer = getOpponentPlayer();
-        currentPlayer.move(source, target, opponentPlayer);
-        if (opponentPlayer.contains(target)) {
-            opponentPlayer.delete(target);
-        }
+    private boolean isOpponentPieceOn(ChessPoint target, ChessPlayer opponentPlayer) {
+        return opponentPlayer.contains(target);
     }
 
     private ChessPlayer getOpponentPlayer() {
