@@ -13,22 +13,29 @@ public class Knight extends Piece {
     public Knight(Team team) {
         super(team);
         this.score = 2.5;
+        pieceType = PieceType.KNIGHT;
         movementUnits = new HashSet<>();
-        movementUnits.add(MovementUnit.KNIGHT_MOVE_ONE);
-        movementUnits.add(MovementUnit.KNIGHT_MOVE_TWO);
+
+        movementUnits.add(MovementUnit.KNIGHT_UP_RIGHT);
+        movementUnits.add(MovementUnit.KNIGHT_RIGHT_UP);
+        movementUnits.add(MovementUnit.KNIGHT_UP_LEFT);
+        movementUnits.add(MovementUnit.KNIGHT_LEFT_UP);
+        movementUnits.add(MovementUnit.KNIGHT_DOWN_RIGHT);
+        movementUnits.add(MovementUnit.KNIGHT_RIGHT_DOWN);
+        movementUnits.add(MovementUnit.KNIGHT_DOWN_LEFT);
+        movementUnits.add(MovementUnit.KNIGHT_LEFT_DOWN);
     }
 
     @Override
     public boolean isMovable(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
+        int xGap = startSpot.xGap(endSpot);
+        int yGap = startSpot.yGap(endSpot);
 
-        return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        return movementUnits.contains(MovementUnit.direction(xGap, yGap));
     }
 
     @Override
     public boolean isAttackable(Spot startSpot, Spot endSpot) {
         return isMovable(startSpot, endSpot);
     }
-
 }

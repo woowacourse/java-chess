@@ -3,8 +3,8 @@ package chess.domain;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Spot, Piece> pieces;
@@ -14,67 +14,52 @@ public class Board {
     }
 
     public Board move(Spot startSpot, Spot endSpot) {
-        validate(startSpot, endSpot);
-        Piece piece = pieces.get(startSpot);
-        pieces.replace(endSpot, piece);
-        pieces.replace(startSpot, Empty.getInstance());
-        return new Board(pieces);
+        if (checkMovable(startSpot, endSpot)) {
+            pieces.replace(endSpot, pieces.get(startSpot));
+            pieces.replace(startSpot, Empty.getInstance());
+            return new Board(pieces);
+        }
+        return this;
     }
 
-    private void validate(Spot startSpot, Spot endSpot) {
-        moveValidate(startSpot, endSpot);
-        checkPath(startSpot, endSpot);
-    }
+    private boolean checkMovable(Spot startSpot, Spot endSpot) {
+        Piece selectedPiece = pieces.get(startSpot);
+        Piece targetPiece = pieces.get(endSpot);
 
-    private boolean moveValidate(Spot startSpot, Spot endSpot) {
-        Piece startPointPiece = pieces.get(startSpot);
-        Piece endPointPiece = pieces.get(endSpot);
-
-        if (startPointPiece.empty()) {
+        if (selectedPiece.empty() || selectedPiece.sameTeam(targetPiece)) {
             return false;
         }
-        if (endPointPiece.empty()) {
-            return startPointPiece.isMovable(startSpot, endSpot);
+
+        Spot nextSpot = startSpot.nextSpot(startSpot.calculateMovement(endSpot));
+
+        return checkPath(nextSpot, endSpot, selectedPiece);
+    }
+
+    private boolean checkPath(Spot startSpot, Spot endSpot, Piece selectedPiece) {
+        MovementUnit movementUnit = startSpot.calculateMovement(endSpot);
+
+        if (startSpot == endSpot) {
+            Piece targetSpot = pieces.get(endSpot);
+            return targetSpot.empty() ?
+                    selectedPiece.isMovable(startSpot, endSpot)
+                    : selectedPiece.isAttackable(startSpot,endSpot);
         }
-        if (startPointPiece.sameTeam(endPointPiece)) {
+
+        if (pieces.get(startSpot) != Empty.getInstance()) {
             return false;
         }
-        return startPointPiece.isAttackable(startSpot, endSpot);
+
+        return checkPath(startSpot.nextSpot(movementUnit), endSpot, selectedPiece);
     }
 
-    private boolean checkPath(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
-
-        MovementUnit movementUnit = MovementUnit.direction(distanceX, distanceY);
-        Spot nextSpot = startSpot;
-        while (nextSpot == endSpot) {
-            nextSpot = startSpot.nextSpot(movementUnit, distanceX, distanceY);
-            if (!pieces.get(nextSpot).empty()) {
-                return false;
-            }
-        }
-        return true;
+    public Map<Spot, Piece> getTeamPieces(Team team) {
+        return pieces.entrySet()
+                .stream()
+                .filter(spotPieceEntry -> spotPieceEntry.getValue().checkTeam(team))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public Map<Spot, Piece> getPieces(Team team) {
-        Map<Spot, Piece> selectedPieces = new HashMap<>();
-        pieces.forEach((spot, piece) -> {
-            if (piece.checkTeam(team)) {
-                selectedPieces.put(spot, piece);
-            }
-        });
-        return selectedPieces;
+    public Map<Spot, Piece> getPieces() {
+        return pieces;
     }
-
-    //TODO 파라미터의 갯수를 늘리지 않고 재귀로 할 수 있는 방법이 있을까?
-//    public boolean checkPath(Spot startSpot, Spot endSpot, MovementUnit movementUnit) {
-//        if (startSpot == endSpot) {
-//            return true;
-//        }
-//        if (pieces.get(startSpot).empty()) {
-//            return checkPath(startSpot.nextSpot(movementUnit), endSpot, movementUnit);
-//        }
-//        return false;
-//    }
 }

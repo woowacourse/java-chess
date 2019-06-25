@@ -13,17 +13,19 @@ public class Rook extends Piece {
     public Rook(Team team) {
         super(team);
         this.score = 5;
+        pieceType = PieceType.ROOK;
         this.movementUnits = new HashSet<>();
+
         movementUnits.add(MovementUnit.UP);
+        movementUnits.add(MovementUnit.DOWN);
         movementUnits.add(MovementUnit.RIGHT);
+        movementUnits.add(MovementUnit.LEFT);
     }
 
     @Override
     public boolean isMovable(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
-
-        return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        MovementUnit movementUnit = startSpot.calculateMovement(endSpot);
+        return movementUnits.contains(movementUnit);
     }
 
     @Override

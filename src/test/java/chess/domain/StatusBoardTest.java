@@ -12,6 +12,7 @@ class StatusBoardTest {
         int blackScore = 23;
         StatusBoard statusBoard = new StatusBoard(blackScore, whiteScore);
         assertThat(statusBoard.getBlackScore()).isEqualTo(23);
+        assertThat(statusBoard.getWhiteScore()).isEqualTo(34);
     }
 
     @Test

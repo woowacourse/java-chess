@@ -8,6 +8,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Pawn extends Piece {
+    private static final int PAWN_X_MAXIMUM_MOVABLE_DISTANCE = 1;
+    private static final int PAWN_X_MINIMUM_MOVABLE_DISTANCE = 0;
+    private static final int PAWN_Y_MAXIMUM_MOVABLE_DISTANCE = 2;
+    private static final int PAWN_Y_MINIMUM_MOVABLE_DISTANCE = 1;
+
     private static final Set<Integer> PAWN_START_COLUMN;
 
     static {
@@ -18,49 +23,63 @@ public class Pawn extends Piece {
 
     private final Set<MovementUnit> movementUnits;
     private final Set<MovementUnit> attackUnits;
-    private final int movingDirection;
 
     public Pawn(Team team) {
         super(team);
         this.score = 1;
-        movingDirection = initDirection(team);
+        pieceType = PieceType.PAWN;
         movementUnits = new HashSet<>();
         attackUnits = new HashSet<>();
-        movementUnits.add(MovementUnit.UP);
-        attackUnits.add(MovementUnit.DIAGNOAL);
-    }
 
-    private int initDirection(Team team) {
         if (team == Team.BLACK) {
-            return -1;
+            movementUnits.add(MovementUnit.UP);
+            attackUnits.add(MovementUnit.UP_LEFT);
+            attackUnits.add(MovementUnit.UP_RIGHT);
         }
-        return 1;
+
+        if (team == Team.WHITE) {
+            movementUnits.add(MovementUnit.DOWN);
+            attackUnits.add(MovementUnit.DOWN_LEFT);
+            attackUnits.add(MovementUnit.DOWN_RIGHT);
+        }
     }
 
-    //TODO 리팩토링
     @Override
     public boolean isMovable(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
-        boolean isFirst = PAWN_START_COLUMN.stream().anyMatch(startSpot::checkColumn);
-        int maxDistance = 1;
-        if (isFirst) {
-            maxDistance = 2;
+        MovementUnit movementUnit = endSpot.calculateMovement(startSpot);
+
+        if (!movementUnits.contains(movementUnit)) {
+            return false;
         }
-        if (movingDirection * distanceY > 0 && Math.abs(distanceY) <= maxDistance) {
-            return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+
+        int xGap = Math.abs(startSpot.xGap(endSpot));
+        int yGap = Math.abs(startSpot.yGap(endSpot));
+
+        if (startSpot.isStartLine()) {
+            return xGap == PAWN_X_MINIMUM_MOVABLE_DISTANCE
+                    && yGap <= PAWN_Y_MAXIMUM_MOVABLE_DISTANCE;
         }
+
+        if (!startSpot.isStartLine()) {
+            return xGap == PAWN_X_MINIMUM_MOVABLE_DISTANCE
+                    && yGap == PAWN_Y_MINIMUM_MOVABLE_DISTANCE;
+        }
+
         return false;
     }
 
     @Override
     public boolean isAttackable(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
+        MovementUnit attackUnit = endSpot.calculateMovement(startSpot);
 
-        if (distanceY * movingDirection == 1) {
-            return attackUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        if (!attackUnits.contains(attackUnit)) {
+            return false;
         }
-        return false;
+
+        int xGap = Math.abs(startSpot.xGap(endSpot));
+        int yGap = Math.abs(startSpot.yGap(endSpot));
+
+        return xGap == PAWN_X_MAXIMUM_MOVABLE_DISTANCE
+                && yGap == PAWN_Y_MINIMUM_MOVABLE_DISTANCE;
     }
 }

@@ -14,26 +14,35 @@ public class King extends Piece {
 
     public King(Team team) {
         super(team);
+        pieceType = PieceType.KING;
         movementUnits = new HashSet<>();
-        movementUnits.add(MovementUnit.RIGHT);
+
         movementUnits.add(MovementUnit.UP);
-        movementUnits.add(MovementUnit.DIAGNOAL);
+        movementUnits.add(MovementUnit.DOWN);
+        movementUnits.add(MovementUnit.RIGHT);
+        movementUnits.add(MovementUnit.LEFT);
+        movementUnits.add(MovementUnit.UP_RIGHT);
+        movementUnits.add(MovementUnit.UP_LEFT);
+        movementUnits.add(MovementUnit.DOWN_RIGHT);
+        movementUnits.add(MovementUnit.DOWN_LEFT);
     }
 
     @Override
     public boolean isMovable(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
-        int distance = getDistance(distanceX, distanceY);
+        int xGap = startSpot.xGap(endSpot);
+        int yGap = startSpot.yGap(endSpot);
 
-        if (distance < KING_MOVING_CONDITION) {
-            return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        if (validMove(xGap, yGap)) {
+            MovementUnit movement = startSpot.calculateMovement(endSpot);
+            return movementUnits.contains(movement);
         }
+
         return false;
+
     }
 
-    private int getDistance(int distanceX, int distanceY) {
-        return distanceX * distanceX + distanceY * distanceY;
+    private boolean validMove(int xGap, int yGap) {
+        return (Math.pow(xGap, 2) + Math.pow(yGap, 2)) <= 4;
     }
 
     @Override

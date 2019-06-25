@@ -6,6 +6,7 @@ import chess.domain.Team;
 public abstract class Piece {
     private Team team;
     double score;
+    PieceType pieceType;
 
     Piece(Team team) {
         this.team = team;
@@ -31,4 +32,7 @@ public abstract class Piece {
 
     public abstract boolean isAttackable(Spot startSpot, Spot endSpot);
 
+    public String getPieceType() {
+        return String.valueOf(pieceType);
+    }
 }

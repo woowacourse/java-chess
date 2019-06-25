@@ -8,6 +8,11 @@ import java.util.Map;
 public class BoardFactory {
     public static Board create() {
         Map<Spot, Piece> spots = new HashMap<>();
+
+//        for (int i = 0; i < 64; i++) {
+//            spots.put(Spot.valueOf(i), Empty.getInstance());
+//        }
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 spots.put(Spot.valueOf(i, j), Empty.getInstance());
@@ -56,6 +61,4 @@ public class BoardFactory {
         }
         return 6;
     }
-
-
 }

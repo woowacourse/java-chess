@@ -15,7 +15,7 @@ public class StatusBoardFactory {
     }
 
     private static double getTeamScore(Board board, Team team) {
-        Map<Spot, Piece> pieces = board.getPieces(team);
+        Map<Spot, Piece> pieces = board.getTeamPieces(team);
         double score = getScoreExceptPawn(pieces);
 
         List<Spot> pawnSpots = new ArrayList<>();
@@ -36,7 +36,7 @@ public class StatusBoardFactory {
     }
 
     private static double getPawnScore(List<Spot> pawnSpots) {
-        Collections.sort(pawnSpots, Spot::getX);
+        Collections.sort(pawnSpots, Spot::xGap);
 
         List<Integer> results = new ArrayList<>();
 

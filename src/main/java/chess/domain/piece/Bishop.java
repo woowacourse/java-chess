@@ -13,16 +13,18 @@ public class Bishop extends Piece {
     public Bishop(Team team) {
         super(team);
         this.score = 3;
+        pieceType = PieceType.BISHOP;
         movementUnits = new HashSet<>();
-        movementUnits.add(MovementUnit.DIAGNOAL);
+        movementUnits.add(MovementUnit.UP_RIGHT);
+        movementUnits.add(MovementUnit.UP_LEFT);
+        movementUnits.add(MovementUnit.DOWN_RIGHT);
+        movementUnits.add(MovementUnit.DOWN_LEFT);
     }
 
     @Override
     public boolean isMovable(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
-
-        return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        MovementUnit movement = startSpot.calculateMovement(endSpot);
+        return movementUnits.contains(movement);
     }
 
     @Override

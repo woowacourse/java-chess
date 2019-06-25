@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.exception.InvalidIndexException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,14 +16,14 @@ class SpotTest {
 
     @Test
     void 최저값_예외_검사() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidIndexException.class, () -> {
             Spot.valueOf(-1, -1);
         });
     }
 
     @Test
     void 최대값_예외_검사() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidIndexException.class, () -> {
             Spot.valueOf(8, 8);
         });
     }
