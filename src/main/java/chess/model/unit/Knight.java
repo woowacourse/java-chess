@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Knight extends Piece {
-    Knight(Side side) {
+    public Knight(Side side) {
         super(UnitType.KNIGHT, side);
     }
 

@@ -11,7 +11,7 @@ import java.util.function.Function;
 public abstract class Piece {
     private static final Map<UnitType, Function<Side, Piece>> createMap = new HashMap<>();
 
-    static{
+    static {
         createMap.put(UnitType.KING, King::new);
         createMap.put(UnitType.QUEEN, Queen::new);
         createMap.put(UnitType.BISHOP, Bishop::new);
@@ -35,6 +35,8 @@ public abstract class Piece {
     }
 
     public boolean isSameSide(Piece piece) {
+        if (piece == null)
+            return false;
         return this.side == piece.side;
     }
 
@@ -44,5 +46,9 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return false;
+    }
+
+    public boolean compareSide(Side side) {
+        return this.side == side;
     }
 }

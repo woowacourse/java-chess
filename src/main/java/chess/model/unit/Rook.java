@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Rook extends Piece {
-    Rook(Side side) {
+    public Rook(Side side) {
         super(UnitType.ROOK, side);
     }
 

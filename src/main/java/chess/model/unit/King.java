@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class King extends Piece {
-    King(Side side) {
+    public King(Side side) {
         super(UnitType.KING, side);
     }
 

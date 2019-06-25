@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Bishop extends Piece {
-    Bishop(Side side) {
+    public Bishop(Side side) {
         super(UnitType.BISHOP, side);
     }
 

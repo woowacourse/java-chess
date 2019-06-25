@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
-    Pawn(Side side) {
+    public Pawn(Side side) {
         super(UnitType.PAWN, side);
     }
 
@@ -20,8 +20,21 @@ public class Pawn extends Piece {
                 .collect(Collectors.toList());
     }
 
+    public List<SquareNavigator> findSquareNavigators(Square beginSquare, boolean isDestinationNull) {
+        if (isDestinationNull)
+            return findSquareNavigators(beginSquare);
+        return Direction.valueOfPawnAttack(getSide()).stream()
+                .map(direction -> new SquareNavigator(direction, beginSquare, 1))
+                .collect(Collectors.toList());
+    }
+
     private boolean isFirstMove(Square beginSquare) {
         return (getSide() == Side.BLACK && beginSquare.isAtColumn(Column._7)) ||
                 (getSide() == Side.WHITE && beginSquare.isAtColumn(Column._2));
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

@@ -1,7 +1,10 @@
 package chess.model;
 
+import chess.model.board.Board;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SquareNavigator {
     private final Direction direction;
@@ -32,5 +35,20 @@ public class SquareNavigator {
             squares.add(temp);
         }
         return squares;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SquareNavigator navigator = (SquareNavigator) o;
+        return distance == navigator.distance &&
+                direction == navigator.direction &&
+                beginSquare.equals(navigator.beginSquare);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(direction, beginSquare, distance);
     }
 }
