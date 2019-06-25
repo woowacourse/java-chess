@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.AbstractPiece;
+import chess.domain.Piece;
 import chess.domain.Coordinate;
 import chess.domain.Position;
 import chess.domain.Team;
@@ -14,26 +14,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PawnTest {
 
-    AbstractPiece abstractPiece;
+    Piece piece;
     Position base;
 
     @BeforeEach
     void setUp() {
-        abstractPiece = new Pawn(Team.BLACK);
+        piece = new Pawn(Team.BLACK);
         base = new Position(new Coordinate('b'), new Coordinate(2));
     }
 
     @Test
     void 상하_이동_여부_테스트() {
         Position base = new Position(new Coordinate('b'), new Coordinate(2));
-        assertTrue(abstractPiece.canMove(base, new Position(new Coordinate('b'), new Coordinate(3))));
-        assertTrue(abstractPiece.canMove(base, new Position(new Coordinate('b'), new Coordinate(1))));
+        assertTrue(piece.canMove(base, new Position(new Coordinate('b'), new Coordinate(3))));
+        assertTrue(piece.canMove(base, new Position(new Coordinate('b'), new Coordinate(1))));
     }
 
     @Test
     void 대각선_이동_여부_테스트() {
         assertThrows(InvalidDirectionException.class, () -> {
-            abstractPiece.canMove(base,
+            piece.canMove(base,
                     new Position(new Coordinate('c'), new Coordinate(3)));
         });
     }
@@ -41,7 +41,7 @@ public class PawnTest {
     @Test
     void 거리가_제한에_위반되는_경우_에외_테스트() {
         assertThrows(InvalidDistanceException.class, () -> {
-            abstractPiece.canMove(base,
+            piece.canMove(base,
                     new Position(new Coordinate('b'), new Coordinate(4)));
         });
     }

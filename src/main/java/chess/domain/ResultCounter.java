@@ -8,22 +8,22 @@ import java.util.List;
 import java.util.Map;
 
 public class ResultCounter {
-    private final Map<AbstractPiece, Count> resultCounter;
+    private final Map<Piece, Count> resultCounter;
 
-    private ResultCounter(final Map<AbstractPiece, Count> resultCounter) {
+    private ResultCounter(final Map<Piece, Count> resultCounter) {
         this.resultCounter = resultCounter;
     }
 
     public static ResultCounter init() {
-        Map<AbstractPiece, Count> resultCounter = new HashMap<>();
+        Map<Piece, Count> resultCounter = new HashMap<>();
         pieces(Team.WHITE).forEach(piece -> resultCounter.put(piece, new Count()));
         pieces(Team.BLACK).forEach(piece -> resultCounter.put(piece, new Count()));
 
         return new ResultCounter(resultCounter);
     }
 
-    public static ResultCounter load(Map<AbstractPiece, Count> existCounter) {
-        Map<AbstractPiece, Count> resultCounter = new HashMap<>(existCounter);
+    public static ResultCounter load(Map<Piece, Count> existCounter) {
+        Map<Piece, Count> resultCounter = new HashMap<>(existCounter);
         pieces(Team.WHITE).stream()
                 .filter(piece -> !resultCounter.containsKey(piece))
                 .forEach(piece -> resultCounter.put(piece, new Count()));
@@ -33,7 +33,7 @@ public class ResultCounter {
         return new ResultCounter(resultCounter);
     }
 
-    private static List<AbstractPiece> pieces(Team team) {
+    private static List<Piece> pieces(Team team) {
         return Arrays.asList(
                 new Pawn(team),
                 new Rook(team),
@@ -44,13 +44,13 @@ public class ResultCounter {
         );
     }
 
-    public Count pieceCount(final AbstractPiece abstractPiece) {
-        return resultCounter.get(abstractPiece);
+    public Count pieceCount(final Piece piece) {
+        return resultCounter.get(piece);
     }
 
-    public void addCount(final AbstractPiece abstractPiece) {
-        if (abstractPiece != null) {
-            pieceCount(abstractPiece).add();
+    public void addCount(final Piece piece) {
+        if (piece != null) {
+            pieceCount(piece).add();
         }
     }
 
@@ -60,7 +60,7 @@ public class ResultCounter {
                 .sum();
     }
 
-    private double pieceScore(final AbstractPiece piece) {
+    private double pieceScore(final Piece piece) {
         Count count = pieceCount(piece);
         return count.score(piece);
     }

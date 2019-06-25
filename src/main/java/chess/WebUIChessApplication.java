@@ -1,6 +1,6 @@
 package chess;
 
-import chess.domain.AbstractPiece;
+import chess.domain.Piece;
 import chess.domain.ChessBoard;
 import chess.domain.Team;
 import chess.domain.piece.King;
@@ -39,7 +39,7 @@ public class WebUIChessApplication {
             String target = req.queryParams("target");
             Map<String, Object> model = new HashMap<>();
 
-            AbstractPiece targetPiece = chessBoard.move(InputParser.position(source), InputParser.position(target));
+            Piece targetPiece = chessBoard.move(InputParser.position(source), InputParser.position(target));
 
             if (targetPiece instanceof King) {
                 Team winner = chessBoard.getWinner();

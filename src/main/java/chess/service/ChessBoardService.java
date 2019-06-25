@@ -56,7 +56,7 @@ public class ChessBoardService {
     }
 
     private Board convertBoardBy(List<BoardDto> boardDtos) {
-        Map<Position, AbstractPiece> board = new HashMap<>();
+        Map<Position, Piece> board = new HashMap<>();
 
         for (BoardDto boardDto : boardDtos) {
             board.put(
@@ -69,7 +69,7 @@ public class ChessBoardService {
     }
 
     private ResultCounter convertResultBy(List<ResultDto> resultDtos) {
-        Map<AbstractPiece, Count> counter = new HashMap<>();
+        Map<Piece, Count> counter = new HashMap<>();
 
         for (ResultDto resultDto : resultDtos) {
             counter.put(

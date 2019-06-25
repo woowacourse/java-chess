@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.AbstractPiece;
+import chess.domain.Piece;
 import chess.domain.MoveRules;
 import chess.domain.Team;
 
-public class Bishop extends AbstractPiece {
+public class Bishop extends Piece {
     private static final String NAME = "b";
     private static final double SCORE = 3;
 

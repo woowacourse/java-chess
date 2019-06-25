@@ -11,14 +11,14 @@ import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 
 public class Board {
-    private final Map<Position, AbstractPiece> board;
+    private final Map<Position, Piece> board;
 
-    private Board(Map<Position, AbstractPiece> board) {
+    private Board(Map<Position, Piece> board) {
         this.board = board;
     }
 
     public static Board init() {
-        Map<Position, AbstractPiece> board = new HashMap<>();
+        Map<Position, Piece> board = new HashMap<>();
         IntStream.rangeClosed(1, 8)
                 .forEach(i -> {
                     board.put(new Position(new Coordinate(i), new Coordinate(8)), chessPieces(BLACK).get(i - 1));
@@ -29,11 +29,11 @@ public class Board {
         return new Board(board);
     }
 
-    public static Board load(Map<Position, AbstractPiece> board) {
+    public static Board load(Map<Position, Piece> board) {
         return new Board(board);
     }
 
-    private static List<AbstractPiece> chessPieces(final Team team) {
+    private static List<Piece> chessPieces(final Team team) {
         return Arrays.asList(
                 new Rook(team), new Knight(team), new Bishop(team),
                 new Queen(team), new King(team), new Bishop(team),
@@ -41,16 +41,16 @@ public class Board {
         );
     }
 
-    public AbstractPiece at(final Position position) {
+    public Piece at(final Position position) {
         return board.get(position);
     }
 
-    public void move(Position source, Position target, AbstractPiece sourcePiece) {
+    public void move(Position source, Position target, Piece sourcePiece) {
         board.remove(source);
         board.put(target, sourcePiece);
     }
 
-    public Map<Position, AbstractPiece> getBoard() {
+    public Map<Position, Piece> getBoard() {
         return board;
     }
 

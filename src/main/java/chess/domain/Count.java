@@ -18,8 +18,8 @@ public class Count {
         return this;
     }
 
-    public double score(final AbstractPiece abstractPiece) {
-        return abstractPiece.score(count);
+    public double score(final Piece piece) {
+        return piece.score(count);
     }
 
     @Override

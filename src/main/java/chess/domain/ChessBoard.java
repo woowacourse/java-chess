@@ -25,9 +25,9 @@ public class ChessBoard {
         this.resultCounter = resultCounter;
     }
 
-    public AbstractPiece move(Position source, Position target) {
-        AbstractPiece sourcePiece = board.at(source);
-        AbstractPiece targetPiece = board.at(target);
+    public Piece move(Position source, Position target) {
+        Piece sourcePiece = board.at(source);
+        Piece targetPiece = board.at(target);
 
         validSourceTarget(sourcePiece, targetPiece);
         validRoute(source, target, source.direction(target));
@@ -39,25 +39,25 @@ public class ChessBoard {
         return targetPiece;
     }
 
-    private void validSourceTarget(final AbstractPiece sourcePiece, final AbstractPiece targetPiece) {
+    private void validSourceTarget(final Piece sourcePiece, final Piece targetPiece) {
         validSourcePiece(sourcePiece);
         validTurn(sourcePiece);
         validTargetPosition(sourcePiece, targetPiece);
     }
 
-    private void validSourcePiece(final AbstractPiece sourcePiece) {
+    private void validSourcePiece(final Piece sourcePiece) {
         if (sourcePiece == null) {
             throw new IllegalSourceException("해당 위치에 말이 없습니다.");
         }
     }
 
-    private void validTurn(final AbstractPiece sourcePiece) {
+    private void validTurn(final Piece sourcePiece) {
         if (!sourcePiece.isTurn(turn)) {
             throw new IllegalSourceException("당신의 말이 이동할 수 있는 턴이 아닙니다.");
         }
     }
 
-    private void validTargetPosition(final AbstractPiece sourcePiece, final AbstractPiece targetPiece) {
+    private void validTargetPosition(final Piece sourcePiece, final Piece targetPiece) {
         if (targetPiece != null && sourcePiece.isSameTeam(targetPiece)) {
             throw new IllegalTargetException("같은 팀이 있는 위치로 이동이 불가능합니다.");
         }
