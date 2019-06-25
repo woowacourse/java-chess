@@ -10,6 +10,9 @@ import java.util.Map;
 public class JDBCTemplate {
     private static JDBCTemplate jdbcTemplate = new JDBCTemplate();
 
+    private JDBCTemplate() {
+    }
+
     public static JDBCTemplate getInstance() {
         return jdbcTemplate;
     }

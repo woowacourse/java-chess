@@ -28,20 +28,6 @@ public class Point {
         return this.yPosition.equals(YPosition.valueOf(yPosition));
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final Point point = (Point) o;
-        return Objects.equals(xPosition, point.xPosition) &&
-                Objects.equals(yPosition, point.yPosition);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(xPosition, yPosition);
-    }
-
     public int calculateYsSub(final Point target) {
         return yPosition.calculateSub(target.yPosition);
     }
@@ -56,5 +42,27 @@ public class Point {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public int getX() {
+        return xPosition.getValue();
+    }
+
+    public int getY() {
+        return yPosition.getValue();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Point point = (Point) o;
+        return Objects.equals(xPosition, point.xPosition) &&
+                Objects.equals(yPosition, point.yPosition);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(xPosition, yPosition);
     }
 }

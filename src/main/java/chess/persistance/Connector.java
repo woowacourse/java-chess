@@ -20,7 +20,6 @@ public class Connector {
 
         try {
             con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + "?useSSL=false&serverTimezone=UTC", userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             throw new JDBCConnectException("연결 오류 : " + e.getMessage());
         }

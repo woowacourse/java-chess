@@ -51,4 +51,8 @@ public class XPosition {
     public XPosition add(final int deltaX) {
         return XPosition.valueOf(xPosition + deltaX);
     }
+
+    public int getValue() {
+        return xPosition;
+    }
 }

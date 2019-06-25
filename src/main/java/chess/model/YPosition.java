@@ -51,4 +51,8 @@ public class YPosition {
     public YPosition add(final int deltaY) {
         return YPosition.valueOf(yPosition + deltaY);
     }
+
+    public int getValue() {
+        return yPosition;
+    }
 }
