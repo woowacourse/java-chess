@@ -31,12 +31,17 @@ public class Pawn extends Piece {
 
     private boolean isPossibleDistance(Position position) {
         return (this.position.getDistanceSquare(position) == DISTANCE_FOR_ALL_DIRECTION)
-                || (this.position.isInStartingPosition() && this.position.getDistanceSquare(position) == DISTANCE_FOR_STARTING_POSITION);
+                || isPossibleDistanceFromStartingPosition(position);
+    }
+
+    private boolean isPossibleDistanceFromStartingPosition(Position position) {
+        return this.position.isInStartingPosition()
+                && (this.position.getDistanceSquare(position) == DISTANCE_FOR_STARTING_POSITION);
     }
 
     private boolean isPossibleDirection(Position position) {
-        return team.equals(Team.WHITE) && this.position.subtractY(position) < STANDARD_DIRECTION_VALUE
-                || team.equals(Team.BLACK) && this.position.subtractY(position) > STANDARD_DIRECTION_VALUE;
+        return (team.equals(Team.WHITE) && this.position.subtractY(position) < STANDARD_DIRECTION_VALUE)
+                || (team.equals(Team.BLACK) && this.position.subtractY(position) > STANDARD_DIRECTION_VALUE);
     }
 
     @Override

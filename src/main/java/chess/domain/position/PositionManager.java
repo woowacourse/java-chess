@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PositionManager {
+    private static final int MIN_COORDINATE = 1;
+    private static final int MAX_COORDINATE = 8;
+
     private static List<Position> positions = new ArrayList<>();
 
     static {
-        for (int i = 1; i <= 8; i++) {
-            for (int j = 1; j <= 8; j++) {
+        for (int i = MIN_COORDINATE; i <= MAX_COORDINATE; i++) {
+            for (int j = MIN_COORDINATE; j <= MAX_COORDINATE; j++) {
                 Position position = new Position(i, j);
                 positions.add(position);
             }

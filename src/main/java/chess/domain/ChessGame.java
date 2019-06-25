@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 public class ChessGame {
@@ -7,7 +8,9 @@ public class ChessGame {
     private static Team team = Team.WHITE;
 
     public void play(Position start, Position end) {
-        board.move(start, end, team);
+        if (board.movable(start, end, team)) {
+            board.move(start, end);
+        }
         team = Team.switchTeam(team);
     }
 
