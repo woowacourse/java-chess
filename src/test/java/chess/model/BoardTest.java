@@ -406,9 +406,9 @@ public class BoardTest {
     @Test
     void 턴이_맞는지_확인() {
         Board board = new Board(new NormalCreateStrategy());
-        assertThat(board.isRightTurn("11", 2)).isTrue();
-        assertThat(board.isRightTurn("18", 2)).isFalse();
-        assertThat(board.isRightTurn("11", 3)).isFalse();
-        assertThat(board.isRightTurn("18", 3)).isTrue();
+        assertThat(board.isRightTurn("11", 3)).isTrue();
+        assertThat(board.isRightTurn("18", 3)).isFalse();
+        assertThat(board.isRightTurn("11", 2)).isFalse();
+        assertThat(board.isRightTurn("18", 2)).isTrue();
     }
 }

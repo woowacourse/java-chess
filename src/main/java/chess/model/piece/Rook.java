@@ -11,7 +11,7 @@ import static chess.model.Direction.*;
 
 public class Rook implements Piece {
     private static final Set<Direction> movableDirections;
-    private static final double SCORE = 5.0;
+    public static final double SCORE = 5.0;
 
     static {
         movableDirections = new HashSet<>();
@@ -94,7 +94,7 @@ public class Rook implements Piece {
 
     @Override
     public Piece cloneSelf() {
-        return new Bishop(team);
+        return new Rook(team);
     }
 
     @Override

@@ -11,7 +11,7 @@ import static chess.model.Direction.*;
 
 public class Bishop implements Piece {
     private static Set<Direction> movableDirections;
-    private static final double SCORE = 3.0;
+    public static final double SCORE = 3.0;
 
     static {
         movableDirections = new HashSet<>();

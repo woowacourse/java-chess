@@ -11,7 +11,7 @@ import static chess.model.Direction.*;
 
 public class Knight implements Piece {
     private static Set<Direction> movableDirections;
-    private static final double SCORE = 2.5;
+    public static final double SCORE = 2.5;
 
     static {
         movableDirections = new HashSet<>();

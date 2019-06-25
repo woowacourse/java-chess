@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{#board}}
+{{this}} <br>
+{{/board}}
+
+<form action="/newgame.html" method="post">
+    <input type="text" name="source">
+    <br>
+    <input type="text" name="target">
+    <button type="submit">SUBMIT</button>
+</form>
+
+</body>
+</html>
