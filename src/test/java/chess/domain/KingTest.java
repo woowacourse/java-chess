@@ -24,7 +24,7 @@ class KingTest {
                 Arrays.asList(Rook.getInstance(Team.WHITE), empty, Bishop.getInstance(Team.WHITE), Queen.getInstance(Team.WHITE), king, empty, empty, Rook.getInstance(Team.WHITE))
         );
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn());
-        assertThat(king.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("e1")))
+        assertThat(king.getMovableCoordinates(board.getBoard()::getTeamAt, ChessCoordinate.valueOf("e1")))
                 .containsExactlyInAnyOrder(
                         ChessCoordinate.valueOf("d2"),
                         ChessCoordinate.valueOf("e2"),

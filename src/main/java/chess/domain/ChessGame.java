@@ -5,51 +5,45 @@ import java.util.stream.Collectors;
 
 
 public class ChessGame {
-    private final Map<ChessCoordinate, ChessPiece> boardState;
+    private final Board board;
     private Turn turn;
 
     public ChessGame(AbstractStateInitiatorFactory stateInitiatorFactory, Turn turn) {
-        this.boardState = stateInitiatorFactory.create();
+        this.board = new Board(stateInitiatorFactory);
         this.turn = turn;
     }
 
-    public Map<ChessCoordinate, PieceType> getBoard() {
-        Map<ChessCoordinate, PieceType> state = new HashMap<>();
-        boardState.entrySet().forEach(entry -> state.put(entry.getKey(), entry.getValue().getType()));
-        return state;
-    }
-
     public void move(ChessCoordinate from, ChessCoordinate to) {
-        ChessPiece fromPiece = boardState.get(from);
+        ChessPiece fromPiece = board.getPieceByCoord(from);
 
         validateTurn(fromPiece);
 
-        Set<ChessCoordinate> movableCoordinates = fromPiece.getMovableCoordinates(this::getTeamAt, from);
+        Set<ChessCoordinate> movableCoordinates = fromPiece.getMovableCoordinates(board::getTeamAt, from);
 
         movableCoordinates.stream()
                 .filter(coord -> coord.equals(to))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 위치입니다"));
 
-        boardState.put(to, boardState.get(from));
-        boardState.put(from, EmptyCell.getInstance());
+        board.updateBoard(from, to);
 
         this.turn = turn.nextTurn();
     }
 
     private void validateTurn(ChessPiece fromPiece) {
+
         if (fromPiece.getType().getTeam() != turn.getCurrent()) {
             throw new IllegalArgumentException("해당 팀의 차례가 아닙니다.");
         }
     }
 
     public Set<String> getMovable(ChessCoordinate from) {
-        return boardState.get(from).getMovableCoordinates(this::getTeamAt, from).stream()
+        return board.getPieceByCoord(from).getMovableCoordinates(board::getTeamAt, from).stream()
                 .map(coord -> coord.toString()).collect(Collectors.toSet());
     }
 
-    Team getTeamAt(ChessCoordinate coord) {
-        return this.boardState.get(coord).getType().getTeam();
+    public Board getBoard() {
+        return board;
     }
 
     public Team getTurn() {
@@ -61,11 +55,12 @@ public class ChessGame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ChessGame chessGame = (ChessGame) o;
-        return Objects.equals(boardState, chessGame.boardState);
+        return Objects.equals(board, chessGame.board) &&
+                Objects.equals(turn, chessGame.turn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(boardState);
+        return Objects.hash(board, turn);
     }
 }

@@ -37,8 +37,8 @@ class ChessGameTest {
         );
 
         ChessGame chessGame = new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn());
-
-        ChessCoordinate.forEachCoordinate(coord -> assertThat(chessGame.getBoard().get(coord))
+        Board board = chessGame.getBoard();
+        ChessCoordinate.forEachCoordinate(coord -> assertThat(board.getBoardState().get(coord))
                 .isEqualTo(expectedBoardState.get(coord.getY().getIndex()).get(coord.getX().getIndex())));
     }
 

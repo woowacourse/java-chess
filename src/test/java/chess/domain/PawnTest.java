@@ -25,7 +25,7 @@ class PawnTest {
         );
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn());
 
-        assertThat(pawn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b2"))).containsExactlyInAnyOrder(
+        assertThat(pawn.getMovableCoordinates(board.getBoard()::getTeamAt, ChessCoordinate.valueOf("b2"))).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("b3"),
                 ChessCoordinate.valueOf("b4")
         );
@@ -48,7 +48,7 @@ class PawnTest {
         );
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn());
 
-        assertThat(pawn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b4"))).isEmpty();
+        assertThat(pawn.getMovableCoordinates(board.getBoard()::getTeamAt, ChessCoordinate.valueOf("b4"))).isEmpty();
     }
 
     @Test
@@ -67,7 +67,7 @@ class PawnTest {
         );
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn());
 
-        assertThat(pawn.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b4"))).containsExactlyInAnyOrder(
+        assertThat(pawn.getMovableCoordinates(board.getBoard()::getTeamAt, ChessCoordinate.valueOf("b4"))).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("a5"),
                 ChessCoordinate.valueOf("c5")
         );

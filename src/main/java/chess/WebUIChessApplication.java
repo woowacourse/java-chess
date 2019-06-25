@@ -77,8 +77,9 @@ public class WebUIChessApplication {
             if (maybeFound.isPresent()) {
                 model.put("id", maybeFound.get().getId());
                 ChessGame chessGame = new ChessGame(new StateInitiatorFactory(), Turn.firstTurn());
+                Board board = chessGame.getBoard();
 
-                chessService.createBoardState(chessGame.getBoard(), maybeFound.get().getId());
+                chessService.createBoardState(board.getBoardState(), maybeFound.get().getId());
                 chessService.createTurn(chessGame.getTurn(), maybeFound.get().getId());
 
                 return model;
@@ -100,9 +101,7 @@ public class WebUIChessApplication {
                 chessService.updateChessPiecePosition(from, to, roomId);
                 chessService.updateTurnByRoomId(chessGame.getTurn(), roomId);
 
-                ChessResult result = ChessResult.judge(chessGame.getBoard().entrySet().stream()
-                        .map(Map.Entry::getValue)
-                        .collect(Collectors.toSet()));
+                ChessResult result = ChessResult.judge(chessGame.getBoard());
                 if (result == ChessResult.KEEP) {
                     return getChessGame(chessService, req).get().getBoard();
                 }

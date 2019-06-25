@@ -26,7 +26,7 @@ public class CUIChessApp {
         String[] tokens = input.split(" ");
         if (tokens[0].equals("start")) {
             initBoard();
-            OutputVIew.printBoardState(chessGame.getBoard());
+            OutputVIew.printBoardState(chessGame.getBoard().getBoardState());
             return false;
         }
 
@@ -37,10 +37,7 @@ public class CUIChessApp {
 
         if (tokens[0].equals("status")) {
             assertStarted();
-
-            ChessScoreCount scoreCount = new ChessScoreCount(chessGame.getBoard().entrySet().stream()
-                    .map(Map.Entry::getValue)
-                    .collect(Collectors.toSet()));
+            ChessScoreCount scoreCount = new ChessScoreCount(chessGame.getBoard());
             OutputVIew.printScore(scoreCount.getScore(WHITE), scoreCount.getScore(BLACK));
             return false;
         }
@@ -49,7 +46,7 @@ public class CUIChessApp {
             assertStarted();
 
             handleMoveCommand(tokens);
-            OutputVIew.printBoardState(chessGame.getBoard());
+            OutputVIew.printBoardState(chessGame.getBoard().getBoardState());
             return checkResult();
         }
 
@@ -64,9 +61,7 @@ public class CUIChessApp {
     }
 
     private static boolean checkResult() {
-        ChessResult result = ChessResult.judge(chessGame.getBoard().entrySet().stream()
-                .map(Map.Entry::getValue)
-                .collect(Collectors.toSet()));
+        ChessResult result = ChessResult.judge(chessGame.getBoard());
         if (result == ChessResult.KEEP) {
             return false;
         }

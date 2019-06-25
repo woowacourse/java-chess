@@ -27,7 +27,7 @@ class BishopTest {
         );
 
         ChessGame board = new ChessGame(new TestStateInitiatorFactory(boardState), Turn.firstTurn());
-        assertThat(bishop.getMovableCoordinates(board::getTeamAt, ChessCoordinate.valueOf("b4"))).containsExactlyInAnyOrder(
+        assertThat(bishop.getMovableCoordinates(board.getBoard()::getTeamAt, ChessCoordinate.valueOf("b4"))).containsExactlyInAnyOrder(
                 ChessCoordinate.valueOf("a3"),
                 ChessCoordinate.valueOf("a5"),
                 ChessCoordinate.valueOf("c5"),
