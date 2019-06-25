@@ -1,17 +1,11 @@
 package chess.domain.piece.pieceinfo;
 
 public enum TeamType {
-    WHITE(-1),
-    BLACK(1),
-    NEUTRAL(0);
+    WHITE,
+    BLACK,
+    NEUTRAL;
 
-    private final int type;
-
-    TeamType(final int type) {
-        this.type = type;
-    }
-
-    public int getType() {
-        return type;
+    public static TeamType switchTeamType(TeamType currentTeamType) {
+        return (currentTeamType == WHITE) ? BLACK : WHITE;
     }
 }
