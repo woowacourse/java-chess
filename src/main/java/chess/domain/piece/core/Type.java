@@ -5,13 +5,13 @@ import chess.domain.piece.*;
 import java.util.function.Function;
 
 public enum Type {
-    KING("k", 0, King::new),
-    QUEEN("q", 9, Queen::new),
-    BISHOP("b", 3, Bishop::new),
-    KNIGHT("N", 2.5, Knight::new),
-    ROOK("r", 5, Rook::new),
-    PAWN("p", 1, Pawn::new),
-    MOVEDPAWN("mp",1,MovedPawn::new);
+    KING("KING", 0, King::new),
+    QUEEN("QUEEN", 9, Queen::new),
+    BISHOP("BISHOP", 3, Bishop::new),
+    KNIGHT("KNIGHT", 2.5, Knight::new),
+    ROOK("ROOK", 5, Rook::new),
+    PAWN("PAWN", 1, Pawn::new),
+    MOVEDPAWN("MOVEDPAWN",1,MovedPawn::new);
 
     String type;
     double score;
@@ -37,9 +37,6 @@ public enum Type {
 
     @Override
     public String toString() {
-        return "Type{" +
-                "type='" + type + '\'' +
-                ", creator=" + creator +
-                '}';
+        return type;
     }
 }

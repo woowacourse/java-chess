@@ -1,8 +1,8 @@
 package chess.domain.piece.core;
 
 public enum Team {
-    BLACK("black"),
-    WHITE("white");
+    BLACK("BLACK"),
+    WHITE("WHITE");
 
     private String team;
 
@@ -16,8 +16,6 @@ public enum Team {
 
     @Override
     public String toString() {
-        return "Team{" +
-                "team='" + team + '\'' +
-                '}';
+        return team;
     }
 }
