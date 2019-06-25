@@ -5,6 +5,7 @@ import chess.domain.board.PositionChecker;
 import chess.domain.piece.pieceinfo.PieceType;
 import chess.domain.piece.pieceinfo.TeamType;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Blank extends Piece {
@@ -20,6 +21,6 @@ public class Blank extends Piece {
 
     @Override
     public Set<Position> makePossiblePositions(Position source, PositionChecker positionChecker) {
-        return null;
+        return new HashSet<>();
     }
 }
