@@ -1,18 +1,18 @@
 package chess.model;
 
 public class GameResult {
-    private ChessPieceColor winner;
+    private GameFlow result;
     private double whiteScore;
     private double blackScore;
 
-    public GameResult(final ChessPieceColor winner, final double whiteScore, final double blackScore) {
-        this.winner = winner;
+    public GameResult(final GameFlow result, final double whiteScore, final double blackScore) {
+        this.result = result;
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
     }
 
-    public ChessPieceColor getWinner() {
-        return winner;
+    public GameFlow getResult() {
+        return result;
     }
 
     public double getWhiteScore() {

@@ -39,7 +39,7 @@ public class ChessEngine {
         GameFlow gameFlow = GameFlow.CONTINUE;
 
         if (!board.isEmpty(target) && board.isSameType(target, ChessPieceType.KING)) {
-            gameFlow = GameFlow.END;
+            gameFlow = GameFlow.valueOf(thisTurnColor);
         }
 
         board.move(source, target);
@@ -47,5 +47,12 @@ public class ChessEngine {
         thisTurnColor = ChessPieceColor.nextTurnColor(thisTurnColor);
 
         return gameFlow;
+    }
+
+    public GameResult getGameStatus() {
+        double blackScore = board.getScore(ChessPieceColor.BLACK);
+        double whiteScore = board.getScore(ChessPieceColor.WHITE);
+        GameFlow result = GameFlow.valueOf(blackScore, whiteScore);
+        return new GameResult(result, whiteScore, blackScore);
     }
 }

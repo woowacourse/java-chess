@@ -56,23 +56,23 @@ public class ChessBoard {
         return board.get(point).isType(type);
     }
 
-    public ChessBoard getWhite() {
-        Map<Point, AbstractChessPiece> whitePieces = new HashMap<>();
-        for (Map.Entry<Point, AbstractChessPiece> entry : board.entrySet()) {
-            if (isSameColor(entry.getKey(), ChessPieceColor.WHITE)) {
-                whitePieces.put(entry.getKey(), entry.getValue());
-            }
+    public double getScore(ChessPieceColor color) {
+        double sum = 0.0;
+        Map<Point, AbstractChessPiece> newBoard = getBoard(color);
+
+        for (Map.Entry<Point, AbstractChessPiece> entry : newBoard.entrySet()) {
+            sum += entry.getValue().getScore(entry.getKey(), (Point p) -> newBoard.get(p));
         }
-        return new ChessBoard(whitePieces);
+        return sum;
     }
 
-    public ChessBoard getBlack() {
-        Map<Point, AbstractChessPiece> blackPieces = new HashMap<>();
+    private Map<Point, AbstractChessPiece> getBoard(ChessPieceColor color) {
+        Map<Point, AbstractChessPiece> newBoard = new HashMap<>();
         for (Map.Entry<Point, AbstractChessPiece> entry : board.entrySet()) {
-            if (isSameColor(entry.getKey(), ChessPieceColor.BLACK)) {
-                blackPieces.put(entry.getKey(), entry.getValue());
+            if (isSameColor(entry.getKey(), color)) {
+                newBoard.put(entry.getKey(), entry.getValue());
             }
         }
-        return new ChessBoard(blackPieces);
+        return newBoard;
     }
 }

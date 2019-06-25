@@ -1,5 +1,6 @@
 package chess.model;
 
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -61,14 +62,8 @@ public class ChessBoardTest {
     }
 
     @Test
-    void getWhitePiecesTest() {
-        ChessBoard whiteChessBoard = board.getWhite();
-        assertThat(whiteChessBoard.isEmpty(new Point(1, 7))).isTrue();
-    }
-
-    @Test
-    void getBlackPiecesTest() {
-        ChessBoard blackChessBoard = board.getBlack();
-        assertThat(blackChessBoard.isEmpty(new Point(1, 2))).isTrue();
+    void 점수_계산_테스트() {
+        assertThat(board.getScore(ChessPieceColor.WHITE)).isEqualTo(38.0, Offset.offset(0.01));
+        assertThat(board.getScore(ChessPieceColor.BLACK)).isEqualTo(38.0, Offset.offset(0.01));
     }
 }

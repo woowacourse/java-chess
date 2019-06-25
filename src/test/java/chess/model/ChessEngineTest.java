@@ -1,5 +1,6 @@
 package chess.model;
 
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -64,6 +65,20 @@ public class ChessEngineTest {
         chessEngine = new ChessEngine(chessBoard, ChessPieceColor.WHITE);
         Point source = new Point(1, 1);
         Point target = new Point(2, 2);
-        assertThat(chessEngine.move(source, target)).isEqualTo(GameFlow.END);
+        assertThat(chessEngine.move(source, target)).isEqualTo(GameFlow.WHITE_WIN);
+    }
+
+    @Test
+    void 점수_계산_승자_판별() {
+        Map<Point, AbstractChessPiece> board = new HashMap<>();
+        board.put(new Point(1, 2), new WhitePawn());
+        board.put(new Point(2, 2), new WhitePawn());
+        board.put(new Point(1, 7), new BlackPawn());
+        ChessBoard chessBoard = new ChessBoard(board);
+        chessEngine = new ChessEngine(chessBoard, ChessPieceColor.BLACK);
+        GameResult gameResult = chessEngine.getGameStatus();
+        assertThat(gameResult.getResult()).isEqualTo(GameFlow.WHITE_WIN);
+        assertThat(gameResult.getBlackScore()).isEqualTo(1.0, Offset.offset(0.01));
+        assertThat(gameResult.getWhiteScore()).isEqualTo(2.0, Offset.offset(0.01));
     }
 }
