@@ -9,10 +9,9 @@ import java.util.List;
 
 public class ChessGameDAO {
     private static ChessGameDAO chessGameDAO;
-    private Connection con;
+
 
     private ChessGameDAO() {
-        con = DataBaseConnector.getConnection();
     }
 
     public static ChessGameDAO getInstance() {
@@ -23,6 +22,7 @@ public class ChessGameDAO {
     }
 
     public List<Integer> findPreviousGamesById(String name) {
+        Connection con = DataBaseConnector.getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<Integer> previousGameId = new ArrayList<>();

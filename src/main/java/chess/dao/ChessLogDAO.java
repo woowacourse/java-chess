@@ -10,10 +10,8 @@ import java.util.List;
 
 public class ChessLogDAO {
     private static ChessLogDAO chessLogDAO;
-    private Connection con;
 
     private ChessLogDAO() {
-        con = DataBaseConnector.getConnection();
     }
 
     public static ChessLogDAO getInstance() {
@@ -24,6 +22,7 @@ public class ChessLogDAO {
     }
 
     public List<List<String>> findGameLogById(String gameId) {
+        Connection con = DataBaseConnector.getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<List<String>> gameLog = new ArrayList<>(new ArrayList<>());
@@ -43,6 +42,7 @@ public class ChessLogDAO {
     }
 
     public void insertLog(String from, String to, String gameId) {
+        Connection con = DataBaseConnector.getConnection();
         PreparedStatement pstmt = null;
         try {
             String query = "insert into game_log(source, destination,game_id) values(?,?,?);";
