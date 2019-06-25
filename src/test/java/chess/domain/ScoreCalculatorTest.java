@@ -21,7 +21,7 @@ public class ScoreCalculatorTest {
     public void 세로_겹칠_떄() {
         Map<Position, Piece> map = new HashMap<>();
         Position position = Position.of("2", "a");
-        map.put(position, Piece.of(position,Piece.Color.WHITE, Pawn.FIRST_BOTTOM));
+        map.put(position, Piece.of(position, Piece.Color.WHITE, Pawn.FIRST_BOTTOM));
         position = Position.of("3", "a");
         map.put(position, Piece.of(position, Piece.Color.WHITE, Pawn.FIRST_BOTTOM));
         position = Position.of("4", "a");

@@ -41,12 +41,16 @@ public class Piece {
         return new Piece(position, Color.EMPTY, Empty.getInstance());
     }
 
-    boolean isSameColor(final Color other) {
-        return color == other;
+    boolean isValidAttack(final Piece other) {
+        return !isSameColor(other) && rule.isValidAttack(this.position, other.position);
     }
 
-    boolean isSameColor(final Piece other) {
+    private boolean isSameColor(final Piece other) {
         return this.color == other.color;
+    }
+
+    boolean isSameColor(final Color other) {
+        return color == other;
     }
 
     boolean isSameColumn(final Column other) {
@@ -55,10 +59,6 @@ public class Piece {
 
     public boolean isValidMove(final Piece other) {
         return rule.isValidMove(this.position, other.position);
-    }
-
-    boolean isValidAttack(final Piece other) {
-        return !isSameColor(other) && rule.isValidAttack(this.position, other.position);
     }
 
     boolean isEmpty() {
@@ -79,16 +79,21 @@ public class Piece {
 
     Piece get(final Position position) {
         Rule rule = this.rule;
+        rule = getSecondPawnIfFirst(rule);
+        return Piece.of(position, this.color, rule);
+    }
+
+    private Rule getSecondPawnIfFirst(Rule rule) {
         if (this.rule == Pawn.FIRST_BOTTOM) {
             rule = Pawn.SECOND_BOTTOM;
         }
         if (this.rule == Pawn.FIRST_TOP) {
             rule = Pawn.SECOND_TOP;
         }
-        return Piece.of(position, this.color, rule);
+        return rule;
     }
 
-    public double getScore() {
+    double getScore() {
         return rule.getScore();
     }
 

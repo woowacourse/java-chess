@@ -66,6 +66,10 @@ public class Position implements Comparable<Position> {
         return subRowAndColumn(position) == distance;
     }
 
+    boolean isSameColumn(final Column other) {
+        return this.column.equals(other);
+    }
+
     private int subRowAndColumn(final Position target) {
         return Math.abs(this.distanceOfRow(target) - this.distanceOfColumn(target));
     }
@@ -80,6 +84,10 @@ public class Position implements Comparable<Position> {
 
     private int distanceOfColumn(final Position target) {
         return this.column.calculateAbsolute(target.column);
+    }
+
+    public int vectorOfRow(final Position target) {
+        return target.row.vectorOf(this.row);
     }
 
     List<Position> findRoutes(Position target) {
@@ -104,22 +112,12 @@ public class Position implements Comparable<Position> {
         return positions;
     }
 
-    public int vectorOfRow(final Position target) {
-        return target.row.vectorOf(this.row);
-    }
-
-    boolean isSameColumn(final Column other) {
-        return this.column.equals(other);
-    }
-
     @Override
     public int compareTo(final Position o) {
         int result = this.row.compareTo(o.row);
-
         if (result == 0) {
             result = this.column.compareTo(o.column);
         }
-
         return result;
     }
 
@@ -140,9 +138,5 @@ public class Position implements Comparable<Position> {
     @Override
     public String toString() {
         return column.toString().concat(row.toString());
-    }
-
-    public boolean isSameRow(final Row other) {
-        return this.row.equals(other);
     }
 }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 public class ScoreCalculator {
     private static final double HALF_SCORE = 0.5;
+    private static final int MIN_BOUNDS_BALANCED_PAWN = 2;
 
     private final List<Piece> pieces;
 
@@ -46,7 +47,7 @@ public class ScoreCalculator {
         List<Piece> retPawns = pawns.stream()
                 .filter(piece -> piece.isSameColumn(Column.from(String.valueOf((char) column))))
                 .collect(Collectors.toList());
-        if (retPawns.size() >= 2) {
+        if (retPawns.size() >= MIN_BOUNDS_BALANCED_PAWN) {
             return retPawns.size() * HALF_SCORE;
         }
         return retPawns.size();
