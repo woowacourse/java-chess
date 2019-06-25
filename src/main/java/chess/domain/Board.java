@@ -36,26 +36,26 @@ public class Board {
         if (target.isKing()) {
             throw new DiedKingException("attacked King");
         }
-        //TODO 공통 코드 추출하기
-        map.put(target.getPosition(), origin.get(target.getPosition()));
-        map.put(origin.getPosition(), Piece.empty(origin.getPosition()));
+        chanePiece(origin, target);
         return true;
     }
 
-    public boolean move(final Piece origin, final Piece target) {
+    private boolean move(final Piece origin, final Piece target) {
         if (origin.isValidMove(target)) {
-            map.put(target.getPosition(), origin.get(target.getPosition()));
-            map.put(origin.getPosition(), Piece.empty(origin.getPosition()));
+            chanePiece(origin, target);
             return true;
-
         }
         return false;
     }
 
+    private void chanePiece(final Piece origin, final Piece target) {
+        map.put(target.getPosition(), origin.get(target.getPosition()));
+        map.put(origin.getPosition(), Piece.empty(origin.getPosition()));
+    }
+
     private boolean hasObstacle(final Position origin, final Position target) {
         for (Position route : origin.findRoutes(target)) {
-            final boolean empty = map.get(route).isEmpty();
-            if (!empty) {
+            if (!map.get(route).isEmpty()) {
                 return true;
             }
         }

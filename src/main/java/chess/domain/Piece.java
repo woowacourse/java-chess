@@ -73,12 +73,10 @@ public class Piece {
         return this.rule.isSameType(Rule.Type.KING);
     }
 
-    //TODO 리팩토링
-    public boolean isSameType(final Rule.Type other) {
+    boolean isSameType(final Rule.Type other) {
         return rule.isSameType(other);
     }
 
-    //TODO 리팩토링
     Piece get(final Position position) {
         Rule rule = this.rule;
         if (this.rule == Pawn.FIRST_BOTTOM) {
