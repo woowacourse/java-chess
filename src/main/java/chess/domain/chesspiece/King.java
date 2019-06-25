@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class King extends ChessPiece {
+    public static final int SCORE = 0;
+
     public King(Team team) {
         super(team);
         initMovingMap();
@@ -21,5 +23,10 @@ public class King extends ChessPiece {
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
         return movingMap.get("fourDirections").move(source, target);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

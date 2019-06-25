@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Queen extends ChessPiece {
+    public static final int SCORE = 9;
+
     private static final int VERTICAL_LINE = 0;
     private static final int HORIZONTAL_LINE = 1;
 
@@ -37,5 +39,10 @@ public class Queen extends ChessPiece {
         }
 
         return movingMap.get(moveName).move(source, target);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

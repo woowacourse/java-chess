@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class ChessBoard {
     private static final int FIRST_BLANK_ROW = 2;
@@ -16,14 +17,73 @@ public class ChessBoard {
     private static final int BLACK_TEAM_PAWNS_AREA = 1;
     private static final int WHITE_TEAM_AREA = 7;
     private static final int WHITE_TEAM_PAWNS_AREA = 6;
+    private static final double INLINE_PAWN_SOCRE = 0.5;
 
     private Map<Position, ChessPiece> chessBoard = new HashMap<>();
+    private boolean gameOver = false;
 
     public ChessBoard() {
         init();
     }
 
-    public boolean canMove(Position source, Position target) {
+    public Map<Position, ChessPiece> getChessBoard() {
+        return chessBoard;
+    }
+
+    public boolean movePiece(Position source, Position target) {
+        if (!canMove(source, target)) return false;
+
+        if (!chessBoard.get(target).isSameTeam(chessBoard.get(source))) {
+            checkGameOver(target);
+        }
+
+        chessBoard.put(target, chessBoard.get(source));
+        chessBoard.put(source, new Blank(Team.BLANK));
+
+        return true;
+    }
+
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public double calculateScore(Team team) {
+        double score = 0.0;
+
+        for (int i = FIRST_COLUMN; i <= LAST_COLUMN; i++) {
+            score += calculateColumn(team, i);
+        }
+
+        return score;
+    }
+
+    private double calculateColumn(Team team, int column) {
+        long inLinePawnCount = getInLinePawnCount(team, column);
+
+        double scoreSum = IntStream.rangeClosed(FIRST_COLUMN, LAST_COLUMN)
+                .mapToObj(i -> chessBoard.get(Position.of(i, column)))
+                .filter(chessPiece -> chessPiece.isSameTeam(team))
+                .mapToDouble(ChessPiece::getScore)
+                .reduce(Double::sum).getAsDouble();
+
+        return inLinePawnCount > 1 ? scoreSum - inLinePawnCount * INLINE_PAWN_SOCRE : scoreSum;
+    }
+
+    private long getInLinePawnCount(Team team, int j) {
+        return IntStream.rangeClosed(FIRST_COLUMN, LAST_COLUMN)
+                .mapToObj(i -> chessBoard.get(Position.of(i, j)))
+                .filter(chessPiece -> chessPiece.getClass() == Pawn.class && chessPiece.isSameTeam(team))
+                .count();
+    }
+
+    private void checkGameOver(Position target) {
+        if (chessBoard.get(target).getClass() == King.class) {
+            gameOver = true;
+        }
+    }
+
+    private boolean canMove(Position source, Position target) {
         ChessPiece sourceChessPiece = chessBoard.get(source);
         List<Position> route = sourceChessPiece.getRouteOfPiece(source, target);
 
@@ -45,8 +105,9 @@ public class ChessBoard {
                 && !chessBoard.get(source).isSameTeam(chessBoard.get(target))) {
             return true;
         }
+
         return route.stream()
-                .allMatch(position -> isSameChessPiece(chessBoard.get(source), Blank.class));
+                .allMatch(position -> isSameChessPiece(chessBoard.get(position), Blank.class));
     }
 
     private boolean validExist(Position source) {
@@ -79,7 +140,7 @@ public class ChessBoard {
     }
 
     private void setBlanks() {
-        for (int i = FIRST_BLANK_ROW; i < LAST_BLANK_ROW; i++) {
+        for (int i = FIRST_BLANK_ROW; i <= LAST_BLANK_ROW; i++) {
             putBlankRow(i);
         }
     }

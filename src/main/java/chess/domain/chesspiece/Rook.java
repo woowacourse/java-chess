@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Rook extends ChessPiece {
+    public static final int SCORE = 5;
+
     public Rook(Team team) {
         super(team);
         initMovingMap();
@@ -39,5 +41,10 @@ public class Rook extends ChessPiece {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

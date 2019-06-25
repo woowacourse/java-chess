@@ -16,11 +16,17 @@ public abstract class ChessPiece {
 
     public abstract void initMovingMap();
 
+    public boolean isSameTeam(Team team) {
+        return this.team.equals(team);
+    }
+
     public boolean isSameTeam(ChessPiece chessPiece) {
         return this.team.equals(chessPiece.team);
     }
 
     public abstract List<Position> getRouteOfPiece(Position source, Position target);
+
+    public abstract double getScore();
 }
 
 
