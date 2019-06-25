@@ -123,9 +123,9 @@ public class ChessRoundService {
         boolean isLastTurnWhite = !chessRound.isWhiteTurn();
 
         deletePieceOn(source, isLastTurnWhite);
-        insertPieceOn(target, isLastTurnWhite);
 
         deletePieceOn(target, !isLastTurnWhite);
+        insertPieceOn(target, isLastTurnWhite);
 
         switchCurrentTurn(isLastTurnWhite);
     }
@@ -177,5 +177,9 @@ public class ChessRoundService {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public boolean isGameFinished() {
+        return chessRound.isGameFinished();
     }
 }

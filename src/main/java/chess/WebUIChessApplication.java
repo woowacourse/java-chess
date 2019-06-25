@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.ChessIndexController;
+import chess.controller.ChessResultController;
 import chess.controller.chessround.ChessRoundController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -18,6 +19,8 @@ public class WebUIChessApplication {
 
         get(ChessRoundController.PATH_CHESS_ROUND, ChessRoundController.fetchChessRound);
         post(ChessRoundController.PATH_CHESS_ROUND, ChessRoundController.handleChessMove);
+
+        get(ChessResultController.PATH_CHESS_RESULT, ChessResultController.fetchChessResult);
     }
 
     public static String render(Map<String, Object> model, String templatePath) {

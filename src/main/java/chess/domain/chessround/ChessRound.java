@@ -69,4 +69,8 @@ public class ChessRound {
     public boolean isWhiteTurn() {
         return currentPlayer == whitePlayer;
     }
+
+    public boolean isGameFinished() {
+        return !currentPlayer.isKingAlive();
+    }
 }

@@ -1,6 +1,7 @@
 package chess.domain.chessround;
 
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.King;
 import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chesspoint.RelativeChessPoint;
 import chess.domain.util.Counter;
@@ -116,5 +117,12 @@ public class ChessPlayer {
 
     public ChessPiece get(ChessPoint point) {
         return alivePieces.get(point);
+    }
+
+    public boolean isKingAlive() {
+        return alivePieces.values()
+                .stream()
+                .anyMatch(chessPiece -> (chessPiece == King.getInstance()))
+                ;
     }
 }

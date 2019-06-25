@@ -38,6 +38,11 @@ public class ChessRoundController {
 
         ChessRoundService chessRoundService = ChessRoundService.getInstance();
         chessRoundService.move(sourceId, targetId);
+        if (chessRoundService.isGameFinished()) {
+            boolean isWhiteWinner = !chessRoundService.isWhiteTurn();
+            String winner = isWhiteWinner ? "white" : "black";
+            res.redirect("/chess-result?winner=" + winner);
+        }
 
         res.redirect("/chess-round");
         return null;
