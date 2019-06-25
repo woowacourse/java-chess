@@ -19,7 +19,7 @@ public class ChessGameDAO {
     }
 
     public String findChessGameById(int id) {
-        String sql = "SELECT pieces FROM game WHERE id = ?";
+        String sql = "SELECT pieces, turn FROM game WHERE id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
