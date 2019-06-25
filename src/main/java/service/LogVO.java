@@ -1,6 +1,7 @@
-package model.game;
+package service;
 
 import model.board.Position;
+import model.game.Turn;
 
 public class LogVO implements Comparable<LogVO> {
     final Turn turn;

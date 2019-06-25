@@ -1,6 +1,7 @@
 package model.game;
 
 import model.board.Position;
+import service.LogVO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
