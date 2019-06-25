@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 class ChessSymbolGenerator {
+    public static final String EMPTY_SYMBOL = "\u00A0";
+
     private static ChessSymbolGenerator generator = null;
     private Map<String, String> whiteSymbols = new HashMap<>();
     private Map<String, String> blackSymbols = new HashMap<>();

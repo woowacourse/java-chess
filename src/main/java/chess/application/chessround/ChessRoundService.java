@@ -4,51 +4,40 @@ import chess.application.chessround.dto.ChessPieceDTO;
 import chess.application.chessround.dto.ChessPlayerDTO;
 import chess.application.chessround.dto.ChessPointDTO;
 import chess.domain.chesspiece.ChessPiece;
-import chess.domain.chesspiece.ChessPieces;
 import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chessround.ChessPiecesBuilder;
 import chess.domain.chessround.ChessPlayer;
 import chess.domain.chessround.ChessRound;
 import chess.domain.chessround.InvalidChessPositionException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChessRoundService {
     private static final String EMPTY = "";
+
     private static ChessRoundService chessRoundService = null;
+
     private ChessRound chessRound;
     private String errorMessage = EMPTY;
 
     private ChessRoundService() {
-        ChessPlayerDAO chessPlayerDAO = ChessPlayerDAO.getInstance();
-        List<ChessPieceDTO> whiteChessPieces = chessPlayerDAO.getAllChessPieces(true);
-        List<ChessPieceDTO> blackChessPieces = chessPlayerDAO.getAllChessPieces(false);
+        chessRound = recoverFromSavedChessRound();
+    }
 
-        ChessPlayer whitePlayer = makeChessPlayerFrom(whiteChessPieces, true);
-        ChessPlayer blackPlayer = makeChessPlayerFrom(blackChessPieces, false);
+    private ChessRound recoverFromSavedChessRound() {
+        ChessPlayerDAO chessPlayerDAO = ChessPlayerDAO.getInstance();
+        ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
+
+        List<ChessPieceDTO> whiteChessPieces = chessPlayerDAO.getAllChessPieces(true);
+        ChessPlayer whitePlayer = chessRoundAssembler.makeChessPlayerFrom(whiteChessPieces, true);
+
+        List<ChessPieceDTO> blackChessPieces = chessPlayerDAO.getAllChessPieces(false);
+        ChessPlayer blackPlayer = chessRoundAssembler.makeChessPlayerFrom(blackChessPieces, false);
 
         ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance();
         boolean isWhiteTurn = chessTurnDAO.getPlayerTurn();
 
-        chessRound = ChessRound.of(whitePlayer, blackPlayer, isWhiteTurn);
-    }
-
-    private ChessPlayer makeChessPlayerFrom(List<ChessPieceDTO> chessPieceDTOs, boolean isWhiteTeam) {
-        Map<ChessPoint, ChessPiece> alivePieces = new HashMap<>();
-        for (ChessPieceDTO chessPieceDTO : chessPieceDTOs) {
-            int row = chessPieceDTO.getRow();
-            int column = chessPieceDTO.getColumn();
-            ChessPoint chessPoint = ChessPoint.of(row, column);
-
-            String chessPieceName = chessPieceDTO.getName();
-            ChessPieces chessPieces = ChessPieces.getInstance();
-            ChessPiece chessPiece = chessPieces.find(chessPieceName, isWhiteTeam);
-
-            alivePieces.put(chessPoint, chessPiece);
-        }
-        return ChessPlayer.from(alivePieces);
+        return ChessRound.of(whitePlayer, blackPlayer, isWhiteTurn);
     }
 
     public static ChessRoundService getInstance() {
@@ -66,8 +55,12 @@ public class ChessRoundService {
         chessRound = ChessRound.of(whitePlayer, blackPlayer);
 
         clearAllChessPlayer();
-        saveChessPlayer(whitePlayer, true);
-        saveChessPlayer(blackPlayer, false);
+        saveCurrentRound();
+    }
+
+    private void saveCurrentRound() {
+        saveChessPlayer(chessRound.getWhitePlayer(), true);
+        saveChessPlayer(chessRound.getBlackPlayer(), false);
 
         saveCurrentTurn(chessRound.isWhiteTurn());
     }
@@ -79,8 +72,10 @@ public class ChessRoundService {
 
     private void saveChessPlayer(ChessPlayer chessPlayer, boolean isWhiteTeam) {
         ChessPlayerDAO chessPlayerDAO = ChessPlayerDAO.getInstance();
+
         ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
         ChessPlayerDTO chessPlayerDTO = chessRoundAssembler.makeChessPlayerDTO(chessPlayer);
+
         for (ChessPieceDTO chessPieceDTO : chessPlayerDTO.getChessPieceDTOs()) {
             chessPlayerDAO.insertChessPiece(chessPieceDTO, isWhiteTeam);
         }
@@ -120,6 +115,8 @@ public class ChessRoundService {
     }
 
     private void saveCurrentMove(ChessPoint source, ChessPoint target) {
+        // chessRound.move 이 끝난 후 호출되기에 chessRound 의 turn 이 변경되어 있음
+        // 따라서 !chessRound.isWhiteTurn() 으로 chessRound.move 당시의 turn 을 표현
         boolean isLastTurnWhite = !chessRound.isWhiteTurn();
 
         deletePieceOn(source, isLastTurnWhite);
@@ -139,12 +136,13 @@ public class ChessRoundService {
     }
 
     private void insertPieceOn(ChessPoint point, boolean isWhiteTurn) {
-        ChessPlayerDAO chessPlayerDAO = ChessPlayerDAO.getInstance();
-        ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
         ChessPlayer currentPlayer = isWhiteTurn ? chessRound.getWhitePlayer() : chessRound.getBlackPlayer();
+
         ChessPiece chessPiece = currentPlayer.get(point);
+        ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
         ChessPieceDTO targetPieceDTO = chessRoundAssembler.makeChessPieceDTO(point, chessPiece);
 
+        ChessPlayerDAO chessPlayerDAO = ChessPlayerDAO.getInstance();
         chessPlayerDAO.insertChessPiece(targetPieceDTO, isWhiteTurn);
     }
 

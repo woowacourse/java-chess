@@ -12,8 +12,6 @@ public class ChessRoundController {
     public static final String PATH_CHESS_ROUND = "/chess-round";
 
     public static final Route fetchChessRound = (req, res) -> {
-        Map<String, Object> model = new HashMap<>();
-
         ChessBoard chessBoard = ChessBoard.createEmpty();
 
         ChessRoundService chessRoundService = ChessRoundService.getInstance();
@@ -24,6 +22,7 @@ public class ChessRoundController {
         ChessPlayerDTO blackPlayerDTO = chessRoundService.fetchBlackPlayer();
         chessBoard.fillBlackChessPiecesOfPlayer(blackPlayerDTO);
 
+        Map<String, Object> model = new HashMap<>();
         model.put("chess-blocks", chessBoard);
         model.put("current-turn", chessRoundService.isWhiteTurn() ? "White" : "Black");
         model.put("white-score", chessRoundService.getWhitePlayerScore());
@@ -40,7 +39,7 @@ public class ChessRoundController {
         chessRoundService.move(sourceId, targetId);
         if (chessRoundService.isGameFinished()) {
             boolean isWhiteWinner = !chessRoundService.isWhiteTurn();
-            String winner = isWhiteWinner ? "white" : "black";
+            String winner = isWhiteWinner ? "White" : "Black";
             res.redirect("/chess-result?winner=" + winner);
         }
 

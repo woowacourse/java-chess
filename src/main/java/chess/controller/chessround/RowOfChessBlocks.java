@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 class RowOfChessBlocks implements Iterable<ChessBlock> {
-    private List<ChessBlock> chessBlocks;
+    private List<ChessBlock> rowOfChessBlocks;
 
-    private RowOfChessBlocks(List<ChessBlock> chessBlocks) {
-        this.chessBlocks = chessBlocks;
+    private RowOfChessBlocks(List<ChessBlock> rowOfChessBlocks) {
+        this.rowOfChessBlocks = rowOfChessBlocks;
     }
 
     static RowOfChessBlocks createEmptyOf(int blockRow) {
@@ -18,7 +18,7 @@ class RowOfChessBlocks implements Iterable<ChessBlock> {
         for (int blockColumn = 0; blockColumn < ChessBoard.LENGTH_OF_CHESS_BOARD_SIDE; blockColumn++) {
             ChessBlock chessBlock = new ChessBlock(
                     String.format("%d%d", remapRowFrom(blockRow), remapColumnFrom(blockColumn))
-                    , "\u00A0");
+                    , ChessSymbolGenerator.EMPTY_SYMBOL);
             chessBlocks.add(chessBlock);
         }
         return new RowOfChessBlocks(chessBlocks);
@@ -33,11 +33,11 @@ class RowOfChessBlocks implements Iterable<ChessBlock> {
     }
 
     void fillChessPieceTo(ChessPieceDTO chessPieceDTO, boolean isWhitePlayer) {
-        int column = chessPieceDTO.getColumn();
-        ChessBlock currentBlock = chessBlocks.get(remapBlockColumnFrom(column));
-
         ChessSymbolGenerator generator = ChessSymbolGenerator.getInstance();
         String chessSymbol = generator.generateSymbol(chessPieceDTO.getName(), isWhitePlayer);
+
+        int column = chessPieceDTO.getColumn();
+        ChessBlock currentBlock = rowOfChessBlocks.get(remapBlockColumnFrom(column));
         currentBlock.setSymbol(chessSymbol);
     }
 
@@ -47,6 +47,6 @@ class RowOfChessBlocks implements Iterable<ChessBlock> {
 
     @Override
     public Iterator<ChessBlock> iterator() {
-        return chessBlocks.iterator();
+        return rowOfChessBlocks.iterator();
     }
 }
