@@ -1,6 +1,6 @@
 package chess.model.board;
 
-import chess.model.view.OutputView;
+import chess.view.OutputView;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

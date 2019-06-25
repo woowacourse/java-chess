@@ -1,4 +1,4 @@
-package chess.model.view;
+package chess.view;
 
 import chess.model.Column;
 import chess.model.Row;
