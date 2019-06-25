@@ -24,7 +24,12 @@ public class Pawn extends Piece {
     }
 
     private boolean isPossibleDirection(Position position) {
-        return team.equals(Team.WHITE) && this.position.subtractRow(position) < STANDARD_DIRECTION_VALUE
-                || team.equals(Team.BLACK) && this.position.subtractRow(position) > STANDARD_DIRECTION_VALUE;
+        return team.equals(Team.WHITE) && this.position.subtractY(position) < STANDARD_DIRECTION_VALUE
+                || team.equals(Team.BLACK) && this.position.subtractY(position) > STANDARD_DIRECTION_VALUE;
+    }
+
+    @Override
+    public String toString() {
+        return "PAWN";
     }
 }

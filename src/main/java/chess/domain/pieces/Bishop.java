@@ -12,6 +12,12 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(Position position) {
-        return this.position.canMoveDiagonally(position);
+        return this.position.canMovePositiveDiagonally(position)
+                || this.position.canMoveNegativeDiagonally(position);
+    }
+
+    @Override
+    public String toString() {
+        return "BISHOP";
     }
 }

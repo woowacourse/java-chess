@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.pieces.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -104,6 +105,10 @@ public class Board {
             throw new IllegalArgumentException("선택하신 말이 움직일 수 없는 위치입니다.");
         }
 
+        if (!(boardState.get(source) instanceof Knight)) {
+            checkObstacle(source, target);
+        }
+
         Piece sourcePiece = boardState.get(source);
         Piece targetPiece = boardState.get(target);
         if (sourcePiece instanceof Pawn) {
@@ -118,6 +123,15 @@ public class Board {
         }
         movePiece(source, target);
         boardState.get(target).move(target);
+    }
+
+    public void checkObstacle(Position source, Position target) {
+        List<Position> route = source.getRoutePosition(target);
+        for (Position position : route) {
+            if (!(boardState.get(position) instanceof Blank)) {
+                throw new IllegalArgumentException("경로에 다른 말이 있습니다.");
+            }
+        }
     }
 
     private void movePiece(Position source, Position target) {

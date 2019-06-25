@@ -3,6 +3,9 @@ package chess.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,9 +43,15 @@ class PositionTest {
     }
 
     @Test
-    public void canMoveDiagonally_Test() {
-        assertThat(position.canMoveDiagonally(new Position(3, 3))).isTrue();
-        assertThat(position.canMoveDiagonally(new Position(2, 3))).isFalse();
+    public void canMovePositiveDiagonally_Test() {
+        assertThat(position.canMovePositiveDiagonally(new Position(3, 3))).isTrue();
+        assertThat(position.canMovePositiveDiagonally(new Position(2, 3))).isFalse();
+    }
+
+    @Test
+    public void canMoveNegativeDiagonally_Test() {
+        assertThat(position.canMoveNegativeDiagonally(new Position(1, 3))).isTrue();
+        assertThat(position.canMoveNegativeDiagonally(new Position(2, 3))).isFalse();
     }
 
     @Test
@@ -53,5 +62,57 @@ class PositionTest {
     @Test
     public void isInStartingPosition_Test() {
         assertThat(position.isInStartingPosition()).isTrue();
+    }
+
+    @Test
+    public void getRoutePosition_Test() {
+        Position target = new Position(5, 5);
+        List<Position> route = new ArrayList<>();
+        route.add(new Position(3, 3));
+        route.add(new Position(4, 4));
+        assertThat(position.getRoutePosition(target)).isEqualTo(route);
+    }
+
+    @Test
+    public void getRoutePosition_Test2() {
+        Position source = new Position(5, 2);
+        Position target = new Position(2, 5);
+        List<Position> route = new ArrayList<>();
+        route.add(new Position(3, 4));
+        route.add(new Position(4, 3));
+        assertThat(source.getRoutePosition(target)).isEqualTo(route);
+    }
+
+    @Test
+    public void getRoutePosition_Test3() {
+        Position target = new Position(5, 2);
+        List<Position> route = new ArrayList<>();
+        route.add(new Position(3, 2));
+        route.add(new Position(4, 2));
+        assertThat(position.getRoutePosition(target)).isEqualTo(route);
+    }
+
+    @Test
+    public void getRoutePosition_Test4() {
+        Position target = new Position(2, 5);
+        List<Position> route = new ArrayList<>();
+        route.add(new Position(2, 3));
+        route.add(new Position(2, 4));
+        assertThat(position.getRoutePosition(target)).isEqualTo(route);
+    }
+
+    @Test
+    public void getSameColumnSamePawnCount_Test() {
+        List<Position> positions = new ArrayList<>();
+        positions.add(new Position(1,1));
+        positions.add(new Position(2,1));
+        positions.add(new Position(3,1));
+        positions.add(new Position(3,1));
+        positions.add(new Position(4,1));
+        positions.add(new Position(4,1));
+        positions.add(new Position(4,1));
+        positions.add(new Position(5,1));
+
+        assertThat(Position.getDuplicatedItemsCount(positions)).isEqualTo(5);
     }
 }

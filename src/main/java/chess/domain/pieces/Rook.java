@@ -15,4 +15,9 @@ public class Rook extends Piece {
         return this.position.canMoveBackAndForth(position)
                 || this.position.canMoveSideToSide(position);
     }
+
+    @Override
+    public String toString() {
+        return "ROOK";
+    }
 }

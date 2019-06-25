@@ -14,6 +14,12 @@ public class Queen extends Piece {
     public boolean canMove(Position position) {
         return this.position.canMoveBackAndForth(position)
                 || this.position.canMoveSideToSide(position)
-                || this.position.canMoveDiagonally(position);
+                || this.position.canMovePositiveDiagonally(position)
+                || this.position.canMoveNegativeDiagonally(position);
+    }
+
+    @Override
+    public String toString() {
+        return "QUEEN";
     }
 }

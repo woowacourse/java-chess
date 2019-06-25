@@ -15,4 +15,9 @@ public class Knight extends Piece {
     public boolean canMove(Position position) {
         return this.position.getDistanceSquare(position) == DISTANCE_FOR_ALL_DIRECTION;
     }
+
+    @Override
+    public String toString() {
+        return "KNIGHT";
+    }
 }

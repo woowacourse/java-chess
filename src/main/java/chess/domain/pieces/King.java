@@ -17,4 +17,9 @@ public class King extends Piece {
         return this.position.getDistanceSquare(position) == DISTANCE_FOR_FOUR_DIRECTION
                 || this.position.getDistanceSquare(position) == DISTANCE_FOR_DIAGONAL_DIRECTION;
     }
+
+    @Override
+    public String toString() {
+        return "KING";
+    }
 }

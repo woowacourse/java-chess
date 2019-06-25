@@ -14,4 +14,9 @@ public class Blank extends Piece {
     public boolean canMove(Position position) {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "BLANK";
+    }
 }
