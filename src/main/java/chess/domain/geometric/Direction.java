@@ -27,7 +27,7 @@ public enum Direction {
                 return direction;
             }
         }
-        throw new IllegalDirectionException();
+        throw new IllegalDirectionException("올바른 방향이 아닙니다.(동서남북 및 대각선 방향이 아님)");
     }
 
     public static List<Direction> plusShape() {

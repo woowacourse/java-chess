@@ -21,7 +21,6 @@ public class ConsoleChessApplication {
                 Position source = InputView.getSourcePosition();
                 Position target = InputView.getTargetPosition();
                 chessBoard.move(source, target);
-                OutputView.printCheckBoard(chessBoard);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

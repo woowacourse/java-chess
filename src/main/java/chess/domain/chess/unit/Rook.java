@@ -32,6 +32,11 @@ public class Rook extends Unit {
     }
 
     @Override
+    public String getName() {
+        return "룩";
+    }
+
+    @Override
     public String toString() {
         return getTeam().getUnitName("R");
     }

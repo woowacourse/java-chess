@@ -5,6 +5,22 @@
     <title>로또</title>
 </head>
 <body>
-Hello World!!
+<div>
+
+</div>
+
+
+<script>
+  window.onload = function () {
+      var pieces = JSON.parse('{{{chessBoard}}}').units;
+      console.log(pieces);
+      console.log('---------');
+      for (var key in pieces) {
+          var classText = pieces[key].team;
+          //document.querySelector("#" + key).setAttribute("class", classText);
+      }
+      //document.querySelector(tr)
+  }
+</script>
 </body>
 </html>

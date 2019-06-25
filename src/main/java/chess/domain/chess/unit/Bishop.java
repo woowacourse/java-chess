@@ -33,4 +33,9 @@ public class Bishop extends Unit {
     public String toString() {
         return getTeam().getUnitName("B");
     }
+
+    @Override
+    public String getName() {
+        return "비숍";
+    }
 }

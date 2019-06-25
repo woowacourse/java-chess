@@ -9,7 +9,9 @@ import chess.domain.geometric.Direction;
 import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class ChessBoard {
     private Map<Position, Unit> units;
@@ -32,10 +34,8 @@ public class ChessBoard {
             throw new SourceUnitNotPresentException("해당 위치에는 유닛이 존재하지 않습니다.");
         }
 
-        if (targetUnit.isPresent()) {
-            if (sourceUnit.get().isEqualTeam(targetUnit.get())) {
-                throw new SameTeamTargetUnitException("같은 팀을 공격할 수 없습니다.");
-            }
+        if (targetUnit.isPresent() && sourceUnit.get().isEqualTeam(targetUnit.get())) {
+            throw new SameTeamTargetUnitException("같은 팀을 공격할 수 없습니다.");
         }
 
         if (sourceUnit.get() instanceof Pawn) {
@@ -46,10 +46,8 @@ public class ChessBoard {
             return;
         }
 
-        if ((!targetUnit.isPresent()) || (sourceUnit.get().isEqualTeam(targetUnit.get()))) {
-            if (!sourceUnit.get().validateDirection(vector)) {
-                throw new IllegalMovingRuleException(sourceUnit.get().toString() + "의 규칙에 어긋납니다.");
-            }
+        if (!sourceUnit.get().validateDirection(vector)) {
+            throw new IllegalMovingRuleException(sourceUnit.get().getName() + "의 규칙에 어긋납니다.");
         }
     }
 
@@ -92,7 +90,7 @@ public class ChessBoard {
         double sum = 0;
 
         for (Position position : units.keySet()) {
-                sum += singleUnitScore(team, position);
+            sum += singleUnitScore(team, position);
         }
         sum += sumPawnScore(team);
 
@@ -101,7 +99,7 @@ public class ChessBoard {
 
     private double singleUnitScore(Team team, Position position) {
         if (units.get(position).getTeam() == team &&
-                ((units.get(position) instanceof Pawn) == false)) {
+                (!(units.get(position) instanceof Pawn))) {
             return units.get(position).score();
         }
         return 0;
@@ -122,7 +120,7 @@ public class ChessBoard {
         return units.keySet().stream()
                 .filter(key -> key.getX() == x)
                 .filter(key -> units.get(key) instanceof Pawn)
-                .filter(key ->units.get(key).getTeam() == team)
+                .filter(key -> units.get(key).getTeam() == team)
                 .count();
     }
 
@@ -131,5 +129,9 @@ public class ChessBoard {
             return 1;
         }
         return 0.5;
+    }
+
+    public Map<Position, Unit> getUnits() {
+        return units;
     }
 }

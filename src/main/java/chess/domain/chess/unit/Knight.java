@@ -26,4 +26,9 @@ public class Knight extends Unit {
     public String toString() {
         return getTeam().getUnitName("N");
     }
+
+    @Override
+    public String getName() {
+        return "나이트";
+    }
 }

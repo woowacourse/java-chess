@@ -37,4 +37,9 @@ public class King extends Unit {
     public String toString() {
         return getTeam().getUnitName("K");
     }
+
+    @Override
+    public String getName() {
+        return "킹";
+    }
 }
