@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,5 +90,9 @@ public class ChessBoard {
 			return new Score(1);
 		}
 		return new Score(count * 0.5);
+	}
+
+	public List<Piece> getPieces() {
+		return Collections.unmodifiableList(pieces);
 	}
 }

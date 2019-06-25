@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.List;
+
 import chess.exception.UnmovableException;
 import chess.domain.piece.Piece;
 
@@ -56,5 +58,9 @@ public class ChessGame {
 			return Result.BLACK_WIN;
 		}
 		return Result.WHITE_WIN;
+	}
+
+	public List<Piece> getPieces() {
+		return chessBoard.getPieces();
 	}
 }
