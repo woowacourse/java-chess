@@ -19,6 +19,15 @@ public class Game {
 
     public Game() {}
 
+    public Game(List<LogVO> log) {
+        Collections.sort(log);
+        log.forEach(l -> {
+            if (!restore(l.from(), l.to())) {
+                throw new FailedToRestoreGameException();
+            }
+        });
+    }
+
     private Turn endTurn() {
         return this.turn.endTurn();
     }
@@ -33,6 +42,27 @@ public class Game {
         return this.board.getPieceAt(from)
                         .map(p -> hands.get(this.turn.team()).getPossibleDestinations(from))
                         .orElse(new ArrayList<>());
+    }
+
+    private boolean tryToMoveFromTo(Position from, Position to, boolean isNotRestoring) {
+        if (this.board.getPieceAt(from)
+                        .map(p -> hands.get(this.turn.team()).tryToMoveFromTo(p.position(), to))
+                        .orElse(false)) {
+            if (isNotRestoring) {
+                GameDAO.holdAndWriteLog(turn, from, to);
+            }
+            endTurn();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean tryToMoveFromTo(Position from, Position to) {
+        return tryToMoveFromTo(from, to, true);
+    }
+
+    public boolean restore(Position from, Position to) {
+        return tryToMoveFromTo(from, to, false);
     }
 
     public double getCurrentScore(Player team) {
