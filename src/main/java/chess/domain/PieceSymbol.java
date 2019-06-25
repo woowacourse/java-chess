@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.RuleImpl.*;
 import chess.domain.rule.*;
 
 public enum PieceSymbol {
