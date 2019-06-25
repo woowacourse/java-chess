@@ -81,7 +81,7 @@ class ChessPlayerTest {
         currentPlayer.move(source, target, opponentPlayer);
 
         assertThat(currentPlayer.contains(source)).isFalse();
-        assertThat(currentPlayer.contains(target)).isTrue();
+        assertThat(currentPlayer.get(target)).isEqualTo(King.getInstance());
     }
 
     @Test
@@ -97,7 +97,7 @@ class ChessPlayerTest {
         currentPlayer.move(source, target, opponentPlayer);
 
         assertThat(currentPlayer.contains(source)).isFalse();
-        assertThat(currentPlayer.contains(target)).isTrue();
+        assertThat(currentPlayer.get(target)).isEqualTo(Queen.getInstance());
     }
 
     @Test
