@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.*;
+import chess.domain.Piece;
+import chess.domain.Team;
 
 public class Pawn extends Piece {
     private static final String NAME = "p";

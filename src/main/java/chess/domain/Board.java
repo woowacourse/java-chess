@@ -50,10 +50,6 @@ public class Board {
         board.put(target, sourcePiece);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
-    }
-
     public List<BoardDto> toDto() {
         List<BoardDto> boardDtos = new ArrayList<>();
         board.forEach((position, piece) -> {
