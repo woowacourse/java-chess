@@ -1,7 +1,8 @@
 # java-chess
 ### Todo
-* 전체적으로 Refactor
-    * Move 중복 제거
+* 몇번 방 이어하기 기능.
+* 게임 끝나면 DB에서 삭제.
+* Controller -> Service로 분리 (중복제거)
 
 ### Done
 * Board 초기화

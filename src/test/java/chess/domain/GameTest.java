@@ -164,4 +164,13 @@ public class GameTest {
         Game game = new Game(BoardFactory.init()); // White team
         assertThrows(IllegalArgumentException.class, () -> game.move(new Point("a7"), new Point("a6")));
     }
+
+    @Test
+    void 폰_이동_불가능() {
+        Map<Point, Piece> board = new HashMap<>();
+        board.put(new Point("a2"), new Pawn(Team.WHITE));
+        board.put(new Point("a3"), new Pawn(Team.BLACK));
+        Game game = new Game(board);
+        assertThrows(IllegalArgumentException.class, () -> game.move(new Point("a2"), new Point("a3")));
+    }
 }

@@ -19,6 +19,8 @@ public class PieceDao {
     private static final String SELECT_PIECE = "SELECT name, x, y, team FROM piece WHERE game_id = ?";
     private static final String UPDATE_PIECE_BY_POSITION = "UPDATE piece SET x = ?, y = ? WHERE game_id = ? and x = ? and y = ?";
     private static final String DELETE_PIECE_BY_POSITION = "DELETE FROM piece WHERE game_id = ? and x = ? and y = ?";
+    private static final String INSERT_BLANK_BY_POSITION = "INSERT INTO piece(game_id, name, x, y, team) VALUES (?, ?, ?, ?, ?)";
+
     private final DataSource dataSource;
 
     public PieceDao(DataSource dataSource) {
@@ -91,18 +93,35 @@ public class PieceDao {
             pstmt.setInt(2, end.getPositionY());
             pstmt.setInt(3, gameId);
             pstmt.setInt(4, start.getPositionX());
-            pstmt.setInt(5, start.getPositionX());
+            pstmt.setInt(5, start.getPositionY());
             pstmt.executeUpdate();
         }
     }
 
-    public void deletePosition(int gameId, Point target) throws SQLException {
+    public void insertBlank(int gameId, Point target) throws SQLException {
         try (Connection con = dataSource.getConnection()) {
-            executeDeletePosition(con, gameId, target);
+            executeInsertBlank(con, gameId, target);
         }
     }
 
-    private void executeDeletePosition(Connection con, int gameId, Point target) throws SQLException {
+    private void executeInsertBlank(Connection con, int gameId, Point target) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(INSERT_BLANK_BY_POSITION)) {
+            pstmt.setInt(1, gameId);
+            pstmt.setString(2, "BLANK");
+            pstmt.setInt(3, target.getPositionX());
+            pstmt.setInt(4, target.getPositionY());
+            pstmt.setBoolean(5, false);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void deletePieceByPosition(int gameId, Point target) throws SQLException {
+        try (Connection con = dataSource.getConnection()) {
+            executeDeletePiece(con, gameId, target);
+        }
+    }
+
+    private void executeDeletePiece(Connection con, int gameId, Point target) throws SQLException {
         try (PreparedStatement pstmt = con.prepareStatement(DELETE_PIECE_BY_POSITION)) {
             pstmt.setInt(1, gameId);
             pstmt.setInt(2, target.getPositionX());

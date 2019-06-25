@@ -11,6 +11,7 @@ public class GameDao {
     private static final String INSERT_GAME = "INSERT INTO game(game_id) SELECT ifnull(MAX(game_id) + 1, 1) FROM game";
     private static final String UPDATE_TURN = "UPDATE game SET turn = ? WHERE game_id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM game WHERE game_id = ?";
+    private static final String SELECT_MAX_ID = "SELECT MAX(game_id) FROM game";
     private final DataSource dataSource;
 
     public GameDao(DataSource dataSource) {
@@ -74,6 +75,25 @@ public class GameDao {
         try (PreparedStatement pstmt = con.prepareStatement(DELETE_BY_ID)) {
             pstmt.setInt(1, gameId);
             pstmt.executeUpdate();
+        }
+    }
+
+    public int findMaxId() throws SQLException {
+        try (Connection con = dataSource.getConnection()) {
+            return executeFindMaxId(con);
+        }
+    }
+
+    private int executeFindMaxId(Connection con) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SELECT_MAX_ID)) {
+            return getMaxId(pstmt);
+        }
+    }
+
+    private int getMaxId(PreparedStatement pstmt) throws SQLException {
+        try (ResultSet rs = pstmt.executeQuery()) {
+            rs.next();
+            return rs.getInt(1);
         }
     }
 }

@@ -5,6 +5,7 @@ import chess.domain.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
 
@@ -24,7 +25,10 @@ public class Pawn extends Piece {
     public List<Point> move(Point start, Point end) {
         List<Point> points = new ArrayList<>();
         Navigator navigator = new Navigator(start, end);
-        Direction foundDirection = navigator.getDirection(type.getDirections());
+        List<Direction> directions = type.getDirections().stream()
+                .filter(direction -> direction.equals(Direction.NORTH) || direction.equals(Direction.SOUTH))
+                .collect(Collectors.toList());
+        Direction foundDirection = navigator.getDirection(directions);
         if (isTwoStep(start, end, foundDirection)) {
             return Arrays.asList(start.move(foundDirection), end);
         }
@@ -38,7 +42,10 @@ public class Pawn extends Piece {
     public List<Point> attack(Point start, Point end) {
         List<Point> points = new ArrayList<>();
         Point vector = start.makeVector(end);
-        if (type.getDirections().contains(Direction.findDirection(vector))) {
+        List<Direction> directions = type.getDirections().stream()
+                .filter(direction -> !direction.equals(Direction.NORTH) && !direction.equals(Direction.SOUTH))
+                .collect(Collectors.toList());
+        if (directions.contains(Direction.findDirection(vector))) {
             points.add(end);
         }
         return points;

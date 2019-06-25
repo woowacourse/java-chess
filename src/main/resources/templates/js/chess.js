@@ -9,6 +9,9 @@ $(function(){
       	if ( value === 0 ) {
       		source = position;
       	} else {
+      		if (source === position) {
+      			return ;
+			}
 	    	var moveUrl = "/move?source=" + source + "&target=" + position;
 	    	console.log(moveUrl);
 	    	$(location).attr('href',moveUrl);

@@ -2,19 +2,18 @@ package chess;
 
 import chess.dao.GameDao;
 import chess.dao.PieceDao;
-import chess.domain.BoardFactory;
-import chess.domain.Game;
-import chess.domain.Point;
+import chess.domain.*;
 import chess.domain.pieces.Piece;
 import chess.utils.DBUtil;
+import chess.vo.PieceVo;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
@@ -30,16 +29,56 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+        });
+
+        get("/home", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
             Game game = new Game(BoardFactory.init());
-            req.session().attribute("game", game);
+            gameDao.add();
+            int gameId = gameDao.findMaxId();
+            for (Point point : game.getBoard().keySet()) {
+                PieceVo pieceVo = new PieceVo(point, game.getBoard().get(point));
+                pieceDao.add(gameId, pieceVo);
+            }
+            req.session().attribute("gameId", gameId);
             Map<Point, Piece> board = game.getBoard();
             Map<String, String> convertedBoard = new HashMap<>();
-
             for (Point point : board.keySet()) {
                 convertedBoard.put(point.convertPosition(), board.get(point).getSymbol());
             }
             Gson gson = new Gson();
             model.put("board", gson.toJson(convertedBoard));
+            model.put("turn", game.getTurn() == Team.WHITE ? "백" : "흑");
+            model.put("whiteScore", game.calculateScore(Team.WHITE));
+            model.put("blackScore", game.calculateScore(Team.BLACK));
+            return render(model, "home.html");
+        });
+
+        get("/continue", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int gameId = gameDao.findMaxId();
+            List<PieceVo> pieceVos = pieceDao.findPieceById(gameId);
+            Map<Point, Piece> board = new HashMap<>();
+            pieceVos.forEach(vo -> board.put(vo.getPoint(), vo.getPiece()));
+            Team turn = gameDao.findTurnByGameId(gameId) ? Team.WHITE : Team.BLACK;
+            Game game = new Game(board, turn);
+
+            if (!game.isKingAlive()) {
+                game.changeTurn();
+                model.put("gameEnd", true);
+                model.put("winner", game.getTurn());
+            }
+
+            Map<String, String> convertedBoard = new HashMap<>();
+            for (Point point : board.keySet()) {
+                convertedBoard.put(point.convertPosition(), board.get(point).getSymbol());
+            }
+            Gson gson = new Gson();
+            model.put("board", gson.toJson(convertedBoard));
+            model.put("turn", game.getTurn() == Team.WHITE ? "백" : "흑");
+            model.put("whiteScore", game.calculateScore(Team.WHITE));
+            model.put("blackScore", game.calculateScore(Team.BLACK));
             return render(model, "home.html");
         });
 
@@ -50,18 +89,41 @@ public class WebUIChessApplication {
             Point start = new Point(source);
             Point end = new Point(target);
 
-            Game game = req.session().attribute("game");
-            game.move(start, end);
-            game.isKingAlive();
-            game.changeTurn();
-            Map<Point, Piece> board = game.getBoard();
-            Map<String, String> convertedBoard = new HashMap<>();
+            int gameId = req.session().attribute("gameId");
+            List<PieceVo> pieceVos = pieceDao.findPieceById(gameId);
+            Map<Point, Piece> board = new HashMap<>();
+            pieceVos.forEach(vo -> board.put(vo.getPoint(), vo.getPiece()));
+            Team turn = gameDao.findTurnByGameId(gameId) ? Team.WHITE : Team.BLACK;
+            Game game = new Game(board, turn);
 
-            for (Point point : board.keySet()) {
-                convertedBoard.put(point.convertPosition(), board.get(point).getSymbol());
+            game.move(start, end);
+
+            pieceDao.deletePieceByPosition(gameId, end);
+            pieceDao.updatePosition(gameId, start, end);
+            pieceDao.insertBlank(gameId, start);
+
+            Map<Point, Piece> movedBoard = game.getBoard();
+
+
+            if (!game.isKingAlive()) {
+                model.put("gameEnd", true);
+                model.put("winner", game.getTurn());
             }
+            game.changeTurn();
+            gameDao.toggleTurnById(gameId);
+
+            model.put("turn", game.getTurn() == Team.WHITE ? "백" : "흑");
+
             Gson gson = new Gson();
-            model.put("board", gson.toJson(convertedBoard));
+            Map<String, String> result = new HashMap<>();
+            for (Point point : movedBoard.keySet()) {
+                result.put(point.convertPosition(), movedBoard.get(point).getSymbol());
+            }
+            model.put("board", gson.toJson(result));
+
+            model.put("whiteScore", game.calculateScore(Team.WHITE));
+            model.put("blackScore", game.calculateScore(Team.BLACK));
+
             return render(model, "home.html");
         });
     }

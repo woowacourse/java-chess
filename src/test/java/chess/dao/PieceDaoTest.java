@@ -59,6 +59,6 @@ public class PieceDaoTest {
     void delete() throws SQLException {
         int gameId = 1;
         Point target = new Point(3, 3);
-        pieceDao.deletePosition(gameId, target);
+        pieceDao.insertBlank(gameId, target);
     }
 }

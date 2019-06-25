@@ -152,19 +152,22 @@
             </table>
         </div>
         <div class="col-md-2">
-            <h1><span class="label label-default">백이 둘 차례</span></h1>
+            <h1><span class="label label-default">{{turn}}이 둘 차례</span></h1>
             <br/>
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">&#9819; : 흑 점수</h3>
                 </div>
-                <div class="panel-body">111</div>
+                <div class="panel-body">{{blackScore}}</div>
             </div>
             <div class="panel panel-danger">
                 <div class="panel-heading">
                     <h3 class="panel-title">&#9813; : 백 점수</h3>
                 </div>
-                <div class="panel-body">111</div>
+                <div class="panel-body">{{whiteScore}}</div>
+            </div>
+            <div>
+                <a href="/" class="btn btn-primary btn-lg">홈으로</a>
             </div>
         </div>
     </div>
@@ -176,9 +179,14 @@
 
 <script>
     var content = '{{{board}}}';
+    var game = '{{gameEnd}}';
     pieces = JSON.parse(content);
     for(var key in pieces) {
         document.querySelector("#" + key + " > a").textContent = pieces[key];
+    }
+    if (game === 'true') {
+        alert('{{winner}}' + " IS WINNER!!");
+        document.location.href = "/";
     }
 </script>
 </body>

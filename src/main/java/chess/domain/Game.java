@@ -23,6 +23,11 @@ public class Game {
         this.turn = Team.WHITE;
     }
 
+    public Game(Map<Point, Piece> board, Team turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
     public void move(Point start, Point end) {
         checkBlank(start);
         checkTurn(start);
@@ -93,12 +98,14 @@ public class Game {
     }
 
     private double calculatePawnScore(Team team) {
-        return board.entrySet().stream().filter(e -> e.getValue().getTeam() == Team.WHITE)
+        return board.entrySet().stream()
+                .filter(e -> e.getValue().getTeam() == team)
                 .filter(e -> e.getValue().getType() == Type.BLACK_PAWN || e.getValue().getType() == Type.WHITE_PAWN)
                 .collect(Collectors.groupingBy(e -> e.getKey().getPositionX()))
                 .values()
                 .stream()
-                .mapToDouble(l -> l.size() == 1 ? 1 : 0.5 * l.size()).sum();
+                .mapToDouble(l -> l.size() == 1 ? 1 : 0.5 * l.size())
+                .sum();
     }
 
     public void changeTurn() {
