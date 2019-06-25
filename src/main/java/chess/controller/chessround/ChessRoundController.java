@@ -1,10 +1,9 @@
 package chess.controller.chessround;
 
+import chess.WebUIChessApplication;
 import chess.application.chessround.ChessRoundService;
 import chess.application.chessround.dto.ChessPlayerDTO;
-import spark.ModelAndView;
 import spark.Route;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,9 +29,7 @@ public class ChessRoundController {
         model.put("white-score", chessRoundService.getWhitePlayerScore());
         model.put("black-score", chessRoundService.getBlackPlayerScore());
         model.put("error-message", chessRoundService.getErrorMessage());
-        return new HandlebarsTemplateEngine().render(
-                new ModelAndView(model, "index.hbs")
-        );
+        return WebUIChessApplication.render(model, "chess-round.hbs");
     };
 
     public static final Route handleChessMove = (req, res) -> {

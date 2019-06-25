@@ -14,10 +14,10 @@ public class ChessPlayer {
     private static final String ERROR_INVALID_EXISTENCE_MESSAGE = "현재 위치에 말이 존재합니다.";
     private static final String ERROR_INVALID_EMPTY_MESSAGE = "현재 위치에 말이 존재하지 않습니다.";
     private static final String ERROR_CANNOT_DELETE_MESSAGE = "존재하지 않는 말을 삭제할 수 없습니다.";
-    private Map<ChessPoint, ChessPiece> chessPieces;
+    private Map<ChessPoint, ChessPiece> alivePieces;
 
-    private ChessPlayer(Map<ChessPoint, ChessPiece> chessPieces) {
-        this.chessPieces = chessPieces;
+    private ChessPlayer(Map<ChessPoint, ChessPiece> alivePieces) {
+        this.alivePieces = alivePieces;
     }
 
     public static ChessPlayer from(Map<ChessPoint, ChessPiece> chessPieces) {
@@ -25,7 +25,7 @@ public class ChessPlayer {
     }
 
     public boolean contains(ChessPoint source) {
-        return chessPieces.containsKey(source);
+        return alivePieces.containsKey(source);
     }
 
     public void move(ChessPoint source, ChessPoint target, ChessPlayer opponentPlayer) {
@@ -39,7 +39,7 @@ public class ChessPlayer {
     }
 
     private boolean isViolatedByRule(ChessPoint source, ChessPoint target, boolean opponentPieceOnTarget) {
-        ChessPiece sourceChessPiece = chessPieces.get(source);
+        ChessPiece sourceChessPiece = alivePieces.get(source);
         return !sourceChessPiece.checkRule(source, target, opponentPieceOnTarget);
     }
 
@@ -68,13 +68,13 @@ public class ChessPlayer {
     }
 
     private void moveChessPiece(ChessPoint source, ChessPoint target) {
-        ChessPiece chessPiece = chessPieces.get(source);
-        chessPieces.put(target, chessPiece);
-        chessPieces.remove(source);
+        ChessPiece chessPiece = alivePieces.get(source);
+        alivePieces.put(target, chessPiece);
+        alivePieces.remove(source);
     }
 
     public void delete(ChessPoint target) {
-        ChessPiece removedChessPiece = chessPieces.remove(target);
+        ChessPiece removedChessPiece = alivePieces.remove(target);
         if (removedChessPiece == null) {
             throw new InvalidChessPositionException(ERROR_CANNOT_DELETE_MESSAGE);
         }
@@ -88,7 +88,7 @@ public class ChessPlayer {
     }
 
     private Counter<Integer> initializeCounter(Counter<Integer> pawnCounter) {
-        for (Entry<ChessPoint, ChessPiece> entry : chessPieces.entrySet()) {
+        for (Entry<ChessPoint, ChessPiece> entry : alivePieces.entrySet()) {
             ChessPoint chessPoint = entry.getKey();
             ChessPiece chessPiece = entry.getValue();
 
@@ -100,7 +100,7 @@ public class ChessPlayer {
 
     private double calculateScoreBy(Counter<Integer> pawnCounter) {
         double sum = 0;
-        for (Entry<ChessPoint, ChessPiece> entry : chessPieces.entrySet()) {
+        for (Entry<ChessPoint, ChessPiece> entry : alivePieces.entrySet()) {
             ChessPoint chessPoint = entry.getKey();
             ChessPiece chessPiece = entry.getValue();
 
@@ -111,10 +111,10 @@ public class ChessPlayer {
     }
 
     public Set<ChessPoint> getAllChessPoints() {
-        return chessPieces.keySet();
+        return alivePieces.keySet();
     }
 
     public ChessPiece get(ChessPoint point) {
-        return chessPieces.get(point);
+        return alivePieces.get(point);
     }
 }

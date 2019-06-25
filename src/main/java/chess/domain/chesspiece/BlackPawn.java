@@ -50,4 +50,9 @@ public class BlackPawn implements ChessPiece {
     public String getName() {
         return NAME;
     }
+
+    @Override
+    public boolean hasName(String name) {
+        return NAME.equals(name);
+    }
 }

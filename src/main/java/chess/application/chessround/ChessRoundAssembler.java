@@ -1,10 +1,11 @@
 package chess.application.chessround;
 
+import chess.application.chessround.dto.ChessPieceDTO;
+import chess.application.chessround.dto.ChessPlayerDTO;
+import chess.application.chessround.dto.ChessPointDTO;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chessround.ChessPlayer;
-import chess.application.chessround.dto.ChessPieceDTO;
-import chess.application.chessround.dto.ChessPlayerDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,17 @@ class ChessRoundAssembler {
 
         for (ChessPoint point : whitePlayer.getAllChessPoints()) {
             ChessPiece chessPiece = whitePlayer.get(point);
-            System.out.println("##############################################" + point.getRow());
-            System.out.println("##############################################" + point.getColumn());
-            System.out.println("##############################################" + chessPiece.getName());
-            ChessPieceDTO chessPieceDTO = new ChessPieceDTO(point.getRow(), point.getColumn(), chessPiece.getName());
+            ChessPieceDTO chessPieceDTO = makeChessPieceDTO(point, chessPiece);
             chessPieceDTOs.add(chessPieceDTO);
         }
         return new ChessPlayerDTO(chessPieceDTOs);
+    }
+
+    ChessPieceDTO makeChessPieceDTO(ChessPoint point, ChessPiece piece) {
+        return new ChessPieceDTO(point.getRow(), point.getColumn(), piece.getName());
+    }
+
+    ChessPointDTO makeChessPointDTO(ChessPoint point) {
+        return new ChessPointDTO(point.getRow(), point.getColumn());
     }
 }

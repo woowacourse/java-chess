@@ -1,5 +1,7 @@
 package chess.application.chessround.dto;
 
+import java.util.Objects;
+
 public class ChessPieceDTO {
     private int row;
     private int column;
@@ -33,5 +35,20 @@ public class ChessPieceDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ChessPieceDTO that = (ChessPieceDTO) o;
+        return row == that.row &&
+                column == that.column &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, column, name);
     }
 }

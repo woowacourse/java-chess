@@ -8,13 +8,21 @@ public class ChessRound {
     private ChessPlayer currentPlayer;
 
     private ChessRound(ChessPlayer whitePlayer, ChessPlayer blackPlayer) {
+        this(whitePlayer, blackPlayer, true);
+    }
+
+    private ChessRound(ChessPlayer whitePlayer, ChessPlayer blackPlayer, boolean isWhiteTurn) {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
-        this.currentPlayer = whitePlayer;
+        this.currentPlayer = isWhiteTurn ? whitePlayer : blackPlayer;
     }
 
     public static ChessRound of(ChessPlayer whitePlayer, ChessPlayer blackPlayer) {
         return new ChessRound(whitePlayer, blackPlayer);
+    }
+
+    public static ChessRound of(ChessPlayer whitePlayer, ChessPlayer blackPlayer, boolean isWhiteTurn) {
+        return new ChessRound(whitePlayer, blackPlayer, isWhiteTurn);
     }
 
     public void move(ChessPoint source, ChessPoint target) {

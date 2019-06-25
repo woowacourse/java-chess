@@ -11,4 +11,6 @@ public interface ChessPiece {
     double getScore(Counter<Integer> pawnCounter, int column);
 
     String getName();
+
+    boolean hasName(String name);
 }
