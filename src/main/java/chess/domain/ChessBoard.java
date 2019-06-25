@@ -47,6 +47,10 @@ public class ChessBoard {
         return points;
     }
 
+    public Map<Point, Piece> getPoints() {
+        return points;
+    }
+
     public boolean hasPiece(Point point, Piece piece) {
         Piece pointPiece = points.get(point);
         return pointPiece.equals(piece);
@@ -92,10 +96,10 @@ public class ChessBoard {
         List<Integer> numberOfPawnInColumn = Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0);
 
         points.entrySet().stream()
-                .filter(pointPieceEntry -> pointPieceEntry.getValue().equalsColor(color))
-                .filter(pointPieceEntry -> pointPieceEntry.getValue().equalsType(Type.PAWN))
-                .forEach(entry -> {
-                    int columnIndex = entry.getKey().getX() - 1;
+                .filter(point -> point.getValue().equalsColor(color))
+                .filter(point -> point.getValue().equalsType(Type.PAWN))
+                .forEach(point -> {
+                    int columnIndex = point.getKey().getX() - 1;
                     numberOfPawnInColumn.set(columnIndex, numberOfPawnInColumn.get(columnIndex) + 1);
                 });
 

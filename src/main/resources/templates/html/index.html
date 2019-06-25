@@ -8,11 +8,11 @@
 <body>
     <div id="index_div">
         <h1> 체 스 게 임 ! </h1>
-        <form action="/playgame">
-            <input type="button" value="새 게임" id="btn_new_game">
+        <form action="/playgame" method="get">
+            <input type="submit" value="새 게임" id="btn_new_game">
         </form>
-        <form action="/continue">
-            <input type="button" value="이어하기" id="btn_continue">
+        <form action="/playgame" method="post">
+            <input type="submit" value="이어하기" id="btn_continue">
         </form>
     </div>
 </body>

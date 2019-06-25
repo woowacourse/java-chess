@@ -28,6 +28,14 @@ public abstract class Piece {
         return type.getScore();
     }
 
+    public Color getColor() {
+        return this.color;
+    }
+
+    public Type getType() {
+        return this.type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

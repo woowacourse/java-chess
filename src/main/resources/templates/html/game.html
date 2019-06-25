@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/game.css">
+    <title>Chess Game!</title>
+</head>
+<body>
+<div id="all">
+<div id="board">
+    <table class="chess_table">
+        <tr>
+            <th></th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>E</th>
+            <th>F</th>
+            <th>G</th>
+            <th>H</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>8</th>
+            <td id="A8" class="BP">&#9820;</td>
+            <td id="B8" class="BP">&#9822;</td>
+            <td id="C8" class="BP">&#9821;</td>
+            <td id="D8" class="BP">&#9819;</td>
+            <td id="E8" class="BP">&#9818;</td>
+            <td id="F8" class="BP">&#9821;</td>
+            <td id="G8" class="BP">&#9822;</td>
+            <td id="H8" class="BP">&#9820;</td>
+            <th>8</th>
+        </tr>
+        <tr>
+            <th>7</th>
+            <td id="A7" class="BP">&#9823;</td>
+            <td id="B7" class="BP">&#9823;</td>
+            <td id="C7" class="BP">&#9823;</td>
+            <td id="D7" class="BP">&#9823;</td>
+            <td id="E7" class="BP">&#9823;</td>
+            <td id="F7" class="BP">&#9823;</td>
+            <td id="G7" class="BP">&#9823;</td>
+            <td id="H7" class="BP">&#9823;</td>
+            <th>7</th>
+        </tr>
+        <tr>
+            <th>6</th>
+            <td id="A6"></td>
+            <td id="B6"></td>
+            <td id="C6"></td>
+            <td id="D6"></td>
+            <td id="E6"></td>
+            <td id="F6"></td>
+            <td id="G6"></td>
+            <td id="H6"></td>
+            <th>6</th>
+        </tr>
+        <tr>
+            <th>5</th>
+            <td id="A5"></td>
+            <td id="B5"></td>
+            <td id="C5"></td>
+            <td id="D5"></td>
+            <td id="E5"></td>
+            <td id="F5"></td>
+            <td id="G5"></td>
+            <td id="H5"></td>
+            <th>5</th>
+        </tr>
+        <tr>
+            <th>4</th>
+            <td id="A4"></td>
+            <td id="B4"></td>
+            <td id="C4"></td>
+            <td id="D4"></td>
+            <td id="E4"></td>
+            <td id="F4"></td>
+            <td id="G4"></td>
+            <td id="H4"></td>
+            <th>4</th>
+        </tr>
+        <tr>
+            <th>3</th>
+            <td id="A3"></td>
+            <td id="B3"></td>
+            <td id="C3"></td>
+            <td id="D3"></td>
+            <td id="E3"></td>
+            <td id="F3"></td>
+            <td id="G3"></td>
+            <td id="H3"></td>
+            <th>3</th>
+        </tr>
+        <tr>
+            <th>2</th>
+            <td id="A2" class="WP">&#9817;</td>
+            <td id="B2" class="WP">&#9817;</td>
+            <td id="C2" class="WP">&#9817;</td>
+            <td id="D2" class="WP">&#9817;</td>
+            <td id="E2" class="WP">&#9817;</td>
+            <td id="F2" class="WP">&#9817;</td>
+            <td id="G2" class="WP">&#9817;</td>
+            <td id="H2" class="WP">&#9817;</td>
+            <th>2</th>
+        </tr>
+        <tr>
+            <th>1</th>
+            <td id="A1" class="WP">&#9814;</td>
+            <td id="B1" class="WP">&#9816;</td>
+            <td id="C1" class="WP">&#9815;</td>
+            <td id="D1" class="WP">&#9813;</td>
+            <td id="E1" class="WP">&#9812;</td>
+            <td id="F1" class="WP">&#9815;</td>
+            <td id="G1" class="WP">&#9816;</td>
+            <td id="H1" class="WP">&#9814;</td>
+            <th>1</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>E</th>
+            <th>F</th>
+            <th>G</th>
+            <th>H</th>
+            <th class="turn_square"></th>
+        </tr>
+    </table>
+</div>
+<div id="input">
+    <form action="/playgame" method="post">
+        Source : <input type="text" id="source"><br>
+        Target : <input type="text" id="target"><br>
+        <input type="submit" value="이동" id="submit">
+    </form>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+    const url = "/img/";
+    const pieceNames = {
+        p: 'pawn_white',
+        P: 'pawn',
+        r: 'rook_white',
+        R: 'rook',
+        b: 'bishop_white',
+        B: 'bishop',
+        q: 'queen_white',
+        Q: 'queen',
+        k: 'king_white',
+        K: 'king',
+        n: 'knight_white',
+        N: 'knight'
+    };
+
+    fetch("/status", {method: "POST"})
+        .then(data => data.json())
+        .then(json => {
+            Object.keys(json).forEach(key => {
+                document.getElementById(key).innerHTML = `<img src="${url + pieceNames[json[key]]}.png"  alt="error"/>`
+            })
+        })
+        .catch(err => console.log(err));
+</script>
+</html>
