@@ -1,11 +1,13 @@
 package chess;
 
-import chess.domain.direction.core.Square;
-import chess.dto.ChessMoveDTO;
-import chess.service.ParserService;
+import chess.persistence.dto.ChessGameDTO;
+import chess.persistence.dto.ChessMoveDTO;
+import chess.persistence.dto.ErrorDTO;
+import chess.service.BoardGeneratorService;
+import chess.service.GameGeneratorService;
+import chess.service.PieceMoveService;
 import chess.util.JsonTransformer;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -16,6 +18,7 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
+        port(8080);
         staticFileLocation("/templates");
 
         get("/", (req, res) -> {
@@ -23,34 +26,25 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        post("/move", "application/json", (req, res) -> {
-            Gson gson = new Gson();
-            try{
-                JsonObject jsonObject = gson.fromJson(req.body(), JsonObject.class);
-                Square source = ParserService.getInstance().squareParsing(jsonObject.get("move").getAsJsonObject().get("source").getAsString());
-                Square target = ParserService.getInstance().squareParsing(jsonObject.get("move").getAsJsonObject().get("target").getAsString());
-
-                String board = jsonObject.get("board").getAsJsonObject().getAsString();
-
-                System.out.println("boarda : " + board);
-                return null;
-            }catch (IllegalArgumentException e) {
-//                return new ErrorDto(e.getMessage());
-                return null;
+        get("/chessGame", (req, res) -> {
+            try {
+                ChessGameDTO chessGameDTO = GameGeneratorService.getInstance().request();
+                return BoardGeneratorService.getInstance().request(chessGameDTO);
+            } catch (IllegalArgumentException e) {
+                return new ErrorDTO(e.getMessage());
             }
         }, new JsonTransformer());
 
-//        get("/chessGame", (req, res) -> {
-//           Gson gson = new Gson();
-//           try {
-//               req.body();
-//               moveServic.requst()
-//           } catch (Exception e) {
-//               throw new IllegalArgumentException(e.getMessage());
-//           }
-//        });
-//
-//        post("/move")˚
+        post("/chessGame", "application/json", (req, res) -> {
+            Gson gson = new Gson();
+            try{
+                ChessMoveDTO chessMoveDTO = gson.fromJson(req.body(), ChessMoveDTO.class);
+                return PieceMoveService.getInstance().request(chessMoveDTO);
+            }catch (IllegalArgumentException e) {
+                return new ErrorDTO(e.getMessage());
+            }
+        }, new JsonTransformer());
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
