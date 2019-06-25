@@ -10,6 +10,6 @@ public class Bishop extends Piece {
 
     @Override
     public String getSymbol() {
-        return team == Team.WHITE ? "&#9815;" : "&#9821;";
+        return team == Team.WHITE ? "♗" : "♝";
     }
 }

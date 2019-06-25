@@ -15,7 +15,7 @@ public class Knight extends Piece {
 
     @Override
     public String getSymbol() {
-        return team == Team.WHITE ? "&#9816;" : "&#9822;";
+        return team == Team.WHITE ? "♘" : "♞";
     }
 
     //TODO: King Knight 중복 제거

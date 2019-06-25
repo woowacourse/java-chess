@@ -26,7 +26,7 @@ public class King extends Piece {
 
     @Override
     public String getSymbol() {
-        return team == Team.WHITE ? "&#9812;" : "&#9818;";
+        return team == Team.WHITE ? "♔" : "♚";
     }
 
     @Override

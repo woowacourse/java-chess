@@ -10,6 +10,6 @@ public class Queen extends Piece {
 
     @Override
     public String getSymbol() {
-        return team == Team.WHITE ? "&#9813;" : "&#9819;";
+        return team == Team.WHITE ? "♕" : "♛";
     }
 }

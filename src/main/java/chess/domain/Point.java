@@ -111,6 +111,10 @@ public class Point { //TODO : 수학 추출
         return positionY;
     }
 
+    public String convertPosition() {
+        return "" + (char)(positionX + 'a') + (char)(positionY + '1');
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

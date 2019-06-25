@@ -10,6 +10,6 @@ public class Rook extends Piece {
 
     @Override
     public String getSymbol() {
-        return team == Team.WHITE ? "&#9814;" : "&#9820;";
+        return team == Team.WHITE ? "♖" : "♜";
     }
 }
