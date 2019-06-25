@@ -66,6 +66,10 @@ public class Tile implements Comparable<Tile> {
         return column.getDiff(tile.column);
     }
 
+    public Column getColumn() {
+        return column;
+    }
+
     public boolean isEqualRow(Row row) {
         return this.row == row;
     }
@@ -98,9 +102,6 @@ public class Tile implements Comparable<Tile> {
 
     @Override
     public String toString() {
-        return "Tile{" +
-                "column=" + column +
-                ", row=" + row +
-                '}';
+        return column.toString() + row.toString();
     }
 }

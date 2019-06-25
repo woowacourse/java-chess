@@ -46,9 +46,7 @@ public class Column implements Comparable<Column> {
 
     @Override
     public String toString() {
-        return "Column{" +
-                "column=" + column +
-                '}';
+        return String.valueOf(column);
     }
 
     @Override

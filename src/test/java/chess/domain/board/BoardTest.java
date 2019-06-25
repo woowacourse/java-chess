@@ -7,31 +7,28 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BoardTest {
-    Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {
-        {
-            put(Tile.of("a1"), PieceType.QUEEN.generate(PieceColor.BLACK));
-        }
-    };
+    Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
+        put(Tile.of("a1"), PieceType.QUEEN.generate(PieceColor.BLACK));
+    }};
     Board customBoard = new Board(boardState);
     Board gameBoard;
 
     @Test
     void 보드_초기화_테스트1() {
         assertThat(customBoard.at("a1"))
-                .isEqualTo(Optional.of(PieceType.QUEEN.generate(PieceColor.BLACK)));
+                .isEqualTo(PieceType.QUEEN.generate(PieceColor.BLACK));
     }
 
     @Test
     void 보드_초기화_테스트2() {
-        assertThat(customBoard.at("a2"))
-                .isEqualTo(Optional.empty());
+        assertThrows(RuntimeException.class, () ->
+                customBoard.at("a2"));
     }
 
     @Test
@@ -73,8 +70,8 @@ class BoardTest {
 
         assertDoesNotThrow(() -> gameBoard.order(current, target));
 
-        assertThat(gameBoard.at(current)).isEqualTo(Optional.empty());
-        assertThat(gameBoard.at(target)).isEqualTo(Optional.of(queen));
+        assertThrows(RuntimeException.class, () -> gameBoard.at(current));
+        assertThat(gameBoard.at(target)).isEqualTo(queen);
     }
 
     @Test
@@ -88,8 +85,8 @@ class BoardTest {
 
         assertThrows(RuntimeException.class, () -> gameBoard.order(current, target));
 
-        assertThat(gameBoard.at(current)).isEqualTo(Optional.of(bishop));
-        assertThat(gameBoard.at(target)).isEqualTo(Optional.empty());
+        assertThat(gameBoard.at(current)).isEqualTo(bishop);
+        assertThrows(RuntimeException.class, () -> gameBoard.at(target));
     }
 
     @Test
@@ -120,18 +117,5 @@ class BoardTest {
         }};
         Board board1 = new Board(boardState);
         assertThat(board1.status(PieceColor.BLACK)).isEqualTo(1);
-    }
-
-    @Test
-    void 게임_종료() {
-        Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
-            put(Tile.of("a5"), PieceType.QUEEN.generate(PieceColor.BLACK));
-            put(Tile.of("a2"), PieceType.KING.generate(PieceColor.WHITE));
-        }};
-
-        Board board = new Board(boardState);
-        assertThrows(GameOverException.class, () -> {
-            board.order("a5", "a2");
-        });
     }
 }

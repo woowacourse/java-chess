@@ -55,9 +55,7 @@ public class Row implements Comparable<Row> {
 
     @Override
     public String toString() {
-        return "Row{" +
-                "row=" + row +
-                '}';
+        return String.valueOf(row);
     }
 
     @Override
