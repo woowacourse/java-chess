@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class ChessJDBCDriverConnector {
     private static String server = "localhost";
     private static String database = "chess";
-    private static String userName = "root";
-    private static String password = "1234";
+    private static String userName = "aaaa";
+    private static String password = "aaaa";
 
     private ChessJDBCDriverConnector() {
     }
