@@ -23,12 +23,14 @@ public class BoardDaoTest {
         BoardDto boardDto = new BoardDto();
         boardDto.setPosition("a1");
         boardDto.setPieceName("r");
+        boardDto.setTeam("BLACK");
 
         boardDao.add(boardDto);
 
         List<BoardDto> findResult = boardDao.findAll();
         assertThat(findResult.get(0).getPosition()).isEqualTo("a1");
         assertThat(findResult.get(0).getPieceName()).isEqualTo("r");
+        assertThat(findResult.get(0).getPieceName()).isEqualTo("BLACK");
 
         boardDao.deleteAll();
     }

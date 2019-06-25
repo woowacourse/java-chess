@@ -29,4 +29,10 @@ public class TurnDaoTest {
 
         turnDao.delete();
     }
+
+    @Test
+    void turn_데이터가_없는_경우() throws SQLException {
+        TurnDto turnDto = turnDao.find();
+        assertThat(turnDto.getTeam()).isEqualTo(null);
+    }
 }
