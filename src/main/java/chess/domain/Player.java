@@ -2,7 +2,8 @@ package chess.domain;
 
 public enum Player {
 	WHITE,
-	BLACK;
+	BLACK,
+	EMPTY;
 
 	public Player changePlayer() {
 		if(this == WHITE) {
