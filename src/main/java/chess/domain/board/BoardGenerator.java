@@ -12,7 +12,6 @@ public class BoardGenerator {
     private static final int MIN_BOUND = 0;
     private static final int MAX_BOUND = 7;
     private static final String NEW_LINE = "\n";
-    private static final String DELIMITER = ",";
     private static final String SPACE = " ";
     private static final String BLANK = "";
 
@@ -46,7 +45,7 @@ public class BoardGenerator {
         List<List<String>> rows = new ArrayList<>();
 
         for (String row : input.split(NEW_LINE)) {
-            rows.add(Arrays.asList(row.split(DELIMITER)));
+            rows.add(Arrays.asList(row.split(BLANK)));
         }
         return rows;
     }

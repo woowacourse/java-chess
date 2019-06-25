@@ -2,42 +2,42 @@ package chess.domain.board;
 
 public class BoardInputForTest {
     public static final String DEFAULT_BOARD =
-                    "R, N, B, Q, K, B, N, R\n" +
-                    "P, P, P, P, P, P, P, P\n" +
-                    "., ., ., ., ., ., ., .\n" +
-                    "., ., ., ., ., ., ., .\n" +
-                    "., ., ., ., ., ., ., .\n" +
-                    "., ., ., ., ., ., ., .\n" +
-                    "p, p, p, p, p, p, p, p\n" +
-                    "r, n, b, q, k, b, n, r";
+                    "RNBQKBNR\n" +
+                    "PPPPPPPP\n" +
+                    "........\n" +
+                    "........\n" +
+                    "........\n" +
+                    "........\n" +
+                    "pppppppp\n" +
+                    "rnbqkbnr";
 
     public static final String EXAMPLE_BOARD =
-                    "., N, ., Q, K, B, ., R\n" +
-                    "., B, P, P, P, P, P, .\n" +
-                    "., P, ., ., ., N, ., .\n" +
-                    "R, ., ., ., ., ., ., P\n" +
-                    "p, ., ., p, p, ., ., .\n" +
-                    "., ., n, ., ., ., p, b\n" +
-                    "., p, p, ., n, p, ., p\n" +
-                    "r, ., b, q, k, ., ., r";
+                    ".N.QKB.R\n" +
+                    ".BPPPPP.\n" +
+                    ".P...N..\n" +
+                    "R......P\n" +
+                    "p..pp...\n" +
+                    "..n...pb\n" +
+                    ".pp.np.p\n" +
+                    "r.bqk..r";
 
     public static final String DUPLICATED_PAWN_BOARD =
-                    "., N, ., Q, K, B, ., R\n" +
-                    "., B, P, P, P, P, P, .\n" +
-                    "., P, ., ., ., N, ., .\n" +
-                    "R, ., ., ., p, ., ., P\n" +
-                    "p, ., ., ., p, ., ., .\n" +
-                    "., ., n, ., p, ., p, b\n" +
-                    "., p, p, ., n, ., ., p\n" +
-                    "r, ., b, q, k, ., ., r";
+                    ".N.QKB.R\n" +
+                    ".BPPPPP.\n" +
+                    ".P...N..\n" +
+                    "R...p..P\n" +
+                    "p...p...\n" +
+                    "..n.p.pb\n" +
+                    ".pp.n..p\n" +
+                    "r.bqk..r";
 
     public static final String CHECKMATE_BOARD =
-                    "., N, ., Q, ., B, ., R\n" +
-                    "., B, P, P, ., P, P, .\n" +
-                    "., P, ., ., ., N, ., .\n" +
-                    "R, ., K, ., ., ., ., P\n" +
-                    "p, ., ., p, p, ., ., .\n" +
-                    "., ., n, ., ., ., p, b\n" +
-                    "., p, p, ., n, p, ., p\n" +
-                    "r, ., b, q, k, ., ., r";
+            ".N.Q.B.R\n" +
+                    ".BPP.PP.\n" +
+                    ".P...N..\n" +
+                    "R.K....P\n" +
+                    "p..pp...\n" +
+                    "..n...pb\n" +
+                    ".pp.np.p\n" +
+                    "r.bqk..r";
 }
