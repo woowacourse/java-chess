@@ -1,4 +1,9 @@
-package chess.domain;
+package chess.domain.factory;
+
+import chess.domain.PieceType;
+import chess.domain.Team;
+import chess.domain.factory.AbstractChessPieceFactory;
+import chess.domain.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;

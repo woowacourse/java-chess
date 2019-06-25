@@ -1,11 +1,14 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.*;
+import chess.domain.coordinate.ChessCoordinate;
 
 import java.util.*;
 
 public class Bishop extends ChessPiece {
     private static Map<Team, Bishop> bishops = new HashMap<>();
 
-    static Bishop getInstance(Team team) {
+    public static Bishop getInstance(Team team) {
         if (!bishops.containsKey(team)) {
             bishops.put(team, new Bishop(team));
         }

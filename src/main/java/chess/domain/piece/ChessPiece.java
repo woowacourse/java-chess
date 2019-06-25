@@ -1,4 +1,9 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.*;
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.coordinate.ChessXCoordinate;
+import chess.domain.coordinate.ChessYCoordinate;
 
 import java.util.*;
 import java.util.function.Consumer;

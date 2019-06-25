@@ -1,5 +1,10 @@
 package chess.domain;
 
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.factory.AbstractStateInitiatorFactory;
+import chess.domain.piece.ChessPiece;
+import chess.domain.piece.EmptyCell;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -26,7 +31,7 @@ public class Board {
         boardState.put(from, EmptyCell.getInstance());
     }
 
-    Team getTeamAt(ChessCoordinate coord) {
+    public Team getTeamAt(ChessCoordinate coord) {
         return this.boardState.get(coord).getType().getTeam();
     }
 

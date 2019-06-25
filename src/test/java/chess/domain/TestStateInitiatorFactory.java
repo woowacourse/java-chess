@@ -1,5 +1,11 @@
 package chess.domain;
 
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.coordinate.ChessXCoordinate;
+import chess.domain.coordinate.ChessYCoordinate;
+import chess.domain.factory.AbstractStateInitiatorFactory;
+import chess.domain.piece.ChessPiece;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

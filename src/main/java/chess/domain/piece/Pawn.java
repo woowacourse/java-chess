@@ -1,4 +1,8 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.*;
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.coordinate.ChessYCoordinate;
 
 import java.util.*;
 
@@ -27,7 +31,7 @@ public class Pawn extends ChessPiece {
 
     private static Map<Team, Pawn> pawns = new HashMap<>();
 
-    static Pawn getInstance(Team team) {
+    public static Pawn getInstance(Team team) {
         if (!pawns.containsKey(team)) {
             pawns.put(team, new Pawn(team));
         }

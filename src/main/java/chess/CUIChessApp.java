@@ -1,11 +1,13 @@
 package chess;
 
 import chess.domain.*;
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.factory.AbstractChessPieceFactory;
+import chess.domain.factory.ChessPieceFactory;
+import chess.domain.factory.StateInitiatorFactory;
+import chess.domain.piece.ChessPiece;
 import chess.view.InputView;
 import chess.view.OutputVIew;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 import static chess.domain.Team.*;
 

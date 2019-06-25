@@ -2,10 +2,12 @@ package chess.view;
 
 
 import chess.domain.*;
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.coordinate.ChessXCoordinate;
+import chess.domain.coordinate.ChessYCoordinate;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class OutputVIew {
 

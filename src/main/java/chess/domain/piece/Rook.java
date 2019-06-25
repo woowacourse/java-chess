@@ -1,11 +1,14 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.*;
+import chess.domain.coordinate.ChessCoordinate;
 
 import java.util.*;
 
 public class Rook extends ChessPiece {
     private static Map<Team, Rook> rooks = new HashMap<>();
 
-    static Rook getInstance(Team team) {
+    public static Rook getInstance(Team team) {
         if (!rooks.containsKey(team)) {
             rooks.put(team, new Rook(team));
         }

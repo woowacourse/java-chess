@@ -1,5 +1,11 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.ChessGame;
+import chess.domain.Team;
+import chess.domain.TestStateInitiatorFactory;
+import chess.domain.Turn;
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.piece.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

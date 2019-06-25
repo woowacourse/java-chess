@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.coordinate;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -24,7 +24,7 @@ public enum ChessXCoordinate {
         this.index = index;
     }
 
-    protected Optional<ChessXCoordinate> move(int n) {
+    public Optional<ChessXCoordinate> move(int n) {
         try {
             return Optional.of(valueOf(index + n));
         } catch (IllegalArgumentException e) {

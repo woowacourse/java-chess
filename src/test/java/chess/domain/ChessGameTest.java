@@ -1,5 +1,9 @@
 package chess.domain;
 
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.piece.ChessPiece;
+import chess.domain.piece.EmptyCell;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

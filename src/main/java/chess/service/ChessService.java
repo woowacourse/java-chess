@@ -1,6 +1,10 @@
 package chess.service;
 
 import chess.domain.*;
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.factory.AbstractChessPieceFactory;
+import chess.domain.factory.ChessPieceFactory;
+import chess.domain.piece.ChessPiece;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
 import chess.persistence.dao.RoomDao;

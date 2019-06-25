@@ -1,6 +1,8 @@
 package chess;
 
 import chess.domain.*;
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.factory.StateInitiatorFactory;
 import chess.persistence.dto.RoomDto;
 import chess.persistence.dto.TurnDto;
 import chess.service.ChessService;
@@ -12,7 +14,6 @@ import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 

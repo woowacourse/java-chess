@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.coordinate;
 
+import chess.domain.coordinate.ChessXCoordinate;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

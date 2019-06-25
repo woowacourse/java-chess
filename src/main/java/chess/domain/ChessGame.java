@@ -1,5 +1,9 @@
 package chess.domain;
 
+import chess.domain.coordinate.ChessCoordinate;
+import chess.domain.factory.AbstractStateInitiatorFactory;
+import chess.domain.piece.ChessPiece;
+
 import java.util.*;
 import java.util.stream.Collectors;
 

@@ -1,10 +1,13 @@
 package chess.domain;
 
+import chess.domain.piece.ChessPiece;
+import chess.domain.piece.EmptyCell;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static chess.domain.PieceType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessScoreCountTest {

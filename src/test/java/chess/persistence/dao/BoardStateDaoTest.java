@@ -1,7 +1,7 @@
 package chess.persistence.dao;
 
-import chess.domain.ChessXCoordinate;
-import chess.domain.ChessYCoordinate;
+import chess.domain.coordinate.ChessXCoordinate;
+import chess.domain.coordinate.ChessYCoordinate;
 import chess.domain.PieceType;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dto.BoardStateDto;

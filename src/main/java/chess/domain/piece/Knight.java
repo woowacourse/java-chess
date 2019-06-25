@@ -1,13 +1,15 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.*;
+import chess.domain.coordinate.ChessCoordinate;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Knight extends ChessPiece {
     private static Map<Team, Knight> knights = new HashMap<>();
 
-    static Knight getInstance(Team team) {
+    public static Knight getInstance(Team team) {
         if (!knights.containsKey(team)) {
             knights.put(team, new Knight(team));
         }

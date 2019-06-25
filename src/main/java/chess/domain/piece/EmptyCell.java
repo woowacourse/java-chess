@@ -1,4 +1,8 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.PieceTeamProvider;
+import chess.domain.PieceType;
+import chess.domain.coordinate.ChessCoordinate;
 
 import java.util.Set;
 
@@ -10,7 +14,7 @@ public class EmptyCell extends ChessPiece {
         super(PieceType.NONE);
     }
 
-    static EmptyCell getInstance() {
+    public static EmptyCell getInstance() {
         if (instance == null) {
             instance = new EmptyCell();
         }

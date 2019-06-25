@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.coordinate.ChessXCoordinate;
+
 import java.util.*;
 import java.util.stream.Collectors;
 

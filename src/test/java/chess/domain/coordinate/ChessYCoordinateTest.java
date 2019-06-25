@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.coordinate;
 
+import chess.domain.coordinate.ChessYCoordinate;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
