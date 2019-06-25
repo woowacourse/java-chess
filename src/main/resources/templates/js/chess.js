@@ -5,7 +5,7 @@ $(function(){
     $('#boards tr td').click(function() {
       	var position = $(this).attr('id');
       	var value = index % 2;
-      	
+
       	if ( value === 0 ) {
       		source = position;
       	} else {
@@ -13,8 +13,9 @@ $(function(){
 	    	console.log(moveUrl);
 	    	$(location).attr('href',moveUrl);
       	}
-      	
+
       	index++;
       	return false;
     });
 });
+
