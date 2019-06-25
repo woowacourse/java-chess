@@ -84,7 +84,6 @@ public class ChessController {
 
         model.put("whiteScore", scoreCalculator.getScore(Piece.Color.WHITE));
         model.put("blackScore", scoreCalculator.getScore(Piece.Color.BLACK));
-
         model.put("roomId", req.queryParams("roomId"));
         return render(model, "score.html");
     }
