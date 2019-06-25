@@ -24,4 +24,8 @@ public enum UnitType {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_ELEMENT_ERROR_MSG));
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }

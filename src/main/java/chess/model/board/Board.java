@@ -1,12 +1,17 @@
-package chess.model;
+package chess.model.board;
 
+import chess.model.Square;
 import chess.model.unit.Piece;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    private final Map<Square, Piece> board = new HashMap<>();
+    private Map<Square, Piece> board = new HashMap<>();
+
+    public void initialize(BoardInitializer initializer) {
+        board = initializer.initialize();
+    }
 
     private void setPiece(Square square, Piece piece) {
         board.put(square, piece);

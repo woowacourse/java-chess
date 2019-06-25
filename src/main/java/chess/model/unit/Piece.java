@@ -37,4 +37,12 @@ public abstract class Piece {
     public boolean isSameSide(Piece piece) {
         return this.side == piece.side;
     }
+
+    public String toSymbolString() {
+        return side == Side.WHITE ? type.getSymbol().toLowerCase() : type.getSymbol();
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
 }
