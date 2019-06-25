@@ -44,4 +44,10 @@ class BoardTest {
         Board board = BoardGenerator.createBoard(BoardInputForTest.DUPLICATED_PAWN_BOARD);
         assertThat(board.calculateFinalScore(TeamType.WHITE)).isEqualTo(36.5);
     }
+
+    @Test
+    public void 체스_보드의_상태를_String으로_잘_변환하는지_테스트() {
+        Board board = BoardGenerator.createBoard(BoardInputForTest.DUPLICATED_PAWN_BOARD);
+        assertThat(board.parseBoard()).isEqualTo(BoardInputForTest.DUPLICATED_PAWN_BOARD);
+    }
 }

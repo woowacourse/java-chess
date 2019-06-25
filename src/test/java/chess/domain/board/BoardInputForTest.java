@@ -9,7 +9,7 @@ public class BoardInputForTest {
                     "........\n" +
                     "........\n" +
                     "pppppppp\n" +
-                    "rnbqkbnr";
+                    "rnbqkbnr\n";
 
     public static final String EXAMPLE_BOARD =
                     ".N.QKB.R\n" +
@@ -19,7 +19,7 @@ public class BoardInputForTest {
                     "p..pp...\n" +
                     "..n...pb\n" +
                     ".pp.np.p\n" +
-                    "r.bqk..r";
+                    "r.bqk..r\n";
 
     public static final String DUPLICATED_PAWN_BOARD =
                     ".N.QKB.R\n" +
@@ -29,7 +29,7 @@ public class BoardInputForTest {
                     "p...p...\n" +
                     "..n.p.pb\n" +
                     ".pp.n..p\n" +
-                    "r.bqk..r";
+                    "r.bqk..r\n";
 
     public static final String CHECKMATE_BOARD =
             ".N.Q.B.R\n" +
@@ -39,5 +39,5 @@ public class BoardInputForTest {
                     "p..pp...\n" +
                     "..n...pb\n" +
                     ".pp.np.p\n" +
-                    "r.bqk..r";
+                    "r.bqk..r\n";
 }
