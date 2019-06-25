@@ -94,7 +94,6 @@ public class Piece {
         return rule.getScore();
     }
 
-    //TODO 리팩토링
     public String getSymbol() {
         return PieceSymbol.getSymbol(this);
     }

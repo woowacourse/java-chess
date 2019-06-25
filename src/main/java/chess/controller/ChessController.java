@@ -43,8 +43,9 @@ public class ChessController {
         Game game = req.session().attribute("game");
         List<Piece> pieces = chessService.getPieces(game);
         long roomId = Long.parseLong(req.queryParams("roomId"));
+
         model.put("board", pieces);
-        model.put("currentColor", game.currentColor());
+        model.put("currentColor", game.currentColor().getName());
         model.put("message", req.queryParams("message"));
         model.put("roomId", roomId);
         return render(model, "board.html");
@@ -68,7 +69,7 @@ public class ChessController {
         Map<String, Object> model = new HashMap<>();
         long roomId = Long.parseLong(req.queryParams("roomId"));
         Game game = req.session().attribute("game");
-        String winner = game.currentColor();
+        String winner = game.currentColor().getName();
 
         roomService.updateStatus(roomId, winner);
 
