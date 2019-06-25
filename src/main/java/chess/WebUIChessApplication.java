@@ -61,11 +61,32 @@ public class WebUIChessApplication {
             Optional<ChessGame> maybeChessGame = getChessGame(chessService, req);
 
             if (maybeChessGame.isPresent()) {
-                return maybeChessGame.get().getBoard();
+                return maybeChessGame.get().getBoard().getBoardState();
             }
 
             return render(Collections.EMPTY_MAP, "error.html");
         }, gson::toJson);
+
+        get("/getScore", (req, res) -> {
+            Optional<ChessGame> maybeChessGame = getChessGame(chessService, req);
+
+            if (maybeChessGame.isPresent()) {
+                return new ChessScoreCount(maybeChessGame.get().getBoard()).getScores();
+            }
+
+            return render(Collections.EMPTY_MAP, "error.html");
+        }, gson::toJson);
+
+        get("/getChessResult", (req, res) -> {
+            Optional<ChessGame> maybeChessGame = getChessGame(chessService, req);
+
+            if (maybeChessGame.isPresent()) {
+                return ChessResult.judge(maybeChessGame.get().getBoard());
+            }
+
+            return render(Collections.EMPTY_MAP, "error.html");
+        }, gson::toJson);
+
 
         post("/create-room", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -104,7 +125,7 @@ public class WebUIChessApplication {
 
                 ChessResult result = ChessResult.judge(chessGame.getBoard());
                 if (result == ChessResult.KEEP) {
-                    return getChessGame(chessService, req).get().getBoard();
+                    return getChessGame(chessService, req).get().getBoard().getBoardState();
                 }
             }
             return render(Collections.EMPTY_MAP, "error.html");

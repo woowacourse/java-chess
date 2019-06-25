@@ -66,6 +66,10 @@ public class ChessScoreCount {
         return pieceTypes.stream().filter(p -> p.equals(PieceType.PAWN_WHITE)).count() > 1;
     }
 
+    public Map<Team, Double> getScores() {
+        return scores;
+    }
+
     public double getScore(Team team) {
         return scores.get(team);
     }
