@@ -1,6 +1,6 @@
 package chess.domain.exceptions;
 
-public class InvalidDistanceException extends RuntimeException {
+public class InvalidDistanceException extends ChessPlayException {
     public InvalidDistanceException(final String message) {
         super(message);
     }

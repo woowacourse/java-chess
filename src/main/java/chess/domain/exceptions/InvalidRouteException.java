@@ -1,6 +1,6 @@
 package chess.domain.exceptions;
 
-public class InvalidRouteException extends RuntimeException {
+public class InvalidRouteException extends ChessPlayException {
     public InvalidRouteException(final String message) {
         super(message);
     }

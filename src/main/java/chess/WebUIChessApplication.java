@@ -3,6 +3,7 @@ package chess;
 import chess.domain.Piece;
 import chess.domain.ChessBoard;
 import chess.domain.Team;
+import chess.domain.exceptions.ChessPlayException;
 import chess.domain.piece.King;
 import chess.domain.utils.InputParser;
 import chess.dto.ResultDto;
@@ -75,7 +76,7 @@ public class WebUIChessApplication {
             return render(model, "result.html");
         });
 
-        exception(RuntimeException.class, (e, req, res) -> res.redirect("/game_play"));
+        exception(ChessPlayException.class, (e, req, res) -> res.redirect("/game_play"));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
