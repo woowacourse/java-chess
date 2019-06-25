@@ -65,7 +65,7 @@ class PositionTest {
     }
 
     @Test
-    public void getRoutePosition_Test() {
+    public void backAndForthRoute_Test() {
         Position target = new Position(5, 5);
         List<Position> route = new ArrayList<>();
         route.add(new Position(3, 3));
@@ -74,7 +74,7 @@ class PositionTest {
     }
 
     @Test
-    public void getRoutePosition_Test2() {
+    public void sideToSideRoute_Test() {
         Position source = new Position(5, 2);
         Position target = new Position(2, 5);
         List<Position> route = new ArrayList<>();
@@ -84,7 +84,7 @@ class PositionTest {
     }
 
     @Test
-    public void getRoutePosition_Test3() {
+    public void positiveDiagonallyRoute_Test() {
         Position target = new Position(5, 2);
         List<Position> route = new ArrayList<>();
         route.add(new Position(3, 2));
@@ -93,7 +93,7 @@ class PositionTest {
     }
 
     @Test
-    public void getRoutePosition_Test4() {
+    public void negativeDiagonallyRoute_Test() {
         Position target = new Position(2, 5);
         List<Position> route = new ArrayList<>();
         route.add(new Position(2, 3));

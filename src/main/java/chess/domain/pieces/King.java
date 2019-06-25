@@ -4,7 +4,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 
 public class King extends Piece {
-    private static final int SCORE = 0;
+    private static final double SCORE = 0;
     private static final int DISTANCE_FOR_FOUR_DIRECTION = 1;
     private static final int DISTANCE_FOR_DIAGONAL_DIRECTION = 2;
 
@@ -16,6 +16,11 @@ public class King extends Piece {
     public boolean canMove(Position position) {
         return this.position.getDistanceSquare(position) == DISTANCE_FOR_FOUR_DIRECTION
                 || this.position.getDistanceSquare(position) == DISTANCE_FOR_DIAGONAL_DIRECTION;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

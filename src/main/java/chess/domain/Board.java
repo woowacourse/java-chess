@@ -5,6 +5,7 @@ import chess.domain.pieces.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private Map<Position, Piece> boardState = new HashMap<>();
@@ -154,5 +155,29 @@ public class Board {
 
     public Piece findPiece(Position position) {
         return boardState.get(position);
+    }
+
+    public boolean isKingDead() {
+        return isKingDead;
+    }
+
+    public double getScore(Team team) {
+        List<Piece> sameTeamPieces = boardState.keySet().stream()
+                .map(position -> boardState.get(position))
+                .filter(piece -> piece.isOurPiece(team))
+                .collect(Collectors.toList());
+
+        double totalScore = sameTeamPieces.stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+
+        List<Pawn> pawns = sameTeamPieces.stream()
+                .filter(piece -> piece instanceof Pawn)
+                .map(piece -> (Pawn) piece)
+                .collect(Collectors.toList());
+
+        totalScore -= Pawn.getSameColumnSamePawnCount(pawns) * 0.5;
+
+        return totalScore;
     }
 }

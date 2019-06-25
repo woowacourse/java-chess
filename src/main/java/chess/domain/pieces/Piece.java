@@ -17,6 +17,7 @@ public abstract class Piece {
     public boolean isSameTeamWith(Piece piece) {
         return this.team == piece.team;
     }
+
     public boolean isOurPiece(Team team) {
         return this.team == team;
     }
@@ -26,6 +27,8 @@ public abstract class Piece {
     }
 
     public abstract boolean canMove(Position position);
+
+    public abstract double getScore();
 
     @Override
     public boolean equals(Object o) {

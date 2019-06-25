@@ -4,7 +4,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 
 public class Bishop extends Piece {
-    private static final int SCORE = 0;
+    private static final double SCORE = 3;
 
     public Bishop(Position position, Team team) {
         super(position, team);
@@ -14,6 +14,11 @@ public class Bishop extends Piece {
     public boolean canMove(Position position) {
         return this.position.canMovePositiveDiagonally(position)
                 || this.position.canMoveNegativeDiagonally(position);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

@@ -4,7 +4,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 
 public class Queen extends Piece {
-    private static final int SCORE = 0;
+    private static final double SCORE = 9;
 
     public Queen(Position position, Team team) {
         super(position, team);
@@ -16,6 +16,11 @@ public class Queen extends Piece {
                 || this.position.canMoveSideToSide(position)
                 || this.position.canMovePositiveDiagonally(position)
                 || this.position.canMoveNegativeDiagonally(position);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
