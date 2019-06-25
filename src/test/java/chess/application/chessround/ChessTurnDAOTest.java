@@ -8,7 +8,7 @@ class ChessTurnDAOTest {
     private ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance();
 
     @Test
-    void i() {
+    void updatePlayerTurn() {
         boolean isWhiteTurn = chessTurnDAO.getPlayerTurn();
 
         chessTurnDAO.updatePlayerTurn(!isWhiteTurn);

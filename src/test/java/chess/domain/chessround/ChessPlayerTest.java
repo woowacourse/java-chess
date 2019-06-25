@@ -82,6 +82,7 @@ class ChessPlayerTest {
 
         assertThat(currentPlayer.contains(source)).isFalse();
         assertThat(currentPlayer.contains(target)).isTrue();
+        assertThat(currentPlayer.get(target) == King.getInstance()).isTrue();
     }
 
     @Test
@@ -98,6 +99,7 @@ class ChessPlayerTest {
 
         assertThat(currentPlayer.contains(source)).isFalse();
         assertThat(currentPlayer.contains(target)).isTrue();
+        assertThat(currentPlayer.get(target) == Queen.getInstance()).isTrue();
     }
 
     @Test

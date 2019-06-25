@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChessPointTest {
     @Test
-    void of_() {
+    void of() {
         assertThat(ChessPoint.of(1, 1)).isEqualTo(ChessPoint.of(1, 1));
     }
 
