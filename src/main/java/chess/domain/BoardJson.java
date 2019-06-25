@@ -13,7 +13,7 @@ public class BoardJson {
         this.board = board;
     }
 
-    public JsonObject getboardJson() {
+    public JsonObject getBoardJson() {
         JsonArray jsonObject = new JsonArray();
         jsonObject.add(teamJson(Team.BLACK));
         jsonObject.add(teamJson(Team.WHITE));

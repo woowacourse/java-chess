@@ -4,6 +4,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -59,7 +60,16 @@ public class Board {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public Map<Spot, Piece> getPieces() {
-        return pieces;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return Objects.equals(pieces, board.pieces);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieces);
     }
 }

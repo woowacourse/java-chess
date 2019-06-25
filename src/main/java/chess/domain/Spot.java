@@ -31,8 +31,7 @@ public class Spot {
         this.y = index % COUNT_OF_COLUMN;
     }
 
-    static Spot
-    valueOf(int index) {
+    public static Spot valueOf(int index) {
         validationIndexCheck(index);
         return SPOTS.get(index);
     }
