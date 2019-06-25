@@ -17,7 +17,7 @@ public class Rook extends Unit {
     }
 
     public Rook(Team team) {
-        super(team);
+        super(team, "Rook");
     }
 
     @Override

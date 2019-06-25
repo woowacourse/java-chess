@@ -19,7 +19,7 @@ public class King extends Unit {
     }
 
     public King(Team team) {
-        super(team);
+        super(team, "King");
     }
 
     @Override
@@ -38,8 +38,4 @@ public class King extends Unit {
         return getTeam().getUnitName("K");
     }
 
-    @Override
-    public String getName() {
-        return "킹";
-    }
 }

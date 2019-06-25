@@ -37,7 +37,7 @@ public class ChessBoardDAOTest {
     void 검색() throws SQLException {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
-        ChessBoard chessBoard = chessBoardDAO.select();
+        ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
         OutputView.printCheckBoard(chessBoard);
     }
 }

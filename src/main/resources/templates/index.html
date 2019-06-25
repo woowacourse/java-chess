@@ -1,26 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>로또</title>
 </head>
 <body>
-<div>
+<form action="/start" method="get">
+    <button type="submit">새로 시작</button>
+</form>
 
-</div>
+<form action="/resume" method="get">
+    <button type="submit">이어 하기</button>
+</form>
 
-
-<script>
-  window.onload = function () {
-      var pieces = JSON.parse('{{{chessBoard}}}').units;
-      console.log(pieces);
-      console.log('---------');
-      for (var key in pieces) {
-          var classText = pieces[key].team;
-          //document.querySelector("#" + key).setAttribute("class", classText);
-      }
-      //document.querySelector(tr)
-  }
-</script>
 </body>
 </html>

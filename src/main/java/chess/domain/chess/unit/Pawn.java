@@ -19,7 +19,7 @@ public class Pawn extends Unit {
     }
 
     public Pawn(Team team) {
-        super(team);
+        super(team, "Pawn");
     }
 
     @Override
@@ -55,11 +55,6 @@ public class Pawn extends Unit {
     @Override
     public double score() {
         return SCORE;
-    }
-
-    @Override
-    public String getName() {
-        return "폰";
     }
 
     @Override

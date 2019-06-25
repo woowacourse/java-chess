@@ -9,7 +9,7 @@ public class Knight extends Unit {
     private static final Double KNIGHT_LENGTH = Math.sqrt(5);
 
     public Knight(Team team) {
-        super(team);
+        super(team, "Knight");
     }
 
     @Override
@@ -25,10 +25,5 @@ public class Knight extends Unit {
     @Override
     public String toString() {
         return getTeam().getUnitName("N");
-    }
-
-    @Override
-    public String getName() {
-        return "나이트";
     }
 }

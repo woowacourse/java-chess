@@ -15,7 +15,7 @@ public class Bishop extends Unit {
     }
 
     public Bishop(Team team) {
-        super(team);
+        super(team, "Bishop");
     }
 
     @Override
@@ -32,10 +32,5 @@ public class Bishop extends Unit {
     @Override
     public String toString() {
         return getTeam().getUnitName("B");
-    }
-
-    @Override
-    public String getName() {
-        return "비숍";
     }
 }

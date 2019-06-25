@@ -33,16 +33,16 @@ public class ChessBoardDAO {
 
     public String printCheckBoard(ChessBoard chessBoard) {
         String chessBoardInfo = "";
-        for (int i = Position.MIN_POSITION; i < Position.MAX_POSITION; i++) {
-            chessBoardInfo += addCheckBoardRowInfo(chessBoard, i);
+        for (int y = Position.MAX_POSITION - 1; y >= Position.MIN_POSITION; y--) {
+            chessBoardInfo += addCheckBoardRowInfo(chessBoard, y);
         }
         return chessBoardInfo;
     }
 
-    private String addCheckBoardRowInfo(ChessBoard chessBoard, int i) {
+    private String addCheckBoardRowInfo(ChessBoard chessBoard, int y) {
         String row = "";
-        for (int j = Position.MIN_POSITION; j < Position.MAX_POSITION; j++) {
-            Optional<Unit> optional = chessBoard.getUnit(Position.create(Position.MAX_POSITION - 1 - j, i));
+        for (int x = Position.MIN_POSITION; x < Position.MAX_POSITION; x++) {
+            Optional<Unit> optional = chessBoard.getUnit(Position.create(x, y));
             row += printUnit(optional);
         }
         return row;
@@ -60,13 +60,15 @@ public class ChessBoardDAO {
         String query = "UPDATE chess_board SET status = ?, team_id = ? " +
                 "ORDER BY id DESC " +
                 "LIMIT 1";
+        System.out.println("확인" + team.getTeamId());
+
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, boardInfo);
         pstmt.setInt(2, team.getTeamId());
         pstmt.executeUpdate();
     }
 
-    public ChessBoard select() throws SQLException {
+    public ChessBoard selectRecentRow() throws SQLException {
         String query = "SELECT status, team_id FROM chess_board ORDER BY id DESC LIMIT 1";
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet resultSet = pstmt.executeQuery();
@@ -76,22 +78,25 @@ public class ChessBoardDAO {
         if (!resultSet.next()) return null;
 
         String[] units = resultSet.getString("status").split("");
+        Team team = Team.getTeamById(resultSet.getInt("team_id"));
 
-        for (int i = 0; i < 8; i++) {
-            unitMapper(map, units, i);
+        System.out.println("조회" + team.name());
+
+        for (int y = 7; y >= 0; y--) {
+            unitMapper(map, units, y);
         }
 
-        return new ChessBoard(new ChessBoardDB(map));
+        return new ChessBoard(new ChessBoardDB(map, team));
     }
 
-    private void unitMapper(Map<Position, Unit> map, String[] units, int i) {
-        for (int j = 0; j < 8; j++) {
-            unitMapper1(map, units[j * 8 + i], i, j);
+    private void unitMapper(Map<Position, Unit> map, String[] units, int y) {
+        for (int x = 0; x <= 7; x++) {
+            unitMapper1(map, units[y * 8 + x], x, y);
         }
     }
 
-    private void unitMapper1(Map<Position, Unit> map, String unit, int i, int j) {
+    private void unitMapper1(Map<Position, Unit> map, String unit, int x, int y) {
         Optional<Unit> optionalUnit = ChessUnitMapper.getUnit(unit);
-        optionalUnit.ifPresent(unit1 -> map.put(Position.create(i, j), unit1));
+        optionalUnit.ifPresent(unit1 -> map.put(Position.create(x, 7-y), unit1));
     }
 }

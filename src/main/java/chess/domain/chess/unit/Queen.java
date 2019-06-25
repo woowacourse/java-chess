@@ -20,7 +20,7 @@ public class Queen extends Unit {
     }
 
     public Queen(Team team) {
-        super(team);
+        super(team, "Queen");
     }
 
     @Override
@@ -32,11 +32,6 @@ public class Queen extends Unit {
     @Override
     public double score() {
         return SCORE;
-    }
-
-    @Override
-    public String getName() {
-        return "퀸";
     }
 
     @Override

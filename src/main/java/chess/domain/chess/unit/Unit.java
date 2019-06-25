@@ -5,9 +5,11 @@ import chess.domain.geometric.Vector;
 
 abstract public class Unit {
     private Team team;
+    private String name;
 
-    public Unit(Team team) {
+    public Unit(Team team, String name) {
         this.team = team;
+        this.name = name;
     }
 
     public Team getTeam() {
@@ -21,5 +23,7 @@ abstract public class Unit {
         return this.team.equals(unit.team);
     }
 
-    public abstract String getName();
+    public String getName() {
+        return this.name;
+    }
 }

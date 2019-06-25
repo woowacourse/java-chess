@@ -19,6 +19,7 @@ public class ChessBoard {
 
     public ChessBoard(Initializer initializer) {
         this.units = initializer.create();
+        this.present = Team.WHITE;
     }
 
     public Optional<Unit> getUnit(Position position) {
@@ -32,6 +33,10 @@ public class ChessBoard {
 
         if (!sourceUnit.isPresent()) {
             throw new SourceUnitNotPresentException("해당 위치에는 유닛이 존재하지 않습니다.");
+        }
+
+        if (sourceUnit.get().getTeam() != present) {
+            throw new IllegalTurnException("현재는" +present.name() +" 턴입니다.");
         }
 
         if (targetUnit.isPresent() && sourceUnit.get().isEqualTeam(targetUnit.get())) {
@@ -133,5 +138,9 @@ public class ChessBoard {
 
     public Map<Position, Unit> getUnits() {
         return units;
+    }
+
+    public Team getTeam() {
+        return present;
     }
 }

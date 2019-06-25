@@ -17,6 +17,11 @@ public class ChessBoardInitializer implements Initializer {
         return units;
     }
 
+    @Override
+    public Team createTeam() {
+        return Team.WHITE;
+    }
+
     private void createSingleTeam(Map<Position, Unit> map, Team team) {
         if (team.equals(Team.WHITE)) {
             initPawn(map, 1, team);
