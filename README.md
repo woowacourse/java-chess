@@ -32,9 +32,8 @@ CREATE TABLE game (
 );
 
 CREATE TABLE piece (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     point VARCHAR(10) NOT NULL,
     color VARCHAR(10) NOT NULL,
-    type VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id)
+    type VARCHAR(10) NOT NULL
 );

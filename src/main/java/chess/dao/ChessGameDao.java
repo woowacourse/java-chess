@@ -16,7 +16,7 @@ public class ChessGameDao {
 
     public void addGame() throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            String query = "INSERT INTO game VALUES(1, 'white')";
+            String query = "INSERT INTO game VALUES(1, 'WHITE')";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.executeUpdate();
         }
@@ -40,7 +40,4 @@ public class ChessGameDao {
             pstmt.executeUpdate();
         }
     }
-
-
-
 }
