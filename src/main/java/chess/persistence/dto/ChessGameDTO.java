@@ -15,12 +15,12 @@ public class ChessGameDTO {
         this.gameId = gameId;
     }
 
-    public void setGameStatus(boolean gameStatus) {
-        this.gameStatus = gameStatus;
-    }
-
     public boolean getGameStatus() {
         return gameStatus;
+    }
+
+    public void setGameStatus(boolean gameStatus) {
+        this.gameStatus = gameStatus;
     }
 
     public String getLastUser() {

@@ -37,10 +37,10 @@ public class WebUIChessApplication {
 
         post("/chessGame", "application/json", (req, res) -> {
             Gson gson = new Gson();
-            try{
+            try {
                 ChessMoveDTO chessMoveDTO = gson.fromJson(req.body(), ChessMoveDTO.class);
                 return PieceMoveService.getInstance().request(chessMoveDTO);
-            }catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 return new ErrorDTO(e.getMessage());
             }
         }, new JsonTransformer());

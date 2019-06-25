@@ -11,7 +11,7 @@ public enum Type {
     KNIGHT("KNIGHT", 2.5, Knight::new),
     ROOK("ROOK", 5, Rook::new),
     PAWN("PAWN", 1, Pawn::new),
-    MOVEDPAWN("MOVEDPAWN",1,MovedPawn::new);
+    MOVEDPAWN("MOVEDPAWN", 1, MovedPawn::new);
 
     String type;
     double score;

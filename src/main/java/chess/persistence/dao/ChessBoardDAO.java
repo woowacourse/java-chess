@@ -79,13 +79,13 @@ public class ChessBoardDAO {
     }
 
     public int findMaxRoundByGameId(int gameId) {
-        try (Connection connection = DataSourceFactory.getInstance().getConnection()){
+        try (Connection connection = DataSourceFactory.getInstance().getConnection()) {
             String query = "SELECT * FROM chess.board WHERE game_id=? ORDER BY round_no DESC LIMIT 1";
             PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             pstmt.setInt(1, gameId);
 
             ResultSet rs = pstmt.executeQuery();
-            if(!rs.next()) {
+            if (!rs.next()) {
                 throw new IllegalArgumentException("Max Round 데이터 없음");
             }
 
