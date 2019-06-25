@@ -14,6 +14,18 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
+
+//        get("/chessGame", (req, res) -> {
+//           Gson gson = new Gson();
+//           try {
+//               req.body();
+//               moveServic.requst()
+//           } catch (Exception e) {
+//               throw new IllegalArgumentException(e.getMessage());
+//           }
+//        });
+//
+//        post("/move")˚
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
