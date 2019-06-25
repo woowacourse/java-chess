@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
 
 class KingTest {
-    Piece testKing;
+    private Piece testKing;
 
     @BeforeEach
     void setUp() {

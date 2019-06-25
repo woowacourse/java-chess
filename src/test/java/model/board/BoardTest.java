@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
-    Board testBoard;
+    private Board testBoard;
 
     @BeforeEach
     void setUp() {

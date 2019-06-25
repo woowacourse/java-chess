@@ -13,7 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BishopTest {
-    Piece testBishop;
+    private Piece testBishop;
 
     @BeforeEach
     void setUp() {

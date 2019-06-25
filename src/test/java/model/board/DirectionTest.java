@@ -8,7 +8,6 @@ import static model.board.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DirectionTest {
-
     @Test
     void rotateFromToTest() {
         assertThat(rotateClockwiseFromTo(EAST, 3)).isEqualTo(Arrays.asList(EAST, SOUTH_EAST, SOUTH));

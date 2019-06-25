@@ -1,6 +1,5 @@
 package model.piece;
 
-import model.board.Direction;
 import model.board.Position;
 import model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,12 +10,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.offset;
 
 class KnightTest {
-    Piece testKnight;
+    private Piece testKnight;
 
     @BeforeEach
     void setUp() {
@@ -28,16 +27,9 @@ class KnightTest {
         List<Position> actual = testKnight.findPossiblePositions()
                                         .map(Iterator::next)
                                         .collect(Collectors.toList());
-        List<Position> expected = Arrays.asList(
-                Position.of("c8"),
-                Position.of("e8"),
-                Position.of("f7"),
-                Position.of("f5"),
-                Position.of("e4"),
-                Position.of("c4"),
-                Position.of("b5"),
-                Position.of("b7")
-        );
+        List<Position> expected = Stream.of("c8", "e8", "f7", "f5", "e4", "c4", "b5", "b7")
+                                        .map(Position::of)
+                                        .collect(Collectors.toList());
         Collections.sort(actual);
         Collections.sort(expected);
         assertThat(actual).isEqualTo(expected);
