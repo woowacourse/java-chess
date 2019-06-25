@@ -6,22 +6,12 @@
     <link rel="stylesheet" href="/css/chess.css"/>
 </head>
 <body>
-<table>
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-</table>
+<main>
+    <div class="grid board">
+        {{#board}}
+            <div class="grid__item piece">{{this.image}}</div>
+        {{/board}}
+    </div>
+</main>
 </body>
 </html>
