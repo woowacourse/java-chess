@@ -14,6 +14,10 @@ public class Score {
 		return Math.round(score * ROUNDING_CRITERION) / (double) ROUNDING_CRITERION;
 	}
 
+	public double getScore() {
+		return score;
+	}
+
 	public Boolean isHigher(final Score score) {
 		if (this.score > score.score) {
 			return true;
