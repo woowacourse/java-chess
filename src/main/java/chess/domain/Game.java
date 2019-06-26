@@ -6,7 +6,6 @@ import chess.domain.piece.piecefigure.Bishop;
 import chess.domain.piece.pieceinfo.TeamType;
 import chess.exception.InvalidTurnException;
 
-import java.util.Objects;
 import java.util.Set;
 
 public class Game {
@@ -31,7 +30,7 @@ public class Game {
     }
 
     public Set<Position> selectSourcePiece(Position source) {
-        if(!board.getCurrentPiece(source).isSameTeam(Bishop.of(currentTeam))) {
+        if (!board.getCurrentPiece(source).isSameTeam(Bishop.of(currentTeam))) {
             throw new InvalidTurnException();
         }
 

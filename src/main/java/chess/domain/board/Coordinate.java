@@ -23,6 +23,10 @@ public class Coordinate {
         this.axis = axis;
     }
 
+    public int getAxis() {
+        return axis;
+    }
+
     public static Coordinate of(int axis) {
         if (axis < MIN_BOUND_OF_AXIS || axis > MAX_BOUND_OF_AXIS) {
             throw new CoordinateOutOfBoundsException();

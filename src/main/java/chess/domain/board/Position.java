@@ -21,8 +21,12 @@ public class Position {
         IntStream.rangeClosed(MIN_BOUND, MAX_BOUND).forEach(Position::addPosition);
     }
 
-    Coordinate getCoordinateY() {
-        return coordinateY;
+    public int getCoordinateX() {
+        return coordinateX.getAxis();
+    }
+
+    int getCoordinateY() {
+        return coordinateY.getAxis();
     }
 
     private static void addPosition(int x) {
@@ -53,5 +57,10 @@ public class Position {
         int movedY = coordinateY.calculate(direction.getY());
 
         return of(makeKey(movedX, movedY));
+    }
+
+    @Override
+    public String toString() {
+        return makeKey(coordinateX.getAxis(), coordinateY.getAxis());
     }
 }

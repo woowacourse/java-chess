@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게임</title>
+    <style>
+        .tile {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<input type="hidden" value='{{{game}}}' id="chessBoard">
+<div id="chessBoardBox"></div>
+<div>
+    이번 턴은 {{turn}} 입니다. <br>
+    <button onclick="calculateScore();">점수 보기</button>
+</div>
+
+</body>
+
+<script>
+    let fromPosition = null;
+
+    const piece = {
+        WHITE_KING: '&#9812;',
+        WHITE_QUEEN: '&#9813;',
+        WHITE_ROOK: '&#9814;',
+        WHITE_BISHOP: '&#9815;',
+        WHITE_KNIGHT: '&#9816;',
+        WHITE_PAWN: '&#9817;',
+        BLACK_KING: '&#9818;',
+        BLACK_QUEEN: '&#9819;',
+        BLACK_ROOK: '&#9820;',
+        BLACK_BISHOP: '&#9821;',
+        BLACK_KNIGHT: '&#9822;',
+        BLACK_PAWN: '&#9823;',
+        NEUTRAL_BLANK: '&#x20;'
+    };
+
+    function chessBoardRender(row, col) {
+        let div = document.createElement("DIV");
+        div.id = '' + row + col;
+        div.name = 'cell';
+        const position = div.id;
+        div.className = 'tile';
+        div.addEventListener("click", () => {
+            if (fromPosition === null) {
+                selectPiece(position);
+            } else {
+                movePiece(position);
+
+                console.log("미 구현");
+            }
+        });
+        return div;
+    }
+
+    function movePiece(destination) {
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = '/move';
+
+        const to = document.createElement('input');
+        to.name = 'destination';
+        to.value = destination;
+
+        const from = document.createElement('input');
+        from.name = 'source';
+        from.value = fromPosition;
+
+        document.body.appendChild(form);
+        form.appendChild(to);
+        form.appendChild(from);
+        form.submit();
+    }
+
+    function selectPiece(source) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/movable?source=' + source);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState !== 4) return;
+
+            if (xhr.status === 200) {
+                colorMovablePositions(xhr);
+                fromPosition = source;
+            } else {
+                console.log('err' + xhr.status);
+                alert('선택할 수 없는 칸입니다.');
+            }
+        };
+        xhr.send();
+    }
+
+    function colorMovablePositions(xhr) {
+        const datas = JSON.parse(xhr.responseText);
+        console.log(xhr.responseText);
+        for (let data of datas) {
+            const id = '' + data.coordinateX.axis + data.coordinateY.axis;
+            document.getElementById(id).style.backgroundColor = "blue";
+        }
+    }
+
+    window.onload = () => {
+        let chessBoardBox = document.getElementById('chessBoardBox');
+        console.log(chessBoardBox);
+
+        for (let row = 0; row <= 7; row++) {
+            for (let col = 0; col <= 7; col++) {
+                chessBoardBox.append(chessBoardRender(row, col));
+            }
+            chessBoardBox.append(document.createElement("BR"));
+        }
+
+        const chessBoard = document.getElementById('chessBoard').value;
+        const pieces = JSON.parse(chessBoard).board;
+        console.log(pieces);
+
+        for (let key in pieces) {
+            console.log(document.getElementById(key));
+            let team = pieces[key].teamType;
+            let type = pieces[key].pieceType;
+            document.getElementById(key).innerHTML = piece[`${team}_${type}`];
+        }
+    };
+
+    function calculateScore() {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/score');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState !== 4) return;
+
+            if (xhr.status === 200) {
+                score(xhr);
+            } else {
+                console.log('err' + xhr.status);
+            }
+        };
+        xhr.send();
+    }
+
+    function score(xhr) {
+        const data = JSON.parse(xhr.responseText);
+        console.log(xhr.responseText);
+
+        alert('흑팀 점수: ' + data.BLACK + '점\n백팀 점수: ' + data.WHITE + '점');
+    }
+</script>
+</html>

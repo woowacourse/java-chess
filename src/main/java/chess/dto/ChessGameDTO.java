@@ -1,6 +1,5 @@
 package chess.dto;
 
-import chess.domain.Game;
 import chess.domain.board.Position;
 import chess.domain.piece.piecefigure.Piece;
 
