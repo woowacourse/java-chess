@@ -2,14 +2,12 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static chess.domain.piece.PieceType.PAWN;
 
 public class Board {
     private final Map<Tile, Piece> board;
@@ -23,14 +21,21 @@ public class Board {
     }
 
     public Optional<Piece> order(String currentTileText, String goalTileText) {
-        Tile currentTile = Tile.of(currentTileText);
-        Tile goalTile = Tile.of(goalTileText);
+        Pair<Tile, Tile> pointedTiles = getTiles(currentTileText, goalTileText);
 
-        if (canMove(currentTile, goalTile)) {
-            return move(currentTile, goalTile);
+        if (canMove(pointedTiles.getLeft(), pointedTiles.getRight())) {
+            return move(pointedTiles.getLeft(), pointedTiles.getRight());
         }
 
         throw new InvalidMovingException("이동 불가능합니다.");
+    }
+
+    private Pair<Tile, Tile> getTiles(String currentTileText, String goalTileText) {
+        try {
+            return Pair.of(Tile.of(currentTileText), Tile.of(goalTileText));
+        } catch (RuntimeException e) {
+            throw new InvalidMovingException(e.getMessage());
+        }
     }
 
     private boolean canMove(Tile currentTile, Tile goalTile) {
@@ -73,37 +78,35 @@ public class Board {
     }
 
     private void checkPathDisturb(List<Tile> path) {
-        boolean haveDisturb = path.stream()
-                .anyMatch(board::containsKey);
+        boolean haveDisturb = path.stream().anyMatch(board::containsKey);
+
         if (haveDisturb) {
             throw new InvalidMovingException("경로 상에 말이 있습니다.");
         }
     }
 
     public double status(PieceColor color) {
-        return  Column.stream()
-                .map(column ->
-                        Tile.tilesOf(column, Tile::of)
-                                .collect(Collectors.toList()))
-                .map(x -> findPieceTypesByColor(x, color))
-                .mapToDouble(Board::getLineScore)
+        return board.entrySet().stream()
+                .filter(map -> map.getValue().getColor() == color)
+                .map(map -> map.getKey())
+                .collect(Collectors.groupingBy(Tile::getColumn))
+                .values().stream()
+                .mapToDouble(this::getLineStatus)
                 .sum()
                 ;
     }
 
-    private List<PieceType> findPieceTypesByColor(List<Tile> tiles, PieceColor color) {
-        return tiles.stream()
-                .filter(board::containsKey)
-                .map(board::get)
-                .filter(piece -> piece.isColor(color))
-                .map(Piece::getType)
-                .collect(Collectors.toList())
-                ;
+    private double getLineStatus(List<Tile> tiles) {
+        return calculateScore(
+                tiles.stream()
+                        .map(tile -> board.get(tile))
+                        .collect(Collectors.toList())
+        );
     }
 
-    private static double getLineScore(List<PieceType> types) {
-        double score = types.stream().mapToDouble(PieceType::getScore).sum();
-        long pawnCount = types.stream().filter(x -> x.equals(PAWN)).count();
+    private double calculateScore(List<Piece> pieces) {
+        double score = pieces.stream().mapToDouble(Piece::getScore).sum();
+        long pawnCount = pieces.stream().filter(Piece::isPawn).count();
 
         if (pawnCount > 1) {
             score -= pawnCount * 0.5;
@@ -112,7 +115,7 @@ public class Board {
         return score;
     }
 
-    public Map getBoard() {
+    public Map<Tile, Piece> getBoard() {
         return board;
     }
 }

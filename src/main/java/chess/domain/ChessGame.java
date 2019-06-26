@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.board.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +12,7 @@ public class ChessGame {
     private PieceColor turn;
     private Board board;
 
-    ChessGame(PieceColor turn, Map<Tile, Piece> boardState) {
+    public ChessGame(PieceColor turn, Map<Tile, Piece> boardState) {
         this.turn = turn;
         this.board = new Board(boardState);
     }
@@ -22,7 +21,7 @@ public class ChessGame {
         this(PieceColor.WHITE, BoardInitializer.initialize());
     }
 
-    void move(String from, String to) {
+    public void move(String from, String to) {
         checkTurn(from);
 
         Optional<Piece> removed = board.order(from, to);
@@ -32,7 +31,7 @@ public class ChessGame {
     }
 
     private void checkTurn(String from) {
-        if(board.at(from).isColor(turn.opposite())) {
+        if (board.at(from).isColor(turn.opposite())) {
             throw new InvalidMovingException(turn + " 차례 입니다.");
         }
     }
@@ -41,13 +40,13 @@ public class ChessGame {
         if (!removedPiece.isPresent()) {
             return;
         }
-        if (removedPiece.get().isType(PieceType.KING)) {
+        if (removedPiece.get().isKing()) {
             throw new GameOverException("game over");
         }
     }
 
-    Map<PieceColor, Double> status() {
-        return new HashMap<PieceColor, Double>(){{
+    public Map<PieceColor, Double> status() {
+        return new HashMap<PieceColor, Double>() {{
             put(PieceColor.BLACK, board.status(PieceColor.BLACK));
             put(PieceColor.WHITE, board.status(PieceColor.WHITE));
         }};

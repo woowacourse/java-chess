@@ -15,7 +15,6 @@ public abstract class Piece {
     public Piece(PieceColor color, PieceType type) {
         this.color = color;
         this.type = type;
-
     }
 
     public List<Tile> pathOf(Tile current, Tile target, boolean isTargetEmpty) {
@@ -36,12 +35,20 @@ public abstract class Piece {
         return piece.color == color;
     }
 
-    public boolean isType(PieceType type){
-        return type == this.type;
+    public boolean isPawn() {
+        return type.equals(PieceType.PAWN);
+    }
+
+    public boolean isKing() {
+        return type.equals(PieceType.KING);
     }
 
     public boolean isColor(PieceColor color) {
         return color == this.color;
+    }
+
+    public double getScore() {
+        return type.getScore();
     }
 
     public PieceColor getColor() {

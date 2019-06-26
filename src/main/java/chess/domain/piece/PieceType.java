@@ -18,8 +18,8 @@ public enum PieceType {
         this.score = score;
     }
 
-    public static Double getScore(PieceType type) {
-        return type.score;
+    public Double getScore() {
+        return this.score;
     }
 
     public Piece generate(PieceColor color) {
