@@ -5,17 +5,30 @@ import chess.model.gameCreator.BoardCreatingStrategy;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ChessGame {
+    private static final int COUNT_OF_TEAM = 2;
+
     private Board board;
     private int turn;
 
     public ChessGame(BoardCreatingStrategy strategy, int turn) {
+        if (Objects.isNull(strategy)) {
+            throw new NullPointerException();
+        }
+        if (turn < 0) {
+            throw new IllegalArgumentException("잘못된 턴이 입력되었습니다.");
+        }
+
         this.turn = turn;
         board = new Board(strategy);
     }
 
     public void movePiece(String sourceCoordinate, String targetCoordinate) {
+        if (Objects.isNull(sourceCoordinate) || Objects.isNull(targetCoordinate)) {
+            throw new NullPointerException();
+        }
         if (isRightTurn(sourceCoordinate)) {
             board.movePiece(Arrays.asList(sourceCoordinate, targetCoordinate));
             turn++;
@@ -26,7 +39,7 @@ public class ChessGame {
         throw new IllegalArgumentException("다음턴에 움직여야합니다.");
     }
 
-    public boolean isRightTurn(String sourceCoordinate) {
+    private boolean isRightTurn(String sourceCoordinate) {
         return board.isRightTurn(sourceCoordinate, turn);
     }
 
@@ -43,7 +56,7 @@ public class ChessGame {
     }
 
     public String getCurrentTeam() {
-        if (turn % 2 == 0) {
+        if (turn % COUNT_OF_TEAM == 0) {
             return "black";
         }
 

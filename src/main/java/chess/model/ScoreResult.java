@@ -7,6 +7,9 @@ public class ScoreResult {
     private double scoreOfBlack;
 
     public ScoreResult(double scoreOfWhite, double scoreOfBlack) {
+        if (scoreOfWhite < 0 || scoreOfBlack < 0) {
+            throw new IllegalArgumentException("점수는 음수일 수 없습니다.");
+        }
         this.scoreOfWhite = scoreOfWhite;
         this.scoreOfBlack = scoreOfBlack;
     }
