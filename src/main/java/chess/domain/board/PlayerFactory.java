@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-
-import chess.domain.path.PathFactory;
 import chess.domain.piece.*;
 
 import java.util.HashMap;

@@ -1,9 +1,12 @@
 package chess.domain.board;
 
 import java.util.List;
+import java.util.Objects;
 
 public class YPosition {
     private final String yPosition;
+    private final int START_TYPE = 1;
+    private final int END_TYPE = 8;
 
     public YPosition(String yPosition) {
         checkYPosition(yPosition);
@@ -11,7 +14,7 @@ public class YPosition {
     }
 
     private void checkYPosition(String yPosition) {
-        if (1 > Integer.valueOf(yPosition) || Integer.valueOf(yPosition) > 8) {
+        if (START_TYPE > Integer.valueOf(yPosition) || Integer.valueOf(yPosition) > END_TYPE) {
             throw new IllegalArgumentException("범위를 벗어났습니다");
         }
     }
@@ -39,7 +42,7 @@ public class YPosition {
 
         YPosition yPosition1 = (YPosition) o;
 
-        return yPosition != null ? yPosition.equals(yPosition1.yPosition) : yPosition1.yPosition == null;
+        return Objects.equals(yPosition, yPosition1.yPosition);
     }
 
     @Override
