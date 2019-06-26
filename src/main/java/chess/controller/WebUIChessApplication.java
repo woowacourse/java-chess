@@ -52,10 +52,8 @@ public class WebUIChessApplication {
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
 
             ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
-            if(chessBoard.numberOfKing() != 2) {
-                model.put("team",chessBoard.getAliveKingTeam());
-                return render(model, "gameover.html");
-            }
+
+            if (checkKing(model, chessBoard)) return render(model, "gameover.html");
 
             chessBoardDTO.setUnits(chessBoard.getUnits());
 
@@ -78,12 +76,6 @@ public class WebUIChessApplication {
             Position targetPosition = Position.create(Integer.parseInt(target[0]), Integer.parseInt(target[1]));
 
             ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
-            if(chessBoard.numberOfKing() != 2) {
-                model.put("team",chessBoard.getAliveKingTeam());
-                return render(model, "gameover.html");
-            }
-
-
 
             chessBoard.move(sourcePosition, targetPosition);
             chessBoard.changeTeam();
@@ -91,16 +83,7 @@ public class WebUIChessApplication {
             chessBoardDAO.update(chessBoard, chessBoard.getTeam());
 
             ChessBoard chessBoardAfterUpdate = chessBoardDAO.selectRecentRow();
-            if(chessBoard.numberOfKing() != 2) {
-                model.put("team",chessBoard.getAliveKingTeam());
-                return render(model, "gameover.html");
-            }
-
-
-
-
-
-
+            if (checkKing(model, chessBoard)) return render(model, "gameover.html");
 
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
             chessBoardDTO.setUnits(chessBoardAfterUpdate.getUnits());
@@ -114,6 +97,14 @@ public class WebUIChessApplication {
         });
 
         exception();
+    }
+
+    private static boolean checkKing(Map<String, Object> model, ChessBoard chessBoard) {
+        if (chessBoard.numberOfKing() != 2) {
+            model.put("team", chessBoard.getAliveKingTeam());
+            return true;
+        }
+        return false;
     }
 
     private static void exception() {

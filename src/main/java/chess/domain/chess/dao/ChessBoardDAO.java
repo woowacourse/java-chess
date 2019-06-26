@@ -60,7 +60,6 @@ public class ChessBoardDAO {
         String query = "UPDATE chess_board SET status = ?, team_id = ? " +
                 "ORDER BY id DESC " +
                 "LIMIT 1";
-        System.out.println("확인" + team.getTeamId());
 
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, boardInfo);
@@ -80,7 +79,6 @@ public class ChessBoardDAO {
         String[] units = resultSet.getString("status").split("");
         Team team = Team.getTeamById(resultSet.getInt("team_id"));
 
-        System.out.println("조회" + team.name());
 
         for (int y = 7; y >= 0; y--) {
             unitMapper(map, units, y);
