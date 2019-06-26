@@ -17,6 +17,10 @@ public abstract class Piece {
         this.position = position;
     }
 
+    public void changePosition(Position position) {
+        this.position = position;
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -32,10 +36,6 @@ public abstract class Piece {
     public String getPieceImage() {
         return ChessPiece.getPieceImage(this.player, this.type);
     }
-
-    public abstract Path getMovablePath(Position end);
-
-    public abstract Path getAttackablePath(Position end);
 
     Path getValidPath(Position end, List<MovementInfo> movementInfos) {
         Path validPath = movementInfos.stream()
@@ -63,8 +63,16 @@ public abstract class Piece {
         return path;
     }
 
-    public void changePosition(Position position) {
-        this.position = position;
+    public int getCoordinateX() {
+        return position.getCoordinateX();
+    }
+
+    public int getCoordinateY() {
+        return position.getCoordinateY();
+    }
+
+    public Score getScore() {
+        return type.getScore();
     }
 
     public boolean isSamePosition(Position position) {
@@ -79,31 +87,23 @@ public abstract class Piece {
         return this.player.equals(player);
     }
 
-    public boolean isPawn() {
-        return type.equals(Type.PAWN);
-    }
-
     public boolean isSameCoordinateX(int x) {
         return position.isSameCoordinateX(x);
-    }
-
-    public int getCoordinateX() {
-        return position.getCoordinateX();
-    }
-
-    public int getCoordinateY() {
-        return position.getCoordinateY();
-    }
-
-    public Score getScore() {
-        return type.getScore();
     }
 
     public boolean isKing() {
         return type.equals(Type.KING);
     }
 
+    public boolean isPawn() {
+        return type.equals(Type.PAWN);
+    }
+
     public boolean isEmpty() {
         return type.equals(Type.EMPTY);
     }
+
+    public abstract Path getMovablePath(Position end);
+
+    public abstract Path getAttackablePath(Position end);
 }
