@@ -14,18 +14,22 @@ public class ChessGameStatusService {
     }
 
     public ChessGameStatusDto request(ChessGameDTO chessGameDTO, ChessBoardDTO chessBoardDTO) {
+
         ChessGameStatusDto chessGameStatusDto = new ChessGameStatusDto();
         chessGameStatusDto.setGameId(chessGameDTO.getGameId());
         chessGameStatusDto.setRoundNo(chessBoardDTO.getRoundNo());
         chessGameStatusDto.setLastUser(chessGameDTO.getLastUser());
         chessGameStatusDto.setBoard(chessBoardDTO.getBoard());
+
         ChessGame chessGame = new ChessGame(Board.drawBoard(chessBoardDTO.getBoard(), Team.valueOf(chessGameDTO.getLastUser())));
         ChessRound chessRound = chessGame.createChessRound();
         chessGameStatusDto.setWhiteScore(chessRound.getWhiteTeamScore());
         chessGameStatusDto.setBlackScore(chessRound.getBlackTeamScore());
+
         if (chessGame.isGameOver()) {
             chessGameStatusDto.setWinner(chessGame.findWinner().getTeam());
         }
+
         return chessGameStatusDto;
     }
 

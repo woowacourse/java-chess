@@ -18,13 +18,7 @@ public class PieceMoveService {
     }
 
     public ChessBoardDTO request(ChessMoveDTO chessMoveDTO, ChessGameDTO chessGameDTO, ChessBoardDTO chessBoardDTO) {
-        Board board = Board.drawBoard(chessBoardDTO.getBoard(), Team.valueOf(chessGameDTO.getLastUser()));
-
-        Square source = Square.of(chessMoveDTO.getSourceX(), chessMoveDTO.getSourceY());
-        Square target = Square.of(chessMoveDTO.getTargetX(), chessMoveDTO.getTargetY());
-        Piece piece = board.getPiece(source);
-        Route route = piece.getRoute(source, target);
-        Board newBoard = board.changeBoard(route);
+        Board newBoard = changeBoard(chessMoveDTO, chessGameDTO, chessBoardDTO);
 
         chessGameDTO.setLastUser(newBoard.getTeam().getTeam());
         chessGameDTO.setGameStatus(new ChessGame(newBoard).isGameOver());
@@ -37,8 +31,15 @@ public class PieceMoveService {
         return chessBoardDTO;
     }
 
-    private Square parseSquare(String squareX, String squareY) {
-        return Square.of(Integer.parseInt(squareX), Integer.parseInt(squareY));
+    private Board changeBoard(ChessMoveDTO chessMoveDTO, ChessGameDTO chessGameDTO, ChessBoardDTO chessBoardDTO) {
+        Board board = Board.drawBoard(chessBoardDTO.getBoard(), Team.valueOf(chessGameDTO.getLastUser()));
+
+        Square source = Square.of(chessMoveDTO.getSourceX(), chessMoveDTO.getSourceY());
+        Square target = Square.of(chessMoveDTO.getTargetX(), chessMoveDTO.getTargetY());
+        Piece piece = board.getPiece(source);
+        Route route = piece.getRoute(source, target);
+
+        return board.changeBoard(route);
     }
 
     private static class PieceMoveServiceHolder {

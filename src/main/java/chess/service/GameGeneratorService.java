@@ -11,12 +11,15 @@ public class GameGeneratorService {
 
     public ChessGameDTO request() {
         ChessGameDTO chessGameDTO = ChessGameDAO.getInstance().findByMaxGameId();
+
         if (chessGameDTO.getGameId() == 0 || chessGameDTO.getGameStatus()) {
             chessGameDTO.setGameStatus(false);
             chessGameDTO.setLastUser(Team.WHITE.getTeam());
             ChessGameDAO.getInstance().addGameStatus(chessGameDTO);
+
             return ChessGameDAO.getInstance().findByMaxGameId();
         }
+
         return chessGameDTO;
     }
 

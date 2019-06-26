@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Navigator {
-    private static final int FIRST_MOVED = 0;
-
     private List<Way> wayList;
 
     public Navigator(List<Way> wayList) {
@@ -20,10 +18,6 @@ public class Navigator {
                 .map(way -> way.generateRoute(source, target))
                 .findAny()
                 .orElse(null);
-    }
-
-    public void firstRemove() {
-        wayList.remove(FIRST_MOVED);
     }
 
     @Override
