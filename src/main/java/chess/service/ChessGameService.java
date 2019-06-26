@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.*;
 
 import chess.dao.ChessGameDAO;
-import chess.dao.PieceDAO;
 import chess.database.DatabaseConnection;
 import chess.domain.ChessGame;
 import chess.domain.ChessPiece;
@@ -30,16 +29,10 @@ public class ChessGameService {
 		return new ArrayList<>(positionPieceImages.values());
 	}
 
-	public int saveInitialChessGame(ChessGame chessGame) throws SQLException {
+	public int saveInitialChessGame(Player currentPlayer) throws SQLException {
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			ChessGameDAO chessGameDAO = ChessGameDAO.getInstance(connection);
-			Player currentPlayer = chessGame.getCurrentPlayer();
-			int roomNumber = chessGameDAO.addChessGame(currentPlayer);
-
-			PieceDAO pieceDAO = PieceDAO.getInstance(connection);
-			List<Piece> pieces = chessGame.getPieces();
-			pieceDAO.addAllPieces(roomNumber, pieces);
-			return roomNumber;
+			return chessGameDAO.addChessGame(currentPlayer);
 		}
 	}
 
@@ -48,12 +41,6 @@ public class ChessGameService {
 			ChessGameDAO chessGameDAO = ChessGameDAO.getInstance(connection);
 			Player currentPlayer = chessGame.getCurrentPlayer();
 			chessGameDAO.changeTurn(roomNumber, currentPlayer);
-
-			PieceDAO pieceDAO = PieceDAO.getInstance(connection);
-			List<Piece> pieces = chessGame.getPieces();
-			pieceDAO.deleteAllPieces(roomNumber);
-
-			pieceDAO.addAllPieces(roomNumber, pieces);
 			return roomNumber;
 		}
 	}
@@ -62,13 +49,6 @@ public class ChessGameService {
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			ChessGameDAO chessGameDAO = ChessGameDAO.getInstance(connection);
 			return chessGameDAO.getChessGameTurn(roomNumber);
-		}
-	}
-
-	public List<Piece> loadChessPieces(int roomNumber) throws SQLException {
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			PieceDAO pieceDAO = PieceDAO.getInstance(connection);
-			return pieceDAO.getChessPieces(roomNumber);
 		}
 	}
 

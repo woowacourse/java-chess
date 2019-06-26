@@ -9,18 +9,21 @@ import chess.domain.*;
 import chess.domain.piece.Piece;
 import chess.exception.GameOverException;
 import chess.service.ChessGameService;
+import chess.service.PieceService;
 import chess.view.OutputViewForWeb;
 import spark.Request;
 import spark.Response;
 
 public class ChessGameController {
 	private final static ChessGameService chessGameService = new ChessGameService();
+	private final static PieceService pieceService = new PieceService();
 
 	public String generateInitialChessGame() throws SQLException {
 		Map<String, Object> model = new HashMap<>();
 		ChessBoard chessBoard = ChessPiece.generateChessBoard(new ChessInitialPosition());
 		ChessGame chessGame = new ChessGame(chessBoard);
-		int roomNumber = chessGameService.saveInitialChessGame(chessGame);
+		int roomNumber = chessGameService.saveInitialChessGame(chessGame.getCurrentPlayer());
+		pieceService.saveInitialPiece(roomNumber, chessBoard.getPieces());
 		return transmitChessBoardInfo(model, roomNumber, chessGame);
 	}
 
@@ -36,7 +39,7 @@ public class ChessGameController {
 
 		Player turn = chessGameService.loadTurn(roomNumber);
 		ChessBoard chessBoard = new ChessBoard();
-		List<Piece> pieces = chessGameService.loadChessPieces(roomNumber);
+		List<Piece> pieces = pieceService.loadChessPieces(roomNumber);
 		for (Piece piece : pieces) {
 			chessBoard.addPiece(piece);
 		}
@@ -62,6 +65,7 @@ public class ChessGameController {
 			return OutputViewForWeb.render(model, "/gameover.html");
 		}
 		chessGameService.saveChessGame(roomNumber, chessGame);
+		pieceService.savePiece(roomNumber, chessGame.getPieces());
 		return transmitChessBoardInfo(model, roomNumber, chessGame);
 	}
 
@@ -84,7 +88,7 @@ public class ChessGameController {
 
 	private ChessBoard generateChessBoard(int roomNumber) throws SQLException {
 		ChessBoard chessBoard = new ChessBoard();
-		List<Piece> pieces = chessGameService.loadChessPieces(roomNumber);
+		List<Piece> pieces = pieceService.loadChessPieces(roomNumber);
 		for (Piece piece : pieces) {
 			chessBoard.addPiece(piece);
 		}
