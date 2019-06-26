@@ -8,17 +8,24 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class BoardGenerator {
+    private static final int ROW_8 = 8;
+    private static final int ROW_7 = 7;
+    private static final int ROW_6 = 6;
+    private static final int ROW_3 = 3;
+    private static final int ROW_2 = 2;
+    private static final int ROW_1 = 1;
+
     private BoardGenerator() {
     }
 
     public static Map<Position, Piece> generate() {
         Map<Position, Piece> map = new TreeMap<>();
 
-        initBlackPieces(map, 8);
-        initBlackPawns(map, 7);
-        initEmptyPieces(map, 6, 3);
-        initWhitePawns(map, 2);
-        initWhitePieces(map, 1);
+        initBlackPieces(map, ROW_8);
+        initBlackPawns(map, ROW_7);
+        initEmptyPieces(map, ROW_6, ROW_3);
+        initWhitePawns(map, ROW_2);
+        initWhitePieces(map, ROW_1);
 
         return map;
     }
