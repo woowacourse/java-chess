@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class BoardCreator {
-    private static final int MIN_RANGE = 1;
-    private static final int MAX_RANGE = 8;
 
     private BoardCreator() {
 
@@ -16,9 +14,9 @@ public class BoardCreator {
 
     public static Board create() {
         Map<Point, Piece> board = new HashMap<>();
-        IntStream.rangeClosed(MIN_RANGE, MAX_RANGE)
+        IntStream.rangeClosed(Point.MIN_AXIS, Point.MAX_AXIS)
                 .forEach(i ->
-                        IntStream.rangeClosed(MIN_RANGE, MAX_RANGE)
+                        IntStream.rangeClosed(Point.MIN_AXIS, Point.MAX_AXIS)
                                 .forEach(j -> board.put(Point.get(i, j), new Empty())));
         white(board);
         black(board);
@@ -38,7 +36,7 @@ public class BoardCreator {
     }
 
     private static void pawn(Map<Point, Piece> board, ChessTeam team, int position) {
-        for (int i = MIN_RANGE; i <= MAX_RANGE; i++) {
+        for (int i = Point.MIN_AXIS; i <= Point.MAX_AXIS; i++) {
             board.put(Point.get(i, position), new Pawn(team));
         }
     }

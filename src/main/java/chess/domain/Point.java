@@ -3,20 +3,19 @@ package chess.domain;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class Point {
     public static final int MAX_AXIS = 8;
     public static final int MIN_AXIS = 1;
-    public static final int ASCHII_CODE_NUMBER = 96;
+    private static final int ASCII_CODE_NUMBER = 96;
     private static Set<Point> points;
 
     static {
         points = new HashSet<>();
-        for (int i = MIN_AXIS; i <= MAX_AXIS; i++) {
-            for (int j = MIN_AXIS; j <= MAX_AXIS; j++) {
-                points.add(new Point(i, j));
-            }
-        }
+        IntStream.rangeClosed(MIN_AXIS,MAX_AXIS)
+                .forEach(i -> IntStream.rangeClosed(MIN_AXIS,MAX_AXIS)
+                        .forEach(j -> points.add(new Point(i,j))));
     }
 
     private final int x;
@@ -74,6 +73,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return (char) (x + ASCHII_CODE_NUMBER) + String.valueOf(y);
+        return (char) (x + ASCII_CODE_NUMBER) + String.valueOf(y);
     }
 }

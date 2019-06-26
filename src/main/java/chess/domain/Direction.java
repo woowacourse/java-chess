@@ -3,9 +3,9 @@ package chess.domain;
 import java.util.Objects;
 
 public class Direction {
-    public static final int MAXIMUM_RANGE = 7;
-    public static final int MINIMUM_RANGE = -7;
-    public static final int ZERO = 0;
+    private static final int MAXIMUM_RANGE = 7;
+    private static final int MINIMUM_RANGE = -7;
+    private static final int ZERO = 0;
     private final int xVector;
     private final int yVector;
 
