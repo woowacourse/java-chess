@@ -7,10 +7,10 @@ import java.sql.SQLException;
 public class DBConnector {
     public static Connection getConnection() {
         Connection conn = null;
-        String server = "localhost";
-        String database = "woowa";
-        String userName = "cony";
-        String password = "0924";
+        String server = "localhost"; // MySQL 서버 주소
+        String database = "ike_TechCourseDB"; // MySQL DATABASE 이름
+        String userName = "ike"; //  MySQL 서버 아이디
+        String password = "754813as!@"; // MySQL 서버 비밀번호
 
         // 드라이버 로딩
         try {

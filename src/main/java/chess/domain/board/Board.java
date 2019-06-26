@@ -26,10 +26,6 @@ public class Board {
         this.boardState = boardState;
     }
 
-    public void updateBoard(Map<Position, Piece> boardState) {
-        this.boardState = boardState;
-    }
-
     public boolean movable(Position source, Position target, Team team) {
         checkMyPieceIsEmpty(source);
         checkSourceIsMine(source, team);
