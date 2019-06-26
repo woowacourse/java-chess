@@ -7,7 +7,9 @@ import chess.domain.board.Player;
 import chess.domain.board.PlayerFactory;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.HistoryDto;
+import chess.domain.piece.BlackPieceInit;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.WhitePieceInit;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
@@ -17,8 +19,8 @@ import java.util.List;
 
 public class InitController {
     public static Object init(Request request, Response response) throws SQLException {
-        Player whitePlayer = new DefaultPlayer(PlayerFactory.init(PieceColor.WHITE));
-        Player blackPlayer = new DefaultPlayer(PlayerFactory.init(PieceColor.BLACK));
+        Player whitePlayer = new DefaultPlayer(PlayerFactory.init(new WhitePieceInit()));
+        Player blackPlayer = new DefaultPlayer(PlayerFactory.init(new BlackPieceInit()));
         Game game = new Game(whitePlayer, blackPlayer);
 
         if (ChessDao.notEnd()) {

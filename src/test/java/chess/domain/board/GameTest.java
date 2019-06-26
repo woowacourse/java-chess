@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class GameTest {
     @Test
     void 실제_보드_초기화() {
-        Player whitePlayer = new DefaultPlayer(PlayerFactory.init(PieceColor.WHITE));
-        Player blackPlayer = new DefaultPlayer(PlayerFactory.init(PieceColor.BLACK));
+        Player whitePlayer = new DefaultPlayer(PlayerFactory.init(new WhitePieceInit()));
+        Player blackPlayer = new DefaultPlayer(PlayerFactory.init(new BlackPieceInit()));
 
         Game game = new Game(whitePlayer, blackPlayer);
 
