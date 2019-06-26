@@ -1,17 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>체스게임</title>
     <link rel="stylesheet" href="/css/chess.css"/>
 </head>
 <body>
-<main>
-    <div class="grid board">
-        {{#board}}
-            <div class="grid__item piece">{{this.image}}</div>
-        {{/board}}
+<div class="container">
+    <main>
+        <div class="grid board">
+            {{#board}}
+            <div class="grid__item piece">{{this}}</div>
+            {{/board}}
+        </div>
+    </main>
+</div>
+<div class="container">
+    <div class="container" style="margin-top: 5%; margin-bottom: 10%; font-weight: bold; font-size: 24pt;">
+        {{turn}} 차례입니다.
     </div>
-</main>
+    <form action="/move" method="post">
+        <div class="row">
+            <div class="container">
+                <input type="hidden" name="room-number" value={{roomNumber}}>
+                <div class="col" style="width: 200px; display: inline-block">
+                    <input type="number" class="form-control" id="start-x" name="start-x" placeholder="시작 X좌표">
+                </div>
+                <div class="col" style="width: 200px; display: inline-block">
+                    <input type="number" class="form-control" id="start-y" name="start-y" placeholder="시작 Y좌표">
+                </div>
+            </div>
+            <div class="container" style="margin-top :5%;">
+                <div class="col" style="width: 200px; display: inline-block">
+                    <input type="number" class="form-control" id="end-x" name="end-x" placeholder="끝 X좌표">
+                </div>
+                <div class="col" style="width: 200px; display: inline-block">
+                    <input type="number" class="form-control" id="end-y" name="end-y" placeholder="끝 Y좌표">
+                </div>
+            </div>
+            <button type="submit" style="margin-top: 5%; width: 350px;" class="container btn btn-primary mb-2">이동
+            </button>
+        </div>
+    </form>
+
+    <form action="/status" method="post" style="margin-top:5%;">
+        <input type="hidden" name="room-number" value={{roomNumber}}>
+        <p>{{winner}}</p>
+        <p>{{whiteScore}}</p>
+        <p>{{blackScore}}</p>
+        <button type="submit" style="margin-top: 5%; width: 350px;" class="container btn btn-primary mb-2">Status</button>
+    </form>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>
