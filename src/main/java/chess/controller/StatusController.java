@@ -1,11 +1,12 @@
 package chess.controller;
 
-import chess.WebUIChessApplication;
 import chess.dao.ChessDao;
 import chess.domain.board.Game;
 import chess.domain.board.Score;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -24,6 +25,10 @@ public class StatusController {
         model.put("whiteScore" , score.getWhiteScore());
         model.put("loser", score.getLoser());
 
-        return WebUIChessApplication.render(model, "result.html");
+        return render(model, "result.html");
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

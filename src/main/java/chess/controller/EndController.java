@@ -1,8 +1,9 @@
 package chess.controller;
 
-import chess.WebUIChessApplication;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,10 @@ public class EndController {
         model.put("loser", loser);
         model.put("blackScore" , 0);
         model.put("whiteScore" , 0);
-        return WebUIChessApplication.render(model, "result.html");
+        return render(model, "result.html");
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
