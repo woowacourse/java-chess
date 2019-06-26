@@ -92,4 +92,12 @@ public class Position implements Comparable<Position> {
 		}
 		return result;
 	}
+
+	public int getCoordinateX() {
+		return x.getValue();
+	}
+
+	public int getCoordinateY() {
+		return y.getValue();
+	}
 }

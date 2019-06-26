@@ -52,14 +52,14 @@ public class ChessBoardTest {
 
 	@Test
 	void 초기_흑색_점수() {
-		chessBoard = ChessBoardGenerator.generate(ChessInitialPosition.getPositions());
+		chessBoard = ChessPiece.generateChessBoard(new ChessInitialPosition());
 
 		assertThat(chessBoard.getXScore(Player.BLACK)).isEqualTo(new Score(38));
 	}
 
 	@Test
 	void 초기_백색_점수() {
-		chessBoard = ChessBoardGenerator.generate(ChessInitialPosition.getPositions());
+		chessBoard = ChessPiece.generateChessBoard(new ChessInitialPosition());
 
 		assertThat(chessBoard.getXScore(Player.WHITE)).isEqualTo(new Score(38));
 	}
