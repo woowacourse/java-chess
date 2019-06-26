@@ -1,5 +1,6 @@
 package chess;
 
+import chess.dao.ChessTurnDAO;
 import chess.domain.board.GameOverException;
 import chess.domain.piece.PieceColor;
 import chess.dto.ChessGameDTO;
@@ -22,9 +23,16 @@ public class WebUIChessApplication {
         port(8080);
         Spark.staticFileLocation("/public");
 
+        get("/", WebUIChessApplication::home);
         get("/chessgame", WebUIChessApplication::chessGame);
         post("/move", WebUIChessApplication::move);
         get("/status", WebUIChessApplication::status);
+    }
+
+    private static String home(Request request, Response response) throws SQLException {
+        Map<String, Object> model = new HashMap<>();
+        model.put("games", ChessTurnDAO.getInstance().selectChessGames());
+        return render(model, "index.html");
     }
 
     private static String chessGame(Request request, Response response) throws SQLException {
