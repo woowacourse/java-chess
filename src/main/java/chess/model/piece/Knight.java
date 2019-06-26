@@ -12,16 +12,6 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Piece createBlack(Point point) {
-        return new Knight(PlayerType.BLACK, point);
-    }
-
-    @Override
-    public Piece createWhite(Point point) {
-        return new Knight(PlayerType.WHITE, point);
-    }
-
-    @Override
     public boolean canMove(Direction direction, Point destination) {
         double distance = point.calculateDistance(destination);
         return distance == Math.sqrt(5) && Direction.knightDirection().contains(direction);

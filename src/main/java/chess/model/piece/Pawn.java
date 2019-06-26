@@ -51,16 +51,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Piece createBlack(Point point) {
-        return new Pawn(PlayerType.BLACK, point);
-    }
-
-    @Override
-    public Piece createWhite(Point point) {
-        return new Pawn(PlayerType.WHITE, point);
-    }
-
-    @Override
     public boolean isPawn() {
         return true;
     }

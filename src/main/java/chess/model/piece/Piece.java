@@ -15,10 +15,6 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public abstract Piece createBlack(Point point);
-
-    public abstract Piece createWhite(Point point);
-
     public boolean isSameTeam(PlayerType team) {
         return this.team == team;
     }

@@ -5,18 +5,10 @@ import chess.model.PlayerType;
 import chess.model.Point;
 
 public class Queen extends Piece {
+    private static final double QUEEN_SCORE = 9;
+
     public Queen(PlayerType team, Point point) {
-        super(team, point, 9);
-    }
-
-    @Override
-    public Piece createBlack(Point point) {
-        return new Queen(PlayerType.BLACK, point);
-    }
-
-    @Override
-    public Piece createWhite(Point point) {
-        return new Queen(PlayerType.WHITE, point);
+        super(team, point, QUEEN_SCORE);
     }
 
     @Override

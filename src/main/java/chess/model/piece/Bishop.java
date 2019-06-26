@@ -11,15 +11,6 @@ public class Bishop extends Piece {
         super(team, point, BISHOP_SCORE);
     }
 
-    @Override
-    public Piece createBlack(Point point) {
-        return new Bishop(PlayerType.BLACK, point);
-    }
-
-    @Override
-    public Piece createWhite(Point point) {
-        return new Bishop(PlayerType.WHITE, point);
-    }
 
     @Override
     public boolean canMove(Direction direction, Point destination) {

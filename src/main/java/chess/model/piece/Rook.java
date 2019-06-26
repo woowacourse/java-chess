@@ -5,18 +5,10 @@ import chess.model.PlayerType;
 import chess.model.Point;
 
 public class Rook extends Piece {
+    private static double ROOK_SCORE = 5;
+
     public Rook(PlayerType team, Point point) {
-        super(team, point, 5);
-    }
-
-    @Override
-    public Piece createBlack(Point point) {
-        return new Rook(PlayerType.BLACK, point);
-    }
-
-    @Override
-    public Piece createWhite(Point point) {
-        return new Rook(PlayerType.WHITE, point);
+        super(team, point, ROOK_SCORE);
     }
 
     @Override

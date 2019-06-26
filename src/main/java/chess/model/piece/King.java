@@ -19,16 +19,6 @@ public class King extends Piece {
     }
 
     @Override
-    public Piece createBlack(Point point) {
-        return new King(PlayerType.BLACK, point);
-    }
-
-    @Override
-    public Piece createWhite(Point point) {
-        return new King(PlayerType.WHITE, point);
-    }
-
-    @Override
     public boolean isKing() {
         return true;
     }

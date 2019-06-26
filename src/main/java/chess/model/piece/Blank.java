@@ -13,16 +13,6 @@ public class Blank extends Piece {
     }
 
     @Override
-    public Piece createBlack(Point point) {
-        throw new IllegalArgumentException(ERROR_MESSAGE_BLANK);
-    }
-
-    @Override
-    public Piece createWhite(Point point) {
-        throw new IllegalArgumentException(ERROR_MESSAGE_BLANK);
-    }
-
-    @Override
     public boolean canMove(Direction direction, Point destination) {
         throw new IllegalArgumentException(ERROR_MESSAGE_BLANK);
     }
