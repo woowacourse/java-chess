@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractSingleMovePiece implements Piece {
-    final ChessTeam team;
+    private final ChessTeam team;
     private final List<Direction> directions;
     private PieceInfo info;
 
@@ -26,10 +26,7 @@ public abstract class AbstractSingleMovePiece implements Piece {
     @Override
     public boolean isAlly(Piece piece) {
         if (piece == null) throw new IllegalArgumentException();
-        if (piece instanceof AbstractSingleMovePiece) {
-            return this.team == ((AbstractSingleMovePiece) piece).team;
-        }
-        return this.team == ((AbstractRangeMovePiece) piece).team;
+        return piece.isTurn(this.team);
     }
 
     @Override

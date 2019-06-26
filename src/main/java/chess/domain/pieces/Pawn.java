@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends AbstractSingleMovePiece {
+    private static final int FIRST_MOVABLE_COUNT = 2;
     private List<Direction> moveDirection;
     private List<Direction> attackDirection;
 
@@ -43,7 +44,7 @@ public class Pawn extends AbstractSingleMovePiece {
     }
 
     private void initialMove() {
-        if (moveDirection.size() == 2) {
+        if (moveDirection.size() == FIRST_MOVABLE_COUNT) {
             moveDirection.remove(1);
         }
     }
