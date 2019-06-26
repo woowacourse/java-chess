@@ -24,6 +24,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public String getSymbol() {
+        return "q";
+    }
+
+    @Override
     public String toString() {
         return "QUEEN";
     }

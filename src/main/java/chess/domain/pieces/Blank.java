@@ -21,6 +21,11 @@ public class Blank extends Piece {
     }
 
     @Override
+    public String getSymbol() {
+        return ".";
+    }
+
+    @Override
     public String toString() {
         return "BLANK";
     }

@@ -52,6 +52,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public String getSymbol() {
+        return "p";
+    }
+
+    @Override
     public String toString() {
         return "PAWN";
     }

@@ -22,6 +22,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public String getSymbol() {
+        return "b";
+    }
+
+    @Override
     public String toString() {
         return "BISHOP";
     }

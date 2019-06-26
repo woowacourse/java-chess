@@ -22,6 +22,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public String getSymbol() {
+        return "n";
+    }
+
+    @Override
     public String toString() {
         return "KNIGHT";
     }
