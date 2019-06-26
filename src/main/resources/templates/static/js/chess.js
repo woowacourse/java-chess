@@ -79,11 +79,11 @@ function pieceHandler(event) {
         return target;
     }
 
-    var target = selectTarget(event);
+    const target = selectTarget(event);
     console.log(target);
     selects.push(target.id);
     if (selects.length >= 2) {
-        clearSelected(true);
+
         fetch('/game/1/move', new bodyData(selects[0], selects[1]))
             .then(res => res.json())
             .then(data => {
@@ -93,9 +93,10 @@ function pieceHandler(event) {
                 console.log(err)
                 alert("실패");
             });
+        clearSelected(true);
 
     } else {
-        event.target.firstChild.classList.add('selected');
+        target.firstChild.classList.add('selected');
     }
 }
 
@@ -137,4 +138,7 @@ function teamToken(text) {
 }
 
 initBoard()
-fetch('game/1', {method: "POST"}).then(res => res.json()).then(data => refresh(data));
+fetch('game/1', { method: "POST" }).then(res => res.json()).then(data => {
+    refresh(data);
+    clickEvent();
+});
