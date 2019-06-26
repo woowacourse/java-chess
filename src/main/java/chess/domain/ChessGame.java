@@ -35,12 +35,16 @@ public class ChessGame {
 		}
 		if (endPiece != null && !endPiece.isMine(currentPlayer)) {
 			chessBoard.remove(endPiece);
-			if (endPiece.isKing()) {
-				throw new GameOverException("게임종료! " + currentPlayer.name() + " 승리");
-			}
+			checkGameOver(endPiece);
 		}
 		startPiece.changePosition(end);
 		currentPlayer = currentPlayer.changePlayer();
+	}
+
+	private void checkGameOver(Piece endPiece) {
+		if (endPiece.isKing()) {
+			throw new GameOverException("게임종료! " + currentPlayer.name() + " 승리");
+		}
 	}
 
 	private Path getPath(Position end, Piece startPiece, Piece endPiece) {
@@ -60,6 +64,10 @@ public class ChessGame {
 	public Result findWinner() {
 		Score blackScore = getPlayerScore(Player.BLACK);
 		Score whiteScore = getPlayerScore(Player.WHITE);
+		return compareResult(blackScore, whiteScore);
+	}
+
+	private Result compareResult(Score blackScore, Score whiteScore) {
 		if (blackScore.equals(whiteScore) ) {
 			return Result.DRAW;
 		}

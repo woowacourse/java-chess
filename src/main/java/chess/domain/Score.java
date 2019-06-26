@@ -19,10 +19,7 @@ public class Score {
 	}
 
 	public Boolean isHigher(final Score score) {
-		if (this.score > score.score) {
-			return true;
-		}
-		return false;
+		return (this.score > score.score)? true : false;
 	}
 
 	public Score add(Score score) {

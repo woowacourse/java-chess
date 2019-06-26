@@ -49,7 +49,7 @@ public enum ChessPiece {
 
 	public static Piece generatePiece(Player player, Type type, Position position) {
 		for(ChessPiece chessPiece : ChessPiece.values()) {
-			if(chessPiece.player.equals(player) && (chessPiece.type.equals(type))) {
+			if(isSameChessPiece(chessPiece, player, type)) {
 				return chessPiece.generator.apply(player, position);
 			}
 		}
@@ -58,7 +58,7 @@ public enum ChessPiece {
 
 	public static String getPieceImage(Player player, Type type) {
 		for(ChessPiece chessPiece : ChessPiece.values()) {
-			if(chessPiece.player.equals(player) && (chessPiece.type.equals(type))) {
+			if(isSameChessPiece(chessPiece, player, type)) {
 				return chessPiece.image;
 			}
 		}
@@ -66,12 +66,16 @@ public enum ChessPiece {
 	}
 
 	public static ChessPiece getChessPiece(Player player, Type type) {
-		for(ChessPiece chess : ChessPiece.values()) {
-			if(chess.player.equals(player) && (chess.type.equals(type))) {
-				return chess;
+		for(ChessPiece chessPiece : ChessPiece.values()) {
+			if(isSameChessPiece(chessPiece, player, type)) {
+				return chessPiece;
 			}
 		}
 		throw new IllegalArgumentException("해당 체스 말을 찾을 수 없습니다.");
+	}
+
+	private static boolean isSameChessPiece(ChessPiece chessPiece, Player player, Type type) {
+		return (chessPiece.player.equals(player) && chessPiece.type.equals(type));
 	}
 
 	public String getImage() {

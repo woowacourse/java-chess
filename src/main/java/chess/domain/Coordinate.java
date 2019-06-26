@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Coordinate implements Comparable<Coordinate> {
-	private static final int MIN_BOUND = 1;
-	private static final int MAX_BOUND = 8;
+public class Coordinate {
+	public static final int MIN_BOUND = 1;
+	public static final int MAX_BOUND = 8;
 	private static final List<Coordinate> coordinates = new ArrayList<>();
 
 	private final int coordinate;
@@ -67,10 +67,5 @@ public class Coordinate implements Comparable<Coordinate> {
 		return "Coordinate{" +
 				"coordinate=" + coordinate +
 				'}';
-	}
-
-	@Override
-	public int compareTo(Coordinate o) {
-		return this.coordinate - o.coordinate;
 	}
 }

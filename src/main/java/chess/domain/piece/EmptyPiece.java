@@ -8,7 +8,7 @@ public class EmptyPiece extends Piece {
 	}
 
 	public static EmptyPiece valueOf(Player player, Position currentPosition) {
-		return new EmptyPiece(Player.EMPTY, Type.EMPTY, currentPosition);
+		return new EmptyPiece(player, Type.EMPTY, currentPosition);
 	}
 
 	@Override
