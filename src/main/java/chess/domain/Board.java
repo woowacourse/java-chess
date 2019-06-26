@@ -17,26 +17,6 @@ public class Board {
         this.pieces = new HashMap<>(pieces);
     }
 
-    //TODO 확인 후 삭제 return this 를 안해도 되는지..
-//    public Board move(Spot startSpot, Spot endSpot) {
-//        boolean x = isPieceMovement(startSpot, endSpot);
-//        if (isMovable(startSpot, endSpot) && x) {
-//            Piece selectedPiece = pieces.get(startSpot);
-//            Piece targetPiece = pieces.get(endSpot);
-//
-//            if (targetPiece.getPieceType() == PieceType.KING) {
-//                Team winnerTeam = selectedPiece.getTeam();
-//                pieces.replaceAll(((spot, piece) -> new King(winnerTeam)));
-//                return new Board(pieces);
-//            }
-//
-//            pieces.replace(endSpot, selectedPiece);
-//            pieces.replace(startSpot, Empty.getInstance());
-//            return new Board(pieces);
-//        }
-//        return this;
-//    }
-
     public Board move(Spot startSpot, Spot endSpot) {
         Piece selectedPiece = pieces.get(startSpot);
         Piece targetPiece = pieces.get(endSpot);
@@ -108,19 +88,6 @@ public class Board {
     public boolean teamCheck(Spot spot, Team team) {
         return pieces.get(spot).checkTeam(team);
     }
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Board board = (Board) o;
-//        return Objects.equals(pieces, board.pieces);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(pieces);
-//    }
 
     @Override
     public boolean equals(Object o) {
