@@ -78,4 +78,9 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(type, side);
     }
+
+    @Override
+    public String toString() {
+        return side.getSymbol() + type.getSymbol();
+    }
 }

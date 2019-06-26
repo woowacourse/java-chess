@@ -37,4 +37,12 @@ public class Board {
     public List<Piece> getPieces(Predicate<Piece> pieceCondition) {
         return board.values().stream().filter(pieceCondition).collect(Collectors.toList());
     }
+
+    public Map<String, String> createPieceMap() {
+        Map<String, String> pieceMap = new HashMap<>();
+        for (Map.Entry<Square, Piece> squarePieceEntry : board.entrySet()) {
+            pieceMap.put(squarePieceEntry.getKey().toString(), squarePieceEntry.getValue().toString());
+        }
+        return pieceMap;
+    }
 }

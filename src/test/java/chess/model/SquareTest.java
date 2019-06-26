@@ -9,7 +9,7 @@ class SquareTest {
     void of_생성_테스트() {
         for (Column column : Column.values()) {
             for (Row row : Row.values()) {
-                assertThat(Square.of(column, row).toString()).isEqualTo(column.toString() + row.toString());
+                assertThat(Square.of(column, row).toString()).isEqualTo(row.toString() + column.toString());
             }
         }
     }

@@ -60,6 +60,6 @@ public class Square {
 
     @Override
     public String toString() {
-        return column.toString() + row.toString();
+        return row.toString() + column.toString();
     }
 }
