@@ -3,6 +3,7 @@ package chess.domain.path;
 import chess.domain.board.Direction;
 import chess.domain.board.Square;
 import chess.domain.board.Vector;
+import chess.domain.board.Vectors;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -18,15 +19,13 @@ public class WhitePawnPath implements Path {
     }
 
     @Override
-    public Set<Vector> movableList(Square source) {
-        Set<Vector> movableList = new LinkedHashSet<>();
-        movableList.add(new Vector(source.moveUp(1), Direction.UP));
-        movableList.add(new Vector(source.moveUpRight(), Direction.UP_RIGHT));
-        movableList.add(new Vector(source.moveUpLeft(), Direction.UP_LEFT));
-        movableList.add(new Vector(source.moveUp(2), Direction.UP));
+    public Vectors movableArea(Square source) {
+        Vectors movableArea = new Vectors(new LinkedHashSet<>());
+        movableArea.add(new Vector(source.moveUp(1), Direction.UP));
+        movableArea.add(new Vector(source.moveUpRight(), Direction.UP_RIGHT));
+        movableArea.add(new Vector(source.moveUpLeft(), Direction.UP_LEFT));
+        movableArea.add(new Vector(source.moveUp(2), Direction.UP));
 
-        return movableList.stream()
-                .filter(vector -> !(vector.getSquare().equals(source)))
-                .collect(Collectors.toSet());
+        return movableArea.removeSource(source);
     }
 }

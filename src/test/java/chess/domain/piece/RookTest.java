@@ -20,8 +20,8 @@ public class RookTest {
 
     @Test
     void 룩_이동_위_오른쪽2() {
-        Set<Vector> movableSquares = rook.movableList(new Square(new XPosition("a"), new YPosition("1")));
-        Set<Vector> expectedSquares = new HashSet<>();
+        Vectors movableSquares = rook.movableArea(new Square(new XPosition("a"), new YPosition("1")));
+        Vectors expectedSquares = new Vectors(new HashSet<>());
         expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("2")), Direction.UP));
         expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("3")), Direction.UP));
         expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("4")), Direction.UP));
@@ -43,8 +43,8 @@ public class RookTest {
 
     @Test
     void 룩_이동_사방() {
-        Set<Vector> movableVectors = rook.movableList(new Square(new XPosition("c"), new YPosition("3")));
-        Set<Vector> expectedVectors = new HashSet<>();
+        Vectors movableVectors = rook.movableArea(new Square(new XPosition("c"), new YPosition("3")));
+        Vectors expectedVectors = new Vectors(new HashSet<>());
         //위
         expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("4")), Direction.UP));
         expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("5")), Direction.UP));

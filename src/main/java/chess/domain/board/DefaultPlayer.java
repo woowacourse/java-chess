@@ -31,14 +31,14 @@ public class DefaultPlayer implements Player {
 
     @Override
     public Set<Square> getKingPath() {
-        Set<Vector> set = new HashSet<>();
+        Vectors vectors = new Vectors(new HashSet<>());
         for (Map.Entry<Square, Piece> entry : pieces.entrySet()) {
             if (entry.getValue() instanceof King) {
-                set = entry.getValue().movableList(entry.getKey());
+                vectors = entry.getValue().movableArea(entry.getKey());
             }
         }
 
-        return set.stream().map(Vector::getSquare).collect(Collectors.toSet());
+        return vectors.generateSquares();
     }
 
     @Override

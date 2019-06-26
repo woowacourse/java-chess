@@ -75,7 +75,7 @@ public class GameTest {
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Set<Vector> moveList = game.moveList(new Square(new XPosition("b"), new YPosition("7")));
+        Vectors moveList = game.movableArea(new Square(new XPosition("b"), new YPosition("7")));
         List<Vector> expectedVectorList = Arrays.asList(
                 new Vector(new Square(new XPosition("a"), new YPosition("7")), Direction.LEFT),
                 new Vector(new Square(new XPosition("c"), new YPosition("7")), Direction.RIGHT),
@@ -88,7 +88,7 @@ public class GameTest {
                 new Vector(new Square(new XPosition("b"), new YPosition("3")), Direction.DOWN),
                 new Vector(new Square(new XPosition("b"), new YPosition("2")), Direction.DOWN));
 
-        Set<Vector> expectedVector = new HashSet<>(expectedVectorList);
+        Vectors expectedVector = new Vectors(new HashSet<>(expectedVectorList));
         assertThat(moveList).isEqualTo(expectedVector);
     }
 
@@ -111,12 +111,12 @@ public class GameTest {
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Set<Vector> moveList = game.moveList(new Square(new XPosition("b"), new YPosition("8")));
+        Vectors moveList = game.movableArea(new Square(new XPosition("b"), new YPosition("8")));
         List<Vector> expectedVectorList = Arrays.asList(
                 new Vector(new Square(new XPosition("c"), new YPosition("6")), Direction.NONE),
                 new Vector(new Square(new XPosition("d"), new YPosition("7")), Direction.NONE));
 
-        Set<Vector> expectedVector = new HashSet<>(expectedVectorList);
+        Vectors expectedVector = new Vectors(new HashSet<>(expectedVectorList));
         assertThat(moveList).isEqualTo(expectedVector);
     }
 
@@ -136,8 +136,8 @@ public class GameTest {
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Set<Vector> moveList = game.moveList(new Square(new XPosition("f"), new YPosition("6")));
-        Set<Vector> expected = new HashSet<>();
+        Vectors moveList = game.movableArea(new Square(new XPosition("f"), new YPosition("6")));
+        Vectors expected = new Vectors(new HashSet<>());
 
         expected.add(new Vector(new Square(new XPosition("g"), new YPosition("5")), Direction.DOWN_RIGHT));
         expected.add(new Vector(new Square(new XPosition("h"), new YPosition("4")), Direction.DOWN_RIGHT));
@@ -171,8 +171,8 @@ public class GameTest {
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Set<Vector> moveList = game.moveList(new Square(new XPosition("f"), new YPosition("6")));
-        Set<Vector> expected = new HashSet<>();
+        Vectors moveList = game.movableArea(new Square(new XPosition("f"), new YPosition("6")));
+        Vectors expected = new Vectors(new HashSet<>());
 
         expected.add(new Vector(new Square(new XPosition("g"), new YPosition("5")), Direction.DOWN_RIGHT));
         expected.add(new Vector(new Square(new XPosition("h"), new YPosition("4")), Direction.DOWN_RIGHT));
@@ -208,7 +208,6 @@ public class GameTest {
     void 킹_움직임_경우의수() {
         Piece king = King.blackCreate();
         Piece rook2 = Rook.blackCreate();
-        Piece rook3 = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
         black.put(new Square(new XPosition("b"), new YPosition("2")), king);
         black.put(new Square(new XPosition("b"), new YPosition("1")), rook2);
@@ -223,8 +222,8 @@ public class GameTest {
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Set<Vector> moveList = game.moveList(new Square(new XPosition("b"), new YPosition("2")));
-        Set<Vector> expected = new HashSet<>();
+        Vectors moveList = game.movableArea(new Square(new XPosition("b"), new YPosition("2")));
+        Vectors expected = new Vectors(new HashSet<>());
 
         expected.add(new Vector(new Square(new XPosition("a"), new YPosition("1")), Direction.DOWN_LEFT));
 

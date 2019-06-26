@@ -23,8 +23,8 @@ public class PawnTest {
 
     @Test
     void 화이트_폰_이동가능영역() {
-        Set<Vector> movableVector = wPawn.movableList(new Square(new XPosition("a"), new YPosition("2")));
-        Set<Vector> expectedVector = new HashSet<>();
+        Vectors movableVector = wPawn.movableArea(new Square(new XPosition("a"), new YPosition("2")));
+        Vectors expectedVector = new Vectors(new HashSet<>());
         expectedVector.add(new Vector(new Square(new XPosition("a"), new YPosition("3")), Direction.UP));
         expectedVector.add(new Vector(new Square(new XPosition("a"), new YPosition("4")), Direction.UP));
         expectedVector.add(new Vector(new Square(new XPosition("b"), new YPosition("3")), Direction.UP_RIGHT));
@@ -34,8 +34,8 @@ public class PawnTest {
 
     @Test
     void 블랙_폰_이동가능영역() {
-        Set<Vector> movableVector = bPawn.movableList(new Square(new XPosition("a"), new YPosition("7")));
-        Set<Vector> expectedVector = new HashSet<>();
+        Vectors movableVector = bPawn.movableArea(new Square(new XPosition("a"), new YPosition("7")));
+        Vectors expectedVector = new Vectors(new HashSet<>());
         expectedVector.add(new Vector(new Square(new XPosition("a"), new YPosition("6")), Direction.DOWN));
         expectedVector.add(new Vector(new Square(new XPosition("b"), new YPosition("6")), Direction.DOWN_RIGHT));
         expectedVector.add(new Vector(new Square(new XPosition("a"), new YPosition("5")), Direction.DOWN));
@@ -45,8 +45,8 @@ public class PawnTest {
 
     @Test
     void 화이트_폰_7번행() {
-        Set<Vector> movableVector = wPawn.movableList(new Square(new XPosition("a"), new YPosition("7")));
-        Set<Vector> expectedVector = new HashSet<>();
+        Vectors movableVector = wPawn.movableArea(new Square(new XPosition("a"), new YPosition("7")));
+        Vectors expectedVector = new Vectors(new HashSet<>());
         expectedVector.add(new Vector(new Square(new XPosition("a"), new YPosition("8")), Direction.UP));
         expectedVector.add(new Vector(new Square(new XPosition("b"), new YPosition("8")), Direction.UP_RIGHT));
 
@@ -55,8 +55,8 @@ public class PawnTest {
 
     @Test
     void 블랙_폰_2번행() {
-        Set<Vector> movableVector = bPawn.movableList(new Square(new XPosition("a"), new YPosition("2")));
-        Set<Vector> expectedVector = new HashSet<>();
+        Vectors movableVector = bPawn.movableArea(new Square(new XPosition("a"), new YPosition("2")));
+        Vectors expectedVector = new Vectors(new HashSet<>());
         expectedVector.add(new Vector(new Square(new XPosition("a"), new YPosition("1")), Direction.DOWN));
         expectedVector.add(new Vector(new Square(new XPosition("b"), new YPosition("1")), Direction.DOWN_RIGHT));
 

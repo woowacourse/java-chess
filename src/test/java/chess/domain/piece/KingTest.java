@@ -20,8 +20,8 @@ public class KingTest {
 
     @Test
     void 이동() {
-        Set<Vector> movableVectors = king.movableList(new Square(new XPosition("c"), new YPosition("3")));
-        Set<Vector> expectedVectors = new HashSet<>();
+        Vectors movableVectors = king.movableArea(new Square(new XPosition("c"), new YPosition("3")));
+        Vectors expectedVectors = new Vectors(new HashSet<>());
         //위
         expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("4")), Direction.UP));
 
@@ -44,8 +44,8 @@ public class KingTest {
 
     @Test
     void 이동_구석() {
-        Set<Vector> movableVectors = king.movableList(new Square(new XPosition("a"), new YPosition("1")));
-        Set<Vector> expectedVectors = new HashSet<>();
+        Vectors movableVectors = king.movableArea(new Square(new XPosition("a"), new YPosition("1")));
+        Vectors expectedVectors = new Vectors(new HashSet<>());
         //위
         expectedVectors.add(new Vector(new Square(new XPosition("a"), new YPosition("2")), Direction.UP));
 

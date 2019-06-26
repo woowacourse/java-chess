@@ -3,6 +3,7 @@ package chess.domain.path;
 import chess.domain.board.Direction;
 import chess.domain.board.Square;
 import chess.domain.board.Vector;
+import chess.domain.board.Vectors;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -18,15 +19,13 @@ public class BlackPawnPath implements Path {
     }
 
     @Override
-    public Set<Vector> movableList(Square source) {
-        Set<Vector> movableList = new LinkedHashSet<>();
-        movableList.add(new Vector(source.moveDown(1), Direction.DOWN));
-        movableList.add(new Vector(source.moveDownRight(), Direction.DOWN_RIGHT));
-        movableList.add(new Vector(source.moveDownLeft(), Direction.DOWN_LEFT));
-        movableList.add(new Vector(source.moveDown(2), Direction.DOWN));
+    public Vectors movableArea(Square source) {
+        Vectors movableArea = new Vectors(new LinkedHashSet<>());
+        movableArea.add(new Vector(source.moveDown(1), Direction.DOWN));
+        movableArea.add(new Vector(source.moveDownRight(), Direction.DOWN_RIGHT));
+        movableArea.add(new Vector(source.moveDownLeft(), Direction.DOWN_LEFT));
+        movableArea.add(new Vector(source.moveDown(2), Direction.DOWN));
 
-        return movableList.stream()
-                .filter(vector -> !(vector.getSquare().equals(source)))
-                .collect(Collectors.toSet());
+        return movableArea.removeSource(source);
     }
 }

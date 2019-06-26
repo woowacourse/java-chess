@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Square;
 import chess.domain.board.Vector;
+import chess.domain.board.Vectors;
 import chess.domain.board.YPosition;
 import chess.domain.path.BlackPawnPath;
 import chess.domain.path.Path;
@@ -27,28 +28,18 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<Vector> movableList(Square source) {
-        Set<Vector> movableList = super.movableList(source);
+    public Vectors movableArea(Square source) {
+        Vectors movableArea =  super.movableArea(source);
 
         if (!source.isSameY(new YPosition("2")) && getColor().equals(PieceColor.WHITE)) {
-            Set<Vector> target = movableList.stream()
-                    .filter(vector -> vector.getSquare().equals(source.moveUp(2)))
-                    .collect(Collectors.toSet());
-
-            movableList.removeAll(target);
-            return movableList;
+            return movableArea.removeSource(source.moveUp(2));
         }
 
         if (!source.isSameY(new YPosition("7")) && getColor().equals(PieceColor.BLACK)) {
-            Set<Vector> target = movableList.stream()
-                    .filter(vector -> vector.getSquare().equals(source.moveDown(2)))
-                    .collect(Collectors.toSet());
-
-            movableList.removeAll(target);
-            return movableList;
+            return movableArea.removeSource(source.moveDown(2));
         }
 
-        return movableList;
+        return movableArea;
     }
 
     @Override

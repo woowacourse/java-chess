@@ -3,6 +3,7 @@ package chess.domain.path;
 import chess.domain.board.Direction;
 import chess.domain.board.Square;
 import chess.domain.board.Vector;
+import chess.domain.board.Vectors;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,8 +18,8 @@ public class QueenPath implements Path {
     }
 
     @Override
-    public Set<Vector> movableList(Square source) {
-        Set<Vector> movableList = new HashSet<>();
+    public Vectors movableArea(Square source) {
+        Vectors movableList = new Vectors(new HashSet<>());
         for (Square square : source.moveUpToEnd()) {
             movableList.add(new Vector(square, Direction.UP));
         }

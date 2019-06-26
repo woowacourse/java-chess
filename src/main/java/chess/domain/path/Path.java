@@ -2,9 +2,10 @@ package chess.domain.path;
 
 import chess.domain.board.Square;
 import chess.domain.board.Vector;
+import chess.domain.board.Vectors;
 
 import java.util.Set;
 
 public interface Path {
-    Set<Vector> movableList(Square source);
+    Vectors movableArea(Square source);
 }

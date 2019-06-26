@@ -6,15 +6,13 @@ import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 
-import java.util.Set;
-
 public class MovableController {
 
     public static Object init(Request request, Response response) {
         Game game = request.session().attribute("game");
 
         MovableDto movableDto = new Gson().fromJson(request.body(), MovableDto.class);
-        Set<Vector> set = game.moveList(movableDto.getSrc());
+        Vectors set = game.movableArea(movableDto.getSrc());
 
         request.session().attribute("game", game);
         return new Gson().toJson(set);

@@ -20,8 +20,8 @@ public class QueenTest {
 
     @Test
     void movablelist() {
-        Set<Vector> movableList = queen.movableList(new Square(new XPosition("f"), new YPosition("6")));
-        Set<Vector> expected = new HashSet<>();
+        Vectors movableList = queen.movableArea(new Square(new XPosition("f"), new YPosition("6")));
+        Vectors expected = new Vectors(new HashSet<>());
 
         expected.add(new Vector(new Square(new XPosition("g"), new YPosition("7")), Direction.UP_RIGHT));
         expected.add(new Vector(new Square(new XPosition("h"), new YPosition("8")), Direction.UP_RIGHT));

@@ -27,6 +27,14 @@ public class Vector {
                 .collect(Collectors.toSet());
     }
 
+    public Vectors generateVectors() {
+        Set<Square> squares = direction.getList(this.square);
+        Set<Vector> vectorSet =  squares.stream()
+                .map(square -> new Vector(square, direction))
+                .collect(Collectors.toSet());
+        return new Vectors(vectorSet);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
