@@ -74,16 +74,27 @@ public class ChessRoundDao {
         return Integer.parseInt((String) result.get("turn"));
     }
 
-    public void updateTurnByRoundId(int roundId, int turn) {
+    public int selectLastRoundId() {
+        String query = "SELECT id FROM round ORDER BY id DESC LIMIT 1";
+        JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
 
-        int changedTurn = (turn + 1) % 2;
-        String query = "UPDATE chess_log SET ? WHERE roundId = ?";
+        List<Map<String, Object>> results = jdbcTemplate.executeQuery(query);
+
+        if (results.size() < 1) {
+            return 0;
+        }
+
+        Map<String, Object> result = results.get(0);
+        return Integer.parseInt((String) result.get("id"));
+    }
+
+    public void insertRound(int roundId) {
+        String query = "INSERT INTO round (id) VALUES (?)";
+        JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
 
         List<Object> queryValues = new ArrayList<>();
-        queryValues.add(turn);
         queryValues.add(roundId);
 
-        JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
         jdbcTemplate.executeUpdate(query, queryValues);
     }
 }

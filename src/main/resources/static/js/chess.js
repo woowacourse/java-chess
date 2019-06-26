@@ -27,9 +27,28 @@ function appendChessBlock() {
     }
 }
 
+function requestChessScores() {
+    axios.get("/chessScore")
+        .then(function (response) {
+            var blackScore = response.data.blackScore;
+            var whiteScore = response.data.whiteScore;
+            document.querySelectorAll(".chess-block").forEach(function (v) {
+                v.disabled = true;
+            });
+            var result = "Black Team: " + blackScore + ", White Team: " + whiteScore;
+            alert(result);
+        })
+        .catch(alertError);
+}
+
 function requestChessPieces() {
     axios.get("/chessBoard")
-        .then(mapChessPieces)
+        .then(function (response) {
+            mapChessPieces(response);
+            if (response.data.isGameOver) {
+                requestChessScores();
+            }
+        })
         .catch(alertError);
 }
 
@@ -40,7 +59,12 @@ function postChessPieceMoving(source, target) {
         targetY: parseInt(target[0]),
         targetX: parseInt(target[1])
     })
-        .then(mapChessPieces)
+        .then(function(response){
+            mapChessPieces(response);
+            if (response.data.isGameOver) {
+                requestChessScores();
+            }
+        })
         .catch(alertError);
 }
 
@@ -77,13 +101,12 @@ function alertError(error) {
 }
 
 function mapChessPieces(response) {
-    if(response.data === "error"){
+    if (response.data === "error") {
         return;
     }
-    console.log(response)
 
     var chessPieces = response.data;
-    for (var i=0,len=chessPieces.rows.length;i<len;i++) {
+    for (var i = 0, len = chessPieces.rows.length; i < len; i++) {
         var row = chessPieces.rows[i];
         for (var j = 0; j < 8; j++) {
             document.querySelector("#chess-block" + i + j).innerText = chessPieceUnicodeMap[row[j]];
@@ -91,7 +114,18 @@ function mapChessPieces(response) {
     }
 }
 
+function newGame(){
+    axios.post("/newRound")
+        .then(function(response){
+            document.querySelector("#chess-block-area").innerHTML = "";
+            appendChessBlock();
+            mapChessPieces(response);
+        })
+        .catch(alertError)
+}
+
 window.addEventListener("load", function () {
     appendChessBlock();
     requestChessPieces();
+    document.querySelector("#restart-button").addEventListener(("click"), newGame);
 });

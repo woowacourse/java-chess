@@ -42,7 +42,7 @@ public class ChessAssembler {
             rows.add(row.toString());
         }
 
-        return new ChessBoardDto(rows);
+        return new ChessBoardDto(rows, chessBoard.isGameOver());
     }
 
     private static void appendChessPiece(Map<Position, ChessPiece> board, int i, StringBuilder row) {

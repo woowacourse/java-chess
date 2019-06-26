@@ -13,11 +13,9 @@
 
     </div>
 
-    <div>
-        <button type="button" id="register-button" class="btn btn-info" disabled>
-            결과보기
-        </button>
-    </div>
+    <button type="button" id="restart-button" class="btn btn-info">
+        재시작
+    </button>
 </div>
 <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -29,6 +27,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous">
+</script>
+
+<script type="rv-template" id="round-template">
+    <option class="rounds" value={roundId} >{roundId}회차</option>
 </script>
 <script type="text/javascript" src="/js/chess.js" charset="utf-8"></script>
 <script type="rv-template" id="chess-row-template">

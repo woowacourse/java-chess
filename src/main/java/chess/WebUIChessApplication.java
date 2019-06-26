@@ -18,7 +18,8 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            req.session().attribute("roundId", 0);
+            int roundId = ChessService.getInstance().getLastRoundId();
+            req.session().attribute("roundId", roundId);
             return render(model, "index.html");
         });
 
@@ -43,6 +44,22 @@ public class WebUIChessApplication {
             }
         }));
 
+        get("/chessScore", ((request, response) -> {
+            Gson gson = new Gson();
+
+            int roundId = request.session().attribute("roundId");
+
+            return gson.toJson(ChessService.getInstance().getChessScore(roundId));
+        }));
+
+        post("/newRound", ((request, response) -> {
+            Gson gson = new Gson();
+            int roundId = request.session().attribute("roundId");
+            roundId++;
+            ChessService.getInstance().addRound(roundId);
+            request.session().attribute("roundId", roundId);
+            return gson.toJson(ChessService.getInstance().getChessBoardDTO(roundId));
+        }));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
