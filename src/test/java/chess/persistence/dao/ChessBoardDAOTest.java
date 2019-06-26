@@ -30,7 +30,7 @@ class ChessBoardDAOTest {
         ChessBoardDTO testDTO = new ChessBoardDTO();
         testDTO.setRoundNo(7);
 
-        assertThat(ChessBoardDAO.getInstance().findByMaxRound()).isEqualTo(testDTO);
+        assertThat(ChessBoardDAO.getInstance().findMaxRoundByGameId(1)).isEqualTo(testDTO);
     }
 
     private ChessBoardDTO boardStatusDTO(){

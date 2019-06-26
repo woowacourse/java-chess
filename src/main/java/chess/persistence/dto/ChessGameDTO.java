@@ -15,7 +15,7 @@ public class ChessGameDTO {
         this.gameId = gameId;
     }
 
-    public boolean isGameStatus() {
+    public boolean getGameStatus() {
         return gameStatus;
     }
 

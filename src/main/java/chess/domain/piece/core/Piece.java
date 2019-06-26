@@ -7,9 +7,9 @@ import chess.domain.direction.core.Square;
 import java.util.Objects;
 
 public abstract class Piece {
+    protected Navigator navigator;
     Team team;
     Type type;
-    protected Navigator navigator;
 
     public Piece(Team team, Type type) {
         this(team, type, null);
@@ -49,7 +49,7 @@ public abstract class Piece {
         return team;
     }
 
-    public Type getType(){
+    public Type getType() {
         return type;
     }
 

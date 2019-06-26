@@ -18,9 +18,9 @@ import static chess.domain.piece.core.Team.BLACK;
 import static chess.domain.piece.core.Team.WHITE;
 
 public class Board {
-    private Map<Square, Piece> board;
     static final int MIN_SIZE = 0;
     static final int MAX_SIZE = 8;
+    private Map<Square, Piece> board;
     private Team team;
 
     public Board(Map<Square, Piece> board, Team team) {
@@ -69,19 +69,27 @@ public class Board {
     }
 
     public Board changeBoard(Route route) {
+        Piece selectedPiece = board.get(route.getSourceSquare());
+        if (!selectedPiece.isTeam(team)) {
+            throw new IllegalArgumentException(team.getTeam() + "팀의 말만 움직일 수 있습니다.");
+        }
         if (!route.canMove(this)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(selectedPiece.toString() + "말을 움직일 수 없습니다.");
         }
         return movePiece(route.getSourceSquare(), route.getTargetSquare());
     }
 
-    Board movePiece(Square source, Square target) {
+    public Board movePiece(Square source, Square target) {
         Map<Square, Piece> copyBoard = board.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         copyBoard.put(target, copyBoard.get(source).move());
         copyBoard.remove(source);
 
         return drawBoard(copyBoard, team.equals(WHITE) ? BLACK : WHITE);
+    }
+
+    public Team getTeam() {
+        return this.team;
     }
 
     public Map<Square, Piece> getBoard() {

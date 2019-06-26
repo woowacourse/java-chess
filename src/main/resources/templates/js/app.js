@@ -1,20 +1,20 @@
 const piece = {
-  white_k: '&#9812;',
-  white_q: '&#9813;',
-  white_r: '&#9814;',
-  white_b: '&#9815;',
-  white_n: '&#9816;',
-  white_p: '&#9817;',
-  white_mp: '&#9817;',
-  black_k: '&#9818;',
-  black_q: '&#9819;',
-  black_r: '&#9820;',
-  black_b: '&#9821;',
-  black_n: '&#9822;',
-  black_p: '&#9823;',
-  black_mp: '&#9823;',
-  empty: '&#x20;'
-}
+    WHITE_KING: '&#9812;',
+    WHITE_QUEEN: '&#9813;',
+    WHITE_ROOK: '&#9814;',
+    WHITE_BISHOP: '&#9815;',
+    WHITE_KNIGHT: '&#9816;',
+    WHITE_PAWN: '&#9817;',
+    WHITE_MOVEDPAWN: '&#9817;',
+    BLACK_KING: '&#9818;',
+    BLACK_QUEEN: '&#9819;',
+    BLACK_ROOK: '&#9820;',
+    BLACK_BISHOP: '&#9821;',
+    BLACK_KNIGHT: '&#9822;',
+    BLACK_PAWN: '&#9823;',
+    BLACK_MOVEDPAWN: '&#9823;',
+    EMPTY: '&#x20;'
+};
 
 const chessGame = {
   move: {
@@ -37,15 +37,17 @@ const chessGame = {
   set board(boardVal) {
     for (let x = 0; x < 8; x++) {
       for (let y = 0; y < 8; y++) {
+          let queryName = `Square{x=${x}, y=${y}}`;
         let query = `${x},${y}`;
         let el = document.querySelector(`div[data-square="${query}"]`);
-        if (boardVal[query] !== undefined) {
-          let team = boardVal[query]['team'];
-          let type = boardVal[query]['type'];
+          el.dataset.name = queryName;
+          if (boardVal[queryName] !== undefined) {
+              let team = boardVal[queryName]['team'];
+              let type = boardVal[queryName]['type'];
           let pieceQuery = `${team}_${type}`;
           el.innerHTML = piece[pieceQuery];
         } else {
-          el.innerHTML = piece['empty'];
+              el.innerHTML = piece['EMPTY'];
         }
       }
     }
@@ -77,44 +79,28 @@ const chessGame = {
   set winner(winnerVal) {
     this._winner = winnerVal;
   }
+};
+
+function requestBoard() {
+    $.ajax({
+        method: "GET",
+        url: "/chessGame",
+        contentType: 'application/json; charset=utf-8',
+        dataType: "json"
+    })
+        .done(function (data) {
+            if (!data.message) {
+                chessGame.board = data.board;
+                console.log(chessGame.board);
+            } else {
+                alert(data.message);
+            }
+        });
 }
 
+let outputData;
 window.onload = function () {
-  let initBoard = {
-    '0,0': {
-      team: 'black',
-      type: 'r'
-    },
-    '1,0': {
-      team: 'black',
-      type: 'n'
-    },
-    '2,0': {
-      team: 'black',
-      type: 'b'
-    },
-    '3,0': {
-      team: 'black',
-      type: 'q'
-    },
-    '4,0': {
-      team: 'black',
-      type: 'k'
-    },
-    '5,0': {
-      team: 'black',
-      type: 'b'
-    },
-    '6,0': {
-      team: 'black',
-      type: 'n'
-    },
-    '7,0': {
-      team: 'black',
-      type: 'r'
-    },
-  };
-  chessGame.board = initBoard;
+    requestBoard();
   const inputSource = document.querySelector('input[data-name="source"]');
   const inputTarget = document.querySelector('input[data-name="target"]');
   const btnReset = document.querySelector('input[data-btn="reset"]');
@@ -140,15 +126,23 @@ window.onload = function () {
   btnMove.addEventListener('click', function () {
     $.ajax({
       method: "POST",
-      url: "/move",
+        url: "/chessGame",
       contentType: 'application/json; charset=utf-8',
       dataType: "json",
-      data: JSON.stringify(chessGame)
+        data: JSON.stringify({
+            sourceX: chessGame.move.source.split(',')[0],
+            sourceY: chessGame.move.source.split(',')[1],
+            targetX: chessGame.move.target.split(',')[0],
+            targetY: chessGame.move.target.split(',')[1],
+        })
     })
         .done(function (data) {
-          outputData = data;
-          console.log(data);
+            if (!data.message) {
+                chessGame.board = data.board;
+                console.log(chessGame.board);
+            } else {
+                alert(data.message);
+            }
         });
-    console.log('move');
   });
-}
+};
