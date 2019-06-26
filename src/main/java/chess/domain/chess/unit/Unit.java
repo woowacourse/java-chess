@@ -18,8 +18,6 @@ abstract public class Unit {
 
     public abstract boolean validateDirection(Vector vector);
 
-    public abstract double score();
-
     public boolean isEqualTeam(Unit unit) {
         return this.team.equals(unit.team);
     }

@@ -11,7 +11,6 @@ import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,7 +20,6 @@ public class ChessGame {
 
     public ChessGame(Initializer initializer) {
         this.units = initializer.create();
-
         this.present = initializer.createTeam();
 
     }
@@ -83,61 +81,6 @@ public class ChessGame {
         validateInterception(source, target);
         units.put(target, units.get(source));
         units.remove(source);
-    }
-
-    public Map<Team, Double> sumScore() {
-        Map<Team, Double> scoreInfo = new HashMap<>();
-
-        for (Team team : Team.values()) {
-            scoreInfo.put(team, sumScore(team));
-        }
-
-        return scoreInfo;
-    }
-
-    private Double sumScore(Team team) {
-        double sum = 0;
-
-        for (Position position : units.keySet()) {
-            sum += singleUnitScore(team, position);
-        }
-        sum += sumPawnScore(team);
-
-        return sum;
-    }
-
-    private double singleUnitScore(Team team, Position position) {
-        if (units.get(position).getTeam() == team &&
-                (!(units.get(position) instanceof Pawn))) {
-            return units.get(position).score();
-        }
-        return 0;
-    }
-
-    public Double sumPawnScore(Team team) {
-        double sum = 0;
-
-        for (int y = Position.MIN_POSITION; y < Position.MAX_POSITION; y++) {
-            long numOfPawns = getNumberOfPawnsByColumn(y, team);
-            sum += numOfPawns * ratio(numOfPawns);
-        }
-
-        return sum;
-    }
-
-    private long getNumberOfPawnsByColumn(int x, Team team) {
-        return units.keySet().stream()
-                .filter(key -> key.getX() == x)
-                .filter(key -> units.get(key) instanceof Pawn)
-                .filter(key -> units.get(key).getTeam() == team)
-                .count();
-    }
-
-    private double ratio(long count) {
-        if (count < 2) {
-            return 1;
-        }
-        return 0.5;
     }
 
     public Map<Position, Unit> getUnits() {

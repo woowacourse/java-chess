@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.chess.ChessGame;
 import chess.domain.chess.Team;
+import chess.domain.chess.UnitScoreBoard;
 import chess.domain.chess.exception.PawnIllegalMovingRuleException;
 import chess.domain.chess.exception.SameTeamTargetUnitException;
 import chess.domain.chess.exception.UnitInterceptionAlongPathException;
@@ -327,7 +328,8 @@ public class ChessGameTest {
     @Test
     void 최초_점수_계산() {
         ChessGame chessGame = new ChessGame(new ChessBoardInitializer());
-        Map<Team, Double> scoreInfo = chessGame.sumScore();
+        UnitScoreBoard unitScoreBoard = new UnitScoreBoard(chessGame.getUnits());
+        Map<Team, Double> scoreInfo = unitScoreBoard.sumScore();
 
         assertThat(scoreInfo.get(Team.BLACK)).isEqualTo(38.0);
     }
@@ -346,9 +348,10 @@ public class ChessGameTest {
         Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessGame chessGame = new ChessGame(testInitializer);
-        Map<Team, Double> score = chessGame.sumScore();
+        UnitScoreBoard unitScoreBoard = new UnitScoreBoard(chessGame.getUnits());
+        Map<Team, Double> scoreInfo = unitScoreBoard.sumScore();
 
-        assertThat(score.get(Team.WHITE))
+        assertThat(scoreInfo.get(Team.WHITE))
                 .isEqualTo(12.5);
     }
 }

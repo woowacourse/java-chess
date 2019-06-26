@@ -11,7 +11,6 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class King extends Unit {
-    private static final double SCORE = UnitInformation.KING.score();
     private static List<Direction> directions;
 
     static {
@@ -27,11 +26,6 @@ public class King extends Unit {
     public boolean validateDirection(Vector another) {
         return directions.stream()
                 .anyMatch(direction -> direction.isEqualTo(another));
-    }
-
-    @Override
-    public double score() {
-        return SCORE;
     }
 
     @Override

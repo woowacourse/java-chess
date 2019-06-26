@@ -9,9 +9,6 @@ import chess.domain.geometric.Vector;
 import java.util.List;
 
 public class Pawn extends Unit {
-    private static final double SCORE = UnitInformation.PAWN.score();
-
-
     private static List<Direction> whiteDirections;
     private static List<Direction> blackDirections;
 
@@ -52,11 +49,6 @@ public class Pawn extends Unit {
     private boolean validateDirection(List<Direction> directions, Vector vector) {
         return directions.stream()
                 .anyMatch(direction -> direction.isEqualTo(vector));
-    }
-
-    @Override
-    public double score() {
-        return SCORE;
     }
 
     @Override

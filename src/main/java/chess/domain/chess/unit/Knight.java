@@ -6,7 +6,6 @@ import chess.domain.geometric.Vector;
 import chess.util.DoubleCompare;
 
 public class Knight extends Unit {
-    private static final Double SCORE = UnitInformation.KNIGHT.score();
     private static final Double KNIGHT_LENGTH = Math.sqrt(5);
 
     public Knight(Team team) {
@@ -18,10 +17,6 @@ public class Knight extends Unit {
         return DoubleCompare.deltaCompare(vector.calculateDistance(), KNIGHT_LENGTH);
     }
 
-    @Override
-    public double score() {
-        return SCORE;
-    }
 
     @Override
     public String toString() {
