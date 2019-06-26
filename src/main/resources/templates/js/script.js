@@ -181,3 +181,18 @@ let drawBoard = (e) => {
 	$('.modal').hide();
 	board1.position(e);
 };
+
+let getScore =() =>{
+	axios({
+		method: 'get',
+		url: '/api/game/score/'+thisGame.round
+	}).then(function(response) {
+		$('#score').show();
+		$('#whiteScore').text(response.data.result.whiteScore);
+		$('#blackScore').text(response.data.result.blackScore);
+		setTimeout(function(){
+			$('#score').hide();
+		},2000)
+
+	});
+}
