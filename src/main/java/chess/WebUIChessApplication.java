@@ -1,22 +1,35 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.BoardController;
+import chess.controller.GameController;
+import chess.controller.HomeController;
+import chess.controller.ScoreController;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
+        staticFiles.location("static");
+        externalStaticFileLocation("src/main/resources/templates");
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        HomeController homeController = HomeController.getInstance();
+        get(HomeController.URL, homeController::get);
+        post(HomeController.URL, homeController::post);
+
+        GameController gameController = GameController.getInstance();
+        get(GameController.URL, gameController::get);
+        post(GameController.URL, gameController::post);
+
+        BoardController boardController = BoardController.getInstance();
+        get(boardController.URL, boardController::get);
+
+        ScoreController scoreController = ScoreController.getInstance();
+        get(ScoreController.URL, scoreController::get);
+
+        exception(Exception.class, (e, req, res) -> {
+            System.out.println("오류###발생");
+            e.printStackTrace();
+            res.body("오류: " + e.getMessage());
+        });
     }
 }
