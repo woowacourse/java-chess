@@ -11,6 +11,9 @@ import chess.exception.UnmovableException;
 public class ChessBoard {
     private static final int MIN_BOUND = 1;
     private static final int MAX_BOUND = 8;
+    private static final int PAWN_NORMAL_SCORE_COUNT = 1;
+    private static final double PAWN_NORMAL_SCORE = 1.0;
+    private static final double PAWN_SPECIAL_SCORE = 0.5;
 
     private final List<Piece> pieces;
 
@@ -86,7 +89,7 @@ public class ChessBoard {
         Score score = new Score(0);
         List<Piece> pawns = getPawn(player);
 
-        for (int i = 1; i <= 8; i++) {
+        for (int i = MIN_BOUND; i <= MAX_BOUND; i++) {
             score = score.add(getXScore(pawns, i));
         }
         return score;
@@ -103,10 +106,10 @@ public class ChessBoard {
                 .filter(piece -> piece.isSameCoordinateX(x))
                 .count();
 
-        if (count == 1) {
-            return new Score(1);
+        if (count == PAWN_NORMAL_SCORE_COUNT) {
+            return new Score(PAWN_NORMAL_SCORE);
         }
-        return new Score(count * 0.5);
+        return new Score(count * PAWN_SPECIAL_SCORE);
     }
 
     public List<Piece> getPieces() {
