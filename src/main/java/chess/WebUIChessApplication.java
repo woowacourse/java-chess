@@ -1,24 +1,41 @@
 package chess;
 
+import chess.dao.ChessDAO;
+import chess.database.DBConnector;
 import chess.domain.ChessGame;
 import chess.domain.Team;
-import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.view.WebInputParser;
 import chess.domain.view.WebOutputView;
+import chess.dto.ChessDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
+    private static Connection conn = DBConnector.getConnection();
+    private static ChessDAO chessDAO = new ChessDAO(conn);
+    private static ChessGame chessGame;
+
     public static void main(String[] args) {
         staticFiles.location("/templates");
 
-        ChessGame chessGame = new ChessGame();
+        try {
+            if (chessDAO.isTableEmpty()) {
+                chessGame = new ChessGame();
+            } else {
+                chessGame = chessDAO.findChessGame();
+                chessDAO.deleteChessGame();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -28,10 +45,13 @@ public class WebUIChessApplication {
         get("/first", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
-                model.put("turn", WebOutputView.printTurn(chessGame.getTeam()));
+                model.put("turn", WebOutputView.printTurn(chessGame.getTurn()));
                 model.put("blackscore", chessGame.getStatus(Team.BLACK));
                 model.put("whitescore", chessGame.getStatus(Team.WHITE));
                 model.put("board", WebOutputView.printBoard(chessGame.getBoard()));
+
+                ChessDTO chessDTO = chessGame.toDTO();
+                chessDAO.addChessGame(chessDTO);
             } catch (Exception e) {
                 model.put("error", e.getMessage());
                 return render(model, "error.html");
@@ -48,11 +68,16 @@ public class WebUIChessApplication {
 
                 chessGame.play(source, target);
                 if (chessGame.isGameEnd()) {
-                    model.put("winner", WebOutputView.printTurn(Team.switchTeam(chessGame.getTeam())));
+                    model.put("winner", WebOutputView.printTurn(Team.switchTeam(chessGame.getTurn())));
+                    chessDAO.deleteChessGame();
+                    chessGame = new ChessGame();
                     return render(model, "winner.html");
                 }
 
-                model.put("turn", WebOutputView.printTurn(chessGame.getTeam()));
+                ChessDTO chessDTO = chessGame.toDTO();
+                chessDAO.updateChessGame(chessDTO);
+
+                model.put("turn", WebOutputView.printTurn(chessGame.getTurn()));
                 model.put("blackscore", chessGame.getStatus(Team.BLACK));
                 model.put("whitescore", chessGame.getStatus(Team.WHITE));
                 model.put("board", WebOutputView.printBoard(chessGame.getBoard()));

@@ -11,20 +11,27 @@ import java.util.Map;
 public class BoardCreator {
     private static final int MIN_BOARD_COORDINATE = 1;
     private static final int MAX_BOARD_COORDINATE = 8;
-    private static final int MIN_BLANK_COORDINATE = 3;
-    private static final int MAX_BLANK_COORDINATE = 6;
 
     public static Map<Position, Piece> initialize() {
         Map<Position, Piece> boardState = new HashMap<>();
+        initializeBlank(boardState);
         initializeRook(boardState);
         initializeKnight(boardState);
         initializeBishop(boardState);
         initializeQueen(boardState);
         initializeKing(boardState);
         initializePawn(boardState);
-        initializeBlank(boardState);
 
         return boardState;
+    }
+
+    public static void initializeBlank(Map<Position, Piece> boardState) {
+        for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
+            for (int j = MIN_BOARD_COORDINATE; j <= MAX_BOARD_COORDINATE; j++) {
+                Position position = PositionManager.getMatchPosition(i, j);
+                boardState.put(position, new Blank(position, Team.BLANK));
+            }
+        }
     }
 
     private static void initializeRook(Map<Position, Piece> boardState) {
@@ -86,15 +93,6 @@ public class BoardCreator {
             boardState.put(position, new Pawn(position, Team.WHITE));
             position = PositionManager.getMatchPosition(i, 7);
             boardState.put(position, new Pawn(position, Team.BLACK));
-        }
-    }
-
-    private static void initializeBlank(Map<Position, Piece> boardState) {
-        for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
-            for (int j = MIN_BLANK_COORDINATE; j <= MAX_BLANK_COORDINATE; j++) {
-                Position position = PositionManager.getMatchPosition(i, j);
-                boardState.put(position, new Blank(position, Team.BLANK));
-            }
         }
     }
 }

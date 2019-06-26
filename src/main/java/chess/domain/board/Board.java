@@ -6,6 +6,7 @@ import chess.domain.pieces.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -15,11 +16,18 @@ public class Board {
     private static final int DISTANCE_FOR_FORWARD = 1;
 
     private Map<Position, Piece> boardState;
-    private boolean isKingDead;
+    private boolean isKingDead = false;
 
     public Board() {
         this.boardState = BoardCreator.initialize();
-        this.isKingDead = false;
+    }
+
+    public Board(Map<Position, Piece> boardState) {
+        this.boardState = boardState;
+    }
+
+    public void updateBoard(Map<Position, Piece> boardState) {
+        this.boardState = boardState;
     }
 
     public boolean movable(Position source, Position target, Team team) {
@@ -162,5 +170,19 @@ public class Board {
                 .filter(piece -> piece instanceof Pawn)
                 .map(piece -> (Pawn) piece)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return isKingDead == board.isKingDead &&
+                Objects.equals(boardState, board.boardState);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(boardState, isKingDead);
     }
 }

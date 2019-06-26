@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardCreator;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.PositionManager;
@@ -8,20 +9,31 @@ import chess.dto.ChessDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ChessGame {
-    private Board board = new Board();
-    private Team team = Team.WHITE;
+    private Board board;
+    private Team turn;
 
-    public void play(Position source, Position target) {
-        if (board.movable(source, target, team)) {
-            board.move(source, target);
-        }
-        team = Team.switchTeam(team);
+    public ChessGame() {
+        this.board = new Board();
+        turn = Team.WHITE;
     }
 
-    public Team getTeam() {
-        return team;
+    public ChessGame(Board board, Team turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
+    public void play(Position source, Position target) {
+        if (board.movable(source, target, turn)) {
+            board.move(source, target);
+        }
+        turn = Team.switchTeam(turn);
+    }
+
+    public Team getTurn() {
+        return turn;
     }
 
     public Board getBoard() {
@@ -42,13 +54,27 @@ public class ChessGame {
         for (int i = 1; i <= 8; i++) {
             StringBuilder rank = new StringBuilder();
             for (int j = 1; j <= 8; j++) {
-                Piece piece = board.findPiece(PositionManager.getMatchPosition(i, j));
+                Piece piece = board.findPiece(PositionManager.getMatchPosition(j, i));
                 rank.append((piece.getTeam() == Team.BLACK) ? piece.getSymbol().toUpperCase() : piece.getSymbol());
             }
             ranks.add(rank.toString());
         }
         chessDTO.setRanks(ranks);
-        chessDTO.setTurn(team.toString());
+        chessDTO.setTurn(turn.toString());
         return chessDTO;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessGame chessGame = (ChessGame) o;
+        return Objects.equals(board, chessGame.board) &&
+                turn == chessGame.turn;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, turn);
     }
 }
