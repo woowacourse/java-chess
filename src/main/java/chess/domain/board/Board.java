@@ -5,6 +5,7 @@ import chess.domain.piece.pieceinfo.PieceType;
 import chess.domain.piece.pieceinfo.TeamType;
 import chess.exception.NotMovablePositionException;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,6 +18,10 @@ public class Board {
 
     public Board(final Map<Position, Piece> pieces) {
         this.pieces = pieces;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(pieces);
     }
 
     public boolean movePiece(Position source, Position destination) {

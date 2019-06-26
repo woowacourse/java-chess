@@ -10,11 +10,24 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Game {
-    private TeamType currentTeam = TeamType.BLACK;
+    private TeamType currentTeam;
     private final Board board;
 
     public Game(final Board board) {
+        this(board, TeamType.BLACK);
+    }
+
+    public Game(final Board board, final TeamType teamType) {
         this.board = board;
+        this.currentTeam = teamType;
+    }
+
+    public Board getBoard() {
+        return this.board;
+    }
+
+    public TeamType getCurrentTeam() {
+        return this.currentTeam;
     }
 
     public Set<Position> selectSourcePiece(Position source) {
