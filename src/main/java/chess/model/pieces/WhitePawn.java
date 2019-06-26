@@ -1,4 +1,7 @@
-package chess.model;
+package chess.model.pieces;
+
+import chess.model.*;
+import chess.model.coordinate.Point;
 
 public class WhitePawn extends AbstractPawn {
     public static final int WHITE_START_Y_POSITION = 2;

@@ -1,4 +1,6 @@
-package chess.model;
+package chess.model.coordinate;
+
+import chess.model.Direction;
 
 import java.util.Objects;
 

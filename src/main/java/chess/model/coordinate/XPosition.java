@@ -1,6 +1,4 @@
-package chess.model;
-
-import chess.model.exceptions.IllegalXPositionException;
+package chess.model.coordinate;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,5 +1,8 @@
 package chess.model;
 
+import chess.model.coordinate.Point;
+import chess.model.pieces.BlackPawn;
+import chess.model.pieces.WhitePawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

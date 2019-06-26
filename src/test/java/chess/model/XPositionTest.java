@@ -1,6 +1,7 @@
 package chess.model;
 
-import chess.model.exceptions.IllegalXPositionException;
+import chess.model.coordinate.XPosition;
+import chess.model.coordinate.IllegalXPositionException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

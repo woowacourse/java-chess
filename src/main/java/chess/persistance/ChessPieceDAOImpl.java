@@ -3,7 +3,7 @@ package chess.persistance;
 import chess.model.AbstractChessPiece;
 import chess.model.ChessPieceColor;
 import chess.model.ChessPieceType;
-import chess.model.Point;
+import chess.model.coordinate.Point;
 
 import java.util.*;
 

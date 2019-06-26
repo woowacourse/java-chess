@@ -1,4 +1,7 @@
-package chess.model;
+package chess.model.pieces;
+
+import chess.model.*;
+import chess.model.coordinate.Point;
 
 public class King extends AbstractChessPiece {
     private static final int STEP_SIZE = 1;

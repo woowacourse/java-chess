@@ -1,5 +1,7 @@
 package chess.model;
 
+import chess.model.coordinate.Point;
+
 public enum Direction {
     E(1, 0),
     NE(1, 1),

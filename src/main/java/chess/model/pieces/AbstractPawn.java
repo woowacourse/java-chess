@@ -1,4 +1,7 @@
-package chess.model;
+package chess.model.pieces;
+
+import chess.model.*;
+import chess.model.coordinate.Point;
 
 public abstract class AbstractPawn extends AbstractChessPiece {
     public static final int START_POINT_STEP_SIZE = 2;

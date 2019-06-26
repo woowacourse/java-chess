@@ -1,4 +1,7 @@
-package chess.model;
+package chess.model.pieces;
+
+import chess.model.*;
+import chess.model.coordinate.Point;
 
 public class BlackPawn extends AbstractPawn {
     private static final int BLACK_START_Y_POSITION = 7;

@@ -1,5 +1,9 @@
 package chess.model;
 
+import chess.model.coordinate.Point;
+import chess.model.pieces.Bishop;
+import chess.model.pieces.Queen;
+import chess.model.pieces.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

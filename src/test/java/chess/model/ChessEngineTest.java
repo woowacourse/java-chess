@@ -1,6 +1,10 @@
 package chess.model;
 
+import chess.model.coordinate.Point;
 import chess.model.exceptions.*;
+import chess.model.pieces.BlackPawn;
+import chess.model.pieces.King;
+import chess.model.pieces.WhitePawn;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

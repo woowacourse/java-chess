@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.model.*;
+import chess.model.coordinate.Point;
 import chess.persistance.ChessPieceDAO;
 import chess.persistance.GameDAO;
 

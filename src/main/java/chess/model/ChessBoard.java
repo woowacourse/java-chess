@@ -1,5 +1,8 @@
 package chess.model;
 
+import chess.model.coordinate.Point;
+import chess.model.pieces.*;
+
 import java.util.HashMap;
 import java.util.Map;
 

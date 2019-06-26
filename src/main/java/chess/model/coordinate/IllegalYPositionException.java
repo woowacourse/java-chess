@@ -1,4 +1,4 @@
-package chess.model.exceptions;
+package chess.model.coordinate;
 
 public class IllegalYPositionException extends RuntimeException {
     public IllegalYPositionException(final String message) {

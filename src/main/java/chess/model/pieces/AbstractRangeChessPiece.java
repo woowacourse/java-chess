@@ -1,4 +1,7 @@
-package chess.model;
+package chess.model.pieces;
+
+import chess.model.*;
+import chess.model.coordinate.Point;
 
 public abstract class AbstractRangeChessPiece extends AbstractChessPiece {
     public AbstractRangeChessPiece(final ChessPieceType type, final ChessPieceColor color) {

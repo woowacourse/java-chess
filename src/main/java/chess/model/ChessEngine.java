@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.model.coordinate.Point;
 import chess.model.exceptions.*;
 
 import java.util.Map;

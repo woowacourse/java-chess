@@ -1,9 +1,9 @@
 package chess.persistance;
 
 import chess.model.AbstractChessPiece;
-import chess.model.BlackPawn;
-import chess.model.Point;
-import chess.model.WhitePawn;
+import chess.model.pieces.BlackPawn;
+import chess.model.coordinate.Point;
+import chess.model.pieces.WhitePawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
