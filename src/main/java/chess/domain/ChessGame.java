@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.List;
 
+import chess.exception.GameOverException;
 import chess.exception.UnmovableException;
 import chess.domain.piece.Piece;
 
@@ -9,9 +10,14 @@ public class ChessGame {
 	private ChessBoard chessBoard;
 	private Player currentPlayer;
 
-	public ChessGame() {
-		currentPlayer = Player.BLACK;
-		chessBoard = ChessBoardGenerator.generate(ChessInitialPosition.getPositions());
+	public ChessGame(ChessBoard chessBoard) {
+		currentPlayer = Player.WHITE;
+		this.chessBoard = chessBoard;
+	}
+
+	public ChessGame(Player player, ChessBoard chessBoard) {
+		currentPlayer = player;
+		this.chessBoard = chessBoard;
 	}
 
 	public void move(Position start, Position end) {
@@ -29,6 +35,9 @@ public class ChessGame {
 		}
 		if (endPiece != null && !endPiece.isMine(currentPlayer)) {
 			chessBoard.remove(endPiece);
+			if (endPiece.isKing()) {
+				throw new GameOverException("게임종료! " + currentPlayer.name() + " 승리");
+			}
 		}
 		startPiece.changePosition(end);
 		currentPlayer = currentPlayer.changePlayer();
@@ -62,5 +71,9 @@ public class ChessGame {
 
 	public List<Piece> getPieces() {
 		return chessBoard.getPieces();
+	}
+
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
 	}
 }
