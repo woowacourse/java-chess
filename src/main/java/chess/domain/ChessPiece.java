@@ -7,8 +7,8 @@ import java.util.function.BiFunction;
 import chess.domain.piece.*;
 
 public enum ChessPiece {
-	BLACK_PAWN(Player.BLACK, Type.PAWN, Pawn::valueOf, "♟"),
-	WHITE_PAWN(Player.WHITE, Type.PAWN, Pawn::valueOf, "♙"),
+	BLACK_PAWN(Player.BLACK, Type.PAWN, BlackPawn::valueOf, "♟"),
+	WHITE_PAWN(Player.WHITE, Type.PAWN, WhitePawn::valueOf, "♙"),
 	BLACK_ROOK(Player.BLACK, Type.ROOK, Rook::valueOf, "♜"),
 	WHITE_ROOK(Player.WHITE, Type.ROOK, Rook::valueOf, "♖"),
 	BLACK_KNIGHT(Player.BLACK, Type.KNIGHT, Knight::valueOf, "♞"),

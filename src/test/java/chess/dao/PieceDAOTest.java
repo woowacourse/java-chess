@@ -8,7 +8,7 @@ import java.util.List;
 import chess.database.DatabaseConnection;
 import chess.domain.Player;
 import chess.domain.Position;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ public class PieceDAOTest {
 	void addAllPieces() throws Exception {
 		List<Piece> pieces = new ArrayList<>(Arrays.asList(
 				Rook.valueOf(Player.WHITE, Position.getPosition(1, 2)),
-				Pawn.valueOf(Player.BLACK, Position.getPosition(2,3))));
+				BlackPawn.valueOf(Player.BLACK, Position.getPosition(2,3))));
 
 	}
 }
