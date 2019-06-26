@@ -90,8 +90,6 @@
 <script>
   window.onload = function () {
       var chessBoardBox = document.querySelector('#chessBoardBox');
-
-    console.log(chessBoardBox);
       for (var y = 7; y >= 0; y--) {
         for (var x = 0; x <= 7; x++) {
             chessBoardBox.append(chessBoardRender(x, y));
