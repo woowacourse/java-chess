@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
     private static final double SCORE = 1;
-    private static final int DISTANCE_FOR_ALL_DIRECTION = 1;
+    private static final int DISTANCE_FOR_FORWARD_DIRECTION = 1;
+    private static final int DISTANCE_FOR_DIAGONALLY_DIRECTION = 2;
     private static final int DISTANCE_FOR_STARTING_POSITION = 4;
     private static final int STANDARD_DIRECTION_VALUE = 0;
 
@@ -30,7 +31,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isPossibleDistance(Position position) {
-        return (this.position.getDistanceSquare(position) == DISTANCE_FOR_ALL_DIRECTION)
+        return this.position.getDistanceSquare(position) == DISTANCE_FOR_FORWARD_DIRECTION
+                || this.position.getDistanceSquare(position) == DISTANCE_FOR_DIAGONALLY_DIRECTION
                 || isPossibleDistanceFromStartingPosition(position);
     }
 

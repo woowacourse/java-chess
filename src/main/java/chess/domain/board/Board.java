@@ -1,8 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.position.Position;
 import chess.domain.Team;
 import chess.domain.pieces.*;
-import chess.domain.position.Position;
 
 import java.util.List;
 import java.util.Map;
@@ -31,7 +31,8 @@ public class Board {
         }
 
         checkObstacle(source, target);
-        //checkPawnMovable(source, target);
+        checkPawnMovable(source, target);
+
         return true;
     }
 
@@ -54,7 +55,7 @@ public class Board {
     }
 
     private void checkCanMove(Position source, Position target) {
-        if (!(findPiece(source).canMove(target) || isPawnMovable(source, target))) {
+        if (!findPiece(source).canMove(target)) {
             throw new IllegalArgumentException("선택하신 말이 움직일 수 없는 위치입니다.");
         }
     }
@@ -76,35 +77,29 @@ public class Board {
         }
     }
 
-    private boolean isPawnMovable(Position source, Position target) {
+    private void checkPawnMovable(Position source, Position target) {
         if (findPiece(source) instanceof Pawn && !(findPiece(target) instanceof Blank)) {
-            checkAccessible(source, target, findPiece(source), findPiece(target));
-            checkMovable(source, target);
-        }
-        return true;
-    }
-
-    private void checkAccessible(Position source, Position target, Piece sourcePiece, Piece targetPiece) {
-        if (inaccessible(source, target, sourcePiece, targetPiece)) {
-            throw new IllegalArgumentException("잡을 수 없는 위치입니다.");
+            checkAccessible(source, target);
         }
     }
 
-    private boolean inaccessible(Position source, Position target, Piece sourcePiece, Piece targetPiece) {
-        return !(targetPiece instanceof Blank
-                || sourcePiece.isSameTeamWith(targetPiece)
-                || source.getDistanceSquare(target) == PAWN_DISTANCE);
-    }
-
-    private void checkMovable(Position source, Position target) {
-        if (immovable(source, target)) {
-            throw new IllegalArgumentException("말을 움직이고자 하는 위치는 폰이 움직일 수 없는 위치입니다.");
+    private void checkAccessible(Position source, Position target) {
+        if (isCatchForward(source, target)) {
+            throw new IllegalArgumentException("정면으로 잡을 수 없습니다.");
+        }
+        if (!isCatchDiagonally(source, target)) {
+            throw new IllegalArgumentException("폰은 대각선으로만 잡을 수 있습니다.");
         }
     }
 
+    private boolean isCatchForward(Position source, Position target) {
+        return !findPiece(source).isSameTeamWith(findPiece(target))
+                && source.getDistanceSquare(target) == 1;
+    }
 
-    private boolean immovable(Position source, Position target) {
-        return isEmpty(target) && source.getDistanceSquare(target) == PAWN_DISTANCE;
+    private boolean isCatchDiagonally(Position source, Position target) {
+        return !(findPiece(source).isSameTeamWith(findPiece(target))
+                && source.getDistanceSquare(target) == PAWN_DISTANCE);
     }
 
     public void move(Position source, Position target) {

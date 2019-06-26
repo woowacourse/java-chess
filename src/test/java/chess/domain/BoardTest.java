@@ -131,7 +131,7 @@ class BoardTest {
         }
 
         source = PositionManager.getMatchPosition(2, 6);
-        target = PositionManager.getMatchPosition(2, 7);
+        target = PositionManager.getMatchPosition(3, 7);
         if(board.movable(source, target, Team.WHITE)){
             board.move(source, target);
         }
