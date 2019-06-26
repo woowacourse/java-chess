@@ -26,15 +26,15 @@ public enum Direction {
         this.unit = unit;
     }
 
-    public Square move(Square square) {
-        return Square.of(square.getX() + unit.getX(), square.getY() + unit.getY());
-    }
-
     public static Direction valuesOf(Square source, Square target) {
         return Arrays.stream(values())
                 .filter(e -> e.checkDirection(source, target))
                 .findAny()
                 .orElse(null);
+    }
+
+    public Square move(Square square) {
+        return Square.of(square.getX() + unit.getX(), square.getY() + unit.getY());
     }
 
     public boolean checkDirection(Square source, Square target) {
