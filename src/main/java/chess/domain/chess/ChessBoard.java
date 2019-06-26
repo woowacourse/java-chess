@@ -2,6 +2,7 @@ package chess.domain.chess;
 
 import chess.domain.chess.exception.*;
 import chess.domain.chess.initializer.Initializer;
+import chess.domain.chess.unit.King;
 import chess.domain.chess.unit.Knight;
 import chess.domain.chess.unit.Pawn;
 import chess.domain.chess.unit.Unit;
@@ -150,5 +151,20 @@ public class ChessBoard {
             return;
         }
         present = Team.WHITE;
+    }
+
+    public int numberOfKing() {
+        int sum = 0;
+        for (Position position : units.keySet()) {
+            if(units.get(position) instanceof King) {
+                sum += 1;
+            }
+        }
+        return sum;
+    }
+
+    public Team getAliveKingTeam() {
+        return units.get(units.keySet().stream().filter(key -> units.get(key) instanceof King)
+                .findAny().get()).getTeam();
     }
 }

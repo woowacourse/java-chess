@@ -52,9 +52,16 @@ public class WebUIChessApplication {
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
 
             ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
+            if(chessBoard.numberOfKing() != 2) {
+                model.put("team",chessBoard.getAliveKingTeam());
+                return render(model, "gameover.html");
+            }
+
             chessBoardDTO.setUnits(chessBoard.getUnits());
 
             String chessJson = new Gson().toJson(chessBoardDTO);
+
+
             model.put("team", chessBoard.getTeam().name());
 
             model.put("chessBoard", chessJson);
@@ -62,6 +69,8 @@ public class WebUIChessApplication {
         });
 
         post("/resume", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
             String[] source = req.queryParams("source").split(",");
             String[] target = req.queryParams("target").split(",");
 
@@ -69,14 +78,29 @@ public class WebUIChessApplication {
             Position targetPosition = Position.create(Integer.parseInt(target[0]), Integer.parseInt(target[1]));
 
             ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
+            if(chessBoard.numberOfKing() != 2) {
+                model.put("team",chessBoard.getAliveKingTeam());
+                return render(model, "gameover.html");
+            }
+
+
+
             chessBoard.move(sourcePosition, targetPosition);
             chessBoard.changeTeam();
 
             chessBoardDAO.update(chessBoard, chessBoard.getTeam());
 
             ChessBoard chessBoardAfterUpdate = chessBoardDAO.selectRecentRow();
+            if(chessBoard.numberOfKing() != 2) {
+                model.put("team",chessBoard.getAliveKingTeam());
+                return render(model, "gameover.html");
+            }
 
-            Map<String, Object> model = new HashMap<>();
+
+
+
+
+
 
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
             chessBoardDTO.setUnits(chessBoardAfterUpdate.getUnits());
