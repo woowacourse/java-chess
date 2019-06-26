@@ -35,9 +35,8 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
                             properties.getProperty("database"))
             );
             return ds;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        } catch (IOException e) {
+            throw new IllegalArgumentException("IOException 발생 -> loadProperty() 에서 예외 발생");
         }
     }
 
@@ -45,8 +44,7 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
         try {
             return create().getConnection();
         } catch (SQLException e) {
-            System.out.println("여기오륲");
-            throw new IllegalArgumentException(e.getMessage());
+            throw new IllegalArgumentException("SQLException 발생 -> getConnection 부분");
         }
     }
 

@@ -19,7 +19,7 @@ public class ChessGameDAO {
 
             return pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw new IllegalArgumentException("SQLException 발생 -> game 상태 데이터 넣는 부분");
         }
     }
 
@@ -33,7 +33,7 @@ public class ChessGameDAO {
 
             return pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw new IllegalArgumentException("SQLException 발생 -> game상태 업데이트 부분");
         }
     }
 
@@ -53,7 +53,7 @@ public class ChessGameDAO {
             chessGameDTO.setLastUser(rs.getString("last_user"));
             return chessGameDTO;
         } catch (SQLException e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw new IllegalArgumentException("SQLException 발생 -> maxGameId 찾는 부분");
         }
     }
 

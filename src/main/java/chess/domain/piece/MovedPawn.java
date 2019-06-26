@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class MovedPawn extends Piece {
 
     public MovedPawn(Team team) {
-        super(team, Type.PAWN);
+        super(team, Type.MOVEDPAWN);
         navigator = generateNavigator(team);
     }
 

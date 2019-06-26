@@ -17,26 +17,6 @@ public class ChessBoardDAO {
     }
 
     public long addBoardStatus(ChessBoardDTO chessBoardDTO) {
-//        try (Connection connection = DataSourceFactory.getInstance().getConnection()) {
-//            Map<Square, Piece> board = chessBoardDTO.getBoard();
-//            long count = 0;
-//            for (Square square : board.keySet()) {
-//                System.out.println("SQUARE : " + square.toString());
-//                String query = "INSERT INTO chess.board(game_id, round_no, square_x, square_y, piece_type, team) VALUES (?,?,?,?,?,?)";
-//                PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-//                pstmt.setInt(1, chessBoardDTO.getGameId());
-//                pstmt.setInt(2, chessBoardDTO.getRoundNo());
-//                pstmt.setInt(3, square.getX());
-//                pstmt.setInt(4, square.getY());
-//                pstmt.setString(5, board.get(square).getType().toString());
-//                pstmt.setString(6, board.get(square).getTeam().toString());
-//
-//                count += pstmt.executeUpdate();
-//            }
-//            return count;
-//        } catch (SQLException e) {
-//            throw new IllegalArgumentException(e.getMessage());
-//        }
         return chessBoardDTO.getBoard().entrySet().stream()
                 .map(entry -> {
                     try (Connection connection = DataSourceFactory.getInstance().getConnection()) {
@@ -51,7 +31,9 @@ public class ChessBoardDAO {
 
                         return pstmt.executeUpdate();
                     } catch (SQLException e) {
-                        throw new IllegalArgumentException(e.getMessage());
+                        System.err.println("SQLException 발생 -> Board 데이터 넣는 부분");
+                        System.err.println(e.getMessage());
+                        return -1;
                     }
                 }).count();
     }
@@ -74,7 +56,7 @@ public class ChessBoardDAO {
 
             return chessBoardDTO;
         } catch (SQLException e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw new IllegalArgumentException("SQLException 발생 -> 보드상태 찾는 부분");
         }
     }
 
@@ -91,7 +73,7 @@ public class ChessBoardDAO {
 
             return rs.getInt("round_no");
         } catch (SQLException e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw new IllegalArgumentException("SQLException 발생 -> maxRound 찾는 부분");
         }
     }
 

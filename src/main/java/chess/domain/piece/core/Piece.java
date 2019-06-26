@@ -24,7 +24,8 @@ public abstract class Piece {
     public Route getRoute(Square source, Square target) {
         Route route = navigator.getWay(source, target);
         if (route == null) {
-            throw new IllegalArgumentException("갈 수 없습니다.");
+            String format = "%s 말은 좌표 %s, %s 에서 %s, %s로 이동 할 수 없습니다.";
+            throw new IllegalArgumentException(String.format(format, type.getType(), source.getX(), source.getY(), target.getX(), target.getY()));
         }
         return route;
     }

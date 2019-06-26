@@ -36,7 +36,8 @@ public class Way {
 
     Route generateRoute(Square source, Square target) {
         if (!canMove(source, target)) {
-            throw new IllegalArgumentException();
+            String format = "좌표 %s, %s 에서 %s, %s로 이동 할 수 없습니다.";
+            throw new IllegalArgumentException(String.format(format, source.getX(), source.getY(), target.getX(), target.getY()));
         }
 
         return new Route(
