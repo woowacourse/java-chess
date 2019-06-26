@@ -1,0 +1,30 @@
+CREATE DATABASE wtc_chess_db CHAR SET UTF8MB4 COLLATE UTF8MB4_GENERAL_CI;
+
+USE wtc_chess_db;
+
+CREATE TABLE game_session(
+	id INT NOT NULL AUTO_INCREMENT,
+	title VARCHAR(255) NOT NULL,
+	state VARCHAR(64) NOT NULL,
+	reg_date TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE board_state(
+	id INT NOT NULL AUTO_INCREMENT,
+	piece_type VARCHAR(64) NOT NULL,
+	loc_x VARCHAR(4) NOT NULL,
+	loc_y VARCHAR(4) NOT NULL,
+	reg_date TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE play_in(
+	id INT NOT NULL AUTO_INCREMENT,
+	session_id INT NOT NULL,
+	board_state_id INT NOT NULL,
+	reg_date TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY(id),
+	FOREIGN KEY(session_id) REFERENCES game_session(id) ON DELETE CASCADE,
+	FOREIGN KEY(board_state_id) REFERENCES board_state(id) ON DELETE CASCADE
+);
