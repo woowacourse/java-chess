@@ -13,13 +13,14 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public class GameService {
-    private static Optional<Game> game = Optional.empty();
-    private static Optional<Position> from = Optional.empty();
+    private static Game game = null;
+    private static Optional<Position> from;
 
     public static Game getGame() {
-        return game.orElseGet(() -> {
+        return Optional.ofNullable(game).orElseGet(() -> {
             try {
-                return new Game(GameDAO.retrieveLog());
+                game = new Game(GameDAO.retrieveLog());
+                return game;
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new FailedToRestoreGameException();
@@ -30,8 +31,8 @@ public class GameService {
     public static Game restartGame() {
         try {
             GameDAO.eraseLog();
-            game = Optional.of(new Game());
-            return getGame();
+            game = new Game();
+            return game;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new FailedToRestartGameException();
@@ -40,21 +41,21 @@ public class GameService {
 
     public static String selectSrc(final String position) {
         from = Position.ofSafe(position);
-        if (from.map(pos -> game.get().isOwnPiece(pos)).orElse(false)) {
-            return WebView.printSelectPage(game.get(), from.get());
+        if (from.map(src -> game.isOwnPiece(src)).orElse(false)) {
+            return WebView.printSelectPage(game, from.get());
         }
-        return WebView.printWrongChoicePage(game.get(), "잘못된 선택입니다.");
+        return WebView.printWrongChoicePage(game, "잘못된 선택입니다.");
     }
 
     public static String selectDest(final String position, final Consumer<String> redirect, final Consumer<Integer> status) {
         if (!from.isPresent()) {
-            return WebView.printWrongChoicePage(game.get(), "잘못된 접근입니다.");
+            return WebView.printWrongChoicePage(game, "잘못된 접근입니다.");
         }
         final Optional<Position> to = Position.ofSafe(position);
-        if (to.map(pos -> game.get().tryToMoveFromTo(from.get(), to.get())).orElse(false)) {
-            return Referee.isKingAlive(game.get()) ? initState(redirect, status) : WebView.printEndPage(game.get());
+        if (to.map(dest -> game.tryToMoveFromTo(from.get(), dest)).orElse(false)) {
+            return Referee.isKingAlive(game) ? initState(redirect, status) : WebView.printEndPage(game);
         }
-        return WebView.printWrongChoicePage(game.get(), from.get(), "잘못된 선택입니다.");
+        return WebView.printWrongChoicePage(game, from.get(), "잘못된 선택입니다.");
     }
 
     public static String initState(final Consumer<String> redirect, final Consumer<Integer> status) {
@@ -64,5 +65,3 @@ public class GameService {
         return null;
     }
 }
-
-//// TODO: 2019-06-26 refactor 
