@@ -2,10 +2,8 @@ package chess.domain.piece;
 
 import java.util.List;
 
-import chess.PieceImage;
 import chess.domain.*;
 import chess.exception.NotFoundPathException;
-import com.sun.javafx.iio.ImageStorage;
 
 public abstract class Piece {
 	private final Player player;
@@ -23,12 +21,20 @@ public abstract class Piece {
 		this.score = score;
 	}
 
+	public Player getPlayer() {
+		return player;
+	}
+
 	public Position getPosition() {
 		return position;
 	}
 
-	public PieceImage getPieceImage() {
-		return PieceImage.getPieceImage(this.player, this.type);
+	public ChessPiece getChessPiece() {
+		return ChessPiece.getChessPiece(player, type);
+	}
+
+	public String getPieceImage() {
+		return ChessPiece.getPieceImage(this.player, this.type);
 	}
 
 	public Path getMovablePath(Position end) {
@@ -96,5 +102,17 @@ public abstract class Piece {
 
 	public boolean isSameCoordinateX(int x) {
 		return position.isSameCoordinateX(x);
+	}
+
+	public int getCoordinateX() {
+		return position.getCoordinateX();
+	}
+
+	public int getCoordinateY() {
+		return position.getCoordinateY();
+	}
+
+	public boolean isKing() {
+		return type.equals(Type.KING);
 	}
 }
