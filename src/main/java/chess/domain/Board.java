@@ -47,16 +47,23 @@ public class Board {
     }
 
     private void checkRange(Point p1, Point p2, Direction direction) {
-        Piece piece = board.get(p1);
         Point point = p1.transport(direction);
         while (!point.equals(p2)) {
-            if (!board.get(point).equals(new Empty())) {
-                throw new IllegalArgumentException();
-            }
+            isInterrupted(point);
             point = point.transport(direction);
         }
-        board.put(p2, piece);
+        switchPiece(p1, p2);
+    }
+
+    private void switchPiece(Point p1, Point p2) {
+        board.put(p2, board.get(p1));
         board.put(p1, new Empty());
+    }
+
+    private void isInterrupted(Point point) {
+        if (!board.get(point).equals(new Empty())) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private void move(Point p1, Point p2) {
@@ -70,7 +77,7 @@ public class Board {
 
     public boolean check(ChessTeam team) {
         return pieceOf(team).stream()
-                .noneMatch(piece -> piece.isKing());
+                .noneMatch(Piece::isKing);
     }
 
     public List<Piece> pieceOf(ChessTeam team) {

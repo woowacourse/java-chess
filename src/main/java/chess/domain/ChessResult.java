@@ -8,8 +8,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessResult {
-    public static final String TEAM = "team";
-    public static final String SCORE = "score";
+    private static final String TEAM = "team";
+    private static final String SCORE = "score";
+    private static final int PAWN_POINT_DISCOUNT_BOUND = 1;
     private static final double PAWN_BALANCE_POINT = 0.5;
     private final Map<Point, Piece> result;
     private final ChessTeam team;
@@ -31,7 +32,7 @@ public class ChessResult {
                 .filter(entry -> entry.getValue().score() == PieceInfo.Pawn.score())
                 .collect(Collectors.groupingBy(entry -> entry.getKey().getX(), Collectors.counting()))
                 .values().stream()
-                .filter(value -> value > 1)
+                .filter(value -> value > PAWN_POINT_DISCOUNT_BOUND)
                 .mapToDouble(value -> value * PAWN_BALANCE_POINT)
                 .sum();
     }
