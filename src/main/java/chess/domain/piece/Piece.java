@@ -1,11 +1,13 @@
 package chess.domain.piece;
 
 import chess.domain.*;
+import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.exceptions.InvalidDirectionException;
 import chess.domain.exceptions.InvalidDistanceException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Piece {
     static final int LIMIT_DISTANCE_ONE_UNIT = 1;
@@ -16,11 +18,6 @@ public abstract class Piece {
     public Piece(Team team) {
         this.team = team;
         this.moveRule = setMoveRule();
-    }
-
-    public Piece(Team team, MoveRule moveRule) {
-        this.team = team;
-        this.moveRule = moveRule;
     }
 
     public boolean isSameTeam(Piece piece) {
@@ -39,8 +36,8 @@ public abstract class Piece {
         return turn.isTurn(team);
     }
 
-    public boolean canMove(Position source, Position target) {
-        return moveRule.check(source, target);
+    public boolean canMove(Position source, Position target,Optional<Team> optionalTargetPieceTeam) {
+        return moveRule.check(source, target, optionalTargetPieceTeam);
     }
 
     public double score(final int count) {
@@ -50,6 +47,13 @@ public abstract class Piece {
     public boolean isKing() {
         return false;
     }
+
+    void validSameTeamCatch(Optional<Team> optionalTargetPieceTeam) {
+        Team targetPieceTeam = optionalTargetPieceTeam.orElseGet(() -> getTeam().enemy());
+        if (Team.isSameTeam(getTeam(), targetPieceTeam)) {
+            throw new IllegalTargetException("같은 팀이 있는 위치로 이동이 불가능합니다.");
+        }
+    };
 
    void validDistance(final int distance, final int limit) {
         if (distance > limit) {

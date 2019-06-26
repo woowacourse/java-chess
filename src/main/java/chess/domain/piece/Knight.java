@@ -6,6 +6,8 @@ import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.exceptions.InvalidDirectionException;
 
+import java.util.Optional;
+
 public class Knight extends Piece {
     private static final double SCORE = 2.5;
     private static final String NAME = "n";
@@ -26,9 +28,10 @@ public class Knight extends Piece {
         return this::knight;
     }
 
-    private boolean knight(Position source, Position target) {
+    private boolean knight(Position source, Position target, Optional<Team> optionalTargetPieceTeam) {
         Direction direction = source.direction(target);
         validNightDirection(direction);
+        validSameTeamCatch(optionalTargetPieceTeam);
         validDistance(source.distance(target), LIMIT_DISTANCE_KNIGHT);
         return true;
     }

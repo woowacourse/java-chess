@@ -8,6 +8,7 @@ import chess.dto.BoardDto;
 import chess.dto.TurnDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ChessBoard {
     private Turn turn;
@@ -33,11 +34,20 @@ public class ChessBoard {
         validSourceTarget(sourcePiece, targetPiece);
         validRoute(source, target, source.direction(target));
 
-        sourcePiece.canMove(source, target);
+        Optional<Team> targetTeam = getTeamBy(targetPiece);
+        sourcePiece.canMove(source, target, targetTeam);
+
         board.move(source, target, sourcePiece);
         resultCounter.addCount(targetPiece);
         turn.turnChanged();
         return targetPiece;
+    }
+
+    private Optional<Team> getTeamBy(Piece targetPiece) {
+        if (targetPiece == null) {
+            return Optional.empty();
+        }
+        return Optional.of(targetPiece.getTeam());
     }
 
     private void validSourceTarget(final Piece sourcePiece, final Piece targetPiece) {
@@ -86,15 +96,15 @@ public class ChessBoard {
         return resultCounter.totalScore(team);
     }
 
+    public Team getWinner() {
+        return Team.isSameTeam(turn.getTeam(), Team.WHITE) ? Team.WHITE : Team.BLACK;
+    }
+
     public TurnDto turnToDto() {
         return turn.toDto();
     }
 
     public List<BoardDto> boardToDto() {
         return board.toDto();
-    }
-
-    public Team getWinner() {
-        return turn.getTeam() == Team.BLACK ? Team.WHITE : Team.BLACK;
     }
 }

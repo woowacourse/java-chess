@@ -5,6 +5,7 @@ import chess.dto.BoardDto;
 import chess.view.WebUtil;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static chess.domain.Team.BLACK;
@@ -48,19 +49,16 @@ public class Board {
     public void move(Position source, Position target, Piece sourcePiece) {
         board.remove(source);
         board.put(target, sourcePiece);
-        sourcePiece.changeFirstState();
     }
 
     public List<BoardDto> toDto() {
-        List<BoardDto> boardDtos = new ArrayList<>();
-        board.forEach((position, piece) -> {
-            BoardDto boardDto = new BoardDto();
-            boardDto.setPieceName(piece.getName());
-            boardDto.setTeam(piece.getTeam().name());
-            boardDto.setPosition(WebUtil.positionParser(position));
-
-            boardDtos.add(boardDto);
-        });
-        return boardDtos;
+        return board.entrySet()
+                .stream()
+                .map((entry) -> {
+                    Position position = entry.getKey();
+                    Piece piece = entry.getValue();
+                    return new BoardDto(WebUtil.positionParser(position), piece.getName(), piece.getTeam().name());
+                })
+                .collect(Collectors.toList());
     }
 }

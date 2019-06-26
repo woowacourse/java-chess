@@ -5,6 +5,8 @@ import chess.domain.MoveRule;
 import chess.domain.Position;
 import chess.domain.Team;
 
+import java.util.Optional;
+
 public class King extends Piece {
     private static final String NAME = "k";
     private static final double SCORE = 0;
@@ -18,9 +20,10 @@ public class King extends Piece {
         return this::king;
     }
 
-    private boolean king(Position source, Position target) {
+    private boolean king(Position source, Position target, Optional<Team> optionalTargetPieceTeam) {
         Direction direction = source.direction(target);
         validDirection(Direction.ALL_DIRECTION, direction);
+        validSameTeamCatch(optionalTargetPieceTeam);
         validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE_UNIT);
         return true;
     }
