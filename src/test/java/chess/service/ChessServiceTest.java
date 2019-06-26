@@ -51,7 +51,7 @@ public class ChessServiceTest {
         CommandDto commandDto = new CommandDto();
         commandDto.setOrigin("a2");
         commandDto.setTarget("a4");
-        commandDto.setRound(1);
+        commandDto.setTurn(1);
         commandDto.setRoomId(100L);
 
         commandDtos.add(commandDto);

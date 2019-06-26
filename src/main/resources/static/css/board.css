@@ -15,13 +15,13 @@ p {
 }
 
 footer {
-    margin : atuo;
+    margin: atuo;
 }
 
 .temp {
     grid-template-columns: repeat(1, 12vmin);
     grid-template-rows: repeat(8, 12vmin);
-    float : left;
+    float: left;
 }
 
 .board {
@@ -38,7 +38,7 @@ footer {
 }
 
 .column {
-    font-size : 4vmin;
+    font-size: 4vmin;
 }
 
 .piece {
@@ -66,12 +66,12 @@ main {
 }
 
 .aside .grid__item {
-    margin : auto;
+    margin: auto;
 }
 
 .controls {
-    float : right;
-    position : relative;
+    float: right;
+    position: relative;
     width: 36vmin;
     display: flex;
     margin-top: 1em;
@@ -87,6 +87,6 @@ button {
 }
 
 .side {
-    margin : 50px;
-    float : right;
+    margin: 50px;
+    float: right;
 }

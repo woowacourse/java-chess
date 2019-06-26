@@ -7,14 +7,14 @@ public class Column implements Comparable<Column> {
     static final char MIN = 'a';
     static final char MAX = 'h';
 
-    private final int column;
-
     static {
         for (int i = MIN; i <= MAX; i++) {
             String columnName = String.valueOf((char) i);
             COLUMNS.put(columnName, new Column(i));
         }
     }
+
+    private final int column;
 
     private Column(final int column) {
         this.column = column;
@@ -30,7 +30,7 @@ public class Column implements Comparable<Column> {
     }
 
     Column next(final int delta) {
-        return Column.from(this.column + delta);
+        return from(this.column + delta);
     }
 
     int calculateAbsolute(final Column other) {

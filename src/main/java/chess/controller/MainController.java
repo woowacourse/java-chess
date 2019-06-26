@@ -12,6 +12,8 @@ import java.util.Map;
 import static chess.WebUIChessApplication.render;
 
 public class MainController {
+    public static final String STATUS_PLAYING = "PLAYING";
+
     private final RoomService roomService;
 
     public MainController(final RoomService roomService) {
@@ -20,7 +22,7 @@ public class MainController {
 
     public Object main(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
-        List<RoomDto> roomDtos = roomService.findAllByStatus(false);
+        List<RoomDto> roomDtos = roomService.findAllByStatus(STATUS_PLAYING);
         model.put("roomDtos", roomDtos);
         return render(model, "main.html");
     }

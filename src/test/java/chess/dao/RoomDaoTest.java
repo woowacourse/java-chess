@@ -3,6 +3,8 @@ package chess.dao;
 import chess.config.DataSource;
 import chess.config.DbConnector;
 import chess.config.TableCreator;
+import chess.controller.ChessController;
+import chess.controller.MainController;
 import chess.domain.Piece;
 import chess.dto.RoomDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +37,7 @@ public class RoomDaoTest {
         final long id = roomDao.getLatestId().get();
         RoomDto expected = new RoomDto();
         expected.setId(id);
-        expected.setStatus(false);
+        expected.setStatus(MainController.STATUS_PLAYING);
         expected.setWinner(null);
 
         RoomDto actual = roomDao.findById(id).get();
@@ -45,7 +47,7 @@ public class RoomDaoTest {
 
     @Test
     public void findByStatusTest() {
-        final boolean status = false;
+        final String status = MainController.STATUS_PLAYING;
         roomDao.add();
         roomDao.add();
         List<RoomDto> actual = roomDao.findAllByStatus(status);
@@ -57,14 +59,15 @@ public class RoomDaoTest {
     public void updateStatusTest() {
         roomDao.add();
         final long id = roomDao.getLatestId().get();
+        final String status = ChessController.STATUS_ENDED;
         final String winner = Piece.Color.WHITE.getName();
 
         RoomDto expected = new RoomDto();
         expected.setId(id);
-        expected.setStatus(true);
+        expected.setStatus(status);
         expected.setWinner(winner);
 
-        roomDao.updateStatus(id, winner);
+        roomDao.updateStatus(id, status, winner);
         RoomDto actual = roomDao.findById(id).get();
 
         assertEquals(expected, actual);

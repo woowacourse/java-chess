@@ -1,7 +1,7 @@
 package chess.dto;
 
 public class CommandDto {
-    private long round;
+    private long turn;
     private long roomId;
     private String origin;
     private String target;
@@ -18,12 +18,12 @@ public class CommandDto {
         this.roomId = room_id;
     }
 
-    public void setRound(final long round) {
-        this.round = round;
+    public void setTurn(final long turn) {
+        this.turn = turn;
     }
 
-    public long getRound() {
-        return round;
+    public long getTurn() {
+        return turn;
     }
 
     public long getRoomId() {

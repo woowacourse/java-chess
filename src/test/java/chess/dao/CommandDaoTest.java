@@ -34,7 +34,7 @@ public class CommandDaoTest {
         commandDto.setTarget(origin.toString());
         commandDto.setOrigin(target.toString());
         commandDto.setRoomId(room_id);
-        commandDto.setRound(round);
+        commandDto.setTurn(round);
 
         assertDoesNotThrow(() -> commandDao.add(commandDto));
     }
@@ -45,7 +45,7 @@ public class CommandDaoTest {
         commandDto.setTarget("a1");
         commandDto.setOrigin("a2");
         commandDto.setRoomId(roomId);
-        commandDto.setRound(100);
+        commandDto.setTurn(100);
         commandDao.add(commandDto);
 
         List<CommandDto> commandDtos = commandDao.findByRoomId(roomId);

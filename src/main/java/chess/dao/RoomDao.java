@@ -30,7 +30,7 @@ public class RoomDao {
             if (rs.next()) {
                 RoomDto roomDto1 = new RoomDto();
                 roomDto1.setId(rs.getLong("id"));
-                roomDto1.setStatus(rs.getBoolean("status"));
+                roomDto1.setStatus(rs.getString("status"));
                 roomDto1.setWinner(rs.getString("winner"));
                 return roomDto1;
             }
@@ -40,7 +40,7 @@ public class RoomDao {
         return Optional.ofNullable(roomDto);
     }
 
-    public List<RoomDto> findAllByStatus(final boolean status) {
+    public List<RoomDto> findAllByStatus(final String status) {
         String sql = "SELECT * FROM room WHERE status = ?";
         List<Object> params = Collections.singletonList(status);
 
@@ -49,7 +49,7 @@ public class RoomDao {
             while (rs.next()) {
                 RoomDto roomDto = new RoomDto();
                 roomDto.setId(rs.getLong("id"));
-                roomDto.setStatus(rs.getBoolean("status"));
+                roomDto.setStatus(rs.getString("status"));
                 roomDto.setWinner(rs.getString("winner"));
                 roomDtos.add(roomDto);
             }
@@ -57,9 +57,9 @@ public class RoomDao {
         });
     }
 
-    public int updateStatus(final long id, final String winner) {
-        String sql = "UPDATE room SET status = TRUE, winner = ? WHERE id = ?";
-        List<Object> params = Arrays.asList(winner, id);
+    public int updateStatus(final long id, final String status, final String winner) {
+        String sql = "UPDATE room SET status = ?, winner = ? WHERE id = ?";
+        List<Object> params = Arrays.asList(status, winner, id);
         return jdbcTemplate.executeUpdate(sql, params);
     }
 

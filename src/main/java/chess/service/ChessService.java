@@ -27,7 +27,7 @@ public class ChessService {
             commandDto.setOrigin(origin.toString());
             commandDto.setTarget(target.toString());
             commandDto.setRoomId(roomId);
-            commandDto.setRound(commandDao.findLatestRoundByRoomId(roomId));
+            commandDto.setTurn(commandDao.findLatestRoundByRoomId(roomId));
             commandDao.add(commandDto);
             return true;
         }

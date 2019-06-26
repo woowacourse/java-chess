@@ -5,31 +5,31 @@ import java.util.Objects;
 public class RoomDto {
 
     private long id;
-    private boolean status;
+    private String status;
     private String winner;
-
-    public void setId(final long id) {
-        this.id = id;
-    }
-
-    public void setStatus(final boolean status) {
-        this.status = status;
-    }
-
-    public void setWinner(final String winner) {
-        this.winner = winner;
-    }
 
     public long getId() {
         return id;
     }
 
-    public boolean getStatus() {
+    public void setId(final long id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
         return status;
+    }
+
+    public void setStatus(final String status) {
+        this.status = status;
     }
 
     public String getWinner() {
         return winner;
+    }
+
+    public void setWinner(final String winner) {
+        this.winner = winner;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class RoomDto {
         if (o == null || getClass() != o.getClass()) return false;
         final RoomDto roomDto = (RoomDto) o;
         return id == roomDto.id &&
-                status == roomDto.status &&
+                Objects.equals(status, roomDto.status) &&
                 Objects.equals(winner, roomDto.winner);
     }
 

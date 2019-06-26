@@ -19,6 +19,8 @@ import java.util.Map;
 import static chess.WebUIChessApplication.render;
 
 public class ChessController {
+    public static final String STATUS_ENDED = "ENDED";
+
     private final ChessService chessService;
     private final RoomService roomService;
 
@@ -71,7 +73,7 @@ public class ChessController {
         Game game = req.session().attribute("game");
         String winner = game.currentColor().getName();
 
-        roomService.updateStatus(roomId, winner);
+        roomService.updateStatus(roomId, STATUS_ENDED, winner);
 
         model.put("winner", winner);
         return render(model, "end.html");
