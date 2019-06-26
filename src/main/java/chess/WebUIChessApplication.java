@@ -29,6 +29,8 @@ public class WebUIChessApplication {
             ScoreResult scoreResult = game.calculateScore();
 
             model.put("score", scoreResult);
+            model.put("currentTeam", game.getCurrentTeam());
+
             req.session().attribute("game", game);
 
             return render(model, "newgame.html");
@@ -43,13 +45,13 @@ public class WebUIChessApplication {
             ChessGame game;
             game = req.session().attribute("game");
 
-            if (!Objects.isNull(source)) { // 이어서하기
+            if (!Objects.isNull(source)) { // 게임 진행
+                model.put("winner", game.getCurrentTeam());
                 game.movePiece(source, target);
                 BoardDTO boardDTO = new BoardDTO(game.convertToList());
                 chessDAO.updateBoard(boardDTO);
+                model.put("currentTeam", game.getCurrentTeam());
                 if (game.checkKingDead()) {
-                    String winningTeamColor = game.askWinningTeamColor(chessDAO.getLatestTurn());
-                    model.put("winner", winningTeamColor);
                     chessDAO.deleteAll();
 
                     return render(model, "end.html");
@@ -57,9 +59,10 @@ public class WebUIChessApplication {
 
                 model.put("board", boardDTO.getPieces());
             }
-            if (Objects.isNull(source)) { // 게임진행
+            if (Objects.isNull(source)) { // 이어서하기 첫 화면
                 BoardDTO boardDTO = chessDAO.selectByTurn(chessDAO.getLatestTurn());
                 game = new ChessGame(new ContinueGameCreateStrategy(boardDTO), chessDAO.getLatestTurn());
+                model.put("currentTeam", game.getCurrentTeam());
 
                 Collections.reverse(boardDTO.getPieces());
 

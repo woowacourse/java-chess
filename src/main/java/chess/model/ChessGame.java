@@ -39,10 +39,11 @@ public class ChessGame {
         return !board.checkKingAlive();
     }
 
-    public String askWinningTeamColor(int latestTurn) {
-        if (latestTurn % 2 != 0) {
+    public String getCurrentTeam() {
+        if (turn % 2 == 0) {
             return "black";
         }
+
         return "white";
     }
 }
