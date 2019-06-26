@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class TableCreator {
+    public static final String SRC_MAIN_RESOURCES_SCHEMA_SQL = "src/main/resources/schema.sql";
     private static final Logger LOGGER = LoggerFactory.getLogger(TableCreator.class);
     private static final String SEMICOLON_DELIMITER = ";";
 
@@ -25,7 +26,7 @@ public class TableCreator {
         }
         flag = true;
 
-        File file = new File("src/main/resources/schema.sql");
+        File file = new File(SRC_MAIN_RESOURCES_SCHEMA_SQL);
         FileInputStream fis = new FileInputStream(file);
 
         String[] querys = getFileContent(fis).split(SEMICOLON_DELIMITER);
