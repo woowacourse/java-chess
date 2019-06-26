@@ -102,7 +102,7 @@ SELECT * FROM player;
 SELECT * FROM history;
 SELECT * FROM result;
 
--- 아직 끝나지 않은 게임 (List<RoundInfoDto>)
+-- 아직 끝나지 않은 게임 (List<RoundInfoDTO>)
 SELECT round.id, p1.name 'black_player', p2.name 'white_player', round.is_end
 FROM round
 INNER JOIN player p1 ON p1.id = round.white_id
@@ -135,8 +135,6 @@ INSERT INTO player (name)
   SELECT 'pobi' FROM DUAL
 WHERE NOT EXISTS 
   (SELECT name FROM player WHERE name = 'pobi');
-
-select * from round;
 
 -- 이름을 사용해 round 등록
 INSERT INTO round(white_id, black_id) VALUES(
