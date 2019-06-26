@@ -1,10 +1,7 @@
 package service;
 
 import model.board.Position;
-import model.game.FailedToRestartGameException;
-import model.game.FailedToRestoreGameException;
-import model.game.Game;
-import model.game.GameDAO;
+import model.game.*;
 import view.WebView;
 
 import java.sql.SQLException;
@@ -54,12 +51,12 @@ public class GameService {
         }
         final Optional<Position> to = Position.ofSafe(position);
         if (to.map(pos -> game.get().tryToMoveFromTo(from.get(), to.get())).orElse(false)) {
-            reselectSrc(redirect, status);
+            return Referee.isKingAlive(game.get()) ? initState(redirect, status) : WebView.printEndPage(game.get());
         }
         return WebView.printWrongChoicePage(game.get(), from.get(), "잘못된 선택입니다. 2sdgasdg");
     }
 
-    public static String reselectSrc(Consumer<String> redirect, Consumer<Integer> status) {
+    public static String initState(Consumer<String> redirect, Consumer<Integer> status) {
         from = Optional.empty();
         redirect.accept("/");
         status.accept(200);

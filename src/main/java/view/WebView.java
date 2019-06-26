@@ -36,7 +36,7 @@ public class WebView {
         model.put("board", WebView.drawBoard(game));
         model.put("uiButtons", WebView.drawChoiceButton() + WebView.drawRestartButton());
         model.put("submitUrl", "/select");
-        model.put("errorMessage", errorMessage);
+        model.put("message", errorMessage);
         return render(model, "game.html");
     }
 
@@ -45,8 +45,18 @@ public class WebView {
         model.put("board", WebView.drawBoard(game, game.getPossiblePositions(position)));
         model.put("uiButtons", WebView.drawConfirmOrCancelButtons() + WebView.drawRestartButton());
         model.put("submitUrl", "/confirm");
-        model.put("errorMessage", errorMessage);
+        model.put("message", errorMessage);
         return render(model, "game.html");
+    }
+
+    public static String printEndPage(Game game) {
+        final Map<String, Object> model = defaultModel(game);
+        model.put("board", WebView.drawBoard(game));
+        model.put("uiButtons", WebView.drawRestartButton());
+        model.put("submitUrl", "/");
+        model.put("message", game.turn().team().toggle() + "이 승리하였습니다.");
+        return render(model, "game.html");
+
     }
 
     private static Map<String, Object> defaultModel(Game game) {
