@@ -35,10 +35,8 @@ public class Game {
             piece = whitePlayer.getPiece(source);
         }
 
-        Optional<Piece> returnPiece = Optional.ofNullable(piece).orElseThrow(IllegalArgumentException::new);
-
-        if (returnPiece.isPresent()) {
-            return returnPiece.get();
+        if (piece.isPresent()) {
+            return piece.get();
         }
 
         throw new IllegalArgumentException();

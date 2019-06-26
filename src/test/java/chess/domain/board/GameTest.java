@@ -41,6 +41,25 @@ public class GameTest {
     }
 
     @Test
+    void 해당_위치_말_확인_예외() {
+        Piece rook = new Rook(PieceColor.BLACK, PathFactory.ROOK.create());
+        Map<Square, Piece> black = new HashMap<>();
+        black.put(new Square(new XPosition("a"), new YPosition("8")), rook);
+        Player blackPlayer = new DefaultPlayer(black);
+
+        Piece pawn = new Pawn(PieceColor.WHITE, PathFactory.WHITE_PAWN.create());
+        Map<Square, Piece> white = new HashMap<>();
+        white.put(new Square(new XPosition("a"), new YPosition("2")), pawn);
+        Player whitePlayer = new DefaultPlayer(white);
+
+        Game game = new Game(whitePlayer, blackPlayer);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            game.getPiece(new Square(new XPosition("a"), new YPosition("7")));
+        });
+    }
+
+    @Test
     void 룩_움직임_경우의수() {
         Piece rook = new Rook(PieceColor.BLACK, PathFactory.ROOK.create());
         Piece rook2 = new Rook(PieceColor.BLACK, PathFactory.ROOK.create());
