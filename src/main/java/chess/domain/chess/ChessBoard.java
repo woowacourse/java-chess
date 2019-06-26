@@ -21,6 +21,7 @@ public class ChessBoard {
 
     public ChessBoard(Initializer initializer) {
         this.units = initializer.create();
+
         this.present = initializer.createTeam();
 
     }

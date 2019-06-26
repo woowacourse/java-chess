@@ -23,7 +23,7 @@ public enum Team {
         return Team.WHITE;
     }
 
-    public String getUnitName(String name) {
+    public String applyUpperCaseOrLowerCaseByTeam(String name) {
         return this.function.apply(name);
     }
 

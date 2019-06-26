@@ -1,5 +1,6 @@
 package chess.domain.chess.unit;
 
+import chess.domain.UnitInformation;
 import chess.domain.chess.Team;
 import chess.domain.geometric.Direction;
 import chess.domain.geometric.Position;
@@ -8,7 +9,8 @@ import chess.domain.geometric.Vector;
 import java.util.List;
 
 public class Pawn extends Unit {
-    private static final double SCORE = 1;
+    private static final double SCORE = UnitInformation.PAWN.score();
+
 
     private static List<Direction> whiteDirections;
     private static List<Direction> blackDirections;
@@ -19,7 +21,7 @@ public class Pawn extends Unit {
     }
 
     public Pawn(Team team) {
-        super(team, "Pawn");
+        super(team, UnitInformation.PAWN.name());
     }
 
     @Override
@@ -59,7 +61,7 @@ public class Pawn extends Unit {
 
     @Override
     public String toString() {
-        return getTeam().getUnitName("P");
+        return getTeam().applyUpperCaseOrLowerCaseByTeam(UnitInformation.PAWN.symbol());
     }
 }
 

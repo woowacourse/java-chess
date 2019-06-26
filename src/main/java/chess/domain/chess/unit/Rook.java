@@ -1,5 +1,6 @@
 package chess.domain.chess.unit;
 
+import chess.domain.UnitInformation;
 import chess.domain.chess.Team;
 import chess.domain.geometric.Direction;
 import chess.domain.geometric.Vector;
@@ -7,7 +8,7 @@ import chess.domain.geometric.Vector;
 import java.util.List;
 
 public class Rook extends Unit {
-    private static final double SCORE = 5;
+    private static final double SCORE = UnitInformation.ROOK.score();
 
     private static List<Direction> directions;
 
@@ -16,7 +17,7 @@ public class Rook extends Unit {
     }
 
     public Rook(Team team) {
-        super(team, "Rook");
+        super(team, UnitInformation.ROOK.name());
     }
 
     @Override
@@ -37,6 +38,6 @@ public class Rook extends Unit {
 
     @Override
     public String toString() {
-        return getTeam().getUnitName("R");
+        return getTeam().applyUpperCaseOrLowerCaseByTeam(UnitInformation.ROOK.symbol());
     }
 }

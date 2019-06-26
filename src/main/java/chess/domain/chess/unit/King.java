@@ -1,5 +1,6 @@
 package chess.domain.chess.unit;
 
+import chess.domain.UnitInformation;
 import chess.domain.chess.Team;
 import chess.domain.geometric.Direction;
 import chess.domain.geometric.Vector;
@@ -10,7 +11,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class King extends Unit {
-    private static final double SCORE = 0;
+    private static final double SCORE = UnitInformation.KING.score();
     private static List<Direction> directions;
 
     static {
@@ -19,7 +20,7 @@ public class King extends Unit {
     }
 
     public King(Team team) {
-        super(team, "King");
+        super(team, UnitInformation.KING.name());
     }
 
     @Override
@@ -35,7 +36,7 @@ public class King extends Unit {
 
     @Override
     public String toString() {
-        return getTeam().getUnitName("K");
+        return getTeam().applyUpperCaseOrLowerCaseByTeam(UnitInformation.KING.symbol());
     }
 
 }

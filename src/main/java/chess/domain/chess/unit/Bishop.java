@@ -1,5 +1,6 @@
 package chess.domain.chess.unit;
 
+import chess.domain.UnitInformation;
 import chess.domain.chess.Team;
 import chess.domain.geometric.Direction;
 import chess.domain.geometric.Vector;
@@ -7,7 +8,7 @@ import chess.domain.geometric.Vector;
 import java.util.List;
 
 public class Bishop extends Unit {
-    private static final double SCORE = 3;
+    private static final double SCORE = UnitInformation.BISHOP.score();
     private static List<Direction> directions;
 
     static {
@@ -15,7 +16,7 @@ public class Bishop extends Unit {
     }
 
     public Bishop(Team team) {
-        super(team, "Bishop");
+        super(team, UnitInformation.BISHOP.name());
     }
 
     @Override
@@ -31,6 +32,6 @@ public class Bishop extends Unit {
 
     @Override
     public String toString() {
-        return getTeam().getUnitName("B");
+        return getTeam().applyUpperCaseOrLowerCaseByTeam(UnitInformation.BISHOP.symbol());
     }
 }

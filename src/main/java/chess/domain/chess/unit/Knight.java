@@ -1,15 +1,16 @@
 package chess.domain.chess.unit;
 
+import chess.domain.UnitInformation;
 import chess.domain.chess.Team;
 import chess.domain.geometric.Vector;
 import chess.util.DoubleCompare;
 
 public class Knight extends Unit {
-    private static final Double SCORE = 2.5;
+    private static final Double SCORE = UnitInformation.KNIGHT.score();
     private static final Double KNIGHT_LENGTH = Math.sqrt(5);
 
     public Knight(Team team) {
-        super(team, "Knight");
+        super(team, UnitInformation.KNIGHT.name());
     }
 
     @Override
@@ -24,6 +25,6 @@ public class Knight extends Unit {
 
     @Override
     public String toString() {
-        return getTeam().getUnitName("N");
+        return getTeam().applyUpperCaseOrLowerCaseByTeam(UnitInformation.KNIGHT.symbol());
     }
 }

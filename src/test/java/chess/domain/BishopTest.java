@@ -66,7 +66,7 @@ public class BishopTest {
 
     @Test
     void unit_class() {
-
+        System.out.println(UnitInformation.BISHOP.name());
     }
 
 }
