@@ -22,7 +22,7 @@ public class ChessDao {
         this.con = con;
     }
 
-    private void deleteAllData() throws SQLException {
+    void deleteAllData() throws SQLException {
         String deleteGameInfoQuery = "DELETE FROM chessgame";
         PreparedStatement pstmt = con.prepareStatement(deleteGameInfoQuery);
         pstmt.executeUpdate();
@@ -81,14 +81,12 @@ public class ChessDao {
             board.initialize(new BasicBoardInitializer());
             return board;
         }
-        board.initialize(() -> {
-            Map<Square, Piece> map = new HashMap<>();
-            do {
-                map.put(Square.of(rs.getString("position"))
-                        , Piece.createPiece(rs.getString("side") + rs.getString("unitType")));
-            } while (rs.next());
-            return map;
-        });
+        Map<Square, Piece> map = new HashMap<>();
+        do {
+            map.put(Square.of(rs.getString("position"))
+                    , Piece.createPiece(rs.getString("side") + rs.getString("unitType")));
+        } while (rs.next());
+        board.initialize(() -> map);
 
         return board;
     }
