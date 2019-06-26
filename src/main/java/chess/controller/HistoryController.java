@@ -1,27 +1,42 @@
 package chess.controller;
 
-import chess.dao.HistoryDao;
-import chess.dto.HistoryDto;
-import chess.dto.RoundInfoDto;
+import chess.domain.board.Point;
 import chess.service.HistoryService;
 import spark.Request;
 import spark.Response;
 
 import java.sql.SQLDataException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import static chess.WebUIChessApplication.nullable;
+import static chess.controller.CommonController.nullable;
 
 public class HistoryController {
     private HistoryController() {
+        throw new AssertionError();
     }
 
-    public static List<RoundInfoDto> selectAllUnfinishedGame(Request request, Response response) throws SQLDataException {
-        return HistoryService.getInstance().selectAllUnfinishedGame();
-    }
-
-    public static HistoryDto selectUnfinishedGame(Request request, Response response) throws SQLDataException {
+    public static Map<String, Object> loadUnfinishedGame(Request request, Response response) throws SQLDataException {
         int round = Integer.parseInt(nullable(request.params(":round")));
-        return HistoryDao.getInstance().selectLastHistory(round);
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("history", HistoryService.getInstance().selectLastHistory(round));
+        return model;
+    }
+
+    public static Map<String, Object> insertHistory(Request request, Response response) throws SQLDataException {
+        int round = Integer.parseInt(nullable(request.queryParams("round")));
+
+        int prevX = Integer.parseInt(nullable(request.queryParams("prevX")));
+        int prevY = Integer.parseInt(nullable(request.queryParams("prevY")));
+        int nextX = Integer.parseInt(nullable(request.queryParams("nextX")));
+        int nextY = Integer.parseInt(nullable(request.queryParams("nextY")));
+
+        Point prev = Point.of(prevX, prevY);
+        Point next = Point.of(nextX, nextY);
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("history", HistoryService.getInstance().movePiece(round, prev, next));
+        return model;
     }
 }
