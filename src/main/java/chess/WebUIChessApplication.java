@@ -21,13 +21,12 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     public static void main(String[] args) {
         Spark.staticFiles.location("/templates");
-//        externalStaticFileLocation("src/main/resources/templates");
         port(8080);
 
         DataSource dataSource = DBUtil.getDataSource();
 
-        PieceDao pieceDao = new PieceDao(dataSource);
-        GameDao gameDao = new GameDao(dataSource);
+        PieceDao pieceDao = PieceDao.getInstance(dataSource);
+        GameDao gameDao = GameDao.getInstance(dataSource);
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

@@ -22,9 +22,17 @@ public class PieceDao {
     private static final String INSERT_BLANK_BY_POSITION = "INSERT INTO piece(game_id, name, x, y, team) VALUES (?, ?, ?, ?, ?)";
 
     private final DataSource dataSource;
+    private static PieceDao pieceDao;
 
-    public PieceDao(DataSource dataSource) {
+    private PieceDao(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static PieceDao getInstance(DataSource dataSource) {
+        if (pieceDao == null) {
+            pieceDao = new PieceDao(dataSource);
+        }
+        return pieceDao;
     }
 
     public void add(int gameId, PieceDto pieceDto) throws SQLException {

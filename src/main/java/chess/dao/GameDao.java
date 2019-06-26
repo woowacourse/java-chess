@@ -15,10 +15,18 @@ public class GameDao {
     private static final String DELETE_BY_ID = "DELETE FROM game WHERE game_id = ?";
     private static final String SELECT_MAX_ID = "SELECT MAX(game_id) FROM game";
     private static final String SELECT_ALL_ID = "SELECT game_id FROM game LIMIT 0, 1000";
+    private static GameDao gameDao;
     private final DataSource dataSource;
 
-    public GameDao(DataSource dataSource) {
+    private GameDao(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static GameDao getInstance(DataSource dataSource){
+        if(gameDao == null){
+            gameDao = new GameDao(dataSource);
+        }
+        return gameDao;
     }
 
     public boolean findTurnByGameId(int gameId) throws SQLException {
