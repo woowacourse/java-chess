@@ -1,15 +1,13 @@
 package chess.model.board.vector;
 
 import chess.model.board.Coordinate;
-import chess.model.board.vector.Direction;
-import chess.model.board.vector.Magnitude;
-import chess.model.board.vector.Vector;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static chess.model.board.vector.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -35,8 +33,8 @@ public class VectorTest {
                 Coordinate.valueOf(3));
         Vector vector = new Vector(coordinates);
 
-        assertThat(vector.getDirection()).isEqualTo(Direction.NORTH);
-        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, Direction.NORTH));
+        assertThat(vector.getDirection()).isEqualTo(NORTH);
+        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, NORTH));
     }
 
     @Test
@@ -48,8 +46,8 @@ public class VectorTest {
                 Coordinate.valueOf(2));
         Vector vector = new Vector(coordinates);
 
-        assertThat(vector.getDirection()).isEqualTo(Direction.WEST);
-        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, Direction.WEST));
+        assertThat(vector.getDirection()).isEqualTo(WEST);
+        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, WEST));
     }
 
     @Test
@@ -61,8 +59,8 @@ public class VectorTest {
                 Coordinate.valueOf(3));
         Vector vector = new Vector(coordinates);
 
-        assertThat(vector.getDirection()).isEqualTo(Direction.NORTHEAST);
-        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, Direction.NORTHEAST));
+        assertThat(vector.getDirection()).isEqualTo(NORTHEAST);
+        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, NORTHEAST));
     }
 
     @Test
@@ -74,7 +72,7 @@ public class VectorTest {
                 Coordinate.valueOf(5));
         Vector vector = new Vector(coordinates);
 
-        assertThat(vector.getDirection()).isEqualTo(Direction.KNIGHT_NORTHWEST);
-        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, Direction.KNIGHT_NORTHWEST));
+        assertThat(vector.getDirection()).isEqualTo(KNIGHT_NORTHWEST);
+        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, KNIGHT_NORTHWEST));
     }
 }

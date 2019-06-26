@@ -87,6 +87,14 @@ public enum Direction {
 
     }
 
+    public static boolean isVertical(Direction direction) {
+        return (direction == NORTH) || (direction == SOUTH);
+    }
+
+    public static boolean isHorizontal(Direction direction) {
+        return (direction == EAST) || (direction == WEST);
+    }
+
     public static boolean isDiagonal(Direction direction) {
         return (direction == NORTHEAST) || (direction == NORTHWEST)
                 || (direction == SOUTHEAST) || (direction == SOUTHWEST);

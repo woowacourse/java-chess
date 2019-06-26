@@ -5,37 +5,36 @@ import chess.model.board.Coordinate;
 import java.util.List;
 import java.util.Objects;
 
+import static chess.model.board.vector.Direction.*;
+
 public class Magnitude {
     private int magnitude;
 
     public Magnitude(List<Coordinate> coordinates, Direction direction) {
-        validateMagnitudeParameters(coordinates, direction);
+        validateConstructor(coordinates, direction);
 
+        this.magnitude = calculateMagnitude(coordinates, direction);
+    }
+
+    private int calculateMagnitude(List<Coordinate> coordinates, Direction direction) {
         Coordinate sourceCoordinateX = coordinates.get(0);
         Coordinate sourceCoordinateY = coordinates.get(1);
         Coordinate targetCoordinateX = coordinates.get(2);
         Coordinate targetCoordinateY = coordinates.get(3);
 
-        if ((direction == Direction.NORTH) || (direction == Direction.SOUTH)) {
-            this.magnitude = Math.abs(targetCoordinateY.calculateDistance(sourceCoordinateY));
-            return;
+        if (isVertical(direction)) {
+            return Math.abs(targetCoordinateY.calculateDistance(sourceCoordinateY));
         }
-
-        if ((direction == Direction.EAST) || (direction == Direction.WEST)) {
-            this.magnitude = Math.abs(targetCoordinateX.calculateDistance(sourceCoordinateX));
-            return;
+        if (isHorizontal(direction)) {
+            return Math.abs(targetCoordinateX.calculateDistance(sourceCoordinateX));
         }
-
-        if ((direction == Direction.SOUTHEAST) || (direction == Direction.SOUTHWEST)
-                || (direction == Direction.NORTHEAST) || (direction == Direction.NORTHWEST)) {
-            this.magnitude = Math.abs(targetCoordinateX.calculateDistance(sourceCoordinateX));
-            return;
+        if (isDiagonal(direction)) {
+            return Math.abs(targetCoordinateX.calculateDistance(sourceCoordinateX));
         }
-
-        this.magnitude = 0;
+        return 0;
     }
 
-    private void validateMagnitudeParameters(List<Coordinate> coordinates, Direction direction) {
+    private void validateConstructor(List<Coordinate> coordinates, Direction direction) {
         if (Objects.isNull(coordinates) || coordinates.isEmpty()) {
             throw new NullPointerException();
         }
