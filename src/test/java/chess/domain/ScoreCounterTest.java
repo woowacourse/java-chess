@@ -1,7 +1,7 @@
 package chess.domain;
 
-import chess.domain.boardcell.ChessPieceFactory;
 import chess.domain.boardcell.ChessPiece;
+import chess.domain.boardcell.ChessPieceFactory;
 import chess.domain.boardcell.PieceType;
 import org.junit.jupiter.api.Test;
 

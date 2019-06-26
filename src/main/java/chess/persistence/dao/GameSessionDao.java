@@ -16,12 +16,14 @@ public class GameSessionDao {
         this.dataSource = ds;
     }
 
-    public long addSession(GameSessionDto sess) throws SQLException {
+    public long addSession(GameSessionDto sess) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             query.setString(1, sess.getTitle());
             query.setString(2, sess.getState());
             return getGeneratedKey(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -33,11 +35,13 @@ public class GameSessionDao {
         }
     }
 
-    public Optional<GameSessionDto> findById(long id) throws SQLException {
+    public Optional<GameSessionDto> findById(long id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
             return handleSingleResult(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -58,19 +62,23 @@ public class GameSessionDao {
         );
     }
 
-    public Optional<GameSessionDto> findByTitle(String title) throws SQLException {
+    public Optional<GameSessionDto> findByTitle(String title) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.SELECT_BY_TITLE)) {
             query.setString(1, title);
             return handleSingleResult(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public List<GameSessionDto> findLatestSessions(int limit) throws SQLException {
+    public List<GameSessionDto> findLatestSessions(int limit) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.SELECT_LATEST_N)) {
             query.setInt(1, limit);
             return handleMultipleResults(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -84,21 +92,25 @@ public class GameSessionDao {
         }
     }
 
-    public int deleteById(long id) throws SQLException {
+    public int deleteById(long id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.DELETE_BY_ID)) {
             query.setLong(1, id);
             return query.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public int updateSession(GameSessionDto sess) throws SQLException {
+    public int updateSession(GameSessionDto sess) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(GameSessionDaoSql.UPDATE)) {
             query.setString(1, sess.getTitle());
             query.setString(2, sess.getState());
             query.setLong(3, sess.getId());
             return query.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

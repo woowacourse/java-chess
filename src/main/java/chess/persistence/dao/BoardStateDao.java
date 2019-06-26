@@ -16,7 +16,7 @@ public class BoardStateDao {
         this.dataSource = ds;
     }
 
-    public long addState(BoardStateDto state, long sessionId) throws SQLException {
+    public long addState(BoardStateDto state, long sessionId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             conn.setAutoCommit(false);
@@ -28,6 +28,8 @@ public class BoardStateDao {
             addPlayIn(state, sessionId, conn);
             conn.commit();
             return state.getId();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -46,11 +48,13 @@ public class BoardStateDao {
         }
     }
 
-    public Optional<BoardStateDto> findById(long id) throws SQLException {
+    public Optional<BoardStateDto> findById(long id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
             return handleSingleResult(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -73,11 +77,13 @@ public class BoardStateDao {
         );
     }
 
-    public List<BoardStateDto> findBySessionId(long sessionId) throws SQLException {
+    public List<BoardStateDto> findBySessionId(long sessionId) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement query = connection.prepareStatement(BoardStateDaoSql.SELECT_BY_SESSION_ID)) {
             query.setLong(1, sessionId);
             return handleMultipleResults(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -91,31 +97,37 @@ public class BoardStateDao {
         }
     }
 
-    public Optional<BoardStateDto> findByRoomIdAndCoordinate(long sessionId, String coordX, String coordY) throws SQLException {
+    public Optional<BoardStateDto> findByRoomIdAndCoordinate(long sessionId, String coordX, String coordY) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.SELECT_BY_SESSION_ID_AND_COORDINATE)) {
             query.setLong(1, sessionId);
             query.setString(2, coordX);
             query.setString(3, coordY);
             return handleSingleResult(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public int updateCoordById(BoardStateDto state) throws SQLException {
+    public int updateCoordById(BoardStateDto state) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.UPDATE_COORD_BY_ID)) {
             query.setString(1, state.getCoordX());
             query.setString(2, state.getCoordY());
             query.setLong(3, state.getId());
             return query.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public int deleteById(long id) throws SQLException {
+    public int deleteById(long id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.DELETE_BY_ID)) {
             query.setLong(1, id);
             return query.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

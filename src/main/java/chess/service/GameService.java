@@ -1,8 +1,8 @@
 package chess.service;
 
 import chess.domain.*;
-import chess.domain.boardcell.ChessPieceFactory;
 import chess.domain.boardcell.ChessPiece;
+import chess.domain.boardcell.ChessPieceFactory;
 import chess.domain.boardcell.PieceType;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
@@ -12,7 +12,6 @@ import chess.persistence.dto.GameSessionDto;
 import chess.service.dto.CoordinatePairDto;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,63 +28,42 @@ public class GameService {
     }
 
     public List<BoardStateDto> findBoardStatesBySessionId(long sessionId) {
-        try {
-            return boardStateDao.findBySessionId(sessionId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        throw new IllegalStateException();
+        return boardStateDao.findBySessionId(sessionId);
     }
 
     public GameResult movePiece(CoordinatePair from, CoordinatePair to, long sessionId) {
-        try {
-            ChessGame game = new ChessGame(() -> findBoardStatesMapBySessionId(sessionId));
-            game.move(from, to);
+        ChessGame game = new ChessGame(() -> findBoardStatesMapBySessionId(sessionId));
+        game.move(from, to);
 
-            deleteTargetStateIfPresent(to, sessionId);
-            updateSrcState(from, to, sessionId);
-            GameResult result = GameResult.judge(game.getBoardState().values());
-            GameSessionDto sess = sessionDao.findById(sessionId).orElseThrow(() -> new IllegalStateException("결과를 반영할 세션을 찾을 수 없습니다."));
-            sess.setState(result.name());
-            sessionDao.updateSession(sess);
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        throw new IllegalStateException();
+        deleteTargetStateIfPresent(to, sessionId);
+        updateSrcState(from, to, sessionId);
+        GameResult result = GameResult.judge(game.getBoardState().values());
+        GameSessionDto sess = sessionDao.findById(sessionId).orElseThrow(() -> new IllegalStateException("결과를 반영할 세션을 찾을 수 없습니다."));
+        sess.setState(result.name());
+        sessionDao.updateSession(sess);
+        return result;
     }
 
     private LivingPieceGroup findBoardStatesMapBySessionId(long roomId) {
-        try {
-            Map<CoordinatePair, ChessPiece> board = new HashMap<>();
+        Map<CoordinatePair, ChessPiece> board = new HashMap<>();
 
-            boardStateDao.findBySessionId(roomId)
-                .forEach(dto ->
-                    board.put(CoordinatePair.of(dto.getCoordX() + dto.getCoordY()).get(),
-                        ChessPieceFactory.create(PieceType.valueOf(dto.getType()))));
-            return LivingPieceGroup.of(board);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        throw new IllegalStateException();
+        boardStateDao.findBySessionId(roomId)
+            .forEach(dto ->
+                board.put(CoordinatePair.of(dto.getCoordX() + dto.getCoordY()).get(),
+                    ChessPieceFactory.create(PieceType.valueOf(dto.getType()))));
+        return LivingPieceGroup.of(board);
     }
 
-    private void deleteTargetStateIfPresent(CoordinatePair to, long roomId) throws SQLException {
+    private void deleteTargetStateIfPresent(CoordinatePair to, long roomId) {
         boardStateDao.findByRoomIdAndCoordinate(roomId, to.getXSymbol(), to.getYSymbol())
             .ifPresent(dto -> tryDeleteBoardStateById(dto.getId()));
     }
 
     private void tryDeleteBoardStateById(long id) {
-        try {
-            boardStateDao.deleteById(id);
-            return;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        throw new IllegalStateException();
+        boardStateDao.deleteById(id);
     }
 
-    private void updateSrcState(CoordinatePair from, CoordinatePair to, long roomId) throws SQLException {
+    private void updateSrcState(CoordinatePair from, CoordinatePair to, long roomId) {
         boardStateDao.findByRoomIdAndCoordinate(roomId, from.getXSymbol(), from.getYSymbol())
             .ifPresent(dto -> {
                 dto.setCoordX(to.getXSymbol());
@@ -95,13 +73,7 @@ public class GameService {
     }
 
     private void tryUpdateBoardState(BoardStateDto dto) {
-        try {
-            boardStateDao.updateCoordById(dto);
-            return;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        throw new IllegalStateException();
+        boardStateDao.updateCoordById(dto);
     }
 
     public List<CoordinatePairDto> findMovableCoordinates(long sessionId, CoordinatePair from) {
