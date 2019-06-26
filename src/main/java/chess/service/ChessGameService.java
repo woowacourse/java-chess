@@ -18,67 +18,38 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ChessService {
-
-    private RoomDao roomDao;
+public class ChessGameService {
     private BoardStateDao boardStateDao;
     private TurnDao turnDao;
 
-    public ChessService() {
+    public ChessGameService() {
         DataSource ds = new DataSourceFactory().createDataSource();
-        roomDao = new RoomDao(ds);
         boardStateDao = new BoardStateDao(ds);
         turnDao = new TurnDao(ds);
     }
 
-    public Optional<Long> createRoom(RoomDto room) {
-        try {
-            return Optional.of(roomDao.addRoom(room));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
-    public Optional<RoomDto> findRoomById(long id) {
-        try {
-            return roomDao.findById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
-    public Optional<RoomDto> findRoomByTitle(String title) {
-        try {
-            return roomDao.findByTitle(title);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
-    public List<RoomDto> findLatestNRooms(int topN) {
-        try {
-            return roomDao.findLatestN(topN);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Collections.EMPTY_LIST;
-    }
-
     public List<Optional<Long>> createBoardState(Map<ChessCoordinate, PieceType> boardState, long roomId) {
         return boardState.entrySet().stream()
-                .map(entry -> {
-                    BoardStateDto dto = new BoardStateDto();
-                    dto.setRoomId(roomId);
-                    dto.setCoordX(entry.getKey().getX().getSymbol());
-                    dto.setCoordY(entry.getKey().getY().getSymbol());
-                    dto.setType(entry.getValue().name());
-                    return dto;
-                })
+                .map(entry -> getBoardStateDto(roomId, entry))
                 .map(this::tryInsertBoardState)
                 .collect(Collectors.toList());
+    }
+
+    private BoardStateDto getBoardStateDto(long roomId, Map.Entry<ChessCoordinate, PieceType> entry) {
+        BoardStateDto dto = new BoardStateDto();
+        dto.setRoomId(roomId);
+        dto.setCoordX(entry.getKey().getX().getSymbol());
+        dto.setCoordY(entry.getKey().getY().getSymbol());
+        dto.setType(entry.getValue().name());
+        return dto;
+    }
+
+    private Optional<Long> tryInsertBoardState(BoardStateDto dto) {
+        try {
+            return Optional.of(boardStateDao.addState(dto));
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("보드 상태를 넣을 수 없습니다.");
+        }
     }
 
     public Map<ChessCoordinate, ChessPiece> findBoardStatesByRoomId(Long roomId) {
@@ -92,18 +63,8 @@ public class ChessService {
                             factory.create(PieceType.valueOf(dto.getType()))));
             return board;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
         }
-        return Collections.emptyMap();
-    }
-
-    private Optional<Long> tryInsertBoardState(BoardStateDto dto) {
-        try {
-            return Optional.of(boardStateDao.addState(dto));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
     }
 
     public void updateChessPiecePosition(ChessCoordinate from, ChessCoordinate to, long roomId) {
@@ -113,7 +74,7 @@ public class ChessService {
             deleteBoardStateByTo(to, boardStates);
             updateBoardState(from, to, boardStates);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
         }
     }
 
@@ -126,7 +87,7 @@ public class ChessService {
             try {
                 boardStateDao.updateCoordById(dto);
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new IllegalArgumentException("보드 상태를 업데이트 할 수 없습니다.");
             }
         });
     }
@@ -137,7 +98,7 @@ public class ChessService {
             try {
                 boardStateDao.deleteById(dto.getId());
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new IllegalArgumentException("보드 상태를 지울 수 없습니다.");
             }
         });
     }
@@ -149,7 +110,7 @@ public class ChessService {
             turn.setRoomId(id);
             turnDao.addTurn(turn);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("턴을 만들 수 없습니다.");
         }
     }
 
@@ -157,9 +118,8 @@ public class ChessService {
         try {
             return turnDao.findById(id);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("턴을 찾을 수 없습니다.");
         }
-        return Optional.empty();
     }
 
     public void updateTurnByRoomId(Team team, long roomId) {
@@ -169,7 +129,7 @@ public class ChessService {
             turn.setRoomId(roomId);
             turnDao.updateCoordById(turn);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("턴을 업데이트 할 수 없습니다.");
         }
     }
 }
