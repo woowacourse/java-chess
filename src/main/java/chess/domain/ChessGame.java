@@ -23,7 +23,7 @@ public class ChessGame {
     }
 
     public void play(String from, String to) {
-        board.play(parse(from), parse(to),turn);
+        board.play(parse(from), parse(to), turn);
         turn = turn.change();
     }
 
@@ -31,7 +31,7 @@ public class ChessGame {
         List<String> split = Arrays.asList(input.split(DELIMITER));
         validate(split);
 
-        play(split.get(COMMAND_FROM_POSITION),split.get(COMMAND_TO_POSITION));
+        play(split.get(COMMAND_FROM_POSITION), split.get(COMMAND_TO_POSITION));
     }
 
     private void validate(List<String> split) {

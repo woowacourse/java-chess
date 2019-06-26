@@ -13,8 +13,10 @@ public abstract class SelectJdbcTemplate<T> {
         setParameter(pstmt, parameters);
         ResultSet rs = pstmt.executeQuery();
         T result = getResult(rs);
+        DataBaseConnector.closeConnection(con, pstmt, rs);
         return result;
     }
+
 
     public void setParameter(PreparedStatement pstmt, List<String> parameters) throws SQLException {
         for (int i = 1; i <= parameters.size(); i++) {

@@ -16,10 +16,10 @@ public class Pawn extends Piece {
         super(team, PieceInfo.Pawn, null);
         moveDirection = new ArrayList<>();
         attackDirection = new ArrayList<>();
-        if(team.color() == ChessTeam.WHITE.color()){
+        if (team.color() == ChessTeam.WHITE.color()) {
             addWhiteDirection();
         }
-        if(team.color() == ChessTeam.BLACK.color()){
+        if (team.color() == ChessTeam.BLACK.color()) {
             addBlackDirection();
         }
 

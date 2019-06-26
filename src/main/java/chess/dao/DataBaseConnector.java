@@ -2,19 +2,14 @@ package chess.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class DataBaseConnector {
     public static Connection getConnection() {
         Properties properties = new Properties();
-        FileInputStream in;
-        try {
-            in = new FileInputStream("src/main/resources/database.properties");
+        try (FileInputStream in = new FileInputStream("src/main/resources/database.properties")) {
             properties.load(in);
-            in.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -43,13 +38,23 @@ public class DataBaseConnector {
         return con;
     }
 
-    // 드라이버 연결해제
-    public static void closeConnection(Connection con) {
+    public static void closeConnection(Connection con, PreparedStatement pstmt, ResultSet rs) {
         try {
-            if (con != null)
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (con != null) {
                 con.close();
+            }
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+            throw new DataBaseConnectException("연결 해제 중에 에러가 발생하였습니다.");
         }
+    }
+
+    public static void closeConnection(Connection con, PreparedStatement pstmt) {
+        closeConnection(con, pstmt, null);
     }
 }

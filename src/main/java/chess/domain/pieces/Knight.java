@@ -20,7 +20,8 @@ public class Knight extends Piece {
         directions.add(MoveVector.NightSouthEast.getDirection());
         directions.add(MoveVector.NightSouthWest.getDirection());
         directions.add(MoveVector.NightWestNorth.getDirection());
-        directions.add(MoveVector.NightWestSouth.getDirection());;
+        directions.add(MoveVector.NightWestSouth.getDirection());
+        ;
     }
 
     public Knight(ChessTeam team) {
@@ -28,7 +29,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Direction move(Point p1, Point p2){
+    public Direction move(Point p1, Point p2) {
         Direction direction = p1.direction(p2);
         if (directions.contains(direction)) {
             return direction;

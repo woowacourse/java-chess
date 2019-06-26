@@ -11,6 +11,7 @@ public class UpdateJdbcTemplate {
         PreparedStatement pstmt = con.prepareStatement(query);
         setParameter(pstmt, parameters);
         pstmt.executeUpdate();
+        DataBaseConnector.closeConnection(con, pstmt);
     }
 
     public void setParameter(PreparedStatement pstmt, List<String> parameters) throws SQLException {
