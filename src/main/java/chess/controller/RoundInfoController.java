@@ -4,6 +4,8 @@ import chess.dto.RoundInfoDto;
 import chess.service.HistoryService;
 import chess.service.PlayerService;
 import chess.service.RoundInfoService;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
 
@@ -28,8 +30,10 @@ public class RoundInfoController {
     }
 
     public static Map<String, Object> startGame(Request request, Response response) throws SQLDataException {
-        String whiteName = nullable(request.queryParams("whiteName"));
-        String blackName = nullable(request.queryParams("blackName"));
+        JsonParser parser = new JsonParser();
+        JsonElement element = parser.parse(request.body());
+        String whiteName = element.getAsJsonObject().get("whiteName").getAsString();
+        String blackName = element.getAsJsonObject().get("blackName").getAsString();
 
         int playerResult = PlayerService.getInstance().insertPlayer(whiteName, blackName);
         int round = RoundInfoService.getInstance().insertRoundInfo(whiteName, blackName);

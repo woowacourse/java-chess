@@ -2,6 +2,8 @@ package chess.controller;
 
 import chess.domain.board.Point;
 import chess.service.HistoryService;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
 
@@ -25,6 +27,7 @@ public class HistoryController {
     }
 
     public static Map<String, Object> insertHistory(Request request, Response response) throws SQLDataException {
+
         int round = Integer.parseInt(nullable(request.queryParams("round")));
 
         int prevX = Integer.parseInt(nullable(request.queryParams("prevX")));

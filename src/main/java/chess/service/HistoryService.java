@@ -33,6 +33,7 @@ public class HistoryService {
             return historyDto;
         }
 
+        historyDto.setCanMove(true);
         historyDto.setRows(board.mappingBoardToString());
         historyDto.setTurn(historyDto.getTurn() + 1);
 
