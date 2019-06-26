@@ -29,7 +29,8 @@ public class WebUIChessApplication {
         try {
             if (chessDAO.isTableEmpty()) {
                 chessGame = new ChessGame();
-            } else {
+            }
+            if (!chessDAO.isTableEmpty()){
                 chessGame = chessDAO.findChessGame();
                 chessDAO.deleteChessGame();
             }
