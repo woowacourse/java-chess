@@ -1,0 +1,51 @@
+package chess.domain;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public class ColumnTest {
+
+    @Test
+    public void 동치성_테스트() {
+        Column column1 = Column.from("a");
+        Column column2 = Column.from("a");
+
+        assertThat(column1).isEqualTo(column2);
+    }
+
+    @Test
+    public void 캐싱_테스트() {
+        Column column1 = Column.from("a");
+        Column column2 = Column.from("a");
+
+        assertThat(column1 == column2).isTrue();
+    }
+
+    @Test
+    public void 숫자로_생성할때_테스트() {
+        Column actual = Column.from("a");
+        Column expected = Column.from(97);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void 문자로_생성할때_테스트() {
+        Column actual = Column.from("a");
+        Column expected = Column.from('a');
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void 범위_유효성_MIN_테스트() {
+        String overThanMax = String.valueOf(Column.MIN - 1);
+        assertThrows(IllegalArgumentException.class, () -> Column.from(overThanMax));
+    }
+
+    @Test
+    public void 범위_유효성_MAX_테스트() {
+        String overThanMax = String.valueOf(Column.MAX + 1);
+        assertThrows(IllegalArgumentException.class, () -> Column.from(overThanMax));
+    }
+}

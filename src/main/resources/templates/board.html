@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/board.css">
+</head>
+<body>
+
+<div class="grid_row temp">
+    <div class="grid__item"><h1>8</h1></div>
+    <div class="grid__item"><h1>7</h1></div>
+    <div class="grid__item"><h1>6</h1></div>
+    <div class="grid__item"><h1>5</h1></div>
+    <div class="grid__item"><h1>4</h1></div>
+    <div class="grid__item"><h1>3</h1></div>
+    <div class="grid__item"><h1>2</h1></div>
+    <div class="grid__item"><h1>1</h1></div>
+</div>
+
+<main>
+    <div class="grid board">
+        {{#board}}
+        <div class="grid__item piece">{{this.symbol}}</div>
+        {{/board}}
+
+        <div class="grid__item piece">a</div>
+        <div class="grid__item piece">b</div>
+        <div class="grid__item piece">c</div>
+        <div class="grid__item piece">d</div>
+        <div class="grid__item piece">e</div>
+        <div class="grid__item piece">f</div>
+        <div class="grid__item piece">g</div>
+        <div class="grid__item piece">h</div>
+    </div>
+</main>
+
+<div>
+    <h3>{{currentColor}}턴 입니다.</h3>
+    <button onclick="location.href='/chess/score?roomId={{roomId}}'">점수보기</button>
+    <button onclick="location.href='/'">메인으로</button>
+    <br><br>
+
+    <form method="post" action="/chess">
+        <input type="hidden" name="roomId" value="{{roomId}}">
+        <div>
+            origin <input type="text" name="origin" placeholder="a8" required><br>
+            target <input type="text" name="target" placeholder="b8" required><br>
+            <button type="submit">이동</button>
+        </div>
+    </form>
+</div>
+
+<input type="hidden" id="message" value="{{message}}">
+
+
+</body>
+<script>
+    window.onload = function () {
+        const message = document.getElementById("message").value;
+        if (message !== "") {
+            alert(message);
+        }
+
+    }
+</script>
+</html>
