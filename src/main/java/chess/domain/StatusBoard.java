@@ -7,8 +7,8 @@ public class StatusBoard {
     private static final double SCORE_MAX_CONDITION = 38;
 
     private final double blackScore;
-    private final double whiteScore;
 
+    private final double whiteScore;
     public StatusBoard(double blackScore, double whiteScore) {
         scoreValidation(blackScore);
         scoreValidation(whiteScore);
@@ -28,6 +28,14 @@ public class StatusBoard {
 
     public double getWhiteScore() {
         return whiteScore;
+    }
+
+    @Override
+    public String toString() {
+        return "StatusBoard{" +
+                "blackScore=" + blackScore +
+                ", whiteScore=" + whiteScore +
+                '}';
     }
 
     @Override

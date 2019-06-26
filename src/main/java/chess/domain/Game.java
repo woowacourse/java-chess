@@ -12,7 +12,6 @@ public class Game {
     private Round round;
     private Board board;
     RoundDao roundDao;
-    StatusBoard statusBoard;
 
     public Game() {
         round = new Round(0);
@@ -24,13 +23,12 @@ public class Game {
         Spot startSpot = Spot.valueOf(from);
         Spot endSpot = Spot.valueOf(to);
 
-        if (!board.teamCheck(startSpot, round.getTeam())) {
+        if (!board.checkTeam(startSpot, round.getTeam())) {
             return new BoardJson(board).getBoardJson();
         }
 
         Board movedBoard = board.move(startSpot, endSpot);
         if (!movedBoard.equals(board)) {
-            System.out.println("보드 움직임");
             RoundDto roundDto = new RoundDto();
             roundDto.setRound(round.getRound());
             roundDto.setFrom(from);
@@ -45,7 +43,7 @@ public class Game {
 
     public JsonObject reload() throws SQLException {
         List<RoundDto> roundDtos = roundDao.selectRound();
-
+        board = BoardFactory.create();
         roundDtos.forEach(roundDto -> {
             Spot from = Spot.valueOf(roundDto.getFrom());
             Spot to = Spot.valueOf(roundDto.getTo());
@@ -53,5 +51,9 @@ public class Game {
             round.nextRound();
         });
         return new BoardJson(board).getBoardJson();
+    }
+
+    public StatusBoard getStatusBoard() {
+        return StatusBoardFactory.create(board);
     }
 }
