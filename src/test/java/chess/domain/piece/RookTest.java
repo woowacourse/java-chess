@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
+import static chess.domain.utils.InputParser.position;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -20,7 +21,7 @@ class RookTest {
     @BeforeEach
     void setUp() {
         piece = new Rook(Team.BLACK);
-        base = new Position(new Coordinate('b'), new Coordinate(4));
+        base = position("b4");
     }
 
     @Test
@@ -39,9 +40,6 @@ class RookTest {
 
     @Test
     void 대각선_이동_여부_테스트() {
-        assertThrows(InvalidDirectionException.class, () -> {
-            piece.canMove(base,
-                    new Position(new Coordinate('c'), new Coordinate(5)));
-        });
+        assertThrows(InvalidDirectionException.class, () -> piece.canMove(base, position("c5")));
     }
 }

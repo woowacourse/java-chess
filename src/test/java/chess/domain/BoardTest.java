@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static chess.domain.utils.InputParser.position;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
@@ -50,8 +51,8 @@ public class BoardTest {
 
     @Test
     void 말_이동_테스트() {
-        Position target = new Position(new Coordinate('b'), new Coordinate(3));
-        Position source = new Position(new Coordinate('b'), new Coordinate(2));
+        Position target = position("b3");
+        Position source = position("b2");
         board.move(source, target, board.at(source)); // Team.WHITE Pawn
 
         assertThat(board.at(target)).isEqualTo(new Pawn(Team.WHITE));

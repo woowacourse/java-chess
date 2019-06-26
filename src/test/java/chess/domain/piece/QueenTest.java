@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
+import static chess.domain.utils.InputParser.position;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class QueenTest {
@@ -18,7 +19,7 @@ class QueenTest {
     @BeforeEach
     void setUp() {
         piece = new Queen(Team.BLACK);
-        base = new Position(new Coordinate('d'), new Coordinate(4));
+        base = position("d4");
     }
 
     @Test
