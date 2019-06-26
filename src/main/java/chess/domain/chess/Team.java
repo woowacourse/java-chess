@@ -32,16 +32,13 @@ public enum Team {
     }
 
     public Team opposite() {
-        if(this.equals(Team.WHITE)) {
+        if (this.equals(Team.WHITE)) {
             return Team.BLACK;
         }
-
         return Team.WHITE;
     }
 
     public String getName() {
         return name;
     }
-
-
 }

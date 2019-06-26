@@ -12,15 +12,15 @@ abstract public class Unit {
         this.name = name;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
     public abstract boolean validateDirection(Vector vector);
     public abstract double score();
 
     public boolean isEqualTeam(Unit unit) {
         return this.team.equals(unit.team);
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     public String getName() {

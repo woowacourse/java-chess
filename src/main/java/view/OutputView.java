@@ -22,7 +22,7 @@ public class OutputView {
 
     private static void printCheckBoardRow(ChessBoard chessBoard, int i) {
         for (int j = Position.MIN_POSITION; j < Position.MAX_POSITION; j++) {
-            Optional<Unit> optional = chessBoard.getUnit(Position.create(j, Position.MAX_POSITION - 1 - i));
+            Optional<Unit> optional = chessBoard.getOptionalUnit(Position.create(j, Position.MAX_POSITION - 1 - i));
             System.out.print(printUnit(optional));
         }
     }

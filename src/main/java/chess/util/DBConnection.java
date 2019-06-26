@@ -9,8 +9,8 @@ public class DBConnection {
         Connection con = null;
         String server = "127.0.0.1";
         String database = "chess";
-        String userName = "Ole";
-        String password = "123";
+        String userName = "mir";
+        String password = "1234";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

@@ -10,11 +10,18 @@ import chess.domain.geometric.Direction;
 import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ChessBoard {
+    private static final int KING_INIT_COUNT = 2;
+    private static final double PAWN_BASIC_SCORE = 1;
+    private static final int PAWN_HORIZONTAL_COUNT = 2;
+    private static final int ZERO = 0;
+
     private Map<Position, Unit> units;
     private Team present;
 
@@ -23,56 +30,13 @@ public class ChessBoard {
         this.present = initializer.createTeam();
     }
 
-    public Optional<Unit> getUnit(Position position) {
+    public Optional<Unit> getOptionalUnit(Position position) {
         return Optional.ofNullable(units.get(position));
     }
 
-    public void validateMove(Position source, Position target) {
-        Optional<Unit> targetUnit = getUnit(target);
-        Optional<Unit> sourceUnit = getUnit(source);
-        Vector vector = Vector.of(source, target);
-
-        if (!sourceUnit.isPresent()) {
-            throw new SourceUnitNotPresentException("해당 위치에는 유닛이 존재하지 않습니다.");
-        }
-
-        if (sourceUnit.get().getTeam() != present) {
-            throw new IllegalTurnException("현재는" +present.name() +" 턴입니다.");
-        }
-
-        if (targetUnit.isPresent() && sourceUnit.get().isEqualTeam(targetUnit.get())) {
-            throw new SameTeamTargetUnitException("같은 팀을 공격할 수 없습니다.");
-        }
-
-        if (sourceUnit.get() instanceof Pawn) {
-            Pawn pawn = (Pawn) sourceUnit.get();
-            if (!pawn.validateDirection(source, target, targetUnit.isPresent())) {
-                throw new PawnIllegalMovingRuleException("폰의 규칙에 어긋납니다.");
-            }
-            return;
-        }
-
-        if (!sourceUnit.get().validateDirection(vector)) {
-            throw new IllegalMovingRuleException(sourceUnit.get().getName() + "의 규칙에 어긋납니다.");
-        }
-    }
-
-    private void validateInterception(Position source, Position target) {
-        Optional<Unit> sourceUnit = Optional.ofNullable(units.get(source));
-        if (sourceUnit.get() instanceof Knight) {
-            return;
-        }
-
-        Vector vector = Vector.of(source, target);
-        Direction direction = Direction.of(vector);
-        Position position = source;
-        while (position.equals(target) == false) {
-            position = direction.apply(position);
-            Optional<Unit> unit = Optional.ofNullable(units.get(position));
-            if (unit.isPresent() && (target.equals(position) == false)) {
-                throw new UnitInterceptionAlongPathException("중간 경로에 유닛이 존재합니다.");
-            }
-        }
+    private Unit getSourceUnit(Position source) {
+        return Optional.ofNullable(units.get(source))
+                .orElseThrow(() -> new IllegalSourceUnitNotPresentException("해당 위치에는 유닛이 존재하지 않습니다."));
     }
 
     public void move(Position source, Position target) {
@@ -82,59 +46,140 @@ public class ChessBoard {
         units.remove(source);
     }
 
-    public Map<Team, Double> sumScore() {
-        Map<Team, Double> scoreInfo = new HashMap<>();
+    private void validateMove(Position source, Position target) {
+        Unit sourceUnit = getOptionalUnit(source)
+                                .orElseThrow(() -> new IllegalSourceUnitNotPresentException("해당 위치에는 유닛이 존재하지 않습니다."));
 
-        for (Team team : Team.values()) {
-            scoreInfo.put(team, sumScore(team));
-        }
-
-        return scoreInfo;
+        validateTurn(sourceUnit);
+        validateTargetUnit(sourceUnit, target);
+        validateMoveRule(source, target, sourceUnit);
     }
 
-    private Double sumScore(Team team) {
-        double sum = 0;
-
-        for (Position position : units.keySet()) {
-            sum += singleUnitScore(team, position);
+    private void validateTurn(Unit sourceUnit) {
+        if (sourceUnit.getTeam() != present) {
+            throw new IllegalTurnException("현재는" +present.name() +" 턴입니다.");
         }
-        sum += sumPawnScore(team);
+    }
 
-        return sum;
+    private void validateTargetUnit(Unit sourceUnit, Position target) {
+        Optional<Unit> targetUnit = getOptionalUnit(target);
+
+        if (targetUnit.isPresent() && sourceUnit.isEqualTeam(targetUnit.get())) {
+            throw new IllegalSameTeamTargetUnitException("같은 팀을 공격할 수 없습니다.");
+        }
+    }
+
+    private void validateMoveRule(Position source, Position target, Unit sourceUnit) {
+        if (sourceUnit instanceof Pawn) {
+            Pawn pawn = (Pawn) sourceUnit;
+            validatePawnMoveRule(source, target, pawn);
+            return;
+        }
+        validateOtherMoveRule(source, target, sourceUnit);
+    }
+
+    private void validatePawnMoveRule(Position source, Position target, Pawn pawn) {
+        if (!pawn.validateDirection(source, target, getOptionalUnit(target).isPresent())) {
+            throw new IllegalPawnMovingRuleException("폰의 규칙에 어긋납니다.");
+        }
+    }
+
+    private void validateOtherMoveRule(Position source, Position target, Unit sourceUnit) {
+        if (!sourceUnit.validateDirection(Vector.of(source, target))) {
+            throw new IllegalMovingRuleException(sourceUnit.getName() + "의 규칙에 어긋납니다.");
+        }
+    }
+
+    private void validateInterception(Position source, Position target) {
+        if (validateKnight(source)) return;
+        validateInterceptionOthers(source, target);
+    }
+
+    private boolean validateKnight(Position source) {
+        return getSourceUnit(source) instanceof Knight;
+    }
+
+    private void validateInterceptionOthers(Position source, Position target) {
+        Vector vector = Vector.of(source, target);
+        Direction direction = Direction.of(vector);
+        Position position = source;
+
+        while (!position.equals(target)) {
+            position = direction.createPosition(position);
+            checkInterception(target, position);
+        }
+    }
+
+    private void checkInterception(Position target, Position position) {
+        Optional<Unit> unit = Optional.ofNullable(units.get(position));
+
+        if (unit.isPresent() && (!target.equals(position))) {
+            throw new IllegalUnitInterceptionAlongPathException("중간 경로에 유닛이 존재합니다.");
+        }
+    }
+
+    public Map<Team, Double> sumScore() {
+        return Arrays.stream(Team.values())
+                .collect(Collectors.toMap(key -> key, this::totalScore));
+    }
+
+    private Double totalScore(Team team) {
+        double score = units.keySet().stream()
+                .mapToDouble(position -> singleUnitScore(team, position))
+                .sum();
+
+        return score + sumPawnScore(team);
     }
 
     private double singleUnitScore(Team team, Position position) {
-        if (units.get(position).getTeam() == team &&
-                (!(units.get(position) instanceof Pawn))) {
+        if (units.get(position).getTeam() == team && (!(units.get(position) instanceof Pawn))) {
             return units.get(position).score();
         }
-        return 0;
+        return ZERO;
     }
 
-    public Double sumPawnScore(Team team) {
-        double sum = 0;
-
-        for (int y = Position.MIN_POSITION; y < Position.MAX_POSITION; y++) {
-            long numOfPawns = getNumberOfPawnsByColumn(y, team);
-            sum += numOfPawns * ratio(numOfPawns);
-        }
-
-        return sum;
+    private Double sumPawnScore(Team team) {
+        return IntStream.range(Position.MIN_POSITION, Position.MAX_POSITION)
+                .map(x -> countPawnOfColumn(x, team))
+                .mapToDouble(x -> x * choosePawnScore(x))
+                .sum();
     }
 
-    private long getNumberOfPawnsByColumn(int x, Team team) {
-        return units.keySet().stream()
+    private int countPawnOfColumn(int x, Team team) {
+        return (int) units.keySet().stream()
                 .filter(key -> key.getX() == x)
                 .filter(key -> units.get(key) instanceof Pawn)
                 .filter(key -> units.get(key).getTeam() == team)
                 .count();
     }
 
-    private double ratio(long count) {
-        if (count < 2) {
-            return 1;
+    private double choosePawnScore(int count) {
+        if (count < PAWN_HORIZONTAL_COUNT) {
+            return PAWN_BASIC_SCORE;
         }
-        return 0.5;
+        return PAWN_BASIC_SCORE / 2;
+    }
+
+    public void changeTeam() {
+        present = present.opposite();
+    }
+
+    public boolean checkKing() {
+        return numberOfKing() != KING_INIT_COUNT;
+    }
+
+    private int numberOfKing() {
+        return (int) units.keySet().stream()
+                .filter(key -> units.get(key) instanceof King)
+                .count();
+    }
+
+    public Team getAliveKingTeam() {
+        return units.values().stream()
+                .filter(unit -> unit instanceof King)
+                .map(Unit::getTeam)
+                .findAny()
+                .orElseThrow(() -> new IllegalTeamException("팀이 존재하지 않습니다."));
     }
 
     public Map<Position, Unit> getUnits() {
@@ -143,28 +188,5 @@ public class ChessBoard {
 
     public Team getTeam() {
         return present;
-    }
-
-    public void changeTeam() {
-        if(present == Team.WHITE) {
-            present = Team.BLACK;
-            return;
-        }
-        present = Team.WHITE;
-    }
-
-    public int numberOfKing() {
-        int sum = 0;
-        for (Position position : units.keySet()) {
-            if(units.get(position) instanceof King) {
-                sum += 1;
-            }
-        }
-        return sum;
-    }
-
-    public Team getAliveKingTeam() {
-        return units.get(units.keySet().stream().filter(key -> units.get(key) instanceof King)
-                .findAny().get()).getTeam();
     }
 }

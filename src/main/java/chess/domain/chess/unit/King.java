@@ -11,6 +11,9 @@ import static java.util.stream.Collectors.toList;
 
 public class King extends Unit {
     private static final double SCORE = 0;
+    private static final String NAME = "King";
+    private static final String SYMBOL = "K";
+
     private static List<Direction> directions;
 
     static {
@@ -19,7 +22,7 @@ public class King extends Unit {
     }
 
     public King(Team team) {
-        super(team, "King");
+        super(team, NAME);
     }
 
     @Override
@@ -35,7 +38,7 @@ public class King extends Unit {
 
     @Override
     public String toString() {
-        return getTeam().getUnitName("K");
+        return getTeam().getUnitName(SYMBOL);
     }
 
 }

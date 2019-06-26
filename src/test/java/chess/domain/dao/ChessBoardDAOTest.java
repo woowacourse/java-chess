@@ -6,6 +6,7 @@ import chess.domain.chess.dao.ChessBoardDAO;
 import chess.domain.chess.initializer.ChessBoardInitializer;
 import chess.domain.geometric.Position;
 import chess.util.DBConnection;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import view.OutputView;
 
@@ -31,13 +32,5 @@ public class ChessBoardDAOTest {
         chessBoard.move(Position.create(1, 0), Position.create(2, 2));
         chessBoardDAO.update(chessBoard, Team.BLACK);
 
-    }
-
-    @Test
-    void 검색() throws SQLException {
-        ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
-
-        ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
-        OutputView.printCheckBoard(chessBoard);
     }
 }

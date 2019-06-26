@@ -2,9 +2,9 @@ package chess.domain;
 
 import chess.domain.chess.ChessBoard;
 import chess.domain.chess.Team;
-import chess.domain.chess.exception.PawnIllegalMovingRuleException;
-import chess.domain.chess.exception.SameTeamTargetUnitException;
-import chess.domain.chess.exception.UnitInterceptionAlongPathException;
+import chess.domain.chess.exception.IllegalPawnMovingRuleException;
+import chess.domain.chess.exception.IllegalSameTeamTargetUnitException;
+import chess.domain.chess.exception.IllegalUnitInterceptionAlongPathException;
 import chess.domain.chess.initializer.ChessBoardInitializer;
 import chess.domain.chess.initializer.TestInitializer;
 import chess.domain.chess.unit.*;
@@ -30,7 +30,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1,1), Position.create(1,2));
 
-        assertThat(chessBoard.getUnit(Position.create(1, 2)).get()).isInstanceOf(Pawn.class);
+        assertThat(chessBoard.getOptionalUnit(Position.create(1, 2)).get()).isInstanceOf(Pawn.class);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class ChessBoardTest {
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
-        assertThrows(SameTeamTargetUnitException.class, () -> {
+        assertThrows(IllegalSameTeamTargetUnitException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(1,2));
         });
     }
@@ -58,7 +58,7 @@ public class ChessBoardTest {
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
-        assertThrows(PawnIllegalMovingRuleException.class, () -> {
+        assertThrows(IllegalPawnMovingRuleException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(1,2));
         });
     }
@@ -73,8 +73,8 @@ public class ChessBoardTest {
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
-        assertThrows(SameTeamTargetUnitException.class, () -> {
-            chessBoard.validateMove(Position.create(1,1), Position.create(2,2));
+        assertThrows(IllegalSameTeamTargetUnitException.class, () -> {
+            chessBoard.move(Position.create(1,1), Position.create(2,2));
         });
     }
 
@@ -89,7 +89,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
         chessBoard.move(Position.create(1,1), Position.create(2,2));
-        assertThat(chessBoard.getUnit(Position.create(2, 2)).get().getTeam())
+        assertThat(chessBoard.getOptionalUnit(Position.create(2, 2)).get().getTeam())
                 .isEqualTo(Team.WHITE);
     }
 
@@ -104,7 +104,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
 
-        assertThrows(SameTeamTargetUnitException.class, () -> {
+        assertThrows(IllegalSameTeamTargetUnitException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(5,5));
         });
     }
@@ -120,7 +120,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1,1), Position.create(5,5));
 
-        assertThat(chessBoard.getUnit(Position.create(5, 5)).get()).isInstanceOf(Bishop.class);
+        assertThat(chessBoard.getOptionalUnit(Position.create(5, 5)).get()).isInstanceOf(Bishop.class);
 
     }
 
@@ -136,7 +136,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
 
-        assertThrows(UnitInterceptionAlongPathException.class, () -> {
+        assertThrows(IllegalUnitInterceptionAlongPathException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(5,5));
         });
 
@@ -153,7 +153,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
 
-        assertThrows(SameTeamTargetUnitException.class, () -> {
+        assertThrows(IllegalSameTeamTargetUnitException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(1,5));
         });
 
@@ -170,7 +170,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1,1), Position.create(1,5));
 
-        assertThat(chessBoard.getUnit(Position.create(1, 5)).get()).isInstanceOf(Rook.class);
+        assertThat(chessBoard.getOptionalUnit(Position.create(1, 5)).get()).isInstanceOf(Rook.class);
     }
 
     @Test
@@ -185,7 +185,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
 
-        assertThrows(UnitInterceptionAlongPathException.class, () -> {
+        assertThrows(IllegalUnitInterceptionAlongPathException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(1,5));
         });
     }
@@ -201,7 +201,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
 
-        assertThrows(SameTeamTargetUnitException.class, () -> {
+        assertThrows(IllegalSameTeamTargetUnitException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(3,2));
         });
 
@@ -218,7 +218,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1,1), Position.create(3,2));
 
-        assertThat(chessBoard.getUnit(Position.create(3, 2)).get()).isInstanceOf(Knight.class);
+        assertThat(chessBoard.getOptionalUnit(Position.create(3, 2)).get()).isInstanceOf(Knight.class);
     }
 
     @Test
@@ -233,7 +233,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1,1), Position.create(3,2));
 
-        assertThat(chessBoard.getUnit(Position.create(3,2)).get()).isInstanceOf(Knight.class);
+        assertThat(chessBoard.getOptionalUnit(Position.create(3,2)).get()).isInstanceOf(Knight.class);
     }
 
     @Test
@@ -247,7 +247,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
 
-        assertThrows(SameTeamTargetUnitException.class, () -> {
+        assertThrows(IllegalSameTeamTargetUnitException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(5,5));
         });
 
@@ -264,7 +264,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1,1), Position.create(5,5));
 
-        assertThat(chessBoard.getUnit(Position.create(5, 5)).get()).isInstanceOf(Queen.class);
+        assertThat(chessBoard.getOptionalUnit(Position.create(5, 5)).get()).isInstanceOf(Queen.class);
 
     }
 
@@ -280,7 +280,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
 
-        assertThrows(UnitInterceptionAlongPathException.class, () -> {
+        assertThrows(IllegalUnitInterceptionAlongPathException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(5,5));
         });
 
@@ -298,7 +298,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
 
-        assertThrows(SameTeamTargetUnitException.class, () -> {
+        assertThrows(IllegalSameTeamTargetUnitException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(1,2));
         });
 
@@ -315,9 +315,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1,1), Position.create(1,2));
 
-        assertThat(chessBoard.getUnit(Position.create(1, 2)).get()).isInstanceOf(King.class);
-
-
+        assertThat(chessBoard.getOptionalUnit(Position.create(1, 2)).get()).isInstanceOf(King.class);
     }
 
     @Test
@@ -332,7 +330,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
 
-        assertThrows(UnitInterceptionAlongPathException.class, () -> {
+        assertThrows(IllegalUnitInterceptionAlongPathException.class, () -> {
             chessBoard.move(Position.create(1,1), Position.create(1,5));
         });
     }
@@ -364,5 +362,11 @@ public class ChessBoardTest {
 
         assertThat(score.get(Team.WHITE))
                 .isEqualTo(12.5);
+    }
+
+    @Test
+    void 팀_변경() {
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
+        assertThat(chessBoard.getTeam().opposite()).isEqualTo(Team.BLACK);
     }
 }

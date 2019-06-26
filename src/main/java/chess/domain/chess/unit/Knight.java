@@ -7,9 +7,11 @@ import chess.util.DoubleCompare;
 public class Knight extends Unit {
     private static final Double SCORE = 2.5;
     private static final Double KNIGHT_LENGTH = Math.sqrt(5);
+    private static final String NAME = "Knight";
+    private static final String SYMBOL = "N";
 
     public Knight(Team team) {
-        super(team, "Knight");
+        super(team, NAME);
     }
 
     @Override
@@ -24,6 +26,6 @@ public class Knight extends Unit {
 
     @Override
     public String toString() {
-        return getTeam().getUnitName("N");
+        return getTeam().getUnitName(SYMBOL);
     }
 }

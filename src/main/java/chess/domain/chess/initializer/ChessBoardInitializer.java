@@ -8,6 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoardInitializer implements Initializer {
+    private static final int ZERO = 0;
+    private static final int ONE = 1;
+    private static final int TWO = 2;
+    private static final int THREE = 3;
+    private static final int FOUR = 4;
+    private static final int FIVE = 5;
+    private static final int SIX = 6;
+    private static final int SEVEN = 7;
+
     @Override
     public Map<Position, Unit> create() {
         Map<Position, Unit> units = new HashMap<>();
@@ -24,38 +33,39 @@ public class ChessBoardInitializer implements Initializer {
 
     private void createSingleTeam(Map<Position, Unit> map, Team team) {
         if (team.equals(Team.WHITE)) {
-            initPawn(map, 1, team);
-            initRook(map, 0, team);
-            initKnights(map, 0, team);
-            initBishop(map, 0, team);
-            initKingQueen(map, 0, team);
+            initPawn(map, ONE, team);
+            initOther(map, ZERO, team);
             return;
         }
-        initPawn(map, 6, team);
-        initRook(map, 7, team);
-        initKnights(map, 7, team);
-        initBishop(map, 7, team);
-        initKingQueen(map, 7, team);
+        initPawn(map, SIX, team);
+        initOther(map, SEVEN, team);
+    }
+
+    private void initOther(Map<Position, Unit> map, int row, Team team) {
+        initRook(map, row, team);
+        initKnights(map, row, team);
+        initBishop(map, row, team);
+        initKingQueen(map, row, team);
     }
 
     private void initKingQueen(Map<Position, Unit> map, int row, Team team) {
-        map.put(Position.create(3, row), new King(team));
-        map.put(Position.create(4, row), new Queen(team));
+        map.put(Position.create(THREE, row), new King(team));
+        map.put(Position.create(FOUR, row), new Queen(team));
     }
 
     private void initBishop(Map<Position, Unit> map, int row, Team team) {
-        map.put(Position.create(2, row), new Bishop(team));
-        map.put(Position.create(5, row), new Bishop(team));
+        map.put(Position.create(TWO, row), new Bishop(team));
+        map.put(Position.create(FIVE, row), new Bishop(team));
     }
 
     private void initKnights(Map<Position, Unit> map, int row, Team team) {
-        map.put(Position.create(1, row), new Knight(team));
-        map.put(Position.create(6, row), new Knight(team));
+        map.put(Position.create(ONE, row), new Knight(team));
+        map.put(Position.create(SIX, row), new Knight(team));
     }
 
     private void initRook(Map<Position, Unit> map, int row, Team team) {
-        map.put(Position.create(0, row), new Rook(team));
-        map.put(Position.create(7, row), new Rook(team));
+        map.put(Position.create(ZERO, row), new Rook(team));
+        map.put(Position.create(SEVEN, row), new Rook(team));
     }
 
     private void initPawn(Map<Position, Unit> map, int row, Team team) {

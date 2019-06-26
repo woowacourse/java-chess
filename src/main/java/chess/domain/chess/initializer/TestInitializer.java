@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestInitializer implements Initializer {
-    Map<Position, Unit> map;
+    private Map<Position, Unit> map;
 
     public TestInitializer(Map<Position, Unit> map) {
         this.map = map;

@@ -1,7 +1,7 @@
-package chess.domain.geometric;
+package chess.domain.chess.exception;
 
 public class IllegalPositionException extends RuntimeException {
-    IllegalPositionException(String msg) {
+    public IllegalPositionException(String msg) {
         super(msg);
     }
 }

@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Rook extends Unit {
     private static final double SCORE = 5;
+    private static final String NAME = "Rook";
+    private static final String SYMBOL = "R";
 
     private static List<Direction> directions;
 
@@ -17,7 +19,7 @@ public class Rook extends Unit {
     }
 
     public Rook(Team team) {
-        super(team, "Rook");
+        super(team, NAME);
     }
 
     @Override
@@ -32,12 +34,7 @@ public class Rook extends Unit {
     }
 
     @Override
-    public String getName() {
-        return "룩";
-    }
-
-    @Override
     public String toString() {
-        return getTeam().getUnitName("R");
+        return getTeam().getUnitName(SYMBOL);
     }
 }

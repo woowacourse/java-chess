@@ -21,13 +21,11 @@ public enum Direction {
         this.vector = vector;
     }
 
-    public static Direction of(Vector vector) throws IllegalDirectionException {
-        for (Direction direction : values()) {
-            if (direction.isParallelTo(vector)) {
-                return direction;
-            }
-        }
-        throw new IllegalDirectionException("올바른 방향이 아닙니다.(동서남북 및 대각선 방향이 아님)");
+    public static Direction of(Vector vector) {
+        return Arrays.stream(values())
+                .filter(direction -> direction.isParallelTo(vector))
+                .findAny()
+                .orElseThrow(() -> new IllegalDirectionException("ㅁ"));
     }
 
     public static List<Direction> plusShape() {
@@ -62,9 +60,10 @@ public enum Direction {
         return this.vector.equals(vector);
     }
 
-    public Position apply(Position position) {
+    public Position createPosition(Position position) {
         int x = position.getX() + vector.getX();
         int y = position.getY() + vector.getY();
+
         return Position.create(x, y);
     }
 }

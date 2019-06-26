@@ -6,6 +6,7 @@ import chess.domain.chess.dao.ChessBoardDAO;
 import chess.domain.chess.dto.ChessBoardDTO;
 import chess.domain.chess.initializer.ChessBoardInitializer;
 import chess.domain.geometric.Position;
+import chess.service.ChessBoardService;
 import chess.util.DBConnection;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -21,8 +22,8 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static Connection dbConnection = DBConnection.getConnection();
-    private static ChessBoardDAO chessBoardDAO = new ChessBoardDAO(dbConnection);
+    private static Connection connection = DBConnection.getConnection();
+    private static ChessBoardService chessBoardService = new ChessBoardService(connection);
 
     public static void main(String[] args) {
         externalStaticFileLocation("src/main/resources/templates");
@@ -35,14 +36,12 @@ public class WebUIChessApplication {
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
-            ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
-            chessBoardDTO.setUnits(chessBoard.getUnits());
 
-            chessBoardDAO.add(chessBoard, Team.WHITE);
+            chessBoardService.createGame();
+            chessBoardDTO.setUnits(chessBoardService.selectRecentGame().getUnits());
 
-            String chessJson = new Gson().toJson(chessBoardDTO);
-
-            model.put("chessBoard", chessJson);
+            model.put("team", Team.WHITE.getName());
+            model.put("chessBoard", new Gson().toJson(chessBoardDTO));
 
             return render(model, "game.html");
         });
@@ -50,61 +49,47 @@ public class WebUIChessApplication {
         get("/resume", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
+            ChessBoard chessBoard = chessBoardService.selectRecentGame();
 
-            ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
-
-            if (checkKing(model, chessBoard)) return render(model, "gameover.html");
+            if (chessBoard.checkKing()) {
+                model.put("team", chessBoard.getAliveKingTeam());
+                return render(model, "gameover.html");
+            }
 
             chessBoardDTO.setUnits(chessBoard.getUnits());
-
-            String chessJson = new Gson().toJson(chessBoardDTO);
-
-
             model.put("team", chessBoard.getTeam().name());
+            model.put("chessBoard", new Gson().toJson(chessBoardDTO));
 
-            model.put("chessBoard", chessJson);
             return render(model, "game.html");
         });
 
         post("/resume", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
-            String[] source = req.queryParams("source").split(",");
-            String[] target = req.queryParams("target").split(",");
+            String[] sourcePosition = req.queryParams("source").split(",");
+            String[] targetPosition = req.queryParams("target").split(",");
 
-            Position sourcePosition = Position.create(Integer.parseInt(source[0]), Integer.parseInt(source[1]));
-            Position targetPosition = Position.create(Integer.parseInt(target[0]), Integer.parseInt(target[1]));
+            ChessBoard chessBoard = chessBoardService.selectRecentGame();
+            chessBoardService.move(chessBoard, sourcePosition, targetPosition);
+            chessBoardService.update(chessBoard, chessBoard.getTeam());
+            ChessBoard chessBoardAfterMove = chessBoardService.selectRecentGame();
 
-            ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
-
-            chessBoard.move(sourcePosition, targetPosition);
-            chessBoard.changeTeam();
-
-            chessBoardDAO.update(chessBoard, chessBoard.getTeam());
-
-            ChessBoard chessBoardAfterUpdate = chessBoardDAO.selectRecentRow();
-            if (checkKing(model, chessBoard)) return render(model, "gameover.html");
+            if (chessBoard.checkKing()) {
+                model.put("team", chessBoard.getAliveKingTeam());
+                return render(model, "gameover.html");
+            }
 
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
-            chessBoardDTO.setUnits(chessBoardAfterUpdate.getUnits());
+            chessBoardDTO.setUnits(chessBoardAfterMove.getUnits());
 
-            String chessJson = new Gson().toJson(chessBoardDTO);
+            model.put("chessBoard", new Gson().toJson(chessBoardDTO));
+            model.put("team", chessBoardAfterMove.getTeam().name());
 
-            model.put("chessBoard", chessJson);
-            model.put("team", chessBoardAfterUpdate.getTeam().name());
             return render(model, "game.html");
 
         });
 
         exception();
-    }
-
-    private static boolean checkKing(Map<String, Object> model, ChessBoard chessBoard) {
-        if (chessBoard.numberOfKing() != 2) {
-            model.put("team", chessBoard.getAliveKingTeam());
-            return true;
-        }
-        return false;
     }
 
     private static void exception() {
@@ -114,9 +99,9 @@ public class WebUIChessApplication {
     private static void exceptionMsg(Exception exception, Request request, Response response) {
         response.body(
                 "<script>" +
-                        "alert('" + exception.getMessage() + "');" +
-                        "history.back();" +
-                        "</script>"
+                    "alert('" + exception.getMessage() + "');" +
+                    "history.back();" +
+                "</script>"
         );
     }
 

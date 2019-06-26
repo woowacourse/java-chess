@@ -1,8 +1,12 @@
 package chess.domain.geometric;
 
+import chess.domain.chess.exception.IllegalPositionException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Position {
     public static final int MIN_POSITION = 0;
@@ -10,15 +14,9 @@ public class Position {
     private static final List<List<Position>> positions;
 
     static {
-        positions = new ArrayList<>();
-
-        for (int i = MIN_POSITION; i < MAX_POSITION; i++) {
-            List<Position> row = new ArrayList<>();
-            for (int j = MIN_POSITION; j < MAX_POSITION; j++) {
-                row.add(new Position(i, j));
-            }
-            positions.add(row);
-        }
+        positions = IntStream.range(MIN_POSITION, MAX_POSITION)
+                        .mapToObj(Position::createPosition)
+                        .collect(Collectors.toList());
     }
 
     private final int x;
@@ -29,6 +27,12 @@ public class Position {
         validatePosition(y);
         this.x = x;
         this.y = y;
+    }
+
+    private static List<Position> createPosition(int i) {
+        return IntStream.range(MIN_POSITION, MAX_POSITION)
+                .mapToObj((j) -> new Position(i, j))
+                .collect(Collectors.toList());
     }
 
     private void validatePosition(final int x) {

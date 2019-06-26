@@ -3,118 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>게임</title>
-    <style>
-        .tile {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 1px solid black;
-        }
-
-        .white_pawn {
-            background-image: url("img/chesspieces/wikipedia/wP.png");
-            background-size: 40px;
-        }
-
-        .white_rook {
-            background-image: url("img/chesspieces/wikipedia/wR.png");
-            background-size: 40px;
-        }
-
-        .white_knight {
-            background-image: url("img/chesspieces/wikipedia/wN.png");
-            background-size: 40px;
-        }
-
-        .white_bishop {
-            background-image: url("img/chesspieces/wikipedia/wB.png");
-            background-size: 40px;
-        }
-
-        .white_queen {
-            background-image: url("img/chesspieces/wikipedia/wQ.png");
-            background-size: 40px;
-        }
-
-        .white_king {
-            background-image: url("img/chesspieces/wikipedia/wK.png");
-            background-size: 40px;
-        }
-
-        .black_pawn {
-            background-image: url("img/chesspieces/wikipedia/bP.png");
-            background-size: 40px;
-        }
-
-        .black_rook {
-            background-image: url("img/chesspieces/wikipedia/bR.png");
-            background-size: 40px;
-        }
-
-        .black_knight {
-            background-image: url("img/chesspieces/wikipedia/bN.png");
-            background-size: 40px;
-        }
-
-        .black_bishop {
-            background-image: url("img/chesspieces/wikipedia/bB.png");
-            background-size: 40px;
-        }
-
-        .black_queen {
-            background-image: url("img/chesspieces/wikipedia/bQ.png");
-            background-size: 40px;
-        }
-
-        .black_king {
-            background-image: url("img/chesspieces/wikipedia/bK.png");
-            background-size: 40px;
-        }
-
-
-
-    </style>
+    <link rel="stylesheet" href="css/game.css">
 </head>
 <body>
 <input type="hidden" value='{{{chessBoard}}}' id="chessBoard">
-<div id="chessBoardBox"></div>
+<div>
+    <div class="row-box">
+        <div class="row">7</div>
+        <div class="row">6</div>
+        <div class="row">5</div>
+        <div class="row">4</div>
+        <div class="row">3</div>
+        <div class="row">2</div>
+        <div class="row">1</div>
+        <div class="row">0</div>
+    </div>
+    <div style="display:inline-block" id="chessBoardBox"></div>
+    <div class="column-box">
+        <div class="blank"></div>
+        <div class="column">0</div><!--
+        --><div class="column">1</div><!--
+        --><div class="column">2</div><!--
+        --><div class="column">3</div><!--
+        --><div class="column">4</div><!--
+        --><div class="column">5</div><!--
+        --><div class="column">6</div><!--
+        --><div class="column">7</div>
+    </div>
+</div>
+</body>
 이번 턴은 {{team}} 입니다. <br>
 <form action="/resume" method="post">
     소스위치 : <input name = "source" type="text" placeholder="ex)1,1">
     타깃위치 : <input name = "target" type="text" placeholder="ex)2,2">
     <input type="submit" value="입력"/>
 </form>
-
+<script src="js/game.js"></script>
 </body>
-
-<script>
-  window.onload = function () {
-      var chessBoardBox = document.querySelector('#chessBoardBox');
-
-    console.log(chessBoardBox);
-      for (var y = 7; y >= 0; y--) {
-        for (var x = 0; x <= 7; x++) {
-            chessBoardBox.append(chessBoardRender(x, y));
-        }
-        chessBoardBox.append(document.createElement("BR"));
-      }
-
-
-      var chessBoard = document.querySelector('#chessBoard').value;
-      var pieces = JSON.parse(chessBoard).units;
-      for (var key in pieces) {
-          var classText = pieces[key].team.toLowerCase() + "_" + pieces[key].name.toLowerCase();
-          document.querySelector('#position' + key).classList.add(classText);
-      }
-  }
-
-  function chessBoardRender(x, y) {
-        var div = document.createElement('DIV');
-
-        div.id = 'position' + x + '' + y;
-        div.className = 'tile';
-
-        return div;
-  }
-</script>
 </html>

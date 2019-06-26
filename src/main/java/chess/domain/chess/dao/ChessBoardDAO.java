@@ -6,6 +6,7 @@ import chess.domain.chess.Team;
 import chess.domain.chess.initializer.ChessBoardDB;
 import chess.domain.chess.unit.Unit;
 import chess.domain.geometric.Position;
+import javafx.geometry.Pos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,27 +24,38 @@ public class ChessBoardDAO {
     }
 
     public void add(ChessBoard chessBoard, Team team) throws SQLException {
-        String boardInfo = printCheckBoard(chessBoard);
         String query = "INSERT INTO chess_board (status, team_id) VALUES (?, ?)";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, boardInfo);
-        pstmt.setInt(2, team.getTeamId());
-        pstmt.executeUpdate();
+        executeQuery(chessBoard, team, query);
     }
 
-    public String printCheckBoard(ChessBoard chessBoard) {
-        String chessBoardInfo = "";
+    public void update(ChessBoard chessBoard, Team team) throws SQLException {
+        String query = "UPDATE chess_board SET status = ?, team_id = ? ORDER BY id DESC LIMIT 1";
+        executeQuery(chessBoard, team, query);
+    }
+
+    private void executeQuery(ChessBoard chessBoard, Team team, String query) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        String boardInfo = printCheckBoard(chessBoard);
+
+        preparedStatement.setString(1, boardInfo);
+        preparedStatement.setInt(2, team.getTeamId());
+        preparedStatement.executeUpdate();
+    }
+
+    private String printCheckBoard(ChessBoard chessBoard) {
+        StringBuilder chessBoardInfo = new StringBuilder();
         for (int y = Position.MAX_POSITION - 1; y >= Position.MIN_POSITION; y--) {
-            chessBoardInfo += addCheckBoardRowInfo(chessBoard, y);
+            chessBoardInfo.append(addCheckBoardRowInfo(chessBoard, y));
         }
-        return chessBoardInfo;
+        return chessBoardInfo.toString();
     }
 
-    private String addCheckBoardRowInfo(ChessBoard chessBoard, int y) {
-        String row = "";
+    private StringBuilder addCheckBoardRowInfo(ChessBoard chessBoard, int y) {
+        StringBuilder row = new StringBuilder();
         for (int x = Position.MIN_POSITION; x < Position.MAX_POSITION; x++) {
-            Optional<Unit> optional = chessBoard.getUnit(Position.create(x, y));
-            row += printUnit(optional);
+            Optional<Unit> optional = chessBoard.getOptionalUnit(Position.create(x, y));
+            row.append(printUnit(optional));
         }
         return row;
     }
@@ -55,19 +67,7 @@ public class ChessBoardDAO {
         return ".";
     }
 
-    public void update(ChessBoard chessBoard, Team team) throws SQLException {
-        String boardInfo = printCheckBoard(chessBoard);
-        String query = "UPDATE chess_board SET status = ?, team_id = ? " +
-                "ORDER BY id DESC " +
-                "LIMIT 1";
-
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, boardInfo);
-        pstmt.setInt(2, team.getTeamId());
-        pstmt.executeUpdate();
-    }
-
-    public ChessBoard selectRecentRow() throws SQLException {
+    public ChessBoard selectRecentGame() throws SQLException {
         String query = "SELECT status, team_id FROM chess_board ORDER BY id DESC LIMIT 1";
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet resultSet = pstmt.executeQuery();
@@ -80,7 +80,7 @@ public class ChessBoardDAO {
         Team team = Team.getTeamById(resultSet.getInt("team_id"));
 
 
-        for (int y = 7; y >= 0; y--) {
+        for (int y = Position.MAX_POSITION - 1; y >= Position.MIN_POSITION; y--) {
             unitMapper(map, units, y);
         }
 
@@ -88,13 +88,13 @@ public class ChessBoardDAO {
     }
 
     private void unitMapper(Map<Position, Unit> map, String[] units, int y) {
-        for (int x = 0; x <= 7; x++) {
-            unitMapper1(map, units[y * 8 + x], x, y);
+        for (int x = Position.MIN_POSITION; x < Position.MAX_POSITION; x++) {
+            unitMapper(map, units[y * Position.MAX_POSITION + x], x, y);
         }
     }
 
-    private void unitMapper1(Map<Position, Unit> map, String unit, int x, int y) {
-        Optional<Unit> optionalUnit = ChessUnitMapper.getUnit(unit);
-        optionalUnit.ifPresent(unit1 -> map.put(Position.create(x, 7-y), unit1));
+    private void unitMapper(Map<Position, Unit> map, String text, int x, int y) {
+        Optional<Unit> optionalUnit = ChessUnitMapper.getUnit(text);
+        optionalUnit.ifPresent(unit -> map.put(Position.create(x, Position.MAX_POSITION - 1 - y), unit));
     }
 }

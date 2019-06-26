@@ -24,7 +24,6 @@ public class ChessUnitMapper {
         map.put("B", new Bishop(Team.BLACK));
     }
 
-
     public static Optional<Unit> getUnit(String name) {
         return Optional.ofNullable(map.get(name));
     }
