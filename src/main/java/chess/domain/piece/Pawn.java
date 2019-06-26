@@ -13,7 +13,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Point prev, Point next) {
-        int directionCorrection = (playerType == PlayerType.WHITE) ? -1 : 1;
+        int directionCorrection = isWhite() ? -1 : 1;
         if (Math.abs(next.xDistance(prev)) > 1) {
             return false;
         }

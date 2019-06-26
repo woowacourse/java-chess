@@ -3,10 +3,8 @@ package chess.domain.piece;
 import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
-import java.util.List;
-
 public abstract class Piece {
-    protected PlayerType playerType;
+    private PlayerType playerType;
 
     public Piece(PlayerType playerType) {
         this.playerType = playerType;

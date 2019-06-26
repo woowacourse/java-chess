@@ -26,12 +26,15 @@ public enum PieceType {
         this.create = create;
     }
 
-    public static PieceType of(String piece) {
+    public static PieceType of(String pieceText) {
         return Arrays.stream(values())
-                // TODO method 분리
-                .filter(x -> x.piece.equals(piece.toLowerCase()))
+                .filter(pieceType -> pieceType.isEquals(pieceText))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(""));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Piece Type 입니다"));
+    }
+
+    private boolean isEquals(String pieceText) {
+        return this.piece.equals(pieceText.toLowerCase());
     }
 
     public Optional<Piece> create(PlayerType playerType) {

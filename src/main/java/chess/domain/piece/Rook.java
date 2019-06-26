@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.DirectionType;
 import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
@@ -19,6 +20,9 @@ public class Rook extends Piece {
             return true;
         }
         return false;
+        // TODO: 2019-06-26 Use Direction~!
+//        DirectionType directionType = DirectionType.valueOf(prev, next);
+//        return DirectionType.linearDirection().contains(directionType);
     }
 
     @Override

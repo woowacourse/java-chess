@@ -1,7 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.board.DirectionType;
 import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
+
+import java.util.Objects;
 
 public class Queen extends Piece {
 
@@ -22,6 +25,9 @@ public class Queen extends Piece {
             return true;
         }
         return false;
+// TODO: 2019-06-26 Use DirectionType~!
+//        DirectionType directionType = DirectionType.valueOf(prev, next);
+//        return !Objects.isNull(directionType);
     }
 
     @Override
