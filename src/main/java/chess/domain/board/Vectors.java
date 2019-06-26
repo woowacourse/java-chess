@@ -26,38 +26,34 @@ public class Vectors {
 
     public Vectors removeSource(Square source) {
         Set<Vector> removeSource = vectors.stream()
-                .filter(vector -> !(vector.getSquare().equals(source)))
+                .filter(vector -> !vector.contains(source))
                 .collect(Collectors.toSet());
         return new Vectors(removeSource);
     }
 
     public Vectors removeSameLines(Square source) {
         Set<Vector> remove = vectors.stream()
-                .filter(vector -> !(source.isLocatedSameLine(vector.getSquare())))
+                .filter(vector -> !vector.isLocatedSameLine(source))
                 .collect(Collectors.toSet());
         return new Vectors(remove);
     }
 
     public Vectors removeCurrentPlayers(Player currentPlayer) {
         Set<Vector> remove = vectors.stream()
-                .filter(vector -> !(currentPlayer.contains(vector)))
+                .filter(vector -> !currentPlayer.contains(vector))
                 .collect(Collectors.toSet());
         return new Vectors(remove);
     }
 
     public Vectors removeOpponentPlayer(Player opponentPlayer) {
         Set<Vector> crossTarget = vectors.stream()
-                .filter(vector -> vector.getDirection().equals(Direction.DOWN_LEFT) ||
-                        vector.getDirection().equals(Direction.DOWN_RIGHT) ||
-                        vector.getDirection().equals(Direction.UP_LEFT) ||
-                        vector.getDirection().equals(Direction.UP_RIGHT))
-                .filter(vector -> !(opponentPlayer.contains(vector)))
+                .filter(Vector::hasDiagonal)
+                .filter(vector -> !opponentPlayer.contains(vector))
                 .collect(Collectors.toSet());
 
         Set<Vector> linearTarget = vectors.stream()
-                .filter(vector -> vector.getDirection().equals(Direction.UP) ||
-                        vector.getDirection().equals(Direction.DOWN))
-                .filter(vector -> (opponentPlayer.contains(vector)))
+                .filter(Vector::hasVertical)
+                .filter(opponentPlayer::contains)
                 .collect(Collectors.toSet());
 
         vectors.removeAll(crossTarget);
@@ -66,9 +62,9 @@ public class Vectors {
         return new Vectors(vectors);
     }
 
-    public Vectors removeKingPath(Player opponentPlayer) {
+    public Vectors removeKingPath(Set<Square> kingPath) {
         Set<Vector> remove = vectors.stream()
-                .filter(vector -> !opponentPlayer.getKingPath().contains(vector.getSquare()))
+                .filter(vector -> !vector.contains(kingPath))
                 .collect(Collectors.toSet());
 
         return new Vectors(remove);
@@ -100,7 +96,7 @@ public class Vectors {
 
     public void checkTarget(Square target) {
         vectors.stream()
-                .filter(vector -> vector.getSquare().equals(target))
+                .filter(vector -> vector.contains(target))
                 .findAny()
                 .orElseThrow(RuntimeException::new);
     }

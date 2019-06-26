@@ -45,7 +45,7 @@ public class Game {
         }
 
         if (piece instanceof King) {
-            movableArea = movableArea.removeKingPath(opponentPlayer());
+            movableArea = movableArea.removeKingPath(opponentPlayer().getKingPath());
         }
 
         if (piece instanceof Pawn) {

@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,12 +28,25 @@ public class Vector {
                 .collect(Collectors.toSet());
     }
 
-    public Vectors generateVectors() {
-        Set<Square> squares = direction.getList(this.square);
-        Set<Vector> vectorSet =  squares.stream()
-                .map(square -> new Vector(square, direction))
-                .collect(Collectors.toSet());
-        return new Vectors(vectorSet);
+    public boolean contains(Square source) {
+        return square.equals(source);
+    }
+
+    public boolean isLocatedSameLine(Square source) {
+        return square.isLocatedSameLine(source);
+    }
+
+    public boolean contains(Set<Square> kingPath) {
+        return kingPath.contains(square);
+    }
+
+    public boolean hasDiagonal() {
+        return direction.equals(Direction.DOWN_LEFT) || direction.equals(Direction.DOWN_RIGHT) ||
+                direction.equals(Direction.UP_LEFT) || direction.equals(Direction.UP_RIGHT);
+    }
+
+    public boolean hasVertical() {
+        return direction.equals(Direction.UP) || direction.equals(Direction.DOWN);
     }
 
     @Override
@@ -42,7 +56,7 @@ public class Vector {
 
         Vector vector = (Vector) o;
 
-        if (square != null ? !square.equals(vector.square) : vector.square != null) return false;
+        if (!Objects.equals(square, vector.square)) return false;
         return direction == vector.direction;
     }
 
