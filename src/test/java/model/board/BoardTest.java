@@ -61,7 +61,7 @@ class BoardTest {
                 Rook.class
         );
         List<Position> positions = new ArrayList<>();
-        for (int i = Coord.MIN; i < Coord.MAX; i++) {
+        for (int i = Coordinate.MIN; i < Coordinate.MAX; i++) {
             positions.add(Position.of(String.valueOf((char) (i + 'a')) + 1));
             positions.add(Position.of(String.valueOf((char) (i + 'a')) + 2));
             positions.add(Position.of(String.valueOf((char) (i + 'a')) + 7));

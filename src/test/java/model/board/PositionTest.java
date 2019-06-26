@@ -12,8 +12,8 @@ class PositionTest {
     @Test
     void parseFromTextTest() {
         Position pos = Position.of("b4");
-        assertThat(pos.x()).isEqualTo(Coord.of(1));
-        assertThat(pos.y()).isEqualTo(Coord.of(3));
+        assertThat(pos.x()).isEqualTo(Coordinate.of(1));
+        assertThat(pos.y()).isEqualTo(Coordinate.of(3));
     }
 
     @Test

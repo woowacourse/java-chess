@@ -1,6 +1,6 @@
 package model.piece;
 
-import model.board.Coord;
+import model.board.Coordinate;
 import model.board.Direction;
 import model.board.Position;
 import model.game.Player;
@@ -95,11 +95,11 @@ public abstract class Piece implements Comparable<Piece> {
         return this.position;
     }
 
-    public Coord x() {
+    public Coordinate x() {
         return this.position.x();
     }
 
-    public Coord y() {
+    public Coordinate y() {
         return this.position.y();
     }
 

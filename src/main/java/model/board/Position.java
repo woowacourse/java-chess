@@ -6,16 +6,16 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
-    private static final Position[][] CACHE = IntStream.range(Coord.MIN, Coord.MAX)
+    private static final Position[][] CACHE = IntStream.range(Coordinate.MIN, Coordinate.MAX)
                                                     .mapToObj(x ->
-                                                            IntStream.range(Coord.MIN, Coord.MAX)
+                                                            IntStream.range(Coordinate.MIN, Coordinate.MAX)
                                                                     .mapToObj(y -> new Position(x, y))
                                                                     .toArray(Position[]::new)
                                                     ).toArray(Position[][]::new);
     private static final Pattern validator = Pattern.compile("\\s*[a-zA-Z][0-9]\\s*");
 
-    private final Coord x;
-    private final Coord y;
+    private final Coordinate x;
+    private final Coordinate y;
 
     public static Position of(final String position) {
         return CACHE[position.substring(0, 1).toLowerCase().charAt(0) - 'a'][Integer.parseInt(position.substring(1)) - 1];
@@ -31,14 +31,14 @@ public class Position implements Comparable<Position> {
     }
 
     private Position(final int x, final int y) {
-        this.x = Coord.of(x);
-        this.y = Coord.of(y);
+        this.x = Coordinate.of(x);
+        this.y = Coordinate.of(y);
     }
 
     public boolean testForward(final Direction dir, final int steps) {
-        final int targetX = this.x.val() + dir.offsetX * steps;
-        final int targetY = this.y.val() + dir.offsetY * steps;
-        return (Coord.MIN <= targetX && targetX < Coord.MAX) && (Coord.MIN <= targetY && targetY < Coord.MAX);
+        final int targetX = this.x.value() + dir.offsetX * steps;
+        final int targetY = this.y.value() + dir.offsetY * steps;
+        return (Coordinate.MIN <= targetX && targetX < Coordinate.MAX) && (Coordinate.MIN <= targetY && targetY < Coordinate.MAX);
     }
 
     public boolean testForward(final Direction dir) {
@@ -46,7 +46,7 @@ public class Position implements Comparable<Position> {
     }
 
     public Position moveForward(final Direction dir, final int steps) {
-        return CACHE[this.x.val() + dir.offsetX * steps][this.y.val() + dir.offsetY * steps];
+        return CACHE[this.x.value() + dir.offsetX * steps][this.y.value() + dir.offsetY * steps];
     }
 
     public Position moveForward(final Direction dir) {
@@ -62,22 +62,22 @@ public class Position implements Comparable<Position> {
     }
 
     public Optional<Position> move(final int x, final int y) {
-        final int targetX = this.x.val() + x;
-        final int targetY = this.y.val() + y;
-        return ((Coord.MIN <= targetX && targetX < Coord.MAX) && (Coord.MIN <= targetY && targetY < Coord.MAX))
-        ? Optional.of(CACHE[this.x.val() + x][this.y.val() + y])
+        final int targetX = this.x.value() + x;
+        final int targetY = this.y.value() + y;
+        return ((Coordinate.MIN <= targetX && targetX < Coordinate.MAX) && (Coordinate.MIN <= targetY && targetY < Coordinate.MAX))
+        ? Optional.of(CACHE[this.x.value() + x][this.y.value() + y])
         : Optional.empty();
     }
 
     public int get1DCoord() {
-        return this.y.val() * Coord.MAX + this.x.val();
+        return this.y.value() * Coordinate.MAX + this.x.value();
     }
 
-    public Coord x() {
+    public Coordinate x() {
         return x;
     }
 
-    public Coord y() {
+    public Coordinate y() {
         return y;
     }
 
@@ -95,8 +95,8 @@ public class Position implements Comparable<Position> {
             return false;
         }
         final Position rhs = (Position) o;
-        return this.x.val() == rhs.x.val() &&
-                this.y.val() == rhs.y.val();
+        return this.x.value() == rhs.x.value() &&
+                this.y.value() == rhs.y.value();
     }
 
     @Override
