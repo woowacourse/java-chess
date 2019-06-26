@@ -13,35 +13,36 @@ public class Board {
     private static final int PAWN_DISTANCE = 2;
 
     private Map<Position, Piece> boardState;
-    private boolean isKingDead = false;
+    private boolean isKingDead;
 
     public Board() {
         this.boardState = BoardCreator.initialize();
+        this.isKingDead = false;
     }
 
     public boolean movable(Position source, Position target, Team team) {
-        checkExistPiece(source);
-        checkDifferentPiece(source, team);
+        checkMyPieceIsEmpty(source);
+        checkSourceIsMine(source, team);
         checkDifferentTeamTarget(source, target);
         checkCanMove(source, target);
 
-        if(boardState.get(source) instanceof Knight){
+        if (findPiece(source) instanceof Knight) {
             return true;
         }
 
         checkObstacle(source, target);
-        checkPawnMovable(source, target);
+        //checkPawnMovable(source, target);
         return true;
     }
 
-    private void checkExistPiece(Position source) {
+    private void checkMyPieceIsEmpty(Position source) {
         if (isEmpty(source)) {
             throw new IllegalArgumentException("선택된 위치에 말이 존재하지 않습니다.");
         }
     }
 
-    private void checkDifferentPiece(Position source, Team team) {
-        if (!boardState.get(source).isOurPiece(team)) {
+    private void checkSourceIsMine(Position source, Team team) {
+        if (!findPiece(source).isOurPiece(team)) {
             throw new IllegalArgumentException("선택된 위치의 말이 상대편 팀의 말입니다.");
         }
     }
@@ -53,9 +54,13 @@ public class Board {
     }
 
     private void checkCanMove(Position source, Position target) {
-        if (!boardState.get(source).canMove(target)) {
+        if (!(findPiece(source).canMove(target) || isPawnMovable(source, target))) {
             throw new IllegalArgumentException("선택하신 말이 움직일 수 없는 위치입니다.");
         }
+    }
+
+    public Piece findPiece(Position position) {
+        return boardState.get(position);
     }
 
     public void checkObstacle(Position source, Position target) {
@@ -66,16 +71,17 @@ public class Board {
     }
 
     private void checkObstacleAtCurrentPosition(Position position) {
-        if (!(boardState.get(position) instanceof Blank)) {
+        if (!(findPiece(position) instanceof Blank)) {
             throw new IllegalArgumentException("경로에 다른 말이 있습니다.");
         }
     }
 
-    private void checkPawnMovable(Position source, Position target) {
-        if (boardState.get(source) instanceof Pawn) {
-            checkAccessible(source, target, boardState.get(source), boardState.get(target));
+    private boolean isPawnMovable(Position source, Position target) {
+        if (findPiece(source) instanceof Pawn && !(findPiece(target) instanceof Blank)) {
+            checkAccessible(source, target, findPiece(source), findPiece(target));
             checkMovable(source, target);
         }
+        return true;
     }
 
     private void checkAccessible(Position source, Position target, Piece sourcePiece, Piece targetPiece) {
@@ -101,31 +107,27 @@ public class Board {
         return isEmpty(target) && source.getDistanceSquare(target) == PAWN_DISTANCE;
     }
 
-    public void move(Position source, Position target){
+    public void move(Position source, Position target) {
         movePiece(source, target);
-        boardState.get(target).move(target);
+        findPiece(target).move(target);
     }
 
     private void movePiece(Position source, Position target) {
-        if (boardState.get(target) instanceof King) {
+        if (findPiece(target) instanceof King) {
             isKingDead = true;
         }
-        boardState.put(target, boardState.get(source));
+        boardState.put(target, findPiece(source));
         boardState.put(source, new Blank(source, Team.BLANK));
     }
 
     private boolean isEmpty(Position position) {
-        return boardState.get(position) instanceof Blank;
+        return findPiece(position) instanceof Blank;
     }
 
     private boolean isSameTeam(Position source, Position target) {
-        Piece sourcePiece = boardState.get(source);
-        Piece targetPiece = boardState.get(target);
+        Piece sourcePiece = findPiece(source);
+        Piece targetPiece = findPiece(target);
         return sourcePiece.isSameTeamWith(targetPiece);
-    }
-
-    public Piece findPiece(Position position) {
-        return boardState.get(position);
     }
 
     public boolean isKingDead() {
@@ -146,7 +148,7 @@ public class Board {
 
     private List<Piece> getSameTeamPieces(Team team) {
         return boardState.keySet().stream()
-                .map(position -> boardState.get(position))
+                .map(this::findPiece)
                 .filter(piece -> piece.isOurPiece(team))
                 .collect(Collectors.toList());
     }

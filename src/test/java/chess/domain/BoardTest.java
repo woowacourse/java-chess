@@ -110,4 +110,31 @@ class BoardTest {
         }
         assertThat(board.findPiece(target)).isEqualTo(new Rook(target, Team.WHITE));
     }
+
+    @Test
+    void 폰으로_잡아보자() {
+        Position source = PositionManager.getMatchPosition(2, 2);
+        Position target = PositionManager.getMatchPosition(2, 4);
+        if(board.movable(source, target, Team.WHITE)){
+            board.move(source, target);
+        }
+        source = PositionManager.getMatchPosition(2, 4);
+        target = PositionManager.getMatchPosition(2, 5);
+        if(board.movable(source, target, Team.WHITE)){
+            board.move(source, target);
+        }
+
+        source = PositionManager.getMatchPosition(2, 5);
+        target = PositionManager.getMatchPosition(2, 6);
+        if(board.movable(source, target, Team.WHITE)){
+            board.move(source, target);
+        }
+
+        source = PositionManager.getMatchPosition(2, 6);
+        target = PositionManager.getMatchPosition(2, 7);
+        if(board.movable(source, target, Team.WHITE)){
+            board.move(source, target);
+        }
+        assertThat(board.findPiece(target)).isEqualTo(new Pawn(target, Team.WHITE));
+    }
 }
