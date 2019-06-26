@@ -79,7 +79,9 @@ public abstract class Piece {
         return this.player.equals(player);
     }
 
-    public abstract boolean isPawn();
+    public boolean isPawn() {
+        return type.equals(Type.PAWN);
+    }
 
     public boolean isSameCoordinateX(int x) {
         return position.isSameCoordinateX(x);

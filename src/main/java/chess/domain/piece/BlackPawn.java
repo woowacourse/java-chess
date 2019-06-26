@@ -32,11 +32,6 @@ public class BlackPawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
     public Path getAttackablePath(Position end) {
         return getValidPath(end, attackMovementInfos);
     }

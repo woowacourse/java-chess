@@ -18,11 +18,6 @@ public class NormalPiece extends Piece {
 	}
 
 	@Override
-	public boolean isPawn() {
-		return false;
-	}
-
-	@Override
 	public Path getAttackablePath(Position end) {
 		return getMovablePath(end);
 	}
