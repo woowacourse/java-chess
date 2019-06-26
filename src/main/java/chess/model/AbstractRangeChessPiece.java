@@ -8,7 +8,7 @@ public abstract class AbstractRangeChessPiece extends AbstractChessPiece {
     protected boolean isObstacleBetween(final Point source, final Point target, final AbstractBoardNavigator navigator) {
         Direction dir = Direction.valueOf(source, target);
         Point tmp = source;
-        while (!tmp.equals(target)) {
+        while (!tmp.moveOneStep(dir).equals(target)) {
             tmp = tmp.moveOneStep(dir);
             if (navigator.getPieceAt(tmp) != null) {
                 return true;

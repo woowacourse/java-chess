@@ -1,5 +1,7 @@
 package chess.model;
 
+import java.util.Map;
+
 public class ChessEngine {
 
     private final ChessBoard board;
@@ -54,5 +56,13 @@ public class ChessEngine {
         double whiteScore = board.getScore(ChessPieceColor.WHITE);
         GameFlow result = GameFlow.valueOf(blackScore, whiteScore);
         return new GameResult(result, whiteScore, blackScore);
+    }
+
+    public Map<Point, AbstractChessPiece> getBoard() {
+        return board.getBoard();
+    }
+
+    public ChessPieceColor getTurn() {
+        return thisTurnColor;
     }
 }

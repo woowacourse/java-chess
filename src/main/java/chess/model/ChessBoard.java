@@ -75,4 +75,8 @@ public class ChessBoard {
         }
         return newBoard;
     }
+
+    public Map<Point, AbstractChessPiece> getBoard() {
+        return board;
+    }
 }

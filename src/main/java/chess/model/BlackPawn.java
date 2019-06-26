@@ -1,7 +1,7 @@
 package chess.model;
 
 public class BlackPawn extends AbstractPawn{
-    private static final int BLACK_START_Y_POSITION = 2;
+    private static final int BLACK_START_Y_POSITION = 7;
 
     public BlackPawn() {
         super(ChessPieceColor.BLACK);

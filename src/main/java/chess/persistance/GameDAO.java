@@ -1,6 +1,9 @@
 package chess.persistance;
 
 import chess.model.ChessPieceColor;
+import chess.service.GameDTO;
+
+import java.util.List;
 
 public interface GameDAO {
     static GameDAO getInstance() {
@@ -16,4 +19,10 @@ public interface GameDAO {
     ChessPieceColor getTurn(int gameId);
 
     int countGames();
+
+    List<Integer> getAllIds();
+
+    String getName(Integer id);
+
+    void setTurn(ChessPieceColor turn, String gameId);
 }
