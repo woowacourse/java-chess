@@ -8,7 +8,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class BishopPath implements Path {
-    protected BishopPath() {
+    private static final BishopPath instance = new BishopPath();
+
+    private BishopPath() {}
+
+    static BishopPath getInstance() {
+        return instance;
     }
 
     @Override

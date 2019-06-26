@@ -8,7 +8,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class QueenPath implements Path {
-    protected QueenPath() {
+    private static QueenPath instance = new QueenPath();
+
+    private QueenPath() { }
+
+    static QueenPath getInstance() {
+        return instance;
     }
 
     @Override

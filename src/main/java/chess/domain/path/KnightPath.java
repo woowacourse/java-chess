@@ -9,7 +9,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class KnightPath implements Path {
-    protected KnightPath() {
+    private static KnightPath instance = new KnightPath();
+
+    private KnightPath() { }
+
+    static KnightPath getInstance() {
+        return instance;
     }
 
     @Override

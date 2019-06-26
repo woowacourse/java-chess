@@ -9,7 +9,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class WhitePawnPath implements Path {
-    protected WhitePawnPath() {
+    private static WhitePawnPath instance = new WhitePawnPath();
+
+    private WhitePawnPath() { }
+
+    static WhitePawnPath getInstance() {
+        return instance;
     }
 
     @Override

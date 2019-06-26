@@ -9,7 +9,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class KingPath implements Path {
-    protected KingPath() {
+    private static KingPath instance = new KingPath();
+
+    private KingPath() { }
+
+    static KingPath getInstance() {
+        return instance;
     }
 
     @Override

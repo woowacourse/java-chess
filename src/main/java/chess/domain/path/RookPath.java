@@ -8,7 +8,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class RookPath implements Path {
-    protected RookPath() {
+    private static RookPath instance = new RookPath();
+
+    private RookPath() {}
+
+    static RookPath getInstance() {
+        return instance;
     }
 
     @Override

@@ -9,7 +9,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BlackPawnPath implements Path {
-    protected BlackPawnPath() {
+    private static BlackPawnPath instance = new BlackPawnPath();
+
+    private BlackPawnPath() { }
+
+    static BlackPawnPath getInstance() {
+        return instance;
     }
 
     @Override
