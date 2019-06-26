@@ -19,7 +19,7 @@ public class ChessBoard {
     }
 
     private void initializePawns(int y, ChessPieceColor color) {
-        for (int x = 1; x <= 8 ; x++) {
+        for (int x = 1; x <= 8; x++) {
             board.put(new Point(x, y), AbstractPawn.getInstance(color));
         }
     }

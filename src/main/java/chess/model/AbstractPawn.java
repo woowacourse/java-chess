@@ -33,11 +33,13 @@ public abstract class AbstractPawn extends AbstractChessPiece {
     protected abstract boolean isVerticalOneStep(Point source, Point target);
 
     protected abstract boolean isVerticalTwoStep(Point source, Point target);
+
     protected abstract boolean isDiagonalOneStep(Point source, Point target);
 
     @Override
     public double getScore(Point point, final AbstractBoardNavigator navigator) {
-        if (checkPawnExistence(point, navigator, Direction.N) || checkPawnExistence(point, navigator, Direction.S)) return 0.5;
+        if (checkPawnExistence(point, navigator, Direction.N) || checkPawnExistence(point, navigator, Direction.S))
+            return 0.5;
         return 1;
     }
 

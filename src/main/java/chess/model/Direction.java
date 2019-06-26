@@ -19,7 +19,7 @@ public enum Direction {
         this.deltaY = deltaY;
     }
 
-    public static Direction valueOf (Point source, Point target) {
+    public static Direction valueOf(Point source, Point target) {
         String result = "";
 
         if (source.calculateYsSub(target) < 0) {

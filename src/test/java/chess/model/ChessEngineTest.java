@@ -58,7 +58,7 @@ public class ChessEngineTest {
     @Test
     void 왕_사망_테스트() {
         Map<Point, AbstractChessPiece> board = new HashMap<>();
-        board.put(new Point(1,1), new WhitePawn());
+        board.put(new Point(1, 1), new WhitePawn());
         board.put(new Point(2, 2), new King(ChessPieceColor.BLACK));
         ChessBoard chessBoard = new ChessBoard(board);
 

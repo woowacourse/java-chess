@@ -35,7 +35,7 @@ public class EngineService {
 
     public void updatePieces(final String source, final String target, ChessEngine engine, final String gameId) {
         ChessPieceDAO chessPieceDAO = ChessPieceDAO.getInstance();
-        System.out.println(source + " / " + target + " / " +gameId);
+        System.out.println(source + " / " + target + " / " + gameId);
         chessPieceDAO.updatePiece(parsePoint(source), parsePoint(target), Integer.valueOf(gameId));
         GameDAO gameDAO = GameDAO.getInstance();
         gameDAO.setTurn(engine.getTurn(), gameId);

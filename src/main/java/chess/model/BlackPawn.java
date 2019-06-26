@@ -1,6 +1,6 @@
 package chess.model;
 
-public class BlackPawn extends AbstractPawn{
+public class BlackPawn extends AbstractPawn {
     private static final int BLACK_START_Y_POSITION = 7;
 
     public BlackPawn() {

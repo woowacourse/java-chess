@@ -9,8 +9,8 @@ public class Connector {
         Connection con = null;
         String server = "localhost";
         String database = "chess";
-        String userName = "root";
-        String password = "soorealbutnice";
+        String userName = "yumin";
+        String password = "1234";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

@@ -1,6 +1,6 @@
 package chess.model;
 
-public class Queen extends AbstractRangeChessPiece{
+public class Queen extends AbstractRangeChessPiece {
 
     public Queen(final ChessPieceColor color) {
         super(ChessPieceType.QUEEN, color);
