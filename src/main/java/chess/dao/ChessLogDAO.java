@@ -10,10 +10,8 @@ import java.util.List;
 
 public class ChessLogDAO {
     private static ChessLogDAO chessLogDAO;
-    private Connection con;
 
     private ChessLogDAO() {
-        con = DataBaseConnector.getConnection();
     }
 
     public static ChessLogDAO getInstance() {
@@ -24,14 +22,13 @@ public class ChessLogDAO {
     }
 
     public List<List<String>> findGameLogById(String gameId) {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        Connection con = DataBaseConnector.getConnection();
         List<List<String>> gameLog = new ArrayList<>(new ArrayList<>());
         try {
             String query = "select source,destination from game_log where game_id = ?";
-            pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setString(1, gameId);
-            rs = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 gameLog.add(Arrays.asList(rs.getString(1), rs.getString(2)));
@@ -43,10 +40,10 @@ public class ChessLogDAO {
     }
 
     public void insertLog(String from, String to, String gameId) {
-        PreparedStatement pstmt = null;
+        Connection con = DataBaseConnector.getConnection();
         try {
             String query = "insert into game_log(source, destination,game_id) values(?,?,?);";
-            pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setString(1, from);
             pstmt.setString(2, to);
             pstmt.setString(3, gameId);
