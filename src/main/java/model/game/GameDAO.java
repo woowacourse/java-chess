@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class GameDAO {
-    private static final Queue<LogVO> temp = new LinkedList<>();
+    private static final Queue<LogVO> buffer = new LinkedList<>();
 
     public static List<LogVO> retrieveLog() throws SQLException {
         createLogTable();
@@ -42,10 +42,10 @@ public class GameDAO {
     }
 
     public static boolean holdAndWriteLog(Turn turn, Position from, Position to) {
-        temp.add(new LogVO(turn, from, to));
+        buffer.add(new LogVO(turn, from, to));
         try {
-            while (!temp.isEmpty()) {
-                writeLog(temp.poll());
+            while (!buffer.isEmpty()) {
+                writeLog(buffer.poll());
             }
             return true;
         } catch (SQLException e) {

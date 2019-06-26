@@ -31,19 +31,21 @@ public class WebView {
         return render(model, "game.html");
     }
 
-    public static String printWrongChoicePage(Game game) {
-        final Map<String, Object> model = wrongChoiceModel(game);
+    public static String printWrongChoicePage(Game game, String errorMessage) {
+        final Map<String, Object> model = defaultModel(game);
         model.put("board", WebView.drawBoard(game));
         model.put("uiButtons", WebView.drawChoiceButton() + WebView.drawRestartButton());
         model.put("submitUrl", "/select");
+        model.put("errorMessage", errorMessage);
         return render(model, "game.html");
     }
 
-    public static String printWrongChoicePage(Game game, Position position) {
-        final Map<String, Object> model = wrongChoiceModel(game);
+    public static String printWrongChoicePage(Game game, Position position, String errorMessage) {
+        final Map<String, Object> model = defaultModel(game);
         model.put("board", WebView.drawBoard(game, game.getPossiblePositions(position)));
         model.put("uiButtons", WebView.drawConfirmOrCancelButtons() + WebView.drawRestartButton());
         model.put("submitUrl", "/confirm");
+        model.put("errorMessage", errorMessage);
         return render(model, "game.html");
     }
 
@@ -52,12 +54,6 @@ public class WebView {
             put("turn", game.turn().team() + " (" + game.turn().count() + ")");
             put("scoreOfWhite", game.getCurrentScore(Player.WHITE));
             put("scoreOfBlack", game.getCurrentScore(Player.BLACK));
-        }};
-    }
-
-    private static Map<String, Object> wrongChoiceModel(Game game) {
-        return new HashMap<String, Object>(defaultModel(game)) {{
-            put("errorMessage", "잘못된 선택입니다.");
         }};
     }
 
@@ -126,7 +122,7 @@ public class WebView {
 
     public static String drawConfirmOrCancelButtons() {
         return "<input type=\"submit\" value=\"확인\" style=\"width: 150px; font-size: 25px;\"/>"
-                + "<a href=\"/\"><input type=\"button\" value=\"취소\" style=\"width: 150px; font-size: 25px;\"/></a>"
+                + "<a href=\"/cancel\"><input type=\"button\" value=\"취소\" style=\"width: 150px; font-size: 25px;\"/></a>"
                 + "<br /><br />";
     }
 

@@ -18,6 +18,8 @@ public class WebUIChessApplication {
 
         get("/confirm", (req, res) -> GameService.selectDest(req.queryParams("choice"), res::redirect, res::status));
 
+        get("/cancel", (req, res) -> GameService.reselectSrc(res::redirect, res::status));
+
         get("/restart", (req, res) -> {
             game = GameService.restartGame();
             res.redirect("/");
