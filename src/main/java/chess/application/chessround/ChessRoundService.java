@@ -105,9 +105,15 @@ public class ChessRoundService {
         ChessPoint target = parseChessPoint(targetId);
 
         try {
-            chessRound.move(source, target);
             cleanErrorMessage();
 
+            // TODO: chessRound 내부의 상태가 변한 후 상태를 저장하게 된다.
+            // 어떻게 보면 중복된 정보가 각각 존재하는 건데......
+            // 중복된 정보를... 너무 멀리서? 다루는 거 아닐까???
+            // 여기서 변경된 것이... 딴 쪽에서 볼 때.. 생각이 안 날 것 같은데...
+            // 해결하려면... 한 쪽에서 고칠 때 동시에 고쳐주거나
+            // 한 쪽에서 고칠 때 다른 쪽에 ... 먼가 등록?! 해주는 무언가가 필요할 듯
+            chessRound.move(source, target);
             saveCurrentMove(source, target);
         } catch (InvalidChessPositionException ex) {
             errorMessage = ex.getMessage();

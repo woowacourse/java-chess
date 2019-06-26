@@ -12,10 +12,9 @@ public class ChessRoundController {
     public static final String PATH_CHESS_ROUND = "/chess-round";
 
     public static final Route fetchChessRound = (req, res) -> {
-        ChessBoard chessBoard = ChessBoard.createEmpty();
-
         ChessRoundService chessRoundService = ChessRoundService.getInstance();
 
+        ChessBoard chessBoard = ChessBoard.createEmpty();
         ChessPlayerDTO whitePlayerDTO = chessRoundService.fetchWhitePlayer();
         chessBoard.fillWhiteChessPiecesOfPlayer(whitePlayerDTO);
 
