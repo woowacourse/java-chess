@@ -11,11 +11,8 @@ public class Pawn extends Piece {
     private static final int ONE_STEP = 1;
     private static final int TWO_STEP = 2;
 
-    private boolean isFirstTurn;
-
     public Pawn(Color color) {
         super(Type.PAWN, color);
-        isFirstTurn = true;
     }
 
     @Override
@@ -37,8 +34,13 @@ public class Pawn extends Piece {
     private List<Point> calculateMovePath(Point source, Point target, Direction direction) {
         List<Point> path = this.makePathIncludedTarget(source, target, direction);
 
-        if ((isFirstTurn && path.size() == TWO_STEP) || (path.size() == ONE_STEP)) {
-            isFirstTurn = false;
+        if (getColor().equals(Color.WHITE) && source.getY() == 2 && path.size() == TWO_STEP) {
+            return path;
+        }
+        if (getColor().equals(Color.BLACK) && source.getY() == 7 && path.size() == TWO_STEP) {
+            return path;
+        }
+        if ((path.size() == ONE_STEP)) {
             return path;
         }
 

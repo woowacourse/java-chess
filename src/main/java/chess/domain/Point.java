@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.pieces.Direction;
+import chess.domain.pieces.PointFactory;
 
 public class Point {
 
