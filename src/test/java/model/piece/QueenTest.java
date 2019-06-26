@@ -23,19 +23,19 @@ class QueenTest {
     @Test
     void findPossiblePositionsTest() {
         List<Position> actual = new ArrayList<>();
-        testQueen.findPossiblePositions().forEach(i -> {
+        testQueen.getIteratorsOfPossibleDestinations().forEach(i -> {
                                                     while (i.hasNext()) {
                                                         actual.add(i.next());
                                                     }
                                                 });
         List<Position> expected = new ArrayList<>();
-        Direction.rotateClockwiseFromTo(Direction.NORTH, 8).forEach(dir -> {
-                                                                        Position pos = testQueen.position();
-                                                                        while (pos.testForward(dir)) {
-                                                                            pos = pos.moveForward(dir);
-                                                                            expected.add(pos);
-                                                                        }
-                                                                    });
+        Direction.every().forEach(dir -> {
+                                        Position pos = testQueen.position();
+                                        while (pos.testForward(dir)) {
+                                            pos = pos.moveForward(dir);
+                                            expected.add(pos);
+                                        }
+                                    });
         Collections.sort(actual);
         Collections.sort(expected);
         assertThat(actual).isEqualTo(expected);

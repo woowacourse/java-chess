@@ -2,8 +2,8 @@ package model.piece;
 
 import model.board.Coord;
 import model.board.Direction;
-import model.game.Player;
 import model.board.Position;
+import model.game.Player;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -14,39 +14,39 @@ public abstract class Piece implements Comparable<Piece> {
     Position position;
     private int totalMoved = 0;
 
-    protected Piece(Player owner, Position position) {
+    protected Piece(final Player owner, final Position position) {
         this.owner = Optional.ofNullable(owner).orElseThrow(IllegalArgumentException::new);
         this.position = Optional.ofNullable(position).orElseThrow(IllegalArgumentException::new);
     }
 
-    protected Piece(Piece copyFrom) {
+    protected Piece(final Piece copyFrom) {
         this.owner = copyFrom.owner;
         this.position = copyFrom.position;
         this.totalMoved = copyFrom.totalMoved;
     }
 
-    public Stream<Iterator<Position>> findPossiblePositions() {
+    public Stream<Iterator<Position>> getIteratorsOfPossibleDestinations() {
         return Stream.empty();
     }
 
-    protected Iterator<Position> proceedUntilBlocked(Direction dir) {
+    protected Iterator<Position> proceedUntilBlocked(final Direction dir) {
         return new Iterator<Position>() {
-            private Position _position = position;
+            private Position current = position;
 
             @Override
             public boolean hasNext() {
-                return _position.testForward(dir);
+                return current.testForward(dir);
             }
 
             @Override
             public Position next() {
-                _position = _position.moveForward(dir);
-                return _position;
+                current = current.moveForward(dir);
+                return current;
             }
         };
     }
 
-    protected Iterator<Position> proceedOnlyOneStep(Direction dir) {
+    protected Iterator<Position> proceedSingleStep(final Direction dir) {
         return new Iterator<Position>() {
             boolean hasNotYielded = true;
 
@@ -63,8 +63,8 @@ public abstract class Piece implements Comparable<Piece> {
         };
     }
 
-    public boolean move(Position to) {
-        this.position = Optional.ofNullable(to).orElseThrow(IllegalArgumentException::new);
+    public boolean move(final Position dest) {
+        this.position = dest;
         this.totalMoved++;
         return true;
     }

@@ -3,8 +3,7 @@ package model.board;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -47,8 +46,11 @@ class CoordTest {
 
     @Test
     void sortTest() {
-        List<Coord> testList = Arrays.asList(Coord.of(5), Coord.of(2), Coord.of(3));
-        Collections.sort(testList);
-        assertThat(testList).isEqualTo(Arrays.asList(Coord.of(2), Coord.of(3), Coord.of(5)));
+        assertThat(
+                Stream.of(Coord.of(5), Coord.of(2), Coord.of(3))
+                        .sorted()
+        ).isEqualTo(
+                Arrays.asList(Coord.of(2), Coord.of(3), Coord.of(5))
+        );
     }
 }

@@ -2,10 +2,8 @@ package model.board;
 
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -38,7 +36,7 @@ class PositionTest {
     @Test
     void invalidForwardMovementTest() {
         assertThatThrownBy(
-                () -> Position.of("h4").tryToMoveForward(Direction.EAST).orElseThrow(IllegalArgumentException::new)
+                () -> Position.of("h4").moveForwardSafe(Direction.EAST).orElseThrow(IllegalArgumentException::new)
         );
     }
 
@@ -59,8 +57,10 @@ class PositionTest {
 
     @Test
     void sortTest() {
-        List<Position> testList = Arrays.asList(Position.of("f2"), Position.of("a1"), Position.of("b8"));
-        Collections.sort(testList);
-        assertThat(testList).isEqualTo(Arrays.asList(Position.of("a1"), Position.of("f2"), Position.of("b8")));
+        assertThat(
+                Stream.of(Position.of("f2"), Position.of("a1"), Position.of("b8")).sorted()
+        ).isEqualTo(
+                Arrays.asList(Position.of("a1"), Position.of("f2"), Position.of("b8"))
+        );
     }
 }

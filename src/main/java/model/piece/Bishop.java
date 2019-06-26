@@ -1,8 +1,8 @@
 package model.piece;
 
 import model.board.Direction;
-import model.game.Player;
 import model.board.Position;
+import model.game.Player;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -10,16 +10,16 @@ import java.util.stream.Stream;
 public class Bishop extends Piece {
     private static final double SCORE = 3.0;
 
-    public Bishop(Player player, Position position) {
+    public Bishop(final Player player, final Position position) {
         super(player, position);
     }
 
-    public Bishop(Piece copyFrom) {
+    public Bishop(final Piece copyFrom) {
         super(copyFrom);
     }
 
     @Override
-    public Stream<Iterator<Position>> findPossiblePositions() {
+    public Stream<Iterator<Position>> getIteratorsOfPossibleDestinations() {
         return Direction.diagonal()
                         .map(super::proceedUntilBlocked);
     }
@@ -31,6 +31,6 @@ public class Bishop extends Piece {
 
     @Override
     public String toString() {
-        return (owner == Player.BLACK) ? "♝" : "♗" ;
+        return (this.owner == Player.BLACK) ? "♝" : "♗" ;
     }
 }

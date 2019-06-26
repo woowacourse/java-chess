@@ -4,7 +4,10 @@ import model.game.Player;
 import model.piece.*;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -29,27 +32,27 @@ public class Board {
         Collections.sort(this.pieces);
     }
 
-    private Stream<Piece> generatePawns(Player owner) {
+    private Stream<Piece> generatePawns(final Player owner) {
         final int y = (owner == Player.WHITE) ? WHITE_PAWN_LINE : BLACK_PAWN_LINE;
-        return horizontalCoords().stream()
-                                .map(x -> new Pawn(owner, Position.of(x + y)));
+        return initialHorizontalCoordsOfPieces().stream()
+                                                .map(x -> new Pawn(owner, Position.of(x + y)));
     }
 
-    private List<String> horizontalCoords() {
-        return IntStream.range('a', 'a' + WIDTH)
-                .mapToObj(i -> String.valueOf((char) i))
-                .collect(Collectors.toList());
-    }
-
-    private Stream<Piece> generateOtherPieces(Player owner) {
-        final List<String> x = horizontalCoords();
+    private Stream<Piece> generateOtherPieces(final Player owner) {
+        final List<String> x = initialHorizontalCoordsOfPieces();
         final int y = (owner == Player.WHITE) ? WHITE_BASE_LINE : BLACK_BASE_LINE;
         final List<Function<Position, Piece>> constructors = otherPiecesConstructors(owner);
         return IntStream.range(0, WIDTH)
                         .mapToObj(i -> constructors.get(i).apply(Position.of(x.get(i) + y)));
     }
 
-    private List<Function<Position, Piece>> otherPiecesConstructors(Player owner) {
+    private List<String> initialHorizontalCoordsOfPieces() {
+        return IntStream.range('a', 'a' + WIDTH)
+                        .mapToObj(i -> String.valueOf((char) i))
+                        .collect(Collectors.toList());
+    }
+
+    private List<Function<Position, Piece>> otherPiecesConstructors(final Player owner) {
         return Arrays.asList(
                 pos -> new Rook(owner, pos),
                 pos -> new Knight(owner, pos),
@@ -62,57 +65,55 @@ public class Board {
         );
     }
 
-    private Optional<Integer> getIndexOfAPieceAt(int coord1D, int begin, int end) {
+    private Optional<Integer> getIndexOfPieceAt(final int coord1D, final int begin, final int end) {
         if (begin > end) {
             return Optional.empty();
         }
         final int targetIndex = (begin + end) >> 1;
         final Piece target = this.pieces.get(targetIndex);
         if (target.get1DCoord() > coord1D) {
-            return getIndexOfAPieceAt(coord1D, begin, targetIndex - 1);
+            return getIndexOfPieceAt(coord1D, begin, targetIndex - 1);
         }
         if (target.get1DCoord() < coord1D) {
-            return getIndexOfAPieceAt(coord1D, targetIndex + 1, end);
+            return getIndexOfPieceAt(coord1D, targetIndex + 1, end);
         }
         return Optional.of(targetIndex);
     }
 
-    private Optional<Integer> getIndexOfAPieceAt(Position position) {
-        return getIndexOfAPieceAt(position.get1DCoord(), 0, this.pieces.size() -1);
+    private Optional<Integer> getIndexOfPieceAt(final Position position) {
+        return getIndexOfPieceAt(position.get1DCoord(), 0, this.pieces.size() -1);
     }
 
-    public Optional<Piece> getPieceAt(Position position) {
-        Optional<Integer> idx = getIndexOfAPieceAt(position);
-        return idx.flatMap(i -> Optional.of(this.pieces.get(i)));
+    public Optional<Piece> getPieceAt(final Position position) {
+        return getIndexOfPieceAt(position).flatMap(i -> Optional.of(this.pieces.get(i)));
     }
 
-    public Optional<Player> getColorOfPieceAt(Position position) {
+    public Optional<Player> getColorOfPieceAt(final Position position) {
         return getPieceAt(position).map(Piece::team);
     }
 
-    public boolean removePieceAt(Position position) {
-        Optional<Integer> idx = getIndexOfAPieceAt(position);
-        return idx.map(i -> {
-            this.pieces.remove(i.intValue());
-            return true;
+    public boolean removePieceAt(final Position position) {
+        return getIndexOfPieceAt(position).map(i -> {
+                                                this.pieces.remove(i.intValue());
+                                                return true;
         }).orElse(false);
     }
 
-    public boolean movePieceFromTo(Position from, Position to) {
-        removePieceAt(to);
-        if (getPieceAt(from).map(p -> p.move(to)).orElse(false)) {
+    public boolean movePieceFromTo(final Position src, final Position dest) {
+        removePieceAt(dest);
+        if (getPieceAt(src).map(p -> p.move(dest)).orElse(false)) {
             Collections.sort(this.pieces);
             return true;
         }
         return false;
     }
 
-    public <T extends Piece> boolean changeTypeOfPieceAt(Position position, Class<T> targetType)
+    public <T extends Piece> boolean changeTypeOfPieceAt(final Position position, final Class<T> targetType)
             throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
         if (targetType == Piece.class || targetType == Pawn.class || targetType == King.class) {
             return false;
         }
-        Optional<Integer> idx = getIndexOfAPieceAt(position);
+        final Optional<Integer> idx = getIndexOfPieceAt(position);
         if (idx.isPresent()) {
             this.pieces.set(
                     idx.get(),
@@ -122,6 +123,8 @@ public class Board {
         }
         return false;
     }
+
+    //// TODO: 2019-06-26 refactor this;
 
     public Stream<Piece> getPieces() {
         return this.pieces.stream();

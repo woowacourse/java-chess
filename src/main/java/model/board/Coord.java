@@ -1,6 +1,6 @@
 package model.board;
 
-import java.util.*;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Coord implements Comparable<Coord> {
@@ -13,11 +13,11 @@ public class Coord implements Comparable<Coord> {
 
     private final int val;
 
-    static Coord of(int val) {
+    static Coord of(final int val) {
         return CACHE[val];
     }
 
-    private Coord(int val) {
+    private Coord(final int val) {
         this.val = val;
     }
 
@@ -39,19 +39,19 @@ public class Coord implements Comparable<Coord> {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (!(o instanceof Coord)) {
             return false;
         }
-        Coord rhs = (Coord) o;
+        final Coord rhs = (Coord) o;
         return val == rhs.val;
     }
 
     @Override
-    public int compareTo(Coord rhs) {
+    public int compareTo(final Coord rhs) {
         return this.val - rhs.val;
     }
 

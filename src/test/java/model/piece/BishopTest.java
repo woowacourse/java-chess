@@ -23,11 +23,11 @@ class BishopTest {
     @Test
     void findPossiblePositionsTest() {
         List<Position> actual = new ArrayList<>();
-        testBishop.findPossiblePositions().forEach(i -> {
-                                                    while (i.hasNext()) {
-                                                        actual.add(i.next());
-                                                    }
-                                                });
+        testBishop.getIteratorsOfPossibleDestinations().forEach(i -> {
+                                                                while (i.hasNext()) {
+                                                                    actual.add(i.next());
+                                                                }
+                                                            });
         List<Position> expected = new ArrayList<>();
         Direction.diagonal().forEach(dir -> {
                                         Position pos = testBishop.position();

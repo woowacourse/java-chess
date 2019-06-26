@@ -1,10 +1,10 @@
 package view;
 
-import model.game.Game;
 import model.board.Board;
 import model.board.Position;
-import model.piece.Piece;
+import model.game.Game;
 import model.game.Player;
+import model.piece.Piece;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class WebView {
-    public static String printIndexPage(Game game) {
+    public static String printIndexPage(final Game game) {
         final Map<String, Object> model = defaultModel(game);
         model.put("board", WebView.drawBoard(game));
         model.put("uiButtons", WebView.drawChoiceButton() + WebView.drawRestartButton());
@@ -23,15 +23,15 @@ public class WebView {
         return render(model, "game.html");
     }
 
-    public static String printSelectPage(Game game, Position position) {
+    public static String printSelectPage(final Game game, final Position position) {
         final Map<String, Object> model = defaultModel(game);
-        model.put("board", WebView.drawBoard(game, game.getPossiblePositions(position)));
+        model.put("board", WebView.drawBoard(game, game.getPossibleDestinationsOf(position)));
         model.put("uiButtons", WebView.drawConfirmOrCancelButtons() + WebView.drawRestartButton());
         model.put("submitUrl", "/confirm");
         return render(model, "game.html");
     }
 
-    public static String printWrongChoicePage(Game game, String errorMessage) {
+    public static String printWrongChoicePage(final Game game, final String errorMessage) {
         final Map<String, Object> model = defaultModel(game);
         model.put("board", WebView.drawBoard(game));
         model.put("uiButtons", WebView.drawChoiceButton() + WebView.drawRestartButton());
@@ -40,16 +40,16 @@ public class WebView {
         return render(model, "game.html");
     }
 
-    public static String printWrongChoicePage(Game game, Position position, String errorMessage) {
+    public static String printWrongChoicePage(final Game game, final Position position, final String errorMessage) {
         final Map<String, Object> model = defaultModel(game);
-        model.put("board", WebView.drawBoard(game, game.getPossiblePositions(position)));
+        model.put("board", WebView.drawBoard(game, game.getPossibleDestinationsOf(position)));
         model.put("uiButtons", WebView.drawConfirmOrCancelButtons() + WebView.drawRestartButton());
         model.put("submitUrl", "/confirm");
         model.put("message", errorMessage);
         return render(model, "game.html");
     }
 
-    public static String printEndPage(Game game) {
+    public static String printEndPage(final Game game) {
         final Map<String, Object> model = defaultModel(game);
         model.put("board", WebView.drawBoard(game));
         model.put("uiButtons", WebView.drawRestartButton());
@@ -59,7 +59,7 @@ public class WebView {
 
     }
 
-    private static Map<String, Object> defaultModel(Game game) {
+    private static Map<String, Object> defaultModel(final Game game) {
         return new HashMap<String, Object>() {{
             put("turn", game.turn().team() + " (" + game.turn().count() + ")");
             put("scoreOfWhite", game.getCurrentScore(Player.WHITE));
@@ -67,33 +67,33 @@ public class WebView {
         }};
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    private static String render(final Map<String, Object> model, final String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
     private static String drawBoard(Game game, List<Position> possibleChoices) {
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
         for (int i = Board.WIDTH; i > 0; i--) {
             result.append(drawRow(game.board(), i));
-            result.append(drawRadioButtons(game.board(), i, possibleChoices));
+            result.append(drawRadioButtons(possibleChoices, i));
         }
         return result.toString();
     }
 
-    private static String drawBoard(Game game) {
+    private static String drawBoard(final Game game) {
         return drawBoard(
                 game,
                 game.board().getPieces()
-                        .filter(p -> p.team() == game.turn().team())
-                        .map(Piece::position)
-                        .collect(Collectors.toList())
+                            .filter(p -> p.team() == game.turn().team())
+                            .map(Piece::position)
+                            .collect(Collectors.toList())
         );
     }
 
-    private static String drawRow(Board board, int number) {
-        StringBuilder result = new StringBuilder("<tr>");
+    private static String drawRow(final Board board, final int number) {
+        final StringBuilder result = new StringBuilder("<tr>");
         for (int i = 0; i < Board.WIDTH; i++) {
-            Optional<Piece> piece = board.getPieceAt(Position.of(String.valueOf((char) (i + 'a')) + number));
+            final Optional<Piece> piece = board.getPieceAt(Position.of(String.valueOf((char) (i + 'a')) + number));
             if (piece.isPresent()) {
                 result.append(colorTile(i, number) + piece.get().toString() + "</td>");
                 continue;
@@ -104,12 +104,12 @@ public class WebView {
         return result.toString();
     }
 
-    private static String colorTile(int row, int col) {
+    private static String colorTile(final int row, final int col) {
         return ((row + col) % 2 == 0) ? "<td>" : "<td bgcolor=\"#cc881c\">";
     }
 
-    private static String drawRadioButtons(Board board, int number, List<Position> possibleChoices) {
-        StringBuilder result = new StringBuilder("<tr height=\"15px\" style=\"font-size: 0px;\">");
+    private static String drawRadioButtons(final List<Position> possibleChoices, final int number) {
+        final StringBuilder result = new StringBuilder("<tr height=\"15px\" style=\"font-size: 0px;\">");
         for (int i = 0; i < Board.WIDTH; i++) {
             String position = String.valueOf((char) (i + 'a')) + number;
             if (possibleChoices.contains(Position.of(position))) {

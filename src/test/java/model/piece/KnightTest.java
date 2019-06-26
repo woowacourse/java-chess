@@ -5,9 +5,7 @@ import model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,14 +21,16 @@ class KnightTest {
 
     @Test
     void findPossiblePositionsTest() {
-        List<Position> actual = testKnight.findPossiblePositions()
-                                        .map(Iterator::next)
-                                        .collect(Collectors.toList());
-        List<Position> expected = Stream.of("c8", "e8", "f7", "f5", "e4", "c4", "b5", "b7")
-                                        .map(Position::of)
-                                        .collect(Collectors.toList());
-        Collections.sort(actual);
-        Collections.sort(expected);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(
+                testKnight.getIteratorsOfPossibleDestinations()
+                            .map(Iterator::next)
+                            .sorted()
+                            .collect(Collectors.toList())
+        ).isEqualTo(
+                Stream.of("c8", "e8", "f7", "f5", "e4", "c4", "b5", "b7")
+                        .map(Position::of)
+                        .sorted()
+                        .collect(Collectors.toList())
+        );
     }
 }

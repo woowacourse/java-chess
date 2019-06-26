@@ -7,7 +7,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class GameDAO {
     private static final Queue<LogVO> buffer = new LinkedList<>();
@@ -41,7 +44,7 @@ public class GameDAO {
         }
     }
 
-    public static boolean holdAndWriteLog(Turn turn, Position from, Position to) {
+    public static boolean holdAndWriteLog(final Turn turn, final Position from, final Position to) {
         buffer.add(new LogVO(turn, from, to));
         try {
             while (!buffer.isEmpty()) {
@@ -54,7 +57,7 @@ public class GameDAO {
         }
     }
 
-    private static void writeLog(LogVO log) throws SQLException {
+    private static void writeLog(final LogVO log) throws SQLException {
         try (Connection con = DAO.connect();
              PreparedStatement pstmt = con.prepareStatement("INSERT INTO chess_log VALUES (?, ?, ?)")) {
             pstmt.setInt(1, log.turn().count());

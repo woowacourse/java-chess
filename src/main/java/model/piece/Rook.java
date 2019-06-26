@@ -10,16 +10,16 @@ import java.util.stream.Stream;
 public class Rook extends Piece {
     private static final double SCORE = 5.0;
 
-    public Rook(Player player, Position position) {
+    public Rook(final Player player, final Position position) {
         super(player, position);
     }
 
-    public Rook(Piece copyFrom) {
+    public Rook(final Piece copyFrom) {
         super(copyFrom);
     }
 
     @Override
-    public Stream<Iterator<Position>> findPossiblePositions() {
+    public Stream<Iterator<Position>> getIteratorsOfPossibleDestinations() {
         return Direction.orthogonal()
                         .map(super::proceedUntilBlocked);
     }
@@ -31,6 +31,6 @@ public class Rook extends Piece {
 
     @Override
     public String toString() {
-        return (owner == Player.BLACK) ? "♜" : "♖";
+        return (this.owner == Player.BLACK) ? "♜" : "♖";
     }
 }

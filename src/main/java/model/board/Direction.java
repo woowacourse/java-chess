@@ -1,8 +1,5 @@
 package model.board;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 public enum Direction {
@@ -18,15 +15,13 @@ public enum Direction {
     final int offsetX;
     final int offsetY;
 
-    Direction(int offsetX, int offsetY) {
+    Direction(final int offsetX, final int offsetY) {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
     }
 
-    public static Stream<Direction> rotateClockwiseFromTo(Direction begin, int number) {
-        List<Direction> result = new ArrayList<>(Arrays.asList(values()));
-        result.addAll(result);
-        return result.subList(result.indexOf(begin), result.indexOf(begin) + number).stream();
+    public static Stream<Direction> every() {
+        return Stream.of(values());
     }
 
     public static Stream<Direction> orthogonal() {
@@ -37,11 +32,11 @@ public enum Direction {
         return Stream.of(NORTH_WEST, NORTH_EAST, SOUTH_EAST, SOUTH_WEST);
     }
 
-    public Direction rotateClockwise(int number) {
+    public Direction rotateClockwise(final int number) {
         return values()[(this.ordinal() + number) % values().length];
     }
 
-    public Direction rotateCounterClockwise(int number) {
+    public Direction rotateCounterClockwise(final int number) {
         return rotateClockwise(values().length - number % values().length);
     }
 

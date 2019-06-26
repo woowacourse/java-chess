@@ -2,6 +2,7 @@ package model.board;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
@@ -11,66 +12,61 @@ public class Position implements Comparable<Position> {
                                                                     .mapToObj(y -> new Position(x, y))
                                                                     .toArray(Position[]::new)
                                                     ).toArray(Position[][]::new);
+    private static final Pattern validator = Pattern.compile("\\s*[a-zA-Z][0-9]\\s*");
 
     private final Coord x;
     private final Coord y;
 
-    public static Position of(String position) {
+    public static Position of(final String position) {
         return CACHE[position.substring(0, 1).toLowerCase().charAt(0) - 'a'][Integer.parseInt(position.substring(1)) - 1];
     }
 
-    public static Optional<Position> ofSafe(String input) {
+    public static Optional<Position> ofSafe(final String input) {
         try {
-            if (input.matches("\\s*[a-zA-Z][0-9]\\s*")) {
+            if (validator.matcher(input).matches()) {
                 return Optional.of(of(input.trim()));
             }
         } catch (IndexOutOfBoundsException | NullPointerException e) {}
         return Optional.empty();
     }
 
-    private Position(int x, int y) {
+    private Position(final int x, final int y) {
         this.x = Coord.of(x);
         this.y = Coord.of(y);
     }
 
-    public boolean testForward(Direction dir, int steps) {
+    public boolean testForward(final Direction dir, final int steps) {
         final int targetX = this.x.val() + dir.offsetX * steps;
         final int targetY = this.y.val() + dir.offsetY * steps;
-        return (Coord.MIN <= targetX && targetX < Coord.MAX)
-                && (Coord.MIN <= targetY && targetY < Coord.MAX);
+        return (Coord.MIN <= targetX && targetX < Coord.MAX) && (Coord.MIN <= targetY && targetY < Coord.MAX);
     }
 
-    public boolean testForward(Direction dir) {
+    public boolean testForward(final Direction dir) {
         return testForward(dir, 1);
     }
 
-    public Position moveForward(Direction dir, int steps) {
+    public Position moveForward(final Direction dir, final int steps) {
         return CACHE[this.x.val() + dir.offsetX * steps][this.y.val() + dir.offsetY * steps];
     }
 
-    public Position moveForward(Direction dir) {
+    public Position moveForward(final Direction dir) {
         return moveForward(dir, 1);
     }
 
-    public Optional<Position> tryToMoveForward(Direction dir, int steps) {
-        if (testForward(dir, steps)) {
-            return Optional.of(moveForward(dir, steps));
-        }
-        return Optional.empty();
+    public Optional<Position> moveForwardSafe(final Direction dir, final int steps) {
+        return (testForward(dir, steps)) ? Optional.of(moveForward(dir, steps)) : Optional.empty();
     }
 
-    public Optional<Position> tryToMoveForward(Direction dir) {
-        return tryToMoveForward(dir, 1);
+    public Optional<Position> moveForwardSafe(final Direction dir) {
+        return moveForwardSafe(dir, 1);
     }
 
-    public Optional<Position> move(int x, int y) {
+    public Optional<Position> move(final int x, final int y) {
         final int targetX = this.x.val() + x;
         final int targetY = this.y.val() + y;
-        if (Coord.MIN <= targetX && targetX < Coord.MAX
-                && Coord.MIN <= targetY && targetY < Coord.MAX) {
-            return Optional.of(CACHE[this.x.val() + x][this.y.val() + y]);
-        }
-        return Optional.empty();
+        return ((Coord.MIN <= targetX && targetX < Coord.MAX) && (Coord.MIN <= targetY && targetY < Coord.MAX))
+        ? Optional.of(CACHE[this.x.val() + x][this.y.val() + y])
+        : Optional.empty();
     }
 
     public int get1DCoord() {
@@ -91,20 +87,20 @@ public class Position implements Comparable<Position> {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (!(o instanceof Position)) {
             return false;
         }
-        Position rhs = (Position) o;
+        final Position rhs = (Position) o;
         return this.x.val() == rhs.x.val() &&
                 this.y.val() == rhs.y.val();
     }
 
     @Override
-    public int compareTo(Position rhs) {
+    public int compareTo(final Position rhs) {
         return this.get1DCoord() - rhs.get1DCoord();
     }
 

@@ -2,17 +2,10 @@ package model.board;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static model.board.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DirectionTest {
-    @Test
-    void rotateFromToTest() {
-        assertThat(rotateClockwiseFromTo(EAST, 3)).isEqualTo(Arrays.asList(EAST, SOUTH_EAST, SOUTH));
-    }
-
     @Test
     void rotationCWTest() {
         assertThat(NORTH.rotateClockwise(11)).isEqualTo(SOUTH_EAST);

@@ -1,35 +1,33 @@
 package model.piece;
 
 import model.board.Direction;
-import model.game.Player;
 import model.board.Position;
+import model.game.Player;
 
-import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Pawn extends Piece {
     private static final double SCORE = 1.0;
 
-    public Pawn(Player player, Position position) {
+    public Pawn(final Player player, final Position position) {
         super(player, position);
     }
 
-    public Stream<Position> possibleDiagonalPositions() {
+    public Stream<Position> possibleDiagonalDestinations() {
         return Stream.of(forward().rotateClockwise(1), forward().rotateCounterClockwise(1))
-                    .map(position::tryToMoveForward)
+                    .map(this.position::moveForwardSafe)
                     .flatMap(x -> x.map(Stream::of).orElseGet(Stream::empty));
     }
 
-    public Stream<Position> possibleForwardPositions() {
-        Stream<Optional<Position>> result = Stream.of(position.tryToMoveForward(forward()));
-        if (hasNotMoved()) {
-            result = Stream.concat(result, Stream.of(position.tryToMoveForward(forward(), 2)));
-        }
-        return result.flatMap(x -> x.map(Stream::of).orElseGet(Stream::empty));
+    public Stream<Position> possibleForwardDestinations() {
+        return IntStream.rangeClosed(1, (hasNotMoved()) ? 2 : 1)
+                        .mapToObj(i -> this.position.moveForwardSafe(forward(), i))
+                        .flatMap(x -> x.map(Stream::of).orElseGet(Stream::empty));
     }
 
     private Direction forward() {
-        return (owner == Player.WHITE) ? Direction.NORTH : Direction.SOUTH;
+        return (this.owner == Player.WHITE) ? Direction.NORTH : Direction.SOUTH;
     }
 
     @Override

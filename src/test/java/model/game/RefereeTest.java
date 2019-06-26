@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RefereeTest {
     Game testGame;
@@ -23,6 +22,7 @@ class RefereeTest {
     @Test
     void isKingDeadTest() {
         testGame.board().removePieceAt(Position.of("e8"));
+        testGame.turn().endTurn();
         assertThat(Referee.isKingAlive(testGame)).isFalse();
     }
 }

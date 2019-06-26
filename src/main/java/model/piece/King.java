@@ -1,25 +1,26 @@
 package model.piece;
 
 import model.board.Direction;
-import model.game.Player;
 import model.board.Position;
+import model.game.Player;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class King extends Piece {
     private static final double SCORE = .0;
 
-    public King(Player player, Position position) {
+    public King(final Player player, final Position position) {
         super(player, position);
     }
 
     @Override
-    public Stream<Iterator<Position>> findPossiblePositions() {
-        List<Iterator<Position>> candidates = Stream.of(Direction.values())
-                                                    .map(super::proceedOnlyOneStep)
-                                                    .collect(Collectors.toList());
+    public Stream<Iterator<Position>> getIteratorsOfPossibleDestinations() {
+        List<Iterator<Position>> candidates = Direction.every()
+                                                        .map(super::proceedSingleStep)
+                                                        .collect(Collectors.toList());
 
 //        if (hasNotMoved()) {
 //            candidates.add((owner == Player.WHITE) ? yieldSinglePositionOf(Position.of("b1")) : yieldSinglePositionOf(Position.of("b8")));
@@ -27,6 +28,8 @@ public class King extends Piece {
 //        }
         return candidates.stream();
     }
+
+    //// TODO: 2019-06-26 castling
 
     @Override
     public boolean isKing() {
@@ -40,6 +43,6 @@ public class King extends Piece {
 
     @Override
     public String toString() {
-        return (owner == Player.BLACK) ? "♚" : "♔";
+        return (this.owner == Player.BLACK) ? "♚" : "♔";
     }
 }

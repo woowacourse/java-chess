@@ -1,15 +1,12 @@
 package model.piece;
 
-import model.game.Player;
 import model.board.Direction;
 import model.board.Position;
+import model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,7 +39,7 @@ class PieceTest {
 
     @Test
     void proceedOnlyOneStepTest() {
-        Iterator<Position> i = testPiece.proceedOnlyOneStep(Direction.SOUTH_WEST);
+        Iterator<Position> i = testPiece.proceedSingleStep(Direction.SOUTH_WEST);
         assertThat(i.next()).isEqualTo(Position.of("g3"));
         assertThat(i.hasNext()).isFalse();
     }
@@ -56,16 +53,14 @@ class PieceTest {
 
     @Test
     void sortTest() {
-        List<Piece> testPieces = Arrays.asList(
-                new King(Player.BLACK, Position.of("b6")),
-                new Pawn(Player.WHITE, Position.of("c7")),
-                new Bishop(Player.BLACK, Position.of("a2"))
-        );
-        Collections.sort(testPieces);
         assertThat(
-                testPieces.stream()
-                        .map(Piece::position)
-                        .collect(Collectors.toList())
+                Stream.of(
+                        new King(Player.BLACK, Position.of("b6")),
+                        new Pawn(Player.WHITE, Position.of("c7")),
+                        new Bishop(Player.BLACK, Position.of("a2"))
+                ).map(Piece::position)
+                .sorted()
+                .collect(Collectors.toList())
         ).isEqualTo(
                 Stream.of(
                         Position.of("a2"),

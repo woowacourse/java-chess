@@ -1,6 +1,8 @@
 package model.game;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DAO {
     private static final String server = "localhost";

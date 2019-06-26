@@ -8,13 +8,13 @@ public class LogVO implements Comparable<LogVO> {
     final Position from;
     final Position to;
 
-    public LogVO(Turn turn, Position from, Position to) {
+    public LogVO(final Turn turn, final Position from, final Position to) {
         this.turn = turn;
         this.from = from;
         this.to = to;
     }
 
-    public LogVO(int turnCount, String from, String to) {
+    public LogVO(final int turnCount, final String from, final String to) {
         this.turn = new Turn(turnCount);
         this.from = Position.of(from);
         this.to = Position.of(to);
@@ -33,7 +33,7 @@ public class LogVO implements Comparable<LogVO> {
     }
 
     @Override
-    public int compareTo(LogVO rhs) {
+    public int compareTo(final LogVO rhs) {
         return this.turn.count() - rhs.turn.count();
     }
 

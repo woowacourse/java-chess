@@ -4,7 +4,8 @@ import model.game.Game;
 import service.GameService;
 import view.WebView;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.port;
 
 public class WebUIChessApplication {
     private static Game game = GameService.getGame();

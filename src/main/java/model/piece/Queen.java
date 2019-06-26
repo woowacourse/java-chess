@@ -10,18 +10,18 @@ import java.util.stream.Stream;
 public class Queen extends Piece {
     private static final double SCORE = 9.0;
 
-    public Queen(Player player, Position position) {
+    public Queen(final Player player, final Position position) {
         super(player, position);
     }
 
-    public Queen(Piece copyFrom) {
+    public Queen(final Piece copyFrom) {
         super(copyFrom);
     }
 
     @Override
-    public Stream<Iterator<Position>> findPossiblePositions() {
-        return Stream.of(Direction.values())
-                    .map(super::proceedUntilBlocked);
+    public Stream<Iterator<Position>> getIteratorsOfPossibleDestinations() {
+        return Direction.every()
+                        .map(super::proceedUntilBlocked);
     }
 
     @Override
@@ -31,6 +31,6 @@ public class Queen extends Piece {
 
     @Override
     public String toString() {
-        return (owner == Player.BLACK) ? "♛" : "♕";
+        return (this.owner == Player.BLACK) ? "♛" : "♕";
     }
 }

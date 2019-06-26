@@ -23,7 +23,7 @@ class RookTest {
     @Test
     void findPossiblePositionsTest() {
         List<Position> actual = new ArrayList<>();
-        testRook.findPossiblePositions().forEach(i -> {
+        testRook.getIteratorsOfPossibleDestinations().forEach(i -> {
                                                     while (i.hasNext()) {
                                                         actual.add(i.next());
                                                     }

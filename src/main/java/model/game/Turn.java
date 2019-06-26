@@ -22,15 +22,6 @@ public class Turn {
         return this;
     }
 
-    public Turn rollback(int turnCount) {
-        if (turnCount >= count) {
-            throw new IllegalArgumentException();
-        }
-        this.count -= turnCount;
-        resetTeam();
-        return this;
-    }
-
     public Player team() {
         return this.team;
     }
