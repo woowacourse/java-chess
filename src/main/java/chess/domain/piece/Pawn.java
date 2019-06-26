@@ -29,6 +29,7 @@ public class Pawn extends Piece {
         Direction direction = source.direction(target);
         validDirection(Direction.WHITE_PAWN_DIRECTION, direction);
         validDistance(source.distance(target, direction), firstMoveDistance());
+        changeFirstState();
         return true;
     }
 
@@ -40,11 +41,11 @@ public class Pawn extends Piece {
         Direction direction = source.direction(target);
         validDirection(Direction.BLACK_PAWN_DIRECTION, direction);
         validDistance(source.distance(target, direction), firstMoveDistance());
+        changeFirstState();
         return true;
     }
 
-    @Override
-    public void changeFirstState() {
+    private void changeFirstState() {
         this.first = false;
     }
 
