@@ -43,4 +43,15 @@ class BoardTest {
         assertThat(piece.getPieceColor()).isEqualByComparingTo(PieceColor.EMPTY);
         assertThat(piece.getPosition()).isEqualTo(Position.of(7, 7));
     }
+
+    @Test
+    @DisplayName("체스 피스가 움직였을 때 보드에 업데이트가 일어나야 한다.")
+    void updateTest() {
+        Position destination = Position.of(1, 0);
+        Piece piece = board.getPieceAt(Position.of(0, 0));
+        Position lastPosition = piece.getPosition();
+        piece.moveTo(destination);
+        assertThat(board.getPieceAt(lastPosition).getPieceColor()).isEqualByComparingTo(PieceColor.EMPTY);
+        assertThat(board.getPieceAt(destination).getPieceColor()).isNotEqualByComparingTo(PieceColor.EMPTY);
+    }
 }

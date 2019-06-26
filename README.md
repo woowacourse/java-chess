@@ -1,6 +1,9 @@
 # java-chess
 체스 게임 구현을 위한 저장소
 
+# Todo
+   * Pawn getMovablePositions 리펙토링
+
 # 기능 목록
    * 체스말들을 체스판 위에 초기화 해야 합니다.
    * 체스 말을 만들어야 합니다.

@@ -25,6 +25,21 @@ public class Pawn extends Piece {
     @Override
     public List<Position> getMovablePositions(BoardView boardView) {
         List<Position> movablePositions = new ArrayList<>();
+        Direction forwardTo = pieceColor == PieceColor.WHITE ? Direction.NORTH : Direction.SOUTH;
+        if (isMovableTo(position.of(forwardTo), boardView)) {
+            movablePositions.add(position.of(forwardTo));
+            if (!hasMoved && isMovableTo(position.of(forwardTo).of(forwardTo), boardView)) {
+                movablePositions.add(position.of(forwardTo).of(forwardTo));
+            }
+        }
+
+        if (isAttackableTo(position.of(forwardTo.clockwiseNext()), boardView)) {
+            movablePositions.add(position.of(forwardTo.clockwiseNext()));
+        }
+
+        if (isAttackableTo(position.of(forwardTo.counterclockwiseNext()), boardView)) {
+            movablePositions.add(position.of(forwardTo.counterclockwiseNext()));
+        }
 
         return movablePositions;
     }

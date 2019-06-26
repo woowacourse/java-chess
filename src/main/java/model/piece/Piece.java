@@ -24,6 +24,15 @@ public abstract class Piece extends Observable {
         return position;
     }
 
+    public void moveTo(Position position) {
+        // TODO: 2019-06-23 validationCheck
+        Position lastPosition = this.position;
+        this.position = position;
+        setChanged();
+        notifyObservers(lastPosition);
+        clearChanged();
+    }
+
     public abstract List<Position> getMovablePositions(BoardView board);
 
     protected boolean isMovableTo(Position position, BoardView boardView) {
