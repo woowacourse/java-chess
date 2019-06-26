@@ -8,7 +8,7 @@ import chess.domain.*;
 
 public class Rook extends NormalPiece {
 	private Rook(Player player, Type type, List<MovementInfo> movementInfos, Position currentPosition) {
-		super(player, type, movementInfos, currentPosition, new Score(5));
+		super(player, type, movementInfos, currentPosition);
 	}
 
 	public static Rook valueOf(Player player, Position currentPosition) {

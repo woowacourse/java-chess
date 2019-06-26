@@ -4,7 +4,7 @@ import chess.domain.*;
 
 public class EmptyPiece extends Piece {
 	public EmptyPiece(Player player, Type type, Position position) {
-		super(player, type, position, new Score(0));
+		super(player, type, position);
 	}
 
 	public static EmptyPiece valueOf(Player player, Position currentPosition) {

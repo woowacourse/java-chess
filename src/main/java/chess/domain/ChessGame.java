@@ -54,7 +54,7 @@ public class ChessGame {
 	}
 
 	public Score getPlayerScore(Player player) {
-		return chessBoard.getXScore(player);
+		return chessBoard.getPlayerScore(player);
 	}
 
 	public Result findWinner() {

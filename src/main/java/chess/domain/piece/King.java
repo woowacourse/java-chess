@@ -8,7 +8,7 @@ import chess.domain.*;
 
 public class King extends NormalPiece {
 	private King(Player player, Type type, List<MovementInfo> movementInfos, Position currentPosition) {
-		super(player, type, movementInfos, currentPosition, new Score(0));
+		super(player, type, movementInfos, currentPosition);
 	}
 
 	public static King valueOf(Player player, Position currentPosition) {

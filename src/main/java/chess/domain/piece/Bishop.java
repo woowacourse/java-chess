@@ -8,7 +8,7 @@ import chess.domain.*;
 
 public class Bishop extends NormalPiece {
 	private Bishop(Player player, Type type, List<MovementInfo> movementInfos, Position currentPosition) {
-		super(player, type, movementInfos, currentPosition, new Score(3));
+		super(player, type, movementInfos, currentPosition);
 	}
 
 	public static Bishop valueOf(Player player, Position currentPosition) {

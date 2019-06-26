@@ -7,8 +7,8 @@ import chess.domain.*;
 public class NormalPiece extends Piece {
 	private final List<MovementInfo> movementInfos;
 
-	NormalPiece(Player player, Type type, List<MovementInfo> movementInfos, Position position, Score score) {
-		super(player, type, position, score);
+	NormalPiece(Player player, Type type, List<MovementInfo> movementInfos, Position position) {
+		super(player, type, position);
 		this.movementInfos = movementInfos;
 	}
 

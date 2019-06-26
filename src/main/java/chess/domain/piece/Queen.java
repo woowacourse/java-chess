@@ -8,7 +8,7 @@ import chess.domain.*;
 
 public class Queen extends NormalPiece {
 	private Queen(Player player, Type type, List<MovementInfo> movementInfos, Position currentPosition) {
-		super(player, type, movementInfos, currentPosition, new Score(9));
+		super(player, type, movementInfos, currentPosition);
 	}
 
 	public static Queen valueOf(Player player, Position currentPosition) {

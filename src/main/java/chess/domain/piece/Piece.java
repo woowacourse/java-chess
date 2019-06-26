@@ -9,14 +9,12 @@ public abstract class Piece {
 	private final Player player;
 	private final Type type;
 
-	private Score score;
 	protected Position position;
 
-	public Piece(Player player, Type type, Position position, Score score) {
+	public Piece(Player player, Type type, Position position) {
 		this.player = player;
 		this.type = type;
 		this.position = position;
-		this.score = score;
 	}
 
 	public Player getPlayer() {
@@ -87,10 +85,6 @@ public abstract class Piece {
 		return this.player.equals(player);
 	}
 
-	public Score getScore() {
-		return score;
-	}
-
 	public abstract boolean isPawn();
 
 	public boolean isSameCoordinateX(int x) {
@@ -107,5 +101,9 @@ public abstract class Piece {
 
 	public boolean isKing() {
 		return type.equals(Type.KING);
+	}
+
+	public Score getScore() {
+		return type.getScore();
 	}
 }

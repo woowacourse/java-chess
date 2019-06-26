@@ -13,8 +13,8 @@ public class Pawn extends Piece {
 	private final List<MovementInfo> movementInfos;
 	private final List<MovementInfo> attackMovementInfos;
 
-	private Pawn(Player player, List<MovementInfo> movementInfos, List<MovementInfo> attackMovementInfos, Position position, Score score) {
-		super(player, Type.PAWN, position, score);
+	private Pawn(Player player, List<MovementInfo> movementInfos, List<MovementInfo> attackMovementInfos, Position position) {
+		super(player, Type.PAWN, position);
 		this.movementInfos = movementInfos;
 		this.attackMovementInfos = attackMovementInfos;
 	}
@@ -33,7 +33,7 @@ public class Pawn extends Piece {
 				new MovementInfo(Direction.LEFT_TOP, 1),
 				new MovementInfo(Direction.RIGHT_TOP, 1)));
 
-		return new Pawn(Player.WHITE, movementInfos, attackMovementInfos, position, new Score(1));
+		return new Pawn(Player.WHITE, movementInfos, attackMovementInfos, position);
 	}
 
 	private static Pawn getBlack(Position position) {
@@ -43,7 +43,7 @@ public class Pawn extends Piece {
 				new MovementInfo(Direction.LEFT_BOTTOM, 1),
 				new MovementInfo(Direction.RIGHT_BOTTOM, 1)));
 
-		return new Pawn(Player.BLACK, movementInfos, attackMovementInfos, position, new Score(1));
+		return new Pawn(Player.BLACK, movementInfos, attackMovementInfos, position);
 	}
 
 	@Override

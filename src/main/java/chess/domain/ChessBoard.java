@@ -50,7 +50,7 @@ public class ChessBoard {
 		pieces.remove(piece);
 	}
 
-	public Score getXScore(Player player) {
+	public Score getPlayerScore(Player player) {
 		Score totalScore = new Score(0);
 		List<Score> scores = pieces.stream()
 				.filter(piece -> piece.isMine(player) && !piece.isPawn())

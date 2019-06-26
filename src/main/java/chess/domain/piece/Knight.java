@@ -8,7 +8,7 @@ import chess.domain.*;
 
 public class Knight extends NormalPiece {
 	private Knight(Player player, Type type, List<MovementInfo> movementInfos, Position currentPosition) {
-		super(player, type, movementInfos, currentPosition, new Score(2.5));
+		super(player, type, movementInfos, currentPosition);
 	}
 
 	public static Knight valueOf(Player player, Position currentPosition) {
