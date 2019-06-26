@@ -54,7 +54,7 @@ public abstract class Piece {
     public void changeFirstState() {}
 
    void validDistance(final int distance, final int limit) {
-        if (distance != limit) {
+        if (distance > limit) {
             throw new InvalidDistanceException("움직일 수 있는 거리가 아닙니다.");
         }
     }
@@ -76,12 +76,11 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Piece piece = (Piece) o;
-        return team == piece.team &&
-                Objects.equals(moveRule, piece.moveRule);
+        return team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(team, moveRule);
+        return Objects.hash(team);
     }
 }
