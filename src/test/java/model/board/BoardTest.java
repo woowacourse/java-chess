@@ -72,7 +72,7 @@ class BoardTest {
                 IntStream.range(0, pieces.size())
                         .mapToObj(i ->
                                 pieces.get(i).getClass().equals(types.get(i))
-                                && pieces.get(i).position() == positions.get(i)
+                                && pieces.get(i).position().equals(positions.get(i))
                         )
                         .allMatch(x -> x)
         ).isTrue();

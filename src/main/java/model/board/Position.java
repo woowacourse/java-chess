@@ -3,22 +3,17 @@ package model.board;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
-    private static final Position[][] CACHE = IntStream.range(Coordinate.MIN, Coordinate.MAX)
-                                                    .mapToObj(x ->
-                                                            IntStream.range(Coordinate.MIN, Coordinate.MAX)
-                                                                    .mapToObj(y -> new Position(x, y))
-                                                                    .toArray(Position[]::new)
-                                                    ).toArray(Position[][]::new);
     private static final Pattern validator = Pattern.compile("\\s*[a-zA-Z][0-9]\\s*");
 
     private final Coordinate x;
     private final Coordinate y;
 
     public static Position of(final String position) {
-        return CACHE[position.substring(0, 1).toLowerCase().charAt(0) - 'a'][Integer.parseInt(position.substring(1)) - 1];
+        int xCoordinate = position.substring(0, 1).toLowerCase().charAt(0) - 'a';
+        int yCoordinate = Integer.parseInt(position.substring(1)) - 1;
+        return new Position(xCoordinate, yCoordinate);
     }
 
     public static Optional<Position> ofSafe(final String input) {
@@ -26,7 +21,9 @@ public class Position implements Comparable<Position> {
             if (validator.matcher(input).matches()) {
                 return Optional.of(of(input.trim()));
             }
-        } catch (IndexOutOfBoundsException | NullPointerException e) {}
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
+            e.getStackTrace();
+        }
         return Optional.empty();
     }
 
@@ -35,18 +32,21 @@ public class Position implements Comparable<Position> {
         this.y = Coordinate.of(y);
     }
 
-    public boolean testForward(final Direction dir, final int steps) {
+    private boolean testForward(final Direction dir, final int steps) {
         final int targetX = this.x.value() + dir.offsetX * steps;
         final int targetY = this.y.value() + dir.offsetY * steps;
-        return (Coordinate.MIN <= targetX && targetX < Coordinate.MAX) && (Coordinate.MIN <= targetY && targetY < Coordinate.MAX);
+        return (Coordinate.MIN <= targetX && targetX < Coordinate.MAX)
+                && (Coordinate.MIN <= targetY && targetY < Coordinate.MAX);
     }
 
     public boolean testForward(final Direction dir) {
         return testForward(dir, 1);
     }
 
-    public Position moveForward(final Direction dir, final int steps) {
-        return CACHE[this.x.value() + dir.offsetX * steps][this.y.value() + dir.offsetY * steps];
+    private Position moveForward(final Direction dir, final int steps) {
+        final int targetX = this.x.value() + dir.offsetX * steps;
+        final int targetY = this.y.value() + dir.offsetY * steps;
+        return new Position(targetX, targetY);
     }
 
     public Position moveForward(final Direction dir) {
@@ -64,8 +64,9 @@ public class Position implements Comparable<Position> {
     public Optional<Position> move(final int x, final int y) {
         final int targetX = this.x.value() + x;
         final int targetY = this.y.value() + y;
-        return ((Coordinate.MIN <= targetX && targetX < Coordinate.MAX) && (Coordinate.MIN <= targetY && targetY < Coordinate.MAX))
-        ? Optional.of(CACHE[this.x.value() + x][this.y.value() + y])
+        return ((Coordinate.MIN <= targetX && targetX < Coordinate.MAX)
+                && (Coordinate.MIN <= targetY && targetY < Coordinate.MAX))
+        ? Optional.of(new Position(targetX, targetY))
         : Optional.empty();
     }
 
