@@ -23,6 +23,9 @@ public class PawnMove implements Move {
         this.direction = team.getDirection();
     }
 
+    private PawnMove() {
+    }
+
     public static PawnMove getInstance(Team team) {
         if (Team.BLACK.equals(team) && Objects.isNull(blackPawnMove)) {
             return new PawnMove(team);

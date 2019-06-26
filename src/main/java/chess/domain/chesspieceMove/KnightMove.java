@@ -12,6 +12,9 @@ public class KnightMove implements Move {
 
     private static KnightMove knightMove;
 
+    private KnightMove() {
+    }
+
     public static KnightMove getInstance() {
         if (Objects.isNull(knightMove))
             return new KnightMove();

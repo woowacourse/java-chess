@@ -11,6 +11,9 @@ public class KingMove implements Move {
 
     private static KingMove kingMove;
 
+    private KingMove() {
+    }
+
     public static KingMove getInstance() {
         if (Objects.isNull(kingMove))
             return new KingMove();

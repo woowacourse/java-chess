@@ -12,6 +12,9 @@ public class VerticalMove implements Move {
 
     private static VerticalMove verticalMove;
 
+    private VerticalMove() {
+    }
+
     public static VerticalMove getInstance() {
         if (Objects.isNull(verticalMove))
             return new VerticalMove();

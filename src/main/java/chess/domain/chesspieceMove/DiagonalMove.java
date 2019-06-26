@@ -12,6 +12,9 @@ public class DiagonalMove implements Move {
 
     private static DiagonalMove diagonalMove;
 
+    private DiagonalMove() {
+    }
+
     public static DiagonalMove getInstance() {
         if (Objects.isNull(diagonalMove))
             return new DiagonalMove();

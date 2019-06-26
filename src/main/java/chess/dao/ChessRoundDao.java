@@ -12,6 +12,9 @@ public class ChessRoundDao {
 
     private static ChessRoundDao chessRoundDao;
 
+    private ChessRoundDao() {
+    }
+
     public static ChessRoundDao getInstance() {
         if (Objects.isNull(chessRoundDao)) {
             chessRoundDao = new ChessRoundDao();
