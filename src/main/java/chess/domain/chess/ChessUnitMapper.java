@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ChessUnitMapper {
-    private static Map<String, Unit> map =  new HashMap<>();
+    private static Map<String, Unit> map = new HashMap<>();
 
     static {
         map.put("p", new Pawn(Team.WHITE));
@@ -23,7 +23,6 @@ public class ChessUnitMapper {
         map.put("K", new King(Team.BLACK));
         map.put("B", new Bishop(Team.BLACK));
     }
-
 
     public static Optional<Unit> getUnit(String name) {
         return Optional.ofNullable(map.get(name));

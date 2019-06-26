@@ -3,7 +3,7 @@ package chess.domain.chess.dao;
 import chess.domain.chess.ChessBoard;
 import chess.domain.chess.ChessUnitMapper;
 import chess.domain.chess.Team;
-import chess.domain.chess.initializer.ChessBoardDB;
+import chess.domain.chess.initializer.SettableChessBoardInitializer;
 import chess.domain.chess.unit.Unit;
 import chess.domain.geometric.Position;
 
@@ -77,12 +77,11 @@ public class ChessBoardDAO {
         String[] units = resultSet.getString("status").split("");
         Team team = Team.getTeamById(resultSet.getInt("team_id"));
 
-
         for (int y = 7; y >= 0; y--) {
             unitMapper(map, units, y);
         }
 
-        return new ChessBoard(new ChessBoardDB(map, team));
+        return new ChessBoard(new SettableChessBoardInitializer(map, team));
     }
 
     public int getRowCount() throws SQLException {
@@ -92,8 +91,7 @@ public class ChessBoardDAO {
 
         int count = resultSet.getInt(1);
         return count;
-   }
-
+    }
 
     private void unitMapper(Map<Position, Unit> map, String[] units, int y) {
         for (int x = 0; x <= 7; x++) {
@@ -103,7 +101,7 @@ public class ChessBoardDAO {
 
     private void unitMapper1(Map<Position, Unit> map, String unit, int x, int y) {
         Optional<Unit> optionalUnit = ChessUnitMapper.getUnit(unit);
-        optionalUnit.ifPresent(unit1 -> map.put(Position.create(x, 7-y), unit1));
+        optionalUnit.ifPresent(unit1 -> map.put(Position.create(x, 7 - y), unit1));
     }
 
     public List<Integer> getIdList() throws SQLException {
@@ -112,7 +110,7 @@ public class ChessBoardDAO {
         ResultSet resultSet = pstmt.executeQuery();
 
         List<Integer> ids = new ArrayList<>();
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             ids.add(resultSet.getInt(1));
         }
 

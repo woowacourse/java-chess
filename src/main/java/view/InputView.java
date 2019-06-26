@@ -26,5 +26,4 @@ public class InputView {
         return Position.create(Integer.parseInt(numbers[0]), Integer.parseInt(numbers[1]));
     }
 
-
 }

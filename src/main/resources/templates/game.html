@@ -72,51 +72,50 @@
         }
 
 
-
     </style>
 </head>
 <body>
-<input type="hidden" value='{{{chessBoard}}}' id="chessBoard">
+<input id="chessBoard" type="hidden" value='{{{chessBoard}}}'>
 
 
 <div id="chessBoardBox"></div>
 이번 턴은 {{team}} 입니다. <br>
 <form action="/game" method="post">
-    소스위치 : <input name = "source" type="text" placeholder="ex)1,1">
-    타깃위치 : <input name = "target" type="text" placeholder="ex)2,2">
-    <input name = "roomId"  type="hidden" value={{roomId}}>
+    소스위치 : <input name="source" placeholder="ex)1,1" type="text">
+    타깃위치 : <input name="target" placeholder="ex)2,2" type="text">
+    <input name="roomId" type="hidden" value={{roomId}}>
     <input type="submit" value="입력"/>
 </form>
 
 </body>
 
 <script>
-  window.onload = function () {
-      var chessBoardBox = document.querySelector('#chessBoardBox');
-      for (var y = 7; y >= 0; y--) {
-        for (var x = 0; x <= 7; x++) {
-            chessBoardBox.append(chessBoardRender(x, y));
+    window.onload = function () {
+        var chessBoardBox = document.querySelector('#chessBoardBox');
+        for (var y = 7; y >= 0; y--) {
+            for (var x = 0; x <= 7; x++) {
+                chessBoardBox.append(chessBoardRender(x, y));
+            }
+            chessBoardBox.append(document.createElement("BR"));
         }
-        chessBoardBox.append(document.createElement("BR"));
-      }
 
 
-      var chessBoard = document.querySelector('#chessBoard').value;
-      var pieces = JSON.parse(chessBoard).units;
+        var chessBoard = document.querySelector('#chessBoard').value;
+        var pieces = JSON.parse(chessBoard).units;
 
-      for (var key in pieces) {
-          var classText = pieces[key].team.toLowerCase() + "_" + pieces[key].name.toLowerCase();
-          document.querySelector('#position' + key).classList.add(classText);
-      }
-  }
+        for (var key in pieces) {
+            var classText = pieces[key].team.toLowerCase() + "_" + pieces[key].name.toLowerCase();
+            document.querySelector('#position' + key).classList.add(classText);
+        }
+    };
 
-  function chessBoardRender(x, y) {
+    function chessBoardRender(x, y) {
         var div = document.createElement('DIV');
 
         div.id = 'position' + x + '' + y;
         div.className = 'tile';
 
         return div;
-  }
+    }
 </script>
 </html>

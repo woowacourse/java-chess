@@ -37,7 +37,7 @@ public class ChessBoard {
         }
 
         if (sourceUnit.get().getTeam() != present) {
-            throw new IllegalTurnException("현재는" +present.name() +" 턴입니다.");
+            throw new IllegalTurnException("현재는" + present.name() + " 턴입니다.");
         }
 
         if (targetUnit.isPresent() && sourceUnit.get().isEqualTeam(targetUnit.get())) {
@@ -146,7 +146,7 @@ public class ChessBoard {
     }
 
     public void changeTeam() {
-        if(present == Team.WHITE) {
+        if (present == Team.WHITE) {
             present = Team.BLACK;
             return;
         }
@@ -156,7 +156,7 @@ public class ChessBoard {
     public int numberOfKing() {
         int sum = 0;
         for (Position position : units.keySet()) {
-            if(units.get(position) instanceof King) {
+            if (units.get(position) instanceof King) {
                 sum += 1;
             }
         }

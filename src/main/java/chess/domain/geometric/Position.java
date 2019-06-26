@@ -31,14 +31,14 @@ public class Position {
         this.y = y;
     }
 
+    public static Position create(final int x, final int y) {
+        return positions.get(x).get(y);
+    }
+
     private void validatePosition(final int x) {
         if (x < MIN_POSITION || x >= MAX_POSITION) {
             throw new IllegalPositionException("범위를 벗어난 포지션입니다.");
         }
-    }
-
-    public static Position create(final int x, final int y) {
-        return positions.get(x).get(y);
     }
 
     public int calculateXDistance(Position position) {

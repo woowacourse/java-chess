@@ -6,18 +6,18 @@ import chess.domain.geometric.Position;
 
 import java.util.Map;
 
-public class ChessBoardDB implements Initializer {
-    private Map<Position, Unit> map;
+public class SettableChessBoardInitializer implements Initializer {
+    private Map<Position, Unit> boardInformation;
     private Team team;
 
-    public ChessBoardDB(Map<Position, Unit> map, Team team) {
-        this.map = map;
+    public SettableChessBoardInitializer(Map<Position, Unit> boardInformation, Team team) {
+        this.boardInformation = boardInformation;
         this.team = team;
     }
 
     @Override
     public Map<Position, Unit> create() {
-        return map;
+        return boardInformation;
     }
 
     @Override

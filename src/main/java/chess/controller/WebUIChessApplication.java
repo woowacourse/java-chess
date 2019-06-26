@@ -96,7 +96,6 @@ public class WebUIChessApplication {
 
             String chessJson = new Gson().toJson(chessBoardDTO);
 
-
             model.put("roomId", roomId);
             model.put("chessBoard", chessJson);
             model.put("team", chessBoardAfterUpdate.getTeam().name());
@@ -136,7 +135,6 @@ public class WebUIChessApplication {
                         "</script>"
         );
     }
-
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));

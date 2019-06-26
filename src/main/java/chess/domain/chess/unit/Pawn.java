@@ -36,12 +36,12 @@ public class Pawn extends Unit {
 
         if (validateDirection(whiteDirections, vector) && getTeam().equals(Team.WHITE)) {
             return isEnemyPresent ? validateDirection(Direction.northDiagonal(), vector)
-                                  : Direction.NORTH.isEqualTo(vector);
+                    : Direction.NORTH.isEqualTo(vector);
         }
 
         if (validateDirection(blackDirections, vector) && getTeam().equals(Team.BLACK)) {
             return isEnemyPresent ? validateDirection(Direction.southDiagonal(), vector)
-                                  : Direction.SOUTH.isEqualTo(vector);
+                    : Direction.SOUTH.isEqualTo(vector);
         }
 
         return false;

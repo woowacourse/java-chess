@@ -30,7 +30,7 @@ public class ChessBoardDAOTest {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
         chessBoard.move(Position.create(1, 0), Position.create(2, 2));
-        chessBoardDAO.update(chessBoard, Team.BLACK,16);
+        chessBoardDAO.update(chessBoard, Team.BLACK, 16);
     }
 
     @Test

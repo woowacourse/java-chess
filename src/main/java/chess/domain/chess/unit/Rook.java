@@ -4,7 +4,6 @@ import chess.domain.chess.Team;
 import chess.domain.geometric.Direction;
 import chess.domain.geometric.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Unit {
