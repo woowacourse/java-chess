@@ -6,7 +6,7 @@ import chess.domain.Point;
 
 import java.util.ArrayList;
 
-public class Empty extends AbstractSingleMovePiece {
+public class Empty extends Piece {
 
     public Empty() {
         super(ChessTeam.EMPTY, PieceInfo.Empty, new ArrayList<>());

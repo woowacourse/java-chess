@@ -16,9 +16,4 @@ class ChessGameServiceTest {
         List<Integer> expect = Arrays.asList(1, 2, 3);
         assertThat(result).isEqualTo(expect);
     }
-
-    @Test
-    void findGameByGameId() {
-        ChessGame chessGame = ChessGameService.findGameByGameId("1");
-    }
 }

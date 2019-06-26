@@ -2,11 +2,12 @@ package chess.domain.pieces;
 
 import chess.domain.ChessTeam;
 import chess.domain.Direction;
+import chess.domain.Point;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knight extends AbstractSingleMovePiece {
+public class Knight extends Piece {
     private static final List<Direction> directions;
 
     static {
@@ -23,5 +24,14 @@ public class Knight extends AbstractSingleMovePiece {
 
     public Knight(ChessTeam team) {
         super(team, PieceInfo.Knight, directions);
+    }
+
+    @Override
+    public Direction move(Point p1, Point p2){
+        Direction direction = p1.direction(p2);
+        if (directions.contains(direction)) {
+            return direction;
+        }
+        throw new IllegalArgumentException();
     }
 }

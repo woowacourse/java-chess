@@ -6,7 +6,7 @@ import chess.domain.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bishop extends AbstractRangeMovePiece {
+public class Bishop extends Piece {
     private static final List<Direction> directions;
 
     static {

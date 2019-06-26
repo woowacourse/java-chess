@@ -7,7 +7,7 @@ import chess.domain.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends AbstractSingleMovePiece {
+public class Pawn extends Piece {
     private List<Direction> moveDirection;
     private List<Direction> attackDirection;
 
