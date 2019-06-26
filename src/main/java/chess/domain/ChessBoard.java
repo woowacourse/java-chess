@@ -1,8 +1,6 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import chess.domain.piece.EmptyPiece;
@@ -11,6 +9,9 @@ import chess.domain.piece.Piece;
 import chess.exception.UnmovableException;
 
 public class ChessBoard {
+    private static final int MIN_BOUND = 1;
+    private static final int MAX_BOUND = 8;
+
     private final List<Piece> pieces;
 
     public ChessBoard() {
@@ -110,5 +111,30 @@ public class ChessBoard {
 
     public List<Piece> getPieces() {
         return Collections.unmodifiableList(pieces);
+    }
+
+    public List<String> getPieceImages() {
+        Map<Position, String> positionPieceImages = makeEmptyImages();
+        for (Piece piece : pieces) {
+            positionPieceImages.put(piece.getPosition(), piece.getPieceImage());
+        }
+        return new ArrayList<>(positionPieceImages.values());
+    }
+
+    private Map<Position, String> makeEmptyImages() {
+        Map<Position, String> positionPieceImages = new LinkedHashMap<>();
+        for (int y = MAX_BOUND; y >= MIN_BOUND; y--) {
+            positionPieceImages.putAll(makeRowWithEmptyImages(y));
+        }
+
+        return positionPieceImages;
+    }
+
+    private Map<Position, String> makeRowWithEmptyImages(int y) {
+        Map<Position, String> positionPieceImages = new LinkedHashMap<>();
+        for (int x = MIN_BOUND; x <= MAX_BOUND; x++) {
+            positionPieceImages.put(Position.getPosition(x, y), ChessPiece.EMPTY.getImage());
+        }
+        return positionPieceImages;
     }
 }

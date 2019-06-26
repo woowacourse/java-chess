@@ -8,28 +8,10 @@ import chess.dao.ChessGameDAO;
 import chess.dao.PieceDAO;
 import chess.database.DatabaseConnection;
 import chess.domain.ChessGame;
-import chess.domain.ChessPiece;
 import chess.domain.Player;
-import chess.domain.Position;
 import chess.domain.piece.Piece;
 
 public class ChessGameService {
-    public static List<String> getPieceImages(ChessGame chessGame) {
-        Map<Position, String> positionPieceImages = new LinkedHashMap<>();
-
-        for (int y = 8; y >= 1; y--) {
-            for (int x = 1; x <= 8; x++) {
-                positionPieceImages.put(Position.getPosition(x, y), ChessPiece.EMPTY.getImage());
-            }
-        }
-
-        for (Piece piece : chessGame.getPieces()) {
-            positionPieceImages.put(piece.getPosition(), piece.getPieceImage());
-        }
-
-        return new ArrayList<>(positionPieceImages.values());
-    }
-
     public static int saveInitialChessGame(ChessGame chessGame) throws SQLException {
         try (Connection connection = DatabaseConnection.getConnection()) {
             ChessGameDAO chessGameDAO = ChessGameDAO.getInstance(connection);

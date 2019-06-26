@@ -7,6 +7,7 @@ import chess.exception.UnmovableException;
 import chess.domain.piece.Piece;
 
 public class ChessGame {
+
     private ChessBoard chessBoard;
     private Player currentPlayer;
 
@@ -74,5 +75,9 @@ public class ChessGame {
 
     public Player getCurrentPlayer() {
         return this.currentPlayer;
+    }
+
+    public List<String> getPieceImages() {
+        return chessBoard.getPieceImages();
     }
 }

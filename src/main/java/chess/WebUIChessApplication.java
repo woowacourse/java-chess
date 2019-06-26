@@ -98,7 +98,7 @@ public class WebUIChessApplication {
         Map<String, Object> model = new HashMap<>();
         model.put("turn", chessGame.getCurrentPlayer().name());
         model.put("roomNumber", roomNumber);
-        model.put("board", ChessGameService.getPieceImages(chessGame));
+        model.put("board", chessGame.getPieceImages());
         return model;
     }
 
