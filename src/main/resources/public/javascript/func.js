@@ -104,7 +104,7 @@ function drawMovable(data) {
 
     MODE = MOVE
     $(`#${SOURCE}`).addClass("selected")
-    movableArea.forEach(function(area){
+    movableArea.vectors.forEach(function(area){
         let x = area.square.x.xPosition;
         let y = area.square.y.yPosition;
 

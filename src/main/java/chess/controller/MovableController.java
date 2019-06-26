@@ -12,9 +12,9 @@ public class MovableController {
         Game game = request.session().attribute("game");
 
         MovableDto movableDto = new Gson().fromJson(request.body(), MovableDto.class);
-        Vectors set = game.movableArea(movableDto.getSrc());
+        Vectors vectors = game.movableArea(movableDto.getSrc());
 
         request.session().attribute("game", game);
-        return new Gson().toJson(set);
+        return new Gson().toJson(vectors);
     }
 }
