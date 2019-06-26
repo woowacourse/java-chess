@@ -64,7 +64,9 @@ public abstract class Piece {
     }
 
     public abstract String getName();
+
     public abstract double getScore();
+
     protected abstract MoveRule setMoveRule();
 
     @Override

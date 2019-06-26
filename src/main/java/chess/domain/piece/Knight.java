@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.*;
+import chess.domain.Direction;
+import chess.domain.MoveRule;
+import chess.domain.Position;
+import chess.domain.Team;
 import chess.domain.exceptions.InvalidDirectionException;
 
 public class Knight extends Piece {
@@ -10,6 +13,12 @@ public class Knight extends Piece {
 
     public Knight(Team team) {
         super(team);
+    }
+
+    private static void validNightDirection(final Direction direction) {
+        if (Direction.ALL_DIRECTION.stream().anyMatch(movable -> movable == direction)) {
+            throw new InvalidDirectionException("움직일 수 있는 방향이 아닙니다.");
+        }
     }
 
     @Override
@@ -22,12 +31,6 @@ public class Knight extends Piece {
         validNightDirection(direction);
         validDistance(source.distance(target), LIMIT_DISTANCE_KNIGHT);
         return true;
-    }
-
-    private static void validNightDirection(final Direction direction) {
-        if (Direction.ALL_DIRECTION.stream().anyMatch(movable -> movable == direction)) {
-            throw new InvalidDirectionException("움직일 수 있는 방향이 아닙니다.");
-        }
     }
 
     @Override

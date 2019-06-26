@@ -1,6 +1,5 @@
 package chess.domain.generator;
 
-import chess.domain.piece.Piece;
 import chess.domain.Team;
 import chess.domain.piece.*;
 

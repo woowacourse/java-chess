@@ -1,9 +1,9 @@
 package chess;
 
 import chess.domain.ChessBoard;
-import chess.domain.piece.Piece;
 import chess.domain.Team;
 import chess.domain.exceptions.ChessPlayException;
+import chess.domain.piece.Piece;
 import chess.domain.utils.InputParser;
 import chess.dto.ResultDto;
 import chess.service.ChessBoardService;

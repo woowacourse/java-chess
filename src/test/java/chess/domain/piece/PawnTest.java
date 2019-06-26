@@ -3,8 +3,6 @@ package chess.domain.piece;
 import chess.domain.Coordinate;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.exceptions.IllegalSourceException;
-import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.exceptions.InvalidDirectionException;
 import chess.domain.exceptions.InvalidDistanceException;
 import org.junit.jupiter.api.BeforeEach;

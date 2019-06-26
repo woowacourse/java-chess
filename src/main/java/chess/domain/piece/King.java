@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.*;
+import chess.domain.Direction;
+import chess.domain.MoveRule;
+import chess.domain.Position;
+import chess.domain.Team;
 
 public class King extends Piece {
     private static final String NAME = "k";

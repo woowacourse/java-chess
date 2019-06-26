@@ -14,24 +14,22 @@ public enum Direction {
     NW(-1, 1, (x, y) -> x < 0 && y > 0 && isAbsEqual(x, y)),
     KNIGHT(100, 100, (x, y) -> Math.abs(x) + Math.abs(y) == 3);
 
-    private static boolean isAbsEqual(final int x, final int y) {
-        return Math.abs(x) == Math.abs(y);
-    }
-
     public static final List<Direction> WHITE_PAWN_DIRECTION = Arrays.asList(N, NE, NW);
     public static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(S, SE, SW);
     public static final List<Direction> DIAGONAL_DIRECTION = Arrays.asList(NE, SE, SW, NW);
     public static final List<Direction> CROSS_DIRECTION = Arrays.asList(N, E, S, W);
     public static final List<Direction> ALL_DIRECTION = Arrays.asList(N, NE, E, SE, S, SW, W, NW);
-
     private final int x;
     private final int y;
     private final DirectionCheck directionCheck;
-
     Direction(int x, int y, DirectionCheck directionCheck) {
         this.x = x;
         this.y = y;
         this.directionCheck = directionCheck;
+    }
+
+    private static boolean isAbsEqual(final int x, final int y) {
+        return Math.abs(x) == Math.abs(y);
     }
 
     public static Direction valueOf(int x, int y) {
