@@ -1,80 +1,137 @@
 package chess.domain;
 
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Spot, Piece> pieces;
 
     public Board(Map<Spot, Piece> pieces) {
-        this.pieces = pieces;
+        this.pieces = new HashMap<>(pieces);
     }
 
+    //TODO 확인 후 삭제 return this 를 안해도 되는지..
+//    public Board move(Spot startSpot, Spot endSpot) {
+//        boolean x = isPieceMovement(startSpot, endSpot);
+//        if (isMovable(startSpot, endSpot) && x) {
+//            Piece selectedPiece = pieces.get(startSpot);
+//            Piece targetPiece = pieces.get(endSpot);
+//
+//            if (targetPiece.getPieceType() == PieceType.KING) {
+//                Team winnerTeam = selectedPiece.getTeam();
+//                pieces.replaceAll(((spot, piece) -> new King(winnerTeam)));
+//                return new Board(pieces);
+//            }
+//
+//            pieces.replace(endSpot, selectedPiece);
+//            pieces.replace(startSpot, Empty.getInstance());
+//            return new Board(pieces);
+//        }
+//        return this;
+//    }
+
     public Board move(Spot startSpot, Spot endSpot) {
-        validate(startSpot, endSpot);
-        Piece piece = pieces.get(startSpot);
-        pieces.replace(endSpot, piece);
-        pieces.replace(startSpot, Empty.getInstance());
+        Piece selectedPiece = pieces.get(startSpot);
+        Piece targetPiece = pieces.get(endSpot);
+        if (moveValidation(startSpot, endSpot)) {
+            pieces.replace(endSpot, selectedPiece);
+            pieces.replace(startSpot, Empty.getInstance());
+        }
+        if (isKingDie(targetPiece)) {
+            Team winnerTeam = selectedPiece.getTeam();
+            pieces.replaceAll(((spot, piece) -> new King(winnerTeam)));
+        }
         return new Board(pieces);
     }
 
-    private void validate(Spot startSpot, Spot endSpot) {
-        moveValidate(startSpot, endSpot);
-        checkPath(startSpot, endSpot);
+    private boolean isKingDie(Piece targetPiece) {
+        return targetPiece.getPieceType() == PieceType.KING;
     }
 
-    private boolean moveValidate(Spot startSpot, Spot endSpot) {
-        Piece startPointPiece = pieces.get(startSpot);
-        Piece endPointPiece = pieces.get(endSpot);
+    private boolean moveValidation(Spot startSpot, Spot endSpot) {
+        return isMovable(startSpot, endSpot) && isPieceMovement(startSpot, endSpot);
+    }
 
-        if (startPointPiece.empty()) {
+    private boolean isMovable(Spot startSpot, Spot endSpot) {
+        Piece selectedPiece = pieces.get(startSpot);
+        Piece targetPiece = pieces.get(endSpot);
+
+        if (selectedPiece.isEmpty() || selectedPiece.checkTeam(targetPiece)) {
             return false;
         }
-        if (endPointPiece.empty()) {
-            return startPointPiece.isMovable(startSpot, endSpot);
-        }
-        if (startPointPiece.sameTeam(endPointPiece)) {
-            return false;
-        }
-        return startPointPiece.isAttackable(startSpot, endSpot);
+
+        Spot nextSpot = startSpot.nextSpot(startSpot.calculateMovement(endSpot));
+
+        return checkPath(nextSpot, endSpot);
     }
 
     private boolean checkPath(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
+        MovementUnit movementUnit = startSpot.calculateMovement(endSpot);
 
-        MovementUnit movementUnit = MovementUnit.direction(distanceX, distanceY);
-        Spot nextSpot = startSpot;
-        while (nextSpot == endSpot) {
-            nextSpot = startSpot.nextSpot(movementUnit, distanceX, distanceY);
-            if (!pieces.get(nextSpot).empty()) {
-                return false;
-            }
+        if (startSpot == endSpot) {
+            return true;
         }
-        return true;
+        Piece piece = pieces.get(startSpot);
+        if (piece != Empty.getInstance()) {
+            return false;
+        }
+        return checkPath(startSpot.nextSpot(movementUnit), endSpot);
     }
 
-    public Map<Spot, Piece> getPieces(Team team) {
-        Map<Spot, Piece> selectedPieces = new HashMap<>();
-        pieces.forEach((spot, piece) -> {
-            if (piece.checkTeam(team)) {
-                selectedPieces.put(spot, piece);
-            }
-        });
-        return selectedPieces;
+    private boolean isPieceMovement(Spot startSpot, Spot endSpot) {
+        Piece selectedPiece = pieces.get(startSpot);
+        Piece targetPiece = pieces.get(endSpot);
+
+        if (targetPiece.checkTeam(Team.EMPTY)) {
+            return selectedPiece.isMovable(startSpot, endSpot);
+        }
+        if (!selectedPiece.checkTeam(targetPiece)) {
+            return selectedPiece.isAttackable(startSpot, endSpot);
+        }
+        return false;
     }
 
-    //TODO 파라미터의 갯수를 늘리지 않고 재귀로 할 수 있는 방법이 있을까?
-//    public boolean checkPath(Spot startSpot, Spot endSpot, MovementUnit movementUnit) {
-//        if (startSpot == endSpot) {
-//            return true;
-//        }
-//        if (pieces.get(startSpot).empty()) {
-//            return checkPath(startSpot.nextSpot(movementUnit), endSpot, movementUnit);
-//        }
-//        return false;
+    public Map<Spot, Piece> getTeamPieces(Team team) {
+        return pieces.entrySet()
+                .stream()
+                .filter(spotPieceEntry -> spotPieceEntry.getValue().checkTeam(team))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public boolean teamCheck(Spot spot, Team team) {
+        return pieces.get(spot).checkTeam(team);
+    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Board board = (Board) o;
+//        return Objects.equals(pieces, board.pieces);
 //    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(pieces);
+//    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return pieces == ((Board) o).pieces;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieces);
+    }
 }
+

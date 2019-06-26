@@ -2,55 +2,78 @@ package chess.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Spot {
-    private static final int MIN_COLUMN = 0;
-    private static final int MAX_COLUMN = 7;
-    private static final int MIN_ROW = 0;
-    private static final int MAX_ROW = 7;
+    public static final int BLACK_PAWN_START_LINE = 1;
+    public static final int WHITE_PAWN_START_LINE = 6;
+
+    private static final List<Spot> SPOTS;
+    private static final int COUNT_OF_ROW = 8;
+    private static final int COUNT_OF_COLUMN = 8;
+    private static final int START_INDEX = 0;
+    private static final int END_INDEX = 63;
 
     private final int x;
     private final int y;
 
-    private Spot(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    //TODO 위치를 인스턴스 변수 위인지 아래인지 확인하기
+    static {
+        SPOTS = new ArrayList<>();
+        IntStream.rangeClosed(START_INDEX, END_INDEX)
+                .forEach(index -> SPOTS.add(index, new Spot(index)));
+
     }
 
-    public static Spot valueOf(final int x, final int y) {
-        validation(x, y);
-        int index = x * 8 + y;
-        return SpotCache.spotsCache.get(index);
+    public static Spot valueOf(int index) {
+        validationIndexCheck(index);
+        return SPOTS.get(index);
     }
 
-    private static void validation(int x, int y) {
-        if (validationRow(x) || validationColumn(y)) {
-            throw new IllegalArgumentException("범위 제대로 입력해 주세요");
+    public static Spot valueOf(int x, int y) {
+        validationLocationCheck(x);
+        validationLocationCheck(y);
+        return SPOTS.get((x) + y * COUNT_OF_COLUMN);
+    }
+
+    private Spot(int index) {
+        validationIndexCheck(index);
+        this.x = index % COUNT_OF_ROW;
+        this.y = index / COUNT_OF_COLUMN;
+    }
+
+    private static void validationIndexCheck(int index) {
+        if (index < START_INDEX || index > END_INDEX) {
+            throw new IllegalArgumentException("올바른 좌표를 입력해 주세요");
         }
     }
 
-    private static boolean validationRow(int x) {
-        return x < MIN_COLUMN || x > MAX_COLUMN;
+    private static void validationLocationCheck(int location) {
+        if (location < 0 || location > 7) {
+            throw new IllegalArgumentException("올바른 좌표를 입력해 주세요");
+        }
     }
 
-    private static boolean validationColumn(int y) {
-        return y < MIN_ROW || y > MAX_ROW;
+    public Spot nextSpot(MovementUnit movementUnit) {
+        int nextXPoint = movementUnit.nextXPoint(x);
+        int nextYPoint = movementUnit.nextYPoint(y);
+        return Spot.valueOf(nextXPoint, nextYPoint);
     }
 
-    public int getX(Spot spot) {
-        return this.x - spot.x;
+    public MovementUnit calculateMovement(Spot targetSpot) {
+        return MovementUnit.direction(targetSpot.x - this.x, targetSpot.y - this.y);
     }
 
-    public int getY(Spot spot) {
-        return this.y - spot.y;
+    public int xGap(Spot targetSpot) {
+        return this.x - targetSpot.x;
     }
 
-    //TODO 생각해보자...getter를 안쓰는 방법을.., 함수명 변경
-    public Spot nextSpot(MovementUnit movementUnit, int xDirection, int yDirection) {
-        int nextSpotX = this.x + movementUnit.getX(xDirection);
-        int nextSpotY = this.y + movementUnit.getY(yDirection);
+    public int yGap(Spot targetSpot) {
+        return this.y - targetSpot.y;
+    }
 
-        return Spot.valueOf(nextSpotX, nextSpotY);
+    public boolean isStartLine() {
+        return y == BLACK_PAWN_START_LINE || y == WHITE_PAWN_START_LINE;
     }
 
     public boolean isSameRaw(Spot spot) {
@@ -61,18 +84,9 @@ public class Spot {
         return this.y == y;
     }
 
-    private static class SpotCache {
-        private static List<Spot> spotsCache = new ArrayList<>();
-
-        //TODO 이중 for 문 리팩토링하기
-        static {
-            for (int i = MIN_COLUMN; i <= MAX_COLUMN; i++) {
-                for (int j = MIN_ROW; j <= MAX_ROW; j++) {
-                    spotsCache.add(new Spot(i, j));
-                }
-            }
-        }
+    public String getIndex() {
+        return String.valueOf(SPOTS.indexOf(this));
     }
 
-
 }
+

@@ -4,27 +4,24 @@ import chess.domain.MovementUnit;
 import chess.domain.Spot;
 import chess.domain.Team;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class Queen extends Piece {
+    private static final int QUEEN_SCORE = 9;
+
     private final Set<MovementUnit> movementUnits;
 
     public Queen(Team team) {
         super(team);
-        this.score = 9;
-        movementUnits = new HashSet<>();
-        movementUnits.add(MovementUnit.RIGHT);
-        movementUnits.add(MovementUnit.UP);
-        movementUnits.add(MovementUnit.DIAGNOAL);
+        this.score = QUEEN_SCORE;
+        pieceType = PieceType.QUEEN;
+        movementUnits = MovementUnit.getAllWay();
     }
 
     @Override
     public boolean isMovable(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
-
-        return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        MovementUnit movementUnit = startSpot.calculateMovement(endSpot);
+        return movementUnits.contains(movementUnit);
     }
 
     @Override

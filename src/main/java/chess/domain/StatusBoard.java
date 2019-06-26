@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class StatusBoard {
     private static final double SCORE_MIN_CONDITION = 0;
-    private static final double SCORE_MAX_CONDITION = 76;
+    private static final double SCORE_MAX_CONDITION = 38;
 
     private final double blackScore;
     private final double whiteScore;

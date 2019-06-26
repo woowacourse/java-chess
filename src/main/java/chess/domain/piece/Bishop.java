@@ -4,25 +4,24 @@ import chess.domain.MovementUnit;
 import chess.domain.Spot;
 import chess.domain.Team;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class Bishop extends Piece {
+    private static final int BISHOP_SCORE = 3;
+
     private final Set<MovementUnit> movementUnits;
 
     public Bishop(Team team) {
         super(team);
-        this.score = 3;
-        movementUnits = new HashSet<>();
-        movementUnits.add(MovementUnit.DIAGNOAL);
+        this.score = BISHOP_SCORE;
+        pieceType = PieceType.BISHOP;
+        movementUnits = MovementUnit.getDiagonals();
     }
 
     @Override
     public boolean isMovable(Spot startSpot, Spot endSpot) {
-        int distanceX = startSpot.getX(endSpot);
-        int distanceY = startSpot.getY(endSpot);
-
-        return movementUnits.contains(MovementUnit.direction(distanceX, distanceY));
+        MovementUnit movement = startSpot.calculateMovement(endSpot);
+        return movementUnits.contains(movement);
     }
 
     @Override

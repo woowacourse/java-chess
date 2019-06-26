@@ -12,4 +12,8 @@ public enum Team {
     public boolean isSameTeam(Team team) {
         return this == team;
     }
+
+    public String getTeamColor() {
+        return String.valueOf(this);
+    }
 }
