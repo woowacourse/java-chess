@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.MoveRules;
-import chess.domain.Piece;
 import chess.domain.Team;
 
 public class Knight extends Piece {

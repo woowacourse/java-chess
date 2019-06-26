@@ -1,10 +1,20 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.*;
+import chess.domain.exceptions.InvalidDirectionException;
+import chess.domain.exceptions.InvalidDistanceException;
+
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
     private final Team team;
     private MoveRule moveRule;
+
+    public Piece(Team team) {
+        this.team = team;
+        this.moveRule = setMoveRule();
+    }
 
     public Piece(Team team, MoveRule moveRule) {
         this.team = team;
@@ -39,9 +49,21 @@ public abstract class Piece {
         return false;
     }
 
-    public abstract String getName();
+    protected void validDistance(final int distance, final int limit) {
+        if (distance != limit) {
+            throw new InvalidDistanceException("움직일 수 있는 거리가 아닙니다.");
+        }
+    }
 
+    protected void validDirection(final List<Direction> movables, final Direction direction) {
+        if (movables.stream().noneMatch(movable -> movable == direction)) {
+            throw new InvalidDirectionException("움직일 수 있는 방향이 아닙니다.");
+        }
+    }
+
+    public abstract String getName();
     public abstract double getScore();
+    protected abstract MoveRule setMoveRule();
 
     @Override
     public boolean equals(final Object o) {

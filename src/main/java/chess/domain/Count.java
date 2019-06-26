@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
+
 import java.util.Objects;
 
 public class Count {

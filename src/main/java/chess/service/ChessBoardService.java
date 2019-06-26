@@ -4,6 +4,7 @@ import chess.dao.BoardDao;
 import chess.dao.ResultDao;
 import chess.dao.TurnDao;
 import chess.domain.*;
+import chess.domain.piece.Piece;
 import chess.domain.utils.InputParser;
 import chess.dto.BoardDto;
 import chess.dto.ResultDto;

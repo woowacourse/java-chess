@@ -1,7 +1,7 @@
 package chess;
 
 import chess.domain.ChessBoard;
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 import chess.domain.Team;
 import chess.domain.exceptions.ChessPlayException;
 import chess.domain.utils.InputParser;
