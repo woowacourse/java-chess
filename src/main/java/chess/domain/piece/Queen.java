@@ -1,14 +1,24 @@
 package chess.domain.piece;
 
-import chess.domain.MoveRules;
-import chess.domain.Team;
+import chess.domain.*;
 
 public class Queen extends Piece {
     private static final String NAME = "q";
     private static final double SCORE = 9;
 
     public Queen(Team team) {
-        super(team, MoveRules::queen);
+        super(team);
+    }
+
+    @Override
+    protected MoveRule setMoveRule() {
+        return this::queen;
+    }
+
+    private boolean queen(Position source, Position target) {
+        Direction direction = source.direction(target);
+        validDirection(Direction.ALL_DIRECTION, direction);
+        return true;
     }
 
     @Override

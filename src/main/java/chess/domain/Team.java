@@ -3,14 +3,11 @@ package chess.domain;
 public enum Team {
     BLACK, WHITE;
 
-    public static MoveRule pawnMoveRule(Team team) {
-        if (team == BLACK) {
-            return MoveRules::blackPawn;
-        }
-        return MoveRules::whitePawn;
+    public static boolean isSameTeam(Team one, Team other) {
+        return one == other;
     }
 
     public Team enemy() {
-        return this == BLACK ? WHITE : BLACK;
+        return isSameTeam(this, BLACK) ? WHITE : BLACK;
     }
 }

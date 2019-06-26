@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
+    protected static final int LIMIT_DISTANCE_ONE = 1;
+
     private final Team team;
     private MoveRule moveRule;
 
@@ -22,7 +24,7 @@ public abstract class Piece {
     }
 
     public boolean isSameTeam(Piece piece) {
-        return this.team == piece.team;
+        return Team.isSameTeam(this.team, piece.team);
     }
 
     public Team getTeam() {

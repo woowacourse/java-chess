@@ -1,14 +1,25 @@
 package chess.domain.piece;
 
-import chess.domain.MoveRules;
-import chess.domain.Team;
+import chess.domain.*;
 
 public class King extends Piece {
     private static final String NAME = "k";
     private static final double SCORE = 0;
 
     public King(Team team) {
-        super(team, MoveRules::king);
+        super(team);
+    }
+
+    @Override
+    protected MoveRule setMoveRule() {
+        return this::king;
+    }
+
+    private boolean king(Position source, Position target) {
+        Direction direction = source.direction(target);
+        validDirection(Direction.ALL_DIRECTION, direction);
+        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
+        return true;
     }
 
     @Override

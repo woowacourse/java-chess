@@ -5,25 +5,38 @@ import chess.domain.*;
 public class Pawn extends Piece {
     private static final String NAME = "p";
     private static final int SCORE = 1;
-    private static final int LIMIT_DISTANCE_ONE = 1;
+    private static final int LIMIT_DISTANCE_FIRST = 2;
+
+    private boolean first;
 
     public Pawn(Team team) {
-        super(team, Team.pawnMoveRule(team));
-
+        super(team);
+        first = true;
     }
 
-    // TODO: 이동 Rule 각 Piece 구현체들로 옮기기
-    public boolean whitePawn(Position source, Position target) {
+    @Override
+    protected MoveRule setMoveRule() {
+        if (Team.isSameTeam(this.getTeam(), Team.BLACK)) {
+            return this::blackPawn;
+        }
+        return this::whitePawn;
+    }
+
+    private boolean whitePawn(Position source, Position target) {
         Direction direction = source.direction(target);
         validDirection(Direction.WHITE_PAWN_DIRECTION, direction);
-        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
+        validDistance(source.distance(target, direction), firstMoveDistance());
         return true;
     }
 
-    public boolean blackPawn(Position source, Position target) {
+    private int firstMoveDistance() {
+        return first ? LIMIT_DISTANCE_FIRST : LIMIT_DISTANCE_ONE;
+    }
+
+    private boolean blackPawn(Position source, Position target) {
         Direction direction = source.direction(target);
         validDirection(Direction.BLACK_PAWN_DIRECTION, direction);
-        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
+        validDistance(source.distance(target, direction), firstMoveDistance());
         return true;
     }
 
