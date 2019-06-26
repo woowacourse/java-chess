@@ -1,19 +1,54 @@
 package chess.service;
 
-import chess.model.MoveHandler;
+import chess.ConnectionFactory;
+import chess.model.ChessGame;
 import chess.model.Square;
 import chess.model.board.BasicBoardInitializer;
 import chess.model.board.Board;
+import chess.model.dao.ChessDao;
+import chess.model.dto.BoardInfo;
+import chess.model.dto.MoveResult;
 import chess.model.unit.Side;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class ChessService {
-    private static Board board = new Board();
+    private static ChessDao chessDao;
 
     static {
-        board.initialize(new BasicBoardInitializer());
+        Connection con = ConnectionFactory.connect();
+        chessDao = new ChessDao(con);
     }
 
-    public boolean canMove(Square source, Square target) {
-        return new MoveHandler(board).move(source, target, Side.WHITE);
+    private ChessGame chessGame;
+
+    private void loadChessGame() throws SQLException {
+        chessGame = new ChessGame(chessDao.loadBoard(), chessDao.loadTurn());
+    }
+
+    public MoveResult canMove(Square source, Square target) throws SQLException {
+        loadChessGame();
+        boolean canMove = chessGame.canMove(source, target);
+        if (canMove && chessGame.isKingAlive()){
+            chessGame.move(source, target);
+            chessDao.updateMove(source, target);
+            chessDao.updateGameInfo(chessGame.createGameInfo());
+            return chessGame.createSuccessMoveResult();
+        }
+        return chessGame.createFailureMoveResult();
+    }
+
+    public BoardInfo initializeBoard() throws SQLException {
+        Board board = new Board();
+        board.initialize(new BasicBoardInitializer());
+        chessGame = new ChessGame(board, Side.WHITE);
+        chessDao.initializeBoard(chessGame.createBoardInfo(), chessGame.createGameInfo());
+        return chessGame.createBoardInfo();
+    }
+
+    public BoardInfo createBoardInfo() throws SQLException {
+        loadChessGame();
+        return chessGame.createBoardInfo();
     }
 }

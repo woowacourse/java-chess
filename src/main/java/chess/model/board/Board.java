@@ -3,6 +3,7 @@ package chess.model.board;
 import chess.model.Square;
 import chess.model.unit.Piece;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 public class Board {
     private Map<Square, Piece> board = new HashMap<>();
 
-    public void initialize(BoardInitializer initializer) {
+    public void initialize(BoardInitializer initializer) throws SQLException {
         board = initializer.initialize();
     }
 
@@ -44,5 +45,10 @@ public class Board {
             pieceMap.put(squarePieceEntry.getKey().toString(), squarePieceEntry.getValue().toString());
         }
         return pieceMap;
+    }
+
+    public void move(Square beginSquare, Square endSquare) {
+        board.put(endSquare, board.get(beginSquare));
+        board.remove(beginSquare);
     }
 }

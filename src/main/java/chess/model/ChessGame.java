@@ -1,6 +1,9 @@
 package chess.model;
 
 import chess.model.board.Board;
+import chess.model.dto.BoardInfo;
+import chess.model.dto.GameInfo;
+import chess.model.dto.MoveResult;
 import chess.model.unit.Piece;
 import chess.model.unit.Side;
 import chess.model.unit.UnitType;
@@ -22,8 +25,13 @@ public class ChessGame {
         handler = new MoveHandler(board);
     }
 
-    public boolean move(final Square beginSquare, final Square endSquare) {
+    public boolean canMove(final Square beginSquare, final Square endSquare) {
         return handler.move(beginSquare, endSquare, turn);
+    }
+
+    public void move(final Square beginSquare, final Square endSquare) {
+        board.move(beginSquare, endSquare);
+        turn = turn == Side.BLACK ? Side.WHITE : Side.BLACK;
     }
 
     public boolean isKingAlive() {
@@ -65,5 +73,38 @@ public class ChessGame {
 
     private void addScore(Side side, Double score) {
         scores.put(side, scores.get(side) + score);
+    }
+
+    public GameInfo createGameInfo() {
+        GameInfo gameInfo = new GameInfo();
+        gameInfo.setFinished(!isKingAlive());
+        gameInfo.setTurn(turn.getSymbol());
+        return gameInfo;
+    }
+
+    public BoardInfo createBoardInfo() {
+        BoardInfo boardInfo = new BoardInfo();
+        boardInfo.setFinished(!isKingAlive());
+        boardInfo.setTurn(turn.getSymbol());
+        boardInfo.setPieceMap(board.createPieceMap());
+        boardInfo.setWhiteScore(calculateScore(Side.WHITE));
+        boardInfo.setBlackScore(calculateScore(Side.BLACK));
+        return boardInfo;
+    }
+
+    public MoveResult createFailureMoveResult() {
+        MoveResult moveResult = new MoveResult();
+        moveResult.setCanMove(false);
+        return moveResult;
+    }
+
+    public MoveResult createSuccessMoveResult() {
+        MoveResult moveResult = new MoveResult();
+        moveResult.setBlackScore(calculateScore(Side.BLACK));
+        moveResult.setWhiteScore(calculateScore(Side.WHITE));
+        moveResult.setFinished(!isKingAlive());
+        moveResult.setTurn(turn.getSymbol());
+        moveResult.setCanMove(true);
+        return moveResult;
     }
 }

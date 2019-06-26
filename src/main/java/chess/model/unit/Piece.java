@@ -1,5 +1,6 @@
 package chess.model.unit;
 
+import chess.model.InvalidElementException;
 import chess.model.Square;
 import chess.model.SquareNavigator;
 
@@ -11,6 +12,8 @@ import java.util.function.Function;
 
 public abstract class Piece {
     private static final Map<UnitType, Function<Side, Piece>> createMap = new HashMap<>();
+    private static final String NO_PIECE_SYMBOL_ERROR_MSG = "해당하는 SYMBOL의 PIECE가 없습니다.";
+    private static final int DEFAULT_SYMBOL_LENGTH = 2;
 
     static {
         createMap.put(UnitType.KING, King::new);
@@ -27,6 +30,13 @@ public abstract class Piece {
     Piece(UnitType type, Side side) {
         this.type = type;
         this.side = side;
+    }
+
+    public static Piece createPiece(String pieceSymbol) {
+        if (pieceSymbol.length() != DEFAULT_SYMBOL_LENGTH)
+            throw new InvalidElementException(NO_PIECE_SYMBOL_ERROR_MSG);
+        return createMap.get(UnitType.findTypeWith(pieceSymbol.substring(1, 2)))
+                .apply(Side.findSide(pieceSymbol.substring(0, 1)));
     }
 
     public abstract List<SquareNavigator> findSquareNavigators(Square beginSquare);
