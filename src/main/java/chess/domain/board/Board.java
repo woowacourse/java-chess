@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 public class Board {
     private static final double HALF = 0.5;
     private static final int PAWN_DISTANCE = 2;
+    private static final int DISTANCE_FOR_DIAGONALLY = 2;
+    private static final int DISTANCE_FOR_FORWARD = 1;
 
     private Map<Position, Piece> boardState;
     private boolean isKingDead;
@@ -78,28 +80,35 @@ public class Board {
     }
 
     private void checkPawnMovable(Position source, Position target) {
-        if (findPiece(source) instanceof Pawn && !(findPiece(target) instanceof Blank)) {
-            checkAccessible(source, target);
+        if (findPiece(source) instanceof Pawn) {
+            checkCanCatch(source, target);
+            checkMoveDiagonally(source, target);
         }
     }
 
-    private void checkAccessible(Position source, Position target) {
-        if (isCatchForward(source, target)) {
+    private void checkCanCatch(Position source, Position target) {
+        if (!(findPiece(target) instanceof Blank) && isCatchForward(source, target)) {
             throw new IllegalArgumentException("정면으로 잡을 수 없습니다.");
         }
-        if (!isCatchDiagonally(source, target)) {
+        if (!(findPiece(target) instanceof Blank) && !isCatchDiagonally(source, target)) {
             throw new IllegalArgumentException("폰은 대각선으로만 잡을 수 있습니다.");
         }
     }
 
     private boolean isCatchForward(Position source, Position target) {
         return !findPiece(source).isSameTeamWith(findPiece(target))
-                && source.getDistanceSquare(target) == 1;
+                && source.getDistanceSquare(target) == DISTANCE_FOR_FORWARD;
     }
 
     private boolean isCatchDiagonally(Position source, Position target) {
         return !(findPiece(source).isSameTeamWith(findPiece(target))
                 && source.getDistanceSquare(target) == PAWN_DISTANCE);
+    }
+
+    private void checkMoveDiagonally(Position source, Position target) {
+        if (findPiece(target) instanceof Blank && source.getDistanceSquare(target) == DISTANCE_FOR_DIAGONALLY) {
+            throw new IllegalArgumentException("폰은 대각선으로 이동할 수 없습니다.");
+        }
     }
 
     public void move(Position source, Position target) {
