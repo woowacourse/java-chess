@@ -3,7 +3,7 @@ package chess.domain.chess;
 import java.util.function.Function;
 
 public enum Team {
-    WHITE(1, String::toLowerCase,"WHITE"),
+    WHITE(1, String::toLowerCase, "WHITE"),
     BLACK(2, String::toUpperCase, "BLACK");
 
     private int teamId;
@@ -30,18 +30,5 @@ public enum Team {
     public int getTeamId() {
         return teamId;
     }
-
-    public Team opposite() {
-        if(this.equals(Team.WHITE)) {
-            return Team.BLACK;
-        }
-
-        return Team.WHITE;
-    }
-
-    public String getName() {
-        return name;
-    }
-
 
 }

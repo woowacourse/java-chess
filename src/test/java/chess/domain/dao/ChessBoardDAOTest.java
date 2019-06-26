@@ -11,6 +11,7 @@ import view.OutputView;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ChessBoardDAOTest {
     private Connection connection = DBConnection.getConnection();
@@ -29,15 +30,23 @@ public class ChessBoardDAOTest {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
         chessBoard.move(Position.create(1, 0), Position.create(2, 2));
-        chessBoardDAO.update(chessBoard, Team.BLACK);
-
+        chessBoardDAO.update(chessBoard, Team.BLACK,16);
     }
 
     @Test
     void 검색() throws SQLException {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
-        ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
+        ChessBoard chessBoard = chessBoardDAO.select(16);
         OutputView.printCheckBoard(chessBoard);
+    }
+
+    @Test
+    void 존재하는id들출력() throws SQLException {
+        ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
+
+        List<Integer> ids = chessBoardDAO.getIdList();
+        System.out.println(ids);
+
     }
 }

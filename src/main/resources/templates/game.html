@@ -77,11 +77,14 @@
 </head>
 <body>
 <input type="hidden" value='{{{chessBoard}}}' id="chessBoard">
+
+
 <div id="chessBoardBox"></div>
 이번 턴은 {{team}} 입니다. <br>
-<form action="/resume" method="post">
+<form action="/game" method="post">
     소스위치 : <input name = "source" type="text" placeholder="ex)1,1">
     타깃위치 : <input name = "target" type="text" placeholder="ex)2,2">
+    <input name = "roomId"  type="hidden" value={{roomId}}>
     <input type="submit" value="입력"/>
 </form>
 
@@ -100,6 +103,7 @@
 
       var chessBoard = document.querySelector('#chessBoard').value;
       var pieces = JSON.parse(chessBoard).units;
+
       for (var key in pieces) {
           var classText = pieces[key].team.toLowerCase() + "_" + pieces[key].name.toLowerCase();
           document.querySelector('#position' + key).classList.add(classText);

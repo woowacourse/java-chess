@@ -11,9 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ChessBoardDAO {
     private Connection connection;
@@ -55,26 +53,26 @@ public class ChessBoardDAO {
         return ".";
     }
 
-    public void update(ChessBoard chessBoard, Team team) throws SQLException {
+    public void update(ChessBoard chessBoard, Team team, int roomId) throws SQLException {
         String boardInfo = printCheckBoard(chessBoard);
-        String query = "UPDATE chess_board SET status = ?, team_id = ? " +
-                "ORDER BY id DESC " +
-                "LIMIT 1";
+        String query = "UPDATE chess_board SET status = ?, team_id = ? WHERE id = ? ";
 
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, boardInfo);
         pstmt.setInt(2, team.getTeamId());
+        pstmt.setInt(3, roomId);
         pstmt.executeUpdate();
     }
 
-    public ChessBoard selectRecentRow() throws SQLException {
-        String query = "SELECT status, team_id FROM chess_board ORDER BY id DESC LIMIT 1";
+    public ChessBoard select(int roomId) throws SQLException {
+        String query = "SELECT status, team_id FROM chess_board WHERE id = ?";
         PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, roomId);
         ResultSet resultSet = pstmt.executeQuery();
 
         Map<Position, Unit> map = new HashMap<>();
 
-        if (!resultSet.next()) return null;
+        if (!resultSet.next()) throw new SQLException();
 
         String[] units = resultSet.getString("status").split("");
         Team team = Team.getTeamById(resultSet.getInt("team_id"));
@@ -87,6 +85,16 @@ public class ChessBoardDAO {
         return new ChessBoard(new ChessBoardDB(map, team));
     }
 
+    public int getRowCount() throws SQLException {
+        String query = "SELECT COUNT(1) FROM chess_board";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet resultSet = pstmt.executeQuery();
+
+        int count = resultSet.getInt(1);
+        return count;
+   }
+
+
     private void unitMapper(Map<Position, Unit> map, String[] units, int y) {
         for (int x = 0; x <= 7; x++) {
             unitMapper1(map, units[y * 8 + x], x, y);
@@ -96,5 +104,20 @@ public class ChessBoardDAO {
     private void unitMapper1(Map<Position, Unit> map, String unit, int x, int y) {
         Optional<Unit> optionalUnit = ChessUnitMapper.getUnit(unit);
         optionalUnit.ifPresent(unit1 -> map.put(Position.create(x, 7-y), unit1));
+    }
+
+    public List<Integer> getIdList() throws SQLException {
+        String query = "SELECT id FROM chess_board WHERE 1=1";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet resultSet = pstmt.executeQuery();
+
+        List<Integer> ids = new ArrayList<>();
+        while(resultSet.next()) {
+            ids.add(resultSet.getInt(1));
+        }
+
+        Collections.sort(ids);
+
+        return ids;
     }
 }
