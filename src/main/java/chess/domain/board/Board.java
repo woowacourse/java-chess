@@ -40,25 +40,25 @@ public class Board {
 
     private void checkMyPieceIsEmpty(Position source) {
         if (isEmpty(source)) {
-            throw new IllegalArgumentException("선택된 위치에 말이 존재하지 않습니다.");
+            throw new IllegalArgumentException("선택한 위치에 말이 존재하지 않습니다.");
         }
     }
 
     private void checkSourceIsMine(Position source, Team team) {
         if (!findPiece(source).isOurPiece(team)) {
-            throw new IllegalArgumentException("선택된 위치의 말이 상대편 팀의 말입니다.");
+            throw new IllegalArgumentException("상대 팀의 말을 선택하셨습니다.");
         }
     }
 
     private void checkDifferentTeamTarget(Position source, Position target) {
         if (isSameTeam(source, target)) {
-            throw new IllegalArgumentException("말을 움직이고자 하는 위치에 같은 팀의 말이 존재합니다.");
+            throw new IllegalArgumentException("같은 팀의 말은 잡을 수 없습니다.");
         }
     }
 
     private void checkCanMove(Position source, Position target) {
         if (!findPiece(source).canMove(target)) {
-            throw new IllegalArgumentException("선택하신 말이 움직일 수 없는 위치입니다.");
+            throw new IllegalArgumentException("선택한 말이 움직일 수 없는 위치입니다.");
         }
     }
 
@@ -66,7 +66,7 @@ public class Board {
         return boardState.get(position);
     }
 
-    public void checkObstacle(Position source, Position target) {
+    private void checkObstacle(Position source, Position target) {
         List<Position> route = source.getRoutePosition(target);
         for (Position position : route) {
             checkObstacleAtCurrentPosition(position);

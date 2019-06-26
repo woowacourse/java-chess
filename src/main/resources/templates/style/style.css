@@ -1,0 +1,174 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: "Source Han Sans KR";
+    font-weight: 500;
+    src: local("※"), url(../font/Source_Han_Sans_KR_500.woff) format("woff")
+}
+
+@font-face {
+    font-family: "Source Han Sans KR";
+    font-weight: 600;
+    src: local("※"), url(../font/Source_Han_Sans_KR_600.woff) format("woff")
+}
+
+@font-face {
+    font-family: "Source Han Sans KR";
+    font-weight: 700;
+    src: local("※"), url(../font/Source_Han_Sans_KR_700.woff) format("woff")
+}
+
+body {
+	font-family: 'Montserrat', "Source Han Sans KR";
+	font-size: 1em;
+	font-weight: 600;
+}
+
+h1 {
+	font-size: 3.5em;
+	margin: 20px;
+}
+
+h2 {
+	font-size: 2em;
+	text-align: center;
+}
+
+h3 {
+	font-size: 1.5em;
+}
+
+p {
+	font-size: 1.5em;
+	line-height: 180%;
+}
+
+#container {
+	text-align: center;
+}
+
+#board {
+	display: grid;
+	/*grid-template-columns: repeat(8, 75px);*/
+	grid-template-columns: 1fr 0fr 0fr 0fr 0fr 0fr 0fr 0fr 0fr 1fr;
+	padding: 10px;
+}
+
+.WHITEPAWN {
+	background: url(../images/white_pawn.png) no-repeat;
+	background-size: 50px;
+	background-position: center;
+}
+
+.WHITEBISHOP {
+	background: url(../images/white_bishop.png) no-repeat;
+	background-size: 55px;
+	background-position: center;
+}
+
+.WHITEQUEEN {
+	background: url(../images/white_queen.png) no-repeat;
+	background-size: 55px;
+	background-position: center;
+}
+
+.WHITEKING {
+	background: url(../images/white_king.png) no-repeat;
+	background-size: 55px;
+	background-position: center;
+}
+
+.WHITEKNIGHT {
+	background: url(../images/white_knight.png) no-repeat;
+	background-size: 55px;
+	background-position: center;
+}
+
+.WHITEROOK {
+	background: url(../images/white_rook.png) no-repeat;
+	background-size: 45px;
+	background-position: center;
+}
+
+.BLACKPAWN {
+	background: url(../images/black_pawn.png) no-repeat;
+	background-size: 50px;
+	background-position: center;
+}
+
+.BLACKBISHOP {
+	background: url(../images/black_bishop.png) no-repeat;
+	background-size: 55px;
+	background-position: center;
+}
+
+.BLACKQUEEN {
+	background: url(../images/black_queen.png) no-repeat;
+	background-size: 55px;
+	background-position: center;
+}
+
+.BLACKKING {
+	background: url(../images/black_king.png) no-repeat;
+	background-size: 55px;
+	background-position: center;
+}
+
+.BLACKKNIGHT {
+	background: url(../images/black_knight.png) no-repeat;
+	background-size: 55px;
+	background-position: center;
+}
+
+.BLACKROOK {
+	background: url(../images/black_rook.png) no-repeat;
+	background-size: 45px;
+	background-position: center;
+}
+
+.WHITE {
+	width: 75px;
+	height: 75px;
+	cursor: pointer;
+	border: #fff 2px solid;
+}
+
+.BLACK {
+	background-color: #ccc;
+	width: 75px;
+	height: 75px;
+	cursor: pointer;
+	border: #ccc 2px solid;
+}
+
+.border {
+	border: orange 2px solid;
+}
+
+#forms {
+	text-align: center;
+	margin: 30px;
+}
+
+input {
+	font-family: 'Montserrat', "Source Han Sans KR";
+	font-size: 1.5em;
+	font-weight: 500;
+	width: 300px;
+	border: 0;
+	border-radius: 20px;
+	background-color: #e1e1e1;
+	padding: 10px;
+	margin: 10px 0;
+	text-align: center;
+}
+
+input[type=submit] {
+	font-size: 1em;
+	color: #fff;
+	width: 100px;
+	height: 50px;
+	border-radius: 10px;
+	background-color: red;
+	cursor: pointer;
+}

@@ -4,18 +4,22 @@ import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 public class ChessGame {
-    private static Board board = new Board();
-    private static Team team = Team.WHITE;
+    private Board board = new Board();
+    private Team team = Team.WHITE;
 
-    public void play(Position start, Position end) {
-        if (board.movable(start, end, team)) {
-            board.move(start, end);
+    public void play(Position source, Position target) {
+        if (board.movable(source, target, team)) {
+            board.move(source, target);
         }
         team = Team.switchTeam(team);
     }
 
-    public static Team getTeam() {
+    public Team getTeam() {
         return team;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public double getStatus(Team team) {
