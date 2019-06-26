@@ -1,25 +1,34 @@
 package chess.dto;
 
-import chess.domain.Point;
-import chess.domain.pieces.Piece;
-
 import java.util.Objects;
 
 public class PieceDto {
-    private final Point point;
-    private final Piece piece;
+    private final int x;
+    private final int y;
+    private final String name;
+    private final boolean team;
 
-    public PieceDto(Point point, Piece piece) {
-        this.point = point;
-        this.piece = piece;
+    public PieceDto(int x, int y, String name, boolean team) {
+        this.x = x;
+        this.y = y;
+        this.name = name;
+        this.team = team;
     }
 
-    public Point getPoint() {
-        return point;
+    public int getX() {
+        return x;
     }
 
-    public Piece getPiece() {
-        return piece;
+    public int getY() {
+        return y;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isTeam() {
+        return team;
     }
 
     @Override
@@ -27,12 +36,14 @@ public class PieceDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PieceDto pieceDto = (PieceDto) o;
-        return Objects.equals(point, pieceDto.point) &&
-                Objects.equals(piece, pieceDto.piece);
+        return x == pieceDto.x &&
+                y == pieceDto.y &&
+                team == pieceDto.team &&
+                Objects.equals(name, pieceDto.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(point, piece);
+        return Objects.hash(x, y, name, team);
     }
 }

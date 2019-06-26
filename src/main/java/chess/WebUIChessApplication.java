@@ -1,9 +1,6 @@
 package chess;
 
-import chess.domain.BoardFactory;
-import chess.domain.Game;
-import chess.domain.Point;
-import chess.domain.Team;
+import chess.domain.*;
 import chess.domain.pieces.Piece;
 import chess.dto.PieceDto;
 import chess.service.ChessGameService;
@@ -12,6 +9,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +34,9 @@ public class WebUIChessApplication {
             Game game = new Game(BoardFactory.init());
             chessGameService.createNewGame();
             int gameId = chessGameService.findMaxId();
-            for (Point point : game.getBoard().keySet()) {
-                PieceDto pieceDto = new PieceDto(point, game.getBoard().get(point));
+
+            List<PieceDto> pieceDtos = game.toDto();
+            for (PieceDto pieceDto : pieceDtos) {
                 chessGameService.add(gameId, pieceDto);
             }
             req.session().attribute("gameId", gameId);
@@ -117,7 +116,8 @@ public class WebUIChessApplication {
     private static Game getGame(ChessGameService chessGameService, int gameId) {
         List<PieceDto> pieceDtos = chessGameService.findPieceById(gameId);
         Map<Point, Piece> board = new HashMap<>();
-        pieceDtos.forEach(vo -> board.put(vo.getPoint(), vo.getPiece()));
+        pieceDtos.forEach(dto -> board.put(new Point(dto.getX(), dto.getY()),
+                PieceFactory.of(dto.getName(), dto.isTeam() ? Team.WHITE : Team.BLACK)));
         Team turn = chessGameService.findTurnByGameId(gameId) ? Team.WHITE : Team.BLACK;
         return new Game(board, turn);
     }

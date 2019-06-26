@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class DBUtilTest {
     @Test
     void connection() throws SQLException {
-        DataSource dataSource = DBUtil.getDataSource();
+        DataSource dataSource = DBUtil.getDataSource("chess");
         assertNotNull(dataSource.getConnection());
     }
 }

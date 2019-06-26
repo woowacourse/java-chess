@@ -1,9 +1,6 @@
 package chess.dao;
 
-import chess.domain.PieceFactory;
 import chess.domain.Point;
-import chess.domain.Team;
-import chess.domain.pieces.Piece;
 import chess.dto.PieceDto;
 
 import javax.sql.DataSource;
@@ -44,12 +41,10 @@ public class PieceDao {
     private void executeAdd(Connection con, int gameId, PieceDto pieceDto) throws SQLException {
         try (PreparedStatement pstmt = con.prepareStatement(INSERT_PIECE)) {
             pstmt.setInt(1, gameId);
-            Piece piece = pieceDto.getPiece();
-            Point point = pieceDto.getPoint();
-            pstmt.setString(2, piece.getType().name());
-            pstmt.setInt(3, point.getPositionX());
-            pstmt.setInt(4, point.getPositionY());
-            pstmt.setBoolean(5, piece.getTeam().equals(Team.WHITE));
+            pstmt.setString(2, pieceDto.getName());
+            pstmt.setInt(3, pieceDto.getX());
+            pstmt.setInt(4, pieceDto.getY());
+            pstmt.setBoolean(5, pieceDto.isTeam());
             pstmt.executeUpdate();
         }
     }
@@ -81,9 +76,7 @@ public class PieceDao {
             int x = rs.getInt("x");
             int y = rs.getInt("y");
             boolean team = rs.getBoolean("team");
-            Point point = new Point(x, y);
-            Piece piece = PieceFactory.of(name, team ? Team.WHITE : Team.BLACK);
-            PieceDto pieceDto = new PieceDto(point, piece);
+            PieceDto pieceDto = new PieceDto(x, y, name, team);
             pieceDtos.add(pieceDto);
         }
         return pieceDtos;

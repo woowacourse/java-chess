@@ -16,8 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGameService {
+    private static final String DATABASE_NAME = "chess";
 
-    private DataSource dataSource = DBUtil.getDataSource();
+    private DataSource dataSource = DBUtil.getDataSource(DATABASE_NAME);
     private PieceDao pieceDao = PieceDao.getInstance(dataSource);
     private GameDao gameDao = GameDao.getInstance(dataSource);
 

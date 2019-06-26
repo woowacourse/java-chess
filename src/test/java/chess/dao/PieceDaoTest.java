@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.PieceFactory;
 import chess.domain.Point;
 import chess.domain.Team;
 import chess.domain.pieces.Piece;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PieceDaoTest {
-    private DataSource dataSource = DBUtil.getDataSource();
+    private DataSource dataSource = DBUtil.getDataSource("chess_test");
     private PieceDao pieceDao;
 
     @BeforeEach
@@ -28,9 +29,7 @@ public class PieceDaoTest {
     @Test
     void create() throws SQLException {
         int gameId = 1;
-        Point point = new Point("a1");
-        Piece rook = new Rook(Team.WHITE);
-        PieceDto pieceDto = new PieceDto(point, rook);
+        PieceDto pieceDto = new PieceDto(0, 0, "ROOK", true);
         pieceDao.add(gameId, pieceDto);
     }
 
@@ -38,7 +37,7 @@ public class PieceDaoTest {
     void read() throws SQLException {
         int gameId = 1;
         List<PieceDto> pieceDtos = pieceDao.findPieceById(gameId);
-        assertThat(pieceDtos.get(0)).isEqualTo(new PieceDto(new Point(3, 3), new Rook(Team.WHITE)));
+        assertThat(pieceDtos.get(0)).isEqualTo(new PieceDto(3, 3, "ROOK", true));
     }
 
     @Test
@@ -48,11 +47,11 @@ public class PieceDaoTest {
         Point end = new Point(3, 3);
         pieceDao.updatePosition(gameId, start, end);
         PieceDto pieceDto = pieceDao.findPieceById(gameId).stream()
-                .filter(vo -> vo.getPoint().equals(end))
+                .filter(dto -> new Point(dto.getX(), dto.getY()).equals(end))
                 .collect(Collectors.toList())
                 .get(0);
-        assertThat(pieceDto.getPiece()).isEqualTo(new Rook(Team.WHITE));
-        assertThat(pieceDto.getPoint()).isEqualTo(end);
+        assertThat(PieceFactory.of(pieceDto.getName(), pieceDto.isTeam() ? Team.WHITE : Team.BLACK)).isEqualTo(new Rook(Team.WHITE));
+        assertThat(new Point(pieceDto.getX(), pieceDto.getY())).isEqualTo(end);
     }
 
     @Test

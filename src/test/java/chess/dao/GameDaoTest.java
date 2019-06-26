@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameDaoTest {
-    private DataSource dataSource = DBUtil.getDataSource();
+    private DataSource dataSource = DBUtil.getDataSource("chess_test");
     private GameDao gameDao;
 
     @BeforeEach

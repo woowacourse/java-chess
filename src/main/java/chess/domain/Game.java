@@ -2,7 +2,9 @@ package chess.domain;
 
 import chess.domain.pieces.Blank;
 import chess.domain.pieces.Piece;
+import chess.dto.PieceDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -114,5 +116,14 @@ public class Game {
 
     public Team getTurn() {
         return this.turn;
+    }
+
+    public List<PieceDto> toDto() {
+        List<PieceDto> pieceDtos = new ArrayList<>();
+        for (Point point : board.keySet()) {
+            Piece piece = board.get(point);
+            pieceDtos.add(new PieceDto(point.getPositionX(), point.getPositionY(), piece.getType().name(), piece.isSameTeam(Team.WHITE)));
+        }
+        return pieceDtos;
     }
 }

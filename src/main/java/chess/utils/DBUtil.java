@@ -9,9 +9,8 @@ public class DBUtil {
     private static final String userName = "chess";
     private static final String password = "1234";
     private static final String portNumber = ":3306";
-    private static final String database = "chess";
 
-    public static DataSource getDataSource() {
+    public static DataSource getDataSource(final String database) {
         MysqlDataSource ds = new MysqlDataSource();
         ds.setUser(userName);
         ds.setPassword(password);
