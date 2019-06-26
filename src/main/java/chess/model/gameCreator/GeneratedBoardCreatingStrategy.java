@@ -6,10 +6,10 @@ import chess.model.piece.*;
 
 import java.util.*;
 
-public class ContinueGameCreateStrategy implements CreateStrategy {
+public class GeneratedBoardCreatingStrategy implements BoardCreatingStrategy {
     private BoardDTO dto;
 
-    public ContinueGameCreateStrategy(BoardDTO dto) {
+    public GeneratedBoardCreatingStrategy(BoardDTO dto) {
         this.dto = dto;
     }
 

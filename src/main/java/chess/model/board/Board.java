@@ -3,7 +3,7 @@ package chess.model.board;
 import chess.model.*;
 import chess.model.board.vector.Direction;
 import chess.model.board.vector.Vector;
-import chess.model.gameCreator.CreateStrategy;
+import chess.model.gameCreator.BoardCreatingStrategy;
 import chess.model.piece.*;
 
 import java.util.*;
@@ -13,7 +13,7 @@ import static chess.model.board.vector.Direction.*;
 public class Board {
     private Map<String, Tile> tiles;
 
-    public Board(CreateStrategy strategy) {
+    public Board(BoardCreatingStrategy strategy) {
         this.tiles = strategy.create();
     }
 

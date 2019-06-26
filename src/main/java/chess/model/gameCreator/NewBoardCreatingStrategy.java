@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class NewGameCreateStrategy implements CreateStrategy {
+public class NewBoardCreatingStrategy implements BoardCreatingStrategy {
     @Override
     public Map<String, Tile> create() {
         Map<String, Tile> tiles = new HashMap<>();

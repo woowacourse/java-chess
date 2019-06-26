@@ -10,10 +10,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class NewGameCreateStrategyTest {
+public class NewBoardCreatingStrategyTest {
     @Test
-    void 말_초기화_확인() {
-        CreateStrategy strategy = new NewGameCreateStrategy();
+    void 체스판_초기화_확인() {
+        BoardCreatingStrategy strategy = new NewBoardCreatingStrategy();
         Map<String, Tile> tiles = new HashMap<>();
         tiles.put("11", new Tile("11", Optional.of(new Rook("white"))));
         tiles.put("21", new Tile("21", Optional.of(new Knight("white"))));

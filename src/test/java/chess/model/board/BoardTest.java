@@ -1,12 +1,8 @@
 package chess.model.board;
 
 import chess.model.ScoreResult;
-import chess.model.board.Board;
-import chess.model.board.Coordinate;
-import chess.model.board.Tile;
 import chess.model.board.vector.Vector;
-import chess.model.gameCreator.NewGameCreateStrategy;
-import chess.model.piece.King;
+import chess.model.gameCreator.NewBoardCreatingStrategy;
 import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Queen;
@@ -23,8 +19,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 public class BoardTest {
     @Test
     void 생성자_확인() {
-        Board board = new Board(new NewGameCreateStrategy());
-        assertThat(board).isEqualTo(new Board(new NewGameCreateStrategy()));
+        Board board = new Board(new NewBoardCreatingStrategy());
+        assertThat(board).isEqualTo(new Board(new NewBoardCreatingStrategy()));
     }
 
     @Test
@@ -403,7 +399,7 @@ public class BoardTest {
 
     @Test
     void 말_초기화_확인() {
-        Board board = new Board(new NewGameCreateStrategy());
+        Board board = new Board(new NewBoardCreatingStrategy());
         assertThat(board.getTile("12"))
                 .isEqualTo(new Tile("12", Optional.of(new Pawn(true, "white"))));
         assertThat(board.getTile("55")).isEqualTo(new Tile("55", Optional.empty()));
@@ -412,7 +408,7 @@ public class BoardTest {
 
     @Test
     void 턴이_맞는지_확인() {
-        Board board = new Board(new NewGameCreateStrategy());
+        Board board = new Board(new NewBoardCreatingStrategy());
         assertThat(board.isRightTurn("11", 3)).isTrue();
         assertThat(board.isRightTurn("18", 3)).isFalse();
         assertThat(board.isRightTurn("11", 2)).isFalse();

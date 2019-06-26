@@ -5,6 +5,6 @@ import chess.model.board.Tile;
 import java.util.Map;
 
 @FunctionalInterface
-public interface CreateStrategy {
+public interface BoardCreatingStrategy {
     Map<String, Tile> create();
 }

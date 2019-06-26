@@ -1,7 +1,7 @@
 package chess.model;
 
 import chess.model.board.Board;
-import chess.model.gameCreator.CreateStrategy;
+import chess.model.gameCreator.BoardCreatingStrategy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,7 @@ public class ChessGame {
     private Board board;
     private int turn;
 
-    public ChessGame(CreateStrategy strategy, int turn) {
+    public ChessGame(BoardCreatingStrategy strategy, int turn) {
         this.turn = turn;
         board = new Board(strategy);
     }
