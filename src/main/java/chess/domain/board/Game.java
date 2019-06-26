@@ -30,16 +30,9 @@ public class Game {
     }
 
     public Piece getPiece(Square source) {
-        Optional<Piece> piece = blackPlayer.getPiece(source);
-        if (!piece.isPresent()) {
-            piece = whitePlayer.getPiece(source);
-        }
-
-        if (piece.isPresent()) {
-            return piece.get();
-        }
-
-        throw new IllegalArgumentException();
+        return blackPlayer.getPiece(source)
+                .orElseGet(() -> whitePlayer.getPiece(source)
+                        .orElseThrow(IllegalArgumentException::new));
     }
 
     public Set<Vector> moveList(Square source) {
