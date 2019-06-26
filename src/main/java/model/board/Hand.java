@@ -1,6 +1,7 @@
 package model.board;
 
 import model.game.Player;
+import model.piece.King;
 import model.piece.Pawn;
 import model.piece.Piece;
 
@@ -21,51 +22,63 @@ public class Hand {
     }
 
     public boolean tryToMoveFromTo(final Position src, final Position dest) {
-        return getPossibleDestinations(src).contains(dest) ? this.board.movePieceFromTo(src, dest) : false;
+        return getPossibleDestinations(src).contains(dest) && this.board.movePieceFromTo(src, dest);
     }
 
     public List<Position> getPossibleDestinations(final Position src) {
-        final Optional<Piece> pieceAtSrc = this.board.getPieceAt(src);
-        if (pieceAtSrc.map(Piece::isPawn).orElse(false)) {
-            return getPossibleDestinationsOfPawn((Pawn) pieceAtSrc.get());
-        }
-        return pieceAtSrc.map(p ->
-                        p.getIteratorsOfPossibleDestinations()
-                        .map(i -> proceedUntilBlocked(i))
-                        .reduce(Stream::concat)
-                        .orElse(Stream.empty())
-                        .collect(Collectors.toList())
-        ).orElse(new ArrayList<>());
+        return this.board.getPieceAt(src).map(p -> {
+            if (p.isPawn()) {
+                return getPossibleDestinationsOfPawn((Pawn) p);
+            }
+            if (p.isKing()) {
+                return collectEveryPossibleDestinations((King) p).collect(Collectors.toList());
+            }
+            return collectEveryPossibleDestinations(p).collect(Collectors.toList());
+        }).orElse(new ArrayList<>());
     }
 
     private List<Position> getPossibleDestinationsOfPawn(final Pawn pawn) {
         return Stream.concat(
-            pawn.possibleDiagonalDestinations().map(pos ->
-                    this.board.getColorOfPieceAt(pos)
-                                .map(color -> (color != pawn.team()) ? pos : null)
-            ).flatMap(x -> x.map(Stream::of).orElseGet(Stream::empty)),
-            pawn.possibleForwardDestinations().map(pos ->
-                    this.board.getColorOfPieceAt(pos).isPresent() ? null : pos
-            )
+                pawn.possibleDiagonalDestinations()
+                    .flatMap(pos -> (this.board.getColorOfPieceAt(pos).map(color -> color != pawn.team()).orElse(false))
+                                    ? Stream.of(pos)
+                                    : Stream.empty()
+                    ),
+                collectEveryPossibleDestinations(pawn)
         ).collect(Collectors.toList());
+    }
+
+    private Stream<Position> collectEveryPossibleDestinations(final Piece src) {
+        return src.getIteratorsOfPossibleDestinations()
+                    .map(i -> proceedUntilBlocked(i))
+                    .reduce(Stream::concat)
+                    .orElseGet(Stream::empty);
     }
 
     private Stream<Position> proceedUntilBlocked(final Iterator<Position> i) {
         final List<Position> result = new ArrayList<>();
         while (i.hasNext()) {
             final Position target = i.next();
-            final Optional<Player> color = this.board.getColorOfPieceAt(target);
-            if (color.isPresent()) {
-                if (color.get() == this.owner) {
-                    break;
-                }
+            final TileState state = this.board.getColorOfPieceAt(target)
+                                                .map(color -> (color == this.owner) ? TileState.OWN : TileState.ENEMY)
+                                                .orElse(TileState.EMPTY);
+            if (state == TileState.OWN) {
+                break;
+            }
+            if (state == TileState.ENEMY) {
                 result.add(target);
                 break;
             }
-            result.add(target);
+            if (state == TileState.EMPTY) {
+                result.add(target);
+            }
         }
         return result.stream();
     }
+}
 
-    //// TODO: 2019-06-26 refactor 2 of the above
+enum TileState {
+    OWN,
+    ENEMY,
+    EMPTY
 }

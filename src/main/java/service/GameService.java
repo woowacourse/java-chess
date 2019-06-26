@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 public class GameService {
     private static Game game = null;
-    private static Optional<Position> from;
+    private static Optional<Position> src;
 
     public static Game getGame() {
         return Optional.ofNullable(game).orElseGet(() -> {
@@ -39,27 +39,26 @@ public class GameService {
         }
     }
 
-    public static String selectSrc(final String position) {
-        from = Position.ofSafe(position);
-        if (from.map(src -> game.isOwnPiece(src)).orElse(false)) {
-            return WebView.printSelectPage(game, from.get());
+    public static String selectSrc(final String input) {
+        src = Position.ofSafe(input);
+        if (src.map(pos -> game.isOwnPiece(pos)).orElse(false)) {
+            return WebView.printSelectPage(game, src.get());
         }
         return WebView.printWrongChoicePage(game, "잘못된 선택입니다.");
     }
 
-    public static String selectDest(final String position, final Consumer<String> redirect, final Consumer<Integer> status) {
-        if (!from.isPresent()) {
+    public static String selectDest(final String input, final Consumer<String> redirect, final Consumer<Integer> status) {
+        if (!src.isPresent()) {
             return WebView.printWrongChoicePage(game, "잘못된 접근입니다.");
         }
-        final Optional<Position> to = Position.ofSafe(position);
-        if (to.map(dest -> game.tryToMoveFromTo(from.get(), dest)).orElse(false)) {
+        if (Position.ofSafe(input).map(dest -> game.tryToMoveFromTo(src.get(), dest)).orElse(false)) {
             return Referee.isKingAlive(game) ? initState(redirect, status) : WebView.printEndPage(game);
         }
-        return WebView.printWrongChoicePage(game, from.get(), "잘못된 선택입니다.");
+        return WebView.printWrongChoicePage(game, src.get(), "잘못된 선택입니다.");
     }
 
     public static String initState(final Consumer<String> redirect, final Consumer<Integer> status) {
-        from = Optional.empty();
+        src = Optional.empty();
         redirect.accept("/");
         status.accept(200);
         return null;

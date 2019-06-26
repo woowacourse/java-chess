@@ -24,18 +24,18 @@ class BishopTest {
     void findPossiblePositionsTest() {
         List<Position> actual = new ArrayList<>();
         testBishop.getIteratorsOfPossibleDestinations().forEach(i -> {
-                                                                while (i.hasNext()) {
-                                                                    actual.add(i.next());
-                                                                }
-                                                            });
+            while (i.hasNext()) {
+                actual.add(i.next());
+            }
+        });
         List<Position> expected = new ArrayList<>();
         Direction.diagonal().forEach(dir -> {
-                                        Position pos = testBishop.position();
-                                        while (pos.testForward(dir)) {
-                                            pos = pos.moveForward(dir);
-                                            expected.add(pos);
-                                        }
-                                    });
+            Position pos = testBishop.position();
+            while (pos.testForward(dir)) {
+                pos = pos.moveForward(dir);
+                expected.add(pos);
+            }
+        });
         Collections.sort(actual);
         Collections.sort(expected);
         assertThat(actual).isEqualTo(expected);

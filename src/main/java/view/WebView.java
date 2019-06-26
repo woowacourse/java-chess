@@ -73,7 +73,7 @@ public class WebView {
 
     private static String drawBoard(Game game, List<Position> possibleChoices) {
         final StringBuilder result = new StringBuilder();
-        for (int i = Board.WIDTH; i > 0; i--) {
+        for (int i = Board.BOARD_WIDTH; i > 0; i--) {
             result.append(drawRow(game.board(), i));
             result.append(drawRadioButtons(possibleChoices, i));
         }
@@ -92,7 +92,7 @@ public class WebView {
 
     private static String drawRow(final Board board, final int number) {
         final StringBuilder result = new StringBuilder("<tr>");
-        for (int i = 0; i < Board.WIDTH; i++) {
+        for (int i = 0; i < Board.BOARD_WIDTH; i++) {
             final Optional<Piece> piece = board.getPieceAt(Position.of(String.valueOf((char) (i + 'a')) + number));
             if (piece.isPresent()) {
                 result.append(colorTile(i, number) + piece.get().toString() + "</td>");
@@ -110,7 +110,7 @@ public class WebView {
 
     private static String drawRadioButtons(final List<Position> possibleChoices, final int number) {
         final StringBuilder result = new StringBuilder("<tr height=\"15px\" style=\"font-size: 0px;\">");
-        for (int i = 0; i < Board.WIDTH; i++) {
+        for (int i = 0; i < Board.BOARD_WIDTH; i++) {
             String position = String.valueOf((char) (i + 'a')) + number;
             if (possibleChoices.contains(Position.of(position))) {
                 result.append(

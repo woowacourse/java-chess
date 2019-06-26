@@ -3,7 +3,6 @@ package model.board;
 import model.game.Player;
 import model.piece.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Board {
-    public static final int WIDTH = 8;
+    public static final int BOARD_WIDTH = 8;
 
     private static final int WHITE_BASE_LINE = 1;
     private static final int WHITE_PAWN_LINE = 2;
@@ -26,8 +25,7 @@ public class Board {
     public Board() {
         this.pieces = Stream.of(Player.values())
                             .map(p -> Stream.concat(generatePawns(p), generateOtherPieces(p)))
-                            .reduce(Stream::concat)
-                            .get()
+                            .reduce(Stream.empty(), Stream::concat)
                             .sorted()
                             .collect(Collectors.toList());
     }
@@ -42,12 +40,12 @@ public class Board {
         final List<String> x = initialHorizontalCoordsOfPieces();
         final int y = (owner == Player.WHITE) ? WHITE_BASE_LINE : BLACK_BASE_LINE;
         final List<Function<Position, Piece>> constructors = otherPiecesConstructors(owner);
-        return IntStream.range(0, WIDTH)
+        return IntStream.range(0, BOARD_WIDTH)
                         .mapToObj(i -> constructors.get(i).apply(Position.of(x.get(i) + y)));
     }
 
     private List<String> initialHorizontalCoordsOfPieces() {
-        return IntStream.range('a', 'a' + WIDTH)
+        return IntStream.range('a', 'a' + BOARD_WIDTH)
                         .mapToObj(i -> String.valueOf((char) i))
                         .collect(Collectors.toList());
     }
@@ -94,8 +92,8 @@ public class Board {
 
     public boolean removePieceAt(final Position position) {
         return getIndexOfPieceAt(position).map(i -> {
-                                                this.pieces.remove(i.intValue());
-                                                return true;
+                this.pieces.remove(i.intValue());
+                return true;
         }).orElse(false);
     }
 

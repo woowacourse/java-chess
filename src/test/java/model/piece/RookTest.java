@@ -24,18 +24,18 @@ class RookTest {
     void findPossiblePositionsTest() {
         List<Position> actual = new ArrayList<>();
         testRook.getIteratorsOfPossibleDestinations().forEach(i -> {
-                                                    while (i.hasNext()) {
-                                                        actual.add(i.next());
-                                                    }
-                                                });
+            while (i.hasNext()) {
+                actual.add(i.next());
+            }
+        });
         List<Position> expected = new ArrayList<>();
         Direction.orthogonal().forEach(dir -> {
-                                            Position pos = testRook.position();
-                                            while (pos.testForward(dir)) {
-                                                pos = pos.moveForward(dir);
-                                                expected.add(pos);
-                                            }
-                                        });
+            Position pos = testRook.position();
+            while (pos.testForward(dir)) {
+                pos = pos.moveForward(dir);
+                expected.add(pos);
+            }
+        });
         Collections.sort(actual);
         Collections.sort(expected);
         assertThat(actual).isEqualTo(expected);

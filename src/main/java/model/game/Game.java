@@ -7,11 +7,7 @@ import model.piece.Pawn;
 import model.piece.Piece;
 import service.LogVO;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Game {
@@ -25,12 +21,17 @@ public class Game {
     public Game() {}
 
     public Game(final List<LogVO> log) {
-        Collections.sort(log);
-        log.forEach(l -> {
-            if (!restore(l.from(), l.to())) {
-                throw new FailedToRestoreGameException();
-            }
-        });
+        if (
+                Optional.ofNullable(log).map(l ->
+                    l.stream()
+                        .sorted()
+                        .map(row -> restore(row.src(), row.dest()))
+                        .anyMatch(x -> x == false)
+                ).orElseThrow(IllegalArgumentException::new)
+        ) {
+            throw new FailedToRestoreGameException();
+        }
+
     }
 
     public boolean isOwnPiece(final Position position) {
@@ -46,19 +47,19 @@ public class Game {
     }
 
     private boolean tryToMoveFromTo(final Position src, final Position dest, final boolean isNotRestoring) {
-        if (this.board.getPieceAt(src)
-                        .map(p -> hands.get(this.turn.team()).tryToMoveFromTo(p.position(), dest))
-                        .orElse(false)) {
+        if (
+                this.board.getPieceAt(src)
+                            .map(p -> hands.get(this.turn.team()).tryToMoveFromTo(p.position(), dest))
+                            .orElse(false)
+        ) {
             if (isNotRestoring) {
-                GameDAO.holdAndWriteLog(turn, src, dest);
+                GameDAO.holdAndWriteLog(this.turn, src, dest);
             }
             endTurn();
             return true;
         }
         return false;
     }
-
-    //// TODO: 2019-06-26 i kinda don't like somethin bout this
 
     public boolean tryToMoveFromTo(final Position src, final Position dest) {
         return tryToMoveFromTo(src, dest, true);
@@ -86,8 +87,7 @@ public class Game {
                         .values().stream()
                         .flatMap(l ->
                                 (l.size() == 1) ? l.stream().map(Pawn::getScore) : l.stream().map(Pawn::getHalfScore)
-                        ).reduce(Double::sum)
-                        .orElse(.0);
+                        ).reduce(.0, Double::sum);
     }
 
     private Turn endTurn() {

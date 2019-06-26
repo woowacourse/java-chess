@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 
 public class Coord implements Comparable<Coord> {
     static final int MIN = 0;
-    static final int MAX = Board.WIDTH;
+    static final int MAX = Board.BOARD_WIDTH;
 
     private static final Coord[] CACHE = IntStream.range(MIN, MAX)
                                                     .mapToObj(Coord::new)

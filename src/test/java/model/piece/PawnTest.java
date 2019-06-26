@@ -1,10 +1,15 @@
 package model.piece;
 
+import model.board.Direction;
 import model.board.Position;
 import model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,17 +29,35 @@ public class PawnTest {
 
     @Test
     void possibleForwardPositionsTest() {
-        assertThat(
-                testPawn.possibleForwardDestinations().collect(Collectors.toList())
-        ).contains(Position.of("c5"), Position.of("c6"));
+        List<Position> actual = new ArrayList<>();
+        testPawn.getIteratorsOfPossibleDestinations().forEach(i -> {
+            while (i.hasNext()) {
+                actual.add(i.next());
+            }
+        });
+        Collections.sort(actual);
+        assertThat(actual).isEqualTo(
+                Arrays.asList(
+                        Position.of("c5"),
+                        Position.of("c6")
+                )
+        );
     }
 
     @Test
     void possibleForwardPositionAfterMoved() {
         testPawn.move(Position.of("a2"));
-        assertThat(
-                testPawn.possibleForwardDestinations().collect(Collectors.toList())
-        ).contains(Position.of("a3"));
+        List<Position> actual = new ArrayList<>();
+        testPawn.getIteratorsOfPossibleDestinations().forEach(i -> {
+            while (i.hasNext()) {
+                actual.add(i.next());
+            }
+        });
+        assertThat(actual).isEqualTo(
+                Arrays.asList(
+                        Position.of("a3")
+                )
+        );
     }
 
     @Test

@@ -35,8 +35,8 @@ public class GameDAO {
              PreparedStatement pstmt = con.prepareStatement(
                      "CREATE TABLE IF NOT EXISTS chess_log("
                              + "turn INT UNSIGNED NOT NULL PRIMARY KEY,"
-                             + "position_from VARCHAR(2) NOT NULL,"
-                             + "position_to VARCHAR(2) NOT NULL" +
+                             + "position_src VARCHAR(2) NOT NULL,"
+                             + "position_dest VARCHAR(2) NOT NULL" +
                              ");"
              )
         ) {
@@ -44,8 +44,8 @@ public class GameDAO {
         }
     }
 
-    public static boolean holdAndWriteLog(final Turn turn, final Position from, final Position to) {
-        buffer.add(new LogVO(turn, from, to));
+    public static boolean holdAndWriteLog(final Turn turn, final Position src, final Position dest) {
+        buffer.add(new LogVO(turn, src, dest));
         try {
             while (!buffer.isEmpty()) {
                 writeLog(buffer.poll());
@@ -61,8 +61,8 @@ public class GameDAO {
         try (Connection con = DAO.connect();
              PreparedStatement pstmt = con.prepareStatement("INSERT INTO chess_log VALUES (?, ?, ?)")) {
             pstmt.setInt(1, log.turn().count());
-            pstmt.setString(2, log.from().toString());
-            pstmt.setString(3, log.to().toString());
+            pstmt.setString(2, log.src().toString());
+            pstmt.setString(3, log.dest().toString());
             pstmt.executeUpdate();
         }
     }

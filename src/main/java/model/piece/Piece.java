@@ -25,9 +25,7 @@ public abstract class Piece implements Comparable<Piece> {
         this.totalMoved = copyFrom.totalMoved;
     }
 
-    public Stream<Iterator<Position>> getIteratorsOfPossibleDestinations() {
-        return Stream.empty();
-    }
+    public abstract Stream<Iterator<Position>> getIteratorsOfPossibleDestinations();
 
     protected Iterator<Position> proceedUntilBlocked(final Direction dir) {
         return new Iterator<Position>() {
@@ -40,8 +38,7 @@ public abstract class Piece implements Comparable<Piece> {
 
             @Override
             public Position next() {
-                current = current.moveForward(dir);
-                return current;
+                return current = current.moveForward(dir);
             }
         };
     }

@@ -7,11 +7,11 @@ import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
     private static final Position[][] CACHE = IntStream.range(Coord.MIN, Coord.MAX)
-                                                    .mapToObj(x ->
-                                                            IntStream.range(Coord.MIN, Coord.MAX)
-                                                                    .mapToObj(y -> new Position(x, y))
-                                                                    .toArray(Position[]::new)
-                                                    ).toArray(Position[][]::new);
+                                                        .mapToObj(x ->
+                                                                IntStream.range(Coord.MIN, Coord.MAX)
+                                                                        .mapToObj(y -> new Position(x, y))
+                                                                        .toArray(Position[]::new)
+                                                        ).toArray(Position[][]::new);
     private static final Pattern validator = Pattern.compile("\\s*[a-zA-Z][0-9]\\s*");
 
     private final Coord x;
