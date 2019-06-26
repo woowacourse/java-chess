@@ -64,12 +64,13 @@ public class ChessBoardDAO {
             String query = "SELECT * FROM chess.board ORDER BY round_no DESC LIMIT 1";
             PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
 
+            ChessBoardDTO chessBoardMaxRound = new ChessBoardDTO();
             ResultSet rs = pstmt.executeQuery();
             if(!rs.next()) {
+                chessBoardMaxRound.setRoundNo(0);
                 throw new IllegalArgumentException("Max Round 데이터 없음");
             }
 
-            ChessBoardDTO chessBoardMaxRound = new ChessBoardDTO();
             chessBoardMaxRound.setRoundNo(rs.getInt("round_no"));
 
             return chessBoardMaxRound;
