@@ -66,12 +66,8 @@ public class WebUIChessApplication {
 			int roomNumber = Integer.parseInt(req.queryParams("room-number"));
 			ChessGame chessGame = loadChessGame(roomNumber);
 
-			Map<String, Object> model = new HashMap<>();
-			model.put("winner", "승자 : " + chessGame.findWinner().name());
-			model.put("whiteScore", "백 점수 : " + chessGame.getPlayerScore(Player.WHITE).getScore());
-			model.put("blackScore", "흑 점수 : " + chessGame.getPlayerScore(Player.BLACK).getScore());
-
-			model.putAll(makeBaseChessGameModel(chessGame, roomNumber));
+			Map<String, Object> model = makeBaseChessGameModel(chessGame, roomNumber);
+            model.putAll(makeStatusModel(chessGame));
 			return render(model, "/chess.html");
 		});
 
@@ -108,4 +104,12 @@ public class WebUIChessApplication {
 		model.put("board", ChessGameService.getPieceImages(chessGame));
 		return model;
 	}
+
+	private static Map<String, Object> makeStatusModel(ChessGame chessGame) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("winner", "승자 : " + chessGame.findWinner().name());
+        model.put("whiteScore", "백 점수 : " + chessGame.getPlayerScore(Player.WHITE).getScore());
+        model.put("blackScore", "흑 점수 : " + chessGame.getPlayerScore(Player.BLACK).getScore());
+        return model;
+    }
 }
