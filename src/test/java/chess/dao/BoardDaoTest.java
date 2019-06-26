@@ -30,7 +30,7 @@ public class BoardDaoTest {
         List<BoardDto> findResult = boardDao.findAll();
         assertThat(findResult.get(0).getPosition()).isEqualTo("a1");
         assertThat(findResult.get(0).getPieceName()).isEqualTo("r");
-        assertThat(findResult.get(0).getPieceName()).isEqualTo("BLACK");
+        assertThat(findResult.get(0).getTeam()).isEqualTo("BLACK");
 
         boardDao.deleteAll();
     }
