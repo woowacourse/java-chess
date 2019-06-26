@@ -1,40 +1,40 @@
 package chess.persistence.dto;
 
 public class ChessMoveDTO {
-    String sourceX;
-    String sourceY;
-    String targetX;
-    String targetY;
+    int sourceX;
+    int sourceY;
+    int targetX;
+    int targetY;
 
-    public String getSourceX() {
+    public int getSourceX() {
         return sourceX;
     }
 
-    public void setSourceX(String sourceX) {
+    public void setSourceX(int sourceX) {
         this.sourceX = sourceX;
     }
 
-    public String getSourceY() {
+    public int getSourceY() {
         return sourceY;
     }
 
-    public void setSourceY(String sourceY) {
+    public void setSourceY(int sourceY) {
         this.sourceY = sourceY;
     }
 
-    public String getTargetX() {
+    public int getTargetX() {
         return targetX;
     }
 
-    public void setTargetX(String targetX) {
+    public void setTargetX(int targetX) {
         this.targetX = targetX;
     }
 
-    public String getTargetY() {
+    public int getTargetY() {
         return targetY;
     }
 
-    public void setTargetY(String targetY) {
+    public void setTargetY(int targetY) {
         this.targetY = targetY;
     }
 }
