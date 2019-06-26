@@ -1,12 +1,10 @@
 package chess.dao;
 
 import chess.dao.utils.JdbcConnector;
+import chess.dto.ResultDto;
 import chess.dto.RoundInfoDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLDataException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,20 +22,23 @@ public class RoundInfoDao {
         return RoundInfoDaoHolder.INSTANCE;
     }
 
-    public List<RoundInfoDto> selectAllUnfinishedGame() throws SQLDataException {
+    public List<RoundInfoDto> selectAllGame(boolean isEnd) throws SQLDataException {
         try (Connection connection = JdbcConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_UNFINISHED_GAME);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_GAME_BY_IS_END)) {
+            preparedStatement.setBoolean(1, isEnd);
+
+            // TODO: 2019-06-25 Close resultSet!!
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             List<RoundInfoDto> list = new ArrayList<>();
             while (resultSet.next()) {
-                RoundInfoDto roundInfoDTO = new RoundInfoDto();
-                roundInfoDTO.setRound(resultSet.getInt("id"));
-                roundInfoDTO.setWhitePlayer(resultSet.getString("white_player"));
-                roundInfoDTO.setBlackPlayer(resultSet.getString("black_player"));
-                roundInfoDTO.setEnd(resultSet.getBoolean("is_end"));
+                RoundInfoDto roundInfoDto = new RoundInfoDto();
+                roundInfoDto.setRound(resultSet.getInt("id"));
+                roundInfoDto.setWhitePlayer(resultSet.getString("white_player"));
+                roundInfoDto.setBlackPlayer(resultSet.getString("black_player"));
+                roundInfoDto.setEnd(resultSet.getBoolean("is_end"));
 
-                list.add(roundInfoDTO);
+                list.add(roundInfoDto);
             }
             return list;
         } catch (Exception e) {
@@ -48,12 +49,19 @@ public class RoundInfoDao {
 
     public int insertRoundInfo(String whitePlayer, String blackPlayer) throws SQLDataException {
         try (Connection connection = JdbcConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ROUND_INFO)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ROUND_INFO, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, whitePlayer);
             preparedStatement.setString(2, blackPlayer);
+            preparedStatement.executeUpdate();
 
-            return preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            if (!resultSet.next()) {
+                throw new SQLDataException();
+            }
+
+            return resultSet.getInt(1);
         } catch (Exception e) {
             e.printStackTrace();
             throw new SQLDataException();
@@ -62,13 +70,60 @@ public class RoundInfoDao {
 
     public int updateGameOver(int round) throws SQLDataException {
         try (Connection connection = JdbcConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_IS_END_TRUE)) {
-            preparedStatement.setInt(1, round);
+             PreparedStatement preparedStatement = createPreparedStatement(connection, round, UPDATE_IS_END_TRUE)) {
 
             return preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             throw new SQLDataException();
         }
+    }
+
+    public RoundInfoDto selectRoundInfo(int round) throws SQLDataException {
+        try (Connection connection = JdbcConnector.getConnection();
+             PreparedStatement preparedStatement = createPreparedStatement(connection, round, SELECT_ROUND_INFO);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (!resultSet.next()) {
+                throw new SQLDataException();
+            }
+
+            RoundInfoDto roundInfoDto = new RoundInfoDto();
+            roundInfoDto.setRound(resultSet.getInt("id"));
+            roundInfoDto.setWhitePlayer(resultSet.getString("white_player"));
+            roundInfoDto.setBlackPlayer(resultSet.getString("black_player"));
+            roundInfoDto.setEnd(resultSet.getBoolean("is_end"));
+
+            return roundInfoDto;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLDataException();
+        }
+    }
+
+    public ResultDto selectGameResult(int round) throws SQLDataException {
+        try (Connection connection = JdbcConnector.getConnection();
+             PreparedStatement preparedStatement = createPreparedStatement(connection, round, SELECT_GAME_RESULT);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (!resultSet.next()) {
+                throw new SQLDataException();
+            }
+
+            ResultDto resultDto = new ResultDto();
+            resultDto.setRound(resultSet.getInt("round_id"));
+            resultDto.setWinner(resultSet.getString("name"));
+
+            return resultDto;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLDataException();
+        }
+    }
+
+    private PreparedStatement createPreparedStatement(Connection connection, int round, String query) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, round);
+        return preparedStatement;
     }
 }
