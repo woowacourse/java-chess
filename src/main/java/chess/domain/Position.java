@@ -32,6 +32,12 @@ public class Position {
         return cacheMap.get(y).get(x);
     }
 
+    public static Position from(String position) {
+        String[] numbers = position.split(",");
+
+        return Position.of(Integer.parseInt(numbers[1]), Integer.parseInt(numbers[0]));
+    }
+
     public boolean isSameColumn(Position position) {
         return this.x == position.x;
     }
@@ -69,5 +75,10 @@ public class Position {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public String toString() {
+        return x + "," + y;
     }
 }

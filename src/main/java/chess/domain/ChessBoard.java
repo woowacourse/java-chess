@@ -17,7 +17,7 @@ public class ChessBoard {
     private static final int BLACK_TEAM_PAWNS_AREA = 1;
     private static final int WHITE_TEAM_AREA = 7;
     private static final int WHITE_TEAM_PAWNS_AREA = 6;
-    private static final double INLINE_PAWN_SOCRE = 0.5;
+    private static final double INLINE_PAWN_SCORE = 0.5;
 
     private Map<Position, ChessPiece> chessBoard = new HashMap<>();
     private boolean gameOver = false;
@@ -43,7 +43,6 @@ public class ChessBoard {
         return true;
     }
 
-
     public boolean isGameOver() {
         return gameOver;
     }
@@ -67,7 +66,7 @@ public class ChessBoard {
                 .mapToDouble(ChessPiece::getScore)
                 .reduce(Double::sum).getAsDouble();
 
-        return inLinePawnCount > 1 ? scoreSum - inLinePawnCount * INLINE_PAWN_SOCRE : scoreSum;
+        return inLinePawnCount > 1 ? scoreSum - inLinePawnCount * INLINE_PAWN_SCORE : scoreSum;
     }
 
     private long getInLinePawnCount(Team team, int j) {
@@ -85,10 +84,15 @@ public class ChessBoard {
 
     private boolean canMove(Position source, Position target) {
         ChessPiece sourceChessPiece = chessBoard.get(source);
-        List<Position> route = sourceChessPiece.getRouteOfPiece(source, target);
+        List<Position> route;
+        try {
+            route = sourceChessPiece.getRouteOfPiece(source, target);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
 
         if (validExist(source)) {
-            throw new IllegalArgumentException();
+            return false;
         }
         if (isSameChessPiece(sourceChessPiece, Pawn.class)) {
             return canMovePawns(source, target, route);
@@ -153,5 +157,9 @@ public class ChessBoard {
 
     private boolean isSameChessPiece(ChessPiece chessPiece, Type type) {
         return chessPiece.getClass().getTypeName().equals(type.getTypeName());
+    }
+
+    public boolean isNextTeam(Position source, Team team) {
+        return chessBoard.get(source).isSameTeam(team);
     }
 }
