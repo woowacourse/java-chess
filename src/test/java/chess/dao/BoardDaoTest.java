@@ -44,6 +44,7 @@ class BoardDaoTest {
 
     @Test
     void round에_따른_체스말_조회() throws SQLException{
+        boardDao.initialize(boardDtos);
         assertThat(boardDao.findChessesByRound(1)).isEqualTo(boardDtos);
     }
 

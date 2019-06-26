@@ -9,7 +9,6 @@ import chess.model.Point;
 import chess.model.board.Board;
 import chess.model.board.BoardLoader;
 import chess.model.board.ChessInitializer;
-import chess.model.piece.PieceFactory;
 import chess.util.PointConverter;
 
 import java.sql.SQLException;
@@ -49,12 +48,7 @@ public class BoardService {
         int round = boardDao.recentRound();
 
         BoardLoader boardLoader = new BoardLoader();
-        List<BoardDto> boardDtos = getChesses();
-        for (BoardDto boardDto : boardDtos) {
-            Point point = PointConverter.convertToPoint(boardDto.getPoint());
-            boardLoader.add(point, PieceFactory.create(
-                    boardDto.getPiece(), PlayerType.valueOf(boardDto.getTeam()), point));
-        }
+        boardLoader.convertBoardDto(getChesses());
         Board board = new Board(boardLoader, PlayerType.valueOf(turnDao.selectCurrentTurn(round)));
 
         if (board.executeMovement(source, destination)) {
@@ -72,12 +66,7 @@ public class BoardService {
         int round = boardDao.recentRound();
 
         BoardLoader boardLoader = new BoardLoader();
-        List<BoardDto> boardDtos = getChesses();
-        for (BoardDto boardDto : boardDtos) {
-            Point point = PointConverter.convertToPoint(boardDto.getPoint());
-            boardLoader.add(point, PieceFactory.create(
-                    boardDto.getPiece(), PlayerType.valueOf(boardDto.getTeam()), point));
-        }
+        boardLoader.convertBoardDto(getChesses());
         Board board = new Board(boardLoader, PlayerType.valueOf(turnDao.selectCurrentTurn(round)));
 
         Map<String, Double> scores = new HashMap<>();
