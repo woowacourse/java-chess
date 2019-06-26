@@ -4,8 +4,8 @@ import chess.domain.Point;
 import chess.domain.Team;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Rook;
-import chess.utils.DBUtil;
 import chess.dto.PieceDto;
+import chess.utils.DBUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ public class PieceDaoTest {
 
     @BeforeEach
     void setUp() {
-        pieceDao = new PieceDao(dataSource);
+        pieceDao = PieceDao.getInstance(dataSource);
     }
 
     @Test

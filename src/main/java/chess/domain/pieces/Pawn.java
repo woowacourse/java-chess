@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
-
     private static final int ONE_STEP = 1;
     private static final int TWO_STEP = 2;
 

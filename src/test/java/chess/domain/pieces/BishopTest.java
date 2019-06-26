@@ -21,7 +21,7 @@ public class BishopTest {
         Piece bishop = new Bishop(Team.WHITE);
         List<Point> points = new ArrayList<>();
         for (int i = 1; i < 3; i++) {
-            points.add(new Point((char)('a' + i), (char)('1'+ i)));
+            points.add(new Point((char) ('a' + i), (char) ('1' + i)));
         }
         assertThat(bishop.move(new Point("a1"), new Point("c3"))).isEqualTo(points);
     }

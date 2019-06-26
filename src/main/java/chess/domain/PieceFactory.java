@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PieceFactory {
-    public static List<Piece> generateFirstPieces(Team team) {
+    static List<Piece> generateFirstPieces(Team team) {
         return Arrays.asList(new Rook(team),
                 new Knight(team),
                 new Bishop(team),

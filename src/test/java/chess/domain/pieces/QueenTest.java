@@ -15,12 +15,13 @@ public class QueenTest {
     void 생성() {
         assertDoesNotThrow(() -> new Queen(Team.WHITE));
     }
+
     @Test
     void 대각선_이동() {
         Piece queen = new Queen(Team.WHITE);
         List<Point> points = new ArrayList<>();
         for (int i = 1; i < 3; i++) {
-            points.add(new Point((char)('a' + i), (char)('1'+ i)));
+            points.add(new Point((char) ('a' + i), (char) ('1' + i)));
         }
         assertThat(queen.move(new Point("a1"), new Point("c3"))).isEqualTo(points);
     }
@@ -30,7 +31,7 @@ public class QueenTest {
         Piece queen = new Queen(Team.WHITE);
         List<Point> points = new ArrayList<>();
         for (int i = 1; i < 3; i++) {
-            points.add(new Point('a', (char)('1'+ i)));
+            points.add(new Point('a', (char) ('1' + i)));
         }
         assertThat(queen.move(new Point("a1"), new Point("a3"))).isEqualTo(points);
     }

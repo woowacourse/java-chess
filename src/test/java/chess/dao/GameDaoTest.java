@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
-
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,7 +16,7 @@ public class GameDaoTest {
 
     @BeforeEach
     void setUp() {
-        gameDao = new GameDao(dataSource);
+        gameDao = GameDao.getInstance(dataSource);
     }
 
     @Test
@@ -35,7 +34,7 @@ public class GameDaoTest {
 
     @Test
     void add() throws SQLException {
-        gameDao.add();
+        gameDao.createNewGame();
     }
 
     @Test

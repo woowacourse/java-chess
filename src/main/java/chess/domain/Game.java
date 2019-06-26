@@ -6,14 +6,14 @@ import chess.domain.pieces.Piece;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 import static chess.domain.Type.*;
 
 public class Game {
     private static final int KING_COUNT = 2;
-    private static final int MAX_BOARD_SIZE = 8;
     private static final int PAWN_ONE_BY_ONE_LINE = 1;
+    private static final double PAWN_HALF_SCORE = 0.5;
+    private static final int PAWN_SCORE = 1;
 
     private Map<Point, Piece> board;
     private Team turn;
@@ -55,18 +55,18 @@ public class Game {
 
     private void checkSameTeam(Piece startPiece, Piece endPiece) {
         if (startPiece.isSameTeam(endPiece)) {
-            throw new IllegalArgumentException("이동 불가능 합니다.3");
+            throw new IllegalArgumentException("당신의 말 위로는 이동 할 수 없습니다.");
         }
     }
 
     private void checkRoute(Point end, Point candidatePoint) {
         if (!isBlank(candidatePoint) && !candidatePoint.equals(end)) {
-            throw new IllegalArgumentException("이동 불가능 합니다.2");
+            throw new IllegalArgumentException("이동 불가능 합니다.");
         }
     }
 
     private void checkMove(List<Point> candidatePoints) {
-        if (candidatePoints.size() == 0) throw new IllegalArgumentException("이동 불가능 합니다.1");
+        if (candidatePoints.size() == 0) throw new IllegalArgumentException("이동 불가능 합니다.");
     }
 
     private void checkBlank(Point start) {
@@ -104,7 +104,7 @@ public class Game {
                 .collect(Collectors.groupingBy(e -> e.getKey().getPositionX()))
                 .values()
                 .stream()
-                .mapToDouble(l -> l.size() == 1 ? 1 : 0.5 * l.size())
+                .mapToDouble(l -> l.size() == PAWN_ONE_BY_ONE_LINE ? PAWN_SCORE : PAWN_HALF_SCORE * l.size())
                 .sum();
     }
 

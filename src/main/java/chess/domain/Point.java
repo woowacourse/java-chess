@@ -112,7 +112,7 @@ public class Point { //TODO : 수학 추출
     }
 
     public String convertPosition() {
-        return "" + (char)(positionX + 'a') + (char)(positionY + '1');
+        return "" + (char) (positionX + X_START) + (char) (positionY + Y_START);
     }
 
     @Override

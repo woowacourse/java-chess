@@ -21,7 +21,7 @@ public class RookTest {
         Rook rook = new Rook(Team.WHITE);
         List<Point> points = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            points.add(new Point('a', (char)('1'+ i)));
+            points.add(new Point('a', (char) ('1' + i)));
         }
         assertThat(rook.move(new Point("a1"), new Point("a5"))).isEqualTo(points);
     }

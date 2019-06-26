@@ -52,7 +52,9 @@ public abstract class Piece {
         return type;
     }
 
-    public Team getTeam() { return team; }
+    public Team getTeam() {
+        return team;
+    }
 
     abstract public String getSymbol();
 

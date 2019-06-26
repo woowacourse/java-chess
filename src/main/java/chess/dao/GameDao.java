@@ -22,8 +22,8 @@ public class GameDao {
         this.dataSource = dataSource;
     }
 
-    public static GameDao getInstance(DataSource dataSource){
-        if(gameDao == null){
+    public static GameDao getInstance(DataSource dataSource) {
+        if (gameDao == null) {
             gameDao = new GameDao(dataSource);
         }
         return gameDao;
@@ -49,13 +49,13 @@ public class GameDao {
         }
     }
 
-    public void add() throws SQLException {
+    public void createNewGame() throws SQLException {
         try (Connection con = dataSource.getConnection()) {
             executeAdd(con);
         }
     }
 
-    private void executeAdd(Connection con) throws SQLException{
+    private void executeAdd(Connection con) throws SQLException {
         try (PreparedStatement pstmt = con.prepareStatement(INSERT_GAME)) {
             pstmt.executeUpdate();
         }

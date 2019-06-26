@@ -18,7 +18,6 @@ public class Knight extends Piece {
         return team == Team.WHITE ? "♘" : "♞";
     }
 
-    //TODO: King Knight 중복 제거
     @Override
     public List<Point> move(Point start, Point end) {
         List<Point> points = new ArrayList<>();
