@@ -17,13 +17,11 @@ public class PieceMoveService {
         return PieceMoveServiceHolder.INSTANCE;
     }
 
-    public ChessBoardDTO request(ChessMoveDTO chessMoveDTO) {
-        ChessGameDTO chessGameDTO = GameGeneratorService.getInstance().request();
-        ChessBoardDTO chessBoardDTO = BoardGeneratorService.getInstance().request(chessGameDTO);
+    public ChessBoardDTO request(ChessMoveDTO chessMoveDTO, ChessGameDTO chessGameDTO, ChessBoardDTO chessBoardDTO) {
         Board board = Board.drawBoard(chessBoardDTO.getBoard(), Team.valueOf(chessGameDTO.getLastUser()));
 
-        Square source = parseSquare(chessMoveDTO.getSourceX(), chessMoveDTO.getSourceY());
-        Square target = parseSquare(chessMoveDTO.getTargetX(), chessMoveDTO.getTargetY());
+        Square source = Square.of(chessMoveDTO.getSourceX(), chessMoveDTO.getSourceY());
+        Square target = Square.of(chessMoveDTO.getTargetX(), chessMoveDTO.getTargetY());
         Piece piece = board.getPiece(source);
         Route route = piece.getRoute(source, target);
         Board newBoard = board.changeBoard(route);
@@ -46,5 +44,4 @@ public class PieceMoveService {
     private static class PieceMoveServiceHolder {
         static final PieceMoveService INSTANCE = new PieceMoveService();
     }
-
 }

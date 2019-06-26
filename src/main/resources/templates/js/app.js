@@ -16,99 +16,113 @@ const piece = {
     EMPTY: '&#x20;'
 };
 
-const chessGame = {
-  move: {
-    get source() {
-      return this._source;
-    },
-    set source(square) {
-      this._source = square;
-    },
-    get target() {
-      return this._target;
-    },
-    set target(square) {
-      this._target = square;
+let outputData;
+window.onload = function () {
+    const inputSource = document.querySelector('input[data-name="source"]');
+    const inputTarget = document.querySelector('input[data-name="target"]');
+    const btnReset = document.querySelector('input[data-btn="reset"]');
+    const btnMove = document.querySelector('input[data-btn="move"]');
+    const elTeam = document.querySelector('div[data-name="team"]');
+    const elScoreWhite = document.querySelector('div[data-name="score_white"]');
+    const elScoreBlack = document.querySelector('div[data-name="score_black"]');
+    const elWinner = document.querySelector('div[data-name="winner"]');
+
+    function requestBoard() {
+        $.ajax({
+            method: "GET",
+            url: "/chessGame",
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json"
+        })
+            .done(function (data) {
+                if (!data.message) {
+                    chessGame.board = data.board;
+                    chessGame.team = data.lastUser;
+                    chessGame.score.black = data.blackScore;
+                    chessGame.score.white = data.whiteScore;
+                    if (data.winner) {
+                        chessGame.winner = data.winner
+                    }
+
+                    console.log(data);
+                } else {
+                    alert(data.message);
+                }
+            });
     }
-  },
-  get board() {
-    return this._board;
-  },
-  set board(boardVal) {
-    for (let x = 0; x < 8; x++) {
-      for (let y = 0; y < 8; y++) {
+
+
+    const chessGame = {
+        move: {
+            get source() {
+                return this._source;
+            },
+            set source(square) {
+                this._source = square;
+            },
+            get target() {
+                return this._target;
+            },
+            set target(square) {
+                this._target = square;
+            }
+        },
+        get board() {
+            return this._board;
+        },
+        set board(boardVal) {
+            for (let x = 0; x < 8; x++) {
+                for (let y = 0; y < 8; y++) {
           let queryName = `Square{x=${x}, y=${y}}`;
-        let query = `${x},${y}`;
-        let el = document.querySelector(`div[data-square="${query}"]`);
+                    let query = `${x},${y}`;
+                    let el = document.querySelector(`div[data-square="${query}"]`);
           el.dataset.name = queryName;
           if (boardVal[queryName] !== undefined) {
               let team = boardVal[queryName]['team'];
               let type = boardVal[queryName]['type'];
-          let pieceQuery = `${team}_${type}`;
-          el.innerHTML = piece[pieceQuery];
-        } else {
+              let pieceQuery = `${team}_${type}`;
+              el.innerHTML = piece[pieceQuery];
+          } else {
               el.innerHTML = piece['EMPTY'];
-        }
-      }
-    }
-    this._board = boardVal;
-  },
-  get team() {
-    return this._team;
-  },
-  set team(teamVal) {
-    this._team = teamVal;
-  },
-  score: {
-    get white() {
-      return this._white;
-    },
-    set white(score) {
-      this._white = score;
-    },
-    get black() {
-      return this._black;
-    },
-    set black(score) {
-      this._score = score;
-    }
-  },
-  get winner() {
-    return this._winner;
-  },
-  set winner(winnerVal) {
-    this._winner = winnerVal;
-  }
-};
-
-function requestBoard() {
-    $.ajax({
-        method: "GET",
-        url: "/chessGame",
-        contentType: 'application/json; charset=utf-8',
-        dataType: "json"
-    })
-        .done(function (data) {
-            if (!data.message) {
-                chessGame.board = data.board;
-                console.log(chessGame.board);
-            } else {
-                alert(data.message);
+          }
+                }
             }
-        });
-}
+            this._board = boardVal;
+        },
+        get team() {
+            return this._team;
+        },
+        set team(teamVal) {
+            this._team = teamVal;
+            elTeam.innerHTML = this._team;
+        },
+        score: {
+            get white() {
+                return this._white;
+            },
+            set white(score) {
+                this._white = score;
+                elScoreWhite.innerHTML = this._white;
+            },
+            get black() {
+                return this._black;
+            },
+            set black(score) {
+                this._black = score;
+                elScoreBlack.innerHTML = this._black;
+            }
+        },
+        get winner() {
+            return this._winner;
+        },
+        set winner(winnerVal) {
+            this._winner = winnerVal;
+            elWinner.innerHTML = this._winner;
+        }
+    };
 
-let outputData;
-window.onload = function () {
     requestBoard();
-  const inputSource = document.querySelector('input[data-name="source"]');
-  const inputTarget = document.querySelector('input[data-name="target"]');
-  const btnReset = document.querySelector('input[data-btn="reset"]');
-  const btnMove = document.querySelector('input[data-btn="move"]');
-  const elTeam = document.querySelector('div[data-name="team"]');
-  const elScoreWhite = document.querySelector('div[data-name="score_white"]');
-  const elScoreBlack = document.querySelector('div[data-name="score_black"]');
-  const elWinner = document.querySelector('div[data-name="winner"]');
+
   inputSource.addEventListener('input', function () {
     chessGame.move.source = this.value;
   });
@@ -139,7 +153,14 @@ window.onload = function () {
         .done(function (data) {
             if (!data.message) {
                 chessGame.board = data.board;
-                console.log(chessGame.board);
+                chessGame.team = data.lastUser;
+                chessGame.score.black = data.blackScore;
+                chessGame.score.white = data.whiteScore;
+                if (data.winner) {
+                    chessGame.winner = data.winner
+                }
+
+                console.log(data);
             } else {
                 alert(data.message);
             }

@@ -1,9 +1,11 @@
 package chess;
 
+import chess.persistence.dto.ChessBoardDTO;
 import chess.persistence.dto.ChessGameDTO;
 import chess.persistence.dto.ChessMoveDTO;
 import chess.persistence.dto.ErrorDTO;
 import chess.service.BoardGeneratorService;
+import chess.service.ChessGameStatusService;
 import chess.service.GameGeneratorService;
 import chess.service.PieceMoveService;
 import chess.util.JsonTransformer;
@@ -29,7 +31,8 @@ public class WebUIChessApplication {
         get("/chessGame", (req, res) -> {
             try {
                 ChessGameDTO chessGameDTO = GameGeneratorService.getInstance().request();
-                return BoardGeneratorService.getInstance().request(chessGameDTO);
+                ChessBoardDTO chessBoardDTO = BoardGeneratorService.getInstance().request(chessGameDTO);
+                return ChessGameStatusService.getInstance().request(chessGameDTO, chessBoardDTO);
             } catch (IllegalArgumentException e) {
                 return new ErrorDTO(e.getMessage());
             }
@@ -39,7 +42,10 @@ public class WebUIChessApplication {
             Gson gson = new Gson();
             try {
                 ChessMoveDTO chessMoveDTO = gson.fromJson(req.body(), ChessMoveDTO.class);
-                return PieceMoveService.getInstance().request(chessMoveDTO);
+                ChessGameDTO chessGameDTO = GameGeneratorService.getInstance().request();
+                ChessBoardDTO chessBoardDTO = BoardGeneratorService.getInstance().request(chessGameDTO);
+                ChessBoardDTO newChessBoardDTO = PieceMoveService.getInstance().request(chessMoveDTO, chessGameDTO, chessBoardDTO);
+                return ChessGameStatusService.getInstance().request(chessGameDTO, newChessBoardDTO);
             } catch (IllegalArgumentException e) {
                 return new ErrorDTO(e.getMessage());
             }
