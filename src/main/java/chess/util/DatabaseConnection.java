@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private final static String SERVER = "localhost";
     private final static String DATABASE = "chess";
-    private final static String USER_NAME = "user";
+    private final static String USER_NAME = "wooteco";
     private final static String PASSWORD = "1234";
 
     public static Connection getConnection() {
