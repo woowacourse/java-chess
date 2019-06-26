@@ -38,7 +38,7 @@ public class ChessGame {
         return new HashSet<>(board.getPieces(Piece::isKing)).size() == DEFAULT_KING_COUNT;
     }
 
-    public double calculateScore(Side side) {
+    double calculateScore(Side side) {
         scores.put(side, 0.0);
         addNotPawnScore(side);
         addPawnScore(side);

@@ -11,7 +11,7 @@ import java.util.List;
 public class MoveHandler {
     private Board board;
 
-    public MoveHandler(Board board) {
+    MoveHandler(Board board) {
         this.board = board;
     }
 

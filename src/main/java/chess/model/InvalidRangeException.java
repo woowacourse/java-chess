@@ -1,7 +1,7 @@
 package chess.model;
 
-public class InvalidRangeException extends RuntimeException{
-    public InvalidRangeException(String message) {
+class InvalidRangeException extends RuntimeException{
+    InvalidRangeException(String message) {
         super(message);
     }
 }
