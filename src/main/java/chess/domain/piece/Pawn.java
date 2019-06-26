@@ -33,7 +33,7 @@ public class Pawn extends Piece {
     }
 
     private int firstMoveDistance() {
-        return first ? LIMIT_DISTANCE_FIRST : LIMIT_DISTANCE_ONE;
+        return first ? LIMIT_DISTANCE_FIRST : LIMIT_DISTANCE_ONE_UNIT;
     }
 
     private boolean blackPawn(Position source, Position target) {

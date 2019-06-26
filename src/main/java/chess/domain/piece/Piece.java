@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-    static final int LIMIT_DISTANCE_ONE = 1;
+    static final int LIMIT_DISTANCE_ONE_UNIT = 1;
 
     private final Team team;
     private MoveRule moveRule;

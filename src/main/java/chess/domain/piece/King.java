@@ -21,7 +21,7 @@ public class King extends Piece {
     private boolean king(Position source, Position target) {
         Direction direction = source.direction(target);
         validDirection(Direction.ALL_DIRECTION, direction);
-        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE);
+        validDistance(source.distance(target, direction), LIMIT_DISTANCE_ONE_UNIT);
         return true;
     }
 
