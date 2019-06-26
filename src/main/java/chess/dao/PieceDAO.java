@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.domain.ChessPiece;
+import chess.domain.ChessPieceInfo;
 import chess.domain.Player;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
@@ -74,7 +74,7 @@ public class PieceDAO {
                 Player player = Player.valueOf(rs.getString(1));
                 Type type = Type.valueOf(rs.getString(2));
                 Position position = Position.getPosition(rs.getInt(3), rs.getInt(4));
-                pieces.add(ChessPiece.generatePiece(player, type, position));
+                pieces.add(ChessPieceInfo.generatePiece(player, type, position));
             }
             return pieces;
         }

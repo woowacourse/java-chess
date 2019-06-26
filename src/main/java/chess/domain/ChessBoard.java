@@ -133,7 +133,7 @@ public class ChessBoard {
     private Map<Position, String> makeRowWithEmptyImages(int y) {
         Map<Position, String> positionPieceImages = new LinkedHashMap<>();
         for (int x = MIN_BOUND; x <= MAX_BOUND; x++) {
-            positionPieceImages.put(Position.getPosition(x, y), ChessPiece.EMPTY.getImage());
+            positionPieceImages.put(Position.getPosition(x, y), ChessPieceInfo.EMPTY.getImage());
         }
         return positionPieceImages;
     }

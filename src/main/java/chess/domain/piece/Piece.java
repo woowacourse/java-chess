@@ -29,12 +29,12 @@ public abstract class Piece {
         return position;
     }
 
-    public ChessPiece getChessPiece() {
-        return ChessPiece.getChessPiece(player, type);
+    public ChessPieceInfo getChessPiece() {
+        return ChessPieceInfo.getChessPiece(player, type);
     }
 
     public String getPieceImage() {
-        return ChessPiece.getPieceImage(this.player, this.type);
+        return ChessPieceInfo.getPieceImage(this.player, this.type);
     }
 
     Path getValidPath(Position end, List<MovementInfo> movementInfos) {

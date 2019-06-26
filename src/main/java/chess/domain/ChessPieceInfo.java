@@ -4,7 +4,7 @@ import java.util.function.BiFunction;
 
 import chess.domain.piece.*;
 
-public enum ChessPiece {
+public enum ChessPieceInfo {
     BLACK_PAWN(Player.BLACK, Type.PAWN, BlackPawn::valueOf, "♟"),
     WHITE_PAWN(Player.WHITE, Type.PAWN, WhitePawn::valueOf, "♙"),
     BLACK_ROOK(Player.BLACK, Type.ROOK, Rook::valueOf, "♜"),
@@ -24,7 +24,7 @@ public enum ChessPiece {
     private BiFunction<Player, Position, Piece> generator;
     private String image;
 
-    ChessPiece(Player player, Type type, BiFunction<Player, Position, Piece> generator, String image) {
+    ChessPieceInfo(Player player, Type type, BiFunction<Player, Position, Piece> generator, String image) {
         this.player = player;
         this.type = type;
         this.generator = generator;
@@ -32,25 +32,25 @@ public enum ChessPiece {
     }
 
     public static Piece generatePiece(Player player, Type type, Position position) {
-        for (ChessPiece chessPiece : ChessPiece.values()) {
-            if (chessPiece.player.equals(player) && (chessPiece.type.equals(type))) {
-                return chessPiece.generator.apply(player, position);
+        for (ChessPieceInfo chessPieceInfo : ChessPieceInfo.values()) {
+            if (chessPieceInfo.player.equals(player) && (chessPieceInfo.type.equals(type))) {
+                return chessPieceInfo.generator.apply(player, position);
             }
         }
         throw new IllegalArgumentException("체스 말을 생성할 수 없습니다.");
     }
 
     public static String getPieceImage(Player player, Type type) {
-        for (ChessPiece chessPiece : ChessPiece.values()) {
-            if (chessPiece.player.equals(player) && (chessPiece.type.equals(type))) {
-                return chessPiece.image;
+        for (ChessPieceInfo chessPieceInfo : ChessPieceInfo.values()) {
+            if (chessPieceInfo.player.equals(player) && (chessPieceInfo.type.equals(type))) {
+                return chessPieceInfo.image;
             }
         }
         throw new IllegalArgumentException("해당 이미지를 찾을 수 없습니다.");
     }
 
-    public static ChessPiece getChessPiece(Player player, Type type) {
-        for (ChessPiece chess : ChessPiece.values()) {
+    public static ChessPieceInfo getChessPiece(Player player, Type type) {
+        for (ChessPieceInfo chess : ChessPieceInfo.values()) {
             if (chess.player.equals(player) && (chess.type.equals(type))) {
                 return chess;
             }

@@ -5,10 +5,10 @@ import chess.domain.piece.Piece;
 import java.util.*;
 
 public class ChessInitialPosition {
-    private static Map<ChessPiece, List<Position>> positions = new HashMap<>();
+    private static Map<ChessPieceInfo, List<Position>> positions = new HashMap<>();
 
     static {
-        positions.put(ChessPiece.BLACK_PAWN, Arrays.asList(
+        positions.put(ChessPieceInfo.BLACK_PAWN, Arrays.asList(
                 Position.getPosition(1, 7),
                 Position.getPosition(2, 7),
                 Position.getPosition(3, 7),
@@ -17,7 +17,7 @@ public class ChessInitialPosition {
                 Position.getPosition(6, 7),
                 Position.getPosition(7, 7),
                 Position.getPosition(8, 7)));
-        positions.put(ChessPiece.WHITE_PAWN, Arrays.asList(
+        positions.put(ChessPieceInfo.WHITE_PAWN, Arrays.asList(
                 Position.getPosition(1, 2),
                 Position.getPosition(2, 2),
                 Position.getPosition(3, 2),
@@ -27,51 +27,51 @@ public class ChessInitialPosition {
                 Position.getPosition(7, 2),
                 Position.getPosition(8, 2)));
 
-        positions.put(ChessPiece.BLACK_ROOK, Arrays.asList(
+        positions.put(ChessPieceInfo.BLACK_ROOK, Arrays.asList(
                 Position.getPosition(1, 8),
                 Position.getPosition(8, 8)));
-        positions.put(ChessPiece.WHITE_ROOK, Arrays.asList(
+        positions.put(ChessPieceInfo.WHITE_ROOK, Arrays.asList(
                 Position.getPosition(1, 1),
                 Position.getPosition(8, 1)));
 
-        positions.put(ChessPiece.BLACK_KNIGHT, Arrays.asList(
+        positions.put(ChessPieceInfo.BLACK_KNIGHT, Arrays.asList(
                 Position.getPosition(2, 8),
                 Position.getPosition(7, 8)));
-        positions.put(ChessPiece.WHITE_KNIGHT, Arrays.asList(
+        positions.put(ChessPieceInfo.WHITE_KNIGHT, Arrays.asList(
                 Position.getPosition(2, 1),
                 Position.getPosition(7, 1)));
 
-        positions.put(ChessPiece.BLACK_BISHOP, Arrays.asList(
+        positions.put(ChessPieceInfo.BLACK_BISHOP, Arrays.asList(
                 Position.getPosition(3, 8),
                 Position.getPosition(6, 8)));
-        positions.put(ChessPiece.WHITE_BISHOP, Arrays.asList(
+        positions.put(ChessPieceInfo.WHITE_BISHOP, Arrays.asList(
                 Position.getPosition(3, 1),
                 Position.getPosition(6, 1)));
 
-        positions.put(ChessPiece.BLACK_QUEEN, Arrays.asList(
+        positions.put(ChessPieceInfo.BLACK_QUEEN, Arrays.asList(
                 Position.getPosition(4, 8)));
-        positions.put(ChessPiece.WHITE_QUEEN, Arrays.asList(
+        positions.put(ChessPieceInfo.WHITE_QUEEN, Arrays.asList(
                 Position.getPosition(4, 1)));
 
-        positions.put(ChessPiece.BLACK_KING, Arrays.asList(
+        positions.put(ChessPieceInfo.BLACK_KING, Arrays.asList(
                 Position.getPosition(5, 8)));
-        positions.put(ChessPiece.WHITE_KING, Arrays.asList(
+        positions.put(ChessPieceInfo.WHITE_KING, Arrays.asList(
                 Position.getPosition(5, 1)));
 
     }
 
     public static ChessBoard generateChessBoard() {
         List<Piece> pieces = new ArrayList<>();
-        for (ChessPiece chessPiece : positions.keySet()) {
-            pieces.addAll(generatePieces(chessPiece));
+        for (ChessPieceInfo chessPieceInfo : positions.keySet()) {
+            pieces.addAll(generatePieces(chessPieceInfo));
         }
         return new ChessBoard(pieces);
     }
 
-    private static List<Piece> generatePieces(ChessPiece chessPiece) {
+    private static List<Piece> generatePieces(ChessPieceInfo chessPieceInfo) {
         List<Piece> pieces = new ArrayList<>();
-        for (Position position : positions.get(chessPiece)) {
-            pieces.add(chessPiece.generate(position));
+        for (Position position : positions.get(chessPieceInfo)) {
+            pieces.add(chessPieceInfo.generate(position));
         }
         return pieces;
     }
