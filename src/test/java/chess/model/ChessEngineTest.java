@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.model.exceptions.*;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

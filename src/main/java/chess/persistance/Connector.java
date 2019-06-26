@@ -1,5 +1,8 @@
 package chess.persistance;
 
+import chess.persistance.exceptions.JDBCConnectException;
+import chess.persistance.exceptions.JDBCDriverLoadException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

@@ -1,5 +1,7 @@
 package chess.model;
 
+import chess.model.exceptions.*;
+
 import java.util.Map;
 
 public class ChessEngine {

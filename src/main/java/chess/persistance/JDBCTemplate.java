@@ -1,6 +1,8 @@
 package chess.persistance;
 
 
+import chess.persistance.exceptions.DataAccessException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;

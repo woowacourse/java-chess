@@ -1,5 +1,7 @@
 package chess.model;
 
+import chess.model.exceptions.IllegalXPositionException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
