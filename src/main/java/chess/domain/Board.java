@@ -14,41 +14,23 @@ public class Board {
     private final Map<Spot, Piece> pieces;
 
     public Board(Map<Spot, Piece> pieces) {
-        this.pieces = new HashMap<>(pieces);
+        this.pieces = pieces;
     }
 
-    //TODO 확인 후 삭제 return this 를 안해도 되는지..
-//    public Board move(Spot startSpot, Spot endSpot) {
-//        boolean x = isPieceMovement(startSpot, endSpot);
-//        if (isMovable(startSpot, endSpot) && x) {
-//            Piece selectedPiece = pieces.get(startSpot);
-//            Piece targetPiece = pieces.get(endSpot);
-//
-//            if (targetPiece.getPieceType() == PieceType.KING) {
-//                Team winnerTeam = selectedPiece.getTeam();
-//                pieces.replaceAll(((spot, piece) -> new King(winnerTeam)));
-//                return new Board(pieces);
-//            }
-//
-//            pieces.replace(endSpot, selectedPiece);
-//            pieces.replace(startSpot, Empty.getInstance());
-//            return new Board(pieces);
-//        }
-//        return this;
-//    }
-
     public Board move(Spot startSpot, Spot endSpot) {
-        Piece selectedPiece = pieces.get(startSpot);
-        Piece targetPiece = pieces.get(endSpot);
+        Map<Spot, Piece> newPieces = new HashMap<>(pieces);
+        Piece selectedPiece = newPieces.get(startSpot);
+        Piece targetPiece = newPieces.get(endSpot);
+
         if (moveValidation(startSpot, endSpot)) {
-            pieces.replace(endSpot, selectedPiece);
-            pieces.replace(startSpot, Empty.getInstance());
+            newPieces.replace(endSpot, selectedPiece);
+            newPieces.replace(startSpot, Empty.getInstance());
         }
         if (isKingDie(targetPiece)) {
             Team winnerTeam = selectedPiece.getTeam();
-            pieces.replaceAll(((spot, piece) -> new King(winnerTeam)));
+            newPieces.replaceAll(((spot, piece) -> new King(winnerTeam)));
         }
-        return new Board(pieces);
+        return new Board(newPieces);
     }
 
     private boolean isKingDie(Piece targetPiece) {
@@ -105,28 +87,16 @@ public class Board {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public boolean teamCheck(Spot spot, Team team) {
+    public boolean checkTeam(Spot spot, Team team) {
         return pieces.get(spot).checkTeam(team);
     }
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Board board = (Board) o;
-//        return Objects.equals(pieces, board.pieces);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(pieces);
-//    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        return pieces == ((Board) o).pieces;
+        Board board = (Board) o;
+        return Objects.equals(pieces, board.pieces);
     }
 
     @Override
