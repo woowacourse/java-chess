@@ -21,40 +21,35 @@ public class ChessGame {
 	}
 
 	public void move(Position start, Position end) {
-		Piece startPiece = chessBoard.findPiece(start);
-
-		if(startPiece == null || !startPiece.isMine(currentPlayer)) {
-			throw new UnmovableException();
-		}
-
-		Piece endPiece = chessBoard.findPiece(end);
+		Piece startPiece = chessBoard.findStartPiece(currentPlayer, start);
+		Piece endPiece = chessBoard.findEndPiece(end);
 		Path path = getPath(end, startPiece, endPiece);
 
 		if (!chessBoard.isMovable(path)) {
 			throw new UnmovableException();
 		}
-		if (endPiece != null && !endPiece.isMine(currentPlayer)) {
+		if (endPiece.isMine(currentPlayer.changePlayer())) {
 			chessBoard.remove(endPiece);
-			if (endPiece.isKing()) {
-				throw new GameOverException("게임종료! " + currentPlayer.name() + " 승리");
-			}
+			checkGameOver(endPiece);
 		}
 		startPiece.changePosition(end);
 		currentPlayer = currentPlayer.changePlayer();
 	}
 
+	private void checkGameOver(Piece endPiece) {
+		if (endPiece.isKing()) {
+			throw new GameOverException("게임종료! " + currentPlayer.name() + " 승리");
+		}
+	}
+
 	private Path getPath(Position end, Piece startPiece, Piece endPiece) {
-		if (endPiece == null) {
+		if (endPiece.isEmpty()) {
 			return startPiece.getMovablePath(end);
 		}
 		if (!endPiece.isMine(currentPlayer)) {
 			return startPiece.getAttackablePath(end);
 		}
 		throw new UnmovableException();
-	}
-
-	public Score getPlayerScore(Player player) {
-		return chessBoard.getPlayerScore(player);
 	}
 
 	public Result findWinner() {
@@ -67,6 +62,10 @@ public class ChessGame {
 			return Result.BLACK_WIN;
 		}
 		return Result.WHITE_WIN;
+	}
+
+	public Score getPlayerScore(Player player) {
+		return chessBoard.getPlayerScore(player);
 	}
 
 	public List<Piece> getPieces() {

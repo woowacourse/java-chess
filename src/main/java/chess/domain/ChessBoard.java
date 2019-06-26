@@ -5,8 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import chess.domain.piece.EmptyPiece;
 import chess.exception.SamePositionException;
 import chess.domain.piece.Piece;
+import chess.exception.UnmovableException;
 
 public class ChessBoard {
 	private final List<Piece> pieces;
@@ -34,13 +36,20 @@ public class ChessBoard {
 				.anyMatch(piece -> piece.isSamePosition(newPiece));
 	}
 
-	public Piece findPiece(Position position) {
+	public Piece findStartPiece(Player player, Position position) {
+	    return pieces.stream()
+                .filter(piece -> piece.isSamePosition(position) && piece.isMine(player))
+                .findFirst()
+                .orElseThrow(UnmovableException::new);
+    }
+
+	public Piece findEndPiece(Position position) {
 		for (Piece piece : pieces) {
 			if (piece.isSamePosition(position)) {
 				return piece;
 			}
 		}
-		return null;
+		return EmptyPiece.valueOf(Player.EMPTY, position);
 	}
 
 	public boolean isMovable(Path path) {

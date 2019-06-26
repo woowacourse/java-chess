@@ -93,11 +93,15 @@ public abstract class Piece {
         return position.getCoordinateY();
     }
 
+    public Score getScore() {
+        return type.getScore();
+    }
+
     public boolean isKing() {
         return type.equals(Type.KING);
     }
 
-    public Score getScore() {
-        return type.getScore();
+    public boolean isEmpty() {
+        return type.equals(Type.EMPTY);
     }
 }
