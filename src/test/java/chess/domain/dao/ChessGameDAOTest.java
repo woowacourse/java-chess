@@ -1,6 +1,6 @@
 package chess.domain.dao;
 
-import chess.domain.chess.ChessBoard;
+import chess.domain.chess.ChessGame;
 import chess.domain.chess.Team;
 import chess.domain.chess.dao.ChessBoardDAO;
 import chess.domain.chess.initializer.ChessBoardInitializer;
@@ -13,26 +13,26 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ChessBoardDAOTest {
+public class ChessGameDAOTest {
     private Connection connection = DBConnection.getConnection();
 
 
 
     @Test
     void 업데이트() throws SQLException {
-        ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
+        ChessGame chessGame = new ChessGame(new ChessBoardInitializer());
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
-        chessBoard.move(Position.create(1, 0), Position.create(2, 2));
-        chessBoardDAO.update(chessBoard, Team.BLACK, 16);
+        chessGame.move(Position.create(1, 0), Position.create(2, 2));
+        chessBoardDAO.update(chessGame, Team.BLACK, 16);
     }
 
     @Test
     void 검색() throws SQLException {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
-        ChessBoard chessBoard = chessBoardDAO.select(16);
-        OutputView.printCheckBoard(chessBoard);
+        ChessGame chessGame = chessBoardDAO.select(16);
+        OutputView.printCheckBoard(chessGame);
     }
 
     @Test

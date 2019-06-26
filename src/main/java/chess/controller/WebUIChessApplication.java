@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.chess.ChessBoard;
+import chess.domain.chess.ChessGame;
 import chess.domain.chess.Team;
 import chess.domain.chess.dao.ChessBoardDAO;
 import chess.domain.chess.dto.ChessBoardDTO;
@@ -36,15 +36,15 @@ public class WebUIChessApplication {
         get("/start_game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
-            ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
-            chessBoardDTO.setUnits(chessBoard.getUnits());
+            ChessGame chessGame = new ChessGame(new ChessBoardInitializer());
+            chessBoardDTO.setUnits(chessGame.getUnits());
 
-            chessBoardDAO.add(chessBoard, Team.WHITE);
+            chessBoardDAO.add(chessGame, Team.WHITE);
 
             String chessJson = new Gson().toJson(chessBoardDTO);
 
-            model.put("team", chessBoard.getTeam().name());
-            model.put("chessBoard", chessJson);
+            model.put("team", chessGame.getTeam().name());
+            model.put("chessGame", chessJson);
 
             return render(model, "game.html");
         });
@@ -54,17 +54,17 @@ public class WebUIChessApplication {
 
             Map<String, Object> model = new HashMap<>();
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
-            ChessBoard chessBoard = chessBoardDAO.select(roomId);
+            ChessGame chessGame = chessBoardDAO.select(roomId);
 
-            if (checkKing(model, chessBoard)) return render(model, "gameover.html");
+            if (checkKing(model, chessGame)) return render(model, "gameover.html");
 
-            chessBoardDTO.setUnits(chessBoard.getUnits());
+            chessBoardDTO.setUnits(chessGame.getUnits());
 
             String chessJson = new Gson().toJson(chessBoardDTO);
 
             model.put("roomId", roomId);
-            model.put("team", chessBoard.getTeam().name());
-            model.put("chessBoard", chessJson);
+            model.put("team", chessGame.getTeam().name());
+            model.put("chessGame", chessJson);
             return render(model, "game.html");
         });
 
@@ -80,25 +80,25 @@ public class WebUIChessApplication {
             Position sourcePosition = Position.create(Integer.parseInt(source[0]), Integer.parseInt(source[1]));
             Position targetPosition = Position.create(Integer.parseInt(target[0]), Integer.parseInt(target[1]));
 
-            ChessBoard chessBoard = chessBoardDAO.select(roomId);
+            ChessGame chessGame = chessBoardDAO.select(roomId);
 
-            chessBoard.move(sourcePosition, targetPosition);
-            chessBoard.changeTeam();
+            chessGame.move(sourcePosition, targetPosition);
+            chessGame.changeTeam();
 
-            chessBoardDAO.update(chessBoard, chessBoard.getTeam(), roomId);
+            chessBoardDAO.update(chessGame, chessGame.getTeam(), roomId);
 
-            ChessBoard chessBoardAfterUpdate = chessBoardDAO.select(roomId);
+            ChessGame chessGameAfterUpdate = chessBoardDAO.select(roomId);
 
-            if (checkKing(model, chessBoard)) return render(model, "gameover.html");
+            if (checkKing(model, chessGame)) return render(model, "gameover.html");
 
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
-            chessBoardDTO.setUnits(chessBoardAfterUpdate.getUnits());
+            chessBoardDTO.setUnits(chessGameAfterUpdate.getUnits());
 
             String chessJson = new Gson().toJson(chessBoardDTO);
 
             model.put("roomId", roomId);
-            model.put("chessBoard", chessJson);
-            model.put("team", chessBoardAfterUpdate.getTeam().name());
+            model.put("chessGame", chessJson);
+            model.put("team", chessGameAfterUpdate.getTeam().name());
             return render(model, "game.html");
 
         });
@@ -115,9 +115,9 @@ public class WebUIChessApplication {
         exception();
     }
 
-    private static boolean checkKing(Map<String, Object> model, ChessBoard chessBoard) {
-        if (chessBoard.numberOfKing() != 2) {
-            model.put("team", chessBoard.getAliveKingTeam());
+    private static boolean checkKing(Map<String, Object> model, ChessGame chessGame) {
+        if (chessGame.numberOfKing() != 2) {
+            model.put("team", chessGame.getAliveKingTeam());
             return true;
         }
         return false;

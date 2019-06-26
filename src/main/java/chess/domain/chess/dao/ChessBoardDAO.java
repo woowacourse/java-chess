@@ -1,6 +1,6 @@
 package chess.domain.chess.dao;
 
-import chess.domain.chess.ChessBoard;
+import chess.domain.chess.ChessGame;
 import chess.domain.chess.ChessUnitMapper;
 import chess.domain.chess.Team;
 import chess.domain.chess.initializer.SettableChessBoardInitializer;
@@ -20,8 +20,8 @@ public class ChessBoardDAO {
         this.connection = connection;
     }
 
-    public void add(ChessBoard chessBoard, Team team) throws SQLException {
-        String boardInfo = printCheckBoard(chessBoard);
+    public void add(ChessGame chessGame, Team team) throws SQLException {
+        String boardInfo = printCheckBoard(chessGame);
         String query = "INSERT INTO chess_board (status, team_id) VALUES (?, ?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, boardInfo);
@@ -29,18 +29,18 @@ public class ChessBoardDAO {
         pstmt.executeUpdate();
     }
 
-    public String printCheckBoard(ChessBoard chessBoard) {
+    public String printCheckBoard(ChessGame chessGame) {
         String chessBoardInfo = "";
         for (int y = Position.MAX_POSITION - 1; y >= Position.MIN_POSITION; y--) {
-            chessBoardInfo += addCheckBoardRowInfo(chessBoard, y);
+            chessBoardInfo += addCheckBoardRowInfo(chessGame, y);
         }
         return chessBoardInfo;
     }
 
-    private String addCheckBoardRowInfo(ChessBoard chessBoard, int y) {
+    private String addCheckBoardRowInfo(ChessGame chessGame, int y) {
         String row = "";
         for (int x = Position.MIN_POSITION; x < Position.MAX_POSITION; x++) {
-            Optional<Unit> optional = chessBoard.getUnit(Position.create(x, y));
+            Optional<Unit> optional = chessGame.getUnit(Position.create(x, y));
             row += printUnit(optional);
         }
         return row;
@@ -53,8 +53,8 @@ public class ChessBoardDAO {
         return ".";
     }
 
-    public void update(ChessBoard chessBoard, Team team, int roomId) throws SQLException {
-        String boardInfo = printCheckBoard(chessBoard);
+    public void update(ChessGame chessGame, Team team, int roomId) throws SQLException {
+        String boardInfo = printCheckBoard(chessGame);
         String query = "UPDATE chess_board SET status = ?, team_id = ? WHERE id = ? ";
 
         PreparedStatement pstmt = connection.prepareStatement(query);
@@ -64,7 +64,7 @@ public class ChessBoardDAO {
         pstmt.executeUpdate();
     }
 
-    public ChessBoard select(int roomId) throws SQLException {
+    public ChessGame select(int roomId) throws SQLException {
         String query = "SELECT status, team_id FROM chess_board WHERE id = ?";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setInt(1, roomId);
@@ -81,7 +81,7 @@ public class ChessBoardDAO {
             unitMapper(map, units, y);
         }
 
-        return new ChessBoard(new SettableChessBoardInitializer(map, team));
+        return new ChessGame(new SettableChessBoardInitializer(map, team));
     }
 
     public int getRowCount() throws SQLException {

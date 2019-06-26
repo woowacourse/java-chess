@@ -15,11 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class ChessBoard {
+public class ChessGame {
     private Map<Position, Unit> units;
     private Team present;
 
-    public ChessBoard(Initializer initializer) {
+    public ChessGame(Initializer initializer) {
         this.units = initializer.create();
 
         this.present = initializer.createTeam();
