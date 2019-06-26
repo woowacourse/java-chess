@@ -8,8 +8,8 @@ import java.util.Objects;
 
 public abstract class Piece {
     protected Navigator navigator;
-    Team team;
-    Type type;
+    private Team team;
+    private Type type;
 
     public Piece(Team team, Type type) {
         this(team, type, null);
@@ -71,14 +71,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(getTeam(), getType(), navigator);
-    }
-
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "team=" + team +
-                ", type=" + type +
-                ", navigator=" + navigator +
-                '}';
     }
 }

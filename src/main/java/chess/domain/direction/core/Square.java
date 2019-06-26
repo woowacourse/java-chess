@@ -51,12 +51,4 @@ public class Square {
     public int hashCode() {
         return Objects.hash(getX(), getY());
     }
-
-    @Override
-    public String toString() {
-        return "Square{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
-    }
 }

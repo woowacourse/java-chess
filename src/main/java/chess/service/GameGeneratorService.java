@@ -5,6 +5,8 @@ import chess.persistence.dao.ChessGameDAO;
 import chess.persistence.dto.ChessGameDTO;
 
 public class GameGeneratorService {
+    private static final int IS_ZERO = 0;
+
     public static GameGeneratorService getInstance() {
         return GameGeneratorHolder.INSTANCE;
     }
@@ -12,7 +14,7 @@ public class GameGeneratorService {
     public ChessGameDTO request() {
         ChessGameDTO chessGameDTO = ChessGameDAO.getInstance().findByMaxGameId();
 
-        if (chessGameDTO.getGameId() == 0 || chessGameDTO.getGameStatus()) {
+        if (chessGameDTO.getGameId() == IS_ZERO || chessGameDTO.getGameStatus()) {
             chessGameDTO.setGameStatus(false);
             chessGameDTO.setLastUser(Team.WHITE.getTeam());
             ChessGameDAO.getInstance().addGameStatus(chessGameDTO);

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MovedPawn extends Piece {
-
     public MovedPawn(Team team) {
         super(team, Type.MOVEDPAWN);
         navigator = generateNavigator(team);
