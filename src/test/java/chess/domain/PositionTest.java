@@ -1,10 +1,9 @@
 package chess.domain;
 
 import chess.domain.exceptions.CoordinateRangeException;
-import chess.domain.utils.InputParser;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.utils.InputParser.*;
+import static chess.domain.utils.InputParser.position;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

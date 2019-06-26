@@ -36,7 +36,7 @@ public abstract class Piece {
         return turn.isTurn(team);
     }
 
-    public boolean canMove(Position source, Position target,Optional<Team> optionalTargetPieceTeam) {
+    public boolean canMove(Position source, Position target, Optional<Team> optionalTargetPieceTeam) {
         return moveRule.check(source, target, optionalTargetPieceTeam);
     }
 
@@ -53,9 +53,11 @@ public abstract class Piece {
         if (Team.isSameTeam(getTeam(), targetPieceTeam)) {
             throw new IllegalTargetException("같은 팀이 있는 위치로 이동이 불가능합니다.");
         }
-    };
+    }
 
-   void validDistance(final int distance, final int limit) {
+    ;
+
+    void validDistance(final int distance, final int limit) {
         if (distance > limit) {
             throw new InvalidDistanceException("움직일 수 있는 거리가 아닙니다.");
         }

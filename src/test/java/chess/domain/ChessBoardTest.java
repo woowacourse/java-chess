@@ -2,11 +2,10 @@ package chess.domain;
 
 import chess.domain.exceptions.IllegalSourceException;
 import chess.domain.exceptions.InvalidRouteException;
-import chess.domain.utils.InputParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.utils.InputParser.*;
+import static chess.domain.utils.InputParser.position;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ChessBoardTest {

@@ -4,14 +4,13 @@ import chess.domain.Coordinate;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.exceptions.InvalidDirectionException;
-import chess.domain.utils.InputParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static chess.domain.utils.InputParser.*;
+import static chess.domain.utils.InputParser.position;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

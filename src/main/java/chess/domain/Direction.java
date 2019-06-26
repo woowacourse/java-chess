@@ -22,6 +22,7 @@ public enum Direction {
     private final int x;
     private final int y;
     private final DirectionCheck directionCheck;
+
     Direction(int x, int y, DirectionCheck directionCheck) {
         this.x = x;
         this.y = y;

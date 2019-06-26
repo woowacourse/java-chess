@@ -4,12 +4,9 @@ import chess.domain.Direction;
 import chess.domain.MoveRule;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.exceptions.IllegalTargetException;
 import chess.domain.exceptions.InvalidDirectionException;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public class Pawn extends Piece {
     private static final String NAME = "p";
@@ -56,7 +53,7 @@ public class Pawn extends Piece {
     }
 
     private void pawnCatchValidation(Direction direction, Optional<Team> optionalTargetPieceTeam) {
-        if (!canMoveStraight(direction, optionalTargetPieceTeam) && !canMoveDiagonal(direction, optionalTargetPieceTeam)){
+        if (!canMoveStraight(direction, optionalTargetPieceTeam) && !canMoveDiagonal(direction, optionalTargetPieceTeam)) {
             throw new InvalidDirectionException("폰이 이동할 수 없는 방햡입니다.");
         }
     }
