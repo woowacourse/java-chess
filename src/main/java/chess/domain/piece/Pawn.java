@@ -7,10 +7,15 @@ import java.util.List;
 import chess.domain.*;
 
 public class Pawn extends Piece {
+	private static int WHITE_INITIAL_Y = 2;
+	private static int BLACK_INITIAL_Y = 7;
+
+	private final List<MovementInfo> movementInfos;
 	private final List<MovementInfo> attackMovementInfos;
 
 	private Pawn(Player player, List<MovementInfo> movementInfos, List<MovementInfo> attackMovementInfos, Position position, Score score) {
-		super(player, Type.PAWN, movementInfos, position, score);
+		super(player, Type.PAWN, position, score);
+		this.movementInfos = movementInfos;
 		this.attackMovementInfos = attackMovementInfos;
 	}
 
@@ -42,16 +47,25 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void changePosition(Position position) {
-		super.changeMovementInfo(getMovementInfo());
-		this.position = position;
-	}
-
-	private MovementInfo getMovementInfo() {
-		if(this.isMine(Player.BLACK)) {
-			return new MovementInfo(Direction.BOTTOM, 1);
+	public Path getMovablePath(Position end) {
+		if (this.isMine(Player.BLACK)) {
+			if (position.getCoordinateY() == BLACK_INITIAL_Y) {
+				List<MovementInfo> movementInfos = new ArrayList<>();
+				movementInfos.add(new MovementInfo(Direction.BOTTOM, 2));
+				return getValidPath(end, movementInfos);
+			}
+			List<MovementInfo> movementInfos = new ArrayList<>();
+			movementInfos.add(new MovementInfo(Direction.BOTTOM, 1));
+			return getValidPath(end, movementInfos);
 		}
-		return new MovementInfo(Direction.TOP, 1);
+		if (position.getCoordinateY() == WHITE_INITIAL_Y) {
+			List<MovementInfo> movementInfos = new ArrayList<>();
+			movementInfos.add(new MovementInfo(Direction.TOP, 2));
+			return getValidPath(end, movementInfos);
+		}
+		List<MovementInfo> movementInfos = new ArrayList<>();
+		movementInfos.add(new MovementInfo(Direction.TOP, 1));
+		return getValidPath(end, movementInfos);
 	}
 
 	@Override

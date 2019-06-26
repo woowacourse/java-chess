@@ -5,13 +5,16 @@ import java.util.List;
 import chess.domain.*;
 
 public class NormalPiece extends Piece {
+	private final List<MovementInfo> movementInfos;
+
 	NormalPiece(Player player, Type type, List<MovementInfo> movementInfos, Position position, Score score) {
-		super(player, type, movementInfos, position, score);
+		super(player, type, position, score);
+		this.movementInfos = movementInfos;
 	}
 
 	@Override
-	public void changePosition(Position position) {
-		this.position = position;
+	public Path getMovablePath(Position end)  {
+		return getValidPath(end, movementInfos);
 	}
 
 	@Override

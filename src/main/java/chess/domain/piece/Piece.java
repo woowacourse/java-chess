@@ -8,15 +8,13 @@ import chess.exception.NotFoundPathException;
 public abstract class Piece {
 	private final Player player;
 	private final Type type;
-	private final List<MovementInfo> movementInfos;
 
 	private Score score;
 	protected Position position;
 
-	public Piece(Player player, Type type, List<MovementInfo> movementInfos, Position position, Score score) {
+	public Piece(Player player, Type type, Position position, Score score) {
 		this.player = player;
 		this.type = type;
-		this.movementInfos = movementInfos;
 		this.position = position;
 		this.score = score;
 	}
@@ -37,9 +35,7 @@ public abstract class Piece {
 		return ChessPiece.getPieceImage(this.player, this.type);
 	}
 
-	public Path getMovablePath(Position end) {
-		return getValidPath(end, movementInfos);
-	}
+	public abstract Path getMovablePath(Position end);
 
 	public abstract Path getAttackablePath(Position end);
 
@@ -75,11 +71,8 @@ public abstract class Piece {
 		return distance;
 	}
 
-	public abstract void changePosition(Position position);
-
-	protected void changeMovementInfo(MovementInfo movementInfo) {
-		this.movementInfos.clear();
-		this.movementInfos.add(movementInfo);
+	public void changePosition(Position position) {
+		this.position = position;
 	}
 
 	public boolean isSamePosition(Position position) {

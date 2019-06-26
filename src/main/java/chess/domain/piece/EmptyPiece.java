@@ -1,18 +1,19 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import chess.domain.*;
 
 public class EmptyPiece extends Piece {
-	public EmptyPiece(Player player, Type type, List<MovementInfo> movementInfos, Position position) {
-		super(player, type, movementInfos, position, new Score(0));
+	public EmptyPiece(Player player, Type type, Position position) {
+		super(player, type, position, new Score(0));
 	}
 
 	public static EmptyPiece valueOf(Player player, Position currentPosition) {
-		List<MovementInfo> movementInfos = new ArrayList<>();
-		return new EmptyPiece(Player.EMPTY, Type.EMPTY, movementInfos, currentPosition);
+		return new EmptyPiece(Player.EMPTY, Type.EMPTY, currentPosition);
+	}
+
+	@Override
+	public Path getMovablePath(Position end) {
+		return null;
 	}
 
 	@Override
