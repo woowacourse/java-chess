@@ -1,7 +1,5 @@
 package chess.dao;
 
-import chess.domain.Position;
-import chess.dto.ChessBoardDto;
 import chess.dto.ChessInfoDto;
 
 import java.util.ArrayList;
@@ -85,7 +83,7 @@ public class ChessRoundDao {
         }
 
         Map<String, Object> result = results.get(0);
-        return Integer.parseInt((String) result.get("id"));
+        return Integer.parseInt(String.valueOf(result.get("id")));
     }
 
     public void insertRound(int roundId) {
