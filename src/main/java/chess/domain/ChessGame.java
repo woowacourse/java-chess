@@ -23,16 +23,15 @@ public class ChessGame {
     }
 
     public void play(String from, String to) {
-        String command = MOVE_COMMAND + DELIMITER + from + DELIMITER + to;
-        play(command);
+        board.play(parse(from), parse(to),turn);
+        turn = turn.change();
     }
 
-    public void play(String input) {
+    void play(String input) {
         List<String> split = Arrays.asList(input.split(DELIMITER));
         validate(split);
 
-        board.play(parse(split.get(COMMAND_FROM_POSITION)), parse(split.get(COMMAND_TO_POSITION)), turn);
-        turn = turn.change();
+        play(split.get(COMMAND_FROM_POSITION),split.get(COMMAND_TO_POSITION));
     }
 
     private void validate(List<String> split) {
