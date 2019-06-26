@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class WhitePawnPath implements Path {
+    protected WhitePawnPath() {
+    }
+
     @Override
     public Set<Vector> movableList(Square source) {
         Set<Vector> movableList = new LinkedHashSet<>();

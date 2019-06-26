@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class KnightPath implements Path {
+    protected KnightPath() {
+    }
+
     @Override
     public Set<Vector> movableList(Square source) {
         Set<Vector> movableList = new HashSet<>();

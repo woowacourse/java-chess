@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class BishopPath implements Path {
+    protected BishopPath() {
+    }
+
     @Override
     public Set<Vector> movableList(Square source) {
         Set<Vector> movableList = new HashSet<>();

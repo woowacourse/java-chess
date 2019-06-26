@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class RookPath implements Path {
+    protected RookPath() {
+    }
+
     @Override
     public Set<Vector> movableList(Square source) {
         Set<Vector> movableList = new HashSet<>();

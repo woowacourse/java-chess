@@ -13,64 +13,64 @@ public class PlayerFactory {
 
         if (color == PieceColor.WHITE) {
             // Pawn
-            pieces.put(new Square(new XPosition("a"), new YPosition("2")), new Pawn(PieceColor.WHITE, PathFactory.WHITE_PAWN.create()));
-            pieces.put(new Square(new XPosition("b"), new YPosition("2")), new Pawn(PieceColor.WHITE, PathFactory.WHITE_PAWN.create()));
-            pieces.put(new Square(new XPosition("c"), new YPosition("2")), new Pawn(PieceColor.WHITE, PathFactory.WHITE_PAWN.create()));
-            pieces.put(new Square(new XPosition("d"), new YPosition("2")), new Pawn(PieceColor.WHITE, PathFactory.WHITE_PAWN.create()));
-            pieces.put(new Square(new XPosition("e"), new YPosition("2")), new Pawn(PieceColor.WHITE, PathFactory.WHITE_PAWN.create()));
-            pieces.put(new Square(new XPosition("f"), new YPosition("2")), new Pawn(PieceColor.WHITE, PathFactory.WHITE_PAWN.create()));
-            pieces.put(new Square(new XPosition("g"), new YPosition("2")), new Pawn(PieceColor.WHITE, PathFactory.WHITE_PAWN.create()));
-            pieces.put(new Square(new XPosition("h"), new YPosition("2")), new Pawn(PieceColor.WHITE, PathFactory.WHITE_PAWN.create()));
+            pieces.put(new Square(new XPosition("a"), new YPosition("2")), Pawn.whiteCreate());
+            pieces.put(new Square(new XPosition("b"), new YPosition("2")), Pawn.whiteCreate());
+            pieces.put(new Square(new XPosition("c"), new YPosition("2")), Pawn.whiteCreate());
+            pieces.put(new Square(new XPosition("d"), new YPosition("2")), Pawn.whiteCreate());
+            pieces.put(new Square(new XPosition("e"), new YPosition("2")), Pawn.whiteCreate());
+            pieces.put(new Square(new XPosition("f"), new YPosition("2")), Pawn.whiteCreate());
+            pieces.put(new Square(new XPosition("g"), new YPosition("2")), Pawn.whiteCreate());
+            pieces.put(new Square(new XPosition("h"), new YPosition("2")), Pawn.whiteCreate());
 
             // Knight
-            pieces.put(new Square(new XPosition("b"), new YPosition("1")), new Knight(PieceColor.WHITE, PathFactory.KNIGHT.create()));
-            pieces.put(new Square(new XPosition("g"), new YPosition("1")), new Knight(PieceColor.WHITE, PathFactory.KNIGHT.create()));
+            pieces.put(new Square(new XPosition("b"), new YPosition("1")), Knight.whiteCreate());
+            pieces.put(new Square(new XPosition("g"), new YPosition("1")), Knight.whiteCreate());
 
             // Rook
-            pieces.put(new Square(new XPosition("a"), new YPosition("1")), new Rook(PieceColor.WHITE, PathFactory.ROOK.create()));
-            pieces.put(new Square(new XPosition("h"), new YPosition("1")), new Rook(PieceColor.WHITE, PathFactory.ROOK.create()));
+            pieces.put(new Square(new XPosition("a"), new YPosition("1")), Rook.whiteCreate());
+            pieces.put(new Square(new XPosition("h"), new YPosition("1")), Rook.whiteCreate());
 
             // BishopPath
-            pieces.put(new Square(new XPosition("c"), new YPosition("1")), new Bishop(PieceColor.WHITE, PathFactory.BISHOP.create()));
-            pieces.put(new Square(new XPosition("f"), new YPosition("1")), new Bishop(PieceColor.WHITE, PathFactory.BISHOP.create()));
+            pieces.put(new Square(new XPosition("c"), new YPosition("1")), Bishop.whiteCreate());
+            pieces.put(new Square(new XPosition("f"), new YPosition("1")), Bishop.whiteCreate());
 
             //Queen
-            pieces.put(new Square(new XPosition("d"), new YPosition("1")), new Queen(PieceColor.WHITE, PathFactory.QUEEN.create()));
+            pieces.put(new Square(new XPosition("d"), new YPosition("1")), Queen.whiteCreate());
 
             //King
-            pieces.put(new Square(new XPosition("e"), new YPosition("1")), new King(PieceColor.WHITE, PathFactory.KING.create()));
+            pieces.put(new Square(new XPosition("e"), new YPosition("1")), King.whiteCreate());
 
             return pieces;
         }
 
         // black
         // Pawn
-        pieces.put(new Square(new XPosition("a"), new YPosition("7")), new Pawn(PieceColor.BLACK, PathFactory.BLACK_PAWN.create()));
-        pieces.put(new Square(new XPosition("b"), new YPosition("7")), new Pawn(PieceColor.BLACK, PathFactory.BLACK_PAWN.create()));
-        pieces.put(new Square(new XPosition("c"), new YPosition("7")), new Pawn(PieceColor.BLACK, PathFactory.BLACK_PAWN.create()));
-        pieces.put(new Square(new XPosition("d"), new YPosition("7")), new Pawn(PieceColor.BLACK, PathFactory.BLACK_PAWN.create()));
-        pieces.put(new Square(new XPosition("e"), new YPosition("7")), new Pawn(PieceColor.BLACK, PathFactory.BLACK_PAWN.create()));
-        pieces.put(new Square(new XPosition("f"), new YPosition("7")), new Pawn(PieceColor.BLACK, PathFactory.BLACK_PAWN.create()));
-        pieces.put(new Square(new XPosition("g"), new YPosition("7")), new Pawn(PieceColor.BLACK, PathFactory.BLACK_PAWN.create()));
-        pieces.put(new Square(new XPosition("h"), new YPosition("7")), new Pawn(PieceColor.BLACK, PathFactory.BLACK_PAWN.create()));
+        pieces.put(new Square(new XPosition("a"), new YPosition("7")), Pawn.blackCreate());
+        pieces.put(new Square(new XPosition("b"), new YPosition("7")), Pawn.blackCreate());
+        pieces.put(new Square(new XPosition("c"), new YPosition("7")), Pawn.blackCreate());
+        pieces.put(new Square(new XPosition("d"), new YPosition("7")), Pawn.blackCreate());
+        pieces.put(new Square(new XPosition("e"), new YPosition("7")), Pawn.blackCreate());
+        pieces.put(new Square(new XPosition("f"), new YPosition("7")), Pawn.blackCreate());
+        pieces.put(new Square(new XPosition("g"), new YPosition("7")), Pawn.blackCreate());
+        pieces.put(new Square(new XPosition("h"), new YPosition("7")), Pawn.blackCreate());
 
         // Knight
-        pieces.put(new Square(new XPosition("b"), new YPosition("8")), new Knight(PieceColor.BLACK, PathFactory.KNIGHT.create()));
-        pieces.put(new Square(new XPosition("g"), new YPosition("8")), new Knight(PieceColor.BLACK, PathFactory.KNIGHT.create()));
+        pieces.put(new Square(new XPosition("b"), new YPosition("8")), Knight.blackCreate());
+        pieces.put(new Square(new XPosition("g"), new YPosition("8")), Knight.blackCreate());
 
         // Rook
-        pieces.put(new Square(new XPosition("a"), new YPosition("8")), new Rook(PieceColor.BLACK, PathFactory.ROOK.create()));
-        pieces.put(new Square(new XPosition("h"), new YPosition("8")), new Rook(PieceColor.BLACK, PathFactory.ROOK.create()));
+        pieces.put(new Square(new XPosition("a"), new YPosition("8")), Rook.blackCreate());
+        pieces.put(new Square(new XPosition("h"), new YPosition("8")), Rook.blackCreate());
 
         // BishopPath
-        pieces.put(new Square(new XPosition("c"), new YPosition("8")), new Bishop(PieceColor.BLACK, PathFactory.BISHOP.create()));
-        pieces.put(new Square(new XPosition("f"), new YPosition("8")), new Bishop(PieceColor.BLACK, PathFactory.BISHOP.create()));
+        pieces.put(new Square(new XPosition("c"), new YPosition("8")), Bishop.blackCreate());
+        pieces.put(new Square(new XPosition("f"), new YPosition("8")), Bishop.blackCreate());
 
         //Queen
-        pieces.put(new Square(new XPosition("d"), new YPosition("8")), new Queen(PieceColor.BLACK, PathFactory.QUEEN.create()));
+        pieces.put(new Square(new XPosition("d"), new YPosition("8")), Queen.blackCreate());
 
         //King
-        pieces.put(new Square(new XPosition("e"), new YPosition("8")), new King(PieceColor.BLACK, PathFactory.KING.create()));
+        pieces.put(new Square(new XPosition("e"), new YPosition("8")), King.blackCreate());
 
         return pieces;
     }
