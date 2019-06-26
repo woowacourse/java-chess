@@ -8,4 +8,12 @@ public class ChessRound {
         this.whiteTeamScore = whiteTeamScore;
         this.blackTeamScore = blackTeamScore;
     }
+
+    public double getWhiteTeamScore() {
+        return whiteTeamScore;
+    }
+
+    public double getBlackTeamScore() {
+        return blackTeamScore;
+    }
 }
