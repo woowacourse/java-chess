@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DirectionTest {
     @Test
-    void rotationCWTest() {
+    void rotationCWTest1() {
         assertThat(NORTH.rotateClockwise(11)).isEqualTo(SOUTH_EAST);
     }
 
@@ -17,12 +17,22 @@ class DirectionTest {
     }
 
     @Test
-    void rotationCCWTest() {
-        assertThat(NORTH.rotateCounterClockwise(5)).isEqualTo(SOUTH_EAST);
+    void rotationCWTest3() {
+        assertThat(NORTH.rotateClockwise(-3)).isEqualTo(SOUTH_WEST);
     }
 
     @Test
-    void rotationCCW2Test() {
+    void rotationCCWTest1() {
+        assertThat(NORTH.rotateCounterClockwise(45)).isEqualTo(SOUTH_EAST);
+    }
+
+    @Test
+    void rotationCCWTest2() {
         assertThat(NORTH.rotateCounterClockwise(1)).isEqualTo(NORTH_WEST);
+    }
+
+    @Test
+    void rotationCCWTest3() {
+        assertThat(NORTH.rotateCounterClockwise(-11)).isEqualTo(SOUTH_EAST);
     }
 }

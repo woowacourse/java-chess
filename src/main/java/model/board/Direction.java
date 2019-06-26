@@ -33,12 +33,14 @@ public enum Direction {
     }
 
     public Direction rotateClockwise(final int number) {
-        return values()[(this.ordinal() + number) % values().length];
+        return (number >= 0)
+                ? values()[(this.ordinal() + number) % values().length]
+                : rotateCounterClockwise(-number);
     }
 
     public Direction rotateCounterClockwise(final int number) {
-        return rotateClockwise(values().length - number % values().length);
+        return (number >= 0)
+                ? rotateClockwise(values().length - (number % values().length))
+                : rotateClockwise(-number);
     }
-
-    // TODO: 2019-06-25 rotation with large numbers might break
 }

@@ -28,8 +28,8 @@ public class Board {
                             .map(p -> Stream.concat(generatePawns(p), generateOtherPieces(p)))
                             .reduce(Stream::concat)
                             .get()
+                            .sorted()
                             .collect(Collectors.toList());
-        Collections.sort(this.pieces);
     }
 
     private Stream<Piece> generatePawns(final Player owner) {
@@ -108,23 +108,22 @@ public class Board {
         return false;
     }
 
-    public <T extends Piece> boolean changeTypeOfPieceAt(final Position position, final Class<T> targetType)
-            throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
-        if (targetType == Piece.class || targetType == Pawn.class || targetType == King.class) {
+    public <T extends Piece> boolean changeTypeOfPieceAt(final Position position, final Class<T> targetType) {
+        if (targetType.equals(Piece.class) || targetType.equals(Pawn.class) || targetType.equals(King.class)) {
             return false;
         }
-        final Optional<Integer> idx = getIndexOfPieceAt(position);
-        if (idx.isPresent()) {
-            this.pieces.set(
-                    idx.get(),
-                    targetType.getConstructor(new Class[] { Piece.class }).newInstance(this.pieces.get(idx.get()))
-            );
-            return true;
-        }
-        return false;
+        return getIndexOfPieceAt(position).map(i -> {
+            try {
+                this.pieces.set(
+                        i,
+                        targetType.getConstructor(new Class[] { Piece.class }).newInstance(this.pieces.get(i))
+                );
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }).orElse(false);
     }
-
-    //// TODO: 2019-06-26 refactor this;
 
     public Stream<Piece> getPieces() {
         return this.pieces.stream();
