@@ -4,7 +4,7 @@ import model.board.Direction;
 import model.board.Position;
 import model.game.Player;
 
-import java.util.stream.IntStream;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 public class Pawn extends Piece {
@@ -14,16 +14,28 @@ public class Pawn extends Piece {
         super(player, position);
     }
 
+    public Stream<Iterator<Position>> getIteratorsOfPossibleDestinations() {
+        return Stream.of(new Iterator<Position>() {
+            Position current = position;
+            int count = 0;
+
+            @Override
+            public boolean hasNext() {
+                return position.testForward(forward()) && (hasNotMoved()) ? count < 2 : count < 1;
+            }
+
+            @Override
+            public Position next() {
+                count++;
+                return current = current.moveForward(forward());
+            }
+        });
+    }
+
     public Stream<Position> possibleDiagonalDestinations() {
         return Stream.of(forward().rotateClockwise(1), forward().rotateCounterClockwise(1))
                     .map(this.position::moveForwardSafe)
                     .flatMap(x -> x.map(Stream::of).orElseGet(Stream::empty));
-    }
-
-    public Stream<Position> possibleForwardDestinations() {
-        return IntStream.rangeClosed(1, (hasNotMoved()) ? 2 : 1)
-                        .mapToObj(i -> this.position.moveForwardSafe(forward(), i))
-                        .flatMap(x -> x.map(Stream::of).orElseGet(Stream::empty));
     }
 
     private Direction forward() {
