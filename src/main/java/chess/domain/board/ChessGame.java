@@ -7,6 +7,7 @@ import chess.domain.piece.core.Type;
 import java.util.stream.IntStream;
 
 public class ChessGame {
+    private static final int HALF_SCORE = 2;
     private Board board;
 
     public ChessGame(Board board) {
@@ -45,7 +46,7 @@ public class ChessGame {
     private double calculateDuplicateScore(Team team, int column) {
         int pawnCount = countDuplicate(team, Type.PAWN, column);
         if (pawnCount > 1) {
-            return pawnCount * Type.PAWN.getScore() / 2;
+            return pawnCount * Type.PAWN.getScore() / HALF_SCORE;
         }
         return 0;
     }

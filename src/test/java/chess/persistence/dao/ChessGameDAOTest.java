@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessGameDAOTest {
-
     @Test
     void 게임_진행과정_데이터_데이터베이스에_잘들어가는지_테스트() {
         ChessGameDTO chessGameDTO = new ChessGameDTO();

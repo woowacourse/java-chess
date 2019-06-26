@@ -12,6 +12,7 @@ public class BoardGeneratorService {
 
     public ChessBoardDTO request(ChessGameDTO chessGameDTO) {
         ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
+
         try {
             chessBoardDTO.setGameId(chessGameDTO.getGameId());
             chessBoardDTO.setRoundNo(ChessBoardDAO.getInstance().findMaxRoundByGameId(chessGameDTO.getGameId()));

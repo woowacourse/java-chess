@@ -14,7 +14,6 @@ public class ChessGameStatusService {
     }
 
     public ChessGameStatusDto request(ChessGameDTO chessGameDTO, ChessBoardDTO chessBoardDTO) {
-
         ChessGameStatusDto chessGameStatusDto = new ChessGameStatusDto();
         chessGameStatusDto.setGameId(chessGameDTO.getGameId());
         chessGameStatusDto.setRoundNo(chessBoardDTO.getRoundNo());

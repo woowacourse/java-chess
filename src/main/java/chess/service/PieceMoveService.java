@@ -13,6 +13,8 @@ import chess.persistence.dto.ChessGameDTO;
 import chess.persistence.dto.ChessMoveDTO;
 
 public class PieceMoveService {
+    private static final int PLUS_ROUND_NUMBER = 1;
+
     public static PieceMoveService getInstance() {
         return PieceMoveServiceHolder.INSTANCE;
     }
@@ -23,7 +25,7 @@ public class PieceMoveService {
         chessGameDTO.setLastUser(newBoard.getTeam().getTeam());
         chessGameDTO.setGameStatus(new ChessGame(newBoard).isGameOver());
 
-        chessBoardDTO.setRoundNo(chessBoardDTO.getRoundNo() + 1);
+        chessBoardDTO.setRoundNo(chessBoardDTO.getRoundNo() + PLUS_ROUND_NUMBER);
         chessBoardDTO.setBoard(newBoard.getBoard());
 
         ChessBoardDAO.getInstance().addBoardStatus(chessBoardDTO);

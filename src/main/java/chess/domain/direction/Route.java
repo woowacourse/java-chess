@@ -9,6 +9,11 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Route {
+    private static final int FIRST = 0;
+    private static final int LAST_MINUS = 1;
+    private static final int START_RANGE = 1;
+    private static final int MINUS_END_RANGE = 2;
+
     private List<Square> squares;
     private MoveStrategy moveStrategy;
 
@@ -22,11 +27,11 @@ public class Route {
     }
 
     public Square getSourceSquare() {
-        return squares.get(0);
+        return squares.get(FIRST);
     }
 
     public Square getTargetSquare() {
-        return squares.get(squares.size() - 1);
+        return squares.get(squares.size() - LAST_MINUS);
     }
 
     public boolean canMove(Board board) {
@@ -35,7 +40,7 @@ public class Route {
     }
 
     private boolean isPieceInRoute(Board board) {
-        return IntStream.rangeClosed(1, squares.size() - 2)
+        return IntStream.rangeClosed(START_RANGE, squares.size() - MINUS_END_RANGE)
                 .mapToObj(index -> board.hasPiece(squares.get(index)))
                 .reduce(false, (a, b) -> a || b)
                 ;

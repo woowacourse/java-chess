@@ -14,7 +14,6 @@ import static chess.domain.piece.core.Team.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessBoardDAOTest {
-
     @Test
     void 보드상황판_라운드_별로_데이터_저장하는_테스트() {
         assertThat(ChessBoardDAO.getInstance().addBoardStatus(boardStatusDTO())).isEqualTo(14);

@@ -26,6 +26,10 @@ public enum Direction {
         this.unit = unit;
     }
 
+    public Square move(Square square) {
+        return Square.of(square.getX() + unit.getX(), square.getY() + unit.getY());
+    }
+
     public static Direction valuesOf(Square source, Square target) {
         return Arrays.stream(values())
                 .filter(e -> e.checkDirection(source, target))
@@ -33,15 +37,11 @@ public enum Direction {
                 .orElse(null);
     }
 
-    public Square move(Square square) {
-        return Square.of(square.getX() + unit.getX(), square.getY() + unit.getY());
-    }
-
     public boolean checkDirection(Square source, Square target) {
         int vectorX = target.getX() - source.getX();
         int vectorY = target.getY() - source.getY();
 
-        double scalar = unit.getX() != 0 ? vectorX * 1.0 / unit.getX() : vectorY * 1.0 / unit.getY();
+        double scalar = unit.getX() != 0 ? ((double) vectorX) / unit.getX() : ((double) vectorY) / unit.getY();
         return !(scalar < 0) && ((scalar * unit.getX() == vectorX) && (scalar * unit.getY() == vectorY));
     }
 
@@ -49,7 +49,7 @@ public enum Direction {
         int vectorX = target.getX() - source.getX();
         int vectorY = target.getY() - source.getY();
 
-        return unit.getX() != 0 ? vectorX * 1.0 / unit.getX() : vectorY * 1.0 / unit.getY();
+        return unit.getX() != 0 ? ((double) vectorX) / unit.getX() : ((double) vectorY) / unit.getY();
     }
 
     public Square calculateSquare(Square source, int step) {
