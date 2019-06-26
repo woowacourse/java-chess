@@ -25,7 +25,7 @@ public enum Direction {
         return Arrays.stream(values())
                 .filter(direction -> direction.isParallelTo(vector))
                 .findAny()
-                .orElseThrow(() -> new IllegalDirectionException("ㅁ"));
+                .orElseThrow(() -> new IllegalDirectionException("올바르지 않은 방향입니다."));
     }
 
     public static List<Direction> plusShape() {

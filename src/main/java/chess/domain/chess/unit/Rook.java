@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Unit {
-    private static final double SCORE = 5;
-    private static final String NAME = "Rook";
-    private static final String SYMBOL = "R";
-
     private static List<Direction> directions;
 
     static {
@@ -19,7 +15,7 @@ public class Rook extends Unit {
     }
 
     public Rook(Team team) {
-        super(team, NAME);
+        super(team, Attribute.ROOK);
     }
 
     @Override
@@ -29,12 +25,7 @@ public class Rook extends Unit {
     }
 
     @Override
-    public double score() {
-        return SCORE;
-    }
-
-    @Override
     public String toString() {
-        return getTeam().getUnitName(SYMBOL);
+        return getTeam().getUnitName(getSymbol());
     }
 }

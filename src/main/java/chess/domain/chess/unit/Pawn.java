@@ -14,8 +14,6 @@ public class Pawn extends Unit {
     private static final double FIRST_MOVE_DISTANCE = 2;
     private static final double ONE_ROW = 1;
     private static final double SIX_ROW = 6;
-    private static final String NAME = "Pawn";
-    private static final String SYMBOL = "P";
 
     private static List<Direction> whiteDirections;
     private static List<Direction> blackDirections;
@@ -26,7 +24,7 @@ public class Pawn extends Unit {
     }
 
     public Pawn(Team team) {
-        super(team, NAME);
+        super(team, Attribute.PAWN);
     }
 
     @Override
@@ -60,13 +58,8 @@ public class Pawn extends Unit {
     }
 
     @Override
-    public double score() {
-        return SCORE;
-    }
-
-    @Override
     public String toString() {
-        return getTeam().getUnitName(SYMBOL);
+        return getTeam().getUnitName(getSymbol());
     }
 }
 

@@ -10,10 +10,6 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class King extends Unit {
-    private static final double SCORE = 0;
-    private static final String NAME = "King";
-    private static final String SYMBOL = "K";
-
     private static List<Direction> directions;
 
     static {
@@ -22,7 +18,7 @@ public class King extends Unit {
     }
 
     public King(Team team) {
-        super(team, NAME);
+        super(team, Attribute.KING);
     }
 
     @Override
@@ -32,13 +28,8 @@ public class King extends Unit {
     }
 
     @Override
-    public double score() {
-        return SCORE;
-    }
-
-    @Override
     public String toString() {
-        return getTeam().getUnitName(SYMBOL);
+        return getTeam().getUnitName(getSymbol());
     }
 
 }

@@ -1,4 +1,4 @@
-package chess.domain.chess.dto;
+package chess.dto;
 
 import chess.domain.chess.unit.Unit;
 import chess.domain.geometric.Position;

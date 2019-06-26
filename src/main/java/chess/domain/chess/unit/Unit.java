@@ -5,15 +5,14 @@ import chess.domain.geometric.Vector;
 
 abstract public class Unit {
     private Team team;
-    private String name;
+    private Attribute attribute;
 
-    public Unit(Team team, String name) {
+    public Unit(Team team, Attribute attribute) {
         this.team = team;
-        this.name = name;
+        this.attribute = attribute;
     }
 
     public abstract boolean validateDirection(Vector vector);
-    public abstract double score();
 
     public boolean isEqualTeam(Unit unit) {
         return this.team.equals(unit.team);
@@ -24,6 +23,14 @@ abstract public class Unit {
     }
 
     public String getName() {
-        return this.name;
+        return attribute.name();
+    }
+
+    public String getSymbol() {
+        return attribute.getSymbol();
+    }
+
+    public double getScore() {
+        return attribute.getScore();
     }
 }

@@ -2,10 +2,7 @@ package chess.controller;
 
 import chess.domain.chess.ChessBoard;
 import chess.domain.chess.Team;
-import chess.domain.chess.dao.ChessBoardDAO;
-import chess.domain.chess.dto.ChessBoardDTO;
-import chess.domain.chess.initializer.ChessBoardInitializer;
-import chess.domain.geometric.Position;
+import chess.dto.ChessBoardDTO;
 import chess.service.ChessBoardService;
 import chess.util.DBConnection;
 import com.google.gson.Gson;

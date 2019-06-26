@@ -19,6 +19,7 @@ import java.util.stream.IntStream;
 public class ChessBoard {
     private static final int KING_INIT_COUNT = 2;
     private static final double PAWN_BASIC_SCORE = 1;
+    private static final double PAWN_HALF_SCORE = PAWN_BASIC_SCORE / 2;
     private static final int PAWN_HORIZONTAL_COUNT = 2;
     private static final int ZERO = 0;
 
@@ -133,7 +134,7 @@ public class ChessBoard {
 
     private double singleUnitScore(Team team, Position position) {
         if (units.get(position).getTeam() == team && (!(units.get(position) instanceof Pawn))) {
-            return units.get(position).score();
+            return units.get(position).getScore();
         }
         return ZERO;
     }
@@ -157,7 +158,7 @@ public class ChessBoard {
         if (count < PAWN_HORIZONTAL_COUNT) {
             return PAWN_BASIC_SCORE;
         }
-        return PAWN_BASIC_SCORE / 2;
+        return PAWN_HALF_SCORE;
     }
 
     public void changeTeam() {

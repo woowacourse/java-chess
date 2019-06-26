@@ -7,10 +7,6 @@ import chess.domain.geometric.Vector;
 import java.util.List;
 
 public class Bishop extends Unit {
-    private static final double SCORE = 3;
-    private static final String NAME = "Bishop";
-    private static final String SYMBOL = "B";
-
     private static List<Direction> directions;
 
     static {
@@ -18,7 +14,7 @@ public class Bishop extends Unit {
     }
 
     public Bishop(Team team) {
-        super(team, NAME);
+        super(team, Attribute.BISHOP);
     }
 
     @Override
@@ -28,12 +24,7 @@ public class Bishop extends Unit {
     }
 
     @Override
-    public double score() {
-        return SCORE;
-    }
-
-    @Override
     public String toString() {
-        return getTeam().getUnitName(SYMBOL);
+        return getTeam().getUnitName(getSymbol());
     }
 }

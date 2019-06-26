@@ -7,16 +7,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.*;
+
 
 public class Position {
     public static final int MIN_POSITION = 0;
     public static final int MAX_POSITION = 8;
-    private static final List<List<Position>> positions;
+    private static final List<Position> positions;
+
 
     static {
-        positions = IntStream.range(MIN_POSITION, MAX_POSITION)
-                        .mapToObj(Position::createPosition)
-                        .collect(Collectors.toList());
+        positions = new ArrayList<>();
+
+        for (int i = MIN_POSITION; i < MAX_POSITION; i++) {
+            createPosition(i);
+        }
     }
 
     private final int x;
@@ -29,10 +36,10 @@ public class Position {
         this.y = y;
     }
 
-    private static List<Position> createPosition(int i) {
-        return IntStream.range(MIN_POSITION, MAX_POSITION)
-                .mapToObj((j) -> new Position(i, j))
-                .collect(Collectors.toList());
+    private static void createPosition(int row) {
+        for (int column = MIN_POSITION; column < MAX_POSITION; column++) {
+            positions.add(new Position(row, column));
+        }
     }
 
     private void validatePosition(final int x) {
@@ -42,7 +49,7 @@ public class Position {
     }
 
     public static Position create(final int x, final int y) {
-        return positions.get(x).get(y);
+        return positions.get(MAX_POSITION * x + y);
     }
 
     public int calculateXDistance(Position position) {
