@@ -8,6 +8,7 @@ import chess.service.ChessGameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.*;
 
 import static spark.Spark.*;
@@ -21,11 +22,10 @@ public class WebUIChessApplication {
 		});
 
 		get("/new", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-
-			ChessBoard chessBoard = ChessPiece.generateChessBoard(new ChessInitialPosition());
-			ChessGame chessGame = new ChessGame(chessBoard);
+			ChessGame chessGame = loadInitialChessGame();
 			int roomNumber = ChessGameService.saveInitialChessGame(chessGame);
+
+			Map<String, Object> model = new HashMap<>();
 			model.put("turn", chessGame.getCurrentPlayer().name());
 			model.put("roomNumber", roomNumber);
 			model.put("board", ChessGameService.getPieceImages(chessGame));
@@ -39,17 +39,10 @@ public class WebUIChessApplication {
 		});
 
 		post("/load", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
 			int roomNumber = Integer.parseInt(req.queryParams("room-number"));
+			ChessGame chessGame = loadChessGame(roomNumber);
 
-			Player turn = ChessGameService.loadTurn(roomNumber);
-			ChessBoard chessBoard = new ChessBoard();
-			List<Piece> pieces = ChessGameService.loadChessPieces(roomNumber);
-			for (Piece piece : pieces) {
-				chessBoard.addPiece(piece);
-			}
-			ChessGame chessGame = new ChessGame(turn, chessBoard);
-
+			Map<String, Object> model = new HashMap<>();
 			model.put("turn", chessGame.getCurrentPlayer().name());
 			model.put("roomNumber", roomNumber);
 			model.put("board", ChessGameService.getPieceImages(chessGame));
@@ -59,13 +52,8 @@ public class WebUIChessApplication {
 		post("/move", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			int roomNumber = Integer.parseInt(req.queryParams("room-number"));
-			Player turn = ChessGameService.loadTurn(roomNumber);
-			List<Piece> pieces = ChessGameService.loadChessPieces(roomNumber);
-			ChessBoard chessBoard = new ChessBoard();
-			for (Piece piece : pieces) {
-				chessBoard.addPiece(piece);
-			}
-			ChessGame chessGame = new ChessGame(turn, chessBoard);
+			ChessGame chessGame = loadChessGame(roomNumber);
+
 			int startX = Integer.parseInt(req.queryParams("start-x"));
 			int startY = Integer.parseInt(req.queryParams("start-y"));
 			int endX = Integer.parseInt(req.queryParams("end-x"));
@@ -79,6 +67,7 @@ public class WebUIChessApplication {
 			}
 
 			ChessGameService.saveChessGame(roomNumber, chessGame);
+
 			model.put("turn", chessGame.getCurrentPlayer().name());
 			model.put("roomNumber", roomNumber);
 			model.put("board", ChessGameService.getPieceImages(chessGame));
@@ -86,16 +75,10 @@ public class WebUIChessApplication {
 		});
 
 		post("/status", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
 			int roomNumber = Integer.parseInt(req.queryParams("room-number"));
-			Player turn = ChessGameService.loadTurn(roomNumber);
-			List<Piece> pieces = ChessGameService.loadChessPieces(roomNumber);
-			ChessBoard chessBoard = new ChessBoard();
-			for (Piece piece : pieces) {
-				chessBoard.addPiece(piece);
-			}
-			ChessGame chessGame = new ChessGame(turn, chessBoard);
+			ChessGame chessGame = loadChessGame(roomNumber);
 
+			Map<String, Object> model = new HashMap<>();
 			model.put("winner", "승자 : " + chessGame.findWinner().name());
 			model.put("whiteScore", "백 점수 : " + chessGame.getPlayerScore(Player.WHITE).getScore());
 			model.put("blackScore", "흑 점수 : " + chessGame.getPlayerScore(Player.BLACK).getScore());
@@ -115,5 +98,21 @@ public class WebUIChessApplication {
 
 	private static String render(Map<String, Object> model, String templatePath) {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+	}
+
+	private static ChessGame loadInitialChessGame() throws SQLException {
+		ChessBoard initialChessBoard = ChessPiece.generateChessBoard(new ChessInitialPosition());
+		return new ChessGame(initialChessBoard);
+	}
+
+
+	private static ChessGame loadChessGame(int roomNumber) throws SQLException {
+		Player turn = ChessGameService.loadTurn(roomNumber);
+		ChessBoard chessBoard = new ChessBoard();
+		List<Piece> pieces = ChessGameService.loadChessPieces(roomNumber);
+		for (Piece piece : pieces) {
+			chessBoard.addPiece(piece);
+		}
+		return new ChessGame(turn, chessBoard);
 	}
 }
