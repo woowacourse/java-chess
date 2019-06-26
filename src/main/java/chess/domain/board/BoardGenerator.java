@@ -22,7 +22,7 @@ public class BoardGenerator {
     }
 
     private static Map<Position, Piece> fillPieces(List<List<String>> rows) {
-        Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, Piece> pieces = new LinkedHashMap<>();
 
         IntStream.rangeClosed(MIN_BOUND, MAX_BOUND)
                 .forEach(row -> pieces.putAll(fillRow(rows, row)));
@@ -30,7 +30,7 @@ public class BoardGenerator {
     }
 
     private static Map<Position, Piece> fillRow(List<List<String>> rows, int row) {
-        Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, Piece> pieces = new LinkedHashMap<>();
 
         IntStream.rangeClosed(MIN_BOUND, MAX_BOUND)
                 .forEach(col -> {
