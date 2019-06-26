@@ -11,7 +11,6 @@ import chess.domain.piece.core.Type;
 import java.util.Arrays;
 
 public class Rook extends Piece {
-
     public Rook(Team team) {
         super(team, Type.ROOK, new Navigator(
                 Arrays.asList(

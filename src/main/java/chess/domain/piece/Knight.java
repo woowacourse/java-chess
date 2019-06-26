@@ -11,7 +11,6 @@ import chess.domain.piece.core.Type;
 import java.util.Arrays;
 
 public class Knight extends Piece {
-
     public Knight(Team team) {
         super(team, Type.KNIGHT, new Navigator(
                 Arrays.asList(

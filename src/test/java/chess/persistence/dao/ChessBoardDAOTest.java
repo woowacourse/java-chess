@@ -33,7 +33,7 @@ class ChessBoardDAOTest {
         assertThat(ChessBoardDAO.getInstance().findMaxRoundByGameId(1)).isEqualTo(testDTO);
     }
 
-    private ChessBoardDTO boardStatusDTO(){
+    private ChessBoardDTO boardStatusDTO() {
         Map<Square, Piece> testBoard = Maps.newHashMap();
 
         testBoard.put(Square.of(1, 0), new King(BLACK));

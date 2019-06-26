@@ -1,10 +1,10 @@
 package chess.persistence.dto;
 
 public class ChessMoveDTO {
-    int sourceX;
-    int sourceY;
-    int targetX;
-    int targetY;
+    private int sourceX;
+    private int sourceY;
+    private int targetX;
+    private int targetY;
 
     public int getSourceX() {
         return sourceX;

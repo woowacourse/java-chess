@@ -4,7 +4,7 @@ public class ChessRound {
     double whiteTeamScore;
     double blackTeamScore;
 
-    public ChessRound(double whiteTeamScore, double blackTeamScore) {
+    ChessRound(double whiteTeamScore, double blackTeamScore) {
         this.whiteTeamScore = whiteTeamScore;
         this.blackTeamScore = blackTeamScore;
     }

@@ -11,7 +11,6 @@ import chess.domain.piece.core.Type;
 import java.util.Arrays;
 
 public class King extends Piece {
-
     public King(Team team) {
         super(team, Type.KING, new Navigator(
                 Arrays.asList(

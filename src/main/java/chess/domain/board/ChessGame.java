@@ -28,13 +28,13 @@ public class ChessGame {
         return board.hasPiece(Team.WHITE, Type.KING) ? Team.WHITE : Team.BLACK;
     }
 
-    double calculateScore(Team team) {
+    private double calculateScore(Team team) {
         return IntStream.range(Board.MIN_SIZE, Board.MAX_SIZE)
                 .mapToObj(column -> this.calculateScore(team, column))
                 .reduce(0.0, Double::sum);
     }
 
-    double calculateScore(Team team, int column) {
+    private double calculateScore(Team team, int column) {
         double totalScore = IntStream.range(Board.MIN_SIZE, Board.MAX_SIZE)
                 .filter(rank -> board.hasPiece(Square.of(column, rank), team))
                 .mapToObj(rank -> board.getPiece(Square.of(column, rank)).getScore())
@@ -42,7 +42,7 @@ public class ChessGame {
         return totalScore - calculateDuplicateScore(team, column);
     }
 
-    double calculateDuplicateScore(Team team, int column) {
+    private double calculateDuplicateScore(Team team, int column) {
         int pawnCount = countDuplicate(team, Type.PAWN, column);
         if (pawnCount > 1) {
             return pawnCount * Type.PAWN.getScore() / 2;
@@ -50,7 +50,7 @@ public class ChessGame {
         return 0;
     }
 
-    int countDuplicate(Team team, Type type, int column) {
+    private int countDuplicate(Team team, Type type, int column) {
         return (int) IntStream.range(Board.MIN_SIZE, Board.MAX_SIZE)
                 .filter(rank -> board.hasPiece(Square.of(column, rank), team, type))
                 .count()

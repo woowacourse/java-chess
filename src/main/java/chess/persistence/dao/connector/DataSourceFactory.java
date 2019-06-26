@@ -15,7 +15,7 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
     private static DataSourceFactory instance;
     private static MysqlDataSource ds;
 
-    public static DataSourceFactory getInstance(){
+    public static DataSourceFactory getInstance() {
         return instance == null ? instance = new DataSourceFactory() : instance;
     }
 
@@ -23,7 +23,7 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
     public DataSource create() {
         try {
             Properties properties = loadProperty();
-            if(ds == null) {
+            if (ds == null) {
                 ds = new MysqlDataSource();
             }
             ds.setUser(properties.getProperty("user"));
@@ -40,7 +40,7 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
         }
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         try {
             return create().getConnection();
         } catch (SQLException e) {

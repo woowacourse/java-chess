@@ -11,7 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static chess.domain.piece.core.Team.*;
+import static chess.domain.piece.core.Team.BLACK;
+import static chess.domain.piece.core.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {

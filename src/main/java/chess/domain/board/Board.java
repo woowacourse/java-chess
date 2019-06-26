@@ -46,15 +46,15 @@ public class Board {
         return board.containsKey(source);
     }
 
-    public boolean hasPiece(Square source, Team team) {
+    boolean hasPiece(Square source, Team team) {
         return board.containsKey(source) && getPiece(source).isTeam(team);
     }
 
-    public boolean hasPiece(Square source, Team team, Type type) {
+    boolean hasPiece(Square source, Team team, Type type) {
         return board.containsKey(source) && getPiece(source).isTeam(team) && getPiece(source).isType(type);
     }
 
-    public boolean hasPiece(Team team, Type type) {
+    boolean hasPiece(Team team, Type type) {
         return board.entrySet().stream()
                 .filter(e -> e.getValue().isTeam(team) && e.getValue().isType(type))
                 .count() > 0;

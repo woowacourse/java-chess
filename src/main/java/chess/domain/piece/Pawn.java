@@ -14,7 +14,6 @@ import java.util.Arrays;
 import static chess.domain.piece.core.Type.MOVEDPAWN;
 
 public class Pawn extends Piece {
-
     public Pawn(Team team) {
         super(team, Type.PAWN);
         navigator = generateNavigator(team);

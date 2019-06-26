@@ -14,20 +14,20 @@ public class Square {
         this.y = y;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public static Square of(int x, int y) {
         String key = String.format("(%d,%d)", x, y);
         if (!squareMap.containsKey(key)) {
             squareMap.put(key, new Square(x, y));
         }
         return squareMap.get(key);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     Square multiply(int scalar) {
