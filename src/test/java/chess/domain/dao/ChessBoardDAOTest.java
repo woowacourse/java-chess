@@ -16,13 +16,7 @@ import java.util.List;
 public class ChessBoardDAOTest {
     private Connection connection = DBConnection.getConnection();
 
-    @Test
-    void 삽입() throws SQLException {
-        ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
-        ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
-        chessBoardDAO.add(chessBoard, Team.WHITE);
-    }
 
     @Test
     void 업데이트() throws SQLException {
@@ -46,7 +40,6 @@ public class ChessBoardDAOTest {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
         List<Integer> ids = chessBoardDAO.getIdList();
-        System.out.println(ids);
 
     }
 }

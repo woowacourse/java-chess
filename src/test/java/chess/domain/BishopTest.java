@@ -64,4 +64,9 @@ public class BishopTest {
                 .isEqualTo(false);
     }
 
+    @Test
+    void unit_class() {
+
+    }
+
 }

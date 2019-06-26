@@ -10,6 +10,7 @@ import chess.domain.geometric.Direction;
 import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -21,6 +22,7 @@ public class ChessBoard {
     public ChessBoard(Initializer initializer) {
         this.units = initializer.create();
         this.present = initializer.createTeam();
+
     }
 
     public Optional<Unit> getUnit(Position position) {
@@ -138,7 +140,7 @@ public class ChessBoard {
     }
 
     public Map<Position, Unit> getUnits() {
-        return units;
+        return Collections.unmodifiableMap(units);
     }
 
     public Team getTeam() {
