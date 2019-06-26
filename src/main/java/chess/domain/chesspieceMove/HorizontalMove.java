@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class HorizontalMove implements Move {
+    private static final int HORIZONTAL_LINE = 1;
+
     private static HorizontalMove horizontalMove;
 
     public static HorizontalMove getInstance() {
@@ -35,6 +37,6 @@ public class HorizontalMove implements Move {
     @Override
     public boolean isInRoute(Position source, Position target) {
         return !source.equals(target)
-                && source.isInLine(target) == 1;
+                && source.isInLine(target) == HORIZONTAL_LINE;
     }
 }

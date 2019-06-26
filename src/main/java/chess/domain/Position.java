@@ -9,6 +9,11 @@ public class Position {
     private static final int MIN = 0;
     private static final int MAX = 7;
     private static final int SQUARE_ROOT = 2;
+    private static final int HORIZONTAL_LINE = 1;
+    private static final int VERTICAL_LINE = 0;
+    private static final int Y = 1;
+    private static final int X = 0;
+    private static final String DELIMITER = ",";
 
     private final int x;
     private final int y;
@@ -33,9 +38,9 @@ public class Position {
     }
 
     public static Position from(String position) {
-        String[] numbers = position.split(",");
+        String[] numbers = position.split(DELIMITER);
 
-        return Position.of(Integer.parseInt(numbers[1]), Integer.parseInt(numbers[0]));
+        return Position.of(Integer.parseInt(numbers[Y]), Integer.parseInt(numbers[X]));
     }
 
     public boolean isSameColumn(Position position) {
@@ -59,11 +64,11 @@ public class Position {
 
     public int isInLine(Position target) {
         if (this.x == target.x) {
-            return 0;
+            return VERTICAL_LINE;
         }
 
         if (this.y == target.y) {
-            return 1;
+            return HORIZONTAL_LINE;
         }
 
         return -1;
@@ -79,6 +84,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return x + "," + y;
+        return x + DELIMITER + y;
     }
 }

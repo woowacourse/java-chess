@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Knight extends ChessPiece {
-    public static final double SCORE = 2.5;
+    private static final double SCORE = 2.5;
 
     public Knight(Team team) {
         super(team);

@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ChessRoundDao {
+    private static final int MIN_SIZE = 1;
+
     private static ChessRoundDao chessRoundDao;
 
     public static ChessRoundDao getInstance() {
@@ -51,7 +53,6 @@ public class ChessRoundDao {
 
             chessInfoDtos.add(new ChessInfoDto(turn, source, target));
         }
-        System.out.println(chessInfoDtos);
         return chessInfoDtos;
     }
 
@@ -64,7 +65,7 @@ public class ChessRoundDao {
 
         List<Map<String, Object>> results = jdbcTemplate.executeQuery(query, queryValues);
 
-        if (results.size() < 1) {
+        if (results.size() < MIN_SIZE) {
             return 0;
         }
 
@@ -78,7 +79,7 @@ public class ChessRoundDao {
 
         List<Map<String, Object>> results = jdbcTemplate.executeQuery(query);
 
-        if (results.size() < 1) {
+        if (results.size() < MIN_SIZE) {
             return 0;
         }
 

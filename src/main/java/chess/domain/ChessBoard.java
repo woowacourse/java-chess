@@ -17,6 +17,7 @@ public class ChessBoard {
     private static final int BLACK_TEAM_PAWNS_AREA = 1;
     private static final int WHITE_TEAM_AREA = 7;
     private static final int WHITE_TEAM_PAWNS_AREA = 6;
+    private static final int ONE_LINE = 1;
     private static final double INLINE_PAWN_SCORE = 0.5;
 
     private Map<Position, ChessPiece> chessBoard = new HashMap<>();
@@ -57,32 +58,11 @@ public class ChessBoard {
         return score;
     }
 
-    private double calculateColumn(Team team, int column) {
-        long inLinePawnCount = getInLinePawnCount(team, column);
-
-        double scoreSum = IntStream.rangeClosed(FIRST_COLUMN, LAST_COLUMN)
-                .mapToObj(i -> chessBoard.get(Position.of(i, column)))
-                .filter(chessPiece -> chessPiece.isSameTeam(team))
-                .mapToDouble(ChessPiece::getScore)
-                .reduce(Double::sum).getAsDouble();
-
-        return inLinePawnCount > 1 ? scoreSum - inLinePawnCount * INLINE_PAWN_SCORE : scoreSum;
+    public boolean isNextTeam(Position source, Team team) {
+        return chessBoard.get(source).isSameTeam(team);
     }
 
-    private long getInLinePawnCount(Team team, int j) {
-        return IntStream.rangeClosed(FIRST_COLUMN, LAST_COLUMN)
-                .mapToObj(i -> chessBoard.get(Position.of(i, j)))
-                .filter(chessPiece -> chessPiece.getClass() == Pawn.class && chessPiece.isSameTeam(team))
-                .count();
-    }
-
-    private void checkGameOver(Position target) {
-        if (chessBoard.get(target).getClass() == King.class) {
-            gameOver = true;
-        }
-    }
-
-      boolean canMove(Position source, Position target) {
+    boolean canMove(Position source, Position target) {
         ChessPiece sourceChessPiece = chessBoard.get(source);
         List<Position> route;
         try {
@@ -102,6 +82,31 @@ public class ChessBoard {
                 && route.stream()
                 .filter(position -> position != target)
                 .allMatch(position -> isSameChessPiece(chessBoard.get(position), Blank.class));
+    }
+
+    private double calculateColumn(Team team, int column) {
+        long inLinePawnCount = getInLinePawnCount(team, column);
+
+        double scoreSum = IntStream.rangeClosed(FIRST_COLUMN, LAST_COLUMN)
+                .mapToObj(i -> chessBoard.get(Position.of(i, column)))
+                .filter(chessPiece -> chessPiece.isSameTeam(team))
+                .mapToDouble(ChessPiece::getScore)
+                .reduce(Double::sum).getAsDouble();
+
+        return inLinePawnCount > ONE_LINE ? scoreSum - inLinePawnCount * INLINE_PAWN_SCORE : scoreSum;
+    }
+
+    private long getInLinePawnCount(Team team, int j) {
+        return IntStream.rangeClosed(FIRST_COLUMN, LAST_COLUMN)
+                .mapToObj(i -> chessBoard.get(Position.of(i, j)))
+                .filter(chessPiece -> chessPiece.getClass() == Pawn.class && chessPiece.isSameTeam(team))
+                .count();
+    }
+
+    private void checkGameOver(Position target) {
+        if (chessBoard.get(target).getClass() == King.class) {
+            gameOver = true;
+        }
     }
 
     private Boolean canMovePawns(Position source, Position target, List<Position> route) {
@@ -157,9 +162,5 @@ public class ChessBoard {
 
     private boolean isSameChessPiece(ChessPiece chessPiece, Type type) {
         return chessPiece.getClass().getTypeName().equals(type.getTypeName());
-    }
-
-    public boolean isNextTeam(Position source, Team team) {
-        return chessBoard.get(source).isSameTeam(team);
     }
 }

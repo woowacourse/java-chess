@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Bishop extends ChessPiece {
-    public static final double SCORE = 3;
+    private static final double SCORE = 3;
 
     public Bishop(Team team) {
         super(team);

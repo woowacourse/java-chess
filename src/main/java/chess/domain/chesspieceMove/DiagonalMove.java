@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class DiagonalMove implements Move {
+    private static final int MIN = 1;
+
     private static DiagonalMove diagonalMove;
 
     public static DiagonalMove getInstance() {
@@ -27,7 +29,7 @@ public class DiagonalMove implements Move {
         int signY = target.calculateRowDistance(source) / Math.abs(target.calculateRowDistance(source));
         int count = Math.abs(source.calculateColumnDistance(target));
 
-        return IntStream.rangeClosed(1, count)
+        return IntStream.rangeClosed(MIN, count)
                 .mapToObj(i -> Position.of(source.getY() + i * signY, source.getX() + i * signX))
                 .collect(Collectors.toList());
     }

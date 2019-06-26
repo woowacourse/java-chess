@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Pawn extends ChessPiece {
-    public static final int SCORE = 1;
+    private static final int SCORE = 1;
 
     public Pawn(Team team) {
         super(team);

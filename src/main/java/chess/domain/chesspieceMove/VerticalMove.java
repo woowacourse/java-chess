@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class VerticalMove implements Move {
+    private static int VERTICAL_LINE = 0;
+
     private static VerticalMove verticalMove;
 
     public static VerticalMove getInstance() {
@@ -35,6 +37,6 @@ public class VerticalMove implements Move {
     @Override
     public boolean isInRoute(Position source, Position target) {
         return !source.equals(target)
-                && source.isInLine(target) == 0;
+                && source.isInLine(target) == VERTICAL_LINE;
     }
 }

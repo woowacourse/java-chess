@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class ChessService {
+    private static final int WHITE_TEAM = 0;
+    private static final int NEXT_NUMBER = 1;
+    private static final int OPERATOR_NUMBER = 2;
+
     private static ChessService chessService;
     private static ChessRoundDao chessRoundDao = ChessRoundDao.getInstance();
 
@@ -38,18 +42,25 @@ public class ChessService {
         Position target = Position.of(chessPositionDto.getTargetY(), chessPositionDto.getTargetX());
         int turn = ChessRoundDao.getInstance().selectTurnByRoundId(roundId);
 
-        Team team = turn == 0 ? Team.WHITE : Team.BLACK;
-
-        System.out.println(team);
+        Team team = getTeam(turn);
 
         if (!chessBoard.isNextTeam(source, team) || !chessBoard.movePiece(source, target)) {
             throw new IllegalArgumentException();
         }
 
-        ChessRoundDao.getInstance().insertChessInfoByRoundId(roundId, new ChessInfoDto(String.valueOf((turn + 1) % 2), source.toString(), target.toString()));
+        ChessRoundDao
+                .getInstance()
+                .insertChessInfoByRoundId(
+                        roundId
+                        , new ChessInfoDto(String.valueOf((turn + NEXT_NUMBER) % OPERATOR_NUMBER)
+                                , source.toString()
+                                , target.toString()));
 
-        System.out.println(chessBoard.getChessBoard());
         return ChessAssembler.toDto(chessBoard);
+    }
+
+    private Team getTeam(int turn) {
+        return turn == WHITE_TEAM ? Team.WHITE : Team.BLACK;
     }
 
     private ChessBoard getMovedChessBoard(int roundId) {

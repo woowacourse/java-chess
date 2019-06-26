@@ -9,6 +9,7 @@ import java.util.Objects;
 public class KnightMove implements Move {
     private static final int MAX_DISTANCE = 2;
     private static final int MIN_DISTANCE = 1;
+
     private static KnightMove knightMove;
 
     public static KnightMove getInstance() {

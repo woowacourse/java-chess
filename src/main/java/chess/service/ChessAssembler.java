@@ -13,16 +13,26 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class ChessAssembler {
+    private static final int MIN_LINE = 0;
+    private static final int MAX_LINE = 7;
+    private static final String KING = "K";
+    private static final String QUEEN = "Q";
+    private static final String ROOK = "R";
+    private static final String BISHOP = "B";
+    private static final String KNIGHT = "N";
+    private static final String PAWN = "P";
+    private static final String BLANK = "S";
+
     private static Map<Type, Function<ChessPiece, String>> chessPieceFunctionMap = new HashMap<>();
 
     static {
-        chessPieceFunctionMap.put(King.class, (chessPiece) -> toLowerCase(chessPiece, "K"));
-        chessPieceFunctionMap.put(Queen.class, (chessPiece) -> toLowerCase(chessPiece, "Q"));
-        chessPieceFunctionMap.put(Rook.class, (chessPiece) -> toLowerCase(chessPiece, "R"));
-        chessPieceFunctionMap.put(Bishop.class, (chessPiece) -> toLowerCase(chessPiece, "B"));
-        chessPieceFunctionMap.put(Knight.class, (chessPiece) -> toLowerCase(chessPiece, "N"));
-        chessPieceFunctionMap.put(Pawn.class, (chessPiece) -> toLowerCase(chessPiece, "P"));
-        chessPieceFunctionMap.put(Blank.class, (chessPiece) -> toLowerCase(chessPiece, "S"));
+        chessPieceFunctionMap.put(King.class, (chessPiece) -> toLowerCase(chessPiece, KING));
+        chessPieceFunctionMap.put(Queen.class, (chessPiece) -> toLowerCase(chessPiece, QUEEN));
+        chessPieceFunctionMap.put(Rook.class, (chessPiece) -> toLowerCase(chessPiece, ROOK));
+        chessPieceFunctionMap.put(Bishop.class, (chessPiece) -> toLowerCase(chessPiece, BISHOP));
+        chessPieceFunctionMap.put(Knight.class, (chessPiece) -> toLowerCase(chessPiece, KNIGHT));
+        chessPieceFunctionMap.put(Pawn.class, (chessPiece) -> toLowerCase(chessPiece, PAWN));
+        chessPieceFunctionMap.put(Blank.class, (chessPiece) -> toLowerCase(chessPiece, BLANK));
     }
 
     private static String toLowerCase(ChessPiece chessPiece, String symbol) {
@@ -36,7 +46,7 @@ public class ChessAssembler {
         List<String> rows = new ArrayList<>();
         Map<Position, ChessPiece> board = chessBoard.getChessBoard();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = MIN_LINE; i <= MAX_LINE; i++) {
             StringBuilder row = new StringBuilder();
             appendChessPiece(board, i, row);
             rows.add(row.toString());
