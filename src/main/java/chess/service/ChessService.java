@@ -48,6 +48,8 @@ public class ChessService {
     }
 
     public BoardInfo createBoardInfo() throws SQLException {
+        if(chessDao.checkEmpty())
+            return initializeBoard();
         loadChessGame();
         return chessGame.createBoardInfo();
     }

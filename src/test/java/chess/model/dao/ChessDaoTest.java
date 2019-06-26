@@ -106,6 +106,15 @@ public class ChessDaoTest {
         }
     }
 
+    @Test
+    void Empty_테스트() {
+        try {
+            assertThat(chessDao.checkEmpty()).isTrue();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @AfterEach
     void tearDown() {
         try {

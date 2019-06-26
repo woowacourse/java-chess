@@ -112,4 +112,11 @@ public class ChessDao {
         pstmt.setString(2, gameInfo.getTurn());
         pstmt.executeUpdate();
     }
+
+    public boolean checkEmpty() throws SQLException {
+        String updateGameInfoQuery = "SELECT * FROM chessgame";
+        PreparedStatement pstmt = con.prepareStatement(updateGameInfoQuery);
+        ResultSet rs = pstmt.executeQuery();
+        return rs == null || !rs.next();
+    }
 }
