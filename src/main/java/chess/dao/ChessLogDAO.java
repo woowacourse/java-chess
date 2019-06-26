@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.domain.ChessGameException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,38 +24,37 @@ public class ChessLogDAO {
     }
 
     public List<List<String>> findGameLogById(String gameId) {
-        Connection con = DataBaseConnector.getConnection();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        List<List<String>> gameLog = new ArrayList<>(new ArrayList<>());
-        try {
-            String query = "select source,destination from game_log where game_id = ?";
-            pstmt = con.prepareStatement(query);
-            pstmt.setString(1, gameId);
-            rs = pstmt.executeQuery();
+        SelectJdbcTemplate<List<List<String>>> selectJdbcTemplate = new SelectJdbcTemplate<List<List<String>>>() {
+            @Override
+            public List<List<String>> getResult(ResultSet resultSet) throws SQLException {
+                List<List<String>> gameLog = new ArrayList<>(new ArrayList<>());
 
-            while (rs.next()) {
-                gameLog.add(Arrays.asList(rs.getString(1), rs.getString(2)));
+                while (resultSet.next()) {
+                    gameLog.add(Arrays.asList(resultSet.getString(1), resultSet.getString(2)));
+                }
+
+                return gameLog;
             }
+        };
+
+        String query = "select source,destination from game_log where game_id = ?";
+        List<String> parameters = Arrays.asList(gameId);
+        try {
+            return selectJdbcTemplate.executeQuery(query, parameters);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessGameException("게임 로그를 찾을 수 없습니다. : " + e.getMessage());
         }
-        return gameLog;
     }
 
     public void insertLog(String from, String to, String gameId) {
-        Connection con = DataBaseConnector.getConnection();
-        PreparedStatement pstmt = null;
-        try {
-            String query = "insert into game_log(source, destination,game_id) values(?,?,?);";
-            pstmt = con.prepareStatement(query);
-            pstmt.setString(1, from);
-            pstmt.setString(2, to);
-            pstmt.setString(3, gameId);
-            pstmt.executeUpdate();
+        UpdateJdbcTemplate updateJdbcTemplate = new UpdateJdbcTemplate();
+        String query = "insert into game_log(source, destination,game_id) values(?,?,?);";
+        List<String> parameters = Arrays.asList(from, to, gameId);
 
+        try {
+            updateJdbcTemplate.updateQuery(query, parameters);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessGameException("게임 로그를 정상적으로 기록하지 못하였습니다. :" + e.getMessage());
         }
     }
 }

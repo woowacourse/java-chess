@@ -1,10 +1,11 @@
 package chess.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import chess.domain.ChessGameException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ChessGameDAO {
@@ -22,23 +23,22 @@ public class ChessGameDAO {
     }
 
     public List<Integer> findPreviousGamesById(String name) {
-        Connection con = DataBaseConnector.getConnection();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        List<Integer> previousGameId = new ArrayList<>();
-        try {
-            String query = "select game_id from chess_game where white_name = ? or black_name = ?";
-            pstmt = con.prepareStatement(query);
-            pstmt.setString(1, name);
-            pstmt.setString(2, name);
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                previousGameId.add(rs.getInt(1));
+        SelectJdbcTemplate<List<Integer>> selectJdbcTemplate = new SelectJdbcTemplate<List<Integer>>() {
+            @Override
+            public List<Integer> getResult(ResultSet resultSet) throws SQLException {
+                List<Integer> previousGameId = new ArrayList<>();
+                while (resultSet.next()) {
+                    previousGameId.add(resultSet.getInt(1));
+                }
+                return previousGameId;
             }
+        };
+        String query = "select game_id from chess_game where white_name = ? or black_name = ?";
+        List<String> parameters = Arrays.asList(name, name);
+        try {
+            return selectJdbcTemplate.executeQuery(query, parameters);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ChessGameException("체스 게임을 찾을 수 없습니다." + e.getMessage());
         }
-        return previousGameId;
     }
 }

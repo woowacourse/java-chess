@@ -3,8 +3,6 @@
 
 ##To-do
  - Connection 닫기(try-with-resources)
- - e.printStackTrace 안티패턴 처리
- - Jdbc Template
  - List<List<String>> 처리
  - DataBaseConnector sout 처리
  - 커넥션 실패에 대한 별도 예외 처리
@@ -15,6 +13,7 @@
  - ChessGame play 고려
  - BoardCreator 메서드 명 동사 처리
  - Direction enum
-
+ - e.printStackTrace 안티패턴 처리
+ - Jdbc Template
 
 
