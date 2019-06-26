@@ -19,17 +19,28 @@ public class King extends Piece {
     @Override
     public Stream<Iterator<Position>> getIteratorsOfPossibleDestinations() {
         List<Iterator<Position>> candidates = Direction.every()
-                                                        .map(super::proceedSingleStep)
+                                                        .map(this::proceedSingleStep)
                                                         .collect(Collectors.toList());
 
-//        if (hasNotMoved()) {
-//            candidates.add((owner == Player.WHITE) ? yieldSinglePositionOf(Position.of("b1")) : yieldSinglePositionOf(Position.of("b8")));
-//            candidates.add((owner == Player.WHITE) ? yieldSinglePositionOf(Position.of("g1")) : yieldSinglePositionOf(Position.of("g8")));
-//        }
         return candidates.stream();
     }
 
-    //// TODO: 2019-06-26 castling
+    private Iterator<Position> proceedSingleStep(final Direction dir) {
+        return new Iterator<Position>() {
+            boolean hasNotYielded = true;
+
+            @Override
+            public boolean hasNext() {
+                return hasNotYielded && position.testForward(dir);
+            }
+
+            @Override
+            public Position next() {
+                hasNotYielded = false;
+                return position.moveForward(dir);
+            }
+        };
+    }
 
     @Override
     public boolean isKing() {
