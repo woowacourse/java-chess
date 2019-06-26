@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chessgame</title>
+    <link href="./style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div>
+    {{turn}} 차례 입니다.
+</div>
+<div>
+    <table>
+        <tr>
+            <th></th>
+            <th>a</th>
+            <th>b</th>
+            <th>c</th>
+            <th>d</th>
+            <th>e</th>
+            <th>f</th>
+            <th>g</th>
+            <th>h</th>
+        </tr>
+        <tr class="even" id="row1">
+            <th>8</th>
+            <td id="a8"></td>
+            <td id="b8"></td>
+            <td id="c8"></td>
+            <td id="d8"></td>
+            <td id="e8"></td>
+            <td id="f8"></td>
+            <td id="g8"></td>
+            <td id="h8"></td>
+        </tr>
+        <tr class="odd" id="row2">
+            <th>7</th>
+            <td id="a7"></td>
+            <td id="b7"></td>
+            <td id="c7"></td>
+            <td id="d7"></td>
+            <td id="e7"></td>
+            <td id="f7"></td>
+            <td id="g7"></td>
+            <td id="h7"></td>
+        </tr>
+        <tr class="even" id="row3">
+            <th>6</th>
+            <td id="a6"></td>
+            <td id="b6"></td>
+            <td id="c6"></td>
+            <td id="d6"></td>
+            <td id="e6"></td>
+            <td id="f6"></td>
+            <td id="g6"></td>
+            <td id="h6"></td>
+        </tr>
+        <tr class="odd" id="row4">
+            <th>5</th>
+            <td id="a5"></td>
+            <td id="b5"></td>
+            <td id="c5"></td>
+            <td id="d5"></td>
+            <td id="e5"></td>
+            <td id="f5"></td>
+            <td id="g5"></td>
+            <td id="h5"></td>
+        </tr>
+        <tr class="even" id="row5">
+            <th>4</th>
+            <td id="a4"></td>
+            <td id="b4"></td>
+            <td id="c4"></td>
+            <td id="d4"></td>
+            <td id="e4"></td>
+            <td id="f4"></td>
+            <td id="g4"></td>
+            <td id="h4"></td>
+        </tr>
+        <tr class="odd" id="row6">
+            <th>3</th>
+            <td id="a3"></td>
+            <td id="b3"></td>
+            <td id="c3"></td>
+            <td id="d3"></td>
+            <td id="e3"></td>
+            <td id="f3"></td>
+            <td id="g3"></td>
+            <td id="h3"></td>
+        </tr>
+        <tr class="even" id="row7">
+            <th>2</th>
+            <td id="a2"></td>
+            <td id="b2"></td>
+            <td id="c2"></td>
+            <td id="d2"></td>
+            <td id="e2"></td>
+            <td id="f2"></td>
+            <td id="g2"></td>
+            <td id="h2"></td>
+        </tr>
+        <tr class="odd" id="row8">
+            <th>1</th>
+            <td id="a1"></td>
+            <td id="b1"></td>
+            <td id="c1"></td>
+            <td id="d1"></td>
+            <td id="e1"></td>
+            <td id="f1"></td>
+            <td id="g1"></td>
+            <td id="h1"></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <form action="/move" method="post">
+        <input name="from" type="text">
+        <br>
+        <input name="to" type="text">
+        <button type="submit">이동</button>
+    </form>
+</div>
+
+<div>
+    <form action="/status" method="get">
+        <button type="submit">점수 보기</button>
+    </form>
+</div>
+
+{{#if error}}
+<div>
+    잘못된 명령입니다! {{error}}
+</div>
+{{/if}}
+
+{{#if whiteStatus}}
+<div>
+    < 점수 >
+</div>
+<div>
+    WHITE의 점수는 {{whiteStatus}} 입니다.
+</div>
+{{/if}}
+{{#if blackStatus}}
+<div>
+    BLACK의 점수는 {{blackStatus}} 입니다.
+</div>
+{{/if}}
+
+<div>
+
+</div>
+<form action="/" method="get">
+    <button type="submit">HOME</button>
+</form>
+<script>
+    window.onload = function () {
+
+        pieces = JSON.parse('{{{boardJson}}}');
+
+        for (var key in pieces) {
+            var classText = pieces[key].color + pieces[key].type;
+            document.querySelector("#" + key).setAttribute("class", classText);
+        }
+    }
+</script>
+</body>
+</html>
