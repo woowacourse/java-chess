@@ -20,30 +20,30 @@ public class BoardCreator {
                 .forEach(i ->
                         IntStream.rangeClosed(MIN_RANGE, MAX_RANGE)
                                 .forEach(j -> board.put(Point.get(i, j), new Empty())));
-        white(board);
-        black(board);
+        putWhitePiece(board);
+        putBlackPiece(board);
         return new Board(board);
     }
 
-    private static void white(Map<Point, Piece> board) {
+    private static void putWhitePiece(Map<Point, Piece> board) {
         ChessTeam team = ChessTeam.WHITE;
-        pawn(board, team, 2);
-        some(board, team, 1);
+        putPawn(board, team, 2);
+        putPieces(board, team, 1);
     }
 
-    private static void black(Map<Point, Piece> board) {
+    private static void putBlackPiece(Map<Point, Piece> board) {
         ChessTeam team = ChessTeam.BLACK;
-        pawn(board, team, 7);
-        some(board, team, 8);
+        putPawn(board, team, 7);
+        putPieces(board, team, 8);
     }
 
-    private static void pawn(Map<Point, Piece> board, ChessTeam team, int position) {
+    private static void putPawn(Map<Point, Piece> board, ChessTeam team, int position) {
         for (int i = MIN_RANGE; i <= MAX_RANGE; i++) {
             board.put(Point.get(i, position), new Pawn(team));
         }
     }
 
-    private static void some(Map<Point, Piece> board, ChessTeam team, int position) {
+    private static void putPieces(Map<Point, Piece> board, ChessTeam team, int position) {
         board.put(Point.get(1, position), new Rook(team));
         board.put(Point.get(2, position), new Knight(team));
         board.put(Point.get(3, position), new Bishop(team));
