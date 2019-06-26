@@ -25,6 +25,20 @@ public class Position implements Comparable<Position> {
         this.y = y;
     }
 
+    public Position move(Direction direction) {
+        return new Position(x.move(direction.getDirectionX()),
+                y.move(direction.getDirectionY()));
+    }
+
+    public boolean canMove(Direction direction) {
+        return x.canMove(direction.getDirectionX())
+                && y.canMove(direction.getDirectionY());
+    }
+
+    public boolean isSameCoordinateX(int x) {
+        return this.x.equals(Coordinate.getCoordinate(x));
+    }
+
     public static Position getPosition(final int x, final int y) {
         return positions.stream()
                 .filter(position -> position.x.isSame(x) && position.y.isSame(y))
@@ -39,20 +53,6 @@ public class Position implements Comparable<Position> {
 
     public int getCoordinateY() {
         return y.getValue();
-    }
-
-    public boolean canMove(Direction direction) {
-        return x.canMove(direction.getDirectionX())
-                && y.canMove(direction.getDirectionY());
-    }
-
-    public Position move(Direction direction) {
-        return new Position(x.move(direction.getDirectionX()),
-                y.move(direction.getDirectionY()));
-    }
-
-    public boolean isSameCoordinateX(int x) {
-        return this.x.equals(Coordinate.getCoordinate(x));
     }
 
     @Override

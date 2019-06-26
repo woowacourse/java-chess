@@ -21,17 +21,6 @@ public class Coordinate implements Comparable<Coordinate> {
         this.coordinate = coordinate;
     }
 
-    public int getValue() {
-        return coordinate;
-    }
-
-    public static Coordinate getCoordinate(final int coordinate) {
-        if (coordinate < MIN_BOUND || coordinate > MAX_BOUND) {
-            throw new IllegalArgumentException("좌표 범위를 벗어났습니다.");
-        }
-        return coordinates.get(coordinate - 1);
-    }
-
     public Coordinate move(int direction) {
         return getCoordinate(coordinate + direction);
     }
@@ -43,6 +32,17 @@ public class Coordinate implements Comparable<Coordinate> {
 
     public boolean isSame(int coordinate) {
         return this.coordinate == coordinate;
+    }
+
+    public int getValue() {
+        return coordinate;
+    }
+
+    public static Coordinate getCoordinate(final int coordinate) {
+        if (coordinate < MIN_BOUND || coordinate > MAX_BOUND) {
+            throw new IllegalArgumentException("좌표 범위를 벗어났습니다.");
+        }
+        return coordinates.get(coordinate - 1);
     }
 
     @Override
