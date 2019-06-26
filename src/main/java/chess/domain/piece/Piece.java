@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-    protected static final int LIMIT_DISTANCE_ONE = 1;
+    static final int LIMIT_DISTANCE_ONE = 1;
 
     private final Team team;
     private MoveRule moveRule;
@@ -51,13 +51,13 @@ public abstract class Piece {
         return false;
     }
 
-    protected void validDistance(final int distance, final int limit) {
+    void validDistance(final int distance, final int limit) {
         if (distance != limit) {
             throw new InvalidDistanceException("움직일 수 있는 거리가 아닙니다.");
         }
     }
 
-    protected void validDirection(final List<Direction> movables, final Direction direction) {
+    void validDirection(final List<Direction> movables, final Direction direction) {
         if (movables.stream().noneMatch(movable -> movable == direction)) {
             throw new InvalidDirectionException("움직일 수 있는 방향이 아닙니다.");
         }
