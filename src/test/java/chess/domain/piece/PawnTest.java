@@ -31,6 +31,13 @@ public class PawnTest {
     }
 
     @Test
+    void 연속으로_2칸_이동하는_경우_예외_테스트() {
+        Position testPostion = new Position(new Coordinate('b'), new Coordinate(6));
+        blackPiece.canMove(testPostion, new Position(new Coordinate('b'), new Coordinate(4)));
+        assertThrows(InvalidDistanceException.class, () -> blackPiece.canMove(testPostion, new Position(new Coordinate('b'), new Coordinate(2))));
+    }
+
+    @Test
     void black_Pawn_이동_예외_테스트() {
         assertThrows(InvalidDirectionException.class, () -> blackPiece.canMove(base, new Position(new Coordinate('a'), new Coordinate(4)))); // 좌
         assertThrows(InvalidDirectionException.class, () -> blackPiece.canMove(base, new Position(new Coordinate('c'), new Coordinate(4)))); // 우

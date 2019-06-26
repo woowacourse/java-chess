@@ -51,7 +51,9 @@ public abstract class Piece {
         return false;
     }
 
-    void validDistance(final int distance, final int limit) {
+    public void changeFirstState() {}
+
+   void validDistance(final int distance, final int limit) {
         if (distance != limit) {
             throw new InvalidDistanceException("움직일 수 있는 거리가 아닙니다.");
         }

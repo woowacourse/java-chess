@@ -44,6 +44,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public void changeFirstState() {
+        this.first = false;
+    }
+
+    @Override
     public String getName() {
         return NAME;
     }

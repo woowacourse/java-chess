@@ -48,6 +48,7 @@ public class Board {
     public void move(Position source, Position target, Piece sourcePiece) {
         board.remove(source);
         board.put(target, sourcePiece);
+        sourcePiece.changeFirstState();
     }
 
     public List<BoardDto> toDto() {
