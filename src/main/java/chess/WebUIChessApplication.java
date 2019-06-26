@@ -105,6 +105,12 @@ public class WebUIChessApplication {
 			model.put("board", ChessGameService.getPieceImages(chessGame));
 			return render(model, "/chess.html");
 		});
+
+		exception(Exception.class, (exception, request, response) -> {
+			Map<String, Object> model = new HashMap<>();
+			model.put("message", exception.getMessage());
+			response.body(render(model, "error.html"));
+		});
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
