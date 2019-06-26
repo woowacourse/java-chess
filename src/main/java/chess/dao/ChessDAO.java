@@ -9,12 +9,13 @@ import java.util.List;
 
 public class ChessDAO {
     private static ChessDAO CHESS_DAO = new ChessDAO();
+    private static final int TURN_BEFORE_STARTING = 0;
 
     public static ChessDAO getInstance() {
         return CHESS_DAO;
     }
 
-    public Connection getConnection() {
+    private Connection getConnection() {
         Connection conn = null;
         String server = "localhost";
         String database = "chess_db";
@@ -114,7 +115,8 @@ public class ChessDAO {
 
     public int getLatestTurn() throws SQLException {
         String query = "SELECT MAX(turn) AS latest_turn FROM chess_info";
-        int latestTurn = 0;
+        int latestTurn = TURN_BEFORE_STARTING;
+
         try (Connection connection = getConnection()) {
             PreparedStatement pstmt = connection.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();

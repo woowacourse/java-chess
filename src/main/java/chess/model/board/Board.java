@@ -14,6 +14,9 @@ public class Board {
     private Map<String, Tile> tiles;
 
     public Board(BoardCreatingStrategy strategy) {
+        if (Objects.isNull(strategy)) {
+            throw new NullPointerException();
+        }
         this.tiles = strategy.create();
     }
 

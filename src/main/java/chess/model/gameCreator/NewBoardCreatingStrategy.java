@@ -34,8 +34,8 @@ public class NewBoardCreatingStrategy implements BoardCreatingStrategy {
                 tiles.put("1".concat(coordinateY), new Tile("1".concat(coordinateY), Optional.of(new Rook("black"))));
                 tiles.put("2".concat(coordinateY), new Tile("2".concat(coordinateY), Optional.of(new Knight("black"))));
                 tiles.put("3".concat(coordinateY), new Tile("3".concat(coordinateY), Optional.of(new Bishop("black"))));
-                tiles.put("4".concat(coordinateY), new Tile("4".concat(coordinateY), Optional.of(new King("black"))));
-                tiles.put("5".concat(coordinateY), new Tile("5".concat(coordinateY), Optional.of(new Queen("black"))));
+                tiles.put("4".concat(coordinateY), new Tile("4".concat(coordinateY), Optional.of(new Queen("black"))));
+                tiles.put("5".concat(coordinateY), new Tile("5".concat(coordinateY), Optional.of(new King("black"))));
                 tiles.put("6".concat(coordinateY), new Tile("6".concat(coordinateY), Optional.of(new Bishop("black"))));
                 tiles.put("7".concat(coordinateY), new Tile("7".concat(coordinateY), Optional.of(new Knight("black"))));
                 tiles.put("8".concat(coordinateY), new Tile("8".concat(coordinateY), Optional.of(new Rook("black"))));

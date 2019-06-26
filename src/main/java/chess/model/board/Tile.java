@@ -16,7 +16,7 @@ public class Tile {
     private Optional<Piece> piece;
 
     public Tile(String coordinates, Optional<Piece> piece) {
-        validateInput(coordinates);
+        validateConstructor(coordinates);
         String firstCoordinate = coordinates.substring(0, 1);
         String secondCoordinate = coordinates.substring(1, 2);
 
@@ -25,7 +25,7 @@ public class Tile {
         this.piece = piece;
     }
 
-    private void validateInput(String coordinates) {
+    private void validateConstructor(String coordinates) {
         if (Objects.isNull(coordinates)) {
             throw new NullPointerException();
         }
@@ -53,20 +53,22 @@ public class Tile {
         return "error";
     }
 
-    public Optional<Piece> getPiece() {
-        return piece;
-    }
-
     public Piece clonePiece() {
-        return piece.get().cloneSelf();
+        return piece.map(Piece::cloneSelf).orElse(null);
     }
 
     public boolean askPieceIfPawn() {
-        if (piece.isPresent()) {
-            return piece.get().isPawn();
-        }
+        return piece.map(Piece::isPawn).orElse(false);
 
-        return false;
+    }
+
+    public boolean askIfKing() {
+        return piece.map(Piece::isKing).orElse(false);
+
+    }
+
+    public Optional<Piece> getPiece() {
+        return piece;
     }
 
     @Override
@@ -82,13 +84,5 @@ public class Tile {
     @Override
     public int hashCode() {
         return Objects.hash(coordinateX, coordinateY, piece);
-    }
-
-    public boolean askIfKing() {
-        if (piece.isPresent()) {
-            return piece.get().isKing();
-        }
-        return false;
-
     }
 }

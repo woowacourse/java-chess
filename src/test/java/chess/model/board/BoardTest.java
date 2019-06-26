@@ -3,6 +3,7 @@ package chess.model.board;
 import chess.model.ScoreResult;
 import chess.model.board.vector.Vector;
 import chess.model.gameCreator.NewBoardCreatingStrategy;
+import chess.model.piece.King;
 import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Queen;
@@ -13,14 +14,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
 
 public class BoardTest {
     @Test
     void 생성자_확인() {
         Board board = new Board(new NewBoardCreatingStrategy());
         assertThat(board).isEqualTo(new Board(new NewBoardCreatingStrategy()));
+    }
+
+    @Test
+    void 생성자_오류확인_null이_입력된_경우() {
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> new Board(null));
     }
 
     @Test
@@ -403,7 +408,7 @@ public class BoardTest {
         assertThat(board.getTile("12"))
                 .isEqualTo(new Tile("12", Optional.of(new Pawn(true, "white"))));
         assertThat(board.getTile("55")).isEqualTo(new Tile("55", Optional.empty()));
-        assertThat(board.getTile("58")).isEqualTo(new Tile("58", Optional.of(new Queen("black"))));
+        assertThat(board.getTile("58")).isEqualTo(new Tile("58", Optional.of(new King("black"))));
     }
 
     @Test

@@ -8,11 +8,10 @@ public class Route {
     private final List<String> route;
 
     public Route(List<String> route) {
+        if (Objects.isNull(route) || route.isEmpty()) {
+            throw new NullPointerException();
+        }
         this.route = route;
-    }
-
-    public List<String> getRoute() {
-        return Collections.unmodifiableList(route);
     }
 
     public boolean contains(String coordinates) {
@@ -22,6 +21,10 @@ public class Route {
         }
 
         return false;
+    }
+
+    public List<String> getRoute() {
+        return Collections.unmodifiableList(route);
     }
 
     @Override

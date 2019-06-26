@@ -27,8 +27,8 @@ public class NewBoardCreatingStrategyTest {
         tiles.put("18", new Tile("18", Optional.of(new Rook("black"))));
         tiles.put("28", new Tile("28", Optional.of(new Knight("black"))));
         tiles.put("38", new Tile("38", Optional.of(new Bishop("black"))));
-        tiles.put("48", new Tile("48", Optional.of(new King("black"))));
-        tiles.put("58", new Tile("58", Optional.of(new Queen("black"))));
+        tiles.put("48", new Tile("48", Optional.of(new Queen("black"))));
+        tiles.put("58", new Tile("58", Optional.of(new King("black"))));
         tiles.put("68", new Tile("68", Optional.of(new Bishop("black"))));
         tiles.put("78", new Tile("78", Optional.of(new Knight("black"))));
         tiles.put("88", new Tile("88", Optional.of(new Rook("black"))));
