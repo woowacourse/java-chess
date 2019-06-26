@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 import chess.exception.GameOverException;
 import chess.exception.UnmovableException;
@@ -21,34 +22,34 @@ public class ChessGame {
 	}
 
 	public void move(Position start, Position end) {
-		Piece startPiece = chessBoard.findPiece(start);
+		Optional<Piece> startPiece = chessBoard.findPiece(start);
 
-		if(startPiece == null || !startPiece.isMine(currentPlayer)) {
+		if(!startPiece.isPresent() || !startPiece.get().isMine(currentPlayer)) {
 			throw new UnmovableException();
 		}
 
-		Piece endPiece = chessBoard.findPiece(end);
+		Optional<Piece> endPiece = chessBoard.findPiece(end);
 		Path path = getPath(end, startPiece, endPiece);
 
 		if (!chessBoard.isMovable(path)) {
 			throw new UnmovableException();
 		}
-		if (endPiece != null && !endPiece.isMine(currentPlayer)) {
-			chessBoard.remove(endPiece);
-			if (endPiece.isKing()) {
+		if (endPiece != null && !endPiece.get().isMine(currentPlayer)) {
+			chessBoard.remove(endPiece.get());
+			if (endPiece.get().isKing()) {
 				throw new GameOverException("게임종료! " + currentPlayer.name() + " 승리");
 			}
 		}
-		startPiece.changePosition(end);
+		startPiece.get().changePosition(end);
 		currentPlayer = currentPlayer.changePlayer();
 	}
 
-	private Path getPath(Position end, Piece startPiece, Piece endPiece) {
-		if (endPiece == null) {
-			return startPiece.getMovablePath(end);
+	private Path getPath(Position end, Optional<Piece> startPiece, Optional<Piece> endPiece) {
+		if (!endPiece.isPresent()) {
+			return startPiece.get().getMovablePath(end);
 		}
-		if (!endPiece.isMine(currentPlayer)) {
-			return startPiece.getAttackablePath(end);
+		if (!endPiece.get().isMine(currentPlayer)) {
+			return startPiece.get().getAttackablePath(end);
 		}
 		throw new UnmovableException();
 	}

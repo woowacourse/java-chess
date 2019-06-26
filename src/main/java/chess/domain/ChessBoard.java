@@ -3,8 +3,10 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import chess.exception.NotFoundPieceException;
 import chess.exception.SamePositionException;
 import chess.domain.piece.Piece;
 
@@ -27,13 +29,13 @@ public class ChessBoard {
 				.anyMatch(piece -> piece.isSamePosition(newPiece));
 	}
 
-	public Piece findPiece(Position position) {
+	public Optional<Piece> findPiece(Position position) {
 		for (Piece piece : pieces) {
 			if (piece.isSamePosition(position)) {
-				return piece;
+				return Optional.ofNullable(piece);
 			}
 		}
-		return null;
+		throw new NotFoundPieceException();
 	}
 
 	public boolean isMovable(Path path) {
