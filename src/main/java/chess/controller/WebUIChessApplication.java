@@ -89,6 +89,14 @@ public class WebUIChessApplication {
 
         });
 
+        post("/score", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            model.put("score", chessBoardService.selectRecentGame().sumScore().entrySet());
+
+            return render(model, "score.html");
+        });
+
         exception();
     }
 

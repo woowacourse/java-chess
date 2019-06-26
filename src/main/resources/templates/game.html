@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>게임</title>
@@ -37,6 +37,9 @@
     소스위치 : <input name = "source" type="text" placeholder="ex)1,1">
     타깃위치 : <input name = "target" type="text" placeholder="ex)2,2">
     <input type="submit" value="입력"/>
+</form>
+<form action="/score" method="post">
+    <input type="submit" onclick="location.href='score'" value="점수보기">
 </form>
 <script src="js/game.js"></script>
 </body>
