@@ -26,17 +26,7 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/templates");
 
-        try {
-            if (chessDAO.isTableEmpty()) {
-                chessGame = new ChessGame();
-            }
-            if(!chessDAO.isTableEmpty()) {
-                chessGame = chessDAO.findChessGame();
-                chessDAO.deleteChessGame();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        chessGameSetting();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -68,6 +58,7 @@ public class WebUIChessApplication {
                 Position target = WebInputParser.getTargetPosition(req.queryParams("target"));
 
                 chessGame.play(source, target);
+
                 if (chessGame.isGameEnd()) {
                     model.put("winner", WebOutputView.printTurn(Team.switchTeam(chessGame.getTurn())));
                     chessDAO.deleteChessGame();
@@ -76,7 +67,8 @@ public class WebUIChessApplication {
                 }
 
                 ChessDTO chessDTO = chessGame.toDTO();
-                chessDAO.updateChessGame(chessDTO);
+                chessDAO.deleteChessGame();
+                chessDAO.addChessGame(chessDTO);
 
                 model.put("turn", WebOutputView.printTurn(chessGame.getTurn()));
                 model.put("blackscore", chessGame.getStatus(Team.BLACK));
@@ -89,6 +81,20 @@ public class WebUIChessApplication {
 
             return render(model, "chess.html");
         });
+    }
+
+    private static void chessGameSetting() {
+        try {
+            if (chessDAO.isTableEmpty()) {
+                chessGame = new ChessGame();
+            }
+            if (!chessDAO.isTableEmpty()) {
+                chessGame = chessDAO.findChessGame();
+                chessDAO.deleteChessGame();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

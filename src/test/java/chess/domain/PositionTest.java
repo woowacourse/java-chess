@@ -106,14 +106,14 @@ class PositionTest {
     @Test
     public void getSameColumnSamePawnCount_Test() {
         List<Position> positions = new ArrayList<>();
-        positions.add(PositionManager.getMatchPosition(1,1));
-        positions.add(PositionManager.getMatchPosition(2,1));
-        positions.add(PositionManager.getMatchPosition(3,1));
-        positions.add(PositionManager.getMatchPosition(3,1));
-        positions.add(PositionManager.getMatchPosition(4,1));
-        positions.add(PositionManager.getMatchPosition(4,1));
-        positions.add(PositionManager.getMatchPosition(4,1));
-        positions.add(PositionManager.getMatchPosition(5,1));
+        positions.add(PositionManager.getMatchPosition(1, 1));
+        positions.add(PositionManager.getMatchPosition(2, 1));
+        positions.add(PositionManager.getMatchPosition(3, 1));
+        positions.add(PositionManager.getMatchPosition(3, 1));
+        positions.add(PositionManager.getMatchPosition(4, 1));
+        positions.add(PositionManager.getMatchPosition(4, 1));
+        positions.add(PositionManager.getMatchPosition(4, 1));
+        positions.add(PositionManager.getMatchPosition(5, 1));
 
         assertThat(Position.getDuplicatedItemsCount(positions)).isEqualTo(5);
     }

@@ -154,7 +154,7 @@ public class Position {
                 .sum();
     }
 
-    public boolean isMatchPosition(int x, int y) {
+    boolean isMatchPosition(int x, int y) {
         return (this.x == x) && (this.y == y);
     }
 

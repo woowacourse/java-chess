@@ -12,7 +12,7 @@ public class BoardCreator {
     private static final int MIN_BOARD_COORDINATE = 1;
     private static final int MAX_BOARD_COORDINATE = 8;
 
-    public static Map<Position, Piece> initialize() {
+    static Map<Position, Piece> initialize() {
         Map<Position, Piece> boardState = new HashMap<>();
         initializeBlank(boardState);
         initializeRook(boardState);
@@ -25,7 +25,7 @@ public class BoardCreator {
         return boardState;
     }
 
-    public static void initializeBlank(Map<Position, Piece> boardState) {
+    private static void initializeBlank(Map<Position, Piece> boardState) {
         for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
             for (int j = MIN_BOARD_COORDINATE; j <= MAX_BOARD_COORDINATE; j++) {
                 Position position = PositionManager.getMatchPosition(i, j);

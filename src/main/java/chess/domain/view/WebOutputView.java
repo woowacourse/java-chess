@@ -6,11 +6,15 @@ import chess.domain.pieces.Piece;
 import chess.domain.position.PositionManager;
 
 public class WebOutputView {
+
+    private static final int MAX_BOARD_NUMBER = 8;
+    private static final int MIN_BOARD_NUMBER = 1;
+
     public static String printBoard(Board board) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 8; i >= 1 ; i--) {
+        for (int i = MAX_BOARD_NUMBER; i >= MIN_BOARD_NUMBER; i--) {
             stringBuilder.append("<div class=\"blank\"></div>\n");
-            for (int j = 1; j <= 8; j++) {
+            for (int j = MIN_BOARD_NUMBER; j <= MAX_BOARD_NUMBER; j++) {
                 Piece piece = board.findPiece(PositionManager.getMatchPosition(j, i));
                 stringBuilder.append(printPiece(piece, j, i));
             }

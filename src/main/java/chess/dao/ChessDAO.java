@@ -17,8 +17,8 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 public class ChessDAO {
+    private static final int EMPTY = 0;
     private final Connection conn;
-    private static Map<String, BiFunction<Position, String, Piece>> aaa = new HashMap<>();
 
     public ChessDAO(Connection conn) {
         this.conn = conn;
@@ -37,13 +37,6 @@ public class ChessDAO {
         pstmt.setString(8, chessDTO.getRanks().get(7));
         pstmt.setString(9, chessDTO.getTurn());
         pstmt.executeUpdate();
-    }
-
-    public void updateChessGame(ChessDTO chessDTO) throws SQLException {
-        String query = "DELETE FROM chess";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.executeUpdate();
-        addChessGame(chessDTO);
     }
 
     public void deleteChessGame() throws SQLException {
@@ -66,17 +59,18 @@ public class ChessDAO {
 
     private ChessGame makeChessGame(ResultSet rs) throws SQLException {
         Map<Position, Piece> boardState = new HashMap<>();
+
         for (int i = 1; i <= 8; i++) {
             String string = rs.getString("rank" + i);
             for (int j = 0; j < 8; j++) {
+                Position position = PositionManager.getMatchPosition(j + 1, i);
                 String symbol = String.valueOf(string.charAt(j));
-                Position position = PositionManager.getMatchPosition(j + 1 , i);
                 Piece piece = makePiece(position, symbol);
                 boardState.put(position, piece);
             }
         }
-        String turn = rs.getString("turn");
-        return new ChessGame(new Board(boardState), Team.valueOf(turn));
+
+        return new ChessGame(new Board(boardState), Team.valueOf(rs.getString("turn")));
     }
 
     private Piece makePiece(Position position, String symbol) {
@@ -127,6 +121,7 @@ public class ChessDAO {
         if (!rs.next()) {
             return true;
         }
-        return rs.getInt(1) == 0;
+
+        return rs.getInt(1) == EMPTY;
     }
 }
