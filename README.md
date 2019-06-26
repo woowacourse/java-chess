@@ -14,6 +14,11 @@
     + 현재 위치 저장
     + 플레이어 저장
     + 점수 저장 
+4. Pattern
+    + 움직일 수 있는 방향 저장
+    + 
+5. Direction
+    + 
 4. Path
     + 좌표 A부터 B까지의 경로 저장
 5. Coordinate
