@@ -32,7 +32,7 @@ public class JDBCTemplate {
             ResultSet rs = pstmt.executeQuery();
 
             if (!rs.next()) {
-                throw new SQLException("데이터베이스에서 레코드를 찾지 못했습니다.");
+                return new ArrayList<>();
             }
 
             List<Map<String, String>> result = new ArrayList<>();

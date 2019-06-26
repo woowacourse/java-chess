@@ -11,7 +11,8 @@ public class ChessPieceDAOImpl implements ChessPieceDAO {
     private static final JDBCTemplate JDBC_TEMPLATE = JDBCTemplate.getInstance();
     private static final ChessPieceDAOImpl INSTANCE = new ChessPieceDAOImpl();
 
-    private ChessPieceDAOImpl() { }
+    private ChessPieceDAOImpl() {
+    }
 
     public static ChessPieceDAOImpl getInstance() {
         return INSTANCE;
@@ -87,8 +88,5 @@ public class ChessPieceDAOImpl implements ChessPieceDAO {
 
         return allChess;
     }
-
-
-
 
 }

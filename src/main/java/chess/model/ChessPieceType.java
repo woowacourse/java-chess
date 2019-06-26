@@ -1,5 +1,5 @@
 package chess.model;
 
 public enum ChessPieceType {
-    KING, QUEEN, ROOK, BISHOP, KNIGHT, PAWN;
+    KING, QUEEN, ROOK, BISHOP, KNIGHT, PAWN
 }

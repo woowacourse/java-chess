@@ -1,7 +1,6 @@
 package chess.model;
 
 import java.util.Objects;
-import java.util.prefs.Preferences;
 
 public abstract class AbstractChessPiece {
     private ChessPieceType type;

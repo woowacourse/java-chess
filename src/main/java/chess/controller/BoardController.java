@@ -23,7 +23,6 @@ public class BoardController {
     }
 
     public String get(final Request req, final Response res) {
-        System.out.println("슬로스");
         BoardService boardService = BoardService.getInstance();
 
         // 보드DTO 만들기

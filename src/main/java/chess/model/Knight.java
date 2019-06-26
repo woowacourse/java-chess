@@ -1,6 +1,6 @@
 package chess.model;
 
-public class Knight extends AbstractChessPiece{
+public class Knight extends AbstractChessPiece {
     private static final int MOVABLE_DISTANCE = 5;
     private static final int SQUARE = 2;
 

@@ -8,7 +8,8 @@ public class GameDAOImpl implements GameDAO {
     private static final JDBCTemplate JDBC_TEMPLATE = JDBCTemplate.getInstance();
     private static final GameDAOImpl INSTANCE = new GameDAOImpl();
 
-    private GameDAOImpl() { }
+    private GameDAOImpl() {
+    }
 
     public static GameDAOImpl getInstance() {
         return INSTANCE;

@@ -8,13 +8,14 @@ public class XPosition {
     private static final int MIN_X = 1;
     private static final int MAX_X = 8;
     private static Map<Integer, XPosition> xPositions = new HashMap<>();
-    private final int xPosition;
 
     static {
         for (int i = MIN_X; i <= MAX_X; i++) {
             xPositions.put(i, new XPosition(i));
         }
     }
+
+    private final int xPosition;
 
     private XPosition(final int xPosition) {
         this.xPosition = xPosition;
@@ -31,6 +32,18 @@ public class XPosition {
         return Math.abs(this.xPosition - target.xPosition);
     }
 
+    public int calculateSub(final XPosition another) {
+        return xPosition - another.xPosition;
+    }
+
+    public XPosition add(final int deltaX) {
+        return XPosition.valueOf(xPosition + deltaX);
+    }
+
+    public int getValue() {
+        return xPosition;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -42,17 +55,5 @@ public class XPosition {
     @Override
     public int hashCode() {
         return Objects.hash(xPosition);
-    }
-
-    public int calculateSub(final XPosition another) {
-        return xPosition - another.xPosition;
-    }
-
-    public XPosition add(final int deltaX) {
-        return XPosition.valueOf(xPosition + deltaX);
-    }
-
-    public int getValue() {
-        return xPosition;
     }
 }

@@ -1,7 +1,6 @@
 package chess.persistance;
 
 import chess.model.ChessPieceColor;
-import chess.service.GameDTO;
 
 import java.util.List;
 

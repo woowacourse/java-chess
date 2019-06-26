@@ -31,18 +31,6 @@ public class YPosition {
         return Math.abs(this.yPosition - target.yPosition);
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final YPosition yPosition1 = (YPosition) o;
-        return yPosition == yPosition1.yPosition;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(yPosition);
-    }
 
     public int calculateSub(final YPosition another) {
         return yPosition - another.yPosition;
@@ -54,5 +42,18 @@ public class YPosition {
 
     public int getValue() {
         return yPosition;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final YPosition yPosition1 = (YPosition) o;
+        return yPosition == yPosition1.yPosition;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(yPosition);
     }
 }
