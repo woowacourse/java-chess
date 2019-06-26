@@ -22,7 +22,7 @@ class PawnTest {
     }
 
     @Test
-    public void 움직여야_할_때_움직이는지_확인() {
+    public void 움직여야_할_때_움직이는지_확인한다() {
         assertThat(firstPlaceWhite.canMove(PositionManager.getMatchPosition(3, 3))).isTrue();
         assertThat(firstPlaceWhite.canMove(PositionManager.getMatchPosition(3, 4))).isTrue();
 
@@ -34,7 +34,7 @@ class PawnTest {
     }
 
     @Test
-    public void 움직이지_말아야_할_때_안_움직이는지_확인() {
+    public void 움직이지_말아야_할_때_안_움직이는지_확인한다() {
         assertThat(firstPlaceWhite.canMove(PositionManager.getMatchPosition(4, 2))).isFalse();
         assertThat(firstPlaceWhite.canMove(PositionManager.getMatchPosition(3, 5))).isFalse();
         assertThat(firstPlaceWhite.canMove(PositionManager.getMatchPosition(3, 1))).isFalse();

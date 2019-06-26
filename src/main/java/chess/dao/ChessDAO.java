@@ -14,11 +14,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 public class ChessDAO {
+    private static final int MIN_BOARD_COORDINATE = 1;
+    private static final int MAX_BOARD_COORDINATE = 8;
+    private static final int MIN_BOARD_INDEX = 0;
+    private static final int MAX_BOARD_INDEX = 7;
+
     private final Connection conn;
-    private static Map<String, BiFunction<Position, String, Piece>> aaa = new HashMap<>();
 
     public ChessDAO(Connection conn) {
         this.conn = conn;
@@ -64,9 +67,9 @@ public class ChessDAO {
 
     private ChessGame makeChessGame(ResultSet rs) throws SQLException {
         Map<Position, Piece> boardState = new HashMap<>();
-        for (int i = 1; i <= 8; i++) {
+        for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
             String string = rs.getString("rank" + i);
-            for (int j = 0; j < 8; j++) {
+            for (int j = MIN_BOARD_INDEX; j <= MAX_BOARD_INDEX; j++) {
                 String symbol = String.valueOf(string.charAt(j));
                 Position position = PositionManager.getMatchPosition(j + 1 , i);
                 Piece piece = makePiece(position, symbol);
@@ -125,6 +128,7 @@ public class ChessDAO {
         if (!rs.next()) {
             return true;
         }
+
         return rs.getInt(1) == 0;
     }
 }

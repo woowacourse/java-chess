@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class ChessGame {
+    private static final int MIN_BOARD_COORDINATE = 1;
+    private static final int MAX_BOARD_COORDINATE = 8;
+
     private Board board;
     private Team turn;
 
@@ -51,9 +54,9 @@ public class ChessGame {
     public ChessDTO toDTO() {
         ChessDTO chessDTO = new ChessDTO();
         List<String> ranks = new ArrayList<>();
-        for (int i = 1; i <= 8; i++) {
+        for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
             StringBuilder rank = new StringBuilder();
-            for (int j = 1; j <= 8; j++) {
+            for (int j = MIN_BOARD_COORDINATE; j <= MAX_BOARD_COORDINATE; j++) {
                 Piece piece = board.findPiece(PositionManager.getMatchPosition(j, i));
                 rank.append((piece.getTeam() == Team.BLACK) ? piece.getSymbol().toUpperCase() : piece.getSymbol());
             }

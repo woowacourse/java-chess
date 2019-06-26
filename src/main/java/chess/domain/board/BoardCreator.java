@@ -88,7 +88,7 @@ public class BoardCreator {
 
     private static void initializePawn(Map<Position, Piece> boardState) {
         Position position;
-        for (int i = 1; i <= 8; i++) {
+        for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
             position = PositionManager.getMatchPosition(i, 2);
             boardState.put(position, new Pawn(position, Team.WHITE));
             position = PositionManager.getMatchPosition(i, 7);

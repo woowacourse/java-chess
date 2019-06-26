@@ -20,7 +20,7 @@ class PositionTest {
     }
 
     @Test
-    public void Position_잘_생성하는지_확인한다() {
+    public void Position을_잘_생성하는지_확인한다() {
         Position position = PositionManager.getMatchPosition(8, 8);
         assertThat(position).isExactlyInstanceOf(Position.class);
     }
