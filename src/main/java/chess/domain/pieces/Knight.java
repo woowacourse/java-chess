@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.ChessTeam;
 import chess.domain.Direction;
+import chess.domain.MoveVector;
 import chess.domain.Point;
 
 import java.util.ArrayList;
@@ -12,14 +13,14 @@ public class Knight extends Piece {
 
     static {
         directions = new ArrayList<>();
-        directions.add(new Direction(2, 1));
-        directions.add(new Direction(2, -1));
-        directions.add(new Direction(1, 2));
-        directions.add(new Direction(1, -2));
-        directions.add(new Direction(-2, 1));
-        directions.add(new Direction(-2, -1));
-        directions.add(new Direction(-1, 2));
-        directions.add(new Direction(-1, -2));
+        directions.add(MoveVector.NightEastNorth.getDirection());
+        directions.add(MoveVector.NightEastSouth.getDirection());
+        directions.add(MoveVector.NightNorthEast.getDirection());
+        directions.add(MoveVector.NightNorthWest.getDirection());
+        directions.add(MoveVector.NightSouthEast.getDirection());
+        directions.add(MoveVector.NightSouthWest.getDirection());
+        directions.add(MoveVector.NightWestNorth.getDirection());
+        directions.add(MoveVector.NightWestSouth.getDirection());;
     }
 
     public Knight(ChessTeam team) {

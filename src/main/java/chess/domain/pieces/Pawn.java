@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.ChessTeam;
 import chess.domain.Direction;
+import chess.domain.MoveVector;
 import chess.domain.Point;
 
 import java.util.ArrayList;
@@ -14,13 +15,33 @@ public class Pawn extends Piece {
     public Pawn(ChessTeam team) {
         super(team, PieceInfo.Pawn, null);
         moveDirection = new ArrayList<>();
-        moveDirection.add(new Direction(0, 1 * team.color()));
-        moveDirection.add(new Direction(0, 2 * team.color()));
-
         attackDirection = new ArrayList<>();
-        attackDirection.add(new Direction(1, 1 * team.color()));
-        attackDirection.add(new Direction(-1, 1 * team.color()));
+        if(team.color() == ChessTeam.WHITE.color()){
+            addWhiteDirection();
+        }
+        if(team.color() == ChessTeam.BLACK.color()){
+            addBlackDirection();
+        }
+
     }
+
+    private void addWhiteDirection() {
+        moveDirection.add(MoveVector.North.getDirection());
+        moveDirection.add(MoveVector.PawnFirstNorth.getDirection());
+
+        attackDirection.add(MoveVector.NorthEast.getDirection());
+        attackDirection.add(MoveVector.NorthWest.getDirection());
+    }
+
+
+    private void addBlackDirection() {
+        moveDirection.add(MoveVector.South.getDirection());
+        moveDirection.add(MoveVector.PawnFirstSouth.getDirection());
+
+        attackDirection.add(MoveVector.SouthEast.getDirection());
+        attackDirection.add(MoveVector.SouthWest.getDirection());
+    }
+
 
     @Override
     public Direction move(Point p1, Point p2) {

@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.ChessTeam;
 import chess.domain.Direction;
+import chess.domain.MoveVector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,10 @@ public class Bishop extends Piece {
 
     static {
         directions = new ArrayList<>();
-        directions.add(new Direction(1, 1));
-        directions.add(new Direction(1, -1));
-        directions.add(new Direction(-1, 1));
-        directions.add(new Direction(-1, -1));
+        directions.add(MoveVector.NorthEast.getDirection());
+        directions.add(MoveVector.NorthWest.getDirection());
+        directions.add(MoveVector.SouthEast.getDirection());
+        directions.add(MoveVector.SouthWest.getDirection());
     }
 
     public Bishop(ChessTeam team) {
