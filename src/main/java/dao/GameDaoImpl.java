@@ -4,6 +4,8 @@ import chess.domain.DBConnector;
 import dto.GameDto;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameDaoImpl implements GameDao {
     private static final DBConnector CONNECTOR = DBConnector.getInstance();
@@ -24,7 +26,7 @@ public class GameDaoImpl implements GameDao {
 
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setInt(1,WHITE_TURN);
+            pstmt.setInt(1, WHITE_TURN);
             pstmt.executeUpdate();
             try(ResultSet rs = pstmt.getGeneratedKeys()){
                 rs.next();
@@ -50,7 +52,7 @@ public class GameDaoImpl implements GameDao {
             if (!rs.next()) return game;
 
             game = new GameDto(rs.getInt("id"),
-                    rs.getBoolean("isEnd"),
+                    rs.getBoolean("is_end"),
                     rs.getInt("team_id"));
 
         } catch (SQLException e) {
@@ -62,8 +64,30 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
+    public List<GameDto> findNotEndGames() {
+        String query = "SELECT * FROM game WHERE is_end = 0";
+        List<GameDto> gameDtos = new ArrayList<>();
+
+        try (Connection con = CONNECTOR.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                boolean isEnd = rs.getBoolean("is_end");
+                int teamId = rs.getInt("team_id");
+                gameDtos.add(new GameDto(id, isEnd, teamId));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("끝나지 않은 게임 정보를 받아올 수 없습니다.");
+        }
+        return gameDtos;
+    }
+
+    @Override
     public int updateGame(GameDto gameDto) {
-        String query = "UPDATE game SET team_id=?, isEnd=?  WHERE id=?";
+        String query = "UPDATE game SET team_id=?, is_end=?  WHERE id=?";
         int result;
 
         try (Connection con = CONNECTOR.getConnection();

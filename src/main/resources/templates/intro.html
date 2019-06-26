@@ -11,24 +11,22 @@
     <div class="wrapper">
         <div class="previous-game-wrapper">
             <div class="previous-game">
-                <div class="message">로비님과 지토님의 끝나지 않은 게임이 있습니다.</div>
-                <button>이어하기</button>
-            </div>
-            <div class="previous-game">
-                <div class="message">가나다님과 에이비씨님의 끝나지 않은 게임이 있습니다.</div>
-                <button>이어하기</button>
+                {{#notEndGames}}
+                <div class="message">끝나지 않은 {{id}}회차 게임이 있습니다.</div>
+                <button onclick="location.href='/{{id}}' ">이어하기</button>
+                {{/notEndGames}}
             </div>
         </div>
         <div class="new-game-wrapper">
             <div class="new-game-title">새로 시작하기</div>
-            <form action="">
+            <form action="/" method="post">
                 <div class="new-user">
                     <img src="img/white_king.png" alt="">
-                    <input type="text">
+                    <input type="text" name="white_user">
                 </div>
                 <div class="new-user">
                     <img src="img/black_king.png" alt="">
-                    <input type="text">
+                    <input type="text" name="black_user">
                 </div>
                 <button>시작하기</button>
             </form>

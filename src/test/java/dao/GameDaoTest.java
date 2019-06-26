@@ -4,6 +4,8 @@ import chess.domain.DBConnector;
 import dto.GameDto;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class GameDaoTest {

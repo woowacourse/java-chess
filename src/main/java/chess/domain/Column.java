@@ -32,6 +32,10 @@ public class Column {
         return new ArrayList<>(columns.values());
     }
 
+    public String getColumn() {
+        return column;
+    }
+
     @Override
     public String toString() {
         return column;

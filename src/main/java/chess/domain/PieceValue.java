@@ -25,4 +25,8 @@ public enum PieceValue {
     public double getScore() {
         return score;
     }
+
+    public int getKindId() {
+        return kindId;
+    }
 }

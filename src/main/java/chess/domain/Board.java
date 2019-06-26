@@ -104,10 +104,8 @@ public class Board {
         }
     }
 
-    public List<Piece> getPieces(){
-        return pieces.values()
-                .stream()
-                .collect(Collectors.toList());
+    public Map<Position, Piece> getPieces(){
+        return pieces;
     }
 
     public long getDuplicatePawnCount(Aliance aliance){
@@ -135,8 +133,5 @@ public class Board {
                 .count() != 0;
     }
 
-    public static void main(String[] args) {
-        Board board = new Board();
-        board.getDuplicatePawnCount(Aliance.WHITE);
-    }
+
 }

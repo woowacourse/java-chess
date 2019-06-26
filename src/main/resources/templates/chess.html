@@ -10,98 +10,34 @@
 <body>
     <div class="wrapper">
         <div class="board-wrapper">
-            <table class="board">
-                <tr class="row-odd">
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
+            <table class="board" id="board">
+            {{#rows}}
+                <tr class="row">
+                    {{#columns}}
+                    <td class="block" id="{{column}}{{row}}"></td>
+                    {{/columns}}
                 </tr>
-                <tr class="row-even">
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                </tr>
-                <tr class="row-odd">
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                </tr>
-                <tr class="row-even">
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                </tr>
-                <tr class="row-odd">
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                </tr>
-                <tr class="row-even">
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                </tr>
-                <tr class="row-odd">
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                </tr>
-                <tr class="row-even">
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                    <td class="block"></td>
-                </tr>
+            {{/rows}}
             </table>
         </div>
         <div class="game-info-wrapper">
             <div class="user-info-wrapper">
+                {{#if whiteTurn}}
+                <div class="user-info turn">
+                {{else}}
                 <div class="user-info">
+                {{/if}}
                     <img src="img/white_king.png">
-                    <div class="user-name">로비</div>
+                    <div class="user-name">{{whiteUser.name}}</div>
                 </div>
+
+                {{#if blackTurn}}
+                <div class="user-info turn">
+                {{else}}
                 <div class="user-info">
+                {{/if}}
                     <img src="img/black_king.png" alt="">
-                    <div class="user-name">지토</div>
+                    <div class="user-name">{{blackUser.name}}</div>
                 </div>
             </div>
             <form action="/" method="post">
@@ -119,5 +55,43 @@
             </form>
         </div>
     </div>
+
+    <div class="piece-img" id="black-piece">
+        <img class="piece" src="img/black_king.png" data-piece="WHITE-KING">
+        <img class="piece" src="img/black_queen.png" data-piece="WHITE-QUEEN">
+        <img class="piece" src="img/black_rook.png" data-piece="WHITE-ROOK">
+        <img class="piece" src="img/black_knight.png" data-piece="WHITE-KNIGHT">
+        <img class="piece" src="img/black_bishop.png" data-piece="WHITE-BISHOP">
+        <img class="piece" src="img/black_pawn.png" data-piece="WHITE-PAWN">
+    </div>
+
+    <div class="piece-img" id="white-piece">
+        <img class="piece" src="img/white_king.png" data-piece="BLACK-KING">
+        <img class="piece" src="img/white_queen.png" data-piece="BLACK-QUEEN">
+        <img class="piece" src="img/white_rook.png" data-piece="BLACK-ROOK">
+        <img class="piece" src="img/white_knight.png" data-piece="BLACK-KNIGHT">
+        <img class="piece" src="img/white_bishop.png" data-piece="BLACK-BISHOP">
+        <img class="piece" src="img/white_pawn.png" data-piece="BLACK-PAWN">
+    </div>
+
+    <script>
+        var pieces = JSON.parse('{{{pieces}}}');
+
+        for (key in pieces) {
+            console.log(pieces[key]);
+            var block = document.getElementById(key);
+            var teamId = pieces[key].aliance;
+            var kindId = pieces[key].pieceValue;
+            var piece = teamId+"-"+kindId;
+
+            document.querySelectorAll(".piece").forEach(img => {
+                if (img.getAttribute('data-piece') == piece) {
+                    var clonePiece = img.cloneNode(true);
+                    clonePiece.classList.remove("piece");
+                    block.appendChild(clonePiece);
+                }
+            })
+        }
+    </script>
 </body>
 </html>

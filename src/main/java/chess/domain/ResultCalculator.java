@@ -2,9 +2,11 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ResultCalculator {
     private static final double DUPLICATE_PAWN_SCORE = 0.5;
@@ -16,7 +18,10 @@ public class ResultCalculator {
     }
 
     public Map<Aliance, Double> calculateResult(){
-        List<Piece> pieces = board.getPieces();
+        List<Piece> pieces = board.getPieces()
+                .values()
+                .stream()
+                .collect(Collectors.toList());
         Map<Aliance,Double> result = new HashMap<>();
         double whiteScore = getTotalScore(pieces, Aliance.WHITE);
         double blackScore = getTotalScore(pieces, Aliance.BLACK);

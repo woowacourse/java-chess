@@ -38,6 +38,10 @@ public class Row {
         return new ArrayList<>(rows.values());
     }
 
+    public String getRow() {
+        return row;
+    }
+
     @Override
     public String toString() {
         return row;
