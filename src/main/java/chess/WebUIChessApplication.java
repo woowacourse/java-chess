@@ -5,9 +5,10 @@ import chess.dao.PieceDao;
 import chess.domain.*;
 import chess.domain.pieces.Piece;
 import chess.utils.DBUtil;
-import chess.vo.PieceVo;
+import chess.dto.PieceDto;
 import com.google.gson.Gson;
 import spark.ModelAndView;
+import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import javax.sql.DataSource;
@@ -19,7 +20,8 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        externalStaticFileLocation("src/main/resources/templates");
+        Spark.staticFiles.location("/templates");
+//        externalStaticFileLocation("src/main/resources/templates");
         port(8080);
 
         DataSource dataSource = DBUtil.getDataSource();
@@ -29,7 +31,9 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            List<Integer> gameIds = gameDao.findAllId();
+            model.put("gameIds", gameIds);
+            return render(model, "main.html");
         });
 
         get("/home", (req, res) -> {
@@ -38,8 +42,8 @@ public class WebUIChessApplication {
             gameDao.add();
             int gameId = gameDao.findMaxId();
             for (Point point : game.getBoard().keySet()) {
-                PieceVo pieceVo = new PieceVo(point, game.getBoard().get(point));
-                pieceDao.add(gameId, pieceVo);
+                PieceDto pieceDto = new PieceDto(point, game.getBoard().get(point));
+                pieceDao.add(gameId, pieceDto);
             }
             req.session().attribute("gameId", gameId);
             Map<Point, Piece> board = game.getBoard();
@@ -55,12 +59,13 @@ public class WebUIChessApplication {
             return render(model, "home.html");
         });
 
-        get("/continue", (req, res) -> {
+        get("/continue/:gameId", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            int gameId = gameDao.findMaxId();
-            List<PieceVo> pieceVos = pieceDao.findPieceById(gameId);
+            int gameId = Integer.parseInt(req.params(":gameId"));
+            req.session().attribute("gameId", gameId);
+            List<PieceDto> pieceDtos = pieceDao.findPieceById(gameId);
             Map<Point, Piece> board = new HashMap<>();
-            pieceVos.forEach(vo -> board.put(vo.getPoint(), vo.getPiece()));
+            pieceDtos.forEach(vo -> board.put(vo.getPoint(), vo.getPiece()));
             Team turn = gameDao.findTurnByGameId(gameId) ? Team.WHITE : Team.BLACK;
             Game game = new Game(board, turn);
 
@@ -90,9 +95,9 @@ public class WebUIChessApplication {
             Point end = new Point(target);
 
             int gameId = req.session().attribute("gameId");
-            List<PieceVo> pieceVos = pieceDao.findPieceById(gameId);
+            List<PieceDto> pieceDtos = pieceDao.findPieceById(gameId);
             Map<Point, Piece> board = new HashMap<>();
-            pieceVos.forEach(vo -> board.put(vo.getPoint(), vo.getPiece()));
+            pieceDtos.forEach(vo -> board.put(vo.getPoint(), vo.getPiece()));
             Team turn = gameDao.findTurnByGameId(gameId) ? Team.WHITE : Team.BLACK;
             Game game = new Game(board, turn);
 

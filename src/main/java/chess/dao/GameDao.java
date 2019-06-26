@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameDao {
     private static final String SELECT_TURN_BY_ID = "SELECT turn FROM game WHERE game_id = ?";
@@ -12,6 +14,7 @@ public class GameDao {
     private static final String UPDATE_TURN = "UPDATE game SET turn = ? WHERE game_id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM game WHERE game_id = ?";
     private static final String SELECT_MAX_ID = "SELECT MAX(game_id) FROM game";
+    private static final String SELECT_ALL_ID = "SELECT game_id FROM game LIMIT 0, 1000";
     private final DataSource dataSource;
 
     public GameDao(DataSource dataSource) {
@@ -94,6 +97,28 @@ public class GameDao {
         try (ResultSet rs = pstmt.executeQuery()) {
             rs.next();
             return rs.getInt(1);
+        }
+    }
+
+    public List<Integer> findAllId() throws SQLException {
+        try (Connection con = dataSource.getConnection()) {
+            return executeFindAllId(con);
+        }
+    }
+
+    private List<Integer> executeFindAllId(Connection con) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SELECT_ALL_ID)) {
+            return getAllId(pstmt);
+        }
+    }
+
+    private List<Integer> getAllId(PreparedStatement pstmt) throws SQLException {
+        try (ResultSet rs = pstmt.executeQuery()) {
+            List<Integer> gameIds = new ArrayList<>();
+            while (rs.next()) {
+                gameIds.add(rs.getInt("game_id"));
+            }
+            return gameIds;
         }
     }
 }

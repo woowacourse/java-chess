@@ -4,7 +4,7 @@ import chess.domain.PieceFactory;
 import chess.domain.Point;
 import chess.domain.Team;
 import chess.domain.pieces.Piece;
-import chess.vo.PieceVo;
+import chess.dto.PieceDto;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -27,17 +27,17 @@ public class PieceDao {
         this.dataSource = dataSource;
     }
 
-    public void add(int gameId, PieceVo pieceVo) throws SQLException {
+    public void add(int gameId, PieceDto pieceDto) throws SQLException {
         try (Connection con = dataSource.getConnection()) {
-            executeAdd(con, gameId, pieceVo);
+            executeAdd(con, gameId, pieceDto);
         }
     }
 
-    private void executeAdd(Connection con, int gameId, PieceVo pieceVo) throws SQLException {
+    private void executeAdd(Connection con, int gameId, PieceDto pieceDto) throws SQLException {
         try (PreparedStatement pstmt = con.prepareStatement(INSERT_PIECE)) {
             pstmt.setInt(1, gameId);
-            Piece piece = pieceVo.getPiece();
-            Point point = pieceVo.getPoint();
+            Piece piece = pieceDto.getPiece();
+            Point point = pieceDto.getPoint();
             pstmt.setString(2, piece.getType().name());
             pstmt.setInt(3, point.getPositionX());
             pstmt.setInt(4, point.getPositionY());
@@ -46,28 +46,28 @@ public class PieceDao {
         }
     }
 
-    public List<PieceVo> findPieceById(int gameId) throws SQLException {
+    public List<PieceDto> findPieceById(int gameId) throws SQLException {
         try (Connection con = dataSource.getConnection()) {
             return executeFindPiece(con, gameId);
         }
     }
 
-    private List<PieceVo> executeFindPiece(Connection con, int gameId) throws SQLException {
+    private List<PieceDto> executeFindPiece(Connection con, int gameId) throws SQLException {
         try (PreparedStatement pstmt = con.prepareStatement(SELECT_PIECE)) {
             pstmt.setInt(1, gameId);
             return getPiece(pstmt);
         }
     }
 
-    private List<PieceVo> getPiece(PreparedStatement pstmt) throws SQLException {
+    private List<PieceDto> getPiece(PreparedStatement pstmt) throws SQLException {
         try (ResultSet rs = pstmt.executeQuery()) {
 
             return getPieceVo(rs);
         }
     }
 
-    private List<PieceVo> getPieceVo(ResultSet rs) throws SQLException {
-        List<PieceVo> pieceVos = new ArrayList<>();
+    private List<PieceDto> getPieceVo(ResultSet rs) throws SQLException {
+        List<PieceDto> pieceDtos = new ArrayList<>();
         while (rs.next()) {
             String name = rs.getString("name");
             int x = rs.getInt("x");
@@ -75,10 +75,10 @@ public class PieceDao {
             boolean team = rs.getBoolean("team");
             Point point = new Point(x, y);
             Piece piece = PieceFactory.of(name, team ? Team.WHITE : Team.BLACK);
-            PieceVo pieceVo = new PieceVo(point, piece);
-            pieceVos.add(pieceVo);
+            PieceDto pieceDto = new PieceDto(point, piece);
+            pieceDtos.add(pieceDto);
         }
-        return pieceVos;
+        return pieceDtos;
     }
 
     public void updatePosition(int gameId, Point start, Point end) throws SQLException {

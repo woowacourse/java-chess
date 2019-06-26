@@ -5,7 +5,7 @@ import chess.domain.Team;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Rook;
 import chess.utils.DBUtil;
-import chess.vo.PieceVo;
+import chess.dto.PieceDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,15 +30,15 @@ public class PieceDaoTest {
         int gameId = 1;
         Point point = new Point("a1");
         Piece rook = new Rook(Team.WHITE);
-        PieceVo pieceVo = new PieceVo(point, rook);
-        pieceDao.add(gameId, pieceVo);
+        PieceDto pieceDto = new PieceDto(point, rook);
+        pieceDao.add(gameId, pieceDto);
     }
 
     @Test
     void read() throws SQLException {
         int gameId = 1;
-        List<PieceVo> pieceVos = pieceDao.findPieceById(gameId);
-        assertThat(pieceVos.get(0)).isEqualTo(new PieceVo(new Point(3, 3), new Rook(Team.WHITE)));
+        List<PieceDto> pieceDtos = pieceDao.findPieceById(gameId);
+        assertThat(pieceDtos.get(0)).isEqualTo(new PieceDto(new Point(3, 3), new Rook(Team.WHITE)));
     }
 
     @Test
@@ -47,12 +47,12 @@ public class PieceDaoTest {
         Point start = new Point(0, 0);
         Point end = new Point(3, 3);
         pieceDao.updatePosition(gameId, start, end);
-        PieceVo pieceVo = pieceDao.findPieceById(gameId).stream()
+        PieceDto pieceDto = pieceDao.findPieceById(gameId).stream()
                 .filter(vo -> vo.getPoint().equals(end))
                 .collect(Collectors.toList())
                 .get(0);
-        assertThat(pieceVo.getPiece()).isEqualTo(new Rook(Team.WHITE));
-        assertThat(pieceVo.getPoint()).isEqualTo(end);
+        assertThat(pieceDto.getPiece()).isEqualTo(new Rook(Team.WHITE));
+        assertThat(pieceDto.getPoint()).isEqualTo(end);
     }
 
     @Test

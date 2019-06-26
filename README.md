@@ -1,6 +1,5 @@
 # java-chess
 ### Todo
-* 몇번 방 이어하기 기능.
 * 게임 끝나면 DB에서 삭제.
 * Controller -> Service로 분리 (중복제거)
 
@@ -24,5 +23,6 @@
     * Pawn 점수 0.5점 체크
 * Pawn 대각선 이동일 때 상대팀 말 있어야 이동 가능
     * 상대팀 말 없으면 이동 불가
-* DB 연동 (DAO, VO)
+* DB 연동 (DAO, DTO)
 * Game에 Turn 추가
+* 몇번 방 이어하기 기능.

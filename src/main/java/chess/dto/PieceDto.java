@@ -1,15 +1,15 @@
-package chess.vo;
+package chess.dto;
 
 import chess.domain.Point;
 import chess.domain.pieces.Piece;
 
 import java.util.Objects;
 
-public class PieceVo {
+public class PieceDto {
     private final Point point;
     private final Piece piece;
 
-    public PieceVo(Point point, Piece piece) {
+    public PieceDto(Point point, Piece piece) {
         this.point = point;
         this.piece = piece;
     }
@@ -26,9 +26,9 @@ public class PieceVo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PieceVo pieceVo = (PieceVo) o;
-        return Objects.equals(point, pieceVo.point) &&
-                Objects.equals(piece, pieceVo.piece);
+        PieceDto pieceDto = (PieceDto) o;
+        return Objects.equals(point, pieceDto.point) &&
+                Objects.equals(piece, pieceDto.piece);
     }
 
     @Override
