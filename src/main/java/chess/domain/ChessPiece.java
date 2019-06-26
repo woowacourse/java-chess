@@ -37,7 +37,7 @@ public enum ChessPiece {
 		Map<ChessPiece, List<Position>> positions = chessPosition.getPositions();
 		ChessBoard chessBoard = new ChessBoard();
 		for (ChessPiece chessPiece : ChessPiece.values()) {
-			if(chessPiece.equals(EMPTY)) {
+			if (chessPiece.equals(EMPTY)) {
 				continue;
 			}
 			for (Position position : positions.get(chessPiece)) {
@@ -48,8 +48,8 @@ public enum ChessPiece {
 	}
 
 	public static Piece generatePiece(Player player, Type type, Position position) {
-		for(ChessPiece chessPiece : ChessPiece.values()) {
-			if(isSameChessPiece(chessPiece, player, type)) {
+		for (ChessPiece chessPiece : ChessPiece.values()) {
+			if (isSameChessPiece(chessPiece, player, type)) {
 				return chessPiece.generator.apply(player, position);
 			}
 		}
@@ -57,8 +57,8 @@ public enum ChessPiece {
 	}
 
 	public static String getPieceImage(Player player, Type type) {
-		for(ChessPiece chessPiece : ChessPiece.values()) {
-			if(isSameChessPiece(chessPiece, player, type)) {
+		for (ChessPiece chessPiece : ChessPiece.values()) {
+			if (isSameChessPiece(chessPiece, player, type)) {
 				return chessPiece.image;
 			}
 		}
@@ -66,8 +66,8 @@ public enum ChessPiece {
 	}
 
 	public static ChessPiece getChessPiece(Player player, Type type) {
-		for(ChessPiece chessPiece : ChessPiece.values()) {
-			if(isSameChessPiece(chessPiece, player, type)) {
+		for (ChessPiece chessPiece : ChessPiece.values()) {
+			if (isSameChessPiece(chessPiece, player, type)) {
 				return chessPiece;
 			}
 		}

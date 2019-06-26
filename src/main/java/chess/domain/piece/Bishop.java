@@ -15,7 +15,7 @@ public class Bishop extends NormalPiece {
 	}
 
 	public static Bishop valueOf(Player player, Position currentPosition) {
-		List<MovementInfo> movementInfos =  new ArrayList<>(Arrays.asList(
+		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
 				new MovementInfo(Direction.LEFT_TOP, MAX_DISTANCE_OF_BISHOP),
 				new MovementInfo(Direction.RIGHT_TOP, MAX_DISTANCE_OF_BISHOP),
 				new MovementInfo(Direction.RIGHT_BOTTOM, MAX_DISTANCE_OF_BISHOP),

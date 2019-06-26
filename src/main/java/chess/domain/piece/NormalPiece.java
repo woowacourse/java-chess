@@ -13,7 +13,7 @@ public class NormalPiece extends Piece {
 	}
 
 	@Override
-	public Path getMovablePath(Position end)  {
+	public Path getMovablePath(Position end) {
 		return getValidPath(end, movementInfos);
 	}
 

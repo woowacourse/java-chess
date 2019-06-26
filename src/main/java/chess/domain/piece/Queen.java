@@ -15,7 +15,7 @@ public class Queen extends NormalPiece {
 	}
 
 	public static Queen valueOf(Player player, Position currentPosition) {
-		List<MovementInfo> movementInfos =  new ArrayList<>(Arrays.asList(
+		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
 				new MovementInfo(Direction.LEFT, MAX_DISTANCE_OF_QUEEN),
 				new MovementInfo(Direction.LEFT_TOP, MAX_DISTANCE_OF_QUEEN),
 				new MovementInfo(Direction.TOP, MAX_DISTANCE_OF_QUEEN),

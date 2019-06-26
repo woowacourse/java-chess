@@ -15,7 +15,7 @@ public class King extends NormalPiece {
 	}
 
 	public static King valueOf(Player player, Position currentPosition) {
-		List<MovementInfo> movementInfos =  new ArrayList<>(Arrays.asList(
+		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
 				new MovementInfo(Direction.LEFT, MAX_DISTANCE_OF_KING),
 				new MovementInfo(Direction.LEFT_TOP, MAX_DISTANCE_OF_KING),
 				new MovementInfo(Direction.TOP, MAX_DISTANCE_OF_KING),

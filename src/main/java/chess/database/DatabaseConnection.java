@@ -19,7 +19,7 @@ public class DatabaseConnection {
 	}
 
 	public static Connection getConnection() throws SQLException {
-		if(connection != null && !connection.isClosed()) {
+		if (connection != null && !connection.isClosed()) {
 			return connection;
 		}
 

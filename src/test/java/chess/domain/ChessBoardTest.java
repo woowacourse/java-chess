@@ -35,18 +35,18 @@ public class ChessBoardTest {
 	void 해당_경로로_이동_불가능() {
 		chessBoard.addPiece(Rook.valueOf(Player.BLACK, Position.getPosition(6, 5)));
 		Path path = new Path();
-		path.add(Position.getPosition(5,5));
-		path.add(Position.getPosition(6,5));
-		path.add(Position.getPosition(7,5));
+		path.add(Position.getPosition(5, 5));
+		path.add(Position.getPosition(6, 5));
+		path.add(Position.getPosition(7, 5));
 		assertFalse(chessBoard.isMovable(path));
 	}
 
 	@Test
 	void 해당_경로로_이동_가능() {
 		Path path = new Path();
-		path.add(Position.getPosition(5,5));
-		path.add(Position.getPosition(6,5));
-		path.add(Position.getPosition(7,5));
+		path.add(Position.getPosition(5, 5));
+		path.add(Position.getPosition(6, 5));
+		path.add(Position.getPosition(7, 5));
 		assertTrue(chessBoard.isMovable(path));
 	}
 
@@ -66,17 +66,17 @@ public class ChessBoardTest {
 
 	@Test
 	void ROOK_점수() {
-		chessBoard.addPiece(Rook.valueOf(Player.BLACK, Position.getPosition(1,1)));
+		chessBoard.addPiece(Rook.valueOf(Player.BLACK, Position.getPosition(1, 1)));
 
 		assertThat(chessBoard.getXScore(Player.BLACK)).isEqualTo(new Score(5));
 	}
 
 	@Test
 	void PAWN_점수() {
-		chessBoard.addPiece(Pawn.valueOf(Player.BLACK, Position.getPosition(1,1)));
-		chessBoard.addPiece(Pawn.valueOf(Player.BLACK, Position.getPosition(1,3)));
-		chessBoard.addPiece(Pawn.valueOf(Player.BLACK, Position.getPosition(1,7)));
-		chessBoard.addPiece(Pawn.valueOf(Player.BLACK, Position.getPosition(2,7)));
+		chessBoard.addPiece(Pawn.valueOf(Player.BLACK, Position.getPosition(1, 1)));
+		chessBoard.addPiece(Pawn.valueOf(Player.BLACK, Position.getPosition(1, 3)));
+		chessBoard.addPiece(Pawn.valueOf(Player.BLACK, Position.getPosition(1, 7)));
+		chessBoard.addPiece(Pawn.valueOf(Player.BLACK, Position.getPosition(2, 7)));
 
 		assertThat(chessBoard.getXScore(Player.BLACK)).isEqualTo(new Score(2.5));
 	}

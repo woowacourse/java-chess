@@ -12,20 +12,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class QueenTest {
 	@Test
 	void End로_갈_수_있는_경우() {
-		Queen queen = Queen.valueOf(Player.BLACK, Position.getPosition(5,5));
-		Position end = Position.getPosition(8,8);
+		Queen queen = Queen.valueOf(Player.BLACK, Position.getPosition(5, 5));
+		Position end = Position.getPosition(8, 8);
 
 		Path path = new Path();
-		path.add(Position.getPosition(6,6));
-		path.add(Position.getPosition(7,7));
+		path.add(Position.getPosition(6, 6));
+		path.add(Position.getPosition(7, 7));
 
 		assertThat(queen.getMovablePath(end)).isEqualTo(path);
 	}
 
 	@Test
 	void End로_갈_수_없는_경우() {
-		Queen queen = Queen.valueOf(Player.BLACK, Position.getPosition(5,5));
-		Position end = Position.getPosition(4,7);
+		Queen queen = Queen.valueOf(Player.BLACK, Position.getPosition(5, 5));
+		Position end = Position.getPosition(4, 7);
 
 		assertThrows(NotFoundPathException.class, () -> queen.getMovablePath(end));
 	}

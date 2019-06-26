@@ -23,7 +23,7 @@ public class Pawn extends Piece {
 	}
 
 	public static Pawn valueOf(Player player, Position position) {
-		return (player.equals(Player.WHITE))? getWhite(position) : getBlack(position);
+		return (player.equals(Player.WHITE)) ? getWhite(position) : getBlack(position);
 	}
 
 	private static Pawn getWhite(Position position) {
@@ -70,7 +70,7 @@ public class Pawn extends Piece {
 			return movementInfos;
 		}
 		movementInfos.add(new MovementInfo(Direction.BOTTOM, MAX_DISTANCE_OF_DEFAULT_PAWN));
-		return  movementInfos;
+		return movementInfos;
 	}
 
 	@Override

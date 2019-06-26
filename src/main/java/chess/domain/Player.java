@@ -6,7 +6,7 @@ public enum Player {
 	EMPTY;
 
 	public Player changePlayer() {
-		if(this == WHITE) {
+		if (this == WHITE) {
 			return BLACK;
 		}
 		return WHITE;

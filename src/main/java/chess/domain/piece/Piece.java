@@ -66,7 +66,7 @@ public abstract class Piece {
 	private int getValidDistance(MovementInfo movementInfo, Direction direction, Position end) {
 		int distance = movementInfo.getMaxDistance();
 		int positionMaxDistance = position.getMaxDistance(direction, end);
-		return (distance > positionMaxDistance)? positionMaxDistance : distance;
+		return (distance > positionMaxDistance) ? positionMaxDistance : distance;
 	}
 
 	public void changePosition(Position position) {

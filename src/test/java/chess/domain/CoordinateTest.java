@@ -25,30 +25,30 @@ public class CoordinateTest {
 	@Test
 	void 증가하는_방향으로_갈_수_있는_경우() {
 		Coordinate coordinate = Coordinate.getCoordinate(1);
-		assertTrue(coordinate.canMove( 1));
+		assertTrue(coordinate.canMove(1));
 	}
 
 	@Test
 	void 증가하는_방향으로_갈_수_없는_경우() {
 		Coordinate coordinate = Coordinate.getCoordinate(8);
-		assertFalse(coordinate.canMove( 1));
+		assertFalse(coordinate.canMove(1));
 	}
 
 	@Test
 	void 감소하는_방향으로_갈_수_있는_경우() {
 		Coordinate coordinate = Coordinate.getCoordinate(8);
-		assertTrue(coordinate.canMove( -1));
+		assertTrue(coordinate.canMove(-1));
 	}
 
 	@Test
 	void 감소하는_방향으로_갈_수_없는_경우() {
 		Coordinate coordinate = Coordinate.getCoordinate(1);
-		assertFalse(coordinate.canMove( -1));
+		assertFalse(coordinate.canMove(-1));
 	}
 
 	@Test
 	void 움직이지_않는_경우() {
 		Coordinate coordinate = Coordinate.getCoordinate(1);
-		assertTrue(coordinate.canMove( 0));
+		assertTrue(coordinate.canMove(0));
 	}
 }

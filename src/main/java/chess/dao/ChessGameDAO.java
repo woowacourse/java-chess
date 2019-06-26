@@ -72,7 +72,7 @@ public class ChessGameDAO {
 	}
 
 	public void gameover(int roomNumber) throws SQLException {
-		try(PreparedStatement pstmt = connection.prepareStatement(UPDATE_CHESS_GAME_OVER_QUERY)) {
+		try (PreparedStatement pstmt = connection.prepareStatement(UPDATE_CHESS_GAME_OVER_QUERY)) {
 			pstmt.setBoolean(1, false);
 			pstmt.setInt(2, roomNumber);
 			pstmt.executeUpdate();
@@ -80,13 +80,13 @@ public class ChessGameDAO {
 	}
 
 	public List<Integer> getNotOverAllRoomNumbers() throws SQLException {
-		try(PreparedStatement pstmt = connection.prepareStatement(SELECT_NOT_OVER_CHESS_GAME)) {
+		try (PreparedStatement pstmt = connection.prepareStatement(SELECT_NOT_OVER_CHESS_GAME)) {
 			return getAllRoomNumbers(pstmt);
 		}
 	}
 
 	public List<Integer> getAllRoomNumbers(PreparedStatement pstmt) throws SQLException {
-		try(ResultSet resultSet = pstmt.executeQuery()) {
+		try (ResultSet resultSet = pstmt.executeQuery()) {
 			List<Integer> roomNumbers = new ArrayList<>();
 			while (resultSet.next()) {
 				roomNumbers.add(resultSet.getInt(1));
