@@ -8,7 +8,9 @@ import java.util.List;
 
 public class Pawn extends Piece {
     private static final double PAWN_INITIAL_SCORE = 1;
-
+    private static final double MAX_DISTANCE = 2;
+    private static final double MIN_DISTANCE = 1;
+    private static final double DIAGONAL_DISTANCE = Math.sqrt(2);
     private boolean isFirstMove = true;
 
     public Pawn(PlayerType team, Point point) {
@@ -25,15 +27,17 @@ public class Pawn extends Piece {
     public boolean canMove(Direction direction, Point destination) {
         List<Direction> pawnDirections = Direction.pawnDirection(team);
         double distance = point.calculateDistance(destination);
-        if (distance == 2) {
+
+        if (distance == MAX_DISTANCE) {
             return pawnDirections.get(0) == direction && isFirstMove;
         }
-        if (distance == 1) {
+        if (distance == MIN_DISTANCE) {
             return pawnDirections.get(0) == direction;
         }
-        if (distance == Math.sqrt(2)) {
+        if (distance == DIAGONAL_DISTANCE) {
             return pawnDirections.get(1) == direction || pawnDirections.get(2) == direction;
         }
+
         throw new IllegalArgumentException();
     }
 

@@ -12,7 +12,8 @@ import java.util.Map;
 import static chess.view.Render.render;
 
 public class ChessGameController {
-    public static Route start = (Request request, Response response) -> {
+
+    static Route start = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         BoardService boardService = new BoardService();
         boardService.initialize();
@@ -25,7 +26,7 @@ public class ChessGameController {
         return render(model, "main.html");
     };
 
-    public static Route load = (Request request, Response response) -> {
+    static Route load = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         BoardService boardService = new BoardService();
 
@@ -38,7 +39,7 @@ public class ChessGameController {
         return render(model, "main.html");
     };
 
-    public static Route move = (Request request, Response response) -> {
+    static Route move = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         BoardService boardService = new BoardService();
 
@@ -56,7 +57,7 @@ public class ChessGameController {
         return render(model, "main.html");
     };
 
-    public static Route score = (Request request, Response response) -> {
+    static Route score = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         BoardService boardService = new BoardService();
 

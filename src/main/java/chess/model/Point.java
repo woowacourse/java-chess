@@ -5,7 +5,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Point {
+    private static final int MIN_POINT_NUMBER = 1;
+    private static final int MAX_POINT_NUMBER = 8;
+    private static final String COMMA = ",";
     private static final Map<String, Point> points = new HashMap<>();
+
     private final int x;
     private final int y;
 
@@ -22,11 +26,11 @@ public class Point {
 
     public static Point of(int x, int y) {
         checkValidPoint(x, y);
-        return points.get(x + "," + y);
+        return points.get(x + COMMA + y);
     }
 
     private static void checkValidPoint(int x, int y) {
-        if (1 > x || 8 < x || 1 > y || 8 < y) {
+        if (MIN_POINT_NUMBER > x || MAX_POINT_NUMBER < x || MIN_POINT_NUMBER > y || MAX_POINT_NUMBER < y) {
             throw new IllegalArgumentException("올바르지 않은 위치입니다.");
         }
     }
@@ -45,6 +49,21 @@ public class Point {
         return of(x + direction.getXDegree(), y + direction.getYDegree());
     }
 
+    public int getX() {
+        return x;
+    }
+
+    private static void setPoints(int i) {
+        for (int j = 1; j <= 8; j++) {
+            points.put(i + COMMA + j, new Point(i, j));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return x + COMMA + y;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,20 +76,5 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    private static void setPoints(int i) {
-        for (int j = 1; j <= 8; j++) {
-            points.put(i + "," + j, new Point(i, j));
-        }
-    }
-
-    @Override
-    public String toString() {
-        return x + "," + y;
     }
 }

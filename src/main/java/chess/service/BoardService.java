@@ -18,6 +18,9 @@ import java.util.Map;
 
 public class BoardService {
     private static final int ADD_ROUND = 1;
+    private static final String WHITE_TEAM = "WHITE";
+    private static final String BLAKC_TEAM = "BLACK";
+
     private BoardDao boardDao;
     private TurnDao turnDao;
 
@@ -70,8 +73,9 @@ public class BoardService {
         Board board = new Board(boardLoader, PlayerType.valueOf(turnDao.selectCurrentTurn(round)));
 
         Map<String, Double> scores = new HashMap<>();
-        scores.put("WHITE", board.calculateScore(PlayerType.WHITE));
-        scores.put("BLACK", board.calculateScore(PlayerType.BLACK));
+        scores.put(WHITE_TEAM, board.calculateScore(PlayerType.WHITE));
+        scores.put(BLAKC_TEAM, board.calculateScore(PlayerType.BLACK));
+
         return scores;
     }
 }

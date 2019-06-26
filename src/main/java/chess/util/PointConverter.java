@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PointConverter {
+
     public static Point convertToPoint(String point) {
         List<Integer> xAndY = Arrays.asList(point.split(",")).stream()
                 .map(String::trim)

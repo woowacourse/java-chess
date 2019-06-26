@@ -9,7 +9,11 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class ScoreCalculator {
-    List<Piece> pieces;
+    private static final double MIN_PAWN_IN_SAME_X_POSITION = 2;
+    private static final double UPDATED_PAWN_SCORE = 0.5;
+    private static final double INITIAL_PAWN_SCORE = 1;
+
+    private List<Piece> pieces;
 
     public ScoreCalculator(List<Piece> pieces) {
         this.pieces = pieces;
@@ -36,9 +40,9 @@ public class ScoreCalculator {
     }
 
     private double relativePawnScore(long number) {
-        if (number >= 2) {
-            return number * 0.5;
+        if (number >= MIN_PAWN_IN_SAME_X_POSITION) {
+            return number * UPDATED_PAWN_SCORE;
         }
-        return 1;
+        return INITIAL_PAWN_SCORE;
     }
 }
