@@ -45,7 +45,11 @@ public class PawnMove implements Move {
         List<Position> positions = new ArrayList<>();
         addRoute(source, target, positions);
 
+        System.out.println("전"+moveFlag);
+
         if (moveFlag == UNMOVED_STATE) changeFlagStatus();
+
+        System.out.println("후"+moveFlag);
 
         return positions;
     }

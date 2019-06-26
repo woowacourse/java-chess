@@ -33,12 +33,10 @@ public class WebUIChessApplication {
             Gson gson = new Gson();
             ChessPositionDto chessPositionDto = gson.fromJson(request.body(), ChessPositionDto.class);
 
-            System.out.println(chessPositionDto);
             int roundId = request.session().attribute("roundId");
 
             try {
                 ChessBoardDto chessBoardDTO = ChessService.getInstance().getChessBoard(chessPositionDto, roundId);
-                System.out.println(chessBoardDTO);
                 return gson.toJson(chessBoardDTO);
             } catch (IllegalArgumentException e) {
                 return "error";

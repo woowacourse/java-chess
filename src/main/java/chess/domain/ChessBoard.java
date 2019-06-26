@@ -82,7 +82,7 @@ public class ChessBoard {
         }
     }
 
-    private boolean canMove(Position source, Position target) {
+      boolean canMove(Position source, Position target) {
         ChessPiece sourceChessPiece = chessBoard.get(source);
         List<Position> route;
         try {
@@ -98,10 +98,10 @@ public class ChessBoard {
             return canMovePawns(source, target, route);
         }
 
-        return route.stream()
-                .limit(route.size() - 1)
-                .allMatch(position -> isSameChessPiece(chessBoard.get(position), Blank.class)
-                        && !chessBoard.get(target).isSameTeam(sourceChessPiece));
+        return (!chessBoard.get(target).isSameTeam(sourceChessPiece))
+                && route.stream()
+                .filter(position -> position != target)
+                .allMatch(position -> isSameChessPiece(chessBoard.get(position), Blank.class));
     }
 
     private Boolean canMovePawns(Position source, Position target, List<Position> route) {

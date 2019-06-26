@@ -38,7 +38,7 @@ public class KnightMove implements Move {
     }
 
     private boolean isColumnRoute(Position source, Position target) {
-        return (Math.abs(source.calculateColumnDistance(target)) == MIN_DISTANCE)
+        return (Math.abs(source.calculateColumnDistance(target)) == MAX_DISTANCE)
                 && (Math.abs(source.calculateRowDistance(target)) == MIN_DISTANCE);
     }
 }
