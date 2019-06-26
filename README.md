@@ -6,7 +6,8 @@
 2. dao(ChessGameDAO, PieceDAO) 
     + database의 데이터를 가져오고, 저장
 3. DatabaseConnection
-    + Connection 얻기
+    + database와 연결
+    + Connection 생성
 4. piece 패키지의 객체들
     + 해당 말의 이동 규칙 저장
     + 이동 최대 거리 저장
@@ -24,14 +25,14 @@
 9. Coordinate
     + 좌표(x,y)를 나타냄
 10. Direction
-    + 말의 이동 방향
+    + 말의 이동 할 수 있는 방향을 나타냄
 11. MovementInfo
     + 말의 이동 방향 저장
     + 말의 최대 이동 거리 저장
 12. Path
     + 말의 이동 경로를 나타냄
 13. Player
-    + 게임 사용자
+    + 게임 사용자를 나타냄
 14. Position
     + ChessBoard의 한 칸을 나타냄
 15. Result
