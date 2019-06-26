@@ -4,27 +4,15 @@ import chess.domain.MovementUnit;
 import chess.domain.Spot;
 import chess.domain.Team;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class King extends Piece {
-    private static final int KING_MOVING_CONDITION = 4;
-
     private final Set<MovementUnit> movementUnits;
 
     public King(Team team) {
         super(team);
         pieceType = PieceType.KING;
-        movementUnits = new HashSet<>();
-
-        movementUnits.add(MovementUnit.UP);
-        movementUnits.add(MovementUnit.DOWN);
-        movementUnits.add(MovementUnit.RIGHT);
-        movementUnits.add(MovementUnit.LEFT);
-        movementUnits.add(MovementUnit.UP_RIGHT);
-        movementUnits.add(MovementUnit.UP_LEFT);
-        movementUnits.add(MovementUnit.DOWN_RIGHT);
-        movementUnits.add(MovementUnit.DOWN_LEFT);
+        movementUnits = MovementUnit.getAllWay();
     }
 
     @Override
@@ -42,7 +30,7 @@ public class King extends Piece {
     }
 
     private boolean validMove(int xGap, int yGap) {
-        return (Math.pow(xGap, 2) + Math.pow(yGap, 2)) <= 4;
+        return (Math.pow(xGap, 2) + Math.pow(yGap, 2)) < 4;
     }
 
     @Override
@@ -50,3 +38,4 @@ public class King extends Piece {
         return isMovable(startSpot, endSpot);
     }
 }
+

@@ -6,17 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
-    public static Board create() {
+    private static final int BLACK_START_LINE = 0;
+    private static final int WHITE_START_LINE = 7;
+
+    static Board create() {
         Map<Spot, Piece> spots = new HashMap<>();
 
-//        for (int i = 0; i < 64; i++) {
-//            spots.put(Spot.valueOf(i), Empty.getInstance());
-//        }
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                spots.put(Spot.valueOf(i, j), Empty.getInstance());
-            }
+        for (int i = 0; i < 64; i++) {
+            spots.put(Spot.valueOf(i), Empty.getInstance());
         }
         initPieces(Team.BLACK, spots);
         initPieces(Team.WHITE, spots);
@@ -50,15 +47,15 @@ public class BoardFactory {
 
     private static int getColumn(Team team) {
         if (team == Team.BLACK) {
-            return 0;
+            return BLACK_START_LINE;
         }
-        return 7;
+        return WHITE_START_LINE;
     }
 
     private static int getPawnColumn(Team team) {
         if (team == Team.BLACK) {
-            return 1;
+            return Spot.BLACK_PAWN_START_LINE;
         }
-        return 6;
+        return Spot.WHITE_PAWN_START_LINE;
     }
 }

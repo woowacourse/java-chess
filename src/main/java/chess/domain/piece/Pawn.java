@@ -8,11 +8,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Pawn extends Piece {
+    public static final int PAWN_SCORE = 1;
+
     private static final int PAWN_X_MAXIMUM_MOVABLE_DISTANCE = 1;
     private static final int PAWN_X_MINIMUM_MOVABLE_DISTANCE = 0;
     private static final int PAWN_Y_MAXIMUM_MOVABLE_DISTANCE = 2;
     private static final int PAWN_Y_MINIMUM_MOVABLE_DISTANCE = 1;
-
     private static final Set<Integer> PAWN_START_COLUMN;
 
     static {
@@ -26,18 +27,18 @@ public class Pawn extends Piece {
 
     public Pawn(Team team) {
         super(team);
-        this.score = 1;
+        this.score = PAWN_SCORE;
         pieceType = PieceType.PAWN;
         movementUnits = new HashSet<>();
         attackUnits = new HashSet<>();
 
-        if (team == Team.BLACK) {
+        if (team == Team.WHITE) {
             movementUnits.add(MovementUnit.UP);
             attackUnits.add(MovementUnit.UP_LEFT);
             attackUnits.add(MovementUnit.UP_RIGHT);
         }
 
-        if (team == Team.WHITE) {
+        if (team == Team.BLACK) {
             movementUnits.add(MovementUnit.DOWN);
             attackUnits.add(MovementUnit.DOWN_LEFT);
             attackUnits.add(MovementUnit.DOWN_RIGHT);

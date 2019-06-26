@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public enum MovementUnit {
@@ -30,6 +32,44 @@ public enum MovementUnit {
     MovementUnit(int movementX, int movementY) {
         this.movementX = movementX;
         this.movementY = movementY;
+    }
+
+    public static Set<MovementUnit> getAllWay() {
+        Set<MovementUnit> movements = new HashSet<>();
+        movements.addAll(getFourWay());
+        movements.addAll(getDiagonals());
+        return movements;
+    }
+
+    public static Set<MovementUnit> getFourWay() {
+        Set<MovementUnit> movements = new HashSet<>();
+        movements.add(MovementUnit.UP);
+        movements.add(MovementUnit.DOWN);
+        movements.add(MovementUnit.RIGHT);
+        movements.add(MovementUnit.LEFT);
+        return movements;
+    }
+
+    public static Set<MovementUnit> getDiagonals() {
+        Set<MovementUnit> movements = new HashSet<>();
+        movements.add(MovementUnit.UP_RIGHT);
+        movements.add(MovementUnit.UP_LEFT);
+        movements.add(MovementUnit.DOWN_RIGHT);
+        movements.add(MovementUnit.DOWN_LEFT);
+        return movements;
+    }
+
+    public static Set<MovementUnit> getKnightWays() {
+        Set<MovementUnit> movements = new HashSet<>();
+        movements.add(KNIGHT_UP_RIGHT);
+        movements.add(KNIGHT_RIGHT_UP);
+        movements.add(KNIGHT_UP_LEFT);
+        movements.add(KNIGHT_LEFT_UP);
+        movements.add(KNIGHT_DOWN_RIGHT);
+        movements.add(KNIGHT_RIGHT_DOWN);
+        movements.add(KNIGHT_DOWN_LEFT);
+        movements.add(KNIGHT_LEFT_DOWN);
+        return movements;
     }
 
     public static MovementUnit direction(int movementX, int movementY) {

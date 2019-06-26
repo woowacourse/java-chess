@@ -85,4 +85,9 @@ class MovementUnitTest {
     void 나이트_계산_왼쪽2_아래1() {
         assertThat(MovementUnit.direction(-2, -1)).isEqualTo(MovementUnit.KNIGHT_LEFT_DOWN);
     }
+
+    @Test
+    void NOT_MOVE_계산() {
+        assertThat(MovementUnit.direction(-3, -1)).isEqualTo(MovementUnit.NOT_MOVE);
+    }
 }

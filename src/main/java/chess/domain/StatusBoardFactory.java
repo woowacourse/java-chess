@@ -1,11 +1,12 @@
 package chess.domain;
 
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class StatusBoardFactory {
     public static StatusBoard create(Board board) {
@@ -17,33 +18,42 @@ public class StatusBoardFactory {
     private static double getTeamScore(Board board, Team team) {
         Map<Spot, Piece> pieces = board.getTeamPieces(team);
         double score = getScoreExceptPawn(pieces);
+        List<Spot> pawnSpots = getPawnSpots(pieces);
 
-        List<Spot> pawnSpots = new ArrayList<>();
-        pieces.forEach((k, v) -> {
-            if (v.score() == 1) {
-                pawnSpots.add(k);
-            }
-        });
         score += getPawnScore(pawnSpots);
         return score;
     }
 
     private static double getScoreExceptPawn(Map<Spot, Piece> pieces) {
         return pieces.values().stream()
-                .filter(x -> x.score() != 1)
-                .mapToDouble(x -> x.score())
+                .filter(piece -> piece.score() != Pawn.PAWN_SCORE)
+                .mapToDouble(Piece::score)
                 .sum();
     }
 
+    private static List<Spot> getPawnSpots(Map<Spot, Piece> pieces) {
+        return pieces.entrySet().stream()
+                .filter(entry -> entry.getValue().score() == Pawn.PAWN_SCORE)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
     private static double getPawnScore(List<Spot> pawnSpots) {
-        Collections.sort(pawnSpots, Spot::xGap);
-
-        List<Integer> results = new ArrayList<>();
-
-        if (pawnSpots.size() == 0) {
+        if (pawnSpots.isEmpty()) {
             return 0;
         }
+        pawnSpots.sort(Spot::xGap);
+        List<Integer> sameLinePawnCounts = getSameLinePawnCounts(pawnSpots);
 
+        double totalResult = 0;
+        for (Integer result : sameLinePawnCounts) {
+            totalResult += calculatePawnScore(result);
+        }
+        return totalResult;
+    }
+
+    private static List<Integer> getSameLinePawnCounts(List<Spot> pawnSpots) {
+        List<Integer> results = new ArrayList<>();
         int count = 1;
         for (int i = 1; i < pawnSpots.size(); i++) {
             if (pawnSpots.get(i).isSameRaw(pawnSpots.get(i - 1))) {
@@ -54,15 +64,10 @@ public class StatusBoardFactory {
             }
         }
         results.add(count);
-
-        double totalResult = 0;
-        for (Integer result : results) {
-            totalResult += calculateNumber(result);
-        }
-        return totalResult;
+        return results;
     }
 
-    private static double calculateNumber(int number) {
+    private static double calculatePawnScore(int number) {
         if (number <= 1) {
             return number;
         }

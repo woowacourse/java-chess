@@ -4,27 +4,18 @@ import chess.domain.MovementUnit;
 import chess.domain.Spot;
 import chess.domain.Team;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class Queen extends Piece {
+    private static final int QUEEN_SCORE = 9;
+
     private final Set<MovementUnit> movementUnits;
 
     public Queen(Team team) {
         super(team);
-        this.score = 9;
+        this.score = QUEEN_SCORE;
         pieceType = PieceType.QUEEN;
-        movementUnits = new HashSet<>();
-
-        movementUnits.add(MovementUnit.UP);
-        movementUnits.add(MovementUnit.DOWN);
-        movementUnits.add(MovementUnit.RIGHT);
-        movementUnits.add(MovementUnit.LEFT);
-
-        movementUnits.add(MovementUnit.UP_RIGHT);
-        movementUnits.add(MovementUnit.UP_LEFT);
-        movementUnits.add(MovementUnit.DOWN_RIGHT);
-        movementUnits.add(MovementUnit.DOWN_LEFT);
+        movementUnits = MovementUnit.getAllWay();
     }
 
     @Override

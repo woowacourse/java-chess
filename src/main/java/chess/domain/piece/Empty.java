@@ -6,15 +6,15 @@ import chess.domain.Team;
 public class Empty extends Piece {
     private static Empty EMPTY;
 
-    private Empty() {
-        super(Team.EMPTY);
-    }
-
     public static Empty getInstance() {
         if (EMPTY == null) {
-            return new Empty();
+            EMPTY = new Empty();
         }
         return EMPTY;
+    }
+
+    private Empty() {
+        super(Team.EMPTY);
     }
 
     @Override

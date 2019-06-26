@@ -13,7 +13,7 @@ public enum Team {
         return this == team;
     }
 
-    String getTeamColor() {
+    public String getTeamColor() {
         return String.valueOf(this);
     }
 }
