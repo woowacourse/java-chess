@@ -181,7 +181,7 @@
     var content = '{{{board}}}';
     var game = '{{gameEnd}}';
     pieces = JSON.parse(content);
-    for(var key in pieces) {
+    for (var key in pieces) {
         document.querySelector("#" + key + " > a").textContent = pieces[key];
     }
     if (game === 'true') {

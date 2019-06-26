@@ -3,7 +3,6 @@ package chess.dao;
 import chess.domain.PieceFactory;
 import chess.domain.Point;
 import chess.domain.Team;
-import chess.domain.pieces.Piece;
 import chess.domain.pieces.Rook;
 import chess.dto.PieceDto;
 import chess.utils.DBUtil;
