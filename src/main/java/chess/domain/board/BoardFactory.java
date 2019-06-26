@@ -3,10 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class BoardFactory {
     private BoardFactory() {
@@ -32,5 +29,17 @@ public class BoardFactory {
         if (size != Board.BOUNDARY) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public static List<String> getBasicArrange() {
+        return Arrays.asList(
+                "RNBKQBNR",
+                "PPPPPPPP",
+                "........",
+                "........",
+                "........",
+                "........",
+                "pppppppp",
+                "rnbkqbnr");
     }
 }

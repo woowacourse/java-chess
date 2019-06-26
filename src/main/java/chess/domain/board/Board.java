@@ -12,6 +12,7 @@ import static java.util.stream.Collectors.*;
 public class Board {
     public static final int BOUNDARY = 8;
     private static final String EMPTY = ".";
+
     private Map<Point, Optional<Piece>> points;
     private boolean isKingDead;
 
@@ -24,54 +25,61 @@ public class Board {
         return points.get(point);
     }
 
-    // TODO: 2019-06-22 private!!
-    public boolean canMove(Point prev, Point next) {
+    public boolean move(Point prev, Point next) {
+        if (canMove(prev, next) && points.get(prev).get().isMovable(prev, next)) {
+
+            Optional<Piece> nextPiece = points.get(next);
+            updateKingStatus(nextPiece);
+
+            points.put(next, points.get(prev));
+            points.put(prev, Optional.empty());
+
+            return true;
+        }
+        return false;
+    }
+
+    private void updateKingStatus(Optional<Piece> nextPiece) {
+        if (nextPiece.isPresent() && PieceType.of(nextPiece.get().pieceToString()).isKing()) {
+            isKingDead = true;
+        }
+    }
+
+    private boolean canMove(Point prev, Point next) {
+        if (prev == next) {
+            return false;
+        }
         Optional<Piece> prevPiece = points.get(prev);
         if (!prevPiece.isPresent()) {
             return false;
         }
 
-        DirectionType direction = DirectionType.valueOf(prev, next);
-
-
-        if (!PieceType.of(prevPiece.get().pieceToString()).isKnight()) {
-            int size = next.calculateMaxAbsoluteDistance(prev);
-
-//            IntStream.range(1, size - 1)
-//                    .mapToObj(i -> prev.moveOneStep(direction, i))
-//                    .anyMatch(movedPoint -> points.get(movedPoint).isPresent());
-
-            for (int i = 1; i < size - 1; i++) {
-                Point moving = prev.moveOneStep(direction, i);
-                if (points.get(moving).isPresent()) {
-                    return false;
-                }
-            }
+        if (!PieceType.of(prevPiece.get().pieceToString()).isKnight() &&
+                isBlocking(prev, next)) {
+            return false;
         }
 
         Optional<Piece> nextPiece = points.get(next);
-        if (nextPiece.isPresent() && PieceType.of(prevPiece.get().pieceToString()).isPawn()) {
-            // TODO: 2019-06-22 대각선 -> 직선으로
-            if (!DirectionType.diagonalDirection().contains(direction)) {
-                return false;
-            }
+        if (nextPiece.isPresent() &&
+                PieceType.of(prevPiece.get().pieceToString()).isPawn() &&
+                DirectionType.linearDirection().contains(DirectionType.valueOf(prev, next))) {
+            return false;
         }
 
-        if (nextPiece.isPresent() && points.get(prev).get().isSamePlayerType(nextPiece.get())) {
+        if (nextPiece.isPresent() &&
+                prevPiece.get().isSamePlayerType(nextPiece.get())) {
             return false;
         }
         return true;
     }
 
-    public void move(Point prev, Point next) {
-        if (canMove(prev, next) && points.get(prev).get().isMovable(prev, next)) {
-            Optional<Piece> nextPiece = points.get(next);
-            if (nextPiece.isPresent() && PieceType.of(nextPiece.get().pieceToString()).isKing()) {
-                isKingDead = true;
-            }
-            points.put(next, points.get(prev));
-            points.put(prev, Optional.empty());
-        }
+    private boolean isBlocking(Point prev, Point next) {
+        int size = next.calculateMaxAbsoluteDistance(prev);
+        DirectionType direction = DirectionType.valueOf(prev, next);
+
+        return IntStream.range(1, size - 1)
+                .mapToObj(i -> prev.moveOneStep(direction, i))
+                .anyMatch(movedPoint -> points.get(movedPoint).isPresent());
     }
 
 
@@ -109,7 +117,6 @@ public class Board {
         return score;
     }
 
-    // TODO: 2019-06-23 Rename this method!!
     public List<String> mappingBoardToString() {
         return IntStream.range(0, BOUNDARY)
                 .mapToObj(column -> IntStream.range(0, BOUNDARY)

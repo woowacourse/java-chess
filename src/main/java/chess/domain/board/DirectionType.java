@@ -33,8 +33,8 @@ public enum DirectionType {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static List<DirectionType> diagonalDirection() {
-        return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+    public static List<DirectionType> linearDirection() {
+        return Arrays.asList(NORTH, EAST, SOUTH, WEST);
     }
 
     public int getxDegree() {

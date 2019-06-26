@@ -18,7 +18,7 @@ public class BoardTest {
     @BeforeEach
     void setUp() {
         basicArrange = Arrays.asList(
-                "RNBKQBKR",
+                "RNBKQBNR",
                 "PPPPPPPP",
                 "........",
                 "........",
@@ -82,27 +82,27 @@ public class BoardTest {
     }
 
     @Test
-    void canMove_JustMove_True() {
+    void move_JustMove_True() {
         Board board = BoardFactory.create(arrange);
-        assertThat(board.canMove(Point.of(4, 3), Point.of(4, 7))).isTrue();
+        assertThat(board.move(Point.of(4, 3), Point.of(4, 7))).isTrue();
     }
 
     @Test
-    void canMove_SameTeamAttack_False() {
+    void move_SameTeamAttack_False() {
         Board board = BoardFactory.create(arrange);
-        assertThat(board.canMove(Point.of(4, 3), Point.of(4, 0))).isFalse();
+        assertThat(board.move(Point.of(4, 3), Point.of(4, 0))).isFalse();
     }
 
     @Test
-    void canMove_BlockOther_False() {
+    void move_BlockOther_False() {
         Board board = BoardFactory.create(arrange);
-        assertThat(board.canMove(Point.of(4, 3), Point.of(0, 3))).isFalse();
+        assertThat(board.move(Point.of(4, 3), Point.of(0, 3))).isFalse();
     }
 
     @Test
-    void canMove_Attack_True() {
+    void move_Attack_True() {
         Board board = BoardFactory.create(arrange);
-        assertThat(board.canMove(Point.of(4, 3), Point.of(2, 3))).isTrue();
+        assertThat(board.move(Point.of(4, 3), Point.of(2, 3))).isTrue();
     }
 
     @Test
@@ -131,7 +131,7 @@ public class BoardTest {
                 "........",
                 "........");
         Board board = BoardFactory.create(list);
-        board.move(Point.of(4,5), Point.of(3, 4));
+        board.move(Point.of(4, 5), Point.of(3, 4));
         board.mappingBoardToString().forEach(System.out::println);
     }
 
