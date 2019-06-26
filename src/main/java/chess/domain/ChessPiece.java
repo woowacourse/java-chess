@@ -1,7 +1,5 @@
 package chess.domain;
 
-import java.util.List;
-import java.util.Map;
 import java.util.function.BiFunction;
 
 import chess.domain.piece.*;
@@ -33,20 +31,6 @@ public enum ChessPiece {
 		this.image = image;
 	}
 
-	public static ChessBoard generateChessBoard(ChessInitialPosition chessPosition) {
-		Map<ChessPiece, List<Position>> positions = chessPosition.getPositions();
-		ChessBoard chessBoard = new ChessBoard();
-		for (ChessPiece chessPiece : ChessPiece.values()) {
-			if(chessPiece.equals(EMPTY)) {
-				continue;
-			}
-			for (Position position : positions.get(chessPiece)) {
-				chessBoard.addPiece(chessPiece.generator.apply(chessPiece.player, position));
-			}
-		}
-		return chessBoard;
-	}
-
 	public static Piece generatePiece(Player player, Type type, Position position) {
 		for(ChessPiece chessPiece : ChessPiece.values()) {
 			if(chessPiece.player.equals(player) && (chessPiece.type.equals(type))) {
@@ -72,6 +56,10 @@ public enum ChessPiece {
 			}
 		}
 		throw new IllegalArgumentException("해당 체스 말을 찾을 수 없습니다.");
+	}
+
+	public Piece generate(Position position) {
+		return generator.apply(player, position);
 	}
 
 	public String getImage() {

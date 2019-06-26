@@ -15,6 +15,13 @@ public class ChessBoard {
 		pieces = new ArrayList<>();
 	}
 
+	public ChessBoard(List<Piece> pieces) {
+		this();
+		for (Piece piece : pieces) {
+			addPiece(piece);
+		}
+	}
+
 	public void addPiece(Piece newPiece) {
 		if (hasSamePosition(newPiece)) {
 			throw new SamePositionException();
