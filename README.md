@@ -1,39 +1,40 @@
 # java-chess
 체스 게임 구현을 위한 저장소
 
-1. ChessGame
-    + 체스 판 초기화
-    + 말 배치
-    + 현재 차례인 플레이어 저장
-2. ChessBoard
-    + 말들 저장
-    + 말의 위치 변경
-3. Piece
-    + 이동 규칙 저장
-    + 이동 규칙에 따른 경로 반환
-    + 현재 위치 저장
-    + 플레이어 저장
-    + 점수 저장 
-4. Pattern
-    + 움직일 수 있는 방향 저장
-    + 
-5. Direction
-    + 
-4. Path
-    + 좌표 A부터 B까지의 경로 저장
-5. Coordinate
-    + 좌표 값 저장
-    + (예외) 1보다 작거나 8보다 큰 경우
-6. Position
-    + x,y 좌표 저장 
-7. Player (enum)
-    + 플레이어 차례
-8. PlayerScore
-    + 플레이어의 점수 저장
-9. Score
-    + 점수 저장
-    + 다른 점수와 비교하여 Result 반환
-10. Result (enum)
-    + 승, 패, 무
-    
-    
+1. ChessGameController
+    + 웹에서 전달받은 request를 처리
+2. dao(ChessGameDAO, PieceDAO) 
+    + database의 데이터를 가져오고, 저장
+3. DatabaseConnection
+    + Connection 얻기
+4. piece 패키지의 객체들
+    + 해당 말의 이동 규칙 저장
+    + 이동 최대 거리 저장
+5. ChessBoard
+    + 현재 존재하는 말 저장
+    + 플레이어에 따라 점수 계산
+6. ChessGame
+    + 말 이동 
+    + 게임 종료(킹이 잡혔을 때) 여부 확인
+    + 우승자 계산
+7. ChessInitialPosition
+    + ChessBoard 초기화
+8. ChessPiece
+    + 말의 정보 저장
+9. Coordinate
+    + 좌표(x,y)를 나타냄
+10. Direction
+    + 말의 이동 방향
+11. MovementInfo
+    + 말의 이동 방향 저장
+    + 말의 최대 이동 거리 저장
+12. Path
+    + 말의 이동 경로를 나타냄
+13. Player
+    + 게임 사용자
+14. Position
+    + ChessBoard의 한 칸을 나타냄
+15. Result
+    + 게임 결과를 나타냄
+16. Score
+    + 말이 가지고 있는 점수를 나타냄
