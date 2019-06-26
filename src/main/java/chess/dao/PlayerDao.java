@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.dao.sqls.PlayerSql;
 import chess.dao.utils.JdbcConnector;
 
 import java.sql.Connection;
@@ -23,7 +22,6 @@ public class PlayerDao {
     }
 
     public int insertPlayers(String whitePlayer, String blackPlayer) throws SQLDataException {
-
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PLAYER)) {
             preparedStatement.setString(1, whitePlayer);
