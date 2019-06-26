@@ -5,14 +5,17 @@ import chess.model.PlayerType;
 import chess.model.Point;
 
 public class King extends Piece {
+    private static final double KING_SCORE = 0;
+    private static final double KING_MAX_DISTANCE = Math.sqrt(2);
+
     public King(PlayerType team, Point point) {
-        super(team, point, 0);
+        super(team, point, KING_SCORE);
     }
 
     @Override
     public boolean canMove(Direction direction, Point destination) {
         double distance = point.calculateDistance(destination);
-        return distance <= Math.sqrt(2) && Direction.allDirection().contains(direction);
+        return distance <= KING_MAX_DISTANCE && Direction.allDirection().contains(direction);
     }
 
     @Override

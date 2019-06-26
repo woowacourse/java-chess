@@ -12,18 +12,18 @@ import java.util.List;
 import java.util.Map;
 
 public class BoardLoader implements BoardInitializer {
-    Map<Point, Piece> pieces = new HashMap<>();
+    private Map<Point, Piece> pieces = new HashMap<>();
 
     @Override
     public Map<Point, Piece> initialize() {
         return pieces;
     }
 
-    public void add(Point point, Piece piece) {
+    private void add(Point point, Piece piece) {
         pieces.put(point, piece);
     }
 
-    public void convertBoardDto(List<BoardDto> boardDtos) {
+    public void convertBoardDtoToMap(List<BoardDto> boardDtos) {
         for (BoardDto boardDto : boardDtos) {
             Point point = PointConverter.convertToPoint(boardDto.getPoint());
             add(point, PieceFactory.create(

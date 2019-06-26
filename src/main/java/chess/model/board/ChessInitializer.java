@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessInitializer implements BoardInitializer {
+    private static final int WHITE_TEAM_FIRST_LINE_Y = 1;
+    private static final int BLACK_TEAM_FIRST_LINE_Y = 8;
+    private static final int WHITE_PAWN_FIRST_Y = 2;
+    private static final int BLACK_PAWN_FIRST_Y = 7;
+
     private final Map<Point, Piece> chessBoard = new HashMap<>();
 
     @Override
@@ -27,7 +32,7 @@ public class ChessInitializer implements BoardInitializer {
         List<String> pieces =
                 Arrays.asList("rook", "knight", "bishop", "queen",
                         "king", "bishop", "knight", "rook");
-        int pieceYPoint = team == PlayerType.WHITE ? 1 : 8;
+        int pieceYPoint = team == PlayerType.WHITE ? WHITE_TEAM_FIRST_LINE_Y : BLACK_TEAM_FIRST_LINE_Y;
         for (int i = 1; i <= 8; i++) {
             Point point = Point.of(i, pieceYPoint);
             chessBoard.put(point, PieceFactory.create(pieces.get(i - 1), team, point));
@@ -35,7 +40,7 @@ public class ChessInitializer implements BoardInitializer {
     }
 
     private void createPawn(PlayerType team) {
-        int pawnYPoint = team == PlayerType.WHITE ? 2 : 7;
+        int pawnYPoint = team == PlayerType.WHITE ? WHITE_PAWN_FIRST_Y : BLACK_PAWN_FIRST_Y;
         for (int i = 1; i <= 8; i++) {
             Point point = Point.of(i, pawnYPoint);
             chessBoard.put(point, PieceFactory.create("pawn", team, point));

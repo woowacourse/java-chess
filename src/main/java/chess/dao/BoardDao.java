@@ -15,7 +15,7 @@ public class BoardDao {
     private static final String SELECT_CHESSES = "select piece, team, point from board where round = ?";
     private static final String DELETE_PIECE = "delete from board where round = ? and point = ?";
     private static final String UPDATE_PIECE = "update board set point = ? where point = ? and round = ?";
-
+    private static final int ZERO_ROUND = 0;
     private final Connection connection;
 
     public BoardDao(Connection connection) {
@@ -40,7 +40,7 @@ public class BoardDao {
         if (resultSet.next()) {
             return resultSet.getInt("round");
         }
-        return 0;
+        return ZERO_ROUND;
     }
 
     public List<BoardDto> findChessesByRound(int round) throws SQLException {

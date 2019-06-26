@@ -7,10 +7,12 @@ import chess.model.Point;
 import java.util.List;
 
 public class Pawn extends Piece {
+    private static final double PAWN_INITIAL_SCORE = 1;
+
     private boolean isFirstMove = true;
 
     public Pawn(PlayerType team, Point point) {
-        super(team, point, 1);
+        super(team, point, PAWN_INITIAL_SCORE);
     }
 
     @Override

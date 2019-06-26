@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BoardService {
+    private static final int ADD_ROUND = 1;
     private BoardDao boardDao;
     private TurnDao turnDao;
 
@@ -28,8 +29,8 @@ public class BoardService {
     public void initialize() throws SQLException {
         Board board = new Board(new ChessInitializer(), PlayerType.WHITE);
         int round = boardDao.recentRound();
-        turnDao.addFirstTurn(round + 1);
-        boardDao.initialize(board.convertToDto(round + 1));
+        turnDao.addFirstTurn(round + ADD_ROUND);
+        boardDao.initialize(board.convertToDto(round + ADD_ROUND));
     }
 
     public String currentTeam() throws SQLException {
@@ -48,7 +49,7 @@ public class BoardService {
         int round = boardDao.recentRound();
 
         BoardLoader boardLoader = new BoardLoader();
-        boardLoader.convertBoardDto(getChesses());
+        boardLoader.convertBoardDtoToMap(getChesses());
         Board board = new Board(boardLoader, PlayerType.valueOf(turnDao.selectCurrentTurn(round)));
 
         if (board.executeMovement(source, destination)) {
@@ -56,7 +57,6 @@ public class BoardService {
         }
         boardDao.remove(round, destination.toString());
         boardDao.update(round, source.toString(), destination.toString());
-
         turnDao.updateCurrentTurn(round);
 
         return false;
@@ -66,7 +66,7 @@ public class BoardService {
         int round = boardDao.recentRound();
 
         BoardLoader boardLoader = new BoardLoader();
-        boardLoader.convertBoardDto(getChesses());
+        boardLoader.convertBoardDtoToMap(getChesses());
         Board board = new Board(boardLoader, PlayerType.valueOf(turnDao.selectCurrentTurn(round)));
 
         Map<String, Double> scores = new HashMap<>();
