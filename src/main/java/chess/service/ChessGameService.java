@@ -17,22 +17,23 @@ public class ChessGameService {
     private static final ChessGameDAO CHESS_GAME_DAO = ChessGameDAO.getInstance();
     private static final ChessLogDAO CHESS_LOG_DAO = ChessLogDAO.getInstance();
 
-    public static Map<String, String> findGameByGameId(Request request) {
-        String gameId = gameId(request);
-        ChessGame chessGame = new ChessGame();
-        lastStatus(CHESS_LOG_DAO.findGameLogById(gameId), chessGame);
-        request.session().attribute(gameId + SESSION_ID, chessGame);
+    public static Map<String, String> findGameByGameId(Request req) {
+        String gameId = gameId(req);
+        ChessGame chessGame = lastStatus(CHESS_LOG_DAO.findGameLogById(gameId));
+        updateSession(req, gameId, chessGame);
         return status(chessGame);
     }
 
-    private static String gameId(Request request) {
-        return request.splat()[0];
+    private static String gameId(Request req) {
+        return req.splat()[0];
     }
 
-    private static void lastStatus(List<List<String>> chessLogs, ChessGame chessGame) {
+    private static ChessGame lastStatus(List<List<String>> chessLogs) {
+        ChessGame chessGame  = new ChessGame();
         for (List<String> chessLog : chessLogs) {
             chessGame.play(chessLog.get(0), chessLog.get(1));
         }
+        return chessGame;
     }
 
     public static List<Integer> findPreviousGamesById(String name) {
@@ -42,13 +43,19 @@ public class ChessGameService {
     public static Map<String, String> playGame(Request req) {
         String gameId = gameId(req);
         ChessGame game = req.session().attribute(gameId + SESSION_ID);
-        String from = req.queryParams(FROM);
-        String to = req.queryParams(TO);
 
+        play(gameId, game, req.queryParams(FROM), req.queryParams(TO));
+        updateSession(req, gameId, game);
+        return status(game);
+    }
+
+    private static void play(String gameId, ChessGame game, String from, String to) {
         game.play(from, to);
         CHESS_LOG_DAO.insertLog(from, to, gameId);
+    }
+
+    private static void updateSession(Request req, String gameId, ChessGame game) {
         req.session().attribute(gameId + SESSION_ID, game);
-        return status(game);
     }
 
     private static Map<String, String> status(ChessGame game) {
