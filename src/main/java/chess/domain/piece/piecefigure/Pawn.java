@@ -7,7 +7,10 @@ import chess.domain.piece.pieceinfo.PieceType;
 import chess.domain.piece.pieceinfo.TeamType;
 import chess.exception.NotFoundPositionException;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Pawn extends Piece {
     private static final int FIRST_MOVEMENT_COUNT = 2;
@@ -58,7 +61,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isAttackablePosition(PositionChecker positionChecker, Position nextPosition) {
-        return !Objects.isNull(positionChecker.getPiece(nextPosition))
+        return !positionChecker.getPiece(nextPosition).isSameTeam(Blank.of())
                 && !positionChecker.getPiece(nextPosition).isSameTeam(this);
     }
 
@@ -80,7 +83,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isMovablePosition(PositionChecker positionChecker, Position nextPosition) {
-        return Objects.isNull(positionChecker.getPiece(nextPosition));
+        return positionChecker.getPiece(nextPosition).isSameTeam(Blank.of());
     }
 
     private boolean isFirstMove(Position source) {

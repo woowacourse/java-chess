@@ -13,7 +13,8 @@ public class ChessGameController {
 
     public static final Route CREATE_NEW_GAME = (request, response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("game", chessGameService.createNewGame());
+        
+        model.put("game", );
         return render(model, "chessBoard.html");
     };
 
