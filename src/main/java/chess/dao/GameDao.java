@@ -30,98 +30,98 @@ public class GameDao {
     }
 
     public boolean findTurnByGameId(int gameId) throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            return executeFindTurnByGameId(con, gameId);
+        try (Connection conn = dataSource.getConnection()) {
+            return executeFindTurnByGameId(conn, gameId);
         }
     }
 
-    private boolean executeFindTurnByGameId(Connection con, int gameId) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(SELECT_TURN_BY_ID)) {
-            pstmt.setInt(1, gameId);
-            return getTurnByGameId(pstmt);
+    private boolean executeFindTurnByGameId(Connection conn, int gameId) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(SELECT_TURN_BY_ID)) {
+            stmt.setInt(1, gameId);
+            return getTurnByGameId(stmt);
         }
     }
 
-    private boolean getTurnByGameId(PreparedStatement pstmt) throws SQLException {
-        try (ResultSet rs = pstmt.executeQuery()) {
+    private boolean getTurnByGameId(PreparedStatement stmt) throws SQLException {
+        try (ResultSet rs = stmt.executeQuery()) {
             rs.next();
             return rs.getBoolean("turn");
         }
     }
 
     public void createNewGame() throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            executeAdd(con);
+        try (Connection conn = dataSource.getConnection()) {
+            executeAdd(conn);
         }
     }
 
-    private void executeAdd(Connection con) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(INSERT_GAME)) {
-            pstmt.executeUpdate();
+    private void executeAdd(Connection conn) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(INSERT_GAME)) {
+            stmt.executeUpdate();
         }
     }
 
     public void toggleTurnById(int gameId) throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
+        try (Connection conn = dataSource.getConnection()) {
             boolean turn = findTurnByGameId(gameId);
-            executeToggle(con, gameId, !turn);
+            executeToggle(conn, gameId, !turn);
         }
     }
 
-    private void executeToggle(Connection con, int gameId, boolean turn) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(UPDATE_TURN)) {
-            pstmt.setBoolean(1, turn);
-            pstmt.setInt(2, gameId);
-            pstmt.executeUpdate();
+    private void executeToggle(Connection conn, int gameId, boolean turn) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(UPDATE_TURN)) {
+            stmt.setBoolean(1, turn);
+            stmt.setInt(2, gameId);
+            stmt.executeUpdate();
         }
     }
 
     public void deleteById(int gameId) throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            executeDeleteById(con, gameId);
+        try (Connection conn = dataSource.getConnection()) {
+            executeDeleteById(conn, gameId);
         }
     }
 
-    private void executeDeleteById(Connection con, int gameId) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(DELETE_BY_ID)) {
-            pstmt.setInt(1, gameId);
-            pstmt.executeUpdate();
+    private void executeDeleteById(Connection conn, int gameId) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(DELETE_BY_ID)) {
+            stmt.setInt(1, gameId);
+            stmt.executeUpdate();
         }
     }
 
     public int findMaxId() throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            return executeFindMaxId(con);
+        try (Connection conn = dataSource.getConnection()) {
+            return executeFindMaxId(conn);
         }
     }
 
-    private int executeFindMaxId(Connection con) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(SELECT_MAX_ID)) {
-            return getMaxId(pstmt);
+    private int executeFindMaxId(Connection conn) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(SELECT_MAX_ID)) {
+            return getMaxId(stmt);
         }
     }
 
-    private int getMaxId(PreparedStatement pstmt) throws SQLException {
-        try (ResultSet rs = pstmt.executeQuery()) {
+    private int getMaxId(PreparedStatement stmt) throws SQLException {
+        try (ResultSet rs = stmt.executeQuery()) {
             rs.next();
             return rs.getInt(1);
         }
     }
 
     public List<Integer> findAllId() throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            return executeFindAllId(con);
+        try (Connection conn = dataSource.getConnection()) {
+            return executeFindAllId(conn);
         }
     }
 
-    private List<Integer> executeFindAllId(Connection con) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(SELECT_ALL_ID)) {
-            return getAllId(pstmt);
+    private List<Integer> executeFindAllId(Connection conn) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(SELECT_ALL_ID)) {
+            return getAllId(stmt);
         }
     }
 
-    private List<Integer> getAllId(PreparedStatement pstmt) throws SQLException {
-        try (ResultSet rs = pstmt.executeQuery()) {
+    private List<Integer> getAllId(PreparedStatement stmt) throws SQLException {
+        try (ResultSet rs = stmt.executeQuery()) {
             List<Integer> gameIds = new ArrayList<>();
             while (rs.next()) {
                 gameIds.add(rs.getInt("game_id"));

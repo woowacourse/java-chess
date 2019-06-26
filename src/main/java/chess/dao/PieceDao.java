@@ -33,37 +33,37 @@ public class PieceDao {
     }
 
     public void add(int gameId, PieceDto pieceDto) throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            executeAdd(con, gameId, pieceDto);
+        try (Connection conn = dataSource.getConnection()) {
+            executeAdd(conn, gameId, pieceDto);
         }
     }
 
-    private void executeAdd(Connection con, int gameId, PieceDto pieceDto) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(INSERT_PIECE)) {
-            pstmt.setInt(1, gameId);
-            pstmt.setString(2, pieceDto.getName());
-            pstmt.setInt(3, pieceDto.getX());
-            pstmt.setInt(4, pieceDto.getY());
-            pstmt.setBoolean(5, pieceDto.isTeam());
-            pstmt.executeUpdate();
+    private void executeAdd(Connection conn, int gameId, PieceDto pieceDto) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(INSERT_PIECE)) {
+            stmt.setInt(1, gameId);
+            stmt.setString(2, pieceDto.getName());
+            stmt.setInt(3, pieceDto.getX());
+            stmt.setInt(4, pieceDto.getY());
+            stmt.setBoolean(5, pieceDto.isTeam());
+            stmt.executeUpdate();
         }
     }
 
     public List<PieceDto> findPieceById(int gameId) throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            return executeFindPiece(con, gameId);
+        try (Connection conn = dataSource.getConnection()) {
+            return executeFindPiece(conn, gameId);
         }
     }
 
-    private List<PieceDto> executeFindPiece(Connection con, int gameId) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(SELECT_PIECE)) {
-            pstmt.setInt(1, gameId);
-            return getPiece(pstmt);
+    private List<PieceDto> executeFindPiece(Connection conn, int gameId) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(SELECT_PIECE)) {
+            stmt.setInt(1, gameId);
+            return getPiece(stmt);
         }
     }
 
-    private List<PieceDto> getPiece(PreparedStatement pstmt) throws SQLException {
-        try (ResultSet rs = pstmt.executeQuery()) {
+    private List<PieceDto> getPiece(PreparedStatement stmt) throws SQLException {
+        try (ResultSet rs = stmt.executeQuery()) {
 
             return getPieceVo(rs);
         }
@@ -83,51 +83,51 @@ public class PieceDao {
     }
 
     public void updatePosition(int gameId, Point start, Point end) throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            executeUpdatePosition(con, gameId, start, end);
+        try (Connection conn = dataSource.getConnection()) {
+            executeUpdatePosition(conn, gameId, start, end);
         }
     }
 
-    private void executeUpdatePosition(Connection con, int gameId, Point start, Point end) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(UPDATE_PIECE_BY_POSITION)) {
-            pstmt.setInt(1, end.getPositionX());
-            pstmt.setInt(2, end.getPositionY());
-            pstmt.setInt(3, gameId);
-            pstmt.setInt(4, start.getPositionX());
-            pstmt.setInt(5, start.getPositionY());
-            pstmt.executeUpdate();
+    private void executeUpdatePosition(Connection conn, int gameId, Point start, Point end) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(UPDATE_PIECE_BY_POSITION)) {
+            stmt.setInt(1, end.getPositionX());
+            stmt.setInt(2, end.getPositionY());
+            stmt.setInt(3, gameId);
+            stmt.setInt(4, start.getPositionX());
+            stmt.setInt(5, start.getPositionY());
+            stmt.executeUpdate();
         }
     }
 
     public void insertBlank(int gameId, Point target) throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            executeInsertBlank(con, gameId, target);
+        try (Connection conn = dataSource.getConnection()) {
+            executeInsertBlank(conn, gameId, target);
         }
     }
 
-    private void executeInsertBlank(Connection con, int gameId, Point target) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(INSERT_BLANK_BY_POSITION)) {
-            pstmt.setInt(1, gameId);
-            pstmt.setString(2, "BLANK");
-            pstmt.setInt(3, target.getPositionX());
-            pstmt.setInt(4, target.getPositionY());
-            pstmt.setBoolean(5, false);
-            pstmt.executeUpdate();
+    private void executeInsertBlank(Connection conn, int gameId, Point target) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(INSERT_BLANK_BY_POSITION)) {
+            stmt.setInt(1, gameId);
+            stmt.setString(2, "BLANK");
+            stmt.setInt(3, target.getPositionX());
+            stmt.setInt(4, target.getPositionY());
+            stmt.setBoolean(5, false);
+            stmt.executeUpdate();
         }
     }
 
     public void deletePieceByPosition(int gameId, Point target) throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            executeDeletePiece(con, gameId, target);
+        try (Connection conn = dataSource.getConnection()) {
+            executeDeletePiece(conn, gameId, target);
         }
     }
 
-    private void executeDeletePiece(Connection con, int gameId, Point target) throws SQLException {
-        try (PreparedStatement pstmt = con.prepareStatement(DELETE_PIECE_BY_POSITION)) {
-            pstmt.setInt(1, gameId);
-            pstmt.setInt(2, target.getPositionX());
-            pstmt.setInt(3, target.getPositionY());
-            pstmt.executeUpdate();
+    private void executeDeletePiece(Connection conn, int gameId, Point target) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(DELETE_PIECE_BY_POSITION)) {
+            stmt.setInt(1, gameId);
+            stmt.setInt(2, target.getPositionX());
+            stmt.setInt(3, target.getPositionY());
+            stmt.executeUpdate();
         }
     }
 }
