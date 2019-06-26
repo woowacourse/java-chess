@@ -3,7 +3,6 @@ package chess.controller;
 import chess.dao.ChessGameDao;
 import chess.dao.ChessPieceDao;
 import chess.dao.DBManager;
-import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.domain.MoveResult;
 import chess.domain.Point;
