@@ -33,6 +33,15 @@ public class ChessGameDao {
         }
     }
 
+    public void updateTurn(String nextTurn) throws SQLException {
+        try (Connection conn = dataSource.getConnection()) {
+            String query = "UPDATE game SET turn=? WHERE id=1";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, nextTurn);
+            pstmt.executeUpdate();
+        }
+    }
+
     public void deleteGame() throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
             String query = "DELETE FROM game";

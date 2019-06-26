@@ -10,6 +10,10 @@ public class ChessBoardDto {
 
     private Map<Point, Piece> points;
 
+    public ChessBoardDto(Map<Point, Piece> points) {
+        this.points = points;
+    }
+
     public Map<Point, Piece> getPoints() {
         return points;
     }

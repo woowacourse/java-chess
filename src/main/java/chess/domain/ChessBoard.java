@@ -15,6 +15,10 @@ public class ChessBoard {
         this.points = initialize();
     }
 
+    public ChessBoard(Map<Point, Piece> points) {
+        this.points = new HashMap<>(points);
+    }
+
     private Map<Point, Piece> initialize() {
         Map<Point, Piece> points = new HashMap<>();
         points.put(PointFactory.of("a1"), new Rook(Color.WHITE));
@@ -116,5 +120,9 @@ public class ChessBoard {
                 .sum();
 
         return totalScore;
+    }
+
+    public Piece getPiece(Point point) {
+        return points.get(point);
     }
 }

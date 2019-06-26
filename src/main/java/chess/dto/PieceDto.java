@@ -6,31 +6,39 @@ import chess.domain.pieces.Type;
 
 public class PieceDto {
 
-    private Point point;
-    private Color color;
-    private Type type;
+    private String point;
+    private String color;
+    private String type;
 
-    public Point getPoint() {
+    public PieceDto() { }
+
+    public PieceDto(Point point, Color color, Type type) {
+        this.point = point.toString();
+        this.color = color.toString();
+        this.type = type.toString();
+    }
+
+    public String getPoint() {
         return point;
     }
 
-    public void setPoint(Point point) {
+    public void setPoint(String point) {
         this.point = point;
     }
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 }

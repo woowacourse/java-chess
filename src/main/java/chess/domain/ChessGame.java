@@ -5,6 +5,7 @@ import chess.domain.pieces.King;
 import chess.domain.pieces.Piece;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -16,6 +17,12 @@ public class ChessGame {
         this.isEnd = false;
         this.colorOfTurn = Color.WHITE;
         chessBoard = new ChessBoard();
+    }
+
+    public ChessGame(Color currentTurn, Map<Point, Piece> points) {
+        this.isEnd = false;
+        this.colorOfTurn = currentTurn;
+        chessBoard = new ChessBoard(points);
     }
 
     public void play(Point source, Point target) {
@@ -41,5 +48,17 @@ public class ChessGame {
 
     public boolean hasPiece(Point point, Piece piece) {
         return chessBoard.hasPiece(point, piece);
+    }
+
+    public Map<Point, Piece> getBoard() {
+        return chessBoard.getPoints();
+    }
+
+    public Piece getPiece(Point point) {
+        return chessBoard.getPiece(point);
+    }
+
+    public Color getColor() {
+        return this.colorOfTurn;
     }
 }

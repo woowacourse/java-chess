@@ -5,10 +5,10 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import javax.sql.DataSource;
 
 public class DBManager {
-    private static final String DB_HOST = "localhost";
+    private static final String DB_HOST = "localhost:3307";
     private static final String DB_NAME = "chess";
-    private static final String DB_USER = "conatuseus";
-    private static final String DB_PASSWORD = "1234";
+    private static final String DB_USER = "codemcd";
+    private static final String DB_PASSWORD = "0803";
 
     public static DataSource createDataSource() {
         MysqlDataSource ds = new MysqlDataSource();
