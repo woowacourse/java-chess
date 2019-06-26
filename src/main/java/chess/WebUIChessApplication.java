@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.board.GameOverException;
+import chess.domain.piece.PieceColor;
 import chess.dto.ChessGameDTO;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
@@ -23,6 +24,7 @@ public class WebUIChessApplication {
 
         get("/chessgame", WebUIChessApplication::chessGame);
         post("/move", WebUIChessApplication::move);
+        get("/status", WebUIChessApplication::status);
     }
 
     private static String chessGame(Request request, Response response) throws SQLException {
@@ -54,6 +56,19 @@ public class WebUIChessApplication {
 
         model.put("boardJson", new Gson().toJson(chessGameDTO.getBoard().getBoard()));
         model.put("turn", chessGameDTO.getTurn());
+        return render(model, "chessgame.html");
+    }
+
+    private static String status(Request request, Response response) throws SQLException {
+        Map<String, Object> model = new HashMap<>();
+
+        int id = request.session().attribute("gameId");
+        ChessGameDTO chessGameDTO = ChessGameService.getInstance().getStatus(id);
+
+        model.put("boardJson", new Gson().toJson(chessGameDTO.getBoard().getBoard()));
+        model.put("turn", chessGameDTO.getTurn());
+        model.put("whiteStatus", chessGameDTO.getStatus().get(PieceColor.WHITE));
+        model.put("blackStatus", chessGameDTO.getStatus().get(PieceColor.BLACK));
         return render(model, "chessgame.html");
     }
 

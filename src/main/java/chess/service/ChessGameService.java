@@ -70,4 +70,10 @@ public class ChessGameService {
         return chessGameDTO;
     }
 
+    public ChessGameDTO getStatus(int id) throws SQLException {
+        ChessGameDTO chessGameDTO = getGame(id);
+        ChessGame chessGame = new ChessGame(chessGameDTO.getTurn(), chessGameDTO.getBoard().getBoard());
+        chessGameDTO.setStatus(chessGame.status());
+        return chessGameDTO;
+    }
 }
