@@ -17,10 +17,11 @@ public class ConsoleChessApplication {
         while (true) {
             try {
                 OutputView.printCheckBoard(chessBoard);
-
+                System.out.println("현재 턴은 " + chessBoard.getTeam().name()+"입니다.");
                 Position source = InputView.getSourcePosition();
                 Position target = InputView.getTargetPosition();
                 chessBoard.move(source, target);
+                chessBoard.changeTeam();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

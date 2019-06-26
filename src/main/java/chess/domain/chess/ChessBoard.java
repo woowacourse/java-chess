@@ -19,7 +19,7 @@ public class ChessBoard {
 
     public ChessBoard(Initializer initializer) {
         this.units = initializer.create();
-        this.present = Team.WHITE;
+        this.present = initializer.createTeam();
     }
 
     public Optional<Unit> getUnit(Position position) {
@@ -142,5 +142,13 @@ public class ChessBoard {
 
     public Team getTeam() {
         return present;
+    }
+
+    public void changeTeam() {
+        if(present == Team.WHITE) {
+            present = Team.BLACK;
+            return;
+        }
+        present = Team.WHITE;
     }
 }

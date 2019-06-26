@@ -70,18 +70,21 @@ public class WebUIChessApplication {
 
             ChessBoard chessBoard = chessBoardDAO.selectRecentRow();
             chessBoard.move(sourcePosition, targetPosition);
+            chessBoard.changeTeam();
 
-            chessBoardDAO.update(chessBoard, chessBoard.getTeam().opposite());
+            chessBoardDAO.update(chessBoard, chessBoard.getTeam());
+
+            ChessBoard chessBoardAfterUpdate = chessBoardDAO.selectRecentRow();
 
             Map<String, Object> model = new HashMap<>();
 
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
-            chessBoardDTO.setUnits(chessBoard.getUnits());
+            chessBoardDTO.setUnits(chessBoardAfterUpdate.getUnits());
 
             String chessJson = new Gson().toJson(chessBoardDTO);
 
             model.put("chessBoard", chessJson);
-            model.put("team", chessBoard.getTeam().name());
+            model.put("team", chessBoardAfterUpdate.getTeam().name());
             return render(model, "game.html");
 
         });
