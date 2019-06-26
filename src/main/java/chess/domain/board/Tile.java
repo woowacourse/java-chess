@@ -25,17 +25,16 @@ public class Tile implements Comparable<Tile> {
         );
     }
 
-    static Stream<Tile> tilesOf(Column column, BiFunction<Column, Row, Tile> t) {
-        return Row.stream()
-                .map(row -> t.apply(column, row));
-    }
-
     private final Column column;
     private final Row row;
-
     private Tile(Column column, Row row) {
         this.column = column;
         this.row = row;
+    }
+
+    static Stream<Tile> tilesOf(Column column, BiFunction<Column, Row, Tile> t) {
+        return Row.stream()
+                .map(row -> t.apply(column, row));
     }
 
     public static Tile of(Column column, Row row) {

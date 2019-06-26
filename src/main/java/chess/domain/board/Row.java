@@ -9,9 +9,9 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Row implements Comparable<Row> {
+    static final int MAX_ROW_SIZE = 8;
     private static final List<Row> ROW_POOL;
     private static final int MIN_ROW_SIZE = 1;
-    static final int MAX_ROW_SIZE = 8;
 
     static {
         ROW_POOL = Collections.unmodifiableList(

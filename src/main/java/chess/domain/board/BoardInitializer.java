@@ -12,11 +12,11 @@ import java.util.Map;
 import static chess.domain.piece.PieceType.*;
 
 public class BoardInitializer {
+    public static final Row WHITE_PAWNS_ROW = Row.of(2);
+    public static final Row BLACK_PAWNS_ROW = Row.of(7);
     private static final List<PieceType> ORDER_OF_PIECES =
             Arrays.asList(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
     private static final Row WHITE_PIECES_ROW = Row.of(1);
-    public static final Row WHITE_PAWNS_ROW = Row.of(2);
-    public static final Row BLACK_PAWNS_ROW = Row.of(7);
     private static final Row BLACK_PIECES_ROW = Row.of(8);
 
     public static Map<Tile, Piece> initialize() {
