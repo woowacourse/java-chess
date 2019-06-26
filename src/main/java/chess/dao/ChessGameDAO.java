@@ -5,7 +5,9 @@ import chess.util.DatabaseConnection;
 import java.sql.*;
 
 public class ChessGameDAO {
+    private static final int NEW_GAME_TURN = 0;
     private static final int NEW_GAME_ID = 1;
+    private static final int BLACK_TURN = -1;
 
     private ChessGameDAO() {
     }
@@ -19,7 +21,7 @@ public class ChessGameDAO {
     }
 
     public String findChessGameById(int id) {
-        String sql = "SELECT pieces, turn FROM game WHERE id = ?";
+        String sql = "SELECT pieces FROM game WHERE id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -31,6 +33,22 @@ public class ChessGameDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int findTurnById(int id) {
+        String sql = "SELECT turn FROM game WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            try (ResultSet rs = statement.executeQuery()) {
+                rs.next();
+                return rs.getInt("turn") != NEW_GAME_TURN ? rs.getInt("turn") : BLACK_TURN;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return BLACK_TURN;
     }
 
     public int findLatestChessGameId() {
@@ -55,7 +73,7 @@ public class ChessGameDAO {
             statement.setString(1, board);
             statement.setInt(2, turn);
             statement.executeUpdate();
-            try(ResultSet rs = statement.getGeneratedKeys()) {
+            try (ResultSet rs = statement.getGeneratedKeys()) {
                 return (rs.next()) ? rs.getInt(1) : NEW_GAME_ID;
             }
         } catch (SQLException e) {
