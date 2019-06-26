@@ -24,12 +24,7 @@ public class WebUIChessApplication {
 		get("/new", (req, res) -> {
 			ChessGame chessGame = loadInitialChessGame();
 			int roomNumber = ChessGameService.saveInitialChessGame(chessGame);
-
-			Map<String, Object> model = new HashMap<>();
-			model.put("turn", chessGame.getCurrentPlayer().name());
-			model.put("roomNumber", roomNumber);
-			model.put("board", ChessGameService.getPieceImages(chessGame));
-			return render(model, "/chess.html");
+			return render(makeBaseChessGameModel(chessGame, roomNumber), "/chess.html");
 		});
 
 		get("/select", (req, res) -> {
@@ -41,12 +36,7 @@ public class WebUIChessApplication {
 		post("/load", (req, res) -> {
 			int roomNumber = Integer.parseInt(req.queryParams("room-number"));
 			ChessGame chessGame = loadChessGame(roomNumber);
-
-			Map<String, Object> model = new HashMap<>();
-			model.put("turn", chessGame.getCurrentPlayer().name());
-			model.put("roomNumber", roomNumber);
-			model.put("board", ChessGameService.getPieceImages(chessGame));
-			return render(model, "/chess.html");
+			return render(makeBaseChessGameModel(chessGame, roomNumber), "/chess.html");
 		});
 
 		post("/move", (req, res) -> {
@@ -68,9 +58,7 @@ public class WebUIChessApplication {
 
 			ChessGameService.saveChessGame(roomNumber, chessGame);
 
-			model.put("turn", chessGame.getCurrentPlayer().name());
-			model.put("roomNumber", roomNumber);
-			model.put("board", ChessGameService.getPieceImages(chessGame));
+			model.putAll(makeBaseChessGameModel(chessGame, roomNumber));
 			return render(model, "/chess.html");
 		});
 
@@ -83,9 +71,7 @@ public class WebUIChessApplication {
 			model.put("whiteScore", "백 점수 : " + chessGame.getPlayerScore(Player.WHITE).getScore());
 			model.put("blackScore", "흑 점수 : " + chessGame.getPlayerScore(Player.BLACK).getScore());
 
-			model.put("turn", chessGame.getCurrentPlayer().name());
-			model.put("roomNumber", roomNumber);
-			model.put("board", ChessGameService.getPieceImages(chessGame));
+			model.putAll(makeBaseChessGameModel(chessGame, roomNumber));
 			return render(model, "/chess.html");
 		});
 
@@ -105,7 +91,6 @@ public class WebUIChessApplication {
 		return new ChessGame(initialChessBoard);
 	}
 
-
 	private static ChessGame loadChessGame(int roomNumber) throws SQLException {
 		Player turn = ChessGameService.loadTurn(roomNumber);
 		ChessBoard chessBoard = new ChessBoard();
@@ -114,5 +99,13 @@ public class WebUIChessApplication {
 			chessBoard.addPiece(piece);
 		}
 		return new ChessGame(turn, chessBoard);
+	}
+
+	private static Map<String, Object> makeBaseChessGameModel(ChessGame chessGame, int roomNumber) {
+		Map<String, Object> model = new HashMap<>();
+		model.put("turn", chessGame.getCurrentPlayer().name());
+		model.put("roomNumber", roomNumber);
+		model.put("board", ChessGameService.getPieceImages(chessGame));
+		return model;
 	}
 }
