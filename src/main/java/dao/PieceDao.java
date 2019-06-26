@@ -1,7 +1,13 @@
 package dao;
 
+import dto.NavigatorDto;
+import dto.PieceDto;
+
+import java.util.List;
+
 public interface PieceDao {
-    PieceDto findByGameId(int gameId);
-    int addPiece(String position, int kindId, int gameId);
-    int deletePieceByPosition(String position);
+    List<PieceDto> findByGameId(int gameId);
+    int addPiece(PieceDto pieceDto);
+    int updatePiece(NavigatorDto navigatorDto);
+    int deletePiece(PieceDto pieceDto);
 }

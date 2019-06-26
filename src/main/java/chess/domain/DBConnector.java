@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnector {
     private static final String SERVER = "localhost";
-    private static final String DATABASE = "chess_db";
+    private static String DATABASE = "chess_db";
     private static final String USER_NAME = "stopsilver";
     private static final String PASSWORD = "12345678";
 
@@ -49,5 +49,9 @@ public class DBConnector {
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }
+    }
+
+    public static void setDATABASE(String DATABASE) {
+        DBConnector.DATABASE = DATABASE;
     }
 }

@@ -1,15 +1,13 @@
 package dao;
 
+import chess.domain.DBConnector;
 import dto.GameDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class GameDaoImpl implements GameDao {
     private static final DBConnector CONNECTOR = DBConnector.getInstance();
-    private static final String WHITE_TURN = "2";
+    private static final int WHITE_TURN = 2;
 
     private static class GameDAOImplHolder {
         private static final GameDao instance = new GameDaoImpl();
@@ -21,12 +19,17 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public int addGame() {
-        String query = "INSERT INTO game (team_id) VALUES "+WHITE_TURN;
+        String query = "INSERT INTO game (team_id) VALUES (?)";
         int result;
 
         try (Connection con = CONNECTOR.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query)) {
-            result = pstmt.executeUpdate();
+             PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setInt(1,WHITE_TURN);
+            pstmt.executeUpdate();
+            try(ResultSet rs = pstmt.getGeneratedKeys()){
+                rs.next();
+                result = rs.getInt(1);
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("게임을 생성할 수 없습니다.");
@@ -36,7 +39,7 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public GameDto findById(int id) {
-        String query = "SELECT * FROM gmae WHERE id = ?";
+        String query = "SELECT * FROM game WHERE id = ?";
         GameDto game = null;
 
         try (Connection con = CONNECTOR.getConnection();

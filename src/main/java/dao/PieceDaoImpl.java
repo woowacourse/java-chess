@@ -1,14 +1,15 @@
 package dao;
 
+import chess.domain.DBConnector;
+import dto.NavigatorDto;
 import dto.PieceDto;
-import dto.UserDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PieceDaoImpl implements PieceDao {
     private static final DBConnector CONNECTOR = DBConnector.getInstance();
@@ -22,14 +23,15 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public int addPiece(String position, int kindId, int gameId) {
-        String query = "INSERT INTO piece (position,kind_id,game_id) VALUES (?, ?, ?)";
+    public int addPiece(PieceDto pieceDto) {
+        String query = "INSERT INTO piece (position,kind_id,game_id,team_id) VALUES (?, ?, ?, ?)";
         int result;
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1,position);
-            pstmt.setInt(2,kindId);
-            pstmt.setInt(3,gameId);
+            pstmt.setString(1,pieceDto.getPosition());
+            pstmt.setInt(2,pieceDto.getKindId());
+            pstmt.setInt(3,pieceDto.getGameId());
+            pstmt.setInt(4, pieceDto.getAliance().getTeamId());
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -39,38 +41,57 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public PieceDto findByGameId(int gameId) {
-        String query = "SELECT position, kind.name FROM piece JOIN kind ON kind.id=piece.kind_id WHERE game_id=?";
-        PieceDto pieceDto = null;
+    public List<PieceDto> findByGameId(int gameId) {
+        String query = "SELECT position, kind_id, team_id from piece WHERE game_id=?";
+        List<PieceDto> pieceDtos = new ArrayList<>();
 
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, gameId);
             ResultSet rs = pstmt.executeQuery();
-            Map<String,String> pieceMap = new HashMap<>();
-            while(rs.next()){
-                pieceMap.put(rs.getString("position"),rs.getString("name"));;
-            }
-            if (!rs.next()) return pieceDto;
 
-            pieceDto = new PieceDto(pieceMap);
+            while(rs.next()){
+                String position = rs.getString("position");
+                int kindId = rs.getInt("kind_id");
+                int teamId = rs.getInt("team_id");
+                pieceDtos.add(new PieceDto(teamId,gameId,kindId,position));
+            }
+            if (!rs.next()) return pieceDtos;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("말의 정보들을 받아올 수 업습니다.");
         }
-
-        return pieceDto;
+        return pieceDtos;
     }
 
     @Override
-    public int deletePieceByPosition(String position) {
-        String query = "DELETE FROM piece WHERE position=?";
+    public int updatePiece(NavigatorDto navigatorDto) {
+        String query = "UPDATE piece SET position=? WHERE game_id=? AND position=?";
         int result;
 
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)){
-            pstmt.setString(1,position);
+            pstmt.setString(1, navigatorDto.getEndPosition());
+            pstmt.setInt(2, navigatorDto.getGameId());
+            pstmt.setString(3, navigatorDto.getStartPosition());
+            result = pstmt.executeUpdate();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException("말의 정보를 업데이트 할 수 없습니다.");
+        }
+        return result;
+    }
+
+    @Override
+    public int deletePiece(PieceDto pieceDto) {
+        String query = "DELETE FROM piece WHERE game_id=? AND position=?";
+        int result;
+
+        try (Connection con = CONNECTOR.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)){
+            pstmt.setInt(1, pieceDto.getGameId());
+            pstmt.setString(2, pieceDto.getPosition());
             result = pstmt.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());

@@ -1,5 +1,6 @@
 package dao;
 
+import chess.domain.DBConnector;
 import dto.GameDto;
 import dto.UserDto;
 
@@ -7,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDaoImpl implements UserDao {
     private static final DBConnector CONNECTOR = DBConnector.getInstance();
@@ -20,15 +23,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int addUser(String userName,int teamId, int gameId) {
+    public int addUser(UserDto userDto) {
         String query = "INSERT INTO user (name,team_id,game_id) VALUES (?, ?, ?)";
         int result;
 
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1,userName);
-            pstmt.setInt(2,teamId);
-            pstmt.setInt(3,gameId);
+            pstmt.setString(1,userDto.getName());
+            pstmt.setInt(2,userDto.getAliance().getTeamId());
+            pstmt.setInt(3,userDto.getGameId());
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -38,25 +41,28 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserDto findByGameId(int gameId) {
+    public List<UserDto> findByGameId(int gameId) {
         String query = "SELECT * FROM user WHERE game_id=?";
         UserDto user = null;
+        List<UserDto> userDtos = new ArrayList<>();
 
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, gameId);
             ResultSet rs = pstmt.executeQuery();
-            List<>
-            if (!rs.next()) return user;
 
-            user = new UserDto(rs.getString("name"),rs.getInt("team_id"));
+            while(rs.next()){
+                String name = rs.getString("name");
+                int teamId = rs.getInt("team_id");
+                userDtos.add(new UserDto(gameId,name,teamId));
+            }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("유저 정보를 받아올 수 업습니다.");
         }
 
-        return user;
+        return userDtos;
     }
 
     @Override

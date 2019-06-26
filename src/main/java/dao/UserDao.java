@@ -2,8 +2,10 @@ package dao;
 
 import dto.UserDto;
 
+import java.util.List;
+
 public interface UserDao {
-    UserDto findByGameId(int gameId);
-    int addUser(String userName,int teamId, int gameId);
+    List<UserDto> findByGameId(int gameId);
+    int addUser(UserDto userDto);
     int deleteUserByGameId(int gameId);
 }
