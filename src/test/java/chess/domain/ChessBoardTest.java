@@ -7,7 +7,7 @@ import chess.domain.chess.exception.SameTeamTargetUnitException;
 import chess.domain.chess.exception.UnitInterceptionAlongPathException;
 import chess.domain.chess.initializer.ChessBoardInitializer;
 import chess.domain.chess.initializer.Initializer;
-import chess.domain.chess.initializer.TestInitializer;
+import chess.domain.chess.initializer.SettableChessBoardInitializer;
 import chess.domain.chess.unit.*;
 import chess.domain.geometric.Position;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class ChessBoardTest {
         Map<Position, Unit> map = new HashMap<>();
         map.put(Position.create(1, 1), new Pawn(Team.WHITE));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1, 1), Position.create(1, 2));
@@ -38,7 +38,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Pawn(Team.WHITE));
         map.put(Position.create(1, 2), new Bishop(Team.WHITE));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -53,7 +53,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Pawn(Team.WHITE));
         map.put(Position.create(1, 2), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -68,7 +68,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Pawn(Team.WHITE));
         map.put(Position.create(2, 2), new Bishop(Team.WHITE));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -83,7 +83,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Pawn(Team.WHITE));
         map.put(Position.create(2, 2), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -98,7 +98,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Bishop(Team.WHITE));
         map.put(Position.create(5, 5), new Rook(Team.WHITE));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -113,7 +113,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Bishop(Team.WHITE));
         map.put(Position.create(5, 5), new Rook(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1, 1), Position.create(5, 5));
@@ -129,7 +129,7 @@ public class ChessBoardTest {
         map.put(Position.create(3, 3), new Bishop(Team.BLACK));
         map.put(Position.create(5, 5), new Rook(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -145,7 +145,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Rook(Team.WHITE));
         map.put(Position.create(1, 5), new Pawn(Team.WHITE));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -161,7 +161,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Rook(Team.WHITE));
         map.put(Position.create(1, 5), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1, 1), Position.create(1, 5));
@@ -176,7 +176,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 3), new Bishop(Team.WHITE));
         map.put(Position.create(1, 5), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -191,7 +191,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Knight(Team.WHITE));
         map.put(Position.create(3, 2), new Rook(Team.WHITE));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -207,7 +207,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Knight(Team.WHITE));
         map.put(Position.create(3, 2), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1, 1), Position.create(3, 2));
@@ -222,7 +222,7 @@ public class ChessBoardTest {
         map.put(Position.create(2, 2), new Bishop(Team.WHITE));
         map.put(Position.create(3, 2), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1, 1), Position.create(3, 2));
@@ -236,13 +236,12 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Queen(Team.WHITE));
         map.put(Position.create(5, 5), new Rook(Team.WHITE));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
-        assertThrows(SameTeamTargetUnitException.class, () -> {
-            chessBoard.move(Position.create(1, 1), Position.create(5, 5));
-        });
+        assertThrows(SameTeamTargetUnitException.class, () ->
+                chessBoard.move(Position.create(1, 1), Position.create(5, 5)));
 
     }
 
@@ -252,7 +251,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new Queen(Team.WHITE));
         map.put(Position.create(5, 5), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1, 1), Position.create(5, 5));
@@ -268,7 +267,7 @@ public class ChessBoardTest {
         map.put(Position.create(3, 3), new Bishop(Team.WHITE));
         map.put(Position.create(5, 5), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -284,7 +283,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new King(Team.WHITE));
         map.put(Position.create(1, 2), new Rook(Team.WHITE));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -300,7 +299,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 1), new King(Team.WHITE));
         map.put(Position.create(1, 2), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         chessBoard.move(Position.create(1, 1), Position.create(1, 2));
@@ -316,7 +315,7 @@ public class ChessBoardTest {
         map.put(Position.create(1, 3), new Bishop(Team.WHITE));
         map.put(Position.create(1, 5), new Bishop(Team.BLACK));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
 
@@ -344,7 +343,7 @@ public class ChessBoardTest {
         map.put(Position.create(3, 2), new Pawn(Team.WHITE));
         map.put(Position.create(4, 2), new Pawn(Team.WHITE));
 
-        Initializer testInitializer = new TestInitializer(map);
+        Initializer testInitializer = new SettableChessBoardInitializer(map, Team.WHITE);
 
         ChessBoard chessBoard = new ChessBoard(testInitializer);
         Map<Team, Double> score = chessBoard.sumScore();
