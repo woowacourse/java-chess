@@ -2,7 +2,9 @@ package chess.service;
 
 import chess.dao.ChessBoardDAO;
 import chess.dao.ChessTurnDAO;
+import chess.domain.ChessGame;
 import chess.domain.board.BoardInitializer;
+import chess.domain.board.GameOverException;
 import chess.domain.piece.PieceColor;
 import chess.dto.ChessBoardDTO;
 import chess.dto.ChessGameDTO;
@@ -46,4 +48,26 @@ public class ChessGameService {
 
         return id;
     }
+
+    public ChessGameDTO move(int id, String from, String to) throws SQLException {
+        ChessGameDTO chessGameDTO = getGame(id);
+
+        ChessGame chessGame = new ChessGame(chessGameDTO.getTurn(), chessGameDTO.getBoard().getBoard());
+
+        try {
+            chessGame.move(from, to);
+            ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessGame.getBoard());
+            chessGameDTO.setBoard(chessBoardDTO);
+            chessGameDTO.setTurn(chessGame.getTurn());
+
+            ChessTurnDAO.getInstance().updateChessTurn(id, chessGameDTO.getTurn());
+            ChessBoardDAO.getInstance().deleteChessBoard(id);
+            ChessBoardDAO.getInstance().insertChessBoard(id, chessBoardDTO);
+        } catch (GameOverException e) {
+            ChessTurnDAO.getInstance().deleteChessTurn(id);
+            throw new GameOverException(chessGameDTO.getTurn().toString());
+        }
+        return chessGameDTO;
+    }
+
 }

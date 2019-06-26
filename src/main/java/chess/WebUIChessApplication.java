@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.board.GameOverException;
 import chess.dto.ChessGameDTO;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
@@ -13,8 +14,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.port;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
@@ -22,6 +22,7 @@ public class WebUIChessApplication {
         Spark.staticFileLocation("/public");
 
         get("/chessgame", WebUIChessApplication::chessGame);
+        post("/move", WebUIChessApplication::move);
     }
 
     private static String chessGame(Request request, Response response) throws SQLException {
@@ -31,6 +32,26 @@ public class WebUIChessApplication {
         ChessGameDTO chessGameDTO = ChessGameService.getInstance().getGame(id);
 
         request.session().attribute("gameId", id);
+        model.put("boardJson", new Gson().toJson(chessGameDTO.getBoard().getBoard()));
+        model.put("turn", chessGameDTO.getTurn());
+        return render(model, "chessgame.html");
+    }
+
+    private static String move(Request request, Response response) throws SQLException {
+        Map<String, Object> model = new HashMap<>();
+
+        int id = request.session().attribute("gameId");
+        ChessGameDTO chessGameDTO = ChessGameService.getInstance().getGame(id);
+
+        try {
+            chessGameDTO = ChessGameService.getInstance().move(id, request.queryParams("from"), request.queryParams("to"));
+        } catch (GameOverException e) {
+            model.put("winner", e.getMessage());
+            return render(model, "gameover.html");
+        } catch (RuntimeException e) {
+            model.put("error", e.getMessage());
+        }
+
         model.put("boardJson", new Gson().toJson(chessGameDTO.getBoard().getBoard()));
         model.put("turn", chessGameDTO.getTurn());
         return render(model, "chessgame.html");
