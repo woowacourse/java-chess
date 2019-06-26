@@ -1,6 +1,10 @@
 package chess;
 
+import chess.dao.ChessDAO;
 import chess.model.*;
+import chess.model.board.BoardDTO;
+import chess.model.gameCreator.ContinueGameCreateStrategy;
+import chess.model.gameCreator.NewGameCreateStrategy;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

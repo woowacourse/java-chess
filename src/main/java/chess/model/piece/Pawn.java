@@ -1,13 +1,13 @@
 package chess.model.piece;
 
-import chess.model.Coordinate;
-import chess.model.Direction;
-import chess.model.Route;
-import chess.model.Vector;
+import chess.model.board.Coordinate;
+import chess.model.board.vector.Direction;
+import chess.model.board.Route;
+import chess.model.board.vector.Vector;
 
 import java.util.*;
 
-import static chess.model.Direction.*;
+import static chess.model.board.vector.Direction.*;
 
 public class Pawn implements Piece {
     private static final Set<Direction> movableDirectionsForWhiteTeam;
@@ -90,7 +90,6 @@ public class Pawn implements Piece {
             throw new IllegalArgumentException("흑팀 폰은 이 방향으로 움직일 수 없습니다");
         }
 
-//        throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
         return new Route(route);
     }
 

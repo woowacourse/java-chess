@@ -1,8 +1,8 @@
 package chess.model.piece;
 
-import chess.model.Coordinate;
-import chess.model.Route;
-import chess.model.Vector;
+import chess.model.board.Coordinate;
+import chess.model.board.Route;
+import chess.model.board.vector.Vector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -277,7 +277,6 @@ public class PawnTest {
 
         Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
 
-//        assertThat(clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
 
@@ -293,7 +292,6 @@ public class PawnTest {
 
         Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
 
-//        assertThat(clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector)).isEqualTo(new Route(Collections.emptyList()));
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> clonedPiece.produceRoute(Arrays.asList(sourceCoordinateX, sourceCoordinateY), vector));
     }

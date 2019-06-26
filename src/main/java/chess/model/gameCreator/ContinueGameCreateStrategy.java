@@ -1,5 +1,7 @@
-package chess.model;
+package chess.model.gameCreator;
 
+import chess.model.board.BoardDTO;
+import chess.model.board.Tile;
 import chess.model.piece.*;
 
 import java.util.*;

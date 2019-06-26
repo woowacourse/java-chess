@@ -1,13 +1,13 @@
 package chess.model.piece;
 
-import chess.model.Coordinate;
-import chess.model.Direction;
-import chess.model.Route;
-import chess.model.Vector;
+import chess.model.board.Coordinate;
+import chess.model.board.vector.Direction;
+import chess.model.board.Route;
+import chess.model.board.vector.Vector;
 
 import java.util.*;
 
-import static chess.model.Direction.*;
+import static chess.model.board.vector.Direction.*;
 
 // TODO: 2019-06-22 cloneSelf를 꼭 써야할까?
 public class King implements Piece {
@@ -42,7 +42,6 @@ public class King implements Piece {
             throw new IllegalArgumentException("없는 팀입니다!");
         }
     }
-
 
     @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {

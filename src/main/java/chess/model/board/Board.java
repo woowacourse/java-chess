@@ -1,10 +1,14 @@
-package chess.model;
+package chess.model.board;
 
+import chess.model.*;
+import chess.model.board.vector.Direction;
+import chess.model.board.vector.Vector;
+import chess.model.gameCreator.CreateStrategy;
 import chess.model.piece.*;
 
 import java.util.*;
 
-import static chess.model.Direction.*;
+import static chess.model.board.vector.Direction.*;
 
 public class Board {
     private Map<String, Tile> tiles;

@@ -1,13 +1,13 @@
 package chess.model.piece;
 
-import chess.model.Coordinate;
-import chess.model.Direction;
-import chess.model.Route;
-import chess.model.Vector;
+import chess.model.board.Coordinate;
+import chess.model.board.vector.Direction;
+import chess.model.board.Route;
+import chess.model.board.vector.Vector;
 
 import java.util.*;
 
-import static chess.model.Direction.*;
+import static chess.model.board.vector.Direction.*;
 
 public class Bishop implements Piece {
     private static Set<Direction> movableDirections;

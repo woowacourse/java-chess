@@ -1,4 +1,6 @@
-package chess.model;
+package chess.model.board.vector;
+
+import chess.model.board.Coordinate;
 
 import java.util.List;
 import java.util.Objects;

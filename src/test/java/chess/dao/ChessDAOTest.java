@@ -1,5 +1,7 @@
-package chess.model;
+package chess.dao;
 
+import chess.dao.ChessDAO;
+import chess.model.board.BoardDTO;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;

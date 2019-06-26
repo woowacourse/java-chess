@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.board;
 
 import java.util.*;
 import java.util.function.Function;
@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Coordinate {
-    private static Map<Integer, Coordinate> coordinates = new HashMap<>();
+    private static Map<Integer, Coordinate> coordinates;
     private static final int MIN_RANGE = 1;
     private static final int MAX_RANGE = 8;
 

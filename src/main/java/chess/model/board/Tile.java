@@ -1,5 +1,6 @@
-package chess.model;
+package chess.model.board;
 
+import chess.model.board.vector.Vector;
 import chess.model.piece.Piece;
 
 import java.util.Arrays;
@@ -46,7 +47,6 @@ public class Tile {
     }
 
     public String askPieceWhichTeam() {
-        System.err.println(piece.isPresent());
         if (piece.isPresent()) {
             return piece.get().askTeamColor();
         }
