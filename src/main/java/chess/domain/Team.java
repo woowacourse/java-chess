@@ -11,8 +11,4 @@ public enum Team {
         }
         return WHITE;
     }
-
-    public static Team getTeam(String team) {
-        return Team.valueOf(team);
-    }
 }

@@ -39,17 +39,15 @@ public class ChessDAO {
         pstmt.executeUpdate();
     }
 
-    public void updateChessGame(ChessDTO chessDTO) throws SQLException {
-        String query = "DELETE FROM chess";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.executeUpdate();
-        addChessGame(chessDTO);
-    }
-
     public void deleteChessGame() throws SQLException {
         String query = "DELETE FROM chess";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.executeUpdate();
+    }
+
+    public void updateChessGame(ChessDTO chessDTO) throws SQLException {
+        deleteChessGame();
+        addChessGame(chessDTO);
     }
 
     public ChessGame findChessGame() throws SQLException {
