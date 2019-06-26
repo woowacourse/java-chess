@@ -1,6 +1,6 @@
 package chess.model.board;
 
-import chess.db.BoardDto;
+import chess.dto.BoardDto;
 import chess.model.Direction;
 import chess.model.PlayerType;
 import chess.model.Point;

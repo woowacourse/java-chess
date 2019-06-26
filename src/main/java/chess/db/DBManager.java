@@ -10,8 +10,8 @@ public class DBManager {
         Connection connection = null;
         String server = "localhost";
         String database = "chess";
-        String userName = "sean";
-        String password = "1234";
+        String userName = "buddy";
+        String password = "buddy";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

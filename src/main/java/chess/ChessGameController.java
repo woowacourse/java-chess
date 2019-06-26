@@ -1,6 +1,6 @@
 package chess;
 
-import chess.model.board.BoardService;
+import chess.service.BoardService;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
