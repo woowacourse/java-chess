@@ -1,16 +1,9 @@
 package chess.dao;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardGenerator;
 import chess.domain.board.BoardInputForTest;
-import chess.domain.board.Position;
-import chess.domain.piece.piecefigure.Piece;
-import com.oracle.tools.packager.mac.MacAppBundler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

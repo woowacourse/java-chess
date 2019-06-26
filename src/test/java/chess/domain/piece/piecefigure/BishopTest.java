@@ -1,8 +1,8 @@
 package chess.domain.piece.piecefigure;
 
-import chess.domain.board.BoardInputForTest;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
+import chess.domain.board.BoardInputForTest;
 import chess.domain.board.Position;
 import chess.domain.piece.pieceinfo.TeamType;
 import org.junit.jupiter.api.AfterEach;

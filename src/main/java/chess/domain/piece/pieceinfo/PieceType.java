@@ -9,10 +9,10 @@ import java.util.function.Function;
 public enum PieceType {
     KING("k", 0, King::of),
     QUEEN("q", 9, Queen::of),
-    ROOK("r",5, Rook::of),
+    ROOK("r", 5, Rook::of),
     BISHOP("b", 3, Bishop::of),
     KNIGHT("n", 2.5, Knight::of),
-    PAWN("p", 1, teamType -> (teamType == TeamType.WHITE) ? WhitePawn.of() : BlackPawn.of() ),
+    PAWN("p", 1, teamType -> (teamType == TeamType.WHITE) ? WhitePawn.of() : BlackPawn.of()),
     BLANK(".", 0, teamType -> Blank.of());
 
     private final String type;

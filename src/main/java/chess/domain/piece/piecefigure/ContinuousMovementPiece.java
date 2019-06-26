@@ -7,7 +7,9 @@ import chess.domain.piece.pieceinfo.PieceType;
 import chess.domain.piece.pieceinfo.TeamType;
 import chess.exception.NotFoundPositionException;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ContinuousMovementPiece extends Piece {
     private final List<DirectionType> directions;
