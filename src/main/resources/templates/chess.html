@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="css/chess.css">
+
+    <title>체스</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="board-wrapper">
+            <table class="board" id="board">
+            {{#rows}}
+                <tr class="row">
+                    {{#columns}}
+                    <td class="block" id="{{column}}{{row}}"></td>
+                    {{/columns}}
+                </tr>
+            {{/rows}}
+            </table>
+        </div>
+        <div class="game-info-wrapper">
+            <div class="user-info-wrapper">
+                {{#if whiteTurn}}
+                <div class="user-info turn">
+                {{else}}
+                <div class="user-info">
+                {{/if}}
+                    <img src="img/white_king.png">
+                    <div class="user-name">{{whiteUser.name}}</div>
+                </div>
+
+                {{#if blackTurn}}
+                <div class="user-info turn">
+                {{else}}
+                <div class="user-info">
+                {{/if}}
+                    <img src="img/black_king.png" alt="">
+                    <div class="user-name">{{blackUser.name}}</div>
+                </div>
+            </div>
+            <form action="/{{gameId}}" method="post">
+                <div class="positions-wrapper">
+                    <div class="position-wrapper">
+                        <div class="position-index">시작</div>
+                        <input type="text" name="start" id="start" readonly>
+                    </div>
+                    <div class="position-wrapper">
+                        <div class="position-index">도착</div>
+                        <input type="text" name="end" id="end" readonly>
+                    </div>
+                </div>
+                <div class="move-button-wrapper">
+                    <button type="submit">이동</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="piece-img" id="black-piece">
+        <img class="piece" src="img/black_king.png" data-piece="BLACK-KING">
+        <img class="piece" src="img/black_queen.png" data-piece="BLACK-QUEEN">
+        <img class="piece" src="img/black_rook.png" data-piece="BLACK-ROOK">
+        <img class="piece" src="img/black_knight.png" data-piece="BLACK-KNIGHT">
+        <img class="piece" src="img/black_bishop.png" data-piece="BLACK-BISHOP">
+        <img class="piece" src="img/black_pawn.png" data-piece="BLACK-PAWN">
+    </div>
+
+    <div class="piece-img" id="white-piece">
+        <img class="piece" src="img/white_king.png" data-piece="WHITE-KING">
+        <img class="piece" src="img/white_queen.png" data-piece="WHITE-QUEEN">
+        <img class="piece" src="img/white_rook.png" data-piece="WHITE-ROOK">
+        <img class="piece" src="img/white_knight.png" data-piece="WHITE-KNIGHT">
+        <img class="piece" src="img/white_bishop.png" data-piece="WHITE-BISHOP">
+        <img class="piece" src="img/white_pawn.png" data-piece="WHITE-PAWN">
+    </div>
+
+    <script>
+        var pieces = JSON.parse('{{{pieces}}}');
+
+        for (key in pieces) {
+            var block = document.getElementById(key);
+            var teamId = pieces[key].aliance;
+            var kindId = pieces[key].pieceValue;
+            var piece = teamId+"-"+kindId;
+
+            document.querySelectorAll(".piece").forEach(img => {
+                if (img.getAttribute('data-piece') == piece) {
+                    var clonePiece = img.cloneNode(true);
+                    clonePiece.classList.remove("piece");
+                    block.appendChild(clonePiece);
+                }
+            })
+        }
+
+        document.querySelectorAll(".block").forEach(block => {
+            block.addEventListener("click", function() {
+                var start = document.getElementById('start');
+                var end = document.getElementById('end');
+
+                if (start.getAttribute('value') == null) {
+                    start.setAttribute('value', this.getAttribute('id'));
+                } else if (end.getAttribute('value') == null) {
+                    end.value = this.getAttribute('id');
+                    end.setAttribute('value', this.getAttribute('id'));
+                } else {
+                    end.removeAttribute('value');
+                    start.setAttribute('value', this.getAttribute('id'));
+                }
+            })
+        })
+    </script>
+</body>
+</html>

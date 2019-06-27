@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="css/intro.css">
+
+    <title>체스 인트로</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="previous-game-wrapper">
+            {{#notEndGames}}
+            <div class="previous-game">
+                <div class="message">끝나지 않은 {{id}}회차 게임이 있습니다.</div>
+                <button onclick="location.href='/{{id}}' ">이어하기</button>
+            </div>
+            {{/notEndGames}}
+        </div>
+        <div class="new-game-wrapper">
+            <div class="new-game-title">새로 시작하기</div>
+            <form action="/" method="post">
+                <div class="new-user">
+                    <img src="img/white_king.png" alt="">
+                    <input type="text" name="white_user">
+                </div>
+                <div class="new-user">
+                    <img src="img/black_king.png" alt="">
+                    <input type="text" name="black_user">
+                </div>
+                <button>시작하기</button>
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>
