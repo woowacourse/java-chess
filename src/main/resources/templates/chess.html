@@ -40,13 +40,15 @@
                     <div class="user-name">{{blackUser.name}}</div>
                 </div>
             </div>
-            <form action="/" method="post">
+            <form action="/{{gameId}}" method="post">
                 <div class="positions-wrapper">
                     <div class="position-wrapper">
-                        <div class="position-index">시작</div><input type="text" disabled>
+                        <div class="position-index">시작</div>
+                        <input type="text" name="start" id="start" readonly>
                     </div>
                     <div class="position-wrapper">
-                        <div class="position-index">도착</div><input type="text" disabled>
+                        <div class="position-index">도착</div>
+                        <input type="text" name="end" id="end" readonly>
                     </div>
                 </div>
                 <div class="move-button-wrapper">
@@ -57,28 +59,27 @@
     </div>
 
     <div class="piece-img" id="black-piece">
-        <img class="piece" src="img/black_king.png" data-piece="WHITE-KING">
-        <img class="piece" src="img/black_queen.png" data-piece="WHITE-QUEEN">
-        <img class="piece" src="img/black_rook.png" data-piece="WHITE-ROOK">
-        <img class="piece" src="img/black_knight.png" data-piece="WHITE-KNIGHT">
-        <img class="piece" src="img/black_bishop.png" data-piece="WHITE-BISHOP">
-        <img class="piece" src="img/black_pawn.png" data-piece="WHITE-PAWN">
+        <img class="piece" src="img/black_king.png" data-piece="BLACK-KING">
+        <img class="piece" src="img/black_queen.png" data-piece="BLACK-QUEEN">
+        <img class="piece" src="img/black_rook.png" data-piece="BLACK-ROOK">
+        <img class="piece" src="img/black_knight.png" data-piece="BLACK-KNIGHT">
+        <img class="piece" src="img/black_bishop.png" data-piece="BLACK-BISHOP">
+        <img class="piece" src="img/black_pawn.png" data-piece="BLACK-PAWN">
     </div>
 
     <div class="piece-img" id="white-piece">
-        <img class="piece" src="img/white_king.png" data-piece="BLACK-KING">
-        <img class="piece" src="img/white_queen.png" data-piece="BLACK-QUEEN">
-        <img class="piece" src="img/white_rook.png" data-piece="BLACK-ROOK">
-        <img class="piece" src="img/white_knight.png" data-piece="BLACK-KNIGHT">
-        <img class="piece" src="img/white_bishop.png" data-piece="BLACK-BISHOP">
-        <img class="piece" src="img/white_pawn.png" data-piece="BLACK-PAWN">
+        <img class="piece" src="img/white_king.png" data-piece="WHITE-KING">
+        <img class="piece" src="img/white_queen.png" data-piece="WHITE-QUEEN">
+        <img class="piece" src="img/white_rook.png" data-piece="WHITE-ROOK">
+        <img class="piece" src="img/white_knight.png" data-piece="WHITE-KNIGHT">
+        <img class="piece" src="img/white_bishop.png" data-piece="WHITE-BISHOP">
+        <img class="piece" src="img/white_pawn.png" data-piece="WHITE-PAWN">
     </div>
 
     <script>
         var pieces = JSON.parse('{{{pieces}}}');
 
         for (key in pieces) {
-            console.log(pieces[key]);
             var block = document.getElementById(key);
             var teamId = pieces[key].aliance;
             var kindId = pieces[key].pieceValue;
@@ -92,6 +93,23 @@
                 }
             })
         }
+
+        document.querySelectorAll(".block").forEach(block => {
+            block.addEventListener("click", function() {
+                var start = document.getElementById('start');
+                var end = document.getElementById('end');
+
+                if (start.getAttribute('value') == null) {
+                    start.setAttribute('value', this.getAttribute('id'));
+                } else if (end.getAttribute('value') == null) {
+                    end.value = this.getAttribute('id');
+                    end.setAttribute('value', this.getAttribute('id'));
+                } else {
+                    end.removeAttribute('value');
+                    start.setAttribute('value', this.getAttribute('id'));
+                }
+            })
+        })
     </script>
 </body>
 </html>

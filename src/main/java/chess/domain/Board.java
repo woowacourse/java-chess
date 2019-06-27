@@ -12,9 +12,7 @@ public class Board {
     private Map<Position, Piece> pieces = new HashMap<>();
     private Aliance thisTurn = Aliance.WHITE;
 
-    public Board() {
-        initBoard();
-    }
+    public Board() {}
 
     public void initBoard() {
         pieces.put(Position.valueOf("a1"), new Rook(Aliance.WHITE, PieceValue.ROOK));
@@ -45,7 +43,27 @@ public class Board {
         for (Position blackPawnPosition : blackPawnPositions) {
             pieces.put(blackPawnPosition, new Pawn(Aliance.BLACK, PieceValue.PAWN));
         }
+    }
 
+    public void putPiece(String position, int teamId, int kindId) {
+        if (kindId == 1) {
+            pieces.put(Position.valueOf(position), new King(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
+        }
+        if (kindId == 2) {
+            pieces.put(Position.valueOf(position), new Queen(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
+        }
+        if (kindId == 3) {
+            pieces.put(Position.valueOf(position), new Rook(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
+        }
+        if (kindId == 4) {
+            pieces.put(Position.valueOf(position), new Knight(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
+        }
+        if (kindId == 5) {
+            pieces.put(Position.valueOf(position), new Bishop(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
+        }
+        if (kindId == 6) {
+            pieces.put(Position.valueOf(position), new Pawn(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
+        }
     }
 
     public Piece pieceValueOf(String position) {
@@ -104,10 +122,6 @@ public class Board {
         }
     }
 
-    public Map<Position, Piece> getPieces(){
-        return pieces;
-    }
-
     public long getDuplicatePawnCount(Aliance aliance){
         List<Position> pawnPositions = pieces.keySet().stream()
                 .filter(k -> pieces.get(k).getAliance() == aliance)
@@ -133,5 +147,15 @@ public class Board {
                 .count() != 0;
     }
 
+    public Map<Position, Piece> getPieces(){
+        return pieces;
+    }
 
+    public Aliance getThisTurn() {
+        return thisTurn;
+    }
+
+    public void setThisTurn(Aliance thisTurn) {
+        this.thisTurn = thisTurn;
+    }
 }

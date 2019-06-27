@@ -42,7 +42,7 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public List<PieceDto> findByGameId(int gameId) {
-        String query = "SELECT position, kind_id, team_id from piece WHERE game_id=?";
+        String query = "SELECT * from piece WHERE game_id=?";
         List<PieceDto> pieceDtos = new ArrayList<>();
 
         try (Connection con = CONNECTOR.getConnection();
@@ -66,15 +66,52 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
+    public PieceDto findByPosition(PieceDto pieceDto) {
+        String query = "SELECT * from piece WHERE game_id=? AND position=?";
+        PieceDto result = null;
+
+        try (Connection con = CONNECTOR.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)){
+            pstmt.setInt(1, pieceDto.getGameId());
+            pstmt.setString(2, pieceDto.getPosition());
+            ResultSet rs = pstmt.executeQuery();
+
+            if (!rs.next()) return result;
+
+            int teamId = rs.getInt("team_id");
+            int gameId = rs.getInt("game_id");
+            int kindId = rs.getInt("kind_id");
+            String position = rs.getString("position");
+
+            result = new PieceDto(teamId, gameId, kindId, position);
+            rs.close();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException("말의 정보를 받아올 수 없습니다.");
+        }
+        return result;
+    }
+
+    @Override
     public int updatePiece(NavigatorDto navigatorDto) {
         String query = "UPDATE piece SET position=? WHERE game_id=? AND position=?";
         int result;
 
+        int gameId = navigatorDto.getGameId();
+        String start = navigatorDto.getStartPosition();
+        String end = navigatorDto.getEndPosition();
+
+        PieceDto pieceDto = new PieceDto(0, gameId, 0, end);
+
+        if (findByPosition(pieceDto) != null) {
+            deletePiece(pieceDto);
+        }
+
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)){
-            pstmt.setString(1, navigatorDto.getEndPosition());
-            pstmt.setInt(2, navigatorDto.getGameId());
-            pstmt.setString(3, navigatorDto.getStartPosition());
+            pstmt.setString(1, end);
+            pstmt.setInt(2, gameId);
+            pstmt.setString(3, start);
             result = pstmt.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());

@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            throw new RuntimeException("유저 정보를 생성할 수 없습니다.");
+            throw new RuntimeException("유저를 생성할 수 없습니다.");
         }
         return result;
     }

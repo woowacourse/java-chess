@@ -13,6 +13,7 @@ public class BoardTest {
     @BeforeEach
     void setUp() {
         board = new Board();
+        board.initBoard();
     }
 
     @Test
@@ -28,6 +29,7 @@ public class BoardTest {
     @Test
     void 팀이_잘_변경되는지_확인() {
         assertThat(board.switchTurn()).isEqualTo(Aliance.BLACK);
+        assertThat(board.switchTurn()).isEqualTo(Aliance.WHITE);
     }
 
     @Test
@@ -84,5 +86,16 @@ public class BoardTest {
         board.movePiece("c3","d5");
         board.movePiece("d5","e7");
         assertThat(board.pieceValueOf("e7").toString()).isEqualTo("n");
+    }
+
+    @Test
+    void 왕이_있는_경우() {
+        assertThat(board.isKingAlive(Aliance.WHITE)).isEqualTo(true);
+    }
+
+    @Test
+    void 왕이_없는_경우() {
+        Board emptyBoard = new Board();
+        assertThat(emptyBoard.isKingAlive(Aliance.WHITE)).isEqualTo(false);
     }
 }

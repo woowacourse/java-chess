@@ -20,6 +20,7 @@
 .game-info-wrapper {
     width: 332px;
     display: inline-block;
+    float: right;
     border: solid 1px #000000;
     vertical-align: top;
 }
@@ -34,7 +35,13 @@
     width: 80px;
     height: 80px;
     display: inline-block;
+    padding: 4px;
     border: solid 1px #000000;
+    cursor: pointer;
+}
+
+.block > img {
+    height: 100%;
 }
 
 .row:nth-child(odd) > .block:nth-child(even) {
@@ -45,22 +52,18 @@
     background-color: #2c9556;
 }
 
-.block > img {
-    height: 100%;
-}
-
 .user-info-wrapper {
     padding: 20px;
 }
 
 .turn {
-    border: solid 2px #b70000 !important;
+    border: solid 4px #b70000 !important;
 }
 
 .user-info {
     width: 100%;
     height: 80px;
-    padding: 10px;
+    padding: 10px 20px;
     margin-bottom: 10px;
     border: solid 1px #000000;
 }
@@ -72,7 +75,7 @@
 }
 
 .user-name {
-    width: 212px;
+    width: 196px;
     display: inline-block;
     text-align: center;
     vertical-align: middle;
@@ -121,7 +124,10 @@
     width: 100%;
     height: 100%;
     font-size: 20px;
-
+    border: none;
+    border-radius: 2px;
+    background-color: #b70000;
+    color: #ffffff;
 }
 
 .piece-img {

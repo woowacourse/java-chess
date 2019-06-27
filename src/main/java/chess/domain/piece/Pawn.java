@@ -18,7 +18,8 @@ public class Pawn extends Piece {
         super(aliance, pieceValue);
 
         List<Direction> possibleDirections = Arrays.asList(VerticalDirection.getInstance());
-        List<Direction> attackDirections = Arrays.asList(RightDiagonalDirection.getInstance(), LeftDiagonalDirection.getInstance());
+        List<Direction> attackDirections = Arrays.asList(VerticalDirection.getInstance(),
+                RightDiagonalDirection.getInstance(), LeftDiagonalDirection.getInstance());
         this.rule = new MoveRule(possibleDirections, 1);
         this.firstRule = new MoveRule(possibleDirections,2);
         this.attactRule = new MoveRule(attackDirections,1);
@@ -50,8 +51,11 @@ public class Pawn extends Piece {
         Position attackablePosition1 = startPosition.movePosition(1,1);
         Position attackablePosition2 = startPosition.movePosition(1,-1);
 
-        return (board.pieceValueOf(attackablePosition1.toString()) != null)
-                || (board.pieceValueOf(attackablePosition2.toString()) != null);
+        Piece attackablePiece1 = board.pieceValueOf(attackablePosition1.toString());
+        Piece attackablePiece2 = board.pieceValueOf(attackablePosition2.toString());
+
+        return ((attackablePiece1 != null) && (attackablePiece1.getAliance() != board.getThisTurn()))
+                || ((attackablePiece2 != null) && (attackablePiece2.getAliance() != board.getThisTurn()));
     }
 
     @Override

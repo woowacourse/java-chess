@@ -10,12 +10,12 @@
 <body>
     <div class="wrapper">
         <div class="previous-game-wrapper">
+            {{#notEndGames}}
             <div class="previous-game">
-                {{#notEndGames}}
                 <div class="message">끝나지 않은 {{id}}회차 게임이 있습니다.</div>
                 <button onclick="location.href='/{{id}}' ">이어하기</button>
-                {{/notEndGames}}
             </div>
+            {{/notEndGames}}
         </div>
         <div class="new-game-wrapper">
             <div class="new-game-title">새로 시작하기</div>

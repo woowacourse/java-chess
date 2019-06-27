@@ -49,13 +49,13 @@ public class Navigator {
         Position endPosition = startPosition;
 
         for (int i = 0; i < Math.abs(moveCount)-1; i++) {
-            endPosition = direction.simulateUnitMove(board, startPosition, isReverse(moveCount));
+            endPosition = direction.simulateUnitMove(board, startPosition, isReverse());
         }
 
         return endPosition;
     }
 
-    private boolean isReverse(int moveCount) {
+    public boolean isReverse() {
         return moveCount < 0;
     }
 

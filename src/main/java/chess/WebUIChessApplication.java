@@ -1,15 +1,12 @@
 package chess;
 
-import chess.domain.Aliance;
-import chess.domain.Board;
-import chess.domain.Column;
-import chess.domain.Row;
+import chess.domain.*;
+import chess.domain.piece.Piece;
 import com.google.gson.Gson;
-import dao.GameDao;
-import dao.GameDaoImpl;
-import dao.UserDao;
-import dao.UserDaoImpl;
+import dao.*;
 import dto.GameDto;
+import dto.NavigatorDto;
+import dto.PieceDto;
 import dto.UserDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -50,18 +47,53 @@ public class WebUIChessApplication {
         });
 
         get("/:gameId", (req, res) -> {
+            int gameId = Integer.parseInt(req.params("gameId"));
+
             List<Row> rows = Row.getRows();
             List<Column> columns = Column.getColumns();
             Collections.reverse(rows);
 
             GameDao gameDao = GameDaoImpl.getInstance();
-            GameDto gameDto = gameDao.findById(Integer.parseInt(req.params("gameId")));
+            GameDto gameDto = gameDao.findById(gameId);
+
             UserDao userDao = UserDaoImpl.getInstance();
-            List<UserDto> userDtos = userDao.findByGameId(Integer.parseInt(req.params("gameId")));
+            List<UserDto> userDtos = userDao.findByGameId(gameId);
 
             Board board = new Board();
+            req.session().attribute("board", board);
+            board.setThisTurn(gameDto.getTurn());
+
+            PieceDao pieceDao = PieceDaoImpl.getInstance();
+            List<PieceDto> pieceDtos = pieceDao.findByGameId(gameId);
+
+            if (pieceDtos.size() == 0) {
+                board.initBoard();
+                Map<Position, Piece> pieces = board.getPieces();
+
+                for (Position position : pieces.keySet()) {
+                    int teamId = pieces.get(position).getAliance().getTeamId();
+                    int kindId = pieces.get(position).getPieceValue().getKindId();
+                    PieceDto pieceDto = new PieceDto(teamId, gameId, kindId, position.toString());
+                    pieceDao.addPiece(pieceDto);
+                }
+            }
+
+            if (pieceDtos.size() != 0) {
+                for (PieceDto piece : pieceDtos) {
+                    board.putPiece(piece.getPosition(), piece.getAliance().getTeamId(), piece.getKindId());
+                }
+            }
+
+            if (gameDto.isEnd() == true) {
+                ResultCalculator resultCalculator = new ResultCalculator(board);
+                Result result = new Result(resultCalculator.calculateResult());
+                throw new RuntimeException(String.format("[최종 스코어] 백 : 흑 = %.1f : %.1f 게임이 종료되었습니다.",
+                        result.getWhiteResult(), result.getBlackResult()));
+            }
+
             Gson gson = new Gson();
             Map<String, Object> model = new HashMap<>();
+            model.put("gameId", gameId);
             model.put("rows", rows);
             model.put("columns", columns);
             model.put("whiteUser", userDtos.get(0));
@@ -71,6 +103,31 @@ public class WebUIChessApplication {
             model.put("pieces", gson.toJson(board.getPieces()));
 
             return render(model, "chess.html");
+        });
+
+        post("/:gameId", (req, res) -> {
+            int gameId = Integer.parseInt(req.params("gameId"));
+
+            Board board = req.session().attribute("board");
+
+            String start = req.queryParams("start");
+            String end = req.queryParams("end");
+
+            board.movePiece(start, end);
+            Aliance nextTurn = board.switchTurn();
+
+            NavigatorDto navigatorDto = new NavigatorDto(gameId, start, end);
+            PieceDao pieceDao = PieceDaoImpl.getInstance();
+            pieceDao.updatePiece(navigatorDto);
+
+            boolean isEnd = !board.isKingAlive(nextTurn);
+
+            GameDto newGameDto = new GameDto(gameId, isEnd, nextTurn.getTeamId());
+            GameDao gameDao = GameDaoImpl.getInstance();
+            gameDao.updateGame(newGameDto);
+
+            res.redirect("/" + gameId);
+            return "";
         });
 
         exception(Exception.class, (exception, req, res) -> {

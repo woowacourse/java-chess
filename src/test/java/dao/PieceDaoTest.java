@@ -22,6 +22,7 @@ public class PieceDaoTest {
         assertThat(pieceDao.addPiece(pieceDto1)).isEqualTo(1);
         assertThat(pieceDao.addPiece(pieceDto2)).isEqualTo(1);
         assertThat(pieceDao.findByGameId(gameId)).isEqualTo(Arrays.asList(pieceDto1, pieceDto2));
+        assertThat(pieceDao.findByPosition(pieceDto1)).isEqualTo(pieceDto1);
 
         NavigatorDto navigatorDto = new NavigatorDto(gameId, "a4", "a5");
         assertThat(pieceDao.updatePiece(navigatorDto)).isEqualTo(1);

@@ -34,7 +34,7 @@ public class Position {
 
     private static void checkValidPosition(String position) {
         if (positions.get(position) == null) {
-            throw new IllegalArgumentException("유효하지 않은 위치입니다.");
+            throw new IllegalArgumentException(position + "유효하지 않은 위치입니다.");
         }
     }
 

@@ -92,9 +92,9 @@ public class GameDaoImpl implements GameDao {
 
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)){
-            pstmt.setInt(1,gameDto.getTurn().getTeamId());
-            pstmt.setBoolean(2,gameDto.isEnd());
-            pstmt.setInt(3,gameDto.getId());
+            pstmt.setInt(1, gameDto.getTurn().getTeamId());
+            pstmt.setBoolean(2, gameDto.isEnd());
+            pstmt.setInt(3, gameDto.getId());
             result = pstmt.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
