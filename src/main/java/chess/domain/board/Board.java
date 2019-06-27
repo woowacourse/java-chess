@@ -62,7 +62,7 @@ public class Board {
         Optional<Piece> nextPiece = points.get(next);
         if (nextPiece.isPresent() &&
                 PieceType.of(prevPiece.get().pieceToString()).isPawn() &&
-                DirectionType.linearDirection().contains(DirectionType.valueOf(prev, next))) {
+                DirectionType.straightDirection().contains(DirectionType.valueOf(prev, next))) {
             return false;
         }
 
