@@ -16,6 +16,7 @@ import java.util.Map;
 public class NewGameInitializer {
     private static final int START_PIECE_ID = 1;
     private static final int END_PIECE_ID = 64;
+    private static final int GAME_ID = 1;
 
     private ChessGameDao chessGameDao;
     private ChessPieceDao chessPieceDao;
@@ -57,7 +58,7 @@ public class NewGameInitializer {
             chessPieceDao.deletePieceById(String.valueOf(i));
         }
         // 새 게임 데이터 추가
-        chessGameDao.addGame();
+        chessGameDao.addGame(GAME_ID);
     }
 
     private void makeJSONBoard() {

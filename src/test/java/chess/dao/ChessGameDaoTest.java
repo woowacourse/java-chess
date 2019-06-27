@@ -22,12 +22,12 @@ public class ChessGameDaoTest {
 
     @Test
     void test1_게임_테이블_추가() {
-        assertDoesNotThrow(() -> chessGameDao.addGame());
+        assertDoesNotThrow(() -> chessGameDao.addGame(2));
     }
 
     @Test
     void test2_게임_테이블_턴_검색() throws SQLException {
-        assertEquals(chessGameDao.findTurn(), "WHITE");
+        assertEquals(chessGameDao.findTurn(2), "WHITE");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ChessGameDaoTest {
 
     @Test
     void test4_게임_테이블_null_확인() throws SQLException {
-        assertEquals(chessGameDao.findTurn(), null);
+        assertEquals(chessGameDao.findTurn(2), null);
     }
 
 }

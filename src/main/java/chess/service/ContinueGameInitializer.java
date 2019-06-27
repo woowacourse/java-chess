@@ -23,6 +23,7 @@ public class ContinueGameInitializer {
     private static final int END_FIRST_CHAR = 1;
     private static final int START_SECOND_CHAR = 1;
     private static final int END_SECOND_CHAR = 2;
+    private static final int GAME_ID = 1;
 
     private ChessGameDao chessGameDao;
     private ChessPieceDao chessPieceDao;
@@ -36,7 +37,7 @@ public class ContinueGameInitializer {
     }
 
     public ChessBoardDto initialize() throws SQLException {
-        Color currentTurn = chessGameDao.findTurn().equals("WHITE") ? Color.WHITE : Color.BLACK;
+        Color currentTurn = chessGameDao.findTurn(GAME_ID).equals("WHITE") ? Color.WHITE : Color.BLACK;
         Map<String, String> initBoard = makeJSONPreviousBoard();
         Map<Point, Piece> gameBoard = makePreviousBoard();
 
