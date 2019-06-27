@@ -7,7 +7,10 @@ import java.util.Objects;
 public class Position {
     public static final int MIN_POSITION = 0;
     public static final int MAX_POSITION = 7;
+    private static final String SEPERATOR = ",";
+
     private static final List<List<Position>> positions;
+
 
     static {
         positions = new ArrayList<>();
@@ -33,6 +36,11 @@ public class Position {
 
     public static Position create(final int x, final int y) {
         return positions.get(x).get(y);
+    }
+
+    public static Position create(String input) {
+        String[] tokens = input.split(SEPERATOR);
+        return create(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]));
     }
 
     private void validatePosition(final int x) {

@@ -1,7 +1,5 @@
 package view;
 
-import chess.domain.geometric.Position;
-
 import java.util.Scanner;
 
 public class InputView {
@@ -12,18 +10,16 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static Position getSourcePosition() {
-        System.out.println("소스 위치를 입력하세요.");
-        String[] numbers = SCANNER.nextLine().split(SEPERATOR);
+    public static String getSourcePosition() {
+        System.out.println("소스 위치를 입력하세요.((ex)1,2) end를 입력하면 게임 종료");
+        return SCANNER.nextLine().trim().toLowerCase();
 
-        return Position.create(Integer.parseInt(numbers[0]), Integer.parseInt(numbers[1]));
     }
 
-    public static Position getTargetPosition() {
-        System.out.println("타깃 위치를 입력하세요.");
-        String[] numbers = SCANNER.nextLine().split(SEPERATOR);
+    public static String getTargetPosition() {
+        System.out.println("타깃 위치를 입력하세요.((ex)1,1) end를 입력하면 게임 종료");
+        return SCANNER.nextLine().trim().toLowerCase();
 
-        return Position.create(Integer.parseInt(numbers[0]), Integer.parseInt(numbers[1]));
     }
 
 }

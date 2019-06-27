@@ -18,8 +18,17 @@ public class ConsoleChessApplication {
             try {
                 OutputView.printCheckBoard(chessBoard);
                 System.out.println("현재 턴은 " + chessBoard.getTeam().name() + "입니다.");
-                Position source = InputView.getSourcePosition();
-                Position target = InputView.getTargetPosition();
+                String sourceInput = InputView.getSourcePosition();
+                if (sourceInput.equals("end")) {
+                    break;
+                }
+                Position source = Position.create(sourceInput);
+
+                String targetInput = InputView.getTargetPosition();
+                if (targetInput.equals("end")) {
+                    break;
+                }
+                Position target = Position.create(targetInput);
                 chessBoard.move(source, target);
                 chessBoard.changeTeam();
             } catch (Exception e) {
