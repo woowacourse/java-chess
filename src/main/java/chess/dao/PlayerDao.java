@@ -35,7 +35,7 @@ public class PlayerDao {
             return Arrays.stream(preparedStatement.executeBatch()).sum();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLDataException();
+            throw new SQLDataException("플레이어 설정에 실패했습니다.");
         }
     }
 }

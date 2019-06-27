@@ -43,7 +43,7 @@ public class RoundInfoDao {
             return list;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLDataException();
+            throw new SQLDataException("게임 목록 불러오기를 실패했습니다.");
         }
     }
 
@@ -64,7 +64,7 @@ public class RoundInfoDao {
             return resultSet.getInt(1);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLDataException();
+            throw new SQLDataException("라운드 정보 저장에 실패 했습니다.");
         }
     }
 
@@ -75,7 +75,7 @@ public class RoundInfoDao {
             return preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLDataException();
+            throw new SQLDataException("게임 종료 저장이 실패 했습니다.");
         }
     }
 
@@ -97,7 +97,7 @@ public class RoundInfoDao {
             return roundInfoDto;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLDataException();
+            throw new SQLDataException("해당 게임 선택이 실패 했습니다.");
         }
     }
 
@@ -117,7 +117,7 @@ public class RoundInfoDao {
             return resultDto;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLDataException();
+            throw new SQLDataException("해당 게임 결과 불러오기를 실패 했습니다.");
         }
     }
 

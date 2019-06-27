@@ -31,7 +31,7 @@ public class HistoryDao {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             if (!resultSet.next()) {
-                throw new SQLDataException();
+                throw new SQLDataException("지난 게임 조회에 실패했습니다.");
             }
 
             List<String> rows = new ArrayList<>();
@@ -73,7 +73,7 @@ public class HistoryDao {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLDataException();
+            throw new SQLDataException("게임 기록 저장에 실패했습니다.");
         }
     }
 }
