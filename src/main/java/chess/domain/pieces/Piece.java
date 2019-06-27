@@ -2,17 +2,18 @@ package chess.domain.pieces;
 
 import chess.domain.ChessTeam;
 import chess.domain.Direction;
+import chess.domain.MoveVector;
 import chess.domain.Point;
 
 import java.util.List;
 import java.util.Objects;
 
-public class Piece {
+public abstract class Piece {
     private final ChessTeam team;
-    private final List<Direction> directions;
+    private final List<MoveVector> directions;
     private PieceInfo info;
 
-    Piece(ChessTeam team, PieceInfo info, List<Direction> directions) {
+    Piece(ChessTeam team, PieceInfo info, List<MoveVector> directions) {
         this.team = team;
         this.info = info;
         this.directions = directions;
@@ -22,13 +23,14 @@ public class Piece {
         return false;
     }
 
-    public Direction move(Point p1, Point p2) {
-        Direction vector = p1.direction(p2).vector();
+    public Direction move(MoveVector vector) {
         if (directions.contains(vector)) {
-            return vector;
+            return vector.getDirection();
         }
         throw new IllegalArgumentException();
     }
+
+    public abstract Direction move(Point p1, Point p2);
 
     public Direction attack(Point p1, Point p2) {
         return move(p1, p2);

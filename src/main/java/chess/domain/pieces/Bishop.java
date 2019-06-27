@@ -1,21 +1,15 @@
 package chess.domain.pieces;
 
 import chess.domain.ChessTeam;
-import chess.domain.Direction;
 import chess.domain.MoveVector;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Bishop extends Piece {
-    private static final List<Direction> directions;
+public class Bishop extends RangeMovePiece {
+    private static final List<MoveVector> directions;
 
     static {
-        directions = new ArrayList<>();
-        directions.add(MoveVector.NorthEast.getDirection());
-        directions.add(MoveVector.NorthWest.getDirection());
-        directions.add(MoveVector.SouthEast.getDirection());
-        directions.add(MoveVector.SouthWest.getDirection());
+        directions = MoveVector.diagonalDirection();
     }
 
     public Bishop(ChessTeam team) {

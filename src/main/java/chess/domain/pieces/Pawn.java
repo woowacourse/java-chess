@@ -5,17 +5,14 @@ import chess.domain.Direction;
 import chess.domain.MoveVector;
 import chess.domain.Point;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends Piece {
-    private List<Direction> moveDirection;
-    private List<Direction> attackDirection;
+public class Pawn extends SingleMovePiece {
+    private List<MoveVector> moveDirection;
+    private List<MoveVector> attackDirection;
 
     public Pawn(ChessTeam team) {
         super(team, PieceInfo.Pawn, null);
-        moveDirection = new ArrayList<>();
-        attackDirection = new ArrayList<>();
         if (team.color() == ChessTeam.WHITE.color()) {
             addWhiteDirection();
         }
@@ -26,46 +23,40 @@ public class Pawn extends Piece {
     }
 
     private void addWhiteDirection() {
-        moveDirection.add(MoveVector.North.getDirection());
-        moveDirection.add(MoveVector.PawnFirstNorth.getDirection());
-
-        attackDirection.add(MoveVector.NorthEast.getDirection());
-        attackDirection.add(MoveVector.NorthWest.getDirection());
+        moveDirection = MoveVector.whitePawnMoveDirection();
+        attackDirection = MoveVector.whitePawnAttackDirection();
     }
 
 
     private void addBlackDirection() {
-        moveDirection.add(MoveVector.South.getDirection());
-        moveDirection.add(MoveVector.PawnFirstSouth.getDirection());
-
-        attackDirection.add(MoveVector.SouthEast.getDirection());
-        attackDirection.add(MoveVector.SouthWest.getDirection());
+        moveDirection = MoveVector.blackPawnMoveDirection();
+        attackDirection = MoveVector.blackPawnAttackDirection();
     }
 
 
     @Override
     public Direction move(Point p1, Point p2) {
-        Direction direction = p1.direction(p2);
-        if (moveDirection.contains(direction)) {
+        MoveVector vector = MoveVector.findVector(p1.direction(p2));
+        if (moveDirection.contains(vector)) {
             initialMove();
-            return direction;
+            return vector.getDirection();
         }
         throw new IllegalArgumentException();
     }
 
     @Override
     public Direction attack(Point p1, Point p2) {
-        Direction direction = p1.direction(p2);
-        if (attackDirection.contains(direction)) {
+        MoveVector vector = MoveVector.findVector(p1.direction(p2));
+        if (attackDirection.contains(vector)) {
             initialMove();
-            return direction;
+            return vector.getDirection();
         }
         throw new IllegalArgumentException();
     }
 
     private void initialMove() {
         if (moveDirection.size() == 2) {
-            moveDirection.remove(1);
+            moveDirection = moveDirection.subList(0, 1);
         }
     }
 }

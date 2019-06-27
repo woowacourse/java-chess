@@ -1,21 +1,15 @@
 package chess.domain.pieces;
 
 import chess.domain.ChessTeam;
-import chess.domain.Direction;
 import chess.domain.MoveVector;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends Piece {
-    private static final List<Direction> directions;
+public class Rook extends RangeMovePiece {
+    private static final List<MoveVector> directions;
 
     static {
-        directions = new ArrayList<>();
-        directions.add(MoveVector.East.getDirection());
-        directions.add(MoveVector.West.getDirection());
-        directions.add(MoveVector.North.getDirection());
-        directions.add(MoveVector.South.getDirection());
+        directions = MoveVector.linearDirection();
     }
 
 
