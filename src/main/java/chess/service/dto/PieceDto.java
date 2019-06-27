@@ -10,7 +10,8 @@ public class PieceDto {
     private String color;
     private String type;
 
-    public PieceDto() { }
+    public PieceDto() {
+    }
 
     public PieceDto(Point point, Color color, Type type) {
         this.point = point.toString();

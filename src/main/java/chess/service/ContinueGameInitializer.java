@@ -20,7 +20,6 @@ public class ContinueGameInitializer {
 
     private ChessGameDao chessGameDao;
     private ChessPieceDao chessPieceDao;
-
     private ChessBoardDto chessBoardDto;
 
     public ContinueGameInitializer() {

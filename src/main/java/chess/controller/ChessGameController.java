@@ -32,7 +32,6 @@ public class ChessGameController {
         boolean isNewGame = request.session().attribute("isNewGame");
         ChessGame chessGame;
         ChessBoardDto chessBoardDto;
-        //request.session(true);
         try {
             if (isNewGame) {
                 chessGame = new ChessGame();
