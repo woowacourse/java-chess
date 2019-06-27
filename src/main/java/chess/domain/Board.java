@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,13 +48,23 @@ public class Board {
         return board.get(position);
     }
 
-    public void move(Position source, Position target, AbstractPiece sourcePiece) {
+    public Board move(Position source, Position target, AbstractPiece sourcePiece) {
+        Board board = new Board(this.board);
         board.remove(source);
         board.put(target, sourcePiece);
+        return board;
+    }
+
+    private void remove(Position position) {
+        board.remove(position);
+    }
+
+    private void put(Position position, AbstractPiece abstractPiece) {
+        board.put(position, abstractPiece);
     }
 
     public Map<Position, AbstractPiece> getBoard() {
-        return board;
+        return Collections.unmodifiableMap(board);
     }
 
     public Set<Position> keySet() {

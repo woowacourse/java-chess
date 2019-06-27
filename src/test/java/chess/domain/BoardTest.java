@@ -52,8 +52,8 @@ public class BoardTest {
     void 말_이동_테스트() {
         Position target = new Position(new Coordinate('b'), new Coordinate(3));
         Position source = new Position(new Coordinate('b'), new Coordinate(2));
-        board.move(source, target, board.at(source)); // Team.WHITE Pawn
+        Board boardMoveAfter = board.move(source, target, board.at(source)); // Team.WHITE Pawn
 
-        assertThat(board.at(target)).isEqualTo(new Pawn(Team.WHITE));
+        assertThat(boardMoveAfter.at(target)).isEqualTo(new Pawn(Team.WHITE));
     }
 }

@@ -31,7 +31,7 @@ public class ChessBoard {
         validRoute(source, target, source.direction(target));
 
         sourcePiece.canMove(source, target);
-        board.move(source, target, sourcePiece);
+        board = board.move(source, target, sourcePiece);
         resultCounter.addCount(targetPiece);
         turn.turnChanged();
         return gameEnd(targetPiece);
