@@ -1,6 +1,7 @@
 package chess.domain.chesspiece;
 
 import chess.domain.Position;
+import chess.domain.chessmove.Direction;
 import chess.domain.chessmove.Move;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public abstract class ChessPiece {
     Team team;
-    Map<String, Move> movingMap;
+    Map<Direction, Move> movingMap;
 
     public ChessPiece(Team team) {
         this.team = team;

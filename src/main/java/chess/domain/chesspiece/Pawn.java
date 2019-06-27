@@ -1,6 +1,7 @@
 package chess.domain.chesspiece;
 
 import chess.domain.Position;
+import chess.domain.chessmove.Direction;
 import chess.domain.chessmove.PawnMove;
 
 import java.util.HashMap;
@@ -17,12 +18,12 @@ public class Pawn extends ChessPiece {
     @Override
     public void initMovingMap() {
         movingMap = new HashMap<>();
-        movingMap.put("pawn", PawnMove.getInstance(team));
+        movingMap.put(Direction.PAWN, PawnMove.getInstance(team));
     }
 
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
-        return movingMap.get("pawn").move(source, target);
+        return movingMap.get(Direction.PAWN).move(source, target);
     }
 
     @Override

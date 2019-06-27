@@ -2,6 +2,7 @@ package chess.domain.chesspiece;
 
 import chess.domain.Position;
 import chess.domain.chessmove.DiagonalMove;
+import chess.domain.chessmove.Direction;
 import chess.domain.chessmove.HorizontalMove;
 import chess.domain.chessmove.VerticalMove;
 
@@ -22,20 +23,20 @@ public class Queen extends ChessPiece {
     @Override
     public void initMovingMap() {
         movingMap = new HashMap<>();
-        movingMap.put("horizontal", HorizontalMove.getInstance());
-        movingMap.put("vertical", VerticalMove.getInstance());
-        movingMap.put("diagonal", DiagonalMove.getInstance());
+        movingMap.put(Direction.HORIZONTAL, HorizontalMove.getInstance());
+        movingMap.put(Direction.VERTICAL, VerticalMove.getInstance());
+        movingMap.put(Direction.DIAGONAL, DiagonalMove.getInstance());
     }
 
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
-        String moveName = "diagonal";
+        Direction moveName = Direction.DIAGONAL;
 
         if (source.isInLine(target) == VERTICAL_LINE) {
-            moveName = "vertical";
+            moveName = Direction.VERTICAL;
         }
         if (source.isInLine(target) == HORIZONTAL_LINE) {
-            moveName = "horizontal";
+            moveName = Direction.HORIZONTAL;
         }
 
         return movingMap.get(moveName).move(source, target);
