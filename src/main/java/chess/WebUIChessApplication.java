@@ -1,22 +1,29 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.ChessGameController;
+import chess.view.OutputViewForWeb;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
+	private final static ChessGameController chessGameController = new ChessGameController();
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
+	public static void main(String[] args) {
+		staticFiles.location("/static");
+		get("/", (req, res) -> OutputViewForWeb.render(new HashMap<>(), "/index.html"));
+
+		get("/new", (req, res) -> chessGameController.generateInitialChessGame());
+
+		get("/select", (req, res) -> chessGameController.getRoomNumbers());
+
+		post("/load", (req, res) -> chessGameController.loadProgressingChessGame(req));
+
+		post("/move", (req, res) -> chessGameController.movePiece(req));
+
+		post("/status", (req, res) -> chessGameController.getStatusScore(req));
+
+		exception(Exception.class, (exception, req, res) -> chessGameController.handleException(res, exception));
+	}
 }
