@@ -12,9 +12,15 @@ public class Board {
     public static final int WIDTH = 8;
 
     private final List<Piece> pieces;
+    private Optional<Piece> cache;
 
     public Board() {
         this.pieces = BoardInitializer.newBoard();
+        this.cache = resetCache();
+    }
+
+    private Optional<Piece> resetCache() {
+        return this.pieces.isEmpty() ? Optional.empty() : Optional.of(this.pieces.get(0));
     }
 
     private Optional<Integer> getIndexOfPieceAt(final int coord1D, final int begin, final int end) {
@@ -37,7 +43,9 @@ public class Board {
     }
 
     public Optional<Piece> getPieceAt(final Position position) {
-        return getIndexOfPieceAt(position).flatMap(i -> Optional.of(this.pieces.get(i)));
+        return (position == this.cache.map(Piece::position).orElse(null))
+                ? this.cache
+                : getIndexOfPieceAt(position).flatMap(i -> Optional.of(this.pieces.get(i)));
     }
 
     public Optional<Color> getColorOfPieceAt(final Position position) {
@@ -47,6 +55,7 @@ public class Board {
     public boolean removePieceAt(final Position position) {
         return getIndexOfPieceAt(position).map(i -> {
                 this.pieces.remove(i.intValue());
+                this.cache = resetCache();
                 return true;
         }).orElse(false);
     }
