@@ -4,40 +4,30 @@ import chess.domain.board.Square;
 import chess.domain.board.XPosition;
 import chess.domain.board.YPosition;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author heebg
  * @version 1.0 2019-06-27
  */
 public class BlackPieceInit implements PieceInit {
+    private static int CONVERT_ASCII = 97;
+    private static String PAWN_LOCATION = "7";
+    private static String OTHER_LOCATION = "8";
+
+    private static List<Piece> pieceOrder = Arrays.asList(
+            Rook.blackCreate(), Knight.blackCreate(), Bishop.blackCreate(), Queen.blackCreate(),
+            King.blackCreate(), Bishop.blackCreate(), Knight.blackCreate(), Rook.blackCreate()
+    );
+
     @Override
     public Map<Square, Piece> create() {
         Map<Square, Piece> pieces = new HashMap<>();
 
-        // Pawn
-        for (char i = 'a'; i <= 'h'; i++) {
-            pieces.put(new Square(new XPosition(String.valueOf(i)), new YPosition("7")), Pawn.blackCreate());
+        for (int i = 0; i < 8; i++) {
+            pieces.put(new Square(new XPosition(Character.toString(i + CONVERT_ASCII)), new YPosition(PAWN_LOCATION)), Pawn.blackCreate());
+            pieces.put(new Square(new XPosition(Character.toString(i + CONVERT_ASCII)), new YPosition(OTHER_LOCATION)), pieceOrder.get(i));
         }
-
-        // Knight
-        pieces.put(new Square(new XPosition("b"), new YPosition("8")), Knight.blackCreate());
-        pieces.put(new Square(new XPosition("g"), new YPosition("8")), Knight.blackCreate());
-
-        // Rook
-        pieces.put(new Square(new XPosition("a"), new YPosition("8")), Rook.blackCreate());
-        pieces.put(new Square(new XPosition("h"), new YPosition("8")), Rook.blackCreate());
-
-        // BishopPath
-        pieces.put(new Square(new XPosition("c"), new YPosition("8")), Bishop.blackCreate());
-        pieces.put(new Square(new XPosition("f"), new YPosition("8")), Bishop.blackCreate());
-
-        //Queen
-        pieces.put(new Square(new XPosition("d"), new YPosition("8")), Queen.blackCreate());
-
-        //King
-        pieces.put(new Square(new XPosition("e"), new YPosition("8")), King.blackCreate());
 
         return pieces;
     }
