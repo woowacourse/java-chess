@@ -5,6 +5,7 @@ import chess.domain.piece.PieceColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ChessObserver {
@@ -20,7 +21,7 @@ public class ChessObserver {
 
     public List<Piece> getDeadList(PieceColor color) {
         return deadList.stream()
-                .filter(piece -> piece.getColor().equals(color))
+                .filter(piece -> piece.isSameColor(color))
                 .collect(Collectors.toList());
     }
 
@@ -31,7 +32,7 @@ public class ChessObserver {
 
         ChessObserver that = (ChessObserver) o;
 
-        return deadList != null ? deadList.equals(that.deadList) : that.deadList == null;
+        return Objects.equals(deadList, that.deadList);
     }
 
     @Override

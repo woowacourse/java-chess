@@ -31,11 +31,11 @@ public class Pawn extends Piece {
     public Vectors movableArea(Square source) {
         Vectors movableArea =  super.movableArea(source);
 
-        if (!source.isSameY(new YPosition("2")) && getColor().equals(PieceColor.WHITE)) {
+        if (!source.isSameY(new YPosition("2")) && isWhite()) {
             return movableArea.removeSource(source.moveUp(2));
         }
 
-        if (!source.isSameY(new YPosition("7")) && getColor().equals(PieceColor.BLACK)) {
+        if (!source.isSameY(new YPosition("7")) && isBlack()) {
             return movableArea.removeSource(source.moveDown(2));
         }
 
@@ -45,5 +45,13 @@ public class Pawn extends Piece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    public boolean isWhite() {
+        return super.isSameColor(PieceColor.WHITE);
+    }
+
+    public boolean isBlack() {
+        return super.isSameColor(PieceColor.BLACK);
     }
 }

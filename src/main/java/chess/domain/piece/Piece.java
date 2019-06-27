@@ -24,7 +24,7 @@ public abstract class Piece {
 
     public abstract double getScore();
 
-    public PieceColor getColor() {
-        return color;
+    public boolean isSameColor(PieceColor pieceColor) {
+        return color.equals(pieceColor);
     }
 }

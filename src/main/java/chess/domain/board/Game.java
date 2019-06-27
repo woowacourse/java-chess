@@ -56,7 +56,7 @@ public class Game {
     }
 
     private void checkTurn(Piece piece) {
-        if (turn != piece.getColor()) {
+        if (!piece.isSameColor(turn)) {
             throw new IllegalArgumentException("맞는 턴이 아닙니다");
         }
     }

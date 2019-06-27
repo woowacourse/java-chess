@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import java.util.List;
+import java.util.Objects;
 
 public class XPosition {
     private final String xPosition;
@@ -41,7 +42,7 @@ public class XPosition {
 
         XPosition xPosition1 = (XPosition) o;
 
-        return xPosition != null ? xPosition.equals(xPosition1.xPosition) : xPosition1.xPosition == null;
+        return Objects.equals(xPosition, xPosition1.xPosition);
     }
 
     @Override
