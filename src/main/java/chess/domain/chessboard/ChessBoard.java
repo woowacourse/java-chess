@@ -28,7 +28,7 @@ public class ChessBoard {
     }
 
     public boolean movePiece(Position source, Position target) {
-        if (!canMove(source, target)) return false;
+        if (!canMove(source, target) || validExist(source)) return false;
 
         if (!chessBoard.get(target).isSameTeam(chessBoard.get(source))) {
             checkGameOver(target);
@@ -68,17 +68,11 @@ public class ChessBoard {
             return false;
         }
 
-        if (validExist(source)) {
-            return false;
-        }
         if (isSameChessPiece(sourceChessPiece, Pawn.class)) {
             return canMovePawns(source, target, route);
         }
 
-        return (!chessBoard.get(target).isSameTeam(sourceChessPiece))
-                && route.stream()
-                .filter(position -> position != target)
-                .allMatch(position -> isSameChessPiece(chessBoard.get(position), Blank.class));
+        return simulatePossibility(sourceChessPiece, target, route);
     }
 
     private double calculateColumn(Team team, int column) {
@@ -122,5 +116,12 @@ public class ChessBoard {
 
     private boolean isSameChessPiece(ChessPiece chessPiece, Type type) {
         return chessPiece.getClass().getTypeName().equals(type.getTypeName());
+    }
+
+    private boolean simulatePossibility(ChessPiece sourceChessPiece, Position target, List<Position> route) {
+        return (!chessBoard.get(target).isSameTeam(sourceChessPiece))
+                && route.stream()
+                .filter(position -> position != target)
+                .allMatch(position -> isSameChessPiece(chessBoard.get(position), Blank.class));
     }
 }
