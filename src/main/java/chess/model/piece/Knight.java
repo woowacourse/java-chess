@@ -4,8 +4,7 @@ import chess.model.board.Coordinate;
 import chess.model.board.vector.Direction;
 import chess.model.board.Route;
 import chess.model.board.vector.Vector;
-import chess.model.routeCreator.CreatingRouteStrategy;
-import chess.model.routeCreator.KnightCreatingRouteStrategy;
+import chess.model.routeCreator.RouteCreator;
 
 import java.util.*;
 
@@ -50,8 +49,7 @@ public class Knight implements Piece {
             throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
         }
 
-        CreatingRouteStrategy strategy = new KnightCreatingRouteStrategy();
-        return strategy.create(sourceCoordinates, vector);
+        return RouteCreator.createByKnight(sourceCoordinates, vector);
     }
 
     private void validateNull(List<Coordinate> coordinates, Vector vector) {

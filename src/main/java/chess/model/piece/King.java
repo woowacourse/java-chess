@@ -4,8 +4,7 @@ import chess.model.board.Coordinate;
 import chess.model.board.vector.Direction;
 import chess.model.board.Route;
 import chess.model.board.vector.Vector;
-import chess.model.routeCreator.CreatingRouteStrategy;
-import chess.model.routeCreator.NormalPieceCreatingRouteStrategy;
+import chess.model.routeCreator.RouteCreator;
 
 import java.util.*;
 
@@ -55,8 +54,7 @@ public class King implements Piece {
             throw new IllegalArgumentException("King은 한칸만 이동할 수 있습니다.");
         }
 
-        CreatingRouteStrategy strategy = new NormalPieceCreatingRouteStrategy();
-        return strategy.create(sourceCoordinates, vector);
+        return RouteCreator.createByNormalPiece(sourceCoordinates, vector);
     }
 
     private void validateNull(List<Coordinate> coordinates, Vector vector) {
