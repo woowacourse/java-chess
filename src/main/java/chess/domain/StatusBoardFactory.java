@@ -61,6 +61,7 @@ public class StatusBoardFactory {
                 count = 1;
             }
         }
+        results.add(count);
         return results;
     }
 
