@@ -13,12 +13,29 @@ import static chess.model.board.vector.Direction.*;
 public class Board {
     public static final String WHITE_TEAM = "white";
     public static final String BLACK_TEAM = "black";
+
+    public static final String BLACK_KING = "K";
+    public static final String BLACK_QUEEN = "Q";
+    public static final String BLACK_KNIGHT = "N";
+    public static final String BLACK_BISHOP = "B";
+    public static final String BLACK_ROOK = "R";
+    public static final String BLACK_PAWN = "P";
+
+    public static final String WHITE_KING = "k";
+    public static final String WHITE_QUEEN = "q";
+    public static final String WHITE_KNIGHT = "n";
+    public static final String WHITE_BISHOP = "b";
+    public static final String WHITE_ROOK = "r";
+    public static final String WHITE_PAWN = "p";
+
+    public static final String EMPTY = "#";
     public static final int ROW_SIZE = 8;
     public static final int INITIAL_ROW = 1;
     public static final int COLUMN_SIZE = 8;
     public static final int INITIAL_COLUMN = 1;
     public static final int BLACK_PAWN_ROW = 2;
     public static final int WHITE_PAWN_ROW = 7;
+
     private static final int HALF_SCORE_STANDARD = 1;
     private static final double HALF_SCORE_OF_PAWN = Pawn.SCORE / 2;
     private static final int TOTAL_COUNT_OF_KING = 2;
@@ -233,9 +250,9 @@ public class Board {
             Tile tile = tiles.get(key);
 
             if (Objects.isNull(tile.getPiece())) {
-                row = row.concat("#");
+                row = row.concat(EMPTY);
 
-                if (count % 8 == 0) {
+                if (count % COLUMN_SIZE == 0) {
                     pieces.add(row);
                     row = "";
                 }
@@ -244,65 +261,65 @@ public class Board {
 
             if (tile.getPiece().getScore() == King.SCORE) {
                 if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("k");
+                    row = row.concat(WHITE_KING);
                 }
 
                 if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("K");
+                    row = row.concat(BLACK_KING);
                 }
             }
 
             if (tile.getPiece().getScore() == Queen.SCORE) {
                 if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("q");
+                    row = row.concat(WHITE_QUEEN);
                 }
 
                 if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("Q");
+                    row = row.concat(BLACK_QUEEN);
                 }
             }
 
             if (tile.getPiece().getScore() == Rook.SCORE) {
                 if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("r");
+                    row = row.concat(WHITE_ROOK);
                 }
 
                 if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("R");
+                    row = row.concat(BLACK_ROOK);
                 }
             }
 
             if (tile.getPiece().getScore() == Knight.SCORE) {
                 if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("n");
+                    row = row.concat(WHITE_KNIGHT);
                 }
 
                 if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("N");
+                    row = row.concat(BLACK_KNIGHT);
                 }
             }
 
             if (tile.getPiece().getScore() == Bishop.SCORE) {
                 if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("b");
+                    row = row.concat(WHITE_BISHOP);
                 }
 
                 if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("B");
+                    row = row.concat(BLACK_BISHOP);
                 }
             }
 
             if (tile.getPiece().getScore() == Pawn.SCORE) {
                 if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("p");
+                    row = row.concat(WHITE_PAWN);
                 }
 
                 if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat("P");
+                    row = row.concat(BLACK_PAWN);
                 }
             }
 
-            if (count % 8 == 0) {
+            if (count % COLUMN_SIZE == 0) {
                 pieces.add(row);
                 row = "";
             }
