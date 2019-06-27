@@ -5,7 +5,6 @@ import chess.domain.chess.dao.DBConnection;
 import chess.domain.chess.dao.RoomDAO;
 import chess.domain.chess.dto.ChessBoardDTO;
 import chess.domain.chess.game.ChessBoard;
-import chess.domain.chess.game.Team;
 import chess.domain.chess.game.initializer.ChessBoardInitializer;
 import chess.domain.geometric.Position;
 import com.google.gson.Gson;
@@ -41,12 +40,15 @@ public class WebUIChessApplication {
             ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
             chessBoardDTO.setUnits(chessBoard.getUnits());
 
-            chessBoardDAO.add(chessBoard, Team.WHITE);
+            roomDAO.add();
+            int roomId = roomDAO.getRecentId();
+            chessBoardDAO.add2(chessBoard, roomDAO.select(roomId), roomId);
 
             String chessJson = new Gson().toJson(chessBoardDTO);
 
             model.put("team", chessBoard.getTeam().name());
             model.put("chessBoard", chessJson);
+            model.put("roomId", roomId);
 
             return render(model, "game.html");
         });
@@ -56,7 +58,7 @@ public class WebUIChessApplication {
 
             Map<String, Object> model = new HashMap<>();
             ChessBoardDTO chessBoardDTO = new ChessBoardDTO();
-            ChessBoard chessBoard = chessBoardDAO.select(roomId);
+            ChessBoard chessBoard = chessBoardDAO.select2(roomId, roomDAO.select(roomId));
 
             if (checkKing(model, chessBoard)) return render(model, "gameover.html");
 
@@ -71,7 +73,6 @@ public class WebUIChessApplication {
         });
 
         post("/game", (req, res) -> {
-            String roomIdstring = req.queryParams("roomId");
             int roomId = Integer.parseInt(req.queryParams("roomId"));
 
             Map<String, Object> model = new HashMap<>();
@@ -82,14 +83,16 @@ public class WebUIChessApplication {
             Position sourcePosition = Position.create(Integer.parseInt(source[0]), Integer.parseInt(source[1]));
             Position targetPosition = Position.create(Integer.parseInt(target[0]), Integer.parseInt(target[1]));
 
-            ChessBoard chessBoard = chessBoardDAO.select(roomId);
+            ChessBoard chessBoard = chessBoardDAO.select2(roomId, roomDAO.select(roomId));
 
             chessBoard.move(sourcePosition, targetPosition);
             chessBoard.changeTeam();
 
-            chessBoardDAO.update(chessBoard, chessBoard.getTeam(), roomId);
+            roomDAO.update(roomId, chessBoard.getTeam());
+            chessBoardDAO.delete(roomId);
+            chessBoardDAO.add2(chessBoard, roomDAO.select(roomId), roomId);
 
-            ChessBoard chessBoardAfterUpdate = chessBoardDAO.select(roomId);
+            ChessBoard chessBoardAfterUpdate = chessBoardDAO.select2(roomId, roomDAO.select(roomId));
 
             if (checkKing(model, chessBoard)) return render(model, "gameover.html");
 
