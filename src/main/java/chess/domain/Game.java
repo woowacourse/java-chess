@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.dao.RoundDao;
+import chess.dao.RoundDaoImpl;
 import chess.dto.RoundDto;
 
 import java.sql.SQLException;
@@ -9,11 +9,11 @@ import java.util.List;
 public class Game {
     private Round round;
     private Board board;
-    private RoundDao roundDao;
+    private RoundDaoImpl roundDao;
 
     public Game() {
         round = new Round(0);
-        roundDao = RoundDao.getInstance();
+        roundDao = RoundDaoImpl.getInstance();
         this.board = BoardFactory.create();
     }
 
