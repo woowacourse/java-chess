@@ -2,7 +2,7 @@ package chess;
 
 import chess.controller.ChessIndexController;
 import chess.controller.ChessResultController;
-import chess.controller.chessround.ChessRoundController;
+import chess.controller.ChessRoundController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

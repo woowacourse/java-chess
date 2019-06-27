@@ -1,8 +1,8 @@
-package chess.controller.chessround;
+package chess.controller;
 
 import chess.WebUIChessApplication;
 import chess.application.chessround.ChessRoundService;
-import chess.application.chessround.dto.ChessPlayerDTO;
+import chess.application.chessround.dto.ChessBoardDTO;
 import spark.Route;
 
 import java.util.HashMap;
@@ -14,17 +14,11 @@ public class ChessRoundController {
     public static final Route fetchChessRound = (req, res) -> {
         Map<String, Object> model = new HashMap<>();
 
-        ChessBoard chessBoard = ChessBoard.createEmpty();
-
         ChessRoundService chessRoundService = ChessRoundService.getInstance();
 
-        ChessPlayerDTO whitePlayerDTO = chessRoundService.fetchWhitePlayer();
-        chessBoard.fillWhiteChessPiecesOfPlayer(whitePlayerDTO);
+        ChessBoardDTO chessBoardDTO = chessRoundService.makeChessBoardDTO();
 
-        ChessPlayerDTO blackPlayerDTO = chessRoundService.fetchBlackPlayer();
-        chessBoard.fillBlackChessPiecesOfPlayer(blackPlayerDTO);
-
-        model.put("chess-blocks", chessBoard);
+        model.put("chess-blocks", chessBoardDTO);
         model.put("current-turn", chessRoundService.isWhiteTurn() ? "White" : "Black");
         model.put("white-score", chessRoundService.getWhitePlayerScore());
         model.put("black-score", chessRoundService.getBlackPlayerScore());

@@ -1,12 +1,13 @@
-package chess.controller.chessround;
+package chess.chessview;
 
 import chess.application.chessround.dto.ChessPieceDTO;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
-class RowOfChessBlocks implements Iterable<ChessBlock> {
+public class RowOfChessBlocks implements Iterable<ChessBlock> {
     private List<ChessBlock> chessBlocks;
 
     private RowOfChessBlocks(List<ChessBlock> chessBlocks) {
@@ -34,15 +35,23 @@ class RowOfChessBlocks implements Iterable<ChessBlock> {
 
     void fillChessPieceTo(ChessPieceDTO chessPieceDTO, boolean isWhitePlayer) {
         int column = chessPieceDTO.getColumn();
-        ChessBlock currentBlock = chessBlocks.get(remapBlockColumnFrom(column));
+        int key = remapBlockColumnFrom(column);
+        ChessBlock currentBlock = chessBlocks.get(key);
+        String currentBlockId = currentBlock.getId();
 
         ChessSymbolGenerator generator = ChessSymbolGenerator.getInstance();
         String chessSymbol = generator.generateSymbol(chessPieceDTO.getName(), isWhitePlayer);
-        currentBlock.setSymbol(chessSymbol);
+
+        chessBlocks.remove(key);
+        chessBlocks.add(key, new ChessBlock(currentBlockId, chessSymbol));
     }
 
     private int remapBlockColumnFrom(int column) {
         return column - 1;
+    }
+
+    public Stream<ChessBlock> stream() {
+        return chessBlocks.stream();
     }
 
     @Override

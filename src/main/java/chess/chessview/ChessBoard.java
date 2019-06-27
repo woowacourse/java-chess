@@ -1,4 +1,4 @@
-package chess.controller.chessround;
+package chess.chessview;
 
 import chess.application.chessround.dto.ChessPieceDTO;
 import chess.application.chessround.dto.ChessPlayerDTO;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-class ChessBoard implements Iterable<RowOfChessBlocks> {
+public class ChessBoard implements Iterable<RowOfChessBlocks> {
     static final int LENGTH_OF_CHESS_BOARD_SIDE = 8;
     private List<RowOfChessBlocks> chessRows;
 
@@ -15,7 +15,7 @@ class ChessBoard implements Iterable<RowOfChessBlocks> {
         this.chessRows = chessRows;
     }
 
-    static ChessBoard createEmpty() {
+    public static ChessBoard createEmpty() {
         List<RowOfChessBlocks> chessRows = new ArrayList<>();
         for (int blockRow = 0; blockRow < 8; blockRow++) {
             chessRows.add(RowOfChessBlocks.createEmptyOf(blockRow));
@@ -23,11 +23,11 @@ class ChessBoard implements Iterable<RowOfChessBlocks> {
         return new ChessBoard(chessRows);
     }
 
-    void fillWhiteChessPiecesOfPlayer(ChessPlayerDTO chessPlayerDTO) {
+    public void fillWhiteChessPiecesOfPlayer(ChessPlayerDTO chessPlayerDTO) {
         fillChessPiecesOfPlayer(chessPlayerDTO, true);
     }
 
-    void fillBlackChessPiecesOfPlayer(ChessPlayerDTO chessPlayerDTO) {
+    public void fillBlackChessPiecesOfPlayer(ChessPlayerDTO chessPlayerDTO) {
         fillChessPiecesOfPlayer(chessPlayerDTO, false);
     }
 

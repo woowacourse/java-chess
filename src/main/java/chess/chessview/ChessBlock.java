@@ -1,4 +1,4 @@
-package chess.controller.chessround;
+package chess.chessview;
 
 public class ChessBlock {
     private String id;
@@ -15,13 +15,5 @@ public class ChessBlock {
 
     public String getSymbol() {
         return symbol;
-    }
-
-    void setId(String id) {
-        this.id = id;
-    }
-
-    void setSymbol(String symbol) {
-        this.symbol = symbol;
     }
 }

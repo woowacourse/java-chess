@@ -1,14 +1,16 @@
 package chess.application.chessround;
 
-import chess.application.chessround.dto.ChessPieceDTO;
-import chess.application.chessround.dto.ChessPlayerDTO;
-import chess.application.chessround.dto.ChessPointDTO;
+import chess.application.chessround.dto.*;
+import chess.chessview.ChessBlock;
+import chess.chessview.ChessBoard;
+import chess.chessview.RowOfChessBlocks;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chessround.ChessPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class ChessRoundAssembler {
     private static ChessRoundAssembler chessRoundAssembler = null;
@@ -40,5 +42,14 @@ class ChessRoundAssembler {
 
     ChessPointDTO makeChessPointDTO(ChessPoint point) {
         return new ChessPointDTO(point.getRow(), point.getColumn());
+    }
+
+    ChessBoardDTO makeChessBoardDTO(ChessBoard chessBoard) {
+        List<RowOfChessBlocksDTO> rowOfChessBlocksDTOs = new ArrayList<>();
+        for (RowOfChessBlocks rowOfChessBlocks : chessBoard) {
+            List<ChessBlock> chessBlocks = rowOfChessBlocks.stream().collect(Collectors.toList());
+            rowOfChessBlocksDTOs.add(new RowOfChessBlocksDTO(chessBlocks));
+        }
+        return new ChessBoardDTO(rowOfChessBlocksDTOs);
     }
 }

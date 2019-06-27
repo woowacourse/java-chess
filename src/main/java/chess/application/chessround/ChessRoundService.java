@@ -1,8 +1,10 @@
 package chess.application.chessround;
 
+import chess.application.chessround.dto.ChessBoardDTO;
 import chess.application.chessround.dto.ChessPieceDTO;
 import chess.application.chessround.dto.ChessPlayerDTO;
 import chess.application.chessround.dto.ChessPointDTO;
+import chess.chessview.ChessBoard;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.ChessPieces;
 import chess.domain.chesspoint.ChessPoint;
@@ -91,20 +93,6 @@ public class ChessRoundService {
         chessTurnDAO.updatePlayerTurn(isWhiteTurn);
     }
 
-    public ChessPlayerDTO fetchWhitePlayer() {
-        ChessPlayer whitePlayer = chessRound.getWhitePlayer();
-
-        ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
-        return chessRoundAssembler.makeChessPlayerDTO(whitePlayer);
-    }
-
-    public ChessPlayerDTO fetchBlackPlayer() {
-        ChessPlayer blackPlayer = chessRound.getBlackPlayer();
-
-        ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
-        return chessRoundAssembler.makeChessPlayerDTO(blackPlayer);
-    }
-
     public void move(String sourceId, String targetId) {
         ChessPoint source = parseChessPoint(sourceId);
         ChessPoint target = parseChessPoint(targetId);
@@ -182,5 +170,37 @@ public class ChessRoundService {
 
     public boolean isGameFinished() {
         return chessRound.isGameFinished();
+    }
+
+    public ChessBoardDTO makeChessBoardDTO() {
+        ChessBoard chessBoard = createLastChessBoard();
+
+        ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
+        return chessRoundAssembler.makeChessBoardDTO(chessBoard);
+    }
+
+    private ChessBoard createLastChessBoard() {
+        ChessBoard chessBoard = ChessBoard.createEmpty();
+
+        ChessPlayerDTO whitePlayerDTO = fetchWhitePlayer();
+        chessBoard.fillWhiteChessPiecesOfPlayer(whitePlayerDTO);
+
+        ChessPlayerDTO blackPlayerDTO = fetchBlackPlayer();
+        chessBoard.fillBlackChessPiecesOfPlayer(blackPlayerDTO);
+        return chessBoard;
+    }
+
+    private ChessPlayerDTO fetchWhitePlayer() {
+        ChessPlayer whitePlayer = chessRound.getWhitePlayer();
+
+        ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
+        return chessRoundAssembler.makeChessPlayerDTO(whitePlayer);
+    }
+
+    private ChessPlayerDTO fetchBlackPlayer() {
+        ChessPlayer blackPlayer = chessRound.getBlackPlayer();
+
+        ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
+        return chessRoundAssembler.makeChessPlayerDTO(blackPlayer);
     }
 }

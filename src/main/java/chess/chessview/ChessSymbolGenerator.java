@@ -1,4 +1,4 @@
-package chess.controller.chessround;
+package chess.chessview;
 
 import java.util.HashMap;
 import java.util.Map;
