@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.Optional;
+
+import chess.domain.piece.Piece;
 import chess.exception.SamePositionException;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Rook;
@@ -79,5 +82,18 @@ public class ChessBoardTest {
 		chessBoard.addPiece(Pawn.valueOf(Player.BLACK, Position.getPosition(2, 7)));
 
 		assertThat(chessBoard.getXScore(Player.BLACK)).isEqualTo(new Score(2.5));
+	}
+
+	@Test
+	void 해당_위치의_말이_존재하는_경우() {
+		Piece actual = Pawn.valueOf(Player.BLACK, Position.getPosition(1, 1));
+		chessBoard.addPiece(actual);
+		Optional<Piece> expect = chessBoard.findPiece(Position.getPosition(1,1));
+		assertThat(actual).isEqualTo(expect.get());
+	}
+
+	@Test
+	void 해당_위치에_말이_존재하지_않는_경우() {
+		assertThat(chessBoard.findPiece(Position.getPosition(1,2))).isEqualTo(Optional.empty());
 	}
 }

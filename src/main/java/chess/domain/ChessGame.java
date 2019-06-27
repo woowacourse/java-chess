@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 import chess.exception.GameOverException;
 import chess.exception.UnmovableException;
@@ -21,23 +22,24 @@ public class ChessGame {
 	}
 
 	public void move(Position start, Position end) {
-		Piece startPiece = chessBoard.findPiece(start);
-
-		if(startPiece == null || !startPiece.isMine(currentPlayer)) {
+		Optional<Piece> startPiece = chessBoard.findPiece(start);
+		if(!startPiece.isPresent() || !startPiece.get().isMine(currentPlayer)) {
 			throw new UnmovableException();
 		}
 
-		Piece endPiece = chessBoard.findPiece(end);
-		Path path = getPath(end, startPiece, endPiece);
+		Optional<Piece> endPiece = chessBoard.findPiece(end);
 
+		Path path = getPath(end, startPiece, endPiece);
 		if (!chessBoard.isMovable(path)) {
 			throw new UnmovableException();
 		}
-		if (endPiece != null && !endPiece.isMine(currentPlayer)) {
-			chessBoard.remove(endPiece);
-			checkGameOver(endPiece);
+
+		if (endPiece.isPresent() && !endPiece.get().isMine(currentPlayer)) {
+			chessBoard.remove(endPiece.get());
+			checkGameOver(endPiece.get());
 		}
-		startPiece.changePosition(end);
+
+		startPiece.get().changePosition(end);
 		currentPlayer = currentPlayer.changePlayer();
 	}
 
@@ -47,41 +49,34 @@ public class ChessGame {
 		}
 	}
 
-	private Path getPath(Position end, Piece startPiece, Piece endPiece) {
-		if (endPiece == null) {
-			return startPiece.getMovablePath(end);
+	private Path getPath(Position end, Optional<Piece> startPiece, Optional<Piece> endPiece) {
+		if (!endPiece.isPresent()) {
+			return startPiece.get().getMovablePath(end);
 		}
-		if (!endPiece.isMine(currentPlayer)) {
-			return startPiece.getAttackablePath(end);
+		if (!endPiece.get().isMine(currentPlayer)) {
+			return startPiece.get().getAttackablePath(end);
 		}
 		throw new UnmovableException();
 	}
 
-	public Score getPlayerScore(Player player) {
-		return chessBoard.getXScore(player);
+	public double getPlayerScore(Player player) {
+		return chessBoard.getXScore(player).getScore();
 	}
 
 	public Result findWinner() {
-		Score blackScore = getPlayerScore(Player.BLACK);
-		Score whiteScore = getPlayerScore(Player.WHITE);
-		return compareResult(blackScore, whiteScore);
+		return compareResult(getPlayerScore(Player.BLACK), getPlayerScore(Player.WHITE));
 	}
 
-	private Result compareResult(Score blackScore, Score whiteScore) {
-		if (blackScore.equals(whiteScore) ) {
-			return Result.DRAW;
-		}
-		if (blackScore.isHigher(whiteScore)) {
-			return Result.BLACK_WIN;
-		}
-		return Result.WHITE_WIN;
+	private Result compareResult(double blackScore, double whiteScore) {
+		return (blackScore == whiteScore)? Result.DRAW :
+				(blackScore > whiteScore)? Result.BLACK_WIN : Result.WHITE_WIN;
 	}
 
 	public List<Piece> getPieces() {
 		return chessBoard.getPieces();
 	}
 
-	public Player getCurrentPlayer() {
-		return this.currentPlayer;
+	public String getCurrentPlayerName() {
+		return this.currentPlayer.name();
 	}
 }

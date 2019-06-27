@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import chess.exception.SamePositionException;
@@ -32,13 +33,11 @@ public class ChessBoard {
 				.anyMatch(piece -> piece.isSamePosition(newPiece));
 	}
 
-	public Piece findPiece(Position position) {
-		for (Piece piece : pieces) {
-			if (piece.isSamePosition(position)) {
-				return piece;
-			}
-		}
-		return null;
+	public Optional<Piece> findPiece(Position position) {
+		return pieces.stream()
+				.filter(piece -> piece.isSamePosition(position))
+				.findFirst()
+				;
 	}
 
 	public boolean isMovable(Path path) {
@@ -91,7 +90,7 @@ public class ChessBoard {
 				.filter(piece -> piece.isSameCoordinateX(x))
 				.count();
 
-		if(count == 1) {
+		if (count == 1) {
 			return new Score(PAWN_SCORE_WHEN_COUNT_IS_ONE_AT_X);
 		}
 		return new Score(count * PAWN_SCORE_WHEN_COUNT_IS_GREATER_THAN_ONE_AT_X);
