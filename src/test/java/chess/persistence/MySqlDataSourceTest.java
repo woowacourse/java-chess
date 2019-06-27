@@ -5,10 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class DataSourceFactoryTest {
-
+public class MySqlDataSourceTest {
     @Test
     void create() {
-        assertDoesNotThrow(() -> new DataSourceFactory().createDataSource());
+        assertDoesNotThrow(() -> new MySqlDataSource().getConnection());
     }
 }

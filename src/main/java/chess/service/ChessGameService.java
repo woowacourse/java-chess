@@ -4,7 +4,8 @@ import chess.domain.*;
 import chess.domain.coordinate.ChessCoordinate;
 import chess.domain.factory.ChessPieceFactory;
 import chess.domain.piece.ChessPiece;
-import chess.persistence.AbstractDataSourceFactory;
+import chess.persistence.AbstractDataSource;
+import chess.persistence.SQLiteDataSource;
 import chess.persistence.dao.BoardStateDao;
 import chess.persistence.dao.TurnDao;
 import chess.persistence.dto.BoardStateDto;
@@ -18,9 +19,15 @@ public class ChessGameService {
     private BoardStateDao boardStateDao;
     private TurnDao turnDao;
 
-    public ChessGameService(AbstractDataSourceFactory dataSourceFactory) {
-        boardStateDao = new BoardStateDao(dataSourceFactory.createDataSource());
-        turnDao = new TurnDao(dataSourceFactory.createDataSource());
+    public ChessGameService(AbstractDataSource dataSourceFactory) {
+        try {
+            dataSourceFactory.getConnection();
+            boardStateDao = new BoardStateDao(dataSourceFactory);
+            turnDao = new TurnDao(dataSourceFactory);
+        } catch (SQLException e) {
+            boardStateDao = new BoardStateDao(new SQLiteDataSource());
+            turnDao = new TurnDao(new SQLiteDataSource());
+        }
     }
 
     public List<Optional<Long>> createBoardState(Map<ChessCoordinate, PieceType> boardState, long roomId) {

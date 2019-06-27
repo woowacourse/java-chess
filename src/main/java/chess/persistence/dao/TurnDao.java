@@ -1,8 +1,8 @@
 package chess.persistence.dao;
 
+import chess.persistence.AbstractDataSource;
 import chess.persistence.dto.TurnDto;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
 
@@ -14,14 +14,14 @@ public class TurnDao {
         private static final String DELETE_BY_ID = "DELETE FROM turn WHERE room_id=?";
     }
 
-    private DataSource dataSource;
+    private AbstractDataSource dataSourceFactory;
 
-    public TurnDao(DataSource ds) {
-        this.dataSource = ds;
+    public TurnDao(AbstractDataSource sourceFactory) {
+        this.dataSourceFactory = sourceFactory;
     }
 
     public long addTurn(TurnDto turn) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(TurnDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             query.setLong(1, turn.getRoomId());
             query.setString(2, turn.getCurrent());
@@ -36,7 +36,7 @@ public class TurnDao {
     }
 
     public Optional<TurnDto> findById(long id) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(TurnDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
             try (ResultSet rs = query.executeQuery()) {
@@ -59,7 +59,7 @@ public class TurnDao {
     }
 
     public int updateTurnByRoomId(TurnDto turn) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(TurnDaoSql.UPDATE_BY_ID)) {
             query.setString(1, turn.getCurrent());
             query.setLong(2, turn.getRoomId());
@@ -70,7 +70,7 @@ public class TurnDao {
     }
 
     public int deleteByRoomId(long roomId) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(TurnDaoSql.DELETE_BY_ID)) {
             query.setLong(1, roomId);
             return query.executeUpdate();

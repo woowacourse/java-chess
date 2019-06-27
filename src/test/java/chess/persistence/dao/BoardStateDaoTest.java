@@ -3,7 +3,8 @@ package chess.persistence.dao;
 import chess.domain.coordinate.ChessXCoordinate;
 import chess.domain.coordinate.ChessYCoordinate;
 import chess.domain.PieceType;
-import chess.persistence.DataSourceFactory;
+import chess.persistence.AbstractDataSource;
+import chess.persistence.MySqlDataSource;
 import chess.persistence.dto.BoardStateDto;
 import chess.persistence.dto.RoomDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,7 @@ public class BoardStateDaoTest {
 
     @BeforeEach
     void init() {
-        DataSource ds = new DataSourceFactory().createDataSource();
+        AbstractDataSource ds = new MySqlDataSource();
         boardStateDao = new BoardStateDao(ds);
         roomDao = new RoomDao(ds);
     }

@@ -1,8 +1,8 @@
 package chess.persistence.dao;
 
+import chess.persistence.AbstractDataSource;
 import chess.persistence.dto.RoomDto;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +17,14 @@ public class RoomDao {
         private static final String DELETE_BY_ID = "DELETE FROM room WHERE id=?";
     }
 
-    private DataSource dataSource;
+    private AbstractDataSource dataSourceFactory;
 
-    public RoomDao(DataSource ds) {
-        this.dataSource = ds;
+    public RoomDao(AbstractDataSource dataSourceFactory) {
+        this.dataSourceFactory = dataSourceFactory;
     }
 
     public long addRoom(RoomDto room) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(RoomDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             query.setString(1, room.getTitle());
             query.executeUpdate();
@@ -38,7 +38,7 @@ public class RoomDao {
     }
 
     public Optional<RoomDto> findById(long id) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
             try (ResultSet rs = query.executeQuery()) {
@@ -54,7 +54,7 @@ public class RoomDao {
     }
 
     public Optional<RoomDto> findByTitle(String title) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_BY_TITLE)) {
             query.setString(1, title);
             try (ResultSet rs = query.executeQuery()) {
@@ -76,7 +76,7 @@ public class RoomDao {
     }
 
     public List<RoomDto> findLatestN(int topN) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_LATEST_N)) {
             query.setInt(1, topN);
             try (ResultSet rs = query.executeQuery()) {
@@ -92,7 +92,7 @@ public class RoomDao {
     }
 
     public int deleteById(long id) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(RoomDaoSql.DELETE_BY_ID)) {
             query.setLong(1, id);
             return query.executeUpdate();

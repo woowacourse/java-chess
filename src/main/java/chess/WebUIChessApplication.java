@@ -3,7 +3,8 @@ package chess;
 import chess.domain.*;
 import chess.domain.coordinate.ChessCoordinate;
 import chess.domain.factory.StateInitiatorFactory;
-import chess.persistence.DataSourceFactory;
+import chess.persistence.MySqlDataSource;
+import chess.persistence.SQLiteDataSource;
 import chess.persistence.dto.RoomDto;
 import chess.persistence.dto.TurnDto;
 import chess.service.ChessGameService;
@@ -23,8 +24,9 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().create();
-        ChessGameService chessService = new ChessGameService(new DataSourceFactory());
-        RoomService roomService = new RoomService(new DataSourceFactory());
+        ChessGameService chessService = new ChessGameService(new MySqlDataSource());
+        RoomService roomService = new RoomService(new MySqlDataSource());
+
         Spark.staticFiles.location("/templates");
 
         get("/", (req, res) -> {

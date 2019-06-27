@@ -16,4 +16,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     testCompile('org.junit.jupiter:junit-jupiter:5.4.2')
     testCompile('org.assertj:assertj-core:3.11.1')
+    implementation 'org.xerial:sqlite-jdbc:3.28.0'
 }

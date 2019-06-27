@@ -1,6 +1,6 @@
 package chess.persistence.dao;
 
-import chess.persistence.DataSourceFactory;
+import chess.persistence.MySqlDataSource;
 import chess.persistence.dto.RoomDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class RoomDaoTest {
 
     @BeforeEach
     void init() {
-        dao = new RoomDao(new DataSourceFactory().createDataSource());
+        dao = new RoomDao(new MySqlDataSource());
     }
 
     @Test

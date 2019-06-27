@@ -1,8 +1,8 @@
 package chess.persistence.dao;
 
+import chess.persistence.AbstractDataSource;
 import chess.persistence.dto.BoardStateDto;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +17,14 @@ public class BoardStateDao {
         private static final String DELETE_BY_ID = "DELETE FROM board_state WHERE id=?";
     }
 
-    private DataSource dataSource;
+    private AbstractDataSource dataSourceFactory;
 
-    public BoardStateDao(DataSource ds) {
-        this.dataSource = ds;
+    public BoardStateDao(AbstractDataSource dataSourceFactory) {
+        this.dataSourceFactory = dataSourceFactory;
     }
 
     public long addState(BoardStateDto state) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             query.setString(1, state.getType());
             query.setString(2, state.getCoordX());
@@ -42,7 +42,7 @@ public class BoardStateDao {
     }
 
     public Optional<BoardStateDto> findById(long id) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
             try (ResultSet rs = query.executeQuery()) {
@@ -58,7 +58,7 @@ public class BoardStateDao {
     }
 
     public List<BoardStateDto> findByRoomId(long roomId) {
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSourceFactory.getConnection();
              PreparedStatement query = connection.prepareStatement(BoardStateDaoSql.SELECT_BY_ROOM_ID)) {
             query.setLong(1, roomId);
             try (ResultSet rs = query.executeQuery()) {
@@ -84,7 +84,7 @@ public class BoardStateDao {
     }
 
     public int updateCoordById(BoardStateDto state) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.UPDATE_COORD_BY_ID)) {
             query.setString(1, state.getCoordX());
             query.setString(2, state.getCoordY());
@@ -96,7 +96,7 @@ public class BoardStateDao {
     }
 
     public int deleteById(long id) {
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = dataSourceFactory.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.DELETE_BY_ID)) {
             query.setLong(1, id);
             return query.executeUpdate();
