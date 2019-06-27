@@ -12,7 +12,7 @@ public class ChessBoard {
     private static final int INIT_WHITE_PIECE_POINT_Y = 1;
     private static final int INIT_BLACK_PIECE_POINT_Y = 8;
     private static final int INIT_WHITE_PAWN_POINT_Y = 2;
-    private static final int INIT_BLACK_PAWN_POINT_Y = 2;
+    private static final int INIT_BLACK_PAWN_POINT_Y = 7;
     private static final int START_BLANK_POINT_Y = 3;
     private static final int END_BLANK_POINT_Y = 6;
     private static final int START_BOARD_POINT_X = 1;
