@@ -1,15 +1,7 @@
 package chess;
 
-import chess.persistence.dto.ChessBoardDTO;
-import chess.persistence.dto.ChessGameDTO;
-import chess.persistence.dto.ChessMoveDTO;
-import chess.persistence.dto.ErrorDTO;
-import chess.service.BoardGeneratorService;
-import chess.service.ChessGameStatusService;
-import chess.service.GameGeneratorService;
-import chess.service.PieceMoveService;
+import chess.controller.ChessGameController;
 import chess.util.JsonTransformer;
-import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -28,29 +20,9 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        get("/chessGame", (req, res) -> {
-            try {
-                ChessGameDTO chessGameDTO = GameGeneratorService.getInstance().request();
-                ChessBoardDTO chessBoardDTO = BoardGeneratorService.getInstance().request(chessGameDTO);
-                return ChessGameStatusService.getInstance().request(chessGameDTO, chessBoardDTO);
-            } catch (IllegalArgumentException e) {
-                return new ErrorDTO(e.getMessage());
-            }
-        }, new JsonTransformer());
+        get("/chessGame", ChessGameController::currentChessBoard, new JsonTransformer());
 
-        post("/chessGame", "application/json", (req, res) -> {
-            Gson gson = new Gson();
-            try {
-                ChessMoveDTO chessMoveDTO = gson.fromJson(req.body(), ChessMoveDTO.class);
-                ChessGameDTO chessGameDTO = GameGeneratorService.getInstance().request();
-                ChessBoardDTO chessBoardDTO = BoardGeneratorService.getInstance().request(chessGameDTO);
-                ChessBoardDTO newChessBoardDTO = PieceMoveService.getInstance().request(chessMoveDTO, chessGameDTO, chessBoardDTO);
-                return ChessGameStatusService.getInstance().request(chessGameDTO, newChessBoardDTO);
-            } catch (IllegalArgumentException e) {
-                return new ErrorDTO(e.getMessage());
-            }
-        }, new JsonTransformer());
-
+        post("/chessGame", "application/json", ChessGameController::changeChessBoard, new JsonTransformer());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
