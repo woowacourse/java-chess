@@ -111,6 +111,7 @@ public class ChessRoundService {
 
         try {
             chessRound.move(source, target);
+            chessRound.switchPlayerTurn();
             cleanErrorMessage();
 
             saveCurrentMove(source, target);

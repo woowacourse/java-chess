@@ -113,4 +113,19 @@ class ChessRoundTest {
 
         assertThrows(InvalidChessPositionException.class, () -> round.move(source, target));
     }
+
+    @Test
+    void switchPlayerTurn() {
+        Map<ChessPoint, ChessPiece> chessPieces = ChessPairsBuilder.build(Collections.emptyList());
+        ChessPlayer currentPlayer = ChessPlayer.from(chessPieces);
+
+        Map<ChessPoint, ChessPiece> opponentChessPieces = ChessPairsBuilder.build(Collections.emptyList());
+        ChessPlayer opponentPlayer = ChessPlayer.from(opponentChessPieces);
+
+        ChessRound round = ChessRound.of(currentPlayer, opponentPlayer);
+
+        round.switchPlayerTurn();
+
+        assertThat(round.isWhiteTurn()).isFalse();
+    }
 }

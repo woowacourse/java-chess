@@ -32,14 +32,21 @@ public class ChessRound {
         ChessPlayer opponentPlayer = getOpponentPlayer();
         currentPlayer.move(source, target, opponentPlayer);
 
+        checkOpponentPieceOn(target, opponentPlayer);
+    }
+
+    private void checkOpponentPieceOn(ChessPoint target, ChessPlayer opponentPlayer) {
         if (isOpponentPieceOn(target, opponentPlayer)) {
             opponentPlayer.delete(target);
         }
-        currentPlayer = getOpponentPlayer();
     }
 
     private boolean isOpponentPieceOn(ChessPoint target, ChessPlayer opponentPlayer) {
         return opponentPlayer.contains(target);
+    }
+
+    public void switchPlayerTurn() {
+        currentPlayer = getOpponentPlayer();
     }
 
     private ChessPlayer getOpponentPlayer() {
