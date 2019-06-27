@@ -11,6 +11,7 @@ import service.LogVO;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static model.piece.PieceColor.BLACK;
 import static model.piece.PieceColor.WHITE;
@@ -94,7 +95,25 @@ public class Game {
         return true;
     }
 
-    public String getCurrentScore(PieceColor white) {
-        return "기능 추가중";
+    public double getCurrentScore(PieceColor pieceColor) {
+        return this.board.getPieces().stream()
+                .filter(p -> !p.isPawn())
+                .filter(p -> p.getPieceColor() == pieceColor)
+                .mapToDouble(Piece::getScore)
+                .sum()
+                + getPawnScore(pieceColor);
+    }
+
+    private double getPawnScore(PieceColor pieceColor) {
+                return this.board.getPieces().stream()
+                        .filter(p -> p.isPawn())
+                        .filter(p -> p.getPieceColor() == pieceColor)
+                        .map(p -> (Pawn) p)
+                        .collect(Collectors.groupingBy(Piece::x))
+                        .values().stream()
+                        .flatMap(l ->
+                                (l.size() == 1) ? l.stream().map(Pawn::getScore) : l.stream().map(Pawn::getHalfScore)
+                        ).reduce(Double::sum)
+                        .orElse(.0);
     }
 }

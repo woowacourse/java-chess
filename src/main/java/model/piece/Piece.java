@@ -1,5 +1,6 @@
 package model.piece;
 
+import model.Coordinate;
 import model.Position;
 import model.board.BoardView;
 
@@ -24,6 +25,12 @@ public abstract class Piece extends Observable {
         return position;
     }
 
+    public Coordinate x() {
+        return position.getX();
+    }
+
+    public abstract double getScore();
+
     public void moveTo(Position position) {
         // TODO: 2019-06-23 validationCheck
         Position lastPosition = this.position;
@@ -41,5 +48,9 @@ public abstract class Piece extends Observable {
 
     public boolean isEnemyOf(PieceColor other) {
         return other != PieceColor.EMPTY && pieceColor != other;
+    }
+
+    public boolean isPawn() {
+        return false;
     }
 }

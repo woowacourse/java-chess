@@ -12,8 +12,15 @@ import java.util.List;
 import static model.piece.PieceColor.BLACK;
 
 public class Bishop extends Piece {
+    private static final double SCORE = 3.0;
+
     public Bishop(PieceColor pieceColor, Position position) {
         super(pieceColor, position);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

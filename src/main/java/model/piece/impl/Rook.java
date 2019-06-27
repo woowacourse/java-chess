@@ -12,8 +12,15 @@ import java.util.List;
 import static model.piece.PieceColor.BLACK;
 
 public class Rook extends Piece {
+    private static final double SCORE = 5.0;
+
     public Rook(PieceColor pieceColor, Position position) {
         super(pieceColor, position);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

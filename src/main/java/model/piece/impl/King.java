@@ -12,8 +12,15 @@ import java.util.stream.Collectors;
 import static model.piece.PieceColor.BLACK;
 
 public class King extends Piece {
+    private static final double SCORE = 0;
+
     public King(PieceColor pieceColor, Position position) {
         super(pieceColor, position);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

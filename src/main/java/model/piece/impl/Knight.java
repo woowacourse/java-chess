@@ -14,8 +14,15 @@ import static model.Direction.*;
 import static model.piece.PieceColor.BLACK;
 
 public class Knight extends Piece {
+    private static final double SCORE = 2.5;
+
     public Knight(PieceColor pieceColor, Position position) {
         super(pieceColor, position);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

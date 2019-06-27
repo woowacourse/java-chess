@@ -9,12 +9,18 @@ import java.util.Collections;
 import java.util.List;
 
 public class Empty extends Piece {
+    private static final double SCORE = 0;
     public Empty(Position position) {
         super(PieceColor.EMPTY, position);
     }
 
     public Empty(PieceColor pieceColor, Position position) {
         super(PieceColor.EMPTY, position);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

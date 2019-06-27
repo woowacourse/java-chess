@@ -12,10 +12,22 @@ import java.util.List;
 import static model.piece.PieceColor.BLACK;
 
 public class Pawn extends Piece {
+    private static final double SCORE = 1.0;
+    private static final double HALF = 0.5;
+
     private boolean hasMoved;
 
     public Pawn(PieceColor pieceColor, Position position) {
         super(pieceColor, position);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
+    }
+
+    public double getHalfScore() {
+        return SCORE * HALF;
     }
 
     @Override
@@ -47,6 +59,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     protected boolean isMovableTo(Position position, BoardView boardView) {
         return position.isValid() && boardView.getPieceColorAt(position) == PieceColor.EMPTY;
     }
@@ -59,4 +76,5 @@ public class Pawn extends Piece {
     public String toString() {
         return (pieceColor == BLACK) ? "♟" : "♙";
     }
+
 }

@@ -29,6 +29,10 @@ public class Position {
         return x.isValid() && y.isValid();
     }
 
+    public Coordinate getX() {
+        return x;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
