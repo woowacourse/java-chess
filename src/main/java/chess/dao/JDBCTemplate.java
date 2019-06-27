@@ -6,9 +6,6 @@ import java.util.*;
 public class JDBCTemplate {
     private static JDBCTemplate jdbcTemplate;
 
-    private JDBCTemplate() {
-    }
-
     public static JDBCTemplate getInstance() {
         if (Objects.isNull(jdbcTemplate)) {
             jdbcTemplate = new JDBCTemplate();
