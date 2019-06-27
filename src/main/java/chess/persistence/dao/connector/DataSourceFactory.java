@@ -11,12 +11,10 @@ import java.util.Properties;
 
 public class DataSourceFactory implements AbstractDataSourceFactory {
     private static final String URL_FORMAT = "jdbc:mysql://%s:%s/%s?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
-
-    private static DataSourceFactory instance;
     private static MysqlDataSource ds;
 
     public static DataSourceFactory getInstance() {
-        return instance == null ? instance = new DataSourceFactory() : instance;
+        return DataSourceFactoryHandler.INSTANCE;
     }
 
     @Override
@@ -53,6 +51,10 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
         Properties properties = new Properties();
         properties.load(inputStream);
         return properties;
+    }
+
+    private static class DataSourceFactoryHandler {
+        static final DataSourceFactory INSTANCE = new DataSourceFactory();
     }
 
 }
