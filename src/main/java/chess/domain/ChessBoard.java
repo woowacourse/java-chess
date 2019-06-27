@@ -32,8 +32,8 @@ public class ChessBoard {
 
         sourcePiece.canMove(source, target);
         board = board.move(source, target, sourcePiece);
-        resultCounter.addCount(targetPiece);
-        turn.turnChanged();
+        resultCounter = resultCounter.addCount(targetPiece);
+        turn = turn.turnChanged();
         return gameEnd(targetPiece);
     }
 
@@ -91,7 +91,7 @@ public class ChessBoard {
         if (turn.getTeam() == Team.BLACK) {
             return new Turn(Team.WHITE);
         }
-        return new Turn(Team.WHITE);
+        return new Turn(Team.BLACK);
     }
 
     public Board getBoard() {

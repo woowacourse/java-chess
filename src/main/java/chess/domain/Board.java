@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.*;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,7 +9,16 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static chess.domain.Team.*;
+import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+
+import static chess.domain.Team.BLACK;
+import static chess.domain.Team.WHITE;
 
 public class Board {
     private final Map<Position, AbstractPiece> board;

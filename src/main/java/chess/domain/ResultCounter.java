@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.transform.Result;
+
 public class ResultCounter {
     private final Map<AbstractPiece, Count> resultCounter;
 
@@ -40,11 +42,12 @@ public class ResultCounter {
         return resultCounter.get(abstractPiece);
     }
 
-    public void addCount(final AbstractPiece abstractPiece) {
+    public ResultCounter addCount(final AbstractPiece abstractPiece) {
+        ResultCounter resultCounter = new ResultCounter(this.resultCounter);
         if (abstractPiece != null) {
             resultCounter.get(abstractPiece).add();
         }
-
+        return resultCounter;
     }
 
     public double totalScore(final Team team) {
@@ -56,7 +59,6 @@ public class ResultCounter {
     public Set<AbstractPiece> keySet() {
         return resultCounter.keySet();
     }
-
 
     public Count get(AbstractPiece key) {
         return resultCounter.get(key);
