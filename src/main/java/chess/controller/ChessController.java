@@ -30,25 +30,25 @@ public class ChessController implements Controller {
         post("/newRound", this::postNextChessRound);
     }
 
-    private String getMain(Request req, Response res) {
+    private String getMain(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
         int roundId = ChessService.getInstance().getLastRoundId();
-        req.session().attribute("roundId", roundId);
+        request.session().attribute("roundId", roundId);
         return render(model, "index.html");
     }
 
-    private String getChessBoard(Request req, Response res) {
+    private String getChessBoard(Request request, Response response) {
         Gson gson = new Gson();
-        int roundId = req.session().attribute("roundId");
+        int roundId = request.session().attribute("roundId");
 
         return gson.toJson(ChessService.getInstance().getChessBoardDTO(roundId));
     }
 
-    private String postChessBoard(Request req, Response res) {
+    private String postChessBoard(Request request, Response response) {
         Gson gson = new Gson();
-        ChessPositionDto chessPositionDto = gson.fromJson(req.body(), ChessPositionDto.class);
+        ChessPositionDto chessPositionDto = gson.fromJson(request.body(), ChessPositionDto.class);
 
-        int roundId = req.session().attribute("roundId");
+        int roundId = request.session().attribute("roundId");
 
         try {
             ChessBoardDto chessBoardDTO = ChessService.getInstance().getChessBoard(chessPositionDto, roundId);
@@ -58,22 +58,22 @@ public class ChessController implements Controller {
         }
     }
 
-    private String getChessScore(Request req, Response res) {
+    private String getChessScore(Request request, Response response) {
         Gson gson = new Gson();
 
-        int roundId = req.session().attribute("roundId");
+        int roundId = request.session().attribute("roundId");
 
         return gson.toJson(ChessService.getInstance().getChessScore(roundId));
     }
 
-    private String postNextChessRound(Request req, Response res) {
+    private String postNextChessRound(Request request, Response response) {
         Gson gson = new Gson();
-        int roundId = req.session().attribute("roundId");
+        int roundId = request.session().attribute("roundId");
 
         roundId++;
 
         ChessService.getInstance().addRound(roundId);
-        req.session().attribute("roundId", roundId);
+        request.session().attribute("roundId", roundId);
 
         return gson.toJson(ChessService.getInstance().getChessBoardDTO(roundId));
     }
