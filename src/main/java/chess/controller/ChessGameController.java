@@ -12,11 +12,11 @@ import chess.domain.Team;
 import chess.dto.BoardDto;
 import chess.dto.ChessBoardDto;
 import chess.dto.ResultCounterDto;
-import chess.web.TemplateEngine;
 import chess.dto.TurnDto;
 import chess.utils.DataProcessor;
 import chess.utils.PositionParser;
 import chess.web.Model;
+import chess.web.TemplateEngine;
 import spark.Request;
 import spark.Response;
 
@@ -25,12 +25,17 @@ public class ChessGameController {
         return TemplateEngine.render(Model.empty(), "index.html");
     }
 
-    public static String playGet(Request req, Response res) throws SQLException{
-        deleteHandler();
-        ChessBoard chessBoard = new ChessBoard();
-        ChessBoardDto chessBoardDto = dataLoadedChessBoardDto(chessBoard);
-        addHandler(chessBoardDto);
-        return TemplateEngine.render(Model.turn(chessBoard), "game_play.html");
+    public static String playGet(Request req, Response res) {
+        try {
+            deleteHandler();
+            ChessBoard chessBoard = new ChessBoard();
+            ChessBoardDto chessBoardDto = dataLoadedChessBoardDto(chessBoard);
+            addHandler(chessBoardDto);
+            return TemplateEngine.render(Model.turn(chessBoard), "game_play.html");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ExceptionController.exception(e, req, res);
+        }
     }
 
     private static void deleteHandler() throws SQLException {
@@ -71,24 +76,34 @@ public class ChessGameController {
         ResultCounterDao.add(chessBoardDto.getResultCounterDto());
     }
 
-    public static String continueGame(Request req, Response res) throws SQLException {
-        return TemplateEngine.render(Model.turn(), "game_play.html");
+    public static String continueGame(Request req, Response res) {
+        try {
+            return TemplateEngine.render(Model.turn(), "game_play.html");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ExceptionController.exception(e, req, res);
+        }
     }
 
-    public static String playPost(Request req, Response res) throws SQLException {
-        Position source = PositionParser.parse(req.queryParams("source"));
-        Position target = PositionParser.parse(req.queryParams("target"));
+    public static String playPost(Request req, Response res) {
+        try {
+            Position source = PositionParser.parse(req.queryParams("source"));
+            Position target = PositionParser.parse(req.queryParams("target"));
 
-        ChessBoard chessBoard = dtoChessBoard();
-        boolean isKingDead = chessBoard.move(source, target);
+            ChessBoard chessBoard = dtoChessBoard();
+            boolean isKingDead = chessBoard.move(source, target);
 
-        ChessBoardDto chessBoardDto = dataLoadedChessBoardDto(chessBoard);
-        moveHandler(chessBoardDto);
+            ChessBoardDto chessBoardDto = dataLoadedChessBoardDto(chessBoard);
+            moveHandler(chessBoardDto);
 
-        if (isKingDead) {
-            return TemplateEngine.render(Model.result(chessBoard), "result.html");
+            if (isKingDead) {
+                return TemplateEngine.render(Model.result(chessBoard), "result.html");
+            }
+            return TemplateEngine.render(Model.turn(chessBoard), "game_play.html");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ExceptionController.exception(e, req, res);
         }
-        return TemplateEngine.render(Model.turn(chessBoard), "game_play.html");
     }
 
     private static ChessBoard dtoChessBoard() throws SQLException {
@@ -104,21 +119,31 @@ public class ChessGameController {
         ResultCounterDao.afterMove(chessBoardDto.getResultCounterDto());
     }
 
-    public static String result(Request req, Response res) throws SQLException {
-        ChessBoard chessBoard = dtoChessBoard();
+    public static String result(Request req, Response res) {
+        try {
+            ChessBoard chessBoard = dtoChessBoard();
 
-        Double whiteScore = chessBoard.totalScore(Team.WHITE);
-        Double blackScore = chessBoard.totalScore(Team.BLACK);
+            Double whiteScore = chessBoard.totalScore(Team.WHITE);
+            Double blackScore = chessBoard.totalScore(Team.BLACK);
 
-        return TemplateEngine.render(Model.result(whiteScore, blackScore), "result.html");
+            return TemplateEngine.render(Model.result(whiteScore, blackScore), "result.html");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ExceptionController.exception(e, req, res);
+        }
     }
 
     public static Map<String, String> status(Request req, Response res) throws SQLException {
         return DataProcessor.board(dtoChessBoard().getBoard());
     }
 
-    public static String end(Request req, Response res) throws SQLException {
-        deleteHandler();
-        return TemplateEngine.render(Model.empty(), "end.html");
+    public static String end(Request req, Response res) {
+        try {
+            deleteHandler();
+            return TemplateEngine.render(Model.empty(), "end.html");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ExceptionController.exception(e, req, res);
+        }
     }
 }
