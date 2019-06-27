@@ -5,7 +5,7 @@ import chess.domain.Point;
 import chess.domain.Team;
 import chess.domain.pieces.Rook;
 import chess.dto.PieceDto;
-import chess.utils.DBUtil;
+import chess.utils.DbUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PieceDaoTest {
-    private DataSource dataSource = DBUtil.getDataSource("chess_test");
+    private DataSource dataSource = DbUtil.getDataSource("chess_test");
     private PieceDao pieceDao;
 
     @BeforeEach

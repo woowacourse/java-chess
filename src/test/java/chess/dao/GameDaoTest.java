@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.utils.DBUtil;
+import chess.utils.DbUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameDaoTest {
-    private DataSource dataSource = DBUtil.getDataSource("chess_test");
+    private DataSource dataSource = DbUtil.getDataSource("chess_test");
     private GameDao gameDao;
 
     @BeforeEach

@@ -7,10 +7,10 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class DBUtilTest {
+public class DbUtilTest {
     @Test
     void connection() throws SQLException {
-        DataSource dataSource = DBUtil.getDataSource("chess");
+        DataSource dataSource = DbUtil.getDataSource("chess");
         assertNotNull(dataSource.getConnection());
     }
 }

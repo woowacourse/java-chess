@@ -5,7 +5,7 @@ import chess.dao.PieceDao;
 import chess.domain.*;
 import chess.domain.pieces.Piece;
 import chess.dto.PieceDto;
-import chess.utils.DBUtil;
+import chess.utils.DbUtil;
 import com.google.gson.Gson;
 import org.javatuples.Pair;
 
@@ -17,7 +17,7 @@ import java.util.Map;
 public class ChessGameService {
     private static final String DATABASE_NAME = "chess";
 
-    private DataSource dataSource = DBUtil.getDataSource(DATABASE_NAME);
+    private DataSource dataSource = DbUtil.getDataSource(DATABASE_NAME);
     private PieceDao pieceDao = PieceDao.getInstance(dataSource);
     private GameDao gameDao = GameDao.getInstance(dataSource);
 

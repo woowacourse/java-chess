@@ -4,12 +4,12 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.sql.DataSource;
 
-public class DBUtil {
+public class DbUtil {
     private static final String server = "localhost";
     private static final String userName = "chess";
     private static final String password = "1234";
     private static final String portNumber = ":3306";
-//sing
+
     public static DataSource getDataSource(final String database) {
         MysqlDataSource ds = new MysqlDataSource();
         ds.setUser(userName);

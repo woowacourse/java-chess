@@ -1,6 +1,11 @@
 package chess;
 
 import chess.controller.ChessGameController;
+import chess.controller.ErrorController;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -10,17 +15,22 @@ public class WebUIChessApplication {
         port(8080);
 
         ChessGameController chessGameController = new ChessGameController();
+        ErrorController errorController = new ErrorController();
 
-        get("/", chessGameController::main);
+        get("/", chessGameController::showIndex);
 
-        get("/home", chessGameController::start);
+        get("/game", chessGameController::game);
 
         get("/continue/:gameId", chessGameController::continueGame);
 
         get("/move", chessGameController::move);
 
-        get("/error", chessGameController::printMessage);
+        get("/error", errorController::print);
 
-        exception(Exception.class, chessGameController::catchException);
+        exception(Exception.class, errorController::catchException);
+    }
+
+    public static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
