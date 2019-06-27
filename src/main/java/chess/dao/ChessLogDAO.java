@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.ChessGameException;
+import chess.dto.ChessLogDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,14 +22,14 @@ public class ChessLogDAO {
         return chessLogDAO;
     }
 
-    public List<List<String>> findGameLogById(String gameId) {
-        SelectJdbcTemplate<List<List<String>>> selectJdbcTemplate = new SelectJdbcTemplate<List<List<String>>>() {
+    public List<ChessLogDTO> findGameLogById(String gameId) {
+        SelectJdbcTemplate<List<ChessLogDTO>> selectJdbcTemplate = new SelectJdbcTemplate<List<ChessLogDTO>>() {
             @Override
-            public List<List<String>> getResult(ResultSet resultSet) throws SQLException {
-                List<List<String>> gameLog = new ArrayList<>(new ArrayList<>());
+            public List<ChessLogDTO> getResult(ResultSet resultSet) throws SQLException {
+                List<ChessLogDTO> gameLog = new ArrayList<>();
 
                 while (resultSet.next()) {
-                    gameLog.add(Arrays.asList(resultSet.getString(1), resultSet.getString(2)));
+                    gameLog.add(new ChessLogDTO(resultSet.getString(1), resultSet.getString(2)));
                 }
 
                 return gameLog;

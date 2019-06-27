@@ -2,7 +2,6 @@
 체스 게임 구현을 위한 저장소
 
 ##To-do
- - List<List<String>> 처리
 
 ##Done
  - isAlly 캐스팅 미필요 처리
@@ -15,6 +14,4 @@
  - Connection 닫기(try-with-resources)
  - DataBaseConnector sout 처리
  - 커넥션 실패에 대한 별도 예외 처리
-
-
-
+ - List<List<String>> 처리

@@ -4,6 +4,7 @@ import chess.dao.ChessGameDAO;
 import chess.dao.ChessLogDAO;
 import chess.domain.ChessGame;
 import chess.domain.ChessResult;
+import chess.dto.ChessLogDTO;
 import spark.Request;
 
 import java.util.HashMap;
@@ -19,10 +20,10 @@ public class ChessGameService {
 
     public static Map<String, String> findGameByGameId(Request request) {
         String gameId = request.splat()[0];
-        List<List<String>> chessLogs = CHESS_LOG_DAO.findGameLogById(gameId);
+        List<ChessLogDTO> chessLogs = CHESS_LOG_DAO.findGameLogById(gameId);
         ChessGame chessGame = new ChessGame();
-        for (List<String> chessLog : chessLogs) {
-            chessGame.play(chessLog.get(0), chessLog.get(1));
+        for (ChessLogDTO chessLog : chessLogs) {
+            chessGame.play(chessLog.getFrom(), chessLog.getTo());
         }
         request.session().attribute(gameId + SESSION_ID, chessGame);
         return status(chessGame);
