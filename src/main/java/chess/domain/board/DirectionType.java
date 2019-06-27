@@ -33,8 +33,20 @@ public enum DirectionType {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static List<DirectionType> linearDirection() {
+    public static List<DirectionType> straightDirection() {
         return Arrays.asList(NORTH, EAST, SOUTH, WEST);
+    }
+
+    public static List<DirectionType> diagonalDirection() {
+        return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+    }
+
+    public static boolean isStraightDirection(DirectionType directionType) {
+        return straightDirection().contains(directionType);
+    }
+
+    public static boolean isDiagonalDirection(DirectionType directionType) {
+        return diagonalDirection().contains(directionType);
     }
 
     public int getxDegree() {

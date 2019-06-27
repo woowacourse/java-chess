@@ -4,11 +4,13 @@ import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
 public class Pawn extends Piece {
+    private final int BLACK_START_POINT = 6;
+    private final int WHITE_START_POINT = 1;
     private int startPoint;
 
     public Pawn(PlayerType playerType) {
         super(playerType);
-        this.startPoint = (playerType == PlayerType.WHITE) ? 6 : 1;
+        this.startPoint = (playerType == PlayerType.WHITE) ? BLACK_START_POINT : WHITE_START_POINT;
     }
 
     @Override
@@ -20,10 +22,7 @@ public class Pawn extends Piece {
         if (next.yDistance(prev) * directionCorrection > 1 && prev.getY() != startPoint) {
             return false;
         }
-        if (next.yDistance(prev) * directionCorrection < 1) {
-            return false;
-        }
-        return true;
+        return next.yDistance(prev) * directionCorrection >= 1;
     }
 
     @Override

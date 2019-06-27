@@ -12,18 +12,17 @@ public class Knight extends Piece {
     @Override
     public boolean isMovable(Point prev, Point next) {
         double gradient = Math.abs(prev.calculateGradient(next));
-        if (gradient == 0) {
-            return false;
-        }
-        if (gradient == Double.MAX_VALUE) {
-            return false;
-        }
-        int distanceSum = Math.abs(next.xDistance(prev)) + Math.abs(next.yDistance(prev));
-        if (distanceSum == 3) {
-            return true;
-        }
-        return false;
+        return isNotStraight(gradient) && isThreeStep(Math.abs(next.xDistance(prev)) + Math.abs(next.yDistance(prev)));
     }
+
+    private boolean isNotStraight(double gradient) {
+        return gradient != 0 && gradient != Double.MAX_VALUE;
+    }
+
+    private boolean isThreeStep(int distanceSum) {
+        return distanceSum == 3;
+    }
+
 
     @Override
     public String pieceToString() {

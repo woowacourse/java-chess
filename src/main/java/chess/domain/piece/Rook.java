@@ -12,17 +12,13 @@ public class Rook extends Piece {
 
     @Override
     public boolean isMovable(Point prev, Point next) {
-        double gradient = Math.abs(prev.calculateGradient(next));
-        if (gradient == 0) {
-            return true;
+        DirectionType directionType;
+        try {
+            directionType = DirectionType.valueOf(prev, next);
+        } catch (IllegalArgumentException e) {
+            return false;
         }
-        if (gradient == Double.MAX_VALUE) {
-            return true;
-        }
-        return false;
-        // TODO: 2019-06-26 Use Direction~!
-//        DirectionType directionType = DirectionType.valueOf(prev, next);
-//        return DirectionType.linearDirection().contains(directionType);
+        return DirectionType.isStraightDirection(directionType);
     }
 
     @Override
