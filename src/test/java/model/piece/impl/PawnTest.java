@@ -1,11 +1,13 @@
-package model.piece;
+package model.piece.impl;
 
 import model.Direction;
 import model.Position;
 import model.board.Board;
 import model.board.BoardBuilder;
 import model.board.BoardView;
-import model.piece.impl.Pawn;
+import model.piece.Piece;
+import model.piece.PieceColor;
+import model.piece.PieceFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
