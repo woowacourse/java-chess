@@ -50,14 +50,12 @@ public class ChessGame {
     }
 
     public ChessDTO toDTO() {
-        ChessDTO chessDTO = new ChessDTO();
         List<String> ranks = new ArrayList<>();
         for (int row = MIN_BOARD_COORDINATE; row <= MAX_BOARD_COORDINATE; row++) {
             makeRank(ranks, row);
         }
-        chessDTO.setRanks(ranks);
-        chessDTO.setTurn(turn.toString());
-        return chessDTO;
+
+        return new ChessDTO(ranks, turn.toString());
     }
 
     private void makeRank(List<String> ranks, int row) {
