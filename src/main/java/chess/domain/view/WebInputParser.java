@@ -1,7 +1,7 @@
 package chess.domain.view;
 
 import chess.domain.position.Position;
-import chess.domain.position.PositionManager;
+import chess.domain.position.Positions;
 
 public class WebInputParser {
 
@@ -10,7 +10,7 @@ public class WebInputParser {
     private static final char CHAR_TO_INTEGER_UNIT = '0';
 
     public static Position getSourcePosition(String sourceInput) {
-        return PositionManager.getMatchPosition(getCoordinate(sourceInput, X), getCoordinate(sourceInput, Y));
+        return Positions.matchWith(getCoordinate(sourceInput, X), getCoordinate(sourceInput, Y));
     }
 
     private static int getCoordinate(String sourceInput, int coordinate) {
@@ -18,6 +18,6 @@ public class WebInputParser {
     }
 
     public static Position getTargetPosition(String targetInput) {
-        return PositionManager.getMatchPosition(getCoordinate(targetInput, X), getCoordinate(targetInput, Y));
+        return Positions.matchWith(getCoordinate(targetInput, X), getCoordinate(targetInput, Y));
     }
 }

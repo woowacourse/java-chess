@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnector {
     public static Connection getConnection() {
-        Connection conn = null;
+        Connection conn;
         String server = "localhost"; // MySQL 서버 주소
         String database = "ike_TechCourseDB"; // MySQL DATABASE 이름
         String userName = "ike"; //  MySQL 서버 아이디
@@ -17,7 +17,7 @@ public class DBConnector {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         // 드라이버 연결
@@ -26,7 +26,7 @@ public class DBConnector {
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         return conn;

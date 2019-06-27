@@ -1,10 +1,9 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardCreator;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.PositionManager;
+import chess.domain.position.Positions;
 import chess.dto.ChessDTO;
 
 import java.util.ArrayList;
@@ -53,17 +52,21 @@ public class ChessGame {
     public ChessDTO toDTO() {
         ChessDTO chessDTO = new ChessDTO();
         List<String> ranks = new ArrayList<>();
-        for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
-            StringBuilder rank = new StringBuilder();
-            for (int j = MIN_BOARD_COORDINATE; j <= MAX_BOARD_COORDINATE; j++) {
-                Piece piece = board.findPiece(PositionManager.getMatchPosition(j, i));
-                rank.append((piece.getTeam() == Team.BLACK) ? piece.getSymbol().toUpperCase() : piece.getSymbol());
-            }
-            ranks.add(rank.toString());
+        for (int row = MIN_BOARD_COORDINATE; row <= MAX_BOARD_COORDINATE; row++) {
+            makeRank(ranks, row);
         }
         chessDTO.setRanks(ranks);
         chessDTO.setTurn(turn.toString());
         return chessDTO;
+    }
+
+    private void makeRank(List<String> ranks, int row) {
+        StringBuilder rank = new StringBuilder();
+        for (int col = MIN_BOARD_COORDINATE; col <= MAX_BOARD_COORDINATE; col++) {
+            Piece piece = board.findPiece(Positions.matchWith(col, row));
+            rank.append((piece.isOurPiece(Team.BLACK)) ? piece.getSymbol().toUpperCase() : piece.getSymbol());
+        }
+        ranks.add(rank.toString());
     }
 
     @Override

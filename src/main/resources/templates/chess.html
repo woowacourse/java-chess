@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>CHESS GAME!</title>
-	<meta charset="UTF-8">
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <title>CHESS GAME!</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-	<link rel="stylesheet" href="style/style.css">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="style/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
 
 <div id="container">
-	<div id="turn">
-		<h2>지금은 {{turn}} 차례!</h2>
-		<h3>BLACK {{blackscore}}점<br>
-			WHITE {{whitescore}}점</h3>
-	</div>
+    <div id="turn">
+        <h2>지금은 {{turn}} 차례!</h2>
+        <h3>BLACK {{blackscore}}점<br>
+            WHITE {{whitescore}}점</h3>
+    </div>
 
-	<div id="board">
-		{{{board}}}
-	</div>
+    <div id="board">
+        {{{board}}}
+    </div>
 
-	<div id="forms">
-	<form action="/chess" method="POST">
-		<input type="text" name="source" placeholder="옮길 말 선택!"><br>
-		<input type="text" name="target" placeholder="옮겨질 위치 선택!"><br>
-		<input type="submit" value="play!">
-	</form>
-	</div>
+    <div id="forms">
+        <form action="/chess" method="POST">
+            <input type="text" name="source" placeholder="옮길 말 선택!"><br>
+            <input type="text" name="target" placeholder="옮겨질 위치 선택!"><br>
+            <input type="submit" value="play!">
+        </form>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -46,6 +46,7 @@
 			}
 		});
 	});
+
 </script>
 
 </body>
