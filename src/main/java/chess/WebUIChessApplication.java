@@ -7,8 +7,6 @@ import chess.model.board.Square;
 import chess.view.JsonInput;
 import chess.view.JsonOutput;
 
-import java.sql.SQLException;
-
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
@@ -16,6 +14,8 @@ public class WebUIChessApplication {
     private static final String STATIC_FILE_LOCATION = "/";
     private static final String CONTENT_JSON = "application/json";
     private static final String EMPTY_JSON = "{}";
+    private static WebUIChessApplication app;
+    private static BoardDAO boardDAO;
 
     private Play play;
 
@@ -24,12 +24,13 @@ public class WebUIChessApplication {
         staticFileLocation(STATIC_FILE_LOCATION);
         init();
 
-        WebUIChessApplication app = new WebUIChessApplication();
-        BoardDAO boardDAO = new BoardDAO("localhost", "chess", "user", "1234");
+        app = new WebUIChessApplication();
+        final DBconnection dbConnection = new DBconnection("localhost", "chess", "user", "1234");
 
         try {
+            boardDAO = new BoardDAO(dbConnection.getConnection());
             app.play = new Play(Board.of(boardDAO.initBoardPositions()));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
 
