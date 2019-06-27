@@ -4,6 +4,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ChessGame {
+    public static String BLACK_KING_SYMBOL = "K";
+    public static String BLACK_QUEEN_SYMBOL = "Q";
+    public static String BLACK_BISHOP_SYMBOL = "B";
+    public static String BLACK_ROOK_SYMBOL = "R";
+    public static String BLACK_KNIGHT_SYMBOL = "N";
+    public static String BLACK_PAWN_SYMBOL = "P";
+    public static String EMPTY_SYMBOL = "#";
+    public static String WHITE_KING_SYMBOL = "k";
+    public static String WHITE_QUEEN_SYMBOL = "q";
+    public static String WHITE_BISHOP_SYMBOL = "b";
+    public static String WHITE_ROOK_SYMBOL = "r";
+    public static String WHITE_KNIGHT_SYMBOL = "n";
+    public static String WHITE_PAWN_SYMBOL = "p";
+    public static String WHITE_TEAM_COLOR = "white";
+    public static String BLACK_TEAM_COLOR = "black";
+    
     private Board board;
     private int turn;
 
@@ -41,9 +57,9 @@ public class ChessGame {
 
     public String getCurrentTeam() {
         if (turn % 2 == 0) {
-            return "black";
+            return BLACK_TEAM_COLOR;
         }
 
-        return "white";
+        return WHITE_TEAM_COLOR;
     }
 }

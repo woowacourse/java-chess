@@ -46,7 +46,6 @@ public class Tile {
     }
 
     public String askPieceWhichTeam() {
-        System.err.println(piece.isPresent());
         if (piece.isPresent()) {
             return piece.askTeamColor();
         }

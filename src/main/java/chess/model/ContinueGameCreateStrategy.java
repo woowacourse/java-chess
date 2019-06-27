@@ -4,21 +4,9 @@ import chess.model.piece.*;
 
 import java.util.*;
 
-public class ContinueGameCreateStrategy implements CreateStrategy {
-    private static String BLACK_KING_SYMBOL = "K";
-    private static String BLACK_QUEEN_SYMBOL = "Q";
-    private static String BLACK_BISHOP_SYMBOL = "B";
-    private static String BLACK_ROOK_SYMBOL = "R";
-    private static String BLACK_KNIGHT_SYMBOL = "N";
-    private static String BLACK_PAWN_SYMBOL = "P";
-    private static String EMPTY_SYMBOL = "#";
-    private static String WHITE_KING_SYMBOL = "k";
-    private static String WHITE_QUEEN_SYMBOL = "q";
-    private static String WHITE_BISHOP_SYMBOL = "b";
-    private static String WHITE_ROOK_SYMBOL = "r";
-    private static String WHITE_KNIGHT_SYMBOL = "n";
-    private static String WHITE_PAWN_SYMBOL = "p";
+import static chess.model.ChessGame.*;
 
+public class ContinueGameCreateStrategy implements CreateStrategy {
     private BoardDTO dto;
 
     public ContinueGameCreateStrategy(BoardDTO dto) {
@@ -55,55 +43,55 @@ public class ContinueGameCreateStrategy implements CreateStrategy {
     }
 
     private void drawEmptyTiles(Map<String, Tile> tiles, String piece, String coordinate) {
-        if (piece.equals("#")) {
+        if (EMPTY_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new Empty()));
         }
     }
 
     private void drawWhitePieces(int i, Map<String, Tile> tiles, String piece, String coordinate) {
-        if (piece.equals("k")) {
+        if (WHITE_KING_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new King("white")));
         }
-        if (piece.equals("q")) {
+        if (WHITE_QUEEN_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new Queen("white")));
         }
-        if (piece.equals("b")) {
+        if (WHITE_BISHOP_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new Bishop("white")));
         }
-        if (piece.equals("r")) {
+        if (WHITE_ROOK_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new Rook("white")));
         }
-        if (piece.equals("n")) {
+        if (WHITE_KNIGHT_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new Knight("white")));
         }
-        if (piece.equals("p") && (i + 1) == 7) {
+        if (WHITE_PAWN_SYMBOL.equals(piece) && (i + 1) == 7) {
             tiles.put(coordinate, new Tile(coordinate, new Pawn(false, "white")));
         }
-        if (piece.equals("p") && (i + 1) != 7) {
+        if (WHITE_PAWN_SYMBOL.equals(piece) && (i + 1) != 7) {
             tiles.put(coordinate, new Tile(coordinate, new Pawn(true, "white")));
         }
     }
 
     private void drawBlackPieces(int i, Map<String, Tile> tiles, String piece, String coordinate) {
-        if (piece.equals("K")) {
+        if (BLACK_KING_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new King("black")));
         }
-        if (piece.equals("Q")) {
+        if (BLACK_QUEEN_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new Queen("black")));
         }
-        if (piece.equals("B")) {
+        if (BLACK_BISHOP_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new Bishop("black")));
         }
-        if (piece.equals("R")) {
+        if (BLACK_ROOK_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new Rook("black")));
         }
-        if (piece.equals("N")) {
+        if (BLACK_KNIGHT_SYMBOL.equals(piece)) {
             tiles.put(coordinate, new Tile(coordinate, new Knight("black")));
         }
-        if (piece.equals("P") && (i + 1) == 2) {
+        if (BLACK_PAWN_SYMBOL.equals(piece) && (i + 1) == 2) {
             tiles.put(coordinate, new Tile(coordinate, new Pawn(false, "black")));
         }
-        if (piece.equals("P") && (i + 1) != 2) {
+        if (BLACK_PAWN_SYMBOL.equals(piece) && (i + 1) != 2) {
             tiles.put(coordinate, new Tile(coordinate, new Pawn(true, "black")));
         }
     }
