@@ -79,7 +79,7 @@ public class Board {
         return movePiece(route.getSourceSquare(), route.getTargetSquare());
     }
 
-    public Board movePiece(Square source, Square target) {
+    private Board movePiece(Square source, Square target) {
         Map<Square, Piece> copyBoard = board.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         copyBoard.put(target, copyBoard.get(source).move());
