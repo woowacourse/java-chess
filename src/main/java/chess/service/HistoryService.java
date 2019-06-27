@@ -41,11 +41,11 @@ public class HistoryService {
         historyDto.setRows(board.mappingBoardToString());
         historyDto.setTurn(historyDto.getTurn() + 1);
 
-        int result = historyDao.insertHistory(historyDto);
+        historyDao.insertHistory(historyDto);
 
         if (board.isKingDead()) {
             historyDto.setKingDead(true);
-            int updateResult = RoundInfoDao.getInstance().updateGameOver(round);
+            RoundInfoDao.getInstance().updateGameOver(round);
             // TODO: 2019-06-25 Redirect result page?
         }
         return historyDto;
@@ -56,7 +56,7 @@ public class HistoryService {
         historyDto.setRound(round);
         historyDto.setRows(BoardFactory.getBasicArrange());
         historyDto.setTurn(0);
-        int historyResult = historyDao.insertHistory(historyDto);
+        historyDao.insertHistory(historyDto);
         return historyDto;
     }
 }
