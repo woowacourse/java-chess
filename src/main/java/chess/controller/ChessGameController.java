@@ -22,7 +22,7 @@ public class ChessGameController {
 		Map<String, Object> model = new HashMap<>();
 		ChessBoard chessBoard = ChessPiece.generateChessBoard(new ChessInitialPosition());
 		ChessGame chessGame = new ChessGame(chessBoard);
-		int roomNumber = chessGameService.saveInitialChessGame(chessGame.getCurrentPlayer());
+		int roomNumber = chessGameService.saveInitialChessGame(chessGame.getCurrentPlayerName());
 		pieceService.saveInitialPiece(roomNumber, chessBoard.getPieces());
 		return transmitChessBoardInfo(model, roomNumber, chessGame);
 	}
@@ -52,11 +52,11 @@ public class ChessGameController {
 		Map<String, Object> model = new HashMap<>();
 		int roomNumber = Integer.parseInt(req.queryParams("room-number"));
 		ChessGame chessGame = generateCurrentChessGame(roomNumber);
-
 		int startX = Integer.parseInt(req.queryParams("start-x"));
 		int startY = Integer.parseInt(req.queryParams("start-y"));
 		int endX = Integer.parseInt(req.queryParams("end-x"));
 		int endY = Integer.parseInt(req.queryParams("end-y"));
+
 		try {
 			chessGame.move(Position.getPosition(startX, startY), Position.getPosition(endX, endY));
 		} catch (GameOverException e) {
@@ -75,8 +75,8 @@ public class ChessGameController {
 		ChessGame chessGame = generateCurrentChessGame(roomNumber);
 
 		model.put("winner", "승자 : " + chessGame.findWinner().name());
-		model.put("whiteScore", "백 점수 : " + chessGame.getPlayerScore(Player.WHITE).getScore());
-		model.put("blackScore", "흑 점수 : " + chessGame.getPlayerScore(Player.BLACK).getScore());
+		model.put("whiteScore", "백 점수 : " + chessGame.getPlayerScore(Player.WHITE));
+		model.put("blackScore", "흑 점수 : " + chessGame.getPlayerScore(Player.BLACK));
 
 		return transmitChessBoardInfo(model, roomNumber, chessGame);
 	}
@@ -96,7 +96,7 @@ public class ChessGameController {
 	}
 
 	public String transmitChessBoardInfo(Map<String, Object> model, int roomNumber, ChessGame chessGame) {
-		model.put("turn", chessGame.getCurrentPlayer().name());
+		model.put("turn", chessGame.getCurrentPlayerName());
 		model.put("roomNumber", roomNumber);
 		model.put("board", chessGameService.getPieceImages(chessGame));
 		return OutputViewForWeb.render(model, "/chess.html");
