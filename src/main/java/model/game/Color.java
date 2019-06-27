@@ -1,10 +1,10 @@
 package model.game;
 
-public enum Player {
+public enum Color {
     WHITE,
     BLACK;
 
-    public Player toggle() {
+    public Color toggle() {
         if (this == WHITE) {
             return BLACK;
         }
