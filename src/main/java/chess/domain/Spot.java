@@ -21,7 +21,6 @@ public class Spot {
         SPOTS = new ArrayList<>();
         IntStream.rangeClosed(START_INDEX, END_INDEX)
                 .forEach(index -> SPOTS.add(index, new Spot(index)));
-
     }
 
     public static Spot valueOf(int index) {
