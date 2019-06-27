@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.database.DBConnector;
 import chess.domain.ChessGame;
 import chess.dto.ChessDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +16,7 @@ class ChessDAOTest {
     @BeforeEach
     public void setUp() {
         chessGame = new ChessGame();
-        chessDAO = new ChessDAO(DBConnector.getConnection());
+        chessDAO = ChessDAO.getInstance();
     }
 
     @Test

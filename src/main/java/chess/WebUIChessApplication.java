@@ -1,7 +1,6 @@
 package chess;
 
 import chess.dao.ChessDAO;
-import chess.database.DBConnector;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.domain.position.Position;
@@ -11,7 +10,6 @@ import chess.dto.ChessDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +17,7 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static Connection conn = DBConnector.getConnection();
-    private static ChessDAO chessDAO = new ChessDAO(conn);
+    private static ChessDAO chessDAO = ChessDAO.getInstance();
     private static ChessGame chessGame;
 
     public static void main(String[] args) {
@@ -35,7 +32,7 @@ public class WebUIChessApplication {
                 chessDAO.deleteChessGame();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("chessDAO 오류!");
         }
 
         get("/", (req, res) -> {

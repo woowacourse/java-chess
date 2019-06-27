@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.database.DBConnector;
 import chess.domain.PieceSymbol;
 import chess.domain.ChessGame;
 import chess.domain.Team;
@@ -22,28 +23,34 @@ public class ChessDAO {
     private static final int MIN_BOARD_INDEX = 0;
     private static final int MAX_BOARD_INDEX = 7;
 
-    private final Connection conn;
+    private static ChessDAO chessDAO = new ChessDAO();
 
-    public ChessDAO(Connection conn) {
-        this.conn = conn;
+    public static ChessDAO getInstance() {
+        return chessDAO;
     }
 
     public void addChessGame(ChessDTO chessDTO) throws SQLException {
         String query = "INSERT INTO chess VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(query);
 
-        for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
-            pstmt.setString(i, chessDTO.getRanks().get(i - 1));
+        try (Connection conn = DBConnector.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
+                pstmt.setString(i, chessDTO.getRanks().get(i - 1));
+            }
+
+            pstmt.setString(9, chessDTO.getTurn());
+            pstmt.executeUpdate();
         }
-
-        pstmt.setString(9, chessDTO.getTurn());
-        pstmt.executeUpdate();
     }
 
     public void deleteChessGame() throws SQLException {
         String query = "DELETE FROM chess";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.executeUpdate();
+
+        try (Connection conn = DBConnector.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.executeUpdate();
+        }
     }
 
     public void updateChessGame(ChessDTO chessDTO) throws SQLException {
@@ -53,14 +60,17 @@ public class ChessDAO {
 
     public ChessGame findChessGame() throws SQLException {
         String query = "SELECT * FROM chess";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) {
-            return null;
+        try (Connection conn = DBConnector.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (!rs.next()) {
+                return null;
+            }
+
+            return makeChessGame(rs);
         }
-
-        return makeChessGame(rs);
     }
 
     private ChessGame makeChessGame(ResultSet rs) throws SQLException {
@@ -84,13 +94,16 @@ public class ChessDAO {
 
     public boolean isTableEmpty() throws SQLException {
         String query = "SELECT COUNT(*) FROM chess;";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) {
-            return true;
+        try (Connection conn = DBConnector.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (!rs.next()) {
+                return true;
+            }
+
+            return rs.getInt(1) == 0;
         }
-
-        return rs.getInt(1) == 0;
     }
 }
