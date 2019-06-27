@@ -10,6 +10,7 @@ import chess.dto.HistoryDto;
 import java.sql.SQLDataException;
 
 public class HistoryService {
+
     private HistoryService() {
     }
 
@@ -37,12 +38,11 @@ public class HistoryService {
         historyDto.setRows(board.mappingBoardToString());
         historyDto.setTurn(historyDto.getTurn() + 1);
 
-        int result = HistoryDao.getInstance().insertHistory(historyDto);
+        HistoryDao.getInstance().insertHistory(historyDto);
 
         if (board.isKingDead()) {
             historyDto.setKingDead(true);
-            int updateResult = RoundInfoDao.getInstance().updateGameOver(round);
-            // TODO: 2019-06-25 Redirect result page?
+            RoundInfoDao.getInstance().updateGameOver(round);
         }
         return historyDto;
     }
@@ -52,7 +52,7 @@ public class HistoryService {
         historyDto.setRound(round);
         historyDto.setRows(BoardFactory.getBasicArrange());
         historyDto.setTurn(0);
-        int historyResult = HistoryDao.getInstance().insertHistory(historyDto);
+        HistoryDao.getInstance().insertHistory(historyDto);
         return historyDto;
     }
 }
