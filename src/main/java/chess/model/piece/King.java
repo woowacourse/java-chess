@@ -4,6 +4,8 @@ import chess.model.board.Coordinate;
 import chess.model.board.vector.Direction;
 import chess.model.board.Route;
 import chess.model.board.vector.Vector;
+import chess.model.routeCreator.CreatingRouteStrategy;
+import chess.model.routeCreator.NormalPieceCreatingRouteStrategy;
 
 import java.util.*;
 
@@ -12,6 +14,7 @@ import static chess.model.board.vector.Direction.*;
 // TODO: 2019-06-22 cloneSelf를 꼭 써야할까?
 public class King implements Piece {
     private static final Set<Direction> movableDirections;
+    private static final int MAGNITUDE_BY_ONE_TURN = 1;
     public static final double SCORE = 0.0;
 
     static {
@@ -29,7 +32,6 @@ public class King implements Piece {
     private String team;
 
     public King(String team) {
-        //todo produceRoute 로직 funtional interface로 빼기
         validateTeam(team);
         this.team = team;
     }
@@ -49,21 +51,12 @@ public class King implements Piece {
         if (!vector.isMatch(movableDirections)) {
             throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
         }
-        if (!vector.isEqualToMagnitude(1)) {
+        if (!vector.isEqualToMagnitude(MAGNITUDE_BY_ONE_TURN)) {
             throw new IllegalArgumentException("King은 한칸만 이동할 수 있습니다.");
         }
 
-        List<String> routes = new ArrayList<>();
-        Coordinate coordinateX = sourceCoordinates.get(0);
-        Coordinate coordinateY = sourceCoordinates.get(1);
-        Direction direction = vector.getDirection();
-
-        for (int i = 1; i <= vector.getMagnitude(); i++) {
-            routes.add(coordinateX.addCoordinate(direction.getUnitX() * i)
-                    .concat(coordinateY.addCoordinate(direction.getUnitY() * i)));
-        }
-
-        return new Route(routes);
+        CreatingRouteStrategy strategy = new NormalPieceCreatingRouteStrategy();
+        return strategy.create(sourceCoordinates, vector);
     }
 
     private void validateNull(List<Coordinate> coordinates, Vector vector) {

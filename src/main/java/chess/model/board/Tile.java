@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Tile {
     private static final int COORDINATE_LENGTH = 2;
-    // TODO: 2019-06-18 인스턴스 변수 줄이기
+
     private Coordinate coordinateX;
     private Coordinate coordinateY;
     private Piece piece;
@@ -37,11 +37,11 @@ public class Tile {
     }
 
     public Route findRouteFromPiece(Vector vector) {
-            return piece.produceRoute(Arrays.asList(coordinateX, coordinateY), vector);
+        return piece.produceRoute(Arrays.asList(coordinateX, coordinateY), vector);
     }
 
     public String askPieceWhichTeam() {
-            return piece.askTeamColor();
+        return piece.askTeamColor();
     }
 
     public Piece clonePiece() {
