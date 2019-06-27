@@ -4,7 +4,7 @@ import chess.domain.Position;
 import chess.domain.chessmove.Direction;
 import chess.domain.chessmove.KnightMove;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 
 public class Knight extends ChessPiece {
@@ -16,7 +16,7 @@ public class Knight extends ChessPiece {
 
     @Override
     public void initMovingMap() {
-        movingMap = new HashMap<>();
+        movingMap = new EnumMap<>(Direction.class);
         movingMap.put(Direction.KNIGHT, KnightMove.getInstance());
     }
 

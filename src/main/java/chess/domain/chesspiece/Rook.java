@@ -5,7 +5,7 @@ import chess.domain.chessmove.Direction;
 import chess.domain.chessmove.HorizontalMove;
 import chess.domain.chessmove.VerticalMove;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 
 public class Rook extends ChessPiece {
@@ -17,7 +17,7 @@ public class Rook extends ChessPiece {
 
     @Override
     public void initMovingMap() {
-        movingMap = new HashMap<>();
+        movingMap = new EnumMap<>(Direction.class);
         movingMap.put(Direction.HORIZONTAL, HorizontalMove.getInstance());
         movingMap.put(Direction.VERTICAL, VerticalMove.getInstance());
     }

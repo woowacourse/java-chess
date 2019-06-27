@@ -4,13 +4,13 @@ import chess.domain.Position;
 import chess.domain.chessmove.Direction;
 import chess.domain.chessmove.Move;
 
+import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class ChessPiece {
     Team team;
     ChessScore chessScore;
-    Map<Direction, Move> movingMap;
+    EnumMap<Direction, Move> movingMap;
 
     public ChessPiece(Team team) {
         this.team = team;

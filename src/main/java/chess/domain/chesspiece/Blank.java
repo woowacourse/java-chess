@@ -1,8 +1,9 @@
 package chess.domain.chesspiece;
 
 import chess.domain.Position;
+import chess.domain.chessmove.Direction;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 
 public class Blank extends ChessPiece {
@@ -14,7 +15,7 @@ public class Blank extends ChessPiece {
 
     @Override
     public void initMovingMap() {
-        movingMap = new HashMap<>();
+        movingMap = new EnumMap<>(Direction.class);
     }
 
     @Override

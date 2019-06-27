@@ -4,7 +4,7 @@ import chess.domain.Position;
 import chess.domain.chessmove.Direction;
 import chess.domain.chessmove.PawnMove;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 
 public class Pawn extends ChessPiece {
@@ -16,7 +16,7 @@ public class Pawn extends ChessPiece {
 
     @Override
     public void initMovingMap() {
-        movingMap = new HashMap<>();
+        movingMap = new EnumMap<>(Direction.class);
         movingMap.put(Direction.PAWN, PawnMove.getInstance(team));
     }
 

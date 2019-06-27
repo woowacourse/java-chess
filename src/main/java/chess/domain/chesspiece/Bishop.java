@@ -4,7 +4,7 @@ import chess.domain.Position;
 import chess.domain.chessmove.DiagonalMove;
 import chess.domain.chessmove.Direction;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 
 public class Bishop extends ChessPiece {
@@ -16,7 +16,7 @@ public class Bishop extends ChessPiece {
 
     @Override
     public void initMovingMap() {
-        movingMap = new HashMap<>();
+        movingMap = new EnumMap<>(Direction.class);
         movingMap.put(Direction.DIAGONAL, DiagonalMove.getInstance());
     }
 
