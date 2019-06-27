@@ -48,7 +48,6 @@ public class StatusBoardFactory {
 
     private static List<Integer> getSameLinePawnCounts(List<Spot> pawnSpots) {
         List<Integer> results = new ArrayList<>();
-
         if (pawnSpots.isEmpty()) {
             return results;
         }
@@ -62,8 +61,6 @@ public class StatusBoardFactory {
                 count = 1;
             }
         }
-
-        results.add(count);
         return results;
     }
 

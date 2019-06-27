@@ -17,12 +17,10 @@ public class Spot {
     private final int x;
     private final int y;
 
-    //TODO 위치를 인스턴스 변수 위인지 아래인지 확인하기
     static {
         SPOTS = new ArrayList<>();
         IntStream.rangeClosed(START_INDEX, END_INDEX)
                 .forEach(index -> SPOTS.add(index, new Spot(index)));
-
     }
 
     public static Spot valueOf(int index) {

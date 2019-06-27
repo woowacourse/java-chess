@@ -18,10 +18,6 @@ public class Round {
         round++;
     }
 
-    public void clear() {
-        round = 0;
-    }
-
     public int getRound() {
         return round;
     }
