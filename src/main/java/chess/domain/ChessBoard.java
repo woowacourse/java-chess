@@ -48,12 +48,10 @@ public class ChessBoard {
     }
 
     public Piece findEndPiece(Position position) {
-        for (Piece piece : pieces) {
-            if (piece.isSamePosition(position)) {
-                return piece;
-            }
-        }
-        return EmptyPiece.valueOf(Player.EMPTY, position);
+        return pieces.stream()
+                .filter(piece -> piece.isSamePosition(position))
+                .findFirst()
+                .orElse(EmptyPiece.valueOf(Player.EMPTY, position));
     }
 
     public boolean isMovable(Path path) {
