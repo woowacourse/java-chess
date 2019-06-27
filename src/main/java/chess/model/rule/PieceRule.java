@@ -8,6 +8,7 @@ import chess.model.unit.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -25,33 +26,35 @@ abstract class PieceRule {
     private List<Square> getOccupiedSquares(final Board board, final List<Square> candidatedSquares, final Piece piece) {
         return candidatedSquares.stream()
                 .filter(square -> {
-                    final Piece occupiedPiece = getPiece(board, square);
-                    if (occupiedPiece != null) {
-                        return occupiedPiece.getSide() == piece.getSide();
+                    final Optional<Piece> occupiedPiece = getPiece(board, square);
+                    if (occupiedPiece.isPresent()) {
+                        return occupiedPiece.get().getSide() == piece.getSide();
                     }
                     return false;
                 })
                 .collect(Collectors.toList());
     }
 
-    List<Square> getNonBlockedNeighbors(final Board board, final Square square, final Function<Square, Square> getNeighbor) {
+    List<Square> getNonBlockedNeighbors(final Board board, final Square square, final Function<Square, Optional<Square>> getNeighbor) {
         final List<Square> squareList = new ArrayList<>();
-        final Side side = getPiece(board, square).getSide();
-        Square nextSquare = getNeighbor.apply(square);
-        while (nextSquare != null && getPiece(board, nextSquare) == null) {
-            squareList.add(nextSquare);
-            nextSquare = getNeighbor.apply(nextSquare);
+        final Side side = getPiece(board, square).get().getSide();
+        Optional<Square> nextSquare = getNeighbor.apply(square);
+        while (nextSquare.isPresent() && getPiece(board, nextSquare.get()).isEmpty()) {
+            squareList.add(nextSquare.get());
+            nextSquare = getNeighbor.apply(nextSquare.get());
         }
         if (checkNextSquareInEnemy(board, nextSquare, side)) {
-            squareList.add(nextSquare);
+            squareList.add(nextSquare.get());
         }
         return squareList;
     }
 
-    private boolean checkNextSquareInEnemy(final Board board, final Square nextSquare, final Side side) {
-        if (nextSquare != null) {
-            final Piece piece = getPiece(board, nextSquare);
-            return piece != null && piece.getSide() != side;
+    private boolean checkNextSquareInEnemy(
+            final Board board, final Optional<Square> nextSquare, final Side side
+    ) {
+        if (nextSquare.isPresent()) {
+            final Optional<Piece> piece = getPiece(board, nextSquare.get());
+            return piece.isPresent() && piece.get().getSide() != side;
         }
         return false;
     }

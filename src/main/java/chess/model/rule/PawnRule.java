@@ -10,6 +10,7 @@ import chess.model.unit.UnitClass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static chess.model.rule.Rule.getPiece;
 
@@ -32,25 +33,25 @@ class PawnRule extends PieceRule {
     }
 
     private static boolean isMyPawn(final Board board, final Square square, final Piece piece) {
-        final Piece another = getPiece(board, square);
-        if (piece == null || another == null) return false;
-        return another.getUnitClass() == UnitClass.PAWN
-                && another.getSide() == piece.getSide();
+        final Optional<Piece> another = getPiece(board, square);
+        if (piece == null || another.isEmpty()) return false;
+        return another.get().getUnitClass() == UnitClass.PAWN
+                && another.get().getSide() == piece.getSide();
     }
 
     @Override
     List<Square> getMovableSquares(Board board, final Square square, final Piece piece) {
         final List<Square> candidate = new ArrayList<>();
-        final Square forwarded = forward(square, piece);
-        final Piece maybeNull = getPiece(board, forwarded);
-        candidate.add(forwarded);
-        if (maybeNull == null && isFirstPosition(square, piece)) {
-            candidate.add(forward(forwarded, piece));
+        final Optional<Square> forwarded = forward(square, piece);
+        final Optional<Piece> maybeNull = getPiece(board, forwarded);
+        forwarded.ifPresent(candidate::add);
+        if (maybeNull.isEmpty() && isFirstPosition(square, piece)) {
+            candidate.add(forward(forwarded.get(), piece).get());
         }
         return candidate;
     }
 
-    private Square forward(final Square square, final Piece piece) {
+    private Optional<Square> forward(final Square square, final Piece piece) {
         if (piece.getSide() == Side.WHITE) {
             return Square.getUpOneNeighbor(square);
         }

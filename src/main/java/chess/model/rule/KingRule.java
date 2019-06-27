@@ -15,14 +15,14 @@ class KingRule extends PieceRule {
     @Override
     List<Square> getMovableSquares(Board board, final Square square, Piece piece) {
         final List<Square> candidate = new ArrayList<>();
-        candidate.add(Square.getLeftOneNeighbor(square));
-        candidate.add(Square.getRightOneNeighbor(square));
-        candidate.add(Square.getUpOneNeighbor(square));
-        candidate.add(Square.getDownOneNeighbor(square));
-        candidate.add(Square.getUpperLeftOneNeighbor(square));
-        candidate.add(Square.getUpperRightOneNeighbor(square));
-        candidate.add(Square.getLowerLeftOneNeighbor(square));
-        candidate.add(Square.getLowerRightOneNeighbor(square));
+        Square.getLeftOneNeighbor(square).ifPresent(candidate::add);
+        Square.getRightOneNeighbor(square).ifPresent(candidate::add);
+        Square.getUpOneNeighbor(square).ifPresent(candidate::add);
+        Square.getDownOneNeighbor(square).ifPresent(candidate::add);
+        Square.getUpperLeftOneNeighbor(square).ifPresent(candidate::add);
+        Square.getUpperRightOneNeighbor(square).ifPresent(candidate::add);
+        Square.getLowerLeftOneNeighbor(square).ifPresent(candidate::add);
+        Square.getLowerRightOneNeighbor(square).ifPresent(candidate::add);
         return candidate;
     }
 }

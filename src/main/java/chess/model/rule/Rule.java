@@ -8,6 +8,7 @@ import chess.model.unit.UnitClass;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Rule {
     private static Map<UnitClass, PieceRule> ruleMap = new HashMap<>();
@@ -21,19 +22,28 @@ public class Rule {
         ruleMap.put(UnitClass.PAWN, new PawnRule());
     }
 
-    static Piece getPiece(final Board board, final Square square) {
+    static Optional<Piece> getPiece(final Board board, final Square square) {
         try {
-            return board.getPiece(square);
+            return Optional.ofNullable(board.getPiece(square));
         } catch (IllegalArgumentException e) {
-            return null;
+            return Optional.empty();
+        }
+    }
+
+    static Optional<Piece> getPiece(final Board board, final Optional<Square> square) {
+        try {
+            return Optional.ofNullable(board.getPiece(square.get()));
+        } catch (Exception e) {
+            return Optional.empty();
         }
     }
 
     public static boolean isValidMove(final Board board, final Square checkTarget, final Square destination) {
-        final Piece piece = getPiece(board, checkTarget);
-        if (piece == null) {
+        final Optional<Piece> maybePiece = getPiece(board, checkTarget);
+        if (maybePiece.isEmpty()) {
             return false;
         }
+        final Piece piece = maybePiece.get();
         final PieceRule rule = ruleMap.get(piece.getUnitClass());
         return rule.isValidMove(board, piece, checkTarget, destination);
     }

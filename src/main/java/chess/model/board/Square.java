@@ -1,6 +1,7 @@
 package chess.model.board;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 
 public class Square {
@@ -23,63 +24,63 @@ public class Square {
         return row;
     }
 
-    private static Square getDiagonalOneNeighbor(final Square square, final Function<Square, Square> getHorizontal, final Function<Square, Square> getVertical) {
-        final Square horizontal = getHorizontal.apply(square);
-        if (horizontal == null) {
-            return null;
-        }
-        return getVertical.apply(horizontal);
+    private static Optional<Square> getDiagonalOneNeighbor(
+            final Square square,
+            final Function<Square, Optional<Square>> getHorizontal,
+            final Function<Square, Optional<Square>> getVertical
+    ) {
+        return getHorizontal.apply(square).flatMap(getVertical);
     }
 
-    private static Square getHorizontalOneNeighbor(final Square square, final int prevOrNext) {
+    private static Optional<Square> getHorizontalOneNeighbor(final Square square, final int prevOrNext) {
         try {
             final Column column = square.getColumn();
             final Column newColumn = Column.getByIndex(column.getColumnIndex() + prevOrNext);
-            return new Square(newColumn, square.getRow());
+            return Optional.of(new Square(newColumn, square.getRow()));
         } catch (Exception e) {
-            return null;
+            return Optional.empty();
         }
     }
 
-    private static Square getVerticalOneNeighbor(final Square square, final int prevOrNext) {
+    private static Optional<Square> getVerticalOneNeighbor(final Square square, final int prevOrNext) {
         try {
             final Row row = square.getRow();
             final Row newRow = Row.getByIndex(row.getRowIndex() + prevOrNext);
-            return new Square(square.getColumn(), newRow);
+            return Optional.of(new Square(square.getColumn(), newRow));
         } catch (Exception e) {
-            return null;
+            return Optional.empty();
         }
     }
 
-    public static Square getLeftOneNeighbor(final Square square) {
+    public static Optional<Square> getLeftOneNeighbor(final Square square) {
         return getHorizontalOneNeighbor(square, PREV);
     }
 
-    public static Square getRightOneNeighbor(final Square square) {
+    public static Optional<Square> getRightOneNeighbor(final Square square) {
         return getHorizontalOneNeighbor(square, NEXT);
     }
 
-    public static Square getUpOneNeighbor(final Square square) {
+    public static Optional<Square> getUpOneNeighbor(final Square square) {
         return getVerticalOneNeighbor(square, NEXT);
     }
 
-    public static Square getDownOneNeighbor(final Square square) {
+    public static Optional<Square> getDownOneNeighbor(final Square square) {
         return getVerticalOneNeighbor(square, PREV);
     }
 
-    public static Square getUpperLeftOneNeighbor(final Square square) {
+    public static Optional<Square> getUpperLeftOneNeighbor(final Square square) {
         return getDiagonalOneNeighbor(square, Square::getLeftOneNeighbor, Square::getUpOneNeighbor);
     }
 
-    public static Square getUpperRightOneNeighbor(final Square square) {
+    public static Optional<Square> getUpperRightOneNeighbor(final Square square) {
         return getDiagonalOneNeighbor(square, Square::getRightOneNeighbor, Square::getUpOneNeighbor);
     }
 
-    public static Square getLowerLeftOneNeighbor(final Square square) {
+    public static Optional<Square> getLowerLeftOneNeighbor(final Square square) {
         return getDiagonalOneNeighbor(square, Square::getLeftOneNeighbor, Square::getDownOneNeighbor);
     }
 
-    public static Square getLowerRightOneNeighbor(final Square square) {
+    public static Optional<Square> getLowerRightOneNeighbor(final Square square) {
         return getDiagonalOneNeighbor(square, Square::getRightOneNeighbor, Square::getDownOneNeighbor);
     }
 
