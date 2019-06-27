@@ -3,37 +3,38 @@ package chess.domain.board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Square {
-    private final XPosition x;
-    private final YPosition y;
+    private final Position x;
+    private final Position y;
 
-    public Square(XPosition x, YPosition y) {
+    public Square(Position x, Position y) {
         this.x = x;
         this.y = y;
     }
 
     public Square moveLeft(int moveCnt) {
-        return new Square(x.moveLeft(moveCnt), y);
+        return new Square(x.moveBack(moveCnt), y);
     }
 
     public Square moveRight(int moveCnt) {
-        return new Square(x.moveRight(moveCnt), y);
+        return new Square(x.moveGo(moveCnt), y);
     }
 
     public Square moveUp(int moveCnt) {
-        return new Square(x, y.moveUp(moveCnt));
+        return new Square(x, y.moveGo(moveCnt));
     }
 
     public Square moveDown(int moveCnt) {
-        return new Square(x, y.moveDown(moveCnt));
+        return new Square(x, y.moveBack(moveCnt));
     }
 
     public List<Square> moveUpToEnd() {
         List<Square> movableList = new ArrayList<>();
-        List<YPosition> yPositions = y.moveUpToEnd();
+        List<Position> yPositions = y.moveGoToEnd();
 
-        for (YPosition yPosition : yPositions) {
+        for (Position yPosition : yPositions) {
             movableList.add(new Square(x, yPosition));
         }
 
@@ -42,9 +43,9 @@ public class Square {
 
     public List<Square> moveDownToEnd() {
         List<Square> movableList = new ArrayList<>();
-        List<YPosition> yPositions = y.moveDownToEnd();
+        List<Position> yPositions = y.moveBackToEnd();
 
-        for (YPosition yPosition : yPositions) {
+        for (Position yPosition : yPositions) {
             movableList.add(new Square(x, yPosition));
         }
 
@@ -53,9 +54,9 @@ public class Square {
 
     public List<Square> moveRightToEnd() {
         List<Square> movableList = new ArrayList<>();
-        List<XPosition> xPositions = x.moveRightToEnd();
+        List<Position> xPositions = x.moveGoToEnd();
 
-        for (XPosition xPosition : xPositions) {
+        for (Position xPosition : xPositions) {
             movableList.add(new Square(xPosition, y));
         }
         return movableList;
@@ -63,9 +64,9 @@ public class Square {
 
     public List<Square> moveLeftToEnd() {
         List<Square> movableList = new ArrayList<>();
-        List<XPosition> xPositions = x.moveLeftToEnd();
+        List<Position> xPositions = x.moveBackToEnd();
 
-        for (XPosition xPosition : xPositions) {
+        for (Position xPosition : xPositions) {
             movableList.add(new Square(xPosition, y));
         }
         return movableList;
@@ -128,7 +129,7 @@ public class Square {
     }
 
     public Square moveUpLeft() {
-        Square moved = new Square(x.moveLeft(1), y.moveUp(1));
+        Square moved = new Square(x.moveBack(1), y.moveGo(1));
         if (isLocatedSameLine(moved)) {
             return this;
         }
@@ -136,7 +137,7 @@ public class Square {
     }
 
     public Square moveUpRight() {
-        Square moved = new Square(x.moveRight(1), y.moveUp(1));
+        Square moved = new Square(x.moveGo(1), y.moveGo(1));
         if (isLocatedSameLine(moved)) {
             return this;
         }
@@ -144,7 +145,7 @@ public class Square {
     }
 
     public Square moveDownLeft() {
-        Square moved = new Square(x.moveLeft(1), y.moveDown(1));
+        Square moved = new Square(x.moveBack(1), y.moveBack(1));
         if (isLocatedSameLine(moved)) {
             return this;
         }
@@ -152,7 +153,7 @@ public class Square {
     }
 
     public Square moveDownRight() {
-        Square moved = new Square(x.moveRight(1), y.moveDown(1));
+        Square moved = new Square(x.moveGo(1), y.moveBack(1));
         if (isLocatedSameLine(moved)) {
             return this;
         }
@@ -163,11 +164,11 @@ public class Square {
         return moved.isSameX(this.x) || moved.isSameY(this.y);
     }
 
-    public boolean isSameX(XPosition x) {
+    public boolean isSameX(Position x) {
         return this.x.equals(x);
     }
 
-    public boolean isSameY(YPosition y) {
+    public boolean isSameY(Position y) {
         return this.y.equals(y);
     }
 
@@ -179,18 +180,14 @@ public class Square {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Square square = (Square) o;
-
-        if (x != null ? !x.equals(square.x) : square.x != null) return false;
-        return y != null ? y.equals(square.y) : square.y == null;
+        Square that = (Square) o;
+        return Objects.equals(x, that.x) &&
+                Objects.equals(y, that.y);
     }
 
     @Override
     public int hashCode() {
-        int result = x != null ? x.hashCode() : 0;
-        result = 31 * result + (y != null ? y.hashCode() : 0);
-        return result;
+        return Objects.hash(x, y);
     }
 
     @Override

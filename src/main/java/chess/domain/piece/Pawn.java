@@ -1,16 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
 import chess.domain.board.Square;
-import chess.domain.board.Vector;
 import chess.domain.board.Vectors;
-import chess.domain.board.YPosition;
-import chess.domain.path.BlackPawnPath;
 import chess.domain.path.Path;
 import chess.domain.path.PathFactory;
-import chess.domain.path.WhitePawnPath;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
     private static final double SCORE = 1;
@@ -31,11 +25,11 @@ public class Pawn extends Piece {
     public Vectors movableArea(Square source) {
         Vectors movableArea =  super.movableArea(source);
 
-        if (!source.isSameY(new YPosition("2")) && isWhite()) {
+        if (!source.isSameY(new Position(2)) && isWhite()) {
             return movableArea.removeSource(source.moveUp(2));
         }
 
-        if (!source.isSameY(new YPosition("7")) && isBlack()) {
+        if (!source.isSameY(new Position(7)) && isBlack()) {
             return movableArea.removeSource(source.moveDown(2));
         }
 

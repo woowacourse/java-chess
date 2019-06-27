@@ -18,14 +18,14 @@ public class PlayerTest {
         Piece rook = Rook.blackCreate();
         Piece rook2 = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("b"), new YPosition("7")), rook);
-        black.put(new Square(new XPosition("f"), new YPosition("7")), rook2);
+        black.put(new Square(new Position(2), new Position(7)), rook);
+        black.put(new Square(new Position(6), new Position(7)), rook2);
         Player blackPlayer = new DefaultPlayer(black);
 
-        Optional<Piece> returnedRook = blackPlayer.getPiece(new Square(new XPosition("b"), new YPosition("7")));
+        Optional<Piece> returnedRook = blackPlayer.getPiece(new Square(new Position(2), new Position(7)));
         returnedRook.ifPresent(piece -> assertThat(piece).isEqualTo(rook));
 
-        Optional<Piece> returnedRook2 = blackPlayer.getPiece(new Square(new XPosition("f"), new YPosition("7")));
+        Optional<Piece> returnedRook2 = blackPlayer.getPiece(new Square(new Position(6), new Position(7)));
         returnedRook2.ifPresent(piece -> assertThat(piece).isEqualTo(rook2));
     }
 }

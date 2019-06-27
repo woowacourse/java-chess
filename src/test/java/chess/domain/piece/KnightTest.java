@@ -20,27 +20,27 @@ public class KnightTest {
 
     @Test
     void 나이트_이동_사방() {
-        Vectors movableVectors = knight.movableArea(new Square(new XPosition("d"), new YPosition("4")));
+        Vectors movableVectors = knight.movableArea(new Square(new Position(4), new Position(4)));
         Vectors expectedVectors = new Vectors(new HashSet<>());
-        expectedVectors.add(new Vector(new Square(new XPosition("e"), new YPosition("6")), Direction.NONE));
-        expectedVectors.add(new Vector(new Square(new XPosition("f"), new YPosition("5")), Direction.NONE));
-        expectedVectors.add(new Vector(new Square(new XPosition("f"), new YPosition("3")), Direction.NONE));
-        expectedVectors.add(new Vector(new Square(new XPosition("e"), new YPosition("2")), Direction.NONE));
-        expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("2")), Direction.NONE));
-        expectedVectors.add(new Vector(new Square(new XPosition("b"), new YPosition("3")), Direction.NONE));
-        expectedVectors.add(new Vector(new Square(new XPosition("b"), new YPosition("5")), Direction.NONE));
-        expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("6")), Direction.NONE));
+        expectedVectors.add(new Vector(new Square(new Position(5), new Position(6)), Direction.NONE));
+        expectedVectors.add(new Vector(new Square(new Position(6), new Position(5)), Direction.NONE));
+        expectedVectors.add(new Vector(new Square(new Position(6), new Position(3)), Direction.NONE));
+        expectedVectors.add(new Vector(new Square(new Position(5), new Position(2)), Direction.NONE));
+        expectedVectors.add(new Vector(new Square(new Position(3), new Position(2)), Direction.NONE));
+        expectedVectors.add(new Vector(new Square(new Position(2), new Position(3)), Direction.NONE));
+        expectedVectors.add(new Vector(new Square(new Position(2), new Position(5)), Direction.NONE));
+        expectedVectors.add(new Vector(new Square(new Position(3), new Position(6)), Direction.NONE));
 
         assertThat(movableVectors).isEqualTo(expectedVectors);
     }
 
     @Test
     void 나이트_이동_막힌곳() {
-        Vectors movableSquares = knight.movableArea(new Square(new XPosition("b"), new YPosition("1")));
+        Vectors movableSquares = knight.movableArea(new Square(new Position(2), new Position(1)));
         Vectors expectedSquares = new Vectors(new HashSet<>());
-        expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("3")), Direction.NONE));
-        expectedSquares.add(new Vector(new Square(new XPosition("c"), new YPosition("3")), Direction.NONE));
-        expectedSquares.add(new Vector(new Square(new XPosition("d"), new YPosition("2")), Direction.NONE));
+        expectedSquares.add(new Vector(new Square(new Position(1), new Position(3)), Direction.NONE));
+        expectedSquares.add(new Vector(new Square(new Position(3), new Position(3)), Direction.NONE));
+        expectedSquares.add(new Vector(new Square(new Position(4), new Position(2)), Direction.NONE));
 
         assertThat(movableSquares).isEqualTo(expectedSquares);
     }

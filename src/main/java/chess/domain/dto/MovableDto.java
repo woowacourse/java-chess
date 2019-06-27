@@ -1,17 +1,16 @@
 package chess.domain.dto;
 
+import chess.domain.board.Position;
 import chess.domain.board.Square;
-import chess.domain.board.XPosition;
-import chess.domain.board.YPosition;
 
 public class MovableDto {
-    private String src;
+    private int src;
 
     public Square getSrc() {
-        return new Square(new XPosition(src.substring(0 , 1)), new YPosition(src.substring(1, 2)));
+        return new Square(new Position((int)(src*0.1)), new Position(src%10));
     }
 
-    public void setSrc(String src) {
+    public void setSrc(int src) {
         this.src = src;
     }
 }

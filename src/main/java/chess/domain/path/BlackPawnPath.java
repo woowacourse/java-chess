@@ -6,8 +6,6 @@ import chess.domain.board.Vector;
 import chess.domain.board.Vectors;
 
 import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class BlackPawnPath implements Path {
     private static BlackPawnPath instance = new BlackPawnPath();

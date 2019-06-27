@@ -1,31 +1,30 @@
 package chess.domain.dto;
 
+import chess.domain.board.Position;
 import chess.domain.board.Square;
-import chess.domain.board.XPosition;
-import chess.domain.board.YPosition;
 
 public class HistoryDto {
-    private String src;
-    private String trg;
+    private int src;
+    private int trg;
 
-    public HistoryDto(String source, String target) {
+    public HistoryDto(int source, int target) {
         this.src = source;
         this.trg = target;
     }
 
-    public void setSrc(String src) {
+    public void setSrc(int src) {
         this.src = src;
     }
 
-    public void setTrg(String trg) {
+    public void setTrg(int trg) {
         this.trg = trg;
     }
 
     public Square getSrc() {
-        return new Square(new XPosition(src.substring(0 , 1)), new YPosition(src.substring(1, 2)));
+        return new Square(new Position((int)(src*0.1)), new Position(src%10));
     }
 
     public Square getTrg() {
-        return new Square(new XPosition(trg.substring(0, 1)), new YPosition(trg.substring(1, 2)));
+        return new Square(new Position((int)(trg*0.1)), new Position(trg%10));
     }
 }

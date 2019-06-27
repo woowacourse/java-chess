@@ -27,35 +27,35 @@ public class GameTest {
     void 해당_위치_말_확인() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("a"), new YPosition("8")), rook);
+        black.put(new Square(new Position(1), new Position(8)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("a"), new YPosition("2")), pawn);
+        white.put(new Square(new Position(1), new Position(2)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        assertThat(game.getPiece(new Square(new XPosition("a"), new YPosition("8")))).isEqualTo(rook);
+        assertThat(game.getPiece(new Square(new Position(1), new Position(8)))).isEqualTo(rook);
     }
 
     @Test
     void 해당_위치_말_확인_예외() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("a"), new YPosition("8")), rook);
+        black.put(new Square(new Position(1), new Position(8)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("a"), new YPosition("2")), pawn);
+        white.put(new Square(new Position(1), new Position(2)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
         assertThrows(IllegalArgumentException.class, () -> {
-            game.getPiece(new Square(new XPosition("a"), new YPosition("7")));
+            game.getPiece(new Square(new Position(1), new Position(7)));
         });
     }
 
@@ -64,29 +64,29 @@ public class GameTest {
         Piece rook = Rook.blackCreate();
         Piece rook2 = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("b"), new YPosition("7")), rook);
-        black.put(new Square(new XPosition("f"), new YPosition("7")), rook2);
+        black.put(new Square(new Position(2), new Position(7)), rook);
+        black.put(new Square(new Position(6), new Position(7)), rook2);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("b"), new YPosition("2")), pawn);
+        white.put(new Square(new Position(2), new Position(2)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Vectors moveList = game.movableArea(new Square(new XPosition("b"), new YPosition("7")));
+        Vectors moveList = game.movableArea(new Square(new Position(2), new Position(7)));
         List<Vector> expectedVectorList = Arrays.asList(
-                new Vector(new Square(new XPosition("a"), new YPosition("7")), Direction.LEFT),
-                new Vector(new Square(new XPosition("c"), new YPosition("7")), Direction.RIGHT),
-                new Vector(new Square(new XPosition("d"), new YPosition("7")), Direction.RIGHT),
-                new Vector(new Square(new XPosition("e"), new YPosition("7")), Direction.RIGHT),
-                new Vector(new Square(new XPosition("b"), new YPosition("8")), Direction.UP),
-                new Vector(new Square(new XPosition("b"), new YPosition("6")), Direction.DOWN),
-                new Vector(new Square(new XPosition("b"), new YPosition("5")), Direction.DOWN),
-                new Vector(new Square(new XPosition("b"), new YPosition("4")), Direction.DOWN),
-                new Vector(new Square(new XPosition("b"), new YPosition("3")), Direction.DOWN),
-                new Vector(new Square(new XPosition("b"), new YPosition("2")), Direction.DOWN));
+                new Vector(new Square(new Position(1), new Position(7)), Direction.LEFT),
+                new Vector(new Square(new Position(3), new Position(7)), Direction.RIGHT),
+                new Vector(new Square(new Position(4), new Position(7)), Direction.RIGHT),
+                new Vector(new Square(new Position(5), new Position(7)), Direction.RIGHT),
+                new Vector(new Square(new Position(2), new Position(8)), Direction.UP),
+                new Vector(new Square(new Position(2), new Position(6)), Direction.DOWN),
+                new Vector(new Square(new Position(2), new Position(5)), Direction.DOWN),
+                new Vector(new Square(new Position(2), new Position(4)), Direction.DOWN),
+                new Vector(new Square(new Position(2), new Position(3)), Direction.DOWN),
+                new Vector(new Square(new Position(2), new Position(2)), Direction.DOWN));
 
         Vectors expectedVector = new Vectors(new HashSet<>(expectedVectorList));
         assertThat(moveList).isEqualTo(expectedVector);
@@ -98,23 +98,23 @@ public class GameTest {
         Piece rook = Rook.blackCreate();
         Piece rook2 = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("b"), new YPosition("8")), knight);
-        black.put(new Square(new XPosition("a"), new YPosition("6")), rook);
+        black.put(new Square(new Position(2), new Position(8)), knight);
+        black.put(new Square(new Position(1), new Position(6)), rook);
         // path
-        black.put(new Square(new XPosition("b"), new YPosition("7")), rook2);
+        black.put(new Square(new Position(2), new Position(7)), rook2);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("c"), new YPosition("6")), pawn);
+        white.put(new Square(new Position(3), new Position(6)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Vectors moveList = game.movableArea(new Square(new XPosition("b"), new YPosition("8")));
+        Vectors moveList = game.movableArea(new Square(new Position(2), new Position(8)));
         List<Vector> expectedVectorList = Arrays.asList(
-                new Vector(new Square(new XPosition("c"), new YPosition("6")), Direction.NONE),
-                new Vector(new Square(new XPosition("d"), new YPosition("7")), Direction.NONE));
+                new Vector(new Square(new Position(3), new Position(6)), Direction.NONE),
+                new Vector(new Square(new Position(4), new Position(7)), Direction.NONE));
 
         Vectors expectedVector = new Vectors(new HashSet<>(expectedVectorList));
         assertThat(moveList).isEqualTo(expectedVector);
@@ -125,28 +125,28 @@ public class GameTest {
         Piece bishop = Bishop.blackCreate();
         Piece rook2 = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("f"), new YPosition("6")), bishop);
-        black.put(new Square(new XPosition("g"), new YPosition("7")), rook2);
+        black.put(new Square(new Position(6), new Position(6)), bishop);
+        black.put(new Square(new Position(7), new Position(7)), rook2);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("d"), new YPosition("4")), pawn);
+        white.put(new Square(new Position(4), new Position(4)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Vectors moveList = game.movableArea(new Square(new XPosition("f"), new YPosition("6")));
+        Vectors moveList = game.movableArea(new Square(new Position(6), new Position(6)));
         Vectors expected = new Vectors(new HashSet<>());
 
-        expected.add(new Vector(new Square(new XPosition("g"), new YPosition("5")), Direction.DOWN_RIGHT));
-        expected.add(new Vector(new Square(new XPosition("h"), new YPosition("4")), Direction.DOWN_RIGHT));
+        expected.add(new Vector(new Square(new Position(7), new Position(5)), Direction.DOWN_RIGHT));
+        expected.add(new Vector(new Square(new Position(8), new Position(4)), Direction.DOWN_RIGHT));
 
-        expected.add(new Vector(new Square(new XPosition("e"), new YPosition("5")), Direction.DOWN_LEFT));
-        expected.add(new Vector(new Square(new XPosition("d"), new YPosition("4")), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(5), new Position(5)), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(4), new Position(4)), Direction.DOWN_LEFT));
 
-        expected.add(new Vector(new Square(new XPosition("e"), new YPosition("7")), Direction.UP_LEFT));
-        expected.add(new Vector(new Square(new XPosition("d"), new YPosition("8")), Direction.UP_LEFT));
+        expected.add(new Vector(new Square(new Position(5), new Position(7)), Direction.UP_LEFT));
+        expected.add(new Vector(new Square(new Position(4), new Position(8)), Direction.UP_LEFT));
 
         assertThat(moveList).isEqualTo(expected);
     }
@@ -157,49 +157,49 @@ public class GameTest {
         Piece rook2 = Rook.blackCreate();
         Piece rook3 = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("f"), new YPosition("6")), queen);
-        black.put(new Square(new XPosition("g"), new YPosition("7")), rook2);
-        black.put(new Square(new XPosition("f"), new YPosition("2")), rook3);
+        black.put(new Square(new Position(6), new Position(6)), queen);
+        black.put(new Square(new Position(7), new Position(7)), rook2);
+        black.put(new Square(new Position(6), new Position(2)), rook3);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Piece pawn2 = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("d"), new YPosition("4")), pawn);
-        white.put(new Square(new XPosition("b"), new YPosition("6")), pawn2);
+        white.put(new Square(new Position(4), new Position(4)), pawn);
+        white.put(new Square(new Position(2), new Position(6)), pawn2);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Vectors moveList = game.movableArea(new Square(new XPosition("f"), new YPosition("6")));
+        Vectors moveList = game.movableArea(new Square(new Position(6), new Position(6)));
         Vectors expected = new Vectors(new HashSet<>());
 
-        expected.add(new Vector(new Square(new XPosition("g"), new YPosition("5")), Direction.DOWN_RIGHT));
-        expected.add(new Vector(new Square(new XPosition("h"), new YPosition("4")), Direction.DOWN_RIGHT));
+        expected.add(new Vector(new Square(new Position(7), new Position(5)), Direction.DOWN_RIGHT));
+        expected.add(new Vector(new Square(new Position(8), new Position(4)), Direction.DOWN_RIGHT));
 
-        expected.add(new Vector(new Square(new XPosition("e"), new YPosition("5")), Direction.DOWN_LEFT));
-        expected.add(new Vector(new Square(new XPosition("d"), new YPosition("4")), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(5), new Position(5)), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(4), new Position(4)), Direction.DOWN_LEFT));
 
-        expected.add(new Vector(new Square(new XPosition("e"), new YPosition("7")), Direction.UP_LEFT));
-        expected.add(new Vector(new Square(new XPosition("d"), new YPosition("8")), Direction.UP_LEFT));
+        expected.add(new Vector(new Square(new Position(5), new Position(7)), Direction.UP_LEFT));
+        expected.add(new Vector(new Square(new Position(4), new Position(8)), Direction.UP_LEFT));
 
-        expected.add(new Vector(new Square(new XPosition("e"), new YPosition("7")), Direction.UP_LEFT));
-        expected.add(new Vector(new Square(new XPosition("d"), new YPosition("8")), Direction.UP_LEFT));
+        expected.add(new Vector(new Square(new Position(5), new Position(7)), Direction.UP_LEFT));
+        expected.add(new Vector(new Square(new Position(4), new Position(8)), Direction.UP_LEFT));
 
-        expected.add(new Vector(new Square(new XPosition("f"), new YPosition("7")), Direction.UP));
-        expected.add(new Vector(new Square(new XPosition("f"), new YPosition("8")), Direction.UP));
+        expected.add(new Vector(new Square(new Position(6), new Position(7)), Direction.UP));
+        expected.add(new Vector(new Square(new Position(6), new Position(8)), Direction.UP));
 
-        expected.add(new Vector(new Square(new XPosition("g"), new YPosition("6")), Direction.RIGHT));
-        expected.add(new Vector(new Square(new XPosition("h"), new YPosition("6")), Direction.RIGHT));
+        expected.add(new Vector(new Square(new Position(7), new Position(6)), Direction.RIGHT));
+        expected.add(new Vector(new Square(new Position(8), new Position(6)), Direction.RIGHT));
 
-        expected.add(new Vector(new Square(new XPosition("f"), new YPosition("5")), Direction.DOWN));
-        expected.add(new Vector(new Square(new XPosition("f"), new YPosition("4")), Direction.DOWN));
-        expected.add(new Vector(new Square(new XPosition("f"), new YPosition("3")), Direction.DOWN));
+        expected.add(new Vector(new Square(new Position(6), new Position(5)), Direction.DOWN));
+        expected.add(new Vector(new Square(new Position(6), new Position(4)), Direction.DOWN));
+        expected.add(new Vector(new Square(new Position(6), new Position(3)), Direction.DOWN));
 
-        expected.add(new Vector(new Square(new XPosition("b"), new YPosition("6")), Direction.LEFT));
-        expected.add(new Vector(new Square(new XPosition("c"), new YPosition("6")), Direction.LEFT));
-        expected.add(new Vector(new Square(new XPosition("d"), new YPosition("6")), Direction.LEFT));
-        expected.add(new Vector(new Square(new XPosition("e"), new YPosition("6")), Direction.LEFT));
+        expected.add(new Vector(new Square(new Position(2), new Position(6)), Direction.LEFT));
+        expected.add(new Vector(new Square(new Position(3), new Position(6)), Direction.LEFT));
+        expected.add(new Vector(new Square(new Position(4), new Position(6)), Direction.LEFT));
+        expected.add(new Vector(new Square(new Position(5), new Position(6)), Direction.LEFT));
 
         assertThat(moveList).isEqualTo(expected);
     }
@@ -209,29 +209,29 @@ public class GameTest {
         Piece king = King.blackCreate();
         Piece rook2 = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("b"), new YPosition("2")), king);
-        black.put(new Square(new XPosition("b"), new YPosition("1")), rook2);
+        black.put(new Square(new Position(2), new Position(2)), king);
+        black.put(new Square(new Position(2), new Position(1)), rook2);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece king2 = King.whiteCreate();
         Piece pawn2 = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("d"), new YPosition("2")), king2);
-        white.put(new Square(new XPosition("b"), new YPosition("3")), pawn2);
+        white.put(new Square(new Position(4), new Position(2)), king2);
+        white.put(new Square(new Position(2), new Position(3)), pawn2);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        Vectors moveList = game.movableArea(new Square(new XPosition("b"), new YPosition("2")));
+        Vectors moveList = game.movableArea(new Square(new Position(2), new Position(2)));
         Vectors expected = new Vectors(new HashSet<>());
 
-        expected.add(new Vector(new Square(new XPosition("a"), new YPosition("1")), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(1), new Position(1)), Direction.DOWN_LEFT));
 
-        expected.add(new Vector(new Square(new XPosition("a"), new YPosition("3")), Direction.UP_LEFT));
+        expected.add(new Vector(new Square(new Position(1), new Position(3)), Direction.UP_LEFT));
 
-        expected.add(new Vector(new Square(new XPosition("b"), new YPosition("3")), Direction.UP));
+        expected.add(new Vector(new Square(new Position(2), new Position(3)), Direction.UP));
 
-        expected.add(new Vector(new Square(new XPosition("a"), new YPosition("2")), Direction.LEFT));
+        expected.add(new Vector(new Square(new Position(1), new Position(2)), Direction.LEFT));
 
         assertThat(moveList).isEqualTo(expected);
     }
@@ -240,20 +240,20 @@ public class GameTest {
     void 룩_움직임() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("b"), new YPosition("7")), rook);
+        black.put(new Square(new Position(2), new Position(7)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("b"), new YPosition("2")), pawn);
+        white.put(new Square(new Position(2), new Position(2)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        game.move(new Square(new XPosition("b"), new YPosition("7")),
-                new Square(new XPosition("b"), new YPosition("3")));
+        game.move(new Square(new Position(2), new Position(7)),
+                new Square(new Position(2), new Position(3)));
 
-        Piece expected = game.getPiece(new Square(new XPosition("b"), new YPosition("3")));
+        Piece expected = game.getPiece(new Square(new Position(2), new Position(3)));
         assertThat(rook).isEqualTo(expected);
     }
 
@@ -261,17 +261,17 @@ public class GameTest {
     void 보드_룩이_폰을잡는다() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("a"), new YPosition("8")), rook);
+        black.put(new Square(new Position(1), new Position(8)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("a"), new YPosition("2")), pawn);
+        white.put(new Square(new Position(1), new Position(2)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
-        game.move(new Square(new XPosition("a"), new YPosition("8")),
-                new Square(new XPosition("a"), new YPosition("2")));
+        game.move(new Square(new Position(1), new Position(8)),
+                new Square(new Position(1), new Position(2)));
 
         assertThat(game.whitePiecesCount()).isEqualTo(0);
     }
@@ -280,18 +280,18 @@ public class GameTest {
     void 보드_룩이_폰을잡는다_유효하지않은_타겟() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("a"), new YPosition("8")), rook);
+        black.put(new Square(new Position(1), new Position(8)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("a"), new YPosition("2")), pawn);
+        white.put(new Square(new Position(1), new Position(2)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        assertThrows(RuntimeException.class, () -> game.move(new Square(new XPosition("a"), new YPosition("8")),
-                new Square(new XPosition("b"), new YPosition("2"))));
+        assertThrows(RuntimeException.class, () -> game.move(new Square(new Position(1), new Position(8)),
+                new Square(new Position(2), new Position(2))));
     }
 
     @Test
@@ -302,10 +302,10 @@ public class GameTest {
         Piece knight = Knight.blackCreate();
 
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("a"), new YPosition("8")), king);
-        black.put(new Square(new XPosition("a"), new YPosition("7")), rook);
-        black.put(new Square(new XPosition("a"), new YPosition("6")), pawn);
-        black.put(new Square(new XPosition("a"), new YPosition("5")), knight);
+        black.put(new Square(new Position(1), new Position(8)), king);
+        black.put(new Square(new Position(1), new Position(7)), rook);
+        black.put(new Square(new Position(1), new Position(6)), pawn);
+        black.put(new Square(new Position(1), new Position(5)), knight);
 
         Player blackPlayer = new DefaultPlayer(black);
 
@@ -315,10 +315,10 @@ public class GameTest {
         Piece bishop = Bishop.whiteCreate();
 
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("a"), new YPosition("2")), king2);
-        white.put(new Square(new XPosition("b"), new YPosition("3")), pawn2);
-        white.put(new Square(new XPosition("c"), new YPosition("4")), queen);
-        white.put(new Square(new XPosition("d"), new YPosition("5")), bishop);
+        white.put(new Square(new Position(1), new Position(2)), king2);
+        white.put(new Square(new Position(2), new Position(3)), pawn2);
+        white.put(new Square(new Position(3), new Position(4)), queen);
+        white.put(new Square(new Position(4), new Position(5)), bishop);
 
         Player whitePlayer = new DefaultPlayer(white);
 
@@ -332,21 +332,21 @@ public class GameTest {
     void 폰_공격() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("b"), new YPosition("4")), rook);
+        black.put(new Square(new Position(2), new Position(4)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("a"), new YPosition("2")), pawn);
+        white.put(new Square(new Position(1), new Position(2)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        game.move(new Square(new XPosition("b"), new YPosition("4")),
-                new Square(new XPosition("b"), new YPosition("3")));
+        game.move(new Square(new Position(2), new Position(4)),
+                new Square(new Position(2), new Position(3)));
 
-        boolean isValid = game.move(new Square(new XPosition("a"), new YPosition("2")),
-                new Square(new XPosition("b"), new YPosition("3")));
+        boolean isValid = game.move(new Square(new Position(1), new Position(2)),
+                new Square(new Position(2), new Position(3)));
 
         assertTrue(isValid);
     }
@@ -355,59 +355,59 @@ public class GameTest {
     void 폰_공격_불가() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("b"), new YPosition("5")), rook);
+        black.put(new Square(new Position(2), new Position(5)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("a"), new YPosition("2")), pawn);
+        white.put(new Square(new Position(1), new Position(2)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        game.move(new Square(new XPosition("b"), new YPosition("5")),
-                new Square(new XPosition("b"), new YPosition("4")));
+        game.move(new Square(new Position(2), new Position(5)),
+                new Square(new Position(2), new Position(4)));
 
-        assertThrows(RuntimeException.class, () -> game.move(new Square(new XPosition("a"), new YPosition("2")),
-                new Square(new XPosition("b"), new YPosition("3"))));
+        assertThrows(RuntimeException.class, () -> game.move(new Square(new Position(1), new Position(2)),
+                new Square(new Position(2), new Position(3))));
     }
 
     @Test
     void 폰_이동_불가() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("a"), new YPosition("5")), rook);
+        black.put(new Square(new Position(1), new Position(5)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece pawn = Pawn.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("a"), new YPosition("2")), pawn);
+        white.put(new Square(new Position(1), new Position(2)), pawn);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
 
-        game.move(new Square(new XPosition("a"), new YPosition("5")),
-                new Square(new XPosition("a"), new YPosition("3")));
+        game.move(new Square(new Position(1), new Position(5)),
+                new Square(new Position(1), new Position(3)));
 
-        assertThrows(RuntimeException.class, () -> game.move(new Square(new XPosition("a"), new YPosition("2")),
-                new Square(new XPosition("a"), new YPosition("3"))));
+        assertThrows(RuntimeException.class, () -> game.move(new Square(new Position(1), new Position(2)),
+                new Square(new Position(1), new Position(3))));
     }
 
     @Test
     void 킹_사망() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("b"), new YPosition("4")), rook);
+        black.put(new Square(new Position(2), new Position(4)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece king = King.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("b"), new YPosition("2")), king);
+        white.put(new Square(new Position(2), new Position(2)), king);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
-        boolean isContinue = game.move(new Square(new XPosition("b"), new YPosition("4")),
-                new Square(new XPosition("b"), new YPosition("2")));
+        boolean isContinue = game.move(new Square(new Position(2), new Position(4)),
+                new Square(new Position(2), new Position(2)));
 
         assertFalse(isContinue);
     }
@@ -416,17 +416,17 @@ public class GameTest {
     void 킹_사망하지_않음() {
         Piece rook = Rook.blackCreate();
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("b"), new YPosition("4")), rook);
+        black.put(new Square(new Position(2), new Position(4)), rook);
         Player blackPlayer = new DefaultPlayer(black);
 
         Piece king = King.whiteCreate();
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("b"), new YPosition("2")), king);
+        white.put(new Square(new Position(2), new Position(2)), king);
         Player whitePlayer = new DefaultPlayer(white);
 
         Game game = new Game(whitePlayer, blackPlayer);
-        boolean isContinue = game.move(new Square(new XPosition("b"), new YPosition("4")),
-                new Square(new XPosition("b"), new YPosition("3")));
+        boolean isContinue = game.move(new Square(new Position(2), new Position(4)),
+                new Square(new Position(2), new Position(3)));
 
         assertTrue(isContinue);
     }
@@ -439,10 +439,10 @@ public class GameTest {
         Piece pawn4 = Pawn.blackCreate();
 
         Map<Square, Piece> black = new HashMap<>();
-        black.put(new Square(new XPosition("a"), new YPosition("8")), pawn1);
-        black.put(new Square(new XPosition("a"), new YPosition("7")), pawn2);
-        black.put(new Square(new XPosition("a"), new YPosition("6")), pawn3);
-        black.put(new Square(new XPosition("b"), new YPosition("5")), pawn4);
+        black.put(new Square(new Position(1), new Position(8)), pawn1);
+        black.put(new Square(new Position(1), new Position(7)), pawn2);
+        black.put(new Square(new Position(1), new Position(6)), pawn3);
+        black.put(new Square(new Position(2), new Position(5)), pawn4);
 
         Player blackPlayer = new DefaultPlayer(black);
 
@@ -452,10 +452,10 @@ public class GameTest {
         Piece wPawn4 = Pawn.whiteCreate();
 
         Map<Square, Piece> white = new HashMap<>();
-        white.put(new Square(new XPosition("a"), new YPosition("2")), wPawn1);
-        white.put(new Square(new XPosition("b"), new YPosition("3")), wPawn2);
-        white.put(new Square(new XPosition("c"), new YPosition("4")), wPawn3);
-        white.put(new Square(new XPosition("d"), new YPosition("5")), wPawn4);
+        white.put(new Square(new Position(1), new Position(2)), wPawn1);
+        white.put(new Square(new Position(2), new Position(3)), wPawn2);
+        white.put(new Square(new Position(3), new Position(4)), wPawn3);
+        white.put(new Square(new Position(4), new Position(5)), wPawn4);
 
         Player whitePlayer = new DefaultPlayer(white);
 

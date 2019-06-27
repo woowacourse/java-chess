@@ -20,53 +20,53 @@ public class RookTest {
 
     @Test
     void 룩_이동_위_오른쪽2() {
-        Vectors movableSquares = rook.movableArea(new Square(new XPosition("a"), new YPosition("1")));
+        Vectors movableSquares = rook.movableArea(new Square(new Position(1), new Position(1)));
         Vectors expectedSquares = new Vectors(new HashSet<>());
-        expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("2")), Direction.UP));
-        expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("3")), Direction.UP));
-        expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("4")), Direction.UP));
-        expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("5")), Direction.UP));
-        expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("6")), Direction.UP));
-        expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("7")), Direction.UP));
-        expectedSquares.add(new Vector(new Square(new XPosition("a"), new YPosition("8")), Direction.UP));
+        expectedSquares.add(new Vector(new Square(new Position(1), new Position(2)), Direction.UP));
+        expectedSquares.add(new Vector(new Square(new Position(1), new Position(3)), Direction.UP));
+        expectedSquares.add(new Vector(new Square(new Position(1), new Position(4)), Direction.UP));
+        expectedSquares.add(new Vector(new Square(new Position(1), new Position(5)), Direction.UP));
+        expectedSquares.add(new Vector(new Square(new Position(1), new Position(6)), Direction.UP));
+        expectedSquares.add(new Vector(new Square(new Position(1), new Position(7)), Direction.UP));
+        expectedSquares.add(new Vector(new Square(new Position(1), new Position(8)), Direction.UP));
 
-        expectedSquares.add(new Vector(new Square(new XPosition("b"), new YPosition("1")), Direction.RIGHT));
-        expectedSquares.add(new Vector(new Square(new XPosition("c"), new YPosition("1")), Direction.RIGHT));
-        expectedSquares.add(new Vector(new Square(new XPosition("d"), new YPosition("1")), Direction.RIGHT));
-        expectedSquares.add(new Vector(new Square(new XPosition("e"), new YPosition("1")), Direction.RIGHT));
-        expectedSquares.add(new Vector(new Square(new XPosition("f"), new YPosition("1")), Direction.RIGHT));
-        expectedSquares.add(new Vector(new Square(new XPosition("g"), new YPosition("1")), Direction.RIGHT));
-        expectedSquares.add(new Vector(new Square(new XPosition("h"), new YPosition("1")), Direction.RIGHT));
+        expectedSquares.add(new Vector(new Square(new Position(2), new Position(1)), Direction.RIGHT));
+        expectedSquares.add(new Vector(new Square(new Position(3), new Position(1)), Direction.RIGHT));
+        expectedSquares.add(new Vector(new Square(new Position(4), new Position(1)), Direction.RIGHT));
+        expectedSquares.add(new Vector(new Square(new Position(5), new Position(1)), Direction.RIGHT));
+        expectedSquares.add(new Vector(new Square(new Position(6), new Position(1)), Direction.RIGHT));
+        expectedSquares.add(new Vector(new Square(new Position(7), new Position(1)), Direction.RIGHT));
+        expectedSquares.add(new Vector(new Square(new Position(8), new Position(1)), Direction.RIGHT));
 
         assertThat(movableSquares).isEqualTo(expectedSquares);
     }
 
     @Test
     void 룩_이동_사방() {
-        Vectors movableVectors = rook.movableArea(new Square(new XPosition("c"), new YPosition("3")));
+        Vectors movableVectors = rook.movableArea(new Square(new Position(3), new Position(3)));
         Vectors expectedVectors = new Vectors(new HashSet<>());
         //위
-        expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("4")), Direction.UP));
-        expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("5")), Direction.UP));
-        expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("6")), Direction.UP));
-        expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("7")), Direction.UP));
-        expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("8")), Direction.UP));
+        expectedVectors.add(new Vector(new Square(new Position(3), new Position(4)), Direction.UP));
+        expectedVectors.add(new Vector(new Square(new Position(3), new Position(5)), Direction.UP));
+        expectedVectors.add(new Vector(new Square(new Position(3), new Position(6)), Direction.UP));
+        expectedVectors.add(new Vector(new Square(new Position(3), new Position(7)), Direction.UP));
+        expectedVectors.add(new Vector(new Square(new Position(3), new Position(8)), Direction.UP));
 
         //아래
-        expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("1")), Direction.DOWN));
-        expectedVectors.add(new Vector(new Square(new XPosition("c"), new YPosition("2")), Direction.DOWN));
+        expectedVectors.add(new Vector(new Square(new Position(3), new Position(1)), Direction.DOWN));
+        expectedVectors.add(new Vector(new Square(new Position(3), new Position(2)), Direction.DOWN));
 
         //왼쪽
-        expectedVectors.add(new Vector(new Square(new XPosition("a"), new YPosition("3")), Direction.LEFT));
-        expectedVectors.add(new Vector(new Square(new XPosition("b"), new YPosition("3")), Direction.LEFT));
+        expectedVectors.add(new Vector(new Square(new Position(1), new Position(3)), Direction.LEFT));
+        expectedVectors.add(new Vector(new Square(new Position(2), new Position(3)), Direction.LEFT));
 
 
         //오른쪽
-        expectedVectors.add(new Vector(new Square(new XPosition("d"), new YPosition("3")), Direction.RIGHT));
-        expectedVectors.add(new Vector(new Square(new XPosition("e"), new YPosition("3")), Direction.RIGHT));
-        expectedVectors.add(new Vector(new Square(new XPosition("f"), new YPosition("3")), Direction.RIGHT));
-        expectedVectors.add(new Vector(new Square(new XPosition("g"), new YPosition("3")), Direction.RIGHT));
-        expectedVectors.add(new Vector(new Square(new XPosition("h"), new YPosition("3")), Direction.RIGHT));
+        expectedVectors.add(new Vector(new Square(new Position(4), new Position(3)), Direction.RIGHT));
+        expectedVectors.add(new Vector(new Square(new Position(5), new Position(3)), Direction.RIGHT));
+        expectedVectors.add(new Vector(new Square(new Position(6), new Position(3)), Direction.RIGHT));
+        expectedVectors.add(new Vector(new Square(new Position(7), new Position(3)), Direction.RIGHT));
+        expectedVectors.add(new Vector(new Square(new Position(8), new Position(3)), Direction.RIGHT));
 
         assertThat(movableVectors).isEqualTo(expectedVectors);
     }

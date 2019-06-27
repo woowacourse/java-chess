@@ -6,8 +6,6 @@ import chess.domain.board.Vector;
 import chess.domain.board.Vectors;
 
 import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class WhitePawnPath implements Path {
     private static WhitePawnPath instance = new WhitePawnPath();

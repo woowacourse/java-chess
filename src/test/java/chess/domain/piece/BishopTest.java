@@ -20,22 +20,22 @@ public class BishopTest {
 
     @Test
     void 이동거리() {
-        Vectors movableList = bishop.movableArea(new Square(new XPosition("f"), new YPosition("6")));
+        Vectors movableList = bishop.movableArea(new Square(new Position(6), new Position(6)));
         Vectors expected = new Vectors(new HashSet<>());
-        expected.add(new Vector(new Square(new XPosition("g"), new YPosition("7")), Direction.UP_RIGHT));
-        expected.add(new Vector(new Square(new XPosition("h"), new YPosition("8")), Direction.UP_RIGHT));
+        expected.add(new Vector(new Square(new Position(7), new Position(7)), Direction.UP_RIGHT));
+        expected.add(new Vector(new Square(new Position(8), new Position(8)), Direction.UP_RIGHT));
 
-        expected.add(new Vector(new Square(new XPosition("g"), new YPosition("5")), Direction.DOWN_RIGHT));
-        expected.add(new Vector(new Square(new XPosition("h"), new YPosition("4")), Direction.DOWN_RIGHT));
+        expected.add(new Vector(new Square(new Position(7), new Position(5)), Direction.DOWN_RIGHT));
+        expected.add(new Vector(new Square(new Position(8), new Position(4)), Direction.DOWN_RIGHT));
 
-        expected.add(new Vector(new Square(new XPosition("e"), new YPosition("5")), Direction.DOWN_LEFT));
-        expected.add(new Vector(new Square(new XPosition("d"), new YPosition("4")), Direction.DOWN_LEFT));
-        expected.add(new Vector(new Square(new XPosition("c"), new YPosition("3")), Direction.DOWN_LEFT));
-        expected.add(new Vector(new Square(new XPosition("b"), new YPosition("2")), Direction.DOWN_LEFT));
-        expected.add(new Vector(new Square(new XPosition("a"), new YPosition("1")), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(5), new Position(5)), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(4), new Position(4)), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(3), new Position(3)), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(2), new Position(2)), Direction.DOWN_LEFT));
+        expected.add(new Vector(new Square(new Position(1), new Position(1)), Direction.DOWN_LEFT));
 
-        expected.add(new Vector(new Square(new XPosition("e"), new YPosition("7")), Direction.UP_LEFT));
-        expected.add(new Vector(new Square(new XPosition("d"), new YPosition("8")), Direction.UP_LEFT));
+        expected.add(new Vector(new Square(new Position(5), new Position(7)), Direction.UP_LEFT));
+        expected.add(new Vector(new Square(new Position(4), new Position(8)), Direction.UP_LEFT));
 
         assertThat(movableList).isEqualTo(expected);
 

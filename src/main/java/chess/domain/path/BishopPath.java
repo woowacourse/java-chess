@@ -1,9 +1,6 @@
 package chess.domain.path;
 
-import chess.domain.board.Direction;
-import chess.domain.board.Square;
-import chess.domain.board.Vector;
-import chess.domain.board.Vectors;
+import chess.domain.board.*;
 
 import java.util.HashSet;
 import java.util.Set;

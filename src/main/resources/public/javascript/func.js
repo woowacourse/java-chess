@@ -105,8 +105,8 @@ function drawMovable(data) {
     MODE = MOVE
     $(`#${SOURCE}`).addClass("selected")
     movableArea.vectors.forEach(function(area){
-        let x = area.square.x.xPosition;
-        let y = area.square.y.yPosition;
+        let x = area.square.x.position;
+        let y = area.square.y.position;
 
         $(`#${x}${y}`).addClass("movable")
     })
@@ -142,9 +142,9 @@ function drawMove(data) {
         window.location.href = "/end?loser=" + target.turn
         return
     }
-    let x = target.x.xPosition;
-    let y = target.y.yPosition;
-    let targetId = x+y
+    let x = target.x.position;
+    let y = target.y.position;
+    let targetId = ""+x+y
     let piece = $(`#${SOURCE}`).text()
     let diePiece = $(`#${targetId}`).text()
     let deadArea = $("#"+targetId).attr("team") + "_dead"

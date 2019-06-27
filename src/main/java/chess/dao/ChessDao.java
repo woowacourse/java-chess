@@ -86,7 +86,7 @@ public class ChessDao {
         while(rs.next()) {
             String source = rs.getString("source");
             String target = rs.getString("target");
-            historyDtos.add(new HistoryDto(source, target));
+            historyDtos.add(new HistoryDto(Integer.parseInt(source), Integer.parseInt(target)));
         }
         return historyDtos;
     }

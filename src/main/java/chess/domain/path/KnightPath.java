@@ -6,8 +6,6 @@ import chess.domain.board.Vector;
 import chess.domain.board.Vectors;
 
 import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class KnightPath implements Path {
     private static KnightPath instance = new KnightPath();

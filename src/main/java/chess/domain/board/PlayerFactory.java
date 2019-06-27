@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerFactory {

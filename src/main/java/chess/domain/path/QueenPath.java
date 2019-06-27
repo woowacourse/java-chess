@@ -6,7 +6,6 @@ import chess.domain.board.Vector;
 import chess.domain.board.Vectors;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public class QueenPath implements Path {
     private static QueenPath instance = new QueenPath();
