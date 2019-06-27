@@ -1,6 +1,5 @@
 package chess.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +30,7 @@ public class PieceDAO {
 	private void addPiece(int roomNumber, Piece piece) throws SQLException {
 		try (PreparedStatement pstmt = DatabaseConnection.getConnection().prepareStatement(INSERT_PIECE)) {
 			pstmt.setString(1, piece.getPlayer().name());
-			pstmt.setString(2, piece.getChessName());
+			pstmt.setString(2, piece.getChessType());
 			pstmt.setInt(3, piece.getCoordinateX());
 			pstmt.setInt(4, piece.getCoordinateY());
 			pstmt.setInt(5, roomNumber);
