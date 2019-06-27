@@ -65,7 +65,7 @@ function postChessPieceMoving(source, target) {
                 requestChessScores();
             }
         })
-        .catch(alertError);
+        .catch(alert);
 }
 
 function clickChessBlock(chessBlockId) {
@@ -94,10 +94,6 @@ function clickChessBlock(chessBlockId) {
     source = source.replace("chess-block", "");
 
     postChessPieceMoving(source, target);
-}
-
-function alertError(error) {
-    alert(error);
 }
 
 function mapChessPieces(response) {
