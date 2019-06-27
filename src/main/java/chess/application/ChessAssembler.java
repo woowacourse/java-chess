@@ -63,9 +63,9 @@ public class ChessAssembler {
         return new ChessBoardDto(rows, chessBoard.isGameOver());
     }
 
-    private static void appendChessPiece(Map<Position, ChessPiece> board, int i, StringBuilder row) {
+    private static void appendChessPiece(Map<Position, ChessPiece> board, int rowIndex, StringBuilder row) {
         for (int j = 0; j < 8; j++) {
-            ChessPiece chessPiece = board.get(Position.of(i, j));
+            ChessPiece chessPiece = board.get(Position.of(rowIndex, j));
             row.append(chessPieceFunctionMap.get(chessPiece.getClass()).apply(chessPiece));
         }
     }
