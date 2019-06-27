@@ -1,10 +1,10 @@
-package chess.utils;
+package chess.dao;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.sql.DataSource;
 
-public class DbUtil {
+public class ChessJdbcConnector {
     private static final String server = "localhost";
     private static final String userName = "chess";
     private static final String password = "1234";

@@ -47,7 +47,7 @@ CREATE TABLE `piece`
     `x`       int(11)    DEFAULT NULL,
     `y`       int(11)    DEFAULT NULL,
     `game_id` int(11)    DEFAULT NULL,
-    `team`    tinyint(4) DEFAULT NULL,
+    `team`    tinyint(1) DEFAULT NULL,
     PRIMARY KEY (`unit_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 4
@@ -64,7 +64,7 @@ SET character_set_client = utf8mb4;
 CREATE TABLE `user`
 (
     `user_id` int(11)    NOT NULL AUTO_INCREMENT,
-    `team`    tinyint(4) NOT NULL,
+    `team`    tinyint(1) NOT NULL,
     `game_id` int(11)    NOT NULL,
     PRIMARY KEY (`user_id`)
 ) ENGINE = InnoDB

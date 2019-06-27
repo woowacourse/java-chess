@@ -10,14 +10,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PieceDaoTest {
-    private DataSource dataSource = DbUtil.getDataSource("chess_test");
+    private DataSource dataSource = ChessJdbcConnector.getDataSource("chess_test");
     private PieceDao pieceDao;
 
     @BeforeEach
@@ -26,21 +25,21 @@ public class PieceDaoTest {
     }
 
     @Test
-    void create() throws SQLException {
+    void create() {
         int gameId = 1;
         PieceDto pieceDto = new PieceDto(0, 0, "ROOK", true);
         pieceDao.add(gameId, pieceDto);
     }
 
     @Test
-    void read() throws SQLException {
+    void read() {
         int gameId = 1;
         List<PieceDto> pieceDtos = pieceDao.findPieceById(gameId);
         assertThat(pieceDtos.get(0)).isEqualTo(new PieceDto(3, 3, "ROOK", true));
     }
 
     @Test
-    void update() throws SQLException {
+    void update() {
         int gameId = 1;
         Point start = new Point(0, 0);
         Point end = new Point(3, 3);
@@ -54,7 +53,7 @@ public class PieceDaoTest {
     }
 
     @Test
-    void delete() throws SQLException {
+    void delete() {
         int gameId = 1;
         Point target = new Point(3, 3);
         pieceDao.insertBlank(gameId, target);
