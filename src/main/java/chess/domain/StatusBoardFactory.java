@@ -29,9 +29,6 @@ public class StatusBoardFactory {
 
     private static double getScorePawn(Map<Spot, Piece> pieces) {
         List<Spot> pawnSpots = getPawnSpots(pieces);
-        if (pawnSpots.isEmpty()) {
-            return 0;
-        }
         sortPawnByXSpot(pawnSpots);
         List<Integer> sameLinePawnCounts = getSameLinePawnCounts(pawnSpots);
 
@@ -51,6 +48,11 @@ public class StatusBoardFactory {
 
     private static List<Integer> getSameLinePawnCounts(List<Spot> pawnSpots) {
         List<Integer> results = new ArrayList<>();
+
+        if (pawnSpots.isEmpty()) {
+            return results;
+        }
+
         int count = 1;
         for (int i = 1; i < pawnSpots.size(); i++) {
             if (pawnSpots.get(i).isSameRaw(pawnSpots.get(i - 1))) {
@@ -60,6 +62,7 @@ public class StatusBoardFactory {
                 count = 1;
             }
         }
+
         results.add(count);
         return results;
     }
