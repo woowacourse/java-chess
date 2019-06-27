@@ -10,33 +10,33 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BoardDto {
-    List<spotPieceDto> blackTeam;
-    List<spotPieceDto> whiteTeam;
+    List<SpotPieceDto> blackTeam;
+    List<SpotPieceDto> whiteTeam;
 
     public BoardDto(Board board) {
         blackTeam = makeSpots(board.getTeamPieces(Team.BLACK));
         whiteTeam = makeSpots(board.getTeamPieces(Team.WHITE));
     }
 
-    private List<spotPieceDto> makeSpots(Map<Spot, Piece> teamPiece) {
+    private List<SpotPieceDto> makeSpots(Map<Spot, Piece> teamPiece) {
         return teamPiece.entrySet().stream()
-                .map(spotPieceEntry -> new spotPieceDto(spotPieceEntry.getKey().getIndex(), String.valueOf(spotPieceEntry.getValue().getPieceType())))
+                .map(spotPieceEntry -> new SpotPieceDto(spotPieceEntry.getKey().getIndex(), String.valueOf(spotPieceEntry.getValue().getPieceType())))
                 .collect(Collectors.toList());
     }
 
-    public List<spotPieceDto> getBlackTeam() {
+    public List<SpotPieceDto> getBlackTeam() {
         return blackTeam;
     }
 
-    public void setBlackTeam(List<spotPieceDto> blackTeam) {
+    public void setBlackTeam(List<SpotPieceDto> blackTeam) {
         this.blackTeam = blackTeam;
     }
 
-    public List<spotPieceDto> getWhiteTeam() {
+    public List<SpotPieceDto> getWhiteTeam() {
         return whiteTeam;
     }
 
-    public void setWhiteTeam(List<spotPieceDto> whiteTeam) {
+    public void setWhiteTeam(List<SpotPieceDto> whiteTeam) {
         this.whiteTeam = whiteTeam;
     }
 }
