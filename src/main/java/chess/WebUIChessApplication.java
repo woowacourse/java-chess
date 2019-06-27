@@ -29,6 +29,8 @@ public class WebUIChessApplication {
 
         get("/newgame.html", gameController::start);
 
+        get("/show", gameController::show);
+
         get("/game.html", gameController::continueGame);
     }
 

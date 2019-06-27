@@ -6,6 +6,7 @@ import chess.model.boardcreatestrategy.ContinueGameCreateStrategy;
 import chess.model.boardcreatestrategy.NewGameCreateStrategy;
 import chess.model.dao.ChessDAO;
 import chess.model.dto.BoardDTO;
+import chess.service.GameService;
 import spark.Request;
 import spark.Response;
 
@@ -18,24 +19,36 @@ import java.util.Objects;
 import static chess.WebUIChessApplication.render;
 
 public class GameController {
+    public static final int START_TURN = 1;
+    private GameService gameService;
+
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
+    }
 
     public Object start(Request req, Response res) throws SQLException {
-        ChessDAO chessDAO = ChessDAO.getInstance();
-        chessDAO.deleteAll();
-        chessDAO.insertInit();
-        Map<String, Object> model = new HashMap<>();
-        model.put("board", chessDAO.selectByTurn(1).getPieces());
+        gameService.deleteAll();
+        gameService.insertInit();
 
-        ChessGame game = new ChessGame(new NewGameCreateStrategy(), 1);
-
-        ScoreResult scoreResult = game.calculateScore();
-
-        model.put("score", scoreResult);
-        model.put("currentTeam", game.getCurrentTeam());
+        int turn = START_TURN;
+        ChessGame game = gameService.initGame(turn);
 
         req.session().attribute("game", game);
+        res.redirect("/show?turn="+turn);
+        return null;
+    }
 
-        return render(model, "newgame.html");
+    public Object show(Request req, Response res) throws SQLException {
+        Map<String, Object> model = new HashMap<>();
+
+        ChessGame game = req.session().attribute("game");
+        ScoreResult scoreResult = game.calculateScore();
+        int turn = Integer.parseInt(req.queryParams("turn"));
+
+        model.put("board", gameService.findByTurn(turn));
+        model.put("score", scoreResult);
+        model.put("currentTeam", game.getCurrentTeam());
+        return render(model, "game.html");
     }
 
     public Object continueGame(Request req, Response res) throws SQLException {
@@ -44,8 +57,7 @@ public class GameController {
         String source = req.queryParams("source");
         String target = req.queryParams("target");
 
-        ChessGame game;
-        game = req.session().attribute("game");
+        ChessGame game = req.session().attribute("game");
 
         if (!Objects.isNull(source)) { // 게임 진행
             model.put("winner", game.getCurrentTeam());
