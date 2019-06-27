@@ -1,10 +1,10 @@
 package model.board;
 
-import model.game.Player;
+import model.game.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,20 +17,11 @@ class HandTest {
     @BeforeEach
     void setUp() {
         testBoard = new Board();
-        testHand = new Hand(Player.WHITE, testBoard);
+        testHand = new Hand(Color.WHITE, testBoard);
     }
 
     @Test
-    void getPossibleDestinationsPawn() {
-        assertThat(
-                testHand.getPossibleDestinations(Position.of("b2"))
-                        .stream()
-                        .sorted()
-        ).isEqualTo(Arrays.asList(Position.of("b3"), Position.of("b4")));
-    }
-
-    @Test
-    void getPossibleDestinationsRookInTheMiddle() {
+    void getPossibleDestinationsOfRookInTheMiddle() {
         testBoard.movePieceFromTo(Position.of("a1"), Position.of("e4"));
         testBoard.movePieceFromTo(Position.of("b1"), Position.of("e6"));
         testBoard.movePieceFromTo(Position.of("c1"), Position.of("b4"));
@@ -38,12 +29,32 @@ class HandTest {
                 testHand.getPossibleDestinations(Position.of("e4"))
                         .stream()
                         .sorted()
-                        .collect(Collectors.toList())
         ).isEqualTo(
-                Stream.of("e3", "e5", "c4", "d4", "f4", "g4", "h4")
+                Stream.of("e3", "c4", "d4", "f4", "g4", "h4", "e5")
                         .map(Position::of)
-                        .sorted()
                         .collect(Collectors.toList())
         );
+    }
+
+    @Test
+    void moveEnemysPieceTest() {
+        assertThat(
+                testHand.tryToMoveFromTo(Position.of("d7"), Position.of("d5"))
+        ).isFalse();
+    }
+
+    @Test
+    void illegalMovementTest() {
+        assertThat(
+                testHand.tryToMoveFromTo(Position.of("a1"), Position.of("a2"))
+        ).isFalse();
+    }
+
+    @Test
+    void getPossibleDestinationsOfPawnWhenHasNotMovedButBlockedInTheWayByOwnPiece() {
+        testBoard.movePieceFromTo(Position.of("a1"), Position.of("b3"));
+        assertThat(
+                testHand.getPossibleDestinations(Position.of("b2"))
+        ).isEqualTo(new ArrayList());
     }
 }

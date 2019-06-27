@@ -3,6 +3,7 @@ package model.game;
 import model.board.Board;
 import model.board.Hand;
 import model.board.Position;
+import model.game.exception.FailedToRestoreGameException;
 import model.piece.Pawn;
 import model.piece.Piece;
 import service.LogVO;
@@ -36,9 +37,7 @@ public class Game {
     }
 
     public boolean isOwnPiece(final Position position) {
-        return this.board.getColorOfPieceAt(position)
-                        .map(color -> color == this.turn.team())
-                        .orElse(false);
+        return hands.get(this.turn.team()).isOwnPiece(position);
     }
 
     public List<Position> getPossibleDestinationsOf(final Position src) {

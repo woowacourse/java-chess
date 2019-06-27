@@ -1,6 +1,10 @@
 package model.game;
 
 import model.board.Position;
+import model.game.exception.FailedToCreateLogTableException;
+import model.game.exception.FailedToEraseLogException;
+import model.game.exception.FailedToRetrieveLogException;
+import model.game.exception.FailedToWriteLogException;
 import service.LogVO;
 
 import java.sql.*;
