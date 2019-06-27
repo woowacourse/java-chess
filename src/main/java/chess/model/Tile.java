@@ -12,7 +12,7 @@ public class Tile {
     // TODO: 2019-06-18 인스턴스 변수 줄이기
     private Coordinate coordinateX;
     private Coordinate coordinateY;
-    private Optional<Piece> piece;
+    private Optional<Piece> piece ;
 
     public Tile(String coordinates, Optional<Piece> piece) {
         validateInput(coordinates);
