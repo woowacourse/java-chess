@@ -1,8 +1,6 @@
-package chess.domain.chess;
+package chess.domain.chess.unit;
 
-import chess.domain.UnitInformation;
-import chess.domain.chess.unit.Pawn;
-import chess.domain.chess.unit.Unit;
+import chess.domain.chess.game.Team;
 import chess.domain.geometric.Position;
 
 import java.util.HashMap;
@@ -58,7 +56,7 @@ public class UnitScoreBoard {
     public Double sumPawnScore(Team team) {
         double sum = 0;
 
-        for (int y = Position.MIN_POSITION; y < Position.MAX_POSITION; y++) {
+        for (int y = Position.MIN_POSITION; y <= Position.MAX_POSITION; y++) {
             long numOfPawns = getNumberOfPawnsByColumn(y, team);
             sum += numOfPawns * ratio(numOfPawns);
         }

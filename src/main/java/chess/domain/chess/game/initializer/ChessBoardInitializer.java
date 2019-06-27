@@ -1,6 +1,6 @@
-package chess.domain.chess.initializer;
+package chess.domain.chess.game.initializer;
 
-import chess.domain.chess.Team;
+import chess.domain.chess.game.Team;
 import chess.domain.chess.unit.*;
 import chess.domain.geometric.Position;
 
@@ -59,7 +59,7 @@ public class ChessBoardInitializer implements Initializer {
     }
 
     private void initPawn(Map<Position, Unit> map, int row, Team team) {
-        for (int i = Position.MIN_POSITION; i < Position.MAX_POSITION; i++) {
+        for (int i = Position.MIN_POSITION; i <= Position.MAX_POSITION; i++) {
             map.put(Position.create(i, row), new Pawn(team));
             map.put(Position.create(i, row), new Pawn(team));
         }

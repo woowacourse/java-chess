@@ -1,12 +1,12 @@
-package chess.domain.chess;
+package chess.domain.chess.unit;
 
-import chess.domain.chess.unit.*;
+import chess.domain.chess.game.Team;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class ChessUnitMapper {
+public class UnitSymbolMapper {
     private static Map<String, Unit> map = new HashMap<>();
 
     static {

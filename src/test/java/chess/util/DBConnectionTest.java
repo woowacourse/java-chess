@@ -1,6 +1,6 @@
 package chess.util;
 
-import chess.db.DBConnection;
+import chess.domain.chess.dao.DBConnection;
 import org.junit.jupiter.api.Test;
 
 public class DBConnectionTest {

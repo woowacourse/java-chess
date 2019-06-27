@@ -1,6 +1,6 @@
 package view;
 
-import chess.domain.chess.Team;
+import chess.domain.chess.game.Team;
 import chess.domain.chess.unit.Unit;
 
 public class UnitMapper {

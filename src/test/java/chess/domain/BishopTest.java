@@ -1,8 +1,9 @@
 package chess.domain;
 
-import chess.domain.chess.Team;
+import chess.domain.chess.game.Team;
 import chess.domain.chess.unit.Bishop;
 import chess.domain.chess.unit.Unit;
+import chess.domain.chess.unit.UnitInformation;
 import chess.domain.geometric.Position;
 import chess.domain.geometric.Vector;
 import org.junit.jupiter.api.Test;

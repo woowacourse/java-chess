@@ -75,7 +75,7 @@
     </style>
 </head>
 <body>
-<input id="chessGame" type="hidden" value='{{{chessGame}}}'>
+<input id="chessBoard" type="hidden" value='{{{chessBoard}}}'>
 
 
 <div id="chessBoardBox"></div>
@@ -100,8 +100,8 @@
         }
 
 
-        var chessGame = document.querySelector('#chessGame').value;
-        var pieces = JSON.parse(chessGame).units;
+        var chessBoard = document.querySelector('#chessBoard').value;
+        var pieces = JSON.parse(chessBoard).units;
 
         for (var key in pieces) {
             var classText = pieces[key].team.toLowerCase() + "_" + pieces[key].name.toLowerCase();

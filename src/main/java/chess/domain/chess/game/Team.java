@@ -1,4 +1,4 @@
-package chess.domain.chess;
+package chess.domain.chess.game;
 
 import java.util.function.Function;
 

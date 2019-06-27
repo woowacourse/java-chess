@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.chess.Team;
+import chess.domain.chess.game.Team;
 import chess.domain.chess.unit.Pawn;
 import chess.domain.geometric.Position;
 import org.assertj.core.api.Assertions;

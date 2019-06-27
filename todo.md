@@ -6,7 +6,7 @@
     - chessboard -> string 변환 함수를 다른 클래스로 보낸다.
     - string -> chessboard 변환 함수를 다른 클래스로 보낸다.
 
-- chessGame 클래스의 몇 기능을 다른 클래스로 보낸다.
+- chessBoard 클래스의 몇 기능을 다른 클래스로 보낸다.
     - 점수 계산하는 기능을 다른 클래스로 보낸다.
 
 

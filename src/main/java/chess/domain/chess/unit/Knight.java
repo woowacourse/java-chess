@@ -1,7 +1,6 @@
 package chess.domain.chess.unit;
 
-import chess.domain.UnitInformation;
-import chess.domain.chess.Team;
+import chess.domain.chess.game.Team;
 import chess.domain.geometric.Vector;
 import chess.util.DoubleCompare;
 

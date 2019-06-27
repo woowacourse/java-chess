@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.chess.unit;
 
 public enum UnitInformation {
     PAWN("P", 1),

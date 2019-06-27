@@ -1,7 +1,7 @@
-package chess.domain.chess;
+package chess.domain.chess.game;
 
 import chess.domain.chess.exception.*;
-import chess.domain.chess.initializer.Initializer;
+import chess.domain.chess.game.initializer.Initializer;
 import chess.domain.chess.unit.King;
 import chess.domain.chess.unit.Knight;
 import chess.domain.chess.unit.Pawn;
@@ -14,11 +14,11 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-public class ChessGame {
+public class ChessBoard {
     private Map<Position, Unit> units;
     private Team present;
 
-    public ChessGame(Initializer initializer) {
+    public ChessBoard(Initializer initializer) {
         this.units = initializer.create();
         this.present = initializer.createTeam();
 

@@ -6,15 +6,15 @@ import java.util.Objects;
 
 public class Position {
     public static final int MIN_POSITION = 0;
-    public static final int MAX_POSITION = 8;
+    public static final int MAX_POSITION = 7;
     private static final List<List<Position>> positions;
 
     static {
         positions = new ArrayList<>();
 
-        for (int i = MIN_POSITION; i < MAX_POSITION; i++) {
+        for (int i = MIN_POSITION; i <= MAX_POSITION; i++) {
             List<Position> row = new ArrayList<>();
-            for (int j = MIN_POSITION; j < MAX_POSITION; j++) {
+            for (int j = MIN_POSITION; j <= MAX_POSITION; j++) {
                 row.add(new Position(i, j));
             }
             positions.add(row);
@@ -36,7 +36,7 @@ public class Position {
     }
 
     private void validatePosition(final int x) {
-        if (x < MIN_POSITION || x >= MAX_POSITION) {
+        if (x < MIN_POSITION || x > MAX_POSITION) {
             throw new IllegalPositionException("범위를 벗어난 포지션입니다.");
         }
     }
