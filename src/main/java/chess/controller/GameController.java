@@ -11,15 +11,12 @@ import spark.Request;
 import spark.Response;
 
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static chess.WebUIChessApplication.render;
 
 public class GameController {
-    public static final int START_TURN = 1;
+    private static final int START_TURN = 1;
     private GameService gameService;
 
     public GameController(GameService gameService) {
@@ -42,16 +39,18 @@ public class GameController {
         Map<String, Object> model = new HashMap<>();
 
         ChessGame game = req.session().attribute("game");
-        ScoreResult scoreResult = game.calculateScore();
         int turn = Integer.parseInt(req.queryParams("turn"));
+        ScoreResult scoreResult = game.calculateScore();
+        List<String> board = gameService.findByTurn(turn).getPieces();
 
-        model.put("board", gameService.findByTurn(turn));
+        model.put("board", board);
         model.put("score", scoreResult);
         model.put("currentTeam", game.getCurrentTeam());
         return render(model, "game.html");
     }
 
-    public Object continueGame(Request req, Response res) throws SQLException {
+
+    public Object play(Request req, Response res) throws SQLException {
         Map<String, Object> model = new HashMap<>();
         ChessDAO chessDAO = ChessDAO.getInstance();
         String source = req.queryParams("source");
@@ -73,20 +72,28 @@ public class GameController {
 
             model.put("board", boardDTO.getPieces());
         }
-        if (Objects.isNull(source)) { // 이어서하기 첫 화면
-            BoardDTO boardDTO = chessDAO.selectByTurn(chessDAO.getLatestTurn());
-            game = new ChessGame(new ContinueGameCreateStrategy(boardDTO), chessDAO.getLatestTurn());
-            model.put("currentTeam", game.getCurrentTeam());
 
-            Collections.reverse(boardDTO.getPieces());
-
-            model.put("board", boardDTO.getPieces());
-        }
         req.session().attribute("game", game);
 
         ScoreResult scoreResult = game.calculateScore();
         model.put("score", scoreResult);
 
         return render(model, "game.html");
+    }
+
+    public Object continueGame(Request req, Response res) throws SQLException {
+        Map<String, Object> model = new HashMap<>();
+
+        int latestTurn = gameService.getLatestTurn();
+        BoardDTO boardDTO = gameService.findByTurn(latestTurn);
+        ChessGame game = gameService.continueGame(boardDTO, latestTurn);
+        ScoreResult scoreResult = game.calculateScore();
+
+        model.put("score", scoreResult);
+        model.put("currentTeam", game.getCurrentTeam());
+        model.put("board", boardDTO.getPieces());
+
+        res.redirect("show?turn="+latestTurn);
+        return null;
     }
 }

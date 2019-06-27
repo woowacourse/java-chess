@@ -31,7 +31,9 @@ public class WebUIChessApplication {
 
         get("/show", gameController::show);
 
-        get("/game.html", gameController::continueGame);
+        get("/game.html", gameController::play);
+
+        get("continueGame", gameController::continueGame);
     }
 
     public static String render(Map<String, Object> model, String templatePath) {
