@@ -16,6 +16,6 @@ class SquareTest {
 
     @Test
     void String_입력_팩토리메소드와_Enum_입력_팩토리메소드_비교() {
-        assertThat(Square.of("a1")).isEqualTo(Square.of(Column._1, Row.A));
+        assertThat(Square.of("a1")).isEqualTo(Square.of(Column.Col_1, Row.Row_A));
     }
 }

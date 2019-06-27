@@ -3,14 +3,14 @@ package chess.model;
 import java.util.Arrays;
 
 public enum Row {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h");
+    Row_A("a"),
+    Row_B("b"),
+    Row_C("c"),
+    Row_D("d"),
+    Row_E("e"),
+    Row_F("f"),
+    Row_G("g"),
+    Row_H("h");
 
     private static final String NEXT_ERROR_MSG = "원하는 방향의 행 좌표가 없습니다.";
     private static final String NOT_FOUND_SYMBOL_ERROR_MSG = "일치하는 SYMBOL을 가진 Row가 없습니다.";
@@ -22,8 +22,8 @@ public enum Row {
     }
 
     boolean hasNext(Direction direction) {
-        return this.calculateAscii() + direction.getRowShiftUnit() >= A.calculateAscii()
-                && this.calculateAscii() + direction.getRowShiftUnit() <= H.calculateAscii();
+        return this.calculateAscii() + direction.getRowShiftUnit() >= Row_A.calculateAscii()
+                && this.calculateAscii() + direction.getRowShiftUnit() <= Row_H.calculateAscii();
     }
 
     Row next(Direction direction) {

@@ -3,14 +3,14 @@ package chess.model;
 import java.util.Arrays;
 
 public enum Column {
-    _1("1"),
-    _2("2"),
-    _3("3"),
-    _4("4"),
-    _5("5"),
-    _6("6"),
-    _7("7"),
-    _8("8");
+    Col_1("1"),
+    Col_2("2"),
+    Col_3("3"),
+    Col_4("4"),
+    Col_5("5"),
+    Col_6("6"),
+    Col_7("7"),
+    Col_8("8");
 
     private static final String INVALID_ELEMENT_ERROR_MSG = "원하는 방향의 행 좌표가 없습니다.";
     private static final String NOT_FOUND_SYMBOL_ERROR_MSG = "일치하는 SYMBOL을 가진 Column이 없습니다.";
@@ -22,8 +22,8 @@ public enum Column {
     }
 
     boolean hasNext(Direction direction) {
-        return this.calculateAscii() + direction.getColumnShiftUnit() >= _1.calculateAscii()
-                && this.calculateAscii() + direction.getColumnShiftUnit() <= _8.calculateAscii();
+        return this.calculateAscii() + direction.getColumnShiftUnit() >= Col_1.calculateAscii()
+                && this.calculateAscii() + direction.getColumnShiftUnit() <= Col_8.calculateAscii();
     }
 
     Column next(Direction direction) {

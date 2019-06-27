@@ -13,7 +13,7 @@ public class QueenTest {
     @Test
     void 퀸_Navigator_생성_테스트() {
         Piece piece = new Queen(Side.BLACK);
-        Square square = Square.of(Column._2, Row.G);
+        Square square = Square.of(Column.Col_2, Row.Row_G);
         int distance = Integer.MAX_VALUE;
         List<SquareNavigator> squareNavigators = new ArrayList<>();
         squareNavigators.add(new SquareNavigator(Direction.NE, square, distance));

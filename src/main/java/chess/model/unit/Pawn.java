@@ -29,8 +29,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isFirstMove(Square beginSquare) {
-        return (getSide() == Side.BLACK && beginSquare.isAtColumn(Column._7)) ||
-                (getSide() == Side.WHITE && beginSquare.isAtColumn(Column._2));
+        return (getSide() == Side.BLACK && beginSquare.isAtColumn(Column.Col_7)) ||
+                (getSide() == Side.WHITE && beginSquare.isAtColumn(Column.Col_2));
     }
 
     @Override

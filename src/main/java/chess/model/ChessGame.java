@@ -47,7 +47,7 @@ public class ChessGame {
 
     private void addPawnScore(Side side) {
         List<Iterator<Square>> iterator = Arrays.stream(Row.values())
-                .map(row -> new SquareNavigator(Direction.N, Square.of(Column._1, row), Integer.MAX_VALUE))
+                .map(row -> new SquareNavigator(Direction.N, Square.of(Column.Col_1, row), Integer.MAX_VALUE))
                 .map(n -> n.findSquares().iterator())
                 .collect(Collectors.toList());
 

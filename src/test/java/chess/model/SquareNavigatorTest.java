@@ -16,12 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SquareNavigatorTest {
     @Test
     void 최소거리_값을_입력했을때_에러가_발생하지_않는지_테스트() {
-        assertDoesNotThrow(() -> new SquareNavigator(Direction.NW, Square.of(Column._5, Row.D), 1));
+        assertDoesNotThrow(() -> new SquareNavigator(Direction.NW, Square.of(Column.Col_5, Row.Row_D), 1));
     }
 
     @Test
     void 최소거리보다_작은_값을_입력했을때_에러_테스트() {
-        assertThrows(InvalidRangeException.class, () -> new SquareNavigator(Direction.NW, Square.of(Column._5, Row.D), 0));
+        assertThrows(InvalidRangeException.class, () -> new SquareNavigator(Direction.NW, Square.of(Column.Col_5, Row.Row_D), 0));
     }
 
     @Test
@@ -29,10 +29,10 @@ public class SquareNavigatorTest {
         Board board = new Board();
         board.initialize(() -> {
             Map<Square, Piece> map = new HashMap<>();
-            map.put(Square.of(Column._1, Row.H), new Rook(Side.WHITE));
+            map.put(Square.of(Column.Col_1, Row.Row_H), new Rook(Side.WHITE));
             return map;
         });
-        SquareNavigator navigator = new SquareNavigator(Direction.E, Square.of(Column._1, Row.H), 1);
+        SquareNavigator navigator = new SquareNavigator(Direction.E, Square.of(Column.Col_1, Row.Row_H), 1);
         assertThat(navigator.findSquares(board)).isEqualTo(new ArrayList<>());
     }
 
@@ -42,11 +42,11 @@ public class SquareNavigatorTest {
         Board board = new Board();
         board.initialize(() -> {
             Map<Square, Piece> map = new HashMap<>();
-            map.put(Square.of(Column._1, Row.G), new Rook(Side.WHITE));
+            map.put(Square.of(Column.Col_1, Row.Row_G), new Rook(Side.WHITE));
             return map;
         });
-        SquareNavigator navigator = new SquareNavigator(Direction.E, Square.of(Column._1, Row.G), 1);
-        assertThat(navigator.findSquares(board)).isEqualTo(Arrays.asList(Square.of(Column._1, Row.H)));
+        SquareNavigator navigator = new SquareNavigator(Direction.E, Square.of(Column.Col_1, Row.Row_G), 1);
+        assertThat(navigator.findSquares(board)).isEqualTo(Arrays.asList(Square.of(Column.Col_1, Row.Row_H)));
     }
 
     @Test
@@ -54,15 +54,15 @@ public class SquareNavigatorTest {
         Board board = new Board();
         board.initialize(() -> {
             Map<Square, Piece> map = new HashMap<>();
-            map.put(Square.of(Column._1, Row.A), new Rook(Side.WHITE));
+            map.put(Square.of(Column.Col_1, Row.Row_A), new Rook(Side.WHITE));
             return map;
         });
-        SquareNavigator navigator = new SquareNavigator(Direction.E, Square.of(Column._1, Row.A), Integer.MAX_VALUE);
+        SquareNavigator navigator = new SquareNavigator(Direction.E, Square.of(Column.Col_1, Row.Row_A), Integer.MAX_VALUE);
         assertThat(navigator.findSquares(board))
                 .isEqualTo(Arrays.asList(
-                        Square.of(Column._1, Row.B), Square.of(Column._1, Row.C), Square.of(Column._1, Row.D)
-                        , Square.of(Column._1, Row.E), Square.of(Column._1, Row.F), Square.of(Column._1, Row.G)
-                        , Square.of(Column._1, Row.H)));
+                        Square.of(Column.Col_1, Row.Row_B), Square.of(Column.Col_1, Row.Row_C), Square.of(Column.Col_1, Row.Row_D)
+                        , Square.of(Column.Col_1, Row.Row_E), Square.of(Column.Col_1, Row.Row_F), Square.of(Column.Col_1, Row.Row_G)
+                        , Square.of(Column.Col_1, Row.Row_H)));
     }
 
     @Test
@@ -70,14 +70,14 @@ public class SquareNavigatorTest {
         Board board = new Board();
         board.initialize(() -> {
             Map<Square, Piece> map = new HashMap<>();
-            map.put(Square.of(Column._1, Row.A), new Bishop(Side.WHITE));
-            map.put(Square.of(Column._4, Row.D), new Pawn(Side.BLACK));
+            map.put(Square.of(Column.Col_1, Row.Row_A), new Bishop(Side.WHITE));
+            map.put(Square.of(Column.Col_4, Row.Row_D), new Pawn(Side.BLACK));
             return map;
         });
-        SquareNavigator navigator = new SquareNavigator(Direction.NE, Square.of(Column._1, Row.A), Integer.MAX_VALUE);
+        SquareNavigator navigator = new SquareNavigator(Direction.NE, Square.of(Column.Col_1, Row.Row_A), Integer.MAX_VALUE);
         assertThat(navigator.findSquares(board))
                 .isEqualTo(Arrays.asList(
-                        Square.of(Column._2, Row.B), Square.of(Column._3, Row.C), Square.of(Column._4, Row.D)));
+                        Square.of(Column.Col_2, Row.Row_B), Square.of(Column.Col_3, Row.Row_C), Square.of(Column.Col_4, Row.Row_D)));
     }
 
     @Test
@@ -85,13 +85,13 @@ public class SquareNavigatorTest {
         Board board = new Board();
         board.initialize(() -> {
             Map<Square, Piece> map = new HashMap<>();
-            map.put(Square.of(Column._1, Row.A), new Bishop(Side.WHITE));
-            map.put(Square.of(Column._4, Row.D), new Pawn(Side.WHITE));
+            map.put(Square.of(Column.Col_1, Row.Row_A), new Bishop(Side.WHITE));
+            map.put(Square.of(Column.Col_4, Row.Row_D), new Pawn(Side.WHITE));
             return map;
         });
-        SquareNavigator navigator = new SquareNavigator(Direction.NE, Square.of(Column._1, Row.A), Integer.MAX_VALUE);
+        SquareNavigator navigator = new SquareNavigator(Direction.NE, Square.of(Column.Col_1, Row.Row_A), Integer.MAX_VALUE);
         assertThat(navigator.findSquares(board))
                 .isEqualTo(Arrays.asList(
-                        Square.of(Column._2, Row.B), Square.of(Column._3, Row.C)));
+                        Square.of(Column.Col_2, Row.Row_B), Square.of(Column.Col_3, Row.Row_C)));
     }
 }

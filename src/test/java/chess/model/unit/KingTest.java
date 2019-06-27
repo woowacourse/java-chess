@@ -13,7 +13,7 @@ class KingTest {
     @Test
     void 킹_Navigator_생성_테스트() {
         Piece piece = new King(Side.BLACK);
-        Square square = Square.of(Column._2, Row.G);
+        Square square = Square.of(Column.Col_2, Row.Row_G);
         int distance = 1;
         List<SquareNavigator> squareNavigators = new ArrayList<>();
         squareNavigators.add(new SquareNavigator(Direction.N, square, distance));

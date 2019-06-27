@@ -27,7 +27,7 @@ public class ChessGameTest {
         Board board = new Board();
         board.initialize(() -> {
             Map<Square, Piece> map = new HashMap<>();
-            map.put(Square.of(Column._7, Row.C), new King(Side.WHITE));
+            map.put(Square.of(Column.Col_7, Row.Row_C), new King(Side.WHITE));
             return map;
         });
         ChessGame game = new ChessGame(board, Side.WHITE);
@@ -39,8 +39,8 @@ public class ChessGameTest {
         Board board = new Board();
         board.initialize(() -> {
             Map<Square, Piece> map = new HashMap<>();
-            map.put(Square.of(Column._7, Row.C), new King(Side.WHITE));
-            map.put(Square.of(Column._6, Row.C), new King(Side.WHITE));
+            map.put(Square.of(Column.Col_7, Row.Row_C), new King(Side.WHITE));
+            map.put(Square.of(Column.Col_6, Row.Row_C), new King(Side.WHITE));
             return map;
         });
         ChessGame game = new ChessGame(board, Side.WHITE);
@@ -60,9 +60,9 @@ public class ChessGameTest {
         Board board = new Board();
         board.initialize(() -> {
             Map<Square, Piece> map = new HashMap<>();
-            map.put(Square.of(Column._7, Row.C), new Pawn(Side.WHITE));
-            map.put(Square.of(Column._8, Row.C), new Pawn(Side.WHITE));
-            map.put(Square.of(Column._6, Row.C), new Pawn(Side.WHITE));
+            map.put(Square.of(Column.Col_7, Row.Row_C), new Pawn(Side.WHITE));
+            map.put(Square.of(Column.Col_8, Row.Row_C), new Pawn(Side.WHITE));
+            map.put(Square.of(Column.Col_6, Row.Row_C), new Pawn(Side.WHITE));
             return map;
         });
         ChessGame game = new ChessGame(board, Side.WHITE);

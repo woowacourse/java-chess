@@ -82,8 +82,8 @@ public class ChessDaoTest {
         ChessGame game = new ChessGame(board, Side.BLACK);
         try {
             chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
-            assertDoesNotThrow(() -> chessDao.updateMove(Square.of(Column._7, Row.C)
-                    , Square.of(Column._5, Row.C)));
+            assertDoesNotThrow(() -> chessDao.updateMove(Square.of(Column.Col_7, Row.Row_C)
+                    , Square.of(Column.Col_5, Row.Row_C)));
         } catch (SQLException e) {
             e.printStackTrace();
         }

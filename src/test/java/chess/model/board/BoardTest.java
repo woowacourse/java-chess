@@ -50,12 +50,12 @@ public class BoardTest {
         Board board = new Board();
         board.initialize(() -> {
             Map<Square, Piece> map = new HashMap<>();
-            map.put(Square.of(Column._1, Row.D), new Queen(Side.BLACK));
-            map.put(Square.of(Column._2, Row.H), new Pawn(Side.WHITE));
-            map.put(Square.of(Column._3, Row.B), new King(Side.BLACK));
-            map.put(Square.of(Column._4, Row.C), new Knight(Side.WHITE));
-            map.put(Square.of(Column._5, Row.F), new Bishop(Side.BLACK));
-            map.put(Square.of(Column._7, Row.E), new Rook(Side.WHITE));
+            map.put(Square.of(Column.Col_1, Row.Row_D), new Queen(Side.BLACK));
+            map.put(Square.of(Column.Col_2, Row.Row_H), new Pawn(Side.WHITE));
+            map.put(Square.of(Column.Col_3, Row.Row_B), new King(Side.BLACK));
+            map.put(Square.of(Column.Col_4, Row.Row_C), new Knight(Side.WHITE));
+            map.put(Square.of(Column.Col_5, Row.Row_F), new Bishop(Side.BLACK));
+            map.put(Square.of(Column.Col_7, Row.Row_E), new Rook(Side.WHITE));
             return map;
         });
         Map<String, String> pieceMap = board.createPieceMap();

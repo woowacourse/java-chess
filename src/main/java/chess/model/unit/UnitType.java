@@ -7,7 +7,7 @@ public enum UnitType {
     QUEEN("Q", 9.0),
     ROOK("R", 5.0),
     KNIGHT("N", 2.5),
-    BISHOP("B", 3.0),
+    BISHOP("Row_B", 3.0),
     PAWN("P", 1.0);
 
     private static final String INVALID_ELEMENT_ERROR_MSG = "원하는 문자의 말이 없습니다.";

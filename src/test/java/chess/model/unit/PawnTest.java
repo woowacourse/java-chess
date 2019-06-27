@@ -13,7 +13,7 @@ public class PawnTest {
     @Test
     void WHITE_폰_초기값_이동_Navigator_생성_테스트() {
         Piece piece = new Pawn(Side.WHITE);
-        Square square = Square.of(Column._2, Row.G);
+        Square square = Square.of(Column.Col_2, Row.Row_G);
         int distance = 2;
         List<SquareNavigator> squareNavigators = new ArrayList<>();
         squareNavigators.add(new SquareNavigator(Direction.N, square, distance));
@@ -24,7 +24,7 @@ public class PawnTest {
     @Test
     void WHITE_폰_초기값_아닐때_이동_Navigator_생성_테스트() {
         Piece piece = new Pawn(Side.WHITE);
-        Square square = Square.of(Column._3, Row.G);
+        Square square = Square.of(Column.Col_3, Row.Row_G);
         int distance = 1;
         List<SquareNavigator> squareNavigators = new ArrayList<>();
         squareNavigators.add(new SquareNavigator(Direction.N, square, distance));
@@ -35,7 +35,7 @@ public class PawnTest {
     @Test
     void BLACK_폰_초기값_이동_Navigator_생성_테스트() {
         Piece piece = new Pawn(Side.BLACK);
-        Square square = Square.of(Column._7, Row.G);
+        Square square = Square.of(Column.Col_7, Row.Row_G);
         int distance = 2;
         List<SquareNavigator> squareNavigators = new ArrayList<>();
         squareNavigators.add(new SquareNavigator(Direction.S, square, distance));
@@ -46,7 +46,7 @@ public class PawnTest {
     @Test
     void BLACK_폰_초기값_아닐때_이동_Navigator_생성_테스트() {
         Piece piece = new Pawn(Side.BLACK);
-        Square square = Square.of(Column._6, Row.G);
+        Square square = Square.of(Column.Col_6, Row.Row_G);
         int distance = 1;
         List<SquareNavigator> squareNavigators = new ArrayList<>();
         squareNavigators.add(new SquareNavigator(Direction.S, square, distance));
@@ -57,7 +57,7 @@ public class PawnTest {
     @Test
     void WHITE_폰_공격_Navigator_생성_테스트() {
         Piece piece = new Pawn(Side.WHITE);
-        Square square = Square.of(Column._3, Row.G);
+        Square square = Square.of(Column.Col_3, Row.Row_G);
         int distance = 1;
         List<SquareNavigator> squareNavigators = new ArrayList<>();
         squareNavigators.add(new SquareNavigator(Direction.NE, square, distance));
@@ -69,7 +69,7 @@ public class PawnTest {
     @Test
     void BLACK_폰_공격_Navigator_생성_테스트() {
         Piece piece = new Pawn(Side.BLACK);
-        Square square = Square.of(Column._6, Row.G);
+        Square square = Square.of(Column.Col_6, Row.Row_G);
         int distance = 1;
         List<SquareNavigator> squareNavigators = new ArrayList<>();
         squareNavigators.add(new SquareNavigator(Direction.SE, square, distance));
