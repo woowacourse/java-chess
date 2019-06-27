@@ -27,6 +27,10 @@ public class Pawn extends Piece {
 
     @Override
     public void checkPossibleMove(Board board, Position startPosition, Navigator navigator) {
+        if (isReverse(navigator)) {
+            throw new RuntimeException("폰은 뒤로 움직일 수 없습니다.");
+        }
+
         if (isFirstMove(startPosition)) {
             firstRule.judge(navigator);
             return;
@@ -36,8 +40,14 @@ public class Pawn extends Piece {
             attactRule.judge(navigator);
             return;
         }
-
         rule.judge(navigator);
+    }
+
+    private boolean isReverse(Navigator navigator){
+        if(this.aliance == Aliance.WHITE){
+            return navigator.isReverse();
+        }
+        return !navigator.isReverse();
     }
 
     private boolean isFirstMove(Position startPosition) {
@@ -50,12 +60,18 @@ public class Pawn extends Piece {
     private boolean isAttackMove(Board board, Position startPosition) {
         Position attackablePosition1 = startPosition.movePosition(1,1);
         Position attackablePosition2 = startPosition.movePosition(1,-1);
-
-        Piece attackablePiece1 = board.pieceValueOf(attackablePosition1.toString());
-        Piece attackablePiece2 = board.pieceValueOf(attackablePosition2.toString());
+        Piece attackablePiece1 = getAttackablePiece(board,attackablePosition1);
+        Piece attackablePiece2 = getAttackablePiece(board,attackablePosition2);
 
         return ((attackablePiece1 != null) && (attackablePiece1.getAliance() != board.getThisTurn()))
                 || ((attackablePiece2 != null) && (attackablePiece2.getAliance() != board.getThisTurn()));
+    }
+
+    private Piece getAttackablePiece(Board board,Position position){
+        if(position == null){
+            return null;
+        }
+        return board.pieceValueOf(position.toString());
     }
 
     @Override

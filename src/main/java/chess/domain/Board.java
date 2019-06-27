@@ -67,6 +67,9 @@ public class Board {
     }
 
     public Piece pieceValueOf(String position) {
+        if(position ==null){
+            return null;
+        }
         return pieces.get(Position.valueOf(position));
     }
 
