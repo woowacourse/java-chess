@@ -11,6 +11,11 @@ class RelativeChessPointTest {
     }
 
     @Test
+    void of_캐시여부() {
+        assertThat(RelativeChessPoint.of(-1, 1) == RelativeChessPoint.of(-1, 1)).isTrue();
+    }
+
+    @Test
     void toUnit_0_0() {
         assertThat(RelativeChessPoint.of(0, 0).toUnit())
                 .isEqualTo(RelativeChessPoint.of(0, 0));

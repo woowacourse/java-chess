@@ -8,18 +8,16 @@ public class ChessPoint {
     public static final int START = 1;
     public static final int END = 8;
     private static final String ERROR_OUT_OF_SCOPE = "범위를 벗어났습니다.";
-    private static final int BASE_FOR_DECIMAL_NUMBER_IN_HASH_FUNC = 10;
-
-    private static Map<Integer, ChessPoint> pointPool = new HashMap<>();
-    private final int row;
-    private final int column;
+    private static Map<String, ChessPoint> pointPool = new HashMap<>();
+    private final ChessRow row;
+    private final ChessColumn column;
 
     private ChessPoint(int row, int column) {
         if (isOutOfScope(row, column)) {
             throw new IllegalArgumentException(ERROR_OUT_OF_SCOPE);
         }
-        this.row = row;
-        this.column = column;
+        this.row = ChessRow.of(row);
+        this.column = ChessColumn.of(column);
     }
 
     private boolean isOutOfScope(int row, int column) {
@@ -31,48 +29,44 @@ public class ChessPoint {
     }
 
     public static ChessPoint of(int row, int column) {
-        int key = hashPoint(row, column);
+        String key = hashPoint(row, column);
 
         if (pointPool.containsKey(key)) {
             return pointPool.get(key);
         }
 
-        ChessPoint chessPoint = new ChessPoint(row, column);
-        pointPool.put(key, chessPoint);
-        return chessPoint;
+        ChessPoint newChessPoint = new ChessPoint(row, column);
+        pointPool.put(key, newChessPoint);
+        return newChessPoint;
     }
 
-    private static int hashPoint(int row, int column) {
-        return makeDecimalNumber(row, column);
-    }
-
-    private static int makeDecimalNumber(int row, int column) {
-        return row * BASE_FOR_DECIMAL_NUMBER_IN_HASH_FUNC + column;
+    private static String hashPoint(int row, int column) {
+        return "" + row + column;
     }
 
     public RelativeChessPoint minus(ChessPoint source) {
-        return RelativeChessPoint.of(row - source.row, column - source.column);
+        return RelativeChessPoint.of(row.minus(source.row), column.minus(source.column));
     }
 
     public ChessPoint moveBy(RelativeChessPoint relativePoint) {
-        return ChessPoint.of(row + relativePoint.getRelativeRow(), column + relativePoint.getRelativeColumn());
+        return ChessPoint.of(row.plus(relativePoint.getRelativeRow()), column.plus(relativePoint.getRelativeColumn()));
     }
 
     public int getRow() {
-        return row;
+        return row.getRow();
     }
 
     public int getColumn() {
-        return column;
+        return column.getColumn();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final ChessPoint chessPoint = (ChessPoint) o;
-        return row == chessPoint.row &&
-                column == chessPoint.column;
+        final ChessPoint that = (ChessPoint) o;
+        return Objects.equals(row, that.row) &&
+                Objects.equals(column, that.column);
     }
 
     @Override

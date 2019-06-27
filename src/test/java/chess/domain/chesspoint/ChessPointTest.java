@@ -12,6 +12,11 @@ class ChessPointTest {
     }
 
     @Test
+    void of_캐시여부() {
+        assertThat(ChessPoint.of(1, 1) == ChessPoint.of(1, 1)).isTrue();
+    }
+
+    @Test
     void of_row_왼쪽으로벗어남() {
         assertThrows(IllegalArgumentException.class, () -> ChessPoint.of(ChessPoint.START - 1, 1));
     }
@@ -29,11 +34,6 @@ class ChessPointTest {
     @Test
     void of_column_위쪽으로벗어남() {
         assertThrows(IllegalArgumentException.class, () -> ChessPoint.of(1, ChessPoint.END + 1));
-    }
-
-    @Test
-    void of_캐시여부() {
-        assertThat(ChessPoint.of(1, 1) == ChessPoint.of(1, 1)).isTrue();
     }
 
     @Test

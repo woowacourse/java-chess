@@ -1,26 +1,40 @@
 package chess.domain.chesspoint;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class RelativeChessPoint {
-    private final int relativeRow;
-    private final int relativeColumn;
+    private static Map<String, RelativeChessPoint> relativePointPool = new HashMap<>();
+    private final ChessRow relativeRow;
+    private final ChessColumn relativeColumn;
 
     private RelativeChessPoint(int relativeRow, int relativeColumn) {
-        this.relativeRow = relativeRow;
-        this.relativeColumn = relativeColumn;
+        this.relativeRow = ChessRow.of(relativeRow);
+        this.relativeColumn = ChessColumn.of(relativeColumn);
     }
 
     public static RelativeChessPoint of(int relativeRow, int relativeColumn) {
-        return new RelativeChessPoint(relativeRow, relativeColumn);
+        String key = hashPoint(relativeRow, relativeColumn);
+        if (relativePointPool.containsKey(key)) {
+            return relativePointPool.get(key);
+        }
+
+        RelativeChessPoint newRelativeChessPoint = new RelativeChessPoint(relativeRow, relativeColumn);
+        relativePointPool.put(key, newRelativeChessPoint);
+        return newRelativeChessPoint;
+    }
+
+    private static String hashPoint(int row, int column) {
+        return "" + row + column;
     }
 
     public RelativeChessPoint toUnit() {
-        if (relativeRow == 0 && relativeColumn == 0) {
+        if (relativeRow.isZero() && relativeColumn.isZero()) {
             return this;
         }
 
-        int positiveGcd = Math.abs(calcGCD(relativeRow, relativeColumn));
+        int positiveGcd = Math.abs(calcGCD(relativeRow.getRow(), relativeColumn.getColumn()));
 
         return divideBy(positiveGcd);
     }
@@ -30,7 +44,7 @@ public class RelativeChessPoint {
     }
 
     private RelativeChessPoint divideBy(int number) {
-        return RelativeChessPoint.of(relativeRow / number, relativeColumn / number);
+        return RelativeChessPoint.of(relativeRow.divide(number), relativeColumn.divide(number));
     }
 
     public static RelativeChessPoint calculateUnitDirection(ChessPoint source, ChessPoint target) {
@@ -39,11 +53,11 @@ public class RelativeChessPoint {
     }
 
     public int getRelativeRow() {
-        return relativeRow;
+        return relativeRow.getRow();
     }
 
     public int getRelativeColumn() {
-        return relativeColumn;
+        return relativeColumn.getColumn();
     }
 
     @Override
@@ -51,8 +65,8 @@ public class RelativeChessPoint {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final RelativeChessPoint that = (RelativeChessPoint) o;
-        return relativeRow == that.relativeRow &&
-                relativeColumn == that.relativeColumn;
+        return Objects.equals(relativeRow, that.relativeRow) &&
+                Objects.equals(relativeColumn, that.relativeColumn);
     }
 
     @Override
