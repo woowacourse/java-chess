@@ -2,12 +2,9 @@ package chess.domain.pieces;
 
 import chess.domain.Point;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
-
-    private static final int EMPTY_SIZE = 0;
 
     public King(Color color) {
         super(Type.KING, color);
@@ -16,22 +13,7 @@ public class King extends Piece {
     @Override
     public List<Point> action(Point source, Point target, boolean hasEnemy) {
         Direction currentDirection = calculateDirection(source, target);
-        return calculatePath(source, target, currentDirection);
-    }
-
-    private List<Point> calculatePath(Point source, Point target, Direction direction) {
-        List<Point> path = new ArrayList<>();
-        Point nextPoint = source.plusPoint(direction);
-        while (!nextPoint.equals(target)) {
-            path.add(nextPoint);
-            nextPoint = nextPoint.plusPoint(direction);
-        }
-
-        if (path.size() > EMPTY_SIZE) {
-            throw new IllegalArgumentException("갈 수 없는 위치입니다.");
-        }
-
-        return path;
+        return makePath(source, target, currentDirection);
     }
 
     private Direction calculateDirection(Point source, Point target) {

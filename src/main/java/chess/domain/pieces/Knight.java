@@ -14,10 +14,6 @@ public class Knight extends Piece {
     @Override
     public List<Point> action(Point source, Point target, boolean hasEnemy) {
         Direction currentDirection = calculateDirection(source, target);
-        return calculatePath(source, target, currentDirection);
-    }
-
-    private List<Point> calculatePath(Point source, Point target, Direction direction) {
         return new ArrayList<>();
     }
 

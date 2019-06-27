@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Point;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -15,6 +16,17 @@ public abstract class Piece {
     }
 
     abstract public List<Point> action(Point source, Point target, boolean hasEnemy);
+
+    public List<Point> makePath(Point source, Point target, Direction direction) {
+        List<Point> path = new ArrayList<>();
+        Point nextPoint = source.plusPoint(direction);
+
+        while (!nextPoint.equals(target)) {
+            path.add(nextPoint);
+            nextPoint = nextPoint.plusPoint(direction);
+        }
+        return path;
+    }
 
     public boolean equalsType(Type another) {
         return this.type == another;

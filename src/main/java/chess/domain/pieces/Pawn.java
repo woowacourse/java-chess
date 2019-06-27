@@ -17,18 +17,13 @@ public class Pawn extends Piece {
 
     @Override
     public List<Point> action(Point source, Point target, boolean hasEnemy) {
-//        if (hasEnemy) {
-//            Direction currentDirection = calculateDirection(source, target);
-//            return calculatePath(source, target, currentDirection);
-//        }
-//        Direction currentDirection = calculateAttackDirection(source, target);
-//        return calculateAttackPath(source, target, currentDirection);
-        Direction currentDirection = hasEnemy
-                ? calculateAttackDirection(source, target)
-                : calculateMoveDirection(source, target);
-        return hasEnemy
-                ? calculateAttackPath(source, target, currentDirection)
-                : calculateMovePath(source, target, currentDirection);
+        Direction currentDirection;
+        if (hasEnemy) {
+            currentDirection = calculateAttackDirection(source, target);
+            return calculateAttackPath(source, target, currentDirection);
+        }
+        currentDirection = calculateMoveDirection(source, target);
+        return calculateMovePath(source, target, currentDirection);
     }
 
     private List<Point> calculateMovePath(Point source, Point target, Direction direction) {
@@ -59,13 +54,7 @@ public class Pawn extends Piece {
     }
 
     private List<Point> calculateAttackPath(Point source, Point target, Direction direction) {
-        List<Point> path = new ArrayList<>();
-        Point nextPoint = source.plusPoint(direction);
-
-        while (!nextPoint.equals(target)) {
-            path.add(nextPoint);
-            nextPoint = nextPoint.plusPoint(direction);
-        }
+        List<Point> path = makePath(source, target, direction);
 
         if (path.size() > EMPTY) {
             throw new IllegalArgumentException("갈 수 없는 위치입니다.");

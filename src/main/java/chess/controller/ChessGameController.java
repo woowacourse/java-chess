@@ -3,7 +3,6 @@ package chess.controller;
 import chess.dao.ChessGameDao;
 import chess.dao.ChessPieceDao;
 import chess.dao.DBManager;
-import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.domain.MoveResult;
 import chess.domain.Point;
@@ -64,7 +63,6 @@ public class ChessGameController {
 
         // 데이터베이스에 초기화 배열 저장
         chessBoardDto.getPoints().entrySet().stream()
-                //.filter(point -> !point.getValue().equalsType(Type.BLANK))
                 .forEach(point -> {
                     PieceDto pieceDto = new PieceDto(point.getKey(), point.getValue().getColor(), point.getValue().getType());
                     try {
@@ -74,7 +72,7 @@ public class ChessGameController {
                     }
                 });
 
-        // 프론트앤드에 보드 정보 주기
+        // 프론트에 보드 정보 주기
         Map<String, String> initBoard = new HashMap<>();
         chessBoardDto.getPoints().entrySet().stream()
                 .filter(point -> !point.getValue().equalsType(Type.BLANK))

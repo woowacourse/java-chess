@@ -2,7 +2,6 @@ package chess.domain.pieces;
 
 import chess.domain.Point;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
@@ -14,17 +13,7 @@ public class Rook extends Piece {
     @Override
     public List<Point> action(Point source, Point target, boolean hasEnemy) {
         Direction currentDirection = calculateDirection(source, target);
-        return calculatePath(source, target, currentDirection);
-    }
-
-    private List<Point> calculatePath(Point source, Point target, Direction direction) {
-        List<Point> path = new ArrayList<>();
-        Point nextPoint = source.plusPoint(direction);
-        while (!nextPoint.equals(target)) {
-            path.add(nextPoint);
-            nextPoint = nextPoint.plusPoint(direction);
-        }
-        return path;
+        return makePath(source, target, currentDirection);
     }
 
     private Direction calculateDirection(Point source, Point target) {

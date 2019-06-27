@@ -29,6 +29,6 @@ public class ChessPieceDaoTest {
 
     @Test
     void test3_체스_말_삭제() {
-        assertDoesNotThrow(() -> chessPieceDao.deletePiece("a1"));
+        assertDoesNotThrow(() -> chessPieceDao.deletePieceByPoint("a1"));
     }
 }
