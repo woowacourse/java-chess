@@ -1,21 +1,13 @@
 package chess.controller;
 
-import chess.dao.ChessGameDao;
-import chess.dao.ChessPieceDao;
-import chess.dao.DBManager;
 import chess.domain.ChessGame;
-import chess.domain.Point;
-import chess.domain.pieces.Color;
-import chess.domain.pieces.Piece;
 import chess.domain.pieces.PointFactory;
-import chess.domain.pieces.Type;
 import chess.service.ContinueGameInitializer;
 import chess.service.NewGameInitializer;
 import chess.service.PieceMover;
 import chess.service.dto.ChessBoardDto;
 import chess.service.dto.MoveDto;
 import chess.service.dto.MoveResultDto;
-import chess.service.dto.PieceDto;
 import com.google.gson.Gson;
 import spark.Route;
 
@@ -74,21 +66,4 @@ public class ChessGameController {
         }
         return new Gson().toJson(moveResultDto);
     };
-
-    public static boolean movePiece(Point source, Point target) {
-        try {
-            Piece sourcePiece = chessGame.getPiece(source);
-            chessGame.play(source, target);
-            PieceDto sourcePieceDto = new PieceDto(source, sourcePiece.getColor(), sourcePiece.getType());
-            PieceDto targetPieceDto = new PieceDto(target, Color.NONE, Type.BLANK);
-            ChessPieceDao chessPieceDao = new ChessPieceDao(DBManager.createDataSource());
-            chessPieceDao.updatePiece(sourcePieceDto, targetPieceDto);                    // target 위치에 해당 체스 말 넣기
-            chessPieceDao.updatePiece(targetPieceDto, sourcePieceDto);                    // source 위치에 빈칸을 넣기
-            ChessGameDao chessGameDao = new ChessGameDao(DBManager.createDataSource());   // 현재 턴 데이터베이스에 저장
-            chessGameDao.updateTurn(chessGame.getColor().toString());
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 }
