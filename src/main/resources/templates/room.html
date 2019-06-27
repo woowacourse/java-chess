@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>체스 방</title>
+
+    <style>
+        .board_b {
+            background-color: brown;
+            width: 45px;
+            height: 45px;
+            display: inline-block;
+        }
+
+        .board_w {
+            background-color: burlywood;
+            width: 45px;
+            height: 45px;
+            display: inline-block;
+        }
+
+        .board_movable {
+            padding: 1px solid black;
+            background-image: url("/images/movable.png");
+        }
+
+        #board {
+            width: 360px;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+    <div>
+        방 번호 : {{id}}
+        방 이름 : {{title}}
+    </div>
+
+    <div>
+        <div>현재 턴</div>
+        <div id="turn"></div>
+        <div id="score"></div>>
+        <div id="board" data-id="{{id}}"></div>
+    </div>
+
+    <script>
+        function stateToString(pieceType) {
+            if (pieceType == "NONE") {
+                return "/images/empty.png";
+            }
+            if (pieceType == "ROOK_WHITE") {
+                return "/images/rook_w.png";
+            }
+            if (pieceType == "KNIGHT_WHITE") {
+                return "/images/knight_w.png";
+            }
+            if (pieceType == "BISHOP_WHITE") {
+                return "/images/bishop_w.png";
+            }
+            if (pieceType == "QUEEN_WHITE") {
+                return "/images/queen_w.png";
+            }
+            if (pieceType == "KING_WHITE") {
+                return "/images/king_w.png";
+            }
+            if (pieceType == "PAWN_WHITE") {
+                return "/images/pawn_w.png";
+            }
+            if (pieceType == "ROOK_BLACK") {
+                return "/images/rook_b.png";
+            }
+            if (pieceType == "KNIGHT_BLACK") {
+                return "/images/knight_b.png";
+            }
+            if (pieceType == "BISHOP_BLACK") {
+                return "/images/bishop_b.png";
+            }
+            if (pieceType == "QUEEN_BLACK") {
+                return "/images/queen_b.png";
+            }
+            if (pieceType == "KING_BLACK") {
+                return "/images/king_b.png";
+            }
+            if (pieceType == "PAWN_BLACK") {
+                return "/images/pawn_b.png";
+            }
+        }
+
+        let id = document.getElementById("board").getAttribute("data-id");
+
+        initBoard();
+
+        function initBoard() {
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener("load", drawBoard);
+            xhr.open("GET", "/board?id=" + id);
+            xhr.send();
+        }
+
+        function getScore() {
+            const xhrScore = new XMLHttpRequest();
+            xhrScore.addEventListener("load", function () {
+                console.log(xhrScore.response);
+                let score = JSON.parse(xhrScore.response);
+                document.getElementById('score').innerHTML = "SCORE [ black : " + score.BLACK + ", white : " + score.WHITE + " ]";
+            });
+            xhrScore.open("GET", "/getScore?id=" + id);
+            xhrScore.send();
+        }
+
+        function getChessResult() {
+            const xhrChessResult = new XMLHttpRequest();
+            xhrChessResult.addEventListener("load", function () {
+                if ("BLACK_WIN" === JSON.parse(xhrChessResult.response)) {
+                    alert("흑 승리!");
+                    removeEvent();  
+                }
+                if ("WHITE_WIN" === JSON.parse(xhrChessResult.response)) {
+                    alert("백 승리!");
+                    removeEvent();
+                }
+            });
+            xhrChessResult.open("GET", "/getChessResult?id=" + id);
+            xhrChessResult.send();
+        }
+
+        function removeEvent() {
+            document.querySelectorAll(".board").forEach(element => {
+                element.removeEventListener("click", drowMovable);
+            });
+        }
+
+        function initTurn() {
+            const xhrTurn = new XMLHttpRequest();
+            xhrTurn.addEventListener("load", function () {
+                document.getElementById('turn').innerHTML = xhrTurn.response;
+            });
+            xhrTurn.open("GET", "/currentTune?id=" + id);
+            xhrTurn.send();
+        }
+
+        let xAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
+        let yAxis = [8, 7, 6, 5, 4, 3, 2, 1];
+
+        function drawBoard() {
+            const states = JSON.parse(this.response);
+            console.log(states);
+            let board = document.querySelector("#board");
+            board.innerHTML = "";
+
+            let str = "";
+            let state = true;
+            let child = "";
+            yAxis.forEach(y => {
+                xAxis.forEach(x => {
+                    str = stateToString(states[x + y]);
+
+                    if (state) {
+                        child = '<img class="' + 'board board_w' + '" src="' + str + '" data-coord="' + x + y + '"/>';
+                        state = false;
+                    } else {
+                        child = '<img class="' + 'board board_b' + '" src="' + str + '" data-coord="' + x + y + '"/>';
+                        state = true;
+                    }
+                    board.innerHTML += child;
+                });
+                
+                if (state) {
+                    state = false;
+                } else {
+                    state = true;
+                }
+            });
+
+            addEvent();
+            initTurn();
+            getScore();
+            getChessResult();
+        }
+
+        function addEvent() {
+            document.querySelectorAll(".board").forEach(element => {
+                element.addEventListener("click", drowMovable);
+            });
+        }
+
+        let from;
+
+        function drowMovable() {
+            console.log(this.getAttribute("data-coord"));
+            from = this.getAttribute("data-coord");
+            const movableXhr = new XMLHttpRequest();
+            movableXhr.addEventListener("load", drawMovableItem);
+            movableXhr.open("GET", "/movable?id=" + id + "&from=" + from);
+            movableXhr.send();
+        }
+
+        function drawMovableItem() {
+            let states = JSON.parse(this.response);
+
+            states.forEach(element => {
+                document.querySelectorAll('.board').forEach(img => {
+                    img.classList.remove('board_movable');
+                });
+            });
+
+            states.forEach(element => {
+                document.querySelectorAll('.board').forEach(img => {
+                    if (img.getAttribute('data-coord') === element) {
+                        img.classList.add('board_movable');
+                    }
+                });
+            });
+
+            addToCilckEvent();
+        }
+
+        function addToCilckEvent() {
+            document.querySelectorAll(".board_movable").forEach(element => {
+                element.removeEventListener("click", drowMovable);
+                element.addEventListener("click", moveFromTo);
+            });
+        }
+
+        function moveFromTo() {
+            let to = this.getAttribute("data-coord");
+            const moveXhr = new XMLHttpRequest();
+            moveXhr.addEventListener("load", drawBoard);
+            moveXhr.open("PUT", "/move-piece?id=" + id + "&from=" + from + "&to=" + to);
+            moveXhr.send();
+        }
+
+    </script>
+</body>
+
+</html>
