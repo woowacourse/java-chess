@@ -10,9 +10,9 @@ public class ConnectionFactory {
     private static final String USER_NAME = "skygl";
     private static final String PASSWORD = "1234";
 
-    private static Connection con = null;
+    public static Connection getConnection() {
+        Connection con = null;
 
-    public static Connection connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {

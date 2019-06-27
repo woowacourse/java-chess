@@ -17,7 +17,7 @@ public class ChessService {
     private static ChessDao chessDao;
 
     static {
-        Connection con = ConnectionFactory.connect();
+        Connection con = ConnectionFactory.getConnection();
         chessDao = new ChessDao(con);
     }
 

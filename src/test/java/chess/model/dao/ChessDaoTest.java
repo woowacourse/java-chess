@@ -24,7 +24,7 @@ public class ChessDaoTest {
 
     @BeforeEach
     void setUp() {
-        Connection con = ConnectionFactory.connect();
+        Connection con = ConnectionFactory.getConnection();
         chessDao = new ChessDao(con);
     }
 
