@@ -65,15 +65,6 @@ public enum ChessPiece {
 		throw new IllegalArgumentException("해당 이미지를 찾을 수 없습니다.");
 	}
 
-	public static ChessPiece getChessPiece(Player player, Type type) {
-		for (ChessPiece chessPiece : ChessPiece.values()) {
-			if (isSameChessPiece(chessPiece, player, type)) {
-				return chessPiece;
-			}
-		}
-		throw new IllegalArgumentException("해당 체스 말을 찾을 수 없습니다.");
-	}
-
 	private static boolean isSameChessPiece(ChessPiece chessPiece, Player player, Type type) {
 		return (chessPiece.player.equals(player) && chessPiece.type.equals(type));
 	}

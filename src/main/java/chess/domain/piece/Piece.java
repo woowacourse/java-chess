@@ -27,10 +27,6 @@ public abstract class Piece {
 		return position;
 	}
 
-	public ChessPiece getChessPiece() {
-		return ChessPiece.getChessPiece(player, type);
-	}
-
 	public String getPieceImage() {
 		return ChessPiece.getPieceImage(this.player, this.type);
 	}
