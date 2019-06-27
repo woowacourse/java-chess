@@ -1,9 +1,13 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.domain.Game;
+import chess.domain.PieceFactory;
+import chess.domain.Point;
+import chess.domain.Team;
 import chess.domain.pieces.Piece;
 import chess.dto.PieceDto;
 import chess.service.ChessGameService;
+import org.javatuples.Pair;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -25,7 +29,15 @@ public class ChessGameController {
         return render(model, "main.html");
     }
 
-    private Map<String, Object> putBoardStatus(ChessGameService chessGameService, Game game) {
+    public Object start(Request req, Response res) {
+        Pair<Game, Integer> game = chessGameService.createNewGame();
+
+        Map<String, Object> model = putBoardStatus(game.getValue0());
+        req.session().attribute("gameId", game.getValue1());
+        return render(model, "home.html");
+    }
+
+    private Map<String, Object> putBoardStatus(Game game) {
         Map<String, Object> model = new HashMap<>();
         model.put("board", chessGameService.convertBoard(game.getBoard()));
         model.put("turn", game.getTurn() == Team.WHITE ? "백" : "흑");
@@ -34,32 +46,18 @@ public class ChessGameController {
         return model;
     }
 
-    public Object start(Request req, Response res) {
-        Game game = new Game(BoardFactory.init());
-        chessGameService.createNewGame();
-        int gameId = chessGameService.findMaxId();
-
-        List<PieceDto> pieceDtos = game.toDto();
-        for (PieceDto pieceDto : pieceDtos) {
-            chessGameService.add(gameId, pieceDto);
-        }
-        req.session().attribute("gameId", gameId);
-        Map<String, Object> model = putBoardStatus(chessGameService, game);
-        return render(model, "home.html");
-    }
-
     public Object continueGame(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
         int gameId = Integer.parseInt(req.params(":gameId"));
         req.session().attribute("gameId", gameId);
-        Game game = getGame(chessGameService, gameId);
+        Game game = getGame(gameId);
 
         if (!game.isKingAlive()) {
             game.changeTurn();
             model.put("gameEnd", true);
             model.put("winner", game.getTurn());
         }
-        model.putAll(putBoardStatus(chessGameService, game));
+        model.putAll(putBoardStatus(game));
         return render(model, "home.html");
     }
 
@@ -70,21 +68,14 @@ public class ChessGameController {
         Point end = new Point(target);
 
         int gameId = req.session().attribute("gameId");
-        Game game = getGame(chessGameService, gameId);
-
-        game.move(start, end);
-        chessGameService.move(gameId, start, end);
+        Game game = chessGameService.move(gameId, start, end);
 
         Map<String, Object> model = new HashMap<>();
         if (!game.isKingAlive()) {
             model.put("gameEnd", true);
             model.put("winner", game.getTurn());
         }
-
-        game.changeTurn();
-        chessGameService.toggleTurnById(gameId);
-
-        model.putAll(putBoardStatus(chessGameService, game));
+        model.putAll(putBoardStatus(game));
 
         return render(model, "home.html");
     }
@@ -107,7 +98,7 @@ public class ChessGameController {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
-    private Game getGame(ChessGameService chessGameService, int gameId) {
+    private Game getGame(int gameId) {
         List<PieceDto> pieceDtos = chessGameService.findPieceById(gameId);
         Map<Point, Piece> board = new HashMap<>();
         pieceDtos.forEach(dto -> board.put(new Point(dto.getX(), dto.getY()),

@@ -13,7 +13,7 @@ public enum Type {
     BISHOP(3.0, Direction.diagonalDirection(), Bishop::new),
     QUEEN(9.0, Direction.everyDirection(), Queen::new),
     KING(0.0, Direction.everyDirection(), King::new),
-    BLANK(0.0, Direction.blankDirection(), (T) -> new Blank());
+    BLANK(0.0, Direction.blankDirection(), (t) -> new Blank());
 
     private double score;
     private List<Direction> directions;

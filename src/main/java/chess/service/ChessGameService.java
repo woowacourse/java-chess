@@ -2,15 +2,14 @@ package chess.service;
 
 import chess.dao.GameDao;
 import chess.dao.PieceDao;
-import chess.domain.Point;
+import chess.domain.*;
 import chess.domain.pieces.Piece;
 import chess.dto.PieceDto;
 import chess.utils.DBUtil;
 import com.google.gson.Gson;
+import org.javatuples.Pair;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,73 +31,58 @@ public class ChessGameService {
     }
 
     public List<Integer> findAllId() {
-        try {
-            return gameDao.findAllId();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+        return gameDao.findAllId();
     }
 
-    public void createNewGame() {
-        try {
-            gameDao.createNewGame();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public Pair<Game, Integer> createNewGame() {
+        Game game = new Game(BoardFactory.init());
+        gameDao.createNewGame();
+        int gameId = findMaxId();
+        List<PieceDto> pieceDtos = game.toDto();
+        for (PieceDto pieceDto : pieceDtos) {
+            add(gameId, pieceDto);
         }
+        return Pair.with(game, gameId);
     }
 
-    public int findMaxId() {
-        try {
-            return gameDao.findMaxId();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
+    private int findMaxId() {
+        return gameDao.findMaxId();
     }
 
     public void add(int gameId, PieceDto pieceDto) {
-        try {
-            pieceDao.add(gameId, pieceDto);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        pieceDao.add(gameId, pieceDto);
     }
 
     public List<PieceDto> findPieceById(int gameId) {
-        try {
-            return pieceDao.findPieceById(gameId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+        return pieceDao.findPieceById(gameId);
     }
 
     public boolean findTurnByGameId(int gameId) {
-        try {
-            return gameDao.findTurnByGameId(gameId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return gameDao.findTurnByGameId(gameId);
     }
 
-    public void move(int gameId, Point start, Point end) {
-        try {
-            pieceDao.deletePieceByPosition(gameId, end);
-            pieceDao.updatePosition(gameId, start, end);
-            pieceDao.insertBlank(gameId, start);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Game move(int gameId, Point start, Point end) {
+        Game game = getGame(gameId);
+        game.move(start, end);
+        pieceDao.deletePieceByPosition(gameId, end);
+        pieceDao.updatePosition(gameId, start, end);
+        pieceDao.insertBlank(gameId, start);
+        toggleTurnById(game, gameId);
+        return game;
     }
 
-    public void toggleTurnById(int gameId) {
-        try {
-            gameDao.toggleTurnById(gameId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private Game getGame(int gameId) {
+        List<PieceDto> pieceDtos = findPieceById(gameId);
+        Map<Point, Piece> board = new HashMap<>();
+        pieceDtos.forEach(dto -> board.put(new Point(dto.getX(), dto.getY()),
+                PieceFactory.of(dto.getName(), dto.isTeam() ? Team.WHITE : Team.BLACK)));
+        Team turn = findTurnByGameId(gameId) ? Team.WHITE : Team.BLACK;
+        return new Game(board, turn);
+    }
+
+    private void toggleTurnById(Game game, int gameId) {
+        game.changeTurn();
+        gameDao.toggleTurnById(gameId);
     }
 
     public String convertBoard(Map<Point, Piece> board) {
