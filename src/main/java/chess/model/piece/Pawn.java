@@ -46,51 +46,39 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public Pawn cloneSelf() {
-        return new Pawn(false, team);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
         validateNull(sourceCoordinates, vector);
 
         List<String> route = new ArrayList<>();
         if ("white".equals(team)) {
-            if (vector.isMatch(movableDirectionsForWhiteTeam)) {
-                addWhenMagnitude2(sourceCoordinates, vector, route);
-                addWhenMagnitude1(sourceCoordinates, vector, route);
-
-                return new Route(route);
-            }
-            throw new IllegalArgumentException("백팀 폰은 이 방향으로 움직일 수 없습니다");
+            return createRouteWhenWhite(sourceCoordinates, vector, route);
         }
 
         if ("black".equals(team)) {
-            if (vector.isMatch(movableDirectionsForBlackTeam)) {
-                addWhenMagnitude2(sourceCoordinates, vector, route);
-                addWhenMagnitude1(sourceCoordinates, vector, route);
-
-                return new Route(route);
-            }
-            throw new IllegalArgumentException("흑팀 폰은 이 방향으로 움직일 수 없습니다");
+            return createRouteWhenBlack(sourceCoordinates, vector, route);
         }
 
         return new Route(route);
+    }
+
+    private Route createRouteWhenWhite(List<Coordinate> sourceCoordinates, Vector vector, List<String> route) {
+        if (vector.isMatch(movableDirectionsForWhiteTeam)) {
+            addWhenMagnitude2(sourceCoordinates, vector, route);
+            addWhenMagnitude1(sourceCoordinates, vector, route);
+
+            return new Route(route);
+        }
+        throw new IllegalArgumentException("백팀 폰은 이 방향으로 움직일 수 없습니다");
+    }
+
+    private Route createRouteWhenBlack(List<Coordinate> sourceCoordinates, Vector vector, List<String> route) {
+        if (vector.isMatch(movableDirectionsForBlackTeam)) {
+            addWhenMagnitude2(sourceCoordinates, vector, route);
+            addWhenMagnitude1(sourceCoordinates, vector, route);
+
+            return new Route(route);
+        }
+        throw new IllegalArgumentException("흑팀 폰은 이 방향으로 움직일 수 없습니다");
     }
 
     private void validateNull(List<Coordinate> coordinates, Vector vector) {
@@ -191,6 +179,26 @@ public class Pawn implements Piece {
             Coordinate coordinateY = coordinates.get(1);
             route.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(-1)));
         }
+    }
+
+    @Override
+    public Pawn cloneSelf() {
+        return new Pawn(false, team);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
     }
 
     @Override

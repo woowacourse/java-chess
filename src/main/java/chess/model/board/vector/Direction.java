@@ -5,10 +5,21 @@ import chess.model.board.Coordinate;
 import java.util.List;
 
 public enum Direction {
-    NORTH, SOUTH, WEST, EAST, NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST,
-    KNIGHT_NORTHWEST, KNIGHT_NORTHEAST, KNIGHT_EASTNORTH, KNIGHT_EASTSOUTH,
-    KNIGHT_SOUTHWEST, KNIGHT_SOUTHEAST, KNIGHT_WESTNORTH, KNIGHT_WESTSOUTH,
-    FAULT_DIRECTION;
+    NORTH(0, 1), SOUTH(0, -1), WEST(-1, 0), EAST(1, 0),
+    NORTHWEST(-1, 1), NORTHEAST(1, 1), SOUTHWEST(-1, -1), SOUTHEAST(1, -1),
+    KNIGHT_NORTHWEST(-1, 2), KNIGHT_NORTHEAST(1, 2),
+    KNIGHT_EASTNORTH(2, 1), KNIGHT_EASTSOUTH(2, -1),
+    KNIGHT_SOUTHWEST(-1, -2), KNIGHT_SOUTHEAST(1, -2),
+    KNIGHT_WESTNORTH(-2, 1), KNIGHT_WESTSOUTH(-2, -1),
+    FAULT_DIRECTION(0, 0);
+
+    private int unitX;
+    private int unitY;
+
+    Direction(int unitX, int unitY) {
+        this.unitX = unitX;
+        this.unitY = unitY;
+    }
 
     public static Direction findDirection(List<Coordinate> coordinates) {
         Coordinate sourceCoordinateX = coordinates.get(0);
@@ -98,5 +109,13 @@ public enum Direction {
     public static boolean isDiagonal(Direction direction) {
         return (direction == NORTHEAST) || (direction == NORTHWEST)
                 || (direction == SOUTHEAST) || (direction == SOUTHWEST);
+    }
+
+    public int getUnitX() {
+        return unitX;
+    }
+
+    public int getUnitY() {
+        return unitY;
     }
 }

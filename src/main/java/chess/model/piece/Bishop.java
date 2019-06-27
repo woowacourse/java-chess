@@ -40,38 +40,21 @@ public class Bishop implements Piece {
     @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
         validateNull(sourceCoordinates, vector);
-
-        List<String> routes = new ArrayList<>();
-
-        if (vector.isMatch(movableDirections)) {
-            Coordinate coordinateX = sourceCoordinates.get(0);
-            Coordinate coordinateY = sourceCoordinates.get(1);
-
-            if (vector.isEqualToDirection(SOUTHEAST)) {
-                for (int i = 1; i <= vector.getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(-i)));
-                }
-            }
-            if (vector.isEqualToDirection(SOUTHWEST)) {
-                for (int i = 1; i <= vector.getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(-i)));
-                }
-            }
-            if (vector.isEqualToDirection(NORTHEAST)) {
-                for (int i = 1; i <= vector.getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(i)));
-                }
-            }
-            if (vector.isEqualToDirection(NORTHWEST)) {
-                for (int i = 1; i <= vector.getMagnitude(); i++) {
-                    routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(i)));
-                }
-            }
-
-            return new Route(routes);
+        if (!vector.isMatch(movableDirections)) {
+            throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
         }
 
-        throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
+        List<String> routes = new ArrayList<>();
+        Coordinate coordinateX = sourceCoordinates.get(0);
+        Coordinate coordinateY = sourceCoordinates.get(1);
+        Direction direction = vector.getDirection();
+
+        for (int i = 1; i <= vector.getMagnitude(); i++) {
+            routes.add(coordinateX.addCoordinate(direction.getUnitX() * i)
+                    .concat(coordinateY.addCoordinate(direction.getUnitY() * i)));
+        }
+
+        return new Route(routes);
     }
 
     private void validateNull(List<Coordinate> coordinates, Vector vector) {

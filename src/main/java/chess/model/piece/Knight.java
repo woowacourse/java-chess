@@ -44,42 +44,19 @@ public class Knight implements Piece {
     @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
         validateNull(sourceCoordinates, vector);
-
-        List<String> routes = new ArrayList<>();
-
-        if (vector.isMatch(movableDirections)) {
-            Coordinate coordinateX = sourceCoordinates.get(0);
-            Coordinate coordinateY = sourceCoordinates.get(1);
-
-            if (vector.isEqualToDirection(KNIGHT_EASTNORTH)) {
-                routes.add(coordinateX.addCoordinate(2).concat(coordinateY.addCoordinate(1)));
-            }
-            if (vector.isEqualToDirection(KNIGHT_EASTSOUTH)) {
-                routes.add(coordinateX.addCoordinate(2).concat(coordinateY.addCoordinate(-1)));
-            }
-            if (vector.isEqualToDirection(KNIGHT_NORTHEAST)) {
-                routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(2)));
-            }
-            if (vector.isEqualToDirection(KNIGHT_NORTHWEST)) {
-                routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(2)));
-            }
-            if (vector.isEqualToDirection(KNIGHT_SOUTHEAST)) {
-                routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(-2)));
-            }
-            if (vector.isEqualToDirection(KNIGHT_SOUTHWEST)) {
-                routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(-2)));
-            }
-            if (vector.isEqualToDirection(KNIGHT_WESTNORTH)) {
-                routes.add(coordinateX.addCoordinate(-2).concat(coordinateY.addCoordinate(1)));
-            }
-            if (vector.isEqualToDirection(KNIGHT_WESTSOUTH)) {
-                routes.add(coordinateX.addCoordinate(-2).concat(coordinateY.addCoordinate(-1)));
-            }
-
-            return new Route(routes);
+        if (!vector.isMatch(movableDirections)) {
+            throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
         }
 
-        throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
+        List<String> routes = new ArrayList<>();
+        Coordinate coordinateX = sourceCoordinates.get(0);
+        Coordinate coordinateY = sourceCoordinates.get(1);
+        Direction direction = vector.getDirection();
+
+        routes.add(coordinateX.addCoordinate(direction.getUnitX())
+                .concat(coordinateY.addCoordinate(direction.getUnitY())));
+
+        return new Route(routes);
     }
 
     private void validateNull(List<Coordinate> coordinates, Vector vector) {

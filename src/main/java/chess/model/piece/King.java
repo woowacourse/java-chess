@@ -46,42 +46,24 @@ public class King implements Piece {
     @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
         validateNull(sourceCoordinates, vector);
-
-        List<String> routes = new ArrayList<>();
-
-        if (vector.isMatch(movableDirections) && vector.isEqualToMagnitude(1)) {
-            Coordinate coordinateX = sourceCoordinates.get(0);
-            Coordinate coordinateY = sourceCoordinates.get(1);
-
-            if (vector.isEqualToDirection(NORTH)) {
-                routes.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(1)));
-            }
-            if (vector.isEqualToDirection(SOUTH)) {
-                routes.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(-1)));
-            }
-            if (vector.isEqualToDirection(WEST)) {
-                routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(0)));
-            }
-            if (vector.isEqualToDirection(EAST)) {
-                routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(0)));
-            }
-            if (vector.isEqualToDirection(SOUTHEAST)) {
-                routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(-1)));
-            }
-            if (vector.isEqualToDirection(SOUTHWEST)) {
-                routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(-1)));
-            }
-            if (vector.isEqualToDirection(NORTHEAST)) {
-                routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(1)));
-            }
-            if (vector.isEqualToDirection(NORTHWEST)) {
-                routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(1)));
-            }
-
-            return new Route(routes);
+        if (!vector.isMatch(movableDirections)) {
+            throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
+        }
+        if (!vector.isEqualToMagnitude(1)) {
+            throw new IllegalArgumentException("King은 한칸만 이동할 수 있습니다.");
         }
 
-        throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
+        List<String> routes = new ArrayList<>();
+        Coordinate coordinateX = sourceCoordinates.get(0);
+        Coordinate coordinateY = sourceCoordinates.get(1);
+        Direction direction = vector.getDirection();
+
+        for (int i = 1; i <= vector.getMagnitude(); i++) {
+            routes.add(coordinateX.addCoordinate(direction.getUnitX() * i)
+                    .concat(coordinateY.addCoordinate(direction.getUnitY() * i)));
+        }
+
+        return new Route(routes);
     }
 
     private void validateNull(List<Coordinate> coordinates, Vector vector) {
