@@ -1,5 +1,5 @@
 CREATE TABLE chess (
-	rank1 VARCHAR(10) NOT NULL,
+    rank1 VARCHAR(10) NOT NULL,
     rank2 VARCHAR(10) NOT NULL,
     rank3 VARCHAR(10) NOT NULL,
     rank4 VARCHAR(10) NOT NULL,
