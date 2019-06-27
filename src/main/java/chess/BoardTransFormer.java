@@ -9,14 +9,14 @@ import com.google.gson.JsonObject;
 
 import java.util.Map;
 
-public class BoardJson {
+public class BoardTransFormer {
     private Board board;
 
-    public BoardJson(Board board) {
+    public BoardTransFormer(Board board) {
         this.board = board;
     }
 
-    public JsonObject getBoardJson() {
+    public JsonObject toJson() {
         JsonArray jsonObject = new JsonArray();
         jsonObject.add(teamJson(Team.BLACK));
         jsonObject.add(teamJson(Team.WHITE));

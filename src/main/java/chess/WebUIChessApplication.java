@@ -41,13 +41,13 @@ public class WebUIChessApplication {
             return render(map, "index.html");
         });
 
-        get("/start", (req, res) -> game.reload());
+        get("/start", (req, res) -> new BoardTransFormer(game.reload()).toJson());
 
         get("/move", (req, res) -> {
             int from = Integer.parseInt(req.queryParams("from"));
             int to = Integer.parseInt(req.queryParams("to"));
 
-            return game.play(from, to).toString();
+            return new BoardTransFormer(game.play(from, to)).toJson();
         });
 
         get("/score", (req, res) -> game.getStatusBoard().toString());

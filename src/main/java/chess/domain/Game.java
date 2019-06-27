@@ -1,9 +1,7 @@
 package chess.domain;
 
-import chess.BoardJson;
 import chess.dao.RoundDao;
 import chess.dto.RoundDto;
-import com.google.gson.JsonObject;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -19,12 +17,12 @@ public class Game {
         this.board = BoardFactory.create();
     }
 
-    public JsonObject play(int from, int to) throws SQLException {
+    public Board play(int from, int to) throws SQLException {
         Spot startSpot = Spot.valueOf(from);
         Spot endSpot = Spot.valueOf(to);
 
         if (!board.checkTeam(startSpot, round.getTeam())) {
-            return new BoardJson(board).getBoardJson();
+            return board;
         }
 
         Board movedBoard = board.move(startSpot, endSpot);
@@ -38,10 +36,10 @@ public class Game {
             board = movedBoard;
         }
 
-        return new BoardJson(board).getBoardJson();
+        return board;
     }
 
-    public JsonObject reload() throws SQLException {
+    public Board reload() throws SQLException {
         List<RoundDto> roundDtos = roundDao.selectRound();
         board = BoardFactory.create();
         roundDtos.forEach(roundDto -> {
@@ -50,7 +48,7 @@ public class Game {
             board.move(from, to);
             round.nextRound();
         });
-        return new BoardJson(board).getBoardJson();
+        return board;
     }
 
     public StatusBoard getStatusBoard() {
