@@ -41,9 +41,7 @@ public class WebUIChessApplication {
             return render(map, "index.html");
         });
 
-        get("/start", (req, res) -> {
-            return game.reload();
-        });
+        get("/start", (req, res) -> game.reload());
 
         get("/move", (req, res) -> {
             int from = Integer.parseInt(req.queryParams("from"));
@@ -52,9 +50,7 @@ public class WebUIChessApplication {
             return game.play(from, to).toString();
         });
 
-        get("/score", (req, res) -> {
-            return game.getStatusBoard().toString();
-        });
+        get("/score", (req, res) -> game.getStatusBoard().toString());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
