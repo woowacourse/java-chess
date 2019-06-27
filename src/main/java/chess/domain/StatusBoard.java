@@ -22,14 +22,6 @@ public class StatusBoard {
         }
     }
 
-    public double getBlackScore() {
-        return blackScore;
-    }
-
-    public double getWhiteScore() {
-        return whiteScore;
-    }
-
     @Override
     public String toString() {
         return "StatusBoard{" +
