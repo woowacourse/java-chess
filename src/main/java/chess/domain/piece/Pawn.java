@@ -8,6 +8,7 @@ import chess.domain.direction.VerticalDirection;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Pawn extends Piece {
     private static final int LIMIT_MOVE_COUNT = 1;
@@ -68,18 +69,20 @@ public class Pawn extends Piece {
     private boolean isAttackMove(Board board, Position startPosition) {
         Position attackablePosition1 = startPosition.movePosition(ATTACKABLE_ROW_DIFF, ATTACKABLE_RIGNT_COLUMN_DIFF);
         Position attackablePosition2 = startPosition.movePosition(ATTACKABLE_ROW_DIFF, ATTACKABLE_LEFT_COLUMN_DIFF);
-        Piece attackablePiece1 = getAttackablePiece(board, attackablePosition1);
-        Piece attackablePiece2 = getAttackablePiece(board, attackablePosition2);
+        Optional<Piece> attackablePiece1 = getAttackablePiece(board, attackablePosition1);
+        Optional<Piece> attackablePiece2 = getAttackablePiece(board, attackablePosition2);
 
-        return ((attackablePiece1 != null) && (attackablePiece1.getAliance() != board.getThisTurn()))
-                || ((attackablePiece2 != null) && (attackablePiece2.getAliance() != board.getThisTurn()));
+        return ((attackablePiece1.isPresent()) && (attackablePiece1.get().getAliance() != board.getThisTurn()))
+                || ((attackablePiece2.isPresent()) && (attackablePiece2.get().getAliance() != board.getThisTurn()));
     }
 
-    private Piece getAttackablePiece(Board board, Position position) {
-        if (position == null) {
-            return null;
+    private Optional<Piece> getAttackablePiece(Board board, Position position) {
+        Optional<Position> maybePosition = Optional.ofNullable(position);
+        if(maybePosition.isPresent()){
+            return board.pieceValueOf(position.toString());
         }
-        return board.pieceValueOf(position.toString());
+        Optional<Piece> emptyPiece = Optional.empty();
+        return emptyPiece;
     }
 
     @Override

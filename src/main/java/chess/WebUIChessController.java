@@ -42,7 +42,7 @@ public class WebUIChessController {
 
         board = GameService.setBoard(board, gameId);
 
-        GameService.JudgeEndGame(board,gameDto);
+        GameService.judgeEndGame(board,gameDto);
 
         Gson gson = new Gson();
         Map<String, Object> model = new HashMap<>();

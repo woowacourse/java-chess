@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.DBConnector;
+import chess.DBConnector;
 import chess.dto.GameDto;
 import org.junit.jupiter.api.Test;
 

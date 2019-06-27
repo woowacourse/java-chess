@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domain.DBConnector;
+import chess.DBConnector;
 import chess.dto.NavigatorDto;
 import chess.dto.PieceDto;
 

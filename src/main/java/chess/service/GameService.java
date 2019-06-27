@@ -70,8 +70,8 @@ public class GameService {
         return board;
     }
 
-    public static void JudgeEndGame(Board board, GameDto gameDto){
-        if (gameDto.isEnd() == true) {
+    public static void judgeEndGame(Board board, GameDto gameDto){
+        if (gameDto.isEnd()) {
             ResultCalculator resultCalculator = new ResultCalculator(board);
             Result result = new Result(resultCalculator.calculateResult());
             throw new RuntimeException(String.format("[최종 스코어] 백 : 흑 = %.1f : %.1f 게임이 종료되었습니다.",
