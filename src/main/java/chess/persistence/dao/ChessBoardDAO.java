@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoardDAO {
+    public static final int NO_GAME_ID = -1;
     public static ChessBoardDAO getInstance() {
         return BoardStatusDAOHandler.INSTANCE;
     }
@@ -68,7 +69,7 @@ public class ChessBoardDAO {
 
             ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) {
-                return -1;
+                return NO_GAME_ID;
             }
 
             return rs.getInt("round_no");
