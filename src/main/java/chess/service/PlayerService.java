@@ -2,8 +2,6 @@ package chess.service;
 
 import chess.dao.PlayerDao;
 
-import java.sql.SQLDataException;
-
 public class PlayerService {
 
     private final PlayerDao playerDao;

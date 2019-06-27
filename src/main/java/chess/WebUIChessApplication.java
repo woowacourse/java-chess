@@ -1,8 +1,8 @@
 package chess;
 
-import chess.controller.CommonController;
 import chess.controller.HistoryController;
 import chess.controller.RoundInfoController;
+import chess.controller.common.CommonController;
 import com.google.gson.Gson;
 
 import static spark.Spark.*;

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chess.dao.sqls.Columns.*;
 import static chess.dao.sqls.HistorySql.INSERT_HISTORY;
 import static chess.dao.sqls.HistorySql.SELECT_LAST_HISTORY_BY_ROUND;
 
@@ -40,11 +41,11 @@ public class HistoryDao {
 
             List<String> rows = new ArrayList<>();
             for (int i = 0; i < Board.BOUNDARY; i++) {
-                rows.add(resultSet.getString("row" + i));
+                rows.add(resultSet.getString(ROW + i));
             }
             HistoryDto historyDTO = new HistoryDto();
-            historyDTO.setRound(resultSet.getInt("round_id"));
-            historyDTO.setTurn(resultSet.getInt("turn"));
+            historyDTO.setRound(resultSet.getInt(ROUND_ID));
+            historyDTO.setTurn(resultSet.getInt(TURN));
             historyDTO.setRows(rows);
 
             return historyDTO;

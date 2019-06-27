@@ -9,7 +9,8 @@ import java.sql.SQLDataException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.controller.CommonController.nullable;
+import static chess.controller.common.CommonController.nullable;
+import static chess.controller.common.ModelKey.HISTORY;
 
 public class HistoryController {
 
@@ -23,7 +24,7 @@ public class HistoryController {
         int round = Integer.parseInt(nullable(request.params(":round")));
 
         Map<String, Object> model = new HashMap<>();
-        model.put("history", HISTORY_SERVICE.selectLastHistory(round));
+        model.put(HISTORY, HISTORY_SERVICE.selectLastHistory(round));
         return model;
     }
 
@@ -40,7 +41,7 @@ public class HistoryController {
         Point next = Point.of(nextX, nextY);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("history", HistoryService.getInstance().movePiece(round, prev, next));
+        model.put(HISTORY, HistoryService.getInstance().movePiece(round, prev, next));
         return model;
     }
 }
