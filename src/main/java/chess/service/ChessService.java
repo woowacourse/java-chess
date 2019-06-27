@@ -21,14 +21,12 @@ public class ChessService {
         chessDao = new ChessDao(con);
     }
 
-    private ChessGame chessGame;
-
-    private void loadChessGame() throws SQLException {
-        chessGame = new ChessGame(chessDao.loadBoard(), chessDao.loadTurn());
+    private ChessGame loadChessGame() throws SQLException {
+        return new ChessGame(chessDao.loadBoard(), chessDao.loadTurn());
     }
 
     public MoveResult canMove(Square source, Square target) throws SQLException {
-        loadChessGame();
+        ChessGame chessGame = loadChessGame();
         boolean canMove = chessGame.canMove(source, target);
         if (canMove && chessGame.isKingAlive()){
             chessGame.move(source, target);
@@ -42,7 +40,7 @@ public class ChessService {
     public BoardInfo initializeBoard() throws SQLException {
         Board board = new Board();
         board.initialize(new BasicBoardInitializer());
-        chessGame = new ChessGame(board, Side.WHITE);
+        ChessGame chessGame = new ChessGame(board, Side.WHITE);
         chessDao.initializeBoard(chessGame.createBoardInfo(), chessGame.createGameInfo());
         return chessGame.createBoardInfo();
     }
@@ -50,7 +48,7 @@ public class ChessService {
     public BoardInfo createBoardInfo() throws SQLException {
         if(chessDao.checkEmpty())
             return initializeBoard();
-        loadChessGame();
+        ChessGame chessGame = loadChessGame();
         return chessGame.createBoardInfo();
     }
 }
