@@ -1,19 +1,31 @@
 package chess.model.gameCreator;
 
+import chess.model.board.BoardDTO;
 import chess.model.board.Tile;
 import chess.model.piece.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class NewBoardCreatingStrategyTest {
+public class NormalBoardCreatingStrategyTest {
     @Test
     void 체스판_초기화_확인() {
-        BoardCreatingStrategy strategy = new NewBoardCreatingStrategy();
+        BoardDTO dto = new BoardDTO(Arrays.asList(
+                "RNBKQBNR",
+                "PPPPPPPP",
+                "########",
+                "########",
+                "########",
+                "########",
+                "pppppppp",
+                "rnbqkbnr"));
+        NormalBoardCreatingStrategy strategy = new NormalBoardCreatingStrategy(dto);
         Map<String, Tile> tiles = new HashMap<>();
+
         tiles.put("11", new Tile("11", new Rook("white")));
         tiles.put("21", new Tile("21", new Knight("white")));
         tiles.put("31", new Tile("31", new Bishop("white")));
@@ -26,8 +38,8 @@ public class NewBoardCreatingStrategyTest {
         tiles.put("18", new Tile("18", new Rook("black")));
         tiles.put("28", new Tile("28", new Knight("black")));
         tiles.put("38", new Tile("38", new Bishop("black")));
-        tiles.put("48", new Tile("48", new Queen("black")));
-        tiles.put("58", new Tile("58", new King("black")));
+        tiles.put("48", new Tile("48", new King("black")));
+        tiles.put("58", new Tile("58", new Queen("black")));
         tiles.put("68", new Tile("68", new Bishop("black")));
         tiles.put("78", new Tile("78", new Knight("black")));
         tiles.put("88", new Tile("88", new Rook("black")));

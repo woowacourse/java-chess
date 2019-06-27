@@ -1,10 +1,10 @@
 package chess;
 
 import chess.dao.ChessDAO;
-import chess.model.*;
+import chess.model.ChessGame;
+import chess.model.ScoreResult;
 import chess.model.board.BoardDTO;
-import chess.model.gameCreator.GeneratedBoardCreatingStrategy;
-import chess.model.gameCreator.NewBoardCreatingStrategy;
+import chess.model.gameCreator.NormalBoardCreatingStrategy;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
@@ -29,7 +29,9 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             model.put("board", chessDAO.selectByTurn(1).getPieces());
 
-            ChessGame game = new ChessGame(new NewBoardCreatingStrategy(), 1);
+            int turn = chessDAO.getLatestTurn();
+            BoardDTO boardDTO = chessDAO.selectByTurn(turn);
+            ChessGame game = new ChessGame(new NormalBoardCreatingStrategy(boardDTO), turn);
 
             ScoreResult scoreResult = game.calculateScore();
 
@@ -66,7 +68,7 @@ public class WebUIChessApplication {
             }
             if (Objects.isNull(source)) { // 이어서하기 첫 화면
                 BoardDTO boardDTO = chessDAO.selectByTurn(chessDAO.getLatestTurn());
-                game = new ChessGame(new GeneratedBoardCreatingStrategy(boardDTO), chessDAO.getLatestTurn());
+                game = new ChessGame(new NormalBoardCreatingStrategy(boardDTO), chessDAO.getLatestTurn());
                 model.put("currentTeam", game.getCurrentTeam());
 
                 Collections.reverse(boardDTO.getPieces());

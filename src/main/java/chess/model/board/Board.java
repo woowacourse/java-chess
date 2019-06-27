@@ -11,6 +11,13 @@ import java.util.*;
 import static chess.model.board.vector.Direction.*;
 
 public class Board {
+    public static final int ROW_SIZE = 8;
+    public static final int INITIAL_ROW = 1;
+    public static final int COLUMN_SIZE = 8;
+    public static final int INITIAL_COLUMN = 1;
+    public static final int BLACK_PAWN_ROW = 2;
+    public static final int WHITE_PAWN_ROW = 7;
+
     private Map<String, Tile> tiles;
 
     public Board(BoardCreatingStrategy strategy) {
@@ -128,10 +135,14 @@ public class Board {
 
         // 폰 탐색
         for (String currentLocation : tiles.keySet()) {
-            if (tiles.get(currentLocation).askPieceIfPawn() && tiles.get(currentLocation).askPieceWhichTeam().equals("white")) {
+            if (tiles.get(currentLocation).isPiecePresent()
+                    && tiles.get(currentLocation).askPieceIfPawn()
+                    && tiles.get(currentLocation).askPieceWhichTeam().equals("white")) {
                 locationsOfWhitePawns.add(currentLocation);
             }
-            if (tiles.get(currentLocation).askPieceIfPawn() && tiles.get(currentLocation).askPieceWhichTeam().equals("black")) {
+            if (tiles.get(currentLocation).isPiecePresent()
+                    && tiles.get(currentLocation).askPieceIfPawn()
+                    && tiles.get(currentLocation).askPieceWhichTeam().equals("black")) {
                 locationsOfBlackPawns.add(currentLocation);
             }
         }
@@ -304,7 +315,7 @@ public class Board {
     public boolean checkKingAlive() {
         int kingCount = 0;
         for (String coordinate : tiles.keySet()) {
-            if (tiles.get(coordinate).askIfKing()) {
+            if (tiles.get(coordinate).isPiecePresent() && tiles.get(coordinate).askIfKing()) {
                 kingCount++;
             }
 

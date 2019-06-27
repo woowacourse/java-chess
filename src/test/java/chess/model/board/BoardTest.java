@@ -1,7 +1,7 @@
 package chess.model.board;
 
 import chess.model.ScoreResult;
-import chess.model.gameCreator.NewBoardCreatingStrategy;
+import chess.model.gameCreator.NormalBoardCreatingStrategy;
 import chess.model.piece.King;
 import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
@@ -18,8 +18,26 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 public class BoardTest {
     @Test
     void 생성자_확인() {
-        Board board = new Board(new NewBoardCreatingStrategy());
-        assertThat(board).isEqualTo(new Board(new NewBoardCreatingStrategy()));
+        BoardDTO dto1 = new BoardDTO(Arrays.asList(
+                "RNBQKBNR",
+                "PPPPPPPP",
+                "########",
+                "########",
+                "########",
+                "########",
+                "pppppppp",
+                "rnbqkbnr"));
+        BoardDTO dto2 = new BoardDTO(Arrays.asList(
+                "RNBQKBNR",
+                "PPPPPPPP",
+                "########",
+                "########",
+                "########",
+                "########",
+                "pppppppp",
+                "rnbqkbnr"));
+        Board board = new Board(new NormalBoardCreatingStrategy(dto1));
+        assertThat(board).isEqualTo(new Board(new NormalBoardCreatingStrategy(dto2)));
     }
 
     @Test
@@ -371,7 +389,17 @@ public class BoardTest {
 
     @Test
     void 말_초기화_확인() {
-        Board board = new Board(new NewBoardCreatingStrategy());
+//        Board board = new Board(new NewBoardCreatingStrategy());
+        BoardDTO dto = new BoardDTO(Arrays.asList(
+                "RNBQKBNR",
+                "PPPPPPPP",
+                "########",
+                "########",
+                "########",
+                "########",
+                "pppppppp",
+                "rnbqkbnr"));
+        Board board = new Board(new NormalBoardCreatingStrategy(dto));
         assertThat(board.getTile("12"))
                 .isEqualTo(new Tile("12", new Pawn(true, "white")));
         assertThat(board.getTile("55")).isEqualTo(new Tile("55", null));
@@ -380,7 +408,17 @@ public class BoardTest {
 
     @Test
     void 턴이_맞는지_확인() {
-        Board board = new Board(new NewBoardCreatingStrategy());
+//        Board board = new Board(new NewBoardCreatingStrategy());
+        BoardDTO dto = new BoardDTO(Arrays.asList(
+                "RNBQKBNR",
+                "PPPPPPPP",
+                "########",
+                "########",
+                "########",
+                "########",
+                "pppppppp",
+                "rnbqkbnr"));
+        Board board = new Board(new NormalBoardCreatingStrategy(dto));
         assertThat(board.isRightTurn("11", 3)).isTrue();
         assertThat(board.isRightTurn("18", 3)).isFalse();
         assertThat(board.isRightTurn("11", 2)).isFalse();
