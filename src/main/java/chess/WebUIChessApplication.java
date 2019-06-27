@@ -1,6 +1,8 @@
 package chess;
 
-import chess.domain.Game;
+import chess.controller.MoveController;
+import chess.controller.ScoreController;
+import chess.controller.StartController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -12,7 +14,10 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
 
     public static void main(String[] args) {
-        Game game = new Game();
+        StartController startController = new StartController();
+        MoveController moveController = new MoveController();
+        ScoreController scoreController = new ScoreController();
+
         staticFileLocation("/static");
         options("/*",
                 (request, response) -> {
@@ -41,20 +46,11 @@ public class WebUIChessApplication {
             return render(map, "index.html");
         });
 
-        get("/start", (req, res) -> {
-            return game.reload();
-        });
+        get("/move", startController::start);
 
-        get("/move", (req, res) -> {
-            int from = Integer.parseInt(req.queryParams("from"));
-            int to = Integer.parseInt(req.queryParams("to"));
+        get("/move", moveController::move);
 
-            return game.play(from, to).toString();
-        });
-
-        get("/score", (req, res) -> {
-            return game.getStatusBoard().toString();
-        });
+        get("/score", scoreController::score);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

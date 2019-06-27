@@ -16,15 +16,15 @@ const touchA = function (id) {
 const setBoard = (black, white) => {
     const blackTeam = black;
     for (key in blackTeam) {
-        const spot = blackTeam[key].Spot;
-        const piece = blackTeam[key].Piece;
+        const spot = blackTeam[key].point;
+        const piece = blackTeam[key].piece;
         setPiece(spot, "black" + piece);
     }
 
     const whiteTeam = white;
     for (key in whiteTeam) {
-        const spot = whiteTeam[key].Spot;
-        const piece = whiteTeam[key].Piece;
+        const spot = whiteTeam[key].point;
+        const piece = whiteTeam[key].piece;
         setPiece(spot, "white" + piece);
     }
 };
@@ -59,8 +59,8 @@ const ajaxRequest = (from, to) => {
         initChess();
         const res = xhttp.response;
         const jsonRes = JSON.parse(res);
-        const blackTeamArray = jsonRes.Board[0].BLACK;
-        const whiteTeamArray = jsonRes.Board[1].WHITE;
+        const blackTeamArray = jsonRes.blackTeam;
+        const whiteTeamArray = jsonRes.whiteTeam;
         setBoard(blackTeamArray, whiteTeamArray);
     });
     xhttp.onreadystatechange = () => {
@@ -95,8 +95,8 @@ const startGame = () => {
         initChess();
         const res = xhttp.response;
         const jsonRes = JSON.parse(res);
-        const blackTeamArray = jsonRes.Board[0].BLACK;
-        const whiteTeamArray = jsonRes.Board[1].WHITE;
+        const blackTeamArray = jsonRes.blackTeam;
+        const whiteTeamArray = jsonRes.whiteTeam;
         setBoard(blackTeamArray, whiteTeamArray);
     });
     xhttp.onreadystatechange = () => {
