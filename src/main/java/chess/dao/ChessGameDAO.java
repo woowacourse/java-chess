@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.database.DatabaseConnection;
 import chess.domain.Player;
 
 public class ChessGameDAO {
@@ -14,24 +15,10 @@ public class ChessGameDAO {
 	private static final String UPDATE_CHESS_GAME_OVER_QUERY = "update chessgame set gameover = ? where room_number = ?";
 	private static final String SELECT_NOT_OVER_CHESS_GAME = "select room_number from chessgame where gameover = 1";
 
-	private static ChessGameDAO chessGameDAO;
-	private static Connection connection;
-
-	private ChessGameDAO() {
-	}
-
-	public static ChessGameDAO getInstance(Connection connection) {
-		if (chessGameDAO == null) {
-			chessGameDAO = new ChessGameDAO();
-		}
-		ChessGameDAO.connection = connection;
-		return chessGameDAO;
-	}
-
-	public int addChessGame(Player currentPlayer) throws SQLException {
-		try (PreparedStatement pstmt = connection.prepareStatement(
+	public int addChessGame(String currentPlayerName) throws SQLException {
+		try (PreparedStatement pstmt = DatabaseConnection.getConnection().prepareStatement(
 				INSERT_CHESS_GAME_QUERY, Statement.RETURN_GENERATED_KEYS)) {
-			pstmt.setString(1, currentPlayer.name());
+			pstmt.setString(1, currentPlayerName);
 			pstmt.executeUpdate();
 			return getRoomNumber(pstmt);
 		}
@@ -48,7 +35,7 @@ public class ChessGameDAO {
 
 
 	public Player getChessGameTurn(int roomNumber) throws SQLException {
-		try (PreparedStatement pstmt = connection.prepareStatement(SELECT_CHESS_GAME_TURN)) {
+		try (PreparedStatement pstmt = DatabaseConnection.getConnection().prepareStatement(SELECT_CHESS_GAME_TURN)) {
 			pstmt.setInt(1, roomNumber);
 			return getTurn(pstmt);
 		}
@@ -63,16 +50,16 @@ public class ChessGameDAO {
 		}
 	}
 
-	public void changeTurn(int roomNumber, Player currentPlayer) throws SQLException {
-		try (PreparedStatement pstmt = connection.prepareStatement(UPDATE_CHESS_GAME_TURN_QUERY)) {
-			pstmt.setString(1, currentPlayer.name());
+	public void changeTurn(int roomNumber, String currentPlayerName) throws SQLException {
+		try (PreparedStatement pstmt = DatabaseConnection.getConnection().prepareStatement(UPDATE_CHESS_GAME_TURN_QUERY)) {
+			pstmt.setString(1, currentPlayerName);
 			pstmt.setInt(2, roomNumber);
 			pstmt.executeUpdate();
 		}
 	}
 
 	public void gameover(int roomNumber) throws SQLException {
-		try (PreparedStatement pstmt = connection.prepareStatement(UPDATE_CHESS_GAME_OVER_QUERY)) {
+		try (PreparedStatement pstmt = DatabaseConnection.getConnection().prepareStatement(UPDATE_CHESS_GAME_OVER_QUERY)) {
 			pstmt.setBoolean(1, false);
 			pstmt.setInt(2, roomNumber);
 			pstmt.executeUpdate();
@@ -80,7 +67,7 @@ public class ChessGameDAO {
 	}
 
 	public List<Integer> getNotOverAllRoomNumbers() throws SQLException {
-		try (PreparedStatement pstmt = connection.prepareStatement(SELECT_NOT_OVER_CHESS_GAME)) {
+		try (PreparedStatement pstmt = DatabaseConnection.getConnection().prepareStatement(SELECT_NOT_OVER_CHESS_GAME)) {
 			return getAllRoomNumbers(pstmt);
 		}
 	}
