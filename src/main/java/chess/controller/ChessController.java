@@ -23,14 +23,14 @@ public class ChessController implements Controller {
     }
 
     public void init() {
-        get("/", this::main);
+        get("/", this::getMain);
         get("/chessBoard", this::getChessBoard);
         post("/chessBoard", this::postChessBoard);
         get("/chessScore", this::getChessScore);
         post("/newRound", this::postNextChessRound);
     }
 
-    private String main(Request req, Response res) {
+    private String getMain(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
         int roundId = ChessService.getInstance().getLastRoundId();
         req.session().attribute("roundId", roundId);
