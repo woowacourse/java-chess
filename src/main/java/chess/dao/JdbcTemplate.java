@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class JdbcTemplate {
     public void executeUpdate(String sql, PreparedStatementSetter pss) throws SQLException {
@@ -28,7 +29,7 @@ public class JdbcTemplate {
         }
     }
 
-    public Object executeQuery(String sql, RowMapper rm) throws SQLException {
+    public <T> List<T> executeQuery(String sql, RowMapper rm) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

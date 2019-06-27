@@ -2,6 +2,7 @@ package chess.dao;
 
 import chess.dto.RoundDto;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,21 +31,23 @@ public class RoundDaoImpl implements RoundDao {
     }
 
     public List<RoundDto> selectRound() throws SQLException {
-        RowMapper rowMapper = resultSet -> {
-            List<RoundDto> roundDtos = new ArrayList<>();
-            while (resultSet.next()) {
-                RoundDto roundDto = new RoundDto();
-                roundDto.setRound(resultSet.getInt("round"));
-                roundDto.setFrom(resultSet.getInt("start"));
-                roundDto.setTo(resultSet.getInt("target"));
-                roundDtos.add(roundDto);
+        RowMapper rowMapper = new RowMapper() {
+            @Override
+            public List<RoundDto> mapRow(ResultSet resultSet) throws SQLException {
+                List<RoundDto> roundDtos = new ArrayList<>();
+                while (resultSet.next()) {
+                    RoundDto roundDto = new RoundDto();
+                    roundDto.setRound(resultSet.getInt("round"));
+                    roundDto.setFrom(resultSet.getInt("start"));
+                    roundDto.setTo(resultSet.getInt("target"));
+                    roundDtos.add(roundDto);
+                }
+                return roundDtos;
             }
-            return roundDtos;
         };
         JdbcTemplate template = new JdbcTemplate();
         String query = "SELECT round, start, target FROM game ORDER BY round ASC";
-        return (List<RoundDto>) template.executeQuery(query, rowMapper);
-
+        return template.executeQuery(query, rowMapper);
     }
 }
 
