@@ -11,6 +11,13 @@ public enum Color {
         return WHITE;
     }
 
+    public static Color turnCountToTeamColor(int turnCount) {
+        if (turnCount < 1) {
+            throw new IllegalArgumentException();
+        }
+        return values()[(turnCount - 1) % values().length];
+    }
+
     @Override
     public String toString() {
         return this == WHITE ? "백" : "흑";

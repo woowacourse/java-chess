@@ -67,8 +67,8 @@ public abstract class Piece implements Comparable<Piece> {
 
     public abstract double getScore();
 
-    public int get1DCoord() {
-        return this.position.get1DCoord();
+    public int ordinal() {
+        return this.position.ordinal();
     }
 
     public Position position() {
@@ -85,6 +85,6 @@ public abstract class Piece implements Comparable<Piece> {
 
     @Override
     public int compareTo(Piece rhs) {
-        return this.position.get1DCoord() - rhs.position.get1DCoord();
+        return this.position.ordinal() - rhs.position.ordinal();
     }
 }

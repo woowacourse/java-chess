@@ -8,12 +8,7 @@ public class Turn {
 
     public Turn(int turnCount) {
         this.count = turnCount;
-        resetTeam();
-    }
-
-    private Color resetTeam() {
-        this.team = (this.count % 2 == 0) ? Color.WHITE : Color.BLACK;
-        return this.team;
+        this.team = Color.turnCountToTeamColor(turnCount);
     }
 
     public Turn endTurn() {
