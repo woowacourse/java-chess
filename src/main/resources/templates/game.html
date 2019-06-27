@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게임</title>
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+<input type="hidden" value='{{{chessBoard}}}' id="chessBoard">
+<div>
+    <div class="row-box">
+        <div class="row">7</div>
+        <div class="row">6</div>
+        <div class="row">5</div>
+        <div class="row">4</div>
+        <div class="row">3</div>
+        <div class="row">2</div>
+        <div class="row">1</div>
+        <div class="row">0</div>
+    </div>
+    <div style="display:inline-block" id="chessBoardBox"></div>
+    <div class="column-box">
+        <div class="blank"></div>
+        <div class="column">0</div><!--
+        --><div class="column">1</div><!--
+        --><div class="column">2</div><!--
+        --><div class="column">3</div><!--
+        --><div class="column">4</div><!--
+        --><div class="column">5</div><!--
+        --><div class="column">6</div><!--
+        --><div class="column">7</div>
+    </div>
+</div>
+</body>
+이번 턴은 {{team}} 입니다. <br>
+<form action="/resume" method="post">
+    소스위치 : <input name = "source" type="text" placeholder="ex)1,1">
+    타깃위치 : <input name = "target" type="text" placeholder="ex)2,2">
+    <input type="submit" value="입력"/>
+</form>
+<form action="/score" method="post">
+    <input type="submit" onclick="location.href='score'" value="점수보기">
+</form>
+<script src="js/game.js"></script>
+</body>
+</html>

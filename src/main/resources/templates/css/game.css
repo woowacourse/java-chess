@@ -1,0 +1,95 @@
+.tile {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.white_pawn {
+    background-image: url("../img/chesspieces/wikipedia/wP.png");
+    background-size: 40px;
+}
+
+.white_rook {
+    background-image: url("../img/chesspieces/wikipedia/wR.png");
+    background-size: 40px;
+}
+
+.white_knight {
+    background-image: url("../img/chesspieces/wikipedia/wN.png");
+    background-size: 40px;
+}
+
+.white_bishop {
+    background-image: url("../img/chesspieces/wikipedia/wB.png");
+    background-size: 40px;
+}
+
+.white_queen {
+    background-image: url("../img/chesspieces/wikipedia/wQ.png");
+    background-size: 40px;
+}
+
+.white_king {
+    background-image: url("../img/chesspieces/wikipedia/wK.png");
+    background-size: 40px;
+}
+
+.black_pawn {
+    background-image: url("../img/chesspieces/wikipedia/bP.png");
+    background-size: 40px;
+}
+
+.black_rook {
+    background-image: url("../img/chesspieces/wikipedia/bR.png");
+    background-size: 40px;
+}
+
+.black_knight {
+    background-image: url("../img/chesspieces/wikipedia/bN.png");
+    background-size: 40px;
+}
+
+.black_bishop {
+    background-image: url("../img/chesspieces/wikipedia/bB.png");
+    background-size: 40px;
+}
+
+.black_queen {
+    background-image: url("../img/chesspieces/wikipedia/bQ.png");
+    background-size: 40px;
+}
+
+.black_king {
+    background-image: url("../img/chesspieces/wikipedia/bK.png");
+    background-size: 40px;
+
+}
+
+.row-box {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.row {
+    display: flex;
+    height: 40px;
+    width: 40px;
+    padding-left: 10px;
+    margin-bottom: 6px;
+    align-items: center;
+}
+
+.column {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    margin-right: 3px;
+}
+
+.blank {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+}
