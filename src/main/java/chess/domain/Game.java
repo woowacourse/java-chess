@@ -4,9 +4,7 @@ import chess.domain.pieces.Blank;
 import chess.domain.pieces.Piece;
 import chess.dto.PieceDto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static chess.domain.Type.*;
@@ -21,12 +19,11 @@ public class Game {
     private Team turn;
 
     public Game(Map<Point, Piece> board) {
-        this.board = board;
-        this.turn = Team.WHITE;
+        this(board, Team.WHITE);
     }
 
     public Game(Map<Point, Piece> board, Team turn) {
-        this.board = board;
+        this.board = new HashMap<>(board);
         this.turn = turn;
     }
 
@@ -68,11 +65,15 @@ public class Game {
     }
 
     private void checkMove(List<Point> candidatePoints) {
-        if (candidatePoints.size() == 0) throw new IllegalArgumentException("이동 불가능 합니다.");
+        if (candidatePoints.size() == 0) {
+            throw new IllegalArgumentException("이동 불가능 합니다.");
+        }
     }
 
     private void checkBlank(Point start) {
-        if (isBlank(start)) throw new IllegalArgumentException("말이 없습니다.");
+        if (isBlank(start)) {
+            throw new IllegalArgumentException("말이 없습니다.");
+        }
     }
 
     private boolean isBlank(Point position) {
@@ -80,7 +81,7 @@ public class Game {
     }
 
     public Map<Point, Piece> getBoard() {
-        return board;
+        return Collections.unmodifiableMap(board);
     }
 
     public double calculateScore(Team team) {
