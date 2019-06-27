@@ -6,15 +6,18 @@ import chess.domain.Team;
 public class Empty extends Piece {
     private static Empty EMPTY;
 
-    public static Empty getInstance() {
-        if (EMPTY == null) {
-            EMPTY = new Empty();
-        }
-        return EMPTY;
-    }
-
     private Empty() {
         super(Team.EMPTY);
+    }
+
+    public static Empty getInstance() {
+        return LazyHolder.INSTANCE;
+    }
+
+    private static class LazyHolder {
+
+        private static Empty INSTANCE = new Empty();
+
     }
 
     @Override
