@@ -6,13 +6,17 @@ import chess.domain.coordinate.ChessCoordinate;
 import java.util.*;
 
 public class Rook extends ChessPiece {
-    private static Map<Team, Rook> rooks = new HashMap<>();
+    private static final Rook rookBlack = new Rook(Team.BLACK);
+    private static final Rook rookWhite = new Rook(Team.WHITE);
 
     public static Rook getInstance(Team team) {
-        if (!rooks.containsKey(team)) {
-            rooks.put(team, new Rook(team));
+        if (team == Team.BLACK) {
+            return rookBlack;
         }
-        return rooks.get(team);
+        if (team == Team.WHITE) {
+            return rookWhite;
+        }
+        throw new IllegalArgumentException();
     }
 
     private Rook(Team team) {

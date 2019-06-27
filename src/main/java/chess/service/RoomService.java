@@ -11,8 +11,8 @@ import java.util.Optional;
 public class RoomService {
     private RoomDao roomDao;
 
-    public RoomService(AbstractDataSourceFactory DataSourceFactory) {
-        this.roomDao = new RoomDao(DataSourceFactory.createDataSource());
+    public RoomService(AbstractDataSourceFactory dataSourceFactory) {
+        this.roomDao = new RoomDao(dataSourceFactory.createDataSource());
     }
 
     public Optional<Long> createRoom(RoomDto room) {

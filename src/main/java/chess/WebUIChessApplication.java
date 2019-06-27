@@ -23,7 +23,7 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().create();
-        ChessGameService chessService = new ChessGameService();
+        ChessGameService chessService = new ChessGameService(new DataSourceFactory());
         RoomService roomService = new RoomService(new DataSourceFactory());
         Spark.staticFiles.location("/templates");
 

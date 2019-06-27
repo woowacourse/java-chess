@@ -6,13 +6,17 @@ import chess.domain.coordinate.ChessCoordinate;
 import java.util.*;
 
 public class Queen extends ChessPiece {
-    private static Map<Team, Queen> queens = new HashMap<>();
+    private static final Queen queenBlack = new Queen(Team.BLACK);
+    private static final Queen queenWhite = new Queen(Team.WHITE);
 
     public static Queen getInstance(Team team) {
-        if (!queens.containsKey(team)) {
-            queens.put(team, new Queen(team));
+        if (team == Team.BLACK) {
+            return queenBlack;
         }
-        return queens.get(team);
+        if (team == Team.WHITE) {
+            return queenWhite;
+        }
+        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
     private Queen(Team team) {
@@ -26,7 +30,7 @@ public class Queen extends ChessPiece {
         if (team == Team.WHITE) {
             return PieceType.QUEEN_WHITE;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
     @Override

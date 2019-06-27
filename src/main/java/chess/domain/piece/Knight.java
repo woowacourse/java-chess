@@ -7,13 +7,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Knight extends ChessPiece {
-    private static Map<Team, Knight> knights = new HashMap<>();
+    private static final Knight knightBlack = new Knight(Team.BLACK);
+    private static final Knight knightWhite = new Knight(Team.WHITE);
+
 
     public static Knight getInstance(Team team) {
-        if (!knights.containsKey(team)) {
-            knights.put(team, new Knight(team));
+        if (team == Team.BLACK) {
+            return knightBlack;
         }
-        return knights.get(team);
+        if (team == Team.WHITE) {
+            return knightWhite;
+        }
+        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
     private Knight(Team team) {
@@ -27,7 +32,7 @@ public class Knight extends ChessPiece {
         if (team == Team.WHITE) {
             return PieceType.KNIGHT_WHITE;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
     @Override

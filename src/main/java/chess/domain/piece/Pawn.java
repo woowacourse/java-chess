@@ -29,13 +29,17 @@ public class Pawn extends ChessPiece {
         }
     }
 
-    private static Map<Team, Pawn> pawns = new HashMap<>();
+    private static final Pawn pawnBlack = new Pawn(Team.BLACK);
+    private static final Pawn pawnWhite = new Pawn(Team.WHITE);
 
     public static Pawn getInstance(Team team) {
-        if (!pawns.containsKey(team)) {
-            pawns.put(team, new Pawn(team));
+        if (team == Team.BLACK) {
+            return pawnBlack;
         }
-        return pawns.get(team);
+        if (team == Team.WHITE) {
+            return pawnWhite;
+        }
+        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
     private Pawn(Team team) {
@@ -49,7 +53,7 @@ public class Pawn extends ChessPiece {
         if (team == Team.WHITE) {
             return PieceType.PAWN_WHITE;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
     @Override

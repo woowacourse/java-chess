@@ -6,13 +6,17 @@ import chess.domain.coordinate.ChessCoordinate;
 import java.util.*;
 
 public class Bishop extends ChessPiece {
-    private static Map<Team, Bishop> bishops = new HashMap<>();
+    private static final Bishop bishopBlack = new Bishop(Team.BLACK);
+    private static final Bishop bishopWhite = new Bishop(Team.WHITE);
 
     public static Bishop getInstance(Team team) {
-        if (!bishops.containsKey(team)) {
-            bishops.put(team, new Bishop(team));
+        if (team == Team.BLACK) {
+            return bishopBlack;
         }
-        return bishops.get(team);
+        if (team == Team.WHITE) {
+            return bishopWhite;
+        }
+        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
     private Bishop(Team team) {
@@ -26,7 +30,7 @@ public class Bishop extends ChessPiece {
         if (team == Team.WHITE) {
             return PieceType.BISHOP_WHITE;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
     @Override

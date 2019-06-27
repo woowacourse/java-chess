@@ -5,6 +5,7 @@ import chess.domain.coordinate.ChessCoordinate;
 import chess.domain.factory.AbstractChessPieceFactory;
 import chess.domain.factory.ChessPieceFactory;
 import chess.domain.piece.ChessPiece;
+import chess.persistence.AbstractDataSourceFactory;
 import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
 import chess.persistence.dao.RoomDao;
@@ -22,10 +23,9 @@ public class ChessGameService {
     private BoardStateDao boardStateDao;
     private TurnDao turnDao;
 
-    public ChessGameService() {
-        DataSource ds = new DataSourceFactory().createDataSource();
-        boardStateDao = new BoardStateDao(ds);
-        turnDao = new TurnDao(ds);
+    public ChessGameService(AbstractDataSourceFactory dataSourceFactory) {
+        boardStateDao = new BoardStateDao(dataSourceFactory.createDataSource());
+        turnDao = new TurnDao(dataSourceFactory.createDataSource());
     }
 
     public List<Optional<Long>> createBoardState(Map<ChessCoordinate, PieceType> boardState, long roomId) {

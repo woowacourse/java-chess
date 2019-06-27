@@ -7,7 +7,6 @@ import chess.domain.coordinate.ChessCoordinate;
 import java.util.Set;
 
 public class EmptyCell extends ChessPiece {
-
     private static EmptyCell instance;
 
     private EmptyCell() {
