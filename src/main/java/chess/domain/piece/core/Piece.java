@@ -72,4 +72,9 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(getTeam(), getType(), navigator);
     }
+
+    @Override
+    public String toString() {
+        return type.toString();
+    }
 }
