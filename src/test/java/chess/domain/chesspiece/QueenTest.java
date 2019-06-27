@@ -13,7 +13,7 @@ class QueenTest {
 
         Queen queen = Queen.getInstance();
 
-        assertThat(queen.checkRule(sourcePoint, targetPoint, true)).isTrue();
+        assertThat(queen.checkRule(sourcePoint, targetPoint)).isTrue();
     }
 
     @Test
@@ -23,7 +23,7 @@ class QueenTest {
 
         Queen queen = Queen.getInstance();
 
-        assertThat(queen.checkRule(sourcePoint, targetPoint, true)).isTrue();
+        assertThat(queen.checkRule(sourcePoint, targetPoint)).isTrue();
     }
 
     @Test
@@ -33,6 +33,6 @@ class QueenTest {
 
         Queen queen = Queen.getInstance();
 
-        assertThat(queen.checkRule(sourcePoint, targetPoint, true)).isFalse();
+        assertThat(queen.checkRule(sourcePoint, targetPoint)).isFalse();
     }
 }

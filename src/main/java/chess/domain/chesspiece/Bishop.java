@@ -7,7 +7,7 @@ import chess.domain.util.Counter;
 import java.util.Arrays;
 import java.util.List;
 
-public class Bishop implements ChessPiece {
+public class Bishop implements BasicChessPiece {
     public static final double SCORE = 3.0;
     private static final List<RelativeChessPoint> UNIT_DIRECTIONS = Arrays.asList(
             RelativeChessPoint.of(1, 1), RelativeChessPoint.of(-1, 1)
@@ -26,7 +26,7 @@ public class Bishop implements ChessPiece {
     }
 
     @Override
-    public boolean checkRule(ChessPoint source, ChessPoint target, boolean opponentPieceOnTarget) {
+    public boolean checkRule(ChessPoint source, ChessPoint target) {
         RelativeChessPoint unitDirection = RelativeChessPoint.calculateUnitDirection(source, target);
 
         return UNIT_DIRECTIONS.stream().anyMatch(d -> d.equals(unitDirection));
@@ -50,5 +50,10 @@ public class Bishop implements ChessPiece {
     @Override
     public boolean hasName(String name) {
         return NAME.equals(name);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

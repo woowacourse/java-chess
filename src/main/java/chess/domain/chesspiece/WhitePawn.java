@@ -7,7 +7,7 @@ import chess.domain.util.Counter;
 import java.util.Arrays;
 import java.util.List;
 
-public class WhitePawn implements ChessPiece {
+public class WhitePawn implements PawnChessPiece {
     public static final double SCORE = 1.0;
     private static final List<RelativeChessPoint> UNIT_DIRECTION_EMPTY_ON_TARGET = Arrays.asList(
             RelativeChessPoint.of(1, 0));
@@ -54,5 +54,10 @@ public class WhitePawn implements ChessPiece {
     @Override
     public boolean hasName(String name) {
         return NAME.equals(name);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

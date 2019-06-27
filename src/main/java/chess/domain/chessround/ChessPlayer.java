@@ -1,7 +1,9 @@
 package chess.domain.chessround;
 
+import chess.domain.chesspiece.BasicChessPiece;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.PawnChessPiece;
 import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chesspoint.RelativeChessPoint;
 import chess.domain.util.Counter;
@@ -41,7 +43,10 @@ public class ChessPlayer {
 
     private boolean isViolatedByRule(ChessPoint source, ChessPoint target, boolean opponentPieceOnTarget) {
         ChessPiece sourceChessPiece = alivePieces.get(source);
-        return !sourceChessPiece.checkRule(source, target, opponentPieceOnTarget);
+        if (sourceChessPiece.isPawn()) {
+            return !((PawnChessPiece) sourceChessPiece).checkRule(source, target, opponentPieceOnTarget);
+        }
+        return !((BasicChessPiece) sourceChessPiece).checkRule(source, target);
     }
 
     private void checkMiddlePoints(ChessPoint source, ChessPoint target, ChessPlayer opponentPlayer) {

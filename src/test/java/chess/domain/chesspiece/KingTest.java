@@ -13,7 +13,7 @@ class KingTest {
 
         King king = King.getInstance();
 
-        assertThat(king.checkRule(sourcePoint, targetPoint, true)).isTrue();
+        assertThat(king.checkRule(sourcePoint, targetPoint)).isTrue();
     }
 
     @Test
@@ -23,6 +23,6 @@ class KingTest {
 
         King king = King.getInstance();
 
-        assertThat(king.checkRule(sourcePoint, targetPoint, true)).isFalse();
+        assertThat(king.checkRule(sourcePoint, targetPoint)).isFalse();
     }
 }
