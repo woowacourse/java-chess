@@ -8,7 +8,7 @@ public class DataSourceFactoryTest {
 
     @Test
     void 데이터소스가_잘되는지_테스트() {
-        assertNotNull(DataSourceFactory.getInstance().create());
+        assertNotNull(DataSourceFactory.getInstance().getDataSource());
     }
 
     @Test

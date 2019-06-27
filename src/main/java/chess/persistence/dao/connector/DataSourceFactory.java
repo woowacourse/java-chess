@@ -12,15 +12,17 @@ import java.util.Properties;
 public class DataSourceFactory implements AbstractDataSourceFactory {
     private static final String URL_FORMAT = "jdbc:mysql://%s:%s/%s?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
 
-    private static DataSourceFactory instance;
     private static MysqlDataSource ds;
 
+    private DataSourceFactory(){
+    }
+
     public static DataSourceFactory getInstance(){
-        return instance == null ? instance = new DataSourceFactory() : instance;
+        return DataSourceFactoryHandler.INSTANCE;
     }
 
     @Override
-    public DataSource create() {
+    public DataSource getDataSource() {
         try {
             Properties properties = loadProperty();
             if(ds == null) {
@@ -42,7 +44,7 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
 
     public Connection getConnection(){
         try {
-            return create().getConnection();
+            return getDataSource().getConnection();
         } catch (SQLException e) {
             throw new IllegalArgumentException("SQLException 발생 -> getConnection 부분");
         }
@@ -55,4 +57,7 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
         return properties;
     }
 
+    private static class DataSourceFactoryHandler{
+        private static final DataSourceFactory INSTANCE = new DataSourceFactory();
+    }
 }
