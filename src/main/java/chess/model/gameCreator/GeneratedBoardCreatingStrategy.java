@@ -27,63 +27,63 @@ public class GeneratedBoardCreatingStrategy implements BoardCreatingStrategy {
                 String piece = row.substring(j - 1, j);
                 if (piece.equals("K")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new King("black"))));
+                    tiles.put(coordinate, new Tile(coordinate, new King("black")));
                 }
                 if (piece.equals("Q")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Queen("black"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Queen("black")));
                 }
                 if (piece.equals("B")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Bishop("black"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Bishop("black")));
                 }
                 if (piece.equals("R")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Rook("black"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Rook("black")));
                 }
                 if (piece.equals("N")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Knight("black"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Knight("black")));
                 }
                 if (piece.equals("P") && (i + 1) == 2) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Pawn(false, "black"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Pawn(false, "black")));
                 }
                 if (piece.equals("P") && (i + 1) != 2) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Pawn(true, "black"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Pawn(true, "black")));
                 }
                 if (piece.equals("k")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new King("white"))));
+                    tiles.put(coordinate, new Tile(coordinate, new King("white")));
                 }
                 if (piece.equals("q")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Queen("white"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Queen("white")));
                 }
                 if (piece.equals("b")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Bishop("white"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Bishop("white")));
                 }
                 if (piece.equals("r")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Rook("white"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Rook("white")));
                 }
                 if (piece.equals("n")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Knight("white"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Knight("white")));
                 }
                 if (piece.equals("p") && (i + 1) == 7) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Pawn(false, "white"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Pawn(false, "white")));
                 }
                 if (piece.equals("p") && (i + 1) != 7) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.of(new Pawn(true, "white"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Pawn(true, "white")));
                 }
                 if (piece.equals("#")) {
                     String coordinate = String.valueOf(j) + (i + 1);
-                    tiles.put(coordinate, new Tile(coordinate, Optional.empty()));
+                    tiles.put(coordinate, new Tile(coordinate, null));
                 }
             }
         }

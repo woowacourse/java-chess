@@ -4,18 +4,16 @@ import chess.model.board.vector.Vector;
 import chess.model.piece.Piece;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Tile {
     private static final int COORDINATE_LENGTH = 2;
     // TODO: 2019-06-18 인스턴스 변수 줄이기
     private Coordinate coordinateX;
     private Coordinate coordinateY;
-    private Optional<Piece> piece;
+    private Piece piece;
 
-    public Tile(String coordinates, Optional<Piece> piece) {
+    public Tile(String coordinates, Piece piece) {
         validateConstructor(coordinates);
         String firstCoordinate = coordinates.substring(0, 1);
         String secondCoordinate = coordinates.substring(1, 2);
@@ -35,39 +33,32 @@ public class Tile {
     }
 
     public boolean isPiecePresent() {
-        return piece.isPresent();
+        return !Objects.isNull(piece);
     }
 
     public Route findRouteFromPiece(Vector vector) {
-        if (piece.isPresent()) {
-            return piece.get().produceRoute(Arrays.asList(coordinateX, coordinateY), vector);
-        }
-
-        return new Route(Collections.emptyList());
+            return piece.produceRoute(Arrays.asList(coordinateX, coordinateY), vector);
     }
 
     public String askPieceWhichTeam() {
-        if (piece.isPresent()) {
-            return piece.get().askTeamColor();
-        }
-        return "error";
+            return piece.askTeamColor();
     }
 
     public Piece clonePiece() {
-        return piece.map(Piece::cloneSelf).orElse(null);
+        return piece.cloneSelf();
     }
 
     public boolean askPieceIfPawn() {
-        return piece.map(Piece::isPawn).orElse(false);
+        return piece.isPawn();
 
     }
 
     public boolean askIfKing() {
-        return piece.map(Piece::isKing).orElse(false);
+        return piece.isKing();
 
     }
 
-    public Optional<Piece> getPiece() {
+    public Piece getPiece() {
         return piece;
     }
 

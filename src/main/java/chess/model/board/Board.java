@@ -31,11 +31,14 @@ public class Board {
 
         Piece clonedPiece = tiles.get(sourcePosition).clonePiece();
 
-        tiles.put(sourcePosition, new Tile(sourcePosition, Optional.empty()));
-        tiles.put(targetPosition, new Tile(targetPosition, Optional.ofNullable(clonedPiece)));
+        tiles.put(sourcePosition, new Tile(sourcePosition, null));
+        tiles.put(targetPosition, new Tile(targetPosition, clonedPiece));
     }
 
     private void checkMovablePiece(List<String> sourceAndTarget, String sourcePosition, String targetPosition) {
+        if (!tiles.get(sourcePosition).isPiecePresent()) {
+            throw new IllegalArgumentException("말을 클릭해야합니다.");
+        }
         Coordinate sourceCoordinateX = Coordinate.valueOf(Integer.parseInt(sourceAndTarget.get(0).substring(0, 1)));
         Coordinate sourceCoordinateY = Coordinate.valueOf(Integer.parseInt(sourceAndTarget.get(0).substring(1)));
         Coordinate targetCoordinateX = Coordinate.valueOf(Integer.parseInt(sourceAndTarget.get(1).substring(0, 1)));
@@ -47,7 +50,10 @@ public class Board {
         }
 
         String teamOfSourceTilePiece = askTilePieceWhichTeam(sourcePosition);
-        String teamOfTargetTilePiece = askTilePieceWhichTeam(targetPosition);
+        String teamOfTargetTilePiece = "";
+        if (tiles.get(targetPosition).isPiecePresent()) {
+            teamOfTargetTilePiece = askTilePieceWhichTeam(targetPosition);
+        }
 
         if (checkPiecePresentInTarget(sourcePosition) && teamOfSourceTilePiece.equals(teamOfTargetTilePiece)) {
             throw new IllegalArgumentException("같은 팀이 있는 곳으로는 움직일 수 없습니다.");
@@ -165,7 +171,7 @@ public class Board {
         // 폰 이외의 말 점수계산
         for (String location : tiles.keySet()) {
             if (tiles.get(location).isPiecePresent()) {
-                Piece piece = tiles.get(location).getPiece().get();
+                Piece piece = tiles.get(location).getPiece();
                 if (!piece.isPawn() && piece.askTeamColor().equals("white")) {
                     scoreOfWhite += piece.getScore();
                 }
@@ -216,7 +222,7 @@ public class Board {
             count++;
             Tile tile = tiles.get(key);
 
-            if (!tile.getPiece().isPresent()) {
+            if (Objects.isNull(tile.getPiece())) {
                 row = row.concat("#");
 
                 if (count % 8 == 0) {
@@ -226,7 +232,7 @@ public class Board {
                 continue;
             }
 
-            if (tile.getPiece().get().getScore() == King.SCORE) {
+            if (tile.getPiece().getScore() == King.SCORE) {
                 if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("k");
                 }
@@ -236,7 +242,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Queen.SCORE) {
+            if (tile.getPiece().getScore() == Queen.SCORE) {
                 if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("q");
                 }
@@ -246,7 +252,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Rook.SCORE) {
+            if (tile.getPiece().getScore() == Rook.SCORE) {
                 if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("r");
                 }
@@ -256,7 +262,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Knight.SCORE) {
+            if (tile.getPiece().getScore() == Knight.SCORE) {
                 if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("n");
                 }
@@ -266,7 +272,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Bishop.SCORE) {
+            if (tile.getPiece().getScore() == Bishop.SCORE) {
                 if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("b");
                 }
@@ -276,7 +282,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Pawn.SCORE) {
+            if (tile.getPiece().getScore() == Pawn.SCORE) {
                 if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("p");
                 }
