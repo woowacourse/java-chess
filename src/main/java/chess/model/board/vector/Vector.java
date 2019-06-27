@@ -22,12 +22,16 @@ public class Vector {
         return this.direction.equals(direction);
     }
 
+    public boolean isEqualToMagnitude(int magnitude) {
+        return this.magnitude.isEqual(magnitude);
+    }
+
     public Direction getDirection() {
         return direction;
     }
 
-    public Magnitude getMagnitude() {
-        return magnitude;
+    public int getMagnitude() {
+        return magnitude.getMagnitude();
     }
 
     public boolean isMatch(Set<Direction> movableDirections) {

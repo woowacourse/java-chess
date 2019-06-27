@@ -45,7 +45,7 @@ public class MagnitudeTest {
                 Coordinate.valueOf(3));
         Magnitude magnitude = new Magnitude(coordinates, NORTH);
 
-        assertThat(magnitude.getMagnitude()).isEqualTo(1);
+        assertThat(magnitude.isEqual(1)).isTrue();
     }
 
     @Test
@@ -57,7 +57,7 @@ public class MagnitudeTest {
                 Coordinate.valueOf(1));
         Magnitude magnitude = new Magnitude(coordinates, SOUTH);
 
-        assertThat(magnitude.getMagnitude()).isEqualTo(1);
+        assertThat(magnitude.isEqual(1)).isTrue();
     }
 
     @Test
@@ -69,7 +69,7 @@ public class MagnitudeTest {
                 Coordinate.valueOf(2));
         Magnitude magnitude = new Magnitude(coordinates, EAST);
 
-        assertThat(magnitude.getMagnitude()).isEqualTo(1);
+        assertThat(magnitude.isEqual(1)).isTrue();
     }
 
     @Test
@@ -81,7 +81,7 @@ public class MagnitudeTest {
                 Coordinate.valueOf(2));
         Magnitude magnitude = new Magnitude(coordinates, WEST);
 
-        assertThat(magnitude.getMagnitude()).isEqualTo(1);
+        assertThat(magnitude.isEqual(1)).isTrue();
     }
 
     @Test
@@ -93,7 +93,7 @@ public class MagnitudeTest {
                 Coordinate.valueOf(3));
         Magnitude magnitude = new Magnitude(coordinates, NORTHWEST);
 
-        assertThat(magnitude.getMagnitude()).isEqualTo(1);
+        assertThat(magnitude.isEqual(1)).isTrue();
     }
 
     @Test
@@ -105,7 +105,7 @@ public class MagnitudeTest {
                 Coordinate.valueOf(3));
         Magnitude magnitude = new Magnitude(coordinates, NORTHEAST);
 
-        assertThat(magnitude.getMagnitude()).isEqualTo(1);
+        assertThat(magnitude.isEqual(1)).isTrue();
     }
 
     @Test
@@ -117,7 +117,7 @@ public class MagnitudeTest {
                 Coordinate.valueOf(1));
         Magnitude magnitude = new Magnitude(coordinates, SOUTHWEST);
 
-        assertThat(magnitude.getMagnitude()).isEqualTo(1);
+        assertThat(magnitude.isEqual(1)).isTrue();
     }
 
     @Test
@@ -129,7 +129,7 @@ public class MagnitudeTest {
                 Coordinate.valueOf(1));
         Magnitude magnitude = new Magnitude(coordinates, SOUTHEAST);
 
-        assertThat(magnitude.getMagnitude()).isEqualTo(1);
+        assertThat(magnitude.isEqual(1)).isTrue();
     }
 
     @Test
@@ -141,6 +141,6 @@ public class MagnitudeTest {
                 Coordinate.valueOf(5));
         Magnitude magnitude = new Magnitude(coordinates, KNIGHT_NORTHEAST);
 
-        assertThat(magnitude.getMagnitude()).isEqualTo(0);
+        assertThat(magnitude.isEqual(0)).isTrue();
     }
 }

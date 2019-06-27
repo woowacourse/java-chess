@@ -63,7 +63,7 @@ public class Knight implements Piece {
             if (vector.isEqualToDirection(KNIGHT_NORTHWEST)) {
                 routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(2)));
             }
-            if (vector.isEqualToDirection(KNIGHT_SOUTHWEST)) {
+            if (vector.isEqualToDirection(KNIGHT_SOUTHEAST)) {
                 routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(-2)));
             }
             if (vector.isEqualToDirection(KNIGHT_SOUTHWEST)) {

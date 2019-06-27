@@ -48,22 +48,22 @@ public class Bishop implements Piece {
             Coordinate coordinateY = sourceCoordinates.get(1);
 
             if (vector.isEqualToDirection(SOUTHEAST)) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
+                for (int i = 1; i <= vector.getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(-i)));
                 }
             }
             if (vector.isEqualToDirection(SOUTHWEST)) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
+                for (int i = 1; i <= vector.getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(-i)));
                 }
             }
             if (vector.isEqualToDirection(NORTHEAST)) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
+                for (int i = 1; i <= vector.getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(i)));
                 }
             }
             if (vector.isEqualToDirection(NORTHWEST)) {
-                for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
+                for (int i = 1; i <= vector.getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(i)));
                 }
             }

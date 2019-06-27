@@ -8,6 +8,8 @@ import java.util.Objects;
 import static chess.model.board.vector.Direction.*;
 
 public class Magnitude {
+    private static final int KNIGHT_MAGNITUDE = 0;
+
     private int magnitude;
 
     public Magnitude(List<Coordinate> coordinates, Direction direction) {
@@ -31,7 +33,7 @@ public class Magnitude {
         if (isDiagonal(direction)) {
             return Math.abs(targetCoordinateX.calculateDistance(sourceCoordinateX));
         }
-        return 0;
+        return KNIGHT_MAGNITUDE;
     }
 
     private void validateNull(List<Coordinate> coordinates, Direction direction) {
@@ -44,7 +46,11 @@ public class Magnitude {
         }
     }
 
-    public int getMagnitude() {
+    public boolean isEqual(int magnitude) {
+        return this.magnitude == magnitude;
+    }
+
+    int getMagnitude() {
         return magnitude;
     }
 

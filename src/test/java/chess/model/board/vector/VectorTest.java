@@ -34,7 +34,7 @@ public class VectorTest {
         Vector vector = new Vector(coordinates);
 
         assertThat(vector.isEqualToDirection(NORTH)).isTrue();
-        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, NORTH));
+        assertThat(vector.isEqualToMagnitude(1)).isTrue();
     }
 
     @Test
@@ -47,7 +47,7 @@ public class VectorTest {
         Vector vector = new Vector(coordinates);
 
         assertThat(vector.isEqualToDirection(WEST)).isTrue();
-        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, WEST));
+        assertThat(vector.isEqualToMagnitude(1)).isTrue();
     }
 
     @Test
@@ -60,7 +60,7 @@ public class VectorTest {
         Vector vector = new Vector(coordinates);
 
         assertThat(vector.isEqualToDirection(NORTHEAST)).isTrue();
-        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, NORTHEAST));
+        assertThat(vector.isEqualToMagnitude(1)).isTrue();
     }
 
     @Test
@@ -73,6 +73,6 @@ public class VectorTest {
         Vector vector = new Vector(coordinates);
 
         assertThat(vector.isEqualToDirection(KNIGHT_NORTHWEST)).isTrue();
-        assertThat(vector.getMagnitude()).isEqualTo(new Magnitude(coordinates, KNIGHT_NORTHWEST));
+        assertThat(vector.isEqualToMagnitude(0)).isTrue();
     }
 }

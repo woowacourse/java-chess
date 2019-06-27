@@ -103,12 +103,12 @@ public class Pawn implements Piece {
     }
 
     private void addWhenMagnitude2(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getMagnitude().getMagnitude() == 2 && isNotMoved) {
+        if (vector.isEqualToMagnitude(2) && isNotMoved) {
             addWhenNorthGivenMagnitude2(coordinates, vector, route);
             addWhenSouthGivenMagnitude2(coordinates, vector, route);
         }
 
-        if (vector.getMagnitude().getMagnitude() == 2 && !isNotMoved) {
+        if (vector.isEqualToMagnitude(2) && !isNotMoved) {
             throw new IllegalArgumentException("한 턴에 2칸을 이동할 수 없습니다.");
         }
     }
@@ -135,7 +135,7 @@ public class Pawn implements Piece {
     }
 
     private void addWhenMagnitude1(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getMagnitude().getMagnitude() == 1) {
+        if (vector.isEqualToMagnitude(1)) {
             addWhenSouthWest(coordinates, vector, route);
             addWhenSouthEast(coordinates, vector, route);
             addWhenNorthEast(coordinates, vector, route);

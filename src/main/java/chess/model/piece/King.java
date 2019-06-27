@@ -49,7 +49,7 @@ public class King implements Piece {
 
         List<String> routes = new ArrayList<>();
 
-        if (vector.isMatch(movableDirections) && vector.getMagnitude().getMagnitude() == 1) {
+        if (vector.isMatch(movableDirections) && vector.isEqualToMagnitude(1)) {
             Coordinate coordinateX = sourceCoordinates.get(0);
             Coordinate coordinateY = sourceCoordinates.get(1);
 

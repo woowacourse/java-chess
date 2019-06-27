@@ -1,7 +1,6 @@
 package chess.model.board;
 
 import chess.model.ScoreResult;
-import chess.model.board.vector.Vector;
 import chess.model.gameCreator.NewBoardCreatingStrategy;
 import chess.model.piece.King;
 import chess.model.piece.Knight;
@@ -14,7 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class BoardTest {
     @Test
@@ -39,31 +39,9 @@ public class BoardTest {
             return testMap;
         });
 
-        Vector vector = new Vector(Arrays.asList(
-                Coordinate.valueOf(5),
-                Coordinate.valueOf(5),
-                Coordinate.valueOf(5),
-                Coordinate.valueOf(7)));
-
-        assertThat(board.checkPiecePresentInRoute(Arrays.asList("55", "57"), vector)).isTrue();
-    }
-
-    @Test
-    void 경로에_piece있는지_확인_piece가_없을_경우() {
-        Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.of(new Pawn(true, "white")));
-            Map<String, Tile> testMap = new HashMap<>();
-            testMap.put("55", testTile1);
-            return testMap;
-        });
-
-        Vector vector = new Vector(Arrays.asList(
-                Coordinate.valueOf(5),
-                Coordinate.valueOf(5),
-                Coordinate.valueOf(5),
-                Coordinate.valueOf(7)));
-
-        assertThat(board.checkPiecePresentInRoute(Arrays.asList("55", "57"), vector)).isFalse();
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> board.movePiece(Arrays.asList("55", "57")))
+                .withMessage("경로에 piece가 있어서 움직일 수 없습니다.");
     }
 
     @Test
@@ -74,8 +52,7 @@ public class BoardTest {
             testMap.put("57", testTile2);
             return testMap;
         });
-
-        assertThat(board.checkPiecePresentInTarget("57")).isTrue();
+        assertThat(board.getTile("57").isPiecePresent()).isTrue();
     }
 
     @Test
@@ -86,8 +63,7 @@ public class BoardTest {
             testMap.put("57", testTile2);
             return testMap;
         });
-
-        assertThat(board.checkPiecePresentInTarget("57")).isFalse();
+        assertThat(board.getTile("57").isPiecePresent()).isFalse();
     }
 
     @Test
@@ -98,8 +74,7 @@ public class BoardTest {
             testMap.put("55", testTile1);
             return testMap;
         });
-
-        assertThat(board.askTilePieceWhichTeam("55")).isEqualTo("white");
+        assertThat(board.isRightTurn("55", 1)).isTrue();
     }
 
     @Test
@@ -110,8 +85,7 @@ public class BoardTest {
             testMap.put("55", testTile1);
             return testMap;
         });
-
-        assertThat(board.askTilePieceWhichTeam("55")).isEqualTo("black");
+        assertThat(board.isRightTurn("55", 2)).isTrue();
     }
 
     @Test
@@ -135,7 +109,6 @@ public class BoardTest {
         });
 
         board.movePiece(Arrays.asList("55", "57"));
-
         assertThat(board).isEqualTo(boardAfterMoved);
     }
 
@@ -191,7 +164,6 @@ public class BoardTest {
         });
 
         board.movePiece(Arrays.asList("55", "66"));
-
         assertThat(board).isEqualTo(boardAfterMoved);
     }
 
@@ -231,7 +203,6 @@ public class BoardTest {
         });
 
         board.movePiece(Arrays.asList("55", "53"));
-
         assertThat(board).isEqualTo(boardAfterMoved);
     }
 
@@ -256,7 +227,6 @@ public class BoardTest {
         });
 
         board.movePiece(Arrays.asList("55", "73"));
-
         assertThat(board).isEqualTo(boardAfterMoved);
     }
 
@@ -311,7 +281,6 @@ public class BoardTest {
         });
 
         board.movePiece(Arrays.asList("55", "63"));
-
         assertThat(board).isEqualTo(boardAfterMoved);
     }
 
@@ -336,7 +305,6 @@ public class BoardTest {
         });
 
         board.movePiece(Arrays.asList("55", "63"));
-
         assertThat(board).isEqualTo(boardAfterMoved);
     }
 
