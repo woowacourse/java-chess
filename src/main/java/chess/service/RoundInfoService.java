@@ -8,7 +8,6 @@ import chess.service.dto.HistoryDto;
 import chess.service.dto.ResultDto;
 import chess.service.dto.RoundInfoDto;
 
-import java.sql.SQLDataException;
 import java.util.List;
 
 public class RoundInfoService {
@@ -29,19 +28,19 @@ public class RoundInfoService {
         return RoundInfoService.RoundInfoServiceHolder.INSTANCE;
     }
 
-    public List<RoundInfoDto> selectAllGame(boolean isEnd) throws SQLDataException {
+    public List<RoundInfoDto> selectAllGame(boolean isEnd) {
         return roundInfoDao.selectAllGame(isEnd);
     }
 
-    public RoundInfoDto selectRoundInfo(int round) throws SQLDataException {
+    public RoundInfoDto selectRoundInfo(int round) {
         return roundInfoDao.selectRoundInfo(round);
     }
 
-    public int insertRoundInfo(String whiteName, String blackName) throws SQLDataException {
+    public int insertRoundInfo(String whiteName, String blackName) {
         return roundInfoDao.insertRoundInfo(whiteName, blackName);
     }
 
-    public ResultDto getScore(int round) throws SQLDataException {
+    public ResultDto getScore(int round) {
         HistoryDto historyDto = historyService.selectLastHistory(round);
         Board board = BoardFactory.create(historyDto.getRows());
 
@@ -51,7 +50,7 @@ public class RoundInfoService {
         return resultDto;
     }
 
-    public ResultDto selectGameResult(int round) throws SQLDataException {
+    public ResultDto selectGameResult(int round) {
         return roundInfoDao.selectGameResult(round);
     }
 }

@@ -1,10 +1,10 @@
 package chess.dao;
 
+import chess.dao.exception.DataAccessException;
 import chess.dao.utils.JdbcConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLDataException;
 import java.util.Arrays;
 
 import static chess.dao.sqls.PlayerSql.INSERT_PLAYER;
@@ -21,7 +21,7 @@ public class PlayerDao {
         return PlayerDaoHolder.INSTANCE;
     }
 
-    public int insertPlayers(String whitePlayer, String blackPlayer) throws SQLDataException {
+    public int insertPlayers(String whitePlayer, String blackPlayer) {
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PLAYER)) {
             preparedStatement.setString(1, whitePlayer);
@@ -34,8 +34,7 @@ public class PlayerDao {
 
             return Arrays.stream(preparedStatement.executeBatch()).sum();
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLDataException();
+            throw new DataAccessException(e);
         }
     }
 }

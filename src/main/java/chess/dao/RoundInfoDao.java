@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.dao.exception.DataAccessException;
 import chess.dao.utils.JdbcConnector;
 import chess.service.dto.ResultDto;
 import chess.service.dto.RoundInfoDto;
@@ -22,7 +23,7 @@ public class RoundInfoDao {
         return RoundInfoDaoHolder.INSTANCE;
     }
 
-    public List<RoundInfoDto> selectAllGame(boolean isEnd) throws SQLDataException {
+    public List<RoundInfoDto> selectAllGame(boolean isEnd) {
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_GAME_BY_IS_END)) {
             preparedStatement.setBoolean(1, isEnd);
@@ -42,12 +43,11 @@ public class RoundInfoDao {
             }
             return list;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLDataException();
+            throw new DataAccessException(e);
         }
     }
 
-    public int insertRoundInfo(String whitePlayer, String blackPlayer) throws SQLDataException {
+    public int insertRoundInfo(String whitePlayer, String blackPlayer) {
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ROUND_INFO, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -58,34 +58,32 @@ public class RoundInfoDao {
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
             if (!resultSet.next()) {
-                throw new SQLDataException();
+                throw new DataAccessException("round 입력 실패!");
             }
 
             return resultSet.getInt(1);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLDataException();
+            throw new DataAccessException(e);
         }
     }
 
-    public int updateGameOver(int round) throws SQLDataException {
+    public int updateGameOver(int round) {
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement preparedStatement = createPreparedStatement(connection, round, UPDATE_IS_END_TRUE)) {
 
             return preparedStatement.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLDataException();
+            throw new DataAccessException(e);
         }
     }
 
-    public RoundInfoDto selectRoundInfo(int round) throws SQLDataException {
+    public RoundInfoDto selectRoundInfo(int round) {
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement preparedStatement = createPreparedStatement(connection, round, SELECT_ROUND_INFO);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             if (!resultSet.next()) {
-                throw new SQLDataException();
+                throw new DataAccessException("게임 정보를 불러오지 못했습니다.");
             }
 
             RoundInfoDto roundInfoDto = new RoundInfoDto();
@@ -96,18 +94,17 @@ public class RoundInfoDao {
 
             return roundInfoDto;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLDataException();
+            throw new DataAccessException(e);
         }
     }
 
-    public ResultDto selectGameResult(int round) throws SQLDataException {
+    public ResultDto selectGameResult(int round) {
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement preparedStatement = createPreparedStatement(connection, round, SELECT_GAME_RESULT);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             if (!resultSet.next()) {
-                throw new SQLDataException();
+                throw new DataAccessException("게임 결과를 불러오지 못했습니다.");
             }
 
             ResultDto resultDto = new ResultDto();
@@ -116,8 +113,7 @@ public class RoundInfoDao {
 
             return resultDto;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLDataException();
+            throw new DataAccessException(e);
         }
     }
 

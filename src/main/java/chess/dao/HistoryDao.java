@@ -1,10 +1,14 @@
 package chess.dao;
 
+import chess.dao.exception.DataAccessException;
 import chess.dao.utils.JdbcConnector;
 import chess.domain.board.Board;
 import chess.service.dto.HistoryDto;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +29,13 @@ public class HistoryDao {
         return HistoryDaoHolder.INSTANCE;
     }
 
-    public HistoryDto selectLastHistory(int round) throws SQLDataException {
+    public HistoryDto selectLastHistory(int round) {
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement preparedStatement = createPreparedStatement(connection, SELECT_LAST_HISTORY_BY_ROUND, round);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             if (!resultSet.next()) {
-                throw new SQLDataException();
+                throw new DataAccessException("History를 찾을 수 없습니다.");
             }
 
             List<String> rows = new ArrayList<>();
@@ -45,8 +49,7 @@ public class HistoryDao {
 
             return historyDTO;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLDataException();
+            throw new DataAccessException(e);
         }
     }
 
@@ -58,7 +61,7 @@ public class HistoryDao {
     }
 
 
-    public int insertHistory(HistoryDto historyDTO) throws SQLDataException {
+    public int insertHistory(HistoryDto historyDTO) {
         try (Connection connection = JdbcConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_HISTORY)) {
 
@@ -72,8 +75,7 @@ public class HistoryDao {
             return preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLDataException();
+            throw new DataAccessException(e);
         }
     }
 }

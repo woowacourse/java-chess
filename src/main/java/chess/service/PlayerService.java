@@ -20,7 +20,7 @@ public class PlayerService {
         return PlayerServiceHolder.INSTANCE;
     }
 
-    public int insertPlayer(String whiteName, String blackName) throws SQLDataException {
+    public int insertPlayer(String whiteName, String blackName) {
         return playerDao.insertPlayers(whiteName, blackName);
     }
 }
