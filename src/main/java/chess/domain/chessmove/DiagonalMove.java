@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 public class DiagonalMove implements Move {
     private static final int MIN = 1;
+    private static final int DIFFERENT_COLUMN_ROW = 0;
 
     private static class DiagonalMoveLazyHolder {
         private static final DiagonalMove INSTANCE = new DiagonalMove();
@@ -35,6 +36,10 @@ public class DiagonalMove implements Move {
     @Override
     public boolean isInRoute(Position source, Position target) {
         return !source.equals(target)
-                && Math.abs(source.calculateRowDistance(target)) - Math.abs(source.calculateColumnDistance(target)) == 0;
+                && isInDiagonal(source, target);
+    }
+
+    private boolean isInDiagonal(Position source, Position target) {
+        return Math.abs(source.calculateRowDistance(target)) - Math.abs(source.calculateColumnDistance(target)) == DIFFERENT_COLUMN_ROW;
     }
 }
