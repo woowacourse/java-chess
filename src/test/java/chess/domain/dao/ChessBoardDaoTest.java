@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ChessBoardDAOTest {
+public class ChessBoardDaoTest {
     private Connection connection = DBConnection.getConnection();
 
     @Test
@@ -21,6 +21,13 @@ public class ChessBoardDAOTest {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
         chessBoardDAO.add(chessBoard, Team.WHITE);
+    }
+
+    @Test
+    void 삽입2() throws SQLException {
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
+        ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
+        chessBoardDAO.add2(chessBoard, Team.WHITE, 12);
     }
 
 
@@ -38,6 +45,14 @@ public class ChessBoardDAOTest {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
         ChessBoard chessBoard = chessBoardDAO.select(16);
+        OutputView.printCheckBoard(chessBoard);
+    }
+
+    @Test
+    void 검색2() throws SQLException {
+        ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
+
+        ChessBoard chessBoard = chessBoardDAO.select2(10, Team.BLACK);
         OutputView.printCheckBoard(chessBoard);
     }
 
