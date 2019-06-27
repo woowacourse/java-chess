@@ -22,8 +22,7 @@ public class ChessJDBCDriverConnector {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException(e);
         }
     }
 
@@ -33,8 +32,7 @@ public class ChessJDBCDriverConnector {
             connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + "?useSSL=false&serverTimezone=UTC", userName, password);
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException(e);
         }
         return connection;
     }
