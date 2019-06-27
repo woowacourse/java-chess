@@ -20,6 +20,7 @@ public class RoomDAO {
         String query = "INSERT INTO room (team) VALUES (?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, Team.WHITE.name());
+
         pstmt.executeUpdate();
     }
 
@@ -54,6 +55,16 @@ public class RoomDAO {
         }
 
         return ids;
+    }
+
+    public int getRecentId() throws SQLException {
+        String query = "SELECT id FROM room ORDER BY id DESC LIMIT 1";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet resultSet = pstmt.executeQuery();
+
+        if (!resultSet.next()) throw new SQLException();
+
+        return resultSet.getInt("id");
     }
 
 }

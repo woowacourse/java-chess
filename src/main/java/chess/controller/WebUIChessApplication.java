@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.chess.dao.ChessBoardDAO;
 import chess.domain.chess.dao.DBConnection;
+import chess.domain.chess.dao.RoomDAO;
 import chess.domain.chess.dto.ChessBoardDTO;
 import chess.domain.chess.game.ChessBoard;
 import chess.domain.chess.game.Team;
@@ -24,6 +25,7 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     private static Connection dbConnection = DBConnection.getConnection();
     private static ChessBoardDAO chessBoardDAO = new ChessBoardDAO(dbConnection);
+    private static RoomDAO roomDAO = new RoomDAO(dbConnection);
 
     public static void main(String[] args) {
         externalStaticFileLocation("src/main/resources/templates");
@@ -105,7 +107,7 @@ public class WebUIChessApplication {
 
         get("/game_room", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<Integer> roomIds = chessBoardDAO.getIdList();
+            List<Integer> roomIds = roomDAO.getIds();
             String roomIdsJson = new Gson().toJson(roomIds);
 
             model.put("roomIds", roomIds);

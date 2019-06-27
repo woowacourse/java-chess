@@ -42,4 +42,12 @@ public class RoomDaoTest {
         assertThat(team).isEqualTo(Team.BLACK);
     }
 
+    @Test
+    void getRecentId() throws SQLException {
+        RoomDAO roomDAO = new RoomDAO(connection);
+
+        int id = roomDAO.getRecentId();
+        System.out.println(id);
+    }
+
 }

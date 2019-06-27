@@ -23,12 +23,6 @@ public class ChessBoardDaoTest {
         chessBoardDAO.add(chessBoard, Team.WHITE);
     }
 
-    @Test
-    void 삽입2() throws SQLException {
-        ChessBoard chessBoard = new ChessBoard(new ChessBoardInitializer());
-        ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
-        chessBoardDAO.add2(chessBoard, Team.WHITE, 12);
-    }
 
 
     @Test
