@@ -15,7 +15,6 @@ const touchA = function (id) {
 
 const setBoard = (black, white) => {
     const blackTeam = black;
-    console.log(blackTeam);
     for (key in blackTeam) {
         const spot = blackTeam[key].Spot;
         const piece = blackTeam[key].Piece;
@@ -23,7 +22,6 @@ const setBoard = (black, white) => {
     }
 
     const whiteTeam = white;
-    console.log(whiteTeam);
     for (key in whiteTeam) {
         const spot = whiteTeam[key].Spot;
         const piece = whiteTeam[key].Piece;
@@ -54,19 +52,15 @@ const setPiece = (pos, name) => {
 };
 
 const ajaxRequest = (from, to) => {
-    console.log("from :" + from + " t o : " + to);
     const xhttp = new XMLHttpRequest();
     const url = "http://localhost:4567/move";
     const query = `?from=${from}&to=${to}`;
     xhttp.addEventListener("load", () => {
         initChess();
         const res = xhttp.response;
-        console.log(res);
         const jsonRes = JSON.parse(res);
         const blackTeamArray = jsonRes.Board[0].BLACK;
-        console.log(blackTeamArray);
         const whiteTeamArray = jsonRes.Board[1].WHITE;
-        console.log(whiteTeamArray);
         setBoard(blackTeamArray, whiteTeamArray);
     });
     xhttp.onreadystatechange = () => {
@@ -83,7 +77,6 @@ const ajaxScore = () => {
     const url = "http://localhost:4567/score";
     xhttp.addEventListener("load", () => {
         const res = xhttp.response;
-        console.log("점수판 응답 : " + res);
         document.getElementById("score").innerText = res;
     });
     xhttp.onreadystatechange = () => {
@@ -101,12 +94,9 @@ const startGame = () => {
     xhttp.addEventListener("load", () => {
         initChess();
         const res = xhttp.response;
-        console.log(res);
         const jsonRes = JSON.parse(res);
         const blackTeamArray = jsonRes.Board[0].BLACK;
-        console.log(blackTeamArray);
         const whiteTeamArray = jsonRes.Board[1].WHITE;
-        console.log(whiteTeamArray);
         setBoard(blackTeamArray, whiteTeamArray);
     });
     xhttp.onreadystatechange = () => {
