@@ -7,6 +7,8 @@ import spark.Response;
 import java.sql.SQLException;
 
 public class ScoreController {
+    public static final String PATH = "/score";
+
     private ScoreController() {
     }
 

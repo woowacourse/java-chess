@@ -46,11 +46,11 @@ public class WebUIChessApplication {
             return render(map, "index.html");
         });
 
-        get("/move", startController::start);
+        get(StartController.PATH, startController::start);
 
-        get("/move", moveController::move);
+        get(MoveController.PATH, moveController::move);
 
-        get("/score", scoreController::score);
+        get(ScoreController.PATH, scoreController::score);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -9,6 +9,8 @@ import spark.Response;
 import java.sql.SQLException;
 
 public class StartController {
+    public static final String PATH = "/start";
+
     private StartController() {
     }
 

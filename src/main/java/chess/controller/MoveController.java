@@ -9,6 +9,8 @@ import spark.Response;
 import java.sql.SQLException;
 
 public class MoveController {
+    public final static String PATH = "/move";
+
     private MoveController() {
     }
 
@@ -19,7 +21,7 @@ public class MoveController {
     private static class Holder {
         private static MoveController INSTANCE = new MoveController();
     }
-    
+
     public Object move(Request req, Response res) throws SQLException {
         Game game = req.session().attribute("game");
         int from = Integer.parseInt(req.queryParams("from"));
