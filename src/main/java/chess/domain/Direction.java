@@ -67,7 +67,7 @@ public enum Direction {
 		return Arrays.asList(LEFT_BOTTOM, RIGHT_BOTTOM);
 	}
 
-	public static List<Direction> getQueenDirection(){
+	public static List<Direction> getQueenDirection() {
 		return Arrays.asList(LEFT, LEFT_TOP, TOP, RIGHT_TOP, RIGHT, RIGHT_BOTTOM, BOTTOM, LEFT_BOTTOM);
 	}
 
