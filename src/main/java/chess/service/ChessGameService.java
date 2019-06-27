@@ -1,11 +1,9 @@
 package chess.service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
 import chess.dao.ChessGameDAO;
-import chess.database.DatabaseConnection;
 import chess.domain.ChessGame;
 import chess.domain.ChessPiece;
 import chess.domain.Player;
@@ -29,40 +27,29 @@ public class ChessGameService {
 		return new ArrayList<>(positionPieceImages.values());
 	}
 
-	public int saveInitialChessGame(Player currentPlayer) throws SQLException {
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			ChessGameDAO chessGameDAO = ChessGameDAO.getInstance(connection);
-			return chessGameDAO.addChessGame(currentPlayer);
-		}
+	public int saveInitialChessGame(String currentPlayerName) throws SQLException {
+		ChessGameDAO chessGameDAO = new ChessGameDAO();
+		return chessGameDAO.addChessGame(currentPlayerName);
 	}
 
 	public int saveChessGame(int roomNumber, ChessGame chessGame) throws SQLException {
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			ChessGameDAO chessGameDAO = ChessGameDAO.getInstance(connection);
-			Player currentPlayer = chessGame.getCurrentPlayer();
-			chessGameDAO.changeTurn(roomNumber, currentPlayer);
-			return roomNumber;
-		}
+		ChessGameDAO chessGameDAO = new ChessGameDAO();
+		chessGameDAO.changeTurn(roomNumber, chessGame.getCurrentPlayerName());
+		return roomNumber;
 	}
 
 	public Player loadTurn(int roomNumber) throws SQLException {
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			ChessGameDAO chessGameDAO = ChessGameDAO.getInstance(connection);
-			return chessGameDAO.getChessGameTurn(roomNumber);
-		}
+		ChessGameDAO chessGameDAO = new ChessGameDAO();
+		return chessGameDAO.getChessGameTurn(roomNumber);
 	}
 
 	public List<Integer> getRoomNumbers() throws SQLException {
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			ChessGameDAO chessGameDAO = ChessGameDAO.getInstance(connection);
-			return chessGameDAO.getNotOverAllRoomNumbers();
-		}
+		ChessGameDAO chessGameDAO = new ChessGameDAO();
+		return chessGameDAO.getNotOverAllRoomNumbers();
 	}
 
 	public void gameOver(int roomNumber) throws SQLException {
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			ChessGameDAO chessGameDAO = ChessGameDAO.getInstance(connection);
-			chessGameDAO.gameover(roomNumber);
-		}
+		ChessGameDAO chessGameDAO = new ChessGameDAO();
+		chessGameDAO.gameover(roomNumber);
 	}
 }
