@@ -3,7 +3,7 @@ package chess.domain.position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PositionManager {
+public class Positions {
     private static final int MIN_COORDINATE = 1;
     private static final int MAX_COORDINATE = 8;
 
@@ -18,7 +18,7 @@ public class PositionManager {
         }
     }
 
-    public static Position getMatchPosition(int x, int y) {
+    public static Position matchWith(int x, int y) {
         return positions.stream()
                 .filter(position -> position.isMatchPosition(x, y))
                 .findFirst()

@@ -5,7 +5,7 @@ import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.pieces.*;
 import chess.domain.position.Position;
-import chess.domain.position.PositionManager;
+import chess.domain.position.Positions;
 import chess.dto.ChessDTO;
 
 import java.sql.Connection;
@@ -71,7 +71,7 @@ public class ChessDAO {
             String string = rs.getString("rank" + i);
             for (int j = MIN_BOARD_INDEX; j <= MAX_BOARD_INDEX; j++) {
                 String symbol = String.valueOf(string.charAt(j));
-                Position position = PositionManager.getMatchPosition(j + 1 , i);
+                Position position = Positions.matchWith(j + 1 , i);
                 Piece piece = makePiece(position, symbol);
                 boardState.put(position, piece);
             }

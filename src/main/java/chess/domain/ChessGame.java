@@ -1,10 +1,9 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardCreator;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.PositionManager;
+import chess.domain.position.Positions;
 import chess.dto.ChessDTO;
 
 import java.util.ArrayList;
@@ -57,8 +56,8 @@ public class ChessGame {
         for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
             StringBuilder rank = new StringBuilder();
             for (int j = MIN_BOARD_COORDINATE; j <= MAX_BOARD_COORDINATE; j++) {
-                Piece piece = board.findPiece(PositionManager.getMatchPosition(j, i));
-                rank.append((piece.getTeam() == Team.BLACK) ? piece.getSymbol().toUpperCase() : piece.getSymbol());
+                Piece piece = board.findPiece(Positions.matchWith(j, i));
+                rank.append((piece.isOurPiece(Team.BLACK)) ? piece.getSymbol().toUpperCase() : piece.getSymbol());
             }
             ranks.add(rank.toString());
         }

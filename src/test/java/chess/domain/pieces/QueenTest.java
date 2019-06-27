@@ -1,7 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
-import chess.domain.position.PositionManager;
+import chess.domain.position.Positions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,19 +12,36 @@ class QueenTest {
 
     @BeforeEach
     public void setUp() {
-        queen = new Queen(PositionManager.getMatchPosition(2, 3), Team.WHITE);
+        queen = new Queen(Positions.matchWith(2, 3), Team.WHITE);
     }
 
     @Test
-    public void 움직여야_할_때_움직이는지_확인한다() {
-        assertThat(queen.canMove(PositionManager.getMatchPosition(2, 4))).isTrue();
-        assertThat(queen.canMove(PositionManager.getMatchPosition(3, 4))).isTrue();
-        assertThat(queen.canMove(PositionManager.getMatchPosition(3, 3))).isTrue();
+    public void 앞으로_한_칸_움직이기() {
+        assertThat(queen.canMove(Positions.matchWith(2, 4))).isTrue();
     }
 
     @Test
-    public void 움직이지_말아야_할_때_안_움직이는지_확인한다() {
-        assertThat(queen.canMove(PositionManager.getMatchPosition(3, 5))).isFalse();
-        assertThat(queen.canMove(PositionManager.getMatchPosition(1, 1))).isFalse();
+    public void 뒤로_두_칸_움직이기() {
+        assertThat(queen.canMove(Positions.matchWith(2, 1))).isTrue();
+    }
+
+    @Test
+    public void 대각선_한_칸_움직이기() {
+        assertThat(queen.canMove(Positions.matchWith(3, 4))).isTrue();
+    }
+
+    @Test
+    public void 대각선_다섯_칸_움직이기() {
+        assertThat(queen.canMove(Positions.matchWith(7, 8))).isTrue();
+    }
+
+    @Test
+    public void 앞으로_둘_오른쪽으로_한_칸_움직이지_않기() {
+        assertThat(queen.canMove(Positions.matchWith(3, 5))).isFalse();
+    }
+
+    @Test
+    public void 뒤로_둘_왼쪽으로_한_칸_움직이지_않기() {
+        assertThat(queen.canMove(Positions.matchWith(1, 1))).isFalse();
     }
 }

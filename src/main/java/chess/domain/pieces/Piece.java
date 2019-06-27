@@ -26,10 +26,6 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
     public abstract boolean canMove(Position position);
 
     public abstract double getScore();

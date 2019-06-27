@@ -3,7 +3,7 @@ package chess.domain.view;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.pieces.Piece;
-import chess.domain.position.PositionManager;
+import chess.domain.position.Positions;
 
 public class WebOutputView {
     private static final int MIN_BOARD_COORDINATE = 1;
@@ -14,7 +14,7 @@ public class WebOutputView {
         for (int i = MAX_BOARD_COORDINATE; i >= MIN_BOARD_COORDINATE ; i--) {
             stringBuilder.append("<div class=\"blank\"></div>\n");
             for (int j = MIN_BOARD_COORDINATE; j <= MAX_BOARD_COORDINATE; j++) {
-                Piece piece = board.findPiece(PositionManager.getMatchPosition(j, i));
+                Piece piece = board.findPiece(Positions.matchWith(j, i));
                 stringBuilder.append(printPiece(piece, j, i));
             }
             stringBuilder.append("<div class=\"blank\"></div>\n");
@@ -32,10 +32,10 @@ public class WebOutputView {
             tileColor = " WHITE ";
         }
 
-        if (piece.getTeam() == Team.WHITE) {
+        if (piece.isOurPiece(Team.WHITE)) {
             return "<div class=\"" + x + "" + y + tileColor + "WHITE" + piece + "\"></div>\n";
         }
-        if (piece.getTeam() == Team.BLACK) {
+        if (piece.isOurPiece(Team.BLACK)) {
             return "<div class=\"" + x + "" + y + tileColor + "BLACK" + piece + "\"></div>\n";
         }
         return "<div class=\"" + x + "" + y + tileColor + piece + "\"></div>\n";
