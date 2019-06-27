@@ -4,9 +4,7 @@ import model.Position;
 import model.piece.Piece;
 import model.piece.PieceFactory;
 
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class Board implements Observer {
     public static final int SIZE = 8;
@@ -19,6 +17,11 @@ public class Board implements Observer {
 
     public Piece getPieceAt(Position position) {
         return pieces.getOrDefault(position, PieceFactory.empty(position));
+    }
+
+    public List<Piece> getPieces() {
+        List<Piece> pieces= new ArrayList<>(this.pieces.values());
+        return pieces;
     }
 
     public BoardView getBoardView() {

@@ -15,6 +15,12 @@ public class Position {
         return new Position(Coordinate.of(x), Coordinate.of(y));
     }
 
+    public static Position of(String position) {
+        int xCoordinate = position.substring(0, 1).toLowerCase().charAt(0) - 'a';
+        int yCoordinate = Integer.parseInt(position.substring(1)) - 1;
+        return Position.of(xCoordinate, yCoordinate);
+    }
+
     public Position of(Direction direction) {
         return Position.of(x.getValue() + direction.getDx(), y.getValue() + direction.getDy());
     }
@@ -35,5 +41,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }
