@@ -1,4 +1,4 @@
-package chess.domain.chesspieceMove;
+package chess.domain.chessmove;
 
 import chess.domain.Position;
 import chess.domain.chesspiece.Team;

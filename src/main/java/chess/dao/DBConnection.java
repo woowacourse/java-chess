@@ -1,4 +1,4 @@
-package chess.dbconnction;
+package chess.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,8 +25,7 @@ public class DBConnection {
         String userName = "yh";
         String password = "dudgus94";
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+        try {            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
             e.printStackTrace();

@@ -1,7 +1,7 @@
 package chess.domain.chesspiece;
 
 import chess.domain.Position;
-import chess.domain.chesspieceMove.PawnMove;
+import chess.domain.chessmove.PawnMove;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,4 +1,4 @@
-package chess.service;
+package chess.application;
 
 import chess.dao.ChessRoundDao;
 import chess.domain.ChessBoard;

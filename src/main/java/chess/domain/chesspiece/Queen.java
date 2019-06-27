@@ -1,9 +1,9 @@
 package chess.domain.chesspiece;
 
 import chess.domain.Position;
-import chess.domain.chesspieceMove.DiagonalMove;
-import chess.domain.chesspieceMove.HorizontalMove;
-import chess.domain.chesspieceMove.VerticalMove;
+import chess.domain.chessmove.DiagonalMove;
+import chess.domain.chessmove.HorizontalMove;
+import chess.domain.chessmove.VerticalMove;
 
 import java.util.HashMap;
 import java.util.List;

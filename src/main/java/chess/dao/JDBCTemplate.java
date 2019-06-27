@@ -1,13 +1,10 @@
 package chess.dao;
 
-import chess.dbconnction.DBConnection;
-
 import java.sql.*;
 import java.util.*;
 
 public class JDBCTemplate {
     private static JDBCTemplate jdbcTemplate;
-    private DBConnection dbConnection = DBConnection.getInstance();
 
     private JDBCTemplate() {
     }
@@ -21,7 +18,7 @@ public class JDBCTemplate {
     }
 
     public void executeUpdate(String query, List<Object> queryValues) {
-        try (Connection connection = dbConnection.getConnection();
+        try (Connection connection = DBCPDataSource.getConnection();
              PreparedStatement statement = createPreparedStatement(connection, query, queryValues)) {
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -30,7 +27,7 @@ public class JDBCTemplate {
     }
 
     public List<Map<String, Object>> executeQuery(String query) {
-        try (Connection connection = dbConnection.getConnection();
+        try (Connection connection = DBCPDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet rs = statement.executeQuery()) {
 
@@ -42,7 +39,7 @@ public class JDBCTemplate {
     }
 
     public List<Map<String, Object>> executeQuery(String query, List<Object> queryValues) {
-        try (Connection connection = dbConnection.getConnection();
+        try (Connection connection = DBCPDataSource.getConnection();
              PreparedStatement statement = createPreparedStatement(connection, query, queryValues);
              ResultSet rs = statement.executeQuery()) {
             return createResult(rs);

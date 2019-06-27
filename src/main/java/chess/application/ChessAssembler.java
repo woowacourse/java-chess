@@ -1,4 +1,4 @@
-package chess.service;
+package chess.application;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;

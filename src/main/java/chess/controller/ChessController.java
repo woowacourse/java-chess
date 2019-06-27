@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.dto.ChessBoardDto;
 import chess.dto.ChessPositionDto;
-import chess.service.ChessService;
+import chess.application.ChessService;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
