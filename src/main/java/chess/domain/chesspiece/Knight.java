@@ -8,10 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Knight extends ChessPiece {
-    private static final double SCORE = 2.5;
-
     public Knight(Team team) {
         super(team);
+        chessScore = ChessScore.KNIGHT;
         initMovingMap();
     }
 
@@ -24,10 +23,5 @@ public class Knight extends ChessPiece {
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
         return movingMap.get(Direction.KNIGHT).move(source, target);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

@@ -8,10 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Pawn extends ChessPiece {
-    private static final int SCORE = 1;
-
     public Pawn(Team team) {
         super(team);
+        chessScore = ChessScore.PAWN;
         initMovingMap();
     }
 
@@ -24,10 +23,5 @@ public class Pawn extends ChessPiece {
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
         return movingMap.get(Direction.PAWN).move(source, target);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

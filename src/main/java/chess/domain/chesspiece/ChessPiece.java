@@ -9,25 +9,28 @@ import java.util.Map;
 
 public abstract class ChessPiece {
     Team team;
+    ChessScore chessScore;
     Map<Direction, Move> movingMap;
 
     public ChessPiece(Team team) {
         this.team = team;
     }
 
-    public abstract void initMovingMap();
-
     public boolean isSameTeam(Team team) {
         return this.team.equals(team);
+    }
+
+    public double getScore() {
+        return chessScore.getScore();
     }
 
     public boolean isSameTeam(ChessPiece chessPiece) {
         return this.team.equals(chessPiece.team);
     }
 
-    public abstract List<Position> getRouteOfPiece(Position source, Position target);
+    public abstract void initMovingMap();
 
-    public abstract double getScore();
+    public abstract List<Position> getRouteOfPiece(Position source, Position target);
 }
 
 

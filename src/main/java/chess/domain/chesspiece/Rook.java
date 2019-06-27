@@ -9,10 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Rook extends ChessPiece {
-    private static final int SCORE = 5;
-
     public Rook(Team team) {
         super(team);
+        chessScore = ChessScore.ROOK;
         initMovingMap();
     }
 
@@ -42,10 +41,5 @@ public class Rook extends ChessPiece {
     @Override
     public int hashCode() {
         return super.hashCode();
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

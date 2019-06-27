@@ -10,10 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Queen extends ChessPiece {
-    private static final int SCORE = 9;
-
     public Queen(Team team) {
         super(team);
+        chessScore = ChessScore.QUEEN;
         initMovingMap();
     }
 
@@ -37,10 +36,5 @@ public class Queen extends ChessPiece {
         }
 
         return movingMap.get(moveName).move(source, target);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }
