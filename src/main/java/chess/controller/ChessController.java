@@ -3,6 +3,7 @@ package chess.controller;
 import chess.application.dto.ChessBoardDto;
 import chess.application.dto.ChessPositionDto;
 import chess.application.ChessService;
+import chess.domain.chesspiece.ChessScore;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
@@ -14,6 +15,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class ChessController implements Controller {
+    private ChessService chessService = ChessService.getInstance();
+
     private static class ChessControllerLazyHolder {
         private static final ChessController INSTANCE = new ChessController();
     }
@@ -32,7 +35,7 @@ public class ChessController implements Controller {
 
     private String getMain(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
-        int roundId = ChessService.getInstance().getLastRoundId();
+        int roundId = chessService.getLastRoundId();
         request.session().attribute("roundId", roundId);
         return render(model, "index.html");
     }
@@ -41,7 +44,7 @@ public class ChessController implements Controller {
         Gson gson = new Gson();
         int roundId = request.session().attribute("roundId");
 
-        return gson.toJson(ChessService.getInstance().getMovedChessBoardByRoundId(roundId));
+        return gson.toJson(chessService.getMovedChessBoardByRoundId(roundId));
     }
 
     private String postChessBoard(Request request, Response response) {
@@ -51,7 +54,7 @@ public class ChessController implements Controller {
         int roundId = request.session().attribute("roundId");
 
         try {
-            ChessBoardDto chessBoardDTO = ChessService.getInstance().moveChessPiece(chessPositionDto, roundId);
+            ChessBoardDto chessBoardDTO = chessService.moveChessPiece(chessPositionDto, roundId);
             return gson.toJson(chessBoardDTO);
         } catch (IllegalArgumentException e) {
             return "error";
@@ -63,7 +66,7 @@ public class ChessController implements Controller {
 
         int roundId = request.session().attribute("roundId");
 
-        return gson.toJson(ChessService.getInstance().getChessScore(roundId));
+        return gson.toJson(chessService.getChessScore(roundId));
     }
 
     private String postNextChessRound(Request request, Response response) {
@@ -72,9 +75,9 @@ public class ChessController implements Controller {
 
         roundId++;
 
-        ChessService.getInstance().addRound(roundId);
+        chessService.addRound(roundId);
         request.session().attribute("roundId", roundId);
 
-        return gson.toJson(ChessService.getInstance().getMovedChessBoardByRoundId(roundId));
+        return gson.toJson(chessService.getMovedChessBoardByRoundId(roundId));
     }
 }

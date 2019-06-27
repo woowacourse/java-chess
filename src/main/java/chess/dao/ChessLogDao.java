@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessLogDao {
+    private JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
+
     private static class ChessLogDaoLazyHolder {
         private static final ChessLogDao INSTANCE = new ChessLogDao();
     }
@@ -17,8 +19,6 @@ public class ChessLogDao {
 
     public void insertChessLogByRoundId(int round, ChessLogDto chessLogDto) {
         String query = "INSERT INTO chess_log (round, turn, source, target) VALUES (?,?,?,?)";
-
-        JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
 
         List<Object> queryValues = new ArrayList<>();
 
@@ -33,7 +33,6 @@ public class ChessLogDao {
     public List<ChessLogDto> selectChessLogByRoundId(int roundId) {
         String query = "SELECT turn, source, target FROM chess_log WHERE round = ?";
 
-        JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
         List<Object> queryValues = new ArrayList<>();
 
         queryValues.add(roundId);
@@ -54,7 +53,6 @@ public class ChessLogDao {
 
     public int selectTurnByRoundId(int roundId) {
         String query = "SELECT turn FROM chess_log WHERE round = ? ORDER BY id DESC";
-        JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
 
         List<Object> queryValues = new ArrayList<>();
         queryValues.add(roundId);

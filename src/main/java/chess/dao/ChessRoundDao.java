@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessRoundDao {
+    private JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
+
     private static class ChessRoundDaoLazyHolder {
         private static final ChessRoundDao INSTANCE = new ChessRoundDao();
     }
@@ -15,7 +17,6 @@ public class ChessRoundDao {
 
     public int selectLastRoundId() {
         String query = "SELECT id FROM round ORDER BY id DESC LIMIT 1";
-        JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
 
         List<Map<String, Object>> results = jdbcTemplate.executeQuery(query);
 
@@ -29,7 +30,6 @@ public class ChessRoundDao {
 
     public void insertRound(int roundId) {
         String query = "INSERT INTO round (id) VALUES (?)";
-        JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
 
         List<Object> queryValues = new ArrayList<>();
         queryValues.add(roundId);

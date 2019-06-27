@@ -13,14 +13,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public class JDBCTemplate {
-    private static JDBCTemplate jdbcTemplate;
+    private static class JDBCTemplateLazyHolder {
+        private static final JDBCTemplate INSTANCE = new JDBCTemplate();
+    }
 
     public static JDBCTemplate getInstance() {
-        if (Objects.isNull(jdbcTemplate)) {
-            jdbcTemplate = new JDBCTemplate();
-        }
-
-        return jdbcTemplate;
+        return JDBCTemplateLazyHolder.INSTANCE;
     }
 
     public void executeUpdate(String query, List<Object> queryValues) {

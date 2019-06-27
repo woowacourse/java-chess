@@ -17,6 +17,9 @@ public class ChessService {
     private static final int NEXT_NUMBER = 1;
     private static final int OPERATOR_NUMBER = 2;
 
+    private ChessLogDao chessLogDao = ChessLogDao.getInstance();
+    private ChessRoundDao chessRoundDao = ChessRoundDao.getInstance();
+
     private static class ChessServiceLazyHolder {
         private static final ChessService INSTANCE = new ChessService();
     }
@@ -27,7 +30,7 @@ public class ChessService {
 
     public ChessBoard getMovedChessBoardByRoundId(int roundId) {
         ChessBoard chessBoard = new ChessBoard();
-        List<ChessLogDto> chessLogDtos = ChessLogDao.getInstance().selectChessLogByRoundId(roundId);
+        List<ChessLogDto> chessLogDtos = chessLogDao.selectChessLogByRoundId(roundId);
 
         for (ChessLogDto chessLogDto : chessLogDtos) {
             chessBoard.movePiece(Position.from(chessLogDto.getSource()), Position.from(chessLogDto.getTarget()));
@@ -41,7 +44,7 @@ public class ChessService {
 
         Position source = Position.of(chessPositionDto.getSourceY(), chessPositionDto.getSourceX());
         Position target = Position.of(chessPositionDto.getTargetY(), chessPositionDto.getTargetX());
-        int turn = ChessLogDao.getInstance().selectTurnByRoundId(roundId);
+        int turn = chessLogDao.selectTurnByRoundId(roundId);
 
         Team team = getTeam(turn);
 
@@ -49,7 +52,7 @@ public class ChessService {
             throw new IllegalArgumentException();
         }
 
-        ChessLogDao.getInstance().insertChessLogByRoundId(roundId
+        chessLogDao.insertChessLogByRoundId(roundId
                 , new ChessLogDto(String.valueOf((turn + NEXT_NUMBER) % OPERATOR_NUMBER), source.toString(), target.toString()));
 
         return ChessAssembler.toDto(chessBoard);
@@ -57,7 +60,7 @@ public class ChessService {
 
     public ChessScoreDto getChessScore(int roundId) {
         ChessBoard chessBoard = new ChessBoard();
-        List<ChessLogDto> chessLogDtos = ChessLogDao.getInstance().selectChessLogByRoundId(roundId);
+        List<ChessLogDto> chessLogDtos = chessLogDao.selectChessLogByRoundId(roundId);
 
         for (ChessLogDto chessLogDto : chessLogDtos) {
             chessBoard.movePiece(Position.from(chessLogDto.getSource()), Position.from(chessLogDto.getTarget()));
@@ -67,11 +70,11 @@ public class ChessService {
     }
 
     public int getLastRoundId() {
-        return ChessRoundDao.getInstance().selectLastRoundId();
+        return chessRoundDao.selectLastRoundId();
     }
 
     public void addRound(int roundId) {
-        ChessRoundDao.getInstance().insertRound(roundId);
+        chessRoundDao.insertRound(roundId);
     }
 
     private Team getTeam(int turn) {
