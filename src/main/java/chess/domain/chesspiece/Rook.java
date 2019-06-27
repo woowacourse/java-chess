@@ -20,16 +20,16 @@ public class Rook extends ChessPiece {
     @Override
     public void initMovingMap() {
         movingMap = new HashMap<>();
-        movingMap.put("horizontal", HorizontalMove.getInstance());
-        movingMap.put("vertical", VerticalMove.getInstance());
+        movingMap.put(MoveDirection.HORIZONTAL, HorizontalMove.getInstance());
+        movingMap.put(MoveDirection.VERTICAL, VerticalMove.getInstance());
     }
 
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
-        String moveName = "horizontal";
+        MoveDirection moveName = MoveDirection.HORIZONTAL;
 
         if (source.isInLine(target) == VERTICAL_LINE) {
-            moveName = "vertical";
+            moveName = MoveDirection.VERTICAL;
         }
 
         return movingMap.get(moveName).move(source, target);

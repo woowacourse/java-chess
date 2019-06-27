@@ -22,20 +22,20 @@ public class Queen extends ChessPiece {
     @Override
     public void initMovingMap() {
         movingMap = new HashMap<>();
-        movingMap.put("horizontal", HorizontalMove.getInstance());
-        movingMap.put("vertical", VerticalMove.getInstance());
-        movingMap.put("diagonal", DiagonalMove.getInstance());
+        movingMap.put(MoveDirection.HORIZONTAL, HorizontalMove.getInstance());
+        movingMap.put(MoveDirection.VERTICAL, VerticalMove.getInstance());
+        movingMap.put(MoveDirection.DIAGONAL, DiagonalMove.getInstance());
     }
 
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
-        String moveName = "diagonal";
+        MoveDirection moveName = MoveDirection.DIAGONAL;
 
         if (source.isInLine(target) == VERTICAL_LINE) {
-            moveName = "vertical";
+            moveName = MoveDirection.VERTICAL;
         }
         if (source.isInLine(target) == HORIZONTAL_LINE) {
-            moveName = "horizontal";
+            moveName = MoveDirection.HORIZONTAL;
         }
 
         return movingMap.get(moveName).move(source, target);

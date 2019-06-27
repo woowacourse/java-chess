@@ -17,12 +17,12 @@ public class Bishop extends ChessPiece {
     @Override
     public void initMovingMap() {
         movingMap = new HashMap<>();
-        movingMap.put("diagonal", DiagonalMove.getInstance());
+        movingMap.put(MoveDirection.DIAGONAL, DiagonalMove.getInstance());
     }
 
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
-        return movingMap.get("diagonal").move(source, target);
+        return movingMap.get(MoveDirection.DIAGONAL).move(source, target);
     }
 
     @Override

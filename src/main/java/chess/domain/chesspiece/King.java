@@ -17,12 +17,12 @@ public class King extends ChessPiece {
     @Override
     public void initMovingMap() {
         movingMap = new HashMap<>();
-        movingMap.put("fourDirections", KingMove.getInstance());
+        movingMap.put(MoveDirection.FOUR_DIRECTION_MOVING, KingMove.getInstance());
     }
 
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
-        return movingMap.get("fourDirections").move(source, target);
+        return movingMap.get(MoveDirection.FOUR_DIRECTION_MOVING).move(source, target);
     }
 
     @Override

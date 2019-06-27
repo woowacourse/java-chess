@@ -8,7 +8,7 @@ import java.util.Map;
 
 public abstract class ChessPiece {
     Team team;
-    Map<String, Move> movingMap;
+    Map<MoveDirection, Move> movingMap;
 
     public ChessPiece(Team team) {
         this.team = team;

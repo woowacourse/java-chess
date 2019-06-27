@@ -17,12 +17,12 @@ public class Pawn extends ChessPiece {
     @Override
     public void initMovingMap() {
         movingMap = new HashMap<>();
-        movingMap.put("pawn", PawnMove.getInstance(team));
+        movingMap.put(MoveDirection.PAWN_MOVING, PawnMove.getInstance(team));
     }
 
     @Override
     public List<Position> getRouteOfPiece(Position source, Position target) {
-        return movingMap.get("pawn").move(source, target);
+        return movingMap.get(MoveDirection.PAWN_MOVING).move(source, target);
     }
 
     @Override
