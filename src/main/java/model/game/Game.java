@@ -28,6 +28,7 @@ public class Game {
     public Game(final List<LogVO> log) {
         board = initializeBoard();
         turn = new Turn();
+
         Collections.sort(log);
         log.forEach(l -> {
             if (!restore(l.from(), l.to())) {
@@ -94,8 +95,8 @@ public class Game {
 
     public boolean movePiece(Position from, Position to) {
         board.getPieceAt(from).moveTo(to);
-        turn.endTurn();
         GameDAO.holdAndWriteLog(turn, from, to);
+        turn.endTurn();
         return true;
     }
 

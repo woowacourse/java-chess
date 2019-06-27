@@ -49,7 +49,6 @@ public class GameService {
     public static String selectDest(final String destination, final Consumer<String> redirect, final Consumer<Integer> status) {
         final Optional<Position> to = Optional.ofNullable(Position.of(destination));
         game.get().movePiece(from.get(), to.get());
-//        game.get().board().getPieceAt(from.get()).moveTo(to.get());
         return initState(redirect, status);
 //        if (to.map(pos -> game.get().tryToMoveFromTo(from.get(), to.get())).orElse(false)) {
 //            return Referee.isKingAlive(game.get()) ? initState(redirect, status) : WebView.printEndPage(game.get());
@@ -63,4 +62,3 @@ public class GameService {
         return null;
     }
 }
-

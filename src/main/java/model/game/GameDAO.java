@@ -19,7 +19,7 @@ public class GameDAO {
         createLogTable();
         try (Connection con = DAO.connect();
              PreparedStatement pstmt = con.prepareStatement(
-                     "SELECT isTurnOf, position_from, position_to FROM chess_log"
+                     "SELECT turn, position_from, position_to FROM chess_log"
              );
              ResultSet result = pstmt.executeQuery()) {
             List<LogVO> log = new ArrayList<>();
@@ -34,7 +34,7 @@ public class GameDAO {
         try (Connection con = DAO.connect();
              PreparedStatement pstmt = con.prepareStatement(
                      "CREATE TABLE IF NOT EXISTS chess_log("
-                             + "isTurnOf INT UNSIGNED NOT NULL PRIMARY KEY,"
+                             + "turn INT UNSIGNED NOT NULL PRIMARY KEY,"
                              + "position_from VARCHAR(12) NOT NULL,"
                              + "position_to VARCHAR(12) NOT NULL" +
                              ");"
@@ -44,8 +44,8 @@ public class GameDAO {
         }
     }
 
-    static boolean holdAndWriteLog(final Turn isTurnOf, final Position from, final Position to) {
-        buffer.add(new LogVO(isTurnOf, from, to));
+    static boolean holdAndWriteLog(final Turn turn, final Position from, final Position to) {
+        buffer.add(new LogVO(turn, from, to));
         try {
             while (!buffer.isEmpty()) {
                 writeLog(buffer.poll());
@@ -60,7 +60,7 @@ public class GameDAO {
     private static void writeLog(final LogVO log) throws SQLException {
         try (Connection con = DAO.connect();
              PreparedStatement pstmt = con.prepareStatement("INSERT INTO chess_log VALUES (?, ?, ?)")) {
-            pstmt.setInt(1, log.isTurnOf().count());
+            pstmt.setInt(1, log.turn().count());
             pstmt.setString(2, log.from().toString());
             pstmt.setString(3, log.to().toString());
             pstmt.executeUpdate();

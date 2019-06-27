@@ -3,6 +3,8 @@ package model;
 import java.util.Objects;
 
 public class Position {
+    final static int START_OF_NUMBERING = 1;
+
     private Coordinate x;
     private Coordinate y;
 
@@ -50,7 +52,7 @@ public class Position {
     @Override
     public String toString() {
         String xCoordinate = String.valueOf((char) ('a' + x.getValue()));
-        String yCoordinate = String.valueOf(y.getValue());
+        String yCoordinate = String.valueOf(y.getValue() + START_OF_NUMBERING);
         return xCoordinate + yCoordinate;
     }
 }
