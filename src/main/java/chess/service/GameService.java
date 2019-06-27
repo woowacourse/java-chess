@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.model.ChessGame;
+import chess.model.board.Board;
 import chess.model.boardcreatestrategy.ContinueGameCreateStrategy;
 import chess.model.boardcreatestrategy.NewGameCreateStrategy;
 import chess.model.dao.ChessDAO;
@@ -40,5 +41,21 @@ public class GameService {
     public ChessGame continueGame(BoardDTO boardDTO, int turn) {
         Collections.reverse(boardDTO.getPieces());
         return new ChessGame(new ContinueGameCreateStrategy(boardDTO), turn);
+    }
+
+    public void movePiece(ChessGame game, String source, String target) {
+        game.movePiece(source, target);
+    }
+
+    public BoardDTO produceBoardDTO(ChessGame game) {
+        return new BoardDTO(game.convertToList());
+    }
+
+    public void updateBoard(BoardDTO boardDTO) throws SQLException {
+        chessDAO.updateBoard(boardDTO);
+    }
+
+    public boolean checkKingDead(ChessGame game) {
+        return game.checkKingDead();
     }
 }

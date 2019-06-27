@@ -2,8 +2,6 @@ package chess.controller;
 
 import chess.model.ChessGame;
 import chess.model.ScoreResult;
-import chess.model.boardcreatestrategy.ContinueGameCreateStrategy;
-import chess.model.boardcreatestrategy.NewGameCreateStrategy;
 import chess.model.dao.ChessDAO;
 import chess.model.dto.BoardDTO;
 import chess.service.GameService;
@@ -11,7 +9,9 @@ import spark.Request;
 import spark.Response;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static chess.WebUIChessApplication.render;
 
@@ -31,7 +31,7 @@ public class GameController {
         ChessGame game = gameService.initGame(turn);
 
         req.session().attribute("game", game);
-        res.redirect("/show?turn="+turn);
+        res.redirect("/show?turn=" + turn);
         return null;
     }
 
@@ -52,30 +52,30 @@ public class GameController {
 
     public Object play(Request req, Response res) throws SQLException {
         Map<String, Object> model = new HashMap<>();
-        ChessDAO chessDAO = ChessDAO.getInstance();
         String source = req.queryParams("source");
         String target = req.queryParams("target");
-
         ChessGame game = req.session().attribute("game");
 
-        if (!Objects.isNull(source)) { // 게임 진행
-            model.put("winner", game.getCurrentTeam());
-            game.movePiece(source, target);
-            BoardDTO boardDTO = new BoardDTO(game.convertToList());
-            chessDAO.updateBoard(boardDTO);
-            model.put("currentTeam", game.getCurrentTeam());
-            if (game.checkKingDead()) {
-                chessDAO.deleteAll();
+        //여기부터 내가 했음
+        gameService.movePiece(game, source, target);
+        BoardDTO boardDTO = gameService.produceBoardDTO(game); //new BoardDTO(game.convertToList());
+        gameService.updateBoard(boardDTO); //chessDAO.updateBoard(boardDTO);
 
-                return render(model, "end.html");
-            }
+//        if (game.checkKingDead()) {
+//            chessDAO.deleteAll();
+//            return render(model, "end.html");
+//        }
 
-            model.put("board", boardDTO.getPieces());
+        model.put("winner", game.getCurrentTeam());
+        if(gameService.checkKingDead(game)){
+            gameService.deleteAll();
+            return render(model, "end.html");
         }
 
-        req.session().attribute("game", game);
-
         ScoreResult scoreResult = game.calculateScore();
+
+        model.put("currentTeam", game.getCurrentTeam());
+        model.put("board", boardDTO.getPieces());
         model.put("score", scoreResult);
 
         return render(model, "game.html");
@@ -93,7 +93,7 @@ public class GameController {
         model.put("currentTeam", game.getCurrentTeam());
         model.put("board", boardDTO.getPieces());
 
-        res.redirect("show?turn="+latestTurn);
+        res.redirect("show?turn=" + latestTurn);
         return null;
     }
 }
