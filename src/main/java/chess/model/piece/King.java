@@ -9,12 +9,13 @@ import chess.model.routeCreator.RouteCreator;
 import java.util.*;
 
 import static chess.model.board.vector.Direction.*;
+import static chess.model.board.Board.*;
 
 // TODO: 2019-06-22 cloneSelf를 꼭 써야할까?
 public class King implements Piece {
+    public static final double SCORE = 0.0;
     private static final Set<Direction> movableDirections;
     private static final int MAGNITUDE_BY_ONE_TURN = 1;
-    public static final double SCORE = 0.0;
 
     static {
         movableDirections = new HashSet<>();
@@ -39,7 +40,7 @@ public class King implements Piece {
         if (Objects.isNull(team) || team.isEmpty()) {
             throw new NullPointerException();
         }
-        if (!"white".equals(team) && !"black".equals(team)) {
+        if (!WHITE_TEAM.equals(team) && !BLACK_TEAM.equals(team)) {
             throw new IllegalArgumentException("없는 팀입니다!");
         }
     }
@@ -69,10 +70,10 @@ public class King implements Piece {
 
     @Override
     public String askTeamColor() {
-        if ("white".equals(team)) {
-            return "white";
+        if (WHITE_TEAM.equals(team)) {
+            return WHITE_TEAM;
         }
-        return "black";
+        return BLACK_TEAM;
     }
 
     @Override

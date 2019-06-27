@@ -11,13 +11,14 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static chess.model.board.Board.*;
 
 public class KingTest {
     private Piece king;
 
     @BeforeEach
     void setUp() {
-        king = new King("white");
+        king = new King(WHITE_TEAM);
     }
 
     @Test
@@ -216,13 +217,13 @@ public class KingTest {
 
     @Test
     void 팀_확인_white팀일_경우() {
-        assertThat(king.askTeamColor()).isEqualTo("white");
+        assertThat(king.askTeamColor()).isEqualTo(WHITE_TEAM);
     }
 
     @Test
     void 팀_확인_black팀일_경우() {
-        Piece blackKing = new King("black");
-        assertThat(blackKing.askTeamColor()).isEqualTo("black");
+        Piece blackKing = new King(BLACK_TEAM);
+        assertThat(blackKing.askTeamColor()).isEqualTo(BLACK_TEAM);
     }
 
     @Test

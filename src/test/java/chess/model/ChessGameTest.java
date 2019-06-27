@@ -9,6 +9,8 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static chess.model.board.Board.*;
+
 
 public class ChessGameTest {
     private BoardDTO dto;
@@ -50,20 +52,20 @@ public class ChessGameTest {
     @Test
     void 말이_움직이면_다음턴으로_넘어가는지_확인() {
         ChessGame game = new ChessGame(new NormalBoardCreatingStrategy(dto), 1);
-        assertThat(game.getCurrentTeam()).isEqualTo("white");
+        assertThat(game.getCurrentTeam()).isEqualTo(WHITE_TEAM);
         game.movePiece("12", "13");
-        assertThat(game.getCurrentTeam()).isEqualTo("black");
+        assertThat(game.getCurrentTeam()).isEqualTo(BLACK_TEAM);
     }
 
     @Test
     void white팀_턴이_맞는지_확인() {
         ChessGame game = new ChessGame(new NormalBoardCreatingStrategy(dto), 3);
-        assertThat(game.getCurrentTeam()).isEqualTo("white");
+        assertThat(game.getCurrentTeam()).isEqualTo(WHITE_TEAM);
     }
 
     @Test
     void black팀_턴이_맞는지_확인() {
         ChessGame game = new ChessGame(new NormalBoardCreatingStrategy(dto), 4);
-        assertThat(game.getCurrentTeam()).isEqualTo("black");
+        assertThat(game.getCurrentTeam()).isEqualTo(BLACK_TEAM);
     }
 }

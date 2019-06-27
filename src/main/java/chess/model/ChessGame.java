@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static chess.model.board.Board.*;
+
 public class ChessGame {
     public static final int COUNT_OF_TEAM = 2;
 
@@ -57,9 +59,9 @@ public class ChessGame {
 
     public String getCurrentTeam() {
         if (turn % COUNT_OF_TEAM == 0) {
-            return "black";
+            return BLACK_TEAM;
         }
 
-        return "white";
+        return WHITE_TEAM;
     }
 }

@@ -15,21 +15,21 @@ public class NormalBoardCreatingStrategy implements BoardCreatingStrategy {
     private BoardDTO dto;
 
     static {
-        pieces.put("K", (coordinate) -> new Tile(coordinate, new King("black")));
-        pieces.put("Q", (coordinate) -> new Tile(coordinate, new Queen("black")));
-        pieces.put("B", (coordinate) -> new Tile(coordinate, new Bishop("black")));
-        pieces.put("R", (coordinate) -> new Tile(coordinate, new Rook("black")));
-        pieces.put("N", (coordinate) -> new Tile(coordinate, new Knight("black")));
-        pieces.put("P", (coordinate) -> new Tile(coordinate, new Pawn(true, "black")));
-        pieces.put("movedP", (coordinate) -> new Tile(coordinate, new Pawn(false, "black")));
+        pieces.put("K", (coordinate) -> new Tile(coordinate, new King(BLACK_TEAM)));
+        pieces.put("Q", (coordinate) -> new Tile(coordinate, new Queen(BLACK_TEAM)));
+        pieces.put("B", (coordinate) -> new Tile(coordinate, new Bishop(BLACK_TEAM)));
+        pieces.put("R", (coordinate) -> new Tile(coordinate, new Rook(BLACK_TEAM)));
+        pieces.put("N", (coordinate) -> new Tile(coordinate, new Knight(BLACK_TEAM)));
+        pieces.put("P", (coordinate) -> new Tile(coordinate, new Pawn(true, BLACK_TEAM)));
+        pieces.put("movedP", (coordinate) -> new Tile(coordinate, new Pawn(false, BLACK_TEAM)));
 
-        pieces.put("k", (coordinate) -> new Tile(coordinate, new King("white")));
-        pieces.put("q", (coordinate) -> new Tile(coordinate, new Queen("white")));
-        pieces.put("b", (coordinate) -> new Tile(coordinate, new Bishop("white")));
-        pieces.put("r", (coordinate) -> new Tile(coordinate, new Rook("white")));
-        pieces.put("n", (coordinate) -> new Tile(coordinate, new Knight("white")));
-        pieces.put("p", (coordinate) -> new Tile(coordinate, new Pawn(true, "white")));
-        pieces.put("movedp", (coordinate) -> new Tile(coordinate, new Pawn(false, "white")));
+        pieces.put("k", (coordinate) -> new Tile(coordinate, new King(WHITE_TEAM)));
+        pieces.put("q", (coordinate) -> new Tile(coordinate, new Queen(WHITE_TEAM)));
+        pieces.put("b", (coordinate) -> new Tile(coordinate, new Bishop(WHITE_TEAM)));
+        pieces.put("r", (coordinate) -> new Tile(coordinate, new Rook(WHITE_TEAM)));
+        pieces.put("n", (coordinate) -> new Tile(coordinate, new Knight(WHITE_TEAM)));
+        pieces.put("p", (coordinate) -> new Tile(coordinate, new Pawn(true, WHITE_TEAM)));
+        pieces.put("movedp", (coordinate) -> new Tile(coordinate, new Pawn(false, WHITE_TEAM)));
         pieces.put("#", (coordinate) -> new Tile(coordinate, null));
     }
 

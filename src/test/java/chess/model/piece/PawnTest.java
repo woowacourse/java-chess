@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.*;
+import static chess.model.board.Board.*;
 
 public class PawnTest {
     private Piece whitePawn;
@@ -17,8 +18,8 @@ public class PawnTest {
 
     @BeforeEach
     void setUp() {
-        whitePawn = new Pawn(true, "white");
-        blackPawn = new Pawn(true, "black");
+        whitePawn = new Pawn(true, WHITE_TEAM);
+        blackPawn = new Pawn(true, BLACK_TEAM);
     }
 
     @Test
@@ -298,12 +299,12 @@ public class PawnTest {
 
     @Test
     void 팀_확인_white팀일_경우() {
-        assertThat(whitePawn.askTeamColor()).isEqualTo("white");
+        assertThat(whitePawn.askTeamColor()).isEqualTo(WHITE_TEAM);
     }
 
     @Test
     void 팀_확인_black팀일_경우() {
-        assertThat(blackPawn.askTeamColor()).isEqualTo("black");
+        assertThat(blackPawn.askTeamColor()).isEqualTo(BLACK_TEAM);
     }
 
     @Test
@@ -313,6 +314,6 @@ public class PawnTest {
 
     @Test
     void clone_확인() {
-        assertThat(whitePawn.cloneSelf()).isEqualTo(new Pawn(false, "white"));
+        assertThat(whitePawn.cloneSelf()).isEqualTo(new Pawn(false, WHITE_TEAM));
     }
 }

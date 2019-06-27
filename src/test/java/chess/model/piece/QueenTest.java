@@ -10,14 +10,14 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.*;
-
+import static chess.model.board.Board.*;
 
 public class QueenTest {
     private Piece queen;
 
     @BeforeEach
     void setUp() {
-        queen = new Queen("white");
+        queen = new Queen(WHITE_TEAM);
     }
 
     @Test
@@ -203,13 +203,13 @@ public class QueenTest {
 
     @Test
     void 팀_확인_white팀일_경우() {
-        assertThat(queen.askTeamColor()).isEqualTo("white");
+        assertThat(queen.askTeamColor()).isEqualTo(WHITE_TEAM);
     }
 
     @Test
     void 팀_확인_black팀일_경우() {
-        Piece blackQueen = new Queen("black");
-        assertThat(blackQueen.askTeamColor()).isEqualTo("black");
+        Piece blackQueen = new Queen(BLACK_TEAM);
+        assertThat(blackQueen.askTeamColor()).isEqualTo(BLACK_TEAM);
     }
 
     @Test

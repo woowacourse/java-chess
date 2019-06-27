@@ -11,6 +11,8 @@ import java.util.*;
 import static chess.model.board.vector.Direction.*;
 
 public class Board {
+    public static final String WHITE_TEAM = "white";
+    public static final String BLACK_TEAM = "black";
     public static final int ROW_SIZE = 8;
     public static final int INITIAL_ROW = 1;
     public static final int COLUMN_SIZE = 8;
@@ -19,7 +21,7 @@ public class Board {
     public static final int WHITE_PAWN_ROW = 7;
     private static final int HALF_SCORE_STANDARD = 1;
     private static final double HALF_SCORE_OF_PAWN = Pawn.SCORE / 2;
-    public static final int TOTAL_COUNT_OF_KING = 2;
+    private static final int TOTAL_COUNT_OF_KING = 2;
 
     private Map<String, Tile> tiles;
 
@@ -148,8 +150,8 @@ public class Board {
         for (String location : tiles.keySet()) {
             if (tiles.get(location).isPiecePresent()) {
                 Piece piece = tiles.get(location).getPiece();
-                scoreOfWhite += calculateNormalPieceScore(piece, "white");
-                scoreOfBlack += calculateNormalPieceScore(piece, "black");
+                scoreOfWhite += calculateNormalPieceScore(piece, WHITE_TEAM);
+                scoreOfBlack += calculateNormalPieceScore(piece, BLACK_TEAM);
             }
         }
 
@@ -160,12 +162,12 @@ public class Board {
         for (String currentLocation : tiles.keySet()) {
             if (tiles.get(currentLocation).isPiecePresent()
                     && tiles.get(currentLocation).askPieceIfPawn()
-                    && tiles.get(currentLocation).askPieceWhichTeam().equals("white")) {
+                    && tiles.get(currentLocation).askPieceWhichTeam().equals(WHITE_TEAM)) {
                 locationsOfWhitePawns.add(currentLocation);
             }
             if (tiles.get(currentLocation).isPiecePresent()
                     && tiles.get(currentLocation).askPieceIfPawn()
-                    && tiles.get(currentLocation).askPieceWhichTeam().equals("black")) {
+                    && tiles.get(currentLocation).askPieceWhichTeam().equals(BLACK_TEAM)) {
                 locationsOfBlackPawns.add(currentLocation);
             }
         }
@@ -198,7 +200,7 @@ public class Board {
     }
 
     public boolean isRightTurn(String sourceCoordinate, int turn) {
-        String turnColor = (turn % ChessGame.COUNT_OF_TEAM == 0) ? "black" : "white";
+        String turnColor = (turn % ChessGame.COUNT_OF_TEAM == 0) ? BLACK_TEAM : WHITE_TEAM;
         return tiles.get(sourceCoordinate).askPieceWhichTeam().equals(turnColor);
 
     }
@@ -241,61 +243,61 @@ public class Board {
             }
 
             if (tile.getPiece().getScore() == King.SCORE) {
-                if ("white".equals(tile.askPieceWhichTeam())) {
+                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("k");
                 }
 
-                if ("black".equals(tile.askPieceWhichTeam())) {
+                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("K");
                 }
             }
 
             if (tile.getPiece().getScore() == Queen.SCORE) {
-                if ("white".equals(tile.askPieceWhichTeam())) {
+                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("q");
                 }
 
-                if ("black".equals(tile.askPieceWhichTeam())) {
+                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("Q");
                 }
             }
 
             if (tile.getPiece().getScore() == Rook.SCORE) {
-                if ("white".equals(tile.askPieceWhichTeam())) {
+                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("r");
                 }
 
-                if ("black".equals(tile.askPieceWhichTeam())) {
+                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("R");
                 }
             }
 
             if (tile.getPiece().getScore() == Knight.SCORE) {
-                if ("white".equals(tile.askPieceWhichTeam())) {
+                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("n");
                 }
 
-                if ("black".equals(tile.askPieceWhichTeam())) {
+                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("N");
                 }
             }
 
             if (tile.getPiece().getScore() == Bishop.SCORE) {
-                if ("white".equals(tile.askPieceWhichTeam())) {
+                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("b");
                 }
 
-                if ("black".equals(tile.askPieceWhichTeam())) {
+                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("B");
                 }
             }
 
             if (tile.getPiece().getScore() == Pawn.SCORE) {
-                if ("white".equals(tile.askPieceWhichTeam())) {
+                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("p");
                 }
 
-                if ("black".equals(tile.askPieceWhichTeam())) {
+                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
                     row = row.concat("P");
                 }
             }

@@ -9,11 +9,13 @@ import chess.model.routeCreator.RouteCreator;
 import java.util.*;
 
 import static chess.model.board.vector.Direction.*;
+import static chess.model.board.Board.*;
+
 
 public class Pawn implements Piece {
+    public static final double SCORE = 1.0;
     private static final Set<Direction> movableDirectionsForWhiteTeam;
     private static final Set<Direction> movableDirectionsForBlackTeam;
-    public static final double SCORE = 1.0;
 
     static {
         movableDirectionsForWhiteTeam = new HashSet<>();
@@ -41,7 +43,7 @@ public class Pawn implements Piece {
         if (Objects.isNull(team) || team.isEmpty()) {
             throw new NullPointerException();
         }
-        if (!"white".equals(team) && !"black".equals(team)) {
+        if (!WHITE_TEAM.equals(team) && !BLACK_TEAM.equals(team)) {
             throw new IllegalArgumentException("없는 팀입니다!");
         }
     }
@@ -50,8 +52,8 @@ public class Pawn implements Piece {
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
         validateNull(sourceCoordinates, vector);
 
-        if (!("white".equals(team) && vector.isMatch(movableDirectionsForWhiteTeam))
-                && !("black".equals(team) && vector.isMatch(movableDirectionsForBlackTeam))) {
+        if (!(WHITE_TEAM.equals(team) && vector.isMatch(movableDirectionsForWhiteTeam))
+                && !(BLACK_TEAM.equals(team) && vector.isMatch(movableDirectionsForBlackTeam))) {
             throw new IllegalArgumentException("이 방향으로 움직일 수 없습니다.");
         }
 
@@ -89,10 +91,10 @@ public class Pawn implements Piece {
 
     @Override
     public String askTeamColor() {
-        if ("white".equals(team)) {
-            return "white";
+        if (WHITE_TEAM.equals(team)) {
+            return WHITE_TEAM;
         }
-        return "black";
+        return BLACK_TEAM;
     }
 
     @Override
