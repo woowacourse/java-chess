@@ -10,25 +10,18 @@ import chess.dto.ChessPositionDto;
 import chess.dto.ChessScoreDto;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ChessService {
     private static final int WHITE_TEAM = 0;
     private static final int NEXT_NUMBER = 1;
     private static final int OPERATOR_NUMBER = 2;
 
-    private static ChessService chessService;
-    private static ChessRoundDao chessRoundDao = ChessRoundDao.getInstance();
-
-    private ChessService() {
+    private static class ChessServiceLazyHolder {
+        private static final ChessService INSTANCE = new ChessService();
     }
 
     public static ChessService getInstance() {
-        if (Objects.isNull(chessService)) {
-            return new ChessService();
-        }
-
-        return chessService;
+        return ChessServiceLazyHolder.INSTANCE;
     }
 
     public ChessBoardDto getChessBoardDTO(int roundId) {

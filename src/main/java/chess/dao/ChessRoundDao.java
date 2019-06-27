@@ -10,16 +10,12 @@ import java.util.Objects;
 public class ChessRoundDao {
     private static final int MIN_SIZE = 1;
 
-    private static ChessRoundDao chessRoundDao;
-
-    private ChessRoundDao() {
+    private static class ChessRoundDaoLazyHolder {
+        private static final ChessRoundDao INSTANCE = new ChessRoundDao();
     }
 
     public static ChessRoundDao getInstance() {
-        if (Objects.isNull(chessRoundDao)) {
-            chessRoundDao = new ChessRoundDao();
-        }
-        return chessRoundDao;
+        return ChessRoundDaoLazyHolder.INSTANCE;
     }
 
     public void insertChessInfoByRoundId(int round, ChessInfoDto chessInfoDto) {

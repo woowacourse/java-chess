@@ -9,23 +9,17 @@ import spark.Response;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class ChessController implements Controller {
-    private static ChessController chessController;
-    private ChessService chessService = ChessService.getInstance();
-
-    private ChessController() {
+    private static class ChessControllerLazyHolder {
+        private static final ChessController INSTANCE = new ChessController();
     }
 
     public static ChessController getInstance() {
-        if (Objects.isNull(chessController)) {
-            return new ChessController();
-        }
-        return chessController;
+        return ChessControllerLazyHolder.INSTANCE;
     }
 
     public void init() {
@@ -38,7 +32,7 @@ public class ChessController implements Controller {
 
     private String main(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
-        int roundId = chessService.getLastRoundId();
+        int roundId = ChessService.getInstance().getLastRoundId();
         req.session().attribute("roundId", roundId);
         return render(model, "index.html");
     }

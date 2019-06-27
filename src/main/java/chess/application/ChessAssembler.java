@@ -2,7 +2,15 @@ package chess.application;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.chesspiece.*;
+import chess.domain.chesspiece.Bishop;
+import chess.domain.chesspiece.Blank;
+import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Knight;
+import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.Queen;
+import chess.domain.chesspiece.Rook;
+import chess.domain.chesspiece.Team;
 import chess.dto.ChessBoardDto;
 
 import java.lang.reflect.Type;
