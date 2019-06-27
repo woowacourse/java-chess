@@ -1,12 +1,12 @@
 package chess.controller;
 
+import chess.db.DBConnection;
 import chess.domain.chess.ChessGame;
 import chess.domain.chess.Team;
 import chess.domain.chess.dao.ChessBoardDAO;
 import chess.domain.chess.dto.ChessBoardDTO;
 import chess.domain.chess.initializer.ChessBoardInitializer;
 import chess.domain.geometric.Position;
-import chess.util.DBConnection;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.Request;

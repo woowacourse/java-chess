@@ -12,6 +12,11 @@
 
 - 현재 상황: pawn의 validateDirection(Vector vector) 하는 일이 없다.
 
+- 현재 상황: connection.close -> dao를 쓸 수 없다.
+          connection, dao는 서버에서 한 번만 실행된다.
+          
+  다른 상황: connection.close -> dao에서 connection을 새로 만든다.
+  
 
 # done
 - 체스판 출력

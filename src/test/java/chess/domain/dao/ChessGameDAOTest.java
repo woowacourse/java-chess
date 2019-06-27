@@ -1,11 +1,11 @@
 package chess.domain.dao;
 
+import chess.db.DBConnection;
 import chess.domain.chess.ChessGame;
 import chess.domain.chess.Team;
 import chess.domain.chess.dao.ChessBoardDAO;
 import chess.domain.chess.initializer.ChessBoardInitializer;
 import chess.domain.geometric.Position;
-import chess.util.DBConnection;
 import org.junit.jupiter.api.Test;
 import view.OutputView;
 

@@ -1,5 +1,6 @@
 package chess.util;
 
+import chess.db.DBConnection;
 import org.junit.jupiter.api.Test;
 
 public class DBConnectionTest {
