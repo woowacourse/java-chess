@@ -13,7 +13,7 @@ public class Game {
 
     public Game() {
         round = new Round(0);
-        roundDao = new RoundDao();
+        roundDao = RoundDao.getInstance();
         this.board = BoardFactory.create();
     }
 

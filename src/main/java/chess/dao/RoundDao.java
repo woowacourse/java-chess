@@ -7,6 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoundDao {
+    private RoundDao() {
+    }
+
+    public static RoundDao getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    private static class Holder {
+        private static RoundDao INSTANCE = new RoundDao();
+    }
+
     public void addRound(RoundDto roundDto) throws SQLException {
         PreparedStatementSetter pss = preparedStatement -> {
             preparedStatement.setInt(1, roundDto.getRound());
