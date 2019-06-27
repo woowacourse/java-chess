@@ -10,7 +10,6 @@ public class PieceDto {
     private final int kindId;
     private final String position;
 
-
     public PieceDto(int teamId, int gameId, int kindId, String position) {
         this.aliance = Aliance.valueOf(teamId);
         this.gameId = gameId;

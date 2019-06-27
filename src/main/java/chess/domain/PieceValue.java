@@ -41,4 +41,5 @@ public enum PieceValue {
     public int getKindId() {
         return kindId;
     }
+
 }

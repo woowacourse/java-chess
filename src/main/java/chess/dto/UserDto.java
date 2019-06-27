@@ -9,7 +9,6 @@ public class UserDto {
     private final String name;
     private final Aliance aliance;
 
-
     public UserDto(final int gameId, String name, int teamId) {
         this.gameId = gameId;
         this.name = name;

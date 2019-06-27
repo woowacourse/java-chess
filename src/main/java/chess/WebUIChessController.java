@@ -3,11 +3,8 @@ package chess;
 import chess.domain.*;
 import chess.dto.GameDto;
 import chess.dto.NavigatorDto;
-import chess.dto.PieceDto;
 import chess.dto.UserDto;
 import chess.service.GameService;
-import chess.service.PieceService;
-import chess.service.UserService;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
@@ -25,8 +22,7 @@ public class WebUIChessController {
     }
 
     public static String generateGameAndUsers(Request req, Response res) {
-        int gameId = GameService.addGame();
-        UserService.addUsers(req, gameId);
+       int gameId = GameService.startGame(req);
         res.redirect("/" + gameId);
         return "";
     }
@@ -36,23 +32,17 @@ public class WebUIChessController {
 
         List<Row> rows = Row.getRows();
         List<Column> columns = Column.getColumns();
-        Collections.reverse(rows);
+        Collections.reverse(Row.getRows());
 
         GameDto gameDto = GameService.findById(gameId);
-        List<UserDto> userDtos = UserService.findByGameId(gameId);
+        List<UserDto> userDtos = GameService.findUsersByGameId(gameId);
 
         Board board = new Board(gameDto.getTurn());
         req.session().attribute("board", board);
 
-        List<PieceDto> pieceDtos = PieceService.findByGameId(gameId);
-        board = PieceService.setBoard(board, pieceDtos, gameId);
+        board = GameService.setBoard(board, gameId);
 
-        if (gameDto.isEnd() == true) {
-            ResultCalculator resultCalculator = new ResultCalculator(board);
-            Result result = new Result(resultCalculator.calculateResult());
-            throw new RuntimeException(String.format("[최종 스코어] 백 : 흑 = %.1f : %.1f 게임이 종료되었습니다.",
-                    result.getWhiteResult(), result.getBlackResult()));
-        }
+        GameService.JudgeEndGame(board,gameDto);
 
         Gson gson = new Gson();
         Map<String, Object> model = new HashMap<>();
@@ -77,7 +67,7 @@ public class WebUIChessController {
         board.movePiece(start, end);
         Aliance nextTurn = board.switchTurn();
 
-        PieceService.updatePiece(new NavigatorDto(gameId, start, end));
+        GameService.updatePiece(new NavigatorDto(gameId, start, end));
 
         boolean isEnd = !board.isKingAlive(nextTurn);
         GameService.updateGame(new GameDto(gameId, isEnd, nextTurn.getTeamId()));
