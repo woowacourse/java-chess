@@ -14,11 +14,11 @@ public class Turn {
         this.team = team;
     }
 
-    public static Turn init() {
+    static Turn init() {
         return new Turn();
     }
 
-    public Turn turnChanged() {
+    Turn turnChanged() {
         if (team == BLACK) {
             return changeTurn(WHITE);
         }
