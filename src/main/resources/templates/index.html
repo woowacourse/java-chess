@@ -1,10 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link rel="stylesheet" href="css/board.css">
+    <title>chess game</title>
 </head>
 <body>
-Hello World!!
+<div class="chessInfo">
+    <h1>CHESS GAME</h1>
+    <div>
+        <div>지금 턴 : <span id="nowTurn"></span></div>
+    </div>
+    <div>
+        <div><button name="status" onclick="location.href='/status'">점수 확인하기</button></div>
+    </div>
+    <div>
+        <p>white : <span id="WHITE_dead"></span></p>
+        <p>black : <span id="BLACK_dead"></span></p>
+    </div>
+</div>
+<div id="board" class="chessBoard">
+    <table>
+        <tbody>
+            <tr>
+                <td id="18"></td>
+                <td id="28"></td>
+                <td id="38"></td>
+                <td id="48"></td>
+                <td id="58"></td>
+                <td id="68"></td>
+                <td id="78"></td>
+                <td id="88"></td>
+            </tr>
+            <tr>
+                <td id="17"></td>
+                <td id="27"></td>
+                <td id="37"></td>
+                <td id="47"></td>
+                <td id="57"></td>
+                <td id="67"></td>
+                <td id="77"></td>
+                <td id="87"></td>
+            </tr>
+            <tr>
+                <td id="16"></td>
+                <td id="26"></td>
+                <td id="36"></td>
+                <td id="46"></td>
+                <td id="56"></td>
+                <td id="66"></td>
+                <td id="76"></td>
+                <td id="86"></td>
+            </tr>
+            <tr>
+                <td id="15"></td>
+                <td id="25"></td>
+                <td id="35"></td>
+                <td id="45"></td>
+                <td id="55"></td>
+                <td id="65"></td>
+                <td id="75"></td>
+                <td id="85"></td>
+            </tr>
+            <tr>
+                <td id="14"></td>
+                <td id="24"></td>
+                <td id="34"></td>
+                <td id="44"></td>
+                <td id="54"></td>
+                <td id="64"></td>
+                <td id="74"></td>
+                <td id="84"></td>
+            </tr>
+            <tr>
+                <td id="13"></td>
+                <td id="23"></td>
+                <td id="33"></td>
+                <td id="43"></td>
+                <td id="53"></td>
+                <td id="63"></td>
+                <td id="73"></td>
+                <td id="83"></td>
+            </tr>
+            <tr>
+                <td id="12"></td>
+                <td id="22"></td>
+                <td id="32"></td>
+                <td id="42"></td>
+                <td id="52"></td>
+                <td id="62"></td>
+                <td id="72"></td>
+                <td id="82"></td>
+            </tr>
+            <tr>
+                <td id="11"></td>
+                <td id="21"></td>
+                <td id="31"></td>
+                <td id="41"></td>
+                <td id="51"></td>
+                <td id="61"></td>
+                <td id="71"></td>
+                <td id="81"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="javascript/pieces.js"></script>
+<script src="javascript/func.js"></script>
 </body>
 </html>
