@@ -13,8 +13,8 @@ class BishopTest {
     @Test
     void 이동가능한_경로_비숍() {
         Position position = Position.of(3, 4);
-        ChessPiece rook = new Bishop(Team.BLACK);
-        List<Position> route = rook.getRouteOfPiece(position, Position.of(6, 1));
+        ChessPiece bishop = new Bishop(Team.BLACK);
+        List<Position> route = bishop.getRouteOfPiece(position, Position.of(6, 1));
         List<Position> testRoute = new ArrayList<>();
 
         for (int i = 1; i <= 3; i++) {
@@ -28,16 +28,9 @@ class BishopTest {
 
     @Test
     void 이동불가능한_경로_예외발생_비숍() {
-        Position position = Position.of(0, 0);
-        ChessPiece rook = new Rook(Team.BLACK);
+        Position position = Position.of(0, 2);
+        ChessPiece bishop = new Bishop(Team.BLACK);
 
-        for (int i = 1; i < 8; i++) {
-            for (int j = 1; j < 8; j++) {
-                int iFinal = i;
-                int jFinal = j;
-                assertThrows(IllegalArgumentException.class, () -> rook.getRouteOfPiece(position, Position.of(iFinal, jFinal)));
-            }
-        }
+        assertThrows(IllegalArgumentException.class, () -> bishop.getRouteOfPiece(position, Position.of(2, 2)));
     }
-
 }

@@ -67,7 +67,6 @@ public class ChessBoard {
         List<Position> route;
         try {
             route = sourceChessPiece.getRouteOfPiece(source, target);
-            System.out.println("루트" + route.toString());
         } catch (IllegalArgumentException e) {
             return false;
         }

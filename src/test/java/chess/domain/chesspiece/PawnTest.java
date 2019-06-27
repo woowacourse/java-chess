@@ -116,7 +116,7 @@ class PawnTest {
 
     @Test
     void 직선으로_두칸씩_두번_이동() {
-        Position position = Position.of(6,2);
+        Position position = Position.of(6, 2);
         ChessPiece pawn = new Pawn(Team.WHITE);
 
         pawn.getRouteOfPiece(position, Position.of(4, 2));
@@ -124,10 +124,9 @@ class PawnTest {
         assertThrows(IllegalArgumentException.class, () -> pawn.getRouteOfPiece(Position.of(4, 2), Position.of(2, 2)));
     }
 
-
     @Test
     void 직선으로_두칸씩_두번_이동_블랙() {
-        Position position = Position.of(1,4);
+        Position position = Position.of(1, 4);
         ChessPiece pawn = new Pawn(Team.BLACK);
 
         pawn.getRouteOfPiece(position, Position.of(3, 4));
