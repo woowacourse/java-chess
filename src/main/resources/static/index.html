@@ -7,6 +7,9 @@
     <title>체스</title>
 </head>
 <body>
+<div>
+    <button onclick="startGame()">게임 시작</button>
+</div>
 <table>
     <tr>
         <td id="56" class="chessPiece" onclick="touchA(this.id)"></td>
@@ -90,10 +93,11 @@
     </tr>
 </table>
 
-<div id="board">점수확인 : <span id="score">asd</span></div>
+
 <div>
-    <button onclick="getStatus"></button>
+    <button onclick="ajaxScore()">점수확인 버튼</button>
 </div>
+<div id="board"><span id="score">asd</span></div>
 </body>
 <script src="app.js"></script>
 </html>

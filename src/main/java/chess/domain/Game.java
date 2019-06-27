@@ -12,7 +12,6 @@ public class Game {
     private Round round;
     private Board board;
     RoundDao roundDao;
-    StatusBoard statusBoard;
 
     public Game() {
         round = new Round(0);
@@ -44,7 +43,7 @@ public class Game {
 
     public JsonObject reload() throws SQLException {
         List<RoundDto> roundDtos = roundDao.selectRound();
-
+        board = BoardFactory.create();
         roundDtos.forEach(roundDto -> {
             Spot from = Spot.valueOf(roundDto.getFrom());
             Spot to = Spot.valueOf(roundDto.getTo());
@@ -52,5 +51,9 @@ public class Game {
             round.nextRound();
         });
         return new BoardJson(board).getBoardJson();
+    }
+
+    public StatusBoard getStatusBoard() {
+        return StatusBoardFactory.create(board);
     }
 }

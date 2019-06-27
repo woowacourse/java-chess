@@ -42,7 +42,7 @@ public class StatusBoardFactory {
         if (pawnSpots.isEmpty()) {
             return 0;
         }
-        pawnSpots.sort(Spot::xGap);
+        sortPawnByXSpot(pawnSpots);
         List<Integer> sameLinePawnCounts = getSameLinePawnCounts(pawnSpots);
 
         double totalResult = 0;
@@ -50,6 +50,10 @@ public class StatusBoardFactory {
             totalResult += calculatePawnScore(result);
         }
         return totalResult;
+    }
+
+    private static void sortPawnByXSpot(List<Spot> pawnSpots) {
+        pawnSpots.sort(Spot::xGap);
     }
 
     private static List<Integer> getSameLinePawnCounts(List<Spot> pawnSpots) {

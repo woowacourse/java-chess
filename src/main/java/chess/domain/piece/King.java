@@ -26,7 +26,6 @@ public class King extends Piece {
         }
 
         return false;
-
     }
 
     private boolean validDistance(int xGap, int yGap) {

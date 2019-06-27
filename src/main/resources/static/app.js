@@ -77,3 +77,44 @@ const ajaxRequest = (from, to) => {
     xhttp.open("GET", url + query, true);
     xhttp.send();
 };
+
+const ajaxScore = () => {
+    const xhttp = new XMLHttpRequest();
+    const url = "http://localhost:4567/score";
+    xhttp.addEventListener("load", () => {
+        const res = xhttp.response;
+        console.log("점수판 응답 : " + res);
+        document.getElementById("score").innerText = res;
+    });
+    xhttp.onreadystatechange = () => {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("demo").innerHTML = this.responseText;
+        }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
+};
+
+const startGame = () => {
+    const xhttp = new XMLHttpRequest();
+    const url = "http://localhost:4567/start";
+    xhttp.addEventListener("load", () => {
+        initChess();
+        const res = xhttp.response;
+        console.log(res);
+        const jsonRes = JSON.parse(res);
+        const blackTeamArray = jsonRes.Board[0].BLACK;
+        console.log(blackTeamArray);
+        const whiteTeamArray = jsonRes.Board[1].WHITE;
+        console.log(whiteTeamArray);
+        setBoard(blackTeamArray, whiteTeamArray);
+    });
+    xhttp.onreadystatechange = () => {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("demo").innerHTML = this.responseText;
+        }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
+};
+
