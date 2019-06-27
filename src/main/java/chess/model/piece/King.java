@@ -11,7 +11,6 @@ import java.util.*;
 import static chess.model.board.vector.Direction.*;
 import static chess.model.board.Board.*;
 
-// TODO: 2019-06-22 cloneSelf를 꼭 써야할까?
 public class King implements Piece {
     public static final double SCORE = 0.0;
     private static final Set<Direction> movableDirections;

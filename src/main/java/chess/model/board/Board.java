@@ -1,14 +1,17 @@
 package chess.model.board;
 
-import chess.model.*;
+import chess.model.ChessGame;
+import chess.model.ScoreResult;
 import chess.model.board.vector.Direction;
 import chess.model.board.vector.Vector;
 import chess.model.gameCreator.BoardCreatingStrategy;
 import chess.model.piece.*;
 
 import java.util.*;
+import java.util.function.Function;
 
-import static chess.model.board.vector.Direction.*;
+import static chess.model.board.vector.Direction.NORTH;
+import static chess.model.board.vector.Direction.SOUTH;
 
 public class Board {
     public static final String WHITE_TEAM = "white";
@@ -39,6 +42,17 @@ public class Board {
     private static final int HALF_SCORE_STANDARD = 1;
     private static final double HALF_SCORE_OF_PAWN = Pawn.SCORE / 2;
     private static final int TOTAL_COUNT_OF_KING = 2;
+
+    private static Map<Double, Function<Tile, String>> pieceString = new HashMap<>();
+
+    static {
+        pieceString.put(King.SCORE, tile -> WHITE_TEAM.equals(tile.askPieceWhichTeam()) ? WHITE_KING : BLACK_KING);
+        pieceString.put(Queen.SCORE, tile -> WHITE_TEAM.equals(tile.askPieceWhichTeam()) ? WHITE_QUEEN : BLACK_QUEEN);
+        pieceString.put(Rook.SCORE, tile -> WHITE_TEAM.equals(tile.askPieceWhichTeam()) ? WHITE_ROOK : BLACK_ROOK);
+        pieceString.put(Knight.SCORE, tile -> WHITE_TEAM.equals(tile.askPieceWhichTeam()) ? WHITE_KNIGHT : BLACK_KNIGHT);
+        pieceString.put(Bishop.SCORE, tile -> WHITE_TEAM.equals(tile.askPieceWhichTeam()) ? WHITE_BISHOP : BLACK_BISHOP);
+        pieceString.put(Pawn.SCORE, tile -> WHITE_TEAM.equals(tile.askPieceWhichTeam()) ? WHITE_PAWN : BLACK_PAWN);
+    }
 
     private Map<String, Tile> tiles;
 
@@ -98,8 +112,6 @@ public class Board {
 
         return checkEveryRoute(route);
     }
-
-    // TODO: 2019-06-21 파라미터 이름 변경
 
     private boolean checkEveryRoute(Route route) {
         for (String coordinates : tiles.keySet()) {
@@ -222,11 +234,12 @@ public class Board {
 
     }
 
+    // Map에 저장되어 있는 말들을 DB에 저장할 형태로 만드는 메소드
     public List<String> convertToList() {
         List<String> pieces = new ArrayList<>();
-        List<String> keys = new ArrayList<>(tiles.keySet());
+        List<String> coordinates = new ArrayList<>(tiles.keySet());
 
-        keys.sort((a1, a2) -> {
+        coordinates.sort((a1, a2) -> {
             int coordinateY1 = Integer.parseInt(a1.substring(1, 2));
             int coordinateY2 = Integer.parseInt(a2.substring(1, 2));
 
@@ -245,79 +258,17 @@ public class Board {
         int count = 0;
         String row = "";
 
-        for (String key : keys) {
+        for (String key : coordinates) {
             count++;
             Tile tile = tiles.get(key);
 
             if (Objects.isNull(tile.getPiece())) {
-                row = row.concat(EMPTY);
-
-                if (count % COLUMN_SIZE == 0) {
-                    pieces.add(row);
-                    row = "";
-                }
+                row = emptyString(pieces, count, row);
                 continue;
             }
 
-            if (tile.getPiece().getScore() == King.SCORE) {
-                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(WHITE_KING);
-                }
-
-                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(BLACK_KING);
-                }
-            }
-
-            if (tile.getPiece().getScore() == Queen.SCORE) {
-                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(WHITE_QUEEN);
-                }
-
-                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(BLACK_QUEEN);
-                }
-            }
-
-            if (tile.getPiece().getScore() == Rook.SCORE) {
-                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(WHITE_ROOK);
-                }
-
-                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(BLACK_ROOK);
-                }
-            }
-
-            if (tile.getPiece().getScore() == Knight.SCORE) {
-                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(WHITE_KNIGHT);
-                }
-
-                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(BLACK_KNIGHT);
-                }
-            }
-
-            if (tile.getPiece().getScore() == Bishop.SCORE) {
-                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(WHITE_BISHOP);
-                }
-
-                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(BLACK_BISHOP);
-                }
-            }
-
-            if (tile.getPiece().getScore() == Pawn.SCORE) {
-                if (WHITE_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(WHITE_PAWN);
-                }
-
-                if (BLACK_TEAM.equals(tile.askPieceWhichTeam())) {
-                    row = row.concat(BLACK_PAWN);
-                }
-            }
+            String piece = pieceString.get(tile.getPiece().getScore()).apply(tile);
+            row = row.concat(piece);
 
             if (count % COLUMN_SIZE == 0) {
                 pieces.add(row);
@@ -326,6 +277,16 @@ public class Board {
         }
 
         return pieces;
+    }
+
+    private String emptyString(List<String> pieces, int count, String row) {
+        row = row.concat(EMPTY);
+
+        if (count % COLUMN_SIZE == 0) {
+            pieces.add(row);
+            row = "";
+        }
+        return row;
     }
 
     public boolean checkKingAlive() {
