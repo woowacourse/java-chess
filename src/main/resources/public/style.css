@@ -1,0 +1,114 @@
+td {
+    width: 50px;
+    height: 50px;
+    /*background-color:GRAY;*/
+}
+
+th {
+    width: 50px;
+    height: 50px;
+    /*background-color:GRAY;*/
+}
+
+/*td{*/
+/*    width:50px;*/
+/*    height:50px;*/
+/*    background-color:WHITE;*/
+/*}*/
+
+.BLACKKING {
+    background-image: url(black_king.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.BLACKQUEEN {
+    background-image: url(black_queen.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.BLACKROOK {
+    background-image: url(black_rook.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.BLACKKNIGHT {
+    background-image: url(black_knight.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.BLACKBISHOP {
+    background-image: url(black_bishop.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.BLACKPAWN {
+    background-image: url(black_pawn.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.WHITEKING {
+    background-image: url(white_king.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.WHITEQUEEN {
+    background-image: url(white_queen.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.WHITEROOK {
+    background-image: url(white_rook.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.WHITEKNIGHT {
+    background-image: url(white_knight.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.WHITEBISHOP {
+    background-image: url(white_bishop.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.WHITEPAWN {
+    background-image: url(white_pawn.png);
+    background-size: cover;
+    height: 50px;
+}
+
+.white-block {
+    background-color: white;
+}
+
+.odd td:nth-child(odd) {
+    background-color: white;
+}
+
+.odd td:nth-child(even) {
+    background-color: gray;
+}
+
+.even td:nth-child(even) {
+    background-color: white;
+}
+
+.even td:nth-child(odd) {
+    background-color: gray;
+}
+
+
+.black-block {
+    background-color: black;
+}
