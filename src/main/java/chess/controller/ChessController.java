@@ -32,8 +32,8 @@ public class ChessController implements Controller {
         get("/", this::main);
         get("/chessBoard", this::getChessBoard);
         post("/chessBoard", this::postChessBoard);
-        get("/chessScore", this::chessScorePage);
-        post("/newRound", this::nextChessRoundPage);
+        get("/chessScore", this::getChessScore);
+        post("/newRound", this::postNextChessRound);
     }
 
     private String main(Request req, Response res) {
@@ -64,7 +64,7 @@ public class ChessController implements Controller {
         }
     }
 
-    private String chessScorePage(Request req, Response res) {
+    private String getChessScore(Request req, Response res) {
         Gson gson = new Gson();
 
         int roundId = req.session().attribute("roundId");
@@ -72,7 +72,7 @@ public class ChessController implements Controller {
         return gson.toJson(ChessService.getInstance().getChessScore(roundId));
     }
 
-    private String nextChessRoundPage(Request req, Response res) {
+    private String postNextChessRound(Request req, Response res) {
         Gson gson = new Gson();
         int roundId = req.session().attribute("roundId");
 
