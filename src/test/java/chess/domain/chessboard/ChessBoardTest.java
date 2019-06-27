@@ -1,5 +1,8 @@
-package chess.domain;
+package chess.domain.chessboard;
 
+import chess.domain.Position;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.chessboard.ChessBoardGenerator;
 import chess.domain.chesspiece.*;
 import org.junit.jupiter.api.Test;
 
@@ -10,20 +13,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ChessBoardTest {
     @Test
     void 경로가_NONE() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         assertThat(chessBoard.canMove(Position.of(0, 1), Position.of(2, 2))).isTrue();
     }
 
     @Test
     void 경로에_말이_있을_때() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         System.out.println(chessBoard.canMove(Position.of(0, 7), Position.of(5, 7)));
         assertThat(chessBoard.canMove(Position.of(0, 7), Position.of(5, 7))).isFalse();
     }
 
     @Test
     void 말_위치_이동() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(1, 3), Position.of(3, 3));
         chessBoard.movePiece(Position.of(0, 2), Position.of(5, 7));
 
@@ -33,7 +36,7 @@ class ChessBoardTest {
 
     @Test
     void 폰_공격() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(1, 2), Position.of(3, 2));
         chessBoard.movePiece(Position.of(6, 3), Position.of(4, 3));
 
@@ -47,7 +50,7 @@ class ChessBoardTest {
 
     @Test
     void 폰_적이_있는_경로에서_직선_이동() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(6, 4), Position.of(5, 4));
         chessBoard.movePiece(Position.of(7, 5), Position.of(2, 0));
 
@@ -61,7 +64,7 @@ class ChessBoardTest {
 
     @Test
     void 비숍_공격() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(1, 3), Position.of(2, 3));
         System.out.println(chessBoard.getChessBoard().get(Position.of(2, 3)));
         chessBoard.movePiece(Position.of(0, 2), Position.of(2, 4));
@@ -75,7 +78,7 @@ class ChessBoardTest {
 
     @Test
     void 킹_공격() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(1, 3), Position.of(2, 3));
         chessBoard.movePiece(Position.of(6, 4), Position.of(5, 4));
         chessBoard.movePiece(Position.of(7, 5), Position.of(3, 1));
@@ -89,7 +92,7 @@ class ChessBoardTest {
 
     @Test
     void 퀸_공격() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(1, 3), Position.of(2, 3));
         chessBoard.movePiece(Position.of(0, 4), Position.of(3, 1));
         chessBoard.movePiece(Position.of(3, 1), Position.of(6, 1));
@@ -101,7 +104,7 @@ class ChessBoardTest {
 
     @Test
     void 나이트_공격() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(0, 1), Position.of(2, 2));
         chessBoard.movePiece(Position.of(2, 2), Position.of(4, 3));
         chessBoard.movePiece(Position.of(4, 3), Position.of(6, 4));
@@ -112,7 +115,7 @@ class ChessBoardTest {
 
     @Test
     void 룩_공격() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(1, 1), Position.of(3, 1));
         chessBoard.movePiece(Position.of(6, 0), Position.of(4, 0));
         chessBoard.movePiece(Position.of(4, 0), Position.of(3, 1));
@@ -124,7 +127,7 @@ class ChessBoardTest {
 
     @Test
     void 게임종료() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(1, 4), Position.of(2, 4));
         chessBoard.movePiece(Position.of(6, 3), Position.of(5, 3));
         chessBoard.movePiece(Position.of(7, 2), Position.of(3, 6));
@@ -136,7 +139,7 @@ class ChessBoardTest {
 
     @Test
     void 폰이_같은_세로줄에_없을_때_점수계산() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(6, 3), Position.of(5, 3));
         chessBoard.movePiece(Position.of(7, 2), Position.of(3, 6));
         chessBoard.movePiece(Position.of(3, 6), Position.of(1, 4));
@@ -148,7 +151,7 @@ class ChessBoardTest {
 
     @Test
     void 폰이_같은_세로줄에_있을_때_점수계산() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         chessBoard.movePiece(Position.of(6, 3), Position.of(4, 3));
         chessBoard.movePiece(Position.of(1, 4), Position.of(3, 4));
         chessBoard.movePiece(Position.of(4, 3), Position.of(3, 4));

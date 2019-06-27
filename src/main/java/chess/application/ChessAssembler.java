@@ -1,6 +1,6 @@
 package chess.application;
 
-import chess.domain.ChessBoard;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.Position;
 import chess.domain.chesspiece.Bishop;
 import chess.domain.chesspiece.Blank;

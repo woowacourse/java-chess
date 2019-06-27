@@ -2,8 +2,9 @@ package chess.application;
 
 import chess.dao.ChessLogDao;
 import chess.dao.ChessRoundDao;
-import chess.domain.ChessBoard;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.Position;
+import chess.domain.chessboard.ChessBoardGenerator;
 import chess.domain.chesspiece.Team;
 import chess.application.dto.ChessBoardDto;
 import chess.application.dto.ChessLogDto;
@@ -29,7 +30,7 @@ public class ChessService {
     }
 
     public ChessBoard getMovedChessBoardByRoundId(int roundId) {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         List<ChessLogDto> chessLogDtos = chessLogDao.selectChessLogByRoundId(roundId);
 
         for (ChessLogDto chessLogDto : chessLogDtos) {
@@ -59,7 +60,7 @@ public class ChessService {
     }
 
     public ChessScoreDto getChessScore(int roundId) {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         List<ChessLogDto> chessLogDtos = chessLogDao.selectChessLogByRoundId(roundId);
 
         for (ChessLogDto chessLogDto : chessLogDtos) {
