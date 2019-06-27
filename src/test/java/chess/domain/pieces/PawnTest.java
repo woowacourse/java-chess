@@ -1,7 +1,6 @@
 package chess.domain.pieces;
 
 import chess.domain.Point;
-import chess.domain.PointFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -56,11 +55,8 @@ public class PawnTest {
     @Test
     void 첫_턴_이후_2칸_비정상_이동_Test() {
         Pawn pawn = new Pawn(Color.BLACK);
-        Point source = PointFactory.of("d7");
-        Point target = PointFactory.of("d5");
-        // 첫 턴 이동
-        pawn.action(source, target, false);
-        // 첫 턴 이후
+        Point source = PointFactory.of("d6");
+        Point target = PointFactory.of("d4");
         assertThrows(IllegalArgumentException.class, () -> pawn.action(source, target, false));
     }
 

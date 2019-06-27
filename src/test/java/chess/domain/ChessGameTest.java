@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Knight;
 import chess.domain.pieces.Pawn;
+import chess.domain.pieces.PointFactory;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -14,11 +15,9 @@ public class ChessGameTest {
 
     private static ChessGame chessGame = new ChessGame();
 
-
-
     @Test
     void test0_정상_생성() {
-        assertDoesNotThrow(ChessGame::new);
+        new ChessGame();
     }
 
     @Test

@@ -1,6 +1,5 @@
 package chess.domain.pieces;
 
-import chess.domain.PointFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

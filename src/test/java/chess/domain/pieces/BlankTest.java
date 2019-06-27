@@ -1,7 +1,6 @@
 package chess.domain.pieces;
 
 import chess.domain.Point;
-import chess.domain.PointFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

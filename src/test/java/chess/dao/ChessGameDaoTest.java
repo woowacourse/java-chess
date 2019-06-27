@@ -27,7 +27,7 @@ public class ChessGameDaoTest {
 
     @Test
     void test2_게임_테이블_턴_검색() throws SQLException {
-        assertEquals(chessGameDao.findTurn(), "white");
+        assertEquals(chessGameDao.findTurn(), "WHITE");
     }
 
     @Test

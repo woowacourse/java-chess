@@ -9,46 +9,38 @@ import java.util.Map;
 
 public class ChessBoard {
 
-    private Map<Point, Piece> points;
+    private Map<Point, Piece> points = new HashMap<>();
 
     public ChessBoard() {
-        this.points = initialize();
+        initializePiece(Color.WHITE, 1, 2);
+        initializePiece(Color.BLACK, 8, 7);
+        initializeBlank();
     }
 
     public ChessBoard(Map<Point, Piece> points) {
         this.points = new HashMap<>(points);
     }
 
-    private Map<Point, Piece> initialize() {
-        Map<Point, Piece> points = new HashMap<>();
-        points.put(PointFactory.of("a1"), new Rook(Color.WHITE));
-        points.put(PointFactory.of("b1"), new Knight(Color.WHITE));
-        points.put(PointFactory.of("c1"), new Bishop(Color.WHITE));
-        points.put(PointFactory.of("d1"), new Queen(Color.WHITE));
-        points.put(PointFactory.of("e1"), new King(Color.WHITE));
-        points.put(PointFactory.of("f1"), new Bishop(Color.WHITE));
-        points.put(PointFactory.of("g1"), new Knight(Color.WHITE));
-        points.put(PointFactory.of("h1"), new Rook(Color.WHITE));
+    private void initializePiece(Color color, Integer pieceInitPointY, Integer pawnInitPointY) {
+        points.put(PointFactory.of("a" + pieceInitPointY), new Rook(color));
+        points.put(PointFactory.of("b" + pieceInitPointY), new Knight(color));
+        points.put(PointFactory.of("c" + pieceInitPointY), new Bishop(color));
+        points.put(PointFactory.of("d" + pieceInitPointY), new Queen(color));
+        points.put(PointFactory.of("e" + pieceInitPointY), new King(color));
+        points.put(PointFactory.of("f" + pieceInitPointY), new Bishop(color));
+        points.put(PointFactory.of("g" + pieceInitPointY), new Knight(color));
+        points.put(PointFactory.of("h" + pieceInitPointY), new Rook(color));
         for (int i = 1; i <= 8; ++i) {
-            points.put(PointFactory.of(i, 2), new Pawn(Color.WHITE));
+            points.put(PointFactory.of(i, pawnInitPointY), new Pawn(color));
         }
+    }
+
+    private void initializeBlank() {
         for (int i = 3; i <= 6; ++i) {
             for (int j = 1; j <= 8; ++j) {
                 points.put(PointFactory.of(j, i), new Blank(Color.NONE));
             }
         }
-        for (int i = 1; i <= 8; ++i) {
-            points.put(PointFactory.of(i, 7), new Pawn(Color.BLACK));
-        }
-        points.put(PointFactory.of("a8"), new Rook(Color.BLACK));
-        points.put(PointFactory.of("b8"), new Knight(Color.BLACK));
-        points.put(PointFactory.of("c8"), new Bishop(Color.BLACK));
-        points.put(PointFactory.of("d8"), new Queen(Color.BLACK));
-        points.put(PointFactory.of("e8"), new King(Color.BLACK));
-        points.put(PointFactory.of("f8"), new Bishop(Color.BLACK));
-        points.put(PointFactory.of("g8"), new Knight(Color.BLACK));
-        points.put(PointFactory.of("h8"), new Rook(Color.BLACK));
-        return points;
     }
 
     public Map<Point, Piece> getPoints() {

@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.pieces.Color;
+import chess.domain.pieces.PointFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
