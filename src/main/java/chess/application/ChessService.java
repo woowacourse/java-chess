@@ -1,11 +1,12 @@
 package chess.application;
 
+import chess.dao.ChessLogDao;
 import chess.dao.ChessRoundDao;
 import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.chesspiece.Team;
 import chess.dto.ChessBoardDto;
-import chess.dto.ChessInfoDto;
+import chess.dto.ChessLogDto;
 import chess.dto.ChessPositionDto;
 import chess.dto.ChessScoreDto;
 
@@ -33,7 +34,7 @@ public class ChessService {
 
         Position source = Position.of(chessPositionDto.getSourceY(), chessPositionDto.getSourceX());
         Position target = Position.of(chessPositionDto.getTargetY(), chessPositionDto.getTargetX());
-        int turn = ChessRoundDao.getInstance().selectTurnByRoundId(roundId);
+        int turn = ChessLogDao.getInstance().selectTurnByRoundId(roundId);
 
         Team team = getTeam(turn);
 
@@ -41,13 +42,8 @@ public class ChessService {
             throw new IllegalArgumentException();
         }
 
-        ChessRoundDao
-                .getInstance()
-                .insertChessInfoByRoundId(
-                        roundId
-                        , new ChessInfoDto(String.valueOf((turn + NEXT_NUMBER) % OPERATOR_NUMBER)
-                                , source.toString()
-                                , target.toString()));
+        ChessLogDao.getInstance().insertChessLogByRoundId(roundId
+                        , new ChessLogDto(String.valueOf((turn + NEXT_NUMBER) % OPERATOR_NUMBER), source.toString(), target.toString()));
 
         return ChessAssembler.toDto(chessBoard);
     }
@@ -58,10 +54,10 @@ public class ChessService {
 
     private ChessBoard getMovedChessBoard(int roundId) {
         ChessBoard chessBoard = new ChessBoard();
-        List<ChessInfoDto> chessInfoDtos = ChessRoundDao.getInstance().selectChessInfoByRoundId(roundId);
+        List<ChessLogDto> chessLogDtos = ChessLogDao.getInstance().selectChessLogByRoundId(roundId);
 
-        for (ChessInfoDto chessInfoDto : chessInfoDtos) {
-            chessBoard.movePiece(Position.from(chessInfoDto.getSource()), Position.from(chessInfoDto.getTarget()));
+        for (ChessLogDto chessLogDto : chessLogDtos) {
+            chessBoard.movePiece(Position.from(chessLogDto.getSource()), Position.from(chessLogDto.getTarget()));
         }
 
         return chessBoard;
@@ -69,10 +65,10 @@ public class ChessService {
 
     public ChessScoreDto getChessScore(int roundId) {
         ChessBoard chessBoard = new ChessBoard();
-        List<ChessInfoDto> chessInfoDtos = ChessRoundDao.getInstance().selectChessInfoByRoundId(roundId);
+        List<ChessLogDto> chessLogDtos = ChessLogDao.getInstance().selectChessLogByRoundId(roundId);
 
-        for (ChessInfoDto chessInfoDto : chessInfoDtos) {
-            chessBoard.movePiece(Position.from(chessInfoDto.getSource()), Position.from(chessInfoDto.getTarget()));
+        for (ChessLogDto chessLogDto : chessLogDtos) {
+            chessBoard.movePiece(Position.from(chessLogDto.getSource()), Position.from(chessLogDto.getTarget()));
         }
 
         return new ChessScoreDto(chessBoard.calculateScore(Team.WHITE), chessBoard.calculateScore(Team.BLACK));

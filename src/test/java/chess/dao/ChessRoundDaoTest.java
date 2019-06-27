@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.ChessInfoDto;
+import chess.dto.ChessLogDto;
 import org.junit.jupiter.api.Test;
 
 class ChessRoundDaoTest {
@@ -8,13 +8,13 @@ class ChessRoundDaoTest {
 
     @Test
     void insertChessInfoByRoundId() {
-        ChessInfoDto chessInfoDto = new ChessInfoDto("0", "5,6", "5,4");
-        chessRoundDao.insertChessInfoByRoundId(2, chessInfoDto);
+        ChessLogDto chessLogDto = new ChessLogDto("0", "5,6", "5,4");
+        chessRoundDao.insertChessLogByRoundId(2, chessLogDto);
     }
 
     @Test
     void selectChessInfoByRoundId() {
-        System.out.println(chessRoundDao.selectChessInfoByRoundId(2));
+        System.out.println(chessRoundDao.selectChessLogByRoundId(2));
     }
 
     @Test

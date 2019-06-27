@@ -1,11 +1,11 @@
 package chess.dto;
 
-public class ChessInfoDto {
+public class ChessLogDto {
     private String turn;
     private String source;
     private String target;
 
-    public ChessInfoDto(String turn, String source, String target) {
+    public ChessLogDto(String turn, String source, String target) {
         this.turn = turn;
         this.source = source;
         this.target = target;
@@ -25,7 +25,7 @@ public class ChessInfoDto {
 
     @Override
     public String toString() {
-        return "ChessInfoDto{" +
+        return "ChessLogDto{" +
                 "turn='" + turn + '\'' +
                 ", source='" + source + '\'' +
                 ", target='" + target + '\'' +
