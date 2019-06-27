@@ -40,37 +40,25 @@ public class ChessGameService {
     }
 
     private Optional<Long> tryInsertBoardState(BoardStateDto dto) {
-        try {
-            return Optional.of(boardStateDao.addState(dto));
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("보드 상태를 넣을 수 없습니다.");
-        }
+        return Optional.of(boardStateDao.addState(dto));
     }
 
     public Map<ChessCoordinate, ChessPiece> findBoardStatesByRoomId(Long roomId) {
-        try {
-            ChessPieceFactory factory = new ChessPieceFactory();
-            Map<ChessCoordinate, ChessPiece> board = new HashMap<>();
-            ChessCoordinate.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
+        ChessPieceFactory factory = new ChessPieceFactory();
+        Map<ChessCoordinate, ChessPiece> board = new HashMap<>();
+        ChessCoordinate.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
 
-            boardStateDao.findByRoomId(roomId).forEach(dto ->
-                    board.put(ChessCoordinate.valueOf(dto.getCoordX() + dto.getCoordY()),
-                            factory.create(PieceType.valueOf(dto.getType()))));
-            return board;
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
-        }
+        boardStateDao.findByRoomId(roomId).forEach(dto ->
+                board.put(ChessCoordinate.valueOf(dto.getCoordX() + dto.getCoordY()),
+                        factory.create(PieceType.valueOf(dto.getType()))));
+        return board;
     }
 
     public void updateChessPiecePosition(ChessCoordinate from, ChessCoordinate to, long roomId) {
-        try {
-            List<BoardStateDto> boardStates = boardStateDao.findByRoomId(roomId);
+        List<BoardStateDto> boardStates = boardStateDao.findByRoomId(roomId);
 
-            deleteBoardStateByTo(to, boardStates);
-            updateBoardState(from, to, boardStates);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("보드를 찾을 수 없습니다.");
-        }
+        deleteBoardStateByTo(to, boardStates);
+        updateBoardState(from, to, boardStates);
     }
 
     private void updateBoardState(ChessCoordinate from, ChessCoordinate to, List<BoardStateDto> boardStates) {
@@ -79,52 +67,35 @@ public class ChessGameService {
                 .filter(dto -> dto.getCoordY().equals(from.getY().getSymbol())).findFirst().ifPresent(dto -> {
             dto.setCoordX(to.getX().getSymbol());
             dto.setCoordY(to.getY().getSymbol());
-            try {
-                boardStateDao.updateCoordById(dto);
-            } catch (SQLException e) {
-                throw new IllegalArgumentException("보드 상태를 업데이트 할 수 없습니다.");
-            }
+            boardStateDao.updateCoordById(dto);
         });
     }
 
     private void deleteBoardStateByTo(ChessCoordinate to, List<BoardStateDto> boardStates) {
         boardStates.stream().filter(dto -> dto.getCoordX().equals(to.getX().getSymbol()))
                 .filter(dto -> dto.getCoordY().equals(to.getY().getSymbol())).findFirst().ifPresent(dto -> {
-            try {
-                boardStateDao.deleteById(dto.getId());
-            } catch (SQLException e) {
-                throw new IllegalArgumentException("보드 상태를 지울 수 없습니다.");
-            }
+
+            boardStateDao.deleteById(dto.getId());
+
         });
     }
 
     public void createTurn(Team team, long id) {
-        try {
-            TurnDto turn = new TurnDto();
-            turn.setCurrent(team.toString());
-            turn.setRoomId(id);
-            turnDao.addTurn(turn);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("턴을 만들 수 없습니다.");
-        }
+        TurnDto turn = new TurnDto();
+        turn.setCurrent(team.toString());
+        turn.setRoomId(id);
+        turnDao.addTurn(turn);
     }
 
     public Optional<TurnDto> findTurnByRoomId(long id) {
-        try {
-            return turnDao.findById(id);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("턴을 찾을 수 없습니다.");
-        }
+        return turnDao.findById(id);
+
     }
 
     public void updateTurnByRoomId(Team team, long roomId) {
-        try {
-            TurnDto turn = new TurnDto();
-            turn.setCurrent(team.name());
-            turn.setRoomId(roomId);
-            turnDao.updateCoordById(turn);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("턴을 업데이트 할 수 없습니다.");
-        }
+        TurnDto turn = new TurnDto();
+        turn.setCurrent(team.name());
+        turn.setRoomId(roomId);
+        turnDao.updateTurnByRoomId(turn);
     }
 }

@@ -20,7 +20,7 @@ public class TurnDao {
         this.dataSource = ds;
     }
 
-    public long addTurn(TurnDto turn) throws SQLException {
+    public long addTurn(TurnDto turn) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(TurnDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             query.setLong(1, turn.getRoomId());
@@ -30,10 +30,12 @@ public class TurnDao {
                 rs.next();
                 return rs.getLong(1);
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("턴을 추가할 수 없습니다.");
         }
     }
 
-    public Optional<TurnDto> findById(long id) throws SQLException {
+    public Optional<TurnDto> findById(long id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(TurnDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
@@ -44,6 +46,8 @@ public class TurnDao {
                 TurnDto turn = mapResult(rs);
                 return Optional.of(turn);
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("턴을 찾을 수 없습니다.");
         }
     }
 
@@ -54,12 +58,24 @@ public class TurnDao {
         return turn;
     }
 
-    public int updateCoordById(TurnDto turn) throws SQLException {
+    public int updateTurnByRoomId(TurnDto turn) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(TurnDaoSql.UPDATE_BY_ID)) {
             query.setString(1, turn.getCurrent());
             query.setLong(2, turn.getRoomId());
             return query.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("턴을 업데이트할 수 없습니다.");
+        }
+    }
+
+    public int deleteByRoomId(long roomId) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement query = conn.prepareStatement(TurnDaoSql.DELETE_BY_ID)) {
+            query.setLong(1, roomId);
+            return query.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("턴을 삭제할 수 없습니다.");
         }
     }
 }

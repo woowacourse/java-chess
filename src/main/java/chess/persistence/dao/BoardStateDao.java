@@ -23,7 +23,7 @@ public class BoardStateDao {
         this.dataSource = ds;
     }
 
-    public long addState(BoardStateDto state) throws SQLException {
+    public long addState(BoardStateDto state) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             query.setString(1, state.getType());
@@ -31,14 +31,17 @@ public class BoardStateDao {
             query.setString(3, state.getCoordY());
             query.setLong(4, state.getRoomId());
             query.executeUpdate();
+
             try (ResultSet rs = query.getGeneratedKeys()) {
                 rs.next();
                 return rs.getLong(1);
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("보드 상태를 추가할 수 없습니다.");
         }
     }
 
-    public Optional<BoardStateDto> findById(long id) throws SQLException {
+    public Optional<BoardStateDto> findById(long id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
@@ -49,6 +52,24 @@ public class BoardStateDao {
                 BoardStateDto state = mapResult(rs);
                 return Optional.of(state);
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("보드 상태를 찾을 수 없습니다.");
+        }
+    }
+
+    public List<BoardStateDto> findByRoomId(long roomId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement query = connection.prepareStatement(BoardStateDaoSql.SELECT_BY_ROOM_ID)) {
+            query.setLong(1, roomId);
+            try (ResultSet rs = query.executeQuery()) {
+                List<BoardStateDto> founds = new ArrayList<>();
+                while (rs.next()) {
+                    founds.add(mapResult(rs));
+                }
+                return founds;
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("보드 상태를 찾을 수 없습니다.");
         }
     }
 
@@ -62,35 +83,25 @@ public class BoardStateDao {
         return state;
     }
 
-    public List<BoardStateDto> findByRoomId(long roomId) throws SQLException {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement query = connection.prepareStatement(BoardStateDaoSql.SELECT_BY_ROOM_ID)) {
-            query.setLong(1, roomId);
-            try (ResultSet rs = query.executeQuery()) {
-                List<BoardStateDto> founds = new ArrayList<>();
-                while (rs.next()) {
-                    founds.add(mapResult(rs));
-                }
-                return founds;
-            }
-        }
-    }
-
-    public int updateCoordById(BoardStateDto state) throws SQLException {
+    public int updateCoordById(BoardStateDto state) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.UPDATE_COORD_BY_ID)) {
             query.setString(1, state.getCoordX());
             query.setString(2, state.getCoordY());
             query.setLong(3, state.getId());
             return query.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("보드 상태를 업데이트 할 수 없습니다.");
         }
     }
 
-    public int deleteById(long id) throws SQLException {
+    public int deleteById(long id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(BoardStateDaoSql.DELETE_BY_ID)) {
             query.setLong(1, id);
             return query.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("보드 상태를 지울 수 없습니다.");
         }
     }
 }

@@ -16,34 +16,18 @@ public class RoomService {
     }
 
     public Optional<Long> createRoom(RoomDto room) {
-        try {
-            return Optional.of(roomDao.addRoom(room));
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("방을 만들 수 없습니다.");
-        }
+        return Optional.of(roomDao.addRoom(room));
     }
 
     public Optional<RoomDto> findRoomById(long id) {
-        try {
-            return roomDao.findById(id);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("방을 찾을 수 없습니다.");
-        }
+        return roomDao.findById(id);
     }
 
     public Optional<RoomDto> findRoomByTitle(String title) {
-        try {
-            return roomDao.findByTitle(title);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("방을 찾을 수 없습니다.");
-        }
+        return roomDao.findByTitle(title);
     }
 
     public List<RoomDto> findLatestNRooms(int topN) {
-        try {
-            return roomDao.findLatestN(topN);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("방 리스트를 찾을 수 없습니다.");
-        }
+        return roomDao.findLatestN(topN);
     }
 }

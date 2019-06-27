@@ -23,7 +23,7 @@ public class RoomDao {
         this.dataSource = ds;
     }
 
-    public long addRoom(RoomDto room) throws SQLException {
+    public long addRoom(RoomDto room) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(RoomDaoSql.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             query.setString(1, room.getTitle());
@@ -32,10 +32,12 @@ public class RoomDao {
                 rs.next();
                 return rs.getLong(1);
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("방을 추가할 수 없습니다.");
         }
     }
 
-    public Optional<RoomDto> findById(long id) throws SQLException {
+    public Optional<RoomDto> findById(long id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_BY_ID)) {
             query.setLong(1, id);
@@ -46,6 +48,23 @@ public class RoomDao {
                 RoomDto room = mapResult(rs);
                 return Optional.of(room);
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("방을 찾을 수 없습니다.");
+        }
+    }
+
+    public Optional<RoomDto> findByTitle(String title) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_BY_TITLE)) {
+            query.setString(1, title);
+            try (ResultSet rs = query.executeQuery()) {
+                if (!rs.next()) {
+                    return Optional.empty();
+                }
+                return Optional.of(mapResult(rs));
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("방을 찾을 수 없습니다.");
         }
     }
 
@@ -56,20 +75,7 @@ public class RoomDao {
         return room;
     }
 
-    public Optional<RoomDto> findByTitle(String title) throws SQLException {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_BY_TITLE)) {
-            query.setString(1, title);
-            try (ResultSet rs = query.executeQuery()) {
-                if (!rs.next()) {
-                    return Optional.empty();
-                }
-                return Optional.of(mapResult(rs));
-            }
-        }
-    }
-
-    public List<RoomDto> findLatestN(int topN) throws SQLException {
+    public List<RoomDto> findLatestN(int topN) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(RoomDaoSql.SELECT_LATEST_N)) {
             query.setInt(1, topN);
@@ -80,14 +86,18 @@ public class RoomDao {
                 }
                 return findRooms;
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("방 리스트를 찾을 수 없습니다.");
         }
     }
 
-    public int deleteById(long id) throws SQLException {
+    public int deleteById(long id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement query = conn.prepareStatement(RoomDaoSql.DELETE_BY_ID)) {
             query.setLong(1, id);
             return query.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("방을 삭제할 수 없습니다.");
         }
     }
 }
