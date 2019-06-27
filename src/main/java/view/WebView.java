@@ -63,7 +63,7 @@ public class WebView {
     private static Map<String, Object> defaultModel(final Game game) {
         Map<String, Object> model = new HashMap<>();
 
-        model.put("turn", "기능 추가중");
+        model.put("turn", game.turn());
         model.put("scoreOfWhite", game.getCurrentScore(WHITE));
         model.put("scoreOfBlack", game.getCurrentScore(BLACK));
         return model;

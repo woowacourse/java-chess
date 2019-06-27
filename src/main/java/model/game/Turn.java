@@ -33,7 +33,7 @@ public class Turn {
         team = WHITE;
     }
 
-    PieceColor team() {
+    PieceColor pieceColor() {
         return team;
     }
 

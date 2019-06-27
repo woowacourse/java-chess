@@ -81,17 +81,21 @@ public class Game {
     }
 
     public boolean isTurnOf(PieceColor pieceColor) {
-        return turn.team() == pieceColor;
+        return turn.pieceColor() == pieceColor;
+    }
+
+    public PieceColor turn() {
+        return turn.pieceColor();
+    }
+
+    public boolean isOwnPiece(final Position position) {
+        return this.board.getPieceAt(position).getPieceColor() == turn.pieceColor();
     }
 
     public boolean movePiece(Position from, Position to) {
         board.getPieceAt(from).moveTo(to);
         turn.endTurn();
         GameDAO.holdAndWriteLog(turn, from, to);
-        return true;
-    }
-
-    public boolean isOwnPiece(Position position) {
         return true;
     }
 
