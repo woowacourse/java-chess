@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
+    private static final String CONNECTION_FAILURE_MSG = "잘못된 Connection 입니다.";
+
     private static final String SERVER = "localhost";
     private static final String DATABASE = "chess";
     private static final String USER_NAME = "skygl";
@@ -29,6 +31,9 @@ public class ConnectionFactory {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
+
+        if (con == null)
+            throw new ConnectionFailureException(CONNECTION_FAILURE_MSG);
 
         return con;
     }
