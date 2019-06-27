@@ -44,7 +44,7 @@ public class GameDAO {
         createLogTable();
         try (Connection con = connect();
              PreparedStatement pstmt = con.prepareStatement(
-                     "SELECT turn, position_from, position_to FROM chess_log"
+                     "SELECT turn, position_src, position_dest FROM chess_log"
              );
              ResultSet result = pstmt.executeQuery()) {
             List<LogVO> log = new ArrayList<>();
