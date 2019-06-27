@@ -29,24 +29,8 @@ public class Point {
                 && (y >= MIN_POINT && y <= MAX_POINT);
     }
 
-    public boolean isEqualsX(Point another) {
-        return this.x == another.x;
-    }
-
-    public boolean isEqualsY(Point another) {
-        return this.y == another.y;
-    }
-
     public boolean isValidIncline(Point another) {
         return Math.abs(minusY(another) / minusX(another)) == DIAGONAL;
-    }
-
-    public int plusX(Point another) {
-        return this.x + another.x;
-    }
-
-    public int plusY(Point another) {
-        return this.y + another.y;
     }
 
     public int minusX(Point another) {

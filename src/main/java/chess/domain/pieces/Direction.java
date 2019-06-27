@@ -22,10 +22,7 @@ public enum Direction {
     EEN(2, 1),
     EES(2, -1),
     WWN(-2, 1),
-    WWS(-2, -1),
-
-    WHITEPAWNTWOSTEP(0, 2),
-    BLACKPAWNTWOSTEP(0, -2);
+    WWS(-2, -1);
 
     private int xDegree;
     private int yDegree;
@@ -88,28 +85,6 @@ public enum Direction {
 
     public static List<Direction> knightDirection() {
         return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
-    }
-
-    public static List<Direction> whitePawnDirection() {
-        return Arrays.asList(NORTH, NORTHEAST, NORTHWEST, WHITEPAWNTWOSTEP);
-    }
-
-    public static List<Direction> blackPawnDirection() {
-        return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST, BLACKPAWNTWOSTEP);
-    }
-
-    public static List<Direction> pawnDirection(Color color) {
-        if (color == Color.WHITE) {
-            return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
-        }
-        return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
-    }
-
-    public static List<Direction> pawnFirstTurnDirection(Color color) {
-        if (color == Color.WHITE) {
-            return Arrays.asList(WHITEPAWNTWOSTEP);
-        }
-        return Arrays.asList(BLACKPAWNTWOSTEP);
     }
 
     public static List<Direction> pawnMoveDirection(Color color) {

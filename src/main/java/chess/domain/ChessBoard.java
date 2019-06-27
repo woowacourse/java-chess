@@ -39,7 +39,7 @@ public class ChessBoard {
         points.put(PointFactory.of("f" + pieceInitPointY), new Bishop(color));
         points.put(PointFactory.of("g" + pieceInitPointY), new Knight(color));
         points.put(PointFactory.of("h" + pieceInitPointY), new Rook(color));
-        for (int i = 1; i <= 8; ++i) {
+        for (int i = START_BOARD_POINT_X; i <= END_BOARD_POINT_X; ++i) {
             points.put(PointFactory.of(i, pawnInitPointY), new Pawn(color));
         }
     }
