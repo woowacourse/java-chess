@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <style>
+        table.chessboard {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            background: #999;
+            border: 25px solid #333;
+            border-collapse: collapse;
+        }
+        td.chessboard {
+            width: 70px;
+            height: 70px;
+            text-align: center;
+        }
+        tr.chessboard:nth-child(odd) td.chessboard:nth-child(even),
+        tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
+            background: white;
+        }
+        .title {
+            text-align: center;
+        }
+        .wrap {
+            text-align: center;
+            width: 100%;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            display: table;
+        }
+        .table_container {
+            display: table-cell;
+            text-align: center;
+            align-content: center;
+            vertical-align: center;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h2 class="title">{{ turn }} 님의 턴입니다.</h2>
+    <div class="wrap">
+        <div class="table_container">
+            <table class="chessboard">
+                <tr class="chessboard">
+                    <td id="a8" class="chessboard"></td>
+                    <td id="b8" class="chessboard"></td>
+                    <td id="c8" class="chessboard"></td>
+                    <td id="d8" class="chessboard"></td>
+                    <td id="e8" class="chessboard"></td>
+                    <td id="f8" class="chessboard"></td>
+                    <td id="g8" class="chessboard"></td>
+                    <td id="h8" class="chessboard"></td>
+                </tr>
+                <tr class="chessboard">
+                    <td id="a7" class="chessboard"></td>
+                    <td id="b7" class="chessboard"></td>
+                    <td id="c7" class="chessboard"></td>
+                    <td id="d7" class="chessboard"></td>
+                    <td id="e7" class="chessboard"></td>
+                    <td id="f7" class="chessboard"></td>
+                    <td id="g7" class="chessboard"></td>
+                    <td id="h7" class="chessboard"></td>
+                </tr>
+                <tr class="chessboard">
+                    <td id="a6" class="chessboard"></td>
+                    <td id="b6" class="chessboard"></td>
+                    <td id="c6" class="chessboard"></td>
+                    <td id="d6" class="chessboard"></td>
+                    <td id="e6" class="chessboard"></td>
+                    <td id="f6" class="chessboard"></td>
+                    <td id="g6" class="chessboard"></td>
+                    <td id="h6" class="chessboard"></td>
+                </tr>
+                <tr class="chessboard">
+                    <td id="a5" class="chessboard"></td>
+                    <td id="b5" class="chessboard"></td>
+                    <td id="c5" class="chessboard"></td>
+                    <td id="d5" class="chessboard"></td>
+                    <td id="e5" class="chessboard"></td>
+                    <td id="f5" class="chessboard"></td>
+                    <td id="g5" class="chessboard"></td>
+                    <td id="h5" class="chessboard"></td>
+                </tr>
+                <tr class="chessboard">
+                    <td id="a4" class="chessboard"></td>
+                    <td id="b4" class="chessboard"></td>
+                    <td id="c4" class="chessboard"></td>
+                    <td id="d4" class="chessboard"></td>
+                    <td id="e4" class="chessboard"></td>
+                    <td id="f4" class="chessboard"></td>
+                    <td id="g4" class="chessboard"></td>
+                    <td id="h4" class="chessboard"></td>
+                </tr>
+                <tr class="chessboard">
+                    <td id="a3" class="chessboard"></td>
+                    <td id="b3" class="chessboard"></td>
+                    <td id="c3" class="chessboard"></td>
+                    <td id="d3" class="chessboard"></td>
+                    <td id="e3" class="chessboard"></td>
+                    <td id="f3" class="chessboard"></td>
+                    <td id="g3" class="chessboard"></td>
+                    <td id="h3" class="chessboard"></td>
+                </tr>
+                <tr class="chessboard">
+                    <td id="a2" class="chessboard"></td>
+                    <td id="b2" class="chessboard"></td>
+                    <td id="c2" class="chessboard"></td>
+                    <td id="d2" class="chessboard"></td>
+                    <td id="e2" class="chessboard"></td>
+                    <td id="f2" class="chessboard"></td>
+                    <td id="g2" class="chessboard"></td>
+                    <td id="h2" class="chessboard"></td>
+                </tr>
+                <tr class="chessboard">
+                    <td id="a1" class="chessboard"></td>
+                    <td id="b1" class="chessboard"></td>
+                    <td id="c1" class="chessboard"></td>
+                    <td id="d1" class="chessboard"></td>
+                    <td id="e1" class="chessboard"></td>
+                    <td id="f1" class="chessboard"></td>
+                    <td id="g1" class="chessboard"></td>
+                    <td id="h1" class="chessboard"></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <div>
+                <form action="/game_play" method="POST">
+                    <div class="row">
+                        <input type="text" name="source" placeholder="source">
+                        <input type="text" name="target" placeholder="target">
+                        <input type="submit" value="move">
+                    </div>
+                </form>
+            </div>
+            <div>
+                <form action="/result">
+                    <button type="submit">end</button>
+                </form>
+            </div>
+            <div>
+                <form action="/result">
+                    <button type="submit">status</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const url = "/img/";
+    const pieceNames = {
+        p: 'pawn_white',
+        P: 'pawn',
+        r: 'rook_white',
+        R: 'rook',
+        b: 'bishop_white',
+        B: 'bishop',
+        q: 'queen_white',
+        Q: 'queen',
+        k: 'king_white',
+        K: 'king',
+        n: 'knight_white',
+        N: 'knight'
+    };
+
+    fetch("/status", {method: "POST"})
+        .then(data => data.json())
+        .then(json => {
+            Object.keys(json).forEach(key => {
+                document.getElementById(key).innerHTML = `<img src="${url + pieceNames[json[key]]}.png"  alt="error"/>`
+            })
+        })
+        .catch(err => console.log(err));
+</script>
+</body>
+</html>

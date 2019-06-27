@@ -1,22 +1,32 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.ChessGameController;
+import chess.controller.ExceptionController;
+import chess.utils.JsonTransformer;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.post;
+import static spark.Spark.staticFiles;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
+        staticFiles.location("/assets");
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        get("/", ChessGameController::index);
+
+        get("/game_play", ChessGameController::playGet);
+
+        get("/game_continue", ChessGameController::continueGame);
+
+        post("/game_play", ChessGameController::playPost);
+
+        post("/status", ChessGameController::status, new JsonTransformer());
+
+        get("/result", ChessGameController::result);
+
+        get("/end", ChessGameController::end);
+
+        exception(RuntimeException.class, ExceptionController::exception);
     }
 }
