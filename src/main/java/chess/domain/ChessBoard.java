@@ -67,6 +67,7 @@ public class ChessBoard {
         List<Position> route;
         try {
             route = sourceChessPiece.getRouteOfPiece(source, target);
+            System.out.println("루트" + route.toString());
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -110,9 +111,10 @@ public class ChessBoard {
     }
 
     private Boolean canMovePawns(Position source, Position target, List<Position> route) {
-        if (!source.isSameColumn(target)
-                && !chessBoard.get(source).isSameTeam(chessBoard.get(target))) {
-            return true;
+        if (!source.isSameColumn(target)) {
+            return !chessBoard.get(source).isSameTeam(chessBoard.get(target))
+                    && !chessBoard.get(target).isSameTeam(Team.BLANK);
+
         }
 
         return route.stream()
