@@ -6,21 +6,23 @@
     <style>
         .tile {
             display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 1px solid black;
+            width: 60px;
+            height: 60px;
+            border: 2px solid black;
             vertical-align: middle;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 <input type="hidden" value='{{{game}}}' id="chessBoard">
 <div id="chessBoardBox"></div>
+<br>
 <div>
-    이번 턴은 {{turn}} 입니다. <br>
+    <div id="turn" style="font-size : 30px"></div>
+    <br>
     <button onclick="calculateScore();">점수 보기</button>
 </div>
-
 </body>
 
 <script>
@@ -42,10 +44,37 @@
         NEUTRAL_BLANK: '&#x20;'
     };
 
+    window.onload = () => {
+        let chessBoardBox = document.getElementById('chessBoardBox');
+        console.log(chessBoardBox);
+
+        for (let row = 0; row <= 7; row++) {
+            for (let col = 0; col <= 7; col++) {
+                chessBoardBox.append(chessBoardRender(row, col));
+            }
+            chessBoardBox.append(document.createElement("BR"));
+        }
+
+        const chessBoard = document.getElementById('chessBoard').value;
+        const pieces = JSON.parse(chessBoard).board;
+        console.log(pieces);
+
+        for (let key in pieces) {
+            console.log(document.getElementById(key));
+            let team = pieces[key].teamType;
+            let type = pieces[key].pieceType;
+            document.getElementById(key).innerHTML = piece[`${team}_${type}`];
+            document.getElementById(key).style.fontSize = "50px";
+        }
+
+        const turn = JSON.parse(chessBoard).turn;
+        console.log(turn);
+        document.getElementById('turn').innerHTML = `이번 턴은 ${turn} 입니다`
+    };
+
     function chessBoardRender(row, col) {
         let div = document.createElement("DIV");
         div.id = '' + row + col;
-        div.name = 'cell';
         const position = div.id;
         div.className = 'tile';
         div.addEventListener("click", () => {
@@ -53,8 +82,6 @@
                 selectPiece(position);
             } else {
                 movePiece(position);
-
-                console.log("미 구현");
             }
         });
         return div;
@@ -76,6 +103,7 @@
         document.body.appendChild(form);
         form.appendChild(to);
         form.appendChild(from);
+        form.style.display = "none";
         form.submit();
     }
 
@@ -105,29 +133,6 @@
             document.getElementById(id).style.backgroundColor = "blue";
         }
     }
-
-    window.onload = () => {
-        let chessBoardBox = document.getElementById('chessBoardBox');
-        console.log(chessBoardBox);
-
-        for (let row = 0; row <= 7; row++) {
-            for (let col = 0; col <= 7; col++) {
-                chessBoardBox.append(chessBoardRender(row, col));
-            }
-            chessBoardBox.append(document.createElement("BR"));
-        }
-
-        const chessBoard = document.getElementById('chessBoard').value;
-        const pieces = JSON.parse(chessBoard).board;
-        console.log(pieces);
-
-        for (let key in pieces) {
-            console.log(document.getElementById(key));
-            let team = pieces[key].teamType;
-            let type = pieces[key].pieceType;
-            document.getElementById(key).innerHTML = piece[`${team}_${type}`];
-        }
-    };
 
     function calculateScore() {
         let xhr = new XMLHttpRequest();
