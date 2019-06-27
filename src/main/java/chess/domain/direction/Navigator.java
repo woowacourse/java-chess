@@ -13,11 +13,15 @@ public class Navigator {
     }
 
     public Route getWay(Square source, Square target) {
-        return wayList.stream()
-                .filter(way -> way.canMove(source, target))
-                .map(way -> way.generateRoute(source, target))
-                .findAny()
-                .orElse(null);
+        try {
+            return wayList.stream()
+                    .filter(way -> way.canMove(source, target))
+                    .map(way -> way.generateRoute(source, target))
+                    .findAny()
+                    .orElse(null);
+        } catch (NullPointerException e){
+            throw new IllegalArgumentException("getWay에서 NullPointerException 이 발생");
+        }
     }
 
     @Override
