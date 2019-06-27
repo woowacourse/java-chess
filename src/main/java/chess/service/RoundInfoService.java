@@ -4,15 +4,21 @@ import chess.dao.RoundInfoDao;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.PlayerType;
-import chess.dto.HistoryDto;
-import chess.dto.ResultDto;
-import chess.dto.RoundInfoDto;
+import chess.service.dto.HistoryDto;
+import chess.service.dto.ResultDto;
+import chess.service.dto.RoundInfoDto;
 
 import java.sql.SQLDataException;
 import java.util.List;
 
 public class RoundInfoService {
+
+    private final HistoryService historyService;
+    private final RoundInfoDao roundInfoDao;
+
     private RoundInfoService() {
+        historyService = HistoryService.getInstance();
+        roundInfoDao = RoundInfoDao.getInstance();
     }
 
     private static class RoundInfoServiceHolder {
@@ -24,19 +30,19 @@ public class RoundInfoService {
     }
 
     public List<RoundInfoDto> selectAllGame(boolean isEnd) throws SQLDataException {
-        return RoundInfoDao.getInstance().selectAllGame(isEnd);
+        return roundInfoDao.selectAllGame(isEnd);
     }
 
     public RoundInfoDto selectRoundInfo(int round) throws SQLDataException {
-        return RoundInfoDao.getInstance().selectRoundInfo(round);
+        return roundInfoDao.selectRoundInfo(round);
     }
 
     public int insertRoundInfo(String whiteName, String blackName) throws SQLDataException {
-        return RoundInfoDao.getInstance().insertRoundInfo(whiteName, blackName);
+        return roundInfoDao.insertRoundInfo(whiteName, blackName);
     }
 
     public ResultDto getScore(int round) throws SQLDataException {
-        HistoryDto historyDto = HistoryService.getInstance().selectLastHistory(round);
+        HistoryDto historyDto = historyService.selectLastHistory(round);
         Board board = BoardFactory.create(historyDto.getRows());
 
         ResultDto resultDto = new ResultDto();
@@ -46,6 +52,6 @@ public class RoundInfoService {
     }
 
     public ResultDto selectGameResult(int round) throws SQLDataException {
-        return RoundInfoDao.getInstance().selectGameResult(round);
+        return roundInfoDao.selectGameResult(round);
     }
 }

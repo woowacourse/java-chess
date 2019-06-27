@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.dto.RoundInfoDto;
+import chess.service.dto.RoundInfoDto;
 import chess.service.HistoryService;
 import chess.service.PlayerService;
 import chess.service.RoundInfoService;
@@ -17,15 +17,18 @@ import static chess.controller.CommonController.nullable;
 
 public class RoundInfoController {
 
+    private static final PlayerService PLAYER_SERVICE = PlayerService.getInstance();
+    private static final RoundInfoService ROUND_INFO_SERVICE = RoundInfoService.getInstance();
+
     public static Map<String, Object> selectUnfinishedGameList(Request request, Response response) throws SQLDataException {
         Map<String, Object> model = new HashMap<>();
-        model.put("gameList", RoundInfoService.getInstance().selectAllGame(false));
+        model.put("gameList", ROUND_INFO_SERVICE.selectAllGame(false));
         return model;
     }
 
     public static Map<String, Object> getFinishedGameList(Request request, Response response) throws SQLDataException {
         Map<String, Object> model = new HashMap<>();
-        model.put("gameList", RoundInfoService.getInstance().selectAllGame(true));
+        model.put("gameList", ROUND_INFO_SERVICE.selectAllGame(true));
         return null;
     }
 
@@ -35,8 +38,8 @@ public class RoundInfoController {
         String whiteName = element.getAsJsonObject().get("whiteName").getAsString();
         String blackName = element.getAsJsonObject().get("blackName").getAsString();
 
-        int playerResult = PlayerService.getInstance().insertPlayer(whiteName, blackName);
-        int round = RoundInfoService.getInstance().insertRoundInfo(whiteName, blackName);
+        PLAYER_SERVICE.insertPlayer(whiteName, blackName);
+        int round = ROUND_INFO_SERVICE.insertRoundInfo(whiteName, blackName);
 
         Map<String, Object> model = new HashMap<>();
         model.put("history", HistoryService.getInstance().insertFirstHistory(round));
@@ -47,19 +50,19 @@ public class RoundInfoController {
         int round = Integer.parseInt(nullable(request.params(":round")));
 
         Map<String, Object> model = new HashMap<>();
-        model.put("result", RoundInfoService.getInstance().getScore(round));
+        model.put("result", ROUND_INFO_SERVICE.getScore(round));
         return model;
     }
 
     public static Map<String, Object> getWinner(Request request, Response response) throws SQLDataException {
         int round = Integer.parseInt(nullable(request.params(":round")));
-        RoundInfoDto roundInfoDto = RoundInfoService.getInstance().selectRoundInfo(round);
+        RoundInfoDto roundInfoDto = ROUND_INFO_SERVICE.selectRoundInfo(round);
         if (!roundInfoDto.isEnd()) {
-            throw new IllegalArgumentException("아직 끝나지 않은 게임 처리");
+            throw new IllegalArgumentException("종료된 게임이 아닙니다.");
         }
 
         Map<String, Object> model = new HashMap<>();
-        model.put("result", RoundInfoService.getInstance().selectGameResult(round));
+        model.put("result", ROUND_INFO_SERVICE.selectGameResult(round));
         return model;
     }
 }

@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.service.dto;
 
 public class RoundInfoDto {
     private int round;

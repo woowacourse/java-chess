@@ -5,12 +5,16 @@ import chess.dao.RoundInfoDao;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Point;
-import chess.dto.HistoryDto;
+import chess.service.dto.HistoryDto;
 
 import java.sql.SQLDataException;
 
 public class HistoryService {
+
+    private final HistoryDao historyDao;
+
     private HistoryService() {
+        historyDao = HistoryDao.getInstance();
     }
 
     private static class HistoryServiceHolder {
@@ -21,7 +25,7 @@ public class HistoryService {
     }
 
     public HistoryDto selectLastHistory(int round) throws SQLDataException {
-        return HistoryDao.getInstance().selectLastHistory(round);
+        return historyDao.selectLastHistory(round);
     }
 
     public HistoryDto movePiece(int round, Point prev, Point next) throws SQLDataException {
@@ -37,7 +41,7 @@ public class HistoryService {
         historyDto.setRows(board.mappingBoardToString());
         historyDto.setTurn(historyDto.getTurn() + 1);
 
-        int result = HistoryDao.getInstance().insertHistory(historyDto);
+        int result = historyDao.insertHistory(historyDto);
 
         if (board.isKingDead()) {
             historyDto.setKingDead(true);
@@ -52,7 +56,7 @@ public class HistoryService {
         historyDto.setRound(round);
         historyDto.setRows(BoardFactory.getBasicArrange());
         historyDto.setTurn(0);
-        int historyResult = HistoryDao.getInstance().insertHistory(historyDto);
+        int historyResult = historyDao.insertHistory(historyDto);
         return historyDto;
     }
 }

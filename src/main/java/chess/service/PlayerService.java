@@ -5,7 +5,11 @@ import chess.dao.PlayerDao;
 import java.sql.SQLDataException;
 
 public class PlayerService {
+
+    private final PlayerDao playerDao;
+
     private PlayerService() {
+        playerDao = PlayerDao.getInstance();
     }
 
     private static class PlayerServiceHolder {
@@ -17,6 +21,6 @@ public class PlayerService {
     }
 
     public int insertPlayer(String whiteName, String blackName) throws SQLDataException {
-        return PlayerDao.getInstance().insertPlayers(whiteName, blackName);
+        return playerDao.insertPlayers(whiteName, blackName);
     }
 }

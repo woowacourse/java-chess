@@ -2,7 +2,7 @@ package chess.dao;
 
 import chess.dao.utils.JdbcConnector;
 import chess.domain.board.Board;
-import chess.dto.HistoryDto;
+import chess.service.dto.HistoryDto;
 
 import java.sql.*;
 import java.util.ArrayList;

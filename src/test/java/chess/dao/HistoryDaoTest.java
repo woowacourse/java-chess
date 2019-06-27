@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.HistoryDto;
+import chess.service.dto.HistoryDto;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLDataException;

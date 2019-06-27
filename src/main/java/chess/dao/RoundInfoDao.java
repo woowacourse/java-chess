@@ -1,8 +1,8 @@
 package chess.dao;
 
 import chess.dao.utils.JdbcConnector;
-import chess.dto.ResultDto;
-import chess.dto.RoundInfoDto;
+import chess.service.dto.ResultDto;
+import chess.service.dto.RoundInfoDto;
 
 import java.sql.*;
 import java.util.ArrayList;

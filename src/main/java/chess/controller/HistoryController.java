@@ -2,8 +2,6 @@ package chess.controller;
 
 import chess.domain.board.Point;
 import chess.service.HistoryService;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
 
@@ -14,6 +12,9 @@ import java.util.Map;
 import static chess.controller.CommonController.nullable;
 
 public class HistoryController {
+
+    private static final HistoryService HISTORY_SERVICE = HistoryService.getInstance();
+
     private HistoryController() {
         throw new AssertionError();
     }
@@ -22,12 +23,12 @@ public class HistoryController {
         int round = Integer.parseInt(nullable(request.params(":round")));
 
         Map<String, Object> model = new HashMap<>();
-        model.put("history", HistoryService.getInstance().selectLastHistory(round));
+        model.put("history", HISTORY_SERVICE.selectLastHistory(round));
         return model;
     }
 
     public static Map<String, Object> insertHistory(Request request, Response response) throws SQLDataException {
-
+        // TODO: 2019-06-27 Create DTO!
         int round = Integer.parseInt(nullable(request.queryParams("round")));
 
         int prevX = Integer.parseInt(nullable(request.queryParams("prevX")));
