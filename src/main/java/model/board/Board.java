@@ -29,17 +29,17 @@ public class Board {
         }
         final int targetIndex = (begin + end) >> 1;
         final Piece target = this.pieces.get(targetIndex);
-        if (target.get1DCoord() > coord1D) {
+        if (target.ordinal() > coord1D) {
             return getIndexOfPieceAt(coord1D, begin, targetIndex - 1);
         }
-        if (target.get1DCoord() < coord1D) {
+        if (target.ordinal() < coord1D) {
             return getIndexOfPieceAt(coord1D, targetIndex + 1, end);
         }
         return Optional.of(targetIndex);
     }
 
     private Optional<Integer> getIndexOfPieceAt(final Position position) {
-        return getIndexOfPieceAt(position.get1DCoord(), 0, this.pieces.size() -1);
+        return getIndexOfPieceAt(position.ordinal(), 0, this.pieces.size() -1);
     }
 
     public Optional<Piece> getPieceAt(final Position position) {

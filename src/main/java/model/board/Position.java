@@ -73,10 +73,6 @@ public class Position implements Comparable<Position> {
         : Optional.empty();
     }
 
-    public int get1DCoord() {
-        return this.y.val() * Coord.MAX + this.x.val();
-    }
-
     public Coord x() {
         return x;
     }
@@ -88,6 +84,10 @@ public class Position implements Comparable<Position> {
     @Override
     public String toString() {
         return x.convertToStringX() + y.convertToStringY();
+    }
+
+    public int ordinal() {
+        return this.y.val() * Coord.MAX + this.x.val();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class Position implements Comparable<Position> {
 
     @Override
     public int compareTo(final Position rhs) {
-        return this.get1DCoord() - rhs.get1DCoord();
+        return this.ordinal() - rhs.ordinal();
     }
 
     @Override
