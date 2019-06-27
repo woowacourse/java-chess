@@ -105,7 +105,7 @@ public class ChessBoardDAO {
     }
 
     public List<Integer> getIdList() throws SQLException {
-        String query = "SELECT id FROM chess_board WHERE 1=1";
+        String query = "SELECT id FROM chess_board";
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet resultSet = pstmt.executeQuery();
 
