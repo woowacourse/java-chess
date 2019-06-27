@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -36,10 +37,12 @@ public enum ChessPiece {
 	public static ChessBoard generateChessBoard(ChessInitialPosition chessPosition) {
 		Map<ChessPiece, List<Position>> positions = chessPosition.getPositions();
 		ChessBoard chessBoard = new ChessBoard();
+
 		for (ChessPiece chessPiece : ChessPiece.values()) {
 			if (chessPiece.equals(EMPTY)) {
 				continue;
 			}
+
 			for (Position position : positions.get(chessPiece)) {
 				chessBoard.addPiece(chessPiece.generator.apply(chessPiece.player, position));
 			}
@@ -48,21 +51,21 @@ public enum ChessPiece {
 	}
 
 	public static Piece generatePiece(Player player, Type type, Position position) {
-		for (ChessPiece chessPiece : ChessPiece.values()) {
-			if (isSameChessPiece(chessPiece, player, type)) {
-				return chessPiece.generator.apply(player, position);
-			}
-		}
-		throw new IllegalArgumentException("체스 말을 생성할 수 없습니다.");
+		return Arrays.stream(ChessPiece.values())
+				.filter(chessPiece -> isSameChessPiece(chessPiece, player, type))
+				.map(chessPiece -> chessPiece.generator.apply(player, position))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("체스 말을 생성할 수 없습니다."))
+				;
 	}
 
 	public static String getPieceImage(Player player, Type type) {
-		for (ChessPiece chessPiece : ChessPiece.values()) {
-			if (isSameChessPiece(chessPiece, player, type)) {
-				return chessPiece.image;
-			}
-		}
-		throw new IllegalArgumentException("해당 이미지를 찾을 수 없습니다.");
+		return Arrays.stream(ChessPiece.values())
+				.filter(chessPiece -> isSameChessPiece(chessPiece, player, type))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("해당 이미지를 찾을 수 없습니다."))
+				.getImage()
+				;
 	}
 
 	private static boolean isSameChessPiece(ChessPiece chessPiece, Player player, Type type) {

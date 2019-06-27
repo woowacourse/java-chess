@@ -2,11 +2,9 @@ package chess.controller;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import chess.domain.*;
-import chess.domain.piece.Piece;
 import chess.exception.GameOverException;
 import chess.service.ChessGameService;
 import chess.service.PieceService;
@@ -36,15 +34,11 @@ public class ChessGameController {
 	public String loadProgressingChessGame(Request req) throws SQLException {
 		Map<String, Object> model = new HashMap<>();
 		int roomNumber = Integer.parseInt(req.queryParams("room-number"));
-
 		Player turn = chessGameService.loadTurn(roomNumber);
 		ChessBoard chessBoard = new ChessBoard();
-		List<Piece> pieces = pieceService.loadChessPieces(roomNumber);
-		for (Piece piece : pieces) {
-			chessBoard.addPiece(piece);
-		}
+		pieceService.loadChessPieces(roomNumber)
+				.forEach(piece -> chessBoard.addPiece(piece));
 		ChessGame chessGame = new ChessGame(turn, chessBoard);
-
 		return transmitChessBoardInfo(model, roomNumber, chessGame);
 	}
 
@@ -73,11 +67,9 @@ public class ChessGameController {
 		Map<String, Object> model = new HashMap<>();
 		int roomNumber = Integer.parseInt(req.queryParams("room-number"));
 		ChessGame chessGame = generateCurrentChessGame(roomNumber);
-
 		model.put("winner", "승자 : " + chessGame.findWinner().name());
 		model.put("whiteScore", "백 점수 : " + chessGame.getPlayerScore(Player.WHITE));
 		model.put("blackScore", "흑 점수 : " + chessGame.getPlayerScore(Player.BLACK));
-
 		return transmitChessBoardInfo(model, roomNumber, chessGame);
 	}
 
@@ -88,10 +80,8 @@ public class ChessGameController {
 
 	private ChessBoard generateChessBoard(int roomNumber) throws SQLException {
 		ChessBoard chessBoard = new ChessBoard();
-		List<Piece> pieces = pieceService.loadChessPieces(roomNumber);
-		for (Piece piece : pieces) {
-			chessBoard.addPiece(piece);
-		}
+		pieceService.loadChessPieces(roomNumber)
+				.forEach(piece -> chessBoard.addPiece(piece));
 		return chessBoard;
 	}
 
@@ -106,6 +96,5 @@ public class ChessGameController {
 		Map<String, Object> model = new HashMap<>();
 		model.put("message", exception.getMessage());
 		response.body(OutputViewForWeb.render(model, "error.html"));
-
 	}
 }
