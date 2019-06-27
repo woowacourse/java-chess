@@ -44,7 +44,7 @@ public class PieceDAO {
     private void addPiece(int roomNumber, Piece piece) throws SQLException {
         try (PreparedStatement pstmt = connection.prepareStatement(INSERT_PIECE)) {
             pstmt.setString(1, piece.getPlayerName());
-            pstmt.setString(2, piece.getPieceName());
+            pstmt.setString(2, piece.getPieceType());
             pstmt.setInt(3, piece.getCoordinateX());
             pstmt.setInt(4, piece.getCoordinateY());
             pstmt.setInt(5, roomNumber);

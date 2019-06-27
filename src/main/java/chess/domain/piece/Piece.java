@@ -29,8 +29,8 @@ public abstract class Piece {
         return player.name();
     }
 
-    public String getPieceName() {
-        return ChessPieceInfo.getChessPiece(player, type).name();
+    public String getPieceType() {
+        return type.name();
     }
 
     public String getPieceImage() {
