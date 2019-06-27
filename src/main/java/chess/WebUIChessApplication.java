@@ -1,8 +1,8 @@
 package chess;
 
-import chess.domain.Game;
-import chess.dto.BoardDto;
-import com.google.gson.Gson;
+import chess.controller.MoveController;
+import chess.controller.ScoreController;
+import chess.controller.StartController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -14,7 +14,10 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
 
     public static void main(String[] args) {
-        Game game = new Game();
+        StartController startController = new StartController();
+        MoveController moveController = new MoveController();
+        ScoreController scoreController = new ScoreController();
+
         staticFileLocation("/static");
         options("/*",
                 (request, response) -> {
@@ -43,15 +46,11 @@ public class WebUIChessApplication {
             return render(map, "index.html");
         });
 
-        get("/start", (req, res) -> new Gson().toJson(new BoardDto(game.reload())));
+        get("/move", startController::start);
 
-        get("/move", (req, res) -> {
-            int from = Integer.parseInt(req.queryParams("from"));
-            int to = Integer.parseInt(req.queryParams("to"));
-            return new Gson().toJson(new BoardDto(game.play(from, to)));
-        });
+        get("/move", moveController::move);
 
-        get("/score", (req, res) -> game.getStatusBoard().toString());
+        get("/score", scoreController::score);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
