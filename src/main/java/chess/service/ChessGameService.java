@@ -2,19 +2,14 @@ package chess.service;
 
 import chess.domain.*;
 import chess.domain.coordinate.ChessCoordinate;
-import chess.domain.factory.AbstractChessPieceFactory;
 import chess.domain.factory.ChessPieceFactory;
 import chess.domain.piece.ChessPiece;
 import chess.persistence.AbstractDataSourceFactory;
-import chess.persistence.DataSourceFactory;
 import chess.persistence.dao.BoardStateDao;
-import chess.persistence.dao.RoomDao;
 import chess.persistence.dao.TurnDao;
 import chess.persistence.dto.BoardStateDto;
-import chess.persistence.dto.RoomDto;
 import chess.persistence.dto.TurnDto;
 
-import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -54,7 +49,7 @@ public class ChessGameService {
 
     public Map<ChessCoordinate, ChessPiece> findBoardStatesByRoomId(Long roomId) {
         try {
-            AbstractChessPieceFactory factory = new ChessPieceFactory();
+            ChessPieceFactory factory = new ChessPieceFactory();
             Map<ChessCoordinate, ChessPiece> board = new HashMap<>();
             ChessCoordinate.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
 

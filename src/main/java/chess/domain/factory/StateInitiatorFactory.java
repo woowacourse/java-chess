@@ -3,9 +3,6 @@ package chess.domain.factory;
 import chess.domain.PieceType;
 import chess.domain.coordinate.ChessCoordinate;
 import chess.domain.coordinate.ChessXCoordinate;
-import chess.domain.factory.AbstractChessPieceFactory;
-import chess.domain.factory.AbstractStateInitiatorFactory;
-import chess.domain.factory.ChessPieceFactory;
 import chess.domain.piece.ChessPiece;
 
 import java.util.HashMap;
@@ -17,7 +14,7 @@ public class StateInitiatorFactory implements AbstractStateInitiatorFactory {
 
     @Override
     public Map<ChessCoordinate, ChessPiece> create() {
-        AbstractChessPieceFactory factory = new ChessPieceFactory();
+        ChessPieceFactory factory = new ChessPieceFactory();
         Map<ChessCoordinate, ChessPiece> board = new HashMap<>();
         ChessCoordinate.forEachCoordinate(coord -> board.put(coord, factory.create(PieceType.NONE)));
 

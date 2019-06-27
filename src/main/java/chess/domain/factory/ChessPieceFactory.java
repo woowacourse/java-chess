@@ -2,14 +2,12 @@ package chess.domain.factory;
 
 import chess.domain.PieceType;
 import chess.domain.Team;
-import chess.domain.factory.AbstractChessPieceFactory;
 import chess.domain.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessPieceFactory implements AbstractChessPieceFactory {
-
+public class ChessPieceFactory {
     private static Map<PieceType, ChessPiece> mapper = new HashMap<>();
 
     static {
@@ -28,8 +26,8 @@ public class ChessPieceFactory implements AbstractChessPieceFactory {
         mapper.put(PieceType.NONE, EmptyCell.getInstance());
     }
 
-    @Override
     public ChessPiece create(PieceType type) {
         return mapper.get(type);
     }
+
 }

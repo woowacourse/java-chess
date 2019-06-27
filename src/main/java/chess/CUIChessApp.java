@@ -2,7 +2,6 @@ package chess;
 
 import chess.domain.*;
 import chess.domain.coordinate.ChessCoordinate;
-import chess.domain.factory.AbstractChessPieceFactory;
 import chess.domain.factory.ChessPieceFactory;
 import chess.domain.factory.StateInitiatorFactory;
 import chess.domain.piece.ChessPiece;
@@ -56,7 +55,7 @@ public class CUIChessApp {
     }
 
     private static void initBoard() {
-        AbstractChessPieceFactory factory = new ChessPieceFactory();
+        ChessPieceFactory factory = new ChessPieceFactory();
         ChessPiece empty = factory.create(PieceType.NONE);
 
         chessGame = new ChessGame(new StateInitiatorFactory(), Turn.firstTurn());
