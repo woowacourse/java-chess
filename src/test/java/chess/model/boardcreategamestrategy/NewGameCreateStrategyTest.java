@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.boardcreategamestrategy;
 
 import org.junit.jupiter.api.Test;
 

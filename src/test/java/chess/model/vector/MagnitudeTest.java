@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.vector;
 
 import chess.model.board.Coordinate;
 import chess.model.vector.Direction;

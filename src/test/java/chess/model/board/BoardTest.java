@@ -1,5 +1,6 @@
-package chess.model;
+package chess.model.board;
 
+import chess.model.ScoreResult;
 import chess.model.board.Board;
 import chess.model.board.Coordinate;
 import chess.model.board.Tile;

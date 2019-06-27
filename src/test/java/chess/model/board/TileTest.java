@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.board;
 
 import chess.model.board.Coordinate;
 import chess.model.board.Tile;
