@@ -59,7 +59,7 @@ public class SQLiteDataSource implements AbstractDataSource {
     private void createRoomTable(Connection connection) throws SQLException {
         String table = "CREATE TABLE IF NOT EXISTS room (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "title varchar(255) NOT NULL" +
+                "title varchar(255) NOT NULL UNIQUE " +
                 ")";
 
         PreparedStatement statement = connection.prepareStatement(table);
