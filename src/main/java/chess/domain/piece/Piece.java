@@ -106,4 +106,8 @@ public abstract class Piece {
 	public boolean isKing() {
 		return type.equals(Type.KING);
 	}
+
+	public String getChessType() {
+		return type.name();
+	}
 }
