@@ -5,6 +5,7 @@ import chess.domain.coordinate.ChessYCoordinate;
 import chess.domain.PieceType;
 import chess.persistence.AbstractDataSource;
 import chess.persistence.MySqlDataSource;
+import chess.persistence.SQLiteDataSource;
 import chess.persistence.dto.BoardStateDto;
 import chess.persistence.dto.RoomDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +24,14 @@ public class BoardStateDaoTest {
 
     @BeforeEach
     void init() {
-        AbstractDataSource ds = new MySqlDataSource();
-        boardStateDao = new BoardStateDao(ds);
-        roomDao = new RoomDao(ds);
+        try {
+            new MySqlDataSource().getConnection();
+            roomDao = new RoomDao(new MySqlDataSource());
+            boardStateDao = new BoardStateDao(new MySqlDataSource());
+        } catch (SQLException e) {
+            roomDao = new RoomDao(new SQLiteDataSource());
+            boardStateDao = new BoardStateDao(new SQLiteDataSource());
+        }
     }
 
     @Test
