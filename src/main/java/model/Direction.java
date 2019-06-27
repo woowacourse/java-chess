@@ -1,5 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public enum Direction {
     NORTH(0, 1),
     NORTH_EAST(1, 1),
@@ -34,5 +38,21 @@ public enum Direction {
 
     public Direction counterclockwiseNext() {
         return directions[(this.ordinal() + directions.length - 1) % directions.length];
+    }
+
+    public static List<Direction> ofOrthgonal() {
+        return Arrays.asList(NORTH, EAST, SOUTH, WEST);
+    }
+
+    public static List<Direction> ofDiagonal() {
+        return Arrays.asList(NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
+    }
+
+    public static List<Direction> ofAll() {
+        List<Direction> allDirections = new ArrayList<>();
+
+        allDirections.addAll(ofOrthgonal());
+        allDirections.addAll(ofDiagonal());
+        return allDirections;
     }
 }
