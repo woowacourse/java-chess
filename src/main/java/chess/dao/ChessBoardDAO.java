@@ -6,69 +6,72 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.dto.ChessBoardDTO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoardDAO {
     private static final String insertQuery = "INSERT INTO chess_board (game_id, tile, piece_type, piece_color) VALUES (?, ?, ?, ?)";
     private static final String selectQuery = "SELECT tile, piece_type, piece_color FROM chess_board WHERE game_id=?";
     private static final String deleteQuery = "DELETE FROM chess_board WHERE game_id=?";
-    private static ChessBoardDAO chessBoardDAO;
 
-    private ChessBoardDAO() {
+    private static ChessBoardDAO instance;
+
+    private JdbcTemplate jdbcTemplate;
+
+    private ChessBoardDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public static ChessBoardDAO getInstance() {
-        if (chessBoardDAO == null) {
-            chessBoardDAO = new ChessBoardDAO();
+    public static ChessBoardDAO getInstance(JdbcTemplate jdbcTemplate) {
+        if (instance == null) {
+            instance = new ChessBoardDAO(jdbcTemplate);
         }
-        return chessBoardDAO;
+
+        if (!instance.jdbcTemplate.equals(jdbcTemplate)) {
+            instance.jdbcTemplate = jdbcTemplate;
+        }
+        return instance;
     }
 
     public ChessBoardDTO selectChessBoard(int id) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-            PreparedStatement pstmt = connection.prepareStatement(selectQuery);
-            pstmt.setInt(1, id);
+        List<Object> parameters = new ArrayList();
+        parameters.add(id);
 
-            ResultSet rs = pstmt.executeQuery();
+        ResultSet rs = jdbcTemplate.executeQuery(selectQuery, parameters);
 
-            Map<Tile, Piece> boardState = new HashMap<>();
-            while (rs.next()) {
-                Tile tile = Tile.of(rs.getString("tile"));
-                PieceType type = PieceType.valueOf(rs.getString("piece_type"));
-                PieceColor color = PieceColor.valueOf(rs.getString("piece_color"));
-                boardState.put(tile, type.generate(color));
-            }
-
-            return new ChessBoardDTO(boardState);
+        Map<Tile, Piece> boardState = new HashMap<>();
+        while (rs.next()) {
+            Tile tile = Tile.of(rs.getString("tile"));
+            PieceType type = PieceType.valueOf(rs.getString("piece_type"));
+            PieceColor color = PieceColor.valueOf(rs.getString("piece_color"));
+            boardState.put(tile, type.generate(color));
         }
+
+        return new ChessBoardDTO(boardState);
     }
 
     public void insertChessBoard(int id, ChessBoardDTO chessBoardDTO) throws SQLException {
-        try (Connection connection = DBUtil.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(insertQuery)) {
+        Map<Tile, Piece> board = chessBoardDTO.getBoard();
+        for (Tile tile : board.keySet()) {
+            List<Object> parameters = new ArrayList();
 
-            pstmt.setInt(1, id);
+            parameters.add(id);
+            parameters.add(tile.toString());
+            parameters.add(board.get(tile).getType().toString());
+            parameters.add(board.get(tile).getColor().toString());
 
-            Map<Tile, Piece> board = chessBoardDTO.getBoard();
-            for (Tile tile : board.keySet()) {
-                pstmt.setString(2, tile.toString());
-                pstmt.setString(3, String.valueOf(board.get(tile).getType()));
-                pstmt.setString(4, String.valueOf(board.get(tile).getColor()));
-                pstmt.executeUpdate();
-            }
+            jdbcTemplate.executeUpdate(insertQuery, parameters);
         }
     }
 
     public void deleteChessBoard(int id) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-            PreparedStatement pstmt = connection.prepareStatement(deleteQuery);
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-        }
+        List<Object> parameters = new ArrayList();
+        parameters.add(id);
+
+        jdbcTemplate.executeUpdate(deleteQuery, parameters);
     }
 }

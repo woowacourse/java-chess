@@ -20,12 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ChessBoardDAOTest {
     ChessBoardDAO chessBoardDAO;
     Connection connection;
+    JdbcTemplate jdbcTemplate;
 
     @BeforeEach
     void setUp() throws Exception {
-        connection = DBUtil.getConnection();
+        connection = DBConnection.getConnection();
         connection.setAutoCommit(false);
-        chessBoardDAO = ChessBoardDAO.getInstance();
+        jdbcTemplate = JdbcTemplate.getInstance(DBConnection.getConnection());
+        chessBoardDAO = ChessBoardDAO.getInstance(jdbcTemplate);
     }
 
     //에러 발생 (해당 게임ID 값이 chess_turn 테이블에 존재하지 않아 외래키가 없음)
@@ -44,7 +46,7 @@ class ChessBoardDAOTest {
     //정상 실행 (외래키 존재)
     @Test
     void insertTest2() throws Exception {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance();
+        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
@@ -62,7 +64,7 @@ class ChessBoardDAOTest {
     //해당 체스보드 정보 존재하는 경우
     @Test
     public void selectTest1() throws Exception {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance();
+        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
@@ -80,7 +82,7 @@ class ChessBoardDAOTest {
     //존재하지 않는 경우
     @Test
     public void selectTest2() throws SQLException {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance();
+        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
@@ -89,7 +91,7 @@ class ChessBoardDAOTest {
 
     @Test
     public void deleteTest() throws Exception {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance();
+        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
@@ -108,6 +110,6 @@ class ChessBoardDAOTest {
     @AfterEach
     void tearDown() throws SQLException {
         connection.rollback();
-        connection.close();
+        //connection.close();
     }
 }

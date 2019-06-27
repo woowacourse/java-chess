@@ -10,16 +10,19 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChessTurnDAOTest {
     ChessTurnDAO chessTurnDAO;
     Connection connection;
+    JdbcTemplate jdbcTemplate;
 
     @BeforeEach
     void setUp() throws Exception {
-        connection = DBUtil.getConnection();
+        connection = DBConnection.getConnection();
         connection.setAutoCommit(false);
-        chessTurnDAO = ChessTurnDAO.getInstance();
+        jdbcTemplate = JdbcTemplate.getInstance(connection);
+        chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
     }
 
     @Test
@@ -39,7 +42,9 @@ class ChessTurnDAOTest {
     @Test
     void selectTest2() throws Exception {
         int gameId = chessTurnDAO.selectMaxGameId();
-        assertThat(chessTurnDAO.selectChessTurn(gameId + 100)).isNull();
+        assertThrows(SQLException.class, () ->
+            chessTurnDAO.selectChessTurn(gameId + 100)
+        );
     }
 
     @Test
@@ -65,7 +70,7 @@ class ChessTurnDAOTest {
 
     @Test
     public void deleteTest() throws Exception {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance();
+        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
@@ -73,7 +78,7 @@ class ChessTurnDAOTest {
 
         chessTurnDAO.deleteChessTurn(id);
 
-        assertThat(chessTurnDAO.selectChessTurn(id)).isNull();
+        assertThrows(SQLException.class, () -> chessTurnDAO.selectChessTurn(id));
     }
 
     @Test
@@ -90,6 +95,6 @@ class ChessTurnDAOTest {
     @AfterEach
     void tearDown() throws SQLException {
         connection.rollback();
-        connection.close();
+        //connection.close();
     }
 }

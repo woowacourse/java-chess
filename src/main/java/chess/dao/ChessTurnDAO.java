@@ -2,8 +2,6 @@ package chess.dao;
 
 import chess.domain.piece.PieceColor;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,83 +11,80 @@ public class ChessTurnDAO {
     private static final String insertQuery = "INSERT INTO chess_turn (turn) VALUES (?)";
     private static final String updateQuery = "UPDATE chess_turn SET turn=? WHERE game_id=?";
     private static final String selectTurnQuery = "SELECT turn FROM chess_turn WHERE game_id=?";
-    private static final String selectMaxQuery = "SELECT max(game_id) FROM chess_turn";
-    private static final String deleteQuery = "DELETE FROM chess_turn WHERE game_id=?";
+    private static final String selectMaxGameIdQuery = "SELECT max(game_id) FROM chess_turn";
     private static final String selectGameIdsQuery = "SELECT game_id FROM chess_turn";
-    private static ChessTurnDAO chessTurnDAO;
+    private static final String deleteQuery = "DELETE FROM chess_turn WHERE game_id=?";
 
-    private ChessTurnDAO() {
+    private static ChessTurnDAO instance;
+
+    private JdbcTemplate jdbcTemplate;
+
+    private ChessTurnDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public static ChessTurnDAO getInstance() {
-        if (chessTurnDAO == null) {
-            chessTurnDAO = new ChessTurnDAO();
+    public static ChessTurnDAO getInstance(JdbcTemplate jdbcTemplate) {
+        if (instance == null) {
+            instance = new ChessTurnDAO(jdbcTemplate);
         }
-        return chessTurnDAO;
+
+        if (!instance.jdbcTemplate.equals(jdbcTemplate)) {
+            instance.jdbcTemplate = jdbcTemplate;
+        }
+        return instance;
     }
 
     public PieceColor selectChessTurn(int id) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
+        List<Object> parameters = new ArrayList();
+        parameters.add(id);
 
-            PreparedStatement pstmt = connection.prepareStatement(selectTurnQuery);
-            pstmt.setInt(1, id);
+        ResultSet rs = jdbcTemplate.executeQuery(selectTurnQuery, parameters);
 
-            ResultSet rs = pstmt.executeQuery();
-
-            return rs.next() ? PieceColor.valueOf(rs.getString("turn")) : null;
+        if (rs.next()) {
+            return PieceColor.valueOf(rs.getString("turn"));
         }
+        throw new SQLException();
     }
 
     public void updateChessTurn(int id, PieceColor turn) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
+        List<Object> parameters = new ArrayList();
+        parameters.add(String.valueOf(turn));
+        parameters.add(id);
 
-            PreparedStatement pstmt = connection.prepareStatement(updateQuery);
-            pstmt.setString(1, String.valueOf(turn));
-            pstmt.setInt(2, id);
-            pstmt.executeUpdate();
-        }
+        jdbcTemplate.executeUpdate(updateQuery, parameters);
     }
 
     public void insertChessTurn(PieceColor turn) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
+        List<Object> parameters = new ArrayList();
+        parameters.add(String.valueOf(turn));
 
-            PreparedStatement pstmt = connection.prepareStatement(insertQuery);
-            pstmt.setString(1, String.valueOf(turn));
-            pstmt.executeUpdate();
-        }
+        jdbcTemplate.executeUpdate(insertQuery, parameters);
     }
 
     public int selectMaxGameId() throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
+        ResultSet rs = jdbcTemplate.executeQuery(selectMaxGameIdQuery, new ArrayList());
 
-            PreparedStatement pstmt = connection.prepareStatement(selectMaxQuery);
-            ResultSet rs = pstmt.executeQuery();
-
-            return rs.next() ? rs.getInt("max(game_id)") : -1;
+        if (rs.next()) {
+            return rs.getInt("max(game_id)");
         }
+        throw new SQLException();
     }
 
     public void deleteChessTurn(int id) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
+        List<Object> parameters = new ArrayList();
+        parameters.add(id);
 
-            PreparedStatement pstmt = connection.prepareStatement(deleteQuery);
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-        }
+        jdbcTemplate.executeUpdate(deleteQuery, parameters);
     }
 
     public List<Integer> selectChessGames() throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
+        ResultSet rs = jdbcTemplate.executeQuery(selectGameIdsQuery, new ArrayList());
 
-            PreparedStatement pstmt = connection.prepareStatement(selectGameIdsQuery);
-            ResultSet rs = pstmt.executeQuery();
-
-            List<Integer> gameIds = new ArrayList<>();
-            while (rs.next()) {
-                gameIds.add(rs.getInt("game_id"));
-            }
-
-            return gameIds;
+        List<Integer> gameIds = new ArrayList<>();
+        while (rs.next()) {
+            gameIds.add(rs.getInt("game_id"));
         }
+
+        return gameIds;
     }
 }
