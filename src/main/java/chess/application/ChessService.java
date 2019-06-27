@@ -25,12 +25,19 @@ public class ChessService {
         return ChessServiceLazyHolder.INSTANCE;
     }
 
-    public ChessBoardDto getChessBoardDTO(int roundId) {
-        return ChessAssembler.toDto(getMovedChessBoard(roundId));
+    public ChessBoard getMovedChessBoardByRoundId(int roundId) {
+        ChessBoard chessBoard = new ChessBoard();
+        List<ChessLogDto> chessLogDtos = ChessLogDao.getInstance().selectChessLogByRoundId(roundId);
+
+        for (ChessLogDto chessLogDto : chessLogDtos) {
+            chessBoard.movePiece(Position.from(chessLogDto.getSource()), Position.from(chessLogDto.getTarget()));
+        }
+
+        return chessBoard;
     }
 
-    public ChessBoardDto getChessBoard(ChessPositionDto chessPositionDto, int roundId) {
-        ChessBoard chessBoard = getMovedChessBoard(roundId);
+    public ChessBoardDto moveChessPiece(ChessPositionDto chessPositionDto, int roundId) {
+        ChessBoard chessBoard = getMovedChessBoardByRoundId(roundId);
 
         Position source = Position.of(chessPositionDto.getSourceY(), chessPositionDto.getSourceX());
         Position target = Position.of(chessPositionDto.getTargetY(), chessPositionDto.getTargetX());
@@ -43,24 +50,9 @@ public class ChessService {
         }
 
         ChessLogDao.getInstance().insertChessLogByRoundId(roundId
-                        , new ChessLogDto(String.valueOf((turn + NEXT_NUMBER) % OPERATOR_NUMBER), source.toString(), target.toString()));
+                , new ChessLogDto(String.valueOf((turn + NEXT_NUMBER) % OPERATOR_NUMBER), source.toString(), target.toString()));
 
         return ChessAssembler.toDto(chessBoard);
-    }
-
-    private Team getTeam(int turn) {
-        return turn == WHITE_TEAM ? Team.WHITE : Team.BLACK;
-    }
-
-    private ChessBoard getMovedChessBoard(int roundId) {
-        ChessBoard chessBoard = new ChessBoard();
-        List<ChessLogDto> chessLogDtos = ChessLogDao.getInstance().selectChessLogByRoundId(roundId);
-
-        for (ChessLogDto chessLogDto : chessLogDtos) {
-            chessBoard.movePiece(Position.from(chessLogDto.getSource()), Position.from(chessLogDto.getTarget()));
-        }
-
-        return chessBoard;
     }
 
     public ChessScoreDto getChessScore(int roundId) {
@@ -80,5 +72,9 @@ public class ChessService {
 
     public void addRound(int roundId) {
         ChessRoundDao.getInstance().insertRound(roundId);
+    }
+
+    private Team getTeam(int turn) {
+        return turn == WHITE_TEAM ? Team.WHITE : Team.BLACK;
     }
 }

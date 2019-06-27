@@ -41,7 +41,7 @@ public class ChessController implements Controller {
         Gson gson = new Gson();
         int roundId = request.session().attribute("roundId");
 
-        return gson.toJson(ChessService.getInstance().getChessBoardDTO(roundId));
+        return gson.toJson(ChessService.getInstance().getMovedChessBoardByRoundId(roundId));
     }
 
     private String postChessBoard(Request request, Response response) {
@@ -51,7 +51,7 @@ public class ChessController implements Controller {
         int roundId = request.session().attribute("roundId");
 
         try {
-            ChessBoardDto chessBoardDTO = ChessService.getInstance().getChessBoard(chessPositionDto, roundId);
+            ChessBoardDto chessBoardDTO = ChessService.getInstance().moveChessPiece(chessPositionDto, roundId);
             return gson.toJson(chessBoardDTO);
         } catch (IllegalArgumentException e) {
             return "error";
@@ -75,6 +75,6 @@ public class ChessController implements Controller {
         ChessService.getInstance().addRound(roundId);
         request.session().attribute("roundId", roundId);
 
-        return gson.toJson(ChessService.getInstance().getChessBoardDTO(roundId));
+        return gson.toJson(ChessService.getInstance().getMovedChessBoardByRoundId(roundId));
     }
 }
