@@ -1,22 +1,36 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.HistoryController;
+import chess.controller.RoundInfoController;
+import chess.controller.common.CommonController;
+import com.google.gson.Gson;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+        setUp();
+
+        Gson gson = new Gson();
+        path("/api", () -> {
+            path("/history", () -> {
+                get("/", RoundInfoController::selectUnfinishedGameList, gson::toJson);
+                get("/:round", HistoryController::loadUnfinishedGame, gson::toJson);
+            });
+
+            path("/game", () -> {
+                post("/new", RoundInfoController::startGame, gson::toJson);
+                post("/move", HistoryController::insertHistory, gson::toJson);
+                get("/score/:round", RoundInfoController::getScore, gson::toJson);
+                get("/winner/:round", RoundInfoController::getWinner, gson::toJson);
+                get("/list", RoundInfoController::getFinishedGameList, gson::toJson);
+            });
         });
+
+        exception(IllegalArgumentException.class, CommonController::handlingException);
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static void setUp() {
+        staticFileLocation("/templates");
     }
 }
