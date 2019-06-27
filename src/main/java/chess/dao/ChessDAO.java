@@ -1,11 +1,12 @@
 package chess.dao;
 
 import chess.domain.ChessGame;
+import chess.domain.pieces.PieceType;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.pieces.*;
 import chess.domain.position.Position;
-import chess.domain.position.PositionManager;
+import chess.domain.position.Positions;
 import chess.dto.ChessDTO;
 
 import java.sql.Connection;
@@ -14,10 +15,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 public class ChessDAO {
     private static final int EMPTY = 0;
+    private static final int MIN_BOARD_COORDINATE = 1;
+    private static final int MAX_BOARD_COORDINATE = 8;
     private final Connection conn;
 
     public ChessDAO(Connection conn) {
@@ -27,14 +29,9 @@ public class ChessDAO {
     public void addChessGame(ChessDTO chessDTO) throws SQLException {
         String query = "INSERT INTO chess VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, chessDTO.getRanks().get(0));
-        pstmt.setString(2, chessDTO.getRanks().get(1));
-        pstmt.setString(3, chessDTO.getRanks().get(2));
-        pstmt.setString(4, chessDTO.getRanks().get(3));
-        pstmt.setString(5, chessDTO.getRanks().get(4));
-        pstmt.setString(6, chessDTO.getRanks().get(5));
-        pstmt.setString(7, chessDTO.getRanks().get(6));
-        pstmt.setString(8, chessDTO.getRanks().get(7));
+        for (int index = MIN_BOARD_COORDINATE; index <= MAX_BOARD_COORDINATE; index++) {
+            pstmt.setString(index, chessDTO.getRanks().get(index - 1));
+        }
         pstmt.setString(9, chessDTO.getTurn());
         pstmt.executeUpdate();
     }
@@ -58,59 +55,27 @@ public class ChessDAO {
     }
 
     private ChessGame makeChessGame(ResultSet rs) throws SQLException {
-        Map<Position, Piece> boardState = new HashMap<>();
-
-        for (int i = 1; i <= 8; i++) {
-            String string = rs.getString("rank" + i);
-            for (int j = 0; j < 8; j++) {
-                Position position = PositionManager.getMatchPosition(j + 1, i);
-                String symbol = String.valueOf(string.charAt(j));
-                Piece piece = makePiece(position, symbol);
-                boardState.put(position, piece);
-            }
-        }
-
-        return new ChessGame(new Board(boardState), Team.valueOf(rs.getString("turn")));
+        return new ChessGame(new Board(makeBoard(rs)), Team.valueOf(rs.getString("turn")));
     }
 
-    private Piece makePiece(Position position, String symbol) {
-        if (symbol.equals("p")) {
-            return new Pawn(position, Team.WHITE);
+    private Map<Position, Piece> makeBoard(ResultSet rs) throws SQLException {
+        Map<Position, Piece> boardState = new HashMap<>();
+
+        for (int i = MIN_BOARD_COORDINATE; i <= MAX_BOARD_COORDINATE; i++) {
+            String string = rs.getString("rank" + i);
+            makeBoardRank(boardState, i, string);
         }
-        if (symbol.equals("r")) {
-            return new Rook(position, Team.WHITE);
+
+        return boardState;
+    }
+
+    private void makeBoardRank(Map<Position, Piece> boardState, int i, String string) {
+        for (int j = MIN_BOARD_COORDINATE; j <= MAX_BOARD_COORDINATE; j++) {
+            Position position = Positions.matchWith(j, i);
+            String symbol = String.valueOf(string.charAt(j - 1));
+            Piece piece = PieceType.getPieceType(symbol).createPiece(position);
+            boardState.put(position, piece);
         }
-        if (symbol.equals("n")) {
-            return new Knight(position, Team.WHITE);
-        }
-        if (symbol.equals("k")) {
-            return new King(position, Team.WHITE);
-        }
-        if (symbol.equals("q")) {
-            return new Queen(position, Team.WHITE);
-        }
-        if (symbol.equals("b")) {
-            return new Bishop(position, Team.WHITE);
-        }
-        if (symbol.equals("P")) {
-            return new Pawn(position, Team.BLACK);
-        }
-        if (symbol.equals("R")) {
-            return new Rook(position, Team.BLACK);
-        }
-        if (symbol.equals("N")) {
-            return new Knight(position, Team.BLACK);
-        }
-        if (symbol.equals("K")) {
-            return new King(position, Team.BLACK);
-        }
-        if (symbol.equals("Q")) {
-            return new Queen(position, Team.BLACK);
-        }
-        if (symbol.equals("B")) {
-            return new Bishop(position, Team.BLACK);
-        }
-        return new Blank(position, Team.BLANK);
     }
 
     public boolean isTableEmpty() throws SQLException {
