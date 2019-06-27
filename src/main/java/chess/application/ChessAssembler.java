@@ -11,7 +11,7 @@ import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Queen;
 import chess.domain.chesspiece.Rook;
 import chess.domain.chesspiece.Team;
-import chess.dto.ChessBoardDto;
+import chess.application.dto.ChessBoardDto;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

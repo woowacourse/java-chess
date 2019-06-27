@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.application.dto;
 
 import java.util.List;
 

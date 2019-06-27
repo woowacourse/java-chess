@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.ChessLogDto;
+import chess.application.dto.ChessLogDto;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.dto.ChessBoardDto;
-import chess.dto.ChessPositionDto;
+import chess.application.dto.ChessBoardDto;
+import chess.application.dto.ChessPositionDto;
 import chess.application.ChessService;
 import com.google.gson.Gson;
 import spark.Request;

@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.application.dto;
 
 public class ChessLogDto {
     private String turn;

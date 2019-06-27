@@ -5,10 +5,10 @@ import chess.dao.ChessRoundDao;
 import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.chesspiece.Team;
-import chess.dto.ChessBoardDto;
-import chess.dto.ChessLogDto;
-import chess.dto.ChessPositionDto;
-import chess.dto.ChessScoreDto;
+import chess.application.dto.ChessBoardDto;
+import chess.application.dto.ChessLogDto;
+import chess.application.dto.ChessPositionDto;
+import chess.application.dto.ChessScoreDto;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.ChessLogDto;
+import chess.application.dto.ChessLogDto;
 import org.junit.jupiter.api.Test;
 
 class ChessRoundDaoTest {

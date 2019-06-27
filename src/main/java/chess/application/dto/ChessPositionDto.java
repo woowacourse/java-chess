@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.application.dto;
 
 public class ChessPositionDto {
     private int sourceX;
