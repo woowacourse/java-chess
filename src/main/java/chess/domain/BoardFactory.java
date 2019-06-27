@@ -9,7 +9,7 @@ public class BoardFactory {
     private static final int BLACK_START_LINE = 0;
     private static final int WHITE_START_LINE = 7;
 
-    static Board create() {
+    public static Board create() {
         Map<Spot, Piece> spots = new HashMap<>();
 
         for (int i = 0; i < 64; i++) {

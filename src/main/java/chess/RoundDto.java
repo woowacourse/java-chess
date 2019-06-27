@@ -1,9 +1,9 @@
 package chess;
 
 public class RoundDto {
-    int round;
-    int from;
-    int to;
+    private int round;
+    private int from;
+    private int to;
 
     public int getRound() {
         return round;

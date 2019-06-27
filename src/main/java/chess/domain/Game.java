@@ -24,13 +24,12 @@ public class Game {
         Spot startSpot = Spot.valueOf(from);
         Spot endSpot = Spot.valueOf(to);
 
-        if (!board.teamCheck(startSpot, round.getTeam())) {
+        if (!board.checkTeam(startSpot, round.getTeam())) {
             return new BoardJson(board).getBoardJson();
         }
 
         Board movedBoard = board.move(startSpot, endSpot);
         if (!movedBoard.equals(board)) {
-            System.out.println("보드 움직임");
             RoundDto roundDto = new RoundDto();
             roundDto.setRound(round.getRound());
             roundDto.setFrom(from);

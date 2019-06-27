@@ -32,7 +32,7 @@ public class BoardJson {
                 .forEach(spotPieceEntry -> {
                     JsonObject blackTeam = new JsonObject();
                     blackTeam.addProperty("Spot", spotPieceEntry.getKey().getIndex());
-                    blackTeam.addProperty("Piece", spotPieceEntry.getValue().getPieceType());
+                    blackTeam.addProperty("Piece", String.valueOf(spotPieceEntry.getValue().getPieceType()));
                     teamJson.add(blackTeam);
                 });
 

@@ -25,8 +25,4 @@ public class Game {
 
         return new BoardJson(board).getBoardJson();
     }
-
-    public String getScore() {
-        statusBoard = StatusBoardFactory.create(board);
-    }
 }
