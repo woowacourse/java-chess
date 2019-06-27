@@ -24,8 +24,10 @@ public class Board {
 
         Piece clonedPiece = tiles.get(sourcePosition).clonePiece();
 
-        tiles.put(sourcePosition, new Tile(sourcePosition, Optional.ofNullable(null)));
-        tiles.put(targetPosition, new Tile(targetPosition, Optional.ofNullable(clonedPiece)));
+//        tiles.put(sourcePosition, new Tile(sourcePosition, Optional.ofNullable(null)));
+//        tiles.put(targetPosition, new Tile(targetPosition, Optional.ofNullable(clonedPiece)));
+        tiles.put(sourcePosition, new Tile(sourcePosition, new Empty()));
+        tiles.put(targetPosition, new Tile(targetPosition, clonedPiece));
     }
 
     private void checkMovablePiece(List<String> sourceAndTarget, String sourcePosition, String targetPosition) {
@@ -171,7 +173,7 @@ public class Board {
         // 폰 이외의 말 점수계산
         for (String location : tiles.keySet()) {
             if (tiles.get(location).isPiecePresent()) {
-                Piece piece = tiles.get(location).getPiece().get();
+                Piece piece = tiles.get(location).getPiece();
                 if (!piece.isPawn() && piece.askTeamColor().equals("white")) {
                     scoreOfWhite += piece.getScore();
                 }
@@ -232,7 +234,7 @@ public class Board {
                 continue;
             }
 
-            if (tile.getPiece().get().getScore() == King.SCORE) {
+            if (tile.getPiece().getScore() == King.SCORE) {
                 if (tile.askPieceWhichTeam().equals("white")) {
                     row = row.concat("k");
                 }
@@ -242,7 +244,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Queen.SCORE) {
+            if (tile.getPiece().getScore() == Queen.SCORE) {
                 if (tile.askPieceWhichTeam().equals("white")) {
                     row = row.concat("q");
                 }
@@ -252,7 +254,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Rook.SCORE) {
+            if (tile.getPiece().getScore() == Rook.SCORE) {
                 if (tile.askPieceWhichTeam().equals("white")) {
                     row = row.concat("r");
                 }
@@ -262,7 +264,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Knight.SCORE) {
+            if (tile.getPiece().getScore() == Knight.SCORE) {
                 if (tile.askPieceWhichTeam().equals("white")) {
                     row = row.concat("n");
                 }
@@ -272,7 +274,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Bishop.SCORE) {
+            if (tile.getPiece().getScore() == Bishop.SCORE) {
                 if (tile.askPieceWhichTeam().equals("white")) {
                     row = row.concat("b");
                 }
@@ -282,7 +284,7 @@ public class Board {
                 }
             }
 
-            if (tile.getPiece().get().getScore() == Pawn.SCORE) {
+            if (tile.getPiece().getScore() == Pawn.SCORE) {
                 if (tile.askPieceWhichTeam().equals("white")) {
                     row = row.concat("p");
                 }

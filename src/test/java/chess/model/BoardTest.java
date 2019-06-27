@@ -4,6 +4,7 @@ import chess.model.piece.King;
 import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Queen;
+import chess.model.piece.Empty;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -24,8 +25,8 @@ public class BoardTest {
     @Test
     void 경로에_piece있는지_확인_piece가_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile2 = new Tile("56", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
+            Tile testTile2 = new Tile("56", new Pawn(true, "white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("56", testTile2);
@@ -44,7 +45,7 @@ public class BoardTest {
     @Test
     void 경로에_piece있는지_확인_piece가_없을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             return testMap;
@@ -62,7 +63,7 @@ public class BoardTest {
     @Test
     void 타일에_piece_있는지_확인() {
         Board board = new Board(() -> {
-            Tile testTile2 = new Tile("57", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile2 = new Tile("57", new Pawn(true, "white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("57", testTile2);
             return testMap;
@@ -74,7 +75,7 @@ public class BoardTest {
     @Test
     void 타일에_piece_없는지_확인() {
         Board board = new Board(() -> {
-            Tile testTile2 = new Tile("57", Optional.ofNullable(null));
+            Tile testTile2 = new Tile("57", new Empty());
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("57", testTile2);
             return testMap;
@@ -86,7 +87,7 @@ public class BoardTest {
     @Test
     void 타일에_있는_piece의_팀_확인_백팀인_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             return testMap;
@@ -98,7 +99,7 @@ public class BoardTest {
     @Test
     void 타일에_있는_piece의_팀_확인_흑팀인_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "black")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "black"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             return testMap;
@@ -110,8 +111,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_pawn이_앞으로_이동_상대팀이_없을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile2 = new Tile("57", Optional.ofNullable(null));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
+            Tile testTile2 = new Tile("57", new Empty());
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("57", testTile2);
@@ -119,8 +120,8 @@ public class BoardTest {
         });
 
         Board boardAfterMoved = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(null));
-            Tile testTile2 = new Tile("57", Optional.ofNullable(new Pawn(false, "white")));
+            Tile testTile1 = new Tile("55", new Empty());
+            Tile testTile2 = new Tile("57", new Pawn(false, "white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("57", testTile2);
@@ -135,8 +136,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_pawn이_앞으로_2칸_이동_상대팀이_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile2 = new Tile("57", Optional.ofNullable(new Pawn(true, "black")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
+            Tile testTile2 = new Tile("57", new Pawn(true, "black"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("57", testTile2);
@@ -150,8 +151,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_pawn이_앞으로_1칸_이동_상대팀이_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile2 = new Tile("56", Optional.ofNullable(new Pawn(true, "black")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
+            Tile testTile2 = new Tile("56", new Pawn(true, "black"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("56", testTile2);
@@ -165,8 +166,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_pawn이_대각선으로_이동_상대팀이_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile2 = new Tile("66", Optional.ofNullable(new Pawn(true, "black")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
+            Tile testTile2 = new Tile("66", new Pawn(true, "black"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("66", testTile2);
@@ -175,8 +176,8 @@ public class BoardTest {
 
 
         Board boardAfterMoved = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(null));
-            Tile testTile2 = new Tile("66", Optional.ofNullable(new Pawn(false, "white")));
+            Tile testTile1 = new Tile("55", new Empty());
+            Tile testTile2 = new Tile("66", new Pawn(false, "white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("66", testTile2);
@@ -191,8 +192,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_pawn이_대각선으로_이동_상대팀이_없을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile2 = new Tile("66", Optional.ofNullable(null));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
+            Tile testTile2 = new Tile("66", new Empty());
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("66", testTile2);
@@ -206,8 +207,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_queen이_남쪽으로_이동_상대팀이_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Queen("white")));
-            Tile testTile2 = new Tile("53", Optional.ofNullable(new Pawn(true, "black")));
+            Tile testTile1 = new Tile("55", new Queen("white"));
+            Tile testTile2 = new Tile("53", new Pawn(true, "black"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("53", testTile2);
@@ -215,8 +216,8 @@ public class BoardTest {
         });
 
         Board boardAfterMoved = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(null));
-            Tile testTile2 = new Tile("53", Optional.ofNullable(new Queen("white")));
+            Tile testTile1 = new Tile("55", new Empty());
+            Tile testTile2 = new Tile("53", new Queen("white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("53", testTile2);
@@ -231,8 +232,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_queen이_남동쪽으로_이동_상대팀이_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Queen("white")));
-            Tile testTile2 = new Tile("73", Optional.ofNullable(new Queen("black")));
+            Tile testTile1 = new Tile("55", new Queen("white"));
+            Tile testTile2 = new Tile("73", new Queen("black"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("73", testTile2);
@@ -240,8 +241,8 @@ public class BoardTest {
         });
 
         Board boardAfterMoved = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(null));
-            Tile testTile2 = new Tile("73", Optional.ofNullable(new Queen("white")));
+            Tile testTile1 = new Tile("55", new Empty());
+            Tile testTile2 = new Tile("73", new Queen("white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("73", testTile2);
@@ -256,8 +257,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_queen이_남쪽으로_이동_같은팀이_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Queen("white")));
-            Tile testTile2 = new Tile("53", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile1 = new Tile("55", new Queen("white"));
+            Tile testTile2 = new Tile("53", new Pawn(true, "white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("53", testTile2);
@@ -271,8 +272,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_queen이_남동쪽으로_이동_같은팀이_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Queen("white")));
-            Tile testTile2 = new Tile("73", Optional.ofNullable(new Queen("white")));
+            Tile testTile1 = new Tile("55", new Queen("white"));
+            Tile testTile2 = new Tile("73", new Queen("white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("73", testTile2);
@@ -286,8 +287,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_knight가_남동쪽으로_이동_상대팀이_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Knight("white")));
-            Tile testTile2 = new Tile("63", Optional.ofNullable(new Queen("black")));
+            Tile testTile1 = new Tile("55", new Knight("white"));
+            Tile testTile2 = new Tile("63", new Queen("black"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("63", testTile2);
@@ -295,8 +296,8 @@ public class BoardTest {
         });
 
         Board boardAfterMoved = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(null));
-            Tile testTile2 = new Tile("63", Optional.ofNullable(new Knight("white")));
+            Tile testTile1 = new Tile("55", new Empty());
+            Tile testTile2 = new Tile("63", new Knight("white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("63", testTile2);
@@ -311,8 +312,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_knight가_남동쪽으로_이동_상대팀이_없을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Knight("white")));
-            Tile testTile2 = new Tile("63", Optional.ofNullable(null));
+            Tile testTile1 = new Tile("55", new Knight("white"));
+            Tile testTile2 = new Tile("63", new Empty());
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("63", testTile2);
@@ -320,8 +321,8 @@ public class BoardTest {
         });
 
         Board boardAfterMoved = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(null));
-            Tile testTile2 = new Tile("63", Optional.ofNullable(new Knight("white")));
+            Tile testTile1 = new Tile("55", new Empty());
+            Tile testTile2 = new Tile("63", new Knight("white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("63", testTile2);
@@ -336,8 +337,8 @@ public class BoardTest {
     @Test
     void piece이동_확인_knight가_남동쪽으로_이동_같은_팀이_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Knight("white")));
-            Tile testTile2 = new Tile("63", Optional.ofNullable(new Queen("white")));
+            Tile testTile1 = new Tile("55", new Knight("white"));
+            Tile testTile2 = new Tile("63", new Queen("white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("63", testTile2);
@@ -351,8 +352,8 @@ public class BoardTest {
     @Test
     void 점수계산을_위한_ScoreResult_생성_테스트() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile2 = new Tile("63", Optional.ofNullable(new Pawn(true, "black")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
+            Tile testTile2 = new Tile("63", new Pawn(true, "black"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("63", testTile2);
@@ -366,8 +367,8 @@ public class BoardTest {
     @Test
     void 점수계산을_위한_ScoreResult_생성_테스트_같은_색이_세로선에_있을_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile2 = new Tile("53", Optional.ofNullable(new Pawn(true, "white")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
+            Tile testTile2 = new Tile("53", new Pawn(true, "white"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("53", testTile2);
@@ -381,9 +382,9 @@ public class BoardTest {
     @Test
     void 점수계산을_위한_ScoreResult_생성_테스트_pawn과_퀸이_공존할_경우() {
         Board board = new Board(() -> {
-            Tile testTile1 = new Tile("55", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile2 = new Tile("53", Optional.ofNullable(new Pawn(true, "white")));
-            Tile testTile3 = new Tile("11", Optional.ofNullable(new Queen("black")));
+            Tile testTile1 = new Tile("55", new Pawn(true, "white"));
+            Tile testTile2 = new Tile("53", new Pawn(true, "white"));
+            Tile testTile3 = new Tile("11", new Queen("black"));
             Map<String, Tile> testMap = new HashMap<>();
             testMap.put("55", testTile1);
             testMap.put("53", testTile2);
@@ -398,9 +399,9 @@ public class BoardTest {
     @Test
     void 말_초기화_확인() {
         Board board = new Board(new NewGameCreateStrategy());
-        assertThat(board.getTile("12")).isEqualTo(new Tile("12", Optional.ofNullable(new Pawn(true, "white"))));
-        assertThat(board.getTile("55")).isEqualTo(new Tile("55", Optional.ofNullable(null)));
-        assertThat(board.getTile("58")).isEqualTo(new Tile("58", Optional.ofNullable(new King("black"))));
+        assertThat(board.getTile("12")).isEqualTo(new Tile("12", new Pawn(true, "white")));
+        assertThat(board.getTile("55")).isEqualTo(new Tile("55", new Empty()));
+        assertThat(board.getTile("58")).isEqualTo(new Tile("58", new King("black")));
     }
 
     @Test

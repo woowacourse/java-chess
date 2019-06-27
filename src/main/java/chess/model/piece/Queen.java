@@ -140,6 +140,11 @@ public class Queen implements Piece {
     }
 
     @Override
+    public boolean isPresent() {
+        return true;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

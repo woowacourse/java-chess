@@ -12,9 +12,9 @@ public class Tile {
     // TODO: 2019-06-18 인스턴스 변수 줄이기
     private Coordinate coordinateX;
     private Coordinate coordinateY;
-    private Optional<Piece> piece;
+    private Piece piece;
 
-    public Tile(String coordinates, Optional<Piece> piece) {
+    public Tile(String coordinates, Piece piece) {
         validateInput(coordinates);
         String firstCoordinate = coordinates.substring(0, 1);
         String secondCoordinate = coordinates.substring(1, 2);
@@ -39,7 +39,7 @@ public class Tile {
 
     public Route findRouteFromPiece(Vector vector) {
         if (piece.isPresent()) {
-            return piece.get().produceRoute(Arrays.asList(coordinateX, coordinateY), vector);
+            return piece.produceRoute(Arrays.asList(coordinateX, coordinateY), vector);
         }
 
         return new Route(Collections.emptyList());
@@ -48,22 +48,22 @@ public class Tile {
     public String askPieceWhichTeam() {
         System.err.println(piece.isPresent());
         if (piece.isPresent()) {
-            return piece.get().askTeamColor();
+            return piece.askTeamColor();
         }
         return "error";
     }
 
-    public Optional<Piece> getPiece() {
+    public Piece getPiece() {
         return piece;
     }
 
     public Piece clonePiece() {
-        return piece.get().cloneSelf();
+        return piece.cloneSelf();
     }
 
     public boolean askPieceIfPawn() {
         if (piece.isPresent()) {
-            return piece.get().isPawn();
+            return piece.isPawn();
         }
 
         return false;
@@ -86,7 +86,7 @@ public class Tile {
 
     public boolean askIfKing() {
         if (piece.isPresent()) {
-            return piece.get().isKing();
+            return piece.isKing();
         }
         return false;
 

@@ -66,6 +66,11 @@ public class Pawn implements Piece {
     }
 
     @Override
+    public boolean isPresent() {
+        return true;
+    }
+
+    @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
         validateInput(sourceCoordinates, vector);
 

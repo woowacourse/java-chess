@@ -18,4 +18,6 @@ public interface Piece {
     double getScore();
 
     boolean isKing();
+
+    boolean isPresent();
 }

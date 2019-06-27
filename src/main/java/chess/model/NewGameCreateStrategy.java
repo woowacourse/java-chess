@@ -16,35 +16,35 @@ public class NewGameCreateStrategy implements CreateStrategy {
                 // white팀 말 넣기
                 String coordinateY = String.valueOf(row);
 
-                tiles.put("1".concat(coordinateY), new Tile("1".concat(coordinateY), Optional.ofNullable(new Rook("white"))));
-                tiles.put("2".concat(coordinateY), new Tile("2".concat(coordinateY), Optional.ofNullable(new Knight("white"))));
-                tiles.put("3".concat(coordinateY), new Tile("3".concat(coordinateY), Optional.ofNullable(new Bishop("white"))));
-                tiles.put("4".concat(coordinateY), new Tile("4".concat(coordinateY), Optional.ofNullable(new Queen("white"))));
-                tiles.put("5".concat(coordinateY), new Tile("5".concat(coordinateY), Optional.ofNullable(new King("white"))));
-                tiles.put("6".concat(coordinateY), new Tile("6".concat(coordinateY), Optional.ofNullable(new Bishop("white"))));
-                tiles.put("7".concat(coordinateY), new Tile("7".concat(coordinateY), Optional.ofNullable(new Knight("white"))));
-                tiles.put("8".concat(coordinateY), new Tile("8".concat(coordinateY), Optional.ofNullable(new Rook("white"))));
+                tiles.put("1".concat(coordinateY), new Tile("1".concat(coordinateY), new Rook("white")));
+                tiles.put("2".concat(coordinateY), new Tile("2".concat(coordinateY), new Knight("white")));
+                tiles.put("3".concat(coordinateY), new Tile("3".concat(coordinateY), new Bishop("white")));
+                tiles.put("4".concat(coordinateY), new Tile("4".concat(coordinateY), new Queen("white")));
+                tiles.put("5".concat(coordinateY), new Tile("5".concat(coordinateY), new King("white")));
+                tiles.put("6".concat(coordinateY), new Tile("6".concat(coordinateY), new Bishop("white")));
+                tiles.put("7".concat(coordinateY), new Tile("7".concat(coordinateY), new Knight("white")));
+                tiles.put("8".concat(coordinateY), new Tile("8".concat(coordinateY), new Rook("white")));
             }
 
             if (row == 8) {
                 // black팀 말 넣기
                 String coordinateY = String.valueOf(row);
 
-                tiles.put("1".concat(coordinateY), new Tile("1".concat(coordinateY), Optional.ofNullable(new Rook("black"))));
-                tiles.put("2".concat(coordinateY), new Tile("2".concat(coordinateY), Optional.ofNullable(new Knight("black"))));
-                tiles.put("3".concat(coordinateY), new Tile("3".concat(coordinateY), Optional.ofNullable(new Bishop("black"))));
-                tiles.put("4".concat(coordinateY), new Tile("4".concat(coordinateY), Optional.ofNullable(new Queen("black"))));
-                tiles.put("5".concat(coordinateY), new Tile("5".concat(coordinateY), Optional.ofNullable(new King("black"))));
-                tiles.put("6".concat(coordinateY), new Tile("6".concat(coordinateY), Optional.ofNullable(new Bishop("black"))));
-                tiles.put("7".concat(coordinateY), new Tile("7".concat(coordinateY), Optional.ofNullable(new Knight("black"))));
-                tiles.put("8".concat(coordinateY), new Tile("8".concat(coordinateY), Optional.ofNullable(new Rook("black"))));
+                tiles.put("1".concat(coordinateY), new Tile("1".concat(coordinateY), new Rook("black")));
+                tiles.put("2".concat(coordinateY), new Tile("2".concat(coordinateY), new Knight("black")));
+                tiles.put("3".concat(coordinateY), new Tile("3".concat(coordinateY), new Bishop("black")));
+                tiles.put("4".concat(coordinateY), new Tile("4".concat(coordinateY), new Queen("black")));
+                tiles.put("5".concat(coordinateY), new Tile("5".concat(coordinateY), new King("black")));
+                tiles.put("6".concat(coordinateY), new Tile("6".concat(coordinateY), new Bishop("black")));
+                tiles.put("7".concat(coordinateY), new Tile("7".concat(coordinateY), new Knight("black")));
+                tiles.put("8".concat(coordinateY), new Tile("8".concat(coordinateY), new Rook("black")));
             }
 
             if (row == 2) {
                 // white팀 pawn 넣기
                 for (int column = 1; column <= 8; column++) {
                     String coordinate = String.valueOf(column).concat(String.valueOf(row));
-                    tiles.put(coordinate, new Tile(coordinate, Optional.ofNullable(new Pawn(true, "white"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Pawn(true, "white")));
                 }
             }
 
@@ -52,7 +52,7 @@ public class NewGameCreateStrategy implements CreateStrategy {
                 // black팀 pawn 넣기
                 for (int column = 1; column <= 8; column++) {
                     String coordinate = String.valueOf(column).concat(String.valueOf(row));
-                    tiles.put(coordinate, new Tile(coordinate, Optional.ofNullable(new Pawn(true, "black"))));
+                    tiles.put(coordinate, new Tile(coordinate, new Pawn(true, "black")));
                 }
             }
 
@@ -60,7 +60,7 @@ public class NewGameCreateStrategy implements CreateStrategy {
                 // null 넣기
                 for (int column = 1; column <= 8; column++) {
                     String coordinate = String.valueOf(column).concat(String.valueOf(row));
-                    tiles.put(coordinate, new Tile(coordinate, Optional.ofNullable(null)));
+                    tiles.put(coordinate, new Tile(coordinate, new Empty()));
                 }
             }
         }
