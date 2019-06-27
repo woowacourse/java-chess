@@ -1,12 +1,10 @@
 package chess.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.database.DatabaseConnection;
 import chess.domain.ChessPieceInfo;
 import chess.domain.Player;
 import chess.domain.Position;
@@ -22,16 +20,14 @@ public class PieceDAO {
             "select player, piece_type, x_position, y_position from piece where room_number = ?";
 
     private static PieceDAO pieceDAO;
-    private static Connection connection;
 
     private PieceDAO() {
     }
 
-    public static PieceDAO getInstance(Connection connection) {
+    public static PieceDAO getInstance() {
         if (pieceDAO == null) {
             pieceDAO = new PieceDAO();
         }
-        PieceDAO.connection = connection;
         return pieceDAO;
     }
 
@@ -42,7 +38,8 @@ public class PieceDAO {
     }
 
     private void addPiece(int roomNumber, Piece piece) throws SQLException {
-        try (PreparedStatement pstmt = connection.prepareStatement(INSERT_PIECE)) {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(INSERT_PIECE)) {
             pstmt.setString(1, piece.getPlayerName());
             pstmt.setString(2, piece.getPieceType());
             pstmt.setInt(3, piece.getCoordinateX());
@@ -53,14 +50,16 @@ public class PieceDAO {
     }
 
     public void deleteAllPieces(int roomNumber) throws SQLException {
-        try (PreparedStatement pstmt = connection.prepareStatement(DELETE_ALL_PIECES_QUERY)) {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(DELETE_ALL_PIECES_QUERY)) {
             pstmt.setInt(1, roomNumber);
             pstmt.executeUpdate();
         }
     }
 
     public List<Piece> getChessPieces(int roomNumber) throws SQLException {
-        try (PreparedStatement pstmt = connection.prepareStatement(SELECT_PIECES_QUERY)) {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(SELECT_PIECES_QUERY)) {
             pstmt.setInt(1, roomNumber);
             return getChessPiece(pstmt);
         }

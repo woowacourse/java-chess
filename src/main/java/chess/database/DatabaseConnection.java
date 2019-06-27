@@ -12,16 +12,8 @@ public class DatabaseConnection {
     private static final String CONNECTION_URL_FORMAT =
             "jdbc:mysql://%s/%s?useSSL=false&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC";
 
-    private static Connection connection;
-
-    private DatabaseConnection() {
-        throw new AssertionError();
-    }
-
-    public static Connection getConnection() throws SQLException {
-        if (connection != null && !connection.isClosed()) {
-            return connection;
-        }
+    public static Connection getConnection() {
+        Connection connection = null;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
