@@ -2,7 +2,7 @@ package model.piece;
 
 import model.board.Direction;
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ class QueenTest {
 
     @BeforeEach
     void setUp() {
-        testQueen = new Queen(Player.WHITE, Position.of("e3"));
+        testQueen = new Queen(Color.WHITE, Position.of("e3"));
     }
 
     @Test

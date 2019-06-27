@@ -2,10 +2,11 @@ package model.piece;
 
 import model.board.Direction;
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,7 +19,7 @@ class PieceTest {
 
     @BeforeEach
     void setUp() {
-        testPiece = new King(Player.WHITE, Position.of("h4"));
+        testPiece = new King(Color.WHITE, Position.of("h4"));
     }
 
     @Test
@@ -38,13 +39,6 @@ class PieceTest {
     }
 
     @Test
-    void proceedOnlyOneStepTest() {
-        Iterator<Position> i = testPiece.proceedSingleStep(Direction.SOUTH_WEST);
-        assertThat(i.next()).isEqualTo(Position.of("g3"));
-        assertThat(i.hasNext()).isFalse();
-    }
-
-    @Test
     void moveTest() {
         testPiece.move(Position.of("c6"));
         assertThat(testPiece.position()).isEqualTo(Position.of("c6"));
@@ -55,18 +49,12 @@ class PieceTest {
     void sortTest() {
         assertThat(
                 Stream.of(
-                        new King(Player.BLACK, Position.of("b6")),
-                        new Pawn(Player.WHITE, Position.of("c7")),
-                        new Bishop(Player.BLACK, Position.of("a2"))
+                        new King(Color.BLACK, Position.of("b6")),
+                        new Pawn(Color.WHITE, Position.of("c7")),
+                        new Bishop(Color.BLACK, Position.of("a2"))
                 ).map(Piece::position)
                 .sorted()
-                .collect(Collectors.toList())
-        ).isEqualTo(
-                Stream.of(
-                        Position.of("a2"),
-                        Position.of("b6"),
-                        Position.of("c7")
-                ).collect(Collectors.toList())
+        ).isEqualTo(Arrays.asList(Position.of("a2"), Position.of("b6"), Position.of("c7"))
         );
     }
 }

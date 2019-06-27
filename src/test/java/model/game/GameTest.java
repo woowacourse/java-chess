@@ -17,13 +17,13 @@ class GameTest {
 
     @Test
     void getCurrentScoreOfInitialBoardTest() {
-        assertThat(testGame.getCurrentScore(Player.WHITE)).isEqualTo(38.0, offset(0.0000001));
+        assertThat(testGame.getCurrentScore(Color.WHITE)).isEqualTo(38.0, offset(0.0000001));
     }
 
     @Test
     void getCurrentScoreTest() {
         testGame.board().removePieceAt(Position.of("d1"));
         testGame.board().removePieceAt(Position.of("g1"));
-        assertThat(testGame.getCurrentScore(Player.WHITE)).isEqualTo(26.5, offset(0.0000001));
+        assertThat(testGame.getCurrentScore(Color.WHITE)).isEqualTo(26.5, offset(0.0000001));
     }
 }

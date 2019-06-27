@@ -1,7 +1,7 @@
 package model.piece;
 
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class KnightTest {
 
     @BeforeEach
     void setUp() {
-        testKnight = new Knight(Player.BLACK, Position.of("d6"));
+        testKnight = new Knight(Color.BLACK, Position.of("d6"));
     }
 
     @Test

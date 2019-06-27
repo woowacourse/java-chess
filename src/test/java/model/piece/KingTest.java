@@ -2,7 +2,7 @@ package model.piece;
 
 import model.board.Direction;
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class KingTest {
 
     @BeforeEach
     void setUp() {
-        testKing = new King(Player.WHITE, Position.of("e3"));
+        testKing = new King(Color.WHITE, Position.of("e3"));
     }
 
     @Test

@@ -1,8 +1,7 @@
 package model.piece;
 
-import model.board.Direction;
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,7 +17,7 @@ public class PawnTest {
 
     @BeforeEach
     void setUp() {
-        testPawn = new Pawn(Player.WHITE, Position.of("c4"));
+        testPawn = new Pawn(Color.WHITE, Position.of("c4"));
     }
 
     @Test
@@ -53,25 +51,19 @@ public class PawnTest {
                 actual.add(i.next());
             }
         });
-        assertThat(actual).isEqualTo(
-                Arrays.asList(
-                        Position.of("a3")
-                )
-        );
+        assertThat(actual).isEqualTo(Arrays.asList(Position.of("a3")));
     }
 
     @Test
     void possibleDiagonalPositionsTest() {
         assertThat(
-                testPawn.possibleDiagonalDestinations().collect(Collectors.toList())
-        ).contains(Position.of("b5"), Position.of("d5"));
+                testPawn.possibleDiagonalDestinations().sorted()
+        ).isEqualTo(Arrays.asList(Position.of("b5"), Position.of("d5")));
     }
 
     @Test
     void possibleDiagonalPositionsAtTheEdge() {
         testPawn.move(Position.of("h7"));
-        assertThat(
-                testPawn.possibleDiagonalDestinations().collect(Collectors.toList())
-        ).contains(Position.of("g8"));
+        assertThat(testPawn.possibleDiagonalDestinations()).isEqualTo(Arrays.asList(Position.of("g8")));
     }
 }

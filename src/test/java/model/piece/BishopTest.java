@@ -2,7 +2,7 @@ package model.piece;
 
 import model.board.Direction;
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ class BishopTest {
 
     @BeforeEach
     void setUp() {
-        testBishop = new Bishop(Player.BLACK, Position.of("f3"));
+        testBishop = new Bishop(Color.BLACK, Position.of("f3"));
     }
 
     @Test

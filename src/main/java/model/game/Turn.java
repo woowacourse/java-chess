@@ -2,7 +2,7 @@ package model.game;
 
 public class Turn {
     private int count = 1;
-    private Player team = Player.WHITE;
+    private Color team = Color.WHITE;
 
     public Turn() {}
 
@@ -11,8 +11,8 @@ public class Turn {
         resetTeam();
     }
 
-    private Player resetTeam() {
-        this.team = (this.count % 2 == 0) ? Player.WHITE : Player.BLACK;
+    private Color resetTeam() {
+        this.team = (this.count % 2 == 0) ? Color.WHITE : Color.BLACK;
         return this.team;
     }
 
@@ -22,7 +22,7 @@ public class Turn {
         return this;
     }
 
-    public Player team() {
+    public Color team() {
         return this.team;
     }
 
