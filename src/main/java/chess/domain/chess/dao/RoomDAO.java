@@ -4,6 +4,7 @@ import chess.domain.chess.game.Team;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +23,37 @@ public class RoomDAO {
         pstmt.executeUpdate();
     }
 
-    public void update(Team team) {
+    public void update(int id, Team team) throws SQLException {
+        String query = "UPDATE room SET team = ? WHERE id = ? ";
 
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setString(1, team.name());
+        pstmt.setInt(2, id);
+        pstmt.executeUpdate();
     }
 
-    public Team select(int roomId) {
+    public Team select(int roomId) throws SQLException {
+        String query = "SELECT team FROM room WHERE id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, roomId);
+        ResultSet resultSet = pstmt.executeQuery();
 
-        return Team.BLACK;
+        if (!resultSet.next()) throw new SQLException();
+
+        return Team.getTeamByName(resultSet.getString("team"));
     }
 
-    public List<Integer> getIds() {
+    public List<Integer> getIds() throws SQLException {
+        String query = "SELECT id FROM room ORDER BY id ASC LIMIT 100 OFFSET 0";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet resultSet = pstmt.executeQuery();
 
-        return new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
+        while (resultSet.next()) {
+            ids.add(resultSet.getInt(1));
+        }
+
+        return ids;
     }
 
 }

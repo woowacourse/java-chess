@@ -23,6 +23,13 @@ public enum Team {
         return Team.WHITE;
     }
 
+    public static Team getTeamByName(String name) {
+        if (name.equals(Team.BLACK.name)) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
+    }
+
     public String applyUpperCaseOrLowerCaseByTeam(String name) {
         return this.function.apply(name);
     }
