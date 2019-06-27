@@ -9,6 +9,8 @@ import model.piece.PieceColor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.piece.PieceColor.BLACK;
+
 public class Pawn extends Piece {
     private boolean hasMoved;
 
@@ -51,5 +53,10 @@ public class Pawn extends Piece {
 
     private boolean isAttackableTo(Position position, BoardView boardView) {
         return position.isValid() && isEnemyOf(boardView.getPieceColorAt(position));
+    }
+
+    @Override
+    public String toString() {
+        return (pieceColor == BLACK) ? "♟" : "♙";
     }
 }
