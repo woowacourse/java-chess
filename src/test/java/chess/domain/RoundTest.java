@@ -21,7 +21,7 @@ class RoundTest {
 
     @Test
     void 한번_진행후_흰팀() {
-        round.nextRound();
-        assertThat(round.getTeam()).isEqualTo(Team.WHITE);
+        Round nextRound = round.nextRound();
+        assertThat(nextRound.getTeam()).isEqualTo(Team.WHITE);
     }
 }

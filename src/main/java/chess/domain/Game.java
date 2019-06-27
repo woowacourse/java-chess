@@ -1,58 +1,67 @@
 package chess.domain;
 
-import chess.dao.RoundDao;
-import chess.dao.RoundDaoImpl;
-import chess.dto.RoundDto;
-
-import java.sql.SQLException;
-import java.util.List;
+import java.util.Objects;
 
 public class Game {
     private Round round;
     private Board board;
-    private RoundDao roundDao;
 
     public Game() {
         round = new Round(0);
-        roundDao = RoundDaoImpl.getInstance();
         this.board = BoardFactory.create();
     }
 
-    public Board play(int from, int to) throws SQLException {
+    public Game(Round round, Board board) {
+        this.round = round;
+        this.board = board;
+    }
+
+    public Game play(int from, int to) {
         Spot startSpot = Spot.valueOf(from);
         Spot endSpot = Spot.valueOf(to);
 
         if (!board.checkTeam(startSpot, round.getTeam())) {
-            return board;
+            return this;
         }
 
         Board movedBoard = board.move(startSpot, endSpot);
         if (!movedBoard.equals(board)) {
-            RoundDto roundDto = new RoundDto();
-            roundDto.setRound(round.getRound());
-            roundDto.setFrom(from);
-            roundDto.setTo(to);
-            roundDao.addRound(roundDto);
-            round.nextRound();
-            board = movedBoard;
+            return new Game(round.nextRound(), movedBoard);
         }
 
-        return board;
+        return this;
     }
 
-    public Board reload() throws SQLException {
-        List<RoundDto> roundDtos = roundDao.selectRound();
-        board = BoardFactory.create();
-        roundDtos.forEach(roundDto -> {
-            Spot from = Spot.valueOf(roundDto.getFrom());
-            Spot to = Spot.valueOf(roundDto.getTo());
-            board.move(from, to);
-            round.nextRound();
-        });
-        return board;
+    public Game reload(int start, int end) {
+        Spot from = Spot.valueOf(start);
+        Spot to = Spot.valueOf(end);
+
+        return new Game(round.nextRound(), board.move(from, to));
     }
 
     public StatusBoard getStatusBoard() {
         return StatusBoardFactory.create(board);
+    }
+
+    public int getRound() {
+        return round.getRound();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return Objects.equals(round, game.round) &&
+                Objects.equals(board, game.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(round, board);
     }
 }

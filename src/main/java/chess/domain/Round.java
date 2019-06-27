@@ -1,6 +1,7 @@
 package chess.domain;
 
 public class Round {
+    private static final int NEXT_ROUND = 1;
     private int round;
 
     public Round(int round) {
@@ -14,8 +15,8 @@ public class Round {
         return Team.WHITE;
     }
 
-    public void nextRound() {
-        round++;
+    public Round nextRound() {
+        return new Round(round + NEXT_ROUND);
     }
 
     public int getRound() {
