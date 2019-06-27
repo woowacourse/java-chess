@@ -42,23 +42,39 @@ public enum Direction {
         return Arrays.asList(TOP, RIGHT, BOTTOM, LEFT);
     }
 
-//    public static List<Direction> diagonalDirection() {
-//        return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
-//    }
-//
-//    public static List<Direction> everyDirection() {
-//        return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
-//    }
-//
-//    public static List<Direction> knightDirection() {
-//        return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
-//    }
-//
-//    public static List<Direction> whitePawnDirection() {
-//        return Arrays.asList(NORTH, NORTHTWO, NORTHEAST, NORTHWEST);
-//    }
-//
-//    public static List<Direction> blackPawnDirection() {
-//        return Arrays.asList(SOUTH, SOUTHTWO, SOUTHEAST, SOUTHWEST);
-//    }
+    public static List<Direction> diagonalDirection() {
+        return Arrays.asList(LEFT_TOP, RIGHT_TOP, RIGHT_BOTTOM, LEFT_BOTTOM);
+    }
+
+    public static List<Direction> everyDirection() {
+        return Arrays.asList(TOP, RIGHT, BOTTOM, LEFT, LEFT_TOP, RIGHT_TOP, RIGHT_BOTTOM, LEFT_BOTTOM);
+    }
+
+    public static List<Direction> knightDirection() {
+        return Arrays.asList(
+                LEFT_LEFT_TOP,
+                LEFT_LEFT_BOTTOM,
+                TOP_TOP_LEFT,
+                TOP_TOP_RIGHT,
+                RIGHT_RIGHT_TOP,
+                RIGHT_RIGHT_BOTTOM,
+                BOTTOM_BOTTOM_RIGHT,
+                BOTTOM_BOTTOM_LEFT);
+    }
+
+    public static List<Direction> whitePawnMovalbeDirection() {
+        return Arrays.asList(TOP);
+    }
+
+    public static List<Direction> whitePawnAttackableDirection() {
+        return Arrays.asList(LEFT_TOP, RIGHT_TOP);
+    }
+
+    public static List<Direction> blackPawnMovalbeDirection() {
+        return Arrays.asList(BOTTOM);
+    }
+
+    public static List<Direction> blackPawnAttackableDirection() {
+        return Arrays.asList(LEFT_BOTTOM, RIGHT_BOTTOM);
+    }
 }
