@@ -4,15 +4,14 @@ import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chesspoint.RelativeChessPoint;
 import chess.domain.util.Counter;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class BlackPawn implements PawnChessPiece {
     public static final double SCORE = 1.0;
-    private static final List<RelativeChessPoint> UNIT_DIRECTION_EMPTY_ON_TARGET = Arrays.asList(
-            RelativeChessPoint.of(-1, 0));
-    private static final List<RelativeChessPoint> UNIT_DIRECTIONS_OPPONENT_ON_TARGET = Arrays.asList(
-            RelativeChessPoint.of(-1, -1), RelativeChessPoint.of(-1, 1));
+    private static final List<ChessDirection> UNIT_DIRECTION_EMPTY_ON_TARGET
+            = ChessDirection.blackPawnDirectionOnEmptyTarget();
+    private static final List<ChessDirection> UNIT_DIRECTIONS_OPPONENT_ON_TARGET
+            = ChessDirection.blackPawnDirectionOnExistTarget();
     private static final String NAME = "P";
     private static BlackPawn blackPawn = null;
 
@@ -31,8 +30,8 @@ public class BlackPawn implements PawnChessPiece {
         RelativeChessPoint direction = target.minus(source);
 
         return opponentPieceOnTarget
-                ? UNIT_DIRECTIONS_OPPONENT_ON_TARGET.stream().anyMatch(d -> d.equals(direction))
-                : UNIT_DIRECTION_EMPTY_ON_TARGET.stream().anyMatch(d -> d.equals(direction));
+                ? UNIT_DIRECTIONS_OPPONENT_ON_TARGET.stream().anyMatch(d -> d.match(direction))
+                : UNIT_DIRECTION_EMPTY_ON_TARGET.stream().anyMatch(d -> d.match(direction));
     }
 
     @Override

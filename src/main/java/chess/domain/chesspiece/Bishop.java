@@ -4,14 +4,11 @@ import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chesspoint.RelativeChessPoint;
 import chess.domain.util.Counter;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Bishop implements BasicChessPiece {
     public static final double SCORE = 3.0;
-    private static final List<RelativeChessPoint> UNIT_DIRECTIONS = Arrays.asList(
-            RelativeChessPoint.of(1, 1), RelativeChessPoint.of(-1, 1)
-            , RelativeChessPoint.of(-1, -1), RelativeChessPoint.of(1, -1));
+    private static final List<ChessDirection> UNIT_DIRECTIONS = ChessDirection.diagonalDirection();
     private static final String NAME = "B";
     private static Bishop bishop = null;
 
@@ -29,7 +26,7 @@ public class Bishop implements BasicChessPiece {
     public boolean checkRule(ChessPoint source, ChessPoint target) {
         RelativeChessPoint unitDirection = RelativeChessPoint.calculateUnitDirection(source, target);
 
-        return UNIT_DIRECTIONS.stream().anyMatch(d -> d.equals(unitDirection));
+        return UNIT_DIRECTIONS.stream().anyMatch(d -> d.match(unitDirection));
     }
 
     @Override

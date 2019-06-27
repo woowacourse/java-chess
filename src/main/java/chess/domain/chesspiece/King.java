@@ -4,16 +4,11 @@ import chess.domain.chesspoint.ChessPoint;
 import chess.domain.chesspoint.RelativeChessPoint;
 import chess.domain.util.Counter;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class King implements BasicChessPiece {
     public static final double SCORE = 0.0;
-    private static final List<RelativeChessPoint> UNIT_DIRECTIONS = Arrays.asList(
-            RelativeChessPoint.of(1, 0), RelativeChessPoint.of(1, 1)
-            , RelativeChessPoint.of(0, 1), RelativeChessPoint.of(-1, 1)
-            , RelativeChessPoint.of(-1, 0), RelativeChessPoint.of(-1, -1)
-            , RelativeChessPoint.of(0, -1), RelativeChessPoint.of(1, -1));
+    private static final List<ChessDirection> UNIT_DIRECTIONS = ChessDirection.everyDirection();
     private static final String NAME = "K";
     private static King king = null;
 
@@ -30,7 +25,7 @@ public class King implements BasicChessPiece {
     @Override
     public boolean checkRule(ChessPoint source, ChessPoint target) {
         RelativeChessPoint direction = target.minus(source);
-        return UNIT_DIRECTIONS.stream().anyMatch(d -> d.equals(direction));
+        return UNIT_DIRECTIONS.stream().anyMatch(d -> d.match(direction));
     }
 
     @Override
