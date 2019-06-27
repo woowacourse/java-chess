@@ -9,7 +9,6 @@ import java.util.Set;
 
 public class Pawn extends Piece {
     public static final int PAWN_SCORE = 1;
-
     private static final int PAWN_X_MAXIMUM_MOVABLE_DISTANCE = 1;
     private static final int PAWN_X_MINIMUM_MOVABLE_DISTANCE = 0;
     private static final int PAWN_Y_MAXIMUM_MOVABLE_DISTANCE = 2;
