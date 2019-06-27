@@ -1,4 +1,4 @@
-package chess;
+package chess.dto;
 
 public class RoundDto {
     private int round;

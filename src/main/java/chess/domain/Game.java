@@ -1,8 +1,8 @@
 package chess.domain;
 
 import chess.BoardJson;
-import chess.RoundDto;
 import chess.dao.RoundDao;
+import chess.dto.RoundDto;
 import com.google.gson.JsonObject;
 
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import java.util.List;
 public class Game {
     private Round round;
     private Board board;
-    RoundDao roundDao;
+    private RoundDao roundDao;
 
     public Game() {
         round = new Round(0);
@@ -33,7 +33,7 @@ public class Game {
             roundDto.setRound(round.getRound());
             roundDto.setFrom(from);
             roundDto.setTo(to);
-            roundDao.insertRound(roundDto);
+            roundDao.addRound(roundDto);
             round.nextRound();
             board = movedBoard;
         }
