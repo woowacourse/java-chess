@@ -16,26 +16,26 @@ public class ChessBoardDAO {
         return BoardStatusDAOHandler.INSTANCE;
     }
 
-    public long addBoardStatus(ChessBoardDTO chessBoardDTO) {
-        return chessBoardDTO.getBoard().entrySet().stream()
-                .map(entry -> {
-                    try (Connection connection = DataSourceFactory.getInstance().getConnection()) {
-                        String query = "INSERT INTO chess.board(game_id, round_no, square_x, square_y, piece_type, team) VALUES (?,?,?,?,?,?)";
-                        PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-                        pstmt.setInt(1, chessBoardDTO.getGameId());
-                        pstmt.setInt(2, chessBoardDTO.getRoundNo());
-                        pstmt.setInt(3, entry.getKey().getX());
-                        pstmt.setInt(4, entry.getKey().getY());
-                        pstmt.setString(5, entry.getValue().getType().toString());
-                        pstmt.setString(6, entry.getValue().getTeam().toString());
+    private ChessBoardDAO() {
+    }
 
-                        return pstmt.executeUpdate();
-                    } catch (SQLException e) {
-                        System.err.println("SQLException 발생 -> Board 데이터 넣는 부분");
-                        System.err.println(e.getMessage());
-                        return -1;
-                    }
-                }).count();
+    public void addBoardStatus(ChessBoardDTO chessBoardDTO) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection()) {
+            String query = "INSERT INTO chess.board(game_id, round_no, square_x, square_y, piece_type, team) VALUES (?,?,?,?,?,?)";
+            for (Square square : chessBoardDTO.getBoard().keySet()) {
+                PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+                pstmt.setInt(1, chessBoardDTO.getGameId());
+                pstmt.setInt(2, chessBoardDTO.getRoundNo());
+                pstmt.setInt(3, square.getX());
+                pstmt.setInt(4, square.getY());
+                pstmt.setString(5, chessBoardDTO.getBoard().get(square).getType().toString());
+                pstmt.setString(6, chessBoardDTO.getBoard().get(square).getTeam().toString());
+
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("SQLException 발생 -> Board 데이터 넣는 부분");
+        }
     }
 
     public ChessBoardDTO findByBoardStatus(ChessBoardDTO chessBoardDTO) {
@@ -68,7 +68,7 @@ public class ChessBoardDAO {
 
             ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) {
-                throw new IllegalArgumentException("Max Round 데이터 없음");
+                return -1;
             }
 
             return rs.getInt("round_no");
