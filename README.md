@@ -3,8 +3,7 @@
 
 ##To-do
  - Connection 닫기(try-with-resources)
- - Point.get 별도 예외 처리
- - isKing 리팩토링
+
 ##Done
  - isAlly 캐스팅 미필요 처리
  - Abstract 중복 로직 추상화
@@ -19,3 +18,5 @@
  - List<List<String>> 처리
  - SelectJdbcTemplate 추상클래스 대신 함수형 인터페이스
  - UpdateJdbcTemplate 클래스 메서드 선언 or 싱글턴 적용
+ - Point.get 별도 예외 처리
+ - isKing 리팩토링

@@ -19,8 +19,8 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public boolean isKing() {
-        return false;
+    public boolean isPieceOf(PieceInfo pieceInfo) {
+        return info.equals(pieceInfo);
     }
 
     public Direction move(MoveVector vector) {

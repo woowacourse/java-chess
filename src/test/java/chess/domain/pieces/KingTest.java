@@ -33,6 +33,6 @@ class KingTest {
     @Test
     void 킹_확인_테스트() {
         King king = new King(ChessTeam.BLACK);
-        assertTrue(king.isKing());
+        assertTrue(king.isPieceOf(PieceInfo.King));
     }
 }

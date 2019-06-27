@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.pieces.Empty;
 import chess.domain.pieces.Piece;
+import chess.domain.pieces.PieceInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -70,7 +71,7 @@ public class Board {
 
     public boolean check(ChessTeam team) {
         return pieceOf(team).stream()
-                .noneMatch(piece -> piece.isKing());
+                .noneMatch(piece -> piece.isPieceOf(PieceInfo.King));
     }
 
     public List<Piece> pieceOf(ChessTeam team) {

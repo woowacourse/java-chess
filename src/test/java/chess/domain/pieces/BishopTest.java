@@ -31,6 +31,6 @@ class BishopTest {
     @Test
     void 킹_아님_테스트() {
         Bishop bishop = new Bishop(ChessTeam.BLACK);
-        assertFalse(bishop.isKing());
+        assertFalse(bishop.isPieceOf(PieceInfo.King));
     }
 }
