@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.PieceDto;
+import chess.service.dto.PieceDto;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
