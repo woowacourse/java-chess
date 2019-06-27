@@ -3,23 +3,18 @@ package chess.domain.chessmove;
 import chess.domain.Position;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class DiagonalMove implements Move {
     private static final int MIN = 1;
 
-    private static DiagonalMove diagonalMove;
-
-    private DiagonalMove() {
+    private static class DiagonalMoveLazyHolder {
+        private static final DiagonalMove INSTANCE = new DiagonalMove();
     }
 
     public static DiagonalMove getInstance() {
-        if (Objects.isNull(diagonalMove))
-            return new DiagonalMove();
-
-        return diagonalMove;
+        return DiagonalMoveLazyHolder.INSTANCE;
     }
 
     @Override

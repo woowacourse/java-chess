@@ -4,21 +4,16 @@ import chess.domain.Position;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class KingMove implements Move {
     private static final int MAX_DISTANCE = 2;
 
-    private static KingMove kingMove;
-
-    private KingMove() {
+    private static class KingMoveLazyHolder {
+        private static final KingMove INSTANCE = new KingMove();
     }
 
     public static KingMove getInstance() {
-        if (Objects.isNull(kingMove))
-            return new KingMove();
-
-        return kingMove;
+        return KingMoveLazyHolder.INSTANCE;
     }
 
     @Override

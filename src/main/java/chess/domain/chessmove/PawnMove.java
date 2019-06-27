@@ -13,9 +13,6 @@ public class PawnMove implements Move {
     private static final int UNMOVED_STATE = 2;
     private static final int MOVED_STATE = 1;
 
-    private static PawnMove whitePawnMove;
-    private static PawnMove blackPawnMove;
-
     private int direction;
     private int moveFlag = UNMOVED_STATE;
 
@@ -23,20 +20,16 @@ public class PawnMove implements Move {
         this.direction = team.getDirection();
     }
 
-    private PawnMove() {
+    private static class PawnMoveLazyHolder {
+        private static final PawnMove BLACK_PAWN_MOVE_INSTANCE = new PawnMove(Team.BLACK);
+        private static final PawnMove WHITE_PAWN_MOVE_INSTANCE = new PawnMove(Team.WHITE);
     }
 
     public static PawnMove getInstance(Team team) {
-        if (Team.BLACK.equals(team) && Objects.isNull(blackPawnMove)) {
-            return new PawnMove(team);
-        }
         if (Team.BLACK.equals(team)) {
-            return blackPawnMove;
+            return PawnMoveLazyHolder.BLACK_PAWN_MOVE_INSTANCE;
         }
-
-        if (Objects.isNull(whitePawnMove)) return new PawnMove(team);
-
-        return whitePawnMove;
+        return PawnMoveLazyHolder.WHITE_PAWN_MOVE_INSTANCE;
     }
 
     @Override

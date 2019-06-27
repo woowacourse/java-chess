@@ -10,16 +10,12 @@ import java.util.stream.IntStream;
 public class VerticalMove implements Move {
     private static int VERTICAL_LINE = 0;
 
-    private static VerticalMove verticalMove;
-
-    private VerticalMove() {
+    private static class VerticalMoveLazyHolder {
+        private static final VerticalMove INSTANCE = new VerticalMove();
     }
 
     public static VerticalMove getInstance() {
-        if (Objects.isNull(verticalMove))
-            return new VerticalMove();
-
-        return verticalMove;
+        return VerticalMoveLazyHolder.INSTANCE;
     }
 
     @Override

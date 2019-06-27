@@ -4,22 +4,17 @@ import chess.domain.Position;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class KnightMove implements Move {
     private static final int MAX_DISTANCE = 2;
     private static final int MIN_DISTANCE = 1;
 
-    private static KnightMove knightMove;
-
-    private KnightMove() {
+    private static class KnightMoveLazyHolder {
+        private static final KnightMove INSTANCE = new KnightMove();
     }
 
     public static KnightMove getInstance() {
-        if (Objects.isNull(knightMove))
-            return new KnightMove();
-
-        return knightMove;
+        return KnightMoveLazyHolder.INSTANCE;
     }
 
     @Override

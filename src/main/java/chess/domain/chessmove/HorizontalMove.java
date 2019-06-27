@@ -3,23 +3,18 @@ package chess.domain.chessmove;
 import chess.domain.Position;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class HorizontalMove implements Move {
     private static final int HORIZONTAL_LINE = 1;
 
-    private static HorizontalMove horizontalMove;
-
-    private HorizontalMove() {
+    private static class HorizontalMoveLazyHolder {
+        private static final HorizontalMove INSTANCE = new HorizontalMove();
     }
 
     public static HorizontalMove getInstance() {
-        if (Objects.isNull(horizontalMove))
-            return new HorizontalMove();
-
-        return horizontalMove;
+        return HorizontalMoveLazyHolder.INSTANCE;
     }
 
     @Override
