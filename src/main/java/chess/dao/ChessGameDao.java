@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChessGameDao {
+    private static final String QUERY_FOR_ADD_GAME ="INSERT INTO game VALUES(1, 'WHITE')";
+    private static final String QUERY_FOR_FIND_TURN ="SELECT turn FROM game WHERE id=1";
+    private static final String QUERY_FOR_UPDATE_TURN ="UPDATE game SET turn=? WHERE id=1";
+    private static final String QUERY_FOR_DELETE_GAME ="DELETE FROM game";
 
     private final DataSource dataSource;
 
@@ -16,16 +20,14 @@ public class ChessGameDao {
 
     public void addGame() throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            String query = "INSERT INTO game VALUES(1, 'WHITE')";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(QUERY_FOR_ADD_GAME);
             pstmt.executeUpdate();
         }
     }
 
     public String findTurn() throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            String query = "SELECT turn FROM game WHERE id=1";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(QUERY_FOR_FIND_TURN);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (!rs.next()) return null;
                 return rs.getString("turn");
@@ -35,8 +37,7 @@ public class ChessGameDao {
 
     public void updateTurn(String nextTurn) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            String query = "UPDATE game SET turn=? WHERE id=1";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(QUERY_FOR_UPDATE_TURN);
             pstmt.setString(1, nextTurn);
             pstmt.executeUpdate();
         }
@@ -44,8 +45,7 @@ public class ChessGameDao {
 
     public void deleteGame() throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            String query = "DELETE FROM game";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(QUERY_FOR_DELETE_GAME);
             pstmt.executeUpdate();
         }
     }

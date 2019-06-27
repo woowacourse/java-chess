@@ -17,6 +17,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ContinueGameInitializer {
+    private static final int START_PIECE_ID = 1;
+    private static final int END_PIECE_ID = 64;
+    private static final int START_FIRST_CHAR = 0;
+    private static final int END_FIRST_CHAR = 1;
+    private static final int START_SECOND_CHAR = 1;
+    private static final int END_SECOND_CHAR = 2;
 
     private ChessGameDao chessGameDao;
     private ChessPieceDao chessPieceDao;
@@ -43,12 +49,12 @@ public class ContinueGameInitializer {
 
     private Map<String, String> makeJSONPreviousBoard() throws SQLException {
         Map<String, String> initBoard = new HashMap<>();
-        for (int i = 1; i <= 64; ++i) {
+        for (int i = START_PIECE_ID; i <= END_PIECE_ID; ++i) {
             PieceDto piece = chessPieceDao.findPieceById(String.valueOf(i));
-            String color = piece.getColor().substring(0, 1).toLowerCase();
+            String color = piece.getColor().substring(START_FIRST_CHAR, END_FIRST_CHAR).toLowerCase();
             String type = piece.getType().equals("KNIGHT")
-                    ? piece.getType().substring(1, 2)
-                    : piece.getType().substring(0, 1);
+                    ? piece.getType().substring(START_SECOND_CHAR, END_SECOND_CHAR)
+                    : piece.getType().substring(START_FIRST_CHAR, END_FIRST_CHAR);
             if (piece.getType().equals("BLANK")) {
                 continue;
             }
@@ -59,12 +65,12 @@ public class ContinueGameInitializer {
 
     private Map<Point, Piece> makePreviousBoard() throws SQLException {
         Map<Point, Piece> gameBoard = new HashMap<>();
-        for (int i = 1; i <= 64; ++i) {
+        for (int i = START_PIECE_ID; i <= END_PIECE_ID; ++i) {
             PieceDto piece = chessPieceDao.findPieceById(String.valueOf(i));
-            String color = piece.getColor().substring(0, 1).toLowerCase();
+            String color = piece.getColor().substring(START_FIRST_CHAR, END_FIRST_CHAR).toLowerCase();
             String type = piece.getType().equals("KNIGHT")
-                    ? piece.getType().substring(1, 2)
-                    : piece.getType().substring(0, 1);
+                    ? piece.getType().substring(START_SECOND_CHAR, END_SECOND_CHAR)
+                    : piece.getType().substring(START_FIRST_CHAR, END_FIRST_CHAR);
             gameBoard.put(PointFactory.of(piece.getPoint()), PieceFactory.of(color + type));
         }
         return gameBoard;
