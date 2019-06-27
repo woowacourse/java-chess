@@ -1,16 +1,14 @@
 package model.piece;
 
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
 
 public class Knight extends Piece {
-    private static final double SCORE = 2.5;
-
-    public Knight(final Player player, final Position position) {
-        super(player, position);
+    public Knight(final Color owner, final Position position) {
+        super(owner, position);
     }
 
     public Knight(final Piece copyFrom) {
@@ -51,11 +49,11 @@ public class Knight extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return Score.KNIGHT.val();
     }
 
     @Override
     public String toString() {
-        return (this.owner == Player.BLACK) ? "♞" : "♘";
+        return (this.owner == Color.BLACK) ? "♞" : "♘";
     }
 }

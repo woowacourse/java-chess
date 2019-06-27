@@ -2,16 +2,14 @@ package model.piece;
 
 import model.board.Direction;
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
 
 public class Bishop extends Piece {
-    private static final double SCORE = 3.0;
-
-    public Bishop(final Player player, final Position position) {
-        super(player, position);
+    public Bishop(final Color owner, final Position position) {
+        super(owner, position);
     }
 
     public Bishop(final Piece copyFrom) {
@@ -26,11 +24,11 @@ public class Bishop extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return Score.BISHOP.val();
     }
 
     @Override
     public String toString() {
-        return (this.owner == Player.BLACK) ? "♝" : "♗" ;
+        return (this.owner == Color.BLACK) ? "♝" : "♗" ;
     }
 }

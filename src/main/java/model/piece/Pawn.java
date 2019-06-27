@@ -2,16 +2,14 @@ package model.piece;
 
 import model.board.Direction;
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
 
 public class Pawn extends Piece {
-    private static final double SCORE = 1.0;
-
-    public Pawn(final Player player, final Position position) {
-        super(player, position);
+    public Pawn(final Color owner, final Position position) {
+        super(owner, position);
     }
 
     public Stream<Iterator<Position>> getIteratorsOfPossibleDestinations() {
@@ -39,7 +37,7 @@ public class Pawn extends Piece {
     }
 
     private Direction forward() {
-        return (this.owner == Player.WHITE) ? Direction.NORTH : Direction.SOUTH;
+        return (this.owner == Color.WHITE) ? Direction.NORTH : Direction.SOUTH;
     }
 
     @Override
@@ -49,15 +47,15 @@ public class Pawn extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return Score.PAWN.val();
     }
 
     public double getHalfScore() {
-        return SCORE * .5;
+        return Score.PAWN_HALF.val();
     }
 
     @Override
     public String toString() {
-        return (owner == Player.BLACK) ? "♟" : "♙";
+        return (owner == Color.BLACK) ? "♟" : "♙";
     }
 }

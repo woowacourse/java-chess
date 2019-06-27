@@ -3,18 +3,18 @@ package model.piece;
 import model.board.Coord;
 import model.board.Direction;
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public abstract class Piece implements Comparable<Piece> {
-    final Player owner;
+    final Color owner;
     Position position;
-    private int totalMoved = 0;
+    int totalMoved = 0;
 
-    protected Piece(final Player owner, final Position position) {
+    protected Piece(final Color owner, final Position position) {
         this.owner = Optional.ofNullable(owner).orElseThrow(IllegalArgumentException::new);
         this.position = Optional.ofNullable(position).orElseThrow(IllegalArgumentException::new);
     }
@@ -43,23 +43,6 @@ public abstract class Piece implements Comparable<Piece> {
         };
     }
 
-    protected Iterator<Position> proceedSingleStep(final Direction dir) {
-        return new Iterator<Position>() {
-            boolean hasNotYielded = true;
-
-            @Override
-            public boolean hasNext() {
-                return hasNotYielded && position.testForward(dir);
-            }
-
-            @Override
-            public Position next() {
-                hasNotYielded = false;
-                return position.moveForward(dir);
-            }
-        };
-    }
-
     public boolean move(final Position dest) {
         this.position = dest;
         this.totalMoved++;
@@ -74,7 +57,7 @@ public abstract class Piece implements Comparable<Piece> {
         return false;
     }
 
-    public Player team() {
+    public Color team() {
         return this.owner;
     }
 

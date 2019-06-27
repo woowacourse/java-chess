@@ -2,7 +2,7 @@ package model.piece;
 
 import model.board.Direction;
 import model.board.Position;
-import model.game.Player;
+import model.game.Color;
 
 import java.util.Iterator;
 import java.util.List;
@@ -10,10 +10,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class King extends Piece {
-    private static final double SCORE = .0;
-
-    public King(final Player player, final Position position) {
-        super(player, position);
+    public King(final Color owner, final Position position) {
+        super(owner, position);
     }
 
     @Override
@@ -49,11 +47,11 @@ public class King extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return Score.KING.val();
     }
 
     @Override
     public String toString() {
-        return (this.owner == Player.BLACK) ? "♚" : "♔";
+        return (this.owner == Color.BLACK) ? "♚" : "♔";
     }
 }

@@ -1,17 +1,15 @@
 package model.piece;
 
 import model.board.Direction;
-import model.game.Player;
+import model.game.Color;
 import model.board.Position;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
 
 public class Rook extends Piece {
-    private static final double SCORE = 5.0;
-
-    public Rook(final Player player, final Position position) {
-        super(player, position);
+    public Rook(final Color owner, final Position position) {
+        super(owner, position);
     }
 
     public Rook(final Piece copyFrom) {
@@ -26,11 +24,11 @@ public class Rook extends Piece {
 
     @Override
     public double getScore() {
-        return SCORE;
+        return Score.ROOK.val();
     }
 
     @Override
     public String toString() {
-        return (this.owner == Player.BLACK) ? "♜" : "♖";
+        return (this.owner == Color.BLACK) ? "♜" : "♖";
     }
 }
