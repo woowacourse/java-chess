@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessLogDao {
+    private static final int MIN_RESULT = 1;
+    private static final int FIRST_RESULT = 0;
+    private static final int FIRST_TURN = 0;
+
+
     private JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
 
     private static class ChessLogDaoLazyHolder {
@@ -59,11 +64,11 @@ public class ChessLogDao {
 
         List<Map<String, Object>> results = jdbcTemplate.executeQuery(query, queryValues);
 
-        if (results.size() < 1) {
-            return 0;
+        if (results.size() < MIN_RESULT) {
+            return FIRST_TURN;
         }
 
-        Map<String, Object> result = results.get(0);
+        Map<String, Object> result = results.get(FIRST_RESULT);
         return Integer.parseInt((String) result.get("turn"));
     }
 
