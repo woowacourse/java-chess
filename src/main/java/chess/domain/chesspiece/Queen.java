@@ -12,9 +12,6 @@ import java.util.List;
 public class Queen extends ChessPiece {
     private static final int SCORE = 9;
 
-    private static final int VERTICAL_LINE = 0;
-    private static final int HORIZONTAL_LINE = 1;
-
     public Queen(Team team) {
         super(team);
         initMovingMap();
@@ -32,10 +29,10 @@ public class Queen extends ChessPiece {
     public List<Position> getRouteOfPiece(Position source, Position target) {
         Direction moveName = Direction.DIAGONAL;
 
-        if (source.isInLine(target) == VERTICAL_LINE) {
+        if (source.isInLine(target) == Position.VERTICAL_LINE) {
             moveName = Direction.VERTICAL;
         }
-        if (source.isInLine(target) == HORIZONTAL_LINE) {
+        if (source.isInLine(target) == Position.HORIZONTAL_LINE) {
             moveName = Direction.HORIZONTAL;
         }
 

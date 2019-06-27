@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position {
+    public static final int HORIZONTAL_LINE = 1;
+    public static final int VERTICAL_LINE = 0;
     private static final int MIN = 0;
     private static final int MAX = 7;
     private static final int SQUARE_ROOT = 2;
-    private static final int HORIZONTAL_LINE = 1;
-    private static final int VERTICAL_LINE = 0;
     private static final int Y = 1;
     private static final int X = 0;
     private static final String DELIMITER = ",";

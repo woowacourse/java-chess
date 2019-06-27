@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Rook extends ChessPiece {
-    private static final int VERTICAL_LINE = 0;
-
     private static final int SCORE = 5;
 
     public Rook(Team team) {
@@ -29,7 +27,7 @@ public class Rook extends ChessPiece {
     public List<Position> getRouteOfPiece(Position source, Position target) {
         Direction moveName = Direction.HORIZONTAL;
 
-        if (source.isInLine(target) == VERTICAL_LINE) {
+        if (source.isInLine(target) == Position.VERTICAL_LINE) {
             moveName = Direction.VERTICAL;
         }
 
