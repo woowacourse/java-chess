@@ -1,14 +1,14 @@
 package chess;
 
 import chess.domain.*;
+import chess.dto.GameDto;
+import chess.dto.NavigatorDto;
+import chess.dto.PieceDto;
+import chess.dto.UserDto;
 import chess.service.GameService;
 import chess.service.PieceService;
 import chess.service.UserService;
 import com.google.gson.Gson;
-import dto.GameDto;
-import dto.NavigatorDto;
-import dto.PieceDto;
-import dto.UserDto;
 import spark.Request;
 import spark.Response;
 
@@ -26,7 +26,7 @@ public class WebUIChessController {
 
     public static String generateGameAndUsers(Request req, Response res) {
         int gameId = GameService.addGame();
-        UserService.addUsers(req,gameId);
+        UserService.addUsers(req, gameId);
         res.redirect("/" + gameId);
         return "";
     }
@@ -38,17 +38,14 @@ public class WebUIChessController {
         List<Column> columns = Column.getColumns();
         Collections.reverse(rows);
 
-
         GameDto gameDto = GameService.findById(gameId);
-
         List<UserDto> userDtos = UserService.findByGameId(gameId);
 
         Board board = new Board(gameDto.getTurn());
         req.session().attribute("board", board);
 
         List<PieceDto> pieceDtos = PieceService.findByGameId(gameId);
-
-        board = PieceService.setBoard(board,pieceDtos,gameId);
+        board = PieceService.setBoard(board, pieceDtos, gameId);
 
         if (gameDto.isEnd() == true) {
             ResultCalculator resultCalculator = new ResultCalculator(board);

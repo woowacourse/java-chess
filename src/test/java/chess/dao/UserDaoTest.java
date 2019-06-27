@@ -1,7 +1,7 @@
-package dao;
+package chess.dao;
 
 import chess.domain.DBConnector;
-import dto.UserDto;
+import chess.dto.UserDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -18,12 +18,12 @@ public class UserDaoTest {
 
         int gameId = gameDao.addGame();
 
-        UserDto userDto = new UserDto(gameId,"지토",1);
-        UserDto userDto2 = new UserDto(gameId,"로비",2);
+        UserDto userDto = new UserDto(gameId, "지토", 1);
+        UserDto userDto2 = new UserDto(gameId, "로비", 2);
         assertThat(userDao.addUser(userDto)).isEqualTo(1);
         assertThat(userDao.addUser(userDto2)).isEqualTo(1);
 
-        assertThat(userDao.findByGameId(gameId)).isEqualTo(Arrays.asList(userDto,userDto2));
+        assertThat(userDao.findByGameId(gameId)).isEqualTo(Arrays.asList(userDto, userDto2));
 
         assertThat(userDao.deleteUserByGameId(gameId)).isEqualTo(2);
 

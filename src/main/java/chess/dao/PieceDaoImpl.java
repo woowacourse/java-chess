@@ -1,8 +1,8 @@
-package dao;
+package chess.dao;
 
 import chess.domain.DBConnector;
-import dto.NavigatorDto;
-import dto.PieceDto;
+import chess.dto.NavigatorDto;
+import chess.dto.PieceDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,11 +26,12 @@ public class PieceDaoImpl implements PieceDao {
     public int addPiece(PieceDto pieceDto) {
         String query = "INSERT INTO piece (position,kind_id,game_id,team_id) VALUES (?, ?, ?, ?)";
         int result;
+
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1,pieceDto.getPosition());
-            pstmt.setInt(2,pieceDto.getKindId());
-            pstmt.setInt(3,pieceDto.getGameId());
+            pstmt.setString(1, pieceDto.getPosition());
+            pstmt.setInt(2, pieceDto.getKindId());
+            pstmt.setInt(3, pieceDto.getGameId());
             pstmt.setInt(4, pieceDto.getAliance().getTeamId());
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -42,7 +43,7 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public List<PieceDto> findByGameId(int gameId) {
-        String query = "SELECT * from piece WHERE game_id=?";
+        String query = "SELECT position, kind_id, team_id from piece WHERE game_id=?";
         List<PieceDto> pieceDtos = new ArrayList<>();
 
         try (Connection con = CONNECTOR.getConnection();
@@ -50,14 +51,13 @@ public class PieceDaoImpl implements PieceDao {
             pstmt.setInt(1, gameId);
             ResultSet rs = pstmt.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 String position = rs.getString("position");
                 int kindId = rs.getInt("kind_id");
                 int teamId = rs.getInt("team_id");
-                pieceDtos.add(new PieceDto(teamId,gameId,kindId,position));
+                pieceDtos.add(new PieceDto(teamId, gameId, kindId, position));
             }
             if (!rs.next()) return pieceDtos;
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("말의 정보들을 받아올 수 업습니다.");
@@ -67,11 +67,11 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public PieceDto findByPosition(PieceDto pieceDto) {
-        String query = "SELECT * from piece WHERE game_id=? AND position=?";
+        String query = "SELECT team_id, game_id, kind_id, position from piece WHERE game_id=? AND position=?";
         PieceDto result = null;
 
         try (Connection con = CONNECTOR.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query)){
+             PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, pieceDto.getGameId());
             pstmt.setString(2, pieceDto.getPosition());
             ResultSet rs = pstmt.executeQuery();
@@ -85,7 +85,7 @@ public class PieceDaoImpl implements PieceDao {
 
             result = new PieceDto(teamId, gameId, kindId, position);
             rs.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("말의 정보를 받아올 수 없습니다.");
         }
@@ -108,12 +108,12 @@ public class PieceDaoImpl implements PieceDao {
         }
 
         try (Connection con = CONNECTOR.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query)){
+             PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setString(1, end);
             pstmt.setInt(2, gameId);
             pstmt.setString(3, start);
             result = pstmt.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("말의 정보를 업데이트 할 수 없습니다.");
         }
@@ -126,11 +126,11 @@ public class PieceDaoImpl implements PieceDao {
         int result;
 
         try (Connection con = CONNECTOR.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query)){
+             PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, pieceDto.getGameId());
             pstmt.setString(2, pieceDto.getPosition());
             result = pstmt.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("말을 삭제할 수 없습니다.");
         }

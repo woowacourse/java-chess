@@ -10,6 +10,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Pawn extends Piece {
+    private static final int LIMIT_MOVE_COUNT = 1;
+    private static final int LIMIT_FIRST_MOVE_COUNT = 2;
+    private static final Character WHITE_INIT_ROW = '2';
+    private static final Character BLACK_INIT_ROW = '7';
+    private static final int ATTACKABLE_ROW_DIFF = 1;
+    private static final int ATTACKABLE_RIGNT_COLUMN_DIFF = 1;
+    private static final int ATTACKABLE_LEFT_COLUMN_DIFF = -1;
+
     private final MoveRule rule;
     private final MoveRule firstRule;
     private final MoveRule attactRule;
@@ -20,9 +28,9 @@ public class Pawn extends Piece {
         List<Direction> possibleDirections = Arrays.asList(VerticalDirection.getInstance());
         List<Direction> attackDirections = Arrays.asList(VerticalDirection.getInstance(),
                 RightDiagonalDirection.getInstance(), LeftDiagonalDirection.getInstance());
-        this.rule = new MoveRule(possibleDirections, 1);
-        this.firstRule = new MoveRule(possibleDirections,2);
-        this.attactRule = new MoveRule(attackDirections,1);
+        this.rule = new MoveRule(possibleDirections, LIMIT_MOVE_COUNT);
+        this.firstRule = new MoveRule(possibleDirections, LIMIT_FIRST_MOVE_COUNT);
+        this.attactRule = new MoveRule(attackDirections, LIMIT_MOVE_COUNT);
     }
 
     @Override
@@ -43,8 +51,8 @@ public class Pawn extends Piece {
         rule.judge(navigator);
     }
 
-    private boolean isReverse(Navigator navigator){
-        if(this.aliance == Aliance.WHITE){
+    private boolean isReverse(Navigator navigator) {
+        if (this.aliance == Aliance.WHITE) {
             return navigator.isReverse();
         }
         return !navigator.isReverse();
@@ -52,23 +60,23 @@ public class Pawn extends Piece {
 
     private boolean isFirstMove(Position startPosition) {
         if (this.aliance == Aliance.WHITE) {
-            return startPosition.toString().charAt(1) == '2';
+            return startPosition.toString().charAt(1) == WHITE_INIT_ROW;
         }
-        return startPosition.toString().charAt(1) == '7';
+        return startPosition.toString().charAt(1) == BLACK_INIT_ROW;
     }
 
     private boolean isAttackMove(Board board, Position startPosition) {
-        Position attackablePosition1 = startPosition.movePosition(1,1);
-        Position attackablePosition2 = startPosition.movePosition(1,-1);
-        Piece attackablePiece1 = getAttackablePiece(board,attackablePosition1);
-        Piece attackablePiece2 = getAttackablePiece(board,attackablePosition2);
+        Position attackablePosition1 = startPosition.movePosition(ATTACKABLE_ROW_DIFF, ATTACKABLE_RIGNT_COLUMN_DIFF);
+        Position attackablePosition2 = startPosition.movePosition(ATTACKABLE_ROW_DIFF, ATTACKABLE_LEFT_COLUMN_DIFF);
+        Piece attackablePiece1 = getAttackablePiece(board, attackablePosition1);
+        Piece attackablePiece2 = getAttackablePiece(board, attackablePosition2);
 
         return ((attackablePiece1 != null) && (attackablePiece1.getAliance() != board.getThisTurn()))
                 || ((attackablePiece2 != null) && (attackablePiece2.getAliance() != board.getThisTurn()));
     }
 
-    private Piece getAttackablePiece(Board board,Position position){
-        if(position == null){
+    private Piece getAttackablePiece(Board board, Position position) {
+        if (position == null) {
             return null;
         }
         return board.pieceValueOf(position.toString());
@@ -81,6 +89,5 @@ public class Pawn extends Piece {
         }
         return pieceValue.getName().toLowerCase();
     }
-
 }
 

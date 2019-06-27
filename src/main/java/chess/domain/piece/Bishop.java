@@ -9,13 +9,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Bishop extends Piece {
+    private static final int LIMIT_MOVE_COUNT = 7;
+
     private final MoveRule rule;
 
     public Bishop(Aliance aliance, PieceValue pieceValue) {
         super(aliance, pieceValue);
 
         List<Direction> possibleDirections = Arrays.asList(RightDiagonalDirection.getInstance(), LeftDiagonalDirection.getInstance());
-        this.rule = new MoveRule(possibleDirections, 7);
+        this.rule = new MoveRule(possibleDirections, LIMIT_MOVE_COUNT);
     }
 
     @Override

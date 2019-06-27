@@ -1,4 +1,4 @@
-package domain;
+package chess.domain.domain;
 
 import chess.domain.Aliance;
 import chess.domain.Board;
@@ -14,7 +14,7 @@ public class ResultCalculatorTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new Board(Aliance.WHITE);
         resultCalculator = new ResultCalculator(board);
     }
 
@@ -26,11 +26,11 @@ public class ResultCalculatorTest {
 
     @Test
     void 폰겹칠때_점수확인() {
-        board.movePiece("d2","d4");
+        board.movePiece("d2", "d4");
         board.switchTurn();
-        board.movePiece("e7","e5");
+        board.movePiece("e7", "e5");
         board.switchTurn();
-        board.movePiece("d4","e5");
+        board.movePiece("d4", "e5");
         assertThat(resultCalculator.calculateResult().get(Aliance.WHITE)).isEqualTo((double) 37);
     }
 }

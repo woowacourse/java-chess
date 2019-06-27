@@ -22,18 +22,14 @@ public class Column {
         return columns.get(column);
     }
 
-    public String moveColumn(int distance) {
-        int newColumnAscii = column.charAt(0) + distance;
-
-        return String.valueOf((char) newColumnAscii);
-    }
-
     public static List<Column> getColumns() {
         return new ArrayList<>(columns.values());
     }
 
-    public String getColumn() {
-        return column;
+    public String moveColumn(int distance) {
+        int newColumnAscii = column.charAt(0) + distance;
+
+        return String.valueOf((char) newColumnAscii);
     }
 
     @Override

@@ -1,8 +1,6 @@
-package domain;
+package chess.domain.domain;
 
 import chess.domain.Column;
-import chess.domain.Row;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -38,6 +36,6 @@ public class ColumnTest {
     @Test
     void 열_차이() {
         Column column = Column.valueOf("d");
-        assertThat(column.getDifference(column.valueOf("a"))).isEqualTo(3);
+        assertThat(column.getDifference(Column.valueOf("a"))).isEqualTo(3);
     }
 }

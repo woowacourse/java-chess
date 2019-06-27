@@ -1,7 +1,7 @@
-package dao;
+package chess.dao;
 
 import chess.domain.DBConnector;
-import dto.GameDto;
+import chess.dto.GameDto;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;

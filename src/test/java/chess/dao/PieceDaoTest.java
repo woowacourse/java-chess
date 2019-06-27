@@ -1,8 +1,8 @@
-package dao;
+package chess.dao;
 
 import chess.domain.DBConnector;
-import dto.NavigatorDto;
-import dto.PieceDto;
+import chess.dto.NavigatorDto;
+import chess.dto.PieceDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

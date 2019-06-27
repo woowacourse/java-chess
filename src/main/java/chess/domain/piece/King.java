@@ -7,14 +7,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class King extends Piece {
+    private static final int LIMIT_MOVE_COUNT = 1;
+
     private final MoveRule rule;
 
     public King(Aliance aliance, PieceValue pieceValue) {
         super(aliance, pieceValue);
 
         List<Direction> possibleDirections = Arrays.asList(VerticalDirection.getInstance(), HorizonDirection.getInstance(),
-                                                            RightDiagonalDirection.getInstance(), LeftDiagonalDirection.getInstance());
-        this.rule = new MoveRule(possibleDirections, 1);
+                RightDiagonalDirection.getInstance(), LeftDiagonalDirection.getInstance());
+        this.rule = new MoveRule(possibleDirections, LIMIT_MOVE_COUNT);
     }
 
     @Override

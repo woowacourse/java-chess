@@ -1,4 +1,4 @@
-package domain.piece;
+package chess.domain.domain.piece;
 
 import chess.domain.Aliance;
 import chess.domain.PieceValue;

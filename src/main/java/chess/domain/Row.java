@@ -28,14 +28,14 @@ public class Row {
         return rows.get(row);
     }
 
+    public static List<Row> getRows() {
+        return new ArrayList<>(rows.values());
+    }
+
     public String moveRow(int distance) {
         int newRowAscii = row.charAt(0) + distance;
 
         return String.valueOf((char) newRowAscii);
-    }
-
-    public static List<Row> getRows() {
-        return new ArrayList<>(rows.values());
     }
 
     public String getRow() {

@@ -1,4 +1,4 @@
-package domain;
+package chess.domain.domain;
 
 import chess.domain.MoveRule;
 import chess.domain.Navigator;

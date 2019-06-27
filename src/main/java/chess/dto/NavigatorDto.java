@@ -1,4 +1,4 @@
-package dto;
+package chess.dto;
 
 public class NavigatorDto {
     private final int gameId;

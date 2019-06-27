@@ -1,21 +1,8 @@
 package chess;
 
-import chess.domain.*;
-import chess.service.GameService;
-import chess.service.PieceService;
-import chess.service.UserService;
-import com.google.gson.Gson;
-import dao.*;
-import dto.GameDto;
-import dto.NavigatorDto;
-import dto.PieceDto;
-import dto.UserDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;

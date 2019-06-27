@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +16,12 @@ public class ResultCalculator {
         this.board = board;
     }
 
-    public Map<Aliance, Double> calculateResult(){
+    public Map<Aliance, Double> calculateResult() {
         List<Piece> pieces = board.getPieces()
                 .values()
                 .stream()
                 .collect(Collectors.toList());
-        Map<Aliance,Double> result = new HashMap<>();
+        Map<Aliance, Double> result = new HashMap<>();
         double whiteScore = getTotalScore(pieces, Aliance.WHITE);
         double blackScore = getTotalScore(pieces, Aliance.BLACK);
         result.put(Aliance.WHITE, whiteScore - DUPLICATE_PAWN_SCORE * board.getDuplicatePawnCount(Aliance.WHITE));

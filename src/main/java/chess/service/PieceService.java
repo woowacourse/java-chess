@@ -1,13 +1,12 @@
 package chess.service;
 
+import chess.dao.PieceDao;
+import chess.dao.PieceDaoImpl;
 import chess.domain.Board;
-import chess.domain.Navigator;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import dao.PieceDao;
-import dao.PieceDaoImpl;
-import dto.NavigatorDto;
-import dto.PieceDto;
+import chess.dto.NavigatorDto;
+import chess.dto.PieceDto;
 
 import java.util.List;
 import java.util.Map;
@@ -15,20 +14,17 @@ import java.util.Map;
 public class PieceService {
     private static PieceDao pieceDao = PieceDaoImpl.getInstance();
 
-    private PieceService(){
+    private PieceService() {}
 
-    }
-
-
-    public static List<PieceDto> findByGameId(int gameId){
+    public static List<PieceDto> findByGameId(int gameId) {
         return pieceDao.findByGameId(gameId);
     }
 
-    public static void updatePiece(NavigatorDto navigatorDto){
+    public static void updatePiece(NavigatorDto navigatorDto) {
         pieceDao.updatePiece(navigatorDto);
     }
 
-    public static Board setBoard(Board board, List<PieceDto> pieceDtos, int gameId){
+    public static Board setBoard(Board board, List<PieceDto> pieceDtos, int gameId) {
         if (pieceDtos.size() == 0) {
             board.initBoard();
             Map<Position, Piece> pieces = board.getPieces();

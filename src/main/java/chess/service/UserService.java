@@ -1,17 +1,16 @@
 package chess.service;
 
-import dao.UserDao;
-import dao.UserDaoImpl;
-import dto.UserDto;
+import chess.dao.UserDao;
+import chess.dao.UserDaoImpl;
+import chess.dto.UserDto;
 import spark.Request;
 
 import java.util.List;
 
 public class UserService {
     private static UserDao userDao = UserDaoImpl.getInstance();
-    private UserService(){
 
-    }
+    private UserService() {}
 
     public static void addUsers(Request req, int gameId) {
         UserDto whiteUserDto = new UserDto(gameId, req.queryParams("white_user"), 2);
@@ -20,8 +19,7 @@ public class UserService {
         userDao.addUser(blackUserDto);
     }
 
-    public static List<UserDto> findByGameId(int gameId){
+    public static List<UserDto> findByGameId(int gameId) {
         return userDao.findByGameId(gameId);
     }
-
 }

@@ -9,6 +9,17 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Board {
+    private static final String WHITE_INIT_ROW = "2";
+    private static final String BLACK_INIT_ROW = "7";
+    private static final int KING_KIND_ID = 1;
+    private static final int QUEEN_KIND_ID = 2;
+    private static final int ROOK_KIND_ID = 3;
+    private static final int KNIGHT_KIND_ID = 4;
+    private static final int BISHOP_KIND_ID = 5;
+    private static final int PAWN_KIND_ID = 6;
+    private static final String KING_NAME = "K";
+    private static final String PAWN_NAME = "P";
+
     private Map<Position, Piece> pieces = new HashMap<>();
     private Aliance thisTurn;
 
@@ -35,8 +46,8 @@ public class Board {
         pieces.put(Position.valueOf("g8"), new Knight(Aliance.BLACK, PieceValue.KNIGHT));
         pieces.put(Position.valueOf("h8"), new Rook(Aliance.BLACK, PieceValue.ROOK));
 
-        List<Position> whitePawnPositions = Position.getRowPositions("2");
-        List<Position> blackPawnPositions = Position.getRowPositions("7");
+        List<Position> whitePawnPositions = Position.getRowPositions(WHITE_INIT_ROW);
+        List<Position> blackPawnPositions = Position.getRowPositions(BLACK_INIT_ROW);
 
         for (Position whitePawnPosition : whitePawnPositions) {
             pieces.put(whitePawnPosition, new Pawn(Aliance.WHITE, PieceValue.PAWN));
@@ -48,28 +59,28 @@ public class Board {
     }
 
     public void putPiece(String position, int teamId, int kindId) {
-        if (kindId == 1) {
+        if (kindId == KING_KIND_ID) {
             pieces.put(Position.valueOf(position), new King(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
         }
-        if (kindId == 2) {
+        if (kindId == QUEEN_KIND_ID) {
             pieces.put(Position.valueOf(position), new Queen(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
         }
-        if (kindId == 3) {
+        if (kindId == ROOK_KIND_ID) {
             pieces.put(Position.valueOf(position), new Rook(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
         }
-        if (kindId == 4) {
+        if (kindId == KNIGHT_KIND_ID) {
             pieces.put(Position.valueOf(position), new Knight(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
         }
-        if (kindId == 5) {
+        if (kindId == BISHOP_KIND_ID) {
             pieces.put(Position.valueOf(position), new Bishop(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
         }
-        if (kindId == 6) {
+        if (kindId == PAWN_KIND_ID) {
             pieces.put(Position.valueOf(position), new Pawn(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
         }
     }
 
     public Piece pieceValueOf(String position) {
-        if(position ==null){
+        if (position == null) {
             return null;
         }
         return pieces.get(Position.valueOf(position));
@@ -106,7 +117,7 @@ public class Board {
             return;
         }
 
-        if(!pieceValueOf(position).isDifferentTeam(thisTurn)){
+        if (!pieceValueOf(position).isDifferentTeam(thisTurn)) {
             throw new IllegalArgumentException("우리팀 말을 공격할 수 없습니다.");
         }
     }
@@ -116,21 +127,21 @@ public class Board {
             throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
         }
 
-        if(pieceValueOf(position).isDifferentTeam(thisTurn)){
+        if (pieceValueOf(position).isDifferentTeam(thisTurn)) {
             throw new IllegalArgumentException("상대팀 말은 움직일 수 없습니다.");
         }
     }
 
-    public void checkUnOccupiedPosition(String position){
+    public void checkUnOccupiedPosition(String position) {
         if (pieceValueOf(position) != null) {
             throw new IllegalArgumentException("이동경로에 다른 말이 있습니다.");
         }
     }
 
-    public long getDuplicatePawnCount(Aliance aliance){
+    public long getDuplicatePawnCount(Aliance aliance) {
         List<Position> pawnPositions = pieces.keySet().stream()
                 .filter(k -> pieces.get(k).getAliance() == aliance)
-                .filter(k -> pieces.get(k).getPieceValue().getName() == "P")
+                .filter(k -> pieces.get(k).getPieceValue().getName() == PAWN_NAME)
                 .collect(Collectors.toList());
 
         List<Character> pawnColumns = pawnPositions.stream()
@@ -145,14 +156,14 @@ public class Board {
                 .reduce((long) 0, (a, b) -> a + b);
     }
 
-    public boolean isKingAlive(Aliance aliance){
+    public boolean isKingAlive(Aliance aliance) {
         return pieces.values().stream()
                 .filter(p -> p.getAliance() == aliance)
-                .filter(p -> p.getPieceValue().getName() == "K")
+                .filter(p -> p.getPieceValue().getName() == KING_NAME)
                 .count() != 0;
     }
 
-    public Map<Position, Piece> getPieces(){
+    public Map<Position, Piece> getPieces() {
         return pieces;
     }
 

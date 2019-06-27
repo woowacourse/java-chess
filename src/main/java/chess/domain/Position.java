@@ -38,18 +38,18 @@ public class Position {
         }
     }
 
-    public Position movePosition(int rowDistance, int columnDistance) {
-        String movedRow = row.moveRow(rowDistance);
-        String movedColumn = column.moveColumn(columnDistance);
-
-        return positions.get(movedColumn + movedRow);
-    }
-
     public static List<Position> getRowPositions(String rowName) {
         return positions.values()
                 .stream()
                 .filter(v -> v.row == Row.valueOf(rowName))
                 .collect(Collectors.toList());
+    }
+
+    public Position movePosition(int rowDistance, int columnDistance) {
+        String movedRow = row.moveRow(rowDistance);
+        String movedColumn = column.moveColumn(columnDistance);
+
+        return positions.get(movedColumn + movedRow);
     }
 
     public int getRowDifference(Position anotherPosition) {

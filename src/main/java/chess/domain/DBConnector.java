@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class DBConnector {
     private static final String SERVER = "localhost";
-    private static String DATABASE = "chess_db";
     private static final String USER_NAME = "stopsilver";
     private static final String PASSWORD = "12345678";
+    private static String DATABASE = "chess_db";
 
     private DBConnector() {}
 
@@ -16,11 +16,11 @@ public class DBConnector {
         private static final DBConnector instance = new DBConnector();
     }
 
-    public static DBConnector getInstance () {
+    public static DBConnector getInstance() {
         return DBUtilsHolder.instance;
     }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         Connection con = null;
         // 드라이버 로딩
         try {
@@ -40,15 +40,6 @@ public class DBConnector {
         }
 
         return con;
-    }
-
-    public static void closeConnection(Connection con) {
-        try { // 드라이버 연결해제
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
     }
 
     public static void setDATABASE(String DATABASE) {

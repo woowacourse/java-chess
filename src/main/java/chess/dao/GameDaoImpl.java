@@ -1,7 +1,7 @@
-package dao;
+package chess.dao;
 
 import chess.domain.DBConnector;
-import dto.GameDto;
+import chess.dto.GameDto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,8 +27,8 @@ public class GameDaoImpl implements GameDao {
         try (Connection con = CONNECTOR.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, WHITE_TURN);
-            pstmt.executeUpdate();
-            try(ResultSet rs = pstmt.getGeneratedKeys()){
+
+            try (ResultSet rs = pstmt.getGeneratedKeys()) {
                 rs.next();
                 result = rs.getInt(1);
             }
@@ -41,7 +41,7 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public GameDto findById(int id) {
-        String query = "SELECT * FROM game WHERE id = ?";
+        String query = "SELECT id, is_end, team_id FROM game WHERE id = ?";
         GameDto game = null;
 
         try (Connection con = CONNECTOR.getConnection();
@@ -54,18 +54,16 @@ public class GameDaoImpl implements GameDao {
             game = new GameDto(rs.getInt("id"),
                     rs.getBoolean("is_end"),
                     rs.getInt("team_id"));
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("게임 정보를 받아올 수 없습니다.");
         }
-
         return game;
     }
 
     @Override
     public List<GameDto> findNotEndGames() {
-        String query = "SELECT * FROM game WHERE is_end = 0";
+        String query = "SELECT id, is_end, team_id FROM game WHERE is_end = 0";
         List<GameDto> gameDtos = new ArrayList<>();
 
         try (Connection con = CONNECTOR.getConnection();
@@ -91,12 +89,12 @@ public class GameDaoImpl implements GameDao {
         int result;
 
         try (Connection con = CONNECTOR.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query)){
+             PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, gameDto.getTurn().getTeamId());
             pstmt.setBoolean(2, gameDto.isEnd());
             pstmt.setInt(3, gameDto.getId());
             result = pstmt.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("게임 정보를 업데이트 할 수 없습니다.");
         }
@@ -109,10 +107,10 @@ public class GameDaoImpl implements GameDao {
         int result;
 
         try (Connection con = CONNECTOR.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query)){
-            pstmt.setInt(1,id);
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, id);
             result = pstmt.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("게임을 삭제할 수 없습니다.");
         }
