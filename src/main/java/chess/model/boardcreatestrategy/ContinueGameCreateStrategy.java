@@ -1,5 +1,7 @@
-package chess.model;
+package chess.model.boardcreatestrategy;
 
+import chess.model.dto.BoardDTO;
+import chess.model.board.Tile;
 import chess.model.piece.*;
 
 import java.util.*;

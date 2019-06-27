@@ -1,11 +1,14 @@
 package chess.model;
 
+import chess.model.board.Coordinate;
+import chess.model.board.Tile;
 import chess.model.piece.Empty;
 import chess.model.piece.Pawn;
+import chess.model.piece.Route;
+import chess.model.vector.Vector;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;

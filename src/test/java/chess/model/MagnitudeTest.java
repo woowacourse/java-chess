@@ -1,5 +1,8 @@
 package chess.model;
 
+import chess.model.board.Coordinate;
+import chess.model.vector.Direction;
+import chess.model.vector.Magnitude;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

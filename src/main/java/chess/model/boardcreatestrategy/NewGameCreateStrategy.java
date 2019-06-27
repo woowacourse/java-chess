@@ -1,10 +1,10 @@
-package chess.model;
+package chess.model.boardcreatestrategy;
 
+import chess.model.board.Tile;
 import chess.model.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static chess.model.ChessGame.BLACK_TEAM_COLOR;
 import static chess.model.ChessGame.WHITE_TEAM_COLOR;

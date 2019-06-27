@@ -1,10 +1,15 @@
-package chess.model;
+package chess.model.board;
 
+import chess.model.piece.Route;
+import chess.model.ScoreResult;
+import chess.model.boardcreatestrategy.CreateStrategy;
 import chess.model.piece.*;
+import chess.model.vector.Direction;
+import chess.model.vector.Vector;
 
 import java.util.*;
 
-import static chess.model.Direction.*;
+import static chess.model.vector.Direction.*;
 
 public class Board {
     private Map<String, Tile> tiles;
@@ -35,7 +40,7 @@ public class Board {
         Coordinate sourceCoordinateY = Coordinate.valueOf(Integer.parseInt(sourceAndTarget.get(0).substring(1)));
         Coordinate targetCoordinateX = Coordinate.valueOf(Integer.parseInt(sourceAndTarget.get(1).substring(0, 1)));
         Coordinate targetCoordinateY = Coordinate.valueOf(Integer.parseInt(sourceAndTarget.get(1).substring(1)));
-        Vector vector = new Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
+        chess.model.vector.Vector vector = new chess.model.vector.Vector(Arrays.asList(sourceCoordinateX, sourceCoordinateY, targetCoordinateX, targetCoordinateY));
 
         if (checkPiecePresentInRoute(sourceAndTarget, vector)) {
             throw new IllegalArgumentException("경로에 piece가 있어서 움직일 수 없습니다.");
@@ -51,14 +56,14 @@ public class Board {
         checkWhenPawn(sourcePosition, targetPosition, vector);
     }
 
-    private void checkWhenPawn(String sourcePosition, String targetPosition, Vector vector) {
+    private void checkWhenPawn(String sourcePosition, String targetPosition, chess.model.vector.Vector vector) {
         if (tiles.get(sourcePosition).askPieceIfPawn()) {
             checkWhenDiagonal(targetPosition, vector);
             checkWhenVertical(targetPosition, vector);
         }
     }
 
-    private void checkWhenDiagonal(String targetPosition, Vector vector) {
+    private void checkWhenDiagonal(String targetPosition, chess.model.vector.Vector vector) {
         if (Direction.isDiagonal(vector.getDirection())) {
             checkPiecePresentWhenDiagonal(targetPosition);
         }
@@ -70,7 +75,7 @@ public class Board {
         }
     }
 
-    private void checkWhenVertical(String targetPosition, Vector vector) {
+    private void checkWhenVertical(String targetPosition, chess.model.vector.Vector vector) {
         if ((vector.getDirection() == NORTH) || (vector.getDirection() == SOUTH)) {
             checkPiecePresentWhenVertical(targetPosition);
         }

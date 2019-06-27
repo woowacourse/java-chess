@@ -1,11 +1,12 @@
-package chess.model;
+package chess.model.board;
 
+import chess.model.piece.Route;
 import chess.model.piece.Piece;
+import chess.model.vector.Vector;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Tile {
     private static final int COORDINATE_LENGTH = 2;

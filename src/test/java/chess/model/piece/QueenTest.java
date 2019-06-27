@@ -1,8 +1,7 @@
 package chess.model.piece;
 
-import chess.model.Coordinate;
-import chess.model.Route;
-import chess.model.Vector;
+import chess.model.board.Coordinate;
+import chess.model.vector.Vector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

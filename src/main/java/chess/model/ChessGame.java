@@ -1,5 +1,8 @@
 package chess.model;
 
+import chess.model.board.Board;
+import chess.model.boardcreatestrategy.CreateStrategy;
+
 import java.util.Arrays;
 import java.util.List;
 

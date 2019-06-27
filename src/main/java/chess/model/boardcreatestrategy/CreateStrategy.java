@@ -1,4 +1,6 @@
-package chess.model;
+package chess.model.boardcreatestrategy;
+
+import chess.model.board.Tile;
 
 import java.util.Map;
 

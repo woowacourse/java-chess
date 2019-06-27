@@ -1,13 +1,12 @@
 package chess.model.piece;
 
-import chess.model.Coordinate;
-import chess.model.Direction;
-import chess.model.Route;
-import chess.model.Vector;
+import chess.model.board.Coordinate;
+import chess.model.vector.Direction;
+import chess.model.vector.Vector;
 
 import java.util.*;
 
-import static chess.model.Direction.*;
+import static chess.model.vector.Direction.*;
 
 // TODO: 2019-06-22 cloneSelf를 꼭 써야할까?
 public class Queen implements Piece {

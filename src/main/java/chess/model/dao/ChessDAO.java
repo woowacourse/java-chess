@@ -1,4 +1,6 @@
-package chess.model;
+package chess.model.dao;
+
+import chess.model.dto.BoardDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
