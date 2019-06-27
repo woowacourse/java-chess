@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.exception.InvalidIndexException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -42,13 +44,13 @@ public class Spot {
 
     private static void validationIndexCheck(int index) {
         if (index < START_INDEX || index > END_INDEX) {
-            throw new IllegalArgumentException("올바른 좌표를 입력해 주세요");
+            throw new InvalidIndexException("올바른 좌표를 입력해 주세요");
         }
     }
 
     private static void validationLocationCheck(int location) {
         if (location < 0 || location > 7) {
-            throw new IllegalArgumentException("올바른 좌표를 입력해 주세요");
+            throw new InvalidIndexException("올바른 좌표를 입력해 주세요");
         }
     }
 
