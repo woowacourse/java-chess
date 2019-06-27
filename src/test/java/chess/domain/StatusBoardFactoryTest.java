@@ -10,6 +10,6 @@ class StatusBoardFactoryTest {
         Board initBoard = BoardFactory.create();
         StatusBoard statusBoard = StatusBoardFactory.create(initBoard);
         StatusBoard expectedStatusBoard = new StatusBoard(38, 38);
-        assertThat(statusBoard.getBlackScore()).isEqualTo(expectedStatusBoard.getBlackScore());
+        assertThat(statusBoard).isEqualTo(expectedStatusBoard);
     }
 }

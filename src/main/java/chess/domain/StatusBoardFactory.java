@@ -17,11 +17,7 @@ public class StatusBoardFactory {
 
     private static double getTeamScore(Board board, Team team) {
         Map<Spot, Piece> pieces = board.getTeamPieces(team);
-        double score = getScoreExceptPawn(pieces);
-        List<Spot> pawnSpots = getPawnSpots(pieces);
-
-        score += getPawnScore(pawnSpots);
-        return score;
+        return getScoreExceptPawn(pieces) + getScorePawn(pieces);
     }
 
     private static double getScoreExceptPawn(Map<Spot, Piece> pieces) {
@@ -31,25 +27,22 @@ public class StatusBoardFactory {
                 .sum();
     }
 
-    private static List<Spot> getPawnSpots(Map<Spot, Piece> pieces) {
-        return pieces.entrySet().stream()
-                .filter(entry -> entry.getValue().score() == Pawn.PAWN_SCORE)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
-    }
-
-    private static double getPawnScore(List<Spot> pawnSpots) {
+    private static double getScorePawn(Map<Spot, Piece> pieces) {
+        List<Spot> pawnSpots = getPawnSpots(pieces);
         if (pawnSpots.isEmpty()) {
             return 0;
         }
         sortPawnByXSpot(pawnSpots);
         List<Integer> sameLinePawnCounts = getSameLinePawnCounts(pawnSpots);
 
-        double totalResult = 0;
-        for (Integer result : sameLinePawnCounts) {
-            totalResult += calculatePawnScore(result);
-        }
-        return totalResult;
+        return getTotalResult(sameLinePawnCounts);
+    }
+
+    private static List<Spot> getPawnSpots(Map<Spot, Piece> pieces) {
+        return pieces.entrySet().stream()
+                .filter(entry -> entry.getValue().score() == Pawn.PAWN_SCORE)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     private static void sortPawnByXSpot(List<Spot> pawnSpots) {
@@ -69,6 +62,14 @@ public class StatusBoardFactory {
         }
         results.add(count);
         return results;
+    }
+
+    private static double getTotalResult(List<Integer> sameLinePawnCounts) {
+        double totalResult = 0;
+        for (Integer result : sameLinePawnCounts) {
+            totalResult += calculatePawnScore(result);
+        }
+        return totalResult;
     }
 
     private static double calculatePawnScore(int number) {
