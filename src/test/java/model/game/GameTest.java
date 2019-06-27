@@ -1,6 +1,7 @@
 package model.game;
 
 import model.Position;
+import model.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,8 @@ class GameTest {
     void getCurrentScoreWhenPawnIsSameLine() {
         Game game = new Game();
 
-        game.movePiece(Position.of("a2"),Position.of("b3"));
+        Piece pawn = game.board().getPieceAt(Position.of("a2"));
+        pawn.moveTo(Position.of("b3"));
 
         assertThat(game.getCurrentScore(WHITE)).isEqualTo(37.0, offset(0.000001));
     }

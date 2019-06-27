@@ -12,7 +12,14 @@ public class Coordinate {
     private int value;
 
     private Coordinate(int value) {
+        validateValue(value);
         this.value = value;
+    }
+
+    private void validateValue(int value) {
+        if (MIN_VALUE > value || value > MAX_VALUE) {
+            throw new IllegalArgumentException("좌표점의 범위는 0에서 7까지입니다.");
+        }
     }
 
     static Coordinate of(int value) {
