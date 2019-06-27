@@ -24,7 +24,6 @@ public class JsonOutput {
     private static final String ERROR = "error";
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.#");
 
-
     public static String responseOk(final String keyName, final String value) {
         return squareBracketWrap(
                 keyAndStringValue(QUERY_STATUS, STATUS_OK)
