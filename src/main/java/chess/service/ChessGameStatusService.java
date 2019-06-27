@@ -9,6 +9,10 @@ import chess.persistence.dto.ChessGameDTO;
 import chess.persistence.dto.ChessGameStatusDto;
 
 public class ChessGameStatusService {
+    private ChessGameStatusService() {
+
+    }
+
     public static ChessGameStatusService getInstance() {
         return ChessGameStatusHolder.INSTANCE;
     }

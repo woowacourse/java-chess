@@ -7,6 +7,10 @@ import chess.persistence.dto.ChessGameDTO;
 public class GameGeneratorService {
     private static final int IS_ZERO = 0;
 
+    private GameGeneratorService() {
+
+    }
+
     public static GameGeneratorService getInstance() {
         return GameGeneratorHolder.INSTANCE;
     }

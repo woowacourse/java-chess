@@ -15,6 +15,10 @@ import chess.persistence.dto.ChessMoveDTO;
 public class PieceMoveService {
     private static final int PLUS_ROUND_NUMBER = 1;
 
+    private PieceMoveService() {
+
+    }
+
     public static PieceMoveService getInstance() {
         return PieceMoveServiceHolder.INSTANCE;
     }
