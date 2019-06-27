@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Direction {
     LEFT_TOP(-1, 1),
     TOP(0, 1),
@@ -34,4 +37,28 @@ public enum Direction {
     public int getDirectionY() {
         return directionY;
     }
+
+    public static List<Direction> linearDirection() {
+        return Arrays.asList(TOP, RIGHT, BOTTOM, LEFT);
+    }
+
+//    public static List<Direction> diagonalDirection() {
+//        return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+//    }
+//
+//    public static List<Direction> everyDirection() {
+//        return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+//    }
+//
+//    public static List<Direction> knightDirection() {
+//        return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
+//    }
+//
+//    public static List<Direction> whitePawnDirection() {
+//        return Arrays.asList(NORTH, NORTHTWO, NORTHEAST, NORTHWEST);
+//    }
+//
+//    public static List<Direction> blackPawnDirection() {
+//        return Arrays.asList(SOUTH, SOUTHTWO, SOUTHEAST, SOUTHWEST);
+//    }
 }

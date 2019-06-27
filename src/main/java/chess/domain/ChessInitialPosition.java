@@ -19,7 +19,7 @@ public class ChessInitialPosition {
     private static final int FIRST_BISHOP_X = 3;
     private static final int SECOND_BISHOP_X = 6;
     private static final int QUEEN_X = 4;
-    private static final int KING_X = 4;
+    private static final int KING_X = 5;
 
     private static final Map<ChessPieceInfo, List<Position>> initialPositions = new HashMap<>();
 
