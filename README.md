@@ -2,7 +2,6 @@
 체스 게임 구현을 위한 저장소
 
 ##To-do
- - Connection 닫기(try-with-resources)
 
 ##Done
  - isAlly 캐스팅 미필요 처리
@@ -12,7 +11,6 @@
  - Direction enum
  - e.printStackTrace 안티패턴 처리
  - Jdbc Template
- - Connection 닫기(try-with-resources)
  - DataBaseConnector sout 처리
  - 커넥션 실패에 대한 별도 예외 처리
  - List<List<String>> 처리
@@ -20,3 +18,4 @@
  - UpdateJdbcTemplate 클래스 메서드 선언 or 싱글턴 적용
  - Point.get 별도 예외 처리
  - isKing 리팩토링
+ - Connection 닫기(try-with-resources)

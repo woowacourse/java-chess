@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.domain.ChessGameException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,20 +21,22 @@ public class SelectJdbcTemplate {
         return template;
     }
 
-    public <T> T executeQuery(String query, List<String> parameters, Function<ResultSet, T> function) throws SQLException {
-        Connection con = DataBaseConnector.getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-        setParameter(pstmt, parameters);
-        ResultSet rs = pstmt.executeQuery();
-        T result = function.getResult(rs);
-        DataBaseConnector.closeConnection(con, pstmt, rs);
-        return result;
+    public <T> T executeQuery(String query, List<String> parameters, Function<ResultSet, T> function) {
+        try (Connection con = DataBaseConnector.getConnection();
+             PreparedStatement pstmt = createPreparedStatement(con, query, parameters);
+             ResultSet rs = pstmt.executeQuery()) {
+            return function.getResult(rs);
+        } catch (SQLException e) {
+            throw new ChessGameException(e.getMessage());
+        }
     }
 
-    public void setParameter(PreparedStatement pstmt, List<String> parameters) throws SQLException {
+    private PreparedStatement createPreparedStatement(Connection con, String query, List<String> parameters) throws SQLException {
+        PreparedStatement pstmt = con.prepareStatement(query);
         for (int i = 1; i <= parameters.size(); i++) {
             pstmt.setString(i, parameters.get(i - 1));
         }
+        return pstmt;
     }
 
     @FunctionalInterface

@@ -50,8 +50,4 @@ public class DataBaseConnector {
             throw new DataBaseConnectException("연결 해제 중에 에러가 발생하였습니다.");
         }
     }
-
-    static void closeConnection(Connection con, PreparedStatement pstmt) {
-        closeConnection(con, pstmt, null);
-    }
 }

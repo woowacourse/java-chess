@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.domain.ChessGameException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -18,17 +20,20 @@ public class UpdateJdbcTemplate {
         return template;
     }
 
-    public void updateQuery(String query, List<String> parameters) throws SQLException {
-        Connection con = DataBaseConnector.getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-        setParameter(pstmt, parameters);
-        pstmt.executeUpdate();
-        DataBaseConnector.closeConnection(con, pstmt);
+    public void updateQuery(String query, List<String> parameters) {
+        try (Connection con = DataBaseConnector.getConnection();
+             PreparedStatement pstmt = createPreparedStatement(con, query, parameters)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new ChessGameException(e.getMessage());
+        }
     }
 
-    public void setParameter(PreparedStatement pstmt, List<String> parameters) throws SQLException {
+    private PreparedStatement createPreparedStatement(Connection con, String query, List<String> parameters) throws SQLException {
+        PreparedStatement pstmt = con.prepareStatement(query);
         for (int i = 1; i <= parameters.size(); i++) {
             pstmt.setString(i, parameters.get(i - 1));
         }
+        return pstmt;
     }
 }
