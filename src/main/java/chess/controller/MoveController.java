@@ -35,6 +35,6 @@ public class MoveController {
             return new Gson().toJson(model);
         }
 
-        return new Gson().toJson(target);
+        return ResponseFactory.MOVE.apply(target);
     }
 }

@@ -25,10 +25,6 @@ public class StatusController {
         model.put("whiteScore" , score.getWhiteScore());
         model.put("loser", score.getLoser());
 
-        return render(model, "result.html");
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return ResponseFactory.STATUS.apply(model, "result.html");
     }
 }

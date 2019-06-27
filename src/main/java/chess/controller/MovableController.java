@@ -15,6 +15,6 @@ public class MovableController {
         Vectors vectors = game.movableArea(movableDto.getSrc());
 
         request.session().attribute("game", game);
-        return new Gson().toJson(vectors);
+        return ResponseFactory.MOVABLE.apply(vectors);
     }
 }

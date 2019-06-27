@@ -48,6 +48,6 @@ public class InitController {
                 game.getDeadList(PieceColor.WHITE), game.getDeadList(PieceColor.BLACK));
 
         request.session().attribute("game", game);
-        return new Gson().toJson(boardDto);
+        return ResponseFactory.INIT.apply(boardDto);
     }
 }

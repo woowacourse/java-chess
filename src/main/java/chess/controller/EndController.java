@@ -15,10 +15,6 @@ public class EndController {
         model.put("loser", loser);
         model.put("blackScore" , 0);
         model.put("whiteScore" , 0);
-        return render(model, "result.html");
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return ResponseFactory.END.apply(model, "result.html");
     }
 }
