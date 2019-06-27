@@ -9,9 +9,7 @@ import chess.model.unit.UnitClass;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Rule {
-    ; // Empty enum for static methods.
-
+public class Rule {
     private static Map<UnitClass, PieceRule> ruleMap = new HashMap<>();
 
     static {

@@ -36,7 +36,7 @@ public class Square {
             final Column column = square.getColumn();
             final Column newColumn = Column.getByIndex(column.getColumnIndex() + prevOrNext);
             return new Square(newColumn, square.getRow());
-        } catch (IllegalArgumentException | NullPointerException e) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -46,7 +46,7 @@ public class Square {
             final Row row = square.getRow();
             final Row newRow = Row.getByIndex(row.getRowIndex() + prevOrNext);
             return new Square(square.getColumn(), newRow);
-        } catch (IllegalArgumentException | NullPointerException e) {
+        } catch (Exception e) {
             return null;
         }
     }
