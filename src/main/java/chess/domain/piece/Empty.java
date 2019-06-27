@@ -4,8 +4,6 @@ import chess.domain.Spot;
 import chess.domain.Team;
 
 public class Empty extends Piece {
-    private static Empty EMPTY;
-
     private Empty() {
         super(Team.EMPTY);
     }
@@ -15,9 +13,7 @@ public class Empty extends Piece {
     }
 
     private static class LazyHolder {
-
         private static Empty INSTANCE = new Empty();
-
     }
 
     @Override
