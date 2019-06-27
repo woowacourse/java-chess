@@ -21,6 +21,10 @@ public class Position implements Comparable<Position> {
         return CACHE[position.substring(0, 1).toLowerCase().charAt(0) - 'a'][Integer.parseInt(position.substring(1)) - 1];
     }
 
+    public static Position of(final Coord x, final Coord y) {
+        return CACHE[x.val()][y.val()];
+    }
+
     public static Optional<Position> ofSafe(final String input) {
         try {
             if (validator.matcher(input).matches()) {
@@ -106,6 +110,6 @@ public class Position implements Comparable<Position> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(this.x, this.y);
     }
 }

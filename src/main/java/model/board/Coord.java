@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 
 public class Coord implements Comparable<Coord> {
     static final int MIN = 0;
-    static final int MAX = Board.BOARD_WIDTH;
+    static final int MAX = Board.WIDTH;
 
     private static final Coord[] CACHE = IntStream.range(MIN, MAX)
                                                     .mapToObj(Coord::new)
@@ -15,6 +15,18 @@ public class Coord implements Comparable<Coord> {
 
     static Coord of(final int val) {
         return CACHE[val];
+    }
+
+    static Coord ofX(final String x) {
+        return ofX(x.charAt(0));
+    }
+
+    static Coord ofX(final char x) {
+        return CACHE[x - 'a'];
+    }
+
+    static Coord ofY(final int y) {
+        return CACHE[y - 1];
     }
 
     private Coord(final int val) {
@@ -30,12 +42,12 @@ public class Coord implements Comparable<Coord> {
     }
 
     public String convertToStringY() {
-        return String.valueOf(val + 1);
+        return String.valueOf(this.val + 1);
     }
 
     @Override
     public String toString() {
-        return String.valueOf(val);
+        return String.valueOf(this.val);
     }
 
     @Override
@@ -57,6 +69,6 @@ public class Coord implements Comparable<Coord> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(val);
+        return Objects.hash(this.val);
     }
 }

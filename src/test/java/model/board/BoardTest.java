@@ -1,13 +1,11 @@
 package model.board;
 
-import model.game.Player;
-import model.piece.*;
+import model.piece.Piece;
+import model.piece.Queen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -26,63 +24,15 @@ class BoardTest {
     @Test
     void initTest() {
         List<Piece> pieces = testBoard.getPieces().collect(Collectors.toList());
-        List<Class> types = Arrays.asList(
-                Rook.class,
-                Knight.class,
-                Bishop.class,
-                Queen.class,
-                King.class,
-                Bishop.class,
-                Knight.class,
-                Rook.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Pawn.class,
-                Rook.class,
-                Knight.class,
-                Bishop.class,
-                Queen.class,
-                King.class,
-                Bishop.class,
-                Knight.class,
-                Rook.class
+        List<String> pieceSymbols = Arrays.asList(
+                "♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖", "♙", "♙", "♙", "♙", "♙", "♙", "♙", "♙",
+                "♟", "♟", "♟", "♟", "♟", "♟", "♟", "♟", "♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"
         );
-        List<Position> positions = new ArrayList<>();
-        for (int i = Coord.MIN; i < Coord.MAX; i++) {
-            positions.add(Position.of(String.valueOf((char) (i + 'a')) + 1));
-            positions.add(Position.of(String.valueOf((char) (i + 'a')) + 2));
-            positions.add(Position.of(String.valueOf((char) (i + 'a')) + 7));
-            positions.add(Position.of(String.valueOf((char) (i + 'a')) + 8));
-        }
-        Collections.sort(positions);
         assertThat(
-                IntStream.range(0, pieces.size())
-                        .mapToObj(i ->
-                                pieces.get(i).getClass().equals(types.get(i))
-                                && pieces.get(i).position() == positions.get(i)
-                        )
+                IntStream.range(0, 32)
+                        .mapToObj(i -> pieces.get(i).toString().equals(pieceSymbols.get(i)))
                         .allMatch(x -> x)
         ).isTrue();
-        assertThat(
-                pieces.stream()
-                        .collect(Collectors.partitioningBy(x -> x.team() == Player.WHITE))
-                        .values().stream()
-                        .map(l -> l.size())
-                        .allMatch(i -> i == 16)
-        );
     }
 
     @Test
