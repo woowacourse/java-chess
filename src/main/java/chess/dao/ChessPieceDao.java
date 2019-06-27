@@ -16,17 +16,6 @@ public class ChessPieceDao {
         this.dataSource = dataSource;
     }
 
-    public void addPiece(String point, String color, String type) throws SQLException {
-        try (Connection conn = dataSource.getConnection()) {
-            String query = "INSERT INTO piece (point,color,type) VALUES(?,?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, point);
-            pstmt.setString(2, color);
-            pstmt.setString(3, type);
-            pstmt.executeUpdate();
-        }
-    }
-
     public void addPiece(PieceDto pieceDto) throws SQLException {
         setAutoIncrement();
         try (Connection conn = dataSource.getConnection()) {
@@ -60,17 +49,6 @@ public class ChessPieceDao {
                 piece.setType(rs.getString("type"));
                 return piece;
             }
-        }
-    }
-
-    public void updatePiece(String targetPoint, String sourceColor, String sourceType) throws SQLException {
-        try (Connection conn = dataSource.getConnection()) {
-            String query = "UPDATE piece SET color=?, type=? WHERE point=?";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, sourceColor);
-            pstmt.setString(2, sourceType);
-            pstmt.setString(3, targetPoint);
-            pstmt.executeUpdate();
         }
     }
 
