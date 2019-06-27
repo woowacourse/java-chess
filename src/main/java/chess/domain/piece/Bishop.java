@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.*;
@@ -15,12 +14,9 @@ public class Bishop extends NormalPiece {
 	}
 
 	public static Bishop valueOf(Player player, Position currentPosition) {
-		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
-				new MovementInfo(Direction.LEFT_TOP, MAX_DISTANCE_OF_BISHOP),
-				new MovementInfo(Direction.RIGHT_TOP, MAX_DISTANCE_OF_BISHOP),
-				new MovementInfo(Direction.RIGHT_BOTTOM, MAX_DISTANCE_OF_BISHOP),
-				new MovementInfo(Direction.LEFT_BOTTOM, MAX_DISTANCE_OF_BISHOP)));
-
+		List<MovementInfo> movementInfos = new ArrayList<>();
+		Direction.getBishopDirection().forEach(direction ->
+				movementInfos.add(new MovementInfo(direction, MAX_DISTANCE_OF_BISHOP)));
 		return new Bishop(player, Type.BISHOP, movementInfos, currentPosition);
 	}
 }

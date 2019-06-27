@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.*;
@@ -15,16 +14,9 @@ public class Knight extends NormalPiece {
 	}
 
 	public static Knight valueOf(Player player, Position currentPosition) {
-		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
-				new MovementInfo(Direction.LEFT_LEFT_BOTTOM, MAX_DISTANCE_OF_KNIGHT),
-				new MovementInfo(Direction.LEFT_LEFT_TOP, MAX_DISTANCE_OF_KNIGHT),
-				new MovementInfo(Direction.TOP_TOP_LEFT, MAX_DISTANCE_OF_KNIGHT),
-				new MovementInfo(Direction.TOP_TOP_RIGHT, MAX_DISTANCE_OF_KNIGHT),
-				new MovementInfo(Direction.RIGHT_RIGHT_TOP, MAX_DISTANCE_OF_KNIGHT),
-				new MovementInfo(Direction.RIGHT_RIGHT_BOTTOM, MAX_DISTANCE_OF_KNIGHT),
-				new MovementInfo(Direction.BOTTOM_BOTTOM_RIGHT, MAX_DISTANCE_OF_KNIGHT),
-				new MovementInfo(Direction.BOTTOM_BOTTOM_LEFT, MAX_DISTANCE_OF_KNIGHT)));
-
+		List<MovementInfo> movementInfos = new ArrayList<>();
+		Direction.getKnightDirection().forEach(direction ->
+				movementInfos.add(new MovementInfo(direction, MAX_DISTANCE_OF_KNIGHT)));
 		return new Knight(player, Type.KNIGHT, movementInfos, currentPosition);
 	}
 }

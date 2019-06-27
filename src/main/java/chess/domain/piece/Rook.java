@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.*;
@@ -15,12 +14,9 @@ public class Rook extends NormalPiece {
 	}
 
 	public static Rook valueOf(Player player, Position currentPosition) {
-		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
-				new MovementInfo(Direction.LEFT, MAX_DISTANCE_OF_ROOK),
-				new MovementInfo(Direction.TOP, MAX_DISTANCE_OF_ROOK),
-				new MovementInfo(Direction.RIGHT, MAX_DISTANCE_OF_ROOK),
-				new MovementInfo(Direction.BOTTOM, MAX_DISTANCE_OF_ROOK)));
-
+		List<MovementInfo> movementInfos = new ArrayList<>();
+		Direction.getRookDirection().forEach(direction ->
+				movementInfos.add(new MovementInfo(direction, MAX_DISTANCE_OF_ROOK)));
 		return new Rook(player, Type.ROOK, movementInfos, currentPosition);
 	}
 }

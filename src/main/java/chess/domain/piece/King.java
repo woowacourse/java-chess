@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.*;
@@ -15,16 +14,9 @@ public class King extends NormalPiece {
 	}
 
 	public static King valueOf(Player player, Position currentPosition) {
-		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
-				new MovementInfo(Direction.LEFT, MAX_DISTANCE_OF_KING),
-				new MovementInfo(Direction.LEFT_TOP, MAX_DISTANCE_OF_KING),
-				new MovementInfo(Direction.TOP, MAX_DISTANCE_OF_KING),
-				new MovementInfo(Direction.RIGHT_TOP, MAX_DISTANCE_OF_KING),
-				new MovementInfo(Direction.RIGHT, MAX_DISTANCE_OF_KING),
-				new MovementInfo(Direction.RIGHT_BOTTOM, MAX_DISTANCE_OF_KING),
-				new MovementInfo(Direction.BOTTOM, MAX_DISTANCE_OF_KING),
-				new MovementInfo(Direction.LEFT_BOTTOM, MAX_DISTANCE_OF_KING)));
-
+		List<MovementInfo> movementInfos = new ArrayList<>();
+		Direction.getKingDirection().forEach(direction ->
+				movementInfos.add(new MovementInfo(direction, MAX_DISTANCE_OF_KING)));
 		return new King(player, Type.KING, movementInfos, currentPosition);
 	}
 }

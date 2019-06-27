@@ -28,21 +28,19 @@ public class Pawn extends Piece {
 
 	private static Pawn getWhite(Position position) {
 		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
-				new MovementInfo(Direction.TOP, MAX_DISTANCE_OF_INITIAL_PAWN)));
-		List<MovementInfo> attackMovementInfos = new ArrayList<>(Arrays.asList(
-				new MovementInfo(Direction.LEFT_TOP, MAX_DISTANCE_OF_DEFAULT_PAWN),
-				new MovementInfo(Direction.RIGHT_TOP, MAX_DISTANCE_OF_DEFAULT_PAWN)));
-
+				new MovementInfo(Direction.getWhitePawnMoveDirection(), MAX_DISTANCE_OF_INITIAL_PAWN)));
+		List<MovementInfo> attackMovementInfos = new ArrayList<>();
+		Direction.getWhitePawnAttackDirection().forEach(direction ->
+				attackMovementInfos.add(new MovementInfo(direction, MAX_DISTANCE_OF_DEFAULT_PAWN)));
 		return new Pawn(Player.WHITE, movementInfos, attackMovementInfos, position, new Score(PAWN_SCORE));
 	}
 
 	private static Pawn getBlack(Position position) {
 		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
-				new MovementInfo(Direction.BOTTOM, MAX_DISTANCE_OF_INITIAL_PAWN)));
-		List<MovementInfo> attackMovementInfos = new ArrayList<>(Arrays.asList(
-				new MovementInfo(Direction.LEFT_BOTTOM, MAX_DISTANCE_OF_DEFAULT_PAWN),
-				new MovementInfo(Direction.RIGHT_BOTTOM, MAX_DISTANCE_OF_DEFAULT_PAWN)));
-
+				new MovementInfo(Direction.getBlackPawnMoveDirection(), MAX_DISTANCE_OF_INITIAL_PAWN)));
+		List<MovementInfo> attackMovementInfos = new ArrayList<>();
+		Direction.getBlackPawnAttackDirection().forEach(direction ->
+				attackMovementInfos.add(new MovementInfo(direction, MAX_DISTANCE_OF_DEFAULT_PAWN)));
 		return new Pawn(Player.BLACK, movementInfos, attackMovementInfos, position, new Score(PAWN_SCORE));
 	}
 

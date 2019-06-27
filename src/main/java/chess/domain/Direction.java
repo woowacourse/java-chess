@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Direction {
 	LEFT_TOP(-1, 1),
 	TOP(0, 1),
@@ -33,5 +36,42 @@ public enum Direction {
 
 	public int getDirectionY() {
 		return directionY;
+	}
+
+	public static List<Direction> getKingDirection() {
+		return Arrays.asList(LEFT, LEFT_TOP, TOP, RIGHT_TOP, RIGHT, RIGHT_BOTTOM, BOTTOM, LEFT_BOTTOM);
+	}
+
+	public static List<Direction> getBishopDirection() {
+		return Arrays.asList(LEFT_TOP, RIGHT_TOP, RIGHT_BOTTOM, LEFT_BOTTOM);
+	}
+
+	public static List<Direction> getKnightDirection() {
+		return Arrays.asList(LEFT_LEFT_BOTTOM, LEFT_LEFT_TOP, TOP_TOP_LEFT, TOP_TOP_RIGHT,
+				RIGHT_RIGHT_TOP, RIGHT_RIGHT_BOTTOM, BOTTOM_BOTTOM_RIGHT, BOTTOM_BOTTOM_LEFT);
+	}
+
+	public static Direction getWhitePawnMoveDirection() {
+		return TOP;
+	}
+
+	public static Direction getBlackPawnMoveDirection() {
+		return BOTTOM;
+	}
+
+	public static List<Direction> getWhitePawnAttackDirection() {
+		return Arrays.asList(LEFT_TOP, RIGHT_TOP);
+	}
+
+	public static List<Direction> getBlackPawnAttackDirection() {
+		return Arrays.asList(LEFT_BOTTOM, RIGHT_BOTTOM);
+	}
+
+	public static List<Direction> getQueenDirection(){
+		return Arrays.asList(LEFT, LEFT_TOP, TOP, RIGHT_TOP, RIGHT, RIGHT_BOTTOM, BOTTOM, LEFT_BOTTOM);
+	}
+
+	public static List<Direction> getRookDirection() {
+		return Arrays.asList(LEFT, TOP, RIGHT, BOTTOM);
 	}
 }

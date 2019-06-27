@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.*;
@@ -15,16 +14,9 @@ public class Queen extends NormalPiece {
 	}
 
 	public static Queen valueOf(Player player, Position currentPosition) {
-		List<MovementInfo> movementInfos = new ArrayList<>(Arrays.asList(
-				new MovementInfo(Direction.LEFT, MAX_DISTANCE_OF_QUEEN),
-				new MovementInfo(Direction.LEFT_TOP, MAX_DISTANCE_OF_QUEEN),
-				new MovementInfo(Direction.TOP, MAX_DISTANCE_OF_QUEEN),
-				new MovementInfo(Direction.RIGHT_TOP, MAX_DISTANCE_OF_QUEEN),
-				new MovementInfo(Direction.RIGHT, MAX_DISTANCE_OF_QUEEN),
-				new MovementInfo(Direction.RIGHT_BOTTOM, MAX_DISTANCE_OF_QUEEN),
-				new MovementInfo(Direction.BOTTOM, MAX_DISTANCE_OF_QUEEN),
-				new MovementInfo(Direction.LEFT_BOTTOM, MAX_DISTANCE_OF_QUEEN)));
-
+		List<MovementInfo> movementInfos = new ArrayList<>();
+		Direction.getQueenDirection().forEach(direction ->
+				movementInfos.add(new MovementInfo(direction, MAX_DISTANCE_OF_QUEEN)));
 		return new Queen(player, Type.QUEEN, movementInfos, currentPosition);
 	}
 }
