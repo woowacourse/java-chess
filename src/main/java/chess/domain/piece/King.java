@@ -20,16 +20,15 @@ public class King extends Piece {
         int xGap = startSpot.xGap(endSpot);
         int yGap = startSpot.yGap(endSpot);
 
-        if (validMove(xGap, yGap)) {
+        if (validDistance(xGap, yGap)) {
             MovementUnit movement = startSpot.calculateMovement(endSpot);
             return movementUnits.contains(movement);
         }
 
         return false;
-
     }
 
-    private boolean validMove(int xGap, int yGap) {
+    private boolean validDistance(int xGap, int yGap) {
         return (Math.pow(xGap, 2) + Math.pow(yGap, 2)) < 4;
     }
 
