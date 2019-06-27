@@ -1,66 +1,62 @@
 package chess.domain;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChessInitialPosition {
-	private static Map<ChessPiece, List<Position>> positions = new HashMap<>();
-
+	private static Map<ChessPiece, List<Position>> initialPositions = new HashMap<>();
 	static {
-		positions.put(ChessPiece.BLACK_PAWN, Arrays.asList(
-				Position.getPosition(1, 7),
-				Position.getPosition(2, 7),
-				Position.getPosition(3, 7),
-				Position.getPosition(4, 7),
-				Position.getPosition(5, 7),
-				Position.getPosition(6, 7),
-				Position.getPosition(7, 7),
-				Position.getPosition(8, 7)));
-		positions.put(ChessPiece.WHITE_PAWN, Arrays.asList(
-				Position.getPosition(1, 2),
-				Position.getPosition(2, 2),
-				Position.getPosition(3, 2),
-				Position.getPosition(4, 2),
-				Position.getPosition(5, 2),
-				Position.getPosition(6, 2),
-				Position.getPosition(7, 2),
-				Position.getPosition(8, 2)));
+		initializePawn(ChessPiece.BLACK_PAWN, 7);
+		initializePawn(ChessPiece.WHITE_PAWN, 2);
 
-		positions.put(ChessPiece.BLACK_ROOK, Arrays.asList(
-				Position.getPosition(1, 8),
-				Position.getPosition(8, 8)));
-		positions.put(ChessPiece.WHITE_ROOK, Arrays.asList(
-				Position.getPosition(1, 1),
-				Position.getPosition(8, 1)));
+		initializeRookPosition(ChessPiece.BLACK_ROOK, 8);
+		initializeRookPosition(ChessPiece.WHITE_ROOK, 1);
 
-		positions.put(ChessPiece.BLACK_KNIGHT, Arrays.asList(
-				Position.getPosition(2, 8),
-				Position.getPosition(7, 8)));
-		positions.put(ChessPiece.WHITE_KNIGHT, Arrays.asList(
-				Position.getPosition(2, 1),
-				Position.getPosition(7, 1)));
+		initializeKnightPosition(ChessPiece.BLACK_KNIGHT, 8);
+		initializeKnightPosition(ChessPiece.WHITE_KNIGHT, 1);
 
-		positions.put(ChessPiece.BLACK_BISHOP, Arrays.asList(
-				Position.getPosition(3, 8),
-				Position.getPosition(6, 8)));
-		positions.put(ChessPiece.WHITE_BISHOP, Arrays.asList(
-				Position.getPosition(3, 1),
-				Position.getPosition(6, 1)));
+		initializeBishopPosition(ChessPiece.BLACK_BISHOP, 8);
+		initializeBishopPosition(ChessPiece.WHITE_BISHOP, 1);
 
-		positions.put(ChessPiece.BLACK_QUEEN, Arrays.asList(
-				Position.getPosition(4, 8)));
-		positions.put(ChessPiece.WHITE_QUEEN, Arrays.asList(
-				Position.getPosition(4, 1)));
+		initializeQueenPosition(ChessPiece.BLACK_QUEEN, 8);
+		initializeQueenPosition(ChessPiece.WHITE_QUEEN, 1);
 
-		positions.put(ChessPiece.BLACK_KING, Arrays.asList(
-				Position.getPosition(5, 8)));
-		positions.put(ChessPiece.WHITE_KING, Arrays.asList(
-				Position.getPosition(5, 1)));
+		initializeKingPosition(ChessPiece.BLACK_KING, 8);
+		initializeKingPosition(ChessPiece.WHITE_KING, 1);
+	}
+
+	public static void initializePawn(ChessPiece pawn, int coordinateY) {
+		List<Position> position = new ArrayList<>();
+		for (int i = 1; i <= 8; ++i) {
+			position.add(Position.getPosition(i, coordinateY));
+		}
+		initialPositions.put(pawn, position);
+	}
+
+	private static void initializeRookPosition(ChessPiece rook, int coordinateY) {
+		initialPositions.put(rook, Arrays.asList(
+				Position.getPosition(1, coordinateY), Position.getPosition(8, coordinateY)
+		));
+	}
+
+	private static void initializeKnightPosition(ChessPiece knight, int coordinateY) {
+		initialPositions.put(knight, Arrays.asList(
+				Position.getPosition(2, coordinateY), Position.getPosition(7, coordinateY)));
+	}
+
+	private static void initializeBishopPosition(ChessPiece bishop, int coordinateY) {
+		initialPositions.put(bishop, Arrays.asList(
+				Position.getPosition(3, coordinateY), Position.getPosition(6, coordinateY)));
+	}
+
+	private static void initializeQueenPosition(ChessPiece queen, int coordinateY) {
+		initialPositions.put(queen, Arrays.asList(Position.getPosition(4, coordinateY)));
+	}
+
+	private static void initializeKingPosition(ChessPiece king, int coordinateY) {
+		initialPositions.put(king, Arrays.asList(Position.getPosition(5, coordinateY)));
 	}
 
 	public Map<ChessPiece, List<Position>> getPositions() {
-		return positions;
+		return initialPositions;
 	}
 }
