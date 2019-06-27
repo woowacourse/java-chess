@@ -29,7 +29,7 @@ public class ChessBoardDAO {
                                 , entry.getKey().getY(), entry.getValue().getType().toString()
                                 , entry.getValue().getTeam().toString());
                     }).count();
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return FAILED;
         }
     }
@@ -47,7 +47,7 @@ public class ChessBoardDAO {
         String query = "SELECT * FROM chess.board WHERE game_id=? ORDER BY round_no DESC LIMIT 1";
         try {
             return JDBC_TEMPLATE.queryForBoard(query, gameId);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return FAILED;
         }
 

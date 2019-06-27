@@ -15,13 +15,13 @@ public class JDBCTemplate {
     private JDBCTemplate() {
     }
 
-    public static JDBCTemplate getInstance(){
+    public static JDBCTemplate getInstance() {
         return JdbcTemplateHandler.INSTANCE;
     }
 
     public long update(String query, int gameId, int roundNo, int x, int y, String type, String team) {
-        try(Connection connection = DataSourceFactory.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
             pstmt.setInt(1, gameId);
             pstmt.setInt(2, roundNo);
             pstmt.setInt(3, x);
@@ -35,9 +35,9 @@ public class JDBCTemplate {
         }
     }
 
-    public long update(String query, boolean gameStatus, String lastUser){
-        try(Connection connection = DataSourceFactory.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
+    public long update(String query, boolean gameStatus, String lastUser) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
             pstmt.setBoolean(1, gameStatus);
             pstmt.setString(2, lastUser);
 
@@ -47,9 +47,9 @@ public class JDBCTemplate {
         }
     }
 
-    public long update(String query, boolean gameStatus, String lastUser, int gameId){
-        try(Connection connection = DataSourceFactory.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
+    public long update(String query, boolean gameStatus, String lastUser, int gameId) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
             pstmt.setBoolean(1, gameStatus);
             pstmt.setString(2, lastUser);
             pstmt.setInt(3, gameId);
@@ -61,8 +61,8 @@ public class JDBCTemplate {
     }
 
     public Map<Square, Piece> queryForBoard(String query, int gameId, int roundNo) {
-        try(Connection connection = DataSourceFactory.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
             pstmt.setInt(1, gameId);
             pstmt.setInt(2, roundNo);
 
@@ -81,8 +81,8 @@ public class JDBCTemplate {
     }
 
     public int queryForBoard(String query, int gameId) {
-        try(Connection connection = DataSourceFactory.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
             pstmt.setInt(1, gameId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -95,9 +95,9 @@ public class JDBCTemplate {
         }
     }
 
-    public ChessGameDTO queryForGame(String query){
-        try(Connection connection = DataSourceFactory.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
+    public ChessGameDTO queryForGame(String query) {
+        try (Connection connection = DataSourceFactory.getInstance().getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS)) {
             ResultSet rs = pstmt.executeQuery();
             ChessGameDTO chessGameDTO = new ChessGameDTO();
 
@@ -116,7 +116,7 @@ public class JDBCTemplate {
         }
     }
 
-    private static class JdbcTemplateHandler{
+    private static class JdbcTemplateHandler {
         private static final JDBCTemplate INSTANCE = new JDBCTemplate();
     }
 }

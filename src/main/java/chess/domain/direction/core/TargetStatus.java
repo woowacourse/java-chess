@@ -21,7 +21,7 @@ public enum TargetStatus {
                     .filter(e -> e.checkStatus(source, target))
                     .findAny()
                     .orElse(null);
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             throw new IllegalArgumentException("TargetStatus 클래스에 있는 valuesOf 함수에서 NullPointException 발생");
         }
     }

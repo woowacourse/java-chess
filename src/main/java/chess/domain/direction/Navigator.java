@@ -19,7 +19,7 @@ public class Navigator {
                     .map(way -> way.generateRoute(source, target))
                     .findAny()
                     .orElse(null);
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             throw new IllegalArgumentException("getWay에서 NullPointerException 이 발생");
         }
     }

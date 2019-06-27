@@ -36,6 +36,6 @@ public class MovedPawn extends Piece {
                         new Way(Direction.DOWN, MoveStrategy.ONLY_EMPTY, 1),
                         new Way(Direction.DOWN_LEFT, MoveStrategy.ONLY_ENEMY, 1),
                         new Way(Direction.DOWN_RIGHT, MoveStrategy.ONLY_ENEMY, 1)
-        ));
+                ));
     }
 }
