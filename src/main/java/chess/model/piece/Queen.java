@@ -42,7 +42,7 @@ public class Queen implements Piece {
             throw new IllegalArgumentException("없는 팀입니다!");
         }
     }
-    
+
     @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
         validateNull(sourceCoordinates, vector);
@@ -53,42 +53,42 @@ public class Queen implements Piece {
             Coordinate coordinateX = sourceCoordinates.get(0);
             Coordinate coordinateY = sourceCoordinates.get(1);
 
-            if (vector.getDirection() == NORTH) {
+            if (vector.isEqualToDirection(NORTH)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(i)));
                 }
             }
-            if (vector.getDirection() == SOUTH) {
+            if (vector.isEqualToDirection(SOUTH)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(-i)));
                 }
             }
-            if (vector.getDirection() == WEST) {
+            if (vector.isEqualToDirection(WEST)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(0)));
                 }
             }
-            if (vector.getDirection() == EAST) {
+            if (vector.isEqualToDirection(EAST)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(0)));
                 }
             }
-            if (vector.getDirection() == SOUTHEAST) {
+            if (vector.isEqualToDirection(SOUTHEAST)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(-i)));
                 }
             }
-            if (vector.getDirection() == SOUTHWEST) {
+            if (vector.isEqualToDirection(SOUTHWEST)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(-i)));
                 }
             }
-            if (vector.getDirection() == NORTHEAST) {
+            if (vector.isEqualToDirection(NORTHEAST)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(i)));
                 }
             }
-            if (vector.getDirection() == NORTHWEST) {
+            if (vector.isEqualToDirection(NORTHWEST)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(i)));
                 }

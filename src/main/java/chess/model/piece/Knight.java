@@ -51,28 +51,28 @@ public class Knight implements Piece {
             Coordinate coordinateX = sourceCoordinates.get(0);
             Coordinate coordinateY = sourceCoordinates.get(1);
 
-            if (vector.getDirection() == KNIGHT_EASTNORTH) {
+            if (vector.isEqualToDirection(KNIGHT_EASTNORTH)) {
                 routes.add(coordinateX.addCoordinate(2).concat(coordinateY.addCoordinate(1)));
             }
-            if (vector.getDirection() == KNIGHT_EASTSOUTH) {
+            if (vector.isEqualToDirection(KNIGHT_EASTSOUTH)) {
                 routes.add(coordinateX.addCoordinate(2).concat(coordinateY.addCoordinate(-1)));
             }
-            if (vector.getDirection() == KNIGHT_NORTHEAST) {
+            if (vector.isEqualToDirection(KNIGHT_NORTHEAST)) {
                 routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(2)));
             }
-            if (vector.getDirection() == KNIGHT_NORTHWEST) {
+            if (vector.isEqualToDirection(KNIGHT_NORTHWEST)) {
                 routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(2)));
             }
-            if (vector.getDirection() == KNIGHT_SOUTHEAST) {
+            if (vector.isEqualToDirection(KNIGHT_SOUTHWEST)) {
                 routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(-2)));
             }
-            if (vector.getDirection() == KNIGHT_SOUTHWEST) {
+            if (vector.isEqualToDirection(KNIGHT_SOUTHWEST)) {
                 routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(-2)));
             }
-            if (vector.getDirection() == KNIGHT_WESTNORTH) {
+            if (vector.isEqualToDirection(KNIGHT_WESTNORTH)) {
                 routes.add(coordinateX.addCoordinate(-2).concat(coordinateY.addCoordinate(1)));
             }
-            if (vector.getDirection() == KNIGHT_WESTSOUTH) {
+            if (vector.isEqualToDirection(KNIGHT_WESTSOUTH)) {
                 routes.add(coordinateX.addCoordinate(-2).concat(coordinateY.addCoordinate(-1)));
             }
 

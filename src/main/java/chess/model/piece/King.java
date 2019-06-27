@@ -53,28 +53,28 @@ public class King implements Piece {
             Coordinate coordinateX = sourceCoordinates.get(0);
             Coordinate coordinateY = sourceCoordinates.get(1);
 
-            if (vector.getDirection() == NORTH) {
+            if (vector.isEqualToDirection(NORTH)) {
                 routes.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(1)));
             }
-            if (vector.getDirection() == SOUTH) {
+            if (vector.isEqualToDirection(SOUTH)) {
                 routes.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(-1)));
             }
-            if (vector.getDirection() == WEST) {
+            if (vector.isEqualToDirection(WEST)) {
                 routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(0)));
             }
-            if (vector.getDirection() == EAST) {
+            if (vector.isEqualToDirection(EAST)) {
                 routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(0)));
             }
-            if (vector.getDirection() == SOUTHEAST) {
+            if (vector.isEqualToDirection(SOUTHEAST)) {
                 routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(-1)));
             }
-            if (vector.getDirection() == SOUTHWEST) {
+            if (vector.isEqualToDirection(SOUTHWEST)) {
                 routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(-1)));
             }
-            if (vector.getDirection() == NORTHEAST) {
+            if (vector.isEqualToDirection(NORTHEAST)) {
                 routes.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(1)));
             }
-            if (vector.getDirection() == NORTHWEST) {
+            if (vector.isEqualToDirection(NORTHWEST)) {
                 routes.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(1)));
             }
 

@@ -18,6 +18,10 @@ public class Vector {
         magnitude = new Magnitude(coordinates, direction);
     }
 
+    public boolean isEqualToDirection(Direction direction) {
+        return this.direction.equals(direction);
+    }
+
     public Direction getDirection() {
         return direction;
     }

@@ -103,7 +103,7 @@ public class Board {
     }
 
     private void checkWhenVertical(String targetPosition, Vector vector) {
-        if ((vector.getDirection() == NORTH) || (vector.getDirection() == SOUTH)) {
+        if (vector.isEqualToDirection(NORTH) || vector.isEqualToDirection(SOUTH)) {
             checkPiecePresentWhenVertical(targetPosition);
         }
     }

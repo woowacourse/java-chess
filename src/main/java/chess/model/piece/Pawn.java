@@ -115,7 +115,7 @@ public class Pawn implements Piece {
 
 
     private void addWhenNorthGivenMagnitude2(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getDirection() == NORTH) {
+        if (vector.isEqualToDirection(NORTH)) {
             Coordinate coordinateX = coordinates.get(0);
             Coordinate coordinateY = coordinates.get(1);
 
@@ -125,7 +125,7 @@ public class Pawn implements Piece {
     }
 
     private void addWhenSouthGivenMagnitude2(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getDirection() == SOUTH) {
+        if (vector.isEqualToDirection(SOUTH)) {
             Coordinate coordinateX = coordinates.get(0);
             Coordinate coordinateY = coordinates.get(1);
 
@@ -146,7 +146,7 @@ public class Pawn implements Piece {
     }
 
     private void addWhenSouthWest(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getDirection() == SOUTHWEST) {
+        if (vector.isEqualToDirection(SOUTHWEST)) {
             Coordinate coordinateX = coordinates.get(0);
             Coordinate coordinateY = coordinates.get(1);
             route.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(-1)));
@@ -154,7 +154,7 @@ public class Pawn implements Piece {
     }
 
     private void addWhenSouthEast(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getDirection() == SOUTHEAST) {
+        if (vector.isEqualToDirection(SOUTHEAST)) {
             Coordinate coordinateX = coordinates.get(0);
             Coordinate coordinateY = coordinates.get(1);
             route.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(-1)));
@@ -162,7 +162,7 @@ public class Pawn implements Piece {
     }
 
     private void addWhenNorthEast(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getDirection() == NORTHEAST) {
+        if (vector.isEqualToDirection(NORTHEAST)) {
             Coordinate coordinateX = coordinates.get(0);
             Coordinate coordinateY = coordinates.get(1);
             route.add(coordinateX.addCoordinate(1).concat(coordinateY.addCoordinate(1)));
@@ -170,7 +170,7 @@ public class Pawn implements Piece {
     }
 
     private void addWhenNorthWest(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getDirection() == NORTHWEST) {
+        if (vector.isEqualToDirection(NORTHWEST)) {
             Coordinate coordinateX = coordinates.get(0);
             Coordinate coordinateY = coordinates.get(1);
             route.add(coordinateX.addCoordinate(-1).concat(coordinateY.addCoordinate(1)));
@@ -178,7 +178,7 @@ public class Pawn implements Piece {
     }
 
     private void addWhenNorthGivenMagnitude1(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getDirection() == NORTH) {
+        if (vector.isEqualToDirection(NORTH)) {
             Coordinate coordinateX = coordinates.get(0);
             Coordinate coordinateY = coordinates.get(1);
             route.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(1)));
@@ -186,7 +186,7 @@ public class Pawn implements Piece {
     }
 
     private void addWhenSouthGivenMagnitude1(List<Coordinate> coordinates, Vector vector, List<String> route) {
-        if (vector.getDirection() == SOUTH) {
+        if (vector.isEqualToDirection(SOUTH)) {
             Coordinate coordinateX = coordinates.get(0);
             Coordinate coordinateY = coordinates.get(1);
             route.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(-1)));

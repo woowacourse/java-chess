@@ -47,22 +47,22 @@ public class Rook implements Piece {
             Coordinate coordinateX = sourceCoordinates.get(0);
             Coordinate coordinateY = sourceCoordinates.get(1);
 
-            if (vector.getDirection() == NORTH) {
+            if (vector.isEqualToDirection(NORTH)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(i)));
                 }
             }
-            if (vector.getDirection() == SOUTH) {
+            if (vector.isEqualToDirection(SOUTH)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(0).concat(coordinateY.addCoordinate(-i)));
                 }
             }
-            if (vector.getDirection() == WEST) {
+            if (vector.isEqualToDirection(WEST)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(-i).concat(coordinateY.addCoordinate(0)));
                 }
             }
-            if (vector.getDirection() == EAST) {
+            if (vector.isEqualToDirection(EAST)) {
                 for (int i = 1; i <= vector.getMagnitude().getMagnitude(); i++) {
                     routes.add(coordinateX.addCoordinate(i).concat(coordinateY.addCoordinate(0)));
                 }
