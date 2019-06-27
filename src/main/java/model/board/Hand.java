@@ -1,6 +1,6 @@
 package model.board;
 
-import model.game.Player;
+import model.game.Color;
 import model.piece.King;
 import model.piece.Pawn;
 import model.piece.Piece;
@@ -13,10 +13,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Hand {
-    private final Player owner;
+    private enum TileState {
+        OWN,
+        ENEMY,
+        EMPTY
+    }
+
+    private final Color owner;
     private final Board board;
 
-    public Hand(final Player owner, final Board board) {
+    public Hand(final Color owner, final Board board) {
         this.owner = Optional.ofNullable(owner).orElseThrow(IllegalArgumentException::new);
         this.board = Optional.ofNullable(board).orElseThrow(IllegalArgumentException::new);
     }
@@ -27,11 +33,14 @@ public class Hand {
 
     public List<Position> getPossibleDestinations(final Position src) {
         return this.board.getPieceAt(src).map(p -> {
+            if (p.team() != this.owner) {
+                return new ArrayList<Position>();
+            }
             if (p.isPawn()) {
                 return getPossibleDestinationsOfPawn((Pawn) p);
             }
             if (p.isKing()) {
-                return collectEveryPossibleDestinations((King) p).collect(Collectors.toList());
+                return getPossibleDestinationsOfKing((King) p);
             }
             return collectEveryPossibleDestinations(p).collect(Collectors.toList());
         }).orElse(new ArrayList<>());
@@ -48,11 +57,14 @@ public class Hand {
         ).collect(Collectors.toList());
     }
 
+    private List<Position> getPossibleDestinationsOfKing(final King king) {
+        return collectEveryPossibleDestinations(king).collect(Collectors.toList());
+    }
+
     private Stream<Position> collectEveryPossibleDestinations(final Piece src) {
         return src.getIteratorsOfPossibleDestinations()
                     .map(i -> proceedUntilBlocked(i))
-                    .reduce(Stream::concat)
-                    .orElseGet(Stream::empty);
+                    .reduce(Stream.empty(), Stream::concat);
     }
 
     private Stream<Position> proceedUntilBlocked(final Iterator<Position> i) {
@@ -75,10 +87,4 @@ public class Hand {
         }
         return result.stream();
     }
-}
-
-enum TileState {
-    OWN,
-    ENEMY,
-    EMPTY
 }
