@@ -6,7 +6,7 @@ public enum Team {
     BLANK;
 
     public static Team switchTeam(Team team) {
-        if (team.equals(WHITE)) {
+        if (WHITE.equals(team)) {
             return BLACK;
         }
         return WHITE;
