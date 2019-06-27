@@ -1,7 +1,7 @@
 package chess.model.board;
 
-import chess.model.piece.Route;
 import chess.model.piece.Piece;
+import chess.model.piece.Route;
 import chess.model.vector.Vector;
 
 import java.util.Arrays;

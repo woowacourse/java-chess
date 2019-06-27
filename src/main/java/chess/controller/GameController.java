@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.model.ChessGame;
 import chess.model.ScoreResult;
-import chess.model.dao.ChessDAO;
 import chess.model.dto.BoardDTO;
 import chess.service.GameService;
 import spark.Request;
@@ -56,22 +55,15 @@ public class GameController {
         String target = req.queryParams("target");
         ChessGame game = req.session().attribute("game");
 
-        //여기부터 내가 했음
         gameService.movePiece(game, source, target);
-        BoardDTO boardDTO = gameService.produceBoardDTO(game); //new BoardDTO(game.convertToList());
-        gameService.updateBoard(boardDTO); //chessDAO.updateBoard(boardDTO);
-
-//        if (game.checkKingDead()) {
-//            chessDAO.deleteAll();
-//            return render(model, "end.html");
-//        }
-
+        BoardDTO boardDTO = gameService.produceBoardDTO(game);
+        gameService.updateBoard(boardDTO);
         model.put("winner", game.getCurrentTeam());
-        if(gameService.checkKingDead(game)){
+
+        if (gameService.checkKingDead(game)) {
             gameService.deleteAll();
             return render(model, "end.html");
         }
-
         ScoreResult scoreResult = game.calculateScore();
 
         model.put("currentTeam", game.getCurrentTeam());

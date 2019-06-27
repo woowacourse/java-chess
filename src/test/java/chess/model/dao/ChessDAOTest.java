@@ -1,6 +1,5 @@
 package chess.model.dao;
 
-import chess.model.dao.ChessDAO;
 import chess.model.dto.BoardDTO;
 import org.junit.jupiter.api.Test;
 

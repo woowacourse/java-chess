@@ -1,6 +1,5 @@
 package chess.model.board;
 
-import chess.model.piece.Route;
 import chess.model.ScoreResult;
 import chess.model.boardcreatestrategy.CreateStrategy;
 import chess.model.piece.*;
@@ -9,7 +8,8 @@ import chess.model.vector.Vector;
 
 import java.util.*;
 
-import static chess.model.vector.Direction.*;
+import static chess.model.vector.Direction.NORTH;
+import static chess.model.vector.Direction.SOUTH;
 
 public class Board {
     private Map<String, Tile> tiles;

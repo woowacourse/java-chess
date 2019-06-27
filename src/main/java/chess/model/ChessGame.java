@@ -22,7 +22,7 @@ public class ChessGame {
     public static String WHITE_PAWN_SYMBOL = "p";
     public static String WHITE_TEAM_COLOR = "white";
     public static String BLACK_TEAM_COLOR = "black";
-    
+
     private Board board;
     private int turn;
 

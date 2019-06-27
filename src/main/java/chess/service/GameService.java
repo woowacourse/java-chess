@@ -1,7 +1,6 @@
 package chess.service;
 
 import chess.model.ChessGame;
-import chess.model.board.Board;
 import chess.model.boardcreatestrategy.ContinueGameCreateStrategy;
 import chess.model.boardcreatestrategy.NewGameCreateStrategy;
 import chess.model.dao.ChessDAO;

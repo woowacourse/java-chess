@@ -1,15 +1,8 @@
 package chess.model.board;
 
 import chess.model.ScoreResult;
-import chess.model.board.Board;
-import chess.model.board.Coordinate;
-import chess.model.board.Tile;
 import chess.model.boardcreatestrategy.NewGameCreateStrategy;
-import chess.model.piece.King;
-import chess.model.piece.Knight;
-import chess.model.piece.Pawn;
-import chess.model.piece.Queen;
-import chess.model.piece.Empty;
+import chess.model.piece.*;
 import chess.model.vector.Vector;
 import org.junit.jupiter.api.Test;
 

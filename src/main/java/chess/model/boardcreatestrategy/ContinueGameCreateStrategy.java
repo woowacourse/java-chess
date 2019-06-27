@@ -1,10 +1,13 @@
 package chess.model.boardcreatestrategy;
 
-import chess.model.dto.BoardDTO;
 import chess.model.board.Tile;
+import chess.model.dto.BoardDTO;
 import chess.model.piece.*;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static chess.model.ChessGame.*;
 
@@ -33,10 +36,10 @@ public class ContinueGameCreateStrategy implements CreateStrategy {
         }
     }
 
-    private void drawTilesFromPieces(String row, int i, Map<String,Tile> tiles) {
+    private void drawTilesFromPieces(String row, int i, Map<String, Tile> tiles) {
         for (int j = 1; j <= 8; j++) {
             String piece = row.substring(j - 1, j);
-            String coordinate = String.valueOf(j) + (i+1);
+            String coordinate = String.valueOf(j) + (i + 1);
 
             drawBlackPieces(i, tiles, piece, coordinate);
             drawWhitePieces(i, tiles, piece, coordinate);

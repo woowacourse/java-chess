@@ -18,7 +18,7 @@ public class NewGameCreateStrategy implements CreateStrategy {
     private static String SIXTH_ROW = "6";
     private static String SEVENTH_ROW = "7";
     private static String EIGTH_ROW = "8";
-    
+
     @Override
     public Map<String, Tile> create() {
         Map<String, Tile> tiles = new HashMap<>();

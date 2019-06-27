@@ -1,7 +1,5 @@
 package chess.model.board;
 
-import chess.model.board.Coordinate;
-import chess.model.board.Tile;
 import chess.model.piece.Empty;
 import chess.model.piece.Pawn;
 import chess.model.piece.Route;

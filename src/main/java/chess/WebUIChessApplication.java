@@ -2,21 +2,14 @@ package chess;
 
 import chess.controller.GameController;
 import chess.controller.MainController;
-import chess.model.*;
-import chess.model.boardcreatestrategy.ContinueGameCreateStrategy;
-import chess.model.boardcreatestrategy.NewGameCreateStrategy;
 import chess.model.dao.ChessDAO;
-import chess.model.dto.BoardDTO;
 import chess.service.GameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
