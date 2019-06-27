@@ -7,9 +7,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Knight extends ChessPiece {
-    private static final Knight knightBlack = new Knight(Team.BLACK);
-    private static final Knight knightWhite = new Knight(Team.WHITE);
-
+    private static final Knight knightBlack = new Knight(PieceType.KNIGHT_BLACK);
+    private static final Knight knightWhite = new Knight(PieceType.KNIGHT_WHITE);
 
     public static Knight getInstance(Team team) {
         if (team == Team.BLACK) {
@@ -21,18 +20,8 @@ public class Knight extends ChessPiece {
         throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
-    private Knight(Team team) {
-        super(getPieceTypeByTeam(team));
-    }
-
-    private static PieceType getPieceTypeByTeam(Team team) {
-        if (team == Team.BLACK) {
-            return PieceType.KNIGHT_BLACK;
-        }
-        if (team == Team.WHITE) {
-            return PieceType.KNIGHT_WHITE;
-        }
-        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
+    private Knight(PieceType pieceType) {
+        super(pieceType);
     }
 
     @Override

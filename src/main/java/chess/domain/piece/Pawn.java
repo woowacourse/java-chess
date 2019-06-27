@@ -29,8 +29,8 @@ public class Pawn extends ChessPiece {
         }
     }
 
-    private static final Pawn pawnBlack = new Pawn(Team.BLACK);
-    private static final Pawn pawnWhite = new Pawn(Team.WHITE);
+    private static final Pawn pawnBlack = new Pawn(PieceType.PAWN_BLACK);
+    private static final Pawn pawnWhite = new Pawn(PieceType.PAWN_WHITE);
 
     public static Pawn getInstance(Team team) {
         if (team == Team.BLACK) {
@@ -42,18 +42,8 @@ public class Pawn extends ChessPiece {
         throw new IllegalArgumentException("만들 수 없는 팀입니다.");
     }
 
-    private Pawn(Team team) {
-        super(getPieceTypeByTeam(team));
-    }
-
-    private static PieceType getPieceTypeByTeam(Team team) {
-        if (team == Team.BLACK) {
-            return PieceType.PAWN_BLACK;
-        }
-        if (team == Team.WHITE) {
-            return PieceType.PAWN_WHITE;
-        }
-        throw new IllegalArgumentException("만들 수 없는 팀입니다.");
+    private Pawn(PieceType pieceType) {
+        super(pieceType);
     }
 
     @Override

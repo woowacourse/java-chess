@@ -6,8 +6,8 @@ import chess.domain.coordinate.ChessCoordinate;
 import java.util.*;
 
 public class Rook extends ChessPiece {
-    private static final Rook rookBlack = new Rook(Team.BLACK);
-    private static final Rook rookWhite = new Rook(Team.WHITE);
+    private static final Rook rookBlack = new Rook(PieceType.ROOK_BLACK);
+    private static final Rook rookWhite = new Rook(PieceType.ROOK_WHITE);
 
     public static Rook getInstance(Team team) {
         if (team == Team.BLACK) {
@@ -19,18 +19,8 @@ public class Rook extends ChessPiece {
         throw new IllegalArgumentException();
     }
 
-    private Rook(Team team) {
-        super(getPieceTypeByTeam(team));
-    }
-
-    private static PieceType getPieceTypeByTeam(Team team) {
-        if (team == Team.BLACK) {
-            return PieceType.ROOK_BLACK;
-        }
-        if (team == Team.WHITE) {
-            return PieceType.ROOK_WHITE;
-        }
-        throw new IllegalArgumentException();
+    private Rook(PieceType pieceType) {
+        super(pieceType);
     }
 
     @Override
