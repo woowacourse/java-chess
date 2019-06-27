@@ -10,6 +10,9 @@ public class ChessGameDAO {
         return ChessGameDAOHandler.INSTANCE;
     }
 
+    private ChessGameDAO() {
+    }
+
     public long addGameStatus(ChessGameDTO chessGameDTO) {
         try (Connection connection = DataSourceFactory.getInstance().getConnection()) {
             String query = "INSERT INTO game(game_status, last_user) VALUES (?,?)";
