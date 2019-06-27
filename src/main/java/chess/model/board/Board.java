@@ -17,6 +17,9 @@ public class Board {
     public static final int INITIAL_COLUMN = 1;
     public static final int BLACK_PAWN_ROW = 2;
     public static final int WHITE_PAWN_ROW = 7;
+    private static final int HALF_SCORE_STANDARD = 1;
+    private static final double HALF_SCORE_OF_PAWN = Pawn.SCORE / 2;
+    public static final int TOTAL_COUNT_OF_KING = 2;
 
     private Map<String, Tile> tiles;
 
@@ -133,7 +136,27 @@ public class Board {
         double scoreOfWhite = 0;
         double scoreOfBlack = 0;
 
-        // 폰 탐색
+        collectPawns(locationsOfWhitePawns, locationsOfBlackPawns);
+
+        // 폰 점수계산
+        for (int column = INITIAL_COLUMN; column <= COLUMN_SIZE; column++) {
+            scoreOfWhite += calculatePawnScore(locationsOfWhitePawns, column);
+            scoreOfBlack += calculatePawnScore(locationsOfBlackPawns, column);
+        }
+
+        // 폰 이외의 말 점수계산
+        for (String location : tiles.keySet()) {
+            if (tiles.get(location).isPiecePresent()) {
+                Piece piece = tiles.get(location).getPiece();
+                scoreOfWhite += calculateNormalPieceScore(piece, "white");
+                scoreOfBlack += calculateNormalPieceScore(piece, "black");
+            }
+        }
+
+        return new ScoreResult(scoreOfWhite, scoreOfBlack);
+    }
+
+    private void collectPawns(List<String> locationsOfWhitePawns, List<String> locationsOfBlackPawns) {
         for (String currentLocation : tiles.keySet()) {
             if (tiles.get(currentLocation).isPiecePresent()
                     && tiles.get(currentLocation).askPieceIfPawn()
@@ -146,54 +169,28 @@ public class Board {
                 locationsOfBlackPawns.add(currentLocation);
             }
         }
+    }
 
-        // 폰 점수 계산
-        for (int i = 1; i <= 8; i++) {
-
-            // white팀 폰 점수 계산
-            int count = 0;
-            for (String location : locationsOfWhitePawns) {
-                if (location.substring(0, 1).equals(String.valueOf(i))) {
-                    count++;
-                }
-            }
-
-            if (count > 1) {
-                scoreOfWhite += (count * (Pawn.SCORE / 2));
-            } else {
-                scoreOfWhite += (count * Pawn.SCORE);
-            }
-
-            // black팀 폰 점수 계산
-            count = 0;
-            for (String location : locationsOfBlackPawns) {
-                if (location.substring(0, 1).equals(String.valueOf(i))) {
-                    count++;
-                }
-            }
-
-            if (count > 1) {
-                scoreOfBlack += (count * (Pawn.SCORE / 2));
-            } else {
-                scoreOfBlack += (count * Pawn.SCORE);
+    private double calculatePawnScore(List<String> locationsOfWhitePawns, int column) {
+        int count = 0;
+        for (String location : locationsOfWhitePawns) {
+            if (location.substring(0, 1).equals(String.valueOf(column))) {
+                count++;
             }
         }
 
-        // 폰 이외의 말 점수계산
-        for (String location : tiles.keySet()) {
-            if (tiles.get(location).isPiecePresent()) {
-                Piece piece = tiles.get(location).getPiece();
-                if (!piece.isPawn() && piece.askTeamColor().equals("white")) {
-                    scoreOfWhite += piece.getScore();
-                }
-
-                if (!piece.isPawn() && piece.askTeamColor().equals("black")) {
-                    scoreOfBlack += piece.getScore();
-                }
-            }
+        if (count > HALF_SCORE_STANDARD) {
+            return (count * HALF_SCORE_OF_PAWN);
         }
+        return (count * Pawn.SCORE);
 
-        return new ScoreResult(scoreOfWhite, scoreOfBlack);
+    }
+
+    private double calculateNormalPieceScore(Piece piece, String team) {
+        if (!piece.isPawn() && team.equals(piece.askTeamColor())) {
+            return piece.getScore();
+        }
+        return 0;
     }
 
     public Tile getTile(String coordinates) {
@@ -201,7 +198,7 @@ public class Board {
     }
 
     public boolean isRightTurn(String sourceCoordinate, int turn) {
-        String turnColor = (turn % 2 == 0) ? "black" : "white";
+        String turnColor = (turn % ChessGame.COUNT_OF_TEAM == 0) ? "black" : "white";
         return tiles.get(sourceCoordinate).askPieceWhichTeam().equals(turnColor);
 
     }
@@ -320,10 +317,7 @@ public class Board {
             }
 
         }
-        if (kingCount != 2) {
-            return false;
-        }
-        return true;
+        return kingCount == TOTAL_COUNT_OF_KING;
     }
 
     @Override

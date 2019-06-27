@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ChessGame {
-    private static final int COUNT_OF_TEAM = 2;
+    public static final int COUNT_OF_TEAM = 2;
 
     private Board board;
     private int turn;
