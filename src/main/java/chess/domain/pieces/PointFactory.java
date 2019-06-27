@@ -7,8 +7,10 @@ import java.util.Map;
 
 public class PointFactory {
 
+    private static final int INVALID_POINT = -1;
+
     private static Map<String, chess.domain.Point> bucket = new HashMap<>();
-    private static Point invalidPoint = new Point(-1, -1);
+    private static Point invalidPoint = new Point(INVALID_POINT, INVALID_POINT);
 
     static {
         for (int i = 'a'; i <= 'h'; ++i) {

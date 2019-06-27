@@ -9,11 +9,20 @@ import java.util.Map;
 
 public class ChessBoard {
 
+    private static final int INIT_WHITE_PIECE_POINT_Y = 1;
+    private static final int INIT_BLACK_PIECE_POINT_Y = 8;
+    private static final int INIT_WHITE_PAWN_POINT_Y = 2;
+    private static final int INIT_BLACK_PAWN_POINT_Y = 2;
+    private static final int START_BLANK_POINT_Y = 3;
+    private static final int END_BLANK_POINT_Y = 6;
+    private static final int START_BOARD_POINT_X = 1;
+    private static final int END_BOARD_POINT_X = 8;
+
     private Map<Point, Piece> points = new HashMap<>();
 
     public ChessBoard() {
-        initializePiece(Color.WHITE, 1, 2);
-        initializePiece(Color.BLACK, 8, 7);
+        initializePiece(Color.WHITE, INIT_WHITE_PIECE_POINT_Y, INIT_WHITE_PAWN_POINT_Y);
+        initializePiece(Color.BLACK, INIT_BLACK_PIECE_POINT_Y, INIT_BLACK_PAWN_POINT_Y);
         initializeBlank();
     }
 
@@ -36,9 +45,9 @@ public class ChessBoard {
     }
 
     private void initializeBlank() {
-        for (int i = 3; i <= 6; ++i) {
-            for (int j = 1; j <= 8; ++j) {
-                points.put(PointFactory.of(j, i), new Blank(Color.NONE));
+        for (int y = START_BLANK_POINT_Y; y <= END_BLANK_POINT_Y; ++y) {
+            for (int x = START_BOARD_POINT_X; x <= END_BOARD_POINT_X; ++x) {
+                points.put(PointFactory.of(x, y), new Blank(Color.NONE));
             }
         }
     }
@@ -57,13 +66,13 @@ public class ChessBoard {
         Piece targetPiece = points.get(target);
 
         if (sourcePiece.equalsType(Type.BLANK)) {
-            throw new IllegalArgumentException("말이 없다");
+            throw new IllegalArgumentException("해당 위치에는 체스 말이 없습니다!");
         }
         if (!sourcePiece.equalsColor(colorOfTurn)) {
-            throw new IllegalArgumentException("색깔이 다르다");
+            throw new IllegalArgumentException("현재 턴이 아닙니다!");
         }
         if (targetPiece.equalsColor(colorOfTurn)) {
-            throw new IllegalArgumentException("source와 target 색이 같다.");
+            throw new IllegalArgumentException("같은 색의 체스 말은 잡을 수 없습니다!");
         }
     }
 
@@ -78,7 +87,7 @@ public class ChessBoard {
                 .anyMatch(point -> !points.get(point).equalsType(Type.BLANK));
 
         if (hasBlank) {
-            throw new IllegalArgumentException("경로에 다른 말 있음.");
+            throw new IllegalArgumentException("체스가 이동하는 중간에 다른 체스 말이 존재합니다!");
         }
     }
 

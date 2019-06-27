@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
-    private static final int EMPTY = 0;
+    private static final int EMPTY_SIZE = 0;
     private static final int ONE_STEP = 1;
     private static final int TWO_STEP = 2;
 
@@ -61,7 +61,7 @@ public class Pawn extends Piece {
             nextPoint = nextPoint.plusPoint(direction);
         }
 
-        if (path.size() > EMPTY) {
+        if (path.size() > EMPTY_SIZE) {
             throw new IllegalArgumentException("갈 수 없는 위치입니다.");
         }
 
