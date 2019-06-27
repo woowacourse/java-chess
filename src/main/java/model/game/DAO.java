@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class DAO {
     private static final String server = "localhost";
-    private static final String database = "woowa";
-    private static final String userName = "donut";
-    private static final String password = "qwer1234";
+    private static final String database = "chess";
+    private static final String userName = "root";
+    private static final String password = "psw4Woowacourse";
 
     public static Connection connect() {
         Connection con = null;
