@@ -39,29 +39,11 @@ public class Board {
     }
 
     private boolean canMove(Tile currentTile, Tile goalTile) {
-        try {
-            Piece pieceOnCurrent = getPieceOnTile(currentTile);
-            boolean haveTarget = haveTarget(pieceOnCurrent, goalTile); //target 위치 비었는가, 적이 있는가
-            List<Tile> path = pieceOnCurrent.pathOf(currentTile, goalTile, haveTarget);
-            checkPathDisturb(path);
-            return true;
-        } catch (InvalidMovingException e) {
-            return false;
-        }
+        Piece pieceOnCurrent = getPieceOnTile(currentTile);
+        boolean haveTarget = board.containsKey(goalTile);
+        List<Tile> path = pieceOnCurrent.pathOf(currentTile, goalTile, haveTarget);
+        return checkPathDisturb(path);
     }
-
-    private boolean haveTarget(Piece pieceOnCurrent, Tile goalTile) {
-        if (!board.containsKey(goalTile)) {
-            return false;
-        }
-
-        if (board.get(goalTile).isSameColorWith(pieceOnCurrent)) {
-            throw new InvalidMovingException("같은 색깔의 말이 존재합니다.");
-        }
-
-        return true;
-    }
-
 
     private Optional<Piece> move(Tile current, Tile goal) {
         Optional<Piece> pieceOnGoal = Optional.ofNullable(board.get(goal));
@@ -77,12 +59,8 @@ public class Board {
         throw new InvalidMovingException("말이 없습니다");
     }
 
-    private void checkPathDisturb(List<Tile> path) {
-        boolean haveDisturb = path.stream().anyMatch(board::containsKey);
-
-        if (haveDisturb) {
-            throw new InvalidMovingException("경로 상에 말이 있습니다.");
-        }
+    private boolean checkPathDisturb(List<Tile> path) {
+        return path.stream().anyMatch(board::containsKey);
     }
 
     public double status(PieceColor color) {
@@ -117,5 +95,16 @@ public class Board {
 
     public Map<Tile, Piece> getBoard() {
         return board;
+    }
+
+    public boolean isSamePieceColor(String from, String to) {
+        Piece fromPiece = at(from);
+        try {
+            Piece toPiece = at(to);
+
+            return fromPiece.isSameColorWith(toPiece);
+        } catch (InvalidMovingException e) {
+            return false;
+        }
     }
 }

@@ -23,11 +23,18 @@ public class ChessGame {
 
     public void move(String from, String to) {
         checkTurn(from);
+        checkTargetColor(from, to);
 
         Optional<Piece> removed = board.order(from, to);
         turn = turn.opposite();
 
         checkKingDie(removed);
+    }
+
+    private void checkTargetColor(String from, String to) {
+        if (board.isSamePieceColor(from, to)) {
+            throw new InvalidMovingException("같은 색의 말이 있는 곳으로 이동 불가");
+        }
     }
 
     private void checkTurn(String from) {
