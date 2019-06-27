@@ -19,7 +19,7 @@ public enum TargetStatus {
         return Arrays.stream(values())
                 .filter(e -> e.checkStatus(source, target))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public boolean checkStatus(Piece source, Piece target) {
