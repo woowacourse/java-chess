@@ -1,11 +1,13 @@
 package chess;
 
 import chess.controller.GameController;
+import chess.controller.MainController;
 import chess.model.*;
 import chess.model.boardcreatestrategy.ContinueGameCreateStrategy;
 import chess.model.boardcreatestrategy.NewGameCreateStrategy;
 import chess.model.dao.ChessDAO;
 import chess.model.dto.BoardDTO;
+import chess.service.GameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -18,12 +20,12 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        GameController gameController = new GameController();
+        ChessDAO chessDAO = ChessDAO.getInstance();
+        GameService gameService = new GameService(chessDAO);
+        GameController gameController = new GameController(gameService);
+        MainController mainController = new MainController();
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        get("/", mainController::main);
 
         get("/newgame.html", gameController::start);
 
