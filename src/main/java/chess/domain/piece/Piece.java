@@ -21,16 +21,16 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
     public Position getPosition() {
         return position;
     }
 
-    public ChessPieceInfo getChessPiece() {
-        return ChessPieceInfo.getChessPiece(player, type);
+    public String getPlayerName() {
+        return player.name();
+    }
+
+    public String getPieceName() {
+        return ChessPieceInfo.getChessPiece(player, type).name();
     }
 
     public String getPieceImage() {
