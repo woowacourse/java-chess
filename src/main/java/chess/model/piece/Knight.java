@@ -28,22 +28,22 @@ public class Knight implements Piece {
     private String team;
 
     public Knight(String team) {
-        validateInput(team);
+        validateTeam(team);
         this.team = team;
     }
 
-    private void validateInput(String team) {
-        if (Objects.isNull(team)) {
+    private void validateTeam(String team) {
+        if (Objects.isNull(team) || team.isEmpty()) {
             throw new NullPointerException();
         }
-        if (!team.equals("white") && !team.equals("black")) {
+        if (!"white".equals(team) && !"black".equals(team)) {
             throw new IllegalArgumentException("없는 팀입니다!");
         }
     }
 
     @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
-        validateInput(sourceCoordinates, vector);
+        validateNull(sourceCoordinates, vector);
 
         List<String> routes = new ArrayList<>();
 
@@ -82,7 +82,7 @@ public class Knight implements Piece {
         throw new IllegalArgumentException("이 방향으로 이동할 수 없습니다.");
     }
 
-    private void validateInput(List<Coordinate> coordinates, Vector vector) {
+    private void validateNull(List<Coordinate> coordinates, Vector vector) {
         if (Objects.isNull(coordinates) || coordinates.isEmpty()) {
             throw new NullPointerException();
         }
@@ -94,7 +94,7 @@ public class Knight implements Piece {
 
     @Override
     public String askTeamColor() {
-        if (this.team.equals("white")) {
+        if ("white".equals(team)) {
             return "white";
         }
         return "black";

@@ -30,17 +30,17 @@ public class Pawn implements Piece {
     private String team;
 
     public Pawn(boolean isNotMoved, String team) {
-        validateInput(team);
+        validateTeam(team);
 
         this.isNotMoved = isNotMoved;
         this.team = team;
     }
 
-    private void validateInput(String team) {
-        if (Objects.isNull(team)) {
+    private void validateTeam(String team) {
+        if (Objects.isNull(team) || team.isEmpty()) {
             throw new NullPointerException();
         }
-        if (!team.equals("white") && !team.equals("black")) {
+        if (!"white".equals(team) && !"black".equals(team)) {
             throw new IllegalArgumentException("없는 팀입니다!");
         }
     }
@@ -67,7 +67,7 @@ public class Pawn implements Piece {
 
     @Override
     public Route produceRoute(List<Coordinate> sourceCoordinates, Vector vector) {
-        validateInput(sourceCoordinates, vector);
+        validateNull(sourceCoordinates, vector);
 
         List<String> route = new ArrayList<>();
         if ("white".equals(team)) {
@@ -93,7 +93,7 @@ public class Pawn implements Piece {
         return new Route(route);
     }
 
-    private void validateInput(List<Coordinate> coordinates, Vector vector) {
+    private void validateNull(List<Coordinate> coordinates, Vector vector) {
         if (Objects.isNull(coordinates) || coordinates.isEmpty()) {
             throw new NullPointerException();
         }
@@ -195,7 +195,7 @@ public class Pawn implements Piece {
 
     @Override
     public String askTeamColor() {
-        if (this.team.equals("white")) {
+        if ("white".equals(team)) {
             return "white";
         }
         return "black";

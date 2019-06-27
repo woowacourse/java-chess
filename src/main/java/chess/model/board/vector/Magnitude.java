@@ -11,7 +11,7 @@ public class Magnitude {
     private int magnitude;
 
     public Magnitude(List<Coordinate> coordinates, Direction direction) {
-        validateConstructor(coordinates, direction);
+        validateNull(coordinates, direction);
 
         this.magnitude = calculateMagnitude(coordinates, direction);
     }
@@ -34,7 +34,7 @@ public class Magnitude {
         return 0;
     }
 
-    private void validateConstructor(List<Coordinate> coordinates, Direction direction) {
+    private void validateNull(List<Coordinate> coordinates, Direction direction) {
         if (Objects.isNull(coordinates) || coordinates.isEmpty()) {
             throw new NullPointerException();
         }

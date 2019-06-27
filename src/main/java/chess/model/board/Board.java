@@ -31,7 +31,7 @@ public class Board {
 
         Piece clonedPiece = tiles.get(sourcePosition).clonePiece();
 
-        tiles.put(sourcePosition, new Tile(sourcePosition, Optional.ofNullable(null)));
+        tiles.put(sourcePosition, new Tile(sourcePosition, Optional.empty()));
         tiles.put(targetPosition, new Tile(targetPosition, Optional.ofNullable(clonedPiece)));
     }
 
@@ -54,6 +54,33 @@ public class Board {
         }
 
         checkWhenPawn(sourcePosition, targetPosition, vector);
+    }
+
+
+    private boolean checkPiecePresentInRoute(List<String> sourceAndTarget, Vector vector) {
+        Tile tile = tiles.get(sourceAndTarget.get(0));
+        Route route = tile.findRouteFromPiece(vector);
+
+        return checkEveryRoute(route);
+    }
+
+    // TODO: 2019-06-21 파라미터 이름 변경
+
+    private boolean checkEveryRoute(Route route) {
+        for (String coordinates : tiles.keySet()) {
+            if (route.contains(coordinates) && tiles.get(coordinates).isPiecePresent()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String askTilePieceWhichTeam(String coordinate) {
+        return tiles.get(coordinate).askPieceWhichTeam();
+    }
+
+    private boolean checkPiecePresentInTarget(String coordinate) {
+        return tiles.get(coordinate).isPiecePresent();
     }
 
     private void checkWhenPawn(String sourcePosition, String targetPosition, Vector vector) {
@@ -87,44 +114,6 @@ public class Board {
         }
     }
 
-    // TODO: 2019-06-21 파라미터 이름 변경
-    public boolean checkPiecePresentInRoute(List<String> sourceAndTarget, Vector vector) {
-        Tile tile = tiles.get(sourceAndTarget.get(0));
-        Route route = tile.findRouteFromPiece(vector);
-
-        return checkEveryRoute(route);
-    }
-
-    private boolean checkEveryRoute(Route route) {
-        for (String coordinates : tiles.keySet()) {
-            if (route.contains(coordinates) && tiles.get(coordinates).isPiecePresent()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean checkPiecePresentInTarget(String coordinate) {
-        return tiles.get(coordinate).isPiecePresent();
-    }
-
-    public String askTilePieceWhichTeam(String coordinate) {
-        return tiles.get(coordinate).askPieceWhichTeam();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Board board = (Board) o;
-        return Objects.equals(tiles, board.tiles);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(tiles);
-    }
-
     public ScoreResult makeScoreResult() {
         List<String> locationsOfWhitePawns = new ArrayList<>();
         List<String> locationsOfBlackPawns = new ArrayList<>();
@@ -140,7 +129,6 @@ public class Board {
                 locationsOfBlackPawns.add(currentLocation);
             }
         }
-
 
         // 폰 점수 계산
         for (int i = 1; i <= 8; i++) {
@@ -173,7 +161,6 @@ public class Board {
                 scoreOfBlack += (count * Pawn.SCORE);
             }
         }
-
 
         // 폰 이외의 말 점수계산
         for (String location : tiles.keySet()) {
@@ -240,61 +227,61 @@ public class Board {
             }
 
             if (tile.getPiece().get().getScore() == King.SCORE) {
-                if (tile.askPieceWhichTeam().equals("white")) {
+                if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("k");
                 }
 
-                if (tile.askPieceWhichTeam().equals("black")) {
+                if ("black".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("K");
                 }
             }
 
             if (tile.getPiece().get().getScore() == Queen.SCORE) {
-                if (tile.askPieceWhichTeam().equals("white")) {
+                if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("q");
                 }
 
-                if (tile.askPieceWhichTeam().equals("black")) {
+                if ("black".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("Q");
                 }
             }
 
             if (tile.getPiece().get().getScore() == Rook.SCORE) {
-                if (tile.askPieceWhichTeam().equals("white")) {
+                if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("r");
                 }
 
-                if (tile.askPieceWhichTeam().equals("black")) {
+                if ("black".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("R");
                 }
             }
 
             if (tile.getPiece().get().getScore() == Knight.SCORE) {
-                if (tile.askPieceWhichTeam().equals("white")) {
+                if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("n");
                 }
 
-                if (tile.askPieceWhichTeam().equals("black")) {
+                if ("black".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("N");
                 }
             }
 
             if (tile.getPiece().get().getScore() == Bishop.SCORE) {
-                if (tile.askPieceWhichTeam().equals("white")) {
+                if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("b");
                 }
 
-                if (tile.askPieceWhichTeam().equals("black")) {
+                if ("black".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("B");
                 }
             }
 
             if (tile.getPiece().get().getScore() == Pawn.SCORE) {
-                if (tile.askPieceWhichTeam().equals("white")) {
+                if ("white".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("p");
                 }
 
-                if (tile.askPieceWhichTeam().equals("black")) {
+                if ("black".equals(tile.askPieceWhichTeam())) {
                     row = row.concat("P");
                 }
             }
@@ -320,5 +307,18 @@ public class Board {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return Objects.equals(tiles, board.tiles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tiles);
     }
 }
