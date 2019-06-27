@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.dao.RoundDao;
 import chess.dao.RoundDaoImpl;
 import chess.dto.RoundDto;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public class Game {
     private Round round;
     private Board board;
-    private RoundDaoImpl roundDao;
+    private RoundDao roundDao;
 
     public Game() {
         round = new Round(0);
