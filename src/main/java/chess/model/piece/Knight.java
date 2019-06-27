@@ -1,4 +1,7 @@
-package chess.model;
+package chess.model.piece;
+
+import chess.model.AbstractBoardNavigator;
+import chess.model.Point;
 
 public class Knight extends AbstractChessPiece {
     private static final int MOVABLE_DISTANCE = 5;

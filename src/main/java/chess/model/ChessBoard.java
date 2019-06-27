@@ -1,5 +1,7 @@
 package chess.model;
 
+import chess.model.piece.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +21,7 @@ public class ChessBoard {
     }
 
     private void initializePawns(int y, ChessPieceColor color) {
-        for (int x = 1; x <= 8 ; x++) {
+        for (int x = 1; x <= 8; x++) {
             board.put(new Point(x, y), AbstractPawn.getInstance(color));
         }
     }
@@ -61,7 +63,7 @@ public class ChessBoard {
         Map<Point, AbstractChessPiece> newBoard = getBoard(color);
 
         for (Map.Entry<Point, AbstractChessPiece> entry : newBoard.entrySet()) {
-            sum += entry.getValue().getScore(entry.getKey(), (Point p) -> newBoard.get(p));
+            sum += entry.getValue().getScore(entry.getKey(), newBoard::get);
         }
         return sum;
     }
@@ -69,11 +71,15 @@ public class ChessBoard {
     private Map<Point, AbstractChessPiece> getBoard(ChessPieceColor color) {
         Map<Point, AbstractChessPiece> newBoard = new HashMap<>();
         for (Map.Entry<Point, AbstractChessPiece> entry : board.entrySet()) {
-            if (isSameColor(entry.getKey(), color)) {
-                newBoard.put(entry.getKey(), entry.getValue());
-            }
+            checkColor(color, newBoard, entry);
         }
         return newBoard;
+    }
+
+    private void checkColor(final ChessPieceColor color, final Map<Point, AbstractChessPiece> newBoard, final Map.Entry<Point, AbstractChessPiece> entry) {
+        if (isSameColor(entry.getKey(), color)) {
+            newBoard.put(entry.getKey(), entry.getValue());
+        }
     }
 
     public Map<Point, AbstractChessPiece> getBoard() {

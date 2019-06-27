@@ -1,8 +1,8 @@
 package chess.service;
 
-import chess.model.AbstractChessPiece;
 import chess.model.ChessBoard;
 import chess.model.Point;
+import chess.model.piece.AbstractChessPiece;
 import chess.persistance.ChessPieceDAO;
 import chess.persistance.GameDAO;
 

@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.piece;
 
 public enum ChessPieceColor {
     WHITE, BLACK;

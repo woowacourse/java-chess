@@ -22,14 +22,14 @@ public class HomeController {
         return INSTANCE;
     }
 
-    public String get(Request req, Response res) {
+    public String getGameRooms(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
         GameService gameService = GameService.getInstance();
         model.put("gameRooms", gameService.getAllGames());
         return render(model, "home.html");
     }
 
-    public String post(final Request req, final Response res) {
+    public String setUpGame(final Request req, final Response res) {
         String gameName = req.queryParams("gameName");
         GameService gameService = GameService.getInstance();
         gameService.addGame(gameName);

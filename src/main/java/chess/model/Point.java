@@ -3,17 +3,17 @@ package chess.model;
 import java.util.Objects;
 
 public class Point {
-    private final XPosition xPosition;
-    private final YPosition yPosition;
+    private final Position xPosition;
+    private final Position yPosition;
 
-    public Point(final XPosition xPosition, final YPosition yPosition) {
+    public Point(final Position xPosition, final Position yPosition) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
     }
 
     public Point(int xPosition, int yPosition) {
-        this.xPosition = XPosition.valueOf(xPosition);
-        this.yPosition = YPosition.valueOf(yPosition);
+        this.xPosition = Position.valueOf(xPosition);
+        this.yPosition = Position.valueOf(yPosition);
     }
 
     public int calculateXsDiff(final Point target) {
@@ -25,7 +25,7 @@ public class Point {
     }
 
     public boolean isSameY(final int yPosition) {
-        return this.yPosition.equals(YPosition.valueOf(yPosition));
+        return this.yPosition.equals(Position.valueOf(yPosition));
     }
 
     public int calculateYsSub(final Point target) {

@@ -1,5 +1,6 @@
-package chess.model;
+package chess.model.piece;
 
+import chess.model.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ public class QueenTest {
     @Test
     void 대각선_이동_가능_테스트() {
         Map<Point, AbstractChessPiece> board = new HashMap<>();
-        board.put(new Point(1,1), queen);
+        board.put(new Point(1, 1), queen);
 
         Point source = new Point(1, 1);
         Point target = new Point(8, 8);
@@ -29,7 +30,7 @@ public class QueenTest {
     @Test
     void 수평_이동_가능_테스트() {
         Map<Point, AbstractChessPiece> board = new HashMap<>();
-        board.put(new Point(1,1), queen);
+        board.put(new Point(1, 1), queen);
 
         Point source = new Point(1, 1);
         Point target = new Point(8, 1);
@@ -39,7 +40,7 @@ public class QueenTest {
     @Test
     void 대각선_이동_불가능_테스트() {
         Map<Point, AbstractChessPiece> board = new HashMap<>();
-        board.put(new Point(1,1), queen);
+        board.put(new Point(1, 1), queen);
         board.put(new Point(3, 3), new Rook(ChessPieceColor.WHITE));
 
         Point source = new Point(1, 1);
@@ -50,7 +51,7 @@ public class QueenTest {
     @Test
     void 수평_이동_불가능_테스트() {
         Map<Point, AbstractChessPiece> board = new HashMap<>();
-        board.put(new Point(1,1), queen);
+        board.put(new Point(1, 1), queen);
         board.put(new Point(3, 1), new Bishop(ChessPieceColor.WHITE));
 
         Point source = new Point(1, 1);

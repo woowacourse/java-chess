@@ -1,7 +1,7 @@
 package chess.persistance;
 
-import chess.model.AbstractChessPiece;
 import chess.model.Point;
+import chess.model.piece.AbstractChessPiece;
 
 import java.util.Map;
 

@@ -1,5 +1,6 @@
-package chess.model;
+package chess.model.piece;
 
+import chess.model.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ public class BishopTest {
     @Test
     void 이동_가능_테스트() {
         Map<Point, AbstractChessPiece> board = new HashMap<>();
-        board.put(new Point(8,8), bishop);
+        board.put(new Point(8, 8), bishop);
 
         Point source = new Point(8, 8);
         Point target = new Point(1, 1);
@@ -30,7 +31,7 @@ public class BishopTest {
     @Test
     void 이동_불가능_테스트() {
         Map<Point, AbstractChessPiece> board = new HashMap<>();
-        board.put(new Point(8,8), bishop);
+        board.put(new Point(8, 8), bishop);
         board.put(new Point(5, 5), new King(ChessPieceColor.WHITE));
 
         Point source = new Point(8, 8);

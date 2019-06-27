@@ -1,9 +1,9 @@
 package chess.service;
 
-import chess.model.AbstractChessPiece;
-import chess.model.ChessPieceColor;
-import chess.model.ChessPieceType;
 import chess.model.Point;
+import chess.model.piece.AbstractChessPiece;
+import chess.model.piece.ChessPieceColor;
+import chess.model.piece.ChessPieceType;
 
 import java.util.HashMap;
 import java.util.Map;

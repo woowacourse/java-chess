@@ -14,7 +14,7 @@ public class ScoreController {
         return INSTANCE;
     }
 
-    public String get(final Request req, final Response res) {
+    public String getScore(final Request req, final Response res) {
         ChessEngine chessEngine = req.session().attribute("engine");
         ScoreService scoreService = ScoreService.getInstance();
         return scoreService.getResult(chessEngine);

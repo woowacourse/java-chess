@@ -1,5 +1,6 @@
-package chess.model;
+package chess.model.piece;
 
+import chess.model.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

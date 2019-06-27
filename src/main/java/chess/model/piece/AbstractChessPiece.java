@@ -1,4 +1,7 @@
-package chess.model;
+package chess.model.piece;
+
+import chess.model.AbstractBoardNavigator;
+import chess.model.Point;
 
 import java.util.Objects;
 

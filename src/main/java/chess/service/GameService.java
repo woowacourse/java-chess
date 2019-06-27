@@ -1,6 +1,6 @@
 package chess.service;
 
-import chess.model.ChessPieceColor;
+import chess.model.piece.ChessPieceColor;
 import chess.persistance.GameDAO;
 
 import java.util.ArrayList;

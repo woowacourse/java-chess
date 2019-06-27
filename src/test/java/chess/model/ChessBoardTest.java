@@ -1,5 +1,7 @@
 package chess.model;
 
+import chess.model.piece.ChessPieceColor;
+import chess.model.piece.ChessPieceType;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,32 +18,32 @@ public class ChessBoardTest {
 
     @Test
     void isEmpty_테스트() {
-        assertThat(board.isEmpty(new Point(3,3))).isTrue();
+        assertThat(board.isEmpty(new Point(3, 3))).isTrue();
     }
 
     @Test
     void isEmpty_false_테스트() {
-        assertThat(board.isEmpty(new Point(1,1))).isFalse();
+        assertThat(board.isEmpty(new Point(1, 1))).isFalse();
     }
 
     @Test
     void isSameColor_테스트() {
-        assertThat(board.isSameColor(new Point(1,1), ChessPieceColor.WHITE)).isTrue();
+        assertThat(board.isSameColor(new Point(1, 1), ChessPieceColor.WHITE)).isTrue();
     }
 
     @Test
     void isSameColor_fail_테스트() {
-        assertThat(board.isSameColor(new Point(1,1), ChessPieceColor.BLACK)).isFalse();
+        assertThat(board.isSameColor(new Point(1, 1), ChessPieceColor.BLACK)).isFalse();
     }
 
     @Test
     void canMove_테스트() {
-        assertThat(board.canMove(new Point(1,2), new Point(1, 4))).isTrue();
+        assertThat(board.canMove(new Point(1, 2), new Point(1, 4))).isTrue();
     }
 
     @Test
     void canMove_fail_테스트() {
-        assertThat(board.canMove(new Point(1,2), new Point(2,3))).isFalse();
+        assertThat(board.canMove(new Point(1, 2), new Point(2, 3))).isFalse();
     }
 
     @Test
@@ -53,12 +55,12 @@ public class ChessBoardTest {
 
     @Test
     void isSmaeType_테스트() {
-        assertThat(board.isSameType(new Point(1,1), ChessPieceType.ROOK)).isTrue();
+        assertThat(board.isSameType(new Point(1, 1), ChessPieceType.ROOK)).isTrue();
     }
 
     @Test
     void isSameType_fail_테스트() {
-        assertThat(board.isSameType(new Point(1,1), ChessPieceType.BISHOP)).isFalse();
+        assertThat(board.isSameType(new Point(1, 1), ChessPieceType.BISHOP)).isFalse();
     }
 
     @Test

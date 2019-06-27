@@ -1,6 +1,10 @@
 package chess.service;
 
-import chess.model.*;
+import chess.model.ChessBoard;
+import chess.model.ChessEngine;
+import chess.model.GameFlow;
+import chess.model.Point;
+import chess.model.piece.ChessPieceColor;
 import chess.persistance.ChessPieceDAO;
 import chess.persistance.GameDAO;
 
@@ -10,17 +14,12 @@ public class EngineService {
     private EngineService() {
     }
 
-
     public static EngineService getInstance() {
         return INSTANCE;
     }
 
     public ChessEngine getEngine(final ChessBoard board, final ChessPieceColor turn) {
         return new ChessEngine(board, turn);
-    }
-
-    public GameFlow validateMove(final ChessEngine engine, final String source, final String target) {
-        return engine.move(parsePoint(source), parsePoint(target));
     }
 
     private Point parsePoint(final String point) {
@@ -33,11 +32,20 @@ public class EngineService {
         return new Point(xVal, yVal);
     }
 
-    public void updatePieces(final String source, final String target, ChessEngine engine, final String gameId) {
+    public GameFlow updatePieces(final String source, final String target, ChessEngine engine, final String gameId) {
         ChessPieceDAO chessPieceDAO = ChessPieceDAO.getInstance();
-        System.out.println(source + " / " + target + " / " +gameId);
-        chessPieceDAO.updatePiece(parsePoint(source), parsePoint(target), Integer.valueOf(gameId));
         GameDAO gameDAO = GameDAO.getInstance();
-        gameDAO.setTurn(engine.getTurn(), gameId);
+        Point sourcePoint = parsePoint(source);
+        Point targetPoint = parsePoint(target);
+
+        engine.validateMove(sourcePoint, targetPoint);
+        GameFlow gameFlow = engine.checkGameFlow(targetPoint);
+
+        if (gameFlow == GameFlow.CONTINUE) {
+            engine.move(sourcePoint, targetPoint);
+            chessPieceDAO.updatePiece(sourcePoint, targetPoint, Integer.valueOf(gameId));
+            gameDAO.setTurn(engine.getTurn(), gameId);
+        }
+        return gameFlow;
     }
 }

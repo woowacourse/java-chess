@@ -1,5 +1,10 @@
 package chess.model;
 
+import chess.model.exception.*;
+import chess.model.piece.AbstractChessPiece;
+import chess.model.piece.ChessPieceColor;
+import chess.model.piece.ChessPieceType;
+
 import java.util.Map;
 
 public class ChessEngine {
@@ -17,7 +22,22 @@ public class ChessEngine {
         this.thisTurnColor = ChessPieceColor.WHITE;
     }
 
-    public GameFlow move(Point source, Point target) {
+    public void move(Point source, Point target) {
+        board.move(source, target);
+    }
+
+    public GameFlow checkGameFlow(final Point target) {
+        GameFlow gameFlow = GameFlow.CONTINUE;
+
+        if (!board.isEmpty(target) && board.isSameType(target, ChessPieceType.KING)) {
+            gameFlow = GameFlow.valueOf(thisTurnColor);
+        }
+
+        thisTurnColor = ChessPieceColor.nextTurnColor(thisTurnColor);
+        return gameFlow;
+    }
+
+    public void validateMove(final Point source, final Point target) {
         if (source.equals(target)) {
             throw new SameTwoPointsException("source 위치와 target 위치가 같을 수 없습니다.");
         }
@@ -37,18 +57,6 @@ public class ChessEngine {
         if (!board.canMove(source, target)) {
             throw new InvalidMovePointException("적절하지 않은 움직임입니다.");
         }
-
-        GameFlow gameFlow = GameFlow.CONTINUE;
-
-        if (!board.isEmpty(target) && board.isSameType(target, ChessPieceType.KING)) {
-            gameFlow = GameFlow.valueOf(thisTurnColor);
-        }
-
-        board.move(source, target);
-
-        thisTurnColor = ChessPieceColor.nextTurnColor(thisTurnColor);
-
-        return gameFlow;
     }
 
     public GameResult getGameStatus() {

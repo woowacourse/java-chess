@@ -1,5 +1,7 @@
 package chess.model;
 
+import chess.model.piece.ChessPieceColor;
+
 public enum GameFlow {
     CONTINUE, BLACK_WIN, WHITE_WIN, DRAW;
 

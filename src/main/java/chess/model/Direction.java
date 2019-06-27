@@ -46,10 +46,9 @@ public enum Direction {
             result += WEST;
         }
 
-        if (result.equals(NORTH_EAST) || result.equals(NORTH_WEST) || result.equals(SOUTH_EAST) || result.equals(SOUTH_WEST)) {
-            if (source.calculateXsDiff(target) != source.calculateYsDiff(target)) {
-                return Direction.UNDEFINED;
-            }
+        if ((result.equals(NORTH_EAST) || result.equals(NORTH_WEST) || result.equals(SOUTH_EAST) || result.equals(SOUTH_WEST))
+                && (source.calculateXsDiff(target) != source.calculateYsDiff(target))) {
+            return Direction.UNDEFINED;
         }
 
         return Direction.valueOf(result);

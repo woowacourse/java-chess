@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.exception;
 
 public class InvalidTurnException extends RuntimeException {
     public InvalidTurnException(String message) {

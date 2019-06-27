@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.model.ChessBoard;
-import chess.model.ChessPieceColor;
+import chess.model.piece.ChessPieceColor;
 import chess.service.BoardDTO;
 import chess.service.BoardService;
 import chess.service.EngineService;
@@ -15,14 +15,13 @@ public class BoardController {
     private static final BoardController INSTANCE = new BoardController();
 
     private BoardController() {
-
     }
 
     public static BoardController getInstance() {
         return INSTANCE;
     }
 
-    public String get(final Request req, final Response res) {
+    public String setUpBoard(final Request req, final Response res) {
         BoardService boardService = BoardService.getInstance();
 
         // 보드DTO 만들기

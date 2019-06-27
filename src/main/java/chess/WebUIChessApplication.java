@@ -13,21 +13,20 @@ public class WebUIChessApplication {
         externalStaticFileLocation("src/main/resources/templates");
 
         HomeController homeController = HomeController.getInstance();
-        get(HomeController.URL, homeController::get);
-        post(HomeController.URL, homeController::post);
+        get(HomeController.URL, homeController::getGameRooms);
+        post(HomeController.URL, homeController::setUpGame);
 
         GameController gameController = GameController.getInstance();
-        get(GameController.URL, gameController::get);
-        post(GameController.URL, gameController::post);
+        get(GameController.URL, gameController::moveToGamePage);
+        post(GameController.URL, gameController::updatePiece);
 
         BoardController boardController = BoardController.getInstance();
-        get(boardController.URL, boardController::get);
+        get(boardController.URL, boardController::setUpBoard);
 
         ScoreController scoreController = ScoreController.getInstance();
-        get(ScoreController.URL, scoreController::get);
+        get(ScoreController.URL, scoreController::getScore);
 
         exception(Exception.class, (e, req, res) -> {
-            System.out.println("오류###발생");
             e.printStackTrace();
             res.body("오류: " + e.getMessage());
         });

@@ -1,15 +1,19 @@
-package chess.model;
+package chess.model.piece;
+
+import chess.model.AbstractBoardNavigator;
+import chess.model.Direction;
+import chess.model.Point;
 
 public abstract class AbstractPawn extends AbstractChessPiece {
     public static final int START_POINT_STEP_SIZE = 2;
     public static final int NORMAL_STEP_SIZE = 1;
 
-    public static AbstractPawn getInstance(ChessPieceColor color) {
-        return color.equals(ChessPieceColor.BLACK) ? new BlackPawn() : new WhitePawn();
-    }
-
     public AbstractPawn(final ChessPieceColor color) {
         super(ChessPieceType.PAWN, color);
+    }
+
+    public static AbstractPawn getInstance(ChessPieceColor color) {
+        return color.equals(ChessPieceColor.BLACK) ? new BlackPawn() : new WhitePawn();
     }
 
     @Override
@@ -33,11 +37,13 @@ public abstract class AbstractPawn extends AbstractChessPiece {
     protected abstract boolean isVerticalOneStep(Point source, Point target);
 
     protected abstract boolean isVerticalTwoStep(Point source, Point target);
+
     protected abstract boolean isDiagonalOneStep(Point source, Point target);
 
     @Override
     public double getScore(Point point, final AbstractBoardNavigator navigator) {
-        if (checkPawnExistence(point, navigator, Direction.N) || checkPawnExistence(point, navigator, Direction.S)) return 0.5;
+        if (checkPawnExistence(point, navigator, Direction.N) || checkPawnExistence(point, navigator, Direction.S))
+            return 0.5;
         return 1;
     }
 

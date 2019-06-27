@@ -1,6 +1,6 @@
 package chess.persistance;
 
-import chess.model.ChessPieceColor;
+import chess.model.piece.ChessPieceColor;
 
 import java.util.*;
 
