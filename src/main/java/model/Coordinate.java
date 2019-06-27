@@ -6,9 +6,10 @@ import model.board.Board;
 import java.util.Objects;
 
 public class Coordinate {
-    private int value;
     private static final int MIN_VALUE = 0;
     private static final int MAX_VALUE = MIN_VALUE + Board.SIZE - 1;
+
+    private int value;
 
     private Coordinate(int value) {
         this.value = value;
