@@ -5,6 +5,7 @@ import chess.domain.Spot;
 import chess.domain.Team;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Pawn extends Piece {
@@ -82,5 +83,20 @@ public class Pawn extends Piece {
 
         return xGap == PAWN_X_MAXIMUM_MOVABLE_DISTANCE
                 && yGap == PAWN_Y_MINIMUM_MOVABLE_DISTANCE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Pawn pawn = (Pawn) o;
+        return Objects.equals(movementUnits, pawn.movementUnits) &&
+                Objects.equals(attackUnits, pawn.attackUnits);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), movementUnits, attackUnits);
     }
 }

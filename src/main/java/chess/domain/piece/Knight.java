@@ -4,7 +4,6 @@ import chess.domain.MovementUnit;
 import chess.domain.Spot;
 import chess.domain.Team;
 
-import java.util.Objects;
 import java.util.Set;
 
 public class Knight extends Piece {
@@ -30,20 +29,6 @@ public class Knight extends Piece {
     @Override
     public boolean isAttackable(Spot startSpot, Spot endSpot) {
         return isMovable(startSpot, endSpot);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Knight knight = (Knight) o;
-        return Objects.equals(movementUnits, knight.movementUnits);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), movementUnits);
     }
 }
 
