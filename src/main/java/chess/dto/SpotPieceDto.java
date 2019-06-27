@@ -1,10 +1,10 @@
 package chess.dto;
 
-public class spotPieceDto {
+public class SpotPieceDto {
     private String point;
     private String piece;
 
-    public spotPieceDto(String point, String piece) {
+    public SpotPieceDto(String point, String piece) {
         this.point = point;
         this.piece = piece;
     }
