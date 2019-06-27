@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChessBoardTest {
     @Test
@@ -17,7 +16,7 @@ class ChessBoardTest {
     @Test
     void 경로에_말이_있을_때() {
         ChessBoard chessBoard = new ChessBoard();
-        System.out.println(chessBoard.canMove(Position.of(0, 7), Position.of(5, 7)));
+        chessBoard.canMove(Position.of(0, 7), Position.of(5, 7));
         assertThat(chessBoard.canMove(Position.of(0, 7), Position.of(5, 7))).isFalse();
     }
 
@@ -63,12 +62,8 @@ class ChessBoardTest {
     void 비숍_공격() {
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.movePiece(Position.of(1, 3), Position.of(2, 3));
-        System.out.println(chessBoard.getChessBoard().get(Position.of(2, 3)));
         chessBoard.movePiece(Position.of(0, 2), Position.of(2, 4));
-        System.out.println(chessBoard.getChessBoard().get(Position.of(2, 4)));
         chessBoard.movePiece(Position.of(2, 4), Position.of(6, 0));
-        System.out.println(chessBoard.getChessBoard().get(Position.of(6, 0)));
-
 
         assertThat(chessBoard.getChessBoard().get(Position.of(6, 0)).getClass() == Bishop.class).isTrue();
     }

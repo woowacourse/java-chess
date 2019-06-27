@@ -18,6 +18,7 @@ public class ChessBoard {
     private static final int WHITE_TEAM_AREA = 7;
     private static final int WHITE_TEAM_PAWNS_AREA = 6;
     private static final int ONE_LINE = 1;
+    private static final double NONE = 0.0;
     private static final double INLINE_PAWN_SCORE = 0.5;
 
     private Map<Position, ChessPiece> chessBoard = new HashMap<>();
@@ -64,7 +65,10 @@ public class ChessBoard {
 
     boolean canMove(Position source, Position target) {
         ChessPiece sourceChessPiece = chessBoard.get(source);
+        ChessPiece targetChessPiece = chessBoard.get(target);
+
         List<Position> route;
+
         try {
             route = sourceChessPiece.getRouteOfPiece(source, target);
         } catch (IllegalArgumentException e) {
@@ -74,14 +78,30 @@ public class ChessBoard {
         if (validExist(source)) {
             return false;
         }
-        if (isSameChessPiece(sourceChessPiece, Pawn.class)) {
+        if (sourceChessPiece.isSameChessPiece(Pawn.class)) {
             return canMovePawns(source, target, route);
         }
 
-        return (!chessBoard.get(target).isSameTeam(sourceChessPiece))
-                && route.stream()
+        return !targetChessPiece.isSameTeam(sourceChessPiece) && isInObstacle(route, target);
+    }
+
+    private Boolean canMovePawns(Position source, Position target, List<Position> route) {
+        if (!source.isSameColumn(target)) {
+            return chessBoard.get(source).isNotSameTeam(chessBoard.get(target));
+        }
+
+        return route.stream()
+                .allMatch(position -> chessBoard.get(position).isSameChessPiece(Blank.class));
+    }
+
+    private boolean validExist(Position source) {
+        return !chessBoard.containsKey(source) || chessBoard.get(source).isSameChessPiece(Blank.class);
+    }
+
+    private boolean isInObstacle(List<Position> route, Position target) {
+        return route.stream()
                 .filter(position -> position != target)
-                .allMatch(position -> isSameChessPiece(chessBoard.get(position), Blank.class));
+                .allMatch(position -> chessBoard.get(position).isSameChessPiece(Blank.class));
     }
 
     private double calculateColumn(Team team, int column) {
@@ -91,7 +111,7 @@ public class ChessBoard {
                 .mapToObj(i -> chessBoard.get(Position.of(i, column)))
                 .filter(chessPiece -> chessPiece.isSameTeam(team))
                 .mapToDouble(ChessPiece::getScore)
-                .reduce(Double::sum).getAsDouble();
+                .reduce(Double::sum).orElse(NONE);
 
         return inLinePawnCount > ONE_LINE ? scoreSum - inLinePawnCount * INLINE_PAWN_SCORE : scoreSum;
     }
@@ -107,21 +127,6 @@ public class ChessBoard {
         if (chessBoard.get(target).getClass() == King.class) {
             gameOver = true;
         }
-    }
-
-    private Boolean canMovePawns(Position source, Position target, List<Position> route) {
-        if (!source.isSameColumn(target)) {
-            return !chessBoard.get(source).isSameTeam(chessBoard.get(target))
-                    && !chessBoard.get(target).isSameTeam(Team.BLANK);
-
-        }
-
-        return route.stream()
-                .allMatch(position -> isSameChessPiece(chessBoard.get(position), Blank.class));
-    }
-
-    private boolean validExist(Position source) {
-        return !chessBoard.containsKey(source) || isSameChessPiece(chessBoard.get(source), Blank.class);
     }
 
     private void init() {
@@ -159,9 +164,5 @@ public class ChessBoard {
         for (int j = FIRST_COLUMN; j <= LAST_COLUMN; j++) {
             chessBoard.put(Position.of(i, j), new Blank(Team.BLANK));
         }
-    }
-
-    private boolean isSameChessPiece(ChessPiece chessPiece, Type type) {
-        return chessPiece.getClass().getTypeName().equals(type.getTypeName());
     }
 }
