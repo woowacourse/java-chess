@@ -46,8 +46,8 @@ public class ChessGameTest {
 		chessGame.move(Position.getPosition(2, 7), Position.getPosition(2, 5));
 		chessGame.move(Position.getPosition(1, 4), Position.getPosition(2, 5));
 
-		assertThat(chessGame.getPlayerScore(Player.WHITE)).isEqualTo(new Score(37));
-		assertThat(chessGame.getPlayerScore(Player.BLACK)).isEqualTo(new Score(37));
+		assertThat(chessGame.getPlayerScore(Player.WHITE)).isEqualTo(new Score(37).getScore());
+		assertThat(chessGame.getPlayerScore(Player.BLACK)).isEqualTo(new Score(37).getScore());
 		assertThat(chessGame.findWinner()).isEqualTo(Result.DRAW);
 	}
 
@@ -60,8 +60,8 @@ public class ChessGameTest {
 		chessGame.move(Position.getPosition(1, 1), Position.getPosition(1, 6));
 		chessGame.move(Position.getPosition(1, 8), Position.getPosition(1, 6));
 
-		assertThat(chessGame.getPlayerScore(Player.WHITE)).isEqualTo(new Score(32));
-		assertThat(chessGame.getPlayerScore(Player.BLACK)).isEqualTo(new Score(36));
+		assertThat(chessGame.getPlayerScore(Player.WHITE)).isEqualTo(new Score(32).getScore());
+		assertThat(chessGame.getPlayerScore(Player.BLACK)).isEqualTo(new Score(36).getScore());
 		assertThat(chessGame.findWinner()).isEqualTo(Result.BLACK_WIN);
 	}
 }
