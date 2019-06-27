@@ -12,5 +12,7 @@ public interface ChessPiece {
 
     String getName();
 
-    boolean hasName(String name);
+    default boolean hasName(String name) {
+        return getName().equals(name);
+    }
 }
