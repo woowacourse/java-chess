@@ -1,5 +1,7 @@
 package chess.model.dto;
 
+import chess.utils.JsonUtils;
+
 import java.util.Map;
 
 public class BoardInfo {
@@ -39,5 +41,9 @@ public class BoardInfo {
 
     public void setBlackScore(double blackScore) {
         this.blackScore = blackScore;
+    }
+
+    public String toJson() {
+        return JsonUtils.toJson(this);
     }
 }

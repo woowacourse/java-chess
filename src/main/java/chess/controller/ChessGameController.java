@@ -3,11 +3,12 @@ package chess.controller;
 import chess.model.Square;
 import chess.model.dto.MoveResult;
 import chess.service.ChessService;
-import com.google.gson.Gson;
+import chess.utils.JsonUtils;
 import spark.Route;
 
 public class ChessGameController {
     private static ChessService service;
+    private static final int INTERNAL_SERVER_ERROR_CODE = 500;
 
     static {
         service = new ChessService();
@@ -24,32 +25,32 @@ public class ChessGameController {
         try {
             Square beginSquare = Square.of(request.queryMap("source").value());
             Square endSquare = Square.of(request.queryMap("target").value());
-            return new Gson().toJson(service.canMove(beginSquare, endSquare));
+            return service.canMove(beginSquare, endSquare).toJson();
         } catch (Exception e) {
             moveResult = new MoveResult();
             moveResult.setCanMove(false);
-            response.status(500);
-            return new Gson().toJson(moveResult);
+            response.status(INTERNAL_SERVER_ERROR_CODE);
+            return moveResult.toJson();
         }
     };
 
     public static Route initialize = (request, response) -> {
         response.type("application/json");
         try {
-            return new Gson().toJson(service.initializeBoard());
+            return service.initializeBoard().toJson();
         } catch (Exception e) {
-            response.status(500);
-            return new Gson().toJson(e.getMessage());
+            response.status(INTERNAL_SERVER_ERROR_CODE);
+            return JsonUtils.toJson(e.getMessage());
         }
     };
 
     public static Route loadBoard = (request, response) -> {
         response.type("application/json");
         try {
-            return new Gson().toJson(service.createBoardInfo());
+            return service.createBoardInfo().toJson();
         } catch (Exception e) {
-            response.status(500);
-            return new Gson().toJson(e.getMessage());
+            response.status(INTERNAL_SERVER_ERROR_CODE);
+            return JsonUtils.toJson(e.getMessage());
         }
     };
 }

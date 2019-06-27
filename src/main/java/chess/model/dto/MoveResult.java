@@ -1,5 +1,7 @@
 package chess.model.dto;
 
+import chess.utils.JsonUtils;
+
 public class MoveResult {
     private boolean canMove;
     private String turn;
@@ -45,5 +47,9 @@ public class MoveResult {
 
     public void setBlackScore(double blackScore) {
         this.blackScore = blackScore;
+    }
+
+    public String toJson() {
+        return JsonUtils.toJson(this);
     }
 }
