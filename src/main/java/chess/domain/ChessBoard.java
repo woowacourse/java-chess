@@ -18,11 +18,11 @@ public class ChessBoard {
     private final List<Piece> pieces;
 
     public ChessBoard() {
-        pieces = new ArrayList<>();
+        this(new ArrayList<>());
     }
 
     public ChessBoard(List<Piece> pieces) {
-        this();
+        this.pieces = new ArrayList<>();
         for (Piece piece : pieces) {
             addPiece(piece);
         }
