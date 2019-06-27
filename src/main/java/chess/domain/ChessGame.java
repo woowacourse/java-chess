@@ -59,12 +59,12 @@ public class ChessGame {
     }
 
     private void makeRank(List<String> ranks, int row) {
-        StringBuilder rank = new StringBuilder();
+        StringBuilder rankBuilder = new StringBuilder();
         for (int col = MIN_BOARD_COORDINATE; col <= MAX_BOARD_COORDINATE; col++) {
             Piece piece = board.findPiece(Positions.matchWith(col, row));
-            rank.append((piece.isOurPiece(Team.BLACK)) ? piece.getSymbol().toUpperCase() : piece.getSymbol());
+            rankBuilder.append((piece.isOurPiece(Team.BLACK)) ? piece.getSymbol().toUpperCase() : piece.getSymbol());
         }
-        ranks.add(rank.toString());
+        ranks.add(rankBuilder.toString());
     }
 
     @Override

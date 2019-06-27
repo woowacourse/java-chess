@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import javafx.geometry.Pos;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -120,7 +122,7 @@ public class Position {
     private List<Position> getPositiveDiagonally(List<Integer> xValues, List<Integer> yValues) {
         List<Position> routePositions = new ArrayList<>();
 
-        for (int i = 0; i < xValues.size(); i++) {
+        for (int i = 0, length = xValues.size(); i < length; i++) {
             routePositions.add(new Position(xValues.get(i), yValues.get(i)));
         }
 
@@ -145,9 +147,9 @@ public class Position {
                 .map(position -> position.x)
                 .collect(Collectors.toList());
 
-        Set<Integer> unique_x = new HashSet<>(xValuesPawnHas);
+        Set<Integer> uniqueX = new HashSet<>(xValuesPawnHas);
 
-        return unique_x.stream()
+        return uniqueX.stream()
                 .map(x -> Collections.frequency(xValuesPawnHas, x))
                 .filter(count -> count >= MINIMUM_DUPLICATES_COUNT)
                 .mapToInt(Integer::intValue)

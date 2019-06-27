@@ -35,8 +35,7 @@ class BoardCreator {
     }
 
     private static void initializeRook(Map<Position, Piece> boardState) {
-        Position position;
-        position = Positions.matchWith(1, 1);
+        Position position = Positions.matchWith(1, 1);
         boardState.put(position, new Rook(position, Team.WHITE));
         position = Positions.matchWith(8, 1);
         boardState.put(position, new Rook(position, Team.WHITE));
@@ -47,8 +46,7 @@ class BoardCreator {
     }
 
     private static void initializeKnight(Map<Position, Piece> boardState) {
-        Position position;
-        position = Positions.matchWith(2, 1);
+        Position position = Positions.matchWith(2, 1);
         boardState.put(position, new Knight(position, Team.WHITE));
         position = Positions.matchWith(7, 1);
         boardState.put(position, new Knight(position, Team.WHITE));
@@ -59,8 +57,7 @@ class BoardCreator {
     }
 
     private static void initializeBishop(Map<Position, Piece> boardState) {
-        Position position;
-        position = Positions.matchWith(3, 1);
+        Position position = Positions.matchWith(3, 1);
         boardState.put(position, new Bishop(position, Team.WHITE));
         position = Positions.matchWith(6, 1);
         boardState.put(position, new Bishop(position, Team.WHITE));
@@ -71,16 +68,14 @@ class BoardCreator {
     }
 
     private static void initializeQueen(Map<Position, Piece> boardState) {
-        Position position;
-        position = Positions.matchWith(4, 1);
+        Position position = Positions.matchWith(4, 1);
         boardState.put(position, new Queen(position, Team.WHITE));
         position = Positions.matchWith(4, 8);
         boardState.put(position, new Queen(position, Team.BLACK));
     }
 
     private static void initializeKing(Map<Position, Piece> boardState) {
-        Position position;
-        position = Positions.matchWith(5, 1);
+        Position position = Positions.matchWith(5, 1);
         boardState.put(position, new King(position, Team.WHITE));
         position = Positions.matchWith(5, 8);
         boardState.put(position, new King(position, Team.BLACK));
