@@ -9,6 +9,17 @@ import spark.Response;
 import java.sql.SQLException;
 
 public class StartController {
+    private StartController() {
+    }
+
+    public static StartController getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    private static class Holder {
+        private static StartController INSTANCE = new StartController();
+    }
+
     public Object start(Request req, Response res) throws SQLException {
         Game game = new Game();
         req.session().attribute("game", game);

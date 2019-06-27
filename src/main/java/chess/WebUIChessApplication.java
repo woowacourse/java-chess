@@ -14,9 +14,9 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
 
     public static void main(String[] args) {
-        StartController startController = new StartController();
-        MoveController moveController = new MoveController();
-        ScoreController scoreController = new ScoreController();
+        StartController startController = StartController.getInstance();
+        MoveController moveController = MoveController.getInstance();
+        ScoreController scoreController = ScoreController.getInstance();
 
         staticFileLocation("/static");
         options("/*",
