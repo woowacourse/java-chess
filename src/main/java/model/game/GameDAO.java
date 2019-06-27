@@ -35,8 +35,8 @@ public class GameDAO {
              PreparedStatement pstmt = con.prepareStatement(
                      "CREATE TABLE IF NOT EXISTS chess_log("
                              + "isTurnOf INT UNSIGNED NOT NULL PRIMARY KEY,"
-                             + "position_from VARCHAR(2) NOT NULL,"
-                             + "position_to VARCHAR(2) NOT NULL" +
+                             + "position_from VARCHAR(12) NOT NULL,"
+                             + "position_to VARCHAR(12) NOT NULL" +
                              ");"
              )
         ) {

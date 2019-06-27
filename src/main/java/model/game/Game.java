@@ -36,8 +36,11 @@ public class Game {
     }
 
     private boolean restore(final Position src, final Position dest) {
-        return movePiece(src, dest);
+        board.getPieceAt(src).moveTo(dest);
+        turn.endTurn();
+        return true;
     }
+
     private Board initializeBoard() {
         BoardBuilder boardBuilder = new BoardBuilder();
 

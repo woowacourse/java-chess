@@ -8,7 +8,7 @@
    * 왕이 잡혔을 때 끝나도록 수정해야 함
    * WebView printEndPage 완성
    * WebView defaultModel 완성
-
+   * game객체의 restoreMovements 리펙토링
 
 # 기능 목록
    * 체스말들을 체스판 위에 초기화 해야 합니다.

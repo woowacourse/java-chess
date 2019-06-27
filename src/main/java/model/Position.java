@@ -45,9 +45,8 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        String xCoordinate = String.valueOf((char) ('a' + x.getValue()));
+        String yCoordinate = String.valueOf(y.getValue());
+        return xCoordinate + yCoordinate;
     }
 }
