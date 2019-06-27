@@ -5,7 +5,6 @@ import chess.domain.chesspiece.Team;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PawnMove implements Move {
     private static final int MIN_DISTANCE = 1;
