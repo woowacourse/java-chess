@@ -3,13 +3,17 @@ package chess.controller;
 import chess.domain.ChessGame;
 import chess.domain.pieces.PointFactory;
 import chess.service.ContinueGameInitializer;
+import chess.service.BoardInitializer;
 import chess.service.NewGameInitializer;
 import chess.service.PieceMover;
 import chess.service.dto.ChessBoardDto;
 import chess.service.dto.MoveDto;
 import chess.service.dto.MoveResultDto;
 import com.google.gson.Gson;
+import spark.Request;
 import spark.Route;
+
+import java.sql.SQLException;
 
 public class ChessGameController {
 
@@ -30,27 +34,20 @@ public class ChessGameController {
     public static Route initialize = (request, response) -> {
         response.type("application/json");
         boolean isNewGame = request.session().attribute("isNewGame");
-        ChessGame chessGame;
-        ChessBoardDto chessBoardDto;
         try {
             if (isNewGame) {
-                chessGame = new ChessGame();
-                NewGameInitializer newGameInitializer = new NewGameInitializer();
-                chessBoardDto = newGameInitializer.initialize(chessGame);
-                request.session().attribute("chessGame", chessGame);
-                return new Gson().toJson(chessBoardDto.getInitWebBoard());
+                return new Gson().toJson(makeChessBoardDto(new NewGameInitializer(), request).getInitWebBoard());
             }
-
-            ContinueGameInitializer continueGameInitializer = new ContinueGameInitializer();
-            chessBoardDto = continueGameInitializer.initialize();
-            chessGame = new ChessGame(chessBoardDto.getCurrentOfTurn(), chessBoardDto.getGameBoard());
-            request.session().attribute("chessGame", chessGame);
-            return new Gson().toJson(chessBoardDto.getInitWebBoard());
+            return new Gson().toJson(makeChessBoardDto(new ContinueGameInitializer(), request).getInitWebBoard());
         } catch (Exception e) {
             response.status(500);
             return new Gson().toJson(e.getMessage());
         }
     };
+
+    private static ChessBoardDto makeChessBoardDto(BoardInitializer initializer, Request request) throws SQLException {
+        return initializer.initialize(request);
+    }
 
     public static Route move = (request, response) -> {
         response.type("application/json");

@@ -7,13 +7,14 @@ import chess.domain.ChessGame;
 import chess.domain.pieces.Type;
 import chess.service.dto.ChessBoardDto;
 import chess.service.dto.PieceDto;
+import spark.Request;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewGameInitializer {
+public class NewGameInitializer implements BoardInitializer {
     private static final int START_PIECE_ID = 1;
     private static final int END_PIECE_ID = 64;
     private static final int GAME_ID = 1;
@@ -29,13 +30,16 @@ public class NewGameInitializer {
         chessBoardDto = new ChessBoardDto();
     }
 
-    public ChessBoardDto initialize(ChessGame chessGame) throws SQLException {
+    @Override
+    public ChessBoardDto initialize(Request request) throws SQLException {
+        ChessGame chessGame = new ChessGame();
         chessBoardDto.setGameBoard(chessGame.getBoard());
         initializeDB();
         // 데이터베이스에 초기화 배열 저장
         loadBoard();
         // 프론트앤드에 보드 정보 주기
         makeJSONBoard();
+        request.session().attribute("chessGame", chessGame);
         return chessBoardDto;
     }
 

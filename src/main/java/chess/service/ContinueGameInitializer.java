@@ -3,6 +3,7 @@ package chess.service;
 import chess.dao.ChessGameDao;
 import chess.dao.ChessPieceDao;
 import chess.dao.DBManager;
+import chess.domain.ChessGame;
 import chess.domain.Point;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
@@ -10,13 +11,14 @@ import chess.domain.pieces.PieceFactory;
 import chess.domain.pieces.PointFactory;
 import chess.service.dto.ChessBoardDto;
 import chess.service.dto.PieceDto;
+import spark.Request;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ContinueGameInitializer {
+public class ContinueGameInitializer implements BoardInitializer {
     private static final int START_PIECE_ID = 1;
     private static final int END_PIECE_ID = 64;
     private static final int START_FIRST_CHAR = 0;
@@ -36,7 +38,8 @@ public class ContinueGameInitializer {
         chessBoardDto = new ChessBoardDto();
     }
 
-    public ChessBoardDto initialize() throws SQLException {
+    @Override
+    public ChessBoardDto initialize(Request request) throws SQLException {
         Color currentTurn = chessGameDao.findTurn(GAME_ID).equals("WHITE") ? Color.WHITE : Color.BLACK;
         Map<String, String> initBoard = makeJSONPreviousBoard();
         Map<Point, Piece> gameBoard = makePreviousBoard();
@@ -44,6 +47,9 @@ public class ContinueGameInitializer {
         chessBoardDto.setCurrentOfTurn(currentTurn);
         chessBoardDto.setInitWebBoard(initBoard);
         chessBoardDto.setGameBoard(gameBoard);
+
+        ChessGame chessGame = new ChessGame(chessBoardDto.getCurrentOfTurn(), chessBoardDto.getGameBoard());
+        request.session().attribute("chessGame", chessGame);
 
         return chessBoardDto;
     }
