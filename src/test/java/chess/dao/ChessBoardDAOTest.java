@@ -3,7 +3,7 @@ package chess.dao;
 import chess.domain.board.Tile;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.PieceGenerator;
 import chess.dto.ChessBoardDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChessBoardDAOTest {
-    ChessBoardDAO chessBoardDAO;
+    ChessBoardDao chessBoardDAO;
     Connection connection;
     JdbcTemplate jdbcTemplate;
 
@@ -27,15 +27,15 @@ class ChessBoardDAOTest {
         connection = DBConnection.getConnection();
         connection.setAutoCommit(false);
         jdbcTemplate = JdbcTemplate.getInstance(DBConnection.getConnection());
-        chessBoardDAO = ChessBoardDAO.getInstance(jdbcTemplate);
+        chessBoardDAO = ChessBoardDao.getInstance(jdbcTemplate);
     }
 
     //에러 발생 (해당 게임ID 값이 chess_turn 테이블에 존재하지 않아 외래키가 없음)
     @Test
-    void insertTest1() throws Exception {
+    void insertTest1() {
         ChessBoardDTO chessBoardDTO = new ChessBoardDTO(
                 new HashMap<Tile, Piece>() {{
-                    put(Tile.of("a1"), PieceType.KING.generate(PieceColor.WHITE));
+                    put(Tile.of("a1"), PieceGenerator.KING.generate(PieceColor.WHITE));
                 }}
         );
         assertThrows(SQLException.class, () -> {
@@ -46,13 +46,13 @@ class ChessBoardDAOTest {
     //정상 실행 (외래키 존재)
     @Test
     void insertTest2() throws Exception {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
+        ChessTurnDao chessTurnDAO = ChessTurnDao.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
         ChessBoardDTO chessBoardDTO = new ChessBoardDTO(
                 new HashMap<Tile, Piece>() {{
-                    put(Tile.of("a1"), PieceType.KING.generate(PieceColor.WHITE));
+                    put(Tile.of("a1"), PieceGenerator.KING.generate(PieceColor.WHITE));
                 }}
         );
 
@@ -64,13 +64,13 @@ class ChessBoardDAOTest {
     //해당 체스보드 정보 존재하는 경우
     @Test
     public void selectTest1() throws Exception {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
+        ChessTurnDao chessTurnDAO = ChessTurnDao.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
         ChessBoardDTO chessBoardDTO = new ChessBoardDTO(
                 new HashMap<Tile, Piece>() {{
-                    put(Tile.of("a1"), PieceType.KING.generate(PieceColor.WHITE));
+                    put(Tile.of("a1"), PieceGenerator.KING.generate(PieceColor.WHITE));
                 }}
         );
         chessBoardDAO.insertChessBoard(id, chessBoardDTO);
@@ -82,7 +82,7 @@ class ChessBoardDAOTest {
     //존재하지 않는 경우
     @Test
     public void selectTest2() throws SQLException {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
+        ChessTurnDao chessTurnDAO = ChessTurnDao.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
@@ -91,13 +91,13 @@ class ChessBoardDAOTest {
 
     @Test
     public void deleteTest() throws Exception {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
+        ChessTurnDao chessTurnDAO = ChessTurnDao.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
         ChessBoardDTO chessBoardDTO = new ChessBoardDTO(
                 new HashMap<Tile, Piece>() {{
-                    put(Tile.of("a1"), PieceType.KING.generate(PieceColor.WHITE));
+                    put(Tile.of("a1"), PieceGenerator.KING.generate(PieceColor.WHITE));
                 }}
         );
         chessBoardDAO.insertChessBoard(id, chessBoardDTO);
@@ -110,6 +110,5 @@ class ChessBoardDAOTest {
     @AfterEach
     void tearDown() throws SQLException {
         connection.rollback();
-        //connection.close();
     }
 }

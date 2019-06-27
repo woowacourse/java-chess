@@ -1,7 +1,7 @@
 package chess.service;
 
-import chess.dao.ChessBoardDAO;
-import chess.dao.ChessTurnDAO;
+import chess.dao.ChessBoardDao;
+import chess.dao.ChessTurnDao;
 import chess.dao.DBConnection;
 import chess.dao.JdbcTemplate;
 import chess.domain.ChessGame;
@@ -28,8 +28,8 @@ public class ChessGameService {
 
     public ChessGameDTO getGame(int gameId) throws SQLException {
         JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance(DBConnection.getConnection());
-        ChessBoardDTO chessBoardDTO = ChessBoardDAO.getInstance(jdbcTemplate).selectChessBoard(gameId);
-        PieceColor turn = ChessTurnDAO.getInstance(jdbcTemplate).selectChessTurn(gameId);
+        ChessBoardDTO chessBoardDTO = ChessBoardDao.getInstance(jdbcTemplate).selectChessBoard(gameId);
+        PieceColor turn = ChessTurnDao.getInstance(jdbcTemplate).selectChessTurn(gameId);
 
         ChessGameDTO chessGameDTO = new ChessGameDTO();
         chessGameDTO.setBoard(chessBoardDTO);
@@ -43,9 +43,9 @@ public class ChessGameService {
 
         if (idText == null) {
             JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance(DBConnection.getConnection());
-            ChessTurnDAO.getInstance(jdbcTemplate).insertChessTurn(PieceColor.WHITE);
-            id = ChessTurnDAO.getInstance(jdbcTemplate).selectMaxGameId();
-            ChessBoardDAO.getInstance(jdbcTemplate).insertChessBoard(id, new ChessBoardDTO(BoardInitializer.initialize()));
+            ChessTurnDao.getInstance(jdbcTemplate).insertChessTurn(PieceColor.WHITE);
+            id = ChessTurnDao.getInstance(jdbcTemplate).selectMaxGameId();
+            ChessBoardDao.getInstance(jdbcTemplate).insertChessBoard(id, new ChessBoardDTO(BoardInitializer.initialize()));
         } else {
             id = Integer.parseInt(idText);
         }
@@ -66,11 +66,11 @@ public class ChessGameService {
             chessGameDTO.setBoard(chessBoardDTO);
             chessGameDTO.setTurn(chessGame.getTurn());
 
-            ChessTurnDAO.getInstance(jdbcTemplate).updateChessTurn(id, chessGameDTO.getTurn());
-            ChessBoardDAO.getInstance(jdbcTemplate).deleteChessBoard(id);
-            ChessBoardDAO.getInstance(jdbcTemplate).insertChessBoard(id, chessBoardDTO);
+            ChessTurnDao.getInstance(jdbcTemplate).updateChessTurn(id, chessGameDTO.getTurn());
+            ChessBoardDao.getInstance(jdbcTemplate).deleteChessBoard(id);
+            ChessBoardDao.getInstance(jdbcTemplate).insertChessBoard(id, chessBoardDTO);
         } catch (GameOverException e) {
-            ChessTurnDAO.getInstance(jdbcTemplate).deleteChessTurn(id);
+            ChessTurnDao.getInstance(jdbcTemplate).deleteChessTurn(id);
             throw new GameOverException(chessGameDTO.getTurn().toString());
         }
         return chessGameDTO;

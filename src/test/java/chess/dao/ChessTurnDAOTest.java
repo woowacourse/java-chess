@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChessTurnDAOTest {
-    ChessTurnDAO chessTurnDAO;
+    ChessTurnDao chessTurnDAO;
     Connection connection;
     JdbcTemplate jdbcTemplate;
 
@@ -22,7 +22,7 @@ class ChessTurnDAOTest {
         connection = DBConnection.getConnection();
         connection.setAutoCommit(false);
         jdbcTemplate = JdbcTemplate.getInstance(connection);
-        chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
+        chessTurnDAO = ChessTurnDao.getInstance(jdbcTemplate);
     }
 
     @Test
@@ -70,7 +70,7 @@ class ChessTurnDAOTest {
 
     @Test
     public void deleteTest() throws Exception {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance(jdbcTemplate);
+        ChessTurnDao chessTurnDAO = ChessTurnDao.getInstance(jdbcTemplate);
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 
@@ -95,6 +95,5 @@ class ChessTurnDAOTest {
     @AfterEach
     void tearDown() throws SQLException {
         connection.rollback();
-        //connection.close();
     }
 }

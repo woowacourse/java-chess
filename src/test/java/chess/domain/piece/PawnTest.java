@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static chess.domain.piece.PieceType.PAWN;
+import static chess.domain.piece.PieceGenerator.PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class PawnTest {
     Piece whitePawn = PAWN.generate(PieceColor.WHITE);
     Piece blackPawn = PAWN.generate(PieceColor.BLACK);
-    
+
     @Test
     void 흰색_폰_이동_검사_1() {
         assertDoesNotThrow(() ->

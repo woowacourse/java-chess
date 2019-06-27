@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.PieceGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BoardTest {
     Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
-        put(Tile.of("a1"), PieceType.QUEEN.generate(PieceColor.BLACK));
+        put(Tile.of("a1"), PieceGenerator.QUEEN.generate(PieceColor.BLACK));
     }};
     Board customBoard = new Board(boardState);
     Board gameBoard;
@@ -22,7 +22,7 @@ class BoardTest {
     @Test
     void 보드_초기화_테스트1() {
         assertThat(customBoard.at("a1"))
-                .isEqualTo(PieceType.QUEEN.generate(PieceColor.BLACK));
+                .isEqualTo(PieceGenerator.QUEEN.generate(PieceColor.BLACK));
     }
 
     @Test
@@ -61,7 +61,7 @@ class BoardTest {
 
     @Test
     void 말_이동_가능_케이스() {
-        Piece queen = PieceType.QUEEN.generate(PieceColor.BLACK);
+        Piece queen = PieceGenerator.QUEEN.generate(PieceColor.BLACK);
         String current = "a1";
         String target = "a2";
         gameBoard = new Board(new HashMap<Tile, Piece>() {{
@@ -76,7 +76,7 @@ class BoardTest {
 
     @Test
     void 말_이동_불가_케이스() {
-        Piece bishop = PieceType.BISHOP.generate(PieceColor.BLACK);
+        Piece bishop = PieceGenerator.BISHOP.generate(PieceColor.BLACK);
         String current = "a1";
         String target = "a2";
         gameBoard = new Board(new HashMap<Tile, Piece>() {{
@@ -92,8 +92,8 @@ class BoardTest {
     @Test
     void 점수_계산1() {
         Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
-            put(Tile.of("a1"), PieceType.QUEEN.generate(PieceColor.BLACK));
-            put(Tile.of("a2"), PieceType.ROOK.generate(PieceColor.WHITE));
+            put(Tile.of("a1"), PieceGenerator.QUEEN.generate(PieceColor.BLACK));
+            put(Tile.of("a2"), PieceGenerator.ROOK.generate(PieceColor.WHITE));
         }};
         Board board1 = new Board(boardState);
         assertThat(board1.status(PieceColor.BLACK)).isEqualTo(9);
@@ -102,8 +102,8 @@ class BoardTest {
     @Test
     void 점수_계산2() {
         Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
-            put(Tile.of("a1"), PieceType.PAWN.generate(PieceColor.BLACK));
-            put(Tile.of("b1"), PieceType.PAWN.generate(PieceColor.BLACK));
+            put(Tile.of("a1"), PieceGenerator.PAWN.generate(PieceColor.BLACK));
+            put(Tile.of("b1"), PieceGenerator.PAWN.generate(PieceColor.BLACK));
         }};
         Board board1 = new Board(boardState);
         assertThat(board1.status(PieceColor.BLACK)).isEqualTo(2);
@@ -112,8 +112,8 @@ class BoardTest {
     @Test
     void 점수_계산3() {
         Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
-            put(Tile.of("a1"), PieceType.PAWN.generate(PieceColor.BLACK));
-            put(Tile.of("a2"), PieceType.PAWN.generate(PieceColor.BLACK));
+            put(Tile.of("a1"), PieceGenerator.PAWN.generate(PieceColor.BLACK));
+            put(Tile.of("a2"), PieceGenerator.PAWN.generate(PieceColor.BLACK));
         }};
         Board board1 = new Board(boardState);
         assertThat(board1.status(PieceColor.BLACK)).isEqualTo(1);

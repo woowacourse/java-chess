@@ -2,19 +2,19 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.PieceGenerator;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static chess.domain.piece.PieceType.*;
+import static chess.domain.piece.PieceGenerator.*;
 
 public class BoardInitializer {
     public static final Row WHITE_PAWNS_ROW = Row.of(2);
     public static final Row BLACK_PAWNS_ROW = Row.of(7);
-    private static final List<PieceType> ORDER_OF_PIECES =
+    private static final List<PieceGenerator> ORDER_OF_PIECES =
             Arrays.asList(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
     private static final Row WHITE_PIECES_ROW = Row.of(1);
     private static final Row BLACK_PIECES_ROW = Row.of(8);
@@ -47,6 +47,6 @@ public class BoardInitializer {
 
     private static void placePawns(Map<Tile, Piece> board, PieceColor color, Row row) {
         Column.stream().forEach(column ->
-                board.put(Tile.of(column, row), PieceType.PAWN.generate(color)));
+                board.put(Tile.of(column, row), PieceGenerator.PAWN.generate(color)));
     }
 }

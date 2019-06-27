@@ -3,7 +3,7 @@ package chess.dao;
 import chess.domain.board.Tile;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.PieceGenerator;
 import chess.dto.ChessBoardDTO;
 
 import java.sql.ResultSet;
@@ -13,22 +13,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChessBoardDAO {
+public class ChessBoardDao {
     private static final String insertQuery = "INSERT INTO chess_board (game_id, tile, piece_type, piece_color) VALUES (?, ?, ?, ?)";
     private static final String selectQuery = "SELECT tile, piece_type, piece_color FROM chess_board WHERE game_id=?";
     private static final String deleteQuery = "DELETE FROM chess_board WHERE game_id=?";
 
-    private static ChessBoardDAO instance;
+    private static ChessBoardDao instance;
 
     private JdbcTemplate jdbcTemplate;
 
-    private ChessBoardDAO(JdbcTemplate jdbcTemplate) {
+    private ChessBoardDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public static ChessBoardDAO getInstance(JdbcTemplate jdbcTemplate) {
+    public static ChessBoardDao getInstance(JdbcTemplate jdbcTemplate) {
         if (instance == null) {
-            instance = new ChessBoardDAO(jdbcTemplate);
+            instance = new ChessBoardDao(jdbcTemplate);
         }
 
         if (!instance.jdbcTemplate.equals(jdbcTemplate)) {
@@ -46,7 +46,7 @@ public class ChessBoardDAO {
         Map<Tile, Piece> boardState = new HashMap<>();
         while (rs.next()) {
             Tile tile = Tile.of(rs.getString("tile"));
-            PieceType type = PieceType.valueOf(rs.getString("piece_type"));
+            PieceGenerator type = PieceGenerator.valueOf(rs.getString("piece_type"));
             PieceColor color = PieceColor.valueOf(rs.getString("piece_color"));
             boardState.put(tile, type.generate(color));
         }
@@ -61,7 +61,7 @@ public class ChessBoardDAO {
 
             parameters.add(id);
             parameters.add(tile.toString());
-            parameters.add(board.get(tile).getType().toString());
+            parameters.add(board.get(tile).getType());
             parameters.add(board.get(tile).getColor().toString());
 
             jdbcTemplate.executeUpdate(insertQuery, parameters);

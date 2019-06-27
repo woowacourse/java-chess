@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static chess.domain.piece.PieceType.*;
+import static chess.domain.piece.PieceGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardInitializerTest {

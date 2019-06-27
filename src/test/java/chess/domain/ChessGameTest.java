@@ -5,7 +5,7 @@ import chess.domain.board.InvalidMovingException;
 import chess.domain.board.Tile;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.PieceGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -18,9 +18,9 @@ class ChessGameTest {
     @Test
     void 말_이동_불가() {
         Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
-            put(Tile.of("c3"), PieceType.KING.generate(PieceColor.BLACK));
-            put(Tile.of("a5"), PieceType.QUEEN.generate(PieceColor.BLACK));
-            put(Tile.of("a2"), PieceType.KING.generate(PieceColor.WHITE));
+            put(Tile.of("c3"), PieceGenerator.KING.generate(PieceColor.BLACK));
+            put(Tile.of("a5"), PieceGenerator.QUEEN.generate(PieceColor.BLACK));
+            put(Tile.of("a2"), PieceGenerator.KING.generate(PieceColor.WHITE));
         }};
 
         ChessGame chessGame = new ChessGame(PieceColor.BLACK, boardState);
@@ -33,9 +33,9 @@ class ChessGameTest {
     @Test
     void 게임_종료() {
         Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
-            put(Tile.of("c3"), PieceType.KING.generate(PieceColor.BLACK));
-            put(Tile.of("a5"), PieceType.QUEEN.generate(PieceColor.BLACK));
-            put(Tile.of("a2"), PieceType.KING.generate(PieceColor.WHITE));
+            put(Tile.of("c3"), PieceGenerator.KING.generate(PieceColor.BLACK));
+            put(Tile.of("a5"), PieceGenerator.QUEEN.generate(PieceColor.BLACK));
+            put(Tile.of("a2"), PieceGenerator.KING.generate(PieceColor.WHITE));
         }};
 
         ChessGame chessGame = new ChessGame(PieceColor.BLACK, boardState);
@@ -56,9 +56,9 @@ class ChessGameTest {
     @Test
     void status2() {
         Map<Tile, Piece> boardState = new HashMap<Tile, Piece>() {{
-            put(Tile.of("c3"), PieceType.KING.generate(PieceColor.BLACK));
-            put(Tile.of("a5"), PieceType.QUEEN.generate(PieceColor.BLACK));
-            put(Tile.of("a2"), PieceType.KING.generate(PieceColor.WHITE));
+            put(Tile.of("c3"), PieceGenerator.KING.generate(PieceColor.BLACK));
+            put(Tile.of("a5"), PieceGenerator.QUEEN.generate(PieceColor.BLACK));
+            put(Tile.of("a2"), PieceGenerator.KING.generate(PieceColor.WHITE));
         }};
 
         Map<PieceColor, Double> status = new ChessGame(PieceColor.BLACK, boardState).status();

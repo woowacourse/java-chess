@@ -10,11 +10,9 @@ import java.util.Objects;
 
 public abstract class Piece {
     private PieceColor color;
-    private PieceType type;
 
-    public Piece(PieceColor color, PieceType type) {
+    public Piece(PieceColor color) {
         this.color = color;
-        this.type = type;
     }
 
     public List<Tile> pathOf(Tile current, Tile target, boolean isTargetEmpty) {
@@ -36,28 +34,24 @@ public abstract class Piece {
     }
 
     public boolean isPawn() {
-        return type.equals(PieceType.PAWN);
+        return false;
     }
 
     public boolean isKing() {
-        return type.equals(PieceType.KING);
+        return false;
     }
 
     public boolean isColor(PieceColor color) {
         return color == this.color;
     }
 
-    public double getScore() {
-        return type.getScore();
-    }
-
     public PieceColor getColor() {
         return color;
     }
 
-    public PieceType getType() {
-        return type;
-    }
+    public abstract double getScore();
+
+    public abstract String getType();
 
     protected abstract MovingRange getRange(boolean haveTarget, Tile current);
 
@@ -73,4 +67,5 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color);
     }
+
 }

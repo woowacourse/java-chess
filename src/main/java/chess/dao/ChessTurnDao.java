@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessTurnDAO {
+public class ChessTurnDao {
     private static final String insertQuery = "INSERT INTO chess_turn (turn) VALUES (?)";
     private static final String updateQuery = "UPDATE chess_turn SET turn=? WHERE game_id=?";
     private static final String selectTurnQuery = "SELECT turn FROM chess_turn WHERE game_id=?";
@@ -15,17 +15,17 @@ public class ChessTurnDAO {
     private static final String selectGameIdsQuery = "SELECT game_id FROM chess_turn";
     private static final String deleteQuery = "DELETE FROM chess_turn WHERE game_id=?";
 
-    private static ChessTurnDAO instance;
+    private static ChessTurnDao instance;
 
     private JdbcTemplate jdbcTemplate;
 
-    private ChessTurnDAO(JdbcTemplate jdbcTemplate) {
+    private ChessTurnDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public static ChessTurnDAO getInstance(JdbcTemplate jdbcTemplate) {
+    public static ChessTurnDao getInstance(JdbcTemplate jdbcTemplate) {
         if (instance == null) {
-            instance = new ChessTurnDAO(jdbcTemplate);
+            instance = new ChessTurnDao(jdbcTemplate);
         }
 
         if (!instance.jdbcTemplate.equals(jdbcTemplate)) {

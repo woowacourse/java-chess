@@ -1,6 +1,6 @@
 package chess;
 
-import chess.dao.ChessTurnDAO;
+import chess.dao.ChessTurnDao;
 import chess.dao.DBConnection;
 import chess.dao.JdbcTemplate;
 import chess.domain.board.GameOverException;
@@ -34,7 +34,7 @@ public class WebUIChessApplication {
     private static String home(Request request, Response response) throws SQLException {
         Map<String, Object> model = new HashMap<>();
         JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance(DBConnection.getConnection());
-        model.put("games", ChessTurnDAO.getInstance(jdbcTemplate).selectChessGames());
+        model.put("games", ChessTurnDao.getInstance(jdbcTemplate).selectChessGames());
         return render(model, "index.html");
     }
 
