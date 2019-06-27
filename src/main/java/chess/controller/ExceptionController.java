@@ -1,4 +1,4 @@
-package chess.api;
+package chess.controller;
 
 import spark.Request;
 import spark.Response;

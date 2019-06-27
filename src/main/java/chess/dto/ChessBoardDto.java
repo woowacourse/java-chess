@@ -1,31 +1,31 @@
 package chess.dto;
 
 public class ChessBoardDto {
-    private BoardDto boardDTO;
-    private TurnDto turnDTO;
-    private ResultCounterDto resultCounterDTO;
+    private BoardDto boardDto;
+    private TurnDto turnDto;
+    private ResultCounterDto resultCounterDto;
 
-    public BoardDto getBoardDTO() {
-        return boardDTO;
+    public BoardDto getBoardDto() {
+        return boardDto;
     }
 
-    public void setBoardDTO(BoardDto boardDTO) {
-        this.boardDTO = boardDTO;
+    public void setBoardDto(BoardDto boardDto) {
+        this.boardDto = boardDto;
     }
 
-    public TurnDto getTurnDTO() {
-        return turnDTO;
+    public TurnDto getTurnDto() {
+        return turnDto;
     }
 
-    public void setTurnDTO(TurnDto turnDTO) {
-        this.turnDTO = turnDTO;
+    public void setTurnDto(TurnDto turnDto) {
+        this.turnDto = turnDto;
     }
 
-    public ResultCounterDto getResultCounterDTO() {
-        return resultCounterDTO;
+    public ResultCounterDto getResultCounterDto() {
+        return resultCounterDto;
     }
 
-    public void setResultCounterDTO(ResultCounterDto resultCounterDTO) {
-        this.resultCounterDTO = resultCounterDTO;
+    public void setResultCounterDto(ResultCounterDto resultCounterDto) {
+        this.resultCounterDto = resultCounterDto;
     }
 }

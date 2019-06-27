@@ -1,7 +1,7 @@
 package chess;
 
-import chess.api.ChessGameController;
-import chess.api.ExceptionController;
+import chess.controller.ChessGameController;
+import chess.controller.ExceptionController;
 import chess.utils.JsonTransformer;
 
 import static spark.Spark.exception;

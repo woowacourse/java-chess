@@ -1,4 +1,4 @@
-package chess.api;
+package chess.controller;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -28,8 +28,8 @@ public class ChessGameController {
     public static String playGet(Request req, Response res) throws SQLException{
         deleteHandler();
         ChessBoard chessBoard = new ChessBoard();
-        ChessBoardDto chessBoardDTO = dataLoadedChessBoardDTO(chessBoard);
-        addHandler(chessBoardDTO);
+        ChessBoardDto chessBoardDto = dataLoadedChessBoardDto(chessBoard);
+        addHandler(chessBoardDto);
         return TemplateEngine.render(Model.turn(chessBoard), "game_play.html");
     }
 
@@ -39,36 +39,36 @@ public class ChessGameController {
         ResultCounterDao.deleteAll();
     }
 
-    private static ChessBoardDto dataLoadedChessBoardDTO(ChessBoard chessBoard) {
-        ChessBoardDto chessBoardDTO = new ChessBoardDto();
-        chessBoardDTO.setBoardDTO(dataLoadedBoardDTO(chessBoard));
-        chessBoardDTO.setTurnDTO(dataLoadedTurnDTO(chessBoard));
-        chessBoardDTO.setResultCounterDTO(dataLoadedResultCounterDTO(chessBoard));
-        return chessBoardDTO;
+    private static ChessBoardDto dataLoadedChessBoardDto(ChessBoard chessBoard) {
+        ChessBoardDto chessBoardDto = new ChessBoardDto();
+        chessBoardDto.setBoardDto(dataLoadedBoardDto(chessBoard));
+        chessBoardDto.setTurnDto(dataLoadedTurnDto(chessBoard));
+        chessBoardDto.setResultCounterDto(dataLoadedResultCounterDto(chessBoard));
+        return chessBoardDto;
     }
 
-    private static BoardDto dataLoadedBoardDTO(ChessBoard chessBoard) {
-        BoardDto boardDTO = new BoardDto();
-        boardDTO.setBoard(chessBoard.getBoard());
-        return boardDTO;
+    private static BoardDto dataLoadedBoardDto(ChessBoard chessBoard) {
+        BoardDto boardDto = new BoardDto();
+        boardDto.setBoard(chessBoard.getBoard());
+        return boardDto;
     }
 
-    private static TurnDto dataLoadedTurnDTO(ChessBoard chessBoard) {
-        TurnDto turnDTO = new TurnDto();
-        turnDTO.setTurn(chessBoard.getTurn());
-        return turnDTO;
+    private static TurnDto dataLoadedTurnDto(ChessBoard chessBoard) {
+        TurnDto turnDto = new TurnDto();
+        turnDto.setTurn(chessBoard.getTurn());
+        return turnDto;
     }
 
-    private static ResultCounterDto dataLoadedResultCounterDTO(ChessBoard chessBoard) {
-        ResultCounterDto resultCounterDTO = new ResultCounterDto();
-        resultCounterDTO.setResultCounter(chessBoard.getResultCounter());
-        return resultCounterDTO;
+    private static ResultCounterDto dataLoadedResultCounterDto(ChessBoard chessBoard) {
+        ResultCounterDto resultCounterDto = new ResultCounterDto();
+        resultCounterDto.setResultCounter(chessBoard.getResultCounter());
+        return resultCounterDto;
     }
 
-    private static void addHandler(ChessBoardDto chessBoardDTO) throws SQLException {
-        BoardDao.add(chessBoardDTO.getBoardDTO());
-        TurnDao.add(chessBoardDTO.getTurnDTO());
-        ResultCounterDao.add(chessBoardDTO.getResultCounterDTO());
+    private static void addHandler(ChessBoardDto chessBoardDto) throws SQLException {
+        BoardDao.add(chessBoardDto.getBoardDto());
+        TurnDao.add(chessBoardDto.getTurnDto());
+        ResultCounterDao.add(chessBoardDto.getResultCounterDto());
     }
 
     public static String continueGame(Request req, Response res) throws SQLException {
@@ -82,8 +82,8 @@ public class ChessGameController {
         ChessBoard chessBoard = dtoChessBoard();
         boolean isKingDead = chessBoard.move(source, target);
 
-        ChessBoardDto chessBoardDTO = dataLoadedChessBoardDTO(chessBoard);
-        moveHandler(chessBoardDTO);
+        ChessBoardDto chessBoardDto = dataLoadedChessBoardDto(chessBoard);
+        moveHandler(chessBoardDto);
 
         if (isKingDead) {
             return TemplateEngine.render(Model.result(chessBoard), "result.html");
@@ -92,16 +92,16 @@ public class ChessGameController {
     }
 
     private static ChessBoard dtoChessBoard() throws SQLException {
-        BoardDto boardDTO = BoardDao.selectAll();
-        TurnDto turnDTO = TurnDao.selectLastTurn();
-        ResultCounterDto resultCounterDTO = ResultCounterDao.selectAll();
-        return new ChessBoard(boardDTO.getBoard(), turnDTO.getTurn(), resultCounterDTO.getResultCounter());
+        BoardDto boardDto = BoardDao.selectAll();
+        TurnDto turnDto = TurnDao.selectLastTurn();
+        ResultCounterDto resultCounterDto = ResultCounterDao.selectAll();
+        return new ChessBoard(boardDto.getBoard(), turnDto.getTurn(), resultCounterDto.getResultCounter());
     }
 
-    private static void moveHandler(ChessBoardDto chessBoardDTO) throws SQLException {
-        BoardDao.afterMove(chessBoardDTO.getBoardDTO());
-        TurnDao.afterMove(chessBoardDTO.getTurnDTO());
-        ResultCounterDao.afterMove(chessBoardDTO.getResultCounterDTO());
+    private static void moveHandler(ChessBoardDto chessBoardDto) throws SQLException {
+        BoardDao.afterMove(chessBoardDto.getBoardDto());
+        TurnDao.afterMove(chessBoardDto.getTurnDto());
+        ResultCounterDao.afterMove(chessBoardDto.getResultCounterDto());
     }
 
     public static String result(Request req, Response res) throws SQLException {

@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Direction {
     N(0, 1, (x, y) -> x == 0 && y > 0),
     NE(1, 1, (x, y) -> x > 0 && y > 0 && isAbsEqual(x, y)),
@@ -44,5 +47,21 @@ public enum Direction {
             }
         }
         return OTHER;
+    }
+
+    public static List<Direction> pawnDirections() {
+        return Arrays.asList(N, S);
+    }
+
+    public static List<Direction> diagonalDirections() {
+        return Arrays.asList(NE, SE, SW, NW);
+    }
+
+    public static List<Direction> crossDirections() {
+        return Arrays.asList(N, E, S, W);
+    }
+
+    public static List<Direction> allDirections() {
+        return Arrays.asList(N, NE, E, SE, S, SW, W, NW);
     }
 }
