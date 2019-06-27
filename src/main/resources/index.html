@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>체스</title>
+    <link rel="stylesheet" href="css/chessboard-1.0.0.css">
+</head>
+<body>
+    <script defer type="text/javascript" src="js/jquery-3.4.1.js"></script>
+    <script defer type="text/javascript" src="js/chessboard-1.0.0.js"></script>
+    <script defer type="text/javascript" src="js/chess-client.js"></script>
+
+    <div id="buttons">
+        <button type="button" onclick="chessStart()">체스 시작/판 초기화</button>
+        <button type="button" onclick="getScores()">현재 점수 계산</button>
+    </div>
+    <div id="myBoard" style="width: 30%"></div>
+    <div id="message"></div>
+</body>
+</html>
