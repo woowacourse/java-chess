@@ -1,6 +1,8 @@
 package chess;
 
 import chess.domain.Game;
+import chess.dto.BoardDto;
+import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -41,13 +43,12 @@ public class WebUIChessApplication {
             return render(map, "index.html");
         });
 
-        get("/start", (req, res) -> new BoardTransFormer(game.reload()).toJson());
+        get("/start", (req, res) -> new Gson().toJson(new BoardDto(game.reload())));
 
         get("/move", (req, res) -> {
             int from = Integer.parseInt(req.queryParams("from"));
             int to = Integer.parseInt(req.queryParams("to"));
-
-            return new BoardTransFormer(game.play(from, to)).toJson();
+            return new Gson().toJson(new BoardDto(game.play(from, to)));
         });
 
         get("/score", (req, res) -> game.getStatusBoard().toString());
