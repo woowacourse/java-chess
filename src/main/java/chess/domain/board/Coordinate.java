@@ -42,4 +42,8 @@ public class Coordinate {
     public int calculateDistance(Coordinate end) {
         return this.coordinate - end.coordinate;
     }
+
+    public int sumCoordinate(int num) {
+        return coordinate + num;
+    }
 }

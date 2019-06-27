@@ -82,7 +82,6 @@ public class Board {
                 .anyMatch(movedPoint -> points.get(movedPoint).isPresent());
     }
 
-
     public boolean isOwnPiece(Point prev, PlayerType playerType) {
         return points.get(prev)
                 .orElseThrow(IllegalArgumentException::new)

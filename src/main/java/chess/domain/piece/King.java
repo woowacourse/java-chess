@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.DirectionType;
 import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
@@ -11,18 +12,26 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Point prev, Point next) {
-        double gradient = Math.abs(prev.calculateGradient(next));
+        DirectionType directionType;
+        try {
+            directionType = DirectionType.valueOf(prev, next);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+
         int distanceSum = Math.abs(next.xDistance(prev)) + Math.abs(next.yDistance(prev));
-        if (gradient == 1 && distanceSum == 2) {
+        if (isMovedDiagonalDirection(directionType, distanceSum)) {
             return true;
         }
-        if (gradient == 0 && distanceSum == 1) {
-            return true;
-        }
-        if (gradient == Double.MAX_VALUE && distanceSum == 1) {
-            return true;
-        }
-        return false;
+        return isMovedLinearDirection(directionType, distanceSum);
+    }
+
+    private boolean isMovedLinearDirection(DirectionType directionType, int distanceSum) {
+        return DirectionType.isLinearDirection(directionType) && distanceSum == 1;
+    }
+
+    private boolean isMovedDiagonalDirection(DirectionType directionType, int distanceSum) {
+        return DirectionType.isDiagonalDirection(directionType) && distanceSum == 2;
     }
 
     @Override

@@ -49,9 +49,8 @@ public class Point {
     }
 
     public Point moveOneStep(DirectionType directionType, int size) {
-        // TODO: 2019-06-21 so loooooooong
-        return Point.of(this.x.getCoordinate() + directionType.getxDegree() * size,
-                this.y.getCoordinate() + directionType.getyDegree() * size);
+        return Point.of(x.sumCoordinate(directionType.getxDegree() * size),
+                y.sumCoordinate(directionType.getyDegree() * size));
     }
 
     public int getY() {

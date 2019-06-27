@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.DirectionType;
 import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
@@ -10,10 +11,13 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMovable(Point prev, Point next) {
-        return Math.abs(prev.calculateGradient(next)) == 1;
-        // TODO: 2019-06-26 Use DirectionType~!
-//        DirectionType directionType = DirectionType.valueOf(prev, next);
-//        return DirectionType.diagonalDirection().contains(directionType);
+        DirectionType directionType;
+        try {
+            directionType = DirectionType.valueOf(prev, next);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        return DirectionType.isDiagonalDirection(directionType);
     }
 
     @Override

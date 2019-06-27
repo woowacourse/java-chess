@@ -4,6 +4,7 @@ import chess.domain.board.PlayerType;
 import chess.domain.board.Point;
 
 public class Knight extends Piece {
+    private static final int MOVE_DISTANCE = 3;
 
     public Knight(PlayerType playerType) {
         super(playerType);
@@ -18,11 +19,7 @@ public class Knight extends Piece {
         if (gradient == Double.MAX_VALUE) {
             return false;
         }
-        int distanceSum = Math.abs(next.xDistance(prev)) + Math.abs(next.yDistance(prev));
-        if (distanceSum == 3) {
-            return true;
-        }
-        return false;
+        return Math.abs(next.xDistance(prev)) + Math.abs(next.yDistance(prev)) == MOVE_DISTANCE;
     }
 
     @Override

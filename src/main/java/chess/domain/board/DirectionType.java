@@ -37,6 +37,18 @@ public enum DirectionType {
         return Arrays.asList(NORTH, EAST, SOUTH, WEST);
     }
 
+    public static List<DirectionType> diagonalDirection() {
+        return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+    }
+
+    public static boolean isLinearDirection(DirectionType directionType) {
+        return linearDirection().contains(directionType);
+    }
+
+    public static boolean isDiagonalDirection(DirectionType directionType) {
+        return diagonalDirection().contains(directionType);
+    }
+
     public int getxDegree() {
         return xDegree;
     }
