@@ -57,7 +57,6 @@ public class WebView {
 //        model.put("message", game.isTurnOf().team().toggle() + "이 승리하였습니다.");
         model.put("message", "이 승리하였습니다.");
         return render(model, "game.html");
-
     }
 
     private static Map<String, Object> defaultModel(final Game game) {
@@ -127,18 +126,18 @@ public class WebView {
         return result.toString();
     }
 
-    public static String drawChoiceButton() {
+    private static String drawChoiceButton() {
         return "<input type=\"submit\" value=\"선택\" style=\"width: 150px; font-size: 25px;\"/>"
                 + "<br /><br /><br />";
     }
 
-    public static String drawConfirmOrCancelButtons() {
+    private static String drawConfirmOrCancelButtons() {
         return "<input type=\"submit\" value=\"확인\" style=\"width: 150px; font-size: 25px;\"/>"
                 + "<a href=\"/cancel\"><input type=\"button\" value=\"취소\" style=\"width: 150px; font-size: 25px;\"/></a>"
                 + "<br /><br />";
     }
 
-    public static String drawRestartButton() {
+    private static String drawRestartButton() {
         return "<a href=\"/restart\">" +
                 "<input type=\"button\" value=\"재시작\" style=\"width: 150px; font-size: 25px;\"/>" +
                 "</a>";
