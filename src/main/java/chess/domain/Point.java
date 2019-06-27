@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Point {
@@ -33,11 +34,14 @@ public class Point {
     public static Point get(int xAxis, int yAxis) {
         validate(xAxis);
         validate(yAxis);
-        return points.stream()
+        Optional<Point> foundPoint = points.stream()
                 .filter(point -> point.x == xAxis)
                 .filter(point -> point.y == yAxis)
-                .findFirst()
-                .get();
+                .findAny();
+        if (foundPoint.isPresent()) {
+            return foundPoint.get();
+        }
+        throw new IllegalArgumentException("요청한 좌표는 존재하지 않습니다.");
     }
 
     private static void validate(int point) {
