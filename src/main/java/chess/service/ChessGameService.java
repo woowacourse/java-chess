@@ -34,14 +34,14 @@ public class ChessGameService {
 
     public static Map<String, String> playGame(Request req) {
         String gameId = req.splat()[0];
-        ChessGame game = req.session().attribute(gameId + SESSION_ID);
+        ChessGame chessGame = req.session().attribute(gameId + SESSION_ID);
         String from = req.queryParams(FROM);
         String to = req.queryParams(TO);
 
-        game.play(from, to);
+        chessGame.play(from, to);
         CHESS_LOG_DAO.insertLog(from, to, gameId);
-        req.session().attribute(gameId + SESSION_ID, game);
-        return status(game);
+        req.session().attribute(gameId + SESSION_ID, chessGame);
+        return status(chessGame);
     }
 
     private static Map<String, String> status(ChessGame game) {

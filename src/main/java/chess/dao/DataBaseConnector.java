@@ -22,23 +22,20 @@ public class DataBaseConnector {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataBaseConnectException("드라이버 로드 오류");
         }
 
         // 드라이버 연결
         try {
             con = DriverManager.getConnection(url, userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
+            throw new DataBaseConnectException("연결 오류");
         }
 
         return con;
     }
 
-    public static void closeConnection(Connection con, PreparedStatement pstmt, ResultSet rs) {
+    static void closeConnection(Connection con, PreparedStatement pstmt, ResultSet rs) {
         try {
             if (rs != null) {
                 rs.close();
@@ -54,7 +51,7 @@ public class DataBaseConnector {
         }
     }
 
-    public static void closeConnection(Connection con, PreparedStatement pstmt) {
+    static void closeConnection(Connection con, PreparedStatement pstmt) {
         closeConnection(con, pstmt, null);
     }
 }
