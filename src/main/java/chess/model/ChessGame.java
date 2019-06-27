@@ -35,7 +35,8 @@ public class ChessGame {
     }
 
     public boolean isKingAlive() {
-        return new HashSet<>(board.getPieces(Piece::isKing)).size() == DEFAULT_KING_COUNT;
+        return new HashSet<>(
+                board.getPieces(piece -> piece.isPieceOf(UnitType.KING))).size() == DEFAULT_KING_COUNT;
     }
 
     double calculateScore(Side side) {
@@ -60,14 +61,15 @@ public class ChessGame {
         int countOfPawn = 0;
         while (iterator.hasNext()) {
             Piece piece = board.getPiece(iterator.next());
-            countOfPawn = piece != null && piece.isSameSide(side) && piece.isPawn() ? countOfPawn + 1 : countOfPawn;
+            countOfPawn = piece != null && piece.isSameSide(side) && piece.isPieceOf(UnitType.PAWN)
+                    ? countOfPawn + 1 : countOfPawn;
         }
         double scoreInColumn = UnitType.PAWN.getScore() * countOfPawn;
         return countOfPawn < 2 ? scoreInColumn : scoreInColumn / 2;
     }
 
     private void addNotPawnScore(Side side) {
-        addScore(side, board.getPieces(piece -> !piece.isPawn() && piece.isSameSide(side)).stream()
+        addScore(side, board.getPieces(piece -> !piece.isPieceOf(UnitType.PAWN) && piece.isSameSide(side)).stream()
                 .mapToDouble(Piece::getScore).sum());
     }
 

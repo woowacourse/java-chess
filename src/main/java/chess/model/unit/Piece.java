@@ -59,16 +59,8 @@ public abstract class Piece {
         return side == Side.WHITE ? type.getSymbol().toLowerCase() : type.getSymbol();
     }
 
-    public boolean isPawn() {
-        return false;
-    }
-
-    public boolean isKing() {
-        return false;
-    }
-
-    public boolean compareSide(Side side) {
-        return this.side == side;
+    public boolean isPieceOf(UnitType unitType) {
+        return this.type == unitType;
     }
 
     public double getScore() {

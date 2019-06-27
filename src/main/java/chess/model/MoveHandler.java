@@ -4,6 +4,7 @@ import chess.model.board.Board;
 import chess.model.unit.Pawn;
 import chess.model.unit.Piece;
 import chess.model.unit.Side;
+import chess.model.unit.UnitType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class MoveHandler {
     }
 
     private boolean isSameSide(Square beginSquare, Side side) {
-        return board.getPiece(beginSquare).compareSide(side);
+        return board.getPiece(beginSquare).isSameSide(side);
     }
 
     private boolean isEqualSquare(Square beginSquare, Square endSquare) {
