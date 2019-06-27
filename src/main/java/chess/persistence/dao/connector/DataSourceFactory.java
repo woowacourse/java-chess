@@ -13,6 +13,9 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
     private static final String URL_FORMAT = "jdbc:mysql://%s:%s/%s?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
     private static MysqlDataSource ds;
 
+    private DataSourceFactory() {
+    }
+
     public static DataSourceFactory getInstance() {
         return DataSourceFactoryHandler.INSTANCE;
     }
@@ -56,5 +59,4 @@ public class DataSourceFactory implements AbstractDataSourceFactory {
     private static class DataSourceFactoryHandler {
         static final DataSourceFactory INSTANCE = new DataSourceFactory();
     }
-
 }
