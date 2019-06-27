@@ -49,14 +49,11 @@ public class Board {
             return false;
         }
 
-        Spot nextSpot = startSpot.nextSpot(startSpot.calculateMovement(endSpot));
-
-        return checkPath(nextSpot, endSpot);
+        MovementUnit movementUnit = startSpot.calculateMovement(endSpot);
+        return checkPath(startSpot.nextSpot(movementUnit), endSpot, movementUnit);
     }
 
-    private boolean checkPath(Spot startSpot, Spot endSpot) {
-        MovementUnit movementUnit = startSpot.calculateMovement(endSpot);
-
+    private boolean checkPath(Spot startSpot, Spot endSpot, MovementUnit movementUnit) {
         if (startSpot == endSpot) {
             return true;
         }
@@ -64,7 +61,7 @@ public class Board {
         if (piece != Empty.getInstance()) {
             return false;
         }
-        return checkPath(startSpot.nextSpot(movementUnit), endSpot);
+        return checkPath(startSpot.nextSpot(movementUnit), endSpot, movementUnit);
     }
 
     private boolean isPieceMovement(Spot startSpot, Spot endSpot) {
