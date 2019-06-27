@@ -1,22 +1,34 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.BoardController;
+import chess.controller.GameController;
+import chess.controller.HomeController;
+import chess.controller.ScoreController;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
+        staticFiles.location("static");
+        externalStaticFileLocation("src/main/resources/templates");
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        HomeController homeController = HomeController.getInstance();
+        get(HomeController.URL, homeController::getGameRooms);
+        post(HomeController.URL, homeController::setUpGame);
+
+        GameController gameController = GameController.getInstance();
+        get(GameController.URL, gameController::moveToGamePage);
+        post(GameController.URL, gameController::updatePiece);
+
+        BoardController boardController = BoardController.getInstance();
+        get(boardController.URL, boardController::setUpBoard);
+
+        ScoreController scoreController = ScoreController.getInstance();
+        get(ScoreController.URL, scoreController::getScore);
+
+        exception(Exception.class, (e, req, res) -> {
+            e.printStackTrace();
+            res.body("오류: " + e.getMessage());
+        });
     }
 }
