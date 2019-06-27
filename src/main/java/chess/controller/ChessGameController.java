@@ -63,7 +63,6 @@ public class ChessGameController {
 
         // 데이터베이스에 초기화 배열 저장
         chessBoardDto.getPoints().entrySet().stream()
-                //.filter(point -> !point.getValue().equalsType(Type.BLANK))
                 .forEach(point -> {
                     PieceDto pieceDto = new PieceDto(point.getKey(), point.getValue().getColor(), point.getValue().getType());
                     try {
@@ -126,10 +125,9 @@ public class ChessGameController {
             PieceDto sourcePieceDto = new PieceDto(source, sourcePiece.getColor(), sourcePiece.getType());
             PieceDto targetPieceDto = new PieceDto(target, Color.NONE, Type.BLANK);
             ChessPieceDao chessPieceDao = new ChessPieceDao(DBManager.createDataSource());
-            chessPieceDao.updatePiece(sourcePieceDto, targetPieceDto);  // target 위치에 해당 체스 말 넣기
-            chessPieceDao.updatePiece(targetPieceDto, sourcePieceDto);  // source 위치에 빈칸을 넣기
-            // 현재 턴 데이터베이스에 저장
-            ChessGameDao chessGameDao = new ChessGameDao(DBManager.createDataSource());
+            chessPieceDao.updatePiece(sourcePieceDto, targetPieceDto);                    // target 위치에 해당 체스 말 넣기
+            chessPieceDao.updatePiece(targetPieceDto, sourcePieceDto);                    // source 위치에 빈칸을 넣기
+            ChessGameDao chessGameDao = new ChessGameDao(DBManager.createDataSource());   // 현재 턴 데이터베이스에 저장
             chessGameDao.updateTurn(chessGame.getColor().toString());
             return true;
         } catch (Exception e) {

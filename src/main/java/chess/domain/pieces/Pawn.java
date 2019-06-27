@@ -17,12 +17,6 @@ public class Pawn extends Piece {
 
     @Override
     public List<Point> action(Point source, Point target, boolean hasEnemy) {
-//        if (hasEnemy) {
-//            Direction currentDirection = calculateDirection(source, target);
-//            return calculatePath(source, target, currentDirection);
-//        }
-//        Direction currentDirection = calculateAttackDirection(source, target);
-//        return calculateAttackPath(source, target, currentDirection);
         Direction currentDirection = hasEnemy
                 ? calculateAttackDirection(source, target)
                 : calculateMoveDirection(source, target);
