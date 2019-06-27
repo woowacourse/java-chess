@@ -10,9 +10,11 @@ import java.util.stream.Collectors;
 
 public class Board {
     private Map<Position, Piece> pieces = new HashMap<>();
-    private Aliance thisTurn = Aliance.WHITE;
+    private Aliance thisTurn;
 
-    public Board() {}
+    public Board(Aliance turn) {
+        this.thisTurn = turn;
+    }
 
     public void initBoard() {
         pieces.put(Position.valueOf("a1"), new Rook(Aliance.WHITE, PieceValue.ROOK));
@@ -156,9 +158,5 @@ public class Board {
 
     public Aliance getThisTurn() {
         return thisTurn;
-    }
-
-    public void setThisTurn(Aliance thisTurn) {
-        this.thisTurn = thisTurn;
     }
 }

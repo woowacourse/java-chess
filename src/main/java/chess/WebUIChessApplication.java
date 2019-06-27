@@ -1,7 +1,9 @@
 package chess;
 
 import chess.domain.*;
-import chess.domain.piece.Piece;
+import chess.service.GameService;
+import chess.service.PieceService;
+import chess.service.UserService;
 import com.google.gson.Gson;
 import dao.*;
 import dto.GameDto;
@@ -23,25 +25,15 @@ public class WebUIChessApplication {
         staticFiles.location("/");
 
         get("/", (req, res) -> {
-            GameDao gameDao = GameDaoImpl.getInstance();
-            List<GameDto> notEndGameDtos = gameDao.findNotEndGames();
-
             Map<String, Object> model = new HashMap<>();
-            model.put("notEndGames", notEndGameDtos);
+            model.put("notEndGames", GameService.getNotEndGames());
 
             return render(model, "intro.html");
         });
 
         post("/", (req, res) -> {
-            GameDao gameDao = GameDaoImpl.getInstance();
-            int gameId = gameDao.addGame();
-
-            UserDao userDao = UserDaoImpl.getInstance();
-            UserDto whiteUserDto = new UserDto(gameId, req.queryParams("white_user"), 2);
-            UserDto blackUserDto = new UserDto(gameId, req.queryParams("black_user"), 1);
-            userDao.addUser(whiteUserDto);
-            userDao.addUser(blackUserDto);
-
+            int gameId = GameService.addGame();
+            UserService.addUsers(req,gameId);
             res.redirect("/" + gameId);
             return "";
         });
@@ -53,36 +45,17 @@ public class WebUIChessApplication {
             List<Column> columns = Column.getColumns();
             Collections.reverse(rows);
 
-            GameDao gameDao = GameDaoImpl.getInstance();
-            GameDto gameDto = gameDao.findById(gameId);
 
-            UserDao userDao = UserDaoImpl.getInstance();
-            List<UserDto> userDtos = userDao.findByGameId(gameId);
+            GameDto gameDto = GameService.findById(gameId);
 
-            Board board = new Board();
+            List<UserDto> userDtos = UserService.findByGameId(gameId);
+
+            Board board = new Board(gameDto.getTurn());
             req.session().attribute("board", board);
-            board.setThisTurn(gameDto.getTurn());
 
-            PieceDao pieceDao = PieceDaoImpl.getInstance();
-            List<PieceDto> pieceDtos = pieceDao.findByGameId(gameId);
+            List<PieceDto> pieceDtos = PieceService.findByGameId(gameId);
 
-            if (pieceDtos.size() == 0) {
-                board.initBoard();
-                Map<Position, Piece> pieces = board.getPieces();
-
-                for (Position position : pieces.keySet()) {
-                    int teamId = pieces.get(position).getAliance().getTeamId();
-                    int kindId = pieces.get(position).getPieceValue().getKindId();
-                    PieceDto pieceDto = new PieceDto(teamId, gameId, kindId, position.toString());
-                    pieceDao.addPiece(pieceDto);
-                }
-            }
-
-            if (pieceDtos.size() != 0) {
-                for (PieceDto piece : pieceDtos) {
-                    board.putPiece(piece.getPosition(), piece.getAliance().getTeamId(), piece.getKindId());
-                }
-            }
+            board = PieceService.setBoard(board,pieceDtos,gameId);
 
             if (gameDto.isEnd() == true) {
                 ResultCalculator resultCalculator = new ResultCalculator(board);
@@ -116,15 +89,11 @@ public class WebUIChessApplication {
             board.movePiece(start, end);
             Aliance nextTurn = board.switchTurn();
 
-            NavigatorDto navigatorDto = new NavigatorDto(gameId, start, end);
-            PieceDao pieceDao = PieceDaoImpl.getInstance();
-            pieceDao.updatePiece(navigatorDto);
+            PieceService.updatePiece(new NavigatorDto(gameId, start, end));
 
             boolean isEnd = !board.isKingAlive(nextTurn);
 
-            GameDto newGameDto = new GameDto(gameId, isEnd, nextTurn.getTeamId());
-            GameDao gameDao = GameDaoImpl.getInstance();
-            gameDao.updateGame(newGameDto);
+            GameService.updateGame(new GameDto(gameId, isEnd, nextTurn.getTeamId()));
 
             res.redirect("/" + gameId);
             return "";
@@ -134,6 +103,7 @@ public class WebUIChessApplication {
             res.body(String.format("<script>alert('%s'); history.back();</script>", exception.getMessage(), req.pathInfo()));
         });
     }
+
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
