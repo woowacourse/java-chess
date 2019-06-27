@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.RoundDto;
+import chess.dto.RoundDto;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
