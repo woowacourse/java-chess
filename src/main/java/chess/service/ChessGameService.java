@@ -51,28 +51,28 @@ public class ChessGameService {
 
     public Set<Position> getPossiblePositions(String seletedPosition) {
         Position source = Position.of(seletedPosition);
-        int latestId = chessGameDAO.findLatestChessGameId();
-        String board = chessGameDAO.findChessGameById(latestId);
-        TeamType teamType = (chessGameDAO.findTurnById(latestId) == WHITE_TURN) ? TeamType.WHITE : TeamType.BLACK;
-        Board latestBoard = BoardGenerator.createBoard(board);
-        Game game = new Game(latestBoard, teamType);
+        Game game = getLatestGame();
 
         return game.selectSourcePiece(source);
     }
 
-    // TODO 중복 제거
     public ChessGameDTO.GameLoading movePiece(String sourceInput, String destinationInput) {
         Position source = Position.of(sourceInput);
         Position destination = Position.of(destinationInput);
+        Game game = getLatestGame();
+        game.move(source, destination);
+        chessGameDAO.addChessGame(game.getBoard().parseBoard(),
+                game.getCurrentTeam() == TeamType.WHITE ? BLACK_TURN : WHITE_TURN);
+
+        return createLatestGame();
+    }
+
+    private Game getLatestGame() {
         int latestId = chessGameDAO.findLatestChessGameId();
         String board = chessGameDAO.findChessGameById(latestId);
         TeamType teamType = (chessGameDAO.findTurnById(latestId) == WHITE_TURN) ? TeamType.WHITE : TeamType.BLACK;
         Board latestBoard = BoardGenerator.createBoard(board);
-        Game game = new Game(latestBoard, teamType);
-        game.move(source, destination);
-        chessGameDAO.addChessGame(game.getBoard().parseBoard(), teamType == TeamType.WHITE ? BLACK_TURN : WHITE_TURN);
-
-        return createLatestGame();
+        return new Game(latestBoard, teamType);
     }
 
     public double calculateScore(TeamType teamType) {
