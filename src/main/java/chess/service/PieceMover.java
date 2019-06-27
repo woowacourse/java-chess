@@ -7,10 +7,11 @@ import chess.domain.ChessGame;
 import chess.domain.Point;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
+import chess.domain.pieces.PointFactory;
 import chess.domain.pieces.Type;
-import chess.service.dto.MoveDto;
 import chess.service.dto.MoveResultDto;
 import chess.service.dto.PieceDto;
+import spark.Request;
 
 import javax.sql.DataSource;
 
@@ -27,11 +28,11 @@ public class PieceMover {
         moveResultDto = new MoveResultDto();
     }
 
-    public MoveResultDto movePiece(MoveDto moveDto) {
+    public MoveResultDto movePiece(Request request) {
         try {
-            ChessGame chessGame = moveDto.getChessGame();
-            Point source = moveDto.getSource();
-            Point target = moveDto.getTarget();
+            ChessGame chessGame = request.session().attribute("chessGame");
+            Point source = PointFactory.of(request.queryMap("source").value());
+            Point target = PointFactory.of(request.queryMap("target").value());
             Piece sourcePiece = chessGame.getPiece(source);
             chessGame.play(source, target);
             PieceDto sourcePieceDto = new PieceDto(source, sourcePiece.getColor(), sourcePiece.getType());

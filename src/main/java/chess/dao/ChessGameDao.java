@@ -7,10 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChessGameDao {
-    private static final String QUERY_FOR_ADD_GAME ="INSERT INTO game VALUES(?, 'WHITE')";
-    private static final String QUERY_FOR_FIND_TURN ="SELECT turn FROM game WHERE id=?";
-    private static final String QUERY_FOR_UPDATE_TURN ="UPDATE game SET turn=? WHERE id=1";
-    private static final String QUERY_FOR_DELETE_GAME ="DELETE FROM game";
+    private static final String QUERY_FOR_ADD_GAME = "INSERT INTO game VALUES(?, 'WHITE')";
+    private static final String QUERY_FOR_FIND_TURN = "SELECT turn FROM game WHERE id=?";
+    private static final String QUERY_FOR_UPDATE_TURN = "UPDATE game SET turn=? WHERE id=1";
+    private static final String QUERY_FOR_DELETE_GAME = "DELETE FROM game";
 
     private final DataSource dataSource;
 
