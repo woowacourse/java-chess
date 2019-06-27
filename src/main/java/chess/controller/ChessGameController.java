@@ -7,49 +7,50 @@ import chess.utils.JsonUtils;
 import spark.Route;
 
 public class ChessGameController {
-    private static ChessService service;
     private static final int INTERNAL_SERVER_ERROR_CODE = 500;
 
-    static {
-        service = new ChessService();
+    private ChessService service;
+
+    public ChessGameController(ChessService service) {
+        this.service = service;
     }
 
-    public static Route serveIndexPage = (request, response) -> {
-        response.redirect("/chessgame.html");
+    public Route serveIndexPage = (req, res) -> {
+        res.redirect("/chessgame.html");
         return null;
     };
 
-    public static Route move = (request, response) -> {
+    public Route move = (req, res) -> {
         MoveResult moveResult;
-        response.type("application/json");
+        res.type("application/json");
         try {
-            Square beginSquare = Square.of(request.queryMap("source").value());
-            Square endSquare = Square.of(request.queryMap("target").value());
+            Square beginSquare = Square.of(req.queryMap("source").value());
+            Square endSquare = Square.of(req.queryMap("target").value());
             return service.canMove(beginSquare, endSquare).toJson();
         } catch (Exception e) {
             moveResult = new MoveResult();
             moveResult.setCanMove(false);
-            response.status(INTERNAL_SERVER_ERROR_CODE);
+            res.status(INTERNAL_SERVER_ERROR_CODE);
             return moveResult.toJson();
         }
     };
 
-    public static Route initialize = (request, response) -> {
-        response.type("application/json");
+    public Route initialize = (req, res) -> {
+        res.type("application/json");
         try {
             return service.initializeBoard().toJson();
         } catch (Exception e) {
-            response.status(INTERNAL_SERVER_ERROR_CODE);
+            res.status(INTERNAL_SERVER_ERROR_CODE);
             return JsonUtils.toJson(e.getMessage());
         }
     };
 
-    public static Route loadBoard = (request, response) -> {
-        response.type("application/json");
+    public Route loadBoard = (req, res) -> {
+        res.type("application/json");
         try {
             return service.createBoardInfo().toJson();
         } catch (Exception e) {
-            response.status(INTERNAL_SERVER_ERROR_CODE);
+            res.status(INTERNAL_SERVER_ERROR_CODE);
             return JsonUtils.toJson(e.getMessage());
         }
     };
