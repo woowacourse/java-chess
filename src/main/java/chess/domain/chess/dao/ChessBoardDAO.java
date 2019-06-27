@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ChessBoardDAO {
     private Connection connection;
@@ -56,7 +59,7 @@ public class ChessBoardDAO {
     }
 
     public List<Integer> getIdList() throws SQLException {
-        String query = "SELECT id FROM chess_board";
+        String query = "SELECT id FROM chess_board ORDER BY id ASC LIMIT 100 OFFSET 0";
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet resultSet = pstmt.executeQuery();
 
@@ -65,7 +68,6 @@ public class ChessBoardDAO {
             ids.add(resultSet.getInt(1));
         }
 
-        Collections.sort(ids);
         return ids;
     }
 }

@@ -46,6 +46,7 @@ public class ChessBoardDAOTest {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO(connection);
 
         List<Integer> ids = chessBoardDAO.getIdList();
+        System.out.println(ids);
 
     }
 }
