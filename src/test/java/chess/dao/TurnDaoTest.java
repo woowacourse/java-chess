@@ -12,22 +12,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class TurnDaoTest {
-    private Connection connection;
-    private TurnDao turnDao;
+    private TurnDao turnDao = new TurnDao();
 
-    @BeforeEach
-    void setUp() throws SQLException {
-        connection = DBManager.getConnection();
-        connection.setAutoCommit(false);
-        turnDao = new TurnDao(connection);
-    }
     @Test
-    void 첫번째_turn_추가() throws SQLException{
+    void 첫번째_turn_추가(){
         turnDao.addFirstTurn(1);
     }
 
     @Test
-    void 현재_차례_팀_조회() throws SQLException {
+    void 현재_차례_팀_조회(){
         turnDao.addFirstTurn(2);
         assertThat(turnDao.selectCurrentTurn(2)).isEqualTo("WHITE");
     }
@@ -39,8 +32,4 @@ public class TurnDaoTest {
         assertThat(turnDao.selectCurrentTurn(3)).isEqualTo("BLACK");
     }
 
-    @AfterEach
-    void tearDown() throws SQLException{
-        connection.rollback();
-    }
 }

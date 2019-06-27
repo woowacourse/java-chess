@@ -2,12 +2,9 @@ package chess.dao;
 
 import chess.dto.BoardDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BoardDao {
     private static final String INSERT_BOARD_SQL = "INSERT INTO board(piece,team,point,round) values(?,?,?,?)";
@@ -16,59 +13,46 @@ public class BoardDao {
     private static final String DELETE_PIECE = "delete from board where round = ? and point = ?";
     private static final String UPDATE_PIECE = "update board set point = ? where point = ? and round = ?";
     private static final int ZERO_ROUND = 0;
-    private final Connection connection;
+    private static final JDBCTemplate JDBC_TEMPLATE = JDBCTemplate.getInstance();
 
-    public BoardDao(Connection connection) {
-        this.connection = connection;
+    public BoardDao() {
     }
 
-    public void initialize(List<BoardDto> boardDtos) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement(INSERT_BOARD_SQL);
+    public void initialize(List<BoardDto> boardDtos) {
         for (BoardDto boardDto : boardDtos) {
-            pstmt.setString(1, boardDto.getPiece());
-            pstmt.setString(2, boardDto.getTeam());
-            pstmt.setString(3, boardDto.getPoint());
-            pstmt.setInt(4, boardDto.getRound());
-            pstmt.addBatch();
+            JDBC_TEMPLATE.updateQuery(INSERT_BOARD_SQL, boardDto.getPiece(), boardDto.getTeam(), boardDto.getPoint(), boardDto.getRound());
         }
-        pstmt.executeBatch();
+
     }
 
-    public int recentRound() throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement(SELECT_CURRENT_ROUND);
-        ResultSet resultSet = pstmt.executeQuery();
-        if (resultSet.next()) {
-            return resultSet.getInt("round");
+    public int recentRound() {
+        List<Map<String, String>> result = JDBC_TEMPLATE.selectQuery(SELECT_CURRENT_ROUND);
+        if (result.size() == 0) {
+            return ZERO_ROUND;
         }
-        return ZERO_ROUND;
+        return Integer.valueOf(result.get(0).get("round"));
     }
 
-    public List<BoardDto> findChessesByRound(int round) throws SQLException {
+    public List<BoardDto> findChessesByRound(int round) {
         List<BoardDto> chesses = new ArrayList<>();
-        PreparedStatement pstmt = connection.prepareStatement(SELECT_CHESSES);
-        pstmt.setInt(1, round);
-        ResultSet resultSet = pstmt.executeQuery();
-        while (resultSet.next()) {
-            String piece = resultSet.getString("piece");
-            String team = resultSet.getString("team");
-            String point = resultSet.getString("point");
+        List<Map<String, String>> results = JDBC_TEMPLATE.selectQuery(SELECT_CHESSES, round);
+
+        for (Map<String, String> result : results) {
+            String piece = result.get("piece");
+            String team = result.get("team");
+            String point = result.get("point");
             chesses.add(new BoardDto(piece, team, point, round));
         }
+
         return chesses;
     }
 
-    public void remove(int round, String destination) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement(DELETE_PIECE);
-        pstmt.setInt(1, round);
-        pstmt.setString(2, destination);
-        pstmt.executeUpdate();
+    public void remove(int round, String destination) {
+        JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
+        jdbcTemplate.updateQuery(DELETE_PIECE, round, destination);
     }
 
-    public void update(int round, String source, String destination) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement(UPDATE_PIECE);
-        pstmt.setString(1, destination);
-        pstmt.setString(2, source);
-        pstmt.setInt(3, round);
-        pstmt.executeUpdate();
+    public void update(int round, String source, String destination) {
+        JDBC_TEMPLATE.updateQuery(UPDATE_PIECE, destination, source, round);
     }
 }

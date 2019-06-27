@@ -2,7 +2,6 @@ package chess.service;
 
 import chess.dao.BoardDao;
 import chess.dao.TurnDao;
-import chess.db.DBManager;
 import chess.dto.BoardDto;
 import chess.model.PlayerType;
 import chess.model.Point;
@@ -25,23 +24,23 @@ public class BoardService {
     private TurnDao turnDao;
 
     public BoardService() {
-        this.boardDao = new BoardDao(DBManager.getConnection());
-        this.turnDao = new TurnDao(DBManager.getConnection());
+        this.boardDao = new BoardDao();
+        this.turnDao = new TurnDao();
     }
 
-    public void initialize() throws SQLException {
+    public void initialize() {
         Board board = new Board(new ChessInitializer(), PlayerType.WHITE);
         int round = boardDao.recentRound();
         turnDao.addFirstTurn(round + ADD_ROUND);
         boardDao.initialize(board.convertToDto(round + ADD_ROUND));
     }
 
-    public String currentTeam() throws SQLException {
+    public String currentTeam() {
         int round = boardDao.recentRound();
         return turnDao.selectCurrentTurn(round);
     }
 
-    public List<BoardDto> getChesses() throws SQLException {
+    public List<BoardDto> getChesses() {
         int round = boardDao.recentRound();
         return boardDao.findChessesByRound(round);
     }
@@ -65,7 +64,7 @@ public class BoardService {
         return false;
     }
 
-    public Map<String, Double> calculateScore() throws SQLException {
+    public Map<String, Double> calculateScore() {
         int round = boardDao.recentRound();
 
         BoardLoader boardLoader = new BoardLoader();
