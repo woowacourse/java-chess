@@ -19,7 +19,7 @@ public class OutputView {
         for (Column column : columns) {
             for (Row row : Row.values()) {
                 Square square = Square.of(column, row);
-                sb.append(board.isNullPiece(square)?".":board.getPiece(square).toSymbolString());
+                sb.append(board.isNullPiece(square) ? "." : board.getPiece(square).toSymbolString());
             }
             sb.append(NEW_LINE);
         }

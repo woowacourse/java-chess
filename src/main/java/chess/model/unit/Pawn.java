@@ -32,9 +32,4 @@ public class Pawn extends Piece {
         return (getSide() == Side.BLACK && beginSquare.isAtColumn(Column.Col_7)) ||
                 (getSide() == Side.WHITE && beginSquare.isAtColumn(Column.Col_2));
     }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
 }

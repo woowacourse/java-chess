@@ -1,6 +1,5 @@
 package chess.model.dao;
 
-import chess.ConnectionFactory;
 import chess.model.ChessGame;
 import chess.model.Column;
 import chess.model.Row;
@@ -13,19 +12,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class ChessDaoTest {
+public class ChessDaoImpTest {
     private ChessDao chessDao;
 
     @BeforeEach
     void setUp() {
-        Connection con = ConnectionFactory.getConnection();
-        chessDao = new ChessDao(con);
+        chessDao = ChessDao.getInstance();
     }
 
     @Test
@@ -41,12 +36,8 @@ public class ChessDaoTest {
         Board board = new Board();
         board.initialize(new BasicBoardInitializer());
         ChessGame game = new ChessGame(board, Side.WHITE);
-        try {
-            chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
-            assertThat(chessDao.loadTurn()).isEqualTo(Side.WHITE);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
+        assertThat(chessDao.loadTurn()).isEqualTo(Side.WHITE);
     }
 
     @Test
@@ -54,12 +45,8 @@ public class ChessDaoTest {
         Board board = new Board();
         board.initialize(new BasicBoardInitializer());
         ChessGame game = new ChessGame(board, Side.BLACK);
-        try {
-            chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
-            assertThat(chessDao.loadTurn()).isEqualTo(Side.BLACK);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
+        assertThat(chessDao.loadTurn()).isEqualTo(Side.BLACK);
     }
 
     @Test
@@ -67,12 +54,8 @@ public class ChessDaoTest {
         Board board = new Board();
         board.initialize(new BasicBoardInitializer());
         ChessGame game = new ChessGame(board, Side.BLACK);
-        try {
-            chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
-            assertThat(chessDao.loadBoard()).isEqualTo(board);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
+        assertThat(chessDao.loadBoard()).isEqualTo(board);
     }
 
     @Test
@@ -80,13 +63,9 @@ public class ChessDaoTest {
         Board board = new Board();
         board.initialize(new BasicBoardInitializer());
         ChessGame game = new ChessGame(board, Side.BLACK);
-        try {
-            chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
-            assertDoesNotThrow(() -> chessDao.updateMove(Square.of(Column.Col_7, Row.Row_C)
-                    , Square.of(Column.Col_5, Row.Row_C)));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
+        assertDoesNotThrow(() -> chessDao.updateMove(Square.of(Column.Col_7, Row.Row_C)
+                , Square.of(Column.Col_5, Row.Row_C)));
     }
 
     @Test
@@ -94,33 +73,21 @@ public class ChessDaoTest {
         Board board = new Board();
         board.initialize(new BasicBoardInitializer());
         ChessGame game = new ChessGame(board, Side.BLACK);
-        try {
-            chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
-            GameInfo gameInfo = new GameInfo();
-            gameInfo.setTurn(Side.WHITE.getSymbol());
-            gameInfo.setFinished(true);
-            chessDao.updateGameInfo(gameInfo);
-            assertThat(Side.WHITE).isEqualTo(chessDao.loadTurn());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        chessDao.initializeBoard(game.createBoardInfo(), game.createGameInfo());
+        GameInfo gameInfo = new GameInfo();
+        gameInfo.setTurn(Side.WHITE.getSymbol());
+        gameInfo.setFinished(true);
+        chessDao.updateGameInfo(gameInfo);
+        assertThat(Side.WHITE).isEqualTo(chessDao.loadTurn());
     }
 
     @Test
     void Empty_테스트() {
-        try {
-            assertThat(chessDao.checkEmpty()).isTrue();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        assertThat(chessDao.checkEmpty()).isTrue();
     }
 
     @AfterEach
     void tearDown() {
-        try {
-            chessDao.deleteAllData();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        chessDao.deleteAllData();
     }
 }

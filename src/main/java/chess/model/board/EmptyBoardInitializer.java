@@ -6,7 +6,7 @@ import chess.model.unit.Piece;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EmptyBoardInitializer implements BoardInitializer{
+public class EmptyBoardInitializer implements BoardInitializer {
     @Override
     public Map<Square, Piece> initialize() {
         return new HashMap<>();

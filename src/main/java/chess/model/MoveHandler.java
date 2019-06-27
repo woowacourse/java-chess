@@ -46,7 +46,7 @@ public class MoveHandler {
 
     private List<SquareNavigator> getSquareNavigators(Square beginSquare, boolean isDestinationNull) {
         Piece source = board.getPiece(beginSquare);
-        if (source.isPawn())
+        if (source.isPieceOf(UnitType.PAWN))
             return ((Pawn) source).findSquareNavigators(beginSquare, isDestinationNull);
         return source.findSquareNavigators(beginSquare);
     }

@@ -42,7 +42,9 @@ public class ChessGame {
     double calculateScore(Side side) {
         scores.put(side, 0.0);
         addNotPawnScore(side);
+        System.out.println("Score "+side.getSymbol() + " : " + scores.get(side));
         addPawnScore(side);
+        System.out.println("Score "+side.getSymbol() + " : " + scores.get(side));
         return scores.get(side);
     }
 
@@ -69,7 +71,10 @@ public class ChessGame {
     }
 
     private void addNotPawnScore(Side side) {
-        addScore(side, board.getPieces(piece -> !piece.isPieceOf(UnitType.PAWN) && piece.isSameSide(side)).stream()
+        addScore(side, board.getPieces(piece -> {
+            if(!piece.isPieceOf(UnitType.PAWN) && piece.isSameSide(side))
+                System.out.println(piece.toString() + " : " + piece.getScore());
+            return !piece.isPieceOf(UnitType.PAWN) && piece.isSameSide(side);}).stream()
                 .mapToDouble(Piece::getScore).sum());
     }
 

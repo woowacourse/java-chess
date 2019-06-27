@@ -8,7 +8,7 @@ import chess.model.unit.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BasicBoardInitializer implements BoardInitializer{
+public class BasicBoardInitializer implements BoardInitializer {
     @Override
     public Map<Square, Piece> initialize() {
         Map<Square, Piece> board = new HashMap<>();
