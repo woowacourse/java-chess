@@ -3,12 +3,12 @@ package chess.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.piece.AbstractPiece;
 import chess.domain.Board;
 import chess.domain.Coordinate;
 import chess.domain.Count;
 import chess.domain.Position;
 import chess.domain.Team;
+import chess.domain.piece.AbstractPiece;
 
 public class DataProcessor {
     public static AbstractPiece piece(String name) {
@@ -17,8 +17,7 @@ public class DataProcessor {
 
     public static Map<String, String> board(Board board) {
         Map<String, String> result = new HashMap<>();
-        board.getBoard()
-                .forEach((key, value) -> result.put(WebUtils.positionParser(key), toPieceName(value)));
+        board.getBoard().forEach((key, value) -> result.put(WebUtils.positionParser(key), toPieceName(value)));
         return result;
     }
 

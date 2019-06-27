@@ -1,14 +1,15 @@
 package chess.domain;
 
-import chess.domain.exceptions.InvalidRouteException;
-import chess.domain.exceptions.IllegalSourceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import chess.domain.exceptions.IllegalSourceException;
+import chess.domain.exceptions.InvalidRouteException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ChessBoardTest {
-    ChessBoard chessBoard;
+    private ChessBoard chessBoard;
 
     @BeforeEach
     void setUp() {
@@ -20,9 +21,7 @@ public class ChessBoardTest {
         Position source = new Position(new Coordinate('b'), new Coordinate(4));
         Position target = new Position(new Coordinate('b'), new Coordinate(5));
 
-        assertThrows(IllegalSourceException.class, () -> {
-            chessBoard.move(source, target);
-        });
+        assertThrows(IllegalSourceException.class, () -> chessBoard.move(source, target));
     }
 
     @Test
@@ -30,9 +29,7 @@ public class ChessBoardTest {
         Position source = new Position(new Coordinate('b'), new Coordinate(4));
         Position target = new Position(new Coordinate('b'), new Coordinate(5));
 
-        assertThrows(IllegalSourceException.class, () -> {
-            chessBoard.move(source, target);
-        });
+        assertThrows(IllegalSourceException.class, () -> chessBoard.move(source, target));
     }
 
     @Test
@@ -40,9 +37,7 @@ public class ChessBoardTest {
         Position source = new Position(new Coordinate('a'), new Coordinate(1)); // Team.WHITE Rook
         Position target = new Position(new Coordinate('a'), new Coordinate(8));
 
-        assertThrows(InvalidRouteException.class, () -> {
-            chessBoard.move(source, target);
-        });
+        assertThrows(InvalidRouteException.class, () -> chessBoard.move(source, target));
     }
 
     @Test
@@ -50,9 +45,7 @@ public class ChessBoardTest {
         Position source = new Position(new Coordinate('c'), new Coordinate(1)); // Team.WHITE Bishop
         Position target = new Position(new Coordinate('e'), new Coordinate(3));
 
-        assertThrows(InvalidRouteException.class, () -> {
-            chessBoard.move(source, target);
-        });
+        assertThrows(InvalidRouteException.class, () -> chessBoard.move(source, target));
     }
 
     @Test
@@ -60,9 +53,7 @@ public class ChessBoardTest {
         Position source = new Position(new Coordinate('d'), new Coordinate(1)); // Team.WHITE Queen
         Position target = new Position(new Coordinate('d'), new Coordinate(3));
 
-        assertThrows(InvalidRouteException.class, () -> {
-            chessBoard.move(source, target);
-        });
+        assertThrows(InvalidRouteException.class, () -> chessBoard.move(source, target));
     }
 
     @Test
@@ -73,9 +64,7 @@ public class ChessBoardTest {
         Position target2 = new Position(new Coordinate('c'), new Coordinate(3));
 
         chessBoard.move(source1, target1);
-        assertThrows(IllegalSourceException.class, () -> {
-            chessBoard.move(source2, target2);
-        });
+        assertThrows(IllegalSourceException.class, () -> chessBoard.move(source2, target2));
     }
 
     @Test
@@ -83,8 +72,6 @@ public class ChessBoardTest {
         Position source = new Position(new Coordinate('b'), new Coordinate(7)); // Team.BLACK Rook
         Position target = new Position(new Coordinate('b'), new Coordinate(6));
 
-        assertThrows(IllegalSourceException.class, () -> {
-            chessBoard.move(source, target);
-        });
+        assertThrows(IllegalSourceException.class, () -> chessBoard.move(source, target));
     }
 }

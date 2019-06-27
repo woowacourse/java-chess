@@ -1,15 +1,15 @@
 package chess.domain;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CountTest {
-
-    Count count;
+    private Count count;
 
     @BeforeEach
     void setUp() {

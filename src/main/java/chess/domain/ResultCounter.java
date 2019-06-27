@@ -1,14 +1,18 @@
 package chess.domain;
 
-import chess.domain.piece.*;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.transform.Result;
+import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 
 public class ResultCounter {
     private final Map<AbstractPiece, Count> resultCounter;

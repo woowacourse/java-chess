@@ -20,6 +20,4 @@ public class Rook extends AbstractPiece {
     public double getScore() {
         return SCORE;
     }
-
-
 }

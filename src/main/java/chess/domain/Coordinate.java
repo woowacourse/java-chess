@@ -1,8 +1,8 @@
 package chess.domain;
 
-import chess.domain.exceptions.CoordinateRangeException;
-
 import java.util.Objects;
+
+import chess.domain.exceptions.CoordinateRangeException;
 
 public class Coordinate {
     private static final int LOWER_BOUND = 1;

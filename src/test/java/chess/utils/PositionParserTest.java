@@ -7,7 +7,7 @@ import chess.domain.Position;
 import chess.utils.exceptions.InvalidPositionInputExecption;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PositionParserTest {
     @Test

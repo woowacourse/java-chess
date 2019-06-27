@@ -41,7 +41,7 @@ public class Position {
     }
 
     public String getX() {
-        return String.valueOf((char)(x.getCoordinate() + 96));
+        return String.valueOf((char) (x.getCoordinate() + 96));
     }
 
     public String getY() {

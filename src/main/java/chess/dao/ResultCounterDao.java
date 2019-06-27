@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.piece.AbstractPiece;
 import chess.domain.Count;
 import chess.domain.ResultCounter;
+import chess.domain.piece.AbstractPiece;
 import chess.dto.ResultCounterDto;
 import chess.utils.DataProcessor;
 import chess.utils.WebUtils;

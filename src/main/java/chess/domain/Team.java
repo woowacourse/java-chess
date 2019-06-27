@@ -1,7 +1,5 @@
 package chess.domain;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 public enum Team {
     WHITE, BLACK;
 

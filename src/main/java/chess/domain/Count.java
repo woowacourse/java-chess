@@ -6,10 +6,11 @@ import chess.domain.piece.AbstractPiece;
 
 public class Count {
     private static final int COUNT_UNIT = 1;
+    private static final int INIT_COUNT = 0;
     private int count;
 
     public Count() {
-        this.count = 0;
+        this.count = INIT_COUNT;
     }
 
     public Count(int count) {

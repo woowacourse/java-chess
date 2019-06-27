@@ -1,6 +1,7 @@
 package chess.utils;
 
 import com.google.gson.Gson;
+
 import spark.ResponseTransformer;
 
 public class JsonTransformer implements ResponseTransformer {

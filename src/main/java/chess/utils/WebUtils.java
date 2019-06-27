@@ -1,8 +1,8 @@
 package chess.utils;
 
-import chess.domain.piece.AbstractPiece;
 import chess.domain.Position;
 import chess.domain.Team;
+import chess.domain.piece.AbstractPiece;
 
 public class WebUtils {
     static String positionParser(Position position) {

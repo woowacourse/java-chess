@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.piece.AbstractPiece;
 import chess.domain.Board;
 import chess.domain.Position;
+import chess.domain.piece.AbstractPiece;
 import chess.dto.BoardDto;
 import chess.utils.DataProcessor;
 import chess.utils.WebUtils;
@@ -37,7 +37,7 @@ public class BoardDao {
     private static Map<Position, AbstractPiece> loadData(PreparedStatement pstmt) throws SQLException {
         Map<Position, AbstractPiece> queryResult = new HashMap<>();
         ResultSet rs = pstmt.executeQuery();
-        while(rs.next()) {
+        while (rs.next()) {
             queryResult.put(
                     DataProcessor.position(rs.getString(1), rs.getString(2)),
                     DataProcessor.piece(rs.getString(3))

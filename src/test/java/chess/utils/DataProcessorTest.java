@@ -10,7 +10,7 @@ import chess.domain.piece.Pawn;
 import chess.utils.exceptions.InvalidPieceNameException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DataProcessorTest {
     @Test
@@ -20,9 +20,7 @@ class DataProcessorTest {
 
     @Test
     void 이름으로_Piece_생성_예외처리() {
-        assertThrows(InvalidPieceNameException.class, () -> {
-            DataProcessor.piece("d");
-        });
+        assertThrows(InvalidPieceNameException.class, () -> DataProcessor.piece("d"));
     }
 
     @Test

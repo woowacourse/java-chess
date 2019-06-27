@@ -1,12 +1,19 @@
 package chess.domain;
 
-import chess.domain.exceptions.InvalidDirectionException;
-import chess.domain.exceptions.InvalidDistanceException;
-
 import java.util.Arrays;
 import java.util.List;
 
-import static chess.domain.Direction.*;
+import chess.domain.exceptions.InvalidDirectionException;
+import chess.domain.exceptions.InvalidDistanceException;
+
+import static chess.domain.Direction.E;
+import static chess.domain.Direction.N;
+import static chess.domain.Direction.NE;
+import static chess.domain.Direction.NW;
+import static chess.domain.Direction.S;
+import static chess.domain.Direction.SE;
+import static chess.domain.Direction.SW;
+import static chess.domain.Direction.W;
 
 public class MoveRules {
     private static final List<Direction> PAWN_DIRECTION = Arrays.asList(N, S);
