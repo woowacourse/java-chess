@@ -7,6 +7,8 @@ import spark.Response;
 import java.sql.SQLException;
 
 public class ScoreController {
+    public static final String PATH = "/score";
+
     public Object score(Request req, Response res) throws SQLException {
         Game game = req.session().attribute("game");
         return game.getStatusBoard().toString();

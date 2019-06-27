@@ -9,6 +9,8 @@ import spark.Response;
 import java.sql.SQLException;
 
 public class StartController {
+    public static final String PATH = "/start";
+
     public Object start(Request req, Response res) throws SQLException {
         Game game = new Game();
         req.session().attribute("game", game);
