@@ -1,0 +1,74 @@
+* {
+    box-sizing: border-box;
+}
+
+.wrapper {
+    width: 1100px;
+    margin: auto;
+    padding-top: 80px;
+}
+
+.previous-game-wrapper {
+    width: 100%;
+}
+
+.previous-game {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.previous-game > .message {
+    margin-right: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+.previous-game > button {
+    width: 80px;
+    height: 28px;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.new-game-wrapper {
+    text-align: center;
+    margin-top: 80px;
+    padding: 40px 160px 80px;
+    background-color: #eeeeee;
+}
+
+.new-game-title {
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 28px;
+}
+
+.new-user {
+    height: 100px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 40px;
+}
+
+.new-user > img {
+    height: 100%;
+    margin-right: 20px;
+    vertical-align: bottom;
+}
+
+.new-user > input {
+    width: 200px;
+    height: 60px;
+    vertical-align: bottom;
+    font-size: 28px;
+    text-align: center;
+}
+
+.new-game-wrapper button {
+    width: 100px;
+    height: 100px;
+    font-size: 20px;
+}
+
