@@ -22,22 +22,22 @@ public class PieceMoveService {
         ChessGame chessGame = moveInfoDto.getChessGame();
         Point source = moveInfoDto.getSource();
         Point target = moveInfoDto.getTarget();
+        Piece sourcePiece = chessGame.getPiece(source);
         chessGame.play(source, target);
-        updateDB(chessGame, source, target);
+        updateDB(moveInfoDto, sourcePiece);
         moveResultDto.setSuccess(true);
         moveResultDto.setKingDead(chessGame.isEnd());
         return moveResultDto;
     }
 
-    private void updateDB(ChessGame chessGame, Point source, Point target) throws SQLException {
+    private void updateDB(MoveInfoDto moveInfoDto, Piece sourcePiece) throws SQLException {
         DataSource ds = DBManager.createDataSource();
         ChessGameDao chessGameDao = new ChessGameDao(ds);
         ChessPieceDao chessPieceDao = new ChessPieceDao(ds);
-        Piece sourcePiece = chessGame.getPiece(source);
-        PieceDto sourcePieceDto = new PieceDto(source, sourcePiece.getColor(), sourcePiece.getType());
-        PieceDto targetPieceDto = new PieceDto(target, Color.NONE, Type.BLANK);
+        PieceDto sourcePieceDto = new PieceDto(moveInfoDto.getSource(), sourcePiece.getColor(), sourcePiece.getType());
+        PieceDto targetPieceDto = new PieceDto(moveInfoDto.getTarget(), Color.NONE, Type.BLANK);
         chessPieceDao.updatePiece(sourcePieceDto, targetPieceDto);   // target 위치에 해당 체스 말 넣기
         chessPieceDao.updatePiece(targetPieceDto, sourcePieceDto);   // source 위치에 빈칸을 넣기
-        chessGameDao.updateTurn(chessGame.getColor().toString());    // 현재 턴 데이터베이스에 저장
+        chessGameDao.updateTurn(moveInfoDto.getChessGame().getColor().toString());    // 현재 턴 데이터베이스에 저장
     }
 }

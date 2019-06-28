@@ -39,6 +39,8 @@ public class ContinueGameInitializeService implements BoardInitializer {
     public ChessGameDto initialize() throws SQLException {
         ChessGameDto chessGameDto = new ChessGameDto();
         Color currentTurn = chessGameDao.findTurn(GAME_ID).equals("WHITE") ? Color.WHITE : Color.BLACK;
+        BoardDto boardDto = new BoardDto();
+        setBoardDto(boardDto);
         ChessGame chessGame = new ChessGame(currentTurn, makePreviousBoard());
 
         chessGameDto.setCurrentOfTurn(currentTurn);
@@ -46,6 +48,25 @@ public class ContinueGameInitializeService implements BoardInitializer {
         chessGameDto.setChessGame(chessGame);
 
         return chessGameDto;
+    }
+
+    private void setBoardDto(BoardDto boardDto) throws SQLException {
+        Map<String, String> initBoard = new HashMap<>();
+        Map<Point, Piece> gameBoard = new HashMap<>();
+        for (int i = START_PIECE_ID; i <= END_PIECE_ID; ++i) {
+            PieceDto piece = chessPieceDao.findPieceById(String.valueOf(i));
+            String color = piece.getColor().substring(START_FIRST_CHAR, END_FIRST_CHAR).toLowerCase();
+            String type = piece.getType().equals("KNIGHT")
+                    ? piece.getType().substring(START_SECOND_CHAR, END_SECOND_CHAR)
+                    : piece.getType().substring(START_FIRST_CHAR, END_FIRST_CHAR);
+            gameBoard.put(PointFactory.of(piece.getPoint()), PieceFactory.of(color + type));
+            if (piece.getType().equals("BLANK")) {
+                continue;
+            }
+            initBoard.put(piece.getPoint(), color + type);
+        }
+        boardDto.setPreviousBoard(gameBoard);
+        boardDto.setWebBoard(initBoard);
     }
 
     private Map<String, String> makeJSONPreviousBoard() throws SQLException {
@@ -75,5 +96,26 @@ public class ContinueGameInitializeService implements BoardInitializer {
             gameBoard.put(PointFactory.of(piece.getPoint()), PieceFactory.of(color + type));
         }
         return gameBoard;
+    }
+
+    public class BoardDto {
+        private Map<String, String> webBoard;
+        private Map<Point, Piece> previousBoard;
+
+        public Map<String, String> getWebBoard() {
+            return webBoard;
+        }
+
+        public void setWebBoard(Map<String, String> webBoard) {
+            this.webBoard = webBoard;
+        }
+
+        public Map<Point, Piece> getPreviousBoard() {
+            return previousBoard;
+        }
+
+        public void setPreviousBoard(Map<Point, Piece> previousBoard) {
+            this.previousBoard = previousBoard;
+        }
     }
 }
