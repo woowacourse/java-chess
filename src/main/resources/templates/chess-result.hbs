@@ -4,38 +4,35 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 	<style type="text/css">
 		.btn-chess {
 			width: 35px;
 		}
 	</style>
-	
+
 	<title>chess</title>
 </head>
 <body>
 <div style="padding-left: 25%; padding-right: 25%">
-	<form id="chess-index-form" method="post" action="/index">
-		<input id="game-type" name="game-type" type="hidden">
-		<div style="padding-top: 15px; padding-bottom: 15px; text-align: center;">
-			<div style="padding-top: 15px; padding-bottom: 15px;">
-				Chess Game!
+	<div style="padding-top: 15px; padding-bottom: 15px; text-align: center;" id="manual-chess-section">
+		Winner is {{winner}}!
+		<form id="chess-result-form" method="post" action="/index">
+			<input id="game-type" name="game-type" type="hidden" value="new">
+			<div style="padding-top: 15px; padding-bottom: 15px; text-align: center;">
+				<button id="new-game" type="submit" form="chess-result-form" class="btn btn-outline-dark btn-sm"
+				        aria-pressed="false">다시 시작
+				</button>
 			</div>
-			<button id="new-game" type="button" class="btn btn-outline-dark btn-sm" data-toggle="button"
-			        aria-pressed="false">시작하기
-			</button>
-			<button id="continue-game" type="button" class="btn btn-outline-dark btn-sm" data-toggle="button"
-			        aria-pressed="false">이어하기
-			</button>
-		</div>
-	</form>
+		</form>
+
+	</div>
+
 </div>
-
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -49,15 +46,7 @@
         crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-    document.getElementById("new-game").addEventListener("click", function () {
-        document.getElementById("game-type").value = "new";
-        document.getElementById("chess-index-form").submit();
-    });
-    
-    document.getElementById("continue-game").addEventListener("click", function () {
-        document.getElementById("game-type").value = "continue";
-        document.getElementById("chess-index-form").submit();
-    });
+
 </script>
 
 </body>
