@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>체스</title>
+    </head>
+    <body align="center">
+        <form action="{{submitUrl}}" method="get">
+            <table border="0" align="center" width="75%">
+                <tr>
+                    <td rowspan="4" width="75%">
+                        <div align="center">
+                          <table border="1" align="center" style="font-size: 35px; text-align:center" width="85%" height="650">
+                              {{{board}}}
+                          </table>
+                        </div>
+                    </td>
+                    <td height="2%">
+                        <h2>고전체스<br/>2000</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i style="font-size:13px;">{{message}}</i></td>
+                </tr>
+                <tr height="400px" valign="bottom">
+                    <td>
+                        <div align="left">
+                          <table border="0" align="left" width="100%">
+                              <tr>
+                                  <td>차례 : {{turn}}</td>
+                              </tr>
+                              <tr>
+                                  <td>&nbsp;</td>
+                              </tr>
+                              <tr>
+                                  <td>점수 - 백 : {{scoreOfWhite}}</td>
+                              </tr>
+                              <tr>
+                                  <td>점수 - 흑 : {{scoreOfBlack}}</td>
+                              </tr>
+                          </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{{uiButtons}}}</td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>
