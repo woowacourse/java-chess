@@ -12,6 +12,7 @@ public class Coordinate {
     private int value;
 
     private Coordinate(int value) {
+        // TODO: 2019-06-28 이곳에서 validation 체크 해볼 것 
         this.value = value;
     }
 

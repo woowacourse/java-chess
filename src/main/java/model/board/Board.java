@@ -29,7 +29,6 @@ public class Board implements Observer {
     }
 
     @Override
-    // TODO: 2019-06-23 빈칸으로 움직이거나 공격했거나
     public void update(Observable o, Object arg) {
         Piece movedPiece = (Piece) o;
         Position lastPosition = (Position) arg;
