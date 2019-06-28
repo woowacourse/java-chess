@@ -4,6 +4,7 @@ import model.Position;
 import model.piece.Piece;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoardBuilder {
@@ -11,6 +12,13 @@ public class BoardBuilder {
 
     public BoardBuilder piece(Piece piece) {
         pieces.put(piece.getPosition(), piece);
+        return this;
+    }
+
+    public BoardBuilder pieces(List<Piece> pieces) {
+        for (Piece piece : pieces) {
+            this.pieces.put(piece.getPosition(), piece);
+        }
         return this;
     }
 
