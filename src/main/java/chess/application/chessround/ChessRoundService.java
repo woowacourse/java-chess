@@ -17,11 +17,9 @@ public class ChessRoundService {
 
     private static ChessRoundService chessRoundService = null;
 
-    private ChessRound chessRound;
     private String errorMessage = EMPTY;
 
     private ChessRoundService() {
-        chessRound = recoverFromSavedChessRound();
     }
 
     private ChessRound recoverFromSavedChessRound() {
@@ -52,13 +50,11 @@ public class ChessRoundService {
         ChessPlayer whitePlayer = ChessPlayer.from(chessPiecesBuilder.initializeWhiteChessPieces());
         ChessPlayer blackPlayer = ChessPlayer.from(chessPiecesBuilder.initializeBlackChessPieces());
 
-        chessRound = ChessRound.of(whitePlayer, blackPlayer);
-
         clearAllChessPlayer();
-        saveCurrentRound();
+        saveCurrentRound(ChessRound.of(whitePlayer, blackPlayer, true));
     }
 
-    private void saveCurrentRound() {
+    private void saveCurrentRound(ChessRound chessRound) {
         saveChessPlayer(chessRound.getWhitePlayer(), true);
         saveChessPlayer(chessRound.getBlackPlayer(), false);
 
@@ -87,6 +83,8 @@ public class ChessRoundService {
     }
 
     public ChessPlayerDTO fetchWhitePlayer() {
+        ChessRound chessRound = recoverFromSavedChessRound();
+
         ChessPlayer whitePlayer = chessRound.getWhitePlayer();
 
         ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
@@ -94,6 +92,8 @@ public class ChessRoundService {
     }
 
     public ChessPlayerDTO fetchBlackPlayer() {
+        ChessRound chessRound = recoverFromSavedChessRound();
+
         ChessPlayer blackPlayer = chessRound.getBlackPlayer();
 
         ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
@@ -104,33 +104,26 @@ public class ChessRoundService {
         ChessPoint source = parseChessPoint(sourceId);
         ChessPoint target = parseChessPoint(targetId);
 
+        ChessRound chessRound = recoverFromSavedChessRound();
         try {
             cleanErrorMessage();
 
-            // TODO: chessRound 내부의 상태가 변한 후 상태를 저장하게 된다.
-            // 어떻게 보면 중복된 정보가 각각 존재하는 건데......
-            // 중복된 정보를... 너무 멀리서? 다루는 거 아닐까???
-            // 여기서 변경된 것이... 딴 쪽에서 볼 때.. 생각이 안 날 것 같은데...
-            // 해결하려면... 한 쪽에서 고칠 때 동시에 고쳐주거나
-            // 한 쪽에서 고칠 때 다른 쪽에 ... 먼가 등록?! 해주는 무언가가 필요할 듯
             chessRound.move(source, target);
-            saveCurrentMove(source, target);
+
+            ChessPiece movedChessPiece = chessRound.getCurrentOpponentPlayer().get(target);
+            saveCurrentMove(source, target, movedChessPiece, !chessRound.isWhiteTurn());
         } catch (InvalidChessPositionException ex) {
             errorMessage = ex.getMessage();
         }
     }
 
-    private void saveCurrentMove(ChessPoint source, ChessPoint target) {
-        // chessRound.move 이 끝난 후 호출되기에 chessRound 의 turn 이 변경되어 있음
-        // 따라서 !chessRound.isWhiteTurn() 으로 chessRound.move 당시의 turn 을 표현
-        boolean isLastTurnWhite = !chessRound.isWhiteTurn();
+    private void saveCurrentMove(ChessPoint source, ChessPoint target, ChessPiece movedChessPiece, boolean isWhiteTurn) {
+        deletePieceOn(source, isWhiteTurn);
 
-        deletePieceOn(source, isLastTurnWhite);
+        deletePieceOn(target, !isWhiteTurn);
+        insertPieceOn(target, movedChessPiece, isWhiteTurn);
 
-        deletePieceOn(target, !isLastTurnWhite);
-        insertPieceOn(target, isLastTurnWhite);
-
-        switchCurrentTurn(isLastTurnWhite);
+        switchCurrentTurn(isWhiteTurn);
     }
 
     private void deletePieceOn(ChessPoint point, boolean isWhiteTurn) {
@@ -141,12 +134,9 @@ public class ChessRoundService {
         chessPlayerDAO.deleteChessPiece(chessPointDTO, isWhiteTurn);
     }
 
-    private void insertPieceOn(ChessPoint point, boolean isWhiteTurn) {
-        ChessPlayer currentPlayer = isWhiteTurn ? chessRound.getWhitePlayer() : chessRound.getBlackPlayer();
-
-        ChessPiece chessPiece = currentPlayer.get(point);
+    private void insertPieceOn(ChessPoint point, ChessPiece piece, boolean isWhiteTurn) {
         ChessRoundAssembler chessRoundAssembler = ChessRoundAssembler.getInstance();
-        ChessPieceDTO targetPieceDTO = chessRoundAssembler.makeChessPieceDTO(point, chessPiece);
+        ChessPieceDTO targetPieceDTO = chessRoundAssembler.makeChessPieceDTO(point, piece);
 
         ChessPlayerDAO chessPlayerDAO = ChessPlayerDAO.getInstance();
         chessPlayerDAO.insertChessPiece(targetPieceDTO, isWhiteTurn);
@@ -168,14 +158,20 @@ public class ChessRoundService {
     }
 
     public double getWhitePlayerScore() {
+        ChessRound chessRound = recoverFromSavedChessRound();
+
         return chessRound.getWhitePlayerScore();
     }
 
     public double getBlackPlayerScore() {
+        ChessRound chessRound = recoverFromSavedChessRound();
+
         return chessRound.getBlackPlayerScore();
     }
 
     public boolean isWhiteTurn() {
+        ChessRound chessRound = recoverFromSavedChessRound();
+
         return chessRound.isWhiteTurn();
     }
 
@@ -184,6 +180,8 @@ public class ChessRoundService {
     }
 
     public boolean isGameFinished() {
+        ChessRound chessRound = recoverFromSavedChessRound();
+
         return chessRound.isGameFinished();
     }
 }

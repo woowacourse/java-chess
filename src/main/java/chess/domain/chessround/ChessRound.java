@@ -58,6 +58,10 @@ public class ChessRound {
         return currentPlayer;
     }
 
+    public ChessPlayer getCurrentOpponentPlayer() {
+        return getOpponentPlayer();
+    }
+
     public double getWhitePlayerScore() {
         return whitePlayer.calculateScore();
     }

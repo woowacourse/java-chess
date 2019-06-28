@@ -26,11 +26,6 @@ public class ChessPlayerDAO {
     public void deleteChessPiece(final ChessPointDTO chessPointDTO, final boolean isWhiteTurn) {
         String query = "DELETE FROM chess_player WHERE row_num=? AND column_num=? AND is_white_team=? AND round=1";
 
-//        List<Object> queryValues = new ArrayList<>();
-//        queryValues.add(chessPointDTO.getRow());
-//        queryValues.add(chessPointDTO.getColumn());
-//        queryValues.add(isWhiteTurn);
-
         ChessJDBCTemplate chessJDBCTemplate = ChessJDBCTemplate.getInstance();
         chessJDBCTemplate.executeUpdate(query,
                 (PreparedStatement pstmt) -> {
@@ -44,12 +39,6 @@ public class ChessPlayerDAO {
 
     public void insertChessPiece(ChessPieceDTO chessPieceDTO, boolean isWhiteTurn) {
         String query = "INSERT INTO chess_player VALUES(?, ?, ?, ?, 1)";
-//
-//        List<Object> queryValues = new ArrayList<>();
-//        queryValues.add(chessPieceDTO.getRow());
-//        queryValues.add(chessPieceDTO.getColumn());
-//        queryValues.add(chessPieceDTO.getName());
-//        queryValues.add(isWhiteTurn);
 
         ChessJDBCTemplate chessJDBCTemplate = ChessJDBCTemplate.getInstance();
         chessJDBCTemplate.executeUpdate(query, (PreparedStatement pstmt) -> {
@@ -64,11 +53,6 @@ public class ChessPlayerDAO {
 
     public ChessPieceDTO getChessPiece(ChessPointDTO chessPointDTO, boolean isWhiteTurn) {
         String query = "SELECT chess_piece FROM chess_player WHERE row_num=? AND column_num=? AND is_white_team=? AND round=1";
-
-//        List<Object> queryValues = new ArrayList<>();
-//        queryValues.add(chessPointDTO.getRow());
-//        queryValues.add(chessPointDTO.getColumn());
-//        queryValues.add(isWhiteTurn);
 
         ChessJDBCTemplate chessJDBCTemplate = ChessJDBCTemplate.getInstance();
         List<String> chessPieces = chessJDBCTemplate.executeQuery(query,
