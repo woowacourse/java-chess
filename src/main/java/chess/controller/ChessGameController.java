@@ -48,12 +48,11 @@ public class ChessGameController {
 
     public static Route move = (request, response) -> {
         response.type("application/json");
-        MoveResultDto moveResultDto = new MoveResultDto();
+        MoveResultDto moveResultDto = new MoveResultDto(false, false);
         try {
             PieceMover pieceMover = new PieceMover();
             moveResultDto = pieceMover.movePiece(request);
         } catch (Exception e) {
-            moveResultDto.setSuccess(false);
             response.status(500);
         }
         return new Gson().toJson(moveResultDto);
