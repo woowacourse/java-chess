@@ -9,6 +9,7 @@ import model.piece.PieceFactory;
 import model.piece.impl.*;
 import service.LogVO;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,30 +47,40 @@ public class Game {
     private Board initializeBoard() {
         BoardBuilder boardBuilder = new BoardBuilder();
 
+        List<Piece> blackPawns = initializePawnsAtLine(6, BLACK);
+        List<Piece> whitePawns = initializePawnsAtLine(1, WHITE);
+        List<Piece> blackPieces = initializePiecesAtLine(7, BLACK);
+        List<Piece> whitePieces = initializePiecesAtLine(0, WHITE);
+
+        return boardBuilder
+                .pieces(blackPawns)
+                .pieces(blackPieces)
+                .pieces(whitePawns)
+                .pieces(whitePieces)
+                .build();
+    }
+
+    private List<Piece> initializePawnsAtLine(int lineNumber, PieceColor pieceColor) {
+        List<Piece> pieces = new ArrayList<>();
+
         for (int i = 0; i < Board.SIZE; i++) {
-            boardBuilder.piece(PieceFactory.create(Pawn.class, BLACK, Position.of(i, 6)));
-            boardBuilder.piece(PieceFactory.create(Pawn.class, WHITE, Position.of(i, 1)));
+            pieces.add(PieceFactory.create(Pawn.class, pieceColor, Position.of(i, lineNumber)));
         }
+        return pieces;
+    }
 
-        boardBuilder.piece(PieceFactory.create(Rook.class, BLACK, Position.of(0, 7)));
-        boardBuilder.piece(PieceFactory.create(Rook.class, BLACK, Position.of(7, 7)));
-        boardBuilder.piece(PieceFactory.create(Knight.class, BLACK, Position.of(1, 7)));
-        boardBuilder.piece(PieceFactory.create(Knight.class, BLACK, Position.of(6, 7)));
-        boardBuilder.piece(PieceFactory.create(Bishop.class, BLACK, Position.of(2, 7)));
-        boardBuilder.piece(PieceFactory.create(Bishop.class, BLACK, Position.of(5, 7)));
-        boardBuilder.piece(PieceFactory.create(Queen.class, BLACK, Position.of(3, 7)));
-        boardBuilder.piece(PieceFactory.create(King.class, BLACK, Position.of(4, 7)));
+    private List<Piece> initializePiecesAtLine(int lineNumber, PieceColor pieceColor) {
+        List<Piece> pieces = new ArrayList<>();
 
-        boardBuilder.piece(PieceFactory.create(Rook.class, WHITE, Position.of(0, 0)));
-        boardBuilder.piece(PieceFactory.create(Rook.class, WHITE, Position.of(7, 0)));
-        boardBuilder.piece(PieceFactory.create(Knight.class, WHITE, Position.of(1, 0)));
-        boardBuilder.piece(PieceFactory.create(Knight.class, WHITE, Position.of(6, 0)));
-        boardBuilder.piece(PieceFactory.create(Bishop.class, WHITE, Position.of(2, 0)));
-        boardBuilder.piece(PieceFactory.create(Bishop.class, WHITE, Position.of(5, 0)));
-        boardBuilder.piece(PieceFactory.create(Queen.class, WHITE, Position.of(3, 0)));
-        boardBuilder.piece(PieceFactory.create(King.class, WHITE, Position.of(4, 0)));
-
-        return boardBuilder.build();
+        pieces.add(PieceFactory.create(Rook.class, pieceColor, Position.of(0, lineNumber)));
+        pieces.add(PieceFactory.create(Rook.class, pieceColor, Position.of(7, lineNumber)));
+        pieces.add(PieceFactory.create(Knight.class, pieceColor, Position.of(1, lineNumber)));
+        pieces.add(PieceFactory.create(Knight.class, pieceColor, Position.of(6, lineNumber)));
+        pieces.add(PieceFactory.create(Bishop.class, pieceColor, Position.of(2, lineNumber)));
+        pieces.add(PieceFactory.create(Bishop.class, pieceColor, Position.of(5, lineNumber)));
+        pieces.add(PieceFactory.create(Queen.class, pieceColor, Position.of(3, lineNumber)));
+        pieces.add(PieceFactory.create(King.class, pieceColor, Position.of(4, lineNumber)));
+        return pieces;
     }
 
     public Board board() {
