@@ -9,9 +9,8 @@ import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.PieceFactory;
 import chess.domain.pieces.PointFactory;
-import chess.service.dto.ChessBoardDto;
+import chess.service.dto.ChessGameDto;
 import chess.service.dto.PieceDto;
-import spark.Request;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -29,29 +28,24 @@ public class ContinueGameInitializer implements BoardInitializer {
 
     private ChessGameDao chessGameDao;
     private ChessPieceDao chessPieceDao;
-    private ChessBoardDto chessBoardDto;
 
     public ContinueGameInitializer() {
         DataSource ds = DBManager.createDataSource();
         chessGameDao = new ChessGameDao(ds);
         chessPieceDao = new ChessPieceDao(ds);
-        chessBoardDto = new ChessBoardDto();
     }
 
     @Override
-    public ChessBoardDto initialize(Request request) throws SQLException {
+    public ChessGameDto initialize() throws SQLException {
+        ChessGameDto chessGameDto = new ChessGameDto();
         Color currentTurn = chessGameDao.findTurn(GAME_ID).equals("WHITE") ? Color.WHITE : Color.BLACK;
-        Map<String, String> initBoard = makeJSONPreviousBoard();
-        Map<Point, Piece> gameBoard = makePreviousBoard();
+        ChessGame chessGame = new ChessGame(currentTurn, makePreviousBoard());
 
-        chessBoardDto.setCurrentOfTurn(currentTurn);
-        chessBoardDto.setInitWebBoard(initBoard);
-        chessBoardDto.setGameBoard(gameBoard);
+        chessGameDto.setCurrentOfTurn(currentTurn);
+        chessGameDto.setInitWebBoard(makeJSONPreviousBoard());
+        chessGameDto.setChessGame(chessGame);
 
-        ChessGame chessGame = new ChessGame(chessBoardDto.getCurrentOfTurn(), chessBoardDto.getGameBoard());
-        request.session().attribute("chessGame", chessGame);
-
-        return chessBoardDto;
+        return chessGameDto;
     }
 
     private Map<String, String> makeJSONPreviousBoard() throws SQLException {

@@ -1,11 +1,10 @@
 package chess.service;
 
-import chess.service.dto.ChessBoardDto;
-import spark.Request;
+import chess.service.dto.ChessGameDto;
 
 import java.sql.SQLException;
 
 public interface BoardInitializer {
 
-    ChessBoardDto initialize(Request request) throws SQLException;
+    ChessGameDto initialize() throws SQLException;
 }

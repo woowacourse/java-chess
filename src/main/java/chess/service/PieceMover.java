@@ -7,31 +7,21 @@ import chess.domain.ChessGame;
 import chess.domain.Point;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
-import chess.domain.pieces.PointFactory;
 import chess.domain.pieces.Type;
+import chess.service.dto.MoveInfoDto;
 import chess.service.dto.MoveResultDto;
 import chess.service.dto.PieceDto;
-import spark.Request;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
 public class PieceMover {
 
-    private ChessGameDao chessGameDao;
-    private ChessPieceDao chessPieceDao;
-
-    public PieceMover() {
-        DataSource ds = DBManager.createDataSource();
-        chessGameDao = new ChessGameDao(ds);
-        chessPieceDao = new ChessPieceDao(ds);
-    }
-
-    public MoveResultDto movePiece(Request request) throws SQLException {
+    public MoveResultDto movePiece(MoveInfoDto moveInfoDto) throws SQLException {
         MoveResultDto moveResultDto = new MoveResultDto(false, false);
-        ChessGame chessGame = request.session().attribute("chessGame");
-        Point source = PointFactory.of(request.queryMap("source").value());
-        Point target = PointFactory.of(request.queryMap("target").value());
+        ChessGame chessGame = moveInfoDto.getChessGame();
+        Point source = moveInfoDto.getSource();
+        Point target = moveInfoDto.getTarget();
         chessGame.play(source, target);
         updateDB(chessGame, source, target);
         moveResultDto.setSuccess(true);
@@ -40,6 +30,9 @@ public class PieceMover {
     }
 
     private void updateDB(ChessGame chessGame, Point source, Point target) throws SQLException {
+        DataSource ds = DBManager.createDataSource();
+        ChessGameDao chessGameDao = new ChessGameDao(ds);
+        ChessPieceDao chessPieceDao = new ChessPieceDao(ds);
         Piece sourcePiece = chessGame.getPiece(source);
         PieceDto sourcePieceDto = new PieceDto(source, sourcePiece.getColor(), sourcePiece.getType());
         PieceDto targetPieceDto = new PieceDto(target, Color.NONE, Type.BLANK);
