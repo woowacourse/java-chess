@@ -2,9 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+   
+
+    <link href = "./css/style.css" rel ="stylesheet" type= "text/css"> 
+    <link href = "./css/chessboard-1.0.0.min.css" rel ="stylesheet" type= "text/css"> 
+
+    <title>Document</title>
 </head>
 <body>
-Hello World!!
+
+    <div class ="modal">
+        <select id = "selectGame" name="selectGame"></select>
+         <button onclick = "loadGame()" id = "load">load game</button>
+         <p>white</p><input type="text" id = "white-name-input" >
+         <p>black</p><input type="text"  id = "black-name-input">
+         <button id = "new" onclick = "newGame()">new game</button>
+    </div>
+    <div id = "board-container">
+        <div id="board1" style="width: 500px"></div>
+        <p id = "total-turn">총 진행턴 : 0</p>
+        <p id ="turn">white의 턴입니다</p>
+        <p id ="whiteName"></p>
+        <p id ="blackName"></p>
+
+        <button onclick = "getScore()">view score</button>
+        <div id="score">
+        <p>화이트 점수</p>
+        <p id ="whiteScore"></p>
+        <br>
+        <p>블랙 점수</p>
+        <p id ="blackScore"></p>
+        </div>
+    </div>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+    <script src = "./js/chessboard-1.0.0.min.js"></script>
+    <script src = "./js/script.js"></script>
+
 </body>
 </html>

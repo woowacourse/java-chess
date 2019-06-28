@@ -1,0 +1,10 @@
+.inactive{
+    display:none;
+}
+
+#board-container{
+    display:none;
+}
+#score{
+    display:none;
+}
