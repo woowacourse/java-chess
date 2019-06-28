@@ -16,14 +16,10 @@ public enum TargetStatus {
     }
 
     public static TargetStatus valuesOf(Piece source, Piece target) {
-        try {
-            return Arrays.stream(values())
+        return Arrays.stream(values())
                     .filter(e -> e.checkStatus(source, target))
                     .findAny()
-                    .orElse(null);
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException("TargetStatus 클래스에 있는 valuesOf 함수에서 NullPointException 발생");
-        }
+                .orElseThrow(() -> new NullPointerException("TargetStatus 클래스에 있는 valuesOf 함수에서 NullPointException 발생"));
     }
 
     public boolean checkStatus(Piece source, Piece target) {
