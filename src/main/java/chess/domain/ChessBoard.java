@@ -108,19 +108,24 @@ public class ChessBoard {
                     numberOfPawnInColumn.set(columnIndex, numberOfPawnInColumn.get(columnIndex) + 1);
                 });
 
-        double totalScore = points.values().stream()
+        return calculateScoreWithoutPawn(color)
+                + calculatePawnScore(numberOfPawnInColumn);
+    }
+
+    private double calculateScoreWithoutPawn(Color color) {
+        return points.values().stream()
                 .filter(piece -> piece.equalsColor(color))
                 .filter(piece -> !piece.equalsType(Type.PAWN))
                 .mapToDouble(Piece::getScore)
                 .sum();
+    }
 
-        totalScore += numberOfPawnInColumn.stream()
+    private double calculatePawnScore(List<Integer> numberOfPawnInColumn) {
+        return numberOfPawnInColumn.stream()
                 .mapToDouble(numberOfPawn -> (numberOfPawn > 1)
                         ? Type.PAWN.getScore() * numberOfPawn * 0.5
                         : Type.PAWN.getScore() * numberOfPawn)
                 .sum();
-
-        return totalScore;
     }
 
     public Piece getPiece(Point point) {
