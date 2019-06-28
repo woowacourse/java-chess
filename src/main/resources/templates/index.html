@@ -2,9 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Chess</title>
 </head>
 <body>
-Hello World!!
+<br>
+<br>
+<br>
+<div class="col-md-12">
+    <a href="/chessgame">시작</a>
+    <br><br>
+</div>
+
+<div>
+    {{#games}}
+    <a href="chessgame?id={{this}}">{{this}} 이어가기</a> </br>
+    {{/games}}
+</div>
 </body>
 </html>
