@@ -13,7 +13,7 @@ public class JdbcTemplate {
 
                         pstmt.executeUpdate();
                 } catch (SQLException e) {
-                        System.out.println(e.getMessage());
+                        throw new RuntimeException("executeUpdate 오류");
                 }
         }
 
@@ -23,9 +23,8 @@ public class JdbcTemplate {
                      ResultSet rs = pstmt.executeQuery()) {
                         return rm.mapRow(rs);
                 } catch (SQLException e) {
-                        System.out.println(e.getMessage());
+                        throw new RuntimeException("executeQuery 오류");
                 }
-                return null;
         }
 
         private PreparedStatement createSelectPstmt(Connection connection, String sql, PreparedStatementSetter pss) throws SQLException {
