@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="./js/chessboard-1.0.0.min.js"></script>
+    <link href="./css/chessboard-1.0.0.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Chess Game</title>
+</head>
+<body>
+<div id="board" style="width: 400px">
+
+</div>
+<div>
+    <input type = 'button' value = 'Initialize' onclick = "initialize()"/>
+    <div>
+        <table>
+            <tr>
+                <td>Turn</td>
+                <td id = 'turn_cell'></td>
+            </tr>
+            <tr>
+                <td>Black Score</td>
+                <td id = 'black_score'> </td>
+            </tr>
+            <tr>
+                <td>White Score</td>
+                <td id = 'white_score'> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+        var end_flag = false;
+        var turn;
+        var squares
+        var blackScore
+        var whiteScore
+        var load
+        var initial
+        var drop
+
+        $(document).ready(function(){
+            $.ajax({
+                url:"loadBoard",
+                type:"GET",
+                async:false,
+                dataType:'json',
+                error:function(request,status,error){
+                    console.log("Initialization Error!")
+                },
+                success:function(data){
+                    load = data
+                    console.log("Successful Initialize!")
+                    turn = data.turn
+                    end_flag = data.isFinished
+                    blackScore = data.blackScore
+                    whiteScore = data.whiteScore
+                    var config = {
+                        draggable : true,
+                        position : data.pieceMap,
+                        onDrop : onDrop
+                    }
+                    board1 = Chessboard('board', config)
+                    refreshInfos()
+                }
+            })
+        })
+
+        function onDrop (source, target) {
+            var isSuccess = true
+            squares = {
+                "source" : source,
+                "target" : target
+            }
+            $.ajax({
+            url:"move",
+            type:"POST",
+            data:squares,
+            async: false,
+            dataType:'json',
+            error:function(request,status,error){
+                console.log("Fail")
+                isSuccess = false
+            },
+            success:function(data){
+                drop = data
+                if(end_flag == true){
+                    isSuccess = false;
+                    alert("Game End\nPlease Initialize")
+                }
+                else{
+                if(data.canMove == true){
+                    console.log("Success - Success")
+                    turn = data.turn
+                    end_flag = data.isFinished
+                    blackScore = data.blackScore
+                    whiteScore = data.whiteScore
+                    refreshInfos()
+                    if(data.isFinished == true){
+                        alert("Game End")
+                    }
+                }
+                else{
+                    console.log("Success - Fail")
+                    isSuccess = false
+                    }
+                }
+            }
+            });
+            if (isSuccess == false) {
+                return 'snapback'
+            }
+        }
+
+        function initialize() {
+            $.ajax({
+                url:"initialize",
+                type:"GET",
+                async:false,
+                dataType:'json',
+                error:function(request,status,error){
+                    console.log("Initialization Error!")
+                },
+                success:function(data){
+                    initial = data
+                    console.log("Successful Initialize!")
+                    turn = data.turn
+                    end_flag = data.isFinished
+                    blackScore = data.blackScore
+                    whiteScore = data.whiteScore
+                    var config = {
+                        draggable : true,
+                        position : data.pieceMap,
+                        onDrop : onDrop
+                    }
+                    board1 = Chessboard('board', config)
+                    refreshInfos()
+                }
+            })
+        }
+
+        function refreshInfos() {
+            if(turn == 'b'){
+                document.getElementById('turn_cell').innerHTML = 'Black'
+            }
+            else{
+                document.getElementById('turn_cell').innerHTML = 'White'
+            }
+            document.getElementById('black_score').innerHTML = blackScore
+            document.getElementById('white_score').innerHTML = whiteScore
+
+        }
+
+</script>
+</body>
