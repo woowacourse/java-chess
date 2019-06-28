@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="./js/chessboard-1.0.0.min.js"></script>
+    <link href="./css/chessboard-1.0.0.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Chess Test Page</title>
+</head>
+<body>
+<div id="board" style="width: 400px">
+
+</div>
+<script type="text/javascript">
+    	var qwer;
+    	var start
+    	var squares
+
+		$(document).ready(function(){
+			$.ajax({
+				url:"initialize",
+				type:"GET",
+				async:false,
+				dataType:'json',
+				error:function(request,status,error){
+					console.log("Initialization Error!")
+				},
+				success:function(data){
+					console.log("Successful Initialize!")
+					start = data
+			    	var config = {
+			    		draggable : true,
+			    		position : start,
+			    		onDrop : onDrop
+			    	}
+					board1 = Chessboard('board', config)
+				}
+			})
+		})
+
+		function onDrop (source, target) {
+			var isSuccess = true
+			squares = {
+				"source" : source,
+				"target" : target
+			}
+			$.ajax({
+            url:"move",
+            type:"POST",
+            data:squares,
+            async: false,
+            dataType:'json',
+            error:function(request,status,error){
+            	qwer = status
+            	console.log("Fail")
+            	isSuccess = false
+            },
+            success:function(data){
+            	console.log(data)
+            	qwer = data
+            	if(data.success == true){
+            		console.log("Success - Success")
+            		if(data.isKingDead == true){
+            			alert("Game End")
+            			location.href = "localhost:8080"
+            		}
+            	}
+            	else{
+	            	console.log("Success - Fail")
+	            	isSuccess = false
+	            	}
+        		}
+    		});
+    		if (isSuccess == false) {
+    			return 'snapback'
+    		}
+		}
+
+
+
+</script>
+</body>
