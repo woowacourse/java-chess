@@ -15,6 +15,7 @@ public class ChessPieceDao {
     private static final String QUERY_FOR_UPDATE_PIECE = "UPDATE piece SET color=?, type=? WHERE point=?";
     private static final String QUERY_FOR_DELETE_PIECE_BY_POINT = "DELETE FROM piece WHERE point=?";
     private static final String QUERY_FOR_DELETE_PIECE_BY_ID = "DELETE FROM piece WHERE id=?";
+    private static final String QUERY_FOR_DELETE_ALL = "TRUNCATE piece";
 
     private final DataSource dataSource;
 
@@ -23,19 +24,11 @@ public class ChessPieceDao {
     }
 
     public void addPiece(PieceDto pieceDto) throws SQLException {
-        setAutoIncrement();
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement pstmt = conn.prepareStatement(QUERY_FOR_ADD_PIECE);
             pstmt.setString(1, pieceDto.getPoint());
             pstmt.setString(2, pieceDto.getColor());
             pstmt.setString(3, pieceDto.getType());
-            pstmt.executeUpdate();
-        }
-    }
-
-    private void setAutoIncrement() throws SQLException {
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement(QUERY_FOR_SET_AUTO_INCREMENT);
             pstmt.executeUpdate();
         }
     }
@@ -77,6 +70,13 @@ public class ChessPieceDao {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement pstmt = conn.prepareStatement(QUERY_FOR_DELETE_PIECE_BY_ID);
             pstmt.setString(1, id);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void deleteAll() throws SQLException {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(QUERY_FOR_DELETE_ALL);
             pstmt.executeUpdate();
         }
     }

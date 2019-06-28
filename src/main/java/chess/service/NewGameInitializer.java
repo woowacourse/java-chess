@@ -15,8 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NewGameInitializer implements BoardInitializer {
-    private static final int START_PIECE_ID = 1;
-    private static final int END_PIECE_ID = 64;
     private static final int GAME_ID = 1;
 
     private ChessGameDao chessGameDao;
@@ -58,9 +56,7 @@ public class NewGameInitializer implements BoardInitializer {
     private void initializeDB() throws SQLException {
         // 이전 게임 데이터 삭제
         chessGameDao.deleteGame();
-        for (int i = START_PIECE_ID; i <= END_PIECE_ID; ++i) {
-            chessPieceDao.deletePieceById(String.valueOf(i));
-        }
+        chessPieceDao.deleteAll();
         // 새 게임 데이터 추가
         chessGameDao.addGame(GAME_ID);
     }
