@@ -20,7 +20,8 @@ public class PieceService {
         return pieceDao.findByGameId(gameId);
     }
 
-    public static void updatePiece(NavigatorDto navigatorDto) {
+    public static void updatePiece(int gameId, String start, String end) {
+        NavigatorDto navigatorDto = new NavigatorDto(gameId, start, end);
         pieceDao.updatePiece(navigatorDto);
     }
 
