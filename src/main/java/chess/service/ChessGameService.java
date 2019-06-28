@@ -1,13 +1,13 @@
 package chess.service;
 
-import chess.dao.ChessBoardDAO;
-import chess.dao.ChessTurnDAO;
+import chess.dao.ChessBoardDao;
+import chess.dao.ChessTurnDao;
 import chess.domain.ChessGame;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.GameOverException;
 import chess.domain.piece.PieceColor;
-import chess.dto.ChessBoardDTO;
-import chess.dto.ChessGameDTO;
+import chess.dto.ChessBoardDto;
+import chess.dto.ChessGameDto;
 
 import java.sql.SQLException;
 
@@ -24,11 +24,11 @@ public class ChessGameService {
         return instance;
     }
 
-    public ChessGameDTO getGame(int gameId) throws SQLException {
-        ChessBoardDTO chessBoardDTO = ChessBoardDAO.getInstance().selectChessBoard(gameId);
-        PieceColor turn = ChessTurnDAO.getInstance().selectChessTurn(gameId);
+    public ChessGameDto getGame(int gameId) throws SQLException {
+        ChessBoardDto chessBoardDTO = ChessBoardDao.getInstance().selectChessBoard(gameId);
+        PieceColor turn = ChessTurnDao.getInstance().selectChessTurn(gameId);
 
-        ChessGameDTO chessGameDTO = new ChessGameDTO();
+        ChessGameDto chessGameDTO = new ChessGameDto();
         chessGameDTO.setBoard(chessBoardDTO);
         chessGameDTO.setTurn(turn);
 
@@ -39,9 +39,9 @@ public class ChessGameService {
         int id;
 
         if (idText == null) {
-            ChessTurnDAO.getInstance().insertChessTurn(PieceColor.WHITE);
-            id = ChessTurnDAO.getInstance().selectMaxGameId();
-            ChessBoardDAO.getInstance().insertChessBoard(id, new ChessBoardDTO(BoardInitializer.initialize()));
+            ChessTurnDao.getInstance().insertChessTurn(PieceColor.WHITE);
+            id = ChessTurnDao.getInstance().selectMaxGameId();
+            ChessBoardDao.getInstance().insertChessBoard(id, new ChessBoardDto(BoardInitializer.initialize()));
         } else {
             id = Integer.parseInt(idText);
         }
@@ -49,29 +49,29 @@ public class ChessGameService {
         return id;
     }
 
-    public ChessGameDTO move(int id, String from, String to) throws SQLException {
-        ChessGameDTO chessGameDTO = getGame(id);
+    public ChessGameDto move(int id, String from, String to) throws SQLException {
+        ChessGameDto chessGameDTO = getGame(id);
 
         ChessGame chessGame = new ChessGame(chessGameDTO.getTurn(), chessGameDTO.getBoard().getBoard());
 
         try {
             chessGame.move(from, to);
-            ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessGame.getBoard());
+            ChessBoardDto chessBoardDTO = new ChessBoardDto(chessGame.getBoard());
             chessGameDTO.setBoard(chessBoardDTO);
             chessGameDTO.setTurn(chessGame.getTurn());
 
-            ChessTurnDAO.getInstance().updateChessTurn(id, chessGameDTO.getTurn());
-            ChessBoardDAO.getInstance().deleteChessBoard(id);
-            ChessBoardDAO.getInstance().insertChessBoard(id, chessBoardDTO);
+            ChessTurnDao.getInstance().updateChessTurn(id, chessGameDTO.getTurn());
+            ChessBoardDao.getInstance().deleteChessBoard(id);
+            ChessBoardDao.getInstance().insertChessBoard(id, chessBoardDTO);
         } catch (GameOverException e) {
-            ChessTurnDAO.getInstance().deleteChessTurn(id);
+            ChessTurnDao.getInstance().deleteChessTurn(id);
             throw new GameOverException(chessGameDTO.getTurn().toString());
         }
         return chessGameDTO;
     }
 
-    public ChessGameDTO getStatus(int id) throws SQLException {
-        ChessGameDTO chessGameDTO = getGame(id);
+    public ChessGameDto getStatus(int id) throws SQLException {
+        ChessGameDto chessGameDTO = getGame(id);
         ChessGame chessGame = new ChessGame(chessGameDTO.getTurn(), chessGameDTO.getBoard().getBoard());
         chessGameDTO.setStatus(chessGame.status());
         return chessGameDTO;

@@ -1,9 +1,9 @@
 package controller;
 
-import chess.dao.ChessTurnDAO;
+import chess.dao.ChessTurnDao;
 import chess.domain.board.GameOverException;
 import chess.domain.piece.PieceColor;
-import chess.dto.ChessGameDTO;
+import chess.dto.ChessGameDto;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -23,7 +23,7 @@ public class Controller {
 
         public static String home(Request request, Response response) throws SQLException {
             Map<String, Object> model = new HashMap<>();
-            model.put("games", ChessTurnDAO.getInstance().selectChessGames());
+            model.put("games", ChessTurnDao.getInstance().selectChessGames());
             return render(model, "index.html");
         }
 
@@ -35,7 +35,7 @@ public class Controller {
             Map<String, Object> model = new HashMap<>();
 
             int id = ChessGameService.getInstance().getId(request.queryParams("id"));
-            ChessGameDTO chessGameDTO = ChessGameService.getInstance().getGame(id);
+            ChessGameDto chessGameDTO = ChessGameService.getInstance().getGame(id);
 
             request.session().attribute("gameId", id);
             model.put("boardJson", new Gson().toJson(chessGameDTO.getBoard().getBoard()));
@@ -47,7 +47,7 @@ public class Controller {
             Map<String, Object> model = new HashMap<>();
 
             int id = request.session().attribute("gameId");
-            ChessGameDTO chessGameDTO = ChessGameService.getInstance().getGame(id);
+            ChessGameDto chessGameDTO = ChessGameService.getInstance().getGame(id);
 
             try {
                 chessGameDTO = ChessGameService.getInstance().move(id, request.queryParams("from"), request.queryParams("to"));
@@ -67,7 +67,7 @@ public class Controller {
             Map<String, Object> model = new HashMap<>();
 
             int id = request.session().attribute("gameId");
-            ChessGameDTO chessGameDTO = ChessGameService.getInstance().getStatus(id);
+            ChessGameDto chessGameDTO = ChessGameService.getInstance().getStatus(id);
 
             model.put("boardJson", new Gson().toJson(chessGameDTO.getBoard().getBoard()));
             model.put("turn", chessGameDTO.getTurn());

@@ -11,15 +11,15 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class ChessTurnDAOTest {
-    ChessTurnDAO chessTurnDAO;
+class ChessTurnDaoTest {
+    ChessTurnDao chessTurnDAO;
     Connection connection;
 
     @BeforeEach
     void setUp() throws Exception {
         connection = DBUtil.getConnection();
         connection.setAutoCommit(false);
-        chessTurnDAO = ChessTurnDAO.getInstance();
+        chessTurnDAO = ChessTurnDao.getInstance();
     }
 
     @Test
@@ -65,7 +65,7 @@ class ChessTurnDAOTest {
 
     @Test
     public void deleteTest() throws Exception {
-        ChessTurnDAO chessTurnDAO = ChessTurnDAO.getInstance();
+        ChessTurnDao chessTurnDAO = ChessTurnDao.getInstance();
         chessTurnDAO.insertChessTurn(PieceColor.BLACK);
         int id = chessTurnDAO.selectMaxGameId();
 

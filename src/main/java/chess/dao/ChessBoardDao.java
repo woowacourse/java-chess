@@ -4,7 +4,7 @@ import chess.domain.board.Tile;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
-import chess.dto.ChessBoardDTO;
+import chess.dto.ChessBoardDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,23 +13,23 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessBoardDAO {
+public class ChessBoardDao {
     private static final String insertQuery = "INSERT INTO chess_board (game_id, tile, piece_type, piece_color) VALUES (?, ?, ?, ?)";
     private static final String selectQuery = "SELECT tile, piece_type, piece_color FROM chess_board WHERE game_id=?";
     private static final String deleteQuery = "DELETE FROM chess_board WHERE game_id=?";
-    private static ChessBoardDAO chessBoardDAO;
+    private static ChessBoardDao chessBoardDAO;
 
-    private ChessBoardDAO() {
+    private ChessBoardDao() {
     }
 
-    public static ChessBoardDAO getInstance() {
+    public static ChessBoardDao getInstance() {
         if (chessBoardDAO == null) {
-            chessBoardDAO = new ChessBoardDAO();
+            chessBoardDAO = new ChessBoardDao();
         }
         return chessBoardDAO;
     }
 
-    public ChessBoardDTO selectChessBoard(int id) throws SQLException {
+    public ChessBoardDto selectChessBoard(int id) throws SQLException {
         try (Connection connection = DBUtil.getConnection()) {
             PreparedStatement pstmt = connection.prepareStatement(selectQuery);
             pstmt.setInt(1, id);
@@ -44,11 +44,11 @@ public class ChessBoardDAO {
                 boardState.put(tile, type.generate(color));
             }
 
-            return new ChessBoardDTO(boardState);
+            return new ChessBoardDto(boardState);
         }
     }
 
-    public void insertChessBoard(int id, ChessBoardDTO chessBoardDTO) throws SQLException {
+    public void insertChessBoard(int id, ChessBoardDto chessBoardDTO) throws SQLException {
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(insertQuery)) {
 

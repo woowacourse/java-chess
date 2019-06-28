@@ -4,9 +4,9 @@ import chess.domain.piece.PieceColor;
 
 import java.util.Map;
 
-public class ChessGameDTO {
+public class ChessGameDto {
     private PieceColor turn;
-    private ChessBoardDTO board;
+    private ChessBoardDto board;
     private Map<PieceColor, Double> status;
 
     public PieceColor getTurn() {
@@ -17,11 +17,11 @@ public class ChessGameDTO {
         this.turn = turn;
     }
 
-    public ChessBoardDTO getBoard() {
+    public ChessBoardDto getBoard() {
         return board;
     }
 
-    public void setBoard(ChessBoardDTO board) {
+    public void setBoard(ChessBoardDto board) {
         this.board = board;
     }
 

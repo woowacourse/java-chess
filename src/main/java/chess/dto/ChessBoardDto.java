@@ -5,10 +5,10 @@ import chess.domain.piece.Piece;
 
 import java.util.Map;
 
-public class ChessBoardDTO {
+public class ChessBoardDto {
     private Map<Tile, Piece> board;
 
-    public ChessBoardDTO(Map<Tile, Piece> board) {
+    public ChessBoardDto(Map<Tile, Piece> board) {
         this.board = board;
     }
 

@@ -9,21 +9,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessTurnDAO {
+public class ChessTurnDao {
     private static final String insertQuery = "INSERT INTO chess_turn (turn) VALUES (?)";
     private static final String updateQuery = "UPDATE chess_turn SET turn=? WHERE game_id=?";
     private static final String selectTurnQuery = "SELECT turn FROM chess_turn WHERE game_id=?";
     private static final String selectMaxQuery = "SELECT max(game_id) FROM chess_turn";
     private static final String deleteQuery = "DELETE FROM chess_turn WHERE game_id=?";
     private static final String selectGameIdsQuery = "SELECT game_id FROM chess_turn";
-    private static ChessTurnDAO chessTurnDAO;
+    private static ChessTurnDao chessTurnDAO;
 
-    private ChessTurnDAO() {
+    private ChessTurnDao() {
     }
 
-    public static ChessTurnDAO getInstance() {
+    public static ChessTurnDao getInstance() {
         if (chessTurnDAO == null) {
-            chessTurnDAO = new ChessTurnDAO();
+            chessTurnDAO = new ChessTurnDao();
         }
         return chessTurnDAO;
     }
