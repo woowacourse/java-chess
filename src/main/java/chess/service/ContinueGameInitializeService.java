@@ -41,10 +41,10 @@ public class ContinueGameInitializeService implements BoardInitializer {
         Color currentTurn = chessGameDao.findTurn(GAME_ID).equals("WHITE") ? Color.WHITE : Color.BLACK;
         BoardDto boardDto = new BoardDto();
         setBoardDto(boardDto);
-        ChessGame chessGame = new ChessGame(currentTurn, makePreviousBoard());
+        ChessGame chessGame = new ChessGame(currentTurn, boardDto.getPreviousBoard());
 
         chessGameDto.setCurrentOfTurn(currentTurn);
-        chessGameDto.setInitWebBoard(makeJSONPreviousBoard());
+        chessGameDto.setInitWebBoard(boardDto.getWebBoard());
         chessGameDto.setChessGame(chessGame);
 
         return chessGameDto;
@@ -67,35 +67,6 @@ public class ContinueGameInitializeService implements BoardInitializer {
         }
         boardDto.setPreviousBoard(gameBoard);
         boardDto.setWebBoard(initBoard);
-    }
-
-    private Map<String, String> makeJSONPreviousBoard() throws SQLException {
-        Map<String, String> initBoard = new HashMap<>();
-        for (int i = START_PIECE_ID; i <= END_PIECE_ID; ++i) {
-            PieceDto piece = chessPieceDao.findPieceById(String.valueOf(i));
-            String color = piece.getColor().substring(START_FIRST_CHAR, END_FIRST_CHAR).toLowerCase();
-            String type = piece.getType().equals("KNIGHT")
-                    ? piece.getType().substring(START_SECOND_CHAR, END_SECOND_CHAR)
-                    : piece.getType().substring(START_FIRST_CHAR, END_FIRST_CHAR);
-            if (piece.getType().equals("BLANK")) {
-                continue;
-            }
-            initBoard.put(piece.getPoint(), color + type);
-        }
-        return initBoard;
-    }
-
-    private Map<Point, Piece> makePreviousBoard() throws SQLException {
-        Map<Point, Piece> gameBoard = new HashMap<>();
-        for (int i = START_PIECE_ID; i <= END_PIECE_ID; ++i) {
-            PieceDto piece = chessPieceDao.findPieceById(String.valueOf(i));
-            String color = piece.getColor().substring(START_FIRST_CHAR, END_FIRST_CHAR).toLowerCase();
-            String type = piece.getType().equals("KNIGHT")
-                    ? piece.getType().substring(START_SECOND_CHAR, END_SECOND_CHAR)
-                    : piece.getType().substring(START_FIRST_CHAR, END_FIRST_CHAR);
-            gameBoard.put(PointFactory.of(piece.getPoint()), PieceFactory.of(color + type));
-        }
-        return gameBoard;
     }
 
     public class BoardDto {
