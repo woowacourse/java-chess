@@ -45,7 +45,7 @@ public class WebUIChessController {
         req.session().attribute("board", board);
 
         List<PieceDto> pieceDtos = PieceService.findByGameId(gameId);
-        board = PieceService.setBoard(board, pieceDtos, gameId);
+        board = PieceService.getBoard(board, pieceDtos, gameId);
 
         if (gameDto.isEnd() == true) {
             ResultCalculator resultCalculator = new ResultCalculator(board);

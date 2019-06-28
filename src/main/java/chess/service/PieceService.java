@@ -24,23 +24,33 @@ public class PieceService {
         pieceDao.updatePiece(navigatorDto);
     }
 
-    public static Board setBoard(Board board, List<PieceDto> pieceDtos, int gameId) {
+    public static Board getBoard(Board board, List<PieceDto> pieceDtos, int gameId) {
         if (pieceDtos.size() == 0) {
-            board.initBoard();
-            Map<Position, Piece> pieces = board.getPieces();
-
-            for (Position position : pieces.keySet()) {
-                int teamId = pieces.get(position).getAliance().getTeamId();
-                int kindId = pieces.get(position).getPieceValue().getKindId();
-                PieceDto pieceDto = new PieceDto(teamId, gameId, kindId, position.toString());
-                pieceDao.addPiece(pieceDto);
-            }
+            initBoard(board, gameId);
         }
 
         if (pieceDtos.size() != 0) {
-            for (PieceDto piece : pieceDtos) {
-                board.putPiece(piece.getPosition(), piece.getAliance().getTeamId(), piece.getKindId());
-            }
+            setBoard(board, pieceDtos);
+        }
+        return board;
+    }
+
+    private static Board initBoard(Board board, int gameId) {
+        board.initBoard();
+        Map<Position, Piece> pieces = board.getPieces();
+
+        for (Position position : pieces.keySet()) {
+            int teamId = pieces.get(position).getAliance().getTeamId();
+            int kindId = pieces.get(position).getPieceValue().getKindId();
+            PieceDto pieceDto = new PieceDto(teamId, gameId, kindId, position.toString());
+            pieceDao.addPiece(pieceDto);
+        }
+        return board;
+    }
+
+    private static Board setBoard(Board board, List<PieceDto> pieceDtos) {
+        for (PieceDto piece : pieceDtos) {
+            board.putPiece(piece.getPosition(), piece.getAliance().getTeamId(), piece.getKindId());
         }
         return board;
     }
