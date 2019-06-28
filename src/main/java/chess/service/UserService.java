@@ -8,13 +8,15 @@ import spark.Request;
 import java.util.List;
 
 public class UserService {
+    private static final int BLACK_TEAM_ID = 1;
+    private static final int WHITE_TEAM_ID = 2;
     private static UserDao userDao = UserDaoImpl.getInstance();
 
     private UserService() {}
 
     public static void addUsers(Request req, int gameId) {
-        UserDto whiteUserDto = new UserDto(gameId, req.queryParams("white_user"), 2);
-        UserDto blackUserDto = new UserDto(gameId, req.queryParams("black_user"), 1);
+        UserDto whiteUserDto = new UserDto(gameId, req.queryParams("white_user"), WHITE_TEAM_ID);
+        UserDto blackUserDto = new UserDto(gameId, req.queryParams("black_user"), BLACK_TEAM_ID);
         userDao.addUser(whiteUserDto);
         userDao.addUser(blackUserDto);
     }
