@@ -1,0 +1,103 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <title>체스</title>
+</head>
+<body>
+<div>
+    <button onclick="startGame()">게임 시작</button>
+</div>
+<table>
+    <tr>
+        <td id="56" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="57" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="58" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="59" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="60" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="61" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="62" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="63" class="chessPiece" onclick="touchA(this.id)"></td>
+    </tr>
+    <tr>
+        <td id="48" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="49" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="50" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="51" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="52" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="53" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="54" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="55" class="chessPiece" onclick="touchA(this.id)"></td>
+    </tr>
+    <tr>
+        <td id="40" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="41" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="42" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="43" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="44" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="45" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="46" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="47" class="chessPiece" onclick="touchA(this.id)"></td>
+    </tr>
+    <tr>
+        <td id="32" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="33" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="34" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="35" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="36" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="37" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="38" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="39" class="chessPiece" onclick="touchA(this.id)"></td>
+    </tr>
+    <tr>
+        <td id="24" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="25" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="26" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="27" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="28" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="29" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="30" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="31" class="chessPiece" onclick="touchA(this.id)"></td>
+    </tr>
+    <tr>
+        <td id="16" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="17" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="18" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="19" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="20" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="21" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="22" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="23" class="chessPiece" onclick="touchA(this.id)"></td>
+    </tr>
+    <tr>
+        <td id="8" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="9" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="10" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="11" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="12" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="13" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="14" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="15" class="chessPiece" onclick="touchA(this.id)"></td>
+    </tr>
+    <tr>
+        <td id="0" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="1" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="2" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="3" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="4" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="5" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="6" class="chessPiece" onclick="touchA(this.id)"></td>
+        <td id="7" class="chessPiece" onclick="touchA(this.id)"></td>
+    </tr>
+</table>
+
+
+<div>
+    <button onclick="ajaxScore()">점수확인 버튼</button>
+</div>
+<div id="board"><span id="score"></span></div>
+</body>
+<script src="app.js"></script>
+</html>
