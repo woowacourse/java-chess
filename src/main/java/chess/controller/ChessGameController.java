@@ -36,9 +36,7 @@ public class ChessGameController {
     public static Route initialize = (request, response) -> {
         response.type("application/json");
         try {
-            return isNewGame
-                    ? new Gson().toJson(initializeNewGame())
-                    : new Gson().toJson(initializeContinue());
+            return new Gson().toJson(isNewGame ? initializeNewGame() : initializeContinue());
         } catch (Exception e) {
             response.status(500);
             return new Gson().toJson(e.getMessage());
@@ -62,15 +60,16 @@ public class ChessGameController {
         }
 
         // 데이터베이스에 초기화 배열 저장
-        chessBoardDto.getPoints().entrySet().stream()
-                .forEach(point -> {
-                    PieceDto pieceDto = new PieceDto(point.getKey(), point.getValue().getColor(), point.getValue().getType());
-                    try {
-                        chessPieceDao.addPiece(pieceDto);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                });
+        chessBoardDto.getPoints().forEach((key, value) -> {
+            PieceDto pieceDto = new PieceDto(key);
+            pieceDto.setColor(value.getColor().toString());
+            pieceDto.setType(value.getType().toString());
+            try {
+                chessPieceDao.addPiece(pieceDto);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
 
         // 프론트에 보드 정보 주기
         Map<String, String> initBoard = new HashMap<>();
@@ -85,15 +84,16 @@ public class ChessGameController {
         ChessPieceDao chessPieceDao = new ChessPieceDao(DBManager.createDataSource());
         Map<String, String> initBoard = new HashMap<>();
         Map<Point, Piece> gameBoard = new HashMap<>();
-        Color currentTurn = chessGameDao.findTurn().equals("WHITE") ? Color.WHITE : Color.BLACK;
+        Color currentTurn = "WHITE".equals(chessGameDao.findTurn()) ? Color.WHITE : Color.BLACK;
+
         for (int i = 1; i <= 64; ++i) {
             PieceDto piece = chessPieceDao.findPieceById(String.valueOf(i));
             String color = piece.getColor().substring(0, 1).toLowerCase();
-            String type = piece.getType().equals("KNIGHT")
+            String type = "KNIGHT".equals(piece.getType())
                     ? piece.getType().substring(1, 2)
                     : piece.getType().substring(0, 1);
             gameBoard.put(PointFactory.of(piece.getPoint()), PieceFactory.of(color + type));
-            if (piece.getType().equals("BLANK")) {
+            if ("BLANK".equals(piece.getType())) {
                 continue;
             }
             initBoard.put(piece.getPoint(), color + type);
@@ -122,7 +122,7 @@ public class ChessGameController {
         try {
             Piece sourcePiece = chessGame.getPiece(source);
             chessGame.play(source, target);
-            PieceDto sourcePieceDto = new PieceDto(source, sourcePiece.getColor(), sourcePiece.getType());
+            PieceDto sourcePieceDto = new PieceDto(source, sourcePiece);
             PieceDto targetPieceDto = new PieceDto(target, Color.NONE, Type.BLANK);
             ChessPieceDao chessPieceDao = new ChessPieceDao(DBManager.createDataSource());
             chessPieceDao.updatePiece(sourcePieceDto, targetPieceDto);  // target 위치에 해당 체스 말 넣기

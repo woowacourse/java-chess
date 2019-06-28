@@ -2,6 +2,7 @@ package chess.dto;
 
 import chess.domain.Point;
 import chess.domain.pieces.Color;
+import chess.domain.pieces.Piece;
 import chess.domain.pieces.Type;
 
 public class PieceDto {
@@ -10,7 +11,18 @@ public class PieceDto {
     private String color;
     private String type;
 
-    public PieceDto() { }
+    public PieceDto() {
+    }
+
+    public PieceDto(Point point) {
+        this.point = point.toString();
+    }
+
+    public PieceDto(Point point, Piece piece) {
+        this.point = point.toString();
+        this.color = piece.getColor().toString();
+        this.type = piece.getType().toString();
+    }
 
     public PieceDto(Point point, Color color, Type type) {
         this.point = point.toString();

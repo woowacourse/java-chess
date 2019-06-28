@@ -100,16 +100,14 @@ public class ChessBoard {
         List<Integer> numberOfPawnInColumn = Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0);
 
         points.entrySet().stream()
-                .filter(point -> point.getValue().equalsColor(color))
-                .filter(point -> point.getValue().equalsType(Type.PAWN))
+                .filter(point -> point.getValue().equalsColor(color) && point.getValue().equalsType(Type.PAWN))
                 .forEach(point -> {
                     int columnIndex = point.getKey().getX() - 1;
                     numberOfPawnInColumn.set(columnIndex, numberOfPawnInColumn.get(columnIndex) + 1);
                 });
 
         double totalScore = points.values().stream()
-                .filter(piece -> piece.equalsColor(color))
-                .filter(piece -> !piece.equalsType(Type.PAWN))
+                .filter(piece -> piece.equalsColor(color) && !piece.equalsType(Type.PAWN))
                 .mapToDouble(Piece::getScore)
                 .sum();
 

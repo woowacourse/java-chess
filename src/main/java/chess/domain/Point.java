@@ -58,8 +58,10 @@ public class Point {
     }
 
     public Point plusPoint(Direction direction) {
-        if (isValid(this.x + direction.getXDegree(), this.y + direction.getYDegree())) {
-            return PointFactory.of(this.x + direction.getXDegree(), this.y + direction.getYDegree());
+        int nextX = this.x + direction.getXDegree();
+        int nextY = this.y + direction.getYDegree();
+        if (isValid(nextX, nextY)) {
+            return PointFactory.of(nextX, nextY);
         }
         return PointFactory.getInvalidPoint();
     }
