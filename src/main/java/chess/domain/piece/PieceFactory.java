@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PieceFactory {
-    private static final Map<PieceValue, CreatePiece> CREATE_MAP = new HashMap<>();
+    private static final Map<PieceValue, PieceCreator> CREATE_MAP = new HashMap<>();
 
     static {
         CREATE_MAP.put(PieceValue.KING, King::new);
@@ -21,9 +21,5 @@ public class PieceFactory {
     public static Piece createPiece(Aliance aliance, PieceValue pieceValue) {
         return CREATE_MAP.get(pieceValue).create(aliance, pieceValue);
     }
-}
-
-interface CreatePiece {
-    Piece create(Aliance aliance, PieceValue pieceValue);
 }
 
