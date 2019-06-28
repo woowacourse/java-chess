@@ -1,11 +1,10 @@
 package chess.controller;
 
+import chess.dto.BoardDto;
 import chess.service.GameService;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
-
-import java.sql.SQLException;
 
 public class StartController {
     public static final String PATH = "/start";
@@ -21,8 +20,9 @@ public class StartController {
         private static StartController INSTANCE = new StartController();
     }
 
-    public Object start(Request req, Response res) throws SQLException {
+    public Object start(Request req, Response res) {
         GameService gameService = GameService.getInstance();
-        return new Gson().toJson(gameService.start());
+        BoardDto boardDto = gameService.start();
+        return new Gson().toJson(boardDto);
     }
 }
