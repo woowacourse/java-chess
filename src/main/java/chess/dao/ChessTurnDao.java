@@ -2,10 +2,6 @@ package chess.dao;
 
 import chess.domain.piece.PieceColor;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,68 +24,53 @@ public class ChessTurnDao {
         return chessTurnDAO;
     }
 
-    public PieceColor selectChessTurn(int id) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-
-            PreparedStatement pstmt = connection.prepareStatement(selectTurnQuery);
-            pstmt.setInt(1, id);
-
-            ResultSet rs = pstmt.executeQuery();
-
-            return rs.next() ? PieceColor.valueOf(rs.getString("turn")) : null;
-        }
+    public PieceColor selectChessTurn(int id) {
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, id);
+        RowMapper rm = rs -> rs.next() ? PieceColor.valueOf(rs.getString("turn")) : null;
+        JdbcTemplate template = new JdbcTemplate();
+        return (PieceColor) template.executeQuery(selectTurnQuery, pss, rm);
     }
 
-    public void updateChessTurn(int id, PieceColor turn) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-
-            PreparedStatement pstmt = connection.prepareStatement(updateQuery);
+    public void updateChessTurn(int id, PieceColor turn) {
+        PreparedStatementSetter pss = pstmt -> {
             pstmt.setString(1, String.valueOf(turn));
             pstmt.setInt(2, id);
-            pstmt.executeUpdate();
-        }
+        };
+        JdbcTemplate template = new JdbcTemplate();
+        template.executeUpdate(updateQuery, pss);
     }
 
-    public void insertChessTurn(PieceColor turn) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-
-            PreparedStatement pstmt = connection.prepareStatement(insertQuery);
-            pstmt.setString(1, String.valueOf(turn));
-            pstmt.executeUpdate();
-        }
+    public void insertChessTurn(PieceColor turn) {
+        PreparedStatementSetter pss = pstmt -> pstmt.setString(1, String.valueOf(turn));
+        JdbcTemplate template = new JdbcTemplate();
+        template.executeUpdate(insertQuery, pss);
     }
 
-    public int selectMaxGameId() throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-
-            PreparedStatement pstmt = connection.prepareStatement(selectMaxQuery);
-            ResultSet rs = pstmt.executeQuery();
-
-            return rs.next() ? rs.getInt("max(game_id)") : -1;
-        }
+    public int selectMaxGameId() {
+        PreparedStatementSetter pss = pstmt -> {
+        };
+        RowMapper rm = rs -> rs.next() ? rs.getInt("max(game_id)") : -1;
+        JdbcTemplate template = new JdbcTemplate();
+        return (int) template.executeQuery(selectMaxQuery, pss, rm);
     }
 
-    public void deleteChessTurn(int id) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-
-            PreparedStatement pstmt = connection.prepareStatement(deleteQuery);
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-        }
+    public void deleteChessTurn(int id) {
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, id);
+        JdbcTemplate template = new JdbcTemplate();
+        template.executeUpdate(deleteQuery, pss);
     }
 
-    public List<Integer> selectChessGames() throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-
-            PreparedStatement pstmt = connection.prepareStatement(selectGameIdsQuery);
-            ResultSet rs = pstmt.executeQuery();
-
+    public List<Integer> selectChessGames() {
+        PreparedStatementSetter pss = pstmt -> {
+        };
+        RowMapper rm = rs -> {
             List<Integer> gameIds = new ArrayList<>();
             while (rs.next()) {
                 gameIds.add(rs.getInt("game_id"));
             }
-
             return gameIds;
-        }
+        };
+        JdbcTemplate template = new JdbcTemplate();
+        return (List<Integer>) template.executeQuery(selectGameIdsQuery, pss, rm);
     }
 }

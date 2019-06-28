@@ -6,10 +6,6 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.dto.ChessBoardDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,46 +25,42 @@ public class ChessBoardDao {
         return chessBoardDAO;
     }
 
-    public ChessBoardDto selectChessBoard(int id) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-            PreparedStatement pstmt = connection.prepareStatement(selectQuery);
-            pstmt.setInt(1, id);
+    public ChessBoardDto selectChessBoard(int id) {
+            PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, id);
+            RowMapper rm = rs -> {
+                    Map<Tile, Piece> boardState = new HashMap<>();
+                    while (rs.next()) {
+                            Tile tile = Tile.of(rs.getString("tile"));
+                            PieceType type = PieceType.valueOf(rs.getString("piece_type"));
+                            PieceColor color = PieceColor.valueOf(rs.getString("piece_color"));
+                            boardState.put(tile, type.generate(color));
+                    }
+                    return new ChessBoardDto(boardState);
+            };
 
-            ResultSet rs = pstmt.executeQuery();
-
-            Map<Tile, Piece> boardState = new HashMap<>();
-            while (rs.next()) {
-                Tile tile = Tile.of(rs.getString("tile"));
-                PieceType type = PieceType.valueOf(rs.getString("piece_type"));
-                PieceColor color = PieceColor.valueOf(rs.getString("piece_color"));
-                boardState.put(tile, type.generate(color));
-            }
-
-            return new ChessBoardDto(boardState);
-        }
+            JdbcTemplate template = new JdbcTemplate();
+            return (ChessBoardDto) template.executeQuery(selectQuery, pss, rm);
     }
 
-    public void insertChessBoard(int id, ChessBoardDto chessBoardDTO) throws SQLException {
-        try (Connection connection = DBUtil.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(insertQuery)) {
-
-            pstmt.setInt(1, id);
-
-            Map<Tile, Piece> board = chessBoardDTO.getBoard();
-            for (Tile tile : board.keySet()) {
-                pstmt.setString(2, tile.toString());
-                pstmt.setString(3, String.valueOf(board.get(tile).getType()));
-                pstmt.setString(4, String.valueOf(board.get(tile).getColor()));
-                pstmt.executeUpdate();
-            }
-        }
+        public void insertChessBoard(int id, ChessBoardDto chessBoardDTO) {
+                PreparedStatementSetter pss = pstmt -> {
+                        pstmt.setInt(1, id);
+                        Map<Tile, Piece> board = chessBoardDTO.getBoard();
+                        for (Tile tile : board.keySet()) {
+                                pstmt.setString(2, tile.toString());
+                                pstmt.setString(3, String.valueOf(board.get(tile).getType()));
+                                pstmt.setString(4, String.valueOf(board.get(tile).getColor()));
+                        }
+                };
+                JdbcTemplate template = new JdbcTemplate();
+                template.executeUpdate(insertQuery, pss);
     }
 
-    public void deleteChessBoard(int id) throws SQLException {
-        try (Connection connection = DBUtil.getConnection()) {
-            PreparedStatement pstmt = connection.prepareStatement(deleteQuery);
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-        }
+        public void deleteChessBoard(int id) {
+                PreparedStatementSetter pss = pstmt -> {
+                        pstmt.setInt(1, id);
+                };
+                JdbcTemplate template = new JdbcTemplate();
+                template.executeUpdate(deleteQuery, pss);
     }
 }
