@@ -9,25 +9,26 @@ import chess.service.dto.ChessGameDto;
 import chess.service.dto.MoveInfoDto;
 import chess.service.dto.MoveResultDto;
 import com.google.gson.Gson;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Route;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 public class ChessGameController {
 
     public static Route newGame = (request, response) -> {
         request.session(true);
         request.session().attribute("isNewGame", true);
-        response.redirect("/chessgame.html");
-        return null;
+        return render(null, "/chessgame.html");
     };
 
     public static Route continueGame = (request, response) -> {
         request.session(true);
         request.session().attribute("isNewGame", false);
-        response.redirect("/chessgame.html");
-        return null;
+        return render(null, "/chessgame.html");
     };
 
     public static Route initialize = (request, response) -> {
@@ -68,4 +69,8 @@ public class ChessGameController {
         }
         return new Gson().toJson(moveResultDto);
     };
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
 }
