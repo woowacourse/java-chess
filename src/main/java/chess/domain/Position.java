@@ -9,13 +9,10 @@ public class Position {
     private static final Map<String, Position> positions = new HashMap<>();
 
     static {
-        List<Row> rows = Row.getRows();
         List<Column> columns = Column.getColumns();
 
         for (Column column : columns) {
-            for (Row row : rows) {
-                positions.put(column.toString() + row.toString(), new Position(row, column));
-            }
+            joinRowAndPut(column);
         }
     }
 
@@ -25,6 +22,14 @@ public class Position {
     private Position(Row row, Column column) {
         this.row = row;
         this.column = column;
+    }
+
+    private static void joinRowAndPut(Column column) {
+        List<Row> rows = Row.getRows();
+
+        for (Row row : rows) {
+            positions.put(column.toString() + row.toString(), new Position(row, column));
+        }
     }
 
     public static Position valueOf(String position) {
