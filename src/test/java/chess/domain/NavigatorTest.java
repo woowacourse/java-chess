@@ -1,4 +1,4 @@
-package chess.domain.domain;
+package chess.domain;
 
 public class NavigatorTest {
 

@@ -1,4 +1,4 @@
-package chess.domain.domain;
+package chess.domain;
 
 import chess.domain.Column;
 import org.junit.jupiter.api.Test;
