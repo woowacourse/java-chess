@@ -1,0 +1,33 @@
+.container {
+    display: table;
+    margin: auto;
+}
+
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    height: 55px;
+    width: 55px;
+}
+
+.cell-inline {
+    display: table-cell;
+    padding: 5px;
+}
+
+.board-dark-white {
+    border: 1px solid #bcbcbc;
+}
+
+.align-middle {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.align-left {
+    vertical-align: middle;
+    text-align: left;
+}
