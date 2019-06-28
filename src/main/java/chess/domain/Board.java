@@ -11,12 +11,6 @@ import java.util.stream.Collectors;
 public class Board {
     private static final String WHITE_INIT_ROW = "2";
     private static final String BLACK_INIT_ROW = "7";
-    private static final int KING_KIND_ID = 1;
-    private static final int QUEEN_KIND_ID = 2;
-    private static final int ROOK_KIND_ID = 3;
-    private static final int KNIGHT_KIND_ID = 4;
-    private static final int BISHOP_KIND_ID = 5;
-    private static final int PAWN_KIND_ID = 6;
     private static final String KING_NAME = "K";
     private static final String PAWN_NAME = "P";
 
@@ -59,24 +53,7 @@ public class Board {
     }
 
     public void putPiece(String position, int teamId, int kindId) {
-        if (kindId == KING_KIND_ID) {
-            pieces.put(Position.valueOf(position), new King(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
-        }
-        if (kindId == QUEEN_KIND_ID) {
-            pieces.put(Position.valueOf(position), new Queen(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
-        }
-        if (kindId == ROOK_KIND_ID) {
-            pieces.put(Position.valueOf(position), new Rook(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
-        }
-        if (kindId == KNIGHT_KIND_ID) {
-            pieces.put(Position.valueOf(position), new Knight(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
-        }
-        if (kindId == BISHOP_KIND_ID) {
-            pieces.put(Position.valueOf(position), new Bishop(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
-        }
-        if (kindId == PAWN_KIND_ID) {
-            pieces.put(Position.valueOf(position), new Pawn(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
-        }
+        pieces.put(Position.valueOf(position), PieceFactory.createPiece(Aliance.valueOf(teamId), PieceValue.valueOf(kindId)));
     }
 
     public Piece pieceValueOf(String position) {
