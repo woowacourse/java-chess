@@ -20,7 +20,7 @@ public class Board implements Observer {
     }
 
     public List<Piece> getPieces() {
-        List<Piece> pieces= new ArrayList<>(this.pieces.values());
+        List<Piece> pieces = new ArrayList<>(this.pieces.values());
         return pieces;
     }
 

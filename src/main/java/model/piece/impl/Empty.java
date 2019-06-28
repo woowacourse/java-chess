@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Empty extends Piece {
     private static final double SCORE = 0;
+
     public Empty(Position position) {
         super(PieceColor.EMPTY, position);
     }

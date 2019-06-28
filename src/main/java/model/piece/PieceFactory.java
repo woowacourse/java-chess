@@ -20,7 +20,8 @@ public class PieceFactory {
         pieceCreators.put(Pawn.class, Pawn::new);
     }
 
-    private PieceFactory() {}
+    private PieceFactory() {
+    }
 
     public static Piece create(Class<?> peiceType, PieceColor pieceColor, Position position) {
         return pieceCreators.getOrDefault(peiceType, Empty::new).apply(pieceColor, position);

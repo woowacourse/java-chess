@@ -121,15 +121,15 @@ public class Game {
     }
 
     private double getPawnScore(PieceColor pieceColor) {
-                return this.board.getPieces().stream()
-                        .filter(p -> p.isPawn())
-                        .filter(p -> p.getPieceColor() == pieceColor)
-                        .map(p -> (Pawn) p)
-                        .collect(Collectors.groupingBy(Piece::x))
-                        .values().stream()
-                        .flatMap(l ->
-                                (l.size() == 1) ? l.stream().map(Pawn::getScore) : l.stream().map(Pawn::getHalfScore)
-                        ).reduce(Double::sum)
-                        .orElse(.0);
+        return this.board.getPieces().stream()
+                .filter(p -> p.isPawn())
+                .filter(p -> p.getPieceColor() == pieceColor)
+                .map(p -> (Pawn) p)
+                .collect(Collectors.groupingBy(Piece::x))
+                .values().stream()
+                .flatMap(l ->
+                        (l.size() == 1) ? l.stream().map(Pawn::getScore) : l.stream().map(Pawn::getHalfScore)
+                ).reduce(Double::sum)
+                .orElse(.0);
     }
 }

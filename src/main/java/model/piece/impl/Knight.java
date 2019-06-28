@@ -1,6 +1,5 @@
 package model.piece.impl;
 
-import model.Direction;
 import model.Position;
 import model.board.BoardView;
 import model.piece.Piece;
