@@ -5,7 +5,7 @@ import chess.domain.piece.piecefigure.Piece;
 
 import java.util.Map;
 
-public class ChessGameDTO {
+public class ChessGameDto {
     public static class GameLoading {
         private Map<Position, Piece> board;
         private String turn;

@@ -4,19 +4,19 @@ import chess.util.DatabaseConnection;
 
 import java.sql.*;
 
-public class ChessGameDAO {
+public class ChessGameDao {
     private static final int NEW_GAME_TURN = 0;
     private static final int NEW_GAME_ID = 1;
     private static final int BLACK_TURN = -1;
 
-    private ChessGameDAO() {
+    private ChessGameDao() {
     }
 
     private static class ChessGameDAOHolder {
-        static final ChessGameDAO CHESS_GAME_DAO = new ChessGameDAO();
+        static final ChessGameDao CHESS_GAME_DAO = new ChessGameDao();
     }
 
-    public static ChessGameDAO getInstance() {
+    public static ChessGameDao getInstance() {
         return ChessGameDAOHolder.CHESS_GAME_DAO;
     }
 
