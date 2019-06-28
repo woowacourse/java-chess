@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>방 목록</title>
+</head>
+<body>
+
+{{#each roomIds}}
+<form action="/game" method="get">
+    <button type="submit">{{this}} 번째 방</button>
+    <input name="roomId" type="hidden" value={{this}}>
+</form>
+{{/each}}
+
+
+</body>
+
+</html>
