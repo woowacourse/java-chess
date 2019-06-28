@@ -13,13 +13,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewGameInitializer implements BoardInitializer {
+public class NewGameInitializeService implements BoardInitializer {
     private static final int GAME_ID = 1;
 
     private ChessGameDao chessGameDao;
     private ChessPieceDao chessPieceDao;
 
-    public NewGameInitializer() {
+    public NewGameInitializeService() {
         DataSource ds = DBManager.createDataSource();
         chessGameDao = new ChessGameDao(ds);
         chessPieceDao = new ChessPieceDao(ds);

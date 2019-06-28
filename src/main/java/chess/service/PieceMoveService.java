@@ -15,7 +15,7 @@ import chess.service.dto.PieceDto;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
-public class PieceMover {
+public class PieceMoveService {
 
     public MoveResultDto movePiece(MoveInfoDto moveInfoDto) throws SQLException {
         MoveResultDto moveResultDto = new MoveResultDto(false, false);

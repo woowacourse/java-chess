@@ -2,9 +2,9 @@ package chess.controller;
 
 import chess.domain.pieces.PointFactory;
 import chess.service.BoardInitializer;
-import chess.service.ContinueGameInitializer;
-import chess.service.NewGameInitializer;
-import chess.service.PieceMover;
+import chess.service.ContinueGameInitializeService;
+import chess.service.NewGameInitializeService;
+import chess.service.PieceMoveService;
 import chess.service.dto.ChessGameDto;
 import chess.service.dto.MoveInfoDto;
 import chess.service.dto.MoveResultDto;
@@ -36,10 +36,10 @@ public class ChessGameController {
         try {
             ChessGameDto chessGameDto;
             if (isNewGame) {
-                chessGameDto = makeNewGameDto(new NewGameInitializer(), request);
+                chessGameDto = makeNewGameDto(new NewGameInitializeService(), request);
                 return new Gson().toJson(chessGameDto.getInitWebBoard());
             }
-            chessGameDto = makeNewGameDto(new ContinueGameInitializer(), request);
+            chessGameDto = makeNewGameDto(new ContinueGameInitializeService(), request);
             return new Gson().toJson(chessGameDto.getInitWebBoard());
         } catch (Exception e) {
             response.status(500);
@@ -61,7 +61,7 @@ public class ChessGameController {
                     request.session().attribute("chessGame"),
                     PointFactory.of(request.queryMap("source").value()),
                     PointFactory.of(request.queryMap("target").value()));
-            PieceMover pieceMover = new PieceMover();
+            PieceMoveService pieceMover = new PieceMoveService();
             moveResultDto = pieceMover.movePiece(moveInfoDto);
         } catch (Exception e) {
             response.status(500);

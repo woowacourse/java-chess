@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ContinueGameInitializer implements BoardInitializer {
+public class ContinueGameInitializeService implements BoardInitializer {
     private static final int START_PIECE_ID = 1;
     private static final int END_PIECE_ID = 64;
     private static final int START_FIRST_CHAR = 0;
@@ -29,7 +29,7 @@ public class ContinueGameInitializer implements BoardInitializer {
     private ChessGameDao chessGameDao;
     private ChessPieceDao chessPieceDao;
 
-    public ContinueGameInitializer() {
+    public ContinueGameInitializeService() {
         DataSource ds = DBManager.createDataSource();
         chessGameDao = new ChessGameDao(ds);
         chessPieceDao = new ChessPieceDao(ds);
