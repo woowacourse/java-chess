@@ -10,4 +10,8 @@ public class InputView {
 		return scanner.nextLine();
 	}
 
+	public static String inputMoveInstruction() {
+		return scanner.nextLine();
+	}
+
 }

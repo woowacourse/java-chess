@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.domain.Pieces;
+import chess.domain.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -9,6 +11,14 @@ public class ChessController {
 		OutputView.printGameStartInstruction();
 		String decision = InputView.inputGameStartOrEnd();
 		Board board = new Board();
-		OutputView.printChessBoard(board.getPieces());
+		Pieces pieces = board.getPieces();
+		OutputView.printChessBoard(pieces);
+
+		String moveInstruction = InputView.inputMoveInstruction();
+		Position source = new Position(moveInstruction.split(" ")[1]);
+		Position destination = new Position(moveInstruction.split(" ")[2]);
+		pieces.findByPosition(source).move(destination);
+		OutputView.printChessBoard(pieces);
+
 	}
 }
