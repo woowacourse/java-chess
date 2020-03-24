@@ -1,19 +1,30 @@
 package domain;
 
+import java.util.List;
+import java.util.Objects;
+
 public class Board {
-    private static Board cashed;
 
-    private final Chess[][] chess;
+    private final List<List<Chess>> chess;
 
-    static {
-        cashed = new Board(new Chess[8][8]);
-    }
-
-    public Board(Chess[][] chess) {
+    public Board(List<List<Chess>> chess) {
         this.chess = chess;
     }
 
-    public static Board getInstance() {
-        return cashed;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Board board = (Board) o;
+        return Objects.equals(chess, board.chess);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(chess);
     }
 }
