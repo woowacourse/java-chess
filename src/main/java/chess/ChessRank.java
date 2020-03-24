@@ -1,6 +1,8 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessRank {
@@ -30,6 +32,10 @@ public class ChessRank {
         if (chessRank < LOWER_BOUND || chessRank > UPPER_BOUND) {
             throw new IllegalArgumentException("유효한 체스 랭크가 아닙니다.");
         }
+    }
+
+    public static List<ChessRank> values() {
+        return new ArrayList<>(CHESS_RANKS.values());
     }
 
     @Override
