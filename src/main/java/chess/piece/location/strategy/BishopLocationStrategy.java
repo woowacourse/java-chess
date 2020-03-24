@@ -16,6 +16,6 @@ public class BishopLocationStrategy extends NoblePieceStrategy {
 		final List<Location> lookLocations = new ArrayList<>();
 		lookLocations.add(LEFT_BISHOP);
 		lookLocations.add(RIGHT_BISHOP);
-		return Collections.unmodifiableList(lookLocations);
+		return lookLocations;
 	}
 }

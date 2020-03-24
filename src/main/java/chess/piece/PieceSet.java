@@ -1,37 +1,56 @@
 package chess.piece;
 
-import java.util.ArrayList;
-import java.util.List;
+import chess.board.Location;
+import chess.piece.location.strategy.*;
 
-import static chess.piece.PieceNameType.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PieceSet {
-    private static final int PAWN_COUNT = 8;
-    private static final int ROOK_COUNT = 2;
-    private static final int KNIGHT_COUNT = 2;
-    private static final int BISHOP_COUNT = 2;
-    private static final int KING_COUNT = 1;
-    private static final int QUEEN_COUNT = 1;
-
-    private final List<Piece> pieces;
+    private final boolean isBlack;
+    private final Map<Location, Piece> pieceSet;
 
     public PieceSet(boolean isBlack) {
-        pieces = new ArrayList<>();
-        makePieceSet(isBlack);
+        this.isBlack = isBlack;
+        this.pieceSet = new HashMap<>();
+        makePieceSet();
     }
 
-    private void makePieceSet(boolean isBlack) {
-        makePieceSet(Piece.of(PAWN, isBlack), PAWN_COUNT);
-        makePieceSet(Piece.of(ROOK, isBlack), ROOK_COUNT);
-        makePieceSet(Piece.of(KNIGHT, isBlack), KNIGHT_COUNT);
-        makePieceSet(Piece.of(BISHOP, isBlack), BISHOP_COUNT);
-        makePieceSet(Piece.of(KING, isBlack), KING_COUNT);
-        makePieceSet(Piece.of(QUEEN, isBlack), QUEEN_COUNT);
-    }
-
-    private void makePieceSet(Piece piece, int size) {
-        for (int i = 0; i < size; i++) {
-            pieces.add(piece);
+    public void makePieceSet() {
+        for (PieceType pieceType : PieceType.values()) {
+            Queue<Location> locations = new LinkedList<>(pieceType.getInitialLocation());
+            putPieceLocations(pieceType, locations);
         }
+    }
+
+    private void putPieceLocations(PieceType pieceType, Queue<Location> locations) {
+        for (Piece piece : find(pieceType)) {
+            pieceSet.put(locations.poll(), piece);
+        }
+    }
+
+    private List<Piece> find(PieceType pieceType) {
+        return makePieces().stream()
+                .filter(piece -> piece.is(pieceType))
+                .collect(Collectors.toList());
+    }
+
+    private List<Piece> makePieces() {
+        List<Piece> pieces = new ArrayList<>();
+
+        for (PieceType pieceType : PieceType.values()) {
+            addPieces(pieces, pieceType);
+        }
+        return Collections.unmodifiableList(pieces);
+    }
+
+    private void addPieces(List<Piece> pieces, PieceType pieceType) {
+        for (int i = 0; i < pieceType.getSize(); i++) {
+            pieces.add(Piece.of(pieceType, isBlack));
+        }
+    }
+
+    public Map<Location, Piece> getPieceSet() {
+        return pieceSet;
     }
 }

@@ -6,20 +6,24 @@ import java.util.Objects;
 
 public class Piece {
 
-	protected final PieceNameType name;
+	protected final PieceType type;
 	protected final boolean team;
 
-	Piece(PieceNameType name, boolean team) {
-		this.name = name;
+	Piece(PieceType type, boolean team) {
+		this.type = type;
 		this.team = team;
 	}
 
-	public static Piece of(PieceNameType pieceNameType, boolean team) {
+	public static Piece of(PieceType pieceType, boolean team) {
 		return PieceCache.pieces.stream()
-			.filter(piece -> piece.name == pieceNameType)
+			.filter(piece -> piece.type == pieceType)
 			.filter(piece -> piece.team == team)
 			.findFirst()
 			.orElseThrow(() -> new AssertionError("카드를 찾을 수 없습니다."));
+	}
+
+	public boolean is(PieceType pieceType) {
+		return this.type == pieceType;
 	}
 
 	@Override
@@ -30,21 +34,21 @@ public class Piece {
 			return false;
 		Piece piece = (Piece)o;
 		return team == piece.team &&
-			name == piece.name;
+			type == piece.type;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, team);
+		return Objects.hash(type, team);
 	}
 
 	private static class PieceCache {
 		private static final List<Piece> pieces = new ArrayList<>();
 
 		static {
-			for (PieceNameType pieceNameType : PieceNameType.values()) {
-				pieces.add(new Piece(pieceNameType, false));
-				pieces.add(new Piece(pieceNameType, true));
+			for (PieceType pieceType : PieceType.values()) {
+				pieces.add(new Piece(pieceType, false));
+				pieces.add(new Piece(pieceType, true));
 			}
 		}
 	}

@@ -16,6 +16,7 @@ public class RookLocationsStrategy extends NoblePieceStrategy {
 		final List<Location> lookLocations = new ArrayList<>();
 		lookLocations.add(ROOK_LEFT);
 		lookLocations.add(ROOK_RIGHT);
-		return Collections.unmodifiableList(lookLocations);
+		return lookLocations;
+
 	}
 }

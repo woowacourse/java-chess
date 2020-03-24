@@ -10,7 +10,7 @@ class PieceTest {
 	@DisplayName("싱글톤 생성테스트")
 	@Test
 	void name() {
-		assertThat(Piece.of(PieceNameType.KING, false)).isEqualTo(Piece.of(PieceNameType.KING, false));
+		assertThat(Piece.of(PieceType.KING, false)).isEqualTo(Piece.of(PieceType.KING, false));
 	}
 
 }
