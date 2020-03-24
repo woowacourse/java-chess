@@ -16,6 +16,10 @@ public class Positions {
         }
     }
 
+    private Positions() {
+
+    }
+
     public static Position of(Row row, Column column) {
         return positions.get(key(row, column));
     }
