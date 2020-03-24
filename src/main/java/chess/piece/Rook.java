@@ -14,6 +14,9 @@ public class Rook extends Piece {
 		if (start.isNotStraight(end)) {
 			throw new UnsupportedOperationException("이동 할 수 없습니다.");
 		}
+		if (start.isSameRank(end)) {
 
+		}
+		return null;
 	}
 }

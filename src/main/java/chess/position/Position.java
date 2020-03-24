@@ -44,4 +44,8 @@ public class Position {
     public boolean isNotStraight(Position other) {
         return !isStraight(other);
     }
+
+    public boolean isSameRank(Position other) {
+        return this.rank == other.rank;
+    }
 }
