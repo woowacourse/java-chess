@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ChessChessRankTest {
+public class ChessRankTest {
 
     @Test
     void of_RankPosition_ReturnInstance() {
