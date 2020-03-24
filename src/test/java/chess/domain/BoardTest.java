@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PointTest {
-    @DisplayName("포인트 생성")
+class BoardTest {
     @Test
+    @DisplayName("보드 생성")
     void construct() {
-        Point point = new Point("a", "1", new WhitePiece(PieceType.BISHOP));
-        assertThat(point).isNotNull();
+        Board board = Board.of();
+        assertThat(board).isNotNull();
+        assertThat(board.size()).isEqualTo(64);
     }
 }
