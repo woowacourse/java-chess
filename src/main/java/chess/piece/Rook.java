@@ -12,9 +12,8 @@ public class Rook extends Piece {
 	@Override
 	public List<Position> findReachablePositions(Position start, Position end) {
 		if (start.isNotStraight(end)) {
-
+			throw new UnsupportedOperationException("이동 할 수 없습니다.");
 		}
 
-		return null;
 	}
 }
