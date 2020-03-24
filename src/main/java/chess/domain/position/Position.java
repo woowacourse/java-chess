@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.position;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,13 +22,16 @@ public class Position {
         this.chessRank = chessRank;
     }
 
+    public Position(String key){
+        this(ChessFile.from(key.charAt(0)),ChessRank.from(Character.getNumericValue(key.charAt(1))));
+    }
+
     public static Position of(ChessFile chessFile, ChessRank chessRank){
         return POSITIONS.getOrDefault(key(chessFile,chessRank),new Position(chessFile,chessRank));
     }
 
-    // TODO: 2020/03/24 default 생성 고려하기.
     public static Position of(String key) {
-        return POSITIONS.get(key);
+        return POSITIONS.getOrDefault(key, new Position(key));
     }
 
     private static String key(ChessFile chessFile, ChessRank chessRank) {

@@ -1,11 +1,11 @@
-package chess.domain.chessPiece;
+package chess.domain.chessPiece.pieceType;
 
-public class Queen implements PieceType {
-    private Queen() {
+public class Rook implements PieceType {
+    private Rook() {
     }
 
     private static class Singleton {
-        private static final Queen instance = new Queen();
+        private static final Rook instance = new Rook();
     }
 
     public static PieceType getInstance() {
@@ -14,6 +14,6 @@ public class Queen implements PieceType {
 
     @Override
     public String getName() {
-        return "Q";
+        return "R";
     }
 }

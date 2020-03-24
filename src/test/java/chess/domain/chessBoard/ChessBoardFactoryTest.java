@@ -1,7 +1,11 @@
-package chess;
+package chess.domain.chessBoard;
 
+import chess.domain.chessBoard.ChessBoardFactory;
 import chess.domain.chessPiece.*;
-import org.junit.jupiter.api.Test;
+import chess.domain.chessPiece.pieceType.*;
+import chess.domain.position.ChessFile;
+import chess.domain.position.ChessRank;
+import chess.domain.position.Position;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

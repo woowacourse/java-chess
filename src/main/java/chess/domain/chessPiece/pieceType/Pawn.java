@@ -1,19 +1,19 @@
-package chess.domain.chessPiece;
+package chess.domain.chessPiece.pieceType;
 
-public class Bishop implements PieceType {
-
-    private Bishop() {
+public class Pawn implements PieceType {
+    private Pawn() {
     }
 
     private static class Singleton {
-        private static final Bishop instance = new Bishop();
+        private static final Pawn instance = new Pawn();
     }
+
     public static PieceType getInstance() {
         return Singleton.instance;
     }
 
     @Override
     public String getName() {
-        return "B";
+        return "P";
     }
 }

@@ -1,10 +1,14 @@
-package chess;
+package chess.domain.chessBoard;
 
-import chess.domain.chessPiece.*;
+import chess.domain.chessPiece.Piece;
+import chess.domain.chessPiece.PieceColor;
+import chess.domain.chessPiece.pieceType.*;
+import chess.domain.position.ChessFile;
+import chess.domain.position.ChessRank;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class ChessBoardFactory {
     public static Map<Position, Piece> create() {

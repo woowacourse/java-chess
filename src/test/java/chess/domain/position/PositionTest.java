@@ -1,6 +1,8 @@
-package chess;
+package chess.domain.position;
 
-import org.assertj.core.api.Assertions;
+import chess.domain.position.ChessFile;
+import chess.domain.position.ChessRank;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

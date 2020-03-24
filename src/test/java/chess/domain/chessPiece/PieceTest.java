@@ -1,8 +1,6 @@
-package chess;
+package chess.domain.chessPiece;
 
-import chess.domain.chessPiece.King;
-import chess.domain.chessPiece.Piece;
-import chess.domain.chessPiece.PieceColor;
+import chess.domain.chessPiece.pieceType.King;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
