@@ -63,13 +63,13 @@ end
   
 - 말
 
-  - [ ] 말 32개 캐싱
+  - [X] 말 12개 캐싱
   
-     - [ ] 캐싱한 말만 사용, 아니면 예외 발생
+     - [X] 캐싱한 말만 사용
   
-  - [ ] 색깔 : Black / White
+  - [X] 색깔 : Black / White
 
-  - [ ] 종류 : Rook / kNight / Bishop / Queen / King / Pawn
+  - [X] 종류 : Rook / kNight / Bishop / Queen / King / Pawn
   
 - 판
 
