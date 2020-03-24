@@ -4,11 +4,11 @@ import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
 public class Position {
-    private Column column;
     private Row row;
+    private Column column;
 
-    protected Position(Column column, Row row) {
-        this.column = column;
+    protected Position(Row row, Column column) {
         this.row = row;
+        this.column = column;
     }
 }
