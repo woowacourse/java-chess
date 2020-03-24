@@ -1,15 +1,13 @@
 package chess.domain.chesspiece;
 
-import chess.Color;
+import chess.Team;
 import chess.Position;
 
 public class ChessPiece {
-    Position position;
-    chess.Color Color;
+	Team team;
 
-    public ChessPiece(){
-        this.position = new Position();
-        this.Color = new Color();
-    }
+	public ChessPiece(Team team) {
+		this.team = team;
+	}
 
 }
