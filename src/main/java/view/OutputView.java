@@ -1,6 +1,6 @@
 package view;
 
-import domain.Board;
+import domain.board.Board;
 import domain.chesspiece.Chesspiece;
 
 import java.util.List;
