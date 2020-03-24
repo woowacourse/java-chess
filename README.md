@@ -27,15 +27,15 @@
 
 
 --- 
-### Coordinate란 좌표에서 x나 y 같은 성분을 의미한다
+### Coordinate란 좌표에서 x(File)나 y(Rank) 같은 성분을 의미한다
 
 - [x] Coordinate는 자신의 값에 대해 알아야 한다.
 - [x] Coordinate는 자신의 범위에 대해 알고, 체크해야 한다.
 
-### Position이란 체스 판에서 한 점을 의미하고, 2개의 Coordinate로 구성된다.
-- [ ] Position은 자신의 x, y값을 알아야 한다.
-- [ ] Position은 위치 객체를 미리 생성해서 캐싱해야 한다.
-- [ ] Position은 입력 값에 맞는 Position 객체를 반환해야 한다.
+### Position이란 체스 판에서 한 점을 의미하고, File과 Rank로 구성된다.
+- [x] Position은 자신의 file, rank 알아야 한다.
+- [x] Position은 위치 객체를 미리 생성해서 캐싱해야 한다.
+- [x] Position은 입력 값에 맞는 Position 객체를 반환해야 한다.(입력값은 String)
 - [ ] Position은 다른 Position을 받아서 상대 위치를 계산할 수 있어야 한다.
 
 ### Piece란 체스 말을 의미한다
