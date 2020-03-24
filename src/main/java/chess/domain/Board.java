@@ -1,20 +1,15 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import chess.domain.piece.PieceFactory;
 
 public class Board {
-	private final List<Rank> ranks;
+	private final Pieces pieces;
 
 	public Board() {
-		List<Rank> ranks = new ArrayList<>();
-		for (int i = 0; i < 8; i++) {
-			ranks.add(new Rank());
-		}
-		this.ranks = ranks;
+		this.pieces = PieceFactory.getPieces();
 	}
 
-	public List<Rank> getRanks() {
-		return ranks;
+	public Pieces getPieces() {
+		return pieces;
 	}
 }

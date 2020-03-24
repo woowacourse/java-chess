@@ -5,10 +5,12 @@ import chess.domain.Position;
 public class Rook extends Piece {
 	public Rook(Position position, Team team) {
 		super(position, team);
+		this.representation = 'R';
 	}
 
 	@Override
-	public void move() {
+	public void move(Position destination) {
 
 	}
+
 }

@@ -8,6 +8,7 @@ public class ChessController {
 	public static void run() {
 		OutputView.printGameStartInstruction();
 		String decision = InputView.inputGameStartOrEnd();
-		OutputView.printChessBoard(new Board());
+		Board board = new Board();
+		OutputView.printChessBoard(board.getPieces());
 	}
 }
