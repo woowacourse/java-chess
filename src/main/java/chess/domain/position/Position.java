@@ -1,7 +1,7 @@
-package chess.position;
+package chess.domain.position;
 
-import chess.position.component.Column;
-import chess.position.component.Row;
+import chess.domain.position.component.Column;
+import chess.domain.position.component.Row;
 
 public class Position {
     private Column column;

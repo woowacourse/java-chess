@@ -1,4 +1,4 @@
-package chess.position.component;
+package chess.domain.position.component;
 
 public enum Column {
     ONE(1),
