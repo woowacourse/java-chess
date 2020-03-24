@@ -40,14 +40,14 @@ public class ChessBoard {
 
         List<List<Piece>> chessBoard = new ArrayList<>();
 
-        chessBoard.add(rank1);
-        chessBoard.add(rank2);
-        chessBoard.add(rank3456);
-        chessBoard.add(rank3456);
-        chessBoard.add(rank3456);
-        chessBoard.add(rank3456);
-        chessBoard.add(rank7);
         chessBoard.add(rank8);
+        chessBoard.add(rank7);
+        chessBoard.add(rank3456);
+        chessBoard.add(rank3456);
+        chessBoard.add(rank3456);
+        chessBoard.add(rank3456);
+        chessBoard.add(rank2);
+        chessBoard.add(rank1);
         this.chessBoard = chessBoard;
     }
 
