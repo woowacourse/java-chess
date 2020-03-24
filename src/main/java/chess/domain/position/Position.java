@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -35,7 +35,31 @@ public class Position {
 			).collect(Collectors.toMap(Position::key, position -> position));
 	}
 
+	public boolean isSameRow(Position that) {
+		return row.equals(that.row);
+	}
+
+	public boolean isSameColumn(Position that) {
+		return column.equals(that.column);
+	}
+
 	private String key() {
 		return row.name() + column.name();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Position position = (Position)o;
+		return row == position.row &&
+			column == position.column;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(row, column);
 	}
 }
