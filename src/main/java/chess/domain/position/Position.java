@@ -4,8 +4,8 @@ import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
 public class Position {
-    private Row row;
-    private Column column;
+    private final Row row;
+    private final Column column;
 
     protected Position(Row row, Column column) {
         this.row = row;

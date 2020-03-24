@@ -3,14 +3,16 @@ package chess.domain.position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Positions {
     private static final Map<String, Position> positions = new LinkedHashMap<>();
 
     static {
-        for (Row row : Row.values()) {
-            for (Column column : Column.values()) {
+        for (Column column : Column.values()) {
+            for (Row row : Row.values()) {
                 positions.put(key(row, column), new Position(row, column));
             }
         }

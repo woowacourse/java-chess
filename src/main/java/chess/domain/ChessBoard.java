@@ -13,10 +13,9 @@ public class ChessBoard {
     private final Map<Position, ChessPiece> chessBoard = new LinkedHashMap<>();
 
     public ChessBoard() {
-        Positions.getValues().stream().forEach(position -> chessBoard.put(position, new Empty()));
+        Positions.getValues().forEach(position -> chessBoard.put(position, new Empty()));
 
         Map<ChessPiece, List<Position>> locationInfo = new HashMap<>();
-        Column blackColumn = Column.ONE;
         locationInfo.put(new Rook("R"), Arrays.asList(Positions.of(Row.A, Column.EIGHT), Positions.of(Row.H, Column.EIGHT)));
         locationInfo.put(new Knight("N"), Arrays.asList(Positions.of(Row.B, Column.EIGHT), Positions.of(Row.G, Column.EIGHT)));
         locationInfo.put(new Bishop("B"), Arrays.asList(Positions.of(Row.C, Column.EIGHT), Positions.of(Row.F, Column.EIGHT)));
@@ -37,6 +36,6 @@ public class ChessBoard {
     }
 
     public Map<Position, ChessPiece> getChessBoard() {
-        return chessBoard;
+        return Collections.unmodifiableMap(chessBoard);
     }
 }

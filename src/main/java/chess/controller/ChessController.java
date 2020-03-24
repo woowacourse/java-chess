@@ -8,13 +8,12 @@ public class ChessController {
     public static void main(String[] args) {
         OutputView.printInitialGuide();
 
-
-        ChessBoard chessBoard;
-        if(Commands.of(InputView.inputCommand()) == Commands.START){
-            chessBoard = new ChessBoard();
+        if (Command.of(InputView.inputCommand()) == Command.START) {
+            ChessBoard chessBoard = new ChessBoard();
+            OutputView.printChessBoard(chessBoard.getChessBoard());
         }
 
-        if(Commands.of(InputView.inputCommand()) == Commands.END){
+        if (Command.of(InputView.inputCommand()) == Command.END) {
             return;
         }
     }
