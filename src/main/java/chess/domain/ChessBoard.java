@@ -12,4 +12,5 @@ public class ChessBoard {
         this.blackChessPieces = blackChessPieces;
         this.whiteChessPieces = whiteChessPieces;
     }
+
 }

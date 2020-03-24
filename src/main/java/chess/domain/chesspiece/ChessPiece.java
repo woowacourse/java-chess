@@ -1,13 +1,14 @@
 package chess.domain.chesspiece;
 
+import chess.Position;
 import chess.Team;
 
 public class ChessPiece {
-    Team team;
-//	int score;
-//	MoveRulse moveRulse;
+    private Position position;
+    private final Team team;
 
-    public ChessPiece(Team team) {
+    public ChessPiece(Position position, Team team) {
+        this.position = position;
         this.team = team;
     }
 
