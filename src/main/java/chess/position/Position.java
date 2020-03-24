@@ -33,4 +33,8 @@ public class Position {
 	public static Position of(File file, Rank rank) {
 		return CACHE.get(getKey(file, rank));
 	}
+
+	public boolean isNotStraight(Position other) {
+		return false;
+	}
 }
