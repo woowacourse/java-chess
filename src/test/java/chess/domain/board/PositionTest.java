@@ -8,19 +8,25 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PointTest {
+class PositionTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"b1", "B1"})
     @DisplayName("Point 생성")
-    void create(String point) {
-        assertThat(Point.from(point)).isInstanceOf(Point.class);
+    void createFrom(String point) {
+        assertThat(Position.from(point)).isInstanceOf(Position.class);
     }
 
     @Test
+    void createOf() {
+        assertThat(Position.of(Column.C, Row.SEVEN)).isEqualTo(Position.from("C7"));
+    }
+
+    @Test
+    @DisplayName("잘못된 Point 인자")
     void createWithInvalidName() {
         assertThatThrownBy(() -> {
-            Point.from("z1");
+            Position.from("z1");
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageMatching(".+는 잘못된 입력입니다.");
     }
