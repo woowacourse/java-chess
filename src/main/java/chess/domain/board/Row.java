@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 public enum Row {
     ONE(1),

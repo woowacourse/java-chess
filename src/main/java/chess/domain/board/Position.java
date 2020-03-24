@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,5 +32,13 @@ public class Position {
 
     private static String key(final Row row, final Column column) {
         return row.toString() + column.toString();
+    }
+
+    public boolean isOn(final Row row) {
+        return this.row == row;
+    }
+
+    public boolean isOn(final Column column) {
+        return this.column == column;
     }
 }
