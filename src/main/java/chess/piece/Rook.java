@@ -2,8 +2,8 @@ package chess.piece;
 
 import chess.position.Position;
 
-public class Pawn extends Piece {
-	public Pawn(Team team, Position position) {
+public class Rook extends Piece {
+	public Rook(Team team, Position position) {
 		super(team, position);
 	}
 }
