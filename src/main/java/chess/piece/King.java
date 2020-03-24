@@ -3,7 +3,7 @@ package chess.piece;
 import chess.position.Position;
 
 public class King extends Piece {
-	public King(Team team, Position position) {
-		super(team, position);
+	public King(Team team) {
+		super(team);
 	}
 }

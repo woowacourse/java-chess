@@ -4,10 +4,8 @@ import chess.position.Position;
 
 public abstract class Piece {
 	private final Team team;
-	private final Position position;
 
-	public Piece(Team team, Position position) {
+	public Piece(Team team) {
 		this.team = team;
-		this.position = position;
 	}
 }

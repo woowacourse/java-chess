@@ -17,4 +17,9 @@ public class PieceTest {
 		Pawn pawn = new Pawn(BLACK, Position.of(A, ONE));
 		assertThat(pawn).isInstanceOf(Pawn.class);
 	}
+
+	@Test
+	void rookPathTest() {
+		Rook rook = new Rook(BLACK, Position.of(A,ONE));
+	}
 }
