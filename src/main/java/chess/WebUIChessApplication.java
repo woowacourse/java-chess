@@ -1,8 +1,8 @@
 package chess;
 
-import domain.Board;
-import domain.BoardFactory;
-import domain.GameCommend;
+import domain.board.Board;
+import domain.board.BoardFactory;
+import domain.commend.CommendType;
 import view.InputView;
 import view.OutputView;
 
@@ -10,8 +10,8 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         OutputView.printStart();
 
-        GameCommend gameCommend = GameCommend.answer(InputView.inputGameCommend());
-        if (gameCommend == GameCommend.START) {
+        CommendType commendType = CommendType.answer(InputView.inputGameCommend());
+        if (commendType == CommendType.START) {
             play();
         }
 
@@ -25,8 +25,8 @@ public class WebUIChessApplication {
         Board board = new Board(BoardFactory.create());
         OutputView.printBoard(board);
 
-        GameCommend gameCommend = GameCommend.answer(InputView.inputGameCommend());
-        if (gameCommend == GameCommend.START) {
+        CommendType commendType = CommendType.answer(InputView.inputGameCommend());
+        if (commendType == CommendType.START) {
             play();
         }
     }
