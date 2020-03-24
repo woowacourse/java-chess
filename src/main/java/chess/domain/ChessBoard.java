@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 import chess.domain.chesspiece.ChessPiece;
 
@@ -17,25 +18,15 @@ public class ChessBoard {
 
 
 	public boolean checkPosition(Position position) {
-		List<ChessPiece> allPieces = new ArrayList<>(blackChessPieces);
-		allPieces.addAll(whiteChessPieces);
-
-		return allPieces.stream()
+		return Stream.concat(blackChessPieces.stream(), whiteChessPieces.stream())
 			.anyMatch(chessPiece -> chessPiece.equalPosition(position));
 	}
 
 	public ChessPiece findByPosition(Position position) {
-		for (ChessPiece blackChessPiece : blackChessPieces) {
-			if (blackChessPiece.equalPosition(position)) {
-				return blackChessPiece;
-			}
-		}
-		for (ChessPiece whiteChessPiece : whiteChessPieces) {
-			if (whiteChessPiece.equalPosition(position)) {
-				return whiteChessPiece;
-			}
-		}
-		throw new NoSuchElementException();
+		return Stream.concat(blackChessPieces.stream(), whiteChessPieces.stream())
+			.filter(chessPiece -> chessPiece.equalPosition(position))
+			.findFirst()
+			.orElseThrow(() -> new NoSuchElementException());
 	}
 
 }
