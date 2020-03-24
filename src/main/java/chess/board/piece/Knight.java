@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.board.piece;
 
 import chess.board.Variation;
 
-public class King implements Piece {
+public class Knight implements Piece {
     @Override
     public boolean canMove(final Variation variation) {
         return false;

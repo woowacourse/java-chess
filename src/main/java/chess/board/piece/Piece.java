@@ -1,4 +1,4 @@
-package chess.piece;
+package chess.board.piece;
 
 import chess.board.Variation;
 
