@@ -5,8 +5,12 @@ import chess.domain.position.Position;
 
 public class Knight extends Piece {
 
-    protected Knight(Position position, Player player) {
+    private Knight(Position position, Player player) {
         super(position, player);
+    }
+
+    public static Piece of(Position position, Player player) {
+        return new Knight(position, player);
     }
 
     @Override

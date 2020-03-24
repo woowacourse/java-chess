@@ -5,8 +5,12 @@ import chess.domain.position.Position;
 
 public class Pawn extends Piece {
 
-    protected Pawn(Position position, Player player) {
+    private Pawn(Position position, Player player) {
         super(position, player);
+    }
+
+    public static Pawn of(Position position, Player player) {
+        return new Pawn(position, player);
     }
 
     @Override

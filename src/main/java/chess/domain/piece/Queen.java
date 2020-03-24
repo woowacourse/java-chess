@@ -5,8 +5,12 @@ import chess.domain.position.Position;
 
 public class Queen extends Piece {
 
-    protected Queen(Position position, Player player) {
+    private Queen(Position position, Player player) {
         super(position, player);
+    }
+
+    public static Piece of(Position position, Player player) {
+        return new Queen(position, player);
     }
 
     @Override
