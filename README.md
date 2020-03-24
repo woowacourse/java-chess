@@ -29,8 +29,8 @@
 --- 
 ### Coordinate란 좌표에서 x나 y 같은 성분을 의미한다
 
-- [ ] Coordinate는 자신의 값에 대해 알아야 한다.
-- [ ] Coordinate는 자신의 범위에 대해 알고, 체크해야 한다.
+- [x] Coordinate는 자신의 값에 대해 알아야 한다.
+- [x] Coordinate는 자신의 범위에 대해 알고, 체크해야 한다.
 
 ### Position이란 체스 판에서 한 점을 의미하고, 2개의 Coordinate로 구성된다.
 - [ ] Position은 자신의 x, y값을 알아야 한다.
