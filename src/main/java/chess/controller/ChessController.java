@@ -8,10 +8,10 @@ public class ChessController {
     public static void run() {
         String gameState = InputView.inputGameState();
 
-        if ("start".equals(gameState)) {
+        if ("start".equalsIgnoreCase(gameState)) {
             ChessBoard chessBoard = new ChessBoard();
             OutputView.printChessBoard(chessBoard);
         }
-        System.out.println("게임을 종료 합니다");
+        System.out.println("\n게임을 종료 합니다");
     }
 }
