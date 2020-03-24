@@ -5,6 +5,4 @@ public class BoardFactory {
         Chess[][] chess = new Chess[8][8];
         return chess;
     }
-
-
 }
