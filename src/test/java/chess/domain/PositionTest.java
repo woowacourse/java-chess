@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PointTest {
-    @DisplayName("포인트 생성")
+class PositionTest {
+    @DisplayName("포지 생성")
     @Test
     void construct() {
-        Point point = new Point("a", "1", new WhitePiece(PieceType.BISHOP));
-        assertThat(point).isNotNull();
+        Position position = new Position("a", "1");
+        assertThat(position).isNotNull();
     }
 }
