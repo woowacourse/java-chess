@@ -1,10 +1,10 @@
 package chess.domain.chesspiece;
 
-import chess.Position;
-import chess.Team;
+import chess.domain.Position;
+import chess.domain.Team;
 
 public class Bishop extends ChessPiece {
     public Bishop(Position position, Team team) {
-        super(position, team);
+        super("b", position, team);
     }
 }

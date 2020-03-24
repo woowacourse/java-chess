@@ -1,10 +1,10 @@
 package chess.domain.chesspiece;
 
-import chess.Position;
-import chess.Team;
+import chess.domain.Position;
+import chess.domain.Team;
 
 public class Pawn extends ChessPiece {
     public Pawn(Position position, Team team) {
-        super(position, team);
+        super("p", position, team);
     }
 }

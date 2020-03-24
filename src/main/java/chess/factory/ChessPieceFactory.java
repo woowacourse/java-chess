@@ -3,8 +3,8 @@ package chess.factory;
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.Position;
-import chess.Team;
+import chess.domain.Position;
+import chess.domain.Team;
 import chess.domain.chesspiece.Bishop;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.King;

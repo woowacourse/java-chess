@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Objects;
+
 public class Coordinate {
     private final int coordinate;
 
@@ -15,5 +17,18 @@ public class Coordinate {
             throw new IllegalArgumentException();
         }
         this.coordinate = coordinate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coordinate that = (Coordinate) o;
+        return coordinate == that.coordinate;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordinate);
     }
 }

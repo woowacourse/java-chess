@@ -13,4 +13,17 @@ public class ChessBoard {
         this.whiteChessPieces = whiteChessPieces;
     }
 
+	public ChessPiece checkPosition(Position position){
+    	for(ChessPiece blackChessPiece : blackChessPieces){
+			if(blackChessPiece.equalPosition(position)){
+				return blackChessPiece;
+			}
+		}
+		for(ChessPiece whiteChessPiece : whiteChessPieces){
+			if(whiteChessPiece.equalPosition(position)){
+				return whiteChessPiece;
+			}
+		}
+		return null;
+	}
 }
