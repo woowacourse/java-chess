@@ -8,7 +8,11 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static final String NEW_LINE = "\n";
+    private static final String NEW_LINE = "\n";
+
+    public static void printStart() {
+        System.out.println("체스 게임을 시작합니다.");
+    }
 
     public static void printBoard(Board board) {
         StringBuilder stringBuilder = new StringBuilder();
