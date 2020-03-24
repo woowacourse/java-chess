@@ -12,7 +12,7 @@
     - [ ] 퀸, 킹, 비숍, 폰, 나이트, 룩
         - [ ] 초기 위치 보유
         - [ ] 
-- [ ] Point 구현
-    - [ ] row, column
+- [x] Point 구현
+    - [x] row, column
 - [ ] Board 구현
     - [ ] 체스판 초기화
