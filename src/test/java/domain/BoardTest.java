@@ -12,11 +12,5 @@ public class BoardTest {
     @Test
     @DisplayName("게임판을 만드는 테스트")
     void create_Board() {
-        List<List<Chess>> chess = new ArrayList<>();
-        Board board1 = new Board(chess);
-        Board board2 = new Board(chess);
-        assertThat(board1).isEqualTo(board2);
-
-        System.out.println(new BoardFactory().create());
     }
 }

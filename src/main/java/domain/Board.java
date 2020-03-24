@@ -1,14 +1,20 @@
 package domain;
 
+import domain.chesspiece.Chesspiece;
+
 import java.util.List;
 import java.util.Objects;
 
 public class Board {
 
-    private final List<List<Chess>> chess;
+    private final List<List<Chesspiece>> chess;
 
-    public Board(List<List<Chess>> chess) {
+    public Board(List<List<Chesspiece>> chess) {
         this.chess = chess;
+    }
+
+    public List<List<Chesspiece>> getChess() {
+        return chess;
     }
 
     @Override

@@ -1,15 +1,15 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import domain.Board;
+import domain.BoardFactory;
+import view.OutputView;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
+        Board board = new Board(BoardFactory.create());
+
+        OutputView.printBoard(board);
+
 //        get("/", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();
 //            return render(model, "index.html");

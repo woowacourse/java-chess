@@ -1,7 +1,9 @@
 package domain.chesspiece;
 
+import domain.team.Team;
+
 public class Knight extends Chesspiece {
-    public Knight() {
-        super("N");
+    public Knight(Team team) {
+        super("N", team);
     }
 }
