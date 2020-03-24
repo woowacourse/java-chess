@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 public enum File {
     A(1),
@@ -14,5 +14,9 @@ public enum File {
 
     File(int value) {
         this.value = value;
+    }
+
+    public int getFileDifference(File targetFile) {
+        return Math.abs(targetFile.value - value);
     }
 }

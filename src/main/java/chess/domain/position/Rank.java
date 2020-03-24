@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 public enum Rank {
     ONE(1),
@@ -18,5 +18,9 @@ public enum Rank {
 
     public String getRank() {
         return String.valueOf(value);
+    }
+
+    public int getRankDifference(Rank targetRank) {
+        return Math.abs(targetRank.value - value);
     }
 }

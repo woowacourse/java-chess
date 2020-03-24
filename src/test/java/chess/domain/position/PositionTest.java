@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,5 +24,15 @@ public class PositionTest {
     @Test
     void fileDifferenceFromTargetPosition() {
         Position A1 = Position.of("A1");
+    }
+
+    @Test
+    void getFileDifference() {
+        assertThat(Position.of("A1").getFileDifference(Position.of("D1"))).isEqualTo(3);
+    }
+
+    @Test
+    void getRankDifference() {
+        assertThat(Position.of("A1").getRankDifference(Position.of("A5"))).isEqualTo(4);
     }
 }
