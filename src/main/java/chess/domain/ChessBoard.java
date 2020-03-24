@@ -1,17 +1,15 @@
 package chess.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import chess.Position;
 import chess.domain.chesspiece.ChessPiece;
 
+import java.util.List;
+
 public class ChessBoard {
-	private Map<Position, ChessPiece> chessBoard;
+    private List<ChessPiece> blackChessPieces;
+    private List<ChessPiece> whiteChessPieces;
 
-	public ChessBoard(Map<Position, ChessPiece> chessBoard) {
-		this.chessBoard = new HashMap<>();
-
-	}
-
+    public ChessBoard(List<ChessPiece> blackChessPieces, List<ChessPiece> whiteChessPieces) {
+        this.blackChessPieces = blackChessPieces;
+        this.whiteChessPieces = whiteChessPieces;
+    }
 }
