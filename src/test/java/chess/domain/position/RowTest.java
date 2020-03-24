@@ -10,13 +10,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 class RowTest {
 	@Test
 	void ofTest() {
-		assertThat(Row.of("a")).isEqualTo(Row.A);
+		assertThat(Row.of("1")).isEqualTo(Row.ONE);
 	}
 
 	@ParameterizedTest
 	@NullSource
-	@ValueSource(strings = {"z", "1", "ㅎ"})
-	void invalidNameTest(String input) {
+	@ValueSource(strings = {"0", "9", "a"})
+	void invalidValueTest(String input) {
 		assertThatThrownBy(() -> Row.of(input))
 			.isInstanceOf(IllegalArgumentException.class);
 	}

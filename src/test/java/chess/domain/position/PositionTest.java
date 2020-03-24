@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
@@ -12,22 +13,39 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PositionTest {
 	static Stream<Arguments> generatePosition() {
-		return Stream.of(Arguments.of(Row.A, null),
-			Arguments.of(null, Column.ONE),
+		return Stream.of(Arguments.of(Column.A, null),
+			Arguments.of(null, Row.ONE),
 			Arguments.of(null, null)
 		);
 	}
 
+	static Stream<Arguments> generateDirection() {
+		return Stream.of(Arguments.of(Direction.LEFT, A2),
+			Arguments.of(Direction.RIGHT, C2),
+			Arguments.of(Direction.UP, B3),
+			Arguments.of(Direction.DOWN, B1),
+			Arguments.of(Direction.RIGHT_DOWN, C1),
+			Arguments.of(Direction.RIGHT_UP, C3),
+			Arguments.of(Direction.LEFT_DOWN, A1),
+			Arguments.of(Direction.LEFT_UP, A3));
+	}
+
 	@Test
 	void ofTest() {
-		assertThat(Position.of(Row.A, Column.ONE)).isInstanceOf(Position.class);
+		assertThat(Position.of(Column.A, Row.ONE)).isInstanceOf(Position.class);
 	}
 
 	@DisplayName("Row 또는 Column이 null인 경우 예외 발생")
 	@ParameterizedTest
 	@MethodSource("generatePosition")
-	void nullPositionTest(Row row, Column column) {
-		assertThatThrownBy(() -> Position.of(row, column))
+	void nullPositionTest(Column column, Row row) {
+		assertThatThrownBy(() -> Position.of(column, row))
 			.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@ParameterizedTest
+	@MethodSource("generateDirection")
+	void nextPositionTest(Direction direction, Position expect) {
+		assertThat(B2.nextPosition(direction)).isEqualTo(expect);
 	}
 }
