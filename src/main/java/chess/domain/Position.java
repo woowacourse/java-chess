@@ -30,7 +30,27 @@ public class Position {
 		return POSITIONS.get(key(column, row));
 	}
 
+	public static Position of(String position) {
+		return POSITIONS.get(position);
+	}
+
 	private static String key(Column column, Row row) {
 		return column.getName() + row.getName();
+	}
+
+	public Position up() {
+		return Position.of(column, row.plus());
+	}
+
+	public Position down() {
+		return Position.of(column, row.minus());
+	}
+
+	public Position right() {
+		return Position.of(column.plus(), row);
+	}
+
+	public Position left() {
+		return Position.of(column.minus(), row);
 	}
 }
