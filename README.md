@@ -22,17 +22,6 @@
 * [프로그래밍 체크리스트](https://github.com/woowacourse/woowacourse-docs/blob/master/cleancode/pr_checklist.md)
 
 ## 구현할 기능 목록
-* 체스판 초기화
-    * Square(체스 한 칸) 생성
-        * Rank(행, 1~8) 생성
-        * File(열, a~h) 생성
-
-* Piece(기물) 클래스 생성
-    * Color
-    * State
-        * move() 했을 때 바깥으로 나가는 경우
-            * 1~8, a~h의 조합이 아니라면 예외처리
-
 * [ ] 게임 설명 출력
 * [ ] 명령 입력받는다. (start, end, move, status)
     * [ ] 예외 : 처음에는 start, end 만 들어올 수 있다.
