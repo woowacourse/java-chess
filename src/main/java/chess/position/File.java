@@ -1,5 +1,7 @@
 package chess.position;
 
+import java.util.List;
+
 public enum File {
 	A("a"),
 	B("b"),
@@ -14,6 +16,10 @@ public enum File {
 
 	File(String name) {
 		this.name = name;
+	}
+
+	public static List<File> valuesBetween(File start, File end) {
+		return null;
 	}
 
 	public String getName() {

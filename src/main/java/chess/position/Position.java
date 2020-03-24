@@ -48,4 +48,12 @@ public class Position {
     public boolean isSameRank(Position other) {
         return this.rank == other.rank;
     }
+
+    public File getFile() {
+        return this.file;
+    }
+
+    public Rank getRank() {
+        return this.rank;
+    }
 }
