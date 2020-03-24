@@ -1,28 +1,24 @@
 package chess.view;
 
-import chess.domain.PiecePosition;
+import chess.domain.Position;
+import chess.domain.chessPiece.Piece;
 import chess.domain.chessboard.ChessBoard;
 
 public class OutputView {
     private static final String EMPTY_MARK = ".";
 
     public static void printChessBoard(ChessBoard chessBoard) {
-        int temp = 0;
-        for (PiecePosition piecePosition : chessBoard.getChessBoard()) {
-            seperateLine(temp);
-            if (piecePosition.getPiece() == null) {
+        for (Position position : chessBoard.getChessBoard()) {
+            if (position.isNewLine()) {
+                System.out.println();
+            }
+            Piece piece = chessBoard.isEqaul(position);
+            if (piece == null) {
                 System.out.print(EMPTY_MARK);
-                temp++;
                 continue;
             }
-            System.out.print(piecePosition.getPieceName());
-            temp++;
-        }
-    }
+            System.out.print(piece.pieceName());
 
-    private static void seperateLine(int temp) {
-        if (temp % 8 == 0) {
-            System.out.println();
         }
     }
 }

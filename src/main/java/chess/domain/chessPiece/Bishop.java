@@ -1,10 +1,12 @@
 package chess.domain.chessPiece;
 
+import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 
 public class Bishop extends ColoredPiece {
-    public Bishop(TeamStrategy teamStrategy) {
-        super(teamStrategy);
+
+    public Bishop(Position position, TeamStrategy teamStrategy) {
+        super(position, teamStrategy);
     }
 
     @Override

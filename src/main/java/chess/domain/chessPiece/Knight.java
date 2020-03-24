@@ -1,10 +1,12 @@
 package chess.domain.chessPiece;
 
+import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 
 public class Knight extends ColoredPiece {
-    public Knight(TeamStrategy teamStrategy) {
-        super(teamStrategy);
+
+    public Knight(Position position, TeamStrategy teamStrategy) {
+        super(position, teamStrategy);
     }
 
     @Override
