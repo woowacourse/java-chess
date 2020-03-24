@@ -18,16 +18,15 @@ public class Point {
         }
     }
 
-    private static String nameOf(Column column, Row row) {
-        return column.getName() + row.getName();
-    }
-
     private final Column column;
     private final Row row;
-
     private Point(Column column, Row row) {
         this.column = column;
         this.row = row;
+    }
+
+    private static String nameOf(Column column, Row row) {
+        return column.getName() + row.getName();
     }
 
     public static Point from(String name) {
