@@ -63,3 +63,8 @@
     - 대각선, 상하좌우로 1칸 이동 가능하다
     
  ### Board란 체스 판을 의미한다
+- [x] Board는 Position과 Piece를 Map으로 가지고 있다.
+- [ ] Board는 source position과 target position을 받아 해당하는 말의 이동을 수행할 수 있다. 
+
+TODO
+- Board에서 이동 후에 연결이 끊어진 Piece가 Position 정보를 가지고 있을텐데, 더 이상 Board에서 접근할 수 없기 때문에 상관 없나?
