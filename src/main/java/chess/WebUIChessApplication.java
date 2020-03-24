@@ -10,7 +10,7 @@ import static spark.Spark.get;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        // 수정2
+        // 수정3
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
