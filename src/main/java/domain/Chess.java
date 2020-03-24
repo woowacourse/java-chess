@@ -1,5 +1,5 @@
 package domain;
 
-public class Chess {
-
+public abstract class Chess {
+    private String name;
 }
