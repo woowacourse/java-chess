@@ -1,9 +1,9 @@
 package chess.board;
 
-import chess.piece.Piece;
-
 import java.util.Map;
 
+import chess.piece.Piece;
+
 public interface Board {
-    Map<Location, Piece> giveMyPiece(final boolean team);
+	Map<Location, Piece> giveMyPiece(final boolean team);
 }
