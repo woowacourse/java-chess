@@ -6,8 +6,6 @@ public class Empty extends Chesspiece {
     private static final String POINT = ".";
 
     public Empty() {
-        super(".", Team.NONE);
+        super(POINT, Team.NONE);
     }
-
-
 }
