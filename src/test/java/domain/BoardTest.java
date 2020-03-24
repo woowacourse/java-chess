@@ -16,5 +16,7 @@ public class BoardTest {
         Board board1 = new Board(chess);
         Board board2 = new Board(chess);
         assertThat(board1).isEqualTo(board2);
+
+        System.out.println(new BoardFactory().create());
     }
 }
