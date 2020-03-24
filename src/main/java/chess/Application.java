@@ -9,6 +9,4 @@ public class Application {
         ChessBoard chessBoard = new ChessBoard(ChessPieceFactory.blackTeamCreate(), ChessPieceFactory.whiteTeamCreate());
         OutputView.printBoard(chessBoard);
     }
-
-
 }
