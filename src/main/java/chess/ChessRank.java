@@ -22,7 +22,7 @@ public class ChessRank {
         this.chessRank = chessRank;
     }
 
-    public static ChessRank of(int chessRank) {
+    public static ChessRank from(int chessRank) {
         return CHESS_RANKS.getOrDefault(chessRank, new ChessRank(chessRank));
     }
 
@@ -30,5 +30,10 @@ public class ChessRank {
         if (chessRank < LOWER_BOUND || chessRank > UPPER_BOUND) {
             throw new IllegalArgumentException("유효한 체스 랭크가 아닙니다.");
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(chessRank);
     }
 }

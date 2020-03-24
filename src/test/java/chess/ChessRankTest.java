@@ -10,14 +10,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class ChessRankTest {
 
     @Test
-    void of_RankPosition_ReturnInstance() {
-        assertThat(ChessRank.of(1)).isInstanceOf(ChessRank.class);
+    void from_RankPosition_ReturnInstance() {
+        assertThat(ChessRank.from(1)).isInstanceOf(ChessRank.class);
     }
 
     @Test
-    void of_EqualInstance_ReturnTrue() {
-        ChessRank chessRank1 = ChessRank.of(1);
-        ChessRank chessRank2 = ChessRank.of(1);
+    void from_EqualInstance_ReturnTrue() {
+        ChessRank chessRank1 = ChessRank.from(1);
+        ChessRank chessRank2 = ChessRank.from(1);
 
         assertThat(chessRank1.equals(chessRank2)).isTrue();
         assertThat(chessRank1 == chessRank2).isTrue();
@@ -26,7 +26,7 @@ public class ChessRankTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 9})
     void validate_InvalidChessRank_ExceptionThrown(int invalidChessRank) {
-        assertThatThrownBy(() -> ChessRank.of(invalidChessRank))
+        assertThatThrownBy(() -> ChessRank.from(invalidChessRank))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

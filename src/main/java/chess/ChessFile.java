@@ -19,7 +19,7 @@ public class ChessFile {
         this.chessFile = chessFile;
     }
 
-    public static ChessFile of(char chessFile) {
+    public static ChessFile from(char chessFile) {
         return CHESS_FILES.getOrDefault(chessFile, new ChessFile(chessFile));
     }
 
@@ -29,4 +29,8 @@ public class ChessFile {
         }
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(chessFile);
+    }
 }
