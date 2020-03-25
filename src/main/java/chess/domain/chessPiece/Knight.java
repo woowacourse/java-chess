@@ -10,7 +10,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable() {
+    public boolean isMovable(Position source, Position target) {
         return false;
     }
 

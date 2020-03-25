@@ -1,5 +1,6 @@
 package chess.domain.chessPiece;
 
+import chess.domain.MoveRule;
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 
@@ -9,7 +10,9 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isMovable() {
+    public boolean isMovable(Position source, Position target) {
+
+        MoveRule.validateStraightMove(source, target);
         return false;
     }
 
