@@ -1,11 +1,8 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import chess.domain.piece.Direction;
+
+import java.util.*;
 
 public class Position implements Comparable<Position> {
 
@@ -59,6 +56,17 @@ public class Position implements Comparable<Position> {
 
     public Position horizontalFlip() {
         return of(file, rank.opposite());
+    }
+
+    public Optional<Position> destinationOf(Direction direction) {
+        File fileDestination = direction.findFileDestination(file).orElse(null);
+        Rank rankDestination = direction.findRankDestination(rank).orElse(null);
+
+        if (fileDestination == null || rankDestination == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(of(fileDestination, rankDestination));
     }
 
     @Override

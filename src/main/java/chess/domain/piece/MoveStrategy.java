@@ -6,5 +6,5 @@ import chess.domain.board.Position;
 
 public interface MoveStrategy {
 
-    List<Position> findMovePath();
+    List<Position> findMovePath(Position source, Position target);
 }
