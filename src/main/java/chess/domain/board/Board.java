@@ -35,4 +35,8 @@ public class Board {
     public Optional<Piece> findPieceBy(Position position) {
         return board.get(position);
     }
+
+    // TODO: 경로 구하는 알고리즘 (직선, 대각선, 박스 형태)
+    // TODO: 위 알고리즘을 통해 Sub-Map 구현하여 전달
+    // TODO: SortedMap 등을 통해 시작과 끝 지점을 암시적으로 알려줄수 있는지? (ex. map.keySet().toArray()[0])
 }

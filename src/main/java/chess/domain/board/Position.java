@@ -19,6 +19,34 @@ public class Position {
         return positions.get(key(row, column));
     }
 
+    public static int rowGap(Position start, Position end) {
+        return start.row() - end.row();
+    }
+
+    public static int columnGap(Position start, Position end) {
+        return start.column() - end.column();
+    }
+
+    public boolean isOn(final Row row) {
+        return this.row == row;
+    }
+
+    public boolean isOn(final Column column) {
+        return this.column == column;
+    }
+
+    public int row() {
+        return row.getValue();
+    }
+
+    public int column() {
+        return column.getValue();
+    }
+
+    public static Collection<Position> getAllPositions() {
+        return positions.values();
+    }
+
     static {
         for (Row row : Row.values()) {
             loopThroughColumns(row);
@@ -33,17 +61,5 @@ public class Position {
 
     private static String key(final Row row, final Column column) {
         return row.toString() + column.toString();
-    }
-
-    public boolean isOn(final Row row) {
-        return this.row == row;
-    }
-
-    public boolean isOn(final Column column) {
-        return this.column == column;
-    }
-
-    public static Collection<Position> getAllPositions() {
-        return positions.values();
     }
 }

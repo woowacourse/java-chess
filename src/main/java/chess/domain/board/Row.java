@@ -15,4 +15,8 @@ public enum Row implements Comparable<Row> {
     Row(final int value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

@@ -15,4 +15,8 @@ public enum Column {
     Column(final int value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
