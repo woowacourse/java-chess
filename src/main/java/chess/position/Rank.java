@@ -2,7 +2,9 @@ package chess.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Rank {
 	ONE("1"),
@@ -63,7 +65,13 @@ public enum Rank {
 				.orElseThrow(() -> new IllegalArgumentException(ILLEGAL_RANK_NAME_EXCEPTION_MESSAGE));
 	}
 
-    public String getName() {
+	public static List<Rank> valuesReverseOrder() {
+		return Arrays.stream(values())
+			.sorted(Comparator.reverseOrder())
+			.collect(Collectors.toList());
+	}
+
+	public String getName() {
 		return name;
 	}
 }
