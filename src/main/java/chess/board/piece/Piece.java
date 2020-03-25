@@ -9,7 +9,12 @@ public abstract class Piece {
         this.team = team;
     }
 
+    public boolean isBlack() {
+        return team.equals(Team.BLACK);
+    }
+
     abstract boolean canMove(Variation variation);
 
     abstract boolean isSameTeam(Team team);
+
 }

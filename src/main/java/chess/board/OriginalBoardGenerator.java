@@ -33,7 +33,6 @@ public class OriginalBoardGenerator implements BoardGenerator {
                 board.put(coordinate, new Tile(coordinate, piece));
             }
         }
-        System.out.println(board);
         return board;
     }
 }

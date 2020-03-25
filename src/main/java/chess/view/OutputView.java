@@ -1,5 +1,10 @@
 package chess.view;
 
+import chess.board.Coordinate;
+import chess.board.Tile;
+
+import java.util.Map;
+
 public class OutputView {
 
     public static void showAllCommand() {
@@ -8,6 +13,7 @@ public class OutputView {
     }
 
     public static void showChessBoard(ChessBoard chessBoard) {
-        //TODO 체스보드 보여주기
+        Map<Coordinate, Tile> board = chessBoard.getChessBoard();
+
     }
 }

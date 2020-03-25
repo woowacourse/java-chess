@@ -2,6 +2,7 @@ package chess.board;
 
 import chess.board.piece.King;
 import chess.board.piece.Piece;
+import chess.board.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TileTest {
     private static Stream<Arguments> pieceProvider() {
         return Stream.of(
-                Arguments.of(new King(Piece.Team.BLACK), true),
+                Arguments.of(new King(Team.BLACK), true),
                 Arguments.of(null, false)
         );
     }
