@@ -2,12 +2,17 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Map;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class PositionTest {
 	@Test
@@ -27,12 +32,21 @@ public class PositionTest {
 
 	}
 
+	private static Stream<Arguments> inBetweenSource() {
+		return Stream.of(
+			Arguments.of(new Position("a1"), new Position("c3"), Collections.singletonList(new Position("b2"))),
+			Arguments.of(new Position("a2"), new Position("d2"),
+				Arrays.asList(new Position("b2"), new Position("c2"))),
+			Arguments.of(new Position("h7"), new Position("d7"),
+				Arrays.asList(new Position("g7"), new Position("f7"), new Position("e7")))
+		);
+	}
+
 	@ParameterizedTest
 	@DisplayName("Source, Destination 사이의 방향과 거리가 맞는지 확인")
-	@CsvSource(value = {"a1,c3,NORTHEAST,2", "a2,e2,EAST,4", "b4,e1,SOUTHEAST,3", "d5,d1,SOUTH,4", "h6,e3,SOUTHWEST,3",
-		"h7,d7,WEST,4", "g4,d7,NORTHWEST,3", "c1,c6,NORTH,5"})
-	void inBetweenTest(String source, String destination, Direction direction, int distance) {
-		Map<Direction, Integer> between = new Position(source).inBetween(new Position(destination));
-		assertThat(between.containsKey(direction) && between.get(direction) == distance).isTrue();
+	@MethodSource("inBetweenSource")
+	void inBetweenTest(Position source, Position destination, List<Position> positions) {
+		assertThat(source.getPositionsInBetween(destination)).containsAll(positions);
+
 	}
 }

@@ -2,8 +2,8 @@ package chess.domain;
 
 import static java.lang.Math.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -27,17 +27,23 @@ public class Position {
 	}
 
 	public Position move(Direction direction) {
-		return new Position(x + direction.getXDegree(), y + direction.getYDegree());
+		return move(direction, 1);
 	}
 
-	public Map<Direction, Integer> inBetween(Position destination) {
+	public Position move(Direction direction, int distance) {
+		return new Position(x + (direction.getXDegree() * distance), y + (direction.getYDegree() * distance));
+	}
+
+	public List<Position> getPositionsInBetween(Position destination) {
+		List<Position> positionsInBetween = new ArrayList<>();
 		int xDegree = destination.x - this.x;
 		int yDegree = destination.y - this.y;
 		int maxDegree = max(abs(xDegree), abs(yDegree));
 		Direction direction = Direction.of(xDegree / maxDegree, yDegree / maxDegree);
-		Map<Direction, Integer> directionAndDistance = new HashMap<>();
-		directionAndDistance.put(direction, maxDegree);
-		return directionAndDistance;
+		for (int i = 1; i < maxDegree; i++) {
+			positionsInBetween.add(new Position(this.x, this.y).move(direction, i));
+		}
+		return positionsInBetween;
 	}
 
 	public Direction calculateDirection(Position destination) {
