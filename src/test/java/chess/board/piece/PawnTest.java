@@ -18,12 +18,4 @@ class PawnTest {
         assertThat(pawn.canMove(new Vector(fileVariation, rankVariation))).isEqualTo(expect);
     }
 
-    @DisplayName("폰 경로 찾기 테스트")
-    @ParameterizedTest
-    @CsvSource(value = {"1,-1,RIGHT_DOWN", "0,-1,DOWN"})
-    void findPath(int fileVariation, int rankVariation, Direction expect) {
-        Pawn pawn = new Pawn(Team.BLACK);
-        assertThat(pawn.findPath(new Vector(fileVariation, rankVariation)))
-                .containsExactly(expect);
-    }
 }
