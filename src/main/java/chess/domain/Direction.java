@@ -8,6 +8,9 @@ public enum Direction {
 	EAST(1, 0),
 	SOUTH(0, -1),
 
+	NORTHNORTH(0, 2),
+	SOUTHSOUTH(0, -2),
+
 	NORTHEAST(1, 1),
 	NORTHWEST(-1, 1),
 	SOUTHEAST(1, -1),
