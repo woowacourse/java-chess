@@ -13,8 +13,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PositionTest {
 	static Stream<Arguments> generatePosition() {
-		return Stream.of(Arguments.of(Column.A, null),
-			Arguments.of(null, Row.ONE),
+		return Stream.of(Arguments.of(Column.of("a"), null),
+			Arguments.of(null, Row.of("1")),
 			Arguments.of(null, null)
 		);
 	}
@@ -32,7 +32,7 @@ class PositionTest {
 
 	@Test
 	void ofTest() {
-		assertThat(Position.of(Column.A, Row.ONE)).isInstanceOf(Position.class);
+		assertThat(Position.of(Column.of("a"), Row.of("1"))).isInstanceOf(Position.class);
 	}
 
 	@DisplayName("Row 또는 Column이 null인 경우 예외 발생")
@@ -46,6 +46,6 @@ class PositionTest {
 	@ParameterizedTest
 	@MethodSource("generateDirection")
 	void nextPositionTest(Direction direction, Position expect) {
-		assertThat(B2.nextPosition(direction)).isEqualTo(expect);
+		assertThat(B2.next(direction)).isEqualTo(expect);
 	}
 }

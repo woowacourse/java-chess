@@ -6,6 +6,6 @@ import java.util.Arrays;
 
 public class Bishop extends StretchPiece {
 	public Bishop(String name, Color color) {
-		super(name, color, Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN));
+		super(name, color, Arrays.asList(LEFT_UP, RIGHT_UP, LEFT_DOWN, RIGHT_DOWN));
 	}
 }

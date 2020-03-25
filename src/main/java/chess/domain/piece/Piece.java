@@ -6,7 +6,7 @@ import chess.domain.Board;
 import chess.domain.position.Position;
 
 public interface Piece {
-	Set<Position> canMove(Position currentPosition, Board board);
+	Set<Position> findMovablePositions(Position currentPosition, Board board);
 
 	boolean isEnemy(Piece that);
 

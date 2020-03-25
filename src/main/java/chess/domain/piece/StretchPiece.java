@@ -22,7 +22,7 @@ public abstract class StretchPiece extends AbstractPiece {
 	}
 
 	@Override
-	public Set<Position> canMove(Position currentPosition, Board board) {
+	public Set<Position> findMovablePositions(Position currentPosition, Board board) {
 		Set<Position> movablePositions = new HashSet<>();
 		for (Direction direction : movableDirections) {
 			movablePositions.addAll(findNext(currentPosition, direction, board));
@@ -41,7 +41,7 @@ public abstract class StretchPiece extends AbstractPiece {
 			}
 			movablePositions.add(currentPosition);
 		}
-		if (isEnemy(board.findPieceBy(currentPosition))) {
+		if (board.isNotEmptyPosition(currentPosition) && isEnemy(board.findPieceBy(currentPosition))) {
 			movablePositions.add(currentPosition);
 		}
 		return movablePositions;

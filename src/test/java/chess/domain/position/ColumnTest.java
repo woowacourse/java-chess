@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class ColumnTest {
 	@Test
 	void ofTest() {
-		assertThat(Column.of("a")).isEqualTo(Column.A);
+		assertThat(Column.of("a")).isEqualTo(Column.of("a"));
 	}
 
 	@ParameterizedTest

@@ -15,7 +15,7 @@ public abstract class AbstractPiece implements Piece {
 	}
 
 	@Override
-	public abstract Set<Position> canMove(Position currentPosition, Board board);
+	public abstract Set<Position> findMovablePositions(Position currentPosition, Board board);
 
 	@Override
 	public boolean isEnemy(Piece that) {

@@ -11,7 +11,7 @@ public abstract class FixedPiece extends AbstractPiece {
 	}
 
 	@Override
-	public Set<Position> canMove(Position currentPosition, Board board) {
+	public Set<Position> findMovablePositions(Position currentPosition, Board board) {
 		return null;
 	}
 }

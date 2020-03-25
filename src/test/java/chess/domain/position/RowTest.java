@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class RowTest {
 	@Test
 	void ofTest() {
-		assertThat(Row.of("1")).isEqualTo(Row.ONE);
+		assertThat(Row.of("1")).isEqualTo(Row.of("1"));
 	}
 
 	@ParameterizedTest
