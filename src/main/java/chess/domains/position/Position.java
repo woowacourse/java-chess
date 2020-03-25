@@ -40,6 +40,10 @@ public class Position implements Comparable<Position> {
         return (this.x == targetPosition.x) || (this.y == targetPosition.y);
     }
 
+    public boolean isInCrossLine(Position targetPosition) {
+        return Math.abs(this.x - targetPosition.x) == Math.abs(this.y - targetPosition.y);
+    }
+
     @Override
     public int compareTo(Position o) {
         if (y > o.y) {
