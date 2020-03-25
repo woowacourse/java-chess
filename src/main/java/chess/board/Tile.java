@@ -16,4 +16,12 @@ public class Tile {
     public boolean hasPiece() {
         return !Objects.isNull(piece);
     }
+
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "piece=" + piece +
+                '}';
+    }
 }

@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TileTest {
     private static Stream<Arguments> pieceProvider() {
         return Stream.of(
-                Arguments.of(new King(), true),
+                Arguments.of(new King(Piece.Team.BLACK), true),
                 Arguments.of(null, false)
         );
     }

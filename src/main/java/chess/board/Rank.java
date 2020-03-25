@@ -1,5 +1,7 @@
 package chess.board;
 
+import java.util.Arrays;
+
 public enum Rank {
     ONE(1),
     TWO(2),
@@ -14,6 +16,13 @@ public enum Rank {
 
     Rank(final int value) {
         this.value = value;
+    }
+
+    public static Rank findByValue(int value) {
+        return Arrays.stream(values())
+                .filter(aRank -> aRank.value == value)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public int subtract(Rank rank) {
