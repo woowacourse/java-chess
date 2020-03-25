@@ -6,13 +6,13 @@ public class ChessRank {
 
     private static final int LOWER_BOUND = 1;
     private static final int UPPER_BOUND = 8;
-    private static final Map<Integer, ChessRank> CHESS_RANKS = new HashMap<>();
+    private static final Map<Integer, ChessRank> CHESS_RANK_CACHE = new HashMap<>();
 
     private final int chessRank;
 
     static {
         for (int i = LOWER_BOUND; i <= UPPER_BOUND; i++) {
-            CHESS_RANKS.put(i, new ChessRank(i));
+            CHESS_RANK_CACHE.put(i, new ChessRank(i));
         }
     }
 
@@ -28,16 +28,16 @@ public class ChessRank {
     }
 
     public static ChessRank from(int chessRank) {
-        return CHESS_RANKS.getOrDefault(chessRank, new ChessRank(chessRank));
+        return CHESS_RANK_CACHE.getOrDefault(chessRank, new ChessRank(chessRank));
     }
 
     public static ChessRank from(char chessRank) {
         int parsedChessRank = Character.getNumericValue(chessRank);
-        return CHESS_RANKS.getOrDefault(parsedChessRank, new ChessRank(parsedChessRank));
+        return CHESS_RANK_CACHE.getOrDefault(parsedChessRank, new ChessRank(parsedChessRank));
     }
 
     public static List<ChessRank> values() {
-        return new ArrayList<>(CHESS_RANKS.values());
+        return new ArrayList<>(CHESS_RANK_CACHE.values());
     }
 
 

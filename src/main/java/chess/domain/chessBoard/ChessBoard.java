@@ -8,7 +8,7 @@ import java.util.Map;
 public class ChessBoard {
     private final Map<Position, ChessPiece> chessPieces;
 
-    public ChessBoard() {
-        this.chessPieces = ChessBoardFactory.create();
+    public ChessBoard(Map<Position, ChessPiece> chessPieces) {
+        this.chessPieces = chessPieces;
     }
 }

@@ -4,16 +4,16 @@ import java.util.*;
 
 public class ChessFile {
 
-    private static final Map<Character, ChessFile> CHESS_FILES = new HashMap<>();
     private static final char LOWER_BOUND = 'a';
     private static final char UPPER_BOUND = 'h';
+    private static final Map<Character, ChessFile> CHESS_FILE_CACHE = new HashMap<>();
 
     private final char chessFile;
 
 
     static {
         for (char c = LOWER_BOUND; c <= UPPER_BOUND; c++) {
-            CHESS_FILES.put(c, new ChessFile(c));
+            CHESS_FILE_CACHE.put(c, new ChessFile(c));
         }
     }
 
@@ -29,11 +29,11 @@ public class ChessFile {
     }
 
     public static ChessFile from(char chessFile) {
-        return CHESS_FILES.getOrDefault(chessFile, new ChessFile(chessFile));
+        return CHESS_FILE_CACHE.getOrDefault(chessFile, new ChessFile(chessFile));
     }
 
     public static List<ChessFile> values() {
-        return new ArrayList<>(CHESS_FILES.values());
+        return new ArrayList<>(CHESS_FILE_CACHE.values());
     }
 
 

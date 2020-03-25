@@ -1,4 +1,4 @@
-package chess.domain.chessPiece.pieceType;
+package chess.domain.chessPiece;
 
 public interface PieceType {
     String getName();

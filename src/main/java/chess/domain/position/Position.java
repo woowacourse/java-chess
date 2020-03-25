@@ -8,8 +8,8 @@ public class Position {
 
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
-    private static final Map<String, Position> POSITIONS = new HashMap<>();
-    public static final int POSITION_KEY_VALID_LENGTH = 2;
+    private static final int POSITION_KEY_VALID_LENGTH = 2;
+    private static final Map<String, Position> POSITION_CACHE = new HashMap<>();
 
     private final ChessFile chessFile;
     private final ChessRank chessRank;
@@ -17,17 +17,17 @@ public class Position {
     static {
         for (ChessFile chessFile : ChessFile.values()) {
             for (ChessRank chessRank : ChessRank.values()) {
-                POSITIONS.put(key(chessFile, chessRank), new Position(chessFile, chessRank));
+                POSITION_CACHE.put(key(chessFile, chessRank), new Position(chessFile, chessRank));
             }
         }
     }
 
-    public Position(ChessFile chessFile, ChessRank chessRank) {
+    private Position(ChessFile chessFile, ChessRank chessRank) {
         this.chessFile = chessFile;
         this.chessRank = chessRank;
     }
 
-    public Position(String key) {
+    private Position(String key) {
         this(ChessFile.from(key.charAt(FILE_INDEX)), ChessRank.from(key.charAt(RANK_INDEX)));
     }
 
@@ -35,12 +35,12 @@ public class Position {
         Objects.requireNonNull(chessFile, "유효한 체스파일이 아닙니다.");
         Objects.requireNonNull(chessRank, "유효한 체스랭크가 아닙니다.");
 
-        return POSITIONS.getOrDefault(key(chessFile, chessRank), new Position(chessFile, chessRank));
+        return POSITION_CACHE.getOrDefault(key(chessFile, chessRank), new Position(chessFile, chessRank));
     }
 
     public static Position of(String key) {
         validate(key);
-        return POSITIONS.getOrDefault(key, new Position(key));
+        return POSITION_CACHE.getOrDefault(key, new Position(key));
     }
 
     private static void validate(String key) {
