@@ -1,9 +1,9 @@
 package chess.domain.chesspiece;
 
-import java.util.List;
-
 import chess.domain.Position;
 import chess.domain.Team;
+
+import java.util.List;
 
 public abstract class ChessPiece {
     private String name;
@@ -12,7 +12,7 @@ public abstract class ChessPiece {
 
     public ChessPiece(String name, Position position, Team team) {
         this.name = name;
-        if(team == Team.BLACK ){
+        if (team == Team.BLACK) {
             this.name = name.toUpperCase();
         }
         this.position = position;

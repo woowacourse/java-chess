@@ -1,9 +1,9 @@
 package chess.domain.chesspiece;
 
-import java.util.List;
-
 import chess.domain.Position;
 import chess.domain.Team;
+
+import java.util.List;
 
 public class Rook extends ChessPiece {
     public Rook(Position position, Team team) {

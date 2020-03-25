@@ -1,9 +1,10 @@
 package chess.domain.chesspiece;
 
-import java.util.List;
-
+import chess.domain.Move;
 import chess.domain.Position;
 import chess.domain.Team;
+
+import java.util.List;
 
 public class Queen extends ChessPiece {
     public Queen(Position position, Team team) {
@@ -17,6 +18,6 @@ public class Queen extends ChessPiece {
 
     @Override
     public List<Position> makeCanMovePositions() {
-        return null;
+        return Move.makePassablePath(MoveRules.QUEEN, this.position);
     }
 }

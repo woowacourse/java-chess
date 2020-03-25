@@ -7,7 +7,7 @@ import java.util.List;
 public class Row {
     private List<ChessPiece> chessPieces;
 
-    public Row(List<ChessPiece> chessPieces){
+    public Row(List<ChessPiece> chessPieces) {
         this.chessPieces = chessPieces;
     }
 
