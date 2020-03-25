@@ -12,8 +12,12 @@ public class ChessGame {
         OutputView.printGameIntro();
         Command command = Command.of(InputView.requestCommand());
         if (command.isStart()) {
-
             OutputView.printBoard(board);
+        }
+
+        while (Command.of(InputView.requestCommand()).isMove()) {
+            //좌표값을 받는다.
+
         }
     }
 }

@@ -24,4 +24,12 @@ public enum Command {
     public boolean isStart() {
         return this == START;
     }
+
+    public boolean isNotEnd() {
+        return this != END;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
+    }
 }
