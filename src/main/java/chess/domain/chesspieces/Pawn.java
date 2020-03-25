@@ -45,10 +45,10 @@ public class Pawn extends Piece {
     @Override
     public boolean validateMovableTileSize(int rowDiff, int columnDiff) {
         int availableRowDiff = 1;
-        int availableColumnDiff = 1;
-        if (!isMoved) {
-            availableColumnDiff = 2;
+        int availableColumnDiff = 2;
+        if (isMoved) {
+            availableColumnDiff = 1;
         }
-        return Math.abs(rowDiff) <= availableRowDiff && columnDiff <= availableColumnDiff;
+        return Math.abs(rowDiff) <= availableRowDiff && Math.abs(columnDiff) <= availableColumnDiff;
     }
 }

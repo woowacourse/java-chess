@@ -18,8 +18,6 @@ public enum Direction {
             (source, target) -> {
                 Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
                 Row biggerRow = Row.getBigger(source.getRow(), target.getRow());
-                System.out.println("small row "+smallerRow.ordinal());
-                System.out.println("big row "+biggerRow.ordinal());
                 List<Row> rows = Arrays.asList(Row.values())
                         .subList(smallerRow.ordinal() + 1, biggerRow.ordinal());
                 List<Position> positions = rows.stream()

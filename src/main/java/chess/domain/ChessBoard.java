@@ -40,7 +40,8 @@ public class ChessBoard {
     }
 
     public boolean move(Position source, Position target) {
-        if (((Piece) chessBoard.get(source)).movable(source, target)
+        if (chessBoard.get(source).getClass() != Empty.class
+                && ((Piece) chessBoard.get(source)).movable(source, target)
                 && validateObstacles(getRoutes(source, target))
                 && !isSamePlayer(source, target)
                 && !cannotMove_Pawn(source, target)) {

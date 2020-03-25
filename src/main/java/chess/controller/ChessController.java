@@ -14,15 +14,15 @@ public class ChessController {
         OutputView.printChessBoard(chessBoard.getChessBoard());
         while (true) {
             String input = InputView.inputCommand();
-            if (Command.of(input.split(" ")[0]).equals(Command.MOVE)) {
-                // do something
-                Piece source = (Piece) chessBoard.getChessBoard().get(input.split(" ")[1]);
-                source.movable(Positions.of(input.split(" ")[1]),
-                        Positions.of(input.split(" ")[2]));
+            Command command = Command.of(input.split(" ")[0]);
+            // move a2 a4 3칸만 입력했는지 검증
+            if (command.equals(Command.MOVE)) {
+                chessBoard.move(Positions.of(input.split(" ")[1]), Positions.of(input.split(" ")[2]));
             }
-            if (Command.of(input).equals(Command.END)) {
+            if (command.equals(Command.END)) {
                 return;
             }
+            OutputView.printChessBoard(chessBoard.getChessBoard());
         }
     }
 

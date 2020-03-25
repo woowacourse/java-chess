@@ -36,6 +36,19 @@ public class PawnTest {
     }
 
     @Test
+    void 예외_이동한_후_2번_이동했을때() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        Position source = Positions.of("a2");
+        Position target = Positions.of("a4");
+        chessBoard.move(source, target);
+
+        source = Positions.of("a4");
+        target = Positions.of("a6");
+        assertThat(chessBoard.move(source, target)).isFalse();
+    }
+
+    @Test
     void 초기x_전진_앞에_아무도없다() {
         ChessBoard chessBoard = new ChessBoard();
         Position source = Positions.of("a2");

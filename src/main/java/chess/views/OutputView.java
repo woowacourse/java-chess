@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private final static String NEWLINE = System.lineSeparator();
+    private final static String NEW_LINE = System.lineSeparator();
     private final static int OFFSET = Row.values().length;
 
     public static void printInitialGuide() {
@@ -27,8 +27,9 @@ public class OutputView {
                     .map(Square::getDisplay)
                     .collect(Collectors.joining());
             stringBuilder.insert(0, row);
-            stringBuilder.insert(0, NEWLINE);
+            stringBuilder.insert(0, NEW_LINE);
         }
+        stringBuilder.append(NEW_LINE);
         System.out.println(stringBuilder.toString());
     }
 }
