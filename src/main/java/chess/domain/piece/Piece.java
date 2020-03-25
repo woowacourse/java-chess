@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 public abstract class Piece {
-	private Position position;
+	protected Position position;
 	private Color color;
 
 	public Piece(Position position, Color color) {
