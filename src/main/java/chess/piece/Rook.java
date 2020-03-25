@@ -15,7 +15,7 @@ public class Rook extends Piece {
 	@Override
 	public List<Position> findReachablePositions(Position start, Position end) {
 		if (start.isNotStraight(end)) {
-			throw new UnsupportedOperationException("이동 할 수 없습니다.");
+			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
 		if (start.isSameRank(end)) {
 			List<File> files = File.valuesBetween(start.getFile(), end.getFile());
