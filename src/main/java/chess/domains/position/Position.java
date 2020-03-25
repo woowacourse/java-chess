@@ -36,12 +36,20 @@ public class Position implements Comparable<Position> {
         return cachedPositions.get(positionName);
     }
 
-    public boolean isInLine(Position targetPosition) {
-        return (this.x == targetPosition.x) || (this.y == targetPosition.y);
+    public int xGapBetween(Position target) {
+        return Math.abs(this.x - target.x);
     }
 
-    public boolean isInCrossLine(Position targetPosition) {
-        return Math.abs(this.x - targetPosition.x) == Math.abs(this.y - targetPosition.y);
+    public int yGapBetween(Position target) {
+        return Math.abs(this.y - target.y);
+    }
+
+    public boolean isSameX(Position target) {
+        return this.x == target.x;
+    }
+
+    public boolean isSameY(Position target) {
+        return this.y == target.y;
     }
 
     @Override
@@ -53,17 +61,5 @@ public class Position implements Comparable<Position> {
             return -1;
         }
         return 1;
-    }
-
-    public boolean isNextTo(Position targetPosition) {
-        return Math.abs(this.x - targetPosition.x) <= 1
-                && Math.abs(this.y - targetPosition.y) <= 1;
-    }
-
-    public boolean isInYshape(Position targetPosition) {
-        int xGap = Math.abs(this.x - targetPosition.x);
-        int yGap = Math.abs(this.y - targetPosition.y);
-        return (xGap == 1 && yGap == 2)
-                || (xGap == 2 && yGap == 1);
     }
 }

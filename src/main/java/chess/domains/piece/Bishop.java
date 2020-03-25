@@ -8,7 +8,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Position currentPosition, Position targetPosition) {
-        return currentPosition.isInCrossLine(targetPosition);
+    public boolean canMove(Position current, Position target) {
+        return current.xGapBetween(target) == current.yGapBetween(target);
     }
 }

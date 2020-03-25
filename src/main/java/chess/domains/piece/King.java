@@ -8,7 +8,8 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Position currentPosition, Position targetPosition) {
-        return currentPosition.isNextTo(targetPosition);
+    public boolean canMove(Position current, Position target) {
+        return current.xGapBetween(target) <= 1
+                && current.yGapBetween(target) <= 1;
     }
 }

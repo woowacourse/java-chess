@@ -8,7 +8,9 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(Position currentPosition, Position targetPosition) {
-        return currentPosition.isInLine(targetPosition) || currentPosition.isInCrossLine(targetPosition);
+    public boolean canMove(Position current, Position target) {
+        return current.isSameX(target)
+                || current.isSameY(target)
+                || (current.xGapBetween(target) == current.yGapBetween(target));
     }
 }

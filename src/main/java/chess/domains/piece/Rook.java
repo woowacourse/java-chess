@@ -8,7 +8,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Position currentPosition, Position targetPosition) {
-        return currentPosition.isInLine(targetPosition);
+    public boolean canMove(Position current, Position target) {
+        return current.isSameX(target) || current.isSameY(target);
     }
 }
