@@ -1,18 +1,16 @@
 package domain.piece.position;
 
 public class Position {
-	private static final int COLUMN_INDEX = 0;
-	private static final int ROW_INDEX = 1;
-	private Column col;
+	private Column column;
 	private int row;
 
-	public Position(String inputPosition) {
-		this.col = Column.of(inputPosition.charAt(COLUMN_INDEX));
-		this.row = Character.getNumericValue(inputPosition.charAt(ROW_INDEX));
+	Position(Column column, int row) {
+		this.column = column;
+		this.row = row;
 	}
 
 	public Column getColumn() {
-		return col;
+		return column;
 	}
 
 	public int getRow() {

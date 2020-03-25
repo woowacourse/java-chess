@@ -1,9 +1,5 @@
 package domain.piece.position;
 
-import static domain.piece.position.InvalidPositionException.*;
-
-import java.util.Arrays;
-
 public enum Column {
 	A('a', 1),
 	B('b', 2),
@@ -14,23 +10,16 @@ public enum Column {
 	G('g', 7),
 	H('h', 8);
 
-	private char representation;
+	private char columnName;
 	private int number;
 
-	Column(char representation, int number) {
-		this.representation = representation;
+	Column(char columnName, int number) {
+		this.columnName = columnName;
 		this.number = number;
 	}
 
-	public static Column of(char representation) {
-		return Arrays.stream(Column.values())
-			.filter(column -> representation == column.getRepresentation())
-			.findFirst()
-			.orElseThrow(() -> new InvalidPositionException(INVALID_COLUMN));
-	}
-
-	public char getRepresentation() {
-		return representation;
+	public char getColumnName() {
+		return columnName;
 	}
 
 	public int getNumber() {
