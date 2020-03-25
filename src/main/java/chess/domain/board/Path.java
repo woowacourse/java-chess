@@ -27,19 +27,22 @@ public class Path {
     }
 
     public boolean isEnemyOnEnd() {
+        if (isEndEmpty()) {
+            return false;
+        }
         Piece startPiece = path.get(start).orElseThrow(UnsupportedOperationException::new);
         Piece endPiece = path.get(end).orElseThrow(UnsupportedOperationException::new);
         return startPiece.isEnemyOf(endPiece);
     }
 
     public boolean isEndEmpty() {
-        return path.get(end).equals(Optional.empty());
+        return !path.get(end).isPresent();
     }
 
     public boolean isBlocked() {
         return path.keySet()
             .stream()
-            .filter(key -> key == start || key == end)
-            .allMatch(key -> path.get(key).equals(Optional.empty()));
+            .filter(key -> key != start && key != end)
+            .anyMatch(key -> path.get(key).isPresent());
     }
 }

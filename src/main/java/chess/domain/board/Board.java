@@ -37,6 +37,9 @@ public class Board {
     }
 
     // TODO: 경로 구하는 알고리즘 (직선, 대각선, 박스 형태)
-    // TODO: 위 알고리즘을 통해 Sub-Map 구현하여 전달
-    // TODO: SortedMap 등을 통해 시작과 끝 지점을 암시적으로 알려줄수 있는지? (ex. map.keySet().toArray()[0])
+    // 직선(가로, 세로), 대각선, 나이트/폰 의 움직임 Map으로 모아서 구현
+    // TODO: 말을 실제로 옮기는 move 마무리
+    // TODO: 게임 끝남 판단 (킹이 잡힌 경우)
+    // TODO: 점수 구하기 (Board에서 count & 폰의 위치를 판단하는 로직 필요)
+
 }
