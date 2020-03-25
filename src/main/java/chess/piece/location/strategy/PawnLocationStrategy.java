@@ -23,10 +23,11 @@ public class PawnLocationStrategy implements LocationStrategy {
 
 	@Override
 	public List<Location> reverseInitialLocation() {
-		List<Location> initialLocations = new ArrayList<>(getInitialLocation());
-		for (Location location : initialLocations) {
-			initialLocations.add(location.moveRowBy(REVERSE_DIFFERENCE_COUNT));
+		List<Location> result = new ArrayList<>();
+		List<Location> initialLocation = getInitialLocation();
+		for (Location location : initialLocation) {
+			result.add(location.moveRowBy(REVERSE_DIFFERENCE_COUNT));
 		}
-		return Collections.unmodifiableList(initialLocations);
+		return Collections.unmodifiableList(result);
 	}
 }

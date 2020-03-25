@@ -42,6 +42,18 @@ public class Piece {
 		return Objects.hash(type, team);
 	}
 
+	public boolean is(boolean isBlack) {
+		return team == isBlack;
+	}
+
+	@Override
+	public String toString() {
+		return "Piece{" +
+			"type=" + type +
+			", team=" + team +
+			'}';
+	}
+
 	private static class PieceCache {
 		private static final List<Piece> pieces = new ArrayList<>();
 
