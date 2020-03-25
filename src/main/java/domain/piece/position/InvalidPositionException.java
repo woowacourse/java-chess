@@ -1,4 +1,4 @@
-package domain.position;
+package domain.piece.position;
 
 public class InvalidPositionException extends IllegalArgumentException {
 	public static final String INVALID_COLUMN = "column을 잘못입력했습니다.";

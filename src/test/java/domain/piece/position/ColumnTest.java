@@ -1,4 +1,4 @@
-package domain.position;
+package domain.piece.position;
 
 import static org.assertj.core.api.Assertions.*;
 
