@@ -12,7 +12,7 @@ public class EnumRepositoryBoardInitializer implements BoardInitializer {
     public Map<Position, Piece> create() {
         Map<Position, Piece> initialBoard = new HashMap<>();
         for (InitialPieceRepository pieceRepository : InitialPieceRepository.values()) {
-            initialBoard.put(pieceRepository.getPosition(), pieceRepository.getPiece());
+            initialBoard.put(pieceRepository.getPosition(), pieceRepository.getInitialPiece());
         }
         return initialBoard;
     }
