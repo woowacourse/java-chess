@@ -12,9 +12,4 @@ public abstract class Piece {
     abstract boolean canMove(Variation variation);
 
     abstract boolean isSameTeam(Team team);
-
-    public enum Team {
-        BLACK,
-        WHITE
-    }
 }
