@@ -16,6 +16,7 @@ public class Pawn extends Piece {
 	public Pawn(Position position, Team team) {
 		super(position, team);
 		this.representation = 'P';
+		this.score = 1;
 	}
 
 	@Override

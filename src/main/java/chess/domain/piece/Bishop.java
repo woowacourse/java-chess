@@ -7,6 +7,7 @@ public class Bishop extends Piece {
 	public Bishop(Position position, Team team) {
 		super(position, team);
 		this.representation = 'B';
+		this.score = 3;
 	}
 
 	@Override

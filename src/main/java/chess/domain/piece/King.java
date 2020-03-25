@@ -13,6 +13,7 @@ public class King extends Piece {
 	public King(Position position, Team team) {
 		super(position, team);
 		this.representation = 'K';
+		this.score = 0;
 	}
 
 	public void validateMove(Position destination) {

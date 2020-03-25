@@ -6,6 +6,7 @@ public class Queen extends Piece {
 	public Queen(Position position, Team team) {
 		super(position, team);
 		this.representation = 'Q';
+		this.score = 9;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ public class Rook extends Piece {
 	public Rook(Position position, Team team) {
 		super(position, team);
 		this.representation = 'R';
+		this.score = 5;
 	}
 
 	@Override

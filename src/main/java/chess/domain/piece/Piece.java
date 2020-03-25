@@ -7,6 +7,7 @@ public abstract class Piece {
 	protected final Team team;
 	protected boolean isAlive;
 	protected Position position;
+	protected double score;
 
 	public Piece(Position position, Team team) {
 		this.team = team;
