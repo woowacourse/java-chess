@@ -21,7 +21,7 @@ public class Finished implements State {
 
 	@Override
 	public Board board() {
-		throw new UnsupportedOperationException();
+		return new Board();
 	}
 
 	@Override

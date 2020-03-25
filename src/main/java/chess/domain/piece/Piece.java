@@ -9,5 +9,9 @@ public abstract class Piece {
 		this.color = color;
 	}
 
+	public boolean isBlack() {
+		return color.isBlack();
+	}
+
 	public abstract void moveTo(Position position);
 }

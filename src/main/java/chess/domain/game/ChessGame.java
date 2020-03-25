@@ -11,6 +11,19 @@ public class ChessGame {
 		this.state = state;
 	}
 
+	public void command(String input) {
+		String[] tokens = input.split(" ");
+		if (tokens[0].equals("start")) {
+			start();
+		}
+		if (tokens[0].equals("end")) {
+			end();
+		}
+		if (tokens[0].equals("move")) {
+			move(Position.from(tokens[1]), Position.from(tokens[1]));
+		}
+	}
+
 	public void start() {
 		state = state.start();
 	}

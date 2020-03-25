@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Position;
 
 public class FinishedTest {
@@ -37,10 +38,9 @@ public class FinishedTest {
 	}
 
 	@Test
-	@DisplayName("게임 종료 후 체스판 확인시 예외 발생")
+	@DisplayName("게임 종료 후 체스판 확인")
 	void board() {
-		assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(
-				() -> new Finished().board());
+		assertThat(new Finished().board()).isInstanceOf(Board.class);
 	}
 
 	@Test

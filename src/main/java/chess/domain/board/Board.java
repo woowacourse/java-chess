@@ -3,6 +3,7 @@ package chess.domain.board;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 import chess.domain.piece.Color;
 
@@ -26,5 +27,14 @@ public class Board {
 
 	public List<Rank> getRanks() {
 		return Collections.unmodifiableList(ranks);
+	}
+
+	public List<Rank> getReverseRanks() {
+		ListIterator<Rank> reverseIterator = ranks.listIterator(ranks.size());
+		List<Rank> reverseRanks = new ArrayList<>();
+		while (reverseIterator.hasPrevious()) {
+			reverseRanks.add(reverseIterator.previous());
+		}
+		return Collections.unmodifiableList(reverseRanks);
 	}
 }
