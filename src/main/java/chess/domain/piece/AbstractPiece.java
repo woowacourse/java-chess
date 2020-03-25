@@ -1,17 +1,21 @@
 package chess.domain.piece;
 
+import java.util.List;
 import java.util.Set;
 
 import chess.domain.Board;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public abstract class AbstractPiece implements Piece {
 	protected String name;
 	protected Color color;
+	protected List<Direction> movableDirections;
 
-	protected AbstractPiece(String name, Color color) {
+	protected AbstractPiece(String name, Color color, List<Direction> movableDirections) {
 		this.name = name;
 		this.color = color;
+		this.movableDirections = movableDirections;
 	}
 
 	@Override

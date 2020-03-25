@@ -58,7 +58,7 @@ public class BoardFactory {
 		return pieces;
 	}
 
-	private static Map<Position, Piece> initializePawn(Map<Position, Piece> pieces) {
+	public static Map<Position, Piece> initializePawn(Map<Position, Piece> pieces) {
 		pieces.put(Position.of(Column.of("B"), Row.of("2")), new Pawn("p", Color.WHITE));
 		pieces.put(Position.of(Column.of("A"), Row.of("2")), new Pawn("p", Color.WHITE));
 		pieces.put(Position.of(Column.of("C"), Row.of("2")), new Pawn("p", Color.WHITE));

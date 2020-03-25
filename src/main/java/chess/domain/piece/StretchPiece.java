@@ -14,11 +14,8 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public abstract class StretchPiece extends AbstractPiece {
-	protected List<Direction> movableDirections;
-
 	public StretchPiece(String name, Color color, List<Direction> movableDirections) {
-		super(name, color);
-		this.movableDirections = movableDirections;
+		super(name, color, movableDirections);
 	}
 
 	@Override

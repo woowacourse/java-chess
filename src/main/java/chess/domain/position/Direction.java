@@ -1,34 +1,29 @@
 package chess.domain.position;
 
-import java.util.function.BiPredicate;
-import java.util.stream.Stream;
-
 public enum Direction {
-	DOWN(0, 1, (column, row) -> column == 0 && row > 0),
-	UP(0, -1, (column, row) -> column == 0 && row < 0),
-	LEFT(-1, 0, (column, row) -> column < 0 && row == 0),
-	RIGHT(1, 0, (column, row) -> column > 0 && row == 0),
-	LEFT_DOWN(-1, 1, (column, row) -> column < 0 && row > 0),
-	LEFT_UP(-1, -1, (column, row) -> column < 0 && row < 0),
-	RIGHT_DOWN(1, 1, (column, row) -> column > 0 && row > 0),
-	RIGHT_UP(1, -1, (column, row) -> column > 0 && row < 0);
+	DOWN(0, 1),
+	UP(0, -1),
+	LEFT(-1, 0),
+	RIGHT(1, 0),
+	LEFT_DOWN(-1, 1),
+	LEFT_UP(-1, -1),
+	RIGHT_DOWN(1, 1),
+	RIGHT_UP(1, -1),
+	LEFT_LEFT_DOWN(-2, 1),
+	LEFT_LEFT_UP(-2, -1),
+	RIGHT_RIGHT_DOWN(2, 1),
+	RIGHT_RIGHT_UP(2, -1),
+	LEFT_DOWN_DOWN(-1, 2),
+	LEFT_UP_UP(-1, -2),
+	RIGHT_DOWN_DOWN(1, 2),
+	RIGHT_UP_UP(1, -2);
 
 	private final int columnDirection;
 	private final int rowDirection;
-	private final BiPredicate<Integer, Integer> match;
 
-	Direction(int columnDirection, int rowDirection,
-		BiPredicate<Integer, Integer> match) {
+	Direction(int columnDirection, int rowDirection) {
 		this.columnDirection = columnDirection;
 		this.rowDirection = rowDirection;
-		this.match = match;
-	}
-
-	public static Direction of(int columnDirection, int rowDirection) {
-		return Stream.of(values())
-			.filter(direction -> direction.match.test(columnDirection, rowDirection))
-			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("방향이 존재하지 않습니다."));
 	}
 
 	public int getColumnDirection() {
