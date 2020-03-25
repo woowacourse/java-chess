@@ -13,6 +13,6 @@ class CoordinateTest {
         Coordinate coordinate1 = Coordinate.of(File.A, Rank.ONE);
         Coordinate coordinate2 = Coordinate.of(File.B, Rank.THREE);
         Assertions.assertThat(coordinate1.calculateVariation(coordinate2))
-                .isEqualTo(new Variation(1, 2));
+                .isEqualTo(new Vector(1, 2));
     }
 }

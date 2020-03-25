@@ -1,9 +1,9 @@
 package chess.board.piece;
 
-import chess.board.Variation;
+import chess.board.Vector;
 
 public abstract class Piece {
-    private final Team team;
+    protected final Team team;
 
     public Piece(final Team team) {
         this.team = team;
@@ -13,7 +13,7 @@ public abstract class Piece {
         return team.equals(Team.BLACK);
     }
 
-    abstract boolean canMove(Variation variation);
+    abstract boolean canMove(Vector vector);
 
     abstract boolean isSameTeam(Team team);
 

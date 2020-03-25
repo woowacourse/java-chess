@@ -1,6 +1,9 @@
 package chess.board.piece;
 
-import chess.board.Variation;
+import chess.board.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bishop extends Piece {
 
@@ -9,8 +12,16 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(final Variation variation) {
-        return false;
+    public boolean canMove(final Vector vector) {
+        return vector.isDiagonal();
+    }
+
+    public List<Direction> findPath(final Vector vector) {
+        List<Direction> path = new ArrayList<>();
+        for (int i = 0; i < vector.getMaxValue(); i++) {
+            path.add(vector.getUnitVector());
+        }
+        return path;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package chess.board.piece;
 
-import chess.board.Variation;
+import chess.board.Vector;
 
 public class Pawn extends Piece {
 
@@ -9,8 +9,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(final Variation variation) {
-        return false;
+    public boolean canMove(final Vector vector) {
+        return vector.isRangeUnderAbsolute(1) && team.isSameDirection(vector.getRankVariation());
     }
 
     @Override

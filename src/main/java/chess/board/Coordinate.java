@@ -21,19 +21,21 @@ public final class Coordinate {
         return this.file.name() + this.rank.name();
     }
 
-    public Variation calculateVariation(final Coordinate coordinate) {
-        return new Variation(coordinate.file.subtract(this.file), coordinate.rank.subtract(this.rank));
+    public Vector calculateVariation(final Coordinate coordinate) {
+        return new Vector(coordinate.file.subtract(this.file), coordinate.rank.subtract(this.rank));
     }
 
     private static class CoordinateCache {
         private static final Map<String, Coordinate> cache;
 
         static {
-            cache = Arrays.stream(File.values())
+            cache = Arrays.stream(File.values
+                    ())
                     .flatMap(file -> Arrays
                             .stream(Rank.values())
                             .map(rank -> new Coordinate(file, rank))
-                    ).collect(Collectors.toMap(Coordinate::key, coordinate -> coordinate));
+                    ).collect(Collectors
+                            .toMap(Coordinate::key, coordinate -> coordinate));
         }
     }
 }

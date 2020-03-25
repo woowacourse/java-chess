@@ -1,6 +1,6 @@
 package chess.board.piece;
 
-import chess.board.Variation;
+import chess.board.Vector;
 
 public class Knight extends Piece {
 
@@ -9,8 +9,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(final Variation variation) {
-        return false;
+    public boolean canMove(final Vector vector) {
+        return vector.sumOfAbsolute() == 3 && vector.subtractOfAbsolute() == 1;
     }
 
     @Override
