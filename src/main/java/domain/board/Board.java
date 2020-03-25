@@ -9,7 +9,11 @@ public class Board {
 		this.ranks = ranks;
 	}
 
-	// public void initialize() {
-	// 	ranks.add()
-	// }
+	public void initialize() {
+
+	}
+
+	public List<Rank> getRanks() {
+		return ranks;
+	}
 }
