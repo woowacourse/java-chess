@@ -18,6 +18,10 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
         return piece.getName();
     }
 
+    public boolean has(Position position) {
+        return this.position == (position);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

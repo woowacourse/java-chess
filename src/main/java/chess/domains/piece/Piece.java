@@ -3,6 +3,7 @@ package chess.domains.piece;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     private static final List<Piece> whitePieces;
@@ -12,7 +13,6 @@ public abstract class Piece {
         whitePieces = createBundleByColor(PieceColor.WHITE);
         blackPieces = createBundleByColor(PieceColor.BLACK);
     }
-
 
     protected final PieceColor pieceColor;
     private final String name;
@@ -49,5 +49,19 @@ public abstract class Piece {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Piece)) return false;
+        Piece piece = (Piece) o;
+        return pieceColor == piece.pieceColor &&
+                Objects.equals(name, piece.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceColor, name);
     }
 }
