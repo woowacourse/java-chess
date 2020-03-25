@@ -7,8 +7,25 @@ public class Straight implements MoveType {
     private final int count;
 
     public Straight(Position source, Position target) {
-        this.direction = Direction.UP;
-        this.count = 2;
+        this.direction = findDirection(source, target);
+        this.count = findCount(source, target);
+    }
+
+    private int findCount(Position source, Position target) {
+        return Math.abs(source.calculateFileDistance(target) + source.calculateRankDistance(target));
+    }
+
+    private Direction findDirection(Position source, Position target) {
+        if (source.isSameFile(target)) {
+            if (source.calculateRankDistance(target) > 0) {
+                return Direction.DOWN;
+            }
+            return Direction.UP;
+        }
+        if (source.calculateFileDistance(target) > 0) {
+            return Direction.LEFT;
+        }
+        return Direction.RIGHT;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.chessboard.ChessBoard;
+import chess.domain.chessPiece.Piece;
 import chess.domain.movefactory.Direction;
 import chess.domain.movefactory.MoveType;
 
@@ -58,7 +58,7 @@ public class Position {
         return file.getNumber() - target.file.getNumber();
     }
 
-    public void move(MoveType moveType, ChessBoard chessBoard) {
+    public void move(MoveType moveType, Piece targetPiece) {
         Direction direction = moveType.getDirection();
         int count = moveType.getCount();
 
@@ -67,7 +67,37 @@ public class Position {
                 int n = rank.getNumber();
                 this.rank = rank.of(++n);
 
-                if (chessBoard.findPieceByPosition(this) != null) {
+                if (targetPiece != null) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+        if (direction == Direction.DOWN) {
+            for (int i = 0; i < count; i++) {
+                int n = rank.getNumber();
+                this.rank = rank.of(--n);
+
+                if (targetPiece != null) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+        if (direction == Direction.RIGHT) {
+            for (int i = 0; i < count; i++) {
+                int n = file.getNumber();
+                this.file = file.of(++n);
+
+                if (targetPiece != null) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+        if (direction == Direction.LEFT) {
+            for (int i = 0; i < count; i++) {
+                int n = file.getNumber();
+                this.file = file.of(--n);
+
+                if (targetPiece != null) {
                     throw new IllegalArgumentException();
                 }
             }
