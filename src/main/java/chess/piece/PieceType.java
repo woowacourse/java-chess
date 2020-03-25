@@ -30,11 +30,11 @@ public enum PieceType {
 	}
 
 	public List<Location> getInitialLocation() {
-		return locationStrategy.getInitialLocation();
+		return locationStrategy.getWhiteTeamLocations();
 	}
 
 	public List<Location> reverseInitialLocation() {
-		return locationStrategy.reverseInitialLocation();
+		return locationStrategy.getBlackTeamLocations();
 	}
 
 	public String getValue() {

@@ -12,7 +12,7 @@ public class BishopLocationStrategy extends NoblePieceStrategy {
 	private static final Location RIGHT_BISHOP = new Location(1, 'f');
 
 	@Override
-	public List<Location> getInitialLocation() {
+	public List<Location> getWhiteTeamLocations() {
 		final List<Location> lookLocations = new ArrayList<>();
 		lookLocations.add(LEFT_BISHOP);
 		lookLocations.add(RIGHT_BISHOP);

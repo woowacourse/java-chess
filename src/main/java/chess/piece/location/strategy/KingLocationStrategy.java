@@ -11,7 +11,7 @@ public class KingLocationStrategy extends NoblePieceStrategy {
 	private static final Location KING_LOCATION = new Location(1, 'e');
 
 	@Override
-	public List<Location> getInitialLocation() {
+	public List<Location> getWhiteTeamLocations() {
 		final List<Location> kingLocations = new ArrayList<>();
 		kingLocations.add(KING_LOCATION);
 		return Collections.unmodifiableList(kingLocations);

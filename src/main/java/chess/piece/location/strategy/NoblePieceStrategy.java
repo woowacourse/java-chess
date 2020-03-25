@@ -10,8 +10,8 @@ public abstract class NoblePieceStrategy implements LocationStrategy {
 
 	private static final int ROW_VALUE = 7;
 
-	public List<Location> reverseInitialLocation() {
-		List<Location> locations = getInitialLocation();
+	public List<Location> getBlackTeamLocations() {
+		List<Location> locations = getWhiteTeamLocations();
 		List<Location> result = new ArrayList<>();
 
 		for (Location location : locations) {

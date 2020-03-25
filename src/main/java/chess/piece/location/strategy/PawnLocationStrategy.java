@@ -13,7 +13,7 @@ public class PawnLocationStrategy implements LocationStrategy {
 	private static final int REVERSE_DIFFERENCE_COUNT = 5;
 
 	@Override
-	public List<Location> getInitialLocation() {
+	public List<Location> getWhiteTeamLocations() {
 		final List<Location> pawnLocations = new ArrayList<>();
 		for (int i = 0; i < PAWN_COUNT; i++) {
 			pawnLocations.add(new Location(PAWN_INITIAL_ROW, (char)(PAWN_INITIAL_COL + i)));
@@ -22,9 +22,9 @@ public class PawnLocationStrategy implements LocationStrategy {
 	}
 
 	@Override
-	public List<Location> reverseInitialLocation() {
+	public List<Location> getBlackTeamLocations() {
 		List<Location> result = new ArrayList<>();
-		List<Location> initialLocation = getInitialLocation();
+		List<Location> initialLocation = getWhiteTeamLocations();
 		for (Location location : initialLocation) {
 			result.add(location.moveRowBy(REVERSE_DIFFERENCE_COUNT));
 		}

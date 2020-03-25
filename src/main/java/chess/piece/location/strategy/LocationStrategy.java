@@ -6,8 +6,8 @@ import chess.board.Location;
 
 public interface LocationStrategy {
 	// 백팀의 로케이션 정보를 가져온다.
-	List<Location> getInitialLocation();
+	List<Location> getWhiteTeamLocations();
 
 	// 흑팀의 로케이션 정보를 가져온다.
-	List<Location> reverseInitialLocation();
+	List<Location> getBlackTeamLocations();
 }

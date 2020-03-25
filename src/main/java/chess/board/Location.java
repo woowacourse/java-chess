@@ -6,7 +6,7 @@ public class Location {
 	private final int row;
 	private final char col;
 
-	public Location(int row, char col) {
+	public Location(final int row, final char col) {
 		this.row = row;
 		this.col = col;
 	}

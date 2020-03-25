@@ -12,7 +12,7 @@ public class KnightLocationStrategy extends NoblePieceStrategy {
 	private static final Location RIGHT_KNIGHT = new Location(1, 'g');
 
 	@Override
-	public List<Location> getInitialLocation() {
+	public List<Location> getWhiteTeamLocations() {
 		final List<Location> knightLocations = new ArrayList<>();
 		knightLocations.add(LEFT_KNIGHT);
 		knightLocations.add(RIGHT_KNIGHT);

@@ -12,7 +12,7 @@ public class RookLocationsStrategy extends NoblePieceStrategy {
 	private static final Location ROOK_RIGHT = new Location(1, 'h');
 
 	@Override
-	public List<Location> getInitialLocation() {
+	public List<Location> getWhiteTeamLocations() {
 		final List<Location> lookLocations = new ArrayList<>();
 		lookLocations.add(ROOK_LEFT);
 		lookLocations.add(ROOK_RIGHT);

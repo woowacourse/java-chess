@@ -7,19 +7,26 @@ import java.util.Objects;
 public class Piece {
 
 	protected final PieceType type;
-	protected final boolean team;
+	protected final boolean isBlack;
 
-	Piece(PieceType type, boolean team) {
+	Piece(PieceType type, boolean isBlack) {
 		this.type = type;
-		this.team = team;
+		this.isBlack = isBlack;
 	}
 
-	public static Piece of(PieceType pieceType, boolean team) {
+	public static Piece of(PieceType pieceType, boolean isBlack) {
 		return PieceCache.pieces.stream()
-			.filter(piece -> piece.type == pieceType)
-			.filter(piece -> piece.team == team)
+			.filter(piece -> piece.is(pieceType, isBlack))
 			.findFirst()
 			.orElseThrow(() -> new AssertionError("카드를 찾을 수 없습니다."));
+	}
+
+	public boolean is(PieceType pieceType, boolean black) {
+		return is(pieceType) && is(black);
+	}
+
+	public boolean is(boolean isBlack) {
+		return this.isBlack == isBlack;
 	}
 
 	public boolean is(PieceType pieceType) {
@@ -33,22 +40,19 @@ public class Piece {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Piece piece = (Piece)o;
-		return team == piece.team &&
+		return isBlack == piece.isBlack &&
 			type == piece.type;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(type, team);
-	}
-
-	public boolean is(boolean isBlack) {
-		return team == isBlack;
+		return Objects.hash(type, isBlack);
 	}
 
 	@Override
 	public String toString() {
-		if (team) {
+		// TODO
+		if (isBlack) {
 			return type.getValue().toUpperCase();
 		}
 		return type.getValue();
