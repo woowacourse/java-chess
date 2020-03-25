@@ -11,7 +11,6 @@ public class KingTest {
     void kingMoveRulesTest() {
         King king = new King("k");
         List<MoveRule> moveRules = king.getMoveRules();
-
         Assertions.assertThat(moveRules.contains(MoveRule.DIAGONAL_DOWN_LEFT)).isTrue();
     }
 }
