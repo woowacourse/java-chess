@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.List;
 import java.util.Map;
 
 import chess.piece.Piece;
@@ -20,4 +21,9 @@ public class Board {
 		Piece target = pieces.remove(from);
         pieces.put(to, target);
     }
+
+	public boolean isNotExistAt(List<Position> traces) {
+		return traces.stream()
+				.noneMatch(pieces::containsKey);
+	}
 }

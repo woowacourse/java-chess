@@ -11,7 +11,7 @@ class MoveValidStrategyTest {
 	@DisplayName("MoveValidStrategy 객체 생성 테스트")
 	@Test
 	void constructTest() {
-		MoveValidateStrategy moveValidateStrategy = new PawnMoveValidateStrategy(new Board(null));
-		assertThat(moveValidateStrategy).isInstanceOf(PawnMoveValidateStrategy.class);
+		MoveValidateStrategy moveValidateStrategy = new RookMoveValidateStrategy(new Board(null));
+		assertThat(moveValidateStrategy).isInstanceOf(RookMoveValidateStrategy.class);
 	}
 }
