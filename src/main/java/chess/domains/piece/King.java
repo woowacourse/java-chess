@@ -9,6 +9,6 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position currentPosition, Position targetPosition) {
-        return false;
+        return currentPosition.isNextTo(targetPosition);
     }
 }

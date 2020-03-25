@@ -44,4 +44,17 @@ class PieceTest {
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
+
+    @DisplayName("King 말이 원하는 위치로 이동할 수 있는 지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"e3, true", "e5, true", "d4, true", "f4, true",
+            "d3, true", "f5, true", "d5, true", "f5, true",
+            "f6, false"})
+    void canMove_4(String target, boolean expectedResult) {
+        Piece king = new King(PieceColor.WHITE);
+
+        boolean actualResult = king.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
 }

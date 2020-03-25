@@ -54,4 +54,9 @@ public class Position implements Comparable<Position> {
         }
         return 1;
     }
+
+    public boolean isNextTo(Position targetPosition) {
+        return Math.abs(this.x - targetPosition.x) <= 1
+                && Math.abs(this.y - targetPosition.y) <= 1;
+    }
 }
