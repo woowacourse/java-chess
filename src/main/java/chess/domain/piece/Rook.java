@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
 
+import java.util.Map;
+
 public class Rook extends Piece {
 
     private static final String BLACK_ROOK_UNICODE = "\u265C";
@@ -17,8 +19,13 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void move(Position target) {
+    protected boolean checkMovingPolicy(Position target, Map<Position, PieceDto> boardDto) {
+        return false;
+    }
 
+    @Override
+    protected PieceState makePieceState() {
+        return null;
     }
 
     @Override

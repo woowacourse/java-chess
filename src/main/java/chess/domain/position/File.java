@@ -17,6 +17,6 @@ public enum File {
     }
 
     public int getFileDifference(File targetFile) {
-        return Math.abs(targetFile.value - value);
+        return targetFile.value - value;
     }
 }

@@ -22,6 +22,6 @@ public enum Rank {
     }
 
     public int getRankDifference(Rank targetRank) {
-        return Math.abs(targetRank.value - value);
+        return targetRank.value - value;
     }
 }
