@@ -108,7 +108,11 @@ abcdefgh
 
 ## 기능
 
-### 1단계
+### 1단계 
+
+좌표를 표현
+ -  Row
+ -  Column
 
 부모 Class - Chess
 
