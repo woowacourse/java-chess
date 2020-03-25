@@ -21,6 +21,6 @@ public class Bishop extends ChessPiece {
     public List<Position> makeCanMovePositions() {
         int x = this.position.getX();
         int y = this.position.getY();
-
+        return null;
     }
 }
