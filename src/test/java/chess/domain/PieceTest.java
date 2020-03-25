@@ -109,4 +109,28 @@ public class PieceTest {
         assertThat(availableSquares.size()).isEqualTo(6);
     }
 
+    @Test
+    @DisplayName("판의 정보를 가져와서 폰이 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")
+    void movablePawnSquareTest() {
+        Map<Square, Piece> board = new HashMap<>();
+
+        board.put(Square.of("b5"), Piece.of(Color.BLACK, Type.KNIGHT));
+        board.put(Square.of("e5"), Piece.of(Color.BLACK, Type.KNIGHT));
+        board.put(Square.of("f5"), Piece.of(Color.WHITE, Type.KNIGHT));
+
+        Piece piece = Piece.of(Color.BLACK, Type.PAWN);
+        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
+        assertThat(availableSquares.contains(Square.of("c5"))).isTrue();
+        assertThat(availableSquares.size()).isEqualTo(1);
+
+        availableSquares = piece.calculateMoveBoundary(Square.of("e6"), board);
+        assertThat(availableSquares.contains(Square.of("f5"))).isTrue();
+        assertThat(availableSquares.size()).isEqualTo(1);
+
+        availableSquares = piece.calculateMoveBoundary(Square.of("g6"), board);
+        assertThat(availableSquares.contains(Square.of("g5"))).isTrue();
+        assertThat(availableSquares.contains(Square.of("f5"))).isTrue();
+        assertThat(availableSquares.size()).isEqualTo(2);
+    }
+
 }
