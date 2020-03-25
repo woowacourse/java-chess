@@ -97,6 +97,19 @@ public class Piece {
             return availableSquares;
         }
 
+        if (type.equals(Type.PAWN)) {
+            int index = 1;
+            if (color.equals(Color.BLACK)) {
+                index *= -1;
+            }
+            if ((color.equals(Color.BLACK) && square.getRank() == 7) ||
+                    (color.equals(Color.WHITE) && square.getRank() == 2)) {
+                availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index * 2));
+            }
+            availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index));
+            return availableSquares;
+        }
+
         throw new IllegalArgumentException("올바른 타입이 아닙니다");
     }
 

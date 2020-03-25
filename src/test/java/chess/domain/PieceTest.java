@@ -76,4 +76,20 @@ public class PieceTest {
         assertThat(availableSquares.size()).isEqualTo(8);
     }
 
+    @Test
+    @DisplayName("말의 위치(pawn)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
+    void calculateScopePawnBlack() {
+        Piece pieceBlack = Piece.of(Color.BLACK, Type.PAWN);
+        Piece pieceWhite = Piece.of(Color.WHITE, Type.PAWN);
+
+        Set<Square> availableSquaresBlack = pieceBlack.calculateScope(Square.of("a7"));
+        Set<Square> availableSquaresWhite = pieceWhite.calculateScope(Square.of("a6"));
+
+        assertThat(availableSquaresBlack.contains(Square.of("a6"))).isTrue();
+        assertThat(availableSquaresBlack.contains(Square.of("a5"))).isTrue();
+        assertThat(availableSquaresWhite.contains(Square.of("a7"))).isTrue();
+
+        assertThat(availableSquaresBlack.size()).isEqualTo(2);
+        assertThat(availableSquaresWhite.size()).isEqualTo(1);
+    }
 }
