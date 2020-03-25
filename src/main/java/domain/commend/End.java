@@ -1,6 +1,7 @@
 package domain.commend;
 
 import domain.pieces.Pieces;
+import domain.pieces.PiecesFactory;
 
 public class End extends NotPlaying {
 
@@ -10,16 +11,12 @@ public class End extends NotPlaying {
 
 	@Override
 	public State start() {
-		return null;
+		return new Start(Pieces.of(new PiecesFactory()));
 	}
 
 	@Override
 	public State status() {
-		return null;
+		return new Status(getPieces());
 	}
 
-	@Override
-	public State pushCommend(String input) {
-		return null;
-	}
 }

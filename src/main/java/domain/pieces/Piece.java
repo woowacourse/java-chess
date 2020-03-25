@@ -30,6 +30,10 @@ public abstract class Piece {
         return point;
     }
 
+    public abstract Piece move(Point afterPoint);
+
+    public abstract Piece attack(Piece piece);
+
     @Override
     public String toString() {
         return initial;

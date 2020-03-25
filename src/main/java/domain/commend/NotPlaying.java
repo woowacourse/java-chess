@@ -14,7 +14,7 @@ public abstract class NotPlaying extends GameState {
 	}
 
 	@Override
-	public State move() {
+	public State move(String from, String to) {
 		throw new StateException("NotPlaying 상태에서 move 명령어는 유효하지 않습니다.");
 	}
 }

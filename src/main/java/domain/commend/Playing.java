@@ -2,6 +2,7 @@ package domain.commend;
 
 import domain.commend.exceptions.StateException;
 import domain.pieces.Pieces;
+import domain.point.Point;
 
 public abstract class Playing extends GameState {
 	protected Playing(Pieces pieces) {
@@ -16,5 +17,16 @@ public abstract class Playing extends GameState {
 	@Override
 	public State status() {
 		throw new StateException("Playing 상태에서 status 명령어는 유효하지 않습니다.");
+	}
+
+	@Override
+	public State move(String from, String to) {
+		getPieces().move(Point.of(from), Point.of(to));
+		return new Move(getPieces());
+	}
+
+	@Override
+	public State end() {
+		return new End(getPieces());
 	}
 }

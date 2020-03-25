@@ -8,7 +8,7 @@ public interface State {
 
 	State end();
 
-	State move(String before, String after);
+	State move(String from, String to);
 
 	State pushCommend(String input);
 }
