@@ -22,6 +22,10 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
         return this.position == (position);
     }
 
+    public boolean canMove(Position targetPosition) {
+        return piece.canMove(this.position, targetPosition);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

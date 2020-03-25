@@ -36,6 +36,10 @@ public class Position implements Comparable<Position> {
         return cachedPositions.get(positionName);
     }
 
+    public boolean isInLine(Position targetPosition) {
+        return (this.x == targetPosition.x) || (this.y == targetPosition.y);
+    }
+
     @Override
     public int compareTo(Position o) {
         if (y > o.y) {
