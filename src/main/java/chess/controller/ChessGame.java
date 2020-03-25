@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.Board;
 import chess.Command;
+import chess.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -16,8 +17,10 @@ public class ChessGame {
         }
 
         while (Command.of(InputView.requestCommand()).isMove()) {
-            //좌표값을 받는다.
-
+            Position startPosition = Position.of(InputView.requestPosition());
+            Position endPosition = Position.of(InputView.requestPosition());
+            board.move(startPosition, endPosition);
+            OutputView.printBoard(board);
         }
     }
 }

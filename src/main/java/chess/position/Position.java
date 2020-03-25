@@ -1,5 +1,6 @@
 package chess.position;
 
+import javax.print.DocFlavor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,10 +22,6 @@ public class Position {
 	private final File file;
 	private final Rank rank;
 
-	private static String getKey(File file, Rank rank) {
-		return file.getName() + rank.getName();
-	}
-
 	private Position(File file, Rank rank) {
 		this.file = file;
 		this.rank = rank;
@@ -32,6 +29,14 @@ public class Position {
 
 	public static Position of(File file, Rank rank) {
 		return CACHE.get(getKey(file, rank));
+	}
+
+	public static Position of(String key){
+		return CACHE.get(key);
+	}
+
+	private static String getKey(File file, Rank rank) {
+		return file.getName() + rank.getName();
 	}
 
 	public boolean isStraight(Position other) {
