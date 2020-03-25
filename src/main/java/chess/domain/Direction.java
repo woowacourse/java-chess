@@ -36,7 +36,7 @@ public enum Direction {
     private static int getDirectionElement(int difference) {
         int localFileDirection;
         try {
-            localFileDirection = difference / difference;
+            localFileDirection = difference / Math.abs(difference);
         } catch (ArithmeticException ae) {
             localFileDirection = 0;
         }

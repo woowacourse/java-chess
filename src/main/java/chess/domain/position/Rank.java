@@ -31,6 +31,6 @@ public enum Rank {
         int newRank = this.value + rank;
         return Arrays.stream(values()).filter(ranks -> ranks.value == newRank)
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 positon입니다."));
     }
 }

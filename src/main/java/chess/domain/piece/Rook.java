@@ -47,7 +47,6 @@ public class Rook extends Piece {
 //                paths.add(startPathPosition);
         }
         return true;
-
     }
 
 

@@ -26,6 +26,6 @@ public enum File {
         int newFile = value + file;
         return Arrays.stream(values()).filter(files -> files.value == newFile)
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 positon입니다."));
     }
 }
