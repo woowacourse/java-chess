@@ -15,7 +15,6 @@ public class ConsoleUIChessApplication {
             if ("start".equals(command)) {
                 OutputView.showChessBoard(chessBoard);
             }
-
             command = InputView.inputCommand();
         }
     }

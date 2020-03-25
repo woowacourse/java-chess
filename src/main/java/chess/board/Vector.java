@@ -42,7 +42,7 @@ public class Vector {
     }
 
     public int getMaxValue() {
-        return Math.abs(Integer.max(fileVariation, rankVariation));
+        return Math.max(Math.abs(fileVariation), Math.abs(rankVariation));
     }
 
     public int getRankVariation() {
