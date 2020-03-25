@@ -8,14 +8,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Positions {
-    private static final Map<String, Position> positions = new LinkedHashMap<>();
+    private static final Map<String, Position> positions;
 
     static {
-        for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-                positions.put(key(row, column), new Position(row, column));
-            }
-        }
+        positions = Arrays.stream(Column.values())
+                .flatMap(column -> Arrays.stream(Row.values())
+                        .map(row -> new Position(row,column)))
+                .collect(Collectors.toMap(Position::key,
+                        position -> position,
+                        (a, b) -> a,
+                        LinkedHashMap::new));
     }
 
     private Positions() {
@@ -23,14 +25,7 @@ public class Positions {
     }
 
     public static Position of(Row row, Column column) {
-        return positions.get(key(row, column));
-    }
-
-    private static String key(Row row, Column column) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(row.getValue());
-        stringBuffer.append(column.getValue());
-        return stringBuffer.toString();
+        return positions.get(Position.key(row, column));
     }
 
     public static List<Position> getValues() {
