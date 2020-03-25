@@ -3,8 +3,7 @@ package chess.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -12,7 +11,7 @@ class BoardTest {
     @Test
     @DisplayName("보드 생성 실패")
     void constructFail() {
-        Map<Position, Piece> positions = new HashMap<>();
+        LinkedHashMap<Position, Piece> positions = new LinkedHashMap<>();
         for (int i = 0; i < 63; i++) {
             positions.put(new Position("a", "b"), new Blank(PieceType.BLANK));
         }
