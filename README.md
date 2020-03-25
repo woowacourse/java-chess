@@ -25,10 +25,16 @@
 
 기능 구현
 
-- [ ]  Position 구현.
-- [ ]  추상 클래스 Unit 구현.
+- [x]  Position 구현.
+- [ ]  Board 구현.
+- [ ]  추상 클래스 Piece 구현.
+- [ ]  Movable interface 구현.
+- [ ]  Filtering interface  구현.
 - [ ]  세부 유닛들 상속하여 구현.
-- [ ]  List<Unit>의 User 일급 컬렉션 (네이밍 이슈)
+- [ ]  List<Piece>의 Player 일급 컬렉션
+- [ ]  List<Piece> Factory 구현.
 - [ ]  ChessGame 구현.
+- [ ]  OperationType 구현.
 - [ ]  컨트롤러
 - [ ]  뷰
+
