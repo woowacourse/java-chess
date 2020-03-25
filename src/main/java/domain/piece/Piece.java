@@ -6,13 +6,19 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public abstract class Piece {
-	private Position position;
-	private Team team;
+	protected Position position;
+	protected Team team;
 
 	public Piece(Position position, Team team) {
 		this.position = position;
 		this.team = team;
 	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public abstract String showSymbol();
 
 	@Override
 	public boolean equals(Object o) {
@@ -29,4 +35,5 @@ public abstract class Piece {
 	public int hashCode() {
 		return Objects.hash(position, team);
 	}
+
 }
