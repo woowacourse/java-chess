@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.board.position;
+
+import java.util.Arrays;
 
 public enum Column {
 	FIRST("1", 1),
@@ -33,5 +35,12 @@ public enum Column {
 
 	public int getValue() {
 		return value;
+	}
+
+	public Column calculate(int value) {
+		return Arrays.stream(Column.values())
+				.filter(column -> column.value == this.value + value)
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException(("옳지 않은 좌표 입력입니다.")));
 	}
 }

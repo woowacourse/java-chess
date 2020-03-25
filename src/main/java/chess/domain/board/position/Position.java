@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board.position;
 
 import java.util.Objects;
 
@@ -24,5 +24,13 @@ public class Position {
 		if (position.isEmpty()) {
 			throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
 		}
+	}
+
+	public Row getRow() {
+		return row;
+	}
+
+	public Column getColumn() {
+		return column;
 	}
 }

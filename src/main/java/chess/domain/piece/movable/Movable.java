@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.piece.movable;
+
+import chess.domain.board.position.Position;
 
 import java.util.Set;
 
