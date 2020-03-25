@@ -1,19 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import static chess.domain.position.Direction.*;
 
-public class Rook implements Piece {
-	private final Color color;
+import java.util.Arrays;
 
-	public Rook(Color color) {
-		this.color = color;
-	}
-
-	@Override
-	public boolean canMove(Position currentPosition, Position nextPosition) {
-		if (currentPosition.equals(nextPosition)) {
-			return false;
-		}
-		return currentPosition.isSameColumn(nextPosition) || currentPosition.isSameRow(nextPosition);
+public class Rook extends StretchPiece {
+	public Rook(String name, Color color) {
+		super(name, color, Arrays.asList(UP, DOWN, LEFT, RIGHT));
 	}
 }
