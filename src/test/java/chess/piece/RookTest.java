@@ -49,6 +49,6 @@ public class RookTest {
     @CsvSource(value = {"BLACK,R", "WHITE,r"})
     void getSymbolTest(Team team, String expected) {
         Piece piece = new Rook(team);
-        assertThat(piece.getSymbolBy()).isEqualTo(expected);
+        assertThat(piece.getSymbol()).isEqualTo(expected);
     }
 }

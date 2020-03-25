@@ -5,7 +5,7 @@ import java.util.List;
 import chess.position.Position;
 
 public class Pawn extends Piece {
-	private static final String SYMBOL = "P";
+	private static final String INITIAL_CHARACTER = "P";
 
 	public Pawn(Team team) {
 		super(team);
@@ -17,7 +17,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected String getSymbol() {
-		return SYMBOL;
+	protected String getInitialCharacter() {
+		return INITIAL_CHARACTER;
 	}
 }

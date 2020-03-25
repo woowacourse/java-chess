@@ -14,12 +14,12 @@ public abstract class Piece {
 
 	public abstract List<Position> findReachablePositions(Position start, Position end);
 
-	public String getSymbolBy() {
+	public String getSymbol() {
 		if (team.isBlack()) {
-			return getSymbol();
+			return getInitialCharacter();
 		}
-		return getSymbol().toLowerCase();
+		return getInitialCharacter().toLowerCase();
 	}
 
-	protected abstract String getSymbol();
+	protected abstract String getInitialCharacter();
 }

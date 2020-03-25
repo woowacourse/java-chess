@@ -5,6 +5,7 @@ import chess.position.File;
 import chess.position.Position;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,12 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public void initialize() {
+    public static Board createInitialBoard() {
+        return new Board(getInitialPieces());
+    }
+
+    private static Map<Position, Piece> getInitialPieces() {
+        Map<Position, Piece> pieces = new HashMap<>();
         pieces.put(Position.of(A, EIGHT), new Rook(BLACK));
         pieces.put(Position.of(B, EIGHT), new Knight(BLACK));
         pieces.put(Position.of(C, EIGHT), new Bishop(BLACK));
@@ -44,6 +50,7 @@ public class Board {
         for (File value : File.values()) {
             pieces.put(Position.of(value, TWO), new Pawn(WHITE));
         }
+        return pieces;
     }
 
     public void move(Position from, Position to) {

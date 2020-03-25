@@ -2,15 +2,20 @@ package chess.view;
 
 import chess.Board;
 import chess.piece.Piece;
-import chess.piece.Rook;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
 
-import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+
+    private static final String GAME_INTRO_MESSAGE = "체스 게임을 시작합니다.\n게임 시작은 start, 종료는 end 명령을 입력하세요.";
+
+    public static void printGameIntro() {
+        System.out.println(GAME_INTRO_MESSAGE);
+    }
+
     public static void printBoard(Board board) {
         Map<Position, Piece> pieces = board.getPieces();
 
@@ -30,6 +35,7 @@ public class OutputView {
     }
 
     private static String findSymbol(Piece piece) {
-        return piece.getSymbolBy();
+        return piece.getSymbol();
+
     }
 }

@@ -5,7 +5,7 @@ import chess.position.Position;
 import java.util.List;
 
 public class Bishop extends Piece {
-	private static final String SYMBOL = "B";
+	private static final String INITIAL_CHARACTER = "B";
 
     public Bishop(Team team) {
         super(team);
@@ -17,7 +17,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected String getSymbol() {
-        return SYMBOL;
+    protected String getInitialCharacter() {
+        return INITIAL_CHARACTER;
     }
 }

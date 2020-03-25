@@ -5,7 +5,7 @@ import java.util.List;
 import chess.position.Position;
 
 public class Queen extends Piece {
-	private static final String SYMBOL = "Q";
+	private static final String INITIAL_CHARACTER = "Q";
 
 	public Queen(Team team) {
 		super(team);
@@ -17,7 +17,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	protected String getSymbol() {
-		return SYMBOL;
+	protected String getInitialCharacter() {
+		return INITIAL_CHARACTER;
 	}
 }

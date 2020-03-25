@@ -8,7 +8,7 @@ import chess.position.Position;
 import chess.position.Rank;
 
 public class Rook extends Piece {
-	private static final String SYMBOL = "R";
+	private static final String INITIAL_CHARACTER = "R";
 
 	public Rook(Team team) {
 		super(team);
@@ -32,7 +32,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	protected String getSymbol() {
-		return SYMBOL;
+	protected String getInitialCharacter() {
+		return INITIAL_CHARACTER;
 	}
 }
