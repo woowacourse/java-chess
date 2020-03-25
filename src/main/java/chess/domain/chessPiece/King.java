@@ -11,7 +11,9 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Position target, Piece targetPiece) {
-        return false;
+        validSameTeam(targetPiece);
+        return Math.abs(position.calculateFileDistance(target)) <= 1
+                && Math.abs(position.calculateRankDistance(target)) <= 1;
     }
 
     @Override

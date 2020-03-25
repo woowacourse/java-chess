@@ -23,5 +23,14 @@ public abstract class Piece implements PieceAbility {
     public boolean isSameTeam(Piece targetPiece) {
         return teamStrategy.equals(targetPiece.teamStrategy);
     }
+
+    protected void validSameTeam(Piece targetPiece) {
+        if (targetPiece == null) {
+            return;
+        }
+        if (isSameTeam(targetPiece)) {
+            throw new IllegalArgumentException("같은팀이 있는 칸으로 이동할수 없습니다.");
+        }
+    }
 }
 

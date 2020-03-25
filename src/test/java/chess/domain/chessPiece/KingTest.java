@@ -9,24 +9,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RookTest {
+class KingTest {
     @Test
     @DisplayName("이동 성공 테스트")
     void movable() {
         Position position = Position.of(File.D, Rank.TWO);
-        Position target = Position.of(File.D, Rank.EIGHT);
-        Piece rook = new Rook(position, new BlackTeam());
+        Position target = Position.of(File.C, Rank.TWO);
+        Piece king = new King(position, new BlackTeam());
 
-        assertThat(rook.isMovable(target, null)).isTrue();
+        assertThat(king.isMovable(target, null)).isTrue();
     }
 
     @Test
     @DisplayName("이동 실패 테스트")
     void isNotMovable() {
         Position position = Position.of(File.D, Rank.TWO);
-        Position target = Position.of(File.A, Rank.EIGHT);
-        Piece rook = new Rook(position, new BlackTeam());
+        Position target = Position.of(File.D, Rank.FIVE);
+        Piece king = new King(position, new BlackTeam());
 
-        assertThat(rook.isMovable(target, null)).isFalse();
+        assertThat(king.isMovable(target, null)).isFalse();
     }
+
 }

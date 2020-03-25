@@ -12,10 +12,8 @@ public class Rook extends Piece {
 
     @Override
     public boolean isMovable(Position target, Piece targetPiece) {
-        if (MoveType.of(position, target) == MoveType.STRAIGHT) {
-            return true;
-        }
-        return false;
+        validSameTeam(targetPiece);
+        return MoveType.of(position, target) == MoveType.STRAIGHT;
     }
 
     @Override
