@@ -9,7 +9,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public void move(Position destination) {
+	public void validateMove(Position destination) {
 
 	}
 

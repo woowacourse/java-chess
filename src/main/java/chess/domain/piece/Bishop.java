@@ -10,7 +10,7 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public void move(Position destination) {
+	public void validateMove(Position destination) {
 
 	}
 

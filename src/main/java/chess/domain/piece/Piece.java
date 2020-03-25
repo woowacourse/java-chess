@@ -12,7 +12,12 @@ public abstract class Piece {
 		this.position = position;
 	}
 
-	public abstract void move(Position destination);
+	public abstract void validateMove(Position destination);
+
+	public void move(Position destination) {
+		validateMove(destination);
+		this.position = destination;
+	}
 
 	public boolean isSamePosition(Position otherPosition) {
 		return this.position.equals(otherPosition);
@@ -21,5 +26,9 @@ public abstract class Piece {
 	@Override
 	public String toString() {
 		return String.valueOf(team.getTeamRepresentation().apply(representation));
+	}
+
+	public boolean isSameTeam(Piece destinationPiece) {
+		return this.team == destinationPiece.team;
 	}
 }

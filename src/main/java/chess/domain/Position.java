@@ -22,6 +22,10 @@ public class Position {
 		}
 	}
 
+	public Position move(Direction direction) {
+		return new Position(x + direction.getXDegree(), y + direction.getYDegree());
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -36,5 +40,9 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
+	}
+
+	public Direction compare(Position destination) {
+		return Direction.of(destination.x - this.x, destination.y - this.y);
 	}
 }
