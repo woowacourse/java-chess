@@ -24,4 +24,8 @@ public enum Row {
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException("잘못된 값이 입력되었습니다."));
 	}
+
+	public int calculateDistance(Row row) {
+		return Math.abs(this.symbol - row.symbol);
+	}
 }
