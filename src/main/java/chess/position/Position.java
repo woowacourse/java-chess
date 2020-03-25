@@ -46,6 +46,14 @@ public class Position {
 		return this.file == other.file || this.rank == other.rank;
 	}
 
+	public boolean isDiagonal(Position other) {
+		return false;
+	}
+
+	public boolean isNotDiagonal(Position other) {
+		return !isDiagonal(other);
+	}
+
 	public boolean isNotStraight(Position other) {
 		return !isStraight(other);
 	}

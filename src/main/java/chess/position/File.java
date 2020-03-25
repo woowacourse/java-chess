@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum File {
-	A("a"),
-	B("b"),
-	C("c"),
-	D("d"),
-	E("e"),
-	F("f"),
-	G("g"),
-	H("h");
+	A("a", 1),
+	B("b", 2),
+	C("c", 3),
+	D("d", 4),
+	E("e", 5),
+	F("f", 6),
+	G("g", 7),
+	H("h", 8);
 
 	private static final String ILLEGAL_FILE_NAME_EXCEPTION_MESSAGE = "올바른 열값이 아닙니다.";
 
