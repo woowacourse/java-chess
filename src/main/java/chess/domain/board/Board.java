@@ -52,8 +52,10 @@ public class Board {
 
     public void move(Position fromPosition, Position toPosition) {
         Piece piece = board.get(fromPosition);
-        System.out.println(piece.getAcronym()); // Todo: 삭제
-        board.remove(fromPosition);
-        board.put(toPosition, piece);
+
+        if (piece.canMove(fromPosition, toPosition)) {
+            board.remove(fromPosition);
+            board.put(toPosition, piece);
+        }
     }
 }

@@ -42,4 +42,20 @@ public class Position {
         this.file = file;
         this.rank = rank;
     }
+
+    public Position increaseFile(int number) {
+        return Position.of(this.file.plus(number), this.rank);
+    }
+
+    public Position increaseRank(int number) {
+        return Position.of(this.file, this.rank.plus(number));
+    }
+
+    public Position increaseDiagonal(int number) {
+        return Position.of(this.file.plus(number), this.rank.plus(number));
+    }
+
+    public boolean isAt(Rank rank) {
+        return this.rank == rank;
+    }
 }
