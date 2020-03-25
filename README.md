@@ -13,7 +13,7 @@
         - [x] 초기 위치 보유
         - [x] 이름
 - [x] Point 구현
-    - [x] row, column
+    - [x] rank, file
 - [x] Player 구현
     - [x] chessPiece의 이름 결정
 - [ ] Board 구현

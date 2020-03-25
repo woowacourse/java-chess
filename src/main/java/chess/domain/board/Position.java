@@ -1,41 +1,40 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
 
-    private static final Map<String, Position> points;
+    private static final Map<String, Position> positions;
 
     static {
-        points = new HashMap<>();
-        for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-                String name = nameOf(column, row);
-                points.put(name, new Position(column, row));
+        positions = new HashMap<>();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                String name = nameOf(file, rank);
+                positions.put(name, new Position(file, rank));
             }
         }
     }
 
-    private final Column column;
-    private final Row row;
+    private final File file;
+    private final Rank rank;
 
-    private Position(Column column, Row row) {
-        this.column = column;
-        this.row = row;
+    private Position(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
-    private static String nameOf(Column column, Row row) {
-        return column.getName() + row.getName();
-    }
-
-    public static Position of(Column column, Row row) {
-        return points.get(nameOf(column, row));
+    public static Position of(File file, Rank rank) {
+        return from(nameOf(file, rank));
     }
 
     public static Position from(String name) {
-        Position position = points.get(name.toUpperCase());
+        Position position = positions.get(name.toUpperCase());
         validate(name, position);
         return position;
     }
@@ -44,5 +43,25 @@ public class Position {
         if (Objects.isNull(position)) {
             throw new IllegalArgumentException(String.format("%s는 잘못된 입력입니다.", name));
         }
+    }
+
+    private static String nameOf(File file, Rank rank) {
+        return file.getName() + rank.getName();
+    }
+
+    public Position opposite() {
+        return of(file.opposite(), rank.opposite());
+    }
+
+    @Override
+    public int compareTo(Position position) {
+        if (rank.compareTo(position.rank) == 0) {
+            return file.compareTo(position.file);
+        }
+        return -rank.compareTo(position.rank);
+    }
+
+    public static List<Position> getAllPosition() {
+        return Collections.unmodifiableList(new ArrayList<>(positions.values()));
     }
 }

@@ -12,14 +12,15 @@ class PositionTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"b1", "B1"})
-    @DisplayName("Point 생성")
+    @DisplayName("from 생성")
     void createFrom(String point) {
         assertThat(Position.from(point)).isInstanceOf(Position.class);
     }
 
     @Test
+    @DisplayName("of 생성")
     void createOf() {
-        assertThat(Position.of(Column.C, Row.SEVEN)).isEqualTo(Position.from("C7"));
+        assertThat(Position.of(File.C, Rank.SEVEN)).isEqualTo(Position.from("C7"));
     }
 
     @Test
@@ -29,5 +30,11 @@ class PositionTest {
             Position.from("z1");
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageMatching(".+는 잘못된 입력입니다.");
+    }
+
+    @Test
+    @DisplayName("점 대칭")
+    void opposite() {
+        assertThat(Position.from("b1").opposite()).isEqualTo(Position.from("g8"));
     }
 }
