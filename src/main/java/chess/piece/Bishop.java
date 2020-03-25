@@ -1,16 +1,17 @@
 package chess.piece;
 
-import java.util.List;
-
 import chess.position.Position;
 
-public class Bishop extends Piece {
-	public Bishop(Team team) {
-		super(team);
-	}
+import java.util.List;
 
-	@Override
-	public List<Position> findReachablePositions(Position start, Position end) {
-		return null;
-	}
+public class Bishop extends Piece {
+	private static final String symbol = "B";
+    public Bishop(Team team) {
+        super(team);
+    }
+
+    @Override
+    public List<Position> findReachablePositions(Position start, Position end) {
+        return null;
+    }
 }

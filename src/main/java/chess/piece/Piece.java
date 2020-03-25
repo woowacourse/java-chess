@@ -12,4 +12,6 @@ public abstract class Piece {
 	}
 
 	public abstract List<Position> findReachablePositions(Position start, Position end);
+
+//	private String getSymbolBy(Team team);
 }
