@@ -45,4 +45,15 @@ public class Board {
             return EMPTY_POSITION_ACRONYM;
         }
     }
+
+    public void move(String keyFromPosition, String keyToPosition) {
+        move(Position.of(keyFromPosition), Position.of(keyToPosition));
+    }
+
+    public void move(Position fromPosition, Position toPosition) {
+        Piece piece = board.get(fromPosition);
+        System.out.println(piece.getAcronym()); // Todo: 삭제
+        board.remove(fromPosition);
+        board.put(toPosition, piece);
+    }
 }
