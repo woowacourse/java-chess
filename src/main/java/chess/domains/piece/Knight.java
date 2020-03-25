@@ -9,6 +9,6 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position currentPosition, Position targetPosition) {
-        return false;
+        return currentPosition.isInYshape(targetPosition);
     }
 }

@@ -59,4 +59,11 @@ public class Position implements Comparable<Position> {
         return Math.abs(this.x - targetPosition.x) <= 1
                 && Math.abs(this.y - targetPosition.y) <= 1;
     }
+
+    public boolean isInYshape(Position targetPosition) {
+        int xGap = Math.abs(this.x - targetPosition.x);
+        int yGap = Math.abs(this.y - targetPosition.y);
+        return (xGap == 1 && yGap == 2)
+                || (xGap == 2 && yGap == 1);
+    }
 }
