@@ -3,12 +3,12 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 public enum Type {
-    KING("k", (start, end) -> true, InitialPosition::king),
-    QUEEN("q", (start, end) -> true, InitialPosition::queen),
-    ROOK("r", (start, end) -> true, InitialPosition::rook),
-    KNIGHT("n", (start, end) -> true, InitialPosition::knight),
-    BISHOP("b", (start, end) -> true, InitialPosition::bishop),
-    PAWN("p", (start, end) -> true, InitialPosition::pawn);
+    KING("k", MovingStrategy::king, InitialPosition::king),
+    QUEEN("q", MovingStrategy::queen, InitialPosition::queen),
+    ROOK("r", MovingStrategy::rook, InitialPosition::rook),
+    KNIGHT("n", MovingStrategy::knight, InitialPosition::knight),
+    BISHOP("b", MovingStrategy::bishop, InitialPosition::bishop),
+    PAWN("p", MovingStrategy::pawn, InitialPosition::pawn);
 
     private final String name;
     private final MovingStrategy movingStrategy;
@@ -22,6 +22,13 @@ public enum Type {
 
     public boolean initPosition(Position position, Side side) {
         return initialPosition.isRightOn(position, side);
+    }
+
+    public boolean canMoveBetween(Position start, Position end) {
+        if (start == end) {
+            return false;
+        }
+        return movingStrategy.test(start, end);
     }
 
     public String getName() {

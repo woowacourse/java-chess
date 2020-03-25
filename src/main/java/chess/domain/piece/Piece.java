@@ -20,8 +20,8 @@ public class Piece {
         return PieceCache.pieces.get(PieceCache.key(type, side));
     }
 
-    public void move(Position end) {
-
+    public boolean isMovable(Position start, Position end) {
+        return type.canMoveBetween(start, end);
     }
 
     public String name() {
