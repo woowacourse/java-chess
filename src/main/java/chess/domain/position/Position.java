@@ -72,6 +72,14 @@ public class Position {
 		return row.equals(that.row);
 	}
 
+	public Row getRow() {
+		return row;
+	}
+
+	public Column getColumn() {
+		return column;
+	}
+
 	public static List<Position> getPositions() {
 		return List.copyOf(POSITIONS.values());
 	}
