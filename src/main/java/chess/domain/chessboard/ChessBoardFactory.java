@@ -12,7 +12,7 @@ public class ChessBoardFactory {
         List<Position> chessBoard = new ArrayList<>();
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                chessBoard.add(new Position(file, rank));
+                chessBoard.add(Position.of(file, rank));
             }
         }
         return chessBoard;

@@ -13,8 +13,8 @@ class RookTest {
     @Test
     @DisplayName("이동 가능 여부 테스트")
     void movable() {
-        Position position = new Position(File.D, Rank.TWO);
-        Position target = new Position(File.D, Rank.EIGHT);
+        Position position = Position.of(File.D, Rank.TWO);
+        Position target = Position.of(File.D, Rank.EIGHT);
         Piece rook = new Rook(position, new BlackTeam());
 
         assertThat(rook.isMovable(target)).isTrue();

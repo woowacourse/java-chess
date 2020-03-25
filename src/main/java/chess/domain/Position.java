@@ -6,7 +6,7 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -14,6 +14,10 @@ public class Position {
     public static Position of(String coordinate) {
         String[] fileAndRank = coordinate.split("");
         return new Position(File.of(fileAndRank[0]), Rank.of(fileAndRank[1]));
+    }
+
+    public static Position of(File file, Rank rank) {
+        return new Position(file, rank);
     }
 
     public boolean isNewRank() {

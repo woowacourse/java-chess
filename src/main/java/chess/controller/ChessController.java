@@ -29,9 +29,7 @@ public class ChessController {
     }
 
     private static List<String> validateInputMoveCommand(String input) {
-        System.out.println(input);
         List<String> inputValues = Arrays.asList(input.split(" "));
-
         if (isIncorrectCommandLength(inputValues)) {
             throw new IllegalArgumentException();
         }

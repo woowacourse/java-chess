@@ -21,16 +21,16 @@ public class PieceBundleFactory {
         }
 
         for (File value : File.values()) {
-            pieceBundle.add(new Pawn(new Position(value, pawnRank), teamStrategy));
+            pieceBundle.add(new Pawn(Position.of(value, pawnRank), teamStrategy));
         }
-        pieceBundle.add(new Rook(new Position(File.H, otherRank), teamStrategy));
-        pieceBundle.add(new Rook(new Position(File.A, otherRank), teamStrategy));
-        pieceBundle.add(new Knight(new Position(File.B, otherRank), teamStrategy));
-        pieceBundle.add(new Knight(new Position(File.G, otherRank), teamStrategy));
-        pieceBundle.add(new Bishop(new Position(File.C, otherRank), teamStrategy));
-        pieceBundle.add(new Bishop(new Position(File.F, otherRank), teamStrategy));
-        pieceBundle.add(new King(new Position(File.E, otherRank), teamStrategy));
-        pieceBundle.add(new Queen(new Position(File.D, otherRank), teamStrategy));
+        pieceBundle.add(new Rook(Position.of(File.H, otherRank), teamStrategy));
+        pieceBundle.add(new Rook(Position.of(File.A, otherRank), teamStrategy));
+        pieceBundle.add(new Knight(Position.of(File.B, otherRank), teamStrategy));
+        pieceBundle.add(new Knight(Position.of(File.G, otherRank), teamStrategy));
+        pieceBundle.add(new Bishop(Position.of(File.C, otherRank), teamStrategy));
+        pieceBundle.add(new Bishop(Position.of(File.F, otherRank), teamStrategy));
+        pieceBundle.add(new King(Position.of(File.E, otherRank), teamStrategy));
+        pieceBundle.add(new Queen(Position.of(File.D, otherRank), teamStrategy));
         return pieceBundle;
     }
 }

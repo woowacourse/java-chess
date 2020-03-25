@@ -9,7 +9,7 @@ class PositionTest {
     @Test
     @DisplayName("of 테스트")
     void of() {
-        Position result = new Position(File.F, Rank.SIX);
+        Position result = Position.of(File.F, Rank.SIX);
 
         assertThat(Position.of("f6")).isEqualTo(result);
     }
