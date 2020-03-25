@@ -1,6 +1,6 @@
 package chess.domain.piece.state;
 
-import chess.domain.board.Square;
+import chess.domain.board.Position;
 
 /**
  *    class description
@@ -8,7 +8,7 @@ import chess.domain.board.Square;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Move extends Running {
-	public Move(Square square) {
-		super(square);
+	public Move(Position position) {
+		super(position);
 	}
 }

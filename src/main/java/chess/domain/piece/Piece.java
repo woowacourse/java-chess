@@ -9,10 +9,15 @@ import chess.domain.piece.state.State;
  */
 public abstract class Piece {
 	private String color;
+	private String name;
 	private State state;
 
-	public Piece(String color) {
+	public Piece(String color, String name) {
 		this.color = color;
 		// this.state = new Started();
+	}
+
+	public static boolean isPawn(Piece piece) {
+		return true;
 	}
 }

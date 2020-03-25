@@ -1,6 +1,6 @@
 package chess.domain.piece.state;
 
-import chess.domain.board.Square;
+import chess.domain.board.Position;
 
 /**
  *    class description
@@ -8,8 +8,8 @@ import chess.domain.board.Square;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Running extends Started {
-	public Running(Square square) {
-		super(square);
+	public Running(Position position) {
+		super(position);
 	}
 
 }

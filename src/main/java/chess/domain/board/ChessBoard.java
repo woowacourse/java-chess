@@ -1,8 +1,10 @@
 package chess.domain.board;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 
 /**
  *    체스 판을 의미하는 클래스입니다.
@@ -10,14 +12,11 @@ import chess.domain.piece.Piece;
  *    @author AnHyungJu, LeeHoBin
  */
 public class ChessBoard {
-	// private final Map<Square, Piece> board
-	public static Map<Square, Piece> board;
+	public Map<Position, Piece> board;
 
-	public static Piece getPiece(Square square) {
-		return board.get(square);
+	public ChessBoard() {
+		board = new HashMap<>();
+		PieceFactory.create(board);
 	}
 
-	public void init() {
-
-	}
 }

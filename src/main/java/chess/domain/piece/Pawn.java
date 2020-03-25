@@ -6,7 +6,7 @@ package chess.domain.piece;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Pawn extends Piece {
-	public Pawn(String color) {
-		super(color);
+	public Pawn(String color, String name) {
+		super(color, name);
 	}
 }
