@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public enum File {
 
@@ -26,6 +27,7 @@ public enum File {
         opposite.put(F, C);
         opposite.put(G, B);
         opposite.put(H, A);
+
     }
 
     private String name;
@@ -36,6 +38,22 @@ public enum File {
 
     public File opposite() {
         return opposite.get(this);
+    }
+
+    public Optional<File> next() {
+        try {
+            return Optional.of(values()[ordinal() + 1]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<File> previous() {
+        try {
+            return Optional.of(values()[ordinal() - 1]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
     }
 
     public String getName() {

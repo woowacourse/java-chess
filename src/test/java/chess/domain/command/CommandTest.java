@@ -1,24 +1,16 @@
 package chess.domain.command;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 class CommandTest {
-
-    @ParameterizedTest
-    @DisplayName("from 팩토리 메서드")
-    @MethodSource("createCommand")
-    void from(String command, Command expected) {
-        assertThat(Command.from(command)).isEqualTo(expected);
-    }
 
     static Stream<Arguments> createCommand() {
         return Stream.of(
@@ -27,6 +19,20 @@ class CommandTest {
                 Arguments.of("end", Command.END),
                 Arguments.of("END", Command.END)
         );
+    }
+
+    static Stream<Arguments> createBoolean() {
+        return Stream.of(
+                Arguments.of(Command.START, true),
+                Arguments.of(Command.END, false)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("from 팩토리 메서드")
+    @MethodSource("createCommand")
+    void from(String command, Command expected) {
+        assertThat(Command.from(command)).isEqualTo(expected);
     }
 
     @Test
@@ -43,12 +49,5 @@ class CommandTest {
     @MethodSource("createBoolean")
     void isStart(Command command, boolean expected) {
         assertThat(command.isStart()).isEqualTo(expected);
-    }
-
-    static Stream<Arguments> createBoolean() {
-        return Stream.of(
-                Arguments.of(Command.START, true),
-                Arguments.of(Command.END, false)
-        );
     }
 }

@@ -18,15 +18,6 @@ import chess.domain.board.Position;
 
 class GamePieceTest {
 
-    @ParameterizedTest
-    @DisplayName("game piece 생성")
-    @MethodSource("createGamePiece")
-    void name() {
-        GamePiece gamePiece = GamePiece.of(BISHOP, BLACK);
-
-        assertThat(gamePiece.getName()).isEqualTo("B");
-    }
-
     static Stream<Arguments> createGamePiece() {
         return Stream.of(
                 Arguments.of(BISHOP, BLACK, "B"),
@@ -34,6 +25,22 @@ class GamePieceTest {
                 Arguments.of(PAWN, BLACK, "P"),
                 Arguments.of(QUEEN, WHITE, "q")
         );
+    }
+
+    static Stream<Arguments> createPositions() {
+        return Stream.of(
+                Arguments.of(GamePiece.of(ROOK, BLACK), Arrays.asList(Position.from("a8"), Position.from("h8"))),
+                Arguments.of(GamePiece.of(ROOK, WHITE), Arrays.asList(Position.from("a1"), Position.from("h1")))
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("game piece 생성")
+    @MethodSource("createGamePiece")
+    void name() {
+        GamePiece gamePiece = GamePiece.of(BISHOP, BLACK);
+
+        assertThat(gamePiece.getName()).isEqualTo("B");
     }
 
     @Test
@@ -47,12 +54,5 @@ class GamePieceTest {
     @MethodSource("createPositions")
     void getInitialPositions(GamePiece piece, List<Position> expected) {
         assertThat(piece.getInitialPositions()).isEqualTo(expected);
-    }
-
-    static Stream<Arguments> createPositions() {
-        return Stream.of(
-                Arguments.of(GamePiece.of(ROOK, BLACK), Arrays.asList(Position.from("a8"), Position.from("h8"))),
-                Arguments.of(GamePiece.of(ROOK, WHITE), Arrays.asList(Position.from("a1"), Position.from("h1")))
-        );
     }
 }

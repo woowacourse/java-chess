@@ -49,6 +49,10 @@ public class Position implements Comparable<Position> {
         return file.getName() + rank.getName();
     }
 
+    public static List<Position> list() {
+        return Collections.unmodifiableList(new ArrayList<>(positions.values()));
+    }
+
     public Position opposite() {
         return of(file.opposite(), rank.opposite());
     }
@@ -63,9 +67,5 @@ public class Position implements Comparable<Position> {
             return file.compareTo(position.file);
         }
         return -rank.compareTo(position.rank);
-    }
-
-    public static List<Position> list() {
-        return Collections.unmodifiableList(new ArrayList<>(positions.values()));
     }
 }

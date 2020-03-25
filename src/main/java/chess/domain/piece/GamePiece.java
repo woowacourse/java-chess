@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
-import chess.domain.player.Player;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import chess.domain.board.Position;
+import chess.domain.player.Player;
 
 public class GamePiece {
 

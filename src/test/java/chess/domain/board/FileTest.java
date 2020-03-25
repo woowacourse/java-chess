@@ -12,13 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class FileTest {
 
-    @ParameterizedTest
-    @DisplayName("세로축에 대해 대칭")
-    @MethodSource("createOppositeCase")
-    void opposite(File actual, File expected) {
-        assertThat(actual.opposite()).isEqualTo(expected);
-    }
-
     static Stream<Arguments> createOppositeCase() {
         return Stream.of(
                 Arguments.of(A, H),
@@ -30,5 +23,40 @@ class FileTest {
                 Arguments.of(G, B),
                 Arguments.of(H, A)
         );
+    }
+
+    static Stream<Arguments> createNextFile() {
+        return Stream.of(
+                Arguments.of(B, C),
+                Arguments.of(H, null)
+        );
+    }
+
+    static Stream<Arguments> createPreviousFile() {
+        return Stream.of(
+                Arguments.of(B, A),
+                Arguments.of(A, null)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("세로축에 대해 대칭")
+    @MethodSource("createOppositeCase")
+    void opposite(File actual, File expected) {
+        assertThat(actual.opposite()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("다음 File")
+    @MethodSource("createNextFile")
+    void next(File actual, File expected) {
+        assertThat(actual.next().orElse(null)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("이전 File")
+    @MethodSource("createPreviousFile")
+    void previous(File actual, File expected) {
+        assertThat(actual.previous().orElse(null)).isEqualTo(expected);
     }
 }

@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public enum Rank {
 
@@ -36,6 +37,22 @@ public enum Rank {
 
     public Rank opposite() {
         return opposite.get(this);
+    }
+
+    public Optional<Rank> next() {
+        try {
+            return Optional.of(values()[ordinal() + 1]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Rank> previous() {
+        try {
+            return Optional.of(values()[ordinal() - 1]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
     }
 
     public String getName() {

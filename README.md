@@ -20,12 +20,18 @@
     - [x] list 생성
 - [x] Point 구현
     - [x] rank, file
+        - [x] opposite 구현
+        - [x] next, previous 구현
     - [x] list 생성
+    - [x] opposite 구현
+    - [x] flip 구현
 - [x] Board 구현
     - [x] 체스판 초기화 
 - [x] Command 구현
     - [x] Start 구현
     - [x] End 구현
+- [ ] moveStrategy 구현
+    - [ ] 퀸, 킹, 비숍, 폰, 나이트, 룩 구현
 ### view
 - [x] Command 입력
 - [x] Board 출력   
