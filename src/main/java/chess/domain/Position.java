@@ -1,5 +1,9 @@
 package chess.domain;
 
+import static java.lang.Math.*;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
@@ -24,6 +28,16 @@ public class Position {
 
 	public Position move(Direction direction) {
 		return new Position(x + direction.getXDegree(), y + direction.getYDegree());
+	}
+
+	public Map<Direction, Integer> inBetween(Position destination) {
+		int xDegree = destination.x - this.x;
+		int yDegree = destination.y - this.y;
+		int maxDegree = max(abs(xDegree), abs(yDegree));
+		Direction direction = Direction.of(xDegree / maxDegree, yDegree / maxDegree);
+		Map<Direction, Integer> directionAndDistance = new HashMap<>();
+		directionAndDistance.put(direction, maxDegree);
+		return directionAndDistance;
 	}
 
 	public Direction calculateDirection(Position destination) {
