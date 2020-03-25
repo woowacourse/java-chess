@@ -10,6 +10,9 @@ public class ChessPiece {
 
     public ChessPiece(String name, Position position, Team team) {
         this.name = name;
+        if(team == Team.BLACK ){
+            this.name = name.toUpperCase();
+        }
         this.position = position;
         this.team = team;
     }

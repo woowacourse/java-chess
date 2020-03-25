@@ -1,38 +1,22 @@
 package chess.view;
 
 import chess.domain.ChessBoard;
-import chess.domain.Position;
+import chess.domain.Row;
 import chess.domain.chesspiece.ChessPiece;
 
+import java.util.List;
+
 public class OutputView {
-	public static void printBoard(ChessBoard chessBoard) {
-		for (int i = 8; i >= 1; i--) {
-		    printRows(i,chessBoard);
-			System.out.println();
-		}
-	}
-
-    private static void printRows(int i, ChessBoard chessBoard) {
-        for (char j = 'a'; j <= 'h'; j++) {
-            Position position = new Position(i, j);
-            System.out.print(getCoordinateName(chessBoard,position));
+    public static void printBoard(ChessBoard chessBoard) {
+        for (int i = 8; i >= 1; i--) {
+            for (int j = 0; j <= 7; j++) {
+                List<Row> rows = chessBoard.getBoard();
+                Row row = rows.get(i - 1);
+                List<ChessPiece> chessPieces = row.getChessPieces();
+                ChessPiece chessPiece = chessPieces.get(j);
+                System.out.print(chessPiece.getName());
+            }
+            System.out.println();
         }
-	}
-
-    private static String getCoordinateName(ChessBoard chessBoard, Position position) {
-        String name = ".";
-        if (chessBoard.checkPosition(position)) {
-            ChessPiece chessPiece = chessBoard.findByPosition(position);
-            return getPieceName(chessPiece);
-        }
-        return name;
-    }
-
-    private static String getPieceName(ChessPiece chessPiece) {
-        String name = chessPiece.getName();
-        if (chessPiece.isBlack()) {
-            return name.toUpperCase();
-        }
-        return name;
     }
 }

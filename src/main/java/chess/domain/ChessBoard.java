@@ -1,32 +1,21 @@
 package chess.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import chess.domain.chesspiece.ChessPiece;
+import chess.factory.BoardFactory;
 
 public class ChessBoard {
-	private List<ChessPiece> blackChessPieces;
-	private List<ChessPiece> whiteChessPieces;
+	private List<Row> board;
 
-	public ChessBoard(List<ChessPiece> blackChessPieces, List<ChessPiece> whiteChessPieces) {
-		this.blackChessPieces = blackChessPieces;
-		this.whiteChessPieces = whiteChessPieces;
+	public ChessBoard(List<Row> board) {
+		this.board = board;
 	}
 
-
-	public boolean checkPosition(Position position) {
-		return Stream.concat(blackChessPieces.stream(), whiteChessPieces.stream())
-			.anyMatch(chessPiece -> chessPiece.equalPosition(position));
-	}
-
-	public ChessPiece findByPosition(Position position) {
-		return Stream.concat(blackChessPieces.stream(), whiteChessPieces.stream())
-			.filter(chessPiece -> chessPiece.equalPosition(position))
-			.findFirst()
-			.orElseThrow(() -> new NoSuchElementException());
+	public List<Row> getBoard() {
+		return board;
 	}
 
 }
