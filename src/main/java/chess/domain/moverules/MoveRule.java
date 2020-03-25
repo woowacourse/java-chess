@@ -12,10 +12,10 @@ public enum MoveRule {
     DIAGONAL_DOWN_LEFT((rowDiff, columnDiff) -> isNegative(rowDiff) && isPositive(columnDiff)),
     DIAGONAL_DOWN_RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isPositive(columnDiff));
 
-    private final BiPredicate<Integer, Integer> movable;
+    private final BiPredicate<Integer, Integer> judge;
 
-    MoveRule(BiPredicate<Integer, Integer> movable) {
-        this.movable = movable;
+    MoveRule(BiPredicate<Integer, Integer> judge) {
+        this.judge = judge;
     }
 
     private static boolean isPositive(int number) {
@@ -28,5 +28,9 @@ public enum MoveRule {
 
     private static boolean isNegative(int number) {
         return number < 0;
+    }
+
+    public BiPredicate<Integer, Integer> getJudge() {
+        return judge;
     }
 }

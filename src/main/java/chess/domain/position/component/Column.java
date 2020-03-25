@@ -1,5 +1,7 @@
 package chess.domain.position.component;
 
+import java.util.Objects;
+
 public enum Column {
     ONE(1),
     TWO(2),
@@ -18,5 +20,11 @@ public enum Column {
 
     public int getValue() {
         return value;
+    }
+
+    public static int getDiff(Column column1, Column column2) {
+        Objects.requireNonNull(column1);
+        Objects.requireNonNull(column2);
+        return column1.getValue() - column2.getValue();
     }
 }
