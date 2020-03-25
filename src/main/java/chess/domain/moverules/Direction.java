@@ -13,7 +13,7 @@ import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 // 중복 코드 개선하기
-public enum MoveRule {
+public enum Direction {
     LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isZero(columnDiff),
             (source, target) -> {
                 Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
@@ -138,7 +138,7 @@ public enum MoveRule {
     private final BiPredicate<Integer, Integer> judge;
     private final BiFunction<Position, Position, List<Position>> positionsBetween;
 
-    MoveRule(BiPredicate<Integer, Integer> judge, BiFunction<Position, Position, List<Position>> positionsBetween) {
+    Direction(BiPredicate<Integer, Integer> judge, BiFunction<Position, Position, List<Position>> positionsBetween) {
         this.judge = judge;
         this.positionsBetween = positionsBetween;
     }
@@ -165,8 +165,8 @@ public enum MoveRule {
         return positionsBetween.apply(source, target);
     }
 
-    public static MoveRule getMoveRule(Position source, Position target) {
-       return  Arrays.stream(MoveRule.values())
+    public static Direction getMoveRule(Position source, Position target) {
+       return  Arrays.stream(Direction.values())
                 .filter(x -> x.getJudge(source, target))
                 .findFirst()
                .orElseThrow(() -> new IllegalArgumentException("이동 방식을 찾을 수 없습니다."));

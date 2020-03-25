@@ -1,6 +1,6 @@
 import chess.domain.Player;
 import chess.domain.chesspieces.King;
-import chess.domain.moverules.MoveRule;
+import chess.domain.moverules.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import org.assertj.core.api.Assertions;
@@ -17,8 +17,8 @@ public class KingTest {
     @DisplayName("moveRules Test : 움직일 수 있는 방향을 가지고 있는지에 테스트")
     @Test
     void kingMoveRulesTest() {
-        List<MoveRule> moveRules = king.getMoveRules();
-        Assertions.assertThat(moveRules.contains(MoveRule.DIAGONAL_DOWN_LEFT)).isTrue();
+        List<Direction> directions = king.getDirections();
+        Assertions.assertThat(directions.contains(Direction.DIAGONAL_DOWN_LEFT)).isTrue();
     }
 
     @DisplayName("movable test: 정상 범위로 입력했을 때 ")

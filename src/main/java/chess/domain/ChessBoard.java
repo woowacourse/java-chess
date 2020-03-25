@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.chesspieces.*;
-import chess.domain.moverules.MoveRule;
+import chess.domain.moverules.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
@@ -61,8 +61,8 @@ public class ChessBoard {
     }
 
     public List<Position> getRoutes(Position source, Position target) {
-        MoveRule moveRule = MoveRule.getMoveRule(source, target);
-        List<Position> routes = moveRule.getPositionsBetween(source, target);
+        Direction direction = Direction.getMoveRule(source, target);
+        List<Position> routes = direction.getPositionsBetween(source, target);
         return routes;
     }
 

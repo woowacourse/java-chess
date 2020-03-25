@@ -1,7 +1,7 @@
 package chess.domain.chesspieces;
 
 import chess.domain.Player;
-import chess.domain.moverules.MoveRule;
+import chess.domain.moverules.Direction;
 
 import java.util.Arrays;
 
@@ -10,8 +10,8 @@ public class Pawn extends Piece {
 
     public Pawn(Player player) {
         super(player, pieceName);
-        moveRules.addAll(Arrays.asList(MoveRule.TOP,
-                MoveRule.DIAGONAL_TOP_LEFT, MoveRule.DIAGONAL_TOP_RIGHT));
+        directions.addAll(Arrays.asList(Direction.TOP,
+                Direction.DIAGONAL_TOP_LEFT, Direction.DIAGONAL_TOP_RIGHT));
     }
 
     @Override

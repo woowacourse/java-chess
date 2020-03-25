@@ -1,7 +1,7 @@
 package chess.domain.chesspieces;
 
 import chess.domain.Player;
-import chess.domain.moverules.MoveRule;
+import chess.domain.moverules.Direction;
 
 import java.util.Arrays;
 
@@ -10,7 +10,7 @@ public class Queen extends Piece {
 
     public Queen(Player player) {
         super(player, pieceName);
-        moveRules.addAll(Arrays.asList(MoveRule.values()));
+        directions.addAll(Arrays.asList(Direction.values()));
     }
 
     @Override
