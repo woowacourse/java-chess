@@ -1,5 +1,6 @@
 package chess.domain.chesspieces;
 
+import chess.domain.Player;
 import chess.domain.moverules.MoveRule;
 import chess.domain.position.Position;
 import chess.domain.position.component.Column;
@@ -9,14 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class ChessPiece {
-    private final String name;
+public abstract class Piece extends Square{
+    private final Player player;
 
     protected List<MoveRule> moveRules = new ArrayList<>();
 
-    public ChessPiece(String name) {
-        this.name = name;
+
+    public Piece(Player player, PieceName name) {
+        super(name.getName(player));
+        this.player = player;
     }
+
 
     public boolean movable(Position source, Position target){
         Objects.requireNonNull(source);
@@ -32,10 +36,6 @@ public abstract class ChessPiece {
     public boolean validateMovableDirection(int rowDiff, int columnDiff) {
         return moveRules.stream()
                 .anyMatch(moveRule -> moveRule.getJudge().test(rowDiff, columnDiff));
-    }
-
-    public String getName() {
-        return name;
     }
 
     public List<MoveRule> getMoveRules() {

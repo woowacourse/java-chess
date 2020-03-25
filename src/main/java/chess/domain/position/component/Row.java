@@ -10,7 +10,7 @@ public enum Row {
     E('e'),
     F('f'),
     G('g'),
-    H('e');
+    H('h');
 
     private final Character value;
 

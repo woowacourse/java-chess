@@ -1,12 +1,9 @@
 package chess.domain.chesspieces;
 
-public class Empty extends ChessPiece {
-    public Empty() {
-        super(".");
-    }
+public class Empty extends Square {
+    public final static String EMPTY_DISPLAY = ".";
 
-    @Override
-    public boolean validateMovableTileSize(int rowDiff, int columnDiff) {
-        return false;
+    public Empty() {
+        super(EMPTY_DISPLAY);
     }
 }

@@ -10,32 +10,35 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-    private final Map<Position, ChessPiece> chessBoard = new LinkedHashMap<>();
+    private final Map<Position, Square> chessBoard = new LinkedHashMap<>();
 
     public ChessBoard() {
         Positions.getValues().forEach(position -> chessBoard.put(position, new Empty()));
 
-        Map<ChessPiece, List<Position>> locationInfo = new HashMap<>();
-        locationInfo.put(new Rook("R"), Arrays.asList(Positions.of(Row.A, Column.EIGHT), Positions.of(Row.H, Column.EIGHT)));
-        locationInfo.put(new Knight("N"), Arrays.asList(Positions.of(Row.B, Column.EIGHT), Positions.of(Row.G, Column.EIGHT)));
-        locationInfo.put(new Bishop("B"), Arrays.asList(Positions.of(Row.C, Column.EIGHT), Positions.of(Row.F, Column.EIGHT)));
-        locationInfo.put(new Queen("Q"), Arrays.asList(Positions.of(Row.D, Column.EIGHT)));
-        locationInfo.put(new Queen("K"), Arrays.asList(Positions.of(Row.E, Column.EIGHT)));
-        locationInfo.put(new Pawn("P"), Arrays.stream(Row.values()).map(row -> Positions.of(row, Column.SEVEN)).collect(Collectors.toList()));
+        Map<Piece, List<Position>> locationInfo = new LinkedHashMap<>();
 
-        locationInfo.put(new Rook("r"), Arrays.asList(Positions.of(Row.A, Column.ONE), Positions.of(Row.H, Column.ONE)));
-        locationInfo.put(new Knight("n"), Arrays.asList(Positions.of(Row.B, Column.ONE), Positions.of(Row.G, Column.ONE)));
-        locationInfo.put(new Bishop("b"), Arrays.asList(Positions.of(Row.C,Column.ONE), Positions.of(Row.F, Column.ONE)));
-        locationInfo.put(new Queen("q"), Arrays.asList(Positions.of(Row.D, Column.ONE)));
-        locationInfo.put(new Queen("k"), Arrays.asList(Positions.of(Row.E, Column.ONE)));
-        locationInfo.put(new Pawn("p"), Arrays.stream(Row.values()).map(row -> Positions.of(row, Column.TWO)).collect(Collectors.toList()));
+        Player blackPlayer = Player.BLACK;
+        locationInfo.put(new Rook(blackPlayer), Arrays.asList(Positions.of(Row.A, Column.EIGHT), Positions.of(Row.H, Column.EIGHT)));
+        locationInfo.put(new Knight(blackPlayer), Arrays.asList(Positions.of(Row.B, Column.EIGHT), Positions.of(Row.G, Column.EIGHT)));
+        locationInfo.put(new Bishop(blackPlayer), Arrays.asList(Positions.of(Row.C, Column.EIGHT), Positions.of(Row.F, Column.EIGHT)));
+        locationInfo.put(new Queen(blackPlayer), Arrays.asList(Positions.of(Row.D, Column.EIGHT)));
+        locationInfo.put(new King(blackPlayer), Arrays.asList(Positions.of(Row.E, Column.EIGHT)));
+        locationInfo.put(new Pawn(blackPlayer), Arrays.stream(Row.values()).map(row -> Positions.of(row, Column.SEVEN)).collect(Collectors.toList()));
 
-        for (Map.Entry<ChessPiece, List<Position>> entry : locationInfo.entrySet()){
+        Player whitePlayer = Player.WHITE;
+        locationInfo.put(new Rook(whitePlayer), Arrays.asList(Positions.of(Row.A, Column.ONE), Positions.of(Row.H, Column.ONE)));
+        locationInfo.put(new Knight(whitePlayer), Arrays.asList(Positions.of(Row.B, Column.ONE), Positions.of(Row.G, Column.ONE)));
+        locationInfo.put(new Bishop(whitePlayer), Arrays.asList(Positions.of(Row.C, Column.ONE), Positions.of(Row.F, Column.ONE)));
+        locationInfo.put(new Queen(whitePlayer), Arrays.asList(Positions.of(Row.D, Column.ONE)));
+        locationInfo.put(new Queen(whitePlayer), Arrays.asList(Positions.of(Row.E, Column.ONE)));
+        locationInfo.put(new Pawn(whitePlayer), Arrays.stream(Row.values()).map(row -> Positions.of(row, Column.TWO)).collect(Collectors.toList()));
+
+        for (Map.Entry<Piece, List<Position>> entry : locationInfo.entrySet()) {
             entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
         }
     }
 
-    public Map<Position, ChessPiece> getChessBoard() {
+    public Map<Position, Square> getChessBoard() {
         return Collections.unmodifiableMap(chessBoard);
     }
 }

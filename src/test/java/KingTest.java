@@ -1,3 +1,4 @@
+import chess.domain.Player;
 import chess.domain.chesspieces.King;
 import chess.domain.moverules.MoveRule;
 import chess.domain.position.Position;
@@ -11,11 +12,11 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class KingTest {
+    private final King king = new King(Player.WHITE);
 
     @DisplayName("moveRules Test : 움직일 수 있는 방향을 가지고 있는지에 테스트")
     @Test
     void kingMoveRulesTest() {
-        King king = new King("k");
         List<MoveRule> moveRules = king.getMoveRules();
         Assertions.assertThat(moveRules.contains(MoveRule.DIAGONAL_DOWN_LEFT)).isTrue();
     }
@@ -25,7 +26,6 @@ public class KingTest {
     void test() {
         Position source = Positions.of("a1");
         Position target = Positions.of("a2");
-        King king = new King("k");
         assertThat(king.movable(source, target)).isTrue();
     }
 
@@ -34,7 +34,6 @@ public class KingTest {
     void test2() {
         Position source = Positions.of("a1");
         Position target = Positions.of("a3");
-        King king = new King("k");
         assertThat(king.movable(source, target)).isFalse();
     }
 }

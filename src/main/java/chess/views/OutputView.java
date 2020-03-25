@@ -1,6 +1,6 @@
 package chess.views;
 
-import chess.domain.chesspieces.ChessPiece;
+import chess.domain.chesspieces.Square;
 import chess.domain.position.Position;
 import chess.domain.position.component.Row;
 
@@ -16,7 +16,7 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static void printChessBoard(Map<Position, ChessPiece> chessBoard) {
+    public static void printChessBoard(Map<Position, Square> chessBoard) {
         StringBuilder stringBuilder = new StringBuilder();
         int size = chessBoard.size();
         for (int i = 0; i < size; i += OFFSET) {
@@ -24,7 +24,7 @@ public class OutputView {
                     .stream()
                     .skip(i)
                     .limit(OFFSET)
-                    .map(ChessPiece::getName)
+                    .map(Square::getDisplay)
                     .collect(Collectors.joining());
             stringBuilder.insert(0, row);
             stringBuilder.insert(0, NEWLINE);

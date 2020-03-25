@@ -1,17 +1,16 @@
 package chess.domain.chesspieces;
 
+import chess.domain.Player;
 import chess.domain.moverules.MoveRule;
-import chess.domain.position.Position;
-import chess.domain.position.component.Column;
-import chess.domain.position.component.Row;
 
 import java.util.Arrays;
-import java.util.Objects;
 
-public class King extends ChessPiece {
+public class King extends Piece {
     private static final int MOVABLE_TILE_SIZE = 1;
-    public King(String name) {
-        super(name);
+    private static PieceName pieceName = PieceName.valueOf("KING");
+
+    public King(Player player) {
+        super(player, pieceName);
         moveRules.addAll(Arrays.asList(MoveRule.values()));
     }
 
