@@ -1,4 +1,4 @@
-package domain.position;
+package domain.piece.position;
 
 public class Position {
 	private static final int COLUMN_INDEX = 0;

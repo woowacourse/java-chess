@@ -1,6 +1,6 @@
-package domain.position;
+package domain.piece.position;
 
-import static domain.position.InvalidPositionException.*;
+import static domain.piece.position.InvalidPositionException.*;
 
 import java.util.Arrays;
 
