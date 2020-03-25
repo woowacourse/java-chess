@@ -1,22 +1,32 @@
 package chess.domain;
 
-public enum File {
-    A(1),
-    B(2),
-    C(3),
-    D(4),
-    E(5),
-    F(6),
-    G(7),
-    H(8);
+import java.util.Arrays;
 
+public enum File {
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8);
+
+    private final String name;
     private final int number;
 
-    File(int number) {
+    File(String name, int number) {
+        this.name = name;
         this.number = number;
     }
 
     public int getNumber() {
         return number;
     }
+
+    public static File of(String fileValue) {
+        return Arrays.stream(File.values()).filter(x -> x.name.equals(fileValue)).findAny().orElseThrow(IllegalArgumentException::new);
+    }
+
+
 }

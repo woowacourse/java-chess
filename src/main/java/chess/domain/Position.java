@@ -11,6 +11,11 @@ public class Position {
         this.rank = rank;
     }
 
+    public static Position of(String coordinate) {
+        String[] fileAndRank = coordinate.split("");
+        return new Position(File.of(fileAndRank[0]), Rank.of(fileAndRank[1]));
+    }
+
     public boolean isNewRank() {
         return file == File.A;
     }
@@ -35,5 +40,13 @@ public class Position {
 
     public boolean isSameFile(Position target) {
         return this.file == target.file;
+    }
+
+    public int calculateRankDistance(Position target) {
+        return Math.abs(rank.getNumber() - target.rank.getNumber());
+    }
+
+    public int calculateFileDistance(Position target) {
+        return Math.abs(file.getNumber() - target.file.getNumber());
     }
 }

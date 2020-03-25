@@ -1,6 +1,6 @@
 package chess.domain.chessPiece;
 
-import chess.domain.MoveRule;
+import chess.domain.MoveType;
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 
@@ -9,10 +9,12 @@ public class Rook extends Piece {
         super(position, teamStrategy);
     }
 
-    @Override
-    public boolean isMovable(Position source, Position target) {
 
-        MoveRule.validateStraightMove(source, target);
+    @Override
+    public boolean isMovable(Position target) {
+        if (MoveType.of(position, target) == MoveType.STRAIGHT) {
+            return true;
+        }
         return false;
     }
 

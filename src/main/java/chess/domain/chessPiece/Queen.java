@@ -10,7 +10,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovable(Position target) {
         return false;
     }
 

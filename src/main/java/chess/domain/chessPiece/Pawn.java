@@ -8,9 +8,8 @@ public class Pawn extends Piece {
     public Pawn(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
-
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovable(Position target) {
         return false;
     }
 

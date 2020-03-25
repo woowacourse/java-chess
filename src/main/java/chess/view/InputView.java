@@ -11,13 +11,18 @@ public class InputView {
 
     public static String inputGameState() {
         System.out.println(INPUT_MESSAGE_GAME_START);
-        return checkGameStateValidation(scanner.nextLine());
+        return validateInputGameState(scanner.nextLine());
     }
 
-    private static String checkGameStateValidation(String gameState) {
+    private static String validateInputGameState(String gameState) {
         if (START_COMMAND.equalsIgnoreCase(gameState) || END_COMMAND.equalsIgnoreCase(gameState)) {
             return gameState;
         }
         throw new IllegalArgumentException();
+    }
+
+    public static String inputMoveCommand() {
+        System.out.println("\n게임 이동 : move source위치 tartget위치 - 예 : move b2 b3");
+        return scanner.nextLine();
     }
 }

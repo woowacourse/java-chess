@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Rank {
     EIGHT(8),
     SEVEN(7),
@@ -18,5 +20,12 @@ public enum Rank {
 
     public int getNumber() {
         return number;
+    }
+
+    public static Rank of(String rankValue) {
+        return Arrays.stream(Rank.values())
+                .filter(x -> x.number == Integer.parseInt(rankValue))
+                .findAny()
+                .orElseThrow(IllegalAccessError::new);
     }
 }
