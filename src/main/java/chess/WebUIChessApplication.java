@@ -22,7 +22,8 @@ public class WebUIChessApplication {
     }
 
     private static void play() {
-        Board board = new Board(PiecesFactory.create());
+        Board board = Board.createEmptyBoard();
+        board.setAll(new PiecesFactory().getInstance());
         OutputView.printBoard(board);
 
         CommendType commendType = CommendType.answer(InputView.inputGameCommend());

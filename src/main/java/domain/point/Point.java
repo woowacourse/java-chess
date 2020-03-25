@@ -11,6 +11,22 @@ public class Point {
 		this.column = column;
 	}
 
+	public Row getRow() {
+		return row;
+	}
+
+	public Column getColumn() {
+		return column;
+	}
+
+	public int getRowIndex() {
+		return row.getIndex();
+	}
+
+	public int getColumnIndex() {
+		return column.getIndex();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

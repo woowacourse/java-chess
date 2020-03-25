@@ -16,12 +16,8 @@ public class OutputView {
 
     public static void printBoard(Board board) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (List<Piece> row : board.getChess()) {
-            String rowString = row.stream()
-                    .map(Piece::getInitial)
-                    .collect(Collectors.joining());
-
-            stringBuilder.append(rowString)
+        for (List<String> row : board.getBoard()) {
+            stringBuilder.append(String.join("", row))
                     .append(NEW_LINE);
         }
 

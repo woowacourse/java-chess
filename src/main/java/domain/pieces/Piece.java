@@ -18,6 +18,18 @@ public abstract class Piece {
         return team.caseInitial(initial);
     }
 
+    public int getRowIndex() {
+        return point.getRowIndex();
+    }
+
+    public int getColumnIndex() {
+        return point.getColumnIndex();
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
     @Override
     public String toString() {
         return initial;
