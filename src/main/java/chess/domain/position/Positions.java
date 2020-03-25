@@ -3,7 +3,6 @@ package chess.domain.position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 

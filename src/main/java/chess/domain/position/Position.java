@@ -2,7 +2,6 @@ package chess.domain.position;
 
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
-import javafx.geometry.Pos;
 
 public class Position {
     private final Row row;
