@@ -8,7 +8,8 @@ public class Bishop implements PieceType {
     private static class Singleton {
         private static final Bishop instance = new Bishop();
     }
-    public static PieceType getInstance() {
+
+    public static Bishop getInstance() {
         return Singleton.instance;
     }
 

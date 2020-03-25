@@ -8,7 +8,7 @@ public class Pawn implements PieceType {
         private static final Pawn instance = new Pawn();
     }
 
-    public static PieceType getInstance() {
+    public static Pawn getInstance() {
         return Singleton.instance;
     }
 

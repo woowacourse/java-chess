@@ -8,7 +8,7 @@ public class Queen implements PieceType {
         private static final Queen instance = new Queen();
     }
 
-    public static PieceType getInstance() {
+    public static Queen getInstance() {
         return Singleton.instance;
     }
 

@@ -1,7 +1,7 @@
 package chess.domain.chessBoard;
 
-import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessPiece.*;
+import chess.domain.chessPiece.ChessPiece;
+import chess.domain.chessPiece.PieceColor;
 import chess.domain.chessPiece.pieceType.*;
 import chess.domain.position.ChessFile;
 import chess.domain.position.ChessRank;
@@ -25,12 +25,12 @@ public class ChessBoardTest {
 
     @ParameterizedTest
     @MethodSource("provideInitializedChessBoard")
-    void initialBoard_AllPieces_GenerateInitialChessBoard(Map<Position, Piece> expected) {
+    void initialBoard_AllPieces_GenerateInitialChessBoard(Map<Position, ChessPiece> expected) {
         assertThat(new ChessBoard()).extracting("pieces").isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideInitializedChessBoard() {
-        Map<Position, Piece> initialBoard = new HashMap<>();
+        Map<Position, ChessPiece> initialBoard = new HashMap<>();
         addOtherPiecesBy(initialBoard, PieceColor.WHITE, 1);
         addPawnPiecesBy(initialBoard, PieceColor.WHITE, 2);
 
@@ -40,20 +40,20 @@ public class ChessBoardTest {
         return Stream.of(Arguments.of(initialBoard));
     }
 
-    private static void addPawnPiecesBy(Map<Position, Piece> initialBoard, PieceColor pieceColor, int rank) {
+    private static void addPawnPiecesBy(Map<Position, ChessPiece> initialBoard, PieceColor pieceColor, int rank) {
         for (ChessFile chessFile : ChessFile.values()) {
-            initialBoard.put(Position.of(chessFile, ChessRank.from(rank)), Piece.of(pieceColor, Pawn.getInstance()));
+            initialBoard.put(Position.of(chessFile, ChessRank.from(rank)), ChessPiece.of(pieceColor, Pawn.getInstance()));
         }
     }
 
-    private static void addOtherPiecesBy(Map<Position, Piece> initialBoard, PieceColor pieceColor, int rank) {
-        initialBoard.put(Position.of(ChessFile.from('a'), ChessRank.from(rank)), Piece.of(pieceColor, Rook.getInstance()));
-        initialBoard.put(Position.of(ChessFile.from('b'), ChessRank.from(rank)), Piece.of(pieceColor, Knight.getInstance()));
-        initialBoard.put(Position.of(ChessFile.from('c'), ChessRank.from(rank)), Piece.of(pieceColor, Bishop.getInstance()));
-        initialBoard.put(Position.of(ChessFile.from('d'), ChessRank.from(rank)), Piece.of(pieceColor, Queen.getInstance()));
-        initialBoard.put(Position.of(ChessFile.from('e'), ChessRank.from(rank)), Piece.of(pieceColor, King.getInstance()));
-        initialBoard.put(Position.of(ChessFile.from('f'), ChessRank.from(rank)), Piece.of(pieceColor, Bishop.getInstance()));
-        initialBoard.put(Position.of(ChessFile.from('g'), ChessRank.from(rank)), Piece.of(pieceColor, Knight.getInstance()));
-        initialBoard.put(Position.of(ChessFile.from('h'), ChessRank.from(rank)), Piece.of(pieceColor, Rook.getInstance()));
+    private static void addOtherPiecesBy(Map<Position, ChessPiece> initialBoard, PieceColor pieceColor, int rank) {
+        initialBoard.put(Position.of(ChessFile.from('a'), ChessRank.from(rank)), ChessPiece.of(pieceColor, Rook.getInstance()));
+        initialBoard.put(Position.of(ChessFile.from('b'), ChessRank.from(rank)), ChessPiece.of(pieceColor, Knight.getInstance()));
+        initialBoard.put(Position.of(ChessFile.from('c'), ChessRank.from(rank)), ChessPiece.of(pieceColor, Bishop.getInstance()));
+        initialBoard.put(Position.of(ChessFile.from('d'), ChessRank.from(rank)), ChessPiece.of(pieceColor, Queen.getInstance()));
+        initialBoard.put(Position.of(ChessFile.from('e'), ChessRank.from(rank)), ChessPiece.of(pieceColor, King.getInstance()));
+        initialBoard.put(Position.of(ChessFile.from('f'), ChessRank.from(rank)), ChessPiece.of(pieceColor, Bishop.getInstance()));
+        initialBoard.put(Position.of(ChessFile.from('g'), ChessRank.from(rank)), ChessPiece.of(pieceColor, Knight.getInstance()));
+        initialBoard.put(Position.of(ChessFile.from('h'), ChessRank.from(rank)), ChessPiece.of(pieceColor, Rook.getInstance()));
     }
 }

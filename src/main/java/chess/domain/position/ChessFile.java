@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessFile {
+
     private static final Map<Character, ChessFile> CHESS_FILES = new HashMap<>();
+    private static final char LOWER_BOUND = 'a';
+    private static final char UPPER_BOUND = 'h';
 
     private final char chessFile;
 
+
     static {
-        for (char c = 'a'; c <= 'h'; c++) {
+        for (char c = LOWER_BOUND; c <= UPPER_BOUND; c++) {
             CHESS_FILES.put(c, new ChessFile(c));
         }
     }
@@ -26,7 +30,7 @@ public class ChessFile {
     }
 
     private void validate(char chessFile) {
-        if (chessFile < 'a' || chessFile > 'h') {
+        if (chessFile < LOWER_BOUND || chessFile > UPPER_BOUND) {
             throw new IllegalArgumentException("유효한 체스 파일이 아닙니다.");
         }
     }

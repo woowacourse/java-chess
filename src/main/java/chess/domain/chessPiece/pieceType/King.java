@@ -9,7 +9,7 @@ public class King implements PieceType {
         private static final King instance = new King();
     }
 
-    public static PieceType getInstance() {
+    public static King getInstance() {
         return Singleton.instance;
     }
 

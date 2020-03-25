@@ -8,7 +8,7 @@ public class Rook implements PieceType {
         private static final Rook instance = new Rook();
     }
 
-    public static PieceType getInstance() {
+    public static Rook getInstance() {
         return Singleton.instance;
     }
 

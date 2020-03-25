@@ -13,6 +13,9 @@ public enum PieceColor {
     }
 
     public String convertName(String pieceName) {
+        if (pieceName == null || pieceName.isEmpty()) {
+            throw new IllegalArgumentException("체스 이름이 유효하지 않습니다.");
+        }
         return convertName.apply(pieceName);
     }
 }

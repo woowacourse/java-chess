@@ -9,7 +9,7 @@ public class Knight implements PieceType {
         private static final Knight instance = new Knight();
     }
 
-    public static PieceType getInstance() {
+    public static Knight getInstance() {
         return Singleton.instance;
     }
 

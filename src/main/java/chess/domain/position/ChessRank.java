@@ -28,6 +28,11 @@ public class ChessRank {
         return CHESS_RANKS.getOrDefault(chessRank, new ChessRank(chessRank));
     }
 
+    public static ChessRank from(char chessRank) {
+        int parsedChessRank = Character.getNumericValue(chessRank);
+        return CHESS_RANKS.getOrDefault(parsedChessRank, new ChessRank(parsedChessRank));
+    }
+
     private void validate(int chessRank) {
         if (chessRank < LOWER_BOUND || chessRank > UPPER_BOUND) {
             throw new IllegalArgumentException("유효한 체스 랭크가 아닙니다.");
