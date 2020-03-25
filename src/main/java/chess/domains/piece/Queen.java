@@ -9,6 +9,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position currentPosition, Position targetPosition) {
-        return false;
+        return currentPosition.isInLine(targetPosition) || currentPosition.isInCrossLine(targetPosition);
     }
 }
