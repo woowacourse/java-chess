@@ -26,7 +26,7 @@ public class ChessBoardTest {
     @ParameterizedTest
     @MethodSource("provideInitializedChessBoard")
     void initialBoard_AllPieces_GenerateInitialChessBoard(Map<Position, ChessPiece> expected) {
-        assertThat(new ChessBoard()).extracting("pieces").isEqualTo(expected);
+        assertThat(new ChessBoard()).extracting("chessPieces").isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideInitializedChessBoard() {
