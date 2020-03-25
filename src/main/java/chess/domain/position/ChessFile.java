@@ -1,9 +1,6 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChessFile {
 
@@ -25,18 +22,28 @@ public class ChessFile {
         this.chessFile = chessFile;
     }
 
-    public static ChessFile from(char chessFile) {
-        return CHESS_FILES.getOrDefault(chessFile, new ChessFile(chessFile));
-    }
-
     private void validate(char chessFile) {
         if (chessFile < LOWER_BOUND || chessFile > UPPER_BOUND) {
             throw new IllegalArgumentException("유효한 체스 파일이 아닙니다.");
         }
     }
 
+    public static ChessFile from(char chessFile) {
+        return CHESS_FILES.getOrDefault(chessFile, new ChessFile(chessFile));
+    }
+
     public static List<ChessFile> values() {
         return new ArrayList<>(CHESS_FILES.values());
+    }
+
+
+    public ChessFile move(int fileMovingUnit) {
+        return from((char) (this.chessFile + fileMovingUnit));
+    }
+
+    public int intervalTo(ChessFile targetFile) {
+        Objects.requireNonNull(targetFile, "비교할 타겟 파일이 존재하지 않습니다.");
+        return targetFile.chessFile - this.chessFile;
     }
 
     @Override

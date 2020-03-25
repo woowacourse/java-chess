@@ -1,9 +1,6 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChessRank {
 
@@ -24,6 +21,12 @@ public class ChessRank {
         this.chessRank = chessRank;
     }
 
+    private void validate(int chessRank) {
+        if (chessRank < LOWER_BOUND || chessRank > UPPER_BOUND) {
+            throw new IllegalArgumentException("유효한 체스 랭크가 아닙니다.");
+        }
+    }
+
     public static ChessRank from(int chessRank) {
         return CHESS_RANKS.getOrDefault(chessRank, new ChessRank(chessRank));
     }
@@ -33,14 +36,18 @@ public class ChessRank {
         return CHESS_RANKS.getOrDefault(parsedChessRank, new ChessRank(parsedChessRank));
     }
 
-    private void validate(int chessRank) {
-        if (chessRank < LOWER_BOUND || chessRank > UPPER_BOUND) {
-            throw new IllegalArgumentException("유효한 체스 랭크가 아닙니다.");
-        }
-    }
-
     public static List<ChessRank> values() {
         return new ArrayList<>(CHESS_RANKS.values());
+    }
+
+
+    public ChessRank move(int rankMovingUnit) {
+        return from(this.chessRank + rankMovingUnit);
+    }
+
+    public int intervalTo(ChessRank targetRank) {
+        Objects.requireNonNull(targetRank, "비교할 타겟 랭크가 존재하지 않습니다.");
+        return targetRank.chessRank - this.chessRank;
     }
 
     @Override

@@ -64,6 +64,20 @@ public class Position {
         return String.format("%s%s", chessFile, chessRank);
     }
 
+    public Position move(int fileMovingUnit, int rankMovingUnit) {
+        return Position.of(chessFile.move(fileMovingUnit), chessRank.move(rankMovingUnit));
+    }
+
+    public int calculateFileIntervalTo(Position targetPosition) {
+        Objects.requireNonNull(targetPosition, "비교할 타겟 위치가 존재하지 않습니다.");
+        return this.chessFile.intervalTo(targetPosition.chessFile);
+    }
+
+    public int calculateRankIntervalTo(Position targetPosition) {
+        Objects.requireNonNull(targetPosition, "비교할 타겟 위치가 존재하지 않습니다.");
+        return this.chessRank.intervalTo(targetPosition.chessRank);
+    }
+
     @Override
     public String toString() {
         return key(this.chessFile, this.chessRank);
