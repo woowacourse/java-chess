@@ -1,20 +1,54 @@
 package domain.board;
 
 import domain.pieces.Piece;
+import domain.point.Column;
+import domain.point.Point;
+import domain.point.Row;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Board {
+    private static final String EMPTY = ".";
 
-    private final List<List<Piece>> chess;
+    private final List<List<String>> board;
 
-    public Board(List<List<Piece>> chess) {
-        this.chess = chess;
+    public Board(List<List<String>> board) {
+        this.board = new ArrayList<>(board);
     }
 
-    public List<List<Piece>> getChess() {
-        return chess;
+    public static Board createEmptyBoard() {
+        List<List<String>> board = new ArrayList<>();
+
+        for (Row row : Row.values()) {
+            board.add(new ArrayList<>());
+            for (Column column : Column.values()) {
+                board.get(row.getIndex()).add(EMPTY);
+            }
+        }
+
+        return new Board(board);
+    }
+
+    public void setAll(Set<Piece> pieces) {
+        for (Piece piece : pieces) {
+            set(piece);
+        }
+    }
+
+    public void setEmpty(Point point) {
+        set(point.getRowIndex(), point.getColumnIndex(), EMPTY);
+    }
+
+    public void set(Piece piece) {
+        set(piece.getRowIndex(), piece.getColumnIndex(), piece.getInitial());
+    }
+
+    private void set(int i, int j, String initial) {
+        board.get(i).set(j, initial);
+    }
+
+    public List<List<String>> getBoard() {
+        return Collections.unmodifiableList(board);
     }
 
     @Override
@@ -26,11 +60,11 @@ public class Board {
             return false;
         }
         Board board = (Board) o;
-        return Objects.equals(chess, board.chess);
+        return Objects.equals(this.board, board.board);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(chess);
+        return Objects.hash(board);
     }
 }

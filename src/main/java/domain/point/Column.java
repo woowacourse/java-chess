@@ -17,4 +17,8 @@ public enum Column {
 		this.column = column;
 		this.index = index;
 	}
+
+	public int getIndex() {
+		return index;
+	}
 }

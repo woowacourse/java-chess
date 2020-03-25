@@ -47,4 +47,8 @@ public class PiecesFactory {
             pieces.add(new Pawn(WHITE, new Point(TWO, column)));
         }
     }
+
+    public Set<Piece> getInstance() {
+        return pieces;
+    }
 }
