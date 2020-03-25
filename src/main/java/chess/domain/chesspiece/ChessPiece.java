@@ -1,11 +1,13 @@
 package chess.domain.chesspiece;
 
+import java.util.List;
+
 import chess.domain.Position;
 import chess.domain.Team;
 
-public class ChessPiece {
+public abstract class ChessPiece {
     private String name;
-    private Position position;
+    protected Position position;
     private final Team team;
 
     public ChessPiece(String name, Position position, Team team) {
@@ -17,15 +19,13 @@ public class ChessPiece {
         this.team = team;
     }
 
-    public boolean equalPosition(Position checkPosition) {
-        return this.position.equals(checkPosition);
-    }
+    public abstract boolean canMove(Position position);
+
+    public abstract List<Position> makeCanMovePositions();
+
 
     public String getName() {
         return name;
     }
 
-    public boolean isBlack() {
-        return team == Team.BLACK;
-    }
 }

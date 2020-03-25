@@ -1,21 +1,20 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Stream;
-
-import chess.domain.chesspiece.ChessPiece;
-import chess.factory.BoardFactory;
 
 public class ChessBoard {
-	private List<Row> board;
+	private final List<Row> board;
 
 	public ChessBoard(List<Row> board) {
-		this.board = board;
+		this.board = new ArrayList<>(board);
 	}
 
 	public List<Row> getBoard() {
-		return board;
+		return Collections.unmodifiableList(board);
 	}
+
+
 
 }
