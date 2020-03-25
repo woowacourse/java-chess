@@ -30,4 +30,9 @@ public class BlackTeam implements TeamStrategy {
     public String rookName() {
         return "r";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof BlackTeam;
+    }
 }

@@ -31,4 +31,9 @@ public class WhiteTeam implements TeamStrategy {
     public String rookName() {
         return "R";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof WhiteTeam;
+    }
 }
