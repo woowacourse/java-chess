@@ -1,42 +1,57 @@
 package chess.domain.board;
 
-import java.util.Map;
-import java.util.TreeMap;
+import chess.domain.piece.GamePiece;
+
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import chess.domain.piece.GamePiece;
 
 public class Board {
 
     private final Map<Position, GamePiece> board;
 
     private Board(Map<Position, GamePiece> board) {
-        this.board = board;
+        this.board = Collections.unmodifiableMap(board);
     }
 
     public static Board createInitial() {
-        Board board = new Board(placeWithEmptyPiece());
-        board.initialize();
-        return board;
+        return new Board(initializePositionsOfPieces());
     }
 
-    private static Map<Position, GamePiece> placeWithEmptyPiece() {
+    private static Map<Position, GamePiece> initializePositionsOfPieces() {
+        Map<Position, GamePiece> emptyBoard = createEmptyBoard();
+        for (GamePiece piece : GamePiece.list()) {
+            placeChessPieces(emptyBoard, piece);
+        }
+
+        return emptyBoard;
+    }
+
+    private static Map<Position, GamePiece> createEmptyBoard() {
         return Position.list()
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), position -> GamePiece.EMPTY));
-    }
-
-    private void initialize() {
-        for (GamePiece piece : GamePiece.list()) {
-            placeChessPieces(board, piece);
-        }
     }
 
     private static void placeChessPieces(Map<Position, GamePiece> board, GamePiece piece) {
         for (Position position : piece.getInitialPositions()) {
             board.put(position, piece);
         }
+    }
+
+    public List<List<GamePiece>> gamePieces() {
+        List<List<GamePiece>> gamePieces = new ArrayList<>();
+        Iterator<GamePiece> iterator = getBoard().values().iterator();
+
+        for (int i = 0; i < Rank.values().length; i++) {
+            List<GamePiece> eachRank = new ArrayList<>();
+            for (int j = 0; j < File.values().length; j++) {
+                eachRank.add(iterator.next());
+            }
+            gamePieces.add(eachRank);
+        }
+
+        return Collections.unmodifiableList(gamePieces);
     }
 
     public Map<Position, GamePiece> getBoard() {

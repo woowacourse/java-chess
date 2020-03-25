@@ -22,4 +22,10 @@
     - [x] rank, file
     - [x] list 생성
 - [x] Board 구현
-    - [x] 체스판 초기화    
+    - [x] 체스판 초기화 
+- [x] Command 구현
+    - [x] Start 구현
+    - [x] End 구현
+### view
+- [x] Command 입력
+- [x] Board 출력   
