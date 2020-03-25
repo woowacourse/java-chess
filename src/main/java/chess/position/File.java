@@ -1,6 +1,7 @@
 package chess.position;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum File {
@@ -13,6 +14,7 @@ public enum File {
 	G("g"),
 	H("h");
 
+	private static final String ILLEGAL_FILE_NAME_EXCEPTION_MESSAGE = "올바른 열값이 아닙니다.";
 	private final String name;
 
 	File(String name) {
@@ -51,6 +53,13 @@ public enum File {
 		} else {
 			return file2;
 		}
+	}
+
+	public static File of(String name) {
+		return Arrays.stream(values())
+			.filter(value -> value.name.equals(name))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(ILLEGAL_FILE_NAME_EXCEPTION_MESSAGE));
 	}
 
 	public String getName() {
