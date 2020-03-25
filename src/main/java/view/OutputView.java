@@ -22,6 +22,7 @@ public class OutputView {
                 newLineCount = 0;
             }
         }
+        System.out.println();
     }
 
     private static void printRowBoard(Pieces pieces, Point point) {

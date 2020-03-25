@@ -3,8 +3,8 @@ package domain.team;
 import java.util.function.UnaryOperator;
 
 public enum Team {
-    WHITE(String::toLowerCase),
     BLACK(String::toUpperCase),
+    WHITE(String::toLowerCase),
     NONE(string -> ".");
 
     private UnaryOperator<String> operator;

@@ -1,6 +1,5 @@
 package domain.pieces;
 
-import domain.point.Point;
 import domain.team.Team;
 
 public class Pawn extends Piece {

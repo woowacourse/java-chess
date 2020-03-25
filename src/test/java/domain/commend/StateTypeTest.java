@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.commend.exceptions.CommendTypeException;
 import org.junit.jupiter.api.Test;
 
-public class CommendTypeTest {
+public class StateTypeTest {
 
     @Test
     void answer_Start() {

@@ -1,5 +1,6 @@
 package domain.pieces;
 
+import domain.point.Point;
 import domain.team.Team;
 
 public abstract class Piece {
@@ -15,6 +16,11 @@ public abstract class Piece {
         return team.caseInitial(initial);
     }
 
+    public boolean isSameTeam(Team team) {
+        return this.team.equals(team);
+    }
+
+//    public abstract boolean isMovable(Point from, Point to);
 
     @Override
     public String toString() {

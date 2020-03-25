@@ -5,23 +5,25 @@ import domain.pieces.Pieces;
 import domain.point.Column;
 import domain.point.Point;
 import domain.point.Row;
+import domain.team.Team;
 import java.util.Arrays;
 import java.util.List;
 
 public class Move {
-    public static void movePiece(Pieces pieces, String input) {
+    public static void movePiece(Team turn, Pieces pieces, String input) {
         validate(input);
         List<String> splitInput = Arrays.asList(input.split(" "));
         Point from = createPointBefore(splitInput.get(1));
         Point to = createPointAfter(splitInput.get(2));
+        pieces.move(turn, from, to);
     }
 
     private static Point createPointBefore(String location) {
-        return new Point(Row.find(location.substring(0, 1)), Column.find(location.substring(1, 2)));
+        return new Point(Row.find(location.substring(1, 2)), Column.find(location.substring(0, 1)));
     }
 
     private static Point createPointAfter(String location) {
-        return new Point(Row.find(location.substring(0, 1)), Column.find(location.substring(1, 2)));
+        return new Point(Row.find(location.substring(1, 2)), Column.find(location.substring(0, 1)));
     }
 
     private static void validate(String input) {

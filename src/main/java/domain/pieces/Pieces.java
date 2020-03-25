@@ -1,6 +1,10 @@
 package domain.pieces;
 
+import static domain.team.Team.NONE;
+
+import domain.commend.exceptions.IsNotMovableException;
 import domain.point.Point;
+import domain.team.Team;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -27,5 +31,24 @@ public class Pieces {
 
     public boolean isGetPoint(Point point) {
         return pieces.containsKey(point);
+    }
+
+    public void move(Team turn, Point from, Point to) {
+        validateExistPiece(from);
+        validateCorrectTurn(turn, from);
+        pieces.put(to, pieces.get(from));
+        pieces.put(from, new Empty(NONE));
+    }
+
+    private void validateExistPiece(Point from) {
+        if (!isGetPoint(from)) {
+            throw new IsNotMovableException("잘못된 move 입력입니다.");
+        }
+    }
+
+    private void validateCorrectTurn(Team turn, Point from) {
+        if(!getPiece(from).isSameTeam(turn)) {
+            throw new IsNotMovableException("잘못된 move 입력입니다.");
+        }
     }
 }

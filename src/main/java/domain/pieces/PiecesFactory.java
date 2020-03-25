@@ -1,24 +1,8 @@
 package domain.pieces;
 
-import static domain.point.Column.A;
-import static domain.point.Column.B;
-import static domain.point.Column.C;
-import static domain.point.Column.D;
-import static domain.point.Column.E;
-import static domain.point.Column.F;
-import static domain.point.Column.G;
-import static domain.point.Column.H;
-import static domain.point.Row.EIGHT;
-import static domain.point.Row.FIVE;
-import static domain.point.Row.FOUR;
-import static domain.point.Row.ONE;
-import static domain.point.Row.SEVEN;
-import static domain.point.Row.SIX;
-import static domain.point.Row.THREE;
-import static domain.point.Row.TWO;
-import static domain.team.Team.BLACK;
-import static domain.team.Team.NONE;
-import static domain.team.Team.WHITE;
+import static domain.point.Column.*;
+import static domain.point.Row.*;
+import static domain.team.Team.*;
 
 import domain.point.Column;
 import domain.point.Point;
@@ -62,6 +46,10 @@ public class PiecesFactory {
     }
 
     private static void createWhiteTeamPieces() {
+        for (Column column: Column.values()) {
+            pieces.put(new Point(TWO, column), new Pawn(WHITE));
+        }
+
         pieces.put(new Point(ONE, A), new Rook(WHITE));
         pieces.put(new Point(ONE, B), new Knight(WHITE));
         pieces.put(new Point(ONE, C), new Bishop(WHITE));
@@ -70,10 +58,6 @@ public class PiecesFactory {
         pieces.put(new Point(ONE, F), new Bishop(WHITE));
         pieces.put(new Point(ONE, G), new Knight(WHITE));
         pieces.put(new Point(ONE, H), new Rook(WHITE));
-
-        for (Column column: Column.values()) {
-            pieces.put(new Point(TWO, column), new Pawn(WHITE));
-        }
     }
 
     public static Map<Point, Piece> create() {

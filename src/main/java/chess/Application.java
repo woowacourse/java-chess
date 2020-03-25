@@ -1,7 +1,6 @@
 package chess;
 
-import domain.commend.CommendType;
-import domain.commend.Commend;
+import domain.commend.State;
 import domain.commend.Move;
 import domain.pieces.Pieces;
 import domain.pieces.PiecesFactory;
@@ -11,24 +10,24 @@ import view.OutputView;
 public class Application {
     public static void main(String[] args) {
         OutputView.printStart();
+        State state = new State();
+        state.changeCommend(InputView.inputGameCommend());
+        play(state);
 
-        Commend commend = new Commend();
-        commend.findCommend(InputView.inputGameCommend());
-        if (commend.isStart()) {
-            play(commend);
-        }
     }
 
-    private static void play(Commend commend) {
+    private static void play(State state) {
         Pieces pieces =  Pieces.of(PiecesFactory.create());
-        OutputView.printBoard(pieces);
 
-//        while (commend.isStart()) {
-//            String inputCommend = InputView.inputGameCommend();
-//            if (commend.findCommend(inputCommend) == CommendType.MOVE) {
-//                Move.movePiece(pieces, inputCommend);
-//            }
-//        }
+        while (!state.isEnd()) {
+            OutputView.printBoard(pieces);
+            String inputCommend = InputView.inputCommend();
+            state.changeCommend(inputCommend);
+            if (state.isMove()) {
+                Move.movePiece(state.getTurn(), pieces, inputCommend);
+                state.changeTurn();
+            }
+        }
 
     }
 }
