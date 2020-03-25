@@ -26,7 +26,7 @@
 기능 구현
 
 - [x]  Position 구현.
-- [ ]  Board 구현.
+- [x]  Board 구현.
 - [ ]  추상 클래스 Piece 구현.
 - [ ]  Movable interface 구현.
 - [ ]  Filtering interface  구현.
