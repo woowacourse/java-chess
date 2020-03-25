@@ -1,4 +1,21 @@
 package chess.domain.MovableStrategy;
 
-public class BishopMovableStrategy implements MovableStrategy {
+import chess.domain.position.MoveDirection;
+import chess.domain.position.Position;
+
+import java.util.Arrays;
+
+public class BishopMovableStrategy extends NonLeapableStrategy {
+    public BishopMovableStrategy() {
+        this.movableDirections.addAll(Arrays.asList(
+                MoveDirection.NE,
+                MoveDirection.SE,
+                MoveDirection.SW,
+                MoveDirection.NW));
+    }
+
+    @Override
+    boolean canMoveRange(Position source, Position target) {
+        return true;
+    }
 }
