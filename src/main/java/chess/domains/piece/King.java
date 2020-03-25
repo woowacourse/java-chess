@@ -9,7 +9,7 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position current, Position target) {
-        return current.xGapBetween(target) <= 1
-                && current.yGapBetween(target) <= 1;
+        return Math.abs(current.xGapBetween(target)) <= 1
+                && Math.abs(current.yGapBetween(target)) <= 1;
     }
 }

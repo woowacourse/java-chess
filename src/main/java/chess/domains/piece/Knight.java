@@ -9,7 +9,7 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position current, Position target) {
-        return (current.xGapBetween(target) == 1 && current.yGapBetween(target) == 2)
-                || (current.xGapBetween(target) == 2 && current.yGapBetween(target) == 1);
+        return (Math.abs(current.xGapBetween(target)) == 1 && Math.abs(current.yGapBetween(target)) == 2)
+                || (Math.abs(current.xGapBetween(target)) == 2 && Math.abs(current.yGapBetween(target)) == 1);
     }
 }

@@ -37,11 +37,11 @@ public class Position implements Comparable<Position> {
     }
 
     public int xGapBetween(Position target) {
-        return Math.abs(this.x - target.x);
+        return target.x - this.x;
     }
 
     public int yGapBetween(Position target) {
-        return Math.abs(this.y - target.y);
+        return target.y - this.y;
     }
 
     public boolean isSameX(Position target) {
@@ -50,6 +50,10 @@ public class Position implements Comparable<Position> {
 
     public boolean isSameY(Position target) {
         return this.y == target.y;
+    }
+
+    public boolean isRow(int row) {
+        return this.y == row;
     }
 
     @Override

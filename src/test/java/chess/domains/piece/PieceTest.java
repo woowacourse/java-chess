@@ -70,4 +70,48 @@ class PieceTest {
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
+
+    @DisplayName("Pawn White 말이 초기 위치에서 원하는 위치로 이동할 수 있는 지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"a3, true", "a4, true", "a5, false", "a1, false", "b2, false"})
+    void canMove_6(String target, boolean expectedResult) {
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        boolean actualResult = pawn.canMove(Position.ofPositionName("a2"), Position.ofPositionName(target));
+
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("Pawn Black 말이 초기 위치에서 원하는 위치로 이동할 수 있는 지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"a6, true", "a5, true", "a4, false", "a8, false", "b7, false"})
+    void canMove_7(String target, boolean expectedResult) {
+        Piece pawn = new Pawn(PieceColor.BLACK);
+
+        boolean actualResult = pawn.canMove(Position.ofPositionName("a7"), Position.ofPositionName(target));
+
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("Pawn White 말이 초기 위치가 아닌 곳에서 원하는 위치로 이동할 수 있는 지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"e5, true", "e6, false", "e4, false", "f4, false", "d4, false"})
+    void canMove_8(String target, boolean expectedResult) {
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        boolean actualResult = pawn.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("Pawn Black 말이 초기 위치가 아닌 곳에서 원하는 위치로 이동할 수 있는 지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"e3, true", "e2, false", "e5, false", "d4, false", "f4, false"})
+    void canMove_9(String target, boolean expectedResult) {
+        Piece pawn = new Pawn(PieceColor.BLACK);
+
+        boolean actualResult = pawn.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
 }

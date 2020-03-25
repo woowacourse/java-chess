@@ -11,6 +11,6 @@ public class Queen extends Piece {
     public boolean canMove(Position current, Position target) {
         return current.isSameX(target)
                 || current.isSameY(target)
-                || (current.xGapBetween(target) == current.yGapBetween(target));
+                || (Math.abs(current.xGapBetween(target)) == Math.abs(current.yGapBetween(target)));
     }
 }
