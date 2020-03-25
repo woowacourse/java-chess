@@ -74,7 +74,6 @@ public class ChessBoard {
             chessBoard2.put(Square.of(file + "1"), Piece.of(Color.WHITE, arr[i]));
             chessBoard2.put(Square.of(file + "8"), Piece.of(Color.BLACK, arr[i]));
         }
-
     }
 
     public List<List<Piece>> getChessBoard() {

@@ -24,6 +24,10 @@ public class OutputView {
         }
     }
 
+    public static void printChessBoard2(ChessBoard chessBoard) {
+
+    }
+
     private static void printChessBoardRow(List<Piece> pieces) {
         for (Piece piece : pieces) {
             if (Objects.isNull(piece)) {

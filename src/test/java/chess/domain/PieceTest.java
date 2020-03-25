@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -91,6 +93,20 @@ public class PieceTest {
 
         assertThat(availableSquaresBlack.size()).isEqualTo(2);
         assertThat(availableSquaresWhite.size()).isEqualTo(1);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"c4", "d5", "d1", "f1", "f5", "g2"})
+    @DisplayName("판의 정보를 가져와서 나이트가 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")
+    void movableKnightSquareTest(String input) {
+        Map<Square, Piece> board = new HashMap<>();
+        board.put(Square.of("d5"), Piece.of(Color.BLACK, Type.KING));
+        board.put(Square.of("c2"), Piece.of(Color.WHITE, Type.QUEEN));
+        board.put(Square.of("g4"), Piece.of(Color.WHITE, Type.PAWN));
+        Piece piece = Piece.of(Color.WHITE, Type.KNIGHT);
+        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("e3"), board);
+        assertThat(availableSquares.contains(Square.of(input))).isTrue();
+        assertThat(availableSquares.size()).isEqualTo(6);
     }
 
 }

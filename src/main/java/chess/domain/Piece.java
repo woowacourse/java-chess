@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Piece {
     private final static Map<String, Piece> CACHE = new HashMap<>();
@@ -113,11 +114,21 @@ public class Piece {
         throw new IllegalArgumentException("올바른 타입이 아닙니다");
     }
 
+
     private Square addIfInBoundary(Square square, int fileIncrementBy, int rankIncrementBy) {
         if (Square.hasCacheAdded(square, fileIncrementBy, rankIncrementBy)) {
             return Square.of(square, fileIncrementBy, rankIncrementBy);
         }
         return square;
     }
+
+    public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
+        // Todo 색비교 메서드로 분리 요청
+        return calculateScope(square).stream()
+                .filter(s -> !(board.containsKey(s) && board.get(s).color == color))
+                .collect(Collectors.toSet());
+    }
     // Todo 칸-말 맵 받아서 자기가 움직일 수 있는 리스트 보내줌
+
+
 }
