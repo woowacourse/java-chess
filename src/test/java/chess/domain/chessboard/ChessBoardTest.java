@@ -5,6 +5,9 @@ import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.chessPiece.Piece;
 import chess.domain.chessPiece.Queen;
+import chess.domain.chessPiece.Rook;
+import chess.domain.chessPiece.team.BlackTeam;
+import chess.domain.movefactory.Straight;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -54,5 +57,15 @@ public class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.movePiece(Position.of("c1"), Position.of("b2")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은팀이 있는 칸으로 이동할수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("움직이는 테스트")
+    void movePieceTest() {
+        Position source = Position.of("a1");
+        Piece piece = new Rook(source, new BlackTeam());
+        piece.move(new Straight(source, Position.of("a3")));
+
+        assertThat(piece.isEqualPosition(Position.of("a3"))).isTrue();
     }
 }

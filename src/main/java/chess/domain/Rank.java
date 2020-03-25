@@ -28,4 +28,8 @@ public enum Rank {
                 .findAny()
                 .orElseThrow(IllegalAccessError::new);
     }
+
+    public static Rank of(int number) {
+        return Arrays.stream(Rank.values()).filter(x -> x.number == number).findAny().orElseThrow(IllegalArgumentException::new);
+    }
 }

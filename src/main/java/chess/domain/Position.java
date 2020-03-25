@@ -1,10 +1,14 @@
 package chess.domain;
 
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.movefactory.Direction;
+import chess.domain.movefactory.MoveType;
+
 import java.util.Objects;
 
 public class Position {
-    private final File file;
-    private final Rank rank;
+    private File file;
+    private Rank rank;
 
     private Position(File file, Rank rank) {
         this.file = file;
@@ -52,5 +56,21 @@ public class Position {
 
     public int calculateFileDistance(Position target) {
         return file.getNumber() - target.file.getNumber();
+    }
+
+    public void move(MoveType moveType, ChessBoard chessBoard) {
+        Direction direction = moveType.getDirection();
+        int count = moveType.getCount();
+
+        if (direction == Direction.UP) {
+            for (int i = 0; i < count; i++) {
+                int n = rank.getNumber();
+                this.rank = rank.of(++n);
+
+                if (chessBoard.findPieceByPosition(this) != null) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
     }
 }

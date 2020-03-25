@@ -3,6 +3,8 @@ package chess.domain.chessPiece;
 import chess.domain.Position;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.TeamStrategy;
+import chess.domain.movefactory.MoveFactory;
+import chess.domain.movefactory.Straight;
 
 public class Pawn extends Piece {
     private final Position startPosition;
@@ -35,7 +37,7 @@ public class Pawn extends Piece {
     private boolean blackPawnMovable(Position targetPosition, Piece targetPiece) {
         if (targetPiece == null) {
             if (this.position.equals(startPosition)) {
-                return isBlackPawnFirstMove(targetPosition);
+                return MoveFactory.of(position, targetPosition) instanceof Straight;
             }
             return isBlackPawnMove(targetPosition);
         }
