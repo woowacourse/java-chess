@@ -9,47 +9,74 @@ import static domain.point.Column.F;
 import static domain.point.Column.G;
 import static domain.point.Column.H;
 import static domain.point.Row.EIGHT;
+import static domain.point.Row.FIVE;
+import static domain.point.Row.FOUR;
 import static domain.point.Row.ONE;
 import static domain.point.Row.SEVEN;
+import static domain.point.Row.SIX;
+import static domain.point.Row.THREE;
 import static domain.point.Row.TWO;
 import static domain.team.Team.BLACK;
+import static domain.team.Team.NONE;
 import static domain.team.Team.WHITE;
 
 import domain.point.Column;
 import domain.point.Point;
-import java.util.HashSet;
-import java.util.Set;
+import domain.point.Row;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-public class
-PiecesFactory {
-    private static Set<Piece> pieces;
+public class PiecesFactory {
+    private static Map<Point, Piece> pieces = new LinkedHashMap<>();
 
     static {
-        pieces = new HashSet<>();
-        pieces.add(new King(BLACK, new Point(EIGHT, E)));
-        pieces.add(new King(WHITE, new Point(ONE, E)));
-        pieces.add(new Queen(BLACK, new Point(EIGHT, D)));
-        pieces.add(new Queen(WHITE, new Point(ONE, D)));
-        pieces.add(new Bishop(BLACK, new Point(EIGHT, C)));
-        pieces.add(new Bishop(BLACK, new Point(EIGHT, F)));
-        pieces.add(new Bishop(WHITE, new Point(ONE, C)));
-        pieces.add(new Bishop(WHITE, new Point(ONE, F)));
-        pieces.add(new Knight(BLACK, new Point(EIGHT, B)));
-        pieces.add(new Knight(BLACK, new Point(EIGHT, G)));
-        pieces.add(new Knight(WHITE, new Point(ONE, B)));
-        pieces.add(new Knight(WHITE, new Point(ONE, G)));
-        pieces.add(new Rook(BLACK, new Point(EIGHT, A)));
-        pieces.add(new Rook(BLACK, new Point(EIGHT, H)));
-        pieces.add(new Rook(WHITE, new Point(ONE, A)));
-        pieces.add(new Rook(WHITE, new Point(ONE, H)));
+        createBlackTeamPieces();
+        createEmpty();
+        createWhiteTeamPieces();
+    }
+
+    private static void createBlackTeamPieces() {
+        pieces.put(new Point(EIGHT, A), new Rook(BLACK));
+        pieces.put(new Point(EIGHT, C), new Bishop(BLACK));
+        pieces.put(new Point(EIGHT, B), new Knight(BLACK));
+        pieces.put(new Point(EIGHT, D), new Queen(BLACK));
+        pieces.put(new Point(EIGHT, E), new King(BLACK));
+        pieces.put(new Point(EIGHT, F), new Bishop(BLACK));
+        pieces.put(new Point(EIGHT, G), new Knight(BLACK));
+        pieces.put(new Point(EIGHT, H), new Rook(BLACK));
 
         for (Column column: Column.values()) {
-            pieces.add(new Pawn(BLACK, new Point(SEVEN, column)));
-            pieces.add(new Pawn(WHITE, new Point(TWO, column)));
+            pieces.put(new Point(SEVEN, column), new Pawn(BLACK));
         }
     }
 
-    public Set<Piece> getInstance() {
+    private static void createEmpty() {
+        List<Row> emptyRows = Arrays.asList(SIX, FIVE, FOUR, THREE);
+        for (Row row : emptyRows) {
+            for (Column column : Column.values()) {
+                pieces.put(new Point(row, column), new Empty(NONE));
+            }
+        }
+    }
+
+    private static void createWhiteTeamPieces() {
+        pieces.put(new Point(ONE, A), new Rook(WHITE));
+        pieces.put(new Point(ONE, B), new Knight(WHITE));
+        pieces.put(new Point(ONE, C), new Bishop(WHITE));
+        pieces.put(new Point(ONE, D), new Queen(WHITE));
+        pieces.put(new Point(ONE, E), new King(WHITE));
+        pieces.put(new Point(ONE, F), new Bishop(WHITE));
+        pieces.put(new Point(ONE, G), new Knight(WHITE));
+        pieces.put(new Point(ONE, H), new Rook(WHITE));
+
+        for (Column column: Column.values()) {
+            pieces.put(new Point(TWO, column), new Pawn(WHITE));
+        }
+    }
+
+    public static Map<Point, Piece> create() {
         return pieces;
     }
 }

@@ -5,7 +5,7 @@ import java.util.function.UnaryOperator;
 public enum Team {
     WHITE(String::toLowerCase),
     BLACK(String::toUpperCase),
-    NONE(s -> s);
+    NONE(string -> ".");
 
     private UnaryOperator<String> operator;
 

@@ -1,26 +1,34 @@
 package view;
 
-import domain.board.Board;
-import domain.pieces.Piece;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import domain.pieces.Pieces;
+import domain.point.Point;
 
 public class OutputView {
 
-    private static final String NEW_LINE = "\n";
+//    private static final String NEW_LINE = System.lineSeparator();
 
     public static void printStart() {
         System.out.println("체스 게임을 시작합니다.");
     }
 
-    public static void printBoard(Board board) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (List<String> row : board.getBoard()) {
-            stringBuilder.append(String.join("", row))
-                    .append(NEW_LINE);
+    public static void printBoard(Pieces pieces) {
+        int newLineCount = 0;
+        for (Point point : pieces.getPieces().keySet()) {
+            printRowBoard(pieces, point);
+            newLineCount++;
+            if (newLineCount == 8) {
+                System.out.println();
+                newLineCount = 0;
+            }
         }
+    }
 
-        System.out.println(stringBuilder.toString());
+    private static void printRowBoard(Pieces pieces, Point point) {
+        if (pieces.isGetPoint(point)) {
+            System.out.print(pieces.getPiece(point).toString());
+            return;
+        }
+        System.out.print(".");
     }
 }

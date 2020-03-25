@@ -6,7 +6,7 @@ import domain.team.Team;
 public class Pawn extends Piece {
     private static final String INITIAL = "P";
 
-    public Pawn(Team team, Point point) {
-        super(INITIAL, team, point);
+    public Pawn(Team team) {
+        super(INITIAL, team);
     }
 }
