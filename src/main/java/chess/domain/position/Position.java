@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 // TODO: 2020/03/25 패키지 옮길수도 있음
@@ -61,5 +62,17 @@ public class Position {
 
 	public int getRowGap(Position that) {
 		return row.compareTo(that.row);
+	}
+
+	public boolean isColumnEquals(Position that) {
+		return column.equals(that.column);
+	}
+
+	public boolean isRowEquals(Position that) {
+		return row.equals(that.row);
+	}
+
+	public static List<Position> getPositions() {
+		return List.copyOf(POSITIONS.values());
 	}
 }
