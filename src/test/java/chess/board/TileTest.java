@@ -23,7 +23,7 @@ class TileTest {
     @ParameterizedTest
     @MethodSource("pieceProvider")
     void hasPiece(Piece piece, boolean expect) {
-        Tile tile = new Tile(new Coordinate(File.A, Rank.ONE), piece);
+        Tile tile = new Tile(Coordinate.of(File.A, Rank.ONE), piece);
         assertThat(tile.hasPiece()).isEqualTo(expect);
     }
 }
