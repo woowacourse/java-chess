@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -18,7 +17,11 @@ public class Position {
 
 	public static Position of(Column columnInput, Row rowInput) {
 		validateNull(columnInput, rowInput);
-		return POSITION_CACHE.get(columnInput.name() + rowInput.name());
+		return POSITION_CACHE.get(columnInput.getName() + rowInput.getName());
+	}
+
+	public static Position of(int column, int row) {
+		return of(Column.of(column), Row.of(row));
 	}
 
 	private static void validateNull(Column columnInput, Row rowInput) {
@@ -28,18 +31,31 @@ public class Position {
 	}
 
 	private static Map<String, Position> generateCache() {
-		return Arrays.stream(Column.values())
-			.flatMap(row1 ->
-				Arrays.stream(Row.values())
-					.map(column1 -> new Position(row1, column1))
+		return Column.columnNames().stream()
+			.flatMap(column ->
+				Row.rowNames().stream()
+					.map(row -> new Position(column, row))
 			).collect(Collectors.toMap(Position::key, position -> position));
 	}
 
-	public Position nextPosition(Direction direction) {
+	public boolean canMoveNext(Direction direction) {
 		int columnDirection = direction.getColumnDirection();
 		int rowDirection = direction.getRowDirection();
 
-		return Position.of(column.nextColumn(columnDirection), row.nextRow(rowDirection));
+		Column nextColumn = column.nextColumn(columnDirection);
+		Row nextRow = row.nextRow(rowDirection);
+
+		return nextColumn != null && nextRow != null;
+	}
+
+	public Position next(Direction direction) {
+		int columnDirection = direction.getColumnDirection();
+		int rowDirection = direction.getRowDirection();
+
+		Column nextColumn = column.nextColumn(columnDirection);
+		Row nextRow = row.nextRow(rowDirection);
+
+		return Position.of(nextColumn, nextRow);
 	}
 
 	public boolean isSameRow(Position that) {
@@ -51,7 +67,7 @@ public class Position {
 	}
 
 	private String key() {
-		return column.name() + row.name();
+		return column.getName() + row.getName();
 	}
 
 	@Override
@@ -68,5 +84,10 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(column, row);
+	}
+
+	@Override
+	public String toString() {
+		return column.getName() + row.getName();
 	}
 }
