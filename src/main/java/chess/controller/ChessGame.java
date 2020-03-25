@@ -6,10 +6,11 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
-    private Board board = new Board();
+    private final Board board = Board.createInitialBoard();
+
     public void run() {
         OutputView.printGameIntro();
-        Command command = new Command(InputView.requestCommand());
+        Command command = Command.of(InputView.requestCommand());
         if(command.isStart()){
             OutputView.printBoard(board);
         }
