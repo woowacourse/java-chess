@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 public enum Direction {
 
+    // TODO: 2020/03/25 Rank와 File 위치 변경
     NORTH(Rank::next, Optional::of),
     NORTH_EAST(Rank::next, File::next),
     EAST(Optional::of, File::next),

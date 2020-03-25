@@ -1,26 +1,27 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import chess.domain.exception.InvalidMovementException;
+import chess.domain.piece.GamePiece;
+
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import chess.domain.piece.GamePiece;
-
 public class Board {
 
+    public static Board EMPTY = new Board(createEmptyBoard());
     private final Map<Position, GamePiece> board;
 
     private Board(Map<Position, GamePiece> board) {
         this.board = Collections.unmodifiableMap(board);
     }
 
+    public static Board from(Map<Position, GamePiece> board) {
+        return new Board(board);
+    }
+
     public static Board createInitial() {
-        return new Board(initializePositionsOfPieces());
+        return from(initializePositionsOfPieces());
     }
 
     private static Map<Position, GamePiece> initializePositionsOfPieces() {
@@ -44,6 +45,36 @@ public class Board {
         }
     }
 
+    public Board move(Position source, Position target) {
+        // TODO: 2020/03/25 리팩토링 확인
+        Map<Position, GamePiece> board = new HashMap<>(this.board);
+        GamePiece sourcePiece = board.get(source);
+
+        validateSourcePiece(sourcePiece);
+
+        List<Position> path = sourcePiece.searchPath(source, target);
+        for (Position position : path) {
+            validateMovable(board.get(position));
+        }
+
+        board.put(target, sourcePiece);
+        board.put(source, GamePiece.EMPTY);
+
+        return from(board);
+    }
+
+    private void validateSourcePiece(GamePiece sourcePiece) {
+        if (sourcePiece.equals(GamePiece.EMPTY)) {
+            throw new InvalidMovementException();
+        }
+    }
+
+    private void validateMovable(GamePiece obstacle) {
+        if (obstacle != GamePiece.EMPTY) {
+            throw new InvalidMovementException();
+        }
+    }
+
     public List<List<GamePiece>> gamePieces() {
         List<List<GamePiece>> gamePieces = new ArrayList<>();
         Iterator<GamePiece> iterator = getBoard().values().iterator();
@@ -60,6 +91,6 @@ public class Board {
     }
 
     public Map<Position, GamePiece> getBoard() {
-        return new TreeMap<>(board);
+        return Collections.unmodifiableMap(new TreeMap<>(board));
     }
 }

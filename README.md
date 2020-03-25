@@ -28,6 +28,7 @@
     - [x] destinationOf 구현
 - [x] Board 구현
     - [x] 체스판 초기화 
+    - [x] move 구현
 - [x] Command 구현
     - [x] Start 구현
     - [x] End 구현
