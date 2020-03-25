@@ -42,11 +42,10 @@ public class ChessBoard {
     public void movePiece(Position source, Position target) {
         Piece movingPiece = findPieceByPosition(source);
         Piece targetPiece = findPieceByPosition(target);
+        movingPiece.isMovable(target, targetPiece);
         if (targetPiece != null) {
-            validSameTeam(movingPiece, targetPiece);
             removePiece(targetPiece);
         }
-        movingPiece.isMovable(target);
         movingPiece.move(target);
     }
 
@@ -58,9 +57,4 @@ public class ChessBoard {
         whiteTeam.remove(targetPiece);
     }
 
-    private void validSameTeam(Piece movingPiece, Piece targetPiece) {
-        if (movingPiece.isSameTeam(targetPiece)) {
-            throw new IllegalArgumentException("같은팀이 있는 칸으로 이동할수 없습니다.");
-        }
-    }
 }

@@ -118,5 +118,10 @@ class MoveTypeTest {
         assertThat(MoveType.of(source, target) == MoveType.KNIGHT).isTrue();
     }
 
-
+    @Test
+    void BLACK_PAWN_FIRST_MOVE() {
+        Position source = Position.of(File.D, Rank.FIVE);
+        Position target = Position.of(File.B, Rank.FOUR);
+        assertThat(MoveType.of(source, target) == MoveType.KNIGHT).isTrue();
+    }
 }

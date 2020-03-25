@@ -47,10 +47,10 @@ public class Position {
     }
 
     public int calculateRankDistance(Position target) {
-        return Math.abs(rank.getNumber() - target.rank.getNumber());
+        return rank.getNumber() - target.rank.getNumber();
     }
 
     public int calculateFileDistance(Position target) {
-        return Math.abs(file.getNumber() - target.file.getNumber());
+        return file.getNumber() - target.file.getNumber();
     }
 }

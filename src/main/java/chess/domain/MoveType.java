@@ -10,11 +10,11 @@ public enum MoveType {
         if (source.isSameRank(target) || source.isSameFile(target)) {
             return STRAIGHT;
         }
-        if (source.calculateRankDistance(target) == source.calculateFileDistance(target)) {
+        if (Math.abs(source.calculateRankDistance(target)) == Math.abs(source.calculateFileDistance(target))) {
             return CROSS;
         }
-        if ((source.calculateFileDistance(target) == 1 && source.calculateRankDistance(target) == 2)
-                || (source.calculateRankDistance(target) == 1 && source.calculateFileDistance(target) == 2)) {
+        if ((Math.abs(source.calculateFileDistance(target)) == 1 && Math.abs(source.calculateRankDistance(target)) == 2)
+                || (Math.abs(source.calculateRankDistance(target)) == 1 && Math.abs(source.calculateFileDistance(target)) == 2)) {
             return KNIGHT;
         }
         return NONE;
