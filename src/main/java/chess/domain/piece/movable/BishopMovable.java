@@ -8,7 +8,7 @@ import chess.domain.board.position.Row;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BishopMovable implements Movable{
+public class BishopMovable implements Movable {
 
 	@Override
 	public Set<Position> move(Position position) {
@@ -28,7 +28,7 @@ public class BishopMovable implements Movable{
 	}
 
 	private void addAvailable(Position position, Set<Position> movablePositions, Row row, Column column) {
-		if(position.isSameDiagonal(Board.of(row,column))) {
+		if (position.isSameDiagonal(Board.of(row, column))) {
 			movablePositions.add(Board.of(row, column));
 		}
 	}
