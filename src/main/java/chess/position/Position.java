@@ -49,11 +49,11 @@ public class Position {
         return isSameSum(other) || isSameDifference(other);
     }
 
-    private boolean isSameSum(Position other) {
+    public boolean isSameSum(Position other) {
         return this.getFileNumber() + this.getRankNumber() == other.getFileNumber() + other.getRankNumber();
     }
 
-    private boolean isSameDifference(Position other) {
+    public boolean isSameDifference(Position other) {
 		return this.getFileNumber() - this.getRankNumber() == other.getFileNumber() - other.getRankNumber();
     }
 
