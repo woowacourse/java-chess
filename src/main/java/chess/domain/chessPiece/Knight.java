@@ -3,7 +3,7 @@ package chess.domain.chessPiece;
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 
-public class Knight extends ColoredPiece {
+public class Knight extends Piece {
 
     public Knight(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
@@ -16,6 +16,6 @@ public class Knight extends ColoredPiece {
 
     @Override
     public String pieceName() {
-        return teamStrategy.kingName();
+        return teamStrategy.knightName();
     }
 }

@@ -32,6 +32,5 @@ public class PieceBundleFactory {
         pieceBundle.add(new King(new Position(File.E, otherRank), teamStrategy));
         pieceBundle.add(new Queen(new Position(File.D, otherRank), teamStrategy));
         return pieceBundle;
-
     }
 }

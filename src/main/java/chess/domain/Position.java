@@ -11,11 +11,7 @@ public class Position {
         this.rank = rank;
     }
 
-    public Rank getRank() {
-        return rank;
-    }
-
-    public boolean isNewLine() {
+    public boolean isNewRank() {
         return file == File.A;
     }
 

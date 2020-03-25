@@ -1,11 +1,19 @@
 package chess.domain.chessPiece;
 
 import chess.domain.Position;
+import chess.domain.chessPiece.team.TeamStrategy;
 
-public interface Piece {
-    boolean isMovable();
+public abstract class Piece implements PieceAbility {
+    protected final Position position;
+    protected final TeamStrategy teamStrategy;
 
-    String pieceName();
+    public Piece(Position position, TeamStrategy teamStrategy) {
+        this.position = position;
+        this.teamStrategy = teamStrategy;
+    }
 
-    boolean isEqualPosition(Position position);
+    public boolean isEqualPosition(Position position) {
+        return this.position.equals(position);
+    }
 }
+

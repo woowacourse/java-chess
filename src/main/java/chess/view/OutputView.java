@@ -9,16 +9,19 @@ public class OutputView {
 
     public static void printChessBoard(ChessBoard chessBoard) {
         for (Position position : chessBoard.getChessBoard()) {
-            if (position.isNewLine()) {
-                System.out.println();
-            }
-            Piece piece = chessBoard.isEqaul(position);
+            seperateLine(position);
+            Piece piece = chessBoard.findPieceByPosition(position);
             if (piece == null) {
                 System.out.print(EMPTY_MARK);
                 continue;
             }
             System.out.print(piece.pieceName());
+        }
+    }
 
+    private static void seperateLine(Position position) {
+        if (position.isNewRank()) {
+            System.out.println();
         }
     }
 }

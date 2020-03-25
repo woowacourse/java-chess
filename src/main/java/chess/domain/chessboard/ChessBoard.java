@@ -25,7 +25,7 @@ public class ChessBoard {
     }
 
 
-    public Piece isEqaul(Position position) {
+    public Piece findPieceByPosition(Position position) {
         Piece piece = blackTeam.stream().filter(x -> x.isEqualPosition(position)).findAny().orElse(null);
         if (piece == null) {
             return whiteTeam.stream().filter(x -> x.isEqualPosition(position)).findAny().orElse(null);
