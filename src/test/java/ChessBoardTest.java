@@ -1,6 +1,5 @@
 import chess.domain.ChessBoard;
 import chess.domain.Player;
-import chess.domain.chesspieces.Piece;
 import chess.domain.chesspieces.Empty;
 import chess.domain.chesspieces.Rook;
 import chess.domain.chesspieces.Square;
@@ -8,6 +7,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,12 +36,12 @@ public class ChessBoardTest {
     @DisplayName("체스 기물의 이동 확인: 정상적일 때")
     @Test
     void test2() {
+        ChessBoard chessBoard = new ChessBoard();
+        Position source = Positions.of("a1");
+        Position target = Positions.of("a2");
+        chessBoard.move(source, target);
 
-    }
-
-    @DisplayName("체스 기물의 이동 확인: ")
-    @Test
-    void test3() {
-
+        Assertions.assertThat(chessBoard.getChessBoard().get(source)).isInstanceOf(Empty.class);
+        Assertions.assertThat(chessBoard.getChessBoard().get(target)).isInstanceOf(Rook.class);
     }
 }

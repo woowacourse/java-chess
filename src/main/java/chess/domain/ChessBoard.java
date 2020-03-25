@@ -38,6 +38,13 @@ public class ChessBoard {
         }
     }
 
+    public void move(Position source, Position target) {
+        if(((Piece) chessBoard.get(source)).movable(source, target)){
+            chessBoard.put(target, chessBoard.get(source));
+            chessBoard.put(source, new Empty());
+        }
+    }
+
     public Map<Position, Square> getChessBoard() {
         return Collections.unmodifiableMap(chessBoard);
     }

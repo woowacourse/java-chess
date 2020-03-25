@@ -27,4 +27,18 @@ public enum Column {
         Objects.requireNonNull(column2);
         return column1.getValue() - column2.getValue();
     }
+
+    public static Column getSmaller(Column column1, Column column2) {
+        if (column1.ordinal() < column2.ordinal()) {
+            return column1;
+        }
+        return column2;
+    }
+
+    public static Column getBigger(Column column1, Column column2) {
+        if (column1.ordinal() > column2.ordinal()) {
+            return column1;
+        }
+        return column2;
+    }
 }
