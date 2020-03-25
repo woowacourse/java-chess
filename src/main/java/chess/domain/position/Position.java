@@ -1,7 +1,8 @@
-package chess;
+package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Position {
     private static List<Position> positions;
@@ -16,13 +17,13 @@ public class Position {
 
     static {
         positions = new ArrayList<>();
-        for (File file : File.values()) {
-            addPosition(file);
+        for (Rank rank : Rank.values()) {
+            addPosition(rank);
         }
     }
 
-    private static void addPosition(File file) {
-        for (Rank rank : Rank.values()) {
+    private static void addPosition(Rank rank) {
+        for (File file : File.values()) {
             positions.add(new Position(file, rank));
         }
     }
@@ -39,5 +40,16 @@ public class Position {
                 .filter(p -> p.file.equals(file) && p.rank.equals(rank))
                 .findFirst()
                 .orElseThrow(AssertionError::new);
+    }
+
+    public static List<String> getPositions() {
+        return positions.stream()
+                .map(Position::toString)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return file.name() + rank.name();
     }
 }
