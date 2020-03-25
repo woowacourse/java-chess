@@ -3,21 +3,21 @@ package chess.domain.board;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Position {
+public class Square {
 	private final File file;
 	private final Rank rank;
 
-	private Position(final File file, final Rank rank) {
+	private Square(final File file, final Rank rank) {
 		this.file = file;
 		this.rank = rank;
 	}
 
-	public static Position of(final File file, final Rank rank) {
+	public static Square of(final File file, final Rank rank) {
 		return SquareCache.BOARD.get(SquareCache.createKey(file, rank));
 	}
 
 	private static class SquareCache {
-		private static final Map<String, Position> BOARD = new HashMap<>();
+		private static final Map<String, Square> BOARD = new HashMap<>();
 
 		static {
 			makeBoard();
@@ -35,7 +35,7 @@ public class Position {
 
 		private static void makeBoardBy(File file) {
 			for (Rank rank : Rank.values()) {
-				BOARD.put(createKey(file, rank), new Position(file, rank));
+				BOARD.put(createKey(file, rank), new Square(file, rank));
 			}
 		}
 
