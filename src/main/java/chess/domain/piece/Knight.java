@@ -18,7 +18,7 @@ public class Knight extends Piece {
 
 	@Override
 	public void validateMove(Position destination) {
-		Direction direction = position.compare(destination);
+		Direction direction = position.calculateDirection(destination);
 		if (!possibleDirections.contains(direction)) {
 			throw new IllegalArgumentException("말이 움직일 수 없는 자리입니다.");
 		}

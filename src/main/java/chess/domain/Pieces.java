@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import chess.domain.piece.Piece;
 
@@ -11,12 +12,12 @@ public class Pieces {
 		this.pieces = pieces;
 	}
 
-	public List<Piece> getPieces() {
-		return pieces;
+	public List<Piece> getAlivePieces() {
+		return pieces.stream().filter(Piece::isAlive).collect(Collectors.toList());
 	}
 
 	public Piece findByPosition(Position position) {
-		return pieces.stream()
+		return getAlivePieces().stream()
 			.filter(p -> p.isSamePosition(position))
 			.findFirst()
 			.orElse(null);

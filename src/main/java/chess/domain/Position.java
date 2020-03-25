@@ -26,6 +26,14 @@ public class Position {
 		return new Position(x + direction.getXDegree(), y + direction.getYDegree());
 	}
 
+	public Direction calculateDirection(Position destination) {
+		return Direction.of(destination.x - this.x, destination.y - this.y);
+	}
+
+	public boolean checkLinearDirection(Position destination) {
+		return this.x == destination.x || this.y == destination.y;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -40,9 +48,5 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
-	}
-
-	public Direction compare(Position destination) {
-		return Direction.of(destination.x - this.x, destination.y - this.y);
 	}
 }

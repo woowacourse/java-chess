@@ -5,11 +5,13 @@ import chess.domain.Position;
 public abstract class Piece {
 	protected char representation;
 	protected final Team team;
+	protected boolean isAlive;
 	protected Position position;
 
 	public Piece(Position position, Team team) {
 		this.team = team;
 		this.position = position;
+		this.isAlive = true;
 	}
 
 	public abstract void validateMove(Position destination);
@@ -21,6 +23,14 @@ public abstract class Piece {
 
 	public boolean isSamePosition(Position otherPosition) {
 		return this.position.equals(otherPosition);
+	}
+
+	public void kill() {
+		this.isAlive = false;
+	}
+
+	public boolean isAlive() {
+		return isAlive;
 	}
 
 	@Override

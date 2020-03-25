@@ -14,12 +14,17 @@ public class ChessController {
 		Pieces pieces = board.getPieces();
 		OutputView.printChessBoard(pieces);
 
+		while (true) {
+			movePiece(board, pieces);
+		}
+
+	}
+
+	private static void movePiece(Board board, Pieces pieces) {
 		String moveInstruction = InputView.inputMoveInstruction();
 		Position source = new Position(moveInstruction.split(" ")[1]);
 		Position destination = new Position(moveInstruction.split(" ")[2]);
-		// pieces.findByPosition(source).move(destination);
 		board.movePiece(source, destination);
 		OutputView.printChessBoard(pieces);
-
 	}
 }
