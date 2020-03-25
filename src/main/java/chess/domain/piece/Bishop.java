@@ -7,4 +7,9 @@ public class Bishop extends Piece {
 	public Bishop(Side side, Position position) {
 		super(side, position);
 	}
+
+	@Override
+	public boolean isInPath(Position targetPosition) {
+		return position.isInDiagonal(targetPosition);
+	}
 }
