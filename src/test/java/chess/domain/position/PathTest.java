@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.position;
 
-import static chess.domain.Fixtures.*;
+import static chess.domain.position.Fixtures.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;

@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.position.Position;
 
 public abstract class Piece {
 	protected Position position;

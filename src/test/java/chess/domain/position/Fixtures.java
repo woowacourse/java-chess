@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 public class Fixtures {
 	public static final Position A1 = Position.of("a1");

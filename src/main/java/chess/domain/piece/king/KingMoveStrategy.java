@@ -1,7 +1,10 @@
-package chess.domain;
+package chess.domain.piece.king;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import chess.domain.piece.MoveStrategy;
+import chess.domain.position.Position;
 
 public class KingMoveStrategy implements MoveStrategy {
 	@Override

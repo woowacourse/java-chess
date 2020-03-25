@@ -1,9 +1,11 @@
-package chess.domain;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import chess.domain.piece.king.King;
+import chess.domain.position.Position;
 
 class KingTest {
 
