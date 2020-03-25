@@ -12,7 +12,7 @@ public class Positions {
     static {
         positions = Arrays.stream(Column.values())
                 .flatMap(column -> Arrays.stream(Row.values())
-                        .map(row -> new Position(row,column)))
+                        .map(row -> new Position(row, column)))
                 .collect(Collectors.toMap(Position::key,
                         position -> position,
                         (a, b) -> a,
@@ -23,8 +23,18 @@ public class Positions {
 
     }
 
+    public static Position of (String position) {
+        Objects.requireNonNull(position);
+        if(!positions.containsKey(position)) {
+            throw new IllegalArgumentException("존재하지 않는 위치입니다.");
+        }
+        return positions.get(position);
+    }
+
     public static Position of(Row row, Column column) {
-        return positions.get(Position.key(row, column));
+        Objects.requireNonNull(row);
+        Objects.requireNonNull(column);
+        return Positions.of(Position.key(row, column));
     }
 
     public static List<Position> getValues() {
