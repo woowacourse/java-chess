@@ -8,4 +8,8 @@ public abstract class GameState implements State {
     protected GameState(Pieces pieces) {
         this.pieces = pieces;
     }
+
+    protected Pieces getPieces() {
+        return pieces;
+    }
 }

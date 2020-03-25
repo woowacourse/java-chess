@@ -1,5 +1,7 @@
 package domain.point;
 
+import java.util.Arrays;
+
 public enum Row {
 	EIGHT("8", 0),
 	SEVEN("7", 1),
@@ -16,6 +18,13 @@ public enum Row {
 	Row(String row, int index) {
 		this.row = row;
 		this.index = index;
+	}
+
+	public static Row find(String input) {
+		return Arrays.stream(values())
+				.filter(row -> row.row.equals(input))
+				.findFirst()
+				.orElseThrow(IllegalArgumentException::new);
 	}
 
 	public int getIndex() {

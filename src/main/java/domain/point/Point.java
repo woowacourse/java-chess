@@ -11,6 +11,13 @@ public class Point {
 		this.column = column;
 	}
 
+	public static Point of(String before) {
+		String column = before.substring(0, 1);
+		String row = before.substring(1, 2);
+
+		return new Point(Row.find(row), Column.find(column));
+	}
+
 	public Row getRow() {
 		return row;
 	}
