@@ -21,6 +21,9 @@ public class Board {
 	public void movePiece(Position source, Position destination) {
 		validateDestination(source, destination);
 		Piece piece = pieces.findByPosition(source);
+		if (piece == null) {
+			throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
+		}
 		Piece destinationPiece = pieces.findByPosition(destination);
 		if (piece instanceof Pawn) {
 			validatePawnDestination(source, destination);
