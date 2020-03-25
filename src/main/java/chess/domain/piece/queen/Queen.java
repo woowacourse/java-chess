@@ -5,6 +5,6 @@ import chess.domain.position.Position;
 
 public class Queen extends Piece {
 	public Queen(Position position) {
-		super(position, new QueenMoveStrategy());
+		super(position, "q", new QueenMoveStrategy());
 	}
 }

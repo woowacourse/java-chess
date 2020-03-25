@@ -87,4 +87,8 @@ public class Position {
 	public Position reverse() {
 		return Position.of(column.reverse(), row.reverse());
 	}
+
+	public String getName() {
+		return column.getName() + row.getName();
+	}
 }

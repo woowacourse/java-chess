@@ -5,6 +5,6 @@ import chess.domain.position.Position;
 
 public class Rook extends Piece {
 	public Rook(Position position) {
-		super(position, new RookMoveStrategy());
+		super(position, "r", new RookMoveStrategy());
 	}
 }

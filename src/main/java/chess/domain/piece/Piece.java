@@ -4,10 +4,12 @@ import chess.domain.position.Position;
 
 public abstract class Piece {
 	protected Position position;
+	protected final String name;
 	protected final MoveStrategy moveStrategy;
 
-	public Piece(Position position, MoveStrategy moveStrategy) {
+	public Piece(Position position, String name, MoveStrategy moveStrategy) {
 		this.position = position;
+		this.name = name;
 		this.moveStrategy = moveStrategy;
 	}
 
@@ -20,5 +22,13 @@ public abstract class Piece {
 
 	public Position getPosition() {
 		return position;
+	}
+
+	public String getUpperName() {
+		return name.toUpperCase();
+	}
+
+	public String getName() {
+		return name;
 	}
 }
