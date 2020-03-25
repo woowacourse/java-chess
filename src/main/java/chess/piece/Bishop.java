@@ -16,7 +16,7 @@ public class Bishop extends Piece {
 
     @Override
     public List<Position> findReachablePositions(Position start, Position end) {
-        if (start.isNotDiagonal(end)) {     //대각선인지 확인해야겠다
+        if (start.isNotDiagonal(end)) {
             throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
         }
         if (start.isSameRank(end)) {
