@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Position {
@@ -50,8 +51,32 @@ public class Position {
         return Collections.unmodifiableList(parseResult);
     }
 
+    public int calculateFileGap(Position target) {
+        int fileGap = this.file.compareTo(target.file);
+        return fileGap;
+    }
+
+    public int calculateRankGap(Position target) {
+        int rankGap = this.rank.compareTo(target.rank);
+        return rankGap;
+    }
+
     @Override
     public String toString() {
         return file.name() + rank.name();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return file == position.file &&
+                rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }

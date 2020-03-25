@@ -12,15 +12,15 @@ public enum Rank {
     TWO(2),
     ONE(1);
 
-    private final int rank;
+    private final int symbol;
 
-    Rank(int rank) {
-        this.rank = rank;
+    Rank(int symbol) {
+        this.symbol = symbol;
     }
 
     public static Rank of(String rank) {
         return Arrays.stream(values())
-                .filter(pv -> pv.rank == Integer.parseInt(rank))
+                .filter(pv -> pv.symbol == Integer.parseInt(rank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 y 좌표값을 입력하였습니다."));
     }
