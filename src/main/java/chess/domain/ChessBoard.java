@@ -39,21 +39,34 @@ public class ChessBoard {
         }
     }
 
-    public void move(Position source, Position target) {
+    public boolean move(Position source, Position target) {
         if (((Piece) chessBoard.get(source)).movable(source, target)
                 && validateObstacles(getRoutes(source, target))
-                && !isSamePlayer(source, target)) {
+                && !isSamePlayer(source, target)
+                && !cannotMove_Pawn(source, target)) {
             chessBoard.put(target, chessBoard.get(source));
             chessBoard.put(source, new Empty());
+            return true;
         }
+        return false;
+    }
+
+    // (할 것) Black White에 따라 Top Down 달라지는 것
+    private boolean cannotMove_Pawn(Position source, Position target) {
+        // pawn 이동 예외
+        return (chessBoard.get(target).getClass() == Empty.class
+                && ((Piece) chessBoard.get(source)).getClass() == Pawn.class)
+                && (Direction.getMoveRule(source, target) == Direction.DIAGONAL_TOP_LEFT
+                || Direction.getMoveRule(source, target) == Direction.DIAGONAL_TOP_RIGHT);
     }
 
     private boolean isSamePlayer(Position source, Position target) {
         if (chessBoard.get(source).getClass() == (Empty.class)
-                || chessBoard.get(target).getClass() == (Empty.class)){
+                || chessBoard.get(target).getClass() == (Empty.class)) {
             return false;
         }
-        return ((Piece) chessBoard.get(source)).getPlayer() != ((Piece) chessBoard.get(target)).getPlayer();
+
+        return ((Piece) chessBoard.get(source)).getPlayer() == ((Piece) chessBoard.get(target)).getPlayer();
     }
 
     public Map<Position, Square> getChessBoard() {
@@ -68,7 +81,7 @@ public class ChessBoard {
 
     public boolean validateObstacles(List<Position> routes) {
         for (Position position : routes) {
-            if (!chessBoard.get(position).getClass().isInstance(Empty.class)) {
+            if (!(chessBoard.get(position).getClass() == Empty.class)) {
                 return false;
             }
         }
