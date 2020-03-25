@@ -5,6 +5,7 @@ import chess.board.piece.Direction;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class Coordinate {
     private final File file;
@@ -16,7 +17,7 @@ public final class Coordinate {
     }
 
     public static Coordinate of(final File file, final Rank rank) {
-        return CoordinateCache.cache.get(file.name() + rank.name());
+        return CoordinateCache.cache.get(file.getSymbol() + rank.getValue());
     }
 
     public static Coordinate of(String key) {
@@ -30,7 +31,7 @@ public final class Coordinate {
     }
 
     private String key() {
-        return this.file.name() + this.rank.name();
+        return this.file.getSymbol() + this.rank.getValue();
     }
 
     public Vector calculateVector(final Coordinate source) {
@@ -41,13 +42,14 @@ public final class Coordinate {
         private static final Map<String, Coordinate> cache;
 
         static {
-            cache = Arrays.stream(File.values
-                    ())
-                    .flatMap(file -> Arrays
-                            .stream(Rank.values())
-                            .map(rank -> new Coordinate(file, rank))
-                    ).collect(Collectors
-                            .toMap(Coordinate::key, coordinate -> coordinate));
+            cache = Arrays.stream(File.values())
+                    .flatMap(CoordinateCache::makeCoordinate)
+                    .collect(Collectors.toMap(Coordinate::key, coordinate -> coordinate));
+        }
+
+        private static Stream<Coordinate> makeCoordinate(File file) {
+            return Arrays.stream(Rank.values())
+                    .map(rank -> new Coordinate(file, rank));
         }
     }
 }

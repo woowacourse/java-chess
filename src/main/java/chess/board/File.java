@@ -34,4 +34,8 @@ public enum File {
     public File sum(int fileValue) {
         return findByValue(this.value + fileValue);
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }

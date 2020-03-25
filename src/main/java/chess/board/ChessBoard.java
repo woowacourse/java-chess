@@ -25,19 +25,23 @@ public class ChessBoard {
         if (isAlliance(source, target)) {
             return false;
         }
+
         Vector vector = target.calculateVector(source);
         Piece piece = chessBoard.get(source);
         if (!piece.canMove(vector)) {
             return false;
         }
+
         List<Direction> directions = piece.findPath(vector);
         Coordinate next = source;
+
         for (int i = 0; i < directions.size() - 1; i++) {
             next = next.move(directions.get(i));
-            if (Objects.isNull(chessBoard.get(next))) {
+            if (!Objects.isNull(chessBoard.get(next))) {
                 return false;
             }
         }
+
         chessBoard.put(source, null);
         chessBoard.put(target, piece);
         return true;

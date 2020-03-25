@@ -29,8 +29,11 @@ public enum Rank {
         return value - rank.value;
     }
 
-
     public Rank sum(int rankValue) {
         return findByValue(this.value + rankValue);
+    }
+
+    public int getValue() {
+        return value;
     }
 }
