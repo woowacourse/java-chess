@@ -29,7 +29,7 @@
 - [x]  Board 구현.
 - [x]  추상 클래스 Piece 구현.
 - [x]  Direction Enum 구현.
-- [ ]  Movable interface 구현.
+- [x]  Movable interface 구현.
 - [ ]  Filtering interface  구현.
 - [ ]  세부 유닛들 상속하여 구현.
 - [ ]  List<Piece>의 Player 일급 컬렉션
