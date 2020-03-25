@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.Blank;
+import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public class RankTest {
@@ -40,6 +41,18 @@ public class RankTest {
 	@Test
 	@DisplayName("Blank 한 줄 생성")
 	void createBlanks() {
-		assertThat(Rank.createBlanks(0)).isInstanceOf(Rank.class);
+		assertThat(Rank.createBlanks(2)).isInstanceOf(Rank.class);
+	}
+
+	@Test
+	@DisplayName("Pawn 한 줄 생성")
+	void createPawns() {
+		assertThat(Rank.createPawns(1, Color.WHITE)).isInstanceOf(Rank.class);
+	}
+
+	@Test
+	@DisplayName("Piece 한 줄 생성")
+	void createPieces() {
+		assertThat(Rank.createPieces(0, Color.WHITE)).isInstanceOf(Rank.class);
 	}
 }

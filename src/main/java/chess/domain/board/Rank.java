@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 import chess.domain.piece.Blank;
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 
 public class Rank {
@@ -29,6 +32,23 @@ public class Rank {
 		List<Piece> pieces = new ArrayList<>();
 		for (int x = 0; x < SIZE; x++) {
 			pieces.add(new Blank(Position.of(x, y)));
+		}
+		return new Rank(pieces);
+	}
+
+	public static Rank createPawns(int y, Color color) {
+		List<Piece> pieces = new ArrayList<>();
+		for (int x = 0; x < SIZE; x++) {
+			pieces.add(new Pawn(Position.of(x, y), color));
+		}
+		return new Rank(pieces);
+	}
+
+	public static Rank createPieces(int y, Color color) {
+		List<String> pieceSequence = Arrays.asList("r", "n", "b", "q", "k", "b", "n", "r");
+		List<Piece> pieces = new ArrayList<>();
+		for (int x = 0; x < SIZE; x++) {
+			pieces.add(PieceFactory.create(pieceSequence.get(x), Position.of(x, y), color));
 		}
 		return new Rank(pieces);
 	}
