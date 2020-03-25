@@ -22,10 +22,10 @@ public class PieceTest {
 		assertThat(pawn).isInstanceOf(Pawn.class);
 	}
 
-//	@Test
-//	void rookPathTest() {
-//		Rook rook = new Rook(BLACK);
-//		List<Position> actual = rook.findReachablePositions(Position.of(B, FOUR), Position.of(B, SIX));
-//		assertThat(actual).containsExactlyInAnyOrder(Position.of(B, FOUR), Position.of(B, FIVE), Position.of(B, SIX));
-//	}
+	@Test
+	void rookPathTest() {
+		Rook rook = new Rook(BLACK);
+		List<Position> actual = rook.findReachablePositions(Position.of(B, FOUR), Position.of(B, SIX));
+		assertThat(actual).containsExactlyInAnyOrder(Position.of(B, FOUR), Position.of(B, FIVE), Position.of(B, SIX));
+	}
 }

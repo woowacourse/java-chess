@@ -12,5 +12,5 @@ public abstract class Piece {
 		this.team = team;
 	}
 
-    //public abstract List<Position> findReachablePositions(Position start, Position end);
+    public abstract List<Position> findReachablePositions(Position start, Position end);
 }
