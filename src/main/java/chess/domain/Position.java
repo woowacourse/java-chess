@@ -53,4 +53,12 @@ public class Position {
 	public Position left() {
 		return Position.of(column.minus(), row);
 	}
+
+	public int getColumnGap(Position that) {
+		return column.compareTo(that.column);
+	}
+
+	public int getRowGap(Position that) {
+		return row.compareTo(that.row);
+	}
 }

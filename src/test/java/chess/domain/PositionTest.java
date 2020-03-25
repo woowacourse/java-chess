@@ -80,4 +80,20 @@ class PositionTest {
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("0 이하의 column 값은 가질수 없습니다.");
 	}
+
+	@Test
+	void columnGap() {
+		Position start = Position.of("a1");
+		Position end = Position.of("b1");
+
+		assertThat(start.getColumnGap(end)).isEqualTo(-1);
+	}
+
+	@Test
+	void rowGap() {
+		Position start = Position.of("a1");
+		Position end = Position.of("a2");
+
+		assertThat(start.getRowGap(end)).isEqualTo(-1);
+	}
 }
