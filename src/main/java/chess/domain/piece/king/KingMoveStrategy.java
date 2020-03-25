@@ -20,9 +20,4 @@ public class KingMoveStrategy implements MoveStrategy {
 		movableArea.add(start.down().left());
 		return !movableArea.contains(destination);
 	}
-
-	@Override
-	public boolean isSameColorIn(Position position) {
-		return false;
-	}
 }

@@ -11,7 +11,12 @@ public abstract class Piece {
 		this.moveStrategy = moveStrategy;
 	}
 
-	public abstract void moveTo(Position destination);
+	public void moveTo(Position destination) {
+		if (moveStrategy.isNotMovableTo(position, destination)) {
+			throw new IllegalArgumentException("기물의 이동 범위에 속하지 않습니다.");
+		}
+		position = destination;
+	}
 
 	public Position getPosition() {
 		return position;

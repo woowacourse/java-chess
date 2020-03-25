@@ -7,6 +7,7 @@ public class LineFactory {
 	public static List<Position> columnOf(Position pivot) {
 		return Position.getPositions()
 			.stream()
+			.filter(position -> !position.equals(pivot))
 			.filter(position -> position.isRowEquals(pivot))
 			.collect(Collectors.toList());
 	}
@@ -14,6 +15,7 @@ public class LineFactory {
 	public static List<Position> rowOf(Position pivot) {
 		return Position.getPositions()
 			.stream()
+			.filter(position -> !position.equals(pivot))
 			.filter(position -> position.isColumnEquals(pivot))
 			.collect(Collectors.toList());
 	}
