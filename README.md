@@ -34,7 +34,7 @@
 - [x] Direction 구현
     - [x] 다음 File, Rank 찾는 기능 구현
 - [ ] moveStrategy 구현
-    - [ ] 퀸, 킹, 비숍, 폰, 나이트, 룩 구현
+    - [ ] 퀸, 킹, 비숍, 폰, 나이트, 룩 구현 // 현재 나이트 제외 모든 moveStrategy 구현
 ### view
 - [x] Command 입력
 - [x] Board 출력   
