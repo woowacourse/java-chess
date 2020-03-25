@@ -1,7 +1,7 @@
-package chess.piece;
+package chess.domains.piece;
 
 public class Knight extends Piece {
     public Knight(PieceColor pieceColor) {
-        super(pieceColor);
+        super(pieceColor, "n");
     }
 }

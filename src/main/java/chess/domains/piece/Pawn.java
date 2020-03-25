@@ -1,7 +1,7 @@
-package chess.piece;
+package chess.domains.piece;
 
 public class Pawn extends Piece {
     public Pawn(PieceColor pieceColor) {
-        super(pieceColor);
+        super(pieceColor, "p");
     }
 }

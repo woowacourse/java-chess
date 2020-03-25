@@ -1,11 +1,11 @@
-package chess.position;
+package chess.domains.position;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Position {
+public class Position implements Comparable<Position> {
     private static final Map<String, Position> cachedPositions;
 
     static {
@@ -34,5 +34,16 @@ public class Position {
 
     public static Position ofPositionName(String positionName) {
         return cachedPositions.get(positionName);
+    }
+
+    @Override
+    public int compareTo(Position o) {
+        if (y > o.y) {
+            return -1;
+        }
+        if (y == o.y && x < o.x) {
+            return -1;
+        }
+        return 1;
     }
 }

@@ -1,17 +1,21 @@
-package chess.board;
+package chess.domains.board;
 
-import chess.piece.Piece;
-import chess.position.Position;
+import chess.domains.piece.Piece;
+import chess.domains.position.Position;
 
 import java.util.Objects;
 
-public class PlayingPiece {
+public class PlayingPiece implements Comparable<PlayingPiece> {
     private final Position position;
     private final Piece piece;
 
     public PlayingPiece(Position position, Piece piece) {
         this.position = position;
         this.piece = piece;
+    }
+
+    public String showPieceName() {
+        return piece.getName();
     }
 
     @Override
@@ -26,5 +30,10 @@ public class PlayingPiece {
     @Override
     public int hashCode() {
         return Objects.hash(position, piece);
+    }
+
+    @Override
+    public int compareTo(PlayingPiece o) {
+        return this.position.compareTo(o.position);
     }
 }
