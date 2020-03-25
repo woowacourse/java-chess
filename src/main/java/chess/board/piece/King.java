@@ -12,9 +12,4 @@ public class King extends Piece {
     public boolean canMove(final Vector vector) {
         return vector.isRangeUnderAbsolute(1);
     }
-
-    @Override
-    public boolean isSameTeam(final Team team) {
-        return false;
-    }
 }

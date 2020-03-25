@@ -12,9 +12,4 @@ public class Queen extends Piece {
     public boolean canMove(final Vector vector) {
         return vector.isDiagonal() || vector.isStraight();
     }
-
-    @Override
-    public boolean isSameTeam(final Team team) {
-        return false;
-    }
 }

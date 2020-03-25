@@ -18,7 +18,7 @@ public class Vector {
     }
 
     public int subtractOfAbsolute() {
-        return Math.abs(fileVariation) - Math.abs(rankVariation);
+        return Math.abs(Math.abs(fileVariation) - Math.abs(rankVariation));
     }
 
     public boolean isDiagonal() {

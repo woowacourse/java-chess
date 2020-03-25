@@ -25,5 +25,4 @@ class PieceTest {
         Piece king = new King(Team.BLACK);
         assertThat(king.findPath(new Vector(file, rank))).containsExactly(expect);
     }
-
 }

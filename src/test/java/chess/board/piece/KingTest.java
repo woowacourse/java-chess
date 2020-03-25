@@ -25,6 +25,4 @@ class KingTest {
         Piece king = new King(Team.BLACK);
         assertThat(king.canMove(new Vector(file, rank))).isEqualTo(expect);
     }
-
-
 }

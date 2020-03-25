@@ -18,8 +18,8 @@ public class OriginalBoardGenerator implements BoardGenerator {
                     "rnbqkbnr";
 
     @Override
-    public Map<Coordinate, Tile> generate() {
-        Map<Coordinate, Tile> board = new HashMap<>();
+    public Map<Coordinate, Piece> generate() {
+        Map<Coordinate, Piece> board = new HashMap<>();
 
         String[] lines = originalBoard.split(",");
         for (int row = 1; row <= 8; row++) {
@@ -30,7 +30,7 @@ public class OriginalBoardGenerator implements BoardGenerator {
                 Rank rank = Rank.findByValue(9 - row);
 
                 Coordinate coordinate = Coordinate.of(file, rank);
-                board.put(coordinate, new Tile(coordinate, piece));
+                board.put(coordinate, piece);
             }
         }
         return board;

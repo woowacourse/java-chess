@@ -12,9 +12,4 @@ public class Knight extends Piece {
     public boolean canMove(final Vector vector) {
         return vector.sumOfAbsolute() == 3 && vector.subtractOfAbsolute() == 1;
     }
-
-    @Override
-    public boolean isSameTeam(final Team team) {
-        return false;
-    }
 }

@@ -28,6 +28,10 @@ public enum File {
     }
 
     public int subtract(File file) {
-        return value - file.value;
+        return this.value - file.value;
+    }
+
+    public File sum(int fileValue) {
+        return findByValue(this.value + fileValue);
     }
 }

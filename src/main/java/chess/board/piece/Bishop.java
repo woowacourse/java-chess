@@ -12,9 +12,4 @@ public class Bishop extends Piece {
     public boolean canMove(final Vector vector) {
         return vector.isDiagonal();
     }
-
-    @Override
-    public boolean isSameTeam(final Team team) {
-        return false;
-    }
 }

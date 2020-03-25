@@ -27,4 +27,12 @@ public enum Direction {
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
+    public int getFile() {
+        return file;
+    }
+
+    public int getRank() {
+        return rank;
+    }
 }

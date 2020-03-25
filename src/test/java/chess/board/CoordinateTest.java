@@ -10,9 +10,9 @@ class CoordinateTest {
     @DisplayName("두 좌표 값의 차이를 구한다.")
     @Test
     void calculateVariation() {
-        Coordinate coordinate1 = Coordinate.of(File.A, Rank.ONE);
-        Coordinate coordinate2 = Coordinate.of(File.B, Rank.THREE);
-        Assertions.assertThat(coordinate1.calculateVariation(coordinate2))
+        Coordinate source = Coordinate.of(File.A, Rank.ONE);
+        Coordinate target = Coordinate.of(File.B, Rank.THREE);
+        Assertions.assertThat(target.calculateVector(source))
                 .isEqualTo(new Vector(1, 2));
     }
 }

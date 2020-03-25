@@ -1,5 +1,7 @@
 package chess.board;
 
+import chess.board.piece.Direction;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,12 +19,22 @@ public final class Coordinate {
         return CoordinateCache.cache.get(file.name() + rank.name());
     }
 
+    public static Coordinate of(String key) {
+        return CoordinateCache.cache.get(key);
+    }
+
+    public Coordinate move(Direction direction) {
+        File nextFile = file.sum(direction.getFile());
+        Rank nextRank = rank.sum(direction.getRank());
+        return of(nextFile, nextRank);
+    }
+
     private String key() {
         return this.file.name() + this.rank.name();
     }
 
-    public Vector calculateVariation(final Coordinate coordinate) {
-        return new Vector(coordinate.file.subtract(this.file), coordinate.rank.subtract(this.rank));
+    public Vector calculateVector(final Coordinate source) {
+        return new Vector(this.file.subtract(source.file), this.rank.subtract(source.rank));
     }
 
     private static class CoordinateCache {

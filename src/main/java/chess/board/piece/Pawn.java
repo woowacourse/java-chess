@@ -12,9 +12,4 @@ public class Pawn extends Piece {
     public boolean canMove(final Vector vector) {
         return vector.isRangeUnderAbsolute(1) && team.isSameDirection(vector.getRankVariation());
     }
-
-    @Override
-    public boolean isSameTeam(final Team team) {
-        return false;
-    }
 }
