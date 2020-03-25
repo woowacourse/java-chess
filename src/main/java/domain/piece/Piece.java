@@ -26,6 +26,10 @@ public abstract class Piece {
 		return this.SYMBOL.toUpperCase();
 	}
 
+	public boolean isTeam(Team nowTurn) {
+		return this.team == nowTurn;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -41,5 +45,4 @@ public abstract class Piece {
 	public int hashCode() {
 		return Objects.hash(position, team);
 	}
-
 }
