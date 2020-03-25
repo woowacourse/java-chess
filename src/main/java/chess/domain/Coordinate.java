@@ -16,7 +16,7 @@ public class Coordinate {
         if (coordinate < 'a' || coordinate > 'h') {
             throw new IllegalArgumentException();
         }
-        this.coordinate = coordinate;
+        this.coordinate = coordinate - 'a' + 1;
     }
 
     public int getCoordinate() {

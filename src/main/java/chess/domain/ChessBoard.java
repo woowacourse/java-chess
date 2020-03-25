@@ -15,6 +15,4 @@ public class ChessBoard {
 		return Collections.unmodifiableList(board);
 	}
 
-
-
 }

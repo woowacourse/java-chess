@@ -11,7 +11,7 @@ public class Row {
         this.chessPieces = chessPieces;
     }
 
-    public List<ChessPiece> getChessPieces() {
-        return chessPieces;
+    public ChessPiece get(int x) {
+        return chessPieces.get(x);
     }
 }

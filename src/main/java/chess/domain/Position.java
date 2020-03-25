@@ -2,9 +2,15 @@ package chess.domain;
 
 import java.util.Objects;
 
+import chess.domain.chesspiece.Direction;
+
 public class Position {
 	private final Coordinate x;
 	private final Coordinate y;
+
+	public Position(int x, int y) {
+		this(new Coordinate(x), new Coordinate(y));
+	}
 
 	public Position(int x, char y) {
 		this(new Coordinate(x), new Coordinate(y));
@@ -13,6 +19,14 @@ public class Position {
 	public Position(Coordinate x, Coordinate y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	@Override
+	public String toString() {
+		return "Position{" +
+			"x=" + x.getCoordinate() +
+			", y=" + y.getCoordinate() +
+			'}';
 	}
 
 	@Override

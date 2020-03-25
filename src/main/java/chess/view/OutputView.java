@@ -12,8 +12,7 @@ public class OutputView {
         for (int i = 8; i >= 1; i--) {
             for (int j = 0; j <= 7; j++) {
                 Row row = board.get(i - 1);
-                List<ChessPiece> chessPieces = row.getChessPieces();
-                ChessPiece chessPiece = chessPieces.get(j);
+                ChessPiece chessPiece = row.get(j);
                 System.out.print(chessPiece.getName());
             }
             System.out.println();
