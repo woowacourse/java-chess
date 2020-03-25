@@ -11,7 +11,7 @@ public class ChessGame {
     public void run() {
         OutputView.printGameIntro();
         Command command = Command.of(InputView.requestCommand());
-        if(command.isStart()){
+        if (command.isStart()) {
             OutputView.printBoard(board);
         }
     }

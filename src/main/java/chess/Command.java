@@ -20,4 +20,8 @@ public enum Command {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_COMMAND_EXCEPTION_MESSAGE));
     }
+
+    public boolean isStart() {
+        return this == START;
+    }
 }

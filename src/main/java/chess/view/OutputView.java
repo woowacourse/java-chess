@@ -30,6 +30,7 @@ public class OutputView {
                     builder.append(".");
                 }
             }
+            builder.append("\n");
         }
         System.out.println(builder);
     }

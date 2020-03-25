@@ -5,7 +5,7 @@ import java.util.List;
 import chess.position.Position;
 
 public class Knight extends Piece {
-	private static final String INITIAL_CHARACTER = "K";
+	private static final String INITIAL_CHARACTER = "N";
 
 	public Knight(Team team) {
 		super(team);
