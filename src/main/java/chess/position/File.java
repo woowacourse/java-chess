@@ -15,6 +15,7 @@ public enum File {
 	H("h");
 
 	private static final String ILLEGAL_FILE_NAME_EXCEPTION_MESSAGE = "올바른 열값이 아닙니다.";
+
 	private final String name;
 
 	File(String name) {

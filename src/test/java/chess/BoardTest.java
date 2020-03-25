@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.piece.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,13 +19,13 @@ import chess.position.Position;
 
 public class BoardTest {
 	private Board board;
-	private Pawn pawn;
+	private Rook rook;
 
 	@BeforeEach
 	void setup() {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pawn = new Pawn(Team.BLACK);
-		pieces.put(Position.of(A, ONE), pawn);
+		rook = new Rook(Team.BLACK);
+		pieces.put(Position.of(A, ONE), rook);
 		board = new Board(pieces);
 	}
 
@@ -40,6 +41,6 @@ public class BoardTest {
 		Position from = Position.of(A, ONE);
 		Position to = Position.of(A, TWO);
 		board.move(from, to);
-		assertThat(board.getPiece(to)).isEqualTo(pawn);
+		assertThat(board.getPiece(to)).isEqualTo(rook);
 	}
 }

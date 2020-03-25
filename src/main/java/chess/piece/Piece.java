@@ -5,7 +5,7 @@ import java.util.List;
 import chess.position.Position;
 
 public abstract class Piece {
-	private final Team team;
+	protected final Team team;
 
 	public Piece(Team team) {
 		this.team = team;

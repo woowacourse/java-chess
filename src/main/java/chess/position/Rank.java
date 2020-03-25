@@ -1,6 +1,7 @@
 package chess.position;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum Rank {
@@ -12,6 +13,8 @@ public enum Rank {
 	SIX("6"),
 	SEVEN("7"),
 	EIGHT("8");
+
+	private static final String ILLEGAL_RANK_NAME_EXCEPTION_MESSAGE = "올바른 행값이 아닙니다.";
 
 	private final String name;
 
@@ -53,7 +56,14 @@ public enum Rank {
 		}
 	}
 
-	public String getName() {
+	public static Rank of(String name) {
+		return Arrays.stream(values())
+				.filter(value -> value.name.equals(name))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException(ILLEGAL_RANK_NAME_EXCEPTION_MESSAGE));
+	}
+
+    public String getName() {
 		return name;
 	}
 }

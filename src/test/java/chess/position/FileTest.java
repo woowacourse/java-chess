@@ -11,15 +11,15 @@ class FileTest {
 	@DisplayName("File 객체값이 a-h 사이인지 테스트")
 	@ParameterizedTest
 	@ValueSource(strings = {"n", "i", "z"})
-	void invalidConstructTest(String name) {
+	void invalidOfTest(String name) {
 		assertThatThrownBy(() -> File.of(name)).isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("올바른 열값이 아닙니다.");
 	}
 
-	@DisplayName("File 객체값이 a-h 사이인지 테스트")
+	@DisplayName("File.of() 테스트")
 	@ParameterizedTest
 	@ValueSource(strings = {"a", "h"})
-	void constructTest(String name) {
+	void ofTest(String name) {
 		assertThat(File.of(name)).isInstanceOf(File.class);
 	}
 
