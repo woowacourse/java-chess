@@ -2,8 +2,6 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -11,18 +9,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.piece.Piece;
-
 public class BoardTest {
     @DisplayName("판 초기화 테스트")
     @ParameterizedTest
     @MethodSource("boardInitParams")
     void BoardInitTest(Row row, Column column, String expectedName) {
         Board board = Board.init();
-        Map<Position, Optional<Piece>> boardMap = board.getBoard();
 
-        assertThat(boardMap.get(Position.of(Row.FOUR, Column.D))).isEmpty();
-        assertThat(getActual(boardMap, row, column)).isEqualTo(expectedName);
+        assertThat(board.findPieceBy(Position.of(Row.FOUR, Column.D))).isEmpty();
+        assertThat(getActual(board, row, column)).isEqualTo(expectedName);
     }
 
     static Stream<Arguments> boardInitParams() {
@@ -33,8 +28,8 @@ public class BoardTest {
         );
     }
 
-    private String getActual(final Map<Position, Optional<Piece>> boardMap, Row row, Column column) {
-        return boardMap.get(Position.of(row, column)).get().name();
+    private String getActual(final Board board, Row row, Column column) {
+        return board.findPieceBy(Position.of(row, column)).get().name();
     }
 
     // @DisplayName("판 카운트 테스트")

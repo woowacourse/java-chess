@@ -1,12 +1,12 @@
 package chess.domain.board;
 
-import java.util.HashMap;
+import static java.util.stream.Collectors.*;
+
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Side;
-import chess.domain.piece.Type;
 
 public class Board {
     private final Map<Position, Optional<Piece>> board;
@@ -16,39 +16,23 @@ public class Board {
     }
 
     public static Board init() {
-        return new Board(createInitial());
+        return new Board(initialPlacing());
     }
 
-    // TODO : 네이밍 변경
-    private static Map<Position, Optional<Piece>> createInitial() {
-        Map<Position, Optional<Piece>> tmpBoard = new HashMap<>();
-
-        // TODO : 스트림 적용
-        for (Row row : Row.values()) {
-            for (Column column : Column.values()) {
-                tmpBoard.put(Position.of(row, column), findInitialConditionByPosition(Position.of(row, column)));
-            }
-        }
-
-        return tmpBoard;
+    private static Map<Position, Optional<Piece>> initialPlacing() {
+        return Position.getAllPositions()
+            .stream()
+            .collect(toMap(Function.identity(), Board::findInitialPieceOn));
     }
 
-    // TODO : 네이밍 변경
-    private static Optional<Piece> findInitialConditionByPosition(final Position position) {
-        for (Type type : Type.values()) {
-            if (type.initPosition(position, Side.WHITE)) {
-                return Optional.of(new Piece(type, Side.WHITE));
-            }
-
-            if (type.initPosition(position, Side.BLACK)) {
-                return Optional.of(new Piece(type, Side.BLACK));
-            }
-        }
-
-        return Optional.empty();
+    private static Optional<Piece> findInitialPieceOn(Position position) {
+        return Piece.getPieces()
+            .stream()
+            .filter(piece -> piece.canBePlacedOn(position))
+            .findAny();
     }
 
-    public Map<Position, Optional<Piece>> getBoard() {
-        return board;
+    public Optional<Piece> findPieceBy(Position position) {
+        return board.get(position);
     }
 }

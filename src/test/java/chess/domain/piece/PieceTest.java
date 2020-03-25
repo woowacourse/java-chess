@@ -11,7 +11,7 @@ public class PieceTest {
     @DisplayName("체스 말 move test")
     @Test
     void moveTest() {
-        Piece queen = new Piece(Type.QUEEN, Side.BLACK);
+        Piece queen = Piece.of(Type.QUEEN, Side.BLACK);
         queen.move(Position.of(Row.FOUR, Column.B));
     }
 }

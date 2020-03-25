@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,5 +41,9 @@ public class Position {
 
     public boolean isOn(final Column column) {
         return this.column == column;
+    }
+
+    public static Collection<Position> getAllPositions() {
+        return positions.values();
     }
 }

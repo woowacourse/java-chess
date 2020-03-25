@@ -21,7 +21,7 @@ public enum Type {
     }
 
     public boolean initPosition(Position position, Side side) {
-        return initialPosition.test(position, side);
+        return initialPosition.isRightOn(position, side);
     }
 
     public String getName() {
