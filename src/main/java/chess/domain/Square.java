@@ -31,4 +31,26 @@ public class Square {
         return CACHE.get(location);
     }
 
+    public static Square of(Square square, int fileIncrementBy, int rankIncrementBy) {
+        if (Objects.isNull(square)) {
+            throw new IllegalArgumentException("잘못된 square의 입력입니다");
+        }
+        return Square.of(String.valueOf((char) (square.file + fileIncrementBy)) + (square.rank + rankIncrementBy));
+    }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
+    }
+
+    public char getFile() {
+        return file;
+    }
+
+    public int getRank() {
+        return rank;
+    }
 }

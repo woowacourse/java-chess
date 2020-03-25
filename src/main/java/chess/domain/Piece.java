@@ -1,8 +1,6 @@
 package chess.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Piece {
     private final static Map<String, Piece> CACHE = new HashMap<>();
@@ -40,4 +38,76 @@ public class Piece {
         }
         return type.getName().toLowerCase();
     }
+
+    public Set<Square> calculateScope(Square square) {
+        Set<Square> availableSquares = new HashSet<>();
+
+        if (type.equals(Type.QUEEN)) {
+            for (int index = -7; index < 8; index++) {
+                availableSquares.add(ifCanAddIsAddOrMyself(square, index, 0));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, index * -1, index));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, index, index));
+            }
+            availableSquares.remove(square);
+            return availableSquares;
+        }
+
+        if (type.equals(Type.BISHOP)) {
+            for (int index = -7; index < 8; index++) {
+                availableSquares.add(ifCanAddIsAddOrMyself(square, index * -1, index));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, index, index));
+            }
+            availableSquares.remove(square);
+            return availableSquares;
+        }
+
+        if (type.equals(Type.ROOK)) {
+            for (int index = -7; index < 8; index++) {
+                availableSquares.add(ifCanAddIsAddOrMyself(square, index, 0));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index));
+            }
+            availableSquares.remove(square);
+            return availableSquares;
+        }
+
+        if (type.equals(Type.KING)) {
+            int index = -1;
+            for (int i = 0; i < 2; i++) {
+                availableSquares.add(ifCanAddIsAddOrMyself(square, index, 0));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, index * -1, index));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, index, index));
+                index *= -1;
+            }
+            return availableSquares;
+        }
+
+        if (type.equals(Type.KNIGHT)) {
+            int x = -1;
+            int y = 2;
+            for (int i = 0; i < 2; i++) {
+                availableSquares.add(ifCanAddIsAddOrMyself(square, x, y));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, y, x));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, x, (-1) * y));
+                availableSquares.add(ifCanAddIsAddOrMyself(square, y * -1, x));
+                x *= -1;
+                y *= -1;
+            }
+            return availableSquares;
+        }
+
+        throw new IllegalArgumentException("올바른 타입이 아닙니다");
+    }
+
+    private Square ifCanAddIsAddOrMyself(Square square, int fileIncrementBy, int rankIncrementBy) {
+        // Todo square.canAdd
+        char fileAdd = (char) (square.getFile() + fileIncrementBy);
+        int rankAdd = square.getRank() + rankIncrementBy;
+        if (fileAdd >= 'a' && fileAdd <= 'h' && rankAdd >= 1 && rankAdd <= 8) {
+            return Square.of(square, fileIncrementBy, rankIncrementBy);
+        }
+        return square;
+    }
+    // Todo 칸-말 맵 받아서 자기가 움직일 수 있는 리스트 보내줌
 }
