@@ -37,6 +37,10 @@ public abstract class Piece implements Remover {
 		return movable.move(position);
 	}
 
+	public void changePosition(Position position) { // TODO: 2020/03/25 테스트 자기자신 넣을 경우 오류.
+		this.position = position;
+	}
+
 	public Position getPosition() {
 		return position;
 	}
@@ -47,9 +51,5 @@ public abstract class Piece implements Remover {
 
 	public Color getColor() {
 		return color;
-	}
-
-	public void changePosition(Position position) {
-		this.position = position;
 	}
 }

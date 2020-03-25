@@ -16,7 +16,7 @@ public class PawnTest {
 	@ValueSource(strings = {"a3", "b3", "c3"})
 	void getAvailablePositions_normal_test(String input) {
 		Position position = Board.of("b2");
-		Pawn pawn = new Pawn(position, "p", Direction.whitePawnDirection());
+		Pawn pawn = new Pawn(position, "p", Direction.whitePawnDirection(), Color.WHITE);
 
 		assertThat(pawn.getAvailablePositions()).contains(Board.of(input));
 	}
@@ -26,7 +26,7 @@ public class PawnTest {
 	@ValueSource(strings = {"a2", "b2"})
 	void getAvailablePositions_normal_corner_test(String input) {
 		Position position = Board.of("a1");
-		Pawn pawn = new Pawn(position, "p", Direction.whitePawnDirection());
+		Pawn pawn = new Pawn(position, "p", Direction.whitePawnDirection(), Color.WHITE);
 
 		assertThat(pawn.getAvailablePositions()).contains(Board.of(input));
 	}

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Pawn extends Piece{
-	public Pawn(Position position, String name, List<Direction> directions) {
-		super(position, name, new PawnMovable(directions));
+	public Pawn(Position position, String name, List<Direction> directions, Color color) {
+		super(position, name, new PawnMovable(directions), color);
 	}
 
 	@Override

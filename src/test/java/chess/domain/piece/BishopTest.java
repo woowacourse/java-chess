@@ -14,7 +14,7 @@ public class BishopTest {
 	@ValueSource(strings = {"a1", "b2", "c3", "e5", "f6", "g7", "h8", "g1", "f2", "e3", "c5", "b6", "a7"})
 	void move_normal_test(String input) {
 		Position position = Board.of("d4");
-		Bishop bishop = new Bishop(position, "b");
+		Bishop bishop = new Bishop(position, "b", Color.WHITE);
 
 		assertThat(bishop.getAvailablePositions()).contains(Board.of(input));
 	}
@@ -24,7 +24,7 @@ public class BishopTest {
 	@ValueSource(strings = {"b2", "c3", "d4", "e5", "f6", "g7", "h8"})
 	void move_normal_corner_test(String input) {
 		Position position = Board.of("a1");
-		Bishop bishop = new Bishop(position, "b");
+		Bishop bishop = new Bishop(position, "b", Color.WHITE);
 
 		assertThat(bishop.getAvailablePositions()).contains(Board.of(input));
 	}

@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Blank extends Piece{
 	public Blank() {
-		super(Board.of("a1"), ".", new KingMovable(), Color.BLANK);//TODO : position, movable check
+		super(Board.of("a1"), ".", new KingMovable(), Color.BLANK); //TODO : position, movable check
 	}
 
 	@Override
