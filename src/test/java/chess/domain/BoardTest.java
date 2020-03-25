@@ -25,5 +25,4 @@ public class BoardTest {
 			board.movePiece(new Position("h1"), new Position("h3"))
 		).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("경로");
 	}
-
 }

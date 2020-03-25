@@ -58,6 +58,10 @@ public class Position {
 		return abs(destination.x - this.x) != abs(destination.y - this.y);
 	}
 
+	public boolean isPawnInOriginalPosition() {
+		return this.y == 2 || this.y == 7;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

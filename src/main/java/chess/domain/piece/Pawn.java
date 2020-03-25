@@ -20,6 +20,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public void validateMove(Position destination) {
+
 		if (this.team == Team.WHITE)
 			validateMoveByDirection(destination, LOWER_TEAM_POSSIBLE_DIRECTIONS);
 		if (this.team == Team.BLACK)
@@ -27,7 +28,11 @@ public class Pawn extends Piece {
 	}
 
 	private void validateMoveByDirection(Position destination, List<Direction> possibleDirections) {
-		if (!possibleDirections.contains(this.position.calculateDirection(destination))) {
+		Direction direction = this.position.calculateDirection(destination);
+		if (!this.position.isPawnInOriginalPosition() && direction.isGoingForwardDouble()) {
+			throw new IllegalArgumentException("말이 움직일 수 없는 자리입니다.");
+		}
+		if (!possibleDirections.contains(direction)) {
 			throw new IllegalArgumentException("말이 움직일 수 없는 자리입니다.");
 		}
 	}
