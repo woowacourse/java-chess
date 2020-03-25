@@ -13,17 +13,9 @@ public class Move {
     public static void movePiece(Team turn, Pieces pieces, String input) {
         validate(input);
         List<String> splitInput = Arrays.asList(input.split(" "));
-        Point from = createPointBefore(splitInput.get(1));
-        Point to = createPointAfter(splitInput.get(2));
+        Point from = Point.of(splitInput.get(1));
+        Point to = Point.of(splitInput.get(2));
         pieces.move(turn, from, to);
-    }
-
-    private static Point createPointBefore(String location) {
-        return new Point(Row.find(location.substring(1, 2)), Column.find(location.substring(0, 1)));
-    }
-
-    private static Point createPointAfter(String location) {
-        return new Point(Row.find(location.substring(1, 2)), Column.find(location.substring(0, 1)));
     }
 
     private static void validate(String input) {

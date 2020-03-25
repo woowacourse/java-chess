@@ -32,7 +32,7 @@ public class State {
         return Arrays.stream(CommendType.values())
             .filter(type -> type.isCommend(input))
             .findFirst()
-            .orElseThrow(() -> new CommendTypeException("잘못된 입력"));
+            .orElseThrow(() -> new CommendTypeException("잘못된 Commend 입력입니다."));
     }
 
     public boolean isEnd() {

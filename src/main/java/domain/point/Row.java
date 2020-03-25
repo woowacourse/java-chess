@@ -1,5 +1,6 @@
 package domain.point;
 
+import domain.point.exceptions.NotExistPointException;
 import java.util.Arrays;
 
 public enum Row {
@@ -24,7 +25,7 @@ public enum Row {
 		return Arrays.stream(values())
 				.filter(row -> row.row.equals(input))
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(() -> new NotExistPointException("존재하지 않는 Row 입니다."));
 	}
 
 	@Override

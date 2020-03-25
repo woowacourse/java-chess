@@ -1,5 +1,6 @@
 package domain.point;
 
+import domain.point.exceptions.NotExistPointException;
 import java.util.Arrays;
 
 public enum Column {
@@ -24,7 +25,7 @@ public enum Column {
 		return Arrays.stream(values())
 				.filter(column -> column.column.equals(input))
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(() -> new NotExistPointException("존재하지 않는 Column 입니다."));
 	}
 
 	@Override
