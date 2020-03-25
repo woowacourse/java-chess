@@ -50,11 +50,11 @@ public class Position {
 		return Direction.of(destination.x - this.x, destination.y - this.y);
 	}
 
-	public boolean checkNonlinearDirection(Position destination) {
+	public boolean isNonLinearDirection(Position destination) {
 		return this.x != destination.x && this.y != destination.y;
 	}
 
-	public boolean checkNondiagonalDirection(Position destination) {
+	public boolean isNonDiagonalDirection(Position destination) {
 		return abs(destination.x - this.x) != abs(destination.y - this.y);
 	}
 

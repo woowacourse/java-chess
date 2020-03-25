@@ -10,7 +10,7 @@ public class Queen extends Piece {
 
 	@Override
 	public void validateMove(Position destination) {
-		if (this.position.checkNondiagonalDirection(destination) && this.position.checkNonlinearDirection(
+		if (this.position.isNonDiagonalDirection(destination) && this.position.isNonLinearDirection(
 			destination)) {
 			throw new IllegalArgumentException("말이 움직일 수 없는 자리입니다.");
 		}

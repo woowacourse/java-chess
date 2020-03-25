@@ -11,7 +11,7 @@ public class Bishop extends Piece {
 
 	@Override
 	public void validateMove(Position destination) {
-		if (this.position.checkNondiagonalDirection(destination)) {
+		if (this.position.isNonDiagonalDirection(destination)) {
 			throw new IllegalArgumentException("말이 움직일 수 없는 자리입니다.");
 		}
 	}
