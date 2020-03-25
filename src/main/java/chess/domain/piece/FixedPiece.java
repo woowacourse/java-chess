@@ -22,7 +22,7 @@ public abstract class FixedPiece extends AbstractPiece {
 		return movablePositions;
 	}
 
-	public Set<Position> findNext(Position currentPosition, Direction direction, Board board) {
+	protected Set<Position> findNext(Position currentPosition, Direction direction, Board board) {
 		Set<Position> movablePositions = new HashSet<>();
 		if (!currentPosition.canMoveNext(direction)) {
 			return movablePositions;
