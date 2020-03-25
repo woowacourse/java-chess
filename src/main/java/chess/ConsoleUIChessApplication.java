@@ -1,9 +1,9 @@
 package chess;
 
-import controller.Controller;
+import controller.GameController;
 
 public class ConsoleUIChessApplication {
 	public static void main(String[] args) {
-		new Controller();
+		new GameController();
 	}
 }
