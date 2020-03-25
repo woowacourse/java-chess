@@ -1,21 +1,21 @@
-package domain.chesspiece;
+package domain.pieces;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.team.Team;
 import org.junit.jupiter.api.Test;
 
-public class ChesspieceTest {
+public class PieceTest {
 
     @Test
     void getInitial_White() {
-        Chesspiece chesspiece = new Pawn(Team.WHITE);
+        Piece chesspiece = new Pawn(Team.WHITE);
         assertThat(chesspiece.getInitial()).isEqualTo("p");
     }
 
     @Test
     void getInitial_Black() {
-        Chesspiece chesspiece = new Pawn(Team.BLACK);
+        Piece chesspiece = new Pawn(Team.BLACK);
         assertThat(chesspiece.getInitial()).isEqualTo("P");
     }
 }

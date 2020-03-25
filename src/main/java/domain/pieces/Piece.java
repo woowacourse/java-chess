@@ -1,14 +1,17 @@
-package domain.chesspiece;
+package domain.pieces;
 
+import domain.point.Point;
 import domain.team.Team;
 
-public abstract class Chesspiece {
+public abstract class Piece {
     private final String initial;
     private final Team team;
+    private final Point point;
 
-    protected Chesspiece(String initial, Team team) {
+    protected Piece(String initial, Team team, Point point) {
         this.initial = initial;
         this.team = team;
+        this.point = point;
     }
 
     public String getInitial() {

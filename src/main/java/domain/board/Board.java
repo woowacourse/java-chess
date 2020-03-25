@@ -1,19 +1,19 @@
 package domain.board;
 
-import domain.chesspiece.Chesspiece;
+import domain.pieces.Piece;
 
 import java.util.List;
 import java.util.Objects;
 
 public class Board {
 
-    private final List<List<Chesspiece>> chess;
+    private final List<List<Piece>> chess;
 
-    public Board(List<List<Chesspiece>> chess) {
+    public Board(List<List<Piece>> chess) {
         this.chess = chess;
     }
 
-    public List<List<Chesspiece>> getChess() {
+    public List<List<Piece>> getChess() {
         return chess;
     }
 

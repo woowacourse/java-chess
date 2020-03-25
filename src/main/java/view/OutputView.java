@@ -1,7 +1,7 @@
 package view;
 
 import domain.board.Board;
-import domain.chesspiece.Chesspiece;
+import domain.pieces.Piece;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,9 +16,9 @@ public class OutputView {
 
     public static void printBoard(Board board) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (List<Chesspiece> row : board.getChess()) {
+        for (List<Piece> row : board.getChess()) {
             String rowString = row.stream()
-                    .map(Chesspiece::getInitial)
+                    .map(Piece::getInitial)
                     .collect(Collectors.joining());
 
             stringBuilder.append(rowString)

@@ -1,7 +1,7 @@
 package chess;
 
 import domain.board.Board;
-import domain.board.BoardFactory;
+import domain.pieces.PiecesFactory;
 import domain.commend.CommendType;
 import view.InputView;
 import view.OutputView;
@@ -22,7 +22,7 @@ public class WebUIChessApplication {
     }
 
     private static void play() {
-        Board board = new Board(BoardFactory.create());
+        Board board = new Board(PiecesFactory.create());
         OutputView.printBoard(board);
 
         CommendType commendType = CommendType.answer(InputView.inputGameCommend());
