@@ -20,7 +20,7 @@
     pppppppp  2
     rnbqkbnr  1 (rank 1)
     
-    abcdefgh ```
+    abcdefgh
 
 2. 체스판에서 각 진영은 검은색(대문자)과 흰색(소문자)편으로 구분한다.
 

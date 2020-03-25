@@ -9,6 +9,10 @@ public class Position {
 		this.row = row;
 	}
 
+	public static Position of(String position) {
+		return PositionCache.of(position);
+	}
+
 	public Column getColumn() {
 		return column;
 	}
