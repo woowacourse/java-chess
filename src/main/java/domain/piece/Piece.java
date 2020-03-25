@@ -8,6 +8,7 @@ import domain.piece.team.Team;
 public abstract class Piece {
 	protected Position position;
 	protected Team team;
+	protected String SYMBOL;
 
 	public Piece(Position position, Team team) {
 		this.position = position;
@@ -18,7 +19,12 @@ public abstract class Piece {
 		return position;
 	}
 
-	public abstract String showSymbol();
+	public String showSymbol() {
+		if (this.team == Team.WHITE) {
+			return this.SYMBOL;
+		}
+		return this.SYMBOL.toUpperCase();
+	}
 
 	@Override
 	public boolean equals(Object o) {
