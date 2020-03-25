@@ -38,6 +38,12 @@ public class Square {
         return Square.of(String.valueOf((char) (square.file + fileIncrementBy)) + (square.rank + rankIncrementBy));
     }
 
+    public static boolean hasCacheAdded(Square square, int fileIncrementBy, int rankIncrementBy) {
+        char fileAdd = (char) (square.getFile() + fileIncrementBy);
+        int rankAdd = square.getRank() + rankIncrementBy;
+        return fileAdd >= 'a' && fileAdd <= 'h' && rankAdd >= 1 && rankAdd <= 8;
+    }
+
     @Override
     public String toString() {
         return "Square{" +

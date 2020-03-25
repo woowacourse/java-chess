@@ -44,10 +44,10 @@ public class Piece {
 
         if (type.equals(Type.QUEEN)) {
             for (int index = -7; index < 8; index++) {
-                availableSquares.add(ifCanAddIsAddOrMyself(square, index, 0));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, index * -1, index));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, index, index));
+                availableSquares.add(addIfInBoundary(square, index, 0));
+                availableSquares.add(addIfInBoundary(square, 0, index));
+                availableSquares.add(addIfInBoundary(square, index * -1, index));
+                availableSquares.add(addIfInBoundary(square, index, index));
             }
             availableSquares.remove(square);
             return availableSquares;
@@ -55,8 +55,8 @@ public class Piece {
 
         if (type.equals(Type.BISHOP)) {
             for (int index = -7; index < 8; index++) {
-                availableSquares.add(ifCanAddIsAddOrMyself(square, index * -1, index));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, index, index));
+                availableSquares.add(addIfInBoundary(square, index * -1, index));
+                availableSquares.add(addIfInBoundary(square, index, index));
             }
             availableSquares.remove(square);
             return availableSquares;
@@ -64,8 +64,8 @@ public class Piece {
 
         if (type.equals(Type.ROOK)) {
             for (int index = -7; index < 8; index++) {
-                availableSquares.add(ifCanAddIsAddOrMyself(square, index, 0));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index));
+                availableSquares.add(addIfInBoundary(square, index, 0));
+                availableSquares.add(addIfInBoundary(square, 0, index));
             }
             availableSquares.remove(square);
             return availableSquares;
@@ -74,10 +74,10 @@ public class Piece {
         if (type.equals(Type.KING)) {
             int index = -1;
             for (int i = 0; i < 2; i++) {
-                availableSquares.add(ifCanAddIsAddOrMyself(square, index, 0));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, index * -1, index));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, index, index));
+                availableSquares.add(addIfInBoundary(square, index, 0));
+                availableSquares.add(addIfInBoundary(square, 0, index));
+                availableSquares.add(addIfInBoundary(square, index * -1, index));
+                availableSquares.add(addIfInBoundary(square, index, index));
                 index *= -1;
             }
             return availableSquares;
@@ -87,10 +87,10 @@ public class Piece {
             int x = -1;
             int y = 2;
             for (int i = 0; i < 2; i++) {
-                availableSquares.add(ifCanAddIsAddOrMyself(square, x, y));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, y, x));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, x, (-1) * y));
-                availableSquares.add(ifCanAddIsAddOrMyself(square, y * -1, x));
+                availableSquares.add(addIfInBoundary(square, x, y));
+                availableSquares.add(addIfInBoundary(square, y, x));
+                availableSquares.add(addIfInBoundary(square, x, (-1) * y));
+                availableSquares.add(addIfInBoundary(square, y * -1, x));
                 x *= -1;
                 y *= -1;
             }
@@ -104,20 +104,17 @@ public class Piece {
             }
             if ((color.equals(Color.BLACK) && square.getRank() == 7) ||
                     (color.equals(Color.WHITE) && square.getRank() == 2)) {
-                availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index * 2));
+                availableSquares.add(addIfInBoundary(square, 0, index * 2));
             }
-            availableSquares.add(ifCanAddIsAddOrMyself(square, 0, index));
+            availableSquares.add(addIfInBoundary(square, 0, index));
             return availableSquares;
         }
 
         throw new IllegalArgumentException("올바른 타입이 아닙니다");
     }
 
-    private Square ifCanAddIsAddOrMyself(Square square, int fileIncrementBy, int rankIncrementBy) {
-        // Todo square.canAdd
-        char fileAdd = (char) (square.getFile() + fileIncrementBy);
-        int rankAdd = square.getRank() + rankIncrementBy;
-        if (fileAdd >= 'a' && fileAdd <= 'h' && rankAdd >= 1 && rankAdd <= 8) {
+    private Square addIfInBoundary(Square square, int fileIncrementBy, int rankIncrementBy) {
+        if (Square.hasCacheAdded(square, fileIncrementBy, rankIncrementBy)) {
             return Square.of(square, fileIncrementBy, rankIncrementBy);
         }
         return square;

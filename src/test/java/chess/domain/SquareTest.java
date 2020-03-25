@@ -26,4 +26,13 @@ public class SquareTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("잘못");
     }
+
+    @DisplayName("칸에 더한 값이 캐싱된 칸에 포함되어 있는지")
+    @Test
+    void canAddTest() {
+        Square square = Square.of("a2");
+        assertThat(Square.hasCacheAdded(square, 1, 1)).isTrue();
+        assertThat(Square.hasCacheAdded(square, -1, 1)).isFalse();
+    }
+
 }

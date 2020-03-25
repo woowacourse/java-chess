@@ -92,4 +92,5 @@ public class PieceTest {
         assertThat(availableSquaresBlack.size()).isEqualTo(2);
         assertThat(availableSquaresWhite.size()).isEqualTo(1);
     }
+
 }
