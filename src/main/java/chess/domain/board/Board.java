@@ -6,6 +6,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public class Board {
             addAcronymToRow(resultBoard, rank);
         }
 
-        return resultBoard;
+        return Collections.unmodifiableList(resultBoard);
     }
 
     private void addAcronymToRow(List<List<String>> result, Rank rank) {

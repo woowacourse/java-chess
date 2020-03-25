@@ -26,7 +26,12 @@ public class Position {
     }
 
     public static Position of(String key) {
-        return cache.get(key);
+        Position position = cache.get(key);
+
+        if (position == null) {
+            throw new IllegalArgumentException("존재하지 않는 위치입니다.");
+        }
+        return position;
     }
 
     public static Position of(File file, Rank rank) {

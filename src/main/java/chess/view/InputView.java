@@ -9,4 +9,8 @@ public class InputView {
         OutputView.printStartInformation();
         return SCANNER.nextLine();
     }
+
+    public static String read() {
+        return SCANNER.nextLine();
+    }
 }
