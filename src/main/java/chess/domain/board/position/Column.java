@@ -3,14 +3,14 @@ package chess.domain.board.position;
 import java.util.Arrays;
 
 public enum Column {
-	FIRST("1", 1),
-	SECOND("2", 2),
-	THIRD("3", 3),
-	FOURTH("4", 4),
-	FIFTH("5", 5),
-	SIXTH("6", 6),
+	EIGHTH("8", 8),
 	SEVENTH("7", 7),
-	EIGHTH("8", 8);
+	SIXTH("6", 6),
+	FIFTH("5", 5),
+	FOURTH("4", 4),
+	THIRD("3", 3),
+	SECOND("2", 2),
+	FIRST("1", 1);
 
 	private final String name;
 	private final int value;
