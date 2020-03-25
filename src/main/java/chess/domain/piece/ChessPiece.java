@@ -16,8 +16,7 @@ public enum ChessPiece {
     ROOK("r", Arrays.asList(Position.of(File.A, Rank.ONE), Position.of(File.H, Rank.ONE))),
     BISHOP("b", Arrays.asList(Position.of(File.C, Rank.ONE), Position.of(File.F, Rank.ONE))),
     KNIGHT("n", Arrays.asList(Position.of(File.B, Rank.ONE), Position.of(File.G, Rank.ONE))),
-    PAWN("p", Arrays.stream(File.values()).map(file -> Position.of(file, Rank.TWO)).collect(Collectors.toList())),
-    EMPTY_PIECE(".", Collections.EMPTY_LIST);
+    PAWN("p", Arrays.stream(File.values()).map(file -> Position.of(file, Rank.TWO)).collect(Collectors.toList()));
 
     private final String name;
 

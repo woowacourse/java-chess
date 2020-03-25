@@ -37,4 +37,10 @@ class PositionTest {
     void opposite() {
         assertThat(Position.from("b1").opposite()).isEqualTo(Position.from("g8"));
     }
+
+    @Test
+    @DisplayName("Position 전체 list 크기")
+    void list() {
+        assertThat(Position.list()).hasSize(64);
+    }
 }

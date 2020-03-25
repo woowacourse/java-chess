@@ -8,13 +8,17 @@
 - 체스판에서 각 진영은 검은색(대문자)과 흰색(소문자) 편으로 구분한다.
 
 ### 기능 목록
-- [x] ChessPiece 추상 클래스 구현
+- [x] ChessPiece enum 구현
     - [x] 퀸, 킹, 비숍, 폰, 나이트, 룩 구현
-        - [x] 초기 위치 보유
+        - [x] 초기 위치
         - [x] 이름
-- [x] Point 구현
-    - [x] rank, file
 - [x] Player 구현
     - [x] chessPiece의 이름 결정
+- [x] GamePiece 구현
+    - [x] Player, ChessPiece, name
+    - [x] list 생성
+- [x] Point 구현
+    - [x] rank, file
+    - [x] list 생성
 - [ ] Board 구현
     - [ ] 체스판 초기화

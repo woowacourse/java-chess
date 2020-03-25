@@ -61,7 +61,7 @@ public class Position implements Comparable<Position> {
         return -rank.compareTo(position.rank);
     }
 
-    public static List<Position> getAllPosition() {
+    public static List<Position> list() {
         return Collections.unmodifiableList(new ArrayList<>(positions.values()));
     }
 }
