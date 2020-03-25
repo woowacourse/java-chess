@@ -6,13 +6,12 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 
 public class KnightTest {
 
 	@Test
 	void moveTo_When_Success() {
-		Piece knight = new Knight(C3, Team.BLACK);
+		Piece knight = new Knight(C3);
 		knight.moveTo(D1);
 		knight.moveTo(B2);
 
@@ -21,7 +20,7 @@ public class KnightTest {
 
 	@Test
 	void moveTo_When_Fail() {
-		Piece knight = new Knight(C3, Team.BLACK);
+		Piece knight = new Knight(C3);
 		assertThatIllegalArgumentException()
 			.isThrownBy(() -> knight.moveTo(D3))
 			.withMessage("기물의 이동 범위에 속하지 않습니다.");

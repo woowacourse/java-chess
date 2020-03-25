@@ -4,12 +4,10 @@ import chess.domain.position.Position;
 
 public abstract class Piece {
 	protected Position position;
-	protected final Team team;
 	protected final MoveStrategy moveStrategy;
 
-	public Piece(Position position, Team team, MoveStrategy moveStrategy) {
+	public Piece(Position position, MoveStrategy moveStrategy) {
 		this.position = position;
-		this.team = team;
 		this.moveStrategy = moveStrategy;
 	}
 
