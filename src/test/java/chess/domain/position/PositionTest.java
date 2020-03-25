@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import static chess.domain.position.Fixtures.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -17,83 +18,80 @@ class PositionTest {
 
 	@Test
 	void of_DoesNotThrowException_When_CreatedByString() {
-		assertThatCode(() -> Position.of("a1"))
+		assertThatCode(() -> Position.of("A1"))
 			.doesNotThrowAnyException();
 	}
 
 	@Test
 	void up_When_Success() {
-		Position expected = Position.of("a2");
-		Position actual = Position.of("a1").up();
+		Position actual = A1.up();
 
-		assertThat(actual).isEqualTo(expected);
+		assertThat(actual).isEqualTo(A2);
 	}
 
 	@Test
 	void up_When_Fail() {
-		assertThatThrownBy(() -> Position.of("a8").up())
+		assertThatThrownBy(H8::up)
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("9 이상의 row 값은 가질수 없습니다.");
 	}
 
 	@Test
 	void down_When_Success() {
-		Position expected = Position.of("a1");
-		Position actual = Position.of("a2").down();
+		Position actual = A2.down();
 
-		assertThat(actual).isEqualTo(expected);
+		assertThat(actual).isEqualTo(A1);
 	}
 
 	@Test
 	void down_When_Fail() {
-		assertThatThrownBy(() -> Position.of("a1").down())
+		assertThatThrownBy(A1::down)
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("0 이하의 row 값은 가질수 없습니다.");
 	}
 
 	@Test
 	void right_When_Success() {
-		Position expected = Position.of("b1");
-		Position actual = Position.of("a1").right();
+		Position actual = A1.right();
 
-		assertThat(actual).isEqualTo(expected);
+		assertThat(actual).isEqualTo(B1);
 	}
 
 	@Test
 	void right_When_Fail() {
-		assertThatThrownBy(() -> Position.of("h1").right())
+		assertThatThrownBy(H3::right)
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("9 이상의 column 값은 가질수 없습니다.");
 	}
 
 	@Test
 	void left_When_Success() {
-		Position expected = Position.of("a1");
-		Position actual = Position.of("b1").left();
+		Position actual = B1.left();
 
-		assertThat(actual).isEqualTo(expected);
+		assertThat(actual).isEqualTo(A1);
 	}
 
 	@Test
 	void left_When_Fail() {
-		assertThatThrownBy(() -> Position.of("a1").left())
+		assertThatThrownBy(A1::left)
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("0 이하의 column 값은 가질수 없습니다.");
 	}
 
 	@Test
 	void columnGap() {
-		Position start = Position.of("a1");
-		Position end = Position.of("b1");
-
-		assertThat(start.getColumnGap(end)).isEqualTo(-1);
+		assertThat(A1.getColumnGap(B2)).isEqualTo(-1);
 	}
 
 	@Test
 	void rowGap() {
-		Position start = Position.of("a1");
-		Position end = Position.of("a2");
+		assertThat(A1.getRowGap(A2)).isEqualTo(-1);
+	}
 
-		assertThat(start.getRowGap(end)).isEqualTo(-1);
+	@Test
+	void reverse() {
+		Position actual = A1.reverse();
+
+		assertThat(actual).isEqualTo(H8);
 	}
 }

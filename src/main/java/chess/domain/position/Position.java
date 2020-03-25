@@ -83,4 +83,8 @@ public class Position {
 	public static List<Position> getPositions() {
 		return List.copyOf(POSITIONS.values());
 	}
+
+	public Position reverse() {
+		return Position.of(column.reverse(), row.reverse());
+	}
 }

@@ -37,4 +37,11 @@ public enum Column {
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("0 이하의 column 값은 가질수 없습니다."));
 	}
+
+	public Column reverse() {
+		return Arrays.stream(Column.values())
+			.filter(value -> value.position == 9 - this.position)
+			.findFirst()
+			.orElseThrow(NullPointerException::new);
+	}
 }
