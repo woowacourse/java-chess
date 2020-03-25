@@ -35,4 +35,11 @@ class MovableAreaFactoryTest {
 		List<Position> actual = MovableAreaFactory.kingOf(C3);
 		assertThat(actual).containsAll(expected);
 	}
+
+	@Test
+	void knightOf() {
+		List<Position> expected = List.of(D5, E4, E2, D1, B1, A2, A4, B5);
+		List<Position> actual = MovableAreaFactory.knightOf(C3);
+		assertThat(actual).containsAll(expected);
+	}
 }

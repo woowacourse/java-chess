@@ -10,6 +10,7 @@ public class Fixtures {
 	public static final Position B2 = Position.of("b2");
 	public static final Position B3 = Position.of("b3");
 	public static final Position B4 = Position.of("b4");
+	public static final Position B5 = Position.of("b5");
 	public static final Position C1 = Position.of("c1");
 	public static final Position C2 = Position.of("c2");
 	public static final Position C3 = Position.of("c3");
@@ -22,8 +23,11 @@ public class Fixtures {
 	public static final Position D2 = Position.of("d2");
 	public static final Position D3 = Position.of("d3");
 	public static final Position D4 = Position.of("d4");
+	public static final Position D5 = Position.of("d5");
 	public static final Position E1 = Position.of("e1");
+	public static final Position E2 = Position.of("e2");
 	public static final Position E3 = Position.of("e3");
+	public static final Position E4 = Position.of("e4");
 	public static final Position E5 = Position.of("e5");
 	public static final Position F3 = Position.of("f3");
 	public static final Position F6 = Position.of("f6");

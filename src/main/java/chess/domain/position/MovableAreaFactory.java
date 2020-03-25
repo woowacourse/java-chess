@@ -24,15 +24,36 @@ public class MovableAreaFactory {
 		return Position.getPositions()
 			.stream()
 			.filter(position -> !position.equals(pivot))
-			.filter(position -> Math.abs(position.getColumnGap(pivot)) == Math.abs(position.getRowGap(pivot)))
+			.filter(position -> isDiagonal(position, pivot))
 			.collect(Collectors.toList());
+	}
+
+	private static boolean isDiagonal(Position position, Position pivot) {
+		return Math.abs(position.getColumnGap(pivot)) == Math.abs(position.getRowGap(pivot));
 	}
 
 	public static List<Position> kingOf(Position pivot) {
 		return Position.getPositions()
 			.stream()
 			.filter(position -> !position.equals(pivot))
-			.filter(position -> Math.abs(position.getColumnGap(pivot)) <= 1 && Math.abs(position.getRowGap(pivot)) <= 1)
+			.filter(position -> isAround(pivot, position))
 			.collect(Collectors.toList());
+	}
+
+	private static boolean isAround(Position pivot, Position position) {
+		return Math.abs(position.getColumnGap(pivot)) <= 1 && Math.abs(position.getRowGap(pivot)) <= 1;
+	}
+
+	public static List<Position> knightOf(Position pivot) {
+		return Position.getPositions()
+			.stream()
+			.filter(position -> !position.equals(pivot))
+			.filter(position -> isKnight(pivot, position))
+			.collect(Collectors.toList());
+	}
+
+	private static boolean isKnight(Position pivot, Position position) {
+		return (Math.abs(position.getColumnGap(pivot)) == 2 && Math.abs(position.getRowGap(pivot)) == 1) ||
+			(Math.abs(position.getColumnGap(pivot)) == 1 && Math.abs(position.getRowGap(pivot)) == 2);
 	}
 }
