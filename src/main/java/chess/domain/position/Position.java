@@ -29,6 +29,10 @@ public class Position {
         return position;
     }
 
+    public static Position of(final File file, final Rank rank) {
+        return matcher.get(key(file, rank));
+    }
+
     private static void validatePosition(Position position) {
         if (Objects.isNull(position)) {
             throw new IllegalArgumentException("잘못된 위치 정보입니다.");
