@@ -1,14 +1,7 @@
 package domain.commend;
 
-public interface State {
+public class State {
+    private CommendType state;
 
-	State start();
 
-	State status();
-
-	State end();
-
-	State move(String from, String to);
-
-	State pushCommend(String input);
 }

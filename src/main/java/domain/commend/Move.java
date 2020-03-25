@@ -1,11 +1,8 @@
 package domain.commend;
 
-import domain.pieces.Pieces;
+public class Move extends CommendType {
 
-public class Move extends Playing {
-
-    protected Move(Pieces pieces) {
-        super(pieces);
+    public Move(String input) {
+        super(input);
     }
-
 }

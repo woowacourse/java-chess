@@ -1,16 +1,8 @@
 package domain.commend;
 
-import domain.pieces.Pieces;
-import domain.point.Point;
+public class Start extends CommendType {
 
-public class Start extends Playing {
-	protected Start(Pieces pieces) {
-		super(pieces);
-	}
-
-	@Override
-	public State end() {
-		return new End(getPieces());
-	}
-
+    public Start(String input) {
+        super(input);
+    }
 }

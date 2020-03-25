@@ -1,7 +1,5 @@
 package domain.pieces;
 
-import domain.commend.Move;
-import domain.commend.MoveType;
 import domain.pieces.exceptions.PiecesException;
 import domain.point.Point;
 

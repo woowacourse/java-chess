@@ -3,7 +3,6 @@ package domain.commend;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.commend.CommendType;
 import domain.commend.exceptions.CommendTypeException;
 import org.junit.jupiter.api.Test;
 
