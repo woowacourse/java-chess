@@ -50,4 +50,8 @@ public class Position {
     public int getRankDifference(Position target) {
         return rank.getRankDifference(target.rank);
     }
+
+    public Position getMovedPosition(int file, int rank) {
+        return of(this.file.add(file), this.rank.add(rank));
+    }
 }

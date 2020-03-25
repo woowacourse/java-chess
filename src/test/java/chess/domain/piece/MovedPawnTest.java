@@ -26,7 +26,7 @@ class MovedPawnTest {
     }
 
     @Test
-    @DisplayName("진행 타켓에 우리편이 있는 경우 예외 발생")
+    @DisplayName("진행 타겟에 우리편이 있는 경우 예외 발생")
     void moveToAlly() {
         boardDto.put(Position.of("B4"), new PieceDto(Player.WHITE));
         assertThatThrownBy(() -> whiteMovedPawn.move(Position.of("B4"), boardDto))
