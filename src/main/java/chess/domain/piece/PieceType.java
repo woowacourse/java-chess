@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.move.*;
+import chess.domain.position.Position;
 
 public enum PieceType {
     KING("k", 0, new KingMoveStrategy()),
@@ -22,5 +23,9 @@ public enum PieceType {
 
     public String getSymbol() {
         return symbol;
+    }
+
+    public boolean move(Position source, Position target) {
+        return this.moveStrategy.movable(source, target);
     }
 }

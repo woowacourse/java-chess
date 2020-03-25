@@ -12,6 +12,13 @@ public enum Team {
         this.expression = expression;
     }
 
+    public static Team changeTurn(Team team) {
+        if (team == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
+
     public String convert(final String name) {
         return this.expression.apply(name);
     }

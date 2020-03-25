@@ -9,9 +9,11 @@ public class ConsoleInputView implements InputView {
 
     @Override
     public boolean askChessRun() {
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 종료 : end");
+        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
         try {
-            System.out.println("체스 게임을 시작합니다.");
-            System.out.println("게임 시작은 start, 종료는 end 명령어를 입력하세요.");
             String input = SCANNER.nextLine();
             validateCommand(input);
             return runFlag(input);
@@ -32,5 +34,23 @@ public class ConsoleInputView implements InputView {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String askMove() {
+        try {
+            String input = SCANNER.nextLine();
+            validateMove(input);
+            return input;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return askMove();
+        }
+    }
+
+    private static void validateMove(String input) {
+        if (!input.contains("move")) {
+            throw new IllegalArgumentException("잘못된 명령어를 입력하였습니다.");
+        }
     }
 }

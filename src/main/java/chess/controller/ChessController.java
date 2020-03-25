@@ -17,6 +17,11 @@ public class ChessController {
         if (inputView.askChessRun()) {
             Board board = new Board();
             printInitialize(board);
+            String[] moveSource = inputView.askMove().split(" ");
+            String sourcePosition = moveSource[1];
+            String targetPosition = moveSource[2];
+            board.updateBoard(sourcePosition, targetPosition);
+            printInitialize(board);
         }
     }
 

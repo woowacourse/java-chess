@@ -27,6 +27,6 @@ public class BoardInitializer {
             board.putAll(strategy.initialize());
         }
 
-        return Collections.unmodifiableMap(board);
+        return board;
     }
 }
