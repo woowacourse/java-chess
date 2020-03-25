@@ -10,10 +10,16 @@ import java.util.Map;
 
 public class OutputView {
 
-    private static final String GAME_INTRO_MESSAGE = "체스 게임을 시작합니다.\n게임 시작은 start, 종료는 end 명령을 입력하세요.";
+    private static final String GAME_INTRO_MESSAGE = "> 체스 게임을 시작합니다.";
+    private static final String START_COMMAND_INFORMATION_MESSAGE = "> 게임 시작 : start";
+    private static final String END_COMMAND_INFORMATION_MESSAGE = "> 게임 종료 : end";
+    private static final String MOVE_COMMAND_INFORMATION_MESSAGE = "> 말 이동 : move source위치 target위치 - 예. move b2 b3";
 
     public static void printGameIntro() {
         System.out.println(GAME_INTRO_MESSAGE);
+        System.out.println(START_COMMAND_INFORMATION_MESSAGE);
+        System.out.println(END_COMMAND_INFORMATION_MESSAGE);
+        System.out.println(MOVE_COMMAND_INFORMATION_MESSAGE);
     }
 
     public static void printBoard(Board board) {
