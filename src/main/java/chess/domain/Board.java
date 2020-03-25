@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.List;
 
+import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 
@@ -17,14 +18,22 @@ public class Board {
 	}
 
 	public void movePiece(Position source, Position destination) {
+		validateDestination(source, destination);
 		Piece piece = pieces.findByPosition(source);
 		Piece destinationPiece = pieces.findByPosition(destination);
 		if (destinationPiece != null) {
 			duplicatePositionHandler(piece, destinationPiece);
 		}
-		validateNoObstacle(source, destination);
-		source.calculateDirection(destination);
+		if (!(piece instanceof Knight)) {
+			validateNoObstacle(source, destination);
+		}
 		piece.move(destination);
+	}
+
+	private void validateDestination(Position source, Position destination) {
+		if (source.equals(destination)) {
+			throw new IllegalArgumentException("말이 원래 있던 자리입니다!");
+		}
 	}
 
 	private void validateNoObstacle(Position source, Position destination) {

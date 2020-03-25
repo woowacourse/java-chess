@@ -17,4 +17,13 @@ public class BoardTest {
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 
+	@Test
+	@DisplayName("가는 경로에 장애물이 있을 경우 예외를 잘 처리하는지 확인")
+	void obstacleTest() {
+		Board board = new Board();
+		assertThatThrownBy(() ->
+			board.movePiece(new Position("h1"), new Position("h3"))
+		).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("경로");
+	}
+
 }
