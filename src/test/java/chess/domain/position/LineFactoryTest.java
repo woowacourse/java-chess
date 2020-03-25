@@ -21,4 +21,11 @@ class LineFactoryTest {
 		List<Position> actual = LineFactory.rowOf(C3);
 		assertThat(actual).containsAll(expected);
 	}
+
+	@Test
+	void diagonalsOf() {
+		List<Position> expected = List.of(A1, B2, D4, E5, F6, G7, H8, E1, D2, B4, A5);
+		List<Position> actual = LineFactory.diagonalsOf(C3);
+		assertThat(actual).containsAll(expected);
+	}
 }

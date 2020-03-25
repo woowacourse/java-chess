@@ -19,4 +19,12 @@ public class LineFactory {
 			.filter(position -> position.isColumnEquals(pivot))
 			.collect(Collectors.toList());
 	}
+
+	public static List<Position> diagonalsOf(Position pivot) {
+		return Position.getPositions()
+			.stream()
+			.filter(position -> !position.equals(pivot))
+			.filter(position -> Math.abs(position.getColumnGap(pivot)) == Math.abs(position.getRowGap(pivot)))
+			.collect(Collectors.toList());
+	}
 }
