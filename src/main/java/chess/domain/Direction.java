@@ -11,7 +11,16 @@ public enum Direction {
 	NORTHEAST(1, 1),
 	NORTHWEST(-1, 1),
 	SOUTHEAST(1, -1),
-	SOUTHWEST(-1, -1);
+	SOUTHWEST(-1, -1),
+
+	NNE(1, 2),
+	NEE(2, 1),
+	NNW(-1, 2),
+	NWW(-2, 1),
+	SSE(1, -2),
+	SEE(2, -1),
+	SSW(-1, -2),
+	SWW(-2, -1);
 
 	private int xDegree;
 	private int yDegree;

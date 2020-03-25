@@ -17,7 +17,8 @@ public class ChessController {
 		String moveInstruction = InputView.inputMoveInstruction();
 		Position source = new Position(moveInstruction.split(" ")[1]);
 		Position destination = new Position(moveInstruction.split(" ")[2]);
-		pieces.findByPosition(source).validateMove(destination);
+		// pieces.findByPosition(source).move(destination);
+		board.movePiece(source, destination);
 		OutputView.printChessBoard(pieces);
 
 	}
