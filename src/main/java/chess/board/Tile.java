@@ -17,6 +17,9 @@ public class Tile {
         return !Objects.isNull(piece);
     }
 
+    public Piece getPiece() {
+        return piece;
+    }
 
     @Override
     public String toString() {

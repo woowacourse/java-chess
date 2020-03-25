@@ -22,12 +22,12 @@ public class OriginalBoardGenerator implements BoardGenerator {
         Map<Coordinate, Tile> board = new HashMap<>();
 
         String[] lines = originalBoard.split(",");
-        for (int row = 8; row >= 1; row--) {
-            String[] tokens = lines[8 - row].split("");
+        for (int row = 1; row <= 8; row++) {
+            String[] tokens = lines[row - 1].split("");
             for (int col = 1; col <= 8; col++) {
                 Piece piece = Pieces.findByToken(tokens[col - 1]);
                 File file = File.findByValue(col);
-                Rank rank = Rank.findByValue(row);
+                Rank rank = Rank.findByValue(9 - row);
 
                 Coordinate coordinate = Coordinate.of(file, rank);
                 board.put(coordinate, new Tile(coordinate, piece));

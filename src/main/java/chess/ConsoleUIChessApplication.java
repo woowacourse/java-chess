@@ -1,7 +1,7 @@
 package chess;
 
+import chess.board.ChessBoard;
 import chess.board.OriginalBoardGenerator;
-import chess.view.ChessBoard;
 import chess.view.InputView;
 import chess.view.OutputView;
 

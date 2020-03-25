@@ -1,7 +1,6 @@
 package chess.view;
 
-import chess.board.Coordinate;
-import chess.board.Tile;
+import chess.board.*;
 
 import java.util.Map;
 
@@ -14,6 +13,12 @@ public class OutputView {
 
     public static void showChessBoard(ChessBoard chessBoard) {
         Map<Coordinate, Tile> board = chessBoard.getChessBoard();
-
+        for (Rank rank : Rank.values()) {
+            for (File file : File.values()) {
+                Tile tile = board.get(Coordinate.of(file, rank));
+                System.out.print(PieceRender.findTokenByPiece(tile.getPiece()));
+            }
+            System.out.println();
+        }
     }
 }
