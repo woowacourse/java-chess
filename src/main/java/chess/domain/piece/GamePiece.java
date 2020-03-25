@@ -1,13 +1,16 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
 import chess.domain.player.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GamePiece {
 
-    public static final GamePiece empty = new GamePiece(null, null, ".");
+    public static final GamePiece EMPTY = new GamePiece(null, null, ".");
 
     private final ChessPiece chessPiece;
     private final Player player;
@@ -32,6 +35,14 @@ public class GamePiece {
         }
 
         return gamePieces;
+    }
+
+    public List<Position> getInitialPositions() {
+        List<Position> positions = chessPiece.getOriginalPositions()
+                .stream()
+                .map(player::reviseInitialPosition)
+                .collect(Collectors.toList());
+        return Collections.unmodifiableList(positions);
     }
 
     public String getName() {

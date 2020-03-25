@@ -43,4 +43,10 @@ class PositionTest {
     void list() {
         assertThat(Position.list()).hasSize(64);
     }
+
+    @Test
+    @DisplayName("가로축 기준 대칭")
+    void horizontalFlip() {
+        assertThat(Position.from("b1").horizontalFlip()).isEqualTo(Position.from("b8"));
+    }
 }

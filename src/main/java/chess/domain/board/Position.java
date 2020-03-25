@@ -53,6 +53,10 @@ public class Position implements Comparable<Position> {
         return of(file.opposite(), rank.opposite());
     }
 
+    public Position horizontalFlip() {
+        return of(file, rank.opposite());
+    }
+
     @Override
     public int compareTo(Position position) {
         if (rank.compareTo(position.rank) == 0) {

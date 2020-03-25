@@ -19,15 +19,14 @@ public enum ChessPiece {
     PAWN("p", Arrays.stream(File.values()).map(file -> Position.of(file, Rank.TWO)).collect(Collectors.toList()));
 
     private final String name;
-
     private final List<Position> initialPositions;
 
     ChessPiece(String name, List<Position> initialPositions) {
         this.name = name;
-        this.initialPositions = initialPositions;
+        this.initialPositions = Collections.unmodifiableList(initialPositions);
     }
 
-    public List<Position> getInitialPositions() {
+    public List<Position> getOriginalPositions() {
         return initialPositions;
     }
 
