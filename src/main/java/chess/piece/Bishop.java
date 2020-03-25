@@ -5,7 +5,8 @@ import chess.position.Position;
 import java.util.List;
 
 public class Bishop extends Piece {
-	private static final String symbol = "B";
+	private static final String SYMBOL = "B";
+
     public Bishop(Team team) {
         super(team);
     }
@@ -13,5 +14,10 @@ public class Bishop extends Piece {
     @Override
     public List<Position> findReachablePositions(Position start, Position end) {
         return null;
+    }
+
+    @Override
+    protected String getSymbol() {
+        return SYMBOL;
     }
 }

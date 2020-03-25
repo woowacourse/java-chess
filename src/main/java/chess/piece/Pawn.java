@@ -5,6 +5,8 @@ import java.util.List;
 import chess.position.Position;
 
 public class Pawn extends Piece {
+	private static final String SYMBOL = "P";
+
 	public Pawn(Team team) {
 		super(team);
 	}
@@ -12,5 +14,10 @@ public class Pawn extends Piece {
 	@Override
 	public List<Position> findReachablePositions(Position start, Position end) {
 		return null;
+	}
+
+	@Override
+	protected String getSymbol() {
+		return SYMBOL;
 	}
 }

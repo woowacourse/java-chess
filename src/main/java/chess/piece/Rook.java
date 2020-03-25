@@ -8,6 +8,7 @@ import chess.position.Position;
 import chess.position.Rank;
 
 public class Rook extends Piece {
+	private static final String SYMBOL = "R";
 
 	public Rook(Team team) {
 		super(team);
@@ -28,5 +29,10 @@ public class Rook extends Piece {
 		return ranks.stream()
 			.map(rank -> Position.of(start.getFile(), rank))
 			.collect(Collectors.toList());
+	}
+
+	@Override
+	protected String getSymbol() {
+		return SYMBOL;
 	}
 }

@@ -1,5 +1,6 @@
 package chess.piece;
 
+
 import java.util.List;
 
 import chess.position.Position;
@@ -13,5 +14,12 @@ public abstract class Piece {
 
 	public abstract List<Position> findReachablePositions(Position start, Position end);
 
-//	private String getSymbolBy(Team team);
+	public String getSymbolBy() {
+		if (team.isBlack()) {
+			return getSymbol();
+		}
+		return getSymbol().toLowerCase();
+	}
+
+	protected abstract String getSymbol();
 }

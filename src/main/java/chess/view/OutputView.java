@@ -21,12 +21,15 @@ public class OutputView {
                 if (pieces.containsKey(Position.of(file, rank))) {
                     Piece piece = pieces.get(Position.of(file, rank));
                     builder.append(findSymbol(piece));
+                } else {
+                    builder.append(".");
                 }
             }
         }
+        System.out.println(builder);
     }
 
     private static String findSymbol(Piece piece) {
-        return null;
+        return piece.getSymbolBy();
     }
 }
