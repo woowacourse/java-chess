@@ -27,7 +27,8 @@ public enum Row {
 				.orElseThrow(IllegalArgumentException::new);
 	}
 
-	public int getIndex() {
-		return this.index;
+	@Override
+	public String toString() {
+		return row;
 	}
 }

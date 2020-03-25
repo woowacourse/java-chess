@@ -1,5 +1,6 @@
 package domain.pieces;
 
+import domain.point.Point;
 import domain.team.Team;
 
 public class Queen extends Piece {
@@ -7,5 +8,10 @@ public class Queen extends Piece {
 
     public Queen(Team team) {
         super(INITIAL, team);
+    }
+
+    @Override
+    public boolean isMovable(Point from, Point to) {
+        return false;
     }
 }

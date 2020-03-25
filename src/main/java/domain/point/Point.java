@@ -18,22 +18,6 @@ public class Point {
 		return new Point(Row.find(row), Column.find(column));
 	}
 
-	public Row getRow() {
-		return row;
-	}
-
-	public Column getColumn() {
-		return column;
-	}
-
-	public int getRowIndex() {
-		return row.getIndex();
-	}
-
-	public int getColumnIndex() {
-		return column.getIndex();
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -50,9 +34,6 @@ public class Point {
 
 	@Override
 	public String toString() {
-		return "Point{" +
-				"row=" + row +
-				", column=" + column +
-				'}';
+		return row.toString() + column.toString();
 	}
 }

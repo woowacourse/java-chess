@@ -20,7 +20,7 @@ public abstract class Piece {
         return this.team.equals(team);
     }
 
-//    public abstract boolean isMovable(Point from, Point to);
+    public abstract boolean isMovable(Point from, Point to);
 
     @Override
     public String toString() {

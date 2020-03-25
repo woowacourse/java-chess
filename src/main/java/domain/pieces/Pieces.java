@@ -42,13 +42,13 @@ public class Pieces {
 
     private void validateExistPiece(Point from) {
         if (!isGetPoint(from)) {
-            throw new IsNotMovableException("잘못된 move 입력입니다.");
+            throw new IsNotMovableException(from.toString() + "에 움직일 수 있는 말이 없습니다.");
         }
     }
 
     private void validateCorrectTurn(Team turn, Point from) {
         if(!getPiece(from).isSameTeam(turn)) {
-            throw new IsNotMovableException("잘못된 move 입력입니다.");
+            throw new IsNotMovableException(turn.toString() + "차례입니다.");
         }
     }
 }

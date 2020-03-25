@@ -9,4 +9,9 @@ public class Knight extends Piece {
     public Knight(Team team) {
         super(INITIAL, team);
     }
+
+    @Override
+    public boolean isMovable(Point from, Point to) {
+        return false;
+    }
 }
