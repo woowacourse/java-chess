@@ -26,20 +26,25 @@ public abstract class Piece extends Square{
         Objects.requireNonNull(target);
         int rowDiff = Row.getDiff(source.getRow(), target.getRow());
         int columnDiff = Column.getDiff(source.getColumn(), target.getColumn());
-        MoveRule moveRule = getMoveRule(rowDiff, columnDiff);
+        if (!hasMoveRule(MoveRule.getMoveRule(source, target))) {
+            System.out.println("return false");
+            return false;
+        }
         return validateMovableTileSize(rowDiff, columnDiff);
     }
 
     public abstract boolean validateMovableTileSize(int rowDiff, int columnDiff);
 
-    public MoveRule getMoveRule(int rowDiff, int columnDiff) {
+    public boolean hasMoveRule(MoveRule moveRule) {
         return moveRules.stream()
-                .filter(moveRule -> moveRule.getJudge(rowDiff, columnDiff))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("이동방식을 찾을 수 없습니다."));
+                .anyMatch(x -> x == moveRule);
     }
 
     public List<MoveRule> getMoveRules() {
         return moveRules;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

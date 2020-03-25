@@ -5,6 +5,7 @@ import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,7 +13,31 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class MoveRuleTest {
+
+    @ParameterizedTest
+    @MethodSource("generatePositionsAndMoveRule")
+    void 방향찾기테스트(String sourceInput, String targetInput, MoveRule moveRule) {
+        Position source = Positions.of(sourceInput);
+        Position target = Positions.of(targetInput);
+
+        assertThat(MoveRule.getMoveRule(source, target)).isEqualTo(moveRule);
+    }
+
+    static Stream<Arguments> generatePositionsAndMoveRule() {
+        return Stream.of(
+                Arguments.of("a1", "a8", MoveRule.TOP),
+                Arguments.of("a8", "a1",MoveRule.DOWN),
+                Arguments.of("a1", "h1",MoveRule.RIGHT),
+                Arguments.of("h1", "a1",MoveRule.LEFT),
+                Arguments.of("a8", "h1",MoveRule.DIAGONAL_DOWN_RIGHT),
+                Arguments.of("h8", "a1",MoveRule.DIAGONAL_DOWN_LEFT),
+                Arguments.of("h1", "a8",MoveRule.DIAGONAL_TOP_LEFT),
+                Arguments.of("a1", "h8",MoveRule.DIAGONAL_TOP_RIGHT));
+    }
+
     @DisplayName( "top/down 이동했을 경우 source와 target 사이의 position들 확인")
     @ParameterizedTest
     @MethodSource("generateTopDownPositions")
@@ -29,7 +54,7 @@ public class MoveRuleTest {
                 Positions.of(Row.A, Column.SIX),
                 Positions.of(Row.A, Column.SEVEN)};
 
-        Assertions.assertThat(actual).containsExactly(expected);
+        assertThat(actual).containsExactly(expected);
     }
 
     static Stream<Arguments> generateTopDownPositions() {
@@ -54,7 +79,7 @@ public class MoveRuleTest {
                 Positions.of(Row.F, Column.ONE),
                 Positions.of(Row.G, Column.ONE)};
 
-        Assertions.assertThat(actual).containsExactly(expected);
+        assertThat(actual).containsExactly(expected);
     }
 
     static Stream<Arguments> generateLeftRightPositions() {
@@ -79,7 +104,7 @@ public class MoveRuleTest {
                 Positions.of(Row.F, Column.SIX),
                 Positions.of(Row.G, Column.SEVEN)};
 
-        Assertions.assertThat(actual).containsExactly(expected);
+        assertThat(actual).containsExactly(expected);
     }
 
     static Stream<Arguments> generateTopLeftDownRightPositions() {
@@ -104,7 +129,7 @@ public class MoveRuleTest {
                 Positions.of(Row.F, Column.SIX),
                 Positions.of(Row.G, Column.SEVEN)};
 
-        Assertions.assertThat(actual).containsExactly(expected);
+        assertThat(actual).containsExactly(expected);
     }
 
     static Stream<Arguments> generateTopRightDownLeftPositions() {

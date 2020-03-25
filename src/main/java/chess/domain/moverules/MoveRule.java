@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 // 중복 코드 개선하기
 public enum MoveRule {
-    LEFT((rowDiff, columnDiff) -> isNegative(rowDiff) && isZero(columnDiff),
+    LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isZero(columnDiff),
             (source, target) -> {
                 Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
                 Row biggerRow = Row.getBigger(source.getRow(), target.getRow());
@@ -28,7 +28,7 @@ public enum MoveRule {
                 return positions;
             }
     ),
-    RIGHT((rowDiff, columnDiff) -> isPositive(rowDiff) && isZero(columnDiff),
+    RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isZero(columnDiff),
             (source, target) -> {
                 Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
                 Row biggerRow = Row.getBigger(source.getRow(), target.getRow());
@@ -40,7 +40,7 @@ public enum MoveRule {
                 return positions;
             }
     ),
-    TOP((rowDiff, columnDiff) -> isZero(rowDiff) && isPositive(columnDiff),
+    TOP((rowDiff, columnDiff) -> isZero(rowDiff) && isNegative(columnDiff),
             (source, target) -> {
                 Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
                 Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
@@ -51,7 +51,7 @@ public enum MoveRule {
                         .collect(Collectors.toList());
                 return positions;
             }),
-    DOWN((rowDiff, columnDiff) -> isZero(rowDiff) && isNegative(columnDiff),
+    DOWN((rowDiff, columnDiff) -> isZero(rowDiff) && isPositive(columnDiff),
             (source, target) -> {
                 Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
                 Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
@@ -62,7 +62,7 @@ public enum MoveRule {
                         .collect(Collectors.toList());
                 return positions;
             }),
-    DIAGONAL_TOP_LEFT((rowDiff, columnDiff) -> isNegative(rowDiff) && isNegative(columnDiff),
+    DIAGONAL_TOP_LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isNegative(columnDiff),
             (source, target) -> {
                 Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
                 Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
@@ -80,7 +80,7 @@ public enum MoveRule {
                 }
                 return positions;
             }),
-    DIAGONAL_TOP_RIGHT((rowDiff, columnDiff) -> isPositive(rowDiff) && isNegative(columnDiff),
+    DIAGONAL_TOP_RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isNegative(columnDiff),
             (source, target) -> {
                 Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
                 Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
@@ -98,7 +98,7 @@ public enum MoveRule {
                 }
                 return positions;
             }),
-    DIAGONAL_DOWN_LEFT((rowDiff, columnDiff) -> isNegative(rowDiff) && isPositive(columnDiff),
+    DIAGONAL_DOWN_LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isPositive(columnDiff),
             (source, target) -> {
                 Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
                 Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
@@ -155,11 +155,20 @@ public enum MoveRule {
         return number < 0;
     }
 
-    public boolean getJudge(int rowDiff, int columnDiff) {
+    public boolean getJudge(Position source, Position target) {
+        int rowDiff = Row.getDiff(source.getRow(), target.getRow());
+        int columnDiff = Column.getDiff(source.getColumn(), target.getColumn());
         return judge.test(rowDiff, columnDiff);
     }
 
     public List<Position> getPositionsBetween(Position source, Position target) {
         return positionsBetween.apply(source, target);
+    }
+
+    public static MoveRule getMoveRule(Position source, Position target) {
+       return  Arrays.stream(MoveRule.values())
+                .filter(x -> x.getJudge(source, target))
+                .findFirst()
+               .orElseThrow(() -> new IllegalArgumentException("이동 방식을 찾을 수 없습니다."));
     }
 }

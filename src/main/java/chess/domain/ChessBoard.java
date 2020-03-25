@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.chesspieces.*;
+import chess.domain.moverules.MoveRule;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
@@ -39,13 +40,38 @@ public class ChessBoard {
     }
 
     public void move(Position source, Position target) {
-        if(((Piece) chessBoard.get(source)).movable(source, target)){
+        if (((Piece) chessBoard.get(source)).movable(source, target)
+                && validateObstacles(getRoutes(source, target))
+                && !isSamePlayer(source, target)) {
             chessBoard.put(target, chessBoard.get(source));
             chessBoard.put(source, new Empty());
         }
     }
 
+    private boolean isSamePlayer(Position source, Position target) {
+        if (chessBoard.get(source).getClass() == (Empty.class)
+                || chessBoard.get(target).getClass() == (Empty.class)){
+            return false;
+        }
+        return ((Piece) chessBoard.get(source)).getPlayer() != ((Piece) chessBoard.get(target)).getPlayer();
+    }
+
     public Map<Position, Square> getChessBoard() {
         return Collections.unmodifiableMap(chessBoard);
+    }
+
+    public List<Position> getRoutes(Position source, Position target) {
+        MoveRule moveRule = MoveRule.getMoveRule(source, target);
+        List<Position> routes = moveRule.getPositionsBetween(source, target);
+        return routes;
+    }
+
+    public boolean validateObstacles(List<Position> routes) {
+        for (Position position : routes) {
+            if (!chessBoard.get(position).getClass().isInstance(Empty.class)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

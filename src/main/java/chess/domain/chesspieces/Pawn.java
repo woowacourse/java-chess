@@ -16,6 +16,6 @@ public class Pawn extends Piece {
 
     @Override
     public boolean validateMovableTileSize(int rowDiff, int columnDiff) {
-        return false;
+        return true;
     }
 }
