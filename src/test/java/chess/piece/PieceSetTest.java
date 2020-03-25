@@ -25,7 +25,7 @@ class PieceSetTest {
     }
 
     private void makeExpectMap(Map<Location, Piece> expect, PieceType pieceType) {
-        List<Location> initialLocation = pieceType.getInitialLocation();
+        List<Location> initialLocation = pieceType.reverseInitialLocation();
 
         for (Location location : initialLocation) {
             expect.put(location, Piece.of(pieceType, true));
