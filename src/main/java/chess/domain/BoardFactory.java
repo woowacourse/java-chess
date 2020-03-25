@@ -1,10 +1,9 @@
 package chess.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class BoardFactory {
-    private static final Map<Position, Piece> INITIALIZED_POSITIONS = new HashMap<>();
+    private static final LinkedHashMap<Position, Piece> INITIALIZED_POSITIONS = new LinkedHashMap<>();
     private static final int WHITE_EDGE_ROW = 1;
     private static final int BLACK_EDGE_ROW = 8;
     private static final int WHITE_PAWN_ROW = 2;
@@ -15,15 +14,15 @@ public class BoardFactory {
     private static final int BLACK_END_INDEX = 6;
 
     static {
-        setUpWhitePiece();
-        setUpBlank();
         setUpBlackPiece();
+        setUpBlank();
+        setUpWhitePiece();
     }
 
-    private static void setUpWhitePiece() {
-        setUpEdge(WhitePiece::new, WHITE_EDGE_ROW);
+    private static void setUpBlackPiece() {
+        setUpEdge(BlackPiece::new, BLACK_EDGE_ROW);
         for (int x = START_INDEX; x <= END_INDEX; x++) {
-            INITIALIZED_POSITIONS.put(new Position(x, WHITE_PAWN_ROW), new WhitePiece(PieceType.PAWN));
+            INITIALIZED_POSITIONS.put(new Position(x, BLACK_PAWN_ROW), new BlackPiece(PieceType.PAWN));
         }
     }
 
@@ -35,11 +34,11 @@ public class BoardFactory {
         }
     }
 
-    private static void setUpBlackPiece() {
-        setUpEdge(BlackPiece::new, BLACK_EDGE_ROW);
+    private static void setUpWhitePiece() {
         for (int x = START_INDEX; x <= END_INDEX; x++) {
-            INITIALIZED_POSITIONS.put(new Position(x, BLACK_PAWN_ROW), new BlackPiece(PieceType.PAWN));
+            INITIALIZED_POSITIONS.put(new Position(x, WHITE_PAWN_ROW), new WhitePiece(PieceType.PAWN));
         }
+        setUpEdge(WhitePiece::new, WHITE_EDGE_ROW);
     }
 
     private static void setUpEdge(PieceCreator pieceCreator, int edgeRow) {
@@ -57,7 +56,7 @@ public class BoardFactory {
         Piece create(PieceType pieceType);
     }
 
-    static Board createBoard() {
+    public static Board createBoard() {
         return new Board(INITIALIZED_POSITIONS);
     }
 }

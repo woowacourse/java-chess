@@ -2,7 +2,7 @@ package chess.domain;
 
 import java.util.Objects;
 
-class Position {
+public class Position {
     private final String x;
     private final String y;
 
