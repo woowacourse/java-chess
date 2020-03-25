@@ -8,15 +8,15 @@ public enum PieceType {
     KNIGHT("n", 2.5),
     PAWN("p", 1);
 
-    private String name;
-    private double score;
+    private final String symbol;
+    private final double score;
 
-    PieceType(String name, double score) {
-        this.name = name;
+    PieceType(String symbol, double score) {
+        this.symbol = symbol;
         this.score = score;
     }
 
-    public String getName() {
-        return name;
+    public String getSymbol() {
+        return symbol;
     }
 }

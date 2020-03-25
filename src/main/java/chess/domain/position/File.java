@@ -12,7 +12,7 @@ public enum File {
     G("g"),
     H("h");
 
-    private String name;
+    private final String name;
 
     File(String name) {
         this.name = name;

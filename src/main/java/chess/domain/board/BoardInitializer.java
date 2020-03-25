@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.initialize.*;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.*;
@@ -20,13 +20,13 @@ public class BoardInitializer {
         ));
     }
 
-    public static Map<Position, PieceType> initializeAll() {
-        Map<Position, PieceType> board = new HashMap<>();
+    public static Map<Position, Piece> initializeAll() {
+        Map<Position, Piece> board = new HashMap<>();
 
         for (InitializeStrategy strategy : INITIALIZER) {
             board.putAll(strategy.initialize());
         }
 
-        return  board;
+        return Collections.unmodifiableMap(board);
     }
 }

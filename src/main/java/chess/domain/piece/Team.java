@@ -1,0 +1,18 @@
+package chess.domain.piece;
+
+import java.util.function.Function;
+
+public enum Team {
+    BLACK(String::toUpperCase),
+    WHITE(String::toLowerCase);
+
+    private final Function<String, String> expression;
+
+    Team(Function<String, String> expression) {
+        this.expression = expression;
+    }
+
+    public String convert(final String name) {
+        return this.expression.apply(name);
+    }
+}

@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,7 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    private Position(File file, Rank rank) {
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -28,7 +29,7 @@ public class Position {
         }
     }
 
-    public static Position of(String position) {
+    public static Position of(final String position) {
         File file = File.of(position.substring(0, 1));
         Rank rank = Rank.of(position.substring(1, 2));
 
@@ -43,9 +44,10 @@ public class Position {
     }
 
     public static List<String> getPositions() {
-        return positions.stream()
+        List<String> parseResult = positions.stream()
                 .map(Position::toString)
                 .collect(Collectors.toList());
+        return Collections.unmodifiableList(parseResult);
     }
 
     @Override

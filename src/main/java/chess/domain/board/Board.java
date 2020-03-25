@@ -1,25 +1,26 @@
 package chess.domain.board;
 
-import chess.domain.piece.PieceType;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
-    private Map<Position, PieceType> board;
+    private final Map<Position, Piece> board;
 
     public Board() {
         this.board = BoardInitializer.initializeAll();
     }
 
-    public Map<String, String> get() {
-        return board.entrySet()
+    public Map<String, String> parse() {
+        Map<String, String> parseResult = board.entrySet()
                 .stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().toString(),
-                        entry -> entry.getValue().getName(),
+                        entry -> entry.getValue().toSymbol(),
                         (e1, e2) -> e1, LinkedHashMap::new));
+        return Collections.unmodifiableMap(parseResult);
     }
 }
