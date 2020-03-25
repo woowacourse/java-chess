@@ -65,20 +65,20 @@ public class BoardFactoryTest {
 		}
 
 		List<Piece> seventh = new ArrayList<>();
-		seventh.add(new Rook(Position.of("a7"), Team.BLACK));
-		seventh.add(new Knight(Position.of("b7"), Team.BLACK));
-		seventh.add(new Bishop(Position.of("c7"), Team.BLACK));
-		seventh.add(new King(Position.of("d7"), Team.BLACK));
-		seventh.add(new Queen(Position.of("e7"), Team.BLACK));
-		seventh.add(new Bishop(Position.of("f7"), Team.BLACK));
-		seventh.add(new Knight(Position.of("g7"), Team.BLACK));
-		seventh.add(new Rook(Position.of("h7"), Team.BLACK));
+		for (Column column : Column.values()) {
+			seventh.add(new Pawn(Position.of(column.getColumnName() + "7"), Team.BLACK));
+		}
 		ranks.add(new Rank(seventh));
 
 		List<Piece> eighth = new ArrayList<>();
-		for (Column column : Column.values()) {
-			eighth.add(new Pawn(Position.of(column.getColumnName() + "8"), Team.BLACK));
-		}
+		eighth.add(new Rook(Position.of("a8"), Team.BLACK));
+		eighth.add(new Knight(Position.of("b8"), Team.BLACK));
+		eighth.add(new Bishop(Position.of("c8"), Team.BLACK));
+		eighth.add(new King(Position.of("d8"), Team.BLACK));
+		eighth.add(new Queen(Position.of("e8"), Team.BLACK));
+		eighth.add(new Bishop(Position.of("f8"), Team.BLACK));
+		eighth.add(new Knight(Position.of("g8"), Team.BLACK));
+		eighth.add(new Rook(Position.of("h8"), Team.BLACK));
 		ranks.add(new Rank(eighth));
 
 		return Stream.of(Arguments.of(ranks));

@@ -26,8 +26,8 @@ public class BoardFactory {
 		createRank(WHITE_OTHER_PIECE_RANK, Team.WHITE);
 		createPawnRank(WHITE_PAWN_RANK, Team.WHITE);
 		createEmptyRank();
-		createRank(BLACK_PAWN_RANK, Team.BLACK);
-		createPawnRank(BLACK_OTHER_PIECE_RANK, Team.BLACK);
+		createPawnRank(BLACK_PAWN_RANK, Team.BLACK);
+		createRank(BLACK_OTHER_PIECE_RANK, Team.BLACK);
 		return new Board(ranks);
 	}
 

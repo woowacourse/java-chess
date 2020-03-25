@@ -12,6 +12,10 @@ public class Rank {
 		this.pieces = pieces;
 	}
 
+	public List<Piece> getPieces() {
+		return pieces;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

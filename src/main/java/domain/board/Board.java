@@ -9,10 +9,6 @@ public class Board {
 		this.ranks = ranks;
 	}
 
-	public void initialize() {
-
-	}
-
 	public List<Rank> getRanks() {
 		return ranks;
 	}
