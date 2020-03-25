@@ -1,9 +1,9 @@
 package chess.move;
 
+import java.util.List;
+
 import chess.Board;
 import chess.position.Position;
-
-import java.util.List;
 
 public abstract class MoveValidateStrategy {
 	protected Board board;

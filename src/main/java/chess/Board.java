@@ -19,11 +19,11 @@ public class Board {
 
 	public void move(Position from, Position to) {
 		Piece target = pieces.remove(from);
-        pieces.put(to, target);
-    }
+		pieces.put(to, target);
+	}
 
 	public boolean isNotExistAt(List<Position> traces) {
 		return traces.stream()
-				.noneMatch(pieces::containsKey);
+			.noneMatch(pieces::containsKey);
 	}
 }
