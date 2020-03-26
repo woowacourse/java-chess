@@ -18,9 +18,11 @@ public class OutputView {
 					stringBuilder.append(".");
 				else
 					stringBuilder.append(piece.toString());
+
 			}
-			stringBuilder.append("\n");
+			stringBuilder.append(" ").append(i).append("\n");
 		}
+		stringBuilder.append("abcdefgh");
 		System.out.println(stringBuilder.toString());
 	}
 
