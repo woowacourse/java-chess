@@ -32,4 +32,8 @@ public class OutputView {
         }
         System.out.print(".");
     }
+
+    public static void printScore(double score) {
+        System.out.println(score + "점");
+    }
 }

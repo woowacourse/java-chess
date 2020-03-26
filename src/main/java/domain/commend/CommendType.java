@@ -16,6 +16,12 @@ public enum CommendType {
             return input.equals("end");
         }
     },
+    STATUS {
+        @Override
+        public boolean isCommend(String input) {
+            return input.equals("status");
+        }
+    },
     MOVE {
         @Override
         public boolean isCommend(String input) {

@@ -43,6 +43,10 @@ public class State {
         return commendType == CommendType.MOVE;
     }
 
+    public boolean isStatus() {
+        return commendType == CommendType.STATUS;
+    }
+
     public Team getTurn() {
         return this.turn;
     }
