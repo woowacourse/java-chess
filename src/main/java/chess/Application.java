@@ -11,14 +11,17 @@ public class Application {
         ChessBoard chessBoard = new ChessBoard(BoardFactory.createBoard());
 
         OutputView.printBoard(chessBoard);
+        System.out.println(chessBoard.getTotalScore(Team.WHITE));
         chessBoard.move(new Position(2, 4), new Position(4, 4));
         OutputView.printBoard(chessBoard);
+        System.out.println(chessBoard.getTotalScore(Team.WHITE));
         chessBoard.move(new Position(2, 4), new Position(4, 4));
         OutputView.printBoard(chessBoard);
+        System.out.println(chessBoard.getTotalScore(Team.WHITE));
         chessBoard.move(new Position(4, 4), new Position(5, 5));
         OutputView.printBoard(chessBoard);
-
         System.out.println(chessBoard.getTotalScore(Team.WHITE));
+
     }
 }
 

@@ -138,14 +138,23 @@ public class ChessBoard {
 
     public double getTotalScore(Team team) {
         double score = 0;
+        int cnt = 0;
         for (int i = 0; i < 8; i++) {
+            	int pawnCnt = 0;
             for (int j = 0; j < 8; j++) {
-                ChessPiece chessPiece = board.get(i).get(j);
+                ChessPiece chessPiece = board.get(j).get(i);
+
                 if (chessPiece.getTeam() == team) {
-                    score += board.get(i).get(j).getScore();
+					if (chessPiece.getClass() == Pawn.class) {
+						pawnCnt++;
+					}
+                    score += board.get(j).get(i).getScore();
                 }
             }
+            if (pawnCnt >= 2) {
+            	cnt += pawnCnt;
+			}
         }
-        return score;
+        return score - cnt * 0.5;
     }
 }
