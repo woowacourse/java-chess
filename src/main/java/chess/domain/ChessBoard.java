@@ -19,6 +19,10 @@ public class ChessBoard {
     }
 
     public boolean move(Position from, Position to) {
+        if (from == to) {
+            throw new IllegalArgumentException("같은 위치로는 이동을 못합니다.");
+        }
+
         Square source = chessBoard.get(from);
         Square target = chessBoard.get(to);
         if (source.movable(from, to)

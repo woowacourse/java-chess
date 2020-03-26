@@ -1,39 +1,72 @@
 import chess.domain.Player;
+import chess.domain.chesspieces.Empty;
 import chess.domain.chesspieces.King;
+import chess.domain.chesspieces.Rook;
 import chess.domain.moverules.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.domain.position.component.Column;
+import chess.domain.position.component.Row;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class KingTest {
     private final King king = new King(Player.WHITE);
 
-    @DisplayName("King: 이동 가능한 방향 확인")
+    @DisplayName("이동 가능한 방향 - 모든 방향")
     @Test
-    void kingMoveRulesTest() {
+    void kingDirectionsTest() {
         List<Direction> directions = king.getDirections();
-        Assertions.assertThat(directions.contains(Direction.DIAGONAL_DOWN_LEFT)).isTrue();
+        Assertions.assertThat(directions).containsExactly(Direction.values());
     }
 
-    @DisplayName("이동 확인: 정상")
-    @Test
-    void test() {
-        Position source = Positions.of("a1");
-        Position target = Positions.of("a2");
-        assertThat(king.movable(source, target)).isTrue();
+    @DisplayName("이동 칸 수 확인: (정상) 1칸일 때")
+    @ParameterizedTest
+    @MethodSource("generatePositions")
+    void tileSize_1(Position from, Position to) {
+        assertThat(king.validateMovableTileSize(from, to)).isTrue();
     }
 
-    @DisplayName("이동 확인: (예외) 2칸 이동")
-    @Test
-    void test2() {
-        Position source = Positions.of("a1");
-        Position target = Positions.of("a3");
-        assertThat(king.movable(source, target)).isFalse();
+    static Stream<Arguments> generatePositions() {
+        return Stream.of(
+                Arguments.of(Positions.of("a1"), Positions.of("a2")),
+                Arguments.of(Positions.of("a8"), Positions.of("a7")),
+                Arguments.of(Positions.of("h8"), Positions.of("g7")));
     }
+
+    @DisplayName("잘못된 이동 확인: 1칸 이상 이동")
+    @ParameterizedTest
+    @MethodSource("generatePositions2")
+    void test2(Position from, Position to) {
+        assertThat(king.validateMovableTileSize(from, to)).isFalse();
+    }
+
+    static Stream<Arguments> generatePositions2() {
+        return Stream.of(
+                Arguments.of(Positions.of("a1"), Positions.of("a3")),
+                Arguments.of(Positions.of("a8"), Positions.of("a1")),
+                Arguments.of(Positions.of("h1"), Positions.of("g7")));
+    }
+//
+//    @Test
+//    @DisplayName("잘못된 이동 확인 : 같은 편이 있는 곳으로 이동했을 경우")
+//    void test3() {
+//    }
+//
+//    @DisplayName("올바른 이동 확인 : 적 기물이 있는 곳으로 이동했을 경우 공격 성공 테스트")
+//    void test4() {
+//    }
+//
+//    @DisplayName("올바른 이동 확인 : 빈칸이 있는 곳으로 이동 했을 경우 이동 성공 테스트")
+//    void test5() {
+//    }
 }

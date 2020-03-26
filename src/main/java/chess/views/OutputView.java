@@ -12,8 +12,15 @@ public class OutputView {
     private final static int OFFSET = Row.values().length;
 
     public static void printInitialGuide() {
-        System.out.println("체스 게임을 시작합니다.");
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+        StringBuilder initialGuide = new StringBuilder();
+        initialGuide.append("> 체스 게임을 시작합니다.")
+                .append(NEW_LINE)
+                .append("> 게임 시작 : start")
+                .append(NEW_LINE)
+                .append("> 게임 종료 : end")
+                .append(NEW_LINE)
+                .append("> 게임 이동 : move source 위치 target위치 - 예. move b2 b3");
+        System.out.println(initialGuide.toString());
     }
 
     public static void printChessBoard(Map<Position, Square> chessBoard) {

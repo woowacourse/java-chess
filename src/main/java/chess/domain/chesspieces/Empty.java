@@ -15,8 +15,8 @@ public class Empty extends Square {
     }
 
     @Override
-    public boolean movable(Position source, Position target) {
-        return false;
+    public boolean movable(Position from, Position to) {
+        throw new UnsupportedOperationException("empty는 이동할 수 없습니다.");
     }
 
     @Override

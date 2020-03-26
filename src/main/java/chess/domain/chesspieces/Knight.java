@@ -25,9 +25,9 @@ public class Knight extends Piece {
                 && validateMovableTileSize(from, to);
     }
 
-    public boolean validateMovePosition(Position source, Position target) {
+    public boolean validateMovePosition(Position from, Position to) {
         return Arrays.stream(MovePosition.values())
-                .anyMatch(movePosition -> movePosition.contains(source, target));
+                .anyMatch(movePosition -> movePosition.contains(from, to));
     }
 
     @Override
