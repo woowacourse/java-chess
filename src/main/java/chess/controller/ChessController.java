@@ -31,6 +31,7 @@ public class ChessController {
 		while (chessBoard.isSurviveKings()) {
 			gameRun(chessBoard);
 		}
+
 		String inputStatus = InputView.inputStatus();
 		if (STATUS.equalsIgnoreCase(inputStatus)) {
 			double blackTeamScore = chessBoard.calculateTeamScore(chessBoard.findBlackTeam());
