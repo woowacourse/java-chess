@@ -55,13 +55,14 @@ public class Board {
 
     public void move(Position from, Position to) {
         Piece piece = pieces.get(from);
-        List<Position> trace = piece.findReachablePositions(from, to);
-        if (isExistAnyPieceAt(trace)) {
+        List<Position> PositionsWherePiecesShouldNeverBeIncluded = piece.findReachablePositions(from, to);
+        if (isExistAnyPieceAt(PositionsWherePiecesShouldNeverBeIncluded)) {
             throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
         }
         if (isExistAt(to) && pieces.get(to).isSameTeam(pieces.get(from))) {
             throw new IllegalArgumentException("본인의 말은 잡을 수 없습니다.");
         }
+        
         Piece target = pieces.remove(from);
         target.updateHasMoved();
         pieces.put(to, target);
@@ -69,7 +70,7 @@ public class Board {
 
 	public boolean isExistAnyPieceAt(List<Position> traces) {
         return traces.stream()
-                .anyMatch(pieces::containsKey);
+                .anyMatch(position -> pieces.containsKey(position));
     }
 
 	private boolean isExistAt(Position position) {
