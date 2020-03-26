@@ -20,6 +20,11 @@ public class AllRouteGenerator {
             return makeKnightRoute(initialPosition);
         }
 
+        if (chessPiece instanceof Pawn && ((Pawn)chessPiece).isFirstMove()) {
+            ((Pawn)chessPiece).firstMoveComplete();
+            directions.add(Direction.DOUBLE_UP);
+        }
+
         for (Direction direction : directions) {
             positions = new ArrayList<>();
 
@@ -28,6 +33,7 @@ public class AllRouteGenerator {
         }
         return routes;
     }
+
 
     private static List<Route> makeKnightRoute(Position initialPosition) {
         List<Position> positions;
