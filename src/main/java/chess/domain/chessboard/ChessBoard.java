@@ -62,7 +62,7 @@ public class ChessBoard {
 	}
 
 	private void validateMovable(Position sourcePosition, Position targetPosition) {
-		MovePattern movePattern = MovePatternFactory.findM ovePattern(sourcePosition, targetPosition);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 		Piece targetPiece = findPieceByPosition(targetPosition);
 		Piece pieceToMove = findPieceByPosition(sourcePosition);
 
