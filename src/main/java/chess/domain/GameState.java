@@ -1,5 +1,7 @@
 package chess.domain;
 
+import util.NullChecker;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -16,17 +18,11 @@ public enum GameState {
     }
 
     public static GameState of(String input) {
-        validateInput(input);
+        NullChecker.validateNotNull(input);
         return Arrays.stream(GameState.values())
                 .filter(gameState -> gameState.getName().equals(input.toLowerCase()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다"));
-    }
-
-    private static void validateInput(String input) {
-        if (Objects.isNull(input)) {
-            throw new IllegalArgumentException("잘못된 입력입니다");
-        }
     }
 
     public String getName() {

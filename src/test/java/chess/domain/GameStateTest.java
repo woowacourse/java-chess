@@ -14,8 +14,6 @@ public class GameStateTest {
     @DisplayName("start, end 이외의 입력이 들어왔을 때 예외처리")
     void otherInputTest(String input) {
         assertThatThrownBy(() -> GameState.of(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("잘못");
+                .isInstanceOf(IllegalArgumentException.class);
     }
-
 }

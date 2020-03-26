@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Square;
+import util.NullChecker;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,21 +26,12 @@ public class Piece {
     }
 
     public static Piece of(Color color, Type type) {
-        validateInput(color, type);
+        NullChecker.validateNotNull(color, type);
         return CACHE.get(color.getName() + type.getName());
     }
 
-    private static void validateInput(Color color, Type type) {
-        if (Objects.isNull(color) || Objects.isNull(type)) {
-            throw new IllegalArgumentException("잘못된 입력입니다");
-        }
-    }
-
     public String getLetter() {
-        if (color == Color.BLACK) {
-            return type.getName();
-        }
-        return type.getName().toLowerCase();
+        return color.getApplyTypeName(type);
     }
 
     public Set<Square> getCheatSheet(Square square) {
@@ -117,7 +109,7 @@ public class Piece {
     }
 
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
-        validateNotNull(square, board);
+        NullChecker.validateNotNull(square, board);
 
         if (type == Type.KNIGHT || type == Type.KING) {
             return getCheatSheet(square).stream()
@@ -129,14 +121,8 @@ public class Piece {
             Set<Square> squares = getCheatSheet(square);
             for (Square s : squares) {
                 if (Math.abs(square.getRank() - s.getRank()) == 1) {
-                    Square squareRight = s;
-                    Square squareLeft = s;
-                    if (s.getFile() != 'a') {
-                        squareLeft = Square.of(s, -1, 0);
-                    }
-                    if (s.getFile() != 'h') {
-                        squareRight = Square.of(s, 1, 0);
-                    }
+                    Square squareRight = s.addIfInBoundary(-1, 0);
+                    Square squareLeft = s.addIfInBoundary(1, 0);
                     if (board.containsKey(s) && color == board.get(s).color) {
                         squares.removeAll(getCheatSheet(square));
                     }
@@ -293,12 +279,6 @@ public class Piece {
         }
         squaresToRemove.remove(s);
         return squaresToRemove;
-    }
-
-    private void validateNotNull(Square square, Map<Square, Piece> board) {
-        if (Objects.isNull(square) || Objects.isNull(board)) {
-            throw new IllegalArgumentException("null 안댐");
-        }
     }
 
     public boolean isBlack() {

@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import util.NullChecker;
+
 import java.util.*;
 
 public class Square {
@@ -22,28 +24,26 @@ public class Square {
     }
 
     public static Square of(String location) {
-        if (Objects.isNull(location) || !CACHE.containsKey(location)) {
-            throw new IllegalArgumentException("잘못된 square의 입력입니다");
+        NullChecker.validateNotNull(location);
+        if (CACHE.containsKey(location)) {
+            return CACHE.get(location);
         }
-
-        return CACHE.get(location);
+        throw new IllegalArgumentException("잘못된 square의 입력입니다");
     }
 
     public static Square of(Square square, int fileIncrementBy, int rankIncrementBy) {
-        if (Objects.isNull(square)) {
-            throw new IllegalArgumentException("잘못된 square의 입력입니다");
-        }
-         return Square.of(String.valueOf((char) (square.file + fileIncrementBy)) + (square.rank + rankIncrementBy));
+        NullChecker.validateNotNull(square);
+        return Square.of(String.valueOf((char) (square.file + fileIncrementBy)) + (square.rank + rankIncrementBy));
     }
 
-    private static boolean hasCacheAdded(Square square, int fileIncrementBy, int rankIncrementBy) {
-        char fileAdd = (char) (square.getFile() + fileIncrementBy);
-        int rankAdd = square.getRank() + rankIncrementBy;
-        return fileAdd >= 'a' && fileAdd <= 'h' && rankAdd >= 1 && rankAdd <= 8;
+    private boolean hasCacheAdded(int fileIncrementBy, int rankIncrementBy) {
+        char fileAdd = (char) (file + fileIncrementBy);
+        int rankAdd = rank + rankIncrementBy;
+        return CACHE.containsKey(String.valueOf(fileAdd) + rankAdd);
     }
 
     public Square addIfInBoundary(int fileIncrementBy, int rankIncrementBy) {
-        if (Square.hasCacheAdded(this, fileIncrementBy, rankIncrementBy)) {
+        if (hasCacheAdded(fileIncrementBy, rankIncrementBy)) {
             return Square.of(this, fileIncrementBy, rankIncrementBy);
         }
         return this;

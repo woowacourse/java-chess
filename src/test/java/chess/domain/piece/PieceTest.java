@@ -26,7 +26,7 @@ public class PieceTest {
     void nullTest() {
         assertThatThrownBy(() -> Piece.of(null, null))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("잘못된 입력입니다");
+                .hasMessageContaining("Null");
     }
 
     @ParameterizedTest

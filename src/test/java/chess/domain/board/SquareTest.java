@@ -24,8 +24,7 @@ public class SquareTest {
     @DisplayName("잘못된 값이 of에 들어갔을 때 예외 발생")
     void validLocation(String location) {
         assertThatThrownBy(() -> Square.of(location))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("잘못");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("더한 값이 캐싱된 값이면 캐싱 값 리턴, 아니면 본인 리턴")
