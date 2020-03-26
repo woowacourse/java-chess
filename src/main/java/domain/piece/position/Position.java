@@ -14,11 +14,11 @@ public class Position {
 	}
 
 	public int calculateColumnGap(Position targetPosition) {
-		return this.column.getNumber() - targetPosition.getColumn().getNumber();
+		return targetPosition.getColumn().getNumber() - this.column.getNumber();
 	}
 
 	public int calculateRowGap(Position targetPosition) {
-		return this.row - targetPosition.getRow();
+		return targetPosition.getRow() - this.row;
 	}
 
 	public Column getColumn() {
