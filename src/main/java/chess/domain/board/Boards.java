@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.domain.Turn;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 public class Boards {
 	private static final int LOWER_BOARD = 0;
 	private static final int UPPER_BOARD = 1;
+	private static final String KING = "k";
 
 	private final List<Board> boards;
 
@@ -57,10 +60,14 @@ public class Boards {
 	}
 
 	public void move(String from, String to, Turn turn) {
-		if (boards.get(turn.self()).containsKey(to)) {
-			throw new IllegalArgumentException("아군 기물이 존재합니다.");
-		}
 		boards.get(turn.self()).update(from, to);
-		boards.get(turn.enemy()).remove(to);
+		boards.get(turn.enemy()).remove(Position.getReversedNameOf(to));
+	}
+
+	public boolean isBothKingAlive() {
+		return getTotal().values()
+			.stream()
+			.filter(piece -> piece.toLowerCase().equals(KING))
+			.count() == 2;
 	}
 }

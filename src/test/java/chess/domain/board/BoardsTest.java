@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import static chess.domain.position.Fixtures.*;
 import static org.assertj.core.api.Assertions.*;

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -40,11 +40,15 @@ public class Board {
 	}
 
 	public void update(String from, String to) {
+		Piece piece = get(from);
 		if (containsKey(to)) {
 			throw new IllegalArgumentException("아군 기물이 위치하고 있습니다.");
 		}
-		board.put(to, board.get(from));
-		board.remove(from);
+
+		piece.moveTo(Position.of(to));
+		board.put(to, piece);
+
+		remove(from);
 	}
 
 	public void remove(String key) {

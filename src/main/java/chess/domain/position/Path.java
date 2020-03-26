@@ -22,6 +22,10 @@ public class Path {
 		return new Path(path);
 	}
 
+	public static Path of(String start, String end) {
+		return of(Position.of(start), Position.of(end));
+	}
+
 	public List<String> path() {
 		return path.stream()
 			.map(Position::getName)
