@@ -28,6 +28,7 @@ public enum Direction {
 	SSW(-1, -2),
 	SWW(-2, -1);
 
+	private static final String INVALID_DIRECTION = "올바르지 않은 방향입니다.";
 	private int xDegree;
 	private int yDegree;
 
@@ -39,21 +40,21 @@ public enum Direction {
 	public static Direction of(int x, int y) {
 		return Arrays.stream(Direction.values()).filter(d -> d.xDegree == x && d.yDegree == y)
 			.findFirst()
-			.orElseThrow(() -> new IllegalMoveException("올바르지 않은 방향입니다."));
+			.orElseThrow(() -> new IllegalMoveException(INVALID_DIRECTION));
 	}
 
-	public boolean isGoingForward() {
-		List<Direction> forwardDirection = Arrays.asList(NORTH, NORTHNORTH, SOUTH, SOUTHSOUTH);
-		return forwardDirection.contains(this);
-	}
-
-	public boolean isGoingDiagonal() {
+	public boolean isDiagonal() {
 		List<Direction> diagonalDirection = Arrays.asList(NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST);
 		return diagonalDirection.contains(this);
 	}
 
-	public boolean isGoingForwardDouble() {
+	public boolean isForwardDouble() {
 		return (this == NORTHNORTH || this == SOUTHSOUTH);
+	}
+
+	public boolean isForwardForPawn() {
+		List<Direction> forwardDirection = Arrays.asList(NORTH, NORTHNORTH, SOUTH, SOUTHSOUTH);
+		return forwardDirection.contains(this);
 	}
 
 	public int getYDegree() {

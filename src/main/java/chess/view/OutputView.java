@@ -7,6 +7,13 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 public class OutputView {
+
+	private static final int UPPER_BOUND = 8;
+	private static final int LOWER_BOUND = 1;
+	private static final String NEW_LINE = "\n";
+	private static final String NO_PIECE = ".";
+	private static final String DELIMITER = " : ";
+
 	public static void printGameStartInstruction() {
 		System.out.println("체스 게임을 시작합니다.");
 	}
@@ -14,24 +21,30 @@ public class OutputView {
 	public static void printChessBoard(Board board) {
 		Pieces pieces = board.getPieces();
 		StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 8; i > 0; i--) {
-			for (int j = 1; j <= 8; j++) {
-				Piece piece = pieces.findByPosition(new Position(j, i));
-				if (piece == null)
-					stringBuilder.append(".");
-				else
-					stringBuilder.append(piece.toString());
-
-			}
-			stringBuilder.append(" ").append(i).append("\n");
+		for (int rank = UPPER_BOUND; rank >= LOWER_BOUND; rank--) {
+			stringBuilder.append(parsePerRank(pieces, rank));
+			stringBuilder.append(" ").append(rank).append(NEW_LINE);
 		}
 		stringBuilder.append("abcdefgh");
 		System.out.println(stringBuilder.toString());
 	}
 
+	private static String parsePerRank(Pieces pieces, int rank) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for (int file = LOWER_BOUND; file <= UPPER_BOUND; file++) {
+			Piece piece = pieces.findByPosition(new Position(file, rank));
+			if (piece == null) {
+				stringBuilder.append(NO_PIECE);
+				continue;
+			}
+			stringBuilder.append(piece.toString());
+		}
+		return stringBuilder.toString();
+	}
+
 	public static void printScore(Board board) {
 		for (Team team : Team.values()) {
-			System.out.println(team.getName() + " : " + board.calculateScoreByTeam(team));
+			System.out.println(team.getName() + DELIMITER + board.calculateScoreByTeam(team));
 		}
 		System.out.println();
 	}

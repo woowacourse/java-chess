@@ -25,5 +25,4 @@ public class Knight extends Piece {
 			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
 	}
-
 }

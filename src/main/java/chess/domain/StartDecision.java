@@ -6,6 +6,7 @@ public enum StartDecision {
 	START("start"),
 	END("end");
 
+	private static final String INVALID_COMMAND = "잘못된 명령입니다.";
 	private String decision;
 
 	StartDecision(String decision) {
@@ -16,6 +17,6 @@ public enum StartDecision {
 		return Arrays.stream(StartDecision.values())
 			.filter(d -> d.decision.equals(userDecision.toLowerCase()))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("start 또는 end로 답해주십시오"));
+			.orElseThrow(() -> new IllegalArgumentException(INVALID_COMMAND));
 	}
 }

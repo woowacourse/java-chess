@@ -30,7 +30,7 @@ public class Pawn extends Piece {
 
 	private void validateMoveByDirection(Position destination, List<Direction> possibleDirections) {
 		Direction direction = this.position.calculateDirection(destination);
-		if (!this.position.isPawnInOriginalPosition() && direction.isGoingForwardDouble()) {
+		if (!this.position.isPawnInOriginalPosition() && direction.isForwardDouble()) {
 			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
 		if (!possibleDirections.contains(direction)) {

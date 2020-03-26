@@ -9,6 +9,9 @@ import java.util.Objects;
 import chess.exception.PositionOutOfBoundsException;
 
 public class Position {
+	private static final int LOWER_BOUND = 1;
+	private static final int UPPER_BOUND = 8;
+	private static final String INVALID_POSITION = "올바른 위치값을 입력해 주십시오.";
 	private final int x;
 	private final int y;
 
@@ -19,26 +22,29 @@ public class Position {
 	}
 
 	public Position(String string) {
-		int x, y;
 		try {
-			x = string.charAt(0) - 'a' + 1;
-			y = Character.getNumericValue(string.charAt(1));
+			int x = alphabetToNumericValue(string.charAt(0));
+			int y = numericCharacterToNumericValue(string.charAt(1));
+			validatePositionRange(x, y);
+			this.x = x;
+			this.y = y;
 		} catch (Exception e) {
-			throw new IllegalArgumentException("올바른 위치값을 입력해 주십시오.");
+			throw new IllegalArgumentException(INVALID_POSITION);
 		}
-		validatePositionRange(x, y);
-		this.x = x;
-		this.y = y;
+	}
+
+	private int numericCharacterToNumericValue(char character) {
+		return Character.getNumericValue(character);
+	}
+
+	private int alphabetToNumericValue(char character) {
+		return character - 'a' + 1;
 	}
 
 	private void validatePositionRange(int x, int y) {
-		if (x < 1 || x > 8 || y < 1 || y > 8) {
-			throw new PositionOutOfBoundsException("올바른 좌표 값이 아닙니다.");
+		if (x < LOWER_BOUND || x > UPPER_BOUND || y < LOWER_BOUND || y > UPPER_BOUND) {
+			throw new PositionOutOfBoundsException(INVALID_POSITION);
 		}
-	}
-
-	public Position move(Direction direction) {
-		return move(direction, 1);
 	}
 
 	public Position move(Direction direction, int distance) {
@@ -73,6 +79,10 @@ public class Position {
 		return this.y == 2 || this.y == 7;
 	}
 
+	public boolean isInSameColumn(Position position) {
+		return this.x == position.x;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -87,9 +97,5 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
-	}
-
-	public boolean isInSameColumn(Position position) {
-		return this.x == position.x;
 	}
 }

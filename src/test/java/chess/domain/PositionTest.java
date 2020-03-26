@@ -30,7 +30,7 @@ public class PositionTest {
 		assertThatThrownBy(() ->
 			new Position(x, y)
 		).isInstanceOf(PositionOutOfBoundsException.class)
-			.hasMessageContaining("체스판 범위");
+			.hasMessageContaining("위치값");
 
 	}
 

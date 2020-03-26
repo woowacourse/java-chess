@@ -17,5 +17,4 @@ public class Bishop extends Piece {
 			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
 	}
-
 }
