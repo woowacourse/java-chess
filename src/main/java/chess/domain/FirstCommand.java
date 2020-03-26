@@ -14,7 +14,14 @@ public enum FirstCommand {
 
 	public static FirstCommand of(String[] input) {
 		validate(input);
-		return FirstCommand.valueOf(input[0]);
+		return findFirstCommand(input[0]);
+	}
+
+	private static FirstCommand findFirstCommand(String command) {
+		if (START.command.equalsIgnoreCase(command)) {
+			return START;
+		}
+		return END;
 	}
 
 	private static void validate(String[] input) {

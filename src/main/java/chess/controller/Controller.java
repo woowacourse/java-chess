@@ -28,6 +28,8 @@ public class Controller {
 	private static void init() {
 		whitePieces = WhitePiecesFactory.create();
 		blackPieces = BlackPiecesFactory.create();
+
+		OutputView.printChessBoard(whitePieces, blackPieces);
 	}
 
 	private static void running() {
@@ -45,7 +47,7 @@ public class Controller {
 
 		do {
 			command = readCommand();
-		} while (command.isEnd() || kingDie());
+		} while (!command.isEnd() || kingDie());
 	}
 
 	private static boolean kingDie() {
@@ -56,6 +58,7 @@ public class Controller {
 		OutputView.printGameInstruction();
 		FirstCommand command = FirstCommand.of(InputView.inputCommand());
 
+		init();
 		if (command.isEnd()) {
 			end();
 		}

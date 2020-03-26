@@ -20,4 +20,8 @@ public class BlackPieces {
 	public boolean hasPiece(Position source) {
 		return pieces.containsKey(source);
 	}
+
+	public Piece getPiece(Position position) {
+		return pieces.get(position);
+	}
 }

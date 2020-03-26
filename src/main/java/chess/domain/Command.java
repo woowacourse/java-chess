@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -20,7 +21,14 @@ public enum Command {
 
 	public static Command of(String[] input) {
 		validate(input);
-		return Command.valueOf(input[0]);
+		return findCommand(input[0]);
+	}
+
+	private static Command findCommand(String command) {
+		return Arrays.stream(Command.values())
+			.filter(cmd -> cmd.command.equals(command))
+			.findFirst()
+			.orElse(END);
 	}
 
 	private static void validate(String[] input) {

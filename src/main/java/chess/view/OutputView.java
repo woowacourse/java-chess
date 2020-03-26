@@ -1,5 +1,11 @@
 package chess.view;
 
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
+import chess.domain.piece.BlackPieces;
+import chess.domain.piece.WhitePieces;
+
 /**
  *
  *    @author AnHyungJu, LeeHoBin
@@ -18,5 +24,23 @@ public class OutputView {
 
 	public static void printGameEnd() {
 		System.out.println("게임을 종료합니다.");
+	}
+
+	public static void printChessBoard(WhitePieces whitePieces, BlackPieces blackPieces) {
+		for (Rank rank : Rank.values()) {
+			for (File file : File.values()) {
+				Position position = Position.of(file.getFile() + rank.getRank());
+				if (whitePieces.hasPiece(position)) {
+					System.out.print(whitePieces.getPiece(position).getSymbol());
+				}
+				if (blackPieces.hasPiece(position)) {
+					System.out.print(blackPieces.getPiece(position).getSymbol());
+				}
+				if (!whitePieces.hasPiece(position) && !blackPieces.hasPiece(position)) {
+					System.out.print(".");
+				}
+			}
+			System.out.println();
+		}
 	}
 }

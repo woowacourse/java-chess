@@ -3,8 +3,8 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 public class Bishop extends Piece {
-	public Bishop(String color, String name) {
-		super(color, name);
+	public Bishop(String color, String symbol) {
+		super(color, symbol);
 	}
 
 	@Override

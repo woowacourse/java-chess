@@ -3,8 +3,8 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 public class King extends Piece {
-	public King(String color, String name) {
-		super(color, name);
+	public King(String color, String symbol) {
+		super(color, symbol);
 	}
 
 	@Override

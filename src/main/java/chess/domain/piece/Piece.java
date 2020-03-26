@@ -15,6 +15,7 @@ public abstract class Piece {
 
 	public Piece(String color, String symbol) {
 		this.color = color;
+		this.symbol = symbol;
 		// this.state = new Started();
 	}
 
@@ -22,5 +23,9 @@ public abstract class Piece {
 
 	public static boolean isPawn(Piece piece) {
 		return true;
+	}
+
+	public String getSymbol() {
+		return symbol;
 	}
 }
