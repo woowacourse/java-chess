@@ -42,4 +42,12 @@ public abstract class Piece {
 	public boolean isSameTeam(Piece destinationPiece) {
 		return this.team == destinationPiece.team;
 	}
+
+	public boolean isInTeam(Team team) {
+		return this.team == team;
+	}
+
+	public double getScore() {
+		return this.score;
+	}
 }

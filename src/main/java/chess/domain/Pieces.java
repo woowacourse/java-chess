@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 
 public class Pieces {
 	private final List<Piece> pieces;
@@ -14,6 +15,10 @@ public class Pieces {
 
 	public List<Piece> getAlivePieces() {
 		return pieces.stream().filter(Piece::isAlive).collect(Collectors.toList());
+	}
+
+	public List<Piece> getAlivePiecesByTeam(Team team) {
+		return this.getAlivePieces().stream().filter(p -> p.isInTeam(team)).collect(Collectors.toList());
 	}
 
 	public Piece findByPosition(Position position) {

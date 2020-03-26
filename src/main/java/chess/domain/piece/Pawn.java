@@ -38,4 +38,7 @@ public class Pawn extends Piece {
 		}
 	}
 
+	public boolean isInSameColumn(Pawn pawn) {
+		return this.position.isInSameColumn(pawn.position);
+	}
 }
