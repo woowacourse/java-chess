@@ -35,11 +35,15 @@
     - [x] Start 구현
     - [x] End 구현
     - [x] Move 구현
+    - [ ] Status 구
 - [x] Direction 구현
     - [x] 다음 File, Rank 찾는 기능 구현
 - [x] moveStrategy 구현
     - [x] findMovePath 구현
     - [x] 폰이 기물을 잡는 경우 구현
+- [x] 점수 구현
+    - [x] 각 진영의 점수를 계산
 ### view
 - [x] Command 입력
 - [x] Board 출력
+- [ ] Score 출력

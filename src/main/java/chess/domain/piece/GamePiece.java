@@ -52,6 +52,14 @@ public class GamePiece {
         return player.equals(Player.WHITE);
     }
 
+    public double calculateScore(int count) {
+        return chessPiece.calculateScore(count);
+    }
+
+    public boolean isPawn() {
+        return chessPiece.equals(ChessPiece.PAWN);
+    }
+
     public List<Position> getInitialPositions() {
         List<Position> positions = chessPiece.getOriginalPositions()
                 .stream()

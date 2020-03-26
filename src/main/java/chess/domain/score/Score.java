@@ -1,0 +1,59 @@
+package chess.domain.score;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
+
+import chess.domain.piece.GamePiece;
+
+public class Score {
+
+    private static final Score ZERO = new Score(0);
+
+    private final double score;
+
+    private Score(double score) {
+        this.score = score;
+    }
+
+    // TODO: 2020/03/26 리팩토링
+    public static Score of(Map<GamePiece, Integer> piecesCount, int sameFilePawnCount) {
+        Score score = Score.ZERO;
+        for (Map.Entry<GamePiece, Integer> entry : piecesCount.entrySet()) {
+            score = score.plus(entry.getKey().calculateScore(entry.getValue()));
+        }
+        score = score.minus(sameFilePawnCount * 0.5);
+        return score;
+    }
+
+    public static Score from(double score) {
+        return new Score(score);
+    }
+
+    private Score plus(double score) {
+        return new Score(this.score + score);
+    }
+
+    private Score minus(double score) {
+        return new Score(this.score - score);
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Score))
+            return false;
+        Score score1 = (Score)o;
+        return Double.compare(score1.score, score) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
+    }
+}

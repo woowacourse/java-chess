@@ -14,6 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 
 class GamePieceTest {
@@ -53,6 +54,34 @@ class GamePieceTest {
         return Stream.of(
                 Arguments.of(GamePiece.of(ROOK, BLACK), Arrays.asList(Position.from("a8"), Position.from("h8"))),
                 Arguments.of(GamePiece.of(ROOK, WHITE), Arrays.asList(Position.from("a1"), Position.from("h1")))
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("gamepiece player가 white인지 확인")
+    @MethodSource("createWhitePieces")
+    void isWhite(GamePiece gamePiece, boolean expected) {
+        assertThat(gamePiece.isWhite()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createWhitePieces() {
+        return Stream.of(
+                Arguments.of(GamePiece.of(ROOK, BLACK), false),
+                Arguments.of(GamePiece.of(ROOK, WHITE), true)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("gamepiece가 pawn인지 확인")
+    @MethodSource("createPieces")
+    void isPawn(GamePiece gamePiece, boolean expected) {
+        assertThat(gamePiece.isPawn()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createPieces() {
+        return Stream.of(
+                Arguments.of(GamePiece.of(ROOK, BLACK), false),
+                Arguments.of(GamePiece.of(PAWN, WHITE), true)
         );
     }
 }

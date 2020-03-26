@@ -8,10 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.GamePiece;
+import chess.domain.player.Player;
+import chess.domain.score.Score;
 
 public class Board {
 
@@ -108,6 +111,47 @@ public class Board {
         if (obstacle != GamePiece.EMPTY) {
             throw new InvalidMovementException();
         }
+    }
+
+    public Map<Player, Score> calculateScore() {
+        Map<Player, Score> scores = new HashMap<>();
+        List<GamePiece> gamePieces = new ArrayList<>(board.values());
+
+        Map<GamePiece, Integer> gameWhitePiecesCount = getGamePieceCount(gamePieces, white -> white);
+        Map<GamePiece, Integer> gameBlackPiecesCount = getGamePieceCount(gamePieces, white -> !white);
+
+        int sameFileWhitePawnCount = getSameFilePawnCount(white -> white);
+        int sameFileBlackPawnCount = getSameFilePawnCount(white -> !white);
+
+        scores.put(Player.WHITE, Score.of(gameWhitePiecesCount, sameFileWhitePawnCount));
+        scores.put(Player.BLACK, Score.of(gameBlackPiecesCount, sameFileBlackPawnCount));
+
+        return scores;
+    }
+
+    private Map<GamePiece, Integer> getGamePieceCount(List<GamePiece> gamePieces, Predicate<Boolean> player) {
+        return gamePieces.stream()
+                .distinct()
+                .filter(gamePiece -> gamePiece != GamePiece.EMPTY)
+                .filter(gamePiece -> player.test(gamePiece.isWhite()))
+                .collect(Collectors.toMap(gamePiece -> gamePiece, gamePiece -> Collections.frequency(gamePieces, gamePiece)));
+    }
+
+    private int getSameFilePawnCount(Predicate<Boolean> player) {
+        int sameFilePawnCount = 0;
+        for (File file : File.values()) {
+            int count = 0;
+            for (Rank rank : Rank.values()) {
+                GamePiece gamePiece = board.get(Position.of(file, rank));
+                if (gamePiece != GamePiece.EMPTY && gamePiece.isPawn() && player.test(gamePiece.isWhite())) {
+                    count++;
+                }
+            }
+            if (count >= 2) {
+                sameFilePawnCount += count;
+            }
+        }
+        return sameFilePawnCount;
     }
 
     public List<List<GamePiece>> gamePieces() {

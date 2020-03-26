@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.BlockingDeque;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,8 +16,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.exception.InvalidMovementException;
-import chess.domain.piece.ChessPiece;
 import chess.domain.piece.GamePiece;
+import chess.domain.player.Player;
+import chess.domain.score.Score;
 
 class BoardTest {
 
@@ -48,6 +48,7 @@ class BoardTest {
         assertThat(board.getBoard().get(source)).isEqualTo(GamePiece.EMPTY);
         assertThat(board.getBoard().get(target)).isEqualTo(piece);
     }
+
     static Stream<Arguments> createMovement() {
         return Stream.of(
                 Arguments.of(GamePiece.of(ROOK, WHITE), Position.from("d3"), Position.from("f3"), 0),
@@ -112,5 +113,32 @@ class BoardTest {
             board.move(Position.from("d5"), Position.from("d6"));
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("초기 board score 계산")
+    void calculateScore() {
+        Board board = Board.createInitial();
+        Map<Player, Score> scores = board.calculateScore();
+        Map<Player, Score> expected = new HashMap<>();
+        expected.put(BLACK, Score.from(38));
+        expected.put(WHITE, Score.from(38));
+
+        assertThat(scores).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("같은 팀, 같은 화일의 pawn이 여러개 있는 경우 score 계산")
+    void calculateScoreWhiteSameFilePawn() {
+        Map<Position, GamePiece> map = new HashMap<>(Board.EMPTY.getBoard());
+        map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
+        map.put(Position.from("d6"), GamePiece.of(PAWN, WHITE));
+        map.put(Position.from("f3"), GamePiece.of(PAWN, WHITE));
+        map.put(Position.from("f4"), GamePiece.of(PAWN, WHITE));
+        map.put(Position.from("f6"), GamePiece.of(PAWN, WHITE));
+        map.put(Position.from("h3"), GamePiece.of(PAWN, WHITE));
+        Board board = Board.from(map, 0);
+
+        assertThat(board.calculateScore().get(WHITE)).isEqualTo(Score.from(3.5));
     }
 }
