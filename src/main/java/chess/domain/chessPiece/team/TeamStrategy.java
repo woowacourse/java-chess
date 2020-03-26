@@ -1,15 +1,15 @@
 package chess.domain.chessPiece.team;
 
 public interface TeamStrategy {
-    String pawnName();
+	String pawnName();
 
-    String kingName();
+	String kingName();
 
-    String queenName();
+	String queenName();
 
-    String bishopName();
+	String bishopName();
 
-    String knightName();
+	String knightName();
 
-    String rookName();
+	String rookName();
 }

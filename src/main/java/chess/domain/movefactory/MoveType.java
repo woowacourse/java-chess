@@ -1,7 +1,7 @@
 package chess.domain.movefactory;
 
 public interface MoveType {
-    Direction getDirection();
+	Direction getDirection();
 
-    int getCount();
+	int getCount();
 }

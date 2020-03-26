@@ -7,10 +7,9 @@ import chess.domain.movefactory.MoveTypeFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class BishopTest {
-
     @Test
     @DisplayName("이동 성공 테스트")
     void movable() {

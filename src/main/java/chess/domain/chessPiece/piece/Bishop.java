@@ -6,26 +6,26 @@ import chess.domain.movefactory.CrossType;
 import chess.domain.movefactory.MoveType;
 
 public class Bishop extends Piece {
-    private static final int BISHOP_SCORE = 3;
+	private static final int BISHOP_SCORE = 3;
 
-    private final double score = BISHOP_SCORE;
+	private final double score = BISHOP_SCORE;
 
-    public Bishop(Position position, TeamStrategy teamStrategy) {
-        super(position, teamStrategy);
-    }
+	public Bishop(Position position, TeamStrategy teamStrategy) {
+		super(position, teamStrategy);
+	}
 
-    @Override
-    public boolean isMovable(MoveType moveType) {
-        return moveType instanceof CrossType;
-    }
+	@Override
+	public boolean isMovable(MoveType moveType) {
+		return moveType instanceof CrossType;
+	}
 
-    @Override
-    public String pieceName() {
-        return teamStrategy.bishopName();
-    }
+	@Override
+	public String pieceName() {
+		return teamStrategy.bishopName();
+	}
 
-    @Override
-    public double getScore() {
-        return score;
-    }
+	@Override
+	public double getScore() {
+		return score;
+	}
 }

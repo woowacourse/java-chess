@@ -2,7 +2,7 @@ package chess.domain;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class FileTest {
     @Test
@@ -10,5 +10,4 @@ class FileTest {
         String input = "b";
         assertThat(File.of(input)).isEqualTo(File.B);
     }
-
 }

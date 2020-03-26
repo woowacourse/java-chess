@@ -8,10 +8,9 @@ import chess.domain.movefactory.MoveTypeFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class PawnTest {
-
     @Test
     @DisplayName("폰 2칸이동 테스트 성공")
     void isMovable() {
