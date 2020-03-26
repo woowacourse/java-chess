@@ -10,4 +10,11 @@ public class Bishop extends Piece {
 		super(position, team);
 	}
 
+	@Override
+	protected boolean validDirection(int rowGap, int columnGap) {
+		int absRowGap = Math.abs(rowGap);
+		int absColumnGap = Math.abs(columnGap);
+
+		return (absColumnGap == absRowGap) && (absColumnGap > 0);
+	}
 }
