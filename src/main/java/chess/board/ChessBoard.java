@@ -1,58 +1,48 @@
 package chess.board;
 
 import chess.board.piece.Direction;
-import chess.board.piece.Piece;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ChessBoard {
-    private final Map<Coordinate, Piece> chessBoard;
+    private final Map<Coordinate, Tile> chessBoard;
 
     public ChessBoard(BoardGenerator boardGenerator) {
         this.chessBoard = boardGenerator.generate();
     }
 
-    public Map<Coordinate, Piece> getChessBoard() {
+    public Map<Coordinate, Tile> getChessBoard() {
         return Collections.unmodifiableMap(chessBoard);
     }
 
     public boolean move(String sourceKey, String targetKey) {
-        Coordinate source = Coordinate.of(sourceKey);
-        Coordinate target = Coordinate.of(targetKey);
-        if (isAlliance(source, target)) {
+        Tile sourceTile = chessBoard.get(Coordinate.of(sourceKey));
+        Tile targetTile = chessBoard.get(Coordinate.of(targetKey));
+
+        if (sourceTile.isAlliance(targetTile)) {
             return false;
         }
 
-        Vector vector = target.calculateVector(source);
-        Piece piece = chessBoard.get(source);
-        if (!piece.canMove(vector)) {
+        if (sourceTile.canNotReach(targetTile)) {
             return false;
         }
 
-        List<Direction> directions = piece.findPath(vector);
-        Coordinate next = source;
+        Directions directions = sourceTile.findPath(targetTile);
 
-        for (int i = 0; i < directions.size() - 1; i++) {
-            next = next.move(directions.get(i));
-            if (!Objects.isNull(chessBoard.get(next))) {
-                return false;
-            }
+        Coordinate next = Coordinate.of(sourceKey);
+        boolean notExist = true;
+        while (directions.isNotEmpty() && notExist) {
+            Direction direction = directions.poll();
+            next = next.move(direction);
+            notExist = chessBoard.get(next).isBlank();
+        }
+        if (!notExist) {
+            return false;
         }
 
-        chessBoard.put(source, null);
-        chessBoard.put(target, piece);
+        targetTile.replacePiece(sourceTile);
         return true;
     }
 
-    private boolean isAlliance(final Coordinate source, final Coordinate target) {
-        Piece sourcePiece = chessBoard.get(source);
-        Piece targetPiece = chessBoard.get(target);
-        if (Objects.isNull(sourcePiece) || Objects.isNull(targetPiece)) {
-            return false;
-        }
-        return sourcePiece.isSameTeam(targetPiece);
-    }
 }

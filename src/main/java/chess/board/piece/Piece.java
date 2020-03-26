@@ -24,7 +24,9 @@ public abstract class Piece {
         return path;
     }
 
-    public abstract boolean canMove(Vector vector);
+    public boolean isBlank() {
+        return this instanceof Blank;
+    }
 
     public boolean isSameTeam(Team team) {
         return this.team == team;
@@ -33,4 +35,7 @@ public abstract class Piece {
     public boolean isSameTeam(Piece piece) {
         return this.team == piece.team;
     }
+
+    public abstract boolean canMove(Vector vector);
+
 }

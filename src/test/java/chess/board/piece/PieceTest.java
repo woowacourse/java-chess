@@ -25,4 +25,20 @@ class PieceTest {
         Piece king = new King(Team.BLACK);
         assertThat(king.findPath(new Vector(file, rank))).containsExactly(expect);
     }
+
+
+    @DisplayName("현재 체스말이 빈칸이면 true 아니면 false")
+    @ParameterizedTest
+    @CsvSource(value = {"BLANK,true", "BLACK_KING,false"})
+    void isBlank(Pieces pieces, boolean expect) {
+        //given
+        Piece piece = pieces.getPiece();
+
+        //when
+        boolean actual = piece.isBlank();
+
+        //then
+        assertThat(actual).isEqualTo(expect);
+    }
+
 }
