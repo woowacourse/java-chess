@@ -1,8 +1,8 @@
 package chess.domain.position;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Path {
 	private final List<Position> path;
@@ -19,12 +19,12 @@ public class Path {
 			current = Direction.of(current, end).move(current);
 			path.add(current);
 		}
-		path.add(end);
-
 		return new Path(path);
 	}
 
-	public List<Position> path() {
-		return Collections.unmodifiableList(path);
+	public List<String> path() {
+		return path.stream()
+			.map(Position::getName)
+			.collect(Collectors.toUnmodifiableList());
 	}
 }
