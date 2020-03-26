@@ -1,6 +1,7 @@
 package chess.position;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,6 @@ public class Position {
     private static final Map<String, Position> CACHE = new HashMap<>();
 
     static {
-        //        Arrays.stream(File.values())
-        //                .map(file -> Arrays.stream(Rank.values())
-        //                        .map(rank -> CACHE.put(getKey(file, rank), new Position(file, rank))));
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
                 CACHE.put(getKey(file, rank), new Position(file, rank));
@@ -41,7 +39,13 @@ public class Position {
     }
 
     public static List<Position> findDiagonalTrace(Position start, Position end) {
-        return null;
+        List<Position> positions = new ArrayList<>();
+        List<File> files = File.valuesBetween(start.getFile(), end.getFile());
+        List<Rank> ranks = Rank.valuesBetween(start.getRank(), end.getRank());
+        for (int i = 0; i < files.size(); i++) {
+            positions.add(Position.of(files.get(i), ranks.get(i)));
+        }
+        return positions;
     }
 
     public boolean isStraight(Position other) {
@@ -56,11 +60,15 @@ public class Position {
     }
 
     public boolean isSameSum(Position other) {
-        return this.getFileNumber() + this.getRankNumber() == other.getFileNumber() + other.getRankNumber();
+        int sumOfStartPositionCoordinate = this.getFileNumber() + this.getRankNumber();
+        int sumOfEndPositionCoordinate = other.getFileNumber() + other.getRankNumber();
+        return sumOfStartPositionCoordinate == sumOfEndPositionCoordinate;
     }
 
     public boolean isSameDifference(Position other) {
-		return this.getFileNumber() - this.getRankNumber() == other.getFileNumber() - other.getRankNumber();
+        int differenceOfStartPositionCoordinate = this.getFileNumber() - this.getRankNumber();
+        int differenceOfEndPositionCoordinate = other.getFileNumber() - other.getRankNumber();
+        return differenceOfStartPositionCoordinate == differenceOfEndPositionCoordinate;
     }
 
     public boolean isNotDiagonal(Position other) {
@@ -88,6 +96,6 @@ public class Position {
     }
 
     public int getRankNumber() {
-        return this.file.getNumber();
+        return this.rank.getNumber();
     }
 }

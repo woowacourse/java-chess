@@ -13,6 +13,6 @@ class CommandTest {
 	@ValueSource(strings = {"hello", "star!"})
 	void ofTest(String input) {
 		assertThatThrownBy(() -> Command.of(input)).isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("존재하지_않는_명령어입니다");
+			.hasMessage("존재하지 않는 명령어입니다.");
 	}
 }
