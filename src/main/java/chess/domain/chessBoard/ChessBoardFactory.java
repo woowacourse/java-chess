@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.PieceColor;
 import chess.domain.chessPiece.pieceType.Bishop;
 import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.Knight;
 import chess.domain.chessPiece.pieceType.Pawn;
+import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.chessPiece.pieceType.Queen;
 import chess.domain.chessPiece.pieceType.Rook;
 import chess.domain.position.ChessFile;

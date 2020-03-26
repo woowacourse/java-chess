@@ -1,20 +1,20 @@
 package chess.domain.chessPiece.pieceType;
 
-import chess.domain.RuleStrategy.KingRuleStrategy;
-import chess.domain.chessPiece.PieceColor;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import chess.domain.RuleStrategy.KingRuleStrategy;
 
 class KingTest {
-    @Test
-    void King_PieceColor_GenerateInstance() {
-        assertThat(new King(PieceColor.BLACK, new KingRuleStrategy())).isInstanceOf(King.class);
-    }
+	@Test
+	void King_PieceColor_GenerateInstance() {
+		assertThat(new King(PieceColor.BLACK, new KingRuleStrategy())).isInstanceOf(King.class);
+	}
 
-    @Test
-    void getName_ReturnName() {
-        assertThat(new King(PieceColor.BLACK, new KingRuleStrategy()).getName()).isEqualTo("K");
-        assertThat(new King(PieceColor.WHITE, new KingRuleStrategy()).getName()).isEqualTo("k");
-    }
+	@Test
+	void getName_ReturnName() {
+		assertThat(new King(PieceColor.BLACK, new KingRuleStrategy()).getName()).isEqualTo("K");
+		assertThat(new King(PieceColor.WHITE, new KingRuleStrategy()).getName()).isEqualTo("k");
+	}
 }
