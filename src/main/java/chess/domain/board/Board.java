@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.Collections;
@@ -31,7 +30,7 @@ public class Board {
     }
 
     public boolean isEmpty(final Position position) {
-        return this.board.containsKey(position);
+        return !this.board.containsKey(position);
     }
 
     public Piece getPiece(final Position position) {

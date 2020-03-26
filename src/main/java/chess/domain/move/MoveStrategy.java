@@ -16,7 +16,7 @@ public abstract class MoveStrategy {
     public abstract boolean movable(Position source, Position target, Board board);
 
     protected boolean checkObstacle(Position source, Position target, Board board) {
-        DirectionStrategy directionStrategy= PathFinder.find(source, target);
+        DirectionStrategy directionStrategy = PathFinder.find(source, target);
         List<Position> path = directionStrategy.find(source, target);
 
         for (Position position : path) {

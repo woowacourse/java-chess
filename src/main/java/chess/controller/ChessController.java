@@ -14,15 +14,31 @@ public class ChessController {
     private static InputView inputView = new ConsoleInputView();
     private static OutputView outputView = new ConsoleOutputView();
 
-    public static void run() {
+    public static void start() {
         if (inputView.askChessRun()) {
-            ChessRunner chessRunner = new ChessRunner();
-            printInitialize(chessRunner.getBoard());
-            String[] moveSource = inputView.askMove().split(" ");
-            String sourcePosition = moveSource[1];
-            String targetPosition = moveSource[2];
-            chessRunner.update(sourcePosition, targetPosition);
-            printInitialize(chessRunner.getBoard());
+            run();
+        }
+    }
+
+
+    public static void run() {
+        ChessRunner chessRunner = new ChessRunner();
+        printInitialize(chessRunner.getBoard());
+        boolean moveFlag = true;
+
+        while (moveFlag) {
+            try {
+                String[] moveSource = inputView.askMove().split(" ");
+                if (moveSource[0].toUpperCase() == "END") {
+                    break;
+                }
+                String sourcePosition = moveSource[1];
+                String targetPosition = moveSource[2];
+                chessRunner.update(sourcePosition, targetPosition);
+                printInitialize(chessRunner.getBoard());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

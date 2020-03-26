@@ -11,8 +11,8 @@ public class UpStrategy implements DirectionStrategy {
         List<Position> path = new ArrayList<>();
 
         for (int i = target.getRank() - 1; i > source.getRank(); i--) {
-        path.add(Position.of(source.getFile(), i));
-    }
+            path.add(Position.of(source.getFile(), i));
+        }
         return path;
     }
 }

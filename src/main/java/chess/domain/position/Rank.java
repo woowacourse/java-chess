@@ -35,4 +35,9 @@ public enum Rank {
     public int getSymbol() {
         return this.symbol;
     }
+
+
+    public int getDifference(Rank rank) {
+        return this.symbol - rank.symbol;
+    }
 }

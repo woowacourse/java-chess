@@ -65,8 +65,7 @@ public class Position {
     }
 
     public int calculateRankGap(Position target) {
-        int rankGap = this.rank.compareTo(target.rank);
-        return rankGap;
+        return this.rank.getDifference(target.rank);
     }
 
     public int getFile() {
