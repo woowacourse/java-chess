@@ -28,10 +28,8 @@ public abstract class Piece {
 
 	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
 		Location nowLocation = new Location(now);
-		System.out.println(nowLocation);
 		for (int weight = 1; nowLocation != destination; weight++) {
 			nowLocation = now.calculateNextLocation(destination, weight);
-			System.out.println(nowLocation);
 			if (board.containsKey(nowLocation)) {
 				return true;
 			}

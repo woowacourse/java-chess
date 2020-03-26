@@ -34,7 +34,8 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
-		return !isMovable(board, now, destination);
+		Location location = now.calculateNextLocation(destination, 1);
+		return !isMovable(board, now, destination) || board.containsKey(location);
 	}
 
 	private boolean isMovable(Map<Location, Piece> board, Location now, Location destination) {

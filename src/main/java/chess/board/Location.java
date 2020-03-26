@@ -135,10 +135,17 @@ public class Location {
 			&& this.col - 1 == after.col || this.col + 1 == after.col;
 	}
 
-	public Location calculateNextLocation(Location destination, int length) {
-		int rowWeight = length;
-		int colWeight = length;
+	public Location calculateNextLocation(Location destination, int weight) {
 
+		int rowWeight = weight;
+		int colWeight = weight;
+
+		if (row == destination.row) {
+			rowWeight = 0;
+		}
+		if (col == destination.col) {
+			colWeight = 0;
+		}
 		if (row > destination.row) {
 			rowWeight = -1 * rowWeight;
 		}
