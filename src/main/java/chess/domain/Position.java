@@ -21,10 +21,16 @@ public class Position {
         return new Position(x,y);
     }
 
-    Distance calculateDistance(Position position) {
-        int xDistance = x - position.x;
-        int yDistance = y - position.y;
-        return new Distance(xDistance, yDistance);
+    Distance calculateDistance(Position to) {
+        return Distance.calculate(this, to);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     private static void validateInRange(int x, int y) {

@@ -43,7 +43,7 @@ class PositionTest {
         //when
         Distance distance = from.calculateDistance(to);
         //then
-        assertThat(distance).isEqualTo(new Distance(toX - fromX, toY - fromY));
+        assertThat(distance).isEqualTo(Distance.of(toX - fromX, toY - fromY));
     }
 
     private static Stream<Arguments> getValidCasesForOf() {

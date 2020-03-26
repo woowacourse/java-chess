@@ -1,14 +1,26 @@
 package chess.domain.Piece;
 
+import chess.domain.Position;
+
 import java.util.Objects;
 
 public class Distance {
-    private final int x;
-    private final int y;
+    private final double value;
 
-    public Distance(int x, int y) {
-        this.x = Math.abs(x);
-        this.y = Math.abs(y);
+    private Distance(double value) {
+        this.value = Math.abs(value);
+    }
+
+
+    public static Distance of(double xDifference, double yDifference) {
+        return new Distance(Math.sqrt(Math.pow(xDifference, 2) + Math.pow(yDifference, 2)));
+    }
+
+    public static Distance calculate(Position from, Position to) {
+        int xDifference = from.getX() - to.getX();
+        int yDifference = from.getY() - to.getY();
+        double calculated = Math.sqrt(Math.pow(xDifference, 2) + Math.pow(yDifference, 2));
+        return new Distance(calculated);
     }
 
     @Override
@@ -16,12 +28,11 @@ public class Distance {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Distance distance = (Distance) o;
-        return x == distance.x &&
-                y == distance.y;
+        return Double.compare(distance.value, value) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(value);
     }
 }
