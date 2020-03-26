@@ -40,4 +40,13 @@ public class Board {
 
         return count == 0;
     }
+
+    public void move(PlayingPiece sourcePiece, PlayingPiece targetPiece) {
+        if (sourcePiece.isMine(targetPiece)) {
+            throw new IllegalStateException("자신의 말 위치로 이동할 수 없습니다.");
+        }
+        this.board.remove(targetPiece);
+        this.board.remove(sourcePiece);
+        this.board.addAll(sourcePiece.moveTo(targetPiece));
+    }
 }

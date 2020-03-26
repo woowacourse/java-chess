@@ -4,7 +4,9 @@ import chess.domains.piece.Blank;
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class PlayingPiece implements Comparable<PlayingPiece> {
     private final Position position;
@@ -48,5 +50,22 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
 
     public boolean isBlank() {
         return this.piece.equals(new Blank());
+    }
+
+    public boolean isMine(PlayingPiece targetPiece) {
+        return this.piece.isMine(targetPiece.piece);
+    }
+
+    public Piece getPiece() {
+        return this.piece;
+    }
+
+    public Set<PlayingPiece> moveTo(PlayingPiece targetPiece) {
+        Set<PlayingPiece> changedPieces = new HashSet<>();
+
+        changedPieces.add(new PlayingPiece(targetPiece.position, this.piece));
+        changedPieces.add(new PlayingPiece(this.position, new Blank()));
+
+        return changedPieces;
     }
 }

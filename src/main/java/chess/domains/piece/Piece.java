@@ -47,6 +47,10 @@ public abstract class Piece {
         return source.findRoute(target);
     }
 
+    public boolean isMine(Piece piece) {
+        return this.pieceColor == piece.pieceColor;
+    }
+
     public static List<Piece> getBlackPieces() {
         return blackPieces;
     }

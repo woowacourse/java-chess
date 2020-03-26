@@ -1,5 +1,6 @@
 package chess.domains.board;
 
+import chess.domains.piece.Pawn;
 import chess.domains.piece.PieceColor;
 import chess.domains.piece.Rook;
 import chess.domains.position.Position;
@@ -14,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BoardTest {
     private static Board board;
@@ -43,5 +46,47 @@ class BoardTest {
 
         boolean actual = board.canGo(route);
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("예외 테스트: 이동하려는 위치에 말이 본인의 말인 경우 예외 발생")
+    @Test
+    void move_1() {
+        Position source = Position.ofPositionName("a1");
+        Position target = Position.ofPositionName("a2");
+
+        PlayingPiece sourcePiece = board.findPiece(source);
+        PlayingPiece targetPiece = board.findPiece(target);
+
+        assertThatThrownBy(() -> board.move(sourcePiece, targetPiece))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("자신의 말 위치로 이동할 수 없습니다.");
+    }
+
+    @DisplayName("이동하려는 위치에 Blank가 있는 경우 이동 테스트")
+    @Test
+    void move_2() {
+        Position source = Position.ofPositionName("a2");
+        Position target = Position.ofPositionName("a3");
+
+        PlayingPiece sourcePiece = board.findPiece(source);
+        PlayingPiece targetPiece = board.findPiece(target);
+
+        board.move(sourcePiece, targetPiece);
+        assertTrue(board.findPiece("a2").isBlank());
+        assertThat(board.findPiece("a3").getPiece()).isEqualTo(new Pawn(PieceColor.WHITE));
+    }
+
+    @DisplayName("이동하려는 위치에 상대 말이 있는 경우 이동 테스트")
+    @Test
+    void move_3() {
+        Position source = Position.ofPositionName("a2");
+        Position target = Position.ofPositionName("a7");
+
+        PlayingPiece sourcePiece = board.findPiece(source);
+        PlayingPiece targetPiece = board.findPiece(target);
+
+        board.move(sourcePiece, targetPiece);
+        assertTrue(board.findPiece("a2").isBlank());
+        assertThat(board.findPiece("a7").getPiece()).isEqualTo(new Pawn(PieceColor.WHITE));
     }
 }
