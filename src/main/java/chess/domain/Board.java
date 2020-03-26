@@ -25,10 +25,21 @@ public class Board {
 	}
 
 	public Piece get(String key) {
+		if (!containsKey(key)) {
+			throw new IllegalArgumentException("기물이 존재하지 않습니다.");
+		}
 		return board.get(key);
 	}
 
 	public boolean containsKey(String key) {
 		return board.containsKey(key);
+	}
+
+	public void update(String from, String to) {
+		if (containsKey(to)) {
+			throw new IllegalArgumentException("아군 기물이 위치하고 있습니다.");
+		}
+		board.put(to, board.get(from));
+		board.remove(from);
 	}
 }
