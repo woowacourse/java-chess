@@ -40,6 +40,10 @@ public class Tile {
         return piece;
     }
 
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
     public double getScore() {
         return piece.getScore();
     }

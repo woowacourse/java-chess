@@ -1,16 +1,29 @@
 package chess.board;
 
+import chess.board.piece.Blank;
 import chess.board.piece.Direction;
 import chess.board.piece.Team;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
     private final Map<Coordinate, Tile> chessBoard;
 
-    public ChessBoard(BoardGenerator boardGenerator) {
-        this.chessBoard = boardGenerator.generate();
+    private ChessBoard(final Map<Coordinate, Tile> chessBoard) {
+        this.chessBoard = chessBoard;
+    }
+
+    public static ChessBoard empty() {
+        Map<Coordinate, Tile> emptyBoard = new HashMap<>();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                Coordinate coordinate = Coordinate.of(file, rank);
+                emptyBoard.put(coordinate, new Tile(coordinate, new Blank()));
+            }
+        }
+        return new ChessBoard(emptyBoard);
     }
 
     public Map<Coordinate, Tile> getChessBoard() {
@@ -56,5 +69,9 @@ public class ChessBoard {
             sum = sum.subtractPawnScore();
         }
         return sum.getSum();
+    }
+
+    public void put(final Tile tile) {
+        this.chessBoard.put(tile.getCoordinate(), tile);
     }
 }

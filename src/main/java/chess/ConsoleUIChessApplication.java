@@ -7,7 +7,7 @@ import chess.view.OutputView;
 
 public class ConsoleUIChessApplication {
     public static void main(String[] args) {
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator(BoardGenerator.Template.BASIC_BOARD.getTemplate()));
+        ChessBoard chessBoard = new BoardGenerator().create();
         OutputView.showAllCommand();
         String command = InputView.inputCommand();
 
