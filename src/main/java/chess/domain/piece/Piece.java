@@ -15,8 +15,12 @@ public abstract class Piece {
         this.symbol = symbol;
     }
 
-    public double getScore() {
+    public double score() {
         return symbol.getScore();
+    }
+
+    public String symbol() {
+        return symbol.getName();
     }
 
     public void move(Position position) {

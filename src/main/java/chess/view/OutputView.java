@@ -3,14 +3,7 @@ package chess.view;
 import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import chess.domain.game.Status;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Blank;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 
 public class OutputView {
     private static final String STATUS_FORMAT = "WHITE: %.1f BLACK: %.1f - %s진영 승\n";
@@ -23,40 +16,18 @@ public class OutputView {
     public static void printBoard(Board board) {
         for (Rank rank : board.getReverseRanks()) {
             for (Piece piece : rank.getPieces()) {
-                System.out.print(drawPieceByColor(piece));
+                System.out.print(drawPiece(piece));
             }
             System.out.println();
         }
     }
 
-    private static String drawPieceByColor(Piece piece) {
-        String shape = drawPiece(piece);
-        if (piece.isBlack()) {
-            shape = shape.toUpperCase();
-        }
-        return shape;
-    }
-
     private static String drawPiece(Piece piece) {
-        if (piece instanceof Pawn) {
-            return "p";
+        if (piece.isBlack()) {
+            return piece.symbol()
+                .toUpperCase();
         }
-        if (piece instanceof Rook) {
-            return "r";
-        }
-        if (piece instanceof Knight) {
-            return "n";
-        }
-        if (piece instanceof Bishop) {
-            return "b";
-        }
-        if (piece instanceof King) {
-            return "k";
-        }
-        if (piece instanceof Queen) {
-            return "q";
-        }
-        return ".";
+        return piece.symbol();
     }
 
     public static void printStatus(Status status) {

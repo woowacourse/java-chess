@@ -74,7 +74,7 @@ public class Rank {
     public double calculateScore(Color color) {
         return pieces.stream()
             .filter(piece -> piece.isSameColor(color))
-            .mapToDouble(Piece::getScore)
+            .mapToDouble(Piece::score)
             .sum();
     }
 }
