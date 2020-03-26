@@ -28,56 +28,56 @@ public class Pawn extends Piece {
 	}
 
 	private void blackPawnMovable(MovePattern movePattern, Piece targetPiece) {
-		if (targetPiece != null && isBlackPawnAttackMovePattern(movePattern)) {
+		if (targetPiece != null && isMovePatternAttackOfBlackPawn(movePattern)) {
 			return;
 		}
-		if (this.position.isPawnStartLine(this) && isBlackPawnOnStartLineMovePattern(movePattern)
+		if (this.position.isPawnStartLine(this) && isMovePatternOnStartLineOfBlackPawn(movePattern)
 				&& targetPiece == null) {
 			return;
 		}
-		if (isBlackPawnNormalMovePattern(movePattern) && targetPiece == null) {
+		if (isNormalMovePatternOfBlackPawn(movePattern) && targetPiece == null) {
 			return;
 		}
 		throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
 	}
 
-	private boolean isBlackPawnAttackMovePattern(MovePattern movePattern) {
+	private boolean isMovePatternAttackOfBlackPawn(MovePattern movePattern) {
 		return movePattern.getDirection() == Direction.UP_RIGHT
 				|| movePattern.getDirection() == Direction.UP_LEFT && movePattern.getCount() == PAWN_NORMAL_MOVE_RANGE;
 	}
 
-	private boolean isBlackPawnOnStartLineMovePattern(MovePattern movePattern) {
+	private boolean isMovePatternOnStartLineOfBlackPawn(MovePattern movePattern) {
 		return movePattern.getDirection() == Direction.UP && movePattern.getCount() <= PAWN_FIRST_MOVE_RANGE;
 	}
 
-	private boolean isBlackPawnNormalMovePattern(MovePattern movePattern) {
+	private boolean isNormalMovePatternOfBlackPawn(MovePattern movePattern) {
 		return movePattern.getDirection() == Direction.UP && movePattern.getCount() == PAWN_NORMAL_MOVE_RANGE;
 	}
 
 	private void whitePawnMovable(MovePattern movePattern, Piece targetPiece) {
-		if (targetPiece != null && isWhitePawnAttackMovePattern(movePattern)) {
+		if (targetPiece != null && isMovePatternAttackOfWhitePawn(movePattern)) {
 			return;
 		}
-		if (this.position.isPawnStartLine(this) && isWhitePawnOnStartLineMovePattern(movePattern)
+		if (this.position.isPawnStartLine(this) && isMovePatternOnStartLineOfWhitePawn(movePattern)
 				&& targetPiece == null) {
 			return;
 		}
-		if (isWhitePawnNormalMovePattern(movePattern) && targetPiece == null) {
+		if (isNormalMovePatternOfWhitePawn(movePattern) && targetPiece == null) {
 			return;
 		}
 		throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
 	}
 
-	private boolean isWhitePawnAttackMovePattern(MovePattern movePattern) {
+	private boolean isMovePatternAttackOfWhitePawn(MovePattern movePattern) {
 		return movePattern.getDirection() == Direction.DOWN_RIGHT
 				|| movePattern.getDirection() == Direction.DOWN_LEFT && movePattern.getCount() == PAWN_NORMAL_MOVE_RANGE;
 	}
 
-	private boolean isWhitePawnOnStartLineMovePattern(MovePattern movePattern) {
+	private boolean isMovePatternOnStartLineOfWhitePawn(MovePattern movePattern) {
 		return movePattern.getDirection() == Direction.DOWN && movePattern.getCount() <= PAWN_FIRST_MOVE_RANGE;
 	}
 
-	private boolean isWhitePawnNormalMovePattern(MovePattern movePattern) {
+	private boolean isNormalMovePatternOfWhitePawn(MovePattern movePattern) {
 		return movePattern.getDirection() == Direction.DOWN && movePattern.getCount() == PAWN_NORMAL_MOVE_RANGE;
 	}
 
