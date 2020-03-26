@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.BoardState;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
 
-import java.util.Map;
-
 public interface PieceState {
 
-    PieceState move(Position target, Map<Position, PieceDto> boardDto);
+    PieceState move(Position target, BoardState boardState);
 
     Player getPlayer();
 

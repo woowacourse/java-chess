@@ -12,4 +12,8 @@ public enum Player {
         return WHITE;
     }
 
+    public boolean isSamePlayer(Player player) {
+        return this == player;
+    }
+
 }

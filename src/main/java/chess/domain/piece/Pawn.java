@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.BoardState;
 import chess.domain.MovingDirection;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
@@ -39,11 +40,11 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    protected void validateMovingPolicy(Position target, Map<Position, PieceDto> boardDto) {
+    protected void validateMovingPolicy(Position target, BoardState boardState) {
         MovingDirection movingDirection = MovingDirection.getDirection(position, target);
         validateDirection(movingDirection);
-        validateAttack(target, boardDto);
-        validateMove(target, boardDto);
+        validateAttack(target, boardState);
+        validateMove(target, boardState);
     }
 
     private void validateDirection(MovingDirection movingDirection) {
@@ -53,9 +54,9 @@ public abstract class Pawn extends Piece {
         }
     }
 
-    protected abstract void validateAttack(Position target, Map<Position, PieceDto> boardDto);
+    protected abstract void validateAttack(Position target, BoardState boardState);
 
-    protected abstract void validateMove(Position target, Map<Position, PieceDto> boardDto);
+    protected abstract void validateMove(Position target, BoardState boardState);
 
     @Override
     public String getFigure() {

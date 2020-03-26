@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.BoardState;
 import chess.domain.MovingDirection;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
@@ -7,7 +8,6 @@ import chess.exception.MovingDirectionException;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Knight extends UnchangeablePiece {
 
@@ -37,7 +37,7 @@ public class Knight extends UnchangeablePiece {
     }
 
     @Override
-    protected void validateMovingPolicy(Position target, Map<Position, PieceDto> boardDto) {
+    protected void validateMovingPolicy(Position target, BoardState boardState) {
         MovingDirection movingDirection = MovingDirection.getDirection(position, target);
 
         if (!MOVING_DIRECTIONS.contains(movingDirection)) {

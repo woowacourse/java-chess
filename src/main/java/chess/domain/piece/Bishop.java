@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.BoardState;
 import chess.domain.MovingDirection;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
@@ -8,8 +9,6 @@ import chess.exception.ObstacleOnPathException;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 public class Bishop extends UnchangeablePiece {
 
@@ -36,7 +35,7 @@ public class Bishop extends UnchangeablePiece {
     }
 
     @Override
-    protected void validateMovingPolicy(Position target, Map<Position, PieceDto> boardDto) {
+    protected void validateMovingPolicy(Position target, BoardState boardState) {
         MovingDirection movingDirection = MovingDirection.getDirection(position, target);
 
         if (!MOVING_DIRECTIONS.contains(movingDirection)) {
@@ -45,7 +44,7 @@ public class Bishop extends UnchangeablePiece {
 
         Position startPathPosition = position.moveByDirection(movingDirection);
         while (!startPathPosition.equals(target)) {
-            if (!Objects.isNull(boardDto.get(startPathPosition))) {
+            if (boardState.isNotEmpty(startPathPosition)) {
                 throw new ObstacleOnPathException();
             }
             startPathPosition = startPathPosition.moveByDirection(movingDirection);
