@@ -1,46 +1,62 @@
 package chess.domain.RuleStrategy;
 
-import chess.domain.position.Position;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import chess.domain.position.Position;
 
 class KingRuleStrategyTest {
-    @Test
-    void KingMovableStrategy_GenerateInstance() {
-        assertThat(new KingRuleStrategy()).isInstanceOf(KingRuleStrategy.class);
-    }
 
-    @ParameterizedTest
-    @NullSource
-    void canMove_NullSource_ExceptionThrown(Position position) {
-        assertThatThrownBy(() -> new KingRuleStrategy().canMove(position, Position.of("b1")))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("이동할 소스가 존재하지 않습니다.");
-    }
+	@Test
+	void KingRuleStrategy_GenerateInstance() {
+		assertThat(new KingRuleStrategy()).isInstanceOf(KingRuleStrategy.class);
+	}
 
-    @ParameterizedTest
-    @NullSource
-    void canMove_NullTarget_ExceptionThrown(Position position) {
-        assertThatThrownBy(() -> new KingRuleStrategy().canMove(Position.of("b1"), position))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("이동할 타겟이 존재하지 않습니다.");
-    }
+	@ParameterizedTest
+	@NullSource
+	void validate_NullSourcePosition_ExceptionThrown(Position sourcePosition) {
+		Position targetPosition = Position.of("b1");
 
-    @Test
-    void canMove_CanMovableSourceAndTarget_ReturnTrue() {
-        RuleStrategy ruleStrategy = new KingRuleStrategy();
-        Position source = Position.of("b3");
-        Position target = Position.of("c4");
+		assertThatThrownBy(() -> new KingRuleStrategy().canMove(sourcePosition, targetPosition))
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("소스 위치가 존재하지 않습니다.");
+	}
 
-        assertThat(ruleStrategy.canMove(source, target)).isTrue();
-    }
+	@ParameterizedTest
+	@NullSource
+	void validate_NullTargetPosition_ExceptionThrown(Position targetPosition) {
+		Position sourcePosition = Position.of("b1");
 
-    @Test
-    void canLeap_ReturnTrue() {
-        assertThat(new KingRuleStrategy().canLeap()).isTrue();
-    }
+		assertThatThrownBy(() -> new KingRuleStrategy().canMove(sourcePosition, targetPosition))
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("타겟 위치가 존재하지 않습니다.");
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"a4", "a3", "b3", "c3", "c4", "c5", "b5", "a5"})
+	void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
+		KingRuleStrategy kingRuleStrategy = new KingRuleStrategy();
+		Position sourcePosition = Position.of("b4");
+
+		assertThat(kingRuleStrategy.canMove(sourcePosition, targetPosition)).isTrue();
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"d6", "a2", "a6", "d2", "d4"})
+	void canMove_NonMovableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
+		KingRuleStrategy kingRuleStrategy = new KingRuleStrategy();
+		Position sourcePosition = Position.of("b4");
+
+		assertThat(kingRuleStrategy.canMove(sourcePosition, targetPosition)).isFalse();
+	}
+
+	@Test
+	void canLeap_ReturnTrue() {
+		assertThat(new KingRuleStrategy().canLeap()).isTrue();
+	}
+
 }

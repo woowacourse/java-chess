@@ -1,23 +1,36 @@
 package chess.domain.RuleStrategy.nonLeapableStrategy;
 
-import chess.domain.RuleStrategy.RuleStrategy;
-import chess.domain.position.Position;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import chess.domain.position.Position;
 
 class BishopRuleStrategyTest {
-    @Test
-    void BishopMovableStrategy_GenerateInstance() {
-        assertThat(new BishopRuleStrategy()).isInstanceOf(BishopRuleStrategy.class);
-    }
 
-    @Test
-    void canMove_CanMovableSourceAndTarget_ReturnTrue() {
-        RuleStrategy ruleStrategy = new BishopRuleStrategy();
-        Position source = Position.of("b3");
-        Position target = Position.of("c4");
+	@Test
+	void BishopRuleStrategy_MovableDirection_GenerateInstance() {
+		assertThat(new BishopRuleStrategy()).isInstanceOf(BishopRuleStrategy.class);
+	}
 
-        assertThat(ruleStrategy.canMove(source, target)).isTrue();
-    }
+	@ParameterizedTest
+	@CsvSource(value = {"a1", "a7", "h8", "g1"})
+	void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
+		BishopRuleStrategy bishopRuleStrategy = new BishopRuleStrategy();
+		Position sourcePosition = Position.of("d4");
+
+		assertThat(bishopRuleStrategy.canMove(sourcePosition, targetPosition)).isTrue();
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"d1", "d8", "h4", "a4"})
+	void canMove_NonMovableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
+		BishopRuleStrategy bishopRuleStrategy = new BishopRuleStrategy();
+		Position sourcePosition = Position.of("d4");
+
+		assertThat(bishopRuleStrategy.canMove(sourcePosition, targetPosition)).isFalse();
+	}
+
 }

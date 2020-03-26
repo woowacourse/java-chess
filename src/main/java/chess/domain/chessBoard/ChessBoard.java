@@ -76,7 +76,7 @@ public class ChessBoard {
 
 	private MoveDirection findDirectionOf(Position sourcePosition, Position targetPosition) {
 		return Arrays.stream(MoveDirection.values())
-			.filter(moveDirection -> moveDirection.isSameDirection(sourcePosition, targetPosition))
+			.filter(moveDirection -> moveDirection.isSameDirectionFrom(sourcePosition, targetPosition))
 			.findAny()
 			.orElseThrow(() -> new IllegalArgumentException("체스 피스가 이동할 수 없는 위치를 입력하였습니다."));
 	}

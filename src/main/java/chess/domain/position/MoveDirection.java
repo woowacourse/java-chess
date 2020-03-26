@@ -37,9 +37,9 @@ public enum MoveDirection {
 		this.moveByUnit = moveByUnit;
 	}
 
-	public boolean isSameDirection(Position sourcePosition, Position targetPosition) {
-		int fileInterval = sourcePosition.calculateFileIntervalTo(targetPosition);
-		int rankInterval = sourcePosition.calculateRankIntervalTo(targetPosition);
+	public boolean isSameDirectionFrom(Position sourcePosition, Position targetPosition) {
+		int fileInterval = sourcePosition.calculateChessFileGapTo(targetPosition);
+		int rankInterval = sourcePosition.calculateChessRankGapTo(targetPosition);
 
 		return this.isSameDirection.test(fileInterval, rankInterval);
 	}

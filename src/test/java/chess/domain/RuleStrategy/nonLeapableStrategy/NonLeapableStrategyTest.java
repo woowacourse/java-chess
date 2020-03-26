@@ -1,36 +1,40 @@
 package chess.domain.RuleStrategy.nonLeapableStrategy;
 
-import chess.domain.position.Position;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import chess.domain.position.Position;
 
 class NonLeapableStrategyTest {
-    @ParameterizedTest
-    @NullSource
-    void canMove_NullSource_ExceptionThrown(Position position) {
-        NonLeapableStrategy nonLeapableStrategy = new QueenRuleStrategy();
 
-        assertThatThrownBy(() -> nonLeapableStrategy.canMove(position, Position.of("b1")))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("이동할 소스가 존재하지 않습니다.");
-    }
+	@ParameterizedTest
+	@NullSource
+	void validate_NullSource_ExceptionThrown(Position sourcePosition) {
+		NonLeapableStrategy nonLeapableStrategy = new QueenRuleStrategy();
+		Position targetPostion = Position.of("b1");
 
-    @ParameterizedTest
-    @NullSource
-    void canMove_NullTarget_ExceptionThrown(Position position) {
-        NonLeapableStrategy nonLeapableStrategy = new QueenRuleStrategy();
+		assertThatThrownBy(() -> nonLeapableStrategy.canMove(sourcePosition, targetPostion))
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("소스 위치가 존재하지 않습니다.");
+	}
 
-        assertThatThrownBy(() -> nonLeapableStrategy.canMove(Position.of("b1"), position))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("이동할 타겟이 존재하지 않습니다.");
-    }
+	@ParameterizedTest
+	@NullSource
+	void validate_NullTarget_ExceptionThrown(Position targetPosition) {
+		NonLeapableStrategy nonLeapableStrategy = new QueenRuleStrategy();
+		Position sourcePosition = Position.of("b1");
 
-    @Test
-    void canLeap_ReturnFalse() {
-        assertThat(new QueenRuleStrategy().canLeap()).isFalse();
-    }
+		assertThatThrownBy(() -> nonLeapableStrategy.canMove(sourcePosition, targetPosition))
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("타겟 위치가 존재하지 않습니다.");
+	}
+
+	@Test
+	void canLeap_ReturnFalse() {
+		assertThat(new QueenRuleStrategy().canLeap()).isFalse();
+	}
+
 }
