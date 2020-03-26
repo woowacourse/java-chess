@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.board.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,7 +34,7 @@ public class PieceTest {
     @DisplayName("말의 위치(퀸)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeQueen(String input) {
         Piece piece = Piece.of(Color.WHITE, Type.QUEEN);
-        Set<Square> availableSquares = piece.calculateScope(Square.of("c1"));
+        Set<Square> availableSquares = piece.getCheatSheet(Square.of("c1"));
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(21);
     }
@@ -43,7 +44,7 @@ public class PieceTest {
     @DisplayName("말의 위치(비숍)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeBishop(String input) {
         Piece piece = Piece.of(Color.WHITE, Type.BISHOP);
-        Set<Square> availableSquares = piece.calculateScope(Square.of("d2"));
+        Set<Square> availableSquares = piece.getCheatSheet(Square.of("d2"));
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(9);
     }
@@ -53,7 +54,7 @@ public class PieceTest {
     @DisplayName("말의 위치(룩)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeRook(String input) {
         Piece piece = Piece.of(Color.WHITE, Type.ROOK);
-        Set<Square> availableSquares = piece.calculateScope(Square.of("d2"));
+        Set<Square> availableSquares = piece.getCheatSheet(Square.of("d2"));
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(14);
     }
@@ -63,7 +64,7 @@ public class PieceTest {
     @DisplayName("말의 위치(king)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeKing(String input) {
         Piece piece = Piece.of(Color.BLACK, Type.KING);
-        Set<Square> availableSquares = piece.calculateScope(Square.of("e7"));
+        Set<Square> availableSquares = piece.getCheatSheet(Square.of("e7"));
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(8);
     }
@@ -73,7 +74,7 @@ public class PieceTest {
     @DisplayName("말의 위치(knight)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeKnight(String input) {
         Piece piece = Piece.of(Color.BLACK, Type.KNIGHT);
-        Set<Square> availableSquares = piece.calculateScope(Square.of("c3"));
+        Set<Square> availableSquares = piece.getCheatSheet(Square.of("c3"));
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(8);
     }
@@ -84,8 +85,8 @@ public class PieceTest {
         Piece pieceBlack = Piece.of(Color.BLACK, Type.PAWN);
         Piece pieceWhite = Piece.of(Color.WHITE, Type.PAWN);
 
-        Set<Square> availableSquaresBlack = pieceBlack.calculateScope(Square.of("a7"));
-        Set<Square> availableSquaresWhite = pieceWhite.calculateScope(Square.of("a6"));
+        Set<Square> availableSquaresBlack = pieceBlack.getCheatSheet(Square.of("a7"));
+        Set<Square> availableSquaresWhite = pieceWhite.getCheatSheet(Square.of("a6"));
 
         assertThat(availableSquaresBlack.contains(Square.of("a6"))).isTrue();
         assertThat(availableSquaresBlack.contains(Square.of("a5"))).isTrue();

@@ -1,8 +1,6 @@
-package chess.domain;
+package chess.domain.board;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Square {
     private final static Map<String, Square> CACHE = new HashMap<>();
@@ -38,10 +36,17 @@ public class Square {
          return Square.of(String.valueOf((char) (square.file + fileIncrementBy)) + (square.rank + rankIncrementBy));
     }
 
-    public static boolean hasCacheAdded(Square square, int fileIncrementBy, int rankIncrementBy) {
+    private static boolean hasCacheAdded(Square square, int fileIncrementBy, int rankIncrementBy) {
         char fileAdd = (char) (square.getFile() + fileIncrementBy);
         int rankAdd = square.getRank() + rankIncrementBy;
         return fileAdd >= 'a' && fileAdd <= 'h' && rankAdd >= 1 && rankAdd <= 8;
+    }
+
+    public Square addIfInBoundary(int fileIncrementBy, int rankIncrementBy) {
+        if (Square.hasCacheAdded(this, fileIncrementBy, rankIncrementBy)) {
+            return Square.of(this, fileIncrementBy, rankIncrementBy);
+        }
+        return this;
     }
 
     @Override
@@ -59,5 +64,9 @@ public class Square {
 
     public boolean isJustSameFile(Square square) {
         return (this != square) && (this.file == square.file);
+    }
+
+    public Set<Square> getAll() {
+        return new HashSet<>(CACHE.values());
     }
 }

@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
-import chess.domain.Color;
+import chess.domain.board.ChessBoard;
+import chess.domain.piece.Color;
 import chess.domain.GameState;
-import chess.domain.Square;
+import chess.domain.board.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 

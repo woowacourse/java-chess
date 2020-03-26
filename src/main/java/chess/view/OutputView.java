@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.domain.ChessBoard;
-import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.Square;
+import chess.domain.board.ChessBoard;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.board.Square;
 
 import java.util.List;
 import java.util.Map;
