@@ -18,7 +18,7 @@ public class Knight extends Piece {
 		if (start.isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(end)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
-		return new ArrayList<>(Collections.singletonList(end));
+		return new ArrayList<>(Collections.emptyList());
 	}
 
 	@Override
