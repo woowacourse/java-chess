@@ -7,6 +7,7 @@ import java.util.List;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -51,6 +52,11 @@ public class Rank {
             pieces.add(PieceFactory.create(pieceSequence.get(x), Position.of(x, y), color));
         }
         return new Rank(pieces);
+    }
+
+    public boolean hasKing() {
+        return pieces.stream()
+            .anyMatch(piece -> piece instanceof King);
     }
 
     public List<Piece> getPieces() {

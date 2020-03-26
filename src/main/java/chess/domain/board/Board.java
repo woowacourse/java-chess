@@ -15,6 +15,7 @@ import chess.domain.piece.Position;
 import chess.domain.piece.exception.NotMovableException;
 
 public class Board {
+    private static final int COUNT_OF_KING = 2;
     private List<Rank> ranks;
 
     public Board() {
@@ -79,6 +80,12 @@ public class Board {
             reverseRanks.add(reverseIterator.previous());
         }
         return Collections.unmodifiableList(reverseRanks);
+    }
+
+    public boolean isGameOver() {
+        return ranks.stream()
+            .filter(Rank::hasKing)
+            .count() < COUNT_OF_KING;
     }
 
     public double calculateScore(Color color) {

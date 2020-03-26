@@ -26,6 +26,9 @@ public class Playing implements State {
     @Override
     public State move(Position source, Position target) {
         board.move(source, target, turn.getColor());
+        if (board.isGameOver()) {
+            return new Finished();
+        }
         turn = turn.next();
         return this;
     }

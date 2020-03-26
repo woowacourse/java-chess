@@ -65,4 +65,21 @@ public class BoardTest {
         assertThat(board.calculateScore(Color.WHITE)).isEqualTo(38);
         assertThat(board.calculateScore(Color.BLACK)).isEqualTo(38);
     }
+
+    @Test
+    @DisplayName("왕이 잡힌 경우 게임 종료")
+    void isGameOver() {
+        board.move(Position.from("e2"), Position.from("e3"), Color.WHITE);
+        board.move(Position.from("e3"), Position.from("e4"), Color.WHITE);
+        board.move(Position.from("e4"), Position.from("e5"), Color.WHITE);
+        board.move(Position.from("e5"), Position.from("e6"), Color.WHITE);
+        board.move(Position.from("e6"), Position.from("f7"), Color.WHITE);
+
+        board.move(Position.from("d7"), Position.from("d6"), Color.BLACK);
+        board.move(Position.from("d8"), Position.from("d7"), Color.BLACK);
+        board.move(Position.from("d7"), Position.from("e6"), Color.BLACK);
+        board.move(Position.from("e6"), Position.from("e1"), Color.BLACK);
+
+        assertThat(board.isGameOver()).isTrue();
+    }
 }
