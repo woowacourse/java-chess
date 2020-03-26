@@ -5,6 +5,11 @@ import static chess.domain.command.CommandType.*;
 import chess.domain.position.Position;
 
 public class Command {
+	private static final String DELIMITER = " ";
+	private static final int FIRST_COMMAND_INDEX = 0;
+	private static final int COMMAND_ROW_INDEX = 1;
+	private static final int COMMAND_COLUMN_INDEX = 2;
+
 	private CommandType commandType;
 	private Position targetPosition;
 	private Position destination;
@@ -22,19 +27,15 @@ public class Command {
 	}
 
 	public static Command of(String input) {
-		String[] commands = input.split(" ");
-		CommandType commandType = CommandType.of(commands[0]);
+		String[] commands = input.split(DELIMITER);
+		CommandType commandType = CommandType.of(commands[FIRST_COMMAND_INDEX]);
 
 		if (MOVE.equals(commandType)) {
-			Position targetPosition = Position.of(commands[1]);
-			Position destination = Position.of(commands[2]);
+			Position targetPosition = Position.of(commands[COMMAND_ROW_INDEX]);
+			Position destination = Position.of(commands[COMMAND_COLUMN_INDEX]);
 			return new Command(commandType, targetPosition, destination);
 		}
 		return new Command(commandType);
-	}
-
-	public boolean isNotEndOfGame() {
-		return commandType != END && commandType != STATUS;
 	}
 
 	public boolean isStart() {

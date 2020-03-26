@@ -20,7 +20,6 @@ public class GameManager {
 		this.currentTurn = WHITE;
 	}
 
-	// @TODO 커스텀 exception 만들기
 	public void move(Command command) {
 		Position targetPosition = command.getTargetPosition();
 		Position destination = command.getDestination();

@@ -5,6 +5,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Position {
+	public static final int MIN_POSITION_INDEX = 1;
+	public static final int MAX_POSITION_INDEX = 8;
+	private static final String DELIMITER = "";
+	private static final int COLUMN_INDEX = 0;
+	private static final int ROW_INDEX = 1;
+
 	private static final Map<String, Position> POSITION_CACHE = generateCache();
 
 	private Column column;
@@ -21,8 +27,8 @@ public class Position {
 	}
 
 	public static Position of(String input) {
-		String[] position = input.split("");
-		return Position.of(Column.of(position[0]), Row.of(position[1]));
+		String[] position = input.split(DELIMITER);
+		return Position.of(Column.of(position[COLUMN_INDEX]), Row.of(position[ROW_INDEX]));
 	}
 
 	public static Position of(int column, int row) {
@@ -79,10 +85,12 @@ public class Position {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if (o == null || getClass() != o.getClass()) {
 			return false;
+		}
 		Position position = (Position)o;
 		return column == position.column &&
 			row == position.row;

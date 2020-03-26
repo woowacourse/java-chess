@@ -11,6 +11,9 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public class ScoreRule {
+	public static final int MIN_COLUMN_PAWN_COUNT = 2;
+	private static final double PAWN_SCORE_DISCOUNT_FACTOR = 2.0;
+
 	private final Map<Position, Piece> pieces;
 
 	public ScoreRule(Map<Position, Piece> pieces) {
@@ -33,8 +36,8 @@ public class ScoreRule {
 		return findEachColumnPawnCountBy(color)
 			.values()
 			.stream()
-			.filter(x -> x > 1)
-			.map(x -> x / 2.0)
+			.filter(x -> x >= MIN_COLUMN_PAWN_COUNT)
+			.map(x -> x / PAWN_SCORE_DISCOUNT_FACTOR)
 			.count();
 	}
 

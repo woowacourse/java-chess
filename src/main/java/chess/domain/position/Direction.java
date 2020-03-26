@@ -16,9 +16,7 @@ public enum Direction {
 	LEFT_DOWN_DOWN(-1, 2),
 	LEFT_UP_UP(-1, -2),
 	RIGHT_DOWN_DOWN(1, 2),
-	RIGHT_UP_UP(1, -2),
-	DOWN_DOWN(0, 2),
-	UP_UP(0, -2);
+	RIGHT_UP_UP(1, -2);
 
 	private final int columnDirection;
 	private final int rowDirection;

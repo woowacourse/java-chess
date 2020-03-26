@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Column {
+
 	private static final Map<Integer, Column> COLUMN_CACHE = new HashMap<>();
 
 	private final int value;
