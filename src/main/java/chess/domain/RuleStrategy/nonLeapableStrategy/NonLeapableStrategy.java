@@ -1,5 +1,6 @@
-package chess.domain.MovableStrategy;
+package chess.domain.RuleStrategy.nonLeapableStrategy;
 
+import chess.domain.RuleStrategy.RuleStrategy;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class NonLeapableStrategy implements MovableStrategy {
+public abstract class NonLeapableStrategy implements RuleStrategy {
 
     protected final List<MoveDirection> movableDirections = new ArrayList<>();
 

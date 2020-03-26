@@ -1,12 +1,12 @@
-package chess.domain.MovableStrategy;
+package chess.domain.RuleStrategy.nonLeapableStrategy;
 
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
 import java.util.Arrays;
 
-public class QueenMovableStrategy extends NonLeapableStrategy {
-    public QueenMovableStrategy() {
+public class QueenRuleStrategy extends NonLeapableStrategy {
+    public QueenRuleStrategy() {
         this.movableDirections.addAll(Arrays.asList(MoveDirection.values()));
     }
 

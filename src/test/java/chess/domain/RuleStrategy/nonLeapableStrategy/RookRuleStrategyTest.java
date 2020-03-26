@@ -1,22 +1,23 @@
-package chess.domain.MovableStrategy;
+package chess.domain.RuleStrategy.nonLeapableStrategy;
 
+import chess.domain.RuleStrategy.RuleStrategy;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RookMovableStrategyTest {
+class RookRuleStrategyTest {
     @Test
     void RookMovableStrategy_GenerateInstance() {
-        assertThat(new RookMovableStrategy()).isInstanceOf(RookMovableStrategy.class);
+        assertThat(new RookRuleStrategy()).isInstanceOf(RookRuleStrategy.class);
     }
 
     @Test
     void canMove_CanMovableSourceAndTarget_ReturnTrue() {
-        MovableStrategy movableStrategy = new RookMovableStrategy();
+        RuleStrategy ruleStrategy = new RookRuleStrategy();
         Position source = Position.of("b3");
         Position target = Position.of("b8");
 
-        assertThat(movableStrategy.canMove(source, target)).isTrue();
+        assertThat(ruleStrategy.canMove(source, target)).isTrue();
     }
 }

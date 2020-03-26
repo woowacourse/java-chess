@@ -2,11 +2,12 @@ package chess.domain.chessPiece;
 
 import chess.domain.chessPiece.pieceType.PieceType;
 import chess.domain.chessPiece.pieceType.PieceTypeCache;
+import chess.domain.position.Position;
 
 import java.util.Objects;
 
 // NOTE: 2020/03/26 여기에 state를 준다면? 새롬게 PieceTypeCache가 캐싱을 하고 있고, 여기선 PieceType을 가져와 state를 조합!
-public class ChessPiece {
+public class ChessPiece implements Movable, Catchable {
     private final PieceType pieceType;
 
     private ChessPiece(PieceType pieceType) {
@@ -19,13 +20,21 @@ public class ChessPiece {
         return new ChessPiece(PieceTypeCache.from(key));
     }
 
-    //    public boolean canMove(Position source, Position target) {
-//        if (pieceType instanceof Pawn) {
-//            return ((Pawn) pieceType).canCatch(source, target);
-//        }
-//        return pieceType.canMove(source, target);
-//    }
-//
+    @Override
+    public boolean canMove(Position source, Position target) {
+        return pieceType.canMove(source, target);
+    }
+
+    @Override
+    public boolean canLeap() {
+        return pieceType.canLeap();
+    }
+
+    @Override
+    public boolean canCatch(Position source, Position target) {
+        return pieceType.canCatch(source, target);
+    }
+
     @Override
     public String toString() {
         return this.pieceType.getName();

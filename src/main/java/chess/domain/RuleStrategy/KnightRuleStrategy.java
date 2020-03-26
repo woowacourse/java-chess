@@ -1,10 +1,10 @@
-package chess.domain.MovableStrategy;
+package chess.domain.RuleStrategy;
 
 import chess.domain.position.Position;
 
 import java.util.Objects;
 
-public class KnightMovableStrategy implements MovableStrategy {
+public class KnightRuleStrategy implements RuleStrategy {
     @Override
     public boolean canMove(Position source, Position target) {
         validate(source, target);

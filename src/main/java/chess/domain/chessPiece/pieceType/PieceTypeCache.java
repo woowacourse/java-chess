@@ -1,6 +1,10 @@
 package chess.domain.chessPiece.pieceType;
 
-import chess.domain.MovableStrategy.*;
+import chess.domain.RuleStrategy.KingRuleStrategy;
+import chess.domain.RuleStrategy.KnightRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.BishopRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.QueenRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.RookRuleStrategy;
 import chess.domain.chessPiece.PieceColor;
 
 import java.util.HashMap;
@@ -12,12 +16,12 @@ public class PieceTypeCache {
 
     static {
         for (PieceColor pieceColor : PieceColor.values()) {
-            King king = new King(pieceColor, new KingMovableStrategy());
-            Queen queen = new Queen(pieceColor, new QueenMovableStrategy());
-            Bishop bishop = new Bishop(pieceColor, new BishopMovableStrategy());
-            Rook rook = new Rook(pieceColor, new RookMovableStrategy());
-            Knight knight = new Knight(pieceColor, new KnightMovableStrategy());
-            Pawn pawn = new Pawn(pieceColor, new PawnMovableStrategy(pieceColor));
+            King king = new King(pieceColor, new KingRuleStrategy());
+            Queen queen = new Queen(pieceColor, new QueenRuleStrategy());
+            Bishop bishop = new Bishop(pieceColor, new BishopRuleStrategy());
+            Rook rook = new Rook(pieceColor, new RookRuleStrategy());
+            Knight knight = new Knight(pieceColor, new KnightRuleStrategy());
+            Pawn pawn = new Pawn(pieceColor, pieceColor.getPawnRuleStrategy());
 
             PIECE_TYPE_CACHE.put(king.getName(), king);
             PIECE_TYPE_CACHE.put(queen.getName(), queen);

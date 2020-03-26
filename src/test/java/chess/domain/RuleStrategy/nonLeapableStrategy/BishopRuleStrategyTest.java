@@ -1,22 +1,23 @@
-package chess.domain.MovableStrategy;
+package chess.domain.RuleStrategy.nonLeapableStrategy;
 
+import chess.domain.RuleStrategy.RuleStrategy;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BishopMovableStrategyTest {
+class BishopRuleStrategyTest {
     @Test
     void BishopMovableStrategy_GenerateInstance() {
-        assertThat(new BishopMovableStrategy()).isInstanceOf(BishopMovableStrategy.class);
+        assertThat(new BishopRuleStrategy()).isInstanceOf(BishopRuleStrategy.class);
     }
 
     @Test
     void canMove_CanMovableSourceAndTarget_ReturnTrue() {
-        MovableStrategy movableStrategy = new BishopMovableStrategy();
+        RuleStrategy ruleStrategy = new BishopRuleStrategy();
         Position source = Position.of("b3");
         Position target = Position.of("c4");
 
-        assertThat(movableStrategy.canMove(source, target)).isTrue();
+        assertThat(ruleStrategy.canMove(source, target)).isTrue();
     }
 }

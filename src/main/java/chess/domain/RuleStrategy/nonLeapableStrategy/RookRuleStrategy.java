@@ -1,17 +1,17 @@
-package chess.domain.MovableStrategy;
+package chess.domain.RuleStrategy.nonLeapableStrategy;
 
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
 import java.util.Arrays;
 
-public class BishopMovableStrategy extends NonLeapableStrategy {
-    public BishopMovableStrategy() {
+public class RookRuleStrategy extends NonLeapableStrategy {
+    public RookRuleStrategy() {
         this.movableDirections.addAll(Arrays.asList(
-                MoveDirection.NE,
-                MoveDirection.SE,
-                MoveDirection.SW,
-                MoveDirection.NW));
+                MoveDirection.N,
+                MoveDirection.E,
+                MoveDirection.S,
+                MoveDirection.W));
     }
 
     @Override
