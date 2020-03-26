@@ -82,4 +82,8 @@ public enum Rank {
 	public boolean isNear(Rank other) {
 		return Math.abs(this.getNumber() - other.getNumber()) <= MINIMUM_DISTANCE;
 	}
+
+	public int findDifference(Rank other) {
+		return Math.abs(this.getNumber() - other.getNumber());
+	}
 }

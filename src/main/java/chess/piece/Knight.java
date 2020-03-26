@@ -1,7 +1,6 @@
 package chess.piece;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class Knight extends Piece {
 
 	@Override
 	public List<Position> findReachablePositions(Position start, Position end) {
-		if(start.isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(end)){
+		if (start.isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(end)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
 		return new ArrayList<>(Collections.singletonList(end));

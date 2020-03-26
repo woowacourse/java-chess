@@ -8,6 +8,7 @@ import java.util.Map;
 public class Position {
 
 	private static final Map<String, Position> CACHE = new HashMap<>();
+	private static final int KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE = 2;
 
 	static {
 		for (File file : File.values()) {
@@ -95,7 +96,8 @@ public class Position {
 	}
 
 	private boolean isMultiplicationOfDifferenceBetweenFileAndRankIsTwo(Position other) {
-		return false;
+		return this.file.findDifference(other.file) * this.rank.findDifference(other.rank)
+			== KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE;
 	}
 
 	public File getFile() {

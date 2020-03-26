@@ -76,4 +76,8 @@ public enum File {
 	public boolean isNear(File other) {
 		return Math.abs(this.getNumber() - other.getNumber()) <= MINIMUM_DISTANCE;
 	}
+
+	public int findDifference(File other) {
+		return Math.abs(this.getNumber() - other.getNumber());
+	}
 }
