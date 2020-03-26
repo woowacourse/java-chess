@@ -33,9 +33,8 @@ public abstract class Piece {
 
     public final Path pathTo(Piece piece) {
         validateColor(piece);
-        int dx = piece.position.getX() - position.getX();
-        int dy = piece.position.getY() - position.getY();
-        Direction direction = findDirection(dx, dy);
+        RelativePosition relativePosition = RelativePosition.of(position, piece.position);
+        Direction direction = findDirection(relativePosition.getX(), relativePosition.getY());
         validateDirections(direction, movableDirections(piece, direction));
         return new Path(position, piece.position, direction);
     }
