@@ -27,11 +27,8 @@ public class ChessBoard {
 
 	public boolean canMove(Location now, Location destination) {
 		Piece piece = board.get(now);
-		if (piece.canMove(now, destination)
-			&& piece.hasObstacle(board, now, destination)) {
-			return true;
-		}
-		return false;
+		return piece.canMove(now, destination)
+			&& piece.hasObstacle(board, now, destination);
 	}
 
 	private void putNoble(int row, Team team) {
