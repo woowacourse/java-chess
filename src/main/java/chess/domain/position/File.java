@@ -20,8 +20,19 @@ public enum File {
 
     public static File of(String file) {
         return Arrays.stream(values())
-                .filter(ph -> ph.symbol == file.toLowerCase().charAt(0))
+                .filter(f -> f.symbol == file.toLowerCase().charAt(0))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 x 좌표값을 입력하였습니다."));
+    }
+
+    public static File of(int file) {
+        return Arrays.stream(values())
+                .filter(f -> f.symbol == (char) file)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 x 좌표값을 입력하였습니다."));
+    }
+
+    public int getSymbol() {
+        return this.symbol;
     }
 }

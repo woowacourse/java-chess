@@ -44,6 +44,16 @@ public class Position {
                 .orElseThrow(AssertionError::new);
     }
 
+    public static Position of(final File file, final Rank rank) {
+        return findPosition(file, rank);
+    }
+
+    public static Position of(final int fileSymbol, final int rankSymbol) {
+
+
+        return findPosition(File.of(fileSymbol), Rank.of(rankSymbol));
+    }
+
     public static List<String> getPositions() {
         List<String> parseResult = positions.stream()
                 .map(Position::toString)
@@ -59,6 +69,14 @@ public class Position {
     public int calculateRankGap(Position target) {
         int rankGap = this.rank.compareTo(target.rank);
         return rankGap;
+    }
+
+    public int getFile() {
+        return this.file.getSymbol();
+    }
+
+    public int getRank() {
+        return this.rank.getSymbol();
     }
 
     @Override

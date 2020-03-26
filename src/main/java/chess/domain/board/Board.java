@@ -12,11 +12,8 @@ import java.util.stream.Collectors;
 public class Board {
     private final Map<Position, Piece> board;
 
-    private Team team;
-
     public Board() {
         this.board = BoardInitializer.initializeAll();
-        this.team = Team.WHITE;
     }
 
     public Map<String, String> parse() {
@@ -28,19 +25,16 @@ public class Board {
         return Collections.unmodifiableMap(parseResult);
     }
 
-    public void updateBoard(String source, String target) {
-        Position sourcePosition = Position.of(source);
-        Position targetPosition = Position.of(target);
-        Piece movedPiece = this.board.get(sourcePosition);
-        if (!movedPiece.move(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 곳입니다.");
-        }
-        this.board.put(targetPosition, movedPiece);
+    public void updateBoard(Position sourcePosition, Position targetPosition, Piece selectedPiece) {
+        this.board.put(targetPosition, selectedPiece);
         this.board.remove(sourcePosition);
-        changeTurn();
     }
 
-    private void changeTurn() {
-        this.team = Team.changeTurn(this.team);
+    public boolean isEmpty(final Position position) {
+        return this.board.containsKey(position);
+    }
+
+    public Piece getPiece(final Position position) {
+        return this.board.get(position);
     }
 }

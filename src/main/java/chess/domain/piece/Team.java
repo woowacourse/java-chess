@@ -22,4 +22,12 @@ public enum Team {
     public String convert(final String name) {
         return this.expression.apply(name);
     }
+
+    public boolean isEnemy(Team team) {
+        return this != team;
+    }
+
+    public boolean isWhite() {
+        return this == WHITE;
+    }
 }

@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.controller.dto.BoardDto;
 import chess.controller.dto.PositionDto;
+import chess.domain.ChessRunner;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.view.ConsoleInputView;
@@ -15,13 +16,13 @@ public class ChessController {
 
     public static void run() {
         if (inputView.askChessRun()) {
-            Board board = new Board();
-            printInitialize(board);
+            ChessRunner chessRunner = new ChessRunner();
+            printInitialize(chessRunner.getBoard());
             String[] moveSource = inputView.askMove().split(" ");
             String sourcePosition = moveSource[1];
             String targetPosition = moveSource[2];
-            board.updateBoard(sourcePosition, targetPosition);
-            printInitialize(board);
+            chessRunner.update(sourcePosition, targetPosition);
+            printInitialize(chessRunner.getBoard());
         }
     }
 

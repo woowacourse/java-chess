@@ -1,11 +1,13 @@
 package chess.domain.move;
 
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class KingMoveStrategy extends MoveStrategy {
 
     @Override
-    public boolean movable(Position source, Position target) {
+    public boolean movable(Position source, Position target, Board board) {
         if (isSamePosition(source, target)) {
             return false;
         }

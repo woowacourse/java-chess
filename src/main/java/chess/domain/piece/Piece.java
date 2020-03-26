@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.move.MoveStrategy;
-import chess.domain.move.MoveStrategyFactory;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 public class Piece {
@@ -19,7 +18,15 @@ public class Piece {
         return this.team.convert(this.pieceType.getSymbol());
     }
 
-    public boolean move(Position source, Position target) {
-        return this.pieceType.move(source, target);
+    public boolean move(Position source, Position target, Board board) {
+        return this.pieceType.move(source, target, board);
+    }
+
+    public boolean isEnemy(Piece targetPiece) {
+        return this.team.isEnemy(targetPiece.getTeam());
+    }
+
+    public Team getTeam() {
+        return this.team;
     }
 }

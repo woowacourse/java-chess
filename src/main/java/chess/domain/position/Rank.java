@@ -24,4 +24,15 @@ public enum Rank {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 y 좌표값을 입력하였습니다."));
     }
+
+    public static Rank of(int rank) {
+        return Arrays.stream(values())
+                .filter(f -> f.symbol == rank)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 x 좌표값을 입력하였습니다."));
+    }
+
+    public int getSymbol() {
+        return this.symbol;
+    }
 }

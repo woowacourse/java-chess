@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.move.*;
 import chess.domain.position.Position;
 
@@ -25,7 +26,7 @@ public enum PieceType {
         return symbol;
     }
 
-    public boolean move(Position source, Position target) {
-        return this.moveStrategy.movable(source, target);
+    public boolean move(Position source, Position target, Board board) {
+        return this.moveStrategy.movable(source, target, board);
     }
 }
