@@ -13,10 +13,10 @@ public class Bishop extends Piece {
     private static final int MOVABLE_ROW_SIZE = Row.values().length;
     private static final int MOVABLE_COLUMN_SIZE = Column.values().length;
 
-    private static PieceName pieceName = PieceName.valueOf("BISHOP");
+    private static PieceInfo pieceInfo = PieceInfo.valueOf("BISHOP");
 
     public Bishop(Player player) {
-        super(player, pieceName);
+        super(player, pieceInfo);
         directions.addAll(Arrays.asList(Direction.DIAGONAL_DOWN_LEFT, Direction.DIAGONAL_DOWN_RIGHT,
                 Direction.DIAGONAL_TOP_LEFT, Direction.DIAGONAL_TOP_RIGHT));
     }

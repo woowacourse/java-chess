@@ -12,10 +12,10 @@ public class Rook extends Piece {
     private static final int MOVABLE_ROW_SIZE = Row.values().length;
     private static final int MOVABLE_COLUMN_SIZE = Column.values().length;
 
-    private static PieceName pieceName = PieceName.valueOf("ROOK");
+    private static PieceInfo pieceInfo = PieceInfo.valueOf("ROOK");
 
     public Rook(Player player) {
-        super(player, pieceName);
+        super(player, pieceInfo);
         directions.addAll(Arrays.asList(Direction.TOP, Direction.DOWN,
                 Direction.LEFT, Direction.RIGHT));
     }

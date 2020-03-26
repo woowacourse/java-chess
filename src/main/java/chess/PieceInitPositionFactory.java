@@ -35,7 +35,7 @@ public class PieceInitPositionFactory {
         initPositions.put(new Knight(whitePlayer), Arrays.asList(Positions.of(Row.B, Column.ONE), Positions.of(Row.G, Column.ONE)));
         initPositions.put(new Bishop(whitePlayer), Arrays.asList(Positions.of(Row.C, Column.ONE), Positions.of(Row.F, Column.ONE)));
         initPositions.put(new Queen(whitePlayer), Arrays.asList(Positions.of(Row.D, Column.ONE)));
-        initPositions.put(new Queen(whitePlayer), Arrays.asList(Positions.of(Row.E, Column.ONE)));
+        initPositions.put(new King(whitePlayer), Arrays.asList(Positions.of(Row.E, Column.ONE)));
 
         List<Position> whitePawnPositions = Arrays.stream(Row.values())
                 .map(row -> Positions.of(row, Column.TWO))

@@ -26,6 +26,9 @@ public class ChessController {
             if (command.equals(Command.MOVE)) {
                 chessBoard.move(Positions.of(input.split(" ")[1]), Positions.of(input.split(" ")[2]));
             }
+            if (command.equals(Command.STATUS)) {
+                // do something
+            }
             if (command.equals(Command.END)) {
                 return;
             }

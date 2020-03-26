@@ -10,10 +10,10 @@ import java.util.Arrays;
 
 public class King extends Piece {
     private static final int MOVABLE_TILE_SIZE = 1;
-    private static PieceName pieceName = PieceName.valueOf("KING");
+    private static PieceInfo pieceInfo = PieceInfo.valueOf("KING");
 
     public King(Player player) {
-        super(player, pieceName);
+        super(player, pieceInfo);
         directions.addAll(Arrays.asList(Direction.values()));
     }
 

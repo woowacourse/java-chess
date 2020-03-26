@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Knight extends Piece {
-    private static PieceName pieceName = PieceName.valueOf("KNIGHT");
+    private static PieceInfo pieceInfo = PieceInfo.valueOf("KNIGHT");
 
     public Knight(Player player) {
-        super(player, pieceName);
+        super(player, pieceInfo);
         directions.addAll(Arrays.asList(Direction.values()));
     }
 

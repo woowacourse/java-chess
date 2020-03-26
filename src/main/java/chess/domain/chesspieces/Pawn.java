@@ -15,7 +15,7 @@ public class Pawn extends Piece {
     private final static int AVAILABLE_ROW_MOVE_DIFF = 1;
     private final static int INIT_AVAILABLE_COLUMN_DIFF = 1;
     private final static int AVAILABLE_COLUMN_DIFF = 2;
-    private final static PieceName pieceName = PieceName.valueOf("PAWN");
+    private final static PieceInfo PIECE_INFO = PieceInfo.valueOf("PAWN");
     private final List<Direction> attackDirections = new ArrayList<>();
 
     private final Position initPosition;
@@ -23,7 +23,7 @@ public class Pawn extends Piece {
     private Direction forwardDirection;
 
     public Pawn(Player player, Position position) {
-        super(player, pieceName);
+        super(player, PIECE_INFO);
         this.initPosition = position;
 
         if (player.equals(Player.BLACK)) {

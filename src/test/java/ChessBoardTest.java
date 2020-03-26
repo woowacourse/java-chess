@@ -1,10 +1,13 @@
 import chess.domain.ChessBoard;
+import chess.domain.Player;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,5 +28,14 @@ public class ChessBoardTest {
         Position position = Positions.of("a1");
         assertThatThrownBy(() -> chessBoard.move(position, position))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = Player.class)
+    void 각각의_플레이어_점수_계산_테스트_pawn처리안한것(Player player) {
+        ChessBoard chessBoard = new ChessBoard();
+        double actual = chessBoard.computeScore(player);
+        double expected = 38;
+        assertThat(actual).isEqualTo(expected);
     }
 }

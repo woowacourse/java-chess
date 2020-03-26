@@ -7,6 +7,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Positions;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
     private final Map<Position, Square> chessBoard = new LinkedHashMap<>();
@@ -58,5 +59,21 @@ public class ChessBoard {
     private List<Position> getRoutes(Position from, Position to) {
         Direction direction = Direction.getDirection(from, to);
         return direction.getPositionsBetween(from, to);
+    }
+
+    public double computeScore(Player player) {
+        return getPlayerPieces(player)
+                .stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private List<Piece> getPlayerPieces(Player player) {
+        return chessBoard.values()
+                .stream()
+                .filter(square -> square != Empty.getInstance())
+                .map(square -> (Piece) square)
+                .filter(piece -> piece.getPlayer() == player)
+                .collect(Collectors.toList());
     }
 }
