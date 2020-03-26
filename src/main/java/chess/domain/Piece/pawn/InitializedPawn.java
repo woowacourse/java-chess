@@ -17,7 +17,19 @@ public class InitializedPawn extends Initialized {
     }
 
     @Override
-    protected boolean canMove(Position to, Piece exPiece) {
+    protected boolean canMove(Position to, Initialized exPiece) {
+        if (isNotSameTeam(exPiece)) {
+            return false;
+        }
+
+        /*
+        * 움직일 수 있다?
+        * 1. 앞 2칸 전진(앞에 아무것도 없을 때)
+        * 2. 앞 1칸 전진(앞에 아무것도 없을 때)
+        * 3. 대각선 1칸(적이 대각선에 있을 때
+        * */
+
+
         return false;
     }
 }

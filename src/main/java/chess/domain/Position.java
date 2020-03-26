@@ -1,36 +1,38 @@
 package chess.domain;
 
-import java.util.Objects;
+import chess.domain.Piece.Distance;
 
 //todo: add validation logic
 public class Position {
-    private final String x;
-    private final String y;
+    private static final int MIN = 1;
+    private static final int MAX = 8;
 
-    Position(int x, int y) {
-        this(String.valueOf((char)(x + 96)), String.valueOf(y));
-    }
+    private final int x;
+    private final int y;
 
-    Position(String x, String y) {
+    private Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Position position = (Position) o;
-        return Objects.equals(x, position.x) &&
-                Objects.equals(y, position.y);
+    static Position of(int x, int y) {
+        validateInRange(x, y);
+
+        return new Position(x,y);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
+    Distance calculateDistance(Position position) {
+        int xDistance = x - position.x;
+        int yDistance = y - position.y;
+        return new Distance(xDistance, yDistance);
+    }
+
+    private static void validateInRange(int x, int y) {
+        if (x < MIN || MAX < x) {
+            throw new IllegalArgumentException("x의 범위를 벗어납니다.");
+        }
+        if (y < MIN || MAX < y) {
+            throw new IllegalArgumentException("y의 범위를 벗어납니다.");
+        }
     }
 }
