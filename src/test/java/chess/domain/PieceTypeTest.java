@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+
 class PieceTypeTest {
     @ParameterizedTest
     @CsvSource(value = {"true:0.5", "false:1.0"}, delimiter = ':')
