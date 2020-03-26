@@ -2,9 +2,9 @@ package chess.view;
 
 import chess.domain.ChessBoard;
 import chess.domain.Piece;
+import chess.domain.Square;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 public class OutputView {
 
@@ -17,24 +17,16 @@ public class OutputView {
     }
 
     public static void printChessBoard(ChessBoard chessBoard) {
-        List<List<Piece>> gameBoard = chessBoard.getChessBoard();
-        for (List<Piece> pieces : gameBoard) {
-            printChessBoardRow(pieces);
-            System.out.println();
-        }
-    }
-
-    public static void printChessBoard2(ChessBoard chessBoard) {
-
-    }
-
-    private static void printChessBoardRow(List<Piece> pieces) {
-        for (Piece piece : pieces) {
-            if (Objects.isNull(piece)) {
+        Map<Square, Piece> gameBoard = chessBoard.getChessBoard();
+        for (int rank = 8; rank >= 1; rank--) {
+            for (char file = 'a'; file <= 'h'; file++) {
+                if (gameBoard.containsKey(Square.of(String.valueOf(file) + rank))) {
+                    System.out.print(gameBoard.get(Square.of(String.valueOf(file) + rank)).getLetter());
+                    continue;
+                }
                 System.out.print(".");
-                continue;
             }
-            System.out.print(piece.getLetter());
+            System.out.println();
         }
     }
 }

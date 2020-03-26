@@ -3,29 +3,16 @@ package chess.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChessBoardTest {
     @Test
-    @DisplayName("체스보드 사이즈 확인")
-    void chessBoardSizeCheck() {
-        ChessBoard chessBoard = new ChessBoard();
-        List<List<Piece>> board = chessBoard.getChessBoard();
-
-        assertThat(board.size()).isEqualTo(8);
-        for (List<Piece> pieces : board) {
-            assertThat(pieces.size()).isEqualTo(8);
-        }
-    }
-
-    @Test
     @DisplayName("체스보드 생성시 32개의 칸-말 셋트를 가지고 있는지 확인")
     void chessBoardSizeCheck2() {
         ChessBoard chessBoard = new ChessBoard();
-        Map<Square, Piece> board = chessBoard.getChessBoard2();
+        Map<Square, Piece> board = chessBoard.getChessBoard();
         assertThat(board.size()).isEqualTo(32);
     }
 }
