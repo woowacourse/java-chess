@@ -133,4 +133,71 @@ public class PieceTest {
         assertThat(availableSquares.size()).isEqualTo(2);
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"b7", "c7", "d7", "a6", "b6", "d6", "e6", "b5", "d5", "a4", "e4", "e8"})
+    @DisplayName("판의 정보를 가져와서 퀸이 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")
+    void movableQueenSquareTest(String input) {
+        Map<Square, Piece> board = new HashMap<>();
+        board.put(Square.of("b7"), Piece.of(Color.WHITE, Type.PAWN));
+        board.put(Square.of("c7"), Piece.of(Color.WHITE, Type.PAWN));
+        board.put(Square.of("a6"), Piece.of(Color.WHITE, Type.KING));
+        board.put(Square.of("c5"), Piece.of(Color.BLACK, Type.PAWN));
+        board.put(Square.of("e8"), Piece.of(Color.WHITE, Type.KNIGHT));
+        board.put(Square.of("f6"), Piece.of(Color.BLACK, Type.QUEEN));
+        board.put(Square.of("f3"), Piece.of(Color.BLACK, Type.PAWN));
+        board.put(Square.of("g6"), Piece.of(Color.BLACK, Type.KING));
+        board.put(Square.of("g2"), Piece.of(Color.WHITE, Type.PAWN));
+
+        Piece piece = Piece.of(Color.BLACK, Type.QUEEN);
+        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
+
+        assertThat(availableSquares.contains(Square.of(input))).isTrue();
+        assertThat(availableSquares.size()).isEqualTo(12);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"b7", "d7", "b5", "d5", "a4", "e4", "e8"})
+    @DisplayName("판의 정보를 가져와서 bishop이 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")
+    void movableBishopSquareTest(String input) {
+        Map<Square, Piece> board = new HashMap<>();
+        board.put(Square.of("b7"), Piece.of(Color.WHITE, Type.PAWN));
+        board.put(Square.of("c7"), Piece.of(Color.WHITE, Type.PAWN));
+        board.put(Square.of("a6"), Piece.of(Color.WHITE, Type.KING));
+        board.put(Square.of("c5"), Piece.of(Color.BLACK, Type.PAWN));
+        board.put(Square.of("e8"), Piece.of(Color.WHITE, Type.KNIGHT));
+        board.put(Square.of("f6"), Piece.of(Color.BLACK, Type.QUEEN));
+        board.put(Square.of("f3"), Piece.of(Color.BLACK, Type.PAWN));
+        board.put(Square.of("g6"), Piece.of(Color.BLACK, Type.KING));
+        board.put(Square.of("g2"), Piece.of(Color.WHITE, Type.PAWN));
+
+        Piece piece = Piece.of(Color.BLACK, Type.BISHOP);
+        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
+
+        assertThat(availableSquares.contains(Square.of(input))).isTrue();
+        assertThat(availableSquares.size()).isEqualTo(7);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a6", "b6", "d6", "e6", "c7"})
+    @DisplayName("판의 정보를 가져와서 rook이 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")
+    void movableRookSquareTest(String input) {
+        Map<Square, Piece> board = new HashMap<>();
+        board.put(Square.of("b7"), Piece.of(Color.WHITE, Type.PAWN));
+        board.put(Square.of("c7"), Piece.of(Color.WHITE, Type.PAWN));
+        board.put(Square.of("a6"), Piece.of(Color.WHITE, Type.KING));
+        board.put(Square.of("c5"), Piece.of(Color.BLACK, Type.PAWN));
+        board.put(Square.of("e8"), Piece.of(Color.WHITE, Type.KNIGHT));
+        board.put(Square.of("f6"), Piece.of(Color.BLACK, Type.QUEEN));
+        board.put(Square.of("f3"), Piece.of(Color.BLACK, Type.PAWN));
+        board.put(Square.of("g6"), Piece.of(Color.BLACK, Type.KING));
+        board.put(Square.of("g2"), Piece.of(Color.WHITE, Type.PAWN));
+
+        Piece piece = Piece.of(Color.BLACK, Type.ROOK);
+        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
+
+        assertThat(availableSquares.contains(Square.of(input))).isTrue();
+        assertThat(availableSquares.size()).isEqualTo(5);
+    }
+
+
 }

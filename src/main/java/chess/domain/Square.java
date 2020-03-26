@@ -46,10 +46,7 @@ public class Square {
 
     @Override
     public String toString() {
-        return "Square{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
+        return "{" + file + rank + '}';
     }
 
     public char getFile() {
