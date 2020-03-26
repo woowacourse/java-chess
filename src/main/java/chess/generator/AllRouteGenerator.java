@@ -105,7 +105,6 @@ public class AllRouteGenerator {
         positions.add(nowPosition);
     }
 
-
     private static boolean validateCoordinate(int x, int y) {
         boolean xInField = (x >= 1 && x <= 8);
         boolean yInField = (y >= 1 && y <= 8);
