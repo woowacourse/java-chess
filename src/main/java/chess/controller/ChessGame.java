@@ -16,14 +16,11 @@ public class ChessGame {
 			OutputView.printBoard(board);
 		}
 
-		while (Command.of(InputView.requestCommand()).isMove()) {
+		while (Command.of(InputView.requestCommand()).isMove() && board.checkGameEnd()) {
 			Position startPosition = Position.of(InputView.requestPosition());
 			Position endPosition = Position.of(InputView.requestPosition());
 			board.move(startPosition, endPosition);
 			OutputView.printBoard(board);
-			if (board.checkGameEnd()) {
-				break;
-			}
 		}
 	}
 }

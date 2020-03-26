@@ -101,6 +101,6 @@ public class Board {
 	}
 
 	public boolean checkGameEnd() {
-		return false;
+		return this.finished;
 	}
 }
