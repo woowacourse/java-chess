@@ -3,7 +3,7 @@ import chess.domain.chesspieces.Empty;
 import chess.domain.chesspieces.Knight;
 import chess.domain.chesspieces.Pawn;
 import chess.domain.chesspieces.Rook;
-import chess.domain.moverules.Direction;
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import org.junit.jupiter.api.DisplayName;

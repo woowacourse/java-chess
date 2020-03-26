@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.PieceInitPositionFactory;
 import chess.domain.chesspieces.*;
-import chess.domain.moverules.Direction;
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 
@@ -46,7 +46,7 @@ public class ChessBoard {
                 && ((Pawn) source).validateAttack(target, direction);
     }
 
-    public boolean validateObstacles(List<Position> routes) {
+    private boolean validateObstacles(List<Position> routes) {
         return routes.stream()
                 .anyMatch(position -> chessBoard.get(position).getClass() == Empty.class);
     }
@@ -55,7 +55,7 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public List<Position> getRoutes(Position from, Position to) {
+    private List<Position> getRoutes(Position from, Position to) {
         Direction direction = Direction.getDirection(from, to);
         return direction.getPositionsBetween(from, to);
     }

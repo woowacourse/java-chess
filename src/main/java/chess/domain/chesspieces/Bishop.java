@@ -1,7 +1,7 @@
 package chess.domain.chesspieces;
 
 import chess.domain.Player;
-import chess.domain.moverules.Direction;
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
