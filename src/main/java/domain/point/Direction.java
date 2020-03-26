@@ -11,6 +11,7 @@ public enum  Direction {
 	SW(1, -1),
 	W(0, -1),
 	NW(-1, -1),
+	KNIGHT(0, 0),
 	ELSE(0, 0);
 
 	private int rowIndex;
@@ -25,6 +26,9 @@ public enum  Direction {
 		int rowDifference = getRowDifference(from, to);
 		int columnDifference = getColumnDifference(from, to);
 
+		if (isKnightDirection(rowDifference, columnDifference)) {
+			return KNIGHT;
+		}
 		if (rowDifference == 0) {
 			return getHorizon(columnDifference);
 		}
@@ -35,6 +39,16 @@ public enum  Direction {
 			return getDiagonal(rowDifference, columnDifference);
 		}
 		return ELSE;
+	}
+
+	private static boolean isKnightDirection(int rowDifference, int columnDifference) {
+		int absRow = Math.abs(rowDifference);
+		int absColumn = Math.abs(columnDifference);
+
+		if (absRow == 2 && absColumn == 1) {
+			return true;
+		}
+		return absRow == 1 && absColumn == 2;
 	}
 
 	private static int getRowDifference(Point from, Point to) {
@@ -66,7 +80,6 @@ public enum  Direction {
 		return ELSE;
 	}
 
-
 	private static Direction getDiagonal(int rowDifference, int columnDifference) {
 		if (rowDifference < 0 && columnDifference < 0) {
 			return NW;
@@ -84,16 +97,24 @@ public enum  Direction {
 		throw new IllegalArgumentException();
 	}
 
-	public boolean isStraight() {
-		return Arrays.asList(E, W, S, N).contains(this);
+	public boolean isNotStraight() {
+		return !Arrays.asList(E, W, S, N).contains(this);
 	}
 
-	public boolean isDiagonal() {
-		return Arrays.asList(NE, NW, SE, SW).contains(this);
+	public boolean isNotDiagonal() {
+		return !Arrays.asList(NE, NW, SE, SW).contains(this);
 	}
 
-	public boolean isElse() {
-		return this == ELSE;
+	public boolean isLinearDirection() {
+		return !isNotLinearDirection();
+	}
+
+	public boolean isNotLinearDirection() {
+		return isNotStraight() && isNotDiagonal();
+	}
+
+	public boolean isKnight() {
+		return this == KNIGHT;
 	}
 
 	public int getRowIndex() {

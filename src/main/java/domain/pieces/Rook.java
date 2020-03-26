@@ -19,7 +19,7 @@ public class Rook extends Piece {
 
     @Override
     public void canMove(Direction direction) {
-        if (!direction.isStraight()) {
+        if (direction.isNotStraight()) {
             throw new CanNotMoveException();
         }
     }

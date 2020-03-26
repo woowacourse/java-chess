@@ -19,7 +19,7 @@ public class Queen extends Piece {
 
     @Override
     public void canMove(Direction direction) {
-        if (direction.isElse()) {
+        if (direction.isNotLinearDirection()) {
             throw new CanNotMoveException();
         }
     }

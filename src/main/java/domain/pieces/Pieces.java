@@ -1,13 +1,12 @@
 package domain.pieces;
 
-import domain.pieces.exceptions.PiecesException;
 import domain.pieces.exceptions.CanNotMoveException;
 import domain.point.Direction;
+import domain.point.Distance;
 import domain.point.Point;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Pieces {
@@ -24,22 +23,28 @@ public class Pieces {
 	public void move(Point from, Point to) {
 		Piece subject = find(from);
 		Direction direction = Direction.of(from, to);
-		subject.canMove(direction);
+		Distance distance = Distance.of(from, to);
+		subject.canReach(distance);
 
-		if (direction != Direction.ELSE) {
-			Point point = from.add(direction.getRowIndex(), direction.getColumnIndex());
-			while (!point.equals(to)) {
-				subject = moveOnly(subject, point);
-				point = point.add(direction.getRowIndex(), direction.getColumnIndex());
-			}
+		if (direction.isLinearDirection()) {
+			subject = moveProgressivelyBeforeTo(from, to, subject, direction);
 		}
 
 		try {
 			Piece target = find(to);
-			attack(subject, target);
+			attack(subject, target, direction);
 		} catch (CanNotMoveException e) {
-			moveOnly(subject, to);
+			moveOnly(subject, to, direction);
 		}
+	}
+
+	private Piece moveProgressivelyBeforeTo(Point from, Point to, Piece subject, Direction direction) {
+		Point point = from.add(direction.getRowIndex(), direction.getColumnIndex());
+		while (!point.equals(to)) {
+			subject = moveOnly(subject, point, direction);
+			point = point.add(direction.getRowIndex(), direction.getColumnIndex());
+		}
+		return subject;
 	}
 
 	private Piece find(Point point) {
@@ -49,8 +54,9 @@ public class Pieces {
 					.orElseThrow(() -> new CanNotMoveException("대상이 없습니다."));
 	}
 
-	private Piece moveOnly(Piece subject, Point to) {
+	private Piece moveOnly(Piece subject, Point to, Direction direction) {
 		if (isEmptyPoint(to)) {
+			subject.canMove(direction);
 			Piece moved = subject.move(to);
 			pieces.remove(subject);
 			pieces.add(moved);
@@ -64,7 +70,8 @@ public class Pieces {
 				.noneMatch(piece -> piece.getPoint().equals(point));
 	}
 
-	private void attack(Piece subject, Piece target) {
+	private void attack(Piece subject, Piece target, Direction direction) {
+		subject.canAttack(direction, target);
 		pieces.remove(subject);
 		pieces.remove(target);
 		pieces.add(subject.move(target.getPoint()));

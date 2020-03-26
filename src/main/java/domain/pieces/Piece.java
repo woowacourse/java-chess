@@ -1,6 +1,8 @@
 package domain.pieces;
 
+import domain.pieces.exceptions.CanNotAttackException;
 import domain.point.Direction;
+import domain.point.Distance;
 import domain.point.Point;
 import domain.team.Team;
 
@@ -39,6 +41,17 @@ public abstract class Piece {
 
     public abstract void canMove(Direction direction);
 
+    public void canAttack(Direction direction, Piece piece) {
+        canMove(direction);
+        if (isAlly(piece)) {
+            throw new CanNotAttackException();
+        }
+    }
+
+    protected boolean isAlly(Piece other) {
+        return this.team == other.team;
+    }
+
     public Team getTeam() {
         return team;
     }
@@ -50,5 +63,8 @@ public abstract class Piece {
     @Override
     public String toString() {
         return initial;
+    }
+
+    public void canReach(Distance distance) {
     }
 }
