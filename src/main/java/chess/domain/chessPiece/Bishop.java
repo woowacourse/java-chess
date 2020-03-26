@@ -2,7 +2,7 @@ package chess.domain.chessPiece;
 
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movefactory.Cross;
+import chess.domain.movefactory.CrossType;
 import chess.domain.movefactory.MoveFactory;
 
 public class Bishop extends Piece {
@@ -13,7 +13,7 @@ public class Bishop extends Piece {
     @Override
     public boolean isMovable(Position targetPosition, Piece targetPiece) {
         validSameTeam(targetPiece);
-        return MoveFactory.of(position, targetPosition) instanceof Cross;
+        return MoveFactory.of(position, targetPosition) instanceof CrossType;
     }
 
     @Override

@@ -51,7 +51,7 @@ public class ChessBoard {
 //            }
 
             MoveType moveType = MoveFactory.of(source, target);
-            movingPiece.move(moveType, findPieceByPosition(target));
+            movingPiece.move(moveType, this);
         }
     }
 

@@ -2,11 +2,11 @@ package chess.domain.movefactory;
 
 import chess.domain.Position;
 
-public class Cross implements MoveType {
+public class CrossType implements MoveType {
     private final Direction direction;
     private final int count;
 
-    public Cross(Position source, Position target) {
+    public CrossType(Position source, Position target) {
         this.direction = findDirection(source, target);
         this.count = findCount(source, target);
     }

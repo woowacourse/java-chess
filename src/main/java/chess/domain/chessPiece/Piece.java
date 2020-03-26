@@ -2,6 +2,7 @@ package chess.domain.chessPiece;
 
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.movefactory.MoveType;
 
 public abstract class Piece implements PieceAbility {
@@ -17,8 +18,8 @@ public abstract class Piece implements PieceAbility {
         return this.position.equals(position);
     }
 
-    public void move(MoveType moveType, Piece targetPiece) {
-        position.move(moveType, targetPiece);
+    public void move(MoveType moveType, ChessBoard chessBoard) {
+        position.move(moveType, chessBoard);
     }
 
     public boolean isSameTeam(Piece targetPiece) {

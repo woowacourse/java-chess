@@ -3,7 +3,7 @@ package chess.domain.chessPiece;
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.movefactory.MoveFactory;
-import chess.domain.movefactory.Straight;
+import chess.domain.movefactory.StraightType;
 
 public class Rook extends Piece {
     public Rook(Position position, TeamStrategy teamStrategy) {
@@ -14,7 +14,7 @@ public class Rook extends Piece {
     @Override
     public boolean isMovable(Position targetPosition, Piece targetPiece) {
         validSameTeam(targetPiece);
-        return MoveFactory.of(position, targetPosition) instanceof Straight;
+        return MoveFactory.of(position, targetPosition) instanceof StraightType;
     }
 
     @Override

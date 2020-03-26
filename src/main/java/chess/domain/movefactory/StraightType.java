@@ -2,11 +2,11 @@ package chess.domain.movefactory;
 
 import chess.domain.Position;
 
-public class Straight implements MoveType {
+public class StraightType implements MoveType {
     private final Direction direction;
     private final int count;
 
-    public Straight(Position source, Position target) {
+    public StraightType(Position source, Position target) {
         this.direction = findDirection(source, target);
         this.count = findCount(source, target);
     }

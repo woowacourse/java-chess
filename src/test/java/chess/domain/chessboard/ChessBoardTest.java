@@ -9,6 +9,7 @@ import chess.domain.chessPiece.Queen;
 import chess.domain.chessPiece.Rook;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.movefactory.MoveFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessBoardTest {
+    private ChessBoard chessBoard;
+
+    @BeforeEach
+    void setUp() {
+        chessBoard = new ChessBoard();
+    }
+
     @Test
     @DisplayName("포지션에 맞는 피스를 찾는 기능 테스트 : QueenBlack")
     void findPieceByPositionTestQueenBlack() {
@@ -51,23 +59,23 @@ public class ChessBoardTest {
     @Test
     @DisplayName("움직이는 테스트 UP")
     void movePieceTest() {
-        Position source = Position.of("a1");
-        Position target = Position.of("a3");
+        Position source = Position.of("a3");
+        Position target = Position.of("a5");
         Piece piece = new Rook(source, new BlackTeam());
-        piece.move(MoveFactory.of(source, target), null);
+        piece.move(MoveFactory.of(source, target), chessBoard);
 
-        assertThat(piece.isEqualPosition(Position.of("a3"))).isTrue();
+        assertThat(piece.isEqualPosition(Position.of("a5"))).isTrue();
     }
 
     @Test
     @DisplayName("움직이는 테스트 DOWN")
     void movePieceTest2() {
-        Position source = Position.of("a3");
-        Position target = Position.of("a1");
+        Position source = Position.of("a5");
+        Position target = Position.of("a3");
         Piece piece = new Rook(source, new BlackTeam());
-        piece.move(MoveFactory.of(source, target), null);
+        piece.move(MoveFactory.of(source, target), chessBoard);
 
-        assertThat(piece.isEqualPosition(Position.of("a1"))).isTrue();
+        assertThat(piece.isEqualPosition(Position.of("a3"))).isTrue();
     }
 
     @Test
@@ -76,7 +84,7 @@ public class ChessBoardTest {
         Position source = Position.of("a3");
         Position target = Position.of("h3");
         Piece piece = new Rook(source, new BlackTeam());
-        piece.move(MoveFactory.of(source, target), null);
+        piece.move(MoveFactory.of(source, target), chessBoard);
 
         assertThat(piece.isEqualPosition(Position.of("h3"))).isTrue();
     }
@@ -87,52 +95,52 @@ public class ChessBoardTest {
         Position source = Position.of("g3");
         Position target = Position.of("b3");
         Piece piece = new Rook(source, new BlackTeam());
-        piece.move(MoveFactory.of(source, target), null);
+        piece.move(MoveFactory.of(source, target), chessBoard);
         assertThat(piece.isEqualPosition(Position.of("b3"))).isTrue();
     }
 
     @Test
     @DisplayName("Bishop 움직임 테스트 UP_RIGHT")
     void bishopMoveTest1() {
-        Position source = Position.of("a1");
-        Position target = Position.of("c3");
+        Position source = Position.of("c3");
+        Position target = Position.of("e5");
         Piece piece = new Bishop(source, new BlackTeam());
-        piece.move(MoveFactory.of(source, target), null);
+        piece.move(MoveFactory.of(source, target), chessBoard);
 
-        assertThat(piece.isEqualPosition(Position.of("c3"))).isTrue();
+        assertThat(piece.isEqualPosition(Position.of("e5"))).isTrue();
     }
 
     @Test
     @DisplayName("Bishop 움직임 테스트 DOWN_RIGHT")
     void bishopMoveTest2() {
-        Position source = Position.of("c3");
-        Position target = Position.of("d2");
+        Position source = Position.of("d4");
+        Position target = Position.of("e3");
         Piece piece = new Bishop(source, new BlackTeam());
-        piece.move(MoveFactory.of(source, target), null);
+        piece.move(MoveFactory.of(source, target), chessBoard);
 
-        assertThat(piece.isEqualPosition(Position.of("d2"))).isTrue();
+        assertThat(piece.isEqualPosition(Position.of("e3"))).isTrue();
     }
 
     @Test
     @DisplayName("Bishop 움직임 테스트 DOWN_LEFT")
     void bishopMoveTest3() {
         Position source = Position.of("d4");
-        Position target = Position.of("a1");
+        Position target = Position.of("c3");
         Piece piece = new Bishop(source, new BlackTeam());
-        piece.move(MoveFactory.of(source, target), null);
+        piece.move(MoveFactory.of(source, target), chessBoard);
 
-        assertThat(piece.isEqualPosition(Position.of("a1"))).isTrue();
+        assertThat(piece.isEqualPosition(Position.of("c3"))).isTrue();
     }
 
     @Test
     @DisplayName("Bishop 움직임 테스트 UP_LEFT")
     void bishopMoveTest4() {
-        Position source = Position.of("b2");
-        Position target = Position.of("a3");
+        Position source = Position.of("d4");
+        Position target = Position.of("c5");
         Piece piece = new Bishop(source, new BlackTeam());
-        piece.move(MoveFactory.of(source, target), null);
+        piece.move(MoveFactory.of(source, target), chessBoard);
 
-        assertThat(piece.isEqualPosition(Position.of("a3"))).isTrue();
+        assertThat(piece.isEqualPosition(Position.of("c5"))).isTrue();
     }
 
 }
