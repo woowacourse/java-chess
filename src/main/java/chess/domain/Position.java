@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.Objects;
 
+//todo: add validation logic
 public class Position {
     private final String x;
     private final String y;

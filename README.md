@@ -21,7 +21,7 @@
 * 폰(PAWN)
 > 전진만 가능하며 첫회 한정으로 2칸 이동이 가능하다. 
 > 그 다음부터는 1칸씩. 
-> 단, 첫 이동을 할 때 바로 앞에 다른 말이 있으면 뛰어 넘을 수 없다. 
+> 단, 첫 이동을 할 때 바로 앞에 다른 말이 있으면 뛰어 넘을 수 없다.
 > 공격은 앞 대각선으로만 공격할 수 있다.
 
 * 룩(ROOK)
@@ -40,3 +40,43 @@
 * 킹(KING)
 > 상대에게 체크메이트를 당하지 않도록 보호해야 하는 말.
 > 어떤 방향으로든 1칸만 이동 가능하다.
+
+
+
+move : - Attack, 그냥move
+
+canMove()
+
+
+
+canMove(x,y)
+
+move(x,y)
+
+moveStrategy
+
+- attack, move
+- 피스마다 다름. : PawnMoveStrategy, PawnAttackStrategy, RookMoveStrategy, RookAttackStrategy
+- 
+
+
+
+
+
+초기화됨 : abstract가 필요해서 (데이터를 가지고 있어야 해서)
+
+[갈 수 없음]
+
+보드를 벗어난 상태
+
+아군인 상태
+
+피스 특성상 갈 수 없는 위치
+
+[갈 수 있음]
+
+적군인 상태, KILLED
+
+적군 킹인 상태
+
+블랭크인 상태
