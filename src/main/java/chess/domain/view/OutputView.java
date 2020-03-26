@@ -6,9 +6,14 @@ import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import chess.domain.judge.Judge;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
 
 public class OutputView {
+
+    public static final String EMPTY_POSITION = ".";
+
     public static void instruction() {
         System.out.println("> 체스 게임을 시작합니다.\n"
             + "> 게임 시작 : start\n"
@@ -35,6 +40,34 @@ public class OutputView {
         if (piece.isPresent()) {
             return piece.get().toString();
         }
-        return ".";
+        return EMPTY_POSITION;
+    }
+
+    public static void showStatus(Judge judge) {
+        System.out.println("백: " + judge.calculateScore(Side.WHITE) + "점");
+        System.out.println("흑: " + judge.calculateScore(Side.BLACK) + "점");
+        showWinner(judge.winner());
+    }
+
+    public static void showWinner(final Optional<Side> winner) {
+        if (winner.isPresent() && winner.get() == Side.WHITE) {
+            System.out.println("백이 이기고 있습니다!");
+        }
+        if (winner.isPresent() && winner.get() == Side.BLACK) {
+            System.out.println("흑이 이기고 있습니다!");
+        }
+        if (!winner.isPresent()) {
+            System.out.println("무승부 입니다.");
+        }
+    }
+
+    public static void showGameOver(final Optional<Side> winner) {
+        if (winner.isPresent() && winner.get() == Side.WHITE) {
+            System.out.println("왕을 잡아서 백이 승리했습니다!");
+        }
+        if (winner.isPresent() && winner.get() == Side.BLACK) {
+            System.out.println("왕을 잡아서 백이 승리했습니다!");
+        }
+        System.out.println("게임을 종료합니다.");
     }
 }

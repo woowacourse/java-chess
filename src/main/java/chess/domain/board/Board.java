@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
+import chess.domain.piece.Type;
 
 public class Board {
     private final Map<Position, Optional<Piece>> board;
@@ -66,6 +68,31 @@ public class Board {
             board.put(end, Optional.of(mover));
             board.put(start, Optional.empty());
         }
+    }
+
+    public long count(final Type type, final Side side) {
+        return board.values()
+            .stream()
+            .filter(piece -> piece.isPresent() && piece.get().equals(Piece.of(type, side)))
+            .count();
+    }
+
+    public int countPawnsOnSameColumn(final Side side) {
+        int result = 0;
+        for (Column column : Column.values()) {
+            long pawnCount = board.keySet()
+                .stream()
+                .filter(position -> board.get(position).isPresent())
+                .filter(position -> {
+                    Piece piece = board.get(position).get();
+                    return position.isOn(column) && piece.getType() == Type.PAWN && piece.getSide() == side;
+                })
+                .count();
+            if (pawnCount > 1) {
+                result += pawnCount;
+            }
+        }
+        return result;
     }
 
     // TODO: 게임 끝남 판단 (킹이 잡힌 경우)

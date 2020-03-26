@@ -5,6 +5,8 @@ import java.util.List;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.judge.Judge;
+import chess.domain.judge.WoowaJudge;
 import chess.domain.view.InputView;
 import chess.domain.view.OutputView;
 
@@ -12,6 +14,7 @@ public class Application {
     private static final String COMMAND_PATTERN = "move [a-h][1-8] [a-h][1-8]";
     private static final String DELIMITER = " ";
     private static Board board;
+    private static Judge judge;
 
     public static void main(String[] args) {
         OutputView.instruction();
@@ -23,7 +26,11 @@ public class Application {
             }
             if (command.equals("start")) {
                 board = Board.init();
+                judge = new WoowaJudge(board);
                 OutputView.showBoard(board);
+            }
+            if (command.equals("status")) {
+                OutputView.showStatus(judge);
             }
             if (command.matches(COMMAND_PATTERN)) {
                 List<Position> positions = getMovePositions(command);
@@ -31,6 +38,10 @@ public class Application {
                 Position end = positions.get(1);
                 board.move(start, end);
                 OutputView.showBoard(board);
+                if (judge.isGameOver()) {
+                    OutputView.showGameOver(judge.winner());
+                    break;
+                }
             }
         }
     }

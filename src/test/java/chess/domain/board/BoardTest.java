@@ -5,9 +5,13 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import chess.domain.piece.Side;
+import chess.domain.piece.Type;
 
 public class BoardTest {
     @DisplayName("판 초기화 테스트")
@@ -73,12 +77,35 @@ public class BoardTest {
         );
     }
 
-    // @DisplayName("판 카운트 테스트")
-    // @Test
-    // void BoardCountTest() {
-    //     Board board = Board.init();
-    //
-    //     assertThat(board.count(Type.PAWN, Side.BLACK)).isEqualTo(8);
-    //     assertThat(board.count(Type.ROOK, Side.BLACK)).isEqualTo(2);
-    // }
+    @DisplayName("판 카운트 테스트")
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("countParams")
+    void count(String message, Type type, Side side, long expected) {
+        Board board = Board.init();
+        board.move(Position.of("b2"), Position.of("b3"));
+        board.move(Position.of("c1"), Position.of("a3"));
+        board.move(Position.of("a3"), Position.of("e7"));
+        assertThat(board.count(type, side)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> countParams() {
+        return Stream.of(
+            Arguments.of("검정 폰 개수", Type.PAWN, Side.BLACK, 7),
+            Arguments.of("흰색 폰 개수", Type.PAWN, Side.WHITE, 8),
+            Arguments.of("검정 룩 개수", Type.ROOK, Side.BLACK, 2)
+        );
+    }
+
+    @DisplayName("폰 세로 정렬된 개수 세기")
+    @Test
+    void countPawnsOnSameColumn() {
+        Board board = Board.init();
+        board.move(Position.of("b2"), Position.of("b4"));
+        board.move(Position.of("b4"), Position.of("b5"));
+        board.move(Position.of("b5"), Position.of("b6"));
+        board.move(Position.of("b6"), Position.of("c7"));
+        assertThat(board.countPawnsOnSameColumn(Side.WHITE)).isEqualTo(2);
+        assertThat(board.countPawnsOnSameColumn(Side.BLACK)).isEqualTo(0);
+    }
+
 }
