@@ -22,7 +22,7 @@ public class InitializedPawn extends Initialized {
             throw new IllegalArgumentException("움직일 수 없습니다.");
         }
 
-        return new MovedPawn(to, team);
+        return new RunningPawn(to, team);
     }
 
     @Override
