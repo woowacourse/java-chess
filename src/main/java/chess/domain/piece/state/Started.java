@@ -8,9 +8,9 @@ import chess.domain.board.Position;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Started {
-	protected Position position;
+	// protected Position position;
 
 	public Started(Position position) {
-		this.position = position;
+		// this.position = position;
 	}
 }

@@ -22,7 +22,7 @@
 * [프로그래밍 체크리스트](https://github.com/woowacourse/woowacourse-docs/blob/master/cleancode/pr_checklist.md)
 
 ## 구현할 기능 목록
-* [ ] 게임 설명 출력
+* [x] 게임 설명 출력
 * [ ] 명령 입력받는다. (start, end, move, status)
     * [ ] 예외 : 처음에는 start, end 만 들어올 수 있다.
     * [ ] 예외 : start 는 한 번만 입력할 수 있다.
