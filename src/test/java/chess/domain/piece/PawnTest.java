@@ -39,15 +39,15 @@ public class PawnTest {
         board.put(Square.of("f5"), Knight.getPieceInstance(Color.WHITE));
 
         Piece piece = Pawn.getPieceInstance(Color.BLACK);
-        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
+        Set<Square> availableSquares = piece.getCheatSheet(Square.of("c6"), board);
         assertThat(availableSquares.contains(Square.of("c5"))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(1);
 
-        availableSquares = piece.calculateMoveBoundary(Square.of("e6"), board);
+        availableSquares = piece.getCheatSheet(Square.of("e6"), board);
         assertThat(availableSquares.contains(Square.of("f5"))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(1);
 
-        availableSquares = piece.calculateMoveBoundary(Square.of("g6"), board);
+        availableSquares = piece.getCheatSheet(Square.of("g6"), board);
         assertThat(availableSquares.contains(Square.of("g5"))).isTrue();
         assertThat(availableSquares.contains(Square.of("f5"))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(2);

@@ -29,6 +29,7 @@ public class Pawn extends Piece {
 
     @Override
     public Set<Square> getAllCheatSheet(Square square) {
+        NullChecker.validateNotNull(square);
         Set<Square> availableSquares = new HashSet<>();
         int index = 1;
         if (isBlack()) {
@@ -40,5 +41,31 @@ public class Pawn extends Piece {
         }
         availableSquares.add(square.addIfInBoundary(0, index));
         return availableSquares;
+    }
+
+    @Override
+    public Set<Square> getCheatSheet(Square square, Map<Square, Piece> board) {
+        NullChecker.validateNotNull(square, board);
+        Set<Square> squares = getAllCheatSheet(square);
+        for (Square s : squares) {
+            if (Math.abs(square.getRank() - s.getRank()) == 1) {
+                Square squareRight = s.addIfInBoundary(-1, 0);
+                Square squareLeft = s.addIfInBoundary(1, 0);
+                if (board.containsKey(s) && isSameColor(board.get(s))) {
+                    squares.removeAll(getAllCheatSheet(square));
+                }
+                if (board.containsKey(squareRight) && !isSameColor(board.get(squareRight))) {
+                    squares.add(squareRight);
+                }
+                if (board.containsKey(squareLeft) && !isSameColor(board.get(squareLeft))) {
+                    squares.add(squareLeft);
+                }
+                continue;
+            }
+            if (board.containsKey(s) && isSameColor(board.get(s))) {
+                squares.remove(s);
+            }
+        }
+        return squares;
     }
 }
