@@ -6,18 +6,41 @@ public class Position {
     private final Coordinate x;
     private final Coordinate y;
 
-    public Position(int x, int y) {
-        this(new Coordinate(x), new Coordinate(y));
-    }
-
-    public Position(int x, char y) {
-        this(new Coordinate(x), new Coordinate(y));
-    }
-
-    public Position(Coordinate x, Coordinate y) {
+    private Position(Coordinate x, Coordinate y) {
         this.x = x;
         this.y = y;
     }
+
+    public static Position of(int x, int y) {
+        return new Position(new Coordinate(x), new Coordinate(y));
+    }
+
+    public static Position of(String position) {
+        validate(position);
+        char[] chars = position.toCharArray();
+        char y = chars[0];
+        char x = chars[1];
+
+        return of(x - '0', (y + 1) - 'a');
+    }
+
+    private static void validate(String position) {
+        char[] chars = position.toCharArray();
+        char y = chars[0];
+        char x = chars[1];
+        boolean xInField = (x >= '1') && (x <= '8');
+        boolean yInField = (y >= 'a') && (x <= 'h');
+
+        if (xInField && yInField) {
+            return;
+        }
+        throw new IllegalArgumentException();
+    }
+
+//    public static Position of(int x, char y) {
+//        return of(x, y);
+//    }
+
 
     @Override
     public String toString() {

@@ -8,8 +8,7 @@ public enum Direction {
     DOWN(-1, 0),
     LEFT_DOWN(-1, -1),
     LEFT(0, -1),
-    LEFT_UP(1, -1),
-    DOUBLE_UP(2, 0);
+    LEFT_UP(1, -1);
 
     private final int x;
     private final int y;

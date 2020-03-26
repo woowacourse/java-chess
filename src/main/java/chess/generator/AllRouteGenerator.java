@@ -21,21 +21,22 @@ public class AllRouteGenerator {
         }
 
         if (chessPiece instanceof Pawn && ((Pawn) chessPiece).isFirstMove()) {
+            positions = new ArrayList<>();
+
             ((Pawn) chessPiece).firstMoveComplete();
-            directions.add(Direction.DOUBLE_UP);
+            positions.add(Position.of(initialPosition.getX() + Direction.UP.getX(), initialPosition.getY()));
+            positions.add(Position.of(initialPosition.getX() + Direction.UP.getX() * 2, initialPosition.getY()));
+            routes.add(new Route(positions));
         }
 
         for (Direction direction : directions) {
             positions = new ArrayList<>();
 
             makeRouteByDirection(chessPiece, positions, direction, initialPosition);
-            System.out.println(positions);
-            System.out.println("--");
             routes.add(new Route(positions));
         }
         return routes;
     }
-
 
     private static List<Route> makeKnightRoute(Position initialPosition) {
         List<Position> positions;
@@ -55,7 +56,7 @@ public class AllRouteGenerator {
         int y = initialPosition.getY() + KNIGHT_DIRECTION[index][1];
 
         if (validateCoordinate(x, y)) {
-            positions.add(new Position(x, y));
+            positions.add(Position.of(x, y));
         }
     }
 
@@ -82,7 +83,7 @@ public class AllRouteGenerator {
         if (!validateCoordinate(x, y)) {
             return;
         }
-        Position nowPosition = new Position(x, y);
+        Position nowPosition = Position.of(x, y);
         positions.add(nowPosition);
         addRouteRecursive(nowPosition, positions, direction);
     }
@@ -94,7 +95,7 @@ public class AllRouteGenerator {
         if (!validateCoordinate(x, y)) {
             return;
         }
-        Position nowPosition = new Position(x, y);
+        Position nowPosition = Position.of(x, y);
         positions.add(nowPosition);
     }
 

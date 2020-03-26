@@ -11,11 +11,11 @@ public class Pawn extends ChessPiece {
     boolean isFirstMove = true;
 
     public Pawn(Team team) {
-        super("p", team, 1, new ArrayList<>(Arrays.asList(
+        super("p", team, 1, Arrays.asList(
                 UP,
                 LEFT_UP,
                 RIGHT_UP)
-        ));
+        );
     }
 
     public boolean isFirstMove() {
