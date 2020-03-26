@@ -3,6 +3,7 @@ package chess.domain.chessboard;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
+import chess.domain.chessPiece.Bishop;
 import chess.domain.chessPiece.Piece;
 import chess.domain.chessPiece.Queen;
 import chess.domain.chessPiece.Rook;
@@ -87,7 +88,51 @@ public class ChessBoardTest {
         Position target = Position.of("b3");
         Piece piece = new Rook(source, new BlackTeam());
         piece.move(MoveFactory.of(source, target), null);
-
         assertThat(piece.isEqualPosition(Position.of("b3"))).isTrue();
     }
+
+    @Test
+    @DisplayName("Bishop 움직임 테스트 UP_RIGHT")
+    void bishopMoveTest1() {
+        Position source = Position.of("a1");
+        Position target = Position.of("c3");
+        Piece piece = new Bishop(source, new BlackTeam());
+        piece.move(MoveFactory.of(source, target), null);
+
+        assertThat(piece.isEqualPosition(Position.of("c3"))).isTrue();
+    }
+
+    @Test
+    @DisplayName("Bishop 움직임 테스트 DOWN_RIGHT")
+    void bishopMoveTest2() {
+        Position source = Position.of("c3");
+        Position target = Position.of("d2");
+        Piece piece = new Bishop(source, new BlackTeam());
+        piece.move(MoveFactory.of(source, target), null);
+
+        assertThat(piece.isEqualPosition(Position.of("d2"))).isTrue();
+    }
+
+    @Test
+    @DisplayName("Bishop 움직임 테스트 DOWN_LEFT")
+    void bishopMoveTest3() {
+        Position source = Position.of("d4");
+        Position target = Position.of("a1");
+        Piece piece = new Bishop(source, new BlackTeam());
+        piece.move(MoveFactory.of(source, target), null);
+
+        assertThat(piece.isEqualPosition(Position.of("a1"))).isTrue();
+    }
+
+    @Test
+    @DisplayName("Bishop 움직임 테스트 UP_LEFT")
+    void bishopMoveTest4() {
+        Position source = Position.of("b2");
+        Position target = Position.of("a3");
+        Piece piece = new Bishop(source, new BlackTeam());
+        piece.move(MoveFactory.of(source, target), null);
+
+        assertThat(piece.isEqualPosition(Position.of("a3"))).isTrue();
+    }
+
 }

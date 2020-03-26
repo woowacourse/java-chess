@@ -61,7 +61,6 @@ public class Position {
     public void move(MoveType moveType, Piece targetPiece) {
         Direction direction = moveType.getDirection();
         int count = moveType.getCount();
-
         if (direction == Direction.UP) {
             for (int i = 0; i < count; i++) {
                 int n = rank.getNumber();
@@ -96,6 +95,57 @@ public class Position {
             for (int i = 0; i < count; i++) {
                 int n = file.getNumber();
                 this.file = file.of(--n);
+                if (targetPiece != null) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+        if (direction == Direction.UP_RIGHT) {
+            for (int i = 0; i < count; i++) {
+                int fileCoordinate = file.getNumber();
+                int rankCoordinate = rank.getNumber();
+
+                this.file = file.of(++fileCoordinate);
+                this.rank = rank.of(++rankCoordinate);
+
+                if (targetPiece != null) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+
+        if (direction == Direction.UP_LEFT) {
+            for (int i = 0; i < count; i++) {
+                int fileCoordinate = file.getNumber();
+                int rankCoordinate = rank.getNumber();
+                this.file = file.of(--fileCoordinate);
+                this.rank = rank.of(++rankCoordinate);
+
+                if (targetPiece != null) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+
+        if (direction == Direction.DOWN_RIGHT) {
+            for (int i = 0; i < count; i++) {
+                int fileLocation = file.getNumber();
+                int rankLocation = rank.getNumber();
+                this.file = file.of(++fileLocation);
+                this.rank = rank.of(--rankLocation);
+
+                if (targetPiece != null) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+
+        if (direction == Direction.DOWN_LEFT) {
+            for (int i = 0; i < count; i++) {
+                int fileLocation = file.getNumber();
+                int rankLocation = rank.getNumber();
+                this.file = file.of(--fileLocation);
+                this.rank = rank.of(--rankLocation);
 
                 if (targetPiece != null) {
                     throw new IllegalArgumentException();
