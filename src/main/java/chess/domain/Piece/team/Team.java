@@ -1,20 +1,27 @@
 package chess.domain.Piece.team;
 
+import chess.domain.position.Direction;
+
 public enum Team {
-    WHITE(Direction.UP),
-    BLACK(Direction.DOWN);
+    WHITE(Direction.NORTH),
+    BLACK(Direction.SOUTH),
+    NOT_ASSIGNED(Direction.STAY);
 
-    private Direction direction;
+    private Direction forwardDirection;
 
-    Team(Direction direction) {
-        this.direction = direction;
+    Team(Direction forwardDirection) {
+        this.forwardDirection = forwardDirection;
     }
 
     public boolean isNotSame(Team team) {
         return this != team;
     }
 
-    public int getDirection() {
-        return direction.getValue();
+    public Direction getForwardDirection() {
+        return forwardDirection;
+    }
+
+    public boolean isSame(Team team) {
+        return this == team;
     }
 }

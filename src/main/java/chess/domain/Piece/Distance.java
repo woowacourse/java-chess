@@ -1,9 +1,10 @@
 package chess.domain.Piece;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 import java.util.Objects;
 
+//todo: test
 public class Distance {
     private final double value;
 
@@ -34,5 +35,9 @@ public class Distance {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public boolean isBiggerThan(int maxDistance) {
+        return maxDistance < value;
     }
 }

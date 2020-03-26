@@ -1,21 +1,41 @@
 package chess.domain.Piece.state;
 
+import chess.domain.Board;
 import chess.domain.Piece.Piece;
 import chess.domain.Piece.team.Team;
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 public abstract class Initialized implements Piece {
     protected final Position position;
-    private final Team team;
+    protected final Team team;
 
     protected Initialized(Position position, Team team) {
         this.position = position;
         this.team = team;
     }
 
-    protected abstract boolean canMove(Position to, Initialized exPiece);
+    protected abstract boolean canNotMove(Position to, Board board);
 
-    protected boolean isNotSameTeam(Initialized piece) {
-        return team.isNotSame(piece.team);
+    protected boolean isNotSameTeam(Piece piece) {
+        return team.isNotSame(piece.getTeam());
+    }
+
+    protected boolean isSameTeam(Piece piece) {
+        return team.isSame(piece.getTeam());
+    }
+
+    @Override
+    public Team getTeam() {
+        return team;
+    }
+
+    @Override
+    public boolean isNotBlank() {
+        return true;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return false;
     }
 }

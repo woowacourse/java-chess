@@ -1,6 +1,7 @@
-package chess.domain;
+package chess.domain.position;
 
 import chess.domain.Piece.Distance;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +17,7 @@ class PositionTest {
 
     @ParameterizedTest
     @MethodSource({"getValidCasesForOf"})
-    @DisplayName("#of() : should return Position")
+    @DisplayName("#of() : should return position")
     void ofSucceed(int x, int y) {
         Position position = Position.of(x, y);
         assertThat(position).isNotNull();

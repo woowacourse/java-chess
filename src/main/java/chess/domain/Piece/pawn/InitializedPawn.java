@@ -1,35 +1,71 @@
 package chess.domain.Piece.pawn;
 
+import chess.domain.Board;
+import chess.domain.Piece.Distance;
 import chess.domain.Piece.Piece;
 import chess.domain.Piece.state.Initialized;
 import chess.domain.Piece.team.Team;
-import chess.domain.Position;
+import chess.domain.position.Position;
 
+//todo: add tests
 public class InitializedPawn extends Initialized {
+    private static final int MAX_DISTANCE = 2;
 
     protected InitializedPawn(Position position, Team team) {
         super(position, team);
     }
 
     @Override
-    public Piece move(Position to, Piece exPiece) {
-        return null;
+    public Piece move(Position to, Board board) {
+        if (canNotMove(to, board)) {
+            //todo: change error message
+            throw new IllegalArgumentException("움직일 수 없습니다.");
+        }
+
+        return new MovedPawn(to, team);
     }
 
     @Override
-    protected boolean canMove(Position to, Initialized exPiece) {
+    protected boolean canNotMove(Position to, Board board) {
+        if (position.equals(to)) {
+            return true;
+        }
+
+        if (to.isNotForward(position, team.getForwardDirection())) {
+            return true;
+        }
+
+        Piece exPiece = board.getPiece(to);
         if (isNotSameTeam(exPiece)) {
+            return true;
+        }
+
+        Distance distance = position.calculateDistance(to);
+        if (distance.isBiggerThan(MAX_DISTANCE)) {
+            return true;
+        }
+
+        if (isSameTeam(exPiece)) {
+            return true;
+        }
+
+        return hasHindrance(to, board);
+
+    }
+
+    private boolean hasHindrance(Position to, Board board) {
+        if (position.isDiagonalDirection(to)) {
             return false;
         }
 
-        /*
-        * 움직일 수 있다?
-        * 1. 앞 2칸 전진(앞에 아무것도 없을 때)
-        * 2. 앞 1칸 전진(앞에 아무것도 없을 때)
-        * 3. 대각선 1칸(적이 대각선에 있을 때
-        * */
+        Position forward = position.go(team.getForwardDirection());
+        Piece piece = board.getPiece(forward);
+        if (forward.equals(to) && piece.isBlank()) {
+            return false;
+        }
 
-
-        return false;
+        forward = forward.go(team.getForwardDirection());
+        piece = board.getPiece(forward);
+        return piece.isNotBlank();
     }
 }

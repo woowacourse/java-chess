@@ -2,7 +2,7 @@ package chess.domain.board;
 
 
 import chess.domain.Piece.Piece;
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 import java.util.LinkedHashMap;
 
