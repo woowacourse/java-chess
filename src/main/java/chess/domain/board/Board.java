@@ -7,8 +7,10 @@ import java.util.ListIterator;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
+import chess.domain.piece.Path;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.exception.NotMovableException;
 
 public class Board {
 	private List<Rank> ranks;
@@ -26,6 +28,26 @@ public class Board {
 		ranks.add(Rank.createBlanks(5));
 		ranks.add(Rank.createPawns(6, Color.BLACK));
 		ranks.add(Rank.createPieces(7, Color.BLACK));
+	}
+
+	public void move(Position source, Position target) {
+		Piece sourcePiece = findPiece(source);
+		Piece targetPiece = findPiece(target);
+		Path path = sourcePiece.pathTo(targetPiece);
+		validatePath(path);
+		sourcePiece.move(target);
+		updatePosition(source, target, sourcePiece);
+	}
+
+	private void validatePath(Path path) {
+		path.forEachRemaining(this::validateBlank);
+	}
+
+	private void validateBlank(Position position) {
+		Piece piece = findPiece(position);
+		if (!(piece instanceof Blank)) {
+			throw new NotMovableException("해당 경로에 장애물이 존재하여 이동할 수 없습니다.");
+		}
 	}
 
 	private void updatePosition(Position source, Position target, Piece piece) {
