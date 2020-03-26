@@ -90,6 +90,7 @@ public class ChessBoardTest {
 		Position target = Position.of("b3");
 		Piece piece = new Rook(source, new BlackTeam());
 		piece.move(MovePatternFactory.findMovePattern(source, target), chessBoard);
+
 		assertThat(piece.isEqualPosition(Position.of("b3"))).isTrue();
 	}
 
@@ -147,7 +148,7 @@ public class ChessBoardTest {
 	@Test
 	void isSurviveKings2() {
 		Piece blackKing = chessBoard.findPieceByPosition(Position.of("e1"));
-		chessBoard.removePiece(blackKing);
+		chessBoard.removeAttackedPiece(blackKing);
 
 		assertThat(chessBoard.isSurviveKings()).isFalse();
 	}

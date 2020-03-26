@@ -57,11 +57,11 @@ public class Position {
 	}
 
 	public int calculateRankDistance(Position target) {
-		return rank.getNumber() - target.rank.getNumber();
+		return rank.calculateDistance(target.rank);
 	}
 
 	public int calculateFileDistance(Position target) {
-		return file.getNumber() - target.file.getNumber();
+		return file.calculateDistance(target.file);
 	}
 
 	public void move(MovePattern movePattern, ChessBoard chessBoard) {

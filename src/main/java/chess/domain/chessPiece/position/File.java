@@ -37,4 +37,8 @@ public enum File {
 	public int getNumber() {
 		return number;
 	}
+
+	public int calculateDistance(File file) {
+		return this.number - file.number;
+	}
 }

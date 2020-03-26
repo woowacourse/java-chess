@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다.";
 	private static final String ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다.";
 	private static final int INIT_KING_COUNT = 2;
 	private static final int ONE_PAWN_COUNT = 1;
@@ -45,7 +44,7 @@ public class ChessBoard {
 		pieceToMove.move(movePattern, this);
 	}
 
-	private void removeAttackedPiece(Piece targetPiece) {
+	public void removeAttackedPiece(Piece targetPiece) {
 		if (targetPiece != null) {
 			pieces.remove(targetPiece);
 		}
