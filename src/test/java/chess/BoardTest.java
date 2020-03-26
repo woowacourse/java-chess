@@ -7,13 +7,12 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.piece.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.piece.Pawn;
 import chess.piece.Piece;
+import chess.piece.Rook;
 import chess.piece.Team;
 import chess.position.Position;
 
