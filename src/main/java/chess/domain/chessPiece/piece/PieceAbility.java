@@ -4,11 +4,11 @@ import chess.domain.Position;
 import chess.domain.movefactory.MoveType;
 
 public interface PieceAbility {
-    boolean isMovable(MoveType moveType);
+	boolean isMovable(MoveType moveType);
 
-    String pieceName();
+	String pieceName();
 
-    boolean isEqualPosition(Position position);
+	boolean isEqualPosition(Position position);
 
-    double getScore();
+	double getScore();
 }

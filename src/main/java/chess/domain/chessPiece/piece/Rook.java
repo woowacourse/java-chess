@@ -6,26 +6,26 @@ import chess.domain.movefactory.MoveType;
 import chess.domain.movefactory.StraightType;
 
 public class Rook extends Piece {
-    private static final int ROOK_SCORE = 5;
+	private static final int ROOK_SCORE = 5;
 
-    private final double score = ROOK_SCORE;
+	private final double score = ROOK_SCORE;
 
-    public Rook(Position position, TeamStrategy teamStrategy) {
-        super(position, teamStrategy);
-    }
+	public Rook(Position position, TeamStrategy teamStrategy) {
+		super(position, teamStrategy);
+	}
 
-    @Override
-    public boolean isMovable(MoveType moveType) {
-        return moveType instanceof StraightType;
-    }
+	@Override
+	public boolean isMovable(MoveType moveType) {
+		return moveType instanceof StraightType;
+	}
 
-    @Override
-    public String pieceName() {
-        return teamStrategy.rookName();
-    }
+	@Override
+	public String pieceName() {
+		return teamStrategy.rookName();
+	}
 
-    @Override
-    public double getScore() {
-        return score;
-    }
+	@Override
+	public double getScore() {
+		return score;
+	}
 }

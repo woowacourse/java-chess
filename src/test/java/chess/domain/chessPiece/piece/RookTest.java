@@ -10,27 +10,27 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 class RookTest {
-    @Test
-    @DisplayName("이동 성공 테스트")
-    void movable() {
-        Position source = Position.of("d2");
-        Position target = Position.of("d4");
+	@Test
+	@DisplayName("이동 성공 테스트")
+	void movable() {
+		Position source = Position.of("d2");
+		Position target = Position.of("d4");
 
-        MoveType moveType = MoveTypeFactory.of(source, target);
-        Piece rook = new Rook(source, new BlackTeam());
+		MoveType moveType = MoveTypeFactory.of(source, target);
+		Piece rook = new Rook(source, new BlackTeam());
 
-        assertThat(rook.isMovable(moveType)).isTrue();
-    }
+		assertThat(rook.isMovable(moveType)).isTrue();
+	}
 
-    @Test
-    @DisplayName("이동 실패 테스트")
-    void isNotMovable() {
-        Position source = Position.of("d2");
-        Position target = Position.of("e3");
+	@Test
+	@DisplayName("이동 실패 테스트")
+	void isNotMovable() {
+		Position source = Position.of("d2");
+		Position target = Position.of("e3");
 
-        MoveType moveType = MoveTypeFactory.of(source, target);
-        Piece rook = new Rook(source, new BlackTeam());
+		MoveType moveType = MoveTypeFactory.of(source, target);
+		Piece rook = new Rook(source, new BlackTeam());
 
-        assertThat(rook.isMovable(moveType)).isFalse();
-    }
+		assertThat(rook.isMovable(moveType)).isFalse();
+	}
 }

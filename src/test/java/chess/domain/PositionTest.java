@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 class PositionTest {
-    @Test
-    @DisplayName("of 테스트")
-    void of() {
-        Position result = Position.of(File.F, Rank.SIX);
+	@Test
+	@DisplayName("of 테스트")
+	void of() {
+		Position result = Position.of(File.F, Rank.SIX);
 
-        assertThat(Position.of("f6")).isEqualTo(result);
-    }
+		assertThat(Position.of("f6")).isEqualTo(result);
+	}
 }

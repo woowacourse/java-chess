@@ -8,38 +8,42 @@ import chess.domain.chessPiece.team.WhiteTeam;
 import chess.domain.chessboard.ChessBoard;
 
 public class OutputView {
-    private static final String EMPTY_MARK = ".";
-    private static final String STRING_FORMAT_PRINT_SCORE = "블랙팀 점수 : %.1f, 화이트 팀 점수 : %.1f";
-    private static final String MESSAGE_END_GAME = "게임을 종료 합니다";
+	private static final String EMPTY_MARK = ".";
+	private static final String STRING_FORMAT_PRINT_SCORE = "블랙팀 점수 : %.1f, 화이트 팀 점수 : %.1f";
+	private static final String MESSAGE_END_GAME = "게임을 종료 합니다";
 
-    public static void printChessBoard(ChessBoard chessBoard) {
-        for (Position position : chessBoard.getChessBoard()) {
-            seperateLine(position);
-            Piece piece = chessBoard.findPieceByPosition(position);
-            if (piece == null) {
-                System.out.print(EMPTY_MARK);
-                continue;
-            }
-            System.out.print(piece.pieceName());
-        }
-    }
+	public static void printChessBoard(ChessBoard chessBoard) {
+		for (Position position : chessBoard.getChessBoard()) {
+			separateLine(position);
+			Piece piece = chessBoard.findPieceByPosition(position);
+			printPiece(piece);
+		}
+	}
 
-    private static void seperateLine(Position position) {
-        if (position.isNewLine()) {
-            System.out.println();
-        }
-    }
+	private static void printPiece(Piece piece) {
+		if (piece == null) {
+			System.out.print(EMPTY_MARK);
+			return;
+		}
+		System.out.print(piece.pieceName());
+	}
 
-    public static void calculateScore(ChessBoard chessBoard) {
-        TeamStrategy blackMark = new BlackTeam();
-        TeamStrategy whiteMark = new WhiteTeam();
-        double blackTeamScore = chessBoard.calculateTeamScore(blackMark);
-        double whiteTeamScore = chessBoard.calculateTeamScore(whiteMark);
+	private static void separateLine(Position position) {
+		if (position.isNewLine()) {
+			System.out.println();
+		}
+	}
 
-        System.out.println(String.format(STRING_FORMAT_PRINT_SCORE, blackTeamScore, whiteTeamScore));
-    }
+	public static void calculateScore(ChessBoard chessBoard) {
+		TeamStrategy blackMark = new BlackTeam();
+		TeamStrategy whiteMark = new WhiteTeam();
+		double blackTeamScore = chessBoard.calculateTeamScore(blackMark);
+		double whiteTeamScore = chessBoard.calculateTeamScore(whiteMark);
 
-    public static void printGameEndMessage() {
-        System.out.println(MESSAGE_END_GAME);
-    }
+		System.out.println(String.format(STRING_FORMAT_PRINT_SCORE, blackTeamScore, whiteTeamScore));
+	}
+
+	public static void printGameEndMessage() {
+		System.out.println(MESSAGE_END_GAME);
+	}
 }
