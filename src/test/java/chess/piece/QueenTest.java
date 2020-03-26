@@ -31,18 +31,18 @@ public class QueenTest {
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
 			Arguments.of(Position.of(C, SIX), Position.of(F, THREE),
-				Arrays.asList(Position.of(D, FIVE), Position.of(E, FOUR), Position.of(F, THREE))),
+				Arrays.asList(Position.of(D, FIVE), Position.of(E, FOUR))),
 			Arguments.of(Position.of(F, THREE), Position.of(C, SIX),
-				Arrays.asList(Position.of(E, FOUR), Position.of(D, FIVE), Position.of(C, SIX))),
+				Arrays.asList(Position.of(E, FOUR), Position.of(D, FIVE))),
 			Arguments.of(Position.of(C, THREE), Position.of(F, SIX),
-				Arrays.asList(Position.of(D, FOUR), Position.of(E, FIVE), Position.of(F, SIX))),
+				Arrays.asList(Position.of(D, FOUR), Position.of(E, FIVE))),
 			Arguments.of(Position.of(F, SIX), Position.of(C, THREE),
-				Arrays.asList(Position.of(E, FIVE), Position.of(D, FOUR), Position.of(C, THREE))),
+				Arrays.asList(Position.of(E, FIVE), Position.of(D, FOUR))),
 
 			Arguments.of(Position.of(B, FOUR), Position.of(B, SIX),
-				Arrays.asList(Position.of(B, FIVE), Position.of(B, SIX))),
+				Arrays.asList(Position.of(B, FIVE))),
 			Arguments.of(Position.of(B, FOUR), Position.of(E, FOUR),
-				Arrays.asList(Position.of(C, FOUR), Position.of(D, FOUR), Position.of(E, FOUR)))
+				Arrays.asList(Position.of(C, FOUR), Position.of(D, FOUR)))
 		);
 	}
 

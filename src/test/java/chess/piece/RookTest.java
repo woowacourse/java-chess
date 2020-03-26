@@ -30,10 +30,9 @@ public class RookTest {
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
 			Arguments.of(Position.of(B, FOUR), Position.of(B, SIX),
-				Arrays.asList(Position.of(B, FIVE), Position.of(B, SIX))),
+				Arrays.asList(Position.of(B, FIVE))),
 			Arguments.of(Position.of(B, FOUR), Position.of(E, FOUR),
-				Arrays.asList(Position.of(C, FOUR), Position.of(D, FOUR),
-					Position.of(E, FOUR)))
+				Arrays.asList(Position.of(C, FOUR), Position.of(D, FOUR)))
 		);
 	}
 

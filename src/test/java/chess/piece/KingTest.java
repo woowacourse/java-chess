@@ -6,6 +6,7 @@ import static chess.position.Rank.*;
 import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -30,14 +31,14 @@ public class KingTest {
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position.of(E, FIVE), Position.of(D, SIX), singletonList(Position.of(D, SIX))),
-			Arguments.of(Position.of(E, FIVE), Position.of(E, SIX), singletonList(Position.of(E, SIX))),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, SIX), singletonList(Position.of(F, SIX))),
-			Arguments.of(Position.of(E, FIVE), Position.of(D, FIVE), singletonList(Position.of(D, FIVE))),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, FIVE), singletonList(Position.of(F, FIVE))),
-			Arguments.of(Position.of(E, FIVE), Position.of(D, FOUR), singletonList(Position.of(D, FOUR))),
-			Arguments.of(Position.of(E, FIVE), Position.of(E, FOUR), singletonList(Position.of(E, FOUR))),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, FOUR), singletonList(Position.of(F, FOUR)))
+			Arguments.of(Position.of(E, FIVE), Position.of(D, SIX), Collections.emptyList()),
+			Arguments.of(Position.of(E, FIVE), Position.of(E, SIX), Collections.emptyList()),
+			Arguments.of(Position.of(E, FIVE), Position.of(F, SIX), Collections.emptyList()),
+			Arguments.of(Position.of(E, FIVE), Position.of(D, FIVE), Collections.emptyList()),
+			Arguments.of(Position.of(E, FIVE), Position.of(F, FIVE), Collections.emptyList()),
+			Arguments.of(Position.of(E, FIVE), Position.of(D, FOUR), Collections.emptyList()),
+			Arguments.of(Position.of(E, FIVE), Position.of(E, FOUR), Collections.emptyList()),
+			Arguments.of(Position.of(E, FIVE), Position.of(F, FOUR), Collections.emptyList())
 		);
 	}
 
