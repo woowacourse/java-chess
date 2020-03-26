@@ -1,12 +1,15 @@
 package chess.domain;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public enum OperationType {
 	START("start"),
 	MOVE("move"),
 	END("end"),
 	STATUS("status");
+
+	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "잘못된 입력입니다.";
 
 	private final String name;
 
@@ -15,11 +18,18 @@ public enum OperationType {
 	}
 
 	public static OperationType of(String name) {
-		// todo validate
+		validate(name);
 		return Arrays.stream(OperationType.values())
 				.filter(operationType -> operationType.name.equals(name))
 				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
+				.orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE));
+	}
+
+	private static void validate(String name) {
+		Objects.requireNonNull(name, INVALID_INPUT_EXCEPTION_MESSAGE);
+		if (name.isEmpty()) {
+			throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
+		}
 	}
 
 	public boolean isStart() {
