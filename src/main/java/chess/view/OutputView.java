@@ -29,5 +29,9 @@ public class OutputView {
             System.out.println();
         }
     }
+
+    public static void printCanNotMove() {
+        System.out.println("못움직여요");
+    }
 }
 

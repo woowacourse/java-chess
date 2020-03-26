@@ -20,12 +20,11 @@ public class ChessController {
         start(chessBoard);
         String input;
         GameState gameState;
+        boolean blackTurn = false;
         do {
             input = InputView.inputStart();
             List<Square> squares = new ArrayList<>();
-            Square squareBeforeMove = null;
-            Square squareAfterMove = null;
-            if (input.length() > 4) {
+            if (input.length() == 10) {
                 List<String> inputs = Arrays.asList(input.split(" "));
                 input = inputs.get(0);
                 squares.add(Square.of(inputs.get(1)));
@@ -36,23 +35,21 @@ public class ChessController {
                 throw new IllegalArgumentException("왜 시작하세요");
             }
             if (gameState == GameState.MOVE) {
-                proceed(chessBoard, squares);
+                if (proceed(chessBoard, squares, blackTurn)) {
+                    blackTurn = !blackTurn;
+                }
             }
         } while (gameState != GameState.END);
     }
 
-    private static void proceed(ChessBoard chessBoard, List<Square> squares) {
-//        if(chessBoard){
-//            //진행
-//        }
-        /*
-        ask... (squares / turn) => 할수잇엉 못행
-        => 1 - 비어잇으면 - 안댐
-        => 2 - 잇는데 울팀아니면 - 안댐
-        => 3 - 잇는데 움직일수잇는 곳이 없으면 - 안댐
-         */
-
-//        //말 선택 잚ㅅ
+    private static boolean proceed(ChessBoard chessBoard, List<Square> squares, boolean blackTurn) {
+        if (chessBoard.canMove(squares, blackTurn)) {
+            chessBoard.movePiece(squares);
+            OutputView.printChessBoard(chessBoard);
+            return true;
+        }
+        OutputView.printCanNotMove();
+        return false;
     }
 
     private static void start(ChessBoard chessBoard) {
