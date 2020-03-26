@@ -1,8 +1,6 @@
 package chess.piece.type;
 
-
 import chess.board.Location;
-import chess.team.Team;
 
 public abstract class Piece {
 	protected final char name;
@@ -14,7 +12,11 @@ public abstract class Piece {
 	public abstract boolean canMove(Location now, Location after);
 
 	public boolean isSameTeam(boolean black) {
-		return Character.isUpperCase(name) == black;
+		return isBlack() == black;
+	}
+
+	protected boolean isBlack() {
+		return Character.isUpperCase(name);
 	}
 
 	@Override

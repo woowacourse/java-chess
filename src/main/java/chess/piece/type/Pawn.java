@@ -19,7 +19,14 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean canMove(Location now, Location after) {
-		// TODO : 이거 구현해야함
-		return false;
+		int value = 1;
+		if (isBlack()) {
+			value = -1;
+		}
+		// now가 초기위치인지 검사
+		if (now.isInitialPawnLocation(isBlack())) {
+			return now.isInitialPawnForwardRange(after, value) || now.isForwardDiagonal(after, value);
+		}
+		return now.isForwardDiagonal(after, value) || now.isPawnForwardRange(after, value);
 	}
 }
