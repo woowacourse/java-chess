@@ -6,28 +6,14 @@ import util.NullChecker;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Piece {
-    private final static Map<String, Piece> CACHE = new HashMap<>();
-
-    static {
-        for (Color color : Color.values()) {
-            for (Type type : Type.values()) {
-                CACHE.put(color.getName() + type.getName(), new Piece(color, type));
-            }
-        }
-    }
+public abstract class Piece {
 
     private final Color color;
     private final Type type;
 
-    private Piece(Color color, Type type) {
+    protected Piece(Color color, Type type) {
         this.color = color;
         this.type = type;
-    }
-
-    public static Piece of(Color color, Type type) {
-        NullChecker.validateNotNull(color, type);
-        return CACHE.get(color.getName() + type.getName());
     }
 
     public String getLetter() {
