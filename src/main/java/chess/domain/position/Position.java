@@ -55,10 +55,6 @@ public class Position {
         return this.file == file;
     }
 
-    public Position reverse() {
-        return new Position(file.reverse(), rank.reverse());
-    }
-
     public Position moveTo(Direction direction) {
         File movedFile = file.plus(direction.getXDegree());
         Rank movedRank = rank.plus(direction.getYDegree());

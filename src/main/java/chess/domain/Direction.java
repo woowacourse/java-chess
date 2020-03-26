@@ -54,6 +54,14 @@ public enum Direction {
         return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }
 
+    public static List<Direction> PawnDriectionOf(Team team) {
+        if (team.isBlack()) {
+            return blackPawnDirection();
+        }
+
+        return whitePawnDirection();
+    }
+
     public static List<Direction> whitePawnDirection() {
         return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
     }

@@ -22,8 +22,12 @@ public class Piece {
         return pieceType.findRoute(fromPosition, toPosition, team);
     }
 
-    public boolean isBlackTeam() {
-        return this.team == Team.BLACK;
+    public boolean isTeam(Team team) {
+        return this.team == team;
+    }
+
+    public double getScore() {
+        return pieceType.score();
     }
 
     @Override
@@ -32,13 +36,5 @@ public class Piece {
                 "team=" + team +
                 ", pieceType=" + pieceType +
                 '}';
-    }
-
-    public boolean isTeam(Team team) {
-        return this.team == team;
-    }
-
-    public double getScore() {
-        return pieceType.score();
     }
 }
