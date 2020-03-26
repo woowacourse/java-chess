@@ -44,4 +44,12 @@ public class ChessBoard {
         }
         return chessBoard.get(before).calculateMoveBoundary(before, chessBoard).contains(after);
     }
+
+    public void movePiece(List<Square> squares) {
+        Square before = squares.get(0);
+        Square after = squares.get(1);
+
+        Piece currentPiece = chessBoard.remove(before);
+        chessBoard.put(after, currentPiece);
+    }
 }

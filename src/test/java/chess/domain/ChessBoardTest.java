@@ -37,6 +37,19 @@ public class ChessBoardTest {
         squares.add(Square.of("a7"));
         squares.add(Square.of("b1"));
         assertThat(chessBoard.canMove(squares, blackTurn)).isFalse();
-
     }
+
+    @Test
+    @DisplayName("move 수행 테스트")
+    void move() {
+        ChessBoard chessBoard = new ChessBoard();
+        List<Square> squares = new ArrayList<>();
+        squares.add(Square.of("a2"));
+        squares.add(Square.of("a3"));
+        chessBoard.movePiece(squares);
+        assertThat(chessBoard.getChessBoard().containsKey(Square.of("a2"))).isFalse();
+        assertThat(chessBoard.getChessBoard().containsKey(Square.of("a3"))).isTrue();
+        assertThat(chessBoard.getChessBoard().get(Square.of("a3"))).isEqualTo(Piece.of(Color.WHITE, Type.PAWN));
+    }
+
 }
