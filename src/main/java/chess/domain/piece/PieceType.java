@@ -29,4 +29,8 @@ public enum PieceType {
     public boolean move(Position source, Position target, Board board) {
         return this.moveStrategy.movable(source, target, board);
     }
+
+    public boolean isKing() {
+        return this == KING;
+    }
 }

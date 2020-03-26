@@ -37,6 +37,10 @@ public class ChessRunner {
         this.currentTeam = Team.changeTurn(this.currentTeam);
     }
 
+    public Team checkWinner() {
+        return this.board.checkWinner();
+    }
+
     public Board getBoard() {
         return this.board;
     }

@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.domain.piece.Team;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,5 +29,10 @@ public class ConsoleOutputView implements OutputView {
             return EMPTY_SQUARE;
         }
         return piece;
+    }
+
+    @Override
+    public void printWinner(Team team) {
+        System.out.println(String.format("%s 팀이 이겼습니다.", team.name()));
     }
 }

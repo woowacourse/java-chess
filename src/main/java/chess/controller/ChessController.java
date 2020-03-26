@@ -36,10 +36,19 @@ public class ChessController {
                 String targetPosition = moveSource[2];
                 chessRunner.update(sourcePosition, targetPosition);
                 printInitialize(chessRunner.getBoard());
+                if (checkWinner(chessRunner)) continue;
+
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    private static boolean checkWinner(ChessRunner chessRunner) {
+        if (chessRunner.checkWinner() != null) {
+            outputView.printWinner(chessRunner.checkWinner());
+        }
+        return true;
     }
 
     private static void printInitialize(Board board) {

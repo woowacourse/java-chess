@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.Collections;
@@ -27,6 +28,30 @@ public class Board {
     public void updateBoard(Position sourcePosition, Position targetPosition, Piece selectedPiece) {
         this.board.put(targetPosition, selectedPiece);
         this.board.remove(sourcePosition);
+    }
+
+    public Team checkWinner() {
+        if (checkWhiteKing() && !checkBlackKing()) {
+            return Team.WHITE;
+        }
+        if (!checkWhiteKing() && checkBlackKing()) {
+            return Team.BLACK;
+        }
+        return null;
+    }
+
+    private boolean checkWhiteKing() {
+        for (Piece piece : board.values()) {
+            if (piece.isWhiteKing()) return true;
+        }
+        return false;
+    }
+
+    private boolean checkBlackKing() {
+        for (Piece piece : board.values()) {
+            if (piece.isBlackKing()) return true;
+        }
+        return false;
     }
 
     public boolean isEmpty(final Position position) {
