@@ -19,10 +19,17 @@ public class PawnMovable implements Movable {
 		Set<Position> movablePositions = new HashSet<>();
 
 		if (position.getColumn().getValue() == 2 && color.isWhite()) {
-			moveDirection = Direction.whiteInitialPawnDirection();
+			Position checkPosition = Board.of(position.getRow(),position.getColumn().calculate(1));
+			if (!isPossessed(checkPosition, pieces)) {
+				moveDirection = Direction.whiteInitialPawnDirection();
+			}
 		}
+
 		if (position.getColumn().getValue() == 7 && color.isBlack()) {
-			moveDirection = Direction.blackInitialPawnDirection();
+			Position checkPosition = Board.of(position.getRow(),position.getColumn().calculate(-1));
+			if (!isPossessed(checkPosition, pieces)) {
+				moveDirection = Direction.blackInitialPawnDirection();
+			}
 		}
 
 		for (Direction direction : moveDirection) {
@@ -56,7 +63,7 @@ public class PawnMovable implements Movable {
 
 	private boolean isPossessed(Position movablePosition, List<Piece> pieces) {
 		for(Piece piece : pieces) {
-			if(piece.getPosition().equals(movablePosition)) {
+			if(piece.isSamePosition(movablePosition)) {
 				return true;
 			}
 		}
@@ -65,7 +72,7 @@ public class PawnMovable implements Movable {
 
 	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
 		for(Piece piece : pieces) {
-			if(piece.getPosition().equals(position) && piece.getColor().isSame(color)) {
+			if(piece.isSamePosition(position) && piece.isSameColor(color)) {
 				return false;
 			}
 		}

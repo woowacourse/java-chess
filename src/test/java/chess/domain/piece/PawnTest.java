@@ -63,4 +63,16 @@ public class PawnTest {
 
 		assertThat(pawn.createMovablePositions(Collections.emptyList()).size()).isEqualTo(1);
 	}
+
+	@DisplayName("createMovablePositions 이동 가능한 경로에 처음이고 바로 앞에 말이 있을시 이동 불가")
+	@Test
+	void createMovablePositions_initial_blocked_test() {
+		Position position = Board.of("b2");
+		Pawn pawn = new Pawn(position, "p", Color.WHITE);
+		Pieces pieces = TestPiecesFactory.of(Collections.singletonList(
+				Board.of("b3")
+		), Color.BLACK);
+
+		assertThat(pawn.createMovablePositions(pieces.getPieces()).size()).isEqualTo(0);
+	}
 }
