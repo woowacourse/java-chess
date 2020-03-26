@@ -10,7 +10,6 @@ public class Rook extends Piece {
         super(position, teamStrategy);
     }
 
-
     @Override
     public boolean isMovable(MoveType moveType) {
         return moveType instanceof StraightType;

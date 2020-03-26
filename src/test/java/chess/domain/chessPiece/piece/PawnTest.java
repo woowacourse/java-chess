@@ -10,7 +10,7 @@ class PawnTest {
 //        Position targetPosition = Position.of("b4");
 //
 //        Piece blackPawn = chessBoard.findPieceByPosition(sourcePosition);
-//        MoveType moveType = MoveFactory.of(sourcePosition, targetPosition);
+//        MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
 //
 //        assertThat(blackPawn.isMovable(moveType)).isTrue();
 //    }

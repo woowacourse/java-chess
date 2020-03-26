@@ -2,7 +2,7 @@ package chess.domain.movefactory;
 
 import chess.domain.Position;
 
-public class MoveFactory {
+public class MoveTypeFactory {
     public static MoveType of(Position source, Position target) {
         if (source.isSameRank(target) || source.isSameFile(target)) {
             return new StraightType(source, target);

@@ -18,4 +18,8 @@ public class KnightType implements MoveType {
     public int getCount() {
         return 0;
     }
+
+    public Position getTargetPosition() {
+        return targetPosition;
+    }
 }

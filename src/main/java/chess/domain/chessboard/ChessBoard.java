@@ -5,8 +5,8 @@ import chess.domain.chessPiece.factory.PieceBundleFactory;
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.WhiteTeam;
-import chess.domain.movefactory.MoveFactory;
 import chess.domain.movefactory.MoveType;
+import chess.domain.movefactory.MoveTypeFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +42,7 @@ public class ChessBoard {
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
-        MoveType moveType = MoveFactory.of(sourcePosition, targetPosition);
+        MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
         Piece targetPiece = findPieceByPosition(targetPosition);
         Piece pieceToMove = findPieceByPosition(sourcePosition);
 

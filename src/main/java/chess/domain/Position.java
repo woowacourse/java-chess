@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.movefactory.Direction;
+import chess.domain.movefactory.KnightType;
 import chess.domain.movefactory.MoveType;
 
 import java.util.Objects;
@@ -45,8 +46,17 @@ public class Position {
     }
 
     public void move(MoveType moveType, ChessBoard chessBoard) {
+        moveWhenKnightType((KnightType) moveType);
         moveWhenStraight(moveType, chessBoard);
         moveWhenCross(moveType, chessBoard);
+    }
+
+    private void moveWhenKnightType(KnightType moveType) {
+        if (moveType instanceof KnightType) {
+            Position target = moveType.getTargetPosition();
+            this.file = target.file;
+            this.rank = target.rank;
+        }
     }
 
     private void moveWhenStraight(MoveType moveType, ChessBoard chessBoard) {
