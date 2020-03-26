@@ -1,6 +1,4 @@
-package chess.domain.board;
-
-import chess.domain.board.Position;
+package chess.domain.move;
 
 import java.util.List;
 

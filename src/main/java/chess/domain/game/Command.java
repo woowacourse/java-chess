@@ -1,4 +1,4 @@
-package chess.domain.command;
+package chess.domain.game;
 
 import java.util.Arrays;
 
@@ -14,7 +14,7 @@ public enum Command {
         this.command = command;
     }
 
-    public static boolean isExistCommand(String inputCommand){
+    public static boolean isExistCommand(String inputCommand) {
         return Arrays.stream(values())
                 .anyMatch((o) -> (o.command.equals(inputCommand)));
     }

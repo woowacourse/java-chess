@@ -1,9 +1,8 @@
 package chess.generator;
 
-import chess.domain.board.Direction;
-import chess.domain.board.Position;
-import chess.domain.board.Route;
 import chess.domain.chesspiece.*;
+import chess.domain.move.Position;
+import chess.domain.move.Route;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,6 @@ public class AllRouteGenerator {
         if (chessPiece instanceof Pawn && ((Pawn) chessPiece).isFirstMove()) {
             positions = new ArrayList<>();
 
-            ((Pawn) chessPiece).firstMoveComplete();
             positions.add(Position.of(initialPosition.getX() + Direction.UP.getX(), initialPosition.getY()));
             positions.add(Position.of(initialPosition.getX() + Direction.UP.getX() * 2, initialPosition.getY()));
             routes.add(new Route(positions));

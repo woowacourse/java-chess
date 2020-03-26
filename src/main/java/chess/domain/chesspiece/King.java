@@ -1,10 +1,8 @@
 package chess.domain.chesspiece;
 
-import chess.domain.team.Team;
-
 import java.util.Arrays;
 
-import static chess.domain.board.Direction.*;
+import static chess.domain.chesspiece.Direction.*;
 
 public class King extends ChessPiece {
     public King(Team team) {

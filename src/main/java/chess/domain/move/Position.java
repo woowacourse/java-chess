@@ -1,4 +1,6 @@
-package chess.domain.board;
+package chess.domain.move;
+
+import chess.domain.board.Coordinate;
 
 import java.util.Objects;
 

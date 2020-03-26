@@ -1,4 +1,4 @@
-package chess.domain.team;
+package chess.domain.chesspiece;
 
 public enum Team {
     BLACK("Black Team"),
@@ -11,8 +11,8 @@ public enum Team {
         this.teamName = teamName;
     }
 
-    public static Team getOpponentTeam(Team team){
-        if(team == Team.BLACK){
+    public static Team getOpponentTeam(Team team) {
+        if (team == Team.BLACK) {
             return Team.WHITE;
         }
         return Team.BLACK;

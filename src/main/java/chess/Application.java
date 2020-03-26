@@ -1,8 +1,9 @@
 package chess;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.board.Position;
-import chess.domain.command.Command;
+import chess.domain.game.Command;
+import chess.domain.move.MovingInfo;
+import chess.domain.move.Position;
 import chess.factory.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -17,7 +18,7 @@ public class Application {
         ChessBoard chessBoard = new ChessBoard(BoardFactory.createBoard());
         String command = "";
 
-        while(!command.equals("end") && !chessBoard.isGameEnd()){
+        while (!command.equals("end") && !chessBoard.isGameEnd()) {
             command = getCommand();
             executeCommand(chessBoard, command);
         }
@@ -26,7 +27,7 @@ public class Application {
     private static String getCommand() {
         String command = InputView.inputCommand();
 
-        if(validateCommand(command)){
+        if (validateCommand(command)) {
             return command;
         }
         OutputView.printWrongCommandMessage();
@@ -36,13 +37,24 @@ public class Application {
     private static void executeCommand(ChessBoard chessBoard, String command) {
         String[] splitCommand = command.split(" ");
 
-        if(splitCommand[0].equals("move")){
-            chessBoard.move(Position.of(splitCommand[1]), Position.of(splitCommand[2]) ) ;
+        if (splitCommand[0].equals("move")) {
+            MovingInfo movingInfo = new MovingInfo(Position.of(splitCommand[1]), Position.of(splitCommand[2]));
+            tryMove(chessBoard, movingInfo);
         }
-        if(splitCommand[0].equals("status")){
+
+        if (splitCommand[0].equals("status")) {
             OutputView.printScore(chessBoard);
         }
         OutputView.printBoard(chessBoard);
+    }
+
+    private static void tryMove(ChessBoard chessBoard, MovingInfo movingInfo) {
+        try {
+            chessBoard.move(movingInfo);
+        }
+        catch (IllegalArgumentException e){
+            OutputView.printWrongCommandMessage();
+        }
     }
 
     private static boolean validateCommand(String nowCommand) {

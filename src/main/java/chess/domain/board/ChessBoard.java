@@ -1,9 +1,12 @@
 package chess.domain.board;
 
-import chess.domain.team.Team;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Pawn;
+import chess.domain.move.MovingInfo;
+import chess.domain.move.Position;
+import chess.domain.move.Route;
+import chess.domain.chesspiece.Team;
 import chess.generator.AllRouteGenerator;
 
 import java.util.ArrayList;
@@ -38,31 +41,30 @@ public class ChessBoard {
         return board;
     }
 
-    public void move(Position startPosition, Position targetPosition) {
-        ChessPiece chessPiece = getChessPiece(startPosition);
-        Route canMoveRoute = findRoute(chessPiece, startPosition, targetPosition);
+    public void move(MovingInfo movingInfo) {
+        ChessPiece chessPiece = getChessPiece(movingInfo.getStartPosition());
+        Route canMoveRoute = findRoute(chessPiece, movingInfo);
 
-        validateMove(chessPiece, canMoveRoute, startPosition, targetPosition);
-        executeMove(startPosition,chessPiece,targetPosition);
+        validateRoute(chessPiece, canMoveRoute, movingInfo);
+        executeMove(chessPiece, movingInfo);
     }
 
-    private void validateMove(ChessPiece chessPiece, Route canMoveRoute, Position startPosition, Position targetPosition) {
-        if (!validateRoute(chessPiece, canMoveRoute, startPosition, targetPosition)) {
-            System.out.println("fail to move");
-            System.out.println();
-            return;
-        }
-    }
-
-    private void executeMove(Position startPosition, ChessPiece chessPiece, Position targetPosition) {
-        clearPosition(startPosition);
-        setPosition(chessPiece, targetPosition);
+    private void executeMove(ChessPiece chessPiece, MovingInfo movingInfo) {
+        clearPosition(movingInfo.getStartPosition());
+        setPosition(chessPiece, movingInfo.getTargetPosition());
         toggleNowPlayingTeam();
         reverseBoard();
+        updateIfPawn(chessPiece);
     }
 
     private void toggleNowPlayingTeam() {
         this.nowPlayingTeam = Team.getOpponentTeam(this.nowPlayingTeam);
+    }
+
+    private void updateIfPawn(ChessPiece chessPiece) {
+        if(chessPiece instanceof Pawn){
+            ((Pawn) chessPiece).firstMoveComplete();
+        }
     }
 
     private void clearPosition(Position startPosition) {
@@ -75,70 +77,87 @@ public class ChessBoard {
     private void setPosition(ChessPiece chessPiece, Position targetPosition) {
         Row row = board.get(targetPosition.getX() - 1);
 
-        checkGameEnd(row,targetPosition);
+        checkGameEnd(row, targetPosition);
         row.modifyRow(targetPosition.getY() - 1, chessPiece);
         board.set(targetPosition.getX() - 1, row);
     }
 
     private void checkGameEnd(Row row, Position targetPosition) {
-        ChessPiece targetChessPiece =row.get(targetPosition.getY() - 1);
+        ChessPiece targetChessPiece = row.get(targetPosition.getY() - 1);
         String chessPieceName = targetChessPiece.getName();
         String lowerCaseChessPieceName = chessPieceName.toLowerCase();
 
-        if(lowerCaseChessPieceName.equals(KING)){
+        if (lowerCaseChessPieceName.equals(KING)) {
             isGameEnd = true;
         }
     }
 
-    private Route findRoute(ChessPiece chessPiece, Position startPosition, Position targetPosition) {
+    private Route findRoute(ChessPiece chessPiece, MovingInfo movingInfo) {
+        Position startPosition = movingInfo.getStartPosition();
+        Position targetPosition = movingInfo.getTargetPosition();
         List<Route> allRoute = AllRouteGenerator.getAllRoute(chessPiece, startPosition);
-        for (Route route : allRoute) {
-            if (route.hasPosition(targetPosition)) {
-                return route;
-            }
-        }
-        return null;
+
+        return allRoute.stream()
+                .filter(o -> o.hasPosition(targetPosition))
+                .findFirst()
+                .orElse(null);
     }
 
-    private boolean validateRoute(ChessPiece chessPiece, Route canMoveRoute, Position startPosition, Position targetPosition) {
-        Position lastPosition = startPosition;
-        if (canMoveRoute == null) {
-            System.out.println("can't find route");
-            return false;
+    private void validateRoute(ChessPiece chessPiece, Route canMoveRoute, MovingInfo movingInfo) {
+        validateRouteNull(canMoveRoute);
+        validateRouteLocation(chessPiece, canMoveRoute, movingInfo);
+        validateRouteTarget(chessPiece, movingInfo);
+    }
+
+    private void validateRouteTarget(ChessPiece chessPiece, MovingInfo movingInfo) {
+        Position targetPosition = movingInfo.getTargetPosition();
+
+        if (getChessPiece(targetPosition).isSameTeam(chessPiece.getTeam())) {
+            throw new IllegalArgumentException();
         }
+    }
+
+    private void validateRouteNull(Route canMoveRoute) {
+        if (canMoveRoute == null) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateRouteLocation(ChessPiece chessPiece, Route canMoveRoute, MovingInfo movingInfo) {
+        Position lastPosition = movingInfo.getStartPosition();
+        Position targetPosition = movingInfo.getTargetPosition();
+
         for (Position position : canMoveRoute.getRoute()) {
             if (position.equals(targetPosition)) {
-                if (!checkPawnMove(chessPiece, lastPosition, targetPosition)) {
-                    return false;
-                }
+                checkPawnMove(chessPiece, lastPosition, targetPosition);
                 break;
             }
             if (!isBlank(position)) {
-                return false;
+                throw new IllegalArgumentException();
             }
             lastPosition = position;
         }
-        if (getChessPiece(targetPosition).isSameTeam(chessPiece.getTeam())) {
-            return false;
-        }
-        return true;
     }
 
-    private boolean checkPawnMove(ChessPiece chessPiece, Position lastPosition, Position targetPosition) {
+    private void checkPawnMove(ChessPiece chessPiece, Position lastPosition, Position targetPosition) {
         if (chessPiece instanceof Pawn && lastPosition != null) {
-            int dy = targetPosition.getY() - lastPosition.getY();
-            if (Math.abs(dy) == 1) {
-                return !isBlank(targetPosition);
-            }
-            if (Math.abs(dy) == 0) {
-                return isBlank(targetPosition);
-            }
+            checkPawnMoveCase(lastPosition, targetPosition);
         }
-        return true;
+    }
+
+    private void checkPawnMoveCase(Position lastPosition, Position targetPosition) {
+        int dy = targetPosition.getY() - lastPosition.getY();
+        if (Math.abs(dy) == 1 && isBlank(targetPosition)) {
+            throw new IllegalArgumentException();
+        }
+        if (Math.abs(dy) == 0 && !isBlank(targetPosition)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private boolean isBlank(Position position) {
         ChessPiece chessPiece = getChessPiece(position);
+
         return chessPiece instanceof Blank;
     }
 
@@ -148,24 +167,24 @@ public class ChessBoard {
 
     public double getTotalScore() {
         double score = 0;
-        int cnt = 0;
-        for (int i = 0; i < 8; i++) {
-            	int pawnCnt = 0;
-            for (int j = 0; j < 8; j++) {
-                ChessPiece chessPiece = board.get(j).get(i);
+
+        for (int j = 0; j < 8; j++) {
+            int pawnCnt = 0;
+            for (int i = 0; i < 8; i++) {
+                ChessPiece chessPiece = board.get(i).get(j);
 
                 if (chessPiece.getTeam() == nowPlayingTeam) {
-					if (chessPiece.getClass() == Pawn.class) {
-						pawnCnt++;
-					}
-                    score += board.get(j).get(i).getScore();
+                    if (chessPiece instanceof Pawn) {
+                        pawnCnt++;
+                    }
+                    score += chessPiece.getScore();
                 }
             }
             if (pawnCnt >= 2) {
-            	cnt += pawnCnt;
-			}
+                score -= pawnCnt * 0.5;
+            }
         }
-        return score - cnt * 0.5;
+        return score;
     }
 
     public boolean isGameEnd() {

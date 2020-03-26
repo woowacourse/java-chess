@@ -1,7 +1,5 @@
 package chess.domain.chesspiece;
 
-import chess.domain.team.Team;
-
 import java.util.Collections;
 
 public class Blank extends ChessPiece {

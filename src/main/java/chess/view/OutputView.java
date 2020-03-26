@@ -2,8 +2,8 @@ package chess.view;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Row;
-import chess.domain.team.Team;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.Team;
 
 import java.util.List;
 
