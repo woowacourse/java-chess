@@ -7,6 +7,6 @@ import org.junit.jupiter.api.Test;
 class BoardFactoryTest {
 	@Test
 	void create() {
-		assertThat(BoardFactory.create()).isInstanceOf(Board.class);
+		assertThat(BoardFactory.create()).isInstanceOf(Boards.class);
 	}
 }

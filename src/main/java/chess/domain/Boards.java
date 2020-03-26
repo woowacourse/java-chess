@@ -55,4 +55,12 @@ public class Boards {
 		return path.stream()
 			.anyMatch(key -> getTotal().containsKey(key));
 	}
+
+	public void move(String from, String to, Turn turn) {
+		if (boards.get(turn.self()).containsKey(to)) {
+			throw new IllegalArgumentException("아군 기물이 존재합니다.");
+		}
+		boards.get(turn.self()).update(from, to);
+		boards.get(turn.enemy()).remove(to);
+	}
 }

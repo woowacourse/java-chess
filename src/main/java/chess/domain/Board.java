@@ -46,4 +46,8 @@ public class Board {
 		board.put(to, board.get(from));
 		board.remove(from);
 	}
+
+	public void remove(String key) {
+		board.remove(key);
+	}
 }
