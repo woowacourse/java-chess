@@ -40,7 +40,10 @@ public abstract class Piece {
 		return movable.createMovablePositions(position, pieces, color);
 	}
 
-	public void changePosition(Position position) { // TODO: 2020/03/25 테스트 자기자신 넣을 경우 오류.
+	public void changePosition(Position position) {
+		if(isSamePosition(position)) {
+			throw new UnsupportedOperationException("같은 위치로 이동할 수 없습니다.");
+		}
 		this.position = position;
 	}
 
