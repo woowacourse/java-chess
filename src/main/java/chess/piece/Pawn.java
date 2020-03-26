@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.position.Position;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -19,7 +20,7 @@ public class Pawn extends Piece {
         if (isNotMovable(start, end) || isNotAbleToMoveDoubleSquare(start, end)) {
             throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
         }
-        return null;
+        return Collections.singletonList(end);
     }
 
     private boolean isNotMovable(Position start, Position end) {
