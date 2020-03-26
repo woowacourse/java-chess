@@ -48,8 +48,12 @@ public class ChessBoard {
     public void movePiece(List<Square> squares) {
         Square before = squares.get(0);
         Square after = squares.get(1);
-
         Piece currentPiece = chessBoard.remove(before);
         chessBoard.put(after, currentPiece);
+    }
+
+    public boolean isKingCaptured() {
+        return !(chessBoard.containsValue(Piece.of(Color.WHITE, Type.KING))
+                && chessBoard.containsValue(Piece.of(Color.BLACK, Type.KING)));
     }
 }
