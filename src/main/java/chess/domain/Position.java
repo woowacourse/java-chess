@@ -9,6 +9,8 @@ import chess.domain.movefactory.MoveType;
 import java.util.Objects;
 
 public class Position {
+    private static final String ERROR_MESSAGE_EXIST_PIECE_ON_PATH = "경로에 다른 말이 존재합니다.";
+
     private File file;
     private Rank rank;
 
@@ -160,7 +162,7 @@ public class Position {
 
     private void isExistPieceOnPath(ChessBoard chessBoard, int xDegree, int yDegree) {
         if (chessBoard.isExistPiece(Position.of(File.of(xDegree), Rank.of(yDegree)))) {
-            throw new IllegalArgumentException("경로에 다른 말이 존재합니다.");
+            throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_PIECE_ON_PATH);
         }
     }
 

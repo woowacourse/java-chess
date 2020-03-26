@@ -18,6 +18,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
+    private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다.";
+    private static final String ERROR_MESSAGE_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다.";
+    private static final int INIT_SCORE = 0;
+    private static final int ONE_PAWN_COUNT = 1;
+    private static final double ONE_PAWN_BONUS = 0.5;
     private final List<Position> chessBoard;
     private final List<Piece> blackTeam;
     private final List<Piece> whiteTeam;
@@ -72,13 +77,13 @@ public class ChessBoard {
             if (pawn.isMovable(moveType, targetPiece)) {
                 return;
             }
-            throw new IllegalArgumentException("잘못된 움직임 입니다");
+            throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
         }
 
         if (pieceToMove.isMovable(moveType)) {
             return;
         }
-        throw new IllegalArgumentException("해당 말이 갈 수 없는 칸입니다.");
+        throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
     }
 
     private void validSameTeam(Position sourcePosition, Position targetPosition) {
@@ -89,7 +94,7 @@ public class ChessBoard {
             return;
         }
         if (pieceToMove.isSameTeam(targetPiece)) {
-            throw new IllegalArgumentException("해당 칸에 같은 팀의 말이 존재 합니다.");
+            throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_SAME_TEAM);
         }
     }
 
@@ -116,14 +121,19 @@ public class ChessBoard {
             team = blackTeam;
         }
 
-        double result = 0;
+        double result = INIT_SCORE;
         for (File file : File.values()) {
             List<Piece> pieces = team.stream().filter(x -> x.isSameFile(file)).collect(Collectors.toList());
-            boolean isOnePawn = pieces.stream().filter(x -> x instanceof Pawn).count() == 1;
-            if (isOnePawn) {
-                result += 0.5;
-            }
-            result += pieces.stream().map(PieceAbility::getScore).reduce((double) 0, Double::sum);
+            result = addBonusWhenOnePawn(result, pieces);
+            result += pieces.stream().map(PieceAbility::getScore).reduce((double) INIT_SCORE, Double::sum);
+        }
+        return result;
+    }
+
+    private double addBonusWhenOnePawn(double result, List<Piece> pieces) {
+        boolean isOnePawn = pieces.stream().filter(x -> x instanceof Pawn).count() == ONE_PAWN_COUNT;
+        if (isOnePawn) {
+            result += ONE_PAWN_BONUS;
         }
         return result;
     }

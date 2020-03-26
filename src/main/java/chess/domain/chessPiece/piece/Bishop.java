@@ -6,7 +6,10 @@ import chess.domain.movefactory.CrossType;
 import chess.domain.movefactory.MoveType;
 
 public class Bishop extends Piece {
-    private final double score = 3;
+    private static final int BISHOP_SCORE = 3;
+
+    private final double score = BISHOP_SCORE;
+
     public Bishop(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }

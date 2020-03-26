@@ -7,7 +7,10 @@ import chess.domain.movefactory.MoveType;
 import chess.domain.movefactory.StraightType;
 
 public class Queen extends Piece {
-    private final double score = 9;
+    private static final int QUEEN_SCORE = 9;
+
+    private final double score = QUEEN_SCORE;
+
     public Queen(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }

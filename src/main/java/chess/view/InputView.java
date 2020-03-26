@@ -8,6 +8,7 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
+    private static final String INPUT_MESSAGE_MOVE_COMMAND = "\n게임 이동 : move source위치 tartget위치 - 예 : move b2 b3";
 
     public static String inputGameState() {
         System.out.println(INPUT_MESSAGE_GAME_START);
@@ -22,7 +23,7 @@ public class InputView {
     }
 
     public static String inputMoveCommand() {
-        System.out.println("\n게임 이동 : move source위치 tartget위치 - 예 : move b2 b3");
+        System.out.println(INPUT_MESSAGE_MOVE_COMMAND);
         return scanner.nextLine();
     }
 }

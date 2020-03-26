@@ -7,12 +7,13 @@ import chess.domain.movefactory.Direction;
 import chess.domain.movefactory.MoveType;
 
 public class Pawn extends Piece {
+    private static final int PAWN_NORMAL_MOVE_RANGE = 1;
+    private static final int PAWN_FIRST_MOVE_RANGE = 2;
+    private static final String ERROR_MESSAGE_UNSUPPORT_METHOD = "지원하지 않는 메소드 입니다";
     private final double score = 0.5;
-    private final Position startPosition;
 
     public Pawn(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
-        startPosition = position;
     }
 
     public boolean isMovable(MoveType moveType, Piece targetPiece) {
@@ -24,32 +25,31 @@ public class Pawn extends Piece {
 
     private boolean whitePawnMovable(MoveType moveType, Piece targetPiece) {
         if (targetPiece != null) {
-            return moveType.getDirection() == Direction.DOWN_RIGHT || moveType.getDirection() == Direction.DOWN_LEFT && moveType.getCount() == 1;
+            return moveType.getDirection() == Direction.DOWN_RIGHT
+                    || moveType.getDirection() == Direction.DOWN_LEFT && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
         }
         if (this.position.isPawnStartLine(this)) {
-            System.out.println("start:" + startPosition);
-            return moveType.getDirection() == Direction.DOWN && moveType.getCount() <= 2;
+            return moveType.getDirection() == Direction.DOWN && moveType.getCount() <= PAWN_FIRST_MOVE_RANGE;
         }
-        return moveType.getDirection() == Direction.DOWN && moveType.getCount() == 1;
+        return moveType.getDirection() == Direction.DOWN && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
     }
 
     private boolean blackPawnMovable(MoveType moveType, Piece targetPiece) {
         if (targetPiece != null) {
-            return moveType.getDirection() == Direction.UP_RIGHT || moveType.getDirection() == Direction.UP_LEFT && moveType.getCount() == 1;
+            return moveType.getDirection() == Direction.UP_RIGHT
+                    || moveType.getDirection() == Direction.UP_LEFT && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
         }
         if (this.position.isPawnStartLine(this)) {
-            System.out.println("start:" + startPosition);
-            return moveType.getDirection() == Direction.UP && moveType.getCount() <= 2;
+            return moveType.getDirection() == Direction.UP && moveType.getCount() <= PAWN_FIRST_MOVE_RANGE;
         }
-        return moveType.getDirection() == Direction.UP && moveType.getCount() == 1;
+        return moveType.getDirection() == Direction.UP && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
     }
 
 
     @Override
     public boolean isMovable(MoveType moveType) {
-        throw new IllegalArgumentException("지원하지 않는 메소드 입니다");
+        throw new UnsupportedOperationException(ERROR_MESSAGE_UNSUPPORT_METHOD);
     }
-
 
     @Override
     public String pieceName() {

@@ -11,10 +11,14 @@ public class ChessBoardFactory {
     static List<Position> create() {
         List<Position> chessBoard = new ArrayList<>();
         for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                chessBoard.add(Position.of(file, rank));
-            }
+            addFilesEachRank(chessBoard, rank);
         }
         return chessBoard;
+    }
+
+    private static void addFilesEachRank(List<Position> chessBoard, Rank rank) {
+        for (File file : File.values()) {
+            chessBoard.add(Position.of(file, rank));
+        }
     }
 }

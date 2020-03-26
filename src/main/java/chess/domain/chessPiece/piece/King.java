@@ -7,7 +7,10 @@ import chess.domain.movefactory.MoveType;
 import chess.domain.movefactory.StraightType;
 
 public class King extends Piece {
-    private final double score = 0;
+    private static final int KING_SCORE = 0;
+
+    private final double score = KING_SCORE;
+
     public King(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }

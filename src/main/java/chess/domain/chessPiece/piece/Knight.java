@@ -6,7 +6,10 @@ import chess.domain.movefactory.KnightType;
 import chess.domain.movefactory.MoveType;
 
 public class Knight extends Piece {
-    private final double score = 2.5;
+    private static final double KNIGHT_SCORE = 2.5;
+
+    private final double score = KNIGHT_SCORE;
+
     public Knight(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }

@@ -25,10 +25,16 @@ public enum File {
     }
 
     public static File of(String fileValue) {
-        return Arrays.stream(File.values()).filter(x -> x.name.equals(fileValue)).findAny().orElseThrow(IllegalArgumentException::new);
+        return Arrays.stream(File.values())
+                .filter(x -> x.name.equals(fileValue))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public static File of(int number) {
-        return Arrays.stream(File.values()).filter(x -> x.number == number).findAny().orElseThrow(IllegalArgumentException::new);
+        return Arrays.stream(File.values())
+                .filter(x -> x.number == number)
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

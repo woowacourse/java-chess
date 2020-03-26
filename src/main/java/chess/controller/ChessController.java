@@ -1,9 +1,6 @@
 package chess.controller;
 
 import chess.domain.Position;
-import chess.domain.chessPiece.team.BlackTeam;
-import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.chessPiece.team.WhiteTeam;
 import chess.domain.chessboard.ChessBoard;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -13,18 +10,23 @@ import java.util.List;
 
 public class ChessController {
     private static final int MOVE_COMMAND_SIZE = 3;
+    private static final int MOVE_COMMAND_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
-    private static final int MOVE_COMMAND_INDEX = 0;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
     private static final String MOVE_COMMAND = "move";
+    private static final String START_VALUE = "start";
+    private static final String BLANK = " ";
 
     public static void run() {
         String gameState = InputView.inputGameState();
 
-        if ("start".equalsIgnoreCase(gameState)) {
+        if (START_VALUE.equalsIgnoreCase(gameState)) {
             chessStart();
         }
-        System.out.println("게임을 종료합니다.");
+
+        OutputView.printGameEndMessage();
     }
 
     private static void chessStart() {
@@ -32,30 +34,34 @@ public class ChessController {
         OutputView.printChessBoard(chessBoard);
 
         while (chessBoard.isSurviveKings()) {
+            gameRun(chessBoard);
+        }
+        OutputView.calculateScore(chessBoard);
+    }
+
+    private static void gameRun(ChessBoard chessBoard) {
+        try {
             List<String> positionsToMove = validateInputMoveCommand(InputView.inputMoveCommand());
             pieceMove(positionsToMove, chessBoard);
             OutputView.printChessBoard(chessBoard);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            OutputView.printChessBoard(chessBoard);
+            gameRun(chessBoard);
         }
-        calculateScore(chessBoard);
     }
 
-    private static void calculateScore(ChessBoard chessBoard) {
-        TeamStrategy blackMark = new BlackTeam();
-        TeamStrategy whiteMark = new WhiteTeam();
-        double blackTeamScore = chessBoard.calculateTeamScore(blackMark);
-        double whiteTeamScore = chessBoard.calculateTeamScore(whiteMark);
-
-        System.out.println(String.format("블랙팀 점수 : %.1f, 화이트 팀 점수 : %.1f", blackTeamScore, whiteTeamScore));
-    }
 
     private static List<String> validateInputMoveCommand(String input) {
-        List<String> inputValues = Arrays.asList(input.split(" "));
+        List<String> inputValues = Arrays.asList(input.split(BLANK));
         if (isIncorrectCommandLength(inputValues)) {
             throw new IllegalArgumentException();
         }
+
         if (isNotMoveCommand(inputValues)) {
             throw new IllegalArgumentException();
         }
+
         if (isSourceEqualTarget(inputValues)) {
             throw new IllegalArgumentException();
         }
@@ -80,8 +86,8 @@ public class ChessController {
 
 
     private static void pieceMove(List<String> movePositions, ChessBoard chessBoard) {
-        Position source = Position.of(movePositions.get(0));
-        Position target = Position.of(movePositions.get(1));
+        Position source = Position.of(movePositions.get(FILE_INDEX));
+        Position target = Position.of(movePositions.get(RANK_INDEX));
         chessBoard.movePiece(source, target);
 
     }

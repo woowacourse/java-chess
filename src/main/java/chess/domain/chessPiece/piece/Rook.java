@@ -6,7 +6,10 @@ import chess.domain.movefactory.MoveType;
 import chess.domain.movefactory.StraightType;
 
 public class Rook extends Piece {
-    private final double score = 5;
+    private static final int ROOK_SCORE = 5;
+
+    private final double score = ROOK_SCORE;
+
     public Rook(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
