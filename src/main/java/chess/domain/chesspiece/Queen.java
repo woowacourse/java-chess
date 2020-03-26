@@ -1,22 +1,37 @@
 package chess.domain.chesspiece;
 
+import java.util.Arrays;
+import java.util.List;
+
+import chess.domain.Direction;
+import chess.domain.NameUtils;
+import chess.domain.Position;
 import chess.domain.Team;
 
-import java.util.Arrays;
+public class Queen extends ValuablePiece {
+	private static final List<Direction> DIRECTIONS;
+	private static final String NAME = "q";
 
-import static chess.domain.Direction.*;
+	static {
+		DIRECTIONS = Arrays.asList(Direction.values());
+	}
 
-public class Queen extends ChessPiece {
-    public Queen(Team team) {
-        super("q", team, 9, Arrays.asList(
-                UP,
-                DOWN,
-                LEFT,
-                RIGHT,
-                LEFT_DOWN,
-                LEFT_UP,
-                RIGHT_DOWN,
-                RIGHT_UP
-        ));
-    }
+	public Queen(Position position, Team team) {
+		super(position, team);
+	}
+
+	@Override
+	public String getName() {
+		return NameUtils.parseName(NAME, team);
+	}
+
+	@Override
+	public boolean isNeedCheckPath() {
+		return true;
+	}
+
+	@Override
+	public List<Position> makePath(ChessPiece chessPiece) {
+		return moveManager.makePath(chessPiece.position, DIRECTIONS);
+	}
 }

@@ -7,6 +7,7 @@ import chess.domain.chesspiece.ChessPiece;
 import java.util.List;
 
 public class OutputView {
+    /*
     public static void printBoard(ChessBoard chessBoard) {
         List<Row> board = chessBoard.getBoard();
         for (int i = 8; i >= 1; i--) {
@@ -29,4 +30,10 @@ public class OutputView {
     public static void printScore(double score) {
         System.out.println("점수 :" + score);
     }
+
+    public static void printErrorMessage(RuntimeException e) {
+        System.out.println(e.getMessage());
+    }
+
+     */
 }

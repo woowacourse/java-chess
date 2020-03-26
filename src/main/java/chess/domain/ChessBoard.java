@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
+    /*
     private List<Row> board;
 
     public ChessBoard(List<Row> board) {
@@ -134,7 +135,7 @@ public class ChessBoard {
 					if (chessPiece.getClass() == Pawn.class) {
 						pawnCnt++;
 					}
-                    score += board.get(j).get(i).getScore();
+                //    score += board.get(j).get(i).getScore();
                 }
             }
             if (pawnCnt >= 2) {
@@ -144,5 +145,5 @@ public class ChessBoard {
         return score - cnt * 0.5;
     }
 
-
+*/
 }

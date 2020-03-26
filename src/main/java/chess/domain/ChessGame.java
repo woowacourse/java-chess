@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import chess.factory.BoardFactory;
 
 public class ChessGame {
+	/*
 	private final ChessBoard chessBoard;
 
 	public ChessGame() {
@@ -21,4 +22,6 @@ public class ChessGame {
 		}
 		return this.chessBoard;
 	}
+
+	 */
 }

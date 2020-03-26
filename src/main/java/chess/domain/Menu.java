@@ -10,6 +10,7 @@ public class Menu {
     private static final int SECOND_INDEX = 1;
     private static final int FIRST_INDEX = 0;
     private static final int THIRD_INDEX = 2;
+    private static final String WRONG_MENU_MESSAGE = "잘못된 메뉴 입력입니다.";
 
     private final String menu;
 
@@ -21,12 +22,8 @@ public class Menu {
     private void validateAllowedMenu(String menu) {
         if (!(START.equals(menu) || END.equals(menu)
             || MOVE.equals(menu.split(BLANK)[FIRST_INDEX]) || STATUS.equals(menu))) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(WRONG_MENU_MESSAGE);
         }
-    }
-
-    public boolean isStart() {
-        return START.equals(menu);
     }
 
     public boolean isNotEnd() {
@@ -41,16 +38,14 @@ public class Menu {
         String[] menus = menu.split(BLANK);
         char x = menus[SECOND_INDEX].charAt(FIRST_INDEX);
         int y = menus[SECOND_INDEX].charAt(SECOND_INDEX) - CHAR_INT_CHANGE_VALUE;
-        System.out.println(y + " " + x);
-        return new Position(y, x);
+        return Position.of(y, x);
     }
 
     public Position getTargetPosition() {
         String[] menus = menu.split(BLANK);
         char x = menus[THIRD_INDEX].charAt(FIRST_INDEX);
         int y = menus[THIRD_INDEX].charAt(SECOND_INDEX) - CHAR_INT_CHANGE_VALUE;
-        System.out.println(y + " " + x);
-        return new Position(y, x);
+        return Position.of(y, x);
     }
 
     public boolean isStatus() {

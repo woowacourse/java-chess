@@ -11,11 +11,11 @@ public class BoardFactory {
     public static List<Row> createBoard() {
         List<Row> board = new ArrayList<>();
         for (int i = 1; i <= 8; i++) {
-            board.add(createRow(i));
+         //   board.add(createRow(i));
         }
         return board;
     }
-
+/*
     public static Row createRow(int i) {
         List<ChessPiece> chessPieces = new ArrayList<>();
         if (i == 8) {
@@ -58,5 +58,7 @@ public class BoardFactory {
         }
         return new Row(chessPieces);
     }
+
+ */
 
 }

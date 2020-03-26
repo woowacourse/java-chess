@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllRouteGenerator {
+    /*
     private static final int[][] KNIGHT_DIRECTION = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
 
     public static List<Route> getAllRoute(ChessPiece chessPiece, Position initialPosition) {
         List<Position> positions;
         List<Route> routes = new ArrayList<>();
-        List<Direction> directions = chessPiece.getMoveDirections();
+        //List<Direction> directions = chessPiece.getMoveDirections();
 
         if (chessPiece instanceof Knight) {
             return makeKnightRoute(initialPosition);
@@ -22,10 +23,10 @@ public class AllRouteGenerator {
 
         if (chessPiece instanceof Pawn && ((Pawn) chessPiece).isFirstMove()) {
             ((Pawn) chessPiece).firstMoveComplete();
-            directions.add(Direction.DOUBLE_UP);
+           // directions.add(Direction.DOUBLE_UP);
         }
 
-        for (Direction direction : directions) {
+       // for (Direction direction : directions) {
             positions = new ArrayList<>();
 
             makeRouteByDirection(chessPiece, positions, direction, initialPosition);
@@ -105,4 +106,6 @@ public class AllRouteGenerator {
 
         return xInField && yInField;
     }
+
+     */
 }
