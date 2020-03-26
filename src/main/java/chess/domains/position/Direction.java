@@ -20,7 +20,26 @@ public enum Direction {
         this.yGap = yGap;
     }
 
-    public static Direction findDirection(int xStep, int yStep) {
+    public static Direction findDirection(int xGap, int yGap) {
+        if (xGap == 0 && yGap == 0) {
+            throw new NullPointerException("방향을 잡지 못했어요.");
+        }
+
+        if (xGap != 0 && yGap != 0 && Math.abs(xGap) != Math.abs(yGap)) {
+            throw new NullPointerException("방향을 잡지 못했어요.");
+        }
+
+        if (xGap != 0) {
+            xGap /= Math.abs(xGap);
+        }
+
+        if (yGap != 0) {
+            yGap /= Math.abs(yGap);
+        }
+
+        int xStep = xGap;
+        int yStep = yGap;
+
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.has(xStep, yStep))
                 .findFirst()
@@ -29,13 +48,5 @@ public enum Direction {
 
     private boolean has(int xGap, int yGap) {
         return this.xGap == xGap && this.yGap == yGap;
-    }
-
-    public int getxGap() {
-        return xGap;
-    }
-
-    public int getyGap() {
-        return yGap;
     }
 }

@@ -43,6 +43,10 @@ public abstract class Piece {
         return name;
     }
 
+    public List<Position> findRoute(Position source, Position target) {
+        return source.findRoute(target);
+    }
+
     public static List<Piece> getBlackPieces() {
         return blackPieces;
     }

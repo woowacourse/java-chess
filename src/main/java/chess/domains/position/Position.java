@@ -1,8 +1,6 @@
 package chess.domains.position;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Position implements Comparable<Position> {
@@ -65,5 +63,42 @@ public class Position implements Comparable<Position> {
             return -1;
         }
         return 1;
+    }
+
+    public List<Position> findRoute(Position target) {
+        ArrayList<Position> route = new ArrayList<>();
+        Direction direction = findDirection(target);
+
+        char x = (char) (this.x + direction.xGap);
+        int y = this.y + direction.yGap;
+
+        while (x != target.x || y != target.y) {
+            route.add(new Position(x, y));
+            x += direction.xGap;
+            y += direction.yGap;
+        }
+
+        return route;
+    }
+
+    public Direction findDirection(Position target) {
+        int yGap = this.yGapBetween(target);
+        int xGap = this.xGapBetween(target);
+
+        return Direction.findDirection(xGap, yGap);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Position)) return false;
+        Position position = (Position) o;
+        return x == position.x &&
+                y == position.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }
