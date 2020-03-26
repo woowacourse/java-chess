@@ -7,6 +7,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 public class TotalScore {
+	public static final double PAWN_DISADVANTAGE = 0.5;
 	private final Pieces pieces;
 	private final double totalScore;
 
@@ -27,7 +28,7 @@ public class TotalScore {
 			.collect(Collectors.toList());
 		for (Pawn pawn : pawns) {
 			if (pawns.stream().anyMatch(p -> !p.equals(pawn) && p.isInSameColumn(pawn))) {
-				plainSum -= 0.5;
+				plainSum -= PAWN_DISADVANTAGE;
 			}
 		}
 		return plainSum;
