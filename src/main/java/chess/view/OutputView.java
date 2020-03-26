@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.ChessGame;
+import chess.domain.ScoreResult;
 import chess.domain.board.Board;
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class OutputView {
 	public static void printOperationsFormat() {
-		System.out.println("> 체스 게임을 시작합니다. \n> 게임 시작 : start\n> 게임 종료 : end\n> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+		System.out.println("> 체스 게임을 시작합니다. \n> 게임 시작 : start\n> 게임 종료 : end\n> 게임 이동 : move source위치 target위치 - 예. move b2 b3\n> 점수 확인 : status");
 	}
 
 	public static void printBoard(ChessGame chessGame) {
@@ -48,9 +49,10 @@ public class OutputView {
 		System.out.println("체스 게임을 종료합니다.");
 	}
 
-	public static void printScore(Map<Color, Double> scores) {
+	public static void printScore(ScoreResult scores) {
+		printEmptyLine();
 		for(Color color : scores.keySet()) {
-			System.out.println(color.getName() + "의 점수는 " + scores.get(color) + "점 입니다.");
+			System.out.println(color.getName() + "의 점수는 " + scores.getScoreBy(color) + "점 입니다.");
 		}
 	}
 }

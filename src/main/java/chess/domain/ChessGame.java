@@ -33,7 +33,7 @@ public class ChessGame {
 		return pieces.getAliveKingColor();
 	}
 
-	public Map<Color, Double> calculateScore() {
-		return ScoreResult.calculateScore(pieces.getPieces());
+	public ScoreResult calculateScore() {
+		return new ScoreResult(pieces.getPieces());
 	}
 }
