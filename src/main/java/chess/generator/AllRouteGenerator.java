@@ -12,14 +12,18 @@ public class AllRouteGenerator {
     private static final int[][] KNIGHT_DIRECTION = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
 
     public static List<Route> getAllRoute(ChessPiece chessPiece, Position initialPosition) {
-        List<Position> positions;
         List<Route> routes = new ArrayList<>();
-        List<Direction> directions = chessPiece.getMoveDirections();
 
         if (chessPiece instanceof Knight) {
             return makeKnightRoute(initialPosition);
         }
+        makeInitialPawnRoutes(chessPiece, routes, initialPosition);
+        makeRoutes(chessPiece, routes, initialPosition);
+        return routes;
+    }
 
+    private static void makeInitialPawnRoutes(ChessPiece chessPiece, List<Route> routes, Position initialPosition) {
+        List<Position> positions;
         if (chessPiece instanceof Pawn && ((Pawn) chessPiece).isFirstMove()) {
             positions = new ArrayList<>();
 
@@ -27,14 +31,17 @@ public class AllRouteGenerator {
             positions.add(Position.of(initialPosition.getX() + Direction.UP.getX() * 2, initialPosition.getY()));
             routes.add(new Route(positions));
         }
+    }
 
+    private static void makeRoutes(ChessPiece chessPiece, List<Route> routes, Position initialPosition) {
+        List<Direction> directions = chessPiece.getMoveDirections();
+        List<Position> positions;
         for (Direction direction : directions) {
             positions = new ArrayList<>();
 
             makeRouteByDirection(chessPiece, positions, direction, initialPosition);
             routes.add(new Route(positions));
         }
-        return routes;
     }
 
     private static List<Route> makeKnightRoute(Position initialPosition) {

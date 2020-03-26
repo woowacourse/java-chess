@@ -10,7 +10,7 @@ import java.util.List;
 public class BoardFactory {
     public static List<Row> createBoard() {
         List<Row> board = new ArrayList<>();
-        
+
         addTeamRow(board, Team.WHITE);
         addBlankRows(board);
         addTeamRow(board, Team.BLACK);
@@ -18,7 +18,7 @@ public class BoardFactory {
     }
 
     private static void addTeamRow(List<Row> board, Team team) {
-        if(team == Team.WHITE){
+        if (team == Team.WHITE) {
             addMainPieces(board, team);
             addPawn(board, team);
             return;
@@ -44,14 +44,14 @@ public class BoardFactory {
     private static void addPawn(List<Row> board, Team team) {
         List<ChessPiece> chessPieces = new ArrayList<>();
 
-        for(int i=0;i<8;i++){
+        for (int i = 0; i < 8; i++) {
             chessPieces.add(new Pawn(team));
         }
         board.add(new Row(chessPieces));
     }
 
     private static void addBlankRows(List<Row> board) {
-        for(int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
             addBlankRow(board);
         }
     }
@@ -59,7 +59,7 @@ public class BoardFactory {
     private static void addBlankRow(List<Row> board) {
         List<ChessPiece> chessPieces = new ArrayList<>();
 
-        for(int i=0;i<8;i++){
+        for (int i = 0; i < 8; i++) {
             chessPieces.add(new Blank(Team.BLANK));
         }
         board.add(new Row(chessPieces));
