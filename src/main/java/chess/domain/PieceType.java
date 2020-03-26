@@ -44,9 +44,9 @@ public enum PieceType {
     }
 
     public double score() {
-        if (this == PAWN) {
-            throw new UnsupportedOperationException(NONSUPPORT_TO_PAWN_MESSAGE);
-        }
+//        if (this == PAWN) {
+//            throw new UnsupportedOperationException(NONSUPPORT_TO_PAWN_MESSAGE);
+//        }
         return score;
     }
 

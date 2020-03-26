@@ -1,7 +1,9 @@
 package chess.domain.board;
 
 import chess.domain.Piece;
+import chess.domain.Pieces;
 import chess.domain.Route;
+import chess.domain.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -87,5 +89,18 @@ public class Board {
         }
 
         return Collections.unmodifiableList(resultBoard);
+    }
+
+    public Pieces findPiecesOf(Team team) {
+        List<Piece> piecesSource = new ArrayList<>();
+
+        for (Position position : board.keySet()) {
+            Piece piece = board.get(position);
+            if (piece != null && piece.isTeam(team)) {
+                piecesSource.add(piece);
+            }
+        }
+
+        return new Pieces(piecesSource);
     }
 }
