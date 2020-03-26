@@ -27,4 +27,12 @@ public class TestPiecesFactory {
 		return new Pieces(pieces);
 	}
 
+	public static Pieces createBy(List<Piece> inputPieces) {
+		List<Piece> pieces = new ArrayList<>();
+
+		for (Piece piece : inputPieces) {
+			pieces.add(piece);
+		}
+		return new Pieces(pieces);
+	}
 }
