@@ -46,10 +46,19 @@ public class PawnTest {
 		assertThat(pawn.createMovablePositions(pieces.getPieces())).contains(Board.of(input));
 	}
 
-	@DisplayName("createMovablePositions 이동 가능한 경로에 아무 말도 없을시 직진 한 칸만 가능")
+	@DisplayName("createMovablePositions 이동 가능한 경로에 처음이고 아무 말도 없을시 직진 두 칸과 한 칸 가능")
 	@Test
-	void createMovablePositions_all_empty_test() {
+	void createMovablePositions_initial_all_empty_test() {
 		Position position = Board.of("b2");
+		Pawn pawn = new Pawn(position, "p", Color.WHITE);
+
+		assertThat(pawn.createMovablePositions(Collections.emptyList()).size()).isEqualTo(2);
+	}
+
+	@DisplayName("createMovablePositions 이동 가능한 경로에 처음이 아니고 아무 말도 없을시 직진 한 칸만 가능")
+	@Test
+	void createMovablePositions_not_initial_all_empty_test() {
+		Position position = Board.of("b4");
 		Pawn pawn = new Pawn(position, "p", Color.WHITE);
 
 		assertThat(pawn.createMovablePositions(Collections.emptyList()).size()).isEqualTo(1);
