@@ -1,5 +1,7 @@
 package chess.piece.type;
 
+import java.util.Map;
+
 import chess.board.Location;
 import chess.team.Team;
 
@@ -20,5 +22,10 @@ public class Knight extends Piece {
 	@Override
 	public boolean canMove(Location now, Location after) {
 		return now.isKnightRange(after);
+	}
+
+	@Override
+	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
+		return true;
 	}
 }

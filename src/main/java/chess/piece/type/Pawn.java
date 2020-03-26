@@ -1,5 +1,7 @@
 package chess.piece.type;
 
+import java.util.Map;
+
 import chess.board.Location;
 import chess.team.Team;
 
@@ -28,5 +30,20 @@ public class Pawn extends Piece {
 			return now.isInitialPawnForwardRange(after, value) || now.isForwardDiagonal(after, value);
 		}
 		return now.isForwardDiagonal(after, value) || now.isPawnForwardRange(after, value);
+	}
+
+	@Override
+	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
+		return !isMovable(board, now, destination);
+	}
+
+	private boolean isMovable(Map<Location, Piece> board, Location now, Location destination) {
+		// 대각선 방향 && 목적지에 피스가 있는경우
+		if (now.isDiagonal(destination) && board.containsKey(destination)) {
+			Piece maybeEnemyPiece = board.get(destination);
+			return maybeEnemyPiece.isSameTeam(!this.isBlack());
+		}
+
+		return now.isVertical(destination) && !board.containsKey(destination);
 	}
 }

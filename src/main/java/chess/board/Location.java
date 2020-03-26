@@ -15,6 +15,11 @@ public class Location {
 		this.col = col;
 	}
 
+	public Location(Location now) {
+		this.row = now.row;
+		this.col = now.col;
+	}
+
 	public Location moveTo(final int row, final char col) {
 		return new Location(row, col);
 	}
@@ -57,7 +62,7 @@ public class Location {
 	}
 
 	public boolean isStraight(Location destination) {
-		return this.row == destination.row || this.col == destination.col;
+		return this.row == destination.row || isVertical(destination);
 	}
 
 	@Override
@@ -129,4 +134,23 @@ public class Location {
 		return this.row + value == after.row
 			&& this.col - 1 == after.col || this.col + 1 == after.col;
 	}
+
+	public Location calculateNextLocation(Location destination, int length) {
+		int rowWeight = length;
+		int colWeight = length;
+
+		if (row > destination.row) {
+			rowWeight = -1 * rowWeight;
+		}
+		if (col > destination.col) {
+			colWeight = -1 * colWeight;
+		}
+
+		return new Location(row + rowWeight, (char)(col + colWeight));
+	}
+
+	public boolean isVertical(Location destination) {
+		return col == destination.col;
+	}
 }
+
