@@ -18,4 +18,8 @@ public class Row {
     public void modifyRow(int index, ChessPiece chessPiece) {
         chessPieces.set(index, chessPiece);
     }
+
+    public List<ChessPiece> getChessPieces() {
+        return chessPieces;
+    }
 }

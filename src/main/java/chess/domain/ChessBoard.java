@@ -6,13 +6,24 @@ import chess.domain.chesspiece.Pawn;
 import chess.generator.AllRouteGenerator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ChessBoard {
-    private final List<Row> board;
+    private List<Row> board;
 
     public ChessBoard(List<Row> board) {
         this.board = new ArrayList<>(board);
+    }
+
+    private void reverseBoard() {
+        List<Row> reversedBoard = new ArrayList<>();
+        for (int i = 7; i >= 0; i--) {
+            Row reversedRow = board.get(i);
+            Collections.reverse(reversedRow.getChessPieces());
+            reversedBoard.add(reversedRow);
+        }
+        this.board = reversedBoard;
     }
 
     public List<Row> getBoard() {
@@ -40,6 +51,7 @@ public class ChessBoard {
 //        Row row = board.get(startPosition.getX() - 1);
         clearPosition(startPosition);
         setPosition(chessPiece, targetPosition);
+        reverseBoard();
     }
 
     private void clearPosition(Position startPosition) {
@@ -74,8 +86,8 @@ public class ChessBoard {
         System.out.println(canMoveRoute.getRoute().toString());
         for (Position position : canMoveRoute.getRoute()) {
             //목적지 도달하여 break;
-            if (position.equals(targetPosition)){
-                if(!checkPawnMove(chessPiece, lastPosition, targetPosition)) {
+            if (position.equals(targetPosition)) {
+                if (!checkPawnMove(chessPiece, lastPosition, targetPosition)) {
                     return false;
                 }
                 break;
@@ -100,9 +112,8 @@ public class ChessBoard {
 
     private boolean checkPawnMove(ChessPiece chessPiece, Position lastPosition, Position targetPosition) {
         if (chessPiece instanceof Pawn && lastPosition != null) {
-            int dy = targetPosition.getY()
-                    - lastPosition.getY();
-            if (Math.abs(dy) == 1)             {
+            int dy = targetPosition.getY() - lastPosition.getY();
+            if (Math.abs(dy) == 1) {
                 System.out.println("aa");
                 //대각선 목적지에 적이 있으면 이동 가능 return true
                 return !isBlank(targetPosition);

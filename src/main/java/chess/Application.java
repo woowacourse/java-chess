@@ -11,10 +11,13 @@ public class Application {
         ChessBoard chessBoard = new ChessBoard(BoardFactory.createBoard());
 
         OutputView.printBoard(chessBoard);
-
-        chessBoard.move(new Position(2, 1), new Position(4, 1));
-
+        chessBoard.move(new Position(2, 4), new Position(4, 4));
         OutputView.printBoard(chessBoard);
+        chessBoard.move(new Position(2, 4), new Position(4, 4));
+        OutputView.printBoard(chessBoard);
+        chessBoard.move(new Position(4, 4), new Position(5, 5));
+        OutputView.printBoard(chessBoard);
+
         System.out.println(chessBoard.getTotalScore(Team.WHITE));
     }
 }
@@ -32,7 +35,6 @@ public class Application {
 ////모든 조건 만족시 이동
 //---------------------------------
 //미구현
-//- Pawn 이동
 //- 리팩토링 아예 안됨
 //- 점수 규칙 중 (pawn의 기본 점수는 1점이다. 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.) 안됨
 //- Input Outputview 이용해서 게임진행
