@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.ChessBoard;
+import chess.domain.Color;
 import chess.domain.Piece;
 import chess.domain.Square;
 
@@ -32,6 +33,10 @@ public class OutputView {
 
     public static void printCanNotMove() {
         System.out.println("못움직여요");
+    }
+
+    public static void printWinner(Color color) {
+        System.out.println(color.getName() + "가 이겼습니다");
     }
 }
 

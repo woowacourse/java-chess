@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
+import chess.domain.Color;
 import chess.domain.GameState;
 import chess.domain.Square;
 import chess.view.InputView;
@@ -38,6 +39,14 @@ public class ChessController {
                 if (proceed(chessBoard, squares, blackTurn)) {
                     blackTurn = !blackTurn;
                 }
+            }
+            if (chessBoard.isKingCaptured()) {
+                if (blackTurn) {
+                    OutputView.printWinner(Color.WHITE);
+                    break;
+                }
+                OutputView.printWinner(Color.BLACK);
+                break;
             }
         } while (gameState != GameState.END);
     }
