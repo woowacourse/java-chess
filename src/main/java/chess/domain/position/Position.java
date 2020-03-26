@@ -18,14 +18,14 @@ public class Position {
         }
     }
 
-    private static String key(File file, Rank rank) {
-        return file.toString() + rank.toString();
-    }
-
     private static void createCacheByRank(Map<String, Position> cache, File file) {
         for (Rank rank : Rank.values()) {
             cache.put(key(file, rank), new Position(file, rank));
         }
+    }
+
+    private static String key(File file, Rank rank) {
+        return file.toString() + rank.toString();
     }
 
     public static Position of(String key) {
@@ -34,6 +34,7 @@ public class Position {
         if (position == null) {
             throw new IllegalArgumentException("존재하지 않는 위치입니다.");
         }
+
         return position;
     }
 
@@ -48,6 +49,10 @@ public class Position {
 
     public boolean isAt(Rank rank) {
         return this.rank == rank;
+    }
+
+    public boolean isAt(File file) {
+        return this.file == file;
     }
 
     public Position reverse() {
