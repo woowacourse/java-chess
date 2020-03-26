@@ -2,10 +2,12 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -67,6 +69,16 @@ public class Board {
         for (Piece piece : board.values()) {
             if (piece.getTeam() == team) {
                 score += piece.getScore();
+            }
+        }
+
+        for (File file : File.values()) {
+            List<Map.Entry<Position, Piece>> sameFile = this.board.entrySet().stream()
+                    .filter(entry -> File.of(entry.getKey().getFile()).equals(file))
+                    .filter(entry -> entry.getValue().isPawn() && !entry.getValue().isEnemy(team))
+                    .collect(Collectors.toList());
+            if (sameFile.size() > 1) {
+                score -= sameFile.size() * 0.5;
             }
         }
         return score;

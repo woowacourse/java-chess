@@ -37,4 +37,8 @@ public enum PieceType {
     public double getScore() {
         return score;
     }
+
+    public boolean isPawn() {
+        return this == PAWN;
+    }
 }

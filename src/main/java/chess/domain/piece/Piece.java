@@ -24,6 +24,10 @@ public class Piece {
         return this.team.isEnemy(targetPiece.getTeam());
     }
 
+    public boolean isEnemy(Team team) {
+        return this.team.isEnemy(team);
+    }
+
     public boolean isWhiteKing() {
         return this.pieceType.isKing() && this.team.isWhite();
     }
@@ -38,5 +42,9 @@ public class Piece {
 
     public double getScore() {
         return this.pieceType.getScore();
+    }
+
+    public boolean isPawn() {
+        return this.pieceType.isPawn();
     }
 }
