@@ -125,7 +125,7 @@ public class Piece {
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         validateNotNull(square, board);
         // Todo 색비교 메서드로 분리 요청
-        if (type == Type.KNIGHT) {
+        if (type == Type.KNIGHT || type == Type.KING) {
             return calculateScope(square).stream()
                     .filter(s -> !(board.containsKey(s) && board.get(s).color == color))
                     .collect(Collectors.toSet());

@@ -199,5 +199,17 @@ public class PieceTest {
         assertThat(availableSquares.size()).isEqualTo(5);
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"a5", "a7", "b5", "b7"})
+    @DisplayName("판의 정보를 가져와서 king이 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")
+    void movableKingSquareTest(String input) {
+        Map<Square, Piece> board = new HashMap<>();
+        board.put(Square.of("a5"), Piece.of(Color.WHITE, Type.PAWN));
+        board.put(Square.of("b6"), Piece.of(Color.BLACK, Type.PAWN));
+        Piece piece = Piece.of(Color.BLACK, Type.KING);
+        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("a6"), board);
 
+        assertThat(availableSquares.contains(Square.of(input))).isTrue();
+        assertThat(availableSquares.size()).isEqualTo(5);
+    }
 }
