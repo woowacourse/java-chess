@@ -18,6 +18,14 @@ import chess.domain.exception.InvalidMovementException;
 
 class QueenStrategyTest {
 
+    @ParameterizedTest
+    @DisplayName("이동 경로 찾기")
+    @MethodSource("createSourceToTarget")
+    void findMovePath(Position source, Position target, List<Position> expected) {
+        MoveStrategy queenStrategy = new QueenStrategy();
+        assertThat(queenStrategy.findMovePath(source, target, false)).isEqualTo(expected);
+    }
+
     static Stream<Arguments> createSourceToTarget() {
         return Stream.of(
                 Arguments.of(Position.from("a1"), Position.from("d4"),
@@ -39,14 +47,6 @@ class QueenStrategyTest {
                         Arrays.asList(Position.from("e2"), Position.from("d2"), Position.from("c2"))),
                 Arguments.of(Position.from("g5"), Position.from("g4"), Collections.emptyList())
         );
-    }
-
-    @ParameterizedTest
-    @DisplayName("이동 경로 찾기")
-    @MethodSource("createSourceToTarget")
-    void findMovePath(Position source, Position target, List<Position> expected) {
-        MoveStrategy queenStrategy = new QueenStrategy();
-        assertThat(queenStrategy.findMovePath(source, target, false)).isEqualTo(expected);
     }
 
     @Test

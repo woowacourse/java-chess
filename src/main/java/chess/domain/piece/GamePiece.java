@@ -48,6 +48,10 @@ public class GamePiece {
         return player != sourcePiece.player;
     }
 
+    public boolean isWhite() {
+        return player.equals(Player.WHITE);
+    }
+
     public List<Position> getInitialPositions() {
         List<Position> positions = chessPiece.getOriginalPositions()
                 .stream()
@@ -66,7 +70,7 @@ public class GamePiece {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        GamePiece gamePiece = (GamePiece) o;
+        GamePiece gamePiece = (GamePiece)o;
         return chessPiece == gamePiece.chessPiece &&
                 player == gamePiece.player &&
                 Objects.equals(name, gamePiece.name);

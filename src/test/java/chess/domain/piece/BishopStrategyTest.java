@@ -18,6 +18,14 @@ import chess.domain.exception.InvalidMovementException;
 
 class BishopStrategyTest {
 
+    @ParameterizedTest
+    @DisplayName("이동 경로 찾기")
+    @MethodSource("createSourceToTarget")
+    void findMovePath(Position source, Position target, List<Position> expected) {
+        MoveStrategy bishopStrategy = new BishopStrategy();
+        assertThat(bishopStrategy.findMovePath(source, target, false)).isEqualTo(expected);
+    }
+
     static Stream<Arguments> createSourceToTarget() {
         return Stream.of(
                 Arguments.of(Position.from("a1"), Position.from("d4"),
@@ -30,14 +38,6 @@ class BishopStrategyTest {
                         Arrays.asList(Position.from("e5"), Position.from("d4"), Position.from("c3"))),
                 Arguments.of(Position.from("g5"), Position.from("f4"), Collections.emptyList())
         );
-    }
-
-    @ParameterizedTest
-    @DisplayName("이동 경로 찾기")
-    @MethodSource("createSourceToTarget")
-    void findMovePath(Position source, Position target, List<Position> expected) {
-        MoveStrategy bishopStrategy = new BishopStrategy();
-        assertThat(bishopStrategy.findMovePath(source, target, false)).isEqualTo(expected);
     }
 
     @Test

@@ -41,4 +41,4 @@ public enum Direction {
     public Optional<File> findFileDestination(File file) {
         return fileDestination.apply(file);
     }
-    }
+}

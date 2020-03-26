@@ -15,19 +15,23 @@ import chess.domain.piece.GamePiece;
 
 public class Board {
 
-    public static Board EMPTY = new Board(createEmptyBoard());
-    private final Map<Position, GamePiece> board;
+    private static final int INIT_TURN = 0;
+    public static Board EMPTY = new Board(createEmptyBoard(), INIT_TURN);
 
-    private Board(Map<Position, GamePiece> board) {
+    private final Map<Position, GamePiece> board;
+    private final int turn;
+
+    private Board(Map<Position, GamePiece> board, int turn) {
         this.board = Collections.unmodifiableMap(board);
+        this.turn = turn;
     }
 
-    public static Board from(Map<Position, GamePiece> board) {
-        return new Board(board);
+    public static Board from(Map<Position, GamePiece> board, int turn) {
+        return new Board(board, turn);
     }
 
     public static Board createInitial() {
-        return new Board(initializePositionsOfPieces());
+        return new Board(initializePositionsOfPieces(), INIT_TURN);
     }
 
     private static Map<Position, GamePiece> initializePositionsOfPieces() {
@@ -60,7 +64,14 @@ public class Board {
         validateSourcePiece(sourcePiece);
 
         boolean isKill = !targetPiece.equals(GamePiece.EMPTY) && targetPiece.isEnemy(sourcePiece);
-        List<Position> path = sourcePiece.searchPath(source, target, isKill);
+
+        List<Position> path;
+        if (isWhiteTurn()) {
+            path = sourcePiece.searchPath(source, target, isKill);
+        } else {
+            path = backWard(sourcePiece.searchPath(source.opposite(), target.opposite(), isKill));
+        }
+
         for (Position position : path) {
             validateMovable(board.get(position));
         }
@@ -68,11 +79,27 @@ public class Board {
         board.put(target, sourcePiece);
         board.put(source, GamePiece.EMPTY);
 
-        return from(board);
+        return from(board, turn + 1);
+    }
+
+    private List<Position> backWard(List<Position> path) {
+        return path.stream()
+                .map(Position::opposite)
+                .collect(Collectors.toList());
+    }
+
+    private boolean isWhiteTurn() {
+        return turn % 2 == 0;
     }
 
     private void validateSourcePiece(GamePiece sourcePiece) {
         if (sourcePiece.equals(GamePiece.EMPTY)) {
+            throw new InvalidMovementException();
+        }
+        if (isWhiteTurn() && !sourcePiece.isWhite()) {
+            throw new InvalidMovementException();
+        }
+        if (!isWhiteTurn() && sourcePiece.isWhite()) {
             throw new InvalidMovementException();
         }
     }

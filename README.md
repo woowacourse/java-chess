@@ -29,8 +29,8 @@
 - [x] Board 구현
     - [x] 체스판 초기화 
     - [x] move 구현
-    - [ ] reverse 구현
-    - [ ] turn 구현
+    - [x] backWard 구현
+    - [x] turn 구현
 - [x] Command 구현
     - [x] Start 구현
     - [x] End 구현
