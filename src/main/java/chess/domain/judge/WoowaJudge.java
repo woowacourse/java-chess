@@ -28,9 +28,10 @@ public class WoowaJudge implements Judge {
 
     @Override
     public double calculateScore(final Side side) {
-        return Arrays.stream(Type.values())
+        double sum = Arrays.stream(Type.values())
             .mapToDouble(type -> board.count(type, side) * scoreboard.get(type))
-            .sum() - board.countPawnsOnSameColumn(side) * PAWN_SCORE_DEDUCTION_IF_ON_SAME_COLUMN;
+            .sum();
+        return sum - board.countPawnsOnSameColumn(side) * PAWN_SCORE_DEDUCTION_IF_ON_SAME_COLUMN;
     }
 
     @Override
@@ -48,12 +49,24 @@ public class WoowaJudge implements Judge {
 
     @Override
     public Optional<Side> winner() {
+        final Optional<Side> finalWinner = finalWinner();
+        if (!finalWinner.isPresent()) {
+            return onGoingWinner();
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Side> finalWinner() {
         if (isGameOver() && isWhiteWinner()) {
             return Optional.of(Side.WHITE);
         }
         if (isGameOver() && isBlackWinner()) {
             return Optional.of(Side.BLACK);
         }
+        return Optional.empty();
+    }
+
+    public Optional<Side> onGoingWinner() {
         if (calculateScore(Side.WHITE) > calculateScore(Side.BLACK)) {
             return Optional.of(Side.WHITE);
         }

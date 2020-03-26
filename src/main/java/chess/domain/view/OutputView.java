@@ -21,6 +21,10 @@ public class OutputView {
             + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
+    public static void quit() {
+        System.out.println("게임을 종료합니다.");
+    }
+
     public static void showBoard(Board board) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Row row : Row.values()) {
@@ -69,5 +73,9 @@ public class OutputView {
             System.out.println("왕을 잡아서 백이 승리했습니다!");
         }
         System.out.println("게임을 종료합니다.");
+    }
+
+    public static void showError(Exception e) {
+        System.out.println(e.getMessage());
     }
 }

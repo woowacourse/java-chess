@@ -9,35 +9,43 @@ import chess.domain.board.Path;
 import chess.domain.board.Position;
 
 public class Piece {
-    private Type type;
-    private Side side;
+    private final Type type;
+    private final Side side;
 
     private Piece(final Type type, final Side side) {
         this.type = type;
         this.side = side;
     }
 
-    public static Piece of(Type type, Side side) {
+    public static Piece of(final Type type, final Side side) {
         return PieceCache.pieces.get(PieceCache.key(type, side));
     }
 
-    public boolean isMovable(Path path) {
-        return type.canMoveBetween(path);
+    public boolean is(final Type type) {
+        return this.type == type;
     }
 
-    public String name() {
-        return type.getName();
+    public boolean is(final Side side) {
+        return this.side == side;
+    }
+
+    public boolean is(final Type type, final Side side) {
+        return is(type) && is(side);
+    }
+
+    public boolean isMovable(final Path path) {
+        return type.canMoveBetween(path);
     }
 
     public boolean canBePlacedOn(final Position position) {
         return type.initPosition(position, side);
     }
 
-    public boolean isEnemyOf(Piece other) {
+    public boolean isEnemyOf(final Piece other) {
         return side != other.side;
     }
 
-    public boolean isOnInitialPosition(Position position) {
+    public boolean isOnInitialPosition(final Position position) {
         return type.initPosition(position, side);
     }
 
@@ -53,16 +61,8 @@ public class Piece {
         return new ArrayList<>(PieceCache.pieces.values());
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public Side getSide() {
-        return side;
-    }
-
     static class PieceCache {
-        public static Map<String, Piece> pieces;
+        public static final Map<String, Piece> pieces;
 
         static {
             pieces = new HashMap<>();

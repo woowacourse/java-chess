@@ -1,5 +1,7 @@
 package chess;
 
+import static chess.domain.Command.*;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,47 +11,67 @@ import chess.domain.judge.Judge;
 import chess.domain.judge.WoowaJudge;
 import chess.domain.view.InputView;
 import chess.domain.view.OutputView;
+import chess.exceptions.InvalidInputException;
 
 public class Application {
-    private static final String COMMAND_PATTERN = "move [a-h][1-8] [a-h][1-8]";
     private static final String DELIMITER = " ";
     private static Board board;
     private static Judge judge;
 
     public static void main(String[] args) {
         OutputView.instruction();
-
         while (true) {
             String command = InputView.getInput();
-            if (command.equals("end")) {
+            validateCommand(command);
+            if (END.is(command)) {
+                OutputView.quit();
                 break;
             }
-            if (command.equals("start")) {
-                board = Board.init();
-                judge = new WoowaJudge(board);
-                OutputView.showBoard(board);
+            if (START.is(command)) {
+                initialize();
             }
-            if (command.equals("status")) {
+            if (STATUS.is(command)) {
                 OutputView.showStatus(judge);
             }
-            if (command.matches(COMMAND_PATTERN)) {
-                List<Position> positions = getMovePositions(command);
-                Position start = positions.get(0);
-                Position end = positions.get(1);
-                board.move(start, end);
-                OutputView.showBoard(board);
-                if (judge.isGameOver()) {
-                    OutputView.showGameOver(judge.winner());
-                    break;
-                }
+            if (MOVE.is(command)) {
+                move(command);
+            }
+            if (judge.isGameOver()) {
+                OutputView.showGameOver(judge.winner());
+                break;
             }
         }
     }
 
-    private static List<Position> getMovePositions(String command) {
-        if (!command.matches(COMMAND_PATTERN)) {
-            throw new UnsupportedOperationException();
+    public static void validateCommand(final String command) {
+        try {
+            validate(command);
+        } catch (InvalidInputException e) {
+            OutputView.showError(e);
         }
+    }
+
+    public static void initialize() {
+        board = Board.init();
+        judge = new WoowaJudge(board);
+        OutputView.showBoard(board);
+    }
+
+    public static void move(final String command) {
+        List<Position> positions = getMovePositions(command);
+        tryToMove(positions.get(0), positions.get(1));
+        OutputView.showBoard(board);
+    }
+
+    public static void tryToMove(final Position start, final Position end) {
+        try {
+            board.move(start, end);
+        } catch (InvalidInputException e) {
+            OutputView.showError(e);
+        }
+    }
+
+    private static List<Position> getMovePositions(String command) {
         String start = command.split(DELIMITER)[1];
         String end = command.split(DELIMITER)[2];
         return Arrays.asList(Position.of(start), Position.of(end));

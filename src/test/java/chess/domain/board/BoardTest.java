@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 
@@ -17,23 +18,23 @@ public class BoardTest {
     @DisplayName("판 초기화 테스트")
     @ParameterizedTest
     @MethodSource("boardInitParams")
-    void BoardInitTest(Row row, Column column, String expectedName) {
+    void BoardInitTest(Row row, Column column, Piece expected) {
         Board board = Board.init();
 
         assertThat(board.findPieceBy(Position.of(Row.FOUR, Column.D))).isEmpty();
-        assertThat(getActual(board, row, column)).isEqualTo(expectedName);
+        assertThat(getActual(board, row, column)).isEqualTo(expected);
     }
 
     static Stream<Arguments> boardInitParams() {
         return Stream.of(
-            Arguments.of(Row.TWO, Column.D, "p"),
-            Arguments.of(Row.ONE, Column.D, "q"),
-            Arguments.of(Row.EIGHT, Column.A, "r")
+            Arguments.of(Row.TWO, Column.D, Piece.of(Type.PAWN, Side.WHITE)),
+            Arguments.of(Row.ONE, Column.D, Piece.of(Type.QUEEN, Side.WHITE)),
+            Arguments.of(Row.EIGHT, Column.A, Piece.of(Type.ROOK, Side.BLACK))
         );
     }
 
-    private String getActual(final Board board, Row row, Column column) {
-        return board.findPieceBy(Position.of(row, column)).get().name();
+    private Piece getActual(final Board board, Row row, Column column) {
+        return board.findPieceBy(Position.of(row, column)).get();
     }
 
     @DisplayName("경로 생성 테스트")

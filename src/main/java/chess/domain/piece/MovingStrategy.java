@@ -33,7 +33,7 @@ public interface MovingStrategy {
     }
 
     static boolean pawn(Path path) {
-        if (path.isInitalStart()) {
+        if (path.isOnInitialPosition()) {
             return (path.distanceSquare() == 4 || path.distanceSquare() == 1)
                 && path.headingForward()
                 && path.isEndEmpty();

@@ -28,16 +28,20 @@ public class Path {
     }
 
     public boolean isEnemyOnEnd() {
-        if (isEndEmpty()) {
+        if (isEndEmpty() || isStartEmpty()) {
             return false;
         }
-        Piece startPiece = path.get(start).orElseThrow(UnsupportedOperationException::new);
-        Piece endPiece = path.get(end).orElseThrow(UnsupportedOperationException::new);
+        Piece startPiece = path.get(start).get();
+        Piece endPiece = path.get(end).get();
         return startPiece.isEnemyOf(endPiece);
     }
 
     public boolean isEndEmpty() {
         return !path.get(end).isPresent();
+    }
+
+    private boolean isStartEmpty() {
+        return !path.get(start).isPresent();
     }
 
     public boolean isBlocked() {
@@ -59,14 +63,14 @@ public class Path {
         return Position.rowGap(start, end) == Position.columnGap(start, end);
     }
 
-    public boolean isInitalStart() {
+    public boolean isOnInitialPosition() {
         Piece piece = path.get(start).get();
         return piece.isOnInitialPosition(start);
     }
 
     public boolean headingForward() {
         Piece piece = path.get(start).get();
-        if (piece.getSide() == Side.BLACK) {
+        if (piece.is(Side.BLACK)) {
             return start.row() > end.row();
         }
         return start.row() < end.row();
