@@ -1,9 +1,9 @@
 package chess.domain.chesspiece;
 
-import java.util.Collections;
+import chess.domain.game.Team;
 
 public class Knight extends ChessPiece {
     public Knight(Team team) {
-        super("n", team, 2.5, Collections.EMPTY_LIST);
+        super(ChessPieceInfo.KNIGHT, team);
     }
 }

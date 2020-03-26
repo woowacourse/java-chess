@@ -1,18 +1,12 @@
 package chess.domain.chesspiece;
 
-import java.util.Arrays;
-
-import static chess.domain.chesspiece.Direction.*;
+import chess.domain.game.Team;
 
 public class Pawn extends ChessPiece {
     boolean isFirstMove = true;
 
     public Pawn(Team team) {
-        super("p", team, 1, Arrays.asList(
-                UP,
-                LEFT_UP,
-                RIGHT_UP)
-        );
+        super(ChessPieceInfo.PAWN, team);
     }
 
     public boolean isFirstMove() {

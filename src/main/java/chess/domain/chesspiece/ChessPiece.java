@@ -1,22 +1,17 @@
 package chess.domain.chesspiece;
 
+import chess.domain.game.Team;
+import chess.domain.move.Direction;
+
 import java.util.List;
 
 public abstract class ChessPiece {
-    private String name;
+    private final ChessPieceInfo chessPieceInfo;
     private final Team team;
-    double score;
-    List<Direction> moveDirections;
 
-    public ChessPiece(String name, Team team, double score, List<Direction> moveDirections) {
-        this.name = name;
-        if (team == Team.BLACK) {
-            this.name = name.toUpperCase();
-        }
+    public ChessPiece(ChessPieceInfo chessPieceInfo, Team team) {
+        this.chessPieceInfo = chessPieceInfo;
         this.team = team;
-        this.score = score;
-        this.moveDirections = moveDirections;
-
     }
 
     public boolean isSameTeam(Team team) {
@@ -24,18 +19,22 @@ public abstract class ChessPiece {
     }
 
     public String getName() {
+        String name = chessPieceInfo.getName();
+        if(team == Team.BLACK){
+            return name.toUpperCase();
+        }
         return name;
     }
 
     public List<Direction> getMoveDirections() {
-        return moveDirections;
+        return chessPieceInfo.getMoveDirections();
     }
 
     public Team getTeam() {
         return team;
     }
 
-    public double getScore() {
-        return score;
+    public double getPoint() {
+        return chessPieceInfo.getPoint();
     }
 }

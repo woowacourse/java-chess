@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.board.Coordinate;
+import chess.domain.move.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

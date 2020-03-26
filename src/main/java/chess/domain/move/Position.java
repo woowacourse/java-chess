@@ -1,7 +1,5 @@
 package chess.domain.move;
 
-import chess.domain.board.Coordinate;
-
 import java.util.Objects;
 
 public class Position {

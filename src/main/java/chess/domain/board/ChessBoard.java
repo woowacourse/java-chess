@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Pawn;
-import chess.domain.chesspiece.Team;
+import chess.domain.game.Team;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
 import chess.domain.move.Route;
@@ -177,7 +177,7 @@ public class ChessBoard {
                     if (chessPiece instanceof Pawn) {
                         pawnCnt++;
                     }
-                    score += chessPiece.getScore();
+                    score += chessPiece.getPoint();
                 }
             }
             if (pawnCnt >= 2) {
