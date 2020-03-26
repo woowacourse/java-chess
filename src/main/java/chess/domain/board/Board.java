@@ -68,6 +68,7 @@ public class Board {
     public boolean isLost(Player player) {
         return board.values()
                 .stream()
+                .filter(piece -> player.equals(piece.getPlayer()))
                 .filter(piece -> piece instanceof King)
                 .count() == 0;
     }
