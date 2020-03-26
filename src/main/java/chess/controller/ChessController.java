@@ -49,7 +49,7 @@ public class ChessController {
 
 		if (operationType.isMove()) {
 			chessGame.move(Board.of(operations.get(1)), Board.of(operations.get(2)));
-			return isMoveOperating(chessGame, operations);
+			return isMoveOperating(chessGame);
 		}
 
 		if (operationType.isStatus()) {
@@ -63,7 +63,7 @@ public class ChessController {
 		return true;
 	}
 
-	private boolean isMoveOperating(ChessGame chessGame, List<String> operations) {
+	private boolean isMoveOperating(ChessGame chessGame) {
 		if (chessGame.isKingDead()) {
 			OutputView.printFinishByKingDead(chessGame.getAliveKingColor());
 			return false;
