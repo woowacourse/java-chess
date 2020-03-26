@@ -29,18 +29,22 @@ public enum Row {
 		throw new IllegalArgumentException("옳지 않은 좌표 입력입니다.");
 	}
 
+	public Row calculate(int value) {
+		return Arrays.stream(Row.values())
+				.filter(row -> row.value == this.value + value)
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException(("옳지 않은 좌표 입력입니다.")));
+	}
+
+	public boolean isSame(Row row) {
+		return this.equals(row);
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public int getValue() {
 		return value;
-	}
-
-	public Row calculate(int value) {
-		return Arrays.stream(Row.values())
-				.filter(row -> row.value == this.value + value)
-				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException(("옳지 않은 좌표 입력입니다.")));
 	}
 }

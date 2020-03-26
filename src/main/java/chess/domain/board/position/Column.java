@@ -1,6 +1,7 @@
 package chess.domain.board.position;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public enum Column {
 	EIGHTH("8", 8),
@@ -29,18 +30,18 @@ public enum Column {
 		throw new IllegalArgumentException("옳지 않은 좌표 입력입니다.");
 	}
 
+	public Column calculate(int value) {
+		return Arrays.stream(Column.values())
+				.filter(column -> column.value == this.value + value)
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException(("옳지 않은 좌표 입력입니다.")));
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public int getValue() {
 		return value;
-	}
-
-	public Column calculate(int value) {
-		return Arrays.stream(Column.values())
-				.filter(column -> column.value == this.value + value)
-				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException(("옳지 않은 좌표 입력입니다.")));
 	}
 }

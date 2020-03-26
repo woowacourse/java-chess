@@ -5,6 +5,8 @@ import chess.domain.piece.pieces.PiecesFactory;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
 
+import java.util.Map;
+
 public class ChessGame {
 	private final Pieces pieces;
 	private Color color;
@@ -29,5 +31,9 @@ public class ChessGame {
 
 	public Color getAliveKingColor() {
 		return pieces.getAliveKingColor();
+	}
+
+	public Map<Color, Double> calculateScore() {
+		return ScoreResult.calculateScore(pieces.getPieces());
 	}
 }

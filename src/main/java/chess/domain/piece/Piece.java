@@ -14,13 +14,16 @@ public abstract class Piece {
 	private final String name;
 	private final Movable movable;
 	private final Color color;
+	private final double score;
 
-	public Piece(Position position, String name, Movable movable, Color color) {
+
+	public Piece(Position position, String name, Movable movable, Color color, double score) {
 		validate(position, name, movable);
 		this.position = position;
 		this.name = name;
 		this.movable = movable;
 		this.color = color;
+		this.score = score;
 	}
 
 	private void validate(Position position, String name, Movable movable) {
@@ -55,6 +58,18 @@ public abstract class Piece {
 		return false;
 	}
 
+	public boolean isPawn() {
+		return false;
+	}
+
+	public boolean isWhite() {
+		return color.isWhite();
+	}
+
+	public boolean isBlack() {
+		return color.isBlack();
+	}
+
 	public Position getPosition() {
 		return position;
 	}
@@ -65,5 +80,9 @@ public abstract class Piece {
 
 	public Color getColor() {
 		return color;
+	}
+
+	public double getScore() {
+		return score;
 	}
 }

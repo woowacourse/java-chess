@@ -10,6 +10,6 @@ public class Rook extends Piece {
 	private final List<Direction> directions = Direction.linearDirection();
 
 	public Rook(Position position, String name, Color color) {
-		super(position, name, new RookMovable(), color);
+		super(position, name, new RookMovable(), color, 5);
 	}
 }
