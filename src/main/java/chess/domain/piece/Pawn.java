@@ -25,7 +25,12 @@ public class Pawn extends Piece {
 		return side.isInitPawnRow(position);
 	}
 
-	private boolean isPawnPath(Position targetPosition, int distance) {
-		return position.isSameCol(targetPosition) && position.isInDistance(distance, targetPosition);
+	private boolean isPawnPath(Position target, int distance) {
+		return position.isSameCol(target) && position.isInDistance(distance, target) && isAttackForward(target);
+	}
+
+	@Override
+	public boolean isPawn() {
+		return true;
 	}
 }

@@ -30,6 +30,13 @@ public class Position {
 		this.row = row;
 	}
 
+	public Direction findDirection(Position target) {
+		return Arrays.stream(Direction.values())
+				.filter(strategy -> strategy.isSameDirection(this, target))
+				.findAny()
+				.orElse(Direction.NON_LINEAR);
+	}
+
 	public boolean isSameRow(Position position) {
 		return isSameRow(position.row);
 	}

@@ -29,6 +29,9 @@ public class ChessBoard {
 
 		validateTurn(sourcePiece, turn);
 		validateMove(source, target);
+		if (sourcePiece.isPawn() && sourcePiece.canMove(target) && isPresentPiece(target)) {
+			throw new IllegalArgumentException("폰은 앞에 있는 말을 공격할 수 없습니다.");
+		}
 		pieces.removeIf(piece -> piece.isSamePosition(target));
 		sourcePiece.move(target);
 	}
@@ -40,12 +43,20 @@ public class ChessBoard {
 	}
 
 	private void validateMove(Position source, Position target) {
+		if (canPawnAttack(source, target)) {
+			return;
+		}
 		if (findByPosition(source).canNotMove(target) || isBlock(source, target) || canNotAttack(source, target)) {
 			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
 		}
 
 	}
 
+	private boolean canPawnAttack(Position source, Position target) {
+		return findByPosition(source).isPawn() && source.isInDiagonal(target) && source.isInDistance(1,
+				target) && findByPosition(source).isAttackForward(
+				target) && isPresentPiece(target) && !findByPosition(source).isSameSide(findByPosition(target));
+	}
 
 	private Piece findByPosition(Position position) {
 		return pieces.stream()
@@ -66,6 +77,32 @@ public class ChessBoard {
 	private boolean isPresentPiece(Position position) {
 		return pieces.stream()
 				.anyMatch(piece -> piece.isSamePosition(position));
+	}
+
+	public boolean isEnd() {
+		return pieces.stream()
+				.filter(piece -> piece.getClass() == King.class)
+				.count() != 2;
+	}
+
+	public double calculateScore(Side side) {
+		return pieces.stream()
+				.filter(piece -> piece.isSameSide(side))
+				.mapToDouble(Piece::getScore)
+				.sum() + calculatePawnInSameCol(side);
+	}
+
+	public double calculatePawnInSameCol(Side side) {
+		return Arrays.stream(Column.values())
+				.mapToLong(col -> countColumnPawn(col, side))
+				.filter(i -> i == 1)
+				.count() * 0.5;
+	}
+
+	public long countColumnPawn(Column column, Side side) {
+		return pieces.stream()
+				.filter(piece -> piece.isPawn() && piece.isSameSide(side) && piece.isSameCol(column))
+				.count();
 	}
 
 	public List<Piece> getPieces() {
