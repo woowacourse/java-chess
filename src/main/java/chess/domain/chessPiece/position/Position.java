@@ -165,7 +165,7 @@ public class Position {
 	}
 
 	private void isExistPieceOnPath(ChessBoard chessBoard, int xDegree, int yDegree) {
-		if (chessBoard.isExistPiece(Position.of(File.of(xDegree), Rank.of(yDegree)))) {
+		if (chessBoard.isExistPieceOnPosition(Position.of(File.of(xDegree), Rank.of(yDegree)))) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_PIECE_ON_PATH);
 		}
 	}

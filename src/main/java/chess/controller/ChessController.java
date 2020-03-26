@@ -1,8 +1,6 @@
 package chess.controller;
 
 import chess.domain.chessPiece.position.Position;
-import chess.domain.chessPiece.team.BlackTeam;
-import chess.domain.chessPiece.team.WhiteTeam;
 import chess.domain.chessboard.ChessBoard;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -36,8 +34,8 @@ public class ChessController {
 			gameRun(chessBoard);
 		}
 
-		double blackTeamScore = chessBoard.calculateTeamScore(new BlackTeam());
-		double whiteTeamScore = chessBoard.calculateTeamScore(new WhiteTeam());
+		double blackTeamScore = chessBoard.calculateTeamScore(chessBoard.getBlackTeam());
+		double whiteTeamScore = chessBoard.calculateTeamScore(chessBoard.getWhiteTeam());
 		OutputView.printGameResult(blackTeamScore, whiteTeamScore);
 	}
 

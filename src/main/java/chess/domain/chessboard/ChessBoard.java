@@ -8,7 +8,6 @@ import chess.domain.chessPiece.piece.PieceAbility;
 import chess.domain.chessPiece.position.File;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.BlackTeam;
-import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.chessPiece.team.WhiteTeam;
 import chess.domain.movetype.MoveType;
 import chess.domain.movetype.MoveTypeFactory;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다.";
 	private static final String ERROR_MESSAGE_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다.";
-	private static final int INIT_SCORE = 0;
+	private static final int ZERO = 0;
 	private static final int ONE_PAWN_COUNT = 1;
 	private static final double ONE_PAWN_BONUS = 0.5;
 
@@ -107,7 +106,7 @@ public class ChessBoard {
 		whiteTeam.remove(targetPiece);
 	}
 
-	public boolean isExistPiece(Position position) {
+	public boolean isExistPieceOnPosition(Position position) {
 		return findPieceByPosition(position) != null;
 	}
 
@@ -116,26 +115,31 @@ public class ChessBoard {
 				&& whiteTeam.stream().anyMatch(x -> x instanceof King);
 	}
 
-	public double calculateTeamScore(TeamStrategy teamStrategy) {
-		List<Piece> team = whiteTeam;
-		if (teamStrategy instanceof BlackTeam) {
-			team = blackTeam;
-		}
-
-		double result = INIT_SCORE;
+	public double calculateTeamScore(List<Piece> team) {
+		double result = ZERO;
 		for (File file : File.values()) {
-			List<Piece> pieces = team.stream().filter(x -> x.isSameFile(file)).collect(Collectors.toList());
-			result = addBonusWhenOnePawn(result, pieces);
-			result += pieces.stream().map(PieceAbility::getScore).reduce((double) INIT_SCORE, Double::sum);
+			List<Piece> piecesInOneFile = team.stream()
+					.filter(x -> x.isSameFile(file))
+					.collect(Collectors.toList());
+			result += piecesInOneFile.stream()
+					.map(PieceAbility::getScore)
+					.reduce((double) ZERO, Double::sum);
+			if (isPawnCountOne(piecesInOneFile)) {
+				result += ONE_PAWN_BONUS;
+			}
 		}
 		return result;
 	}
 
-	private double addBonusWhenOnePawn(double result, List<Piece> pieces) {
-		boolean isOnePawn = pieces.stream().filter(x -> x instanceof Pawn).count() == ONE_PAWN_COUNT;
-		if (isOnePawn) {
-			result += ONE_PAWN_BONUS;
-		}
-		return result;
+	private boolean isPawnCountOne(List<Piece> pieces) {
+		return pieces.stream().filter(x -> x instanceof Pawn).count() == ONE_PAWN_COUNT;
+	}
+
+	public List<Piece> getBlackTeam() {
+		return Collections.unmodifiableList(this.blackTeam);
+	}
+
+	public List<Piece> getWhiteTeam() {
+		return Collections.unmodifiableList(this.whiteTeam);
 	}
 }
