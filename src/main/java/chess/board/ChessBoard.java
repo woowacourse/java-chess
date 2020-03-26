@@ -74,4 +74,9 @@ public class ChessBoard {
     public void put(final Tile tile) {
         this.chessBoard.put(tile.getCoordinate(), tile);
     }
+
+    public boolean isNotSameTeam(final String source, final Team currentTeam) {
+        Tile tile = this.chessBoard.get(Coordinate.of(source));
+        return !tile.isSameTeam(currentTeam);
+    }
 }

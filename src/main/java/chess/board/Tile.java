@@ -3,6 +3,7 @@ package chess.board;
 import chess.board.piece.Pawn;
 import chess.board.piece.Piece;
 import chess.board.piece.Pieces;
+import chess.board.piece.Team;
 
 public class Tile {
     private final Coordinate coordinate;
@@ -50,5 +51,9 @@ public class Tile {
 
     public boolean isPawn() {
         return this.piece instanceof Pawn;
+    }
+
+    public boolean isSameTeam(final Team currentTeam) {
+        return this.piece.isSameTeam(currentTeam);
     }
 }
