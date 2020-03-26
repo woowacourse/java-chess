@@ -24,11 +24,11 @@ public class Position {
     }
 
     public static int rowGap(Position start, Position end) {
-        return start.row() - end.row();
+        return Math.abs(start.row() - end.row());
     }
 
     public static int columnGap(Position start, Position end) {
-        return start.column() - end.column();
+        return Math.abs(start.column() - end.column());
     }
 
     public boolean isOn(final Row row) {

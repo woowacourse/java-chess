@@ -56,7 +56,7 @@ public class Path {
     }
 
     public boolean isDiagonal() {
-        return Math.abs(Position.rowGap(start, end)) == Math.abs(Position.columnGap(start, end));
+        return Position.rowGap(start, end) == Position.columnGap(start, end);
     }
 
     public boolean isInitalStart() {
