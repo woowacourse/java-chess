@@ -2,10 +2,12 @@ package domain.piece;
 
 import java.util.Objects;
 
+import domain.board.InvalidTurnException;
+import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public abstract class Piece {
+public abstract class Piece implements Movable {
 	protected Position position;
 	protected Team team;
 	protected String SYMBOL;
@@ -26,8 +28,28 @@ public abstract class Piece {
 		return this.SYMBOL.toUpperCase();
 	}
 
-	public boolean isTeam(Team nowTurn) {
-		return this.team == nowTurn;
+	protected void validateTurn(Team nowTurn) {
+		if (this.team != nowTurn) {
+			throw new InvalidTurnException(InvalidTurnException.INVALID_TURN);
+		}
+	}
+
+	abstract boolean validDirection(int rowGap, int columnGap);
+
+	@Override
+	public boolean canMove(Position targetPosition, Team turn) {
+		validateTurn(turn);
+		int rowGap = this.position.calculateRowGap(targetPosition);
+		int columnGap = this.position.calculateColumnGap(targetPosition);
+		if (validDirection(rowGap, columnGap)) {
+			return true;
+		}
+		throw new InvalidPositionException(InvalidPositionException.INVALID_TARGET_POSITION);
+	}
+
+	@Override
+	public void move() {
+
 	}
 
 	@Override

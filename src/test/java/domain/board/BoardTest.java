@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -24,7 +25,7 @@ public class BoardTest {
 	void move_InvalidPosition_ExceptionThrown(String sourcePosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, "a1", Team.WHITE))
 			.isInstanceOf(InvalidPositionException.class)
-			.hasMessage(InvalidPositionException.INVALID_POSITION);
+			.hasMessage(InvalidPositionException.INVALID_SOURCE_POSITION);
 	}
 
 	@DisplayName("현재 턴과 움직일 말의 팀이 일치하지 않으면 예외 발생")
@@ -34,5 +35,9 @@ public class BoardTest {
 		assertThatThrownBy(() -> board.move(sourcePosition, "b1", Team.BLACK))
 			.isInstanceOf(InvalidTurnException.class)
 			.hasMessage(InvalidTurnException.INVALID_TURN);
+	}
+
+	@Test
+	void name() {
 	}
 }
