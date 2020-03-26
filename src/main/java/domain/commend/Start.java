@@ -1,7 +1,6 @@
 package domain.commend;
 
 import domain.pieces.Pieces;
-import domain.point.Point;
 
 public class Start extends Playing {
 	protected Start(Pieces pieces) {
@@ -12,5 +11,4 @@ public class Start extends Playing {
 	public State end() {
 		return new End(getPieces());
 	}
-
 }

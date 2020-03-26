@@ -20,6 +20,10 @@ public enum Column {
 		this.index = index;
 	}
 
+	public Column add(int columnIndex) {
+		return find(index + columnIndex);
+	}
+
 	public static Column find(String input) {
 		return Arrays.stream(values())
 				.filter(column -> column.column.equals(input))
@@ -27,7 +31,18 @@ public enum Column {
 				.orElseThrow(IllegalArgumentException::new);
 	}
 
+	private Column find(int index) {
+		return Arrays.stream(values())
+				.filter(column -> column.index == index)
+				.findFirst()
+				.orElseThrow(IllegalArgumentException::new);
+	}
+
 	public int getIndex() {
 		return index;
+	}
+
+	public Column subtract(Column column) {
+		return find(this.index - column.index);
 	}
 }

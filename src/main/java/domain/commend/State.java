@@ -1,5 +1,9 @@
 package domain.commend;
 
+import domain.pieces.Piece;
+
+import java.util.Set;
+
 public interface State {
 
 	State start();
@@ -11,4 +15,6 @@ public interface State {
 	State move(String from, String to);
 
 	State pushCommend(String input);
+
+	Set<Piece> getSet();
 }

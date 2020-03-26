@@ -18,12 +18,20 @@ public class Point {
 		return new Point(Row.find(row), Column.find(column));
 	}
 
-	public Row getRow() {
-		return row;
+	public Point add(int rowIndex, int columnIndex) {
+		return new Point(row.add(rowIndex), column.add(columnIndex));
 	}
 
-	public Column getColumn() {
-		return column;
+	public boolean isRowAndColumnEqual() {
+		return row.getIndex() == column.getIndex();
+	}
+
+	public boolean isRowIndexZero() {
+		return row.getIndex() == 0;
+	}
+
+	public boolean isColumnIndexZero() {
+		return row.getIndex() == 0;
 	}
 
 	public int getRowIndex() {

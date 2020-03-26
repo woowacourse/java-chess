@@ -1,9 +1,11 @@
 package domain.commend;
 
 import domain.commend.exceptions.StateException;
+import domain.pieces.Piece;
 import domain.pieces.Pieces;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public abstract class GameState implements State {
     private Pieces pieces;
@@ -44,5 +46,10 @@ public abstract class GameState implements State {
         if (tokens.size() != 3) {
             throw new StateException("잘못된 명령어입니다.");
         }
+    }
+
+    @Override
+    public Set<Piece> getSet() {
+        return pieces.getSet();
     }
 }

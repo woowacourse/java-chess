@@ -1,5 +1,6 @@
 package domain.pieces;
 
+import domain.point.Direction;
 import domain.point.Point;
 import domain.team.Team;
 
@@ -26,13 +27,25 @@ public abstract class Piece {
         return point.getColumnIndex();
     }
 
-    public Point getPoint() {
-        return point;
+    public boolean isWhite() {
+        return team == Team.WHITE;
+    }
+
+    public boolean isBlack() {
+        return team == Team.BLACK;
     }
 
     public abstract Piece move(Point afterPoint);
 
-    public abstract Piece attack(Piece piece);
+    public abstract void canMove(Direction direction);
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
 
     @Override
     public String toString() {

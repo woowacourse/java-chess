@@ -20,6 +20,10 @@ public enum Row {
 		this.index = index;
 	}
 
+	public Row add(int rowIndex) {
+		return find(index + rowIndex);
+	}
+
 	public static Row find(String input) {
 		return Arrays.stream(values())
 				.filter(row -> row.row.equals(input))
@@ -27,7 +31,18 @@ public enum Row {
 				.orElseThrow(IllegalArgumentException::new);
 	}
 
+	public static Row find(int index) {
+		return Arrays.stream(values())
+				.filter(row -> row.index == index)
+				.findFirst()
+				.orElseThrow(IllegalArgumentException::new);
+	}
+
 	public int getIndex() {
 		return this.index;
+	}
+
+	public Row subtract(Row row) {
+		return find(this.index - row.index);
 	}
 }

@@ -16,7 +16,13 @@ public class Board {
         this.board = new ArrayList<>(board);
     }
 
-    public static Board createEmptyBoard() {
+    public static Board of(Set<Piece> pieces) {
+        Board board = createEmptyBoard();
+        board.setAll(pieces);
+        return board;
+    }
+
+    private static Board createEmptyBoard() {
         List<List<String>> board = new ArrayList<>();
 
         for (Row row : Row.values()) {
@@ -35,11 +41,11 @@ public class Board {
         }
     }
 
-    public void setEmpty(Point point) {
+    private void setEmpty(Point point) {
         set(point.getRowIndex(), point.getColumnIndex(), EMPTY);
     }
 
-    public void set(Piece piece) {
+    private void set(Piece piece) {
         set(piece.getRowIndex(), piece.getColumnIndex(), piece.getInitial());
     }
 
