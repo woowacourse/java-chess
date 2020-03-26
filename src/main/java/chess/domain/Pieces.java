@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
@@ -17,8 +18,8 @@ public class Pieces {
 		return pieces.stream().filter(Piece::isAlive).collect(Collectors.toList());
 	}
 
-	public List<Piece> getAlivePiecesByTeam(Team team) {
-		return this.getAlivePieces().stream().filter(p -> p.isInTeam(team)).collect(Collectors.toList());
+	public Pieces getAlivePiecesByTeam(Team team) {
+		return new Pieces(this.getAlivePieces().stream().filter(p -> p.isInTeam(team)).collect(Collectors.toList()));
 	}
 
 	public Piece findByPosition(Position position) {
@@ -26,5 +27,19 @@ public class Pieces {
 			.filter(p -> p.isSamePosition(position))
 			.findFirst()
 			.orElse(null);
+	}
+
+	public boolean isBothKingAlive() {
+		return this.getAlivePieces().stream()
+			.filter(p -> p instanceof King)
+			.count() == 2;
+	}
+
+	public Team teamWithAliveKing() {
+		return this.getAlivePieces().stream()
+			.filter(p -> p instanceof King)
+			.findFirst()
+			.orElseThrow(() -> new NullPointerException("킹이 한 명도 없습니다."))
+			.getTeam();
 	}
 }

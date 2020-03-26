@@ -3,6 +3,8 @@ package chess.domain;
 import java.util.Arrays;
 import java.util.List;
 
+import chess.exception.IllegalMoveException;
+
 public enum Direction {
 	NORTH(0, 1),
 	WEST(-1, 0),
@@ -37,7 +39,7 @@ public enum Direction {
 	public static Direction of(int x, int y) {
 		return Arrays.stream(Direction.values()).filter(d -> d.xDegree == x && d.yDegree == y)
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("올바르지 않은 방향입니다."));
+			.orElseThrow(() -> new IllegalMoveException("올바르지 않은 방향입니다."));
 	}
 
 	public boolean isGoingForward() {

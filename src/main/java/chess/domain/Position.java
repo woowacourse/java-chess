@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import chess.exception.PositionOutOfBoundsException;
+
 public class Position {
 	private int x;
 	private int y;
@@ -22,7 +24,7 @@ public class Position {
 
 	private void validatePositionRange(int x, int y) {
 		if (x < 1 || x > 8 || y < 1 || y > 8) {
-			throw new IllegalArgumentException("체스판 범위를 초과한 값입니다.");
+			throw new PositionOutOfBoundsException("체스판 범위를 초과한 값입니다.");
 		}
 	}
 
