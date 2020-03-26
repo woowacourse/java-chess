@@ -20,7 +20,7 @@ class PieceTest {
     void canMove_1(String target, boolean expectedResult) {
         Piece rook = new Rook(PieceColor.WHITE);
 
-        boolean actualResult = rook.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+        boolean actualResult = rook.isValidMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
@@ -32,7 +32,7 @@ class PieceTest {
     void canMove_2(String target, boolean expectedResult) {
         Piece bishop = new Bishop(PieceColor.WHITE);
 
-        boolean actualResult = bishop.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+        boolean actualResult = bishop.isValidMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
@@ -45,7 +45,7 @@ class PieceTest {
     void canMove_3(String target, boolean expectedResult) {
         Piece queen = new Queen(PieceColor.WHITE);
 
-        boolean actualResult = queen.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+        boolean actualResult = queen.isValidMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
@@ -58,7 +58,7 @@ class PieceTest {
     void canMove_4(String target, boolean expectedResult) {
         Piece king = new King(PieceColor.WHITE);
 
-        boolean actualResult = king.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+        boolean actualResult = king.isValidMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
@@ -71,7 +71,7 @@ class PieceTest {
     void canMove_5(String target, boolean expectedResult) {
         Piece knight = new Knight(PieceColor.WHITE);
 
-        boolean actualResult = knight.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+        boolean actualResult = knight.isValidMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
@@ -82,7 +82,7 @@ class PieceTest {
     void canMove_6(String target, boolean expectedResult) {
         Piece pawn = new Pawn(PieceColor.WHITE);
 
-        boolean actualResult = pawn.canMove(Position.ofPositionName("a2"), Position.ofPositionName(target));
+        boolean actualResult = pawn.isValidMove(Position.ofPositionName("a2"), Position.ofPositionName(target));
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
@@ -93,7 +93,7 @@ class PieceTest {
     void canMove_7(String target, boolean expectedResult) {
         Piece pawn = new Pawn(PieceColor.BLACK);
 
-        boolean actualResult = pawn.canMove(Position.ofPositionName("a7"), Position.ofPositionName(target));
+        boolean actualResult = pawn.isValidMove(Position.ofPositionName("a7"), Position.ofPositionName(target));
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
@@ -104,7 +104,7 @@ class PieceTest {
     void canMove_8(String target, boolean expectedResult) {
         Piece pawn = new Pawn(PieceColor.WHITE);
 
-        boolean actualResult = pawn.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+        boolean actualResult = pawn.isValidMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
@@ -115,7 +115,7 @@ class PieceTest {
     void canMove_9(String target, boolean expectedResult) {
         Piece pawn = new Pawn(PieceColor.BLACK);
 
-        boolean actualResult = pawn.canMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
+        boolean actualResult = pawn.isValidMove(Position.ofPositionName("e4"), Position.ofPositionName(target));
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }

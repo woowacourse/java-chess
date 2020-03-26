@@ -8,7 +8,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position current, Position target) {
+    public boolean isValidMove(Position current, Position target) {
         if (isInitialPosition(current)) {
             return canFirstMove(current, target);
         }

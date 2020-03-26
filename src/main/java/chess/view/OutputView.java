@@ -6,7 +6,13 @@ import java.util.List;
 
 public class OutputView {
 
-    public static final String END = "end";
+    private static final String STARTING_MSG = "> 체스 게임을 시작합니다.\n" +
+            "> 게임 시작 : start\n" + "> 게임 종료 : end\n" + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3\n";
+    private static final String END = "end";
+
+    public static void printStartMSG() {
+        System.out.println(STARTING_MSG);
+    }
 
     public static void printBoard(List<PlayingPiece> showingBoard) {
         StringBuilder sb = new StringBuilder();

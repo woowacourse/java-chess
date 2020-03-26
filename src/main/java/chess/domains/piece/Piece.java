@@ -19,7 +19,7 @@ public abstract class Piece {
     protected final PieceColor pieceColor;
     private final String name;
 
-    public abstract boolean canMove(Position currentPosition, Position targetPosition);
+    public abstract boolean isValidMove(Position currentPosition, Position targetPosition);
 
     public Piece(PieceColor pieceColor, String name) {
         this.pieceColor = pieceColor;

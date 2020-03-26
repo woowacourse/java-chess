@@ -8,7 +8,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Position current, Position target) {
+    public boolean isValidMove(Position current, Position target) {
         return Math.abs(current.xGapBetween(target)) == Math.abs(current.yGapBetween(target));
     }
 }
