@@ -38,15 +38,17 @@ public class ChessBoard {
 		validateTargetTeam(sourcePosition, targetPosition);
 		validateMovable(sourcePosition, targetPosition);
 
-		Piece targetPiece = findPieceByPosition(targetPosition);
 		Piece pieceToMove = findPieceByPosition(sourcePosition);
 		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 
-		if (targetPiece != null) {
-			removePiece(targetPiece);
-		}
-
 		pieceToMove.move(movePattern, this);
+		removeAttackedPiece(findPieceByPosition(targetPosition));
+	}
+
+	private void removeAttackedPiece(Piece targetPiece) {
+		if (targetPiece != null) {
+			pieces.remove(targetPiece);
+		}
 	}
 
 	private void validateTargetTeam(Position sourcePosition, Position targetPosition) {
@@ -79,10 +81,6 @@ public class ChessBoard {
 				.filter(x -> x.isEqualPosition(position))
 				.findAny()
 				.orElse(null);
-	}
-
-	public void removePiece(Piece targetPiece) {
-		pieces.remove(targetPiece);
 	}
 
 	public boolean isExistPieceOnPosition(Position position) {

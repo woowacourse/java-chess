@@ -7,8 +7,8 @@ import chess.domain.chessboard.ChessBoard;
 import chess.domain.movepattern.MovePattern;
 
 public abstract class Piece implements PieceAbility {
-	protected final TeamStrategy teamStrategy;
 	protected Position position;
+	protected final TeamStrategy teamStrategy;
 
 	public Piece(Position position, TeamStrategy teamStrategy) {
 		this.position = position;
