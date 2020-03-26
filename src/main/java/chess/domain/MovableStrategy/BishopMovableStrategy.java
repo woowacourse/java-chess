@@ -15,7 +15,7 @@ public class BishopMovableStrategy extends NonLeapableStrategy {
     }
 
     @Override
-    boolean canMoveRange(Position source, Position target) {
+    protected boolean canMoveRange(Position source, Position target) {
         return true;
     }
 }

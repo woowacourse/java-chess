@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class NonLeapableStrategy implements MovableStrategy {
 
@@ -12,11 +13,17 @@ public abstract class NonLeapableStrategy implements MovableStrategy {
 
     @Override
     public boolean canMove(Position source, Position target) {
+        validate(source, target);
         return canMoveDirection(source, target) && canMoveRange(source, target);
     }
 
+    private void validate(Position source, Position target) {
+        Objects.requireNonNull(source, "이동할 소스가 존재하지 않습니다.");
+        Objects.requireNonNull(target, "이동할 타겟이 존재하지 않습니다.");
+    }
+
     @Override
-    public boolean canLeap(Position source, Position target) {
+    public boolean canLeap() {
         return false;
     }
 
@@ -25,5 +32,5 @@ public abstract class NonLeapableStrategy implements MovableStrategy {
                 .anyMatch(moveDirection -> moveDirection.isSameDirection(source, target));
     }
 
-    abstract boolean canMoveRange(Position source, Position target);
+    protected abstract boolean canMoveRange(Position source, Position target);
 }

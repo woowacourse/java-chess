@@ -1,21 +1,26 @@
 package chess.domain.MovableStrategy;
 
-import java.util.Arrays;
-
-import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
-// TODO: 2020/03/26 MovableStrategy 구현하도록
-public class KingMovableStrategy extends NonLeapableStrategy {
-	public KingMovableStrategy() {
-		this.movableDirections.addAll(Arrays.asList(MoveDirection.values()));
-	}
+import java.util.Objects;
 
-	@Override
-	boolean canMoveRange(Position source, Position target) {
-		int fileInterval = Math.abs(source.calculateFileIntervalTo(target));
-		int rankInterval = Math.abs(source.calculateRankIntervalTo(target));
+public class KingMovableStrategy implements MovableStrategy {
+    @Override
+    public boolean canMove(Position source, Position target) {
+        validate(source, target);
+        int fileInterval = Math.abs(source.calculateFileIntervalTo(target));
+        int rankInterval = Math.abs(source.calculateRankIntervalTo(target));
 
-		return fileInterval == 1 || rankInterval == 1;
-	}
+        return fileInterval <= 1 && rankInterval <= 1;
+    }
+
+    private void validate(Position source, Position target) {
+        Objects.requireNonNull(source, "이동할 소스가 존재하지 않습니다.");
+        Objects.requireNonNull(target, "이동할 타겟이 존재하지 않습니다.");
+    }
+
+    @Override
+    public boolean canLeap() {
+        return true;
+    }
 }

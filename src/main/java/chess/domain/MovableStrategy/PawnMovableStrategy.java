@@ -12,7 +12,7 @@ public class PawnMovableStrategy extends NonLeapableStrategy {
     }
 
     @Override
-    boolean canMoveRange(Position source, Position target) {
+    protected boolean canMoveRange(Position source, Position target) {
         int fileInterval = Math.abs(source.calculateFileIntervalTo(target));
         int rankInterval = Math.abs(source.calculateRankIntervalTo(target));
 
