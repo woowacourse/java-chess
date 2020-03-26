@@ -2,7 +2,6 @@ package chess.domains.board;
 
 import chess.domains.piece.Blank;
 import chess.domains.piece.Piece;
-import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
 
 import java.util.HashSet;
@@ -46,7 +45,7 @@ public class BoardFactory {
         List<String> aRow = Position.fromRow(row);
 
         return aRow.stream()
-                .map(location -> new PlayingPiece(Position.ofPositionName(location), new Blank(PieceColor.BLANK)))
+                .map(location -> new PlayingPiece(Position.ofPositionName(location), new Blank()))
                 .collect(Collectors.toSet());
     }
 }

@@ -5,8 +5,8 @@ import chess.domains.position.Position;
 import java.util.List;
 
 public class Blank extends Piece {
-    public Blank(PieceColor pieceColor) {
-        super(pieceColor, ".");
+    public Blank() {
+        super(PieceColor.BLANK, ".");
     }
 
     @Override

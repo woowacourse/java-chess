@@ -1,5 +1,6 @@
 package chess.domains.board;
 
+import chess.domains.piece.Blank;
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
 
@@ -43,5 +44,9 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
     @Override
     public int compareTo(PlayingPiece o) {
         return this.position.compareTo(o.position);
+    }
+
+    public boolean isBlank() {
+        return this.piece.equals(new Blank());
     }
 }

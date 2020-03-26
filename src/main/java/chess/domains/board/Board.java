@@ -23,4 +23,21 @@ public class Board {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_LOCATION_ERR_MSG));
     }
+
+    public PlayingPiece findPiece(Position location) {
+        return board.stream()
+                .filter(piece -> piece.has(location))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_LOCATION_ERR_MSG));
+    }
+
+    public boolean canGo(List<Position> route) {
+        int count = (int) route.stream()
+                .map(this::findPiece)
+                .map(PlayingPiece::isBlank)
+                .filter(x -> !x)
+                .count();
+
+        return count == 0;
+    }
 }

@@ -171,7 +171,7 @@ class PieceTest {
         Position target = Position.ofPositionName(targetName);
         Piece pawn = new Pawn(PieceColor.WHITE);
 
-        List<Position> expected = new ArrayList<>(Arrays.asList(
+        List<Position> expected = new ArrayList<>(Arrays.asList(Position.ofPositionName(route1)
         ));
 
         assertThat(pawn.findRoute(source, target)).isEqualTo(expected);
