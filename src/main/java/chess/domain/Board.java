@@ -27,4 +27,8 @@ public class Board {
 	public Piece get(String key) {
 		return board.get(key);
 	}
+
+	public boolean containsKey(String key) {
+		return board.containsKey(key);
+	}
 }

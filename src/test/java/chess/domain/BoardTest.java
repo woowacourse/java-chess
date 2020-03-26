@@ -33,4 +33,9 @@ class BoardTest {
 	void get() {
 		assertThat(board.get("a1")).isEqualTo(rook);
 	}
+
+	@Test
+	void containsKey() {
+		assertThat(board.containsKey("a1")).isTrue();
+	}
 }
