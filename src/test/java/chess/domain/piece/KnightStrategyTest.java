@@ -22,7 +22,7 @@ class KnightStrategyTest {
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d5");
         MoveStrategy knightStrategy = new KnightStrategy();
-        assertThat(knightStrategy.findMovePath(source, target)).isEqualTo(expected);
+        assertThat(knightStrategy.findMovePath(source, target, false)).isEqualTo(expected);
     }
 
     static Stream<Arguments> createSourceToTarget() {
@@ -47,7 +47,7 @@ class KnightStrategyTest {
         Position source = Position.from("d5");
 
         assertThatThrownBy(() -> {
-            knightStrategy.findMovePath(source, target);
+            knightStrategy.findMovePath(source, target, false);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
     }

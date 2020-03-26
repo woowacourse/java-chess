@@ -46,7 +46,7 @@ class QueenStrategyTest {
     @MethodSource("createSourceToTarget")
     void findMovePath(Position source, Position target, List<Position> expected) {
         MoveStrategy queenStrategy = new QueenStrategy();
-        assertThat(queenStrategy.findMovePath(source, target)).isEqualTo(expected);
+        assertThat(queenStrategy.findMovePath(source, target, false)).isEqualTo(expected);
     }
 
     @Test
@@ -58,7 +58,7 @@ class QueenStrategyTest {
         Position target = Position.from("d3");
 
         assertThatThrownBy(() -> {
-            queenStrategy.findMovePath(source, target);
+            queenStrategy.findMovePath(source, target, false);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
     }

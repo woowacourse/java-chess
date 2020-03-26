@@ -55,10 +55,12 @@ public class Board {
         // TODO: 2020/03/25 리팩토링 확인
         Map<Position, GamePiece> board = new HashMap<>(this.board);
         GamePiece sourcePiece = board.get(source);
+        GamePiece targetPiece = board.get(target);
 
         validateSourcePiece(sourcePiece);
 
-        List<Position> path = sourcePiece.searchPath(source, target);
+        boolean isKill = !targetPiece.equals(GamePiece.EMPTY) && targetPiece.isEnemy(sourcePiece);
+        List<Position> path = sourcePiece.searchPath(source, target, isKill);
         for (Position position : path) {
             validateMovable(board.get(position));
         }

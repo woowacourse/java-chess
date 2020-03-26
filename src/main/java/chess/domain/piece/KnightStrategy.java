@@ -14,7 +14,7 @@ public class KnightStrategy implements MoveStrategy {
     private final List<Direction> directions = Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
 
     @Override
-    public List<Position> findMovePath(final Position source, final Position target) {
+    public List<Position> findMovePath(final Position source, final Position target, final boolean isKill) {
         for (Direction direction : directions) {
             Position position = source.destinationOf(direction).orElse(null);
             if (target.equals(position)) {

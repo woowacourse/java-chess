@@ -65,12 +65,12 @@ class BoardTest {
     @DisplayName("경로에 기물이 있는 경우")
     void moveWithObstacle() {
         Map<Position, GamePiece> map = new HashMap<>(Board.EMPTY.getBoard());
-        map.put(Position.from("d5"), GamePiece.of(ROOK, BLACK));
-        map.put(Position.from("f5"), GamePiece.of(BISHOP, WHITE));
+        map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
+        map.put(Position.from("d6"), GamePiece.of(BISHOP, BLACK));
         Board board = Board.from(map);
 
         assertThatThrownBy(() -> {
-            board.move(Position.from("d5"), Position.from("g5"));
+            board.move(Position.from("d5"), Position.from("d6"));
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
     }

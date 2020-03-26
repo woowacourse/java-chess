@@ -40,8 +40,12 @@ public class GamePiece {
         return gamePieces;
     }
 
-    public List<Position> searchPath(Position source, Position target) {
-        return chessPiece.searchPath(source, target);
+    public List<Position> searchPath(Position source, Position target, boolean isKill) {
+        return chessPiece.searchPath(source, target, isKill);
+    }
+
+    public boolean isEnemy(GamePiece sourcePiece) {
+        return player != sourcePiece.player;
     }
 
     public List<Position> getInitialPositions() {
@@ -62,7 +66,7 @@ public class GamePiece {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        GamePiece gamePiece = (GamePiece)o;
+        GamePiece gamePiece = (GamePiece) o;
         return chessPiece == gamePiece.chessPiece &&
                 player == gamePiece.player &&
                 Objects.equals(name, gamePiece.name);

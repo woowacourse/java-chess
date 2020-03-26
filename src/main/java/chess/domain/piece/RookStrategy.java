@@ -14,7 +14,7 @@ public class RookStrategy implements MoveStrategy {
     private final List<Direction> directions = Arrays.asList(NORTH, EAST, WEST, SOUTH);
 
     @Override
-    public List<Position> findMovePath(final Position source, final Position target) {
+    public List<Position> findMovePath(final Position source, final Position target, final boolean isKill) {
         for (Direction direction : directions) {
             List<Position> path = new ArrayList<>();
             Position position = source;

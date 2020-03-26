@@ -16,11 +16,34 @@ import chess.domain.exception.InvalidMovementException;
 
 class PawnStrategyTest {
 
+    @ParameterizedTest
+    @DisplayName("이동 경로 찾기")
+    @MethodSource("createSourceToTarget")
+    void findMovePath(Position target, List<Position> expected) {
+        Position source = Position.from("d2");
+        MoveStrategy pawnStrategy = new PawnStrategy();
+        assertThat(pawnStrategy.findMovePath(source, target, false)).isEqualTo(expected);
+    }
+
     static Stream<Arguments> createSourceToTarget() {
         return Stream.of(
                 Arguments.of(Position.from("d3"), Collections.emptyList()),
                 Arguments.of(Position.from("d4"), Collections.singletonList(Position.from("d3")))
         );
+    }
+
+    @ParameterizedTest
+    @DisplayName("이동할 수 없는 source, target")
+    @MethodSource("createInvalidTarget")
+    void invalidMovementException(Position target) {
+        MoveStrategy pawnStrategy = new PawnStrategy();
+
+        Position source = Position.from("d5");
+
+        assertThatThrownBy(() -> {
+            pawnStrategy.findMovePath(source, target, false);
+        }).isInstanceOf(InvalidMovementException.class)
+                .hasMessage("이동할 수 없습니다.");
     }
 
     static Stream<Arguments> createInvalidTarget() {
@@ -36,25 +59,43 @@ class PawnStrategyTest {
     }
 
     @ParameterizedTest
-    @DisplayName("이동 경로 찾기")
-    @MethodSource("createSourceToTarget")
-    void findMovePath(Position target, List<Position> expected) {
+    @DisplayName("kill일 경우 이동 경로 찾기")
+    @MethodSource("createKillSourceToTarget")
+    void findKillPath(Position target, List<Position> expected) {
         Position source = Position.from("d2");
         MoveStrategy pawnStrategy = new PawnStrategy();
-        assertThat(pawnStrategy.findMovePath(source, target)).isEqualTo(expected);
+        assertThat(pawnStrategy.findMovePath(source, target, true)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createKillSourceToTarget() {
+        return Stream.of(
+                Arguments.of(Position.from("c3"), Collections.emptyList()),
+                Arguments.of(Position.from("e3"), Collections.emptyList())
+        );
     }
 
     @ParameterizedTest
-    @DisplayName("이동할 수 없는 source, target")
-    @MethodSource("createInvalidTarget")
-    void invalidMovementException(Position target) {
+    @DisplayName("kill일 경우 이동할 수 없는 source, target")
+    @MethodSource("createKillInvalidTarget")
+    void invalidKillMovementException(Position target) {
         MoveStrategy pawnStrategy = new PawnStrategy();
 
         Position source = Position.from("d5");
 
         assertThatThrownBy(() -> {
-            pawnStrategy.findMovePath(source, target);
+            pawnStrategy.findMovePath(source, target, true);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
+    }
+
+    static Stream<Arguments> createKillInvalidTarget() {
+        return Stream.of(
+                Arguments.of(Position.from("d6")),
+                Arguments.of(Position.from("c5")),
+                Arguments.of(Position.from("c4")),
+                Arguments.of(Position.from("d4")),
+                Arguments.of(Position.from("e4")),
+                Arguments.of(Position.from("e5"))
+        );
     }
 }

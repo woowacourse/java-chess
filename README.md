@@ -29,15 +29,17 @@
 - [x] Board 구현
     - [x] 체스판 초기화 
     - [x] move 구현
+    - [ ] reverse 구현
+    - [ ] turn 구현
 - [x] Command 구현
     - [x] Start 구현
     - [x] End 구현
     - [ ] Move 구현
 - [x] Direction 구현
     - [x] 다음 File, Rank 찾는 기능 구현
-- [ ] moveStrategy 구현
+- [x] moveStrategy 구현
     - [x] findMovePath 구현
-    - [ ] findKillPath 구현
+    - [x] 폰이 기물을 잡는 경우 구현
 ### view
 - [x] Command 입력
 - [x] Board 출력

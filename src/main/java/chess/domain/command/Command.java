@@ -23,4 +23,8 @@ public enum Command {
     public boolean isStart() {
         return this.equals(START);
     }
+
+    public boolean isNotEnd() {
+        return !this.equals(END);
+    }
 }

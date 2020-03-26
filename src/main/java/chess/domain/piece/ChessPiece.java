@@ -33,8 +33,8 @@ public enum ChessPiece {
         return initialPositions;
     }
 
-    public List<Position> searchPath(Position source, Position target) {
-        return moveStrategy.findMovePath(source, target);
+    public List<Position> searchPath(Position source, Position target, boolean isKill) {
+        return moveStrategy.findMovePath(source, target, isKill);
     }
 
     public String getName() {

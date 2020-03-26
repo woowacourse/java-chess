@@ -12,6 +12,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CommandTest {
 
+    @ParameterizedTest
+    @DisplayName("from 팩토리 메서드")
+    @MethodSource("createCommand")
+    void from(String command, Command expected) {
+        assertThat(Command.from(command)).isEqualTo(expected);
+    }
+
     static Stream<Arguments> createCommand() {
         return Stream.of(
                 Arguments.of("Start", Command.START),
@@ -19,20 +26,6 @@ class CommandTest {
                 Arguments.of("end", Command.END),
                 Arguments.of("END", Command.END)
         );
-    }
-
-    static Stream<Arguments> createBoolean() {
-        return Stream.of(
-                Arguments.of(Command.START, true),
-                Arguments.of(Command.END, false)
-        );
-    }
-
-    @ParameterizedTest
-    @DisplayName("from 팩토리 메서드")
-    @MethodSource("createCommand")
-    void from(String command, Command expected) {
-        assertThat(Command.from(command)).isEqualTo(expected);
     }
 
     @Test
@@ -49,5 +42,26 @@ class CommandTest {
     @MethodSource("createBoolean")
     void isStart(Command command, boolean expected) {
         assertThat(command.isStart()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createBoolean() {
+        return Stream.of(
+                Arguments.of(Command.START, true),
+                Arguments.of(Command.END, false)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("Command가 End가 아닌지 확인")
+    @MethodSource("createEnd")
+    void isNotEnd(Command command, boolean expected) {
+        assertThat(command.isStart()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createEnd() {
+        return Stream.of(
+                Arguments.of(Command.START, true),
+                Arguments.of(Command.END, false)
+        );
     }
 }

@@ -14,7 +14,7 @@ public class BishopStrategy implements MoveStrategy {
     private final List<Direction> directions = Arrays.asList(NORTH_EAST, SOUTH_EAST, NORTH_WEST, SOUTH_WEST);
 
     @Override
-    public List<Position> findMovePath(final Position source, final Position target) {
+    public List<Position> findMovePath(final Position source, final Position target, final boolean isKill) {
         for (Direction direction : directions) {
             List<Position> path = new ArrayList<>();
             Position position = source;
