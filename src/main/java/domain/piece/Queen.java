@@ -9,4 +9,12 @@ public class Queen extends Piece {
 	public Queen(Position position, Team team) {
 		super(position, team);
 	}
+
+	@Override
+	boolean validDirection(int rowGap, int columnGap) {
+		int absRowGap = Math.abs(rowGap);
+		int absColumnGap = Math.abs(columnGap);
+		return (((absRowGap > 0 && absRowGap < 8) && absColumnGap == 0) || ((absColumnGap > 0 && absColumnGap < 8)
+			&& absRowGap == 0)) || (absColumnGap == absRowGap) && (absColumnGap > 0);
+	}
 }
