@@ -135,8 +135,14 @@ public class Piece {
             Set<Square> squares = calculateScope(square);
             for (Square s : squares) {
                 if (Math.abs(square.getRank() - s.getRank()) == 1) {
-                    Square squareRight = Square.of(s, 1, 0);
-                    Square squareLeft = Square.of(s, -1, 0);
+                    Square squareRight = s;
+                    Square squareLeft = s;
+                    if (s.getFile() != 'a') {
+                        squareLeft = Square.of(s, -1, 0);
+                    }
+                    if (s.getFile() != 'h') {
+                        squareRight = Square.of(s, 1, 0);
+                    }
                     if (board.containsKey(s) && color == board.get(s).color) {
                         squares.removeAll(calculateScope(square));
                     }
@@ -299,6 +305,10 @@ public class Piece {
         if (Objects.isNull(square) || Objects.isNull(board)) {
             throw new IllegalArgumentException("null 안댐");
         }
+    }
+
+    public boolean isBlack() {
+        return color == Color.BLACK;
     }
     // Todo 칸-말 맵 받아서 자기가 움직일 수 있는 리스트 보내줌
 

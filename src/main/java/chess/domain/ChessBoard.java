@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -33,5 +34,14 @@ public class ChessBoard {
 
     public Map<Square, Piece> getChessBoard() {
         return chessBoard;
+    }
+
+    public boolean canMove(List<Square> squares, boolean blackTurn) {
+        Square before = squares.get(0);
+        Square after = squares.get(1);
+        if (!chessBoard.containsKey(before) || chessBoard.get(before).isBlack() != blackTurn) {
+            return false;
+        }
+        return chessBoard.get(before).calculateMoveBoundary(before, chessBoard).contains(after);
     }
 }

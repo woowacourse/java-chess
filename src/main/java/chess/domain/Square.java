@@ -35,7 +35,7 @@ public class Square {
         if (Objects.isNull(square)) {
             throw new IllegalArgumentException("잘못된 square의 입력입니다");
         }
-        return Square.of(String.valueOf((char) (square.file + fileIncrementBy)) + (square.rank + rankIncrementBy));
+         return Square.of(String.valueOf((char) (square.file + fileIncrementBy)) + (square.rank + rankIncrementBy));
     }
 
     public static boolean hasCacheAdded(Square square, int fileIncrementBy, int rankIncrementBy) {

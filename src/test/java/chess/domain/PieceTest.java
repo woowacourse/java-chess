@@ -212,4 +212,11 @@ public class PieceTest {
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(5);
     }
+
+    @Test
+    @DisplayName("체스 말이 블랙인지 검증하는 테스트")
+    void isBlack() {
+        assertThat(Piece.of(Color.BLACK, Type.PAWN).isBlack()).isTrue();
+        assertThat(Piece.of(Color.WHITE, Type.KING).isBlack()).isFalse();
+    }
 }
