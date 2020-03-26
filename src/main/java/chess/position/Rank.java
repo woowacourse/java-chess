@@ -27,17 +27,15 @@ public enum Rank {
     }
 
     public static List<Rank> valuesBetween(Rank start, Rank end) {
-        Rank smaller = min(start, end);
-        Rank bigger = max(start, end);
-
-        List<Rank> ranks = new ArrayList<>();
-        for (Rank rank : values()) {
-            if (between(rank, smaller, bigger)) {
-                ranks.add(rank);
-            }
+        if (start.getNumber() > end.getNumber()) {
+            return Arrays.stream(values())
+                    .sorted(Comparator.reverseOrder())
+                    .filter(file -> file.getNumber() < start.getNumber() && file.getNumber() >= end.getNumber())
+                    .collect(Collectors.toList());
         }
-        ranks.remove(start);
-        return ranks;
+        return Arrays.stream(values())
+                .filter(file -> file.getNumber() > start.getNumber() && file.getNumber() <= end.getNumber())
+                .collect(Collectors.toList());
     }
 
     private static boolean between(Rank target, Rank smaller, Rank bigger) {

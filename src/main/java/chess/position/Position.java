@@ -1,6 +1,9 @@
 package chess.position;
 
+import javafx.geometry.Pos;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Position {
@@ -36,6 +39,10 @@ public class Position {
 
     private static String getKey(File file, Rank rank) {
         return file.getName() + rank.getName();
+    }
+
+    public static List<Position> findDiagonalTrace(Position start, Position end) {
+        return null;
     }
 
     public boolean isStraight(Position other) {

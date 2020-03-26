@@ -1,8 +1,9 @@
 package chess.position;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum File {
     A("a", 1),
@@ -25,17 +26,15 @@ public enum File {
     }
 
     public static List<File> valuesBetween(File start, File end) {
-        File smaller = min(start, end);
-        File bigger = max(start, end);
-
-        List<File> files = new ArrayList<>();
-        for (File file : values()) {
-            if (between(file, smaller, bigger)) {
-                files.add(file);
-            }
+        if (start.getNumber() > end.getNumber()) {
+            return Arrays.stream(values())
+                    .sorted(Comparator.reverseOrder())
+                    .filter(file -> file.getNumber() < start.getNumber() && file.getNumber() >= end.getNumber())
+                    .collect(Collectors.toList());
         }
-        files.remove(start);
-        return files;
+        return Arrays.stream(values())
+                .filter(file -> file.getNumber() > start.getNumber() && file.getNumber() <= end.getNumber())
+                .collect(Collectors.toList());
     }
 
     private static boolean between(File target, File smaller, File bigger) {
