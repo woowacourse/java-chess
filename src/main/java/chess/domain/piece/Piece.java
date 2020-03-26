@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.board.Square;
-import util.NullChecker;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-public abstract class Piece {
+public abstract class Piece implements Movable {
 
     private final Color color;
     private final Type type;
@@ -22,6 +22,7 @@ public abstract class Piece {
 
     public abstract Set<Square> getAllCheatSheet(Square square);
 
+    @Override
     public abstract Set<Square> getCheatSheet(Square square, Map<Square, Piece> board);
 
     protected Set<Square> findSquaresToRemove(Square s, int fileAddAmount, int rankAddAmount) {
