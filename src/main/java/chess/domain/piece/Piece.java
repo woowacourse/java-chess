@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.Position;
 
 public abstract class Piece {
+	protected static final String ILLEGAL_MOVE = "말이 움직일 수 없는 자리입니다.";
+
 	protected char representation;
 	protected final Team team;
 	protected boolean isAlive;
@@ -22,21 +24,12 @@ public abstract class Piece {
 		this.position = destination;
 	}
 
-	public boolean isSamePosition(Position otherPosition) {
-		return this.position.equals(otherPosition);
-	}
-
 	public void kill() {
 		this.isAlive = false;
 	}
 
-	public boolean isAlive() {
-		return isAlive;
-	}
-
-	@Override
-	public String toString() {
-		return String.valueOf(team.getTeamRepresentation().apply(representation));
+	public boolean isSamePosition(Position otherPosition) {
+		return this.position.equals(otherPosition);
 	}
 
 	public boolean isSameTeam(Piece destinationPiece) {
@@ -47,11 +40,20 @@ public abstract class Piece {
 		return this.team == team;
 	}
 
+	public boolean isAlive() {
+		return isAlive;
+	}
+
 	public double getScore() {
 		return this.score;
 	}
 
 	public Team getTeam() {
 		return team;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(team.getTeamRepresentation().apply(representation));
 	}
 }

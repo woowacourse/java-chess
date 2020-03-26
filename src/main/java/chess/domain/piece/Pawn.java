@@ -13,7 +13,6 @@ public class Pawn extends Piece {
 		Direction.NORTHNORTH, Direction.NORTHEAST, Direction.NORTHWEST);
 	public static final List<Direction> UPPER_TEAM_POSSIBLE_DIRECTIONS = Arrays.asList(Direction.SOUTH,
 		Direction.SOUTHSOUTH, Direction.SOUTHEAST, Direction.SOUTHWEST);
-	public static final String ILLEGAL_MOVE = "말이 움직일 수 없는 자리입니다.";
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
@@ -23,7 +22,6 @@ public class Pawn extends Piece {
 
 	@Override
 	public void validateMove(Position destination) {
-
 		if (this.team == Team.WHITE)
 			validateMoveByDirection(destination, LOWER_TEAM_POSSIBLE_DIRECTIONS);
 		if (this.team == Team.BLACK)

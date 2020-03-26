@@ -9,8 +9,8 @@ import java.util.Objects;
 import chess.exception.PositionOutOfBoundsException;
 
 public class Position {
-	private int x;
-	private int y;
+	private final int x;
+	private final int y;
 
 	public Position(int x, int y) {
 		validatePositionRange(x, y);
@@ -19,12 +19,21 @@ public class Position {
 	}
 
 	public Position(String string) {
-		this(string.charAt(0) - 'a' + 1, Character.getNumericValue(string.charAt(1)));
+		int x, y;
+		try {
+			x = string.charAt(0) - 'a' + 1;
+			y = Character.getNumericValue(string.charAt(1));
+		} catch (Exception e) {
+			throw new IllegalArgumentException("올바른 위치값을 입력해 주십시오.");
+		}
+		validatePositionRange(x, y);
+		this.x = x;
+		this.y = y;
 	}
 
 	private void validatePositionRange(int x, int y) {
 		if (x < 1 || x > 8 || y < 1 || y > 8) {
-			throw new PositionOutOfBoundsException("체스판 범위를 초과한 값입니다.");
+			throw new PositionOutOfBoundsException("올바른 좌표 값이 아닙니다.");
 		}
 	}
 

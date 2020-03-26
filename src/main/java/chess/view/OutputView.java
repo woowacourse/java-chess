@@ -11,7 +11,8 @@ public class OutputView {
 		System.out.println("체스 게임을 시작합니다.");
 	}
 
-	public static void printChessBoard(Pieces pieces) {
+	public static void printChessBoard(Board board) {
+		Pieces pieces = board.getPieces();
 		StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 8; i > 0; i--) {
 			for (int j = 1; j <= 8; j++) {

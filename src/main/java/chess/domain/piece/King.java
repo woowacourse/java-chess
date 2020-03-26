@@ -8,7 +8,6 @@ import chess.domain.Position;
 import chess.exception.IllegalMoveException;
 
 public class King extends Piece {
-	public static final String ILLEGAL_MOVE = "말이 움직일 수 없는 자리입니다.";
 	private static List<Direction> possibleDirections = Arrays.asList(Direction.NORTH, Direction.EAST, Direction.WEST,
 		Direction.SOUTH, Direction.NORTHEAST, Direction.NORTHWEST, Direction.SOUTHEAST, Direction.SOUTHWEST);
 

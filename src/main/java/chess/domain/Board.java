@@ -76,6 +76,10 @@ public class Board {
 		return new TotalScore(pieces.getAlivePiecesByTeam(team)).getTotalScore();
 	}
 
+	public boolean isBothKingAlive() {
+		return pieces.isBothKingAlive();
+	}
+
 	public Team getWinner() {
 		return pieces.teamWithAliveKing();
 	}
