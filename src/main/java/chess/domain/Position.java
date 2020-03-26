@@ -137,7 +137,7 @@ public class Position {
     }
 
     private void isExistPieceOnPath(ChessBoard chessBoard, int xDegree, int yDegree) {
-        if (chessBoard.findPieceByPosition(Position.of(File.of(xDegree), Rank.of(yDegree))) != null) {
+        if (chessBoard.isExistPiece(Position.of(File.of(xDegree), Rank.of(yDegree)))) {
             throw new IllegalArgumentException("경로에 다른 말이 존재합니다.");
         }
     }

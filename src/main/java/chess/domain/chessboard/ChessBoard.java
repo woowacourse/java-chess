@@ -41,17 +41,31 @@ public class ChessBoard {
         return piece;
     }
 
-    public void movePiece(Position source, Position target) {
-        Piece movingPiece = findPieceByPosition(source);
-        Piece targetPiece = findPieceByPosition(target);
+    public void movePiece(Position sourcePosition, Position targetPosition) {
+        MoveType moveType = MoveFactory.of(sourcePosition, targetPosition);
+        Piece targetPiece = findPieceByPosition(targetPosition);
+        Piece pieceToMove = findPieceByPosition(sourcePosition);
 
-        if (movingPiece.isMovable(target, targetPiece)) {
-//            if (targetPiece != null) {
-//                removePiece(targetPiece);
-//            }
+        validSameTeam(pieceToMove, targetPiece);
+        validMovable(pieceToMove, targetPosition);
 
-            MoveType moveType = MoveFactory.of(source, target);
-            movingPiece.move(moveType, this);
+        if (targetPiece != null) {
+            removePiece(targetPiece);
+        }
+        pieceToMove.move(moveType, this);
+    }
+
+    private void validMovable(Piece pieceToMove, Position targetPosition) {
+        Piece targetPiece = findPieceByPosition(targetPosition);
+        if (pieceToMove.isMovable(targetPiece, targetPosition)) {
+            return;
+        }
+        throw new IllegalArgumentException("해당 말이 갈 수 없는 칸입니다.");
+    }
+
+    private void validSameTeam(Piece pieceToMove, Piece targetPiece) {
+        if (pieceToMove.isSameTeam(targetPiece)) {
+            throw new IllegalArgumentException("해당 칸에 같은 팀의 말이 존재 합니다.");
         }
     }
 
@@ -63,4 +77,7 @@ public class ChessBoard {
         whiteTeam.remove(targetPiece);
     }
 
+    public boolean isExistPiece(Position position) {
+        return findPieceByPosition(position) != null;
+    }
 }

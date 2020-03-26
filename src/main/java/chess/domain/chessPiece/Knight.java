@@ -10,7 +10,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position target, Piece targetPiece) {
+    public boolean isMovable(Piece targetPiece, Position targetPosition) {
         validSameTeam(targetPiece);
         return true;
         //TODO 미구현 ;

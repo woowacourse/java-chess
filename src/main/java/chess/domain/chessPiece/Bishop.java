@@ -11,7 +11,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position targetPosition, Piece targetPiece) {
+    public boolean isMovable(Piece targetPiece, Position targetPosition) {
         validSameTeam(targetPiece);
         return MoveFactory.of(position, targetPosition) instanceof CrossType;
     }

@@ -24,8 +24,8 @@ public class ChessController {
 
             int count = 5;
             while (count-- > 0) {
-                List<String> movePositions = validateInputMoveCommand(InputView.inputMoveCommand());
-                pieceMove(movePositions, chessBoard);
+                List<String> positionsToMove = validateInputMoveCommand(InputView.inputMoveCommand());
+                pieceMove(positionsToMove, chessBoard);
                 OutputView.printChessBoard(chessBoard);
             }
         }

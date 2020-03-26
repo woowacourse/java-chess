@@ -12,9 +12,8 @@ public class Rook extends Piece {
 
 
     @Override
-    public boolean isMovable(Position targetPosition, Piece targetPiece) {
-        validSameTeam(targetPiece);
-        return MoveFactory.of(position, targetPosition) instanceof StraightType;
+    public boolean isMovable(Piece targetPiece, Position targetPosition) {
+        return MoveFactory.of(this.position, targetPosition) instanceof StraightType;
     }
 
     @Override
