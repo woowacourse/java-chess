@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.Piece;
 
 public enum PieceType {
     PAWN("p"),
