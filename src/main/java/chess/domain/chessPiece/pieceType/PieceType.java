@@ -35,4 +35,8 @@ public abstract class PieceType {
     }
 
     public abstract String getName();
+
+    public boolean isSamePieceColor(PieceType pieceType) {
+        return this.pieceColor.equals(pieceType.pieceColor);
+    }
 }

@@ -39,4 +39,8 @@ public class ChessPiece implements Movable, Catchable {
     public String toString() {
         return this.pieceType.getName();
     }
+
+    public boolean isSamePieceColor(ChessPiece targetPiece) {
+        return this.pieceType.isSamePieceColor(targetPiece.pieceType);
+    }
 }
