@@ -2,6 +2,7 @@ package chess.domain.chessPiece;
 
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
+import chess.domain.movefactory.MoveType;
 
 public class King extends Piece {
 
@@ -10,10 +11,8 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(Piece targetPiece, Position targetPosition) {
-        validSameTeam(targetPiece);
-        return Math.abs(position.calculateFileDistance(targetPosition)) <= 1
-                && Math.abs(position.calculateRankDistance(targetPosition)) <= 1;
+    public boolean isMovable(MoveType moveType) {
+        return true;
     }
 
     @Override

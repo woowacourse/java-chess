@@ -1,9 +1,9 @@
 package chess.domain.chessPiece;
 
 import chess.domain.Position;
-import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.movefactory.MoveFactory;
+import chess.domain.movefactory.MoveType;
 import chess.domain.movefactory.StraightType;
 
 public class Pawn extends Piece {
@@ -15,13 +15,13 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Piece targetPiece, Position targetPosition) {
-        validSameTeam(targetPiece);
-        if (this.teamStrategy instanceof BlackTeam) {
-            return blackPawnMovable(targetPosition, targetPiece);
-        }
-        return whitePawnMovable(targetPosition, targetPiece);
-
+    public boolean isMovable(MoveType moveType) {
+//        validSameTeam(targetPiece);
+//        if (this.teamStrategy instanceof BlackTeam) {
+//            return blackPawnMovable(targetPosition, targetPiece);
+//        }
+//        return whitePawnMovable(targetPosition, targetPiece);
+        return true;
     }
 
     private boolean whitePawnMovable(Position targetPosition, Piece targetPiece) {

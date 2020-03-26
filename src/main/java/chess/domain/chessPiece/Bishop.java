@@ -3,7 +3,7 @@ package chess.domain.chessPiece;
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.movefactory.CrossType;
-import chess.domain.movefactory.MoveFactory;
+import chess.domain.movefactory.MoveType;
 
 public class Bishop extends Piece {
     public Bishop(Position position, TeamStrategy teamStrategy) {
@@ -11,9 +11,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Piece targetPiece, Position targetPosition) {
-        validSameTeam(targetPiece);
-        return MoveFactory.of(position, targetPosition) instanceof CrossType;
+    public boolean isMovable(MoveType moveType) {
+        return moveType instanceof CrossType;
     }
 
     @Override

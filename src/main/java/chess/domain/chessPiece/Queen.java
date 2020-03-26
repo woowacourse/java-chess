@@ -2,6 +2,7 @@ package chess.domain.chessPiece;
 
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
+import chess.domain.movefactory.MoveType;
 
 public class Queen extends Piece {
 
@@ -10,8 +11,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(Piece targetPiece, Position targetPosition) {
-        validSameTeam(targetPiece);
+    public boolean isMovable(MoveType moveType) {
         return true;
     }
 

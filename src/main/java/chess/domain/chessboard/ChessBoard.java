@@ -47,17 +47,17 @@ public class ChessBoard {
         Piece pieceToMove = findPieceByPosition(sourcePosition);
 
         validSameTeam(pieceToMove, targetPiece);
-        validMovable(pieceToMove, targetPosition);
+        validMovable(pieceToMove, moveType);
 
         if (targetPiece != null) {
             removePiece(targetPiece);
         }
+
         pieceToMove.move(moveType, this);
     }
 
-    private void validMovable(Piece pieceToMove, Position targetPosition) {
-        Piece targetPiece = findPieceByPosition(targetPosition);
-        if (pieceToMove.isMovable(targetPiece, targetPosition)) {
+    private void validMovable(Piece pieceToMove, MoveType moveType) {
+        if (pieceToMove.isMovable(moveType)) {
             return;
         }
         throw new IllegalArgumentException("해당 말이 갈 수 없는 칸입니다.");
