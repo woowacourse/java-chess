@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.Piece.Distance;
+import chess.util.SmallLetterAsciiConverter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,9 @@ public class Position {
     }
 
     static Position of(String x, String y) {
-        return of(1,1);
+        int convertedX = SmallLetterAsciiConverter.convert(x);
+        int convertedY = SmallLetterAsciiConverter.convert(y);
+        return of(convertedX,convertedY);
     }
 
     static Position of(int x, int y) {
