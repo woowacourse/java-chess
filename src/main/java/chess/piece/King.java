@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.position.Position;
 
+import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
@@ -16,8 +17,7 @@ public class King extends Piece {
         if (start.isNotDistanceOneSquare(end)) {
             throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
         }
-        //구현
-        return null;
+        return Collections.singletonList(end);
     }
 
     @Override

@@ -82,8 +82,12 @@ public class Position {
 		return this.rank == other.rank;
 	}
 
-	public boolean isNotDistanceOneSquare(Position position) {
-		return false;
+	public boolean isNotDistanceOneSquare(Position other) {
+		return !isDistanceOneSquare(other);
+	}
+
+	private boolean isDistanceOneSquare(Position other) {
+		return this.rank.isNear(other.rank) && this.file.isNear(other.file);
 	}
 
 	public File getFile() {

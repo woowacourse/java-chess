@@ -16,6 +16,7 @@ public enum File {
 	H("h", 8);
 
 	private static final String ILLEGAL_FILE_NAME_EXCEPTION_MESSAGE = "올바른 열값이 아닙니다.";
+	private static final int MINIMUM_DISTANCE = 1;
 
 	private final String name;
 	private final int number;
@@ -70,5 +71,9 @@ public enum File {
 
 	public int getNumber() {
 		return this.number;
+	}
+
+	public boolean isNear(File other) {
+		return Math.abs(this.getNumber() - other.getNumber()) <= MINIMUM_DISTANCE;
 	}
 }

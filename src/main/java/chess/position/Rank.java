@@ -16,6 +16,7 @@ public enum Rank {
 	EIGHT("8", 8);
 
 	private static final String ILLEGAL_RANK_NAME_EXCEPTION_MESSAGE = "올바른 행값이 아닙니다.";
+	private static final int MINIMUM_DISTANCE = 1;
 
 	private final String name;
 	private final int number;
@@ -76,5 +77,9 @@ public enum Rank {
 
 	public int getNumber() {
 		return this.number;
+	}
+
+	public boolean isNear(Rank other) {
+		return Math.abs(this.getNumber() - other.getNumber()) <= MINIMUM_DISTANCE;
 	}
 }
