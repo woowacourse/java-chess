@@ -21,6 +21,9 @@ public class ChessGame {
 			Position endPosition = Position.of(InputView.requestPosition());
 			board.move(startPosition, endPosition);
 			OutputView.printBoard(board);
+			if (board.checkGameEnd()) {
+				break;
+			}
 		}
 	}
 }

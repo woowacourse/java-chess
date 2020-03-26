@@ -16,14 +16,19 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.piece.Team;
 import chess.position.File;
 import chess.position.Position;
 
 public class Board {
 	private final Map<Position, Piece> pieces;
+	private Team turn;
+	private boolean finished;
 
 	public Board(Map<Position, Piece> pieces) {
 		this.pieces = pieces;
+		this.turn = Team.WHITE;
+		this.finished = false;
 	}
 
 	public static Board createInitialBoard() {
@@ -70,7 +75,12 @@ public class Board {
 
 		Piece target = pieces.remove(from);
 		target.updateHasMoved();
+		Piece piece1 = pieces.get(to);
+		if (piece1 != null && piece instanceof King) {
+			this.finished = true;
+		}
 		pieces.put(to, target);
+		this.turn = turn.getOppositeTeam();
 	}
 
 	public boolean isExistAnyPieceAt(List<Position> traces) {
@@ -88,5 +98,9 @@ public class Board {
 
 	public Map<Position, Piece> getPieces() {
 		return Collections.unmodifiableMap(this.pieces);
+	}
+
+	public boolean checkGameEnd() {
+		return false;
 	}
 }

@@ -10,4 +10,11 @@ public enum Team {
 	public boolean isWhite() {
 		return this == WHITE;
 	}
+
+	public Team getOppositeTeam() {
+		if(this.isBlack()){
+			return WHITE;
+		}
+		return BLACK;
+	}
 }
