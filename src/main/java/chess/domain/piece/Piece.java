@@ -9,10 +9,10 @@ import chess.domain.piece.state.State;
  */
 public abstract class Piece {
 	private String color;
-	private String name;
+	private String symbol;
 	private State state;
 
-	public Piece(String color, String name) {
+	public Piece(String color, String symbol) {
 		this.color = color;
 		// this.state = new Started();
 	}

@@ -7,10 +7,16 @@ import chess.domain.board.Position;
  *
  *    @author AnHyungJu, LeeHoBin
  */
-public class Started {
-	// protected Position position;
+public class Started implements State {
+	protected Position source;
+	protected Position target;
 
 	public Started(Position position) {
 		// this.position = position;
+	}
+
+	@Override
+	public State move() {
+		return null;
 	}
 }

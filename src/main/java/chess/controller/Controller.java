@@ -19,6 +19,7 @@ public class Controller {
 
 	private static void running() {
 		Command command;
+
 		do {
 			command = readCommand();
 		} while (command.isEnd() || kingDie());

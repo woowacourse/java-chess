@@ -6,5 +6,5 @@ package chess.domain.piece.state;
  *    @author AnHyungJu, LeeHoBin
  */
 public interface State {
-	void move();
+	State move();
 }

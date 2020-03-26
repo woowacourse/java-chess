@@ -12,7 +12,7 @@ import chess.domain.piece.PieceFactory;
  *    @author AnHyungJu, LeeHoBin
  */
 public class ChessBoard {
-	private Map<Position, Piece> board;
+	public static Map<Position, Piece> board;
 
 	public ChessBoard() {
 		board = new HashMap<>();

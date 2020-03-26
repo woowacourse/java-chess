@@ -20,4 +20,8 @@ public enum File {
 	File(String file) {
 		this.file = file;
 	}
+
+	public String getFile() {
+		return file;
+	}
 }

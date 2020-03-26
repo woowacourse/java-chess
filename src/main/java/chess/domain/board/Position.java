@@ -12,8 +12,15 @@ public class Position {
 		this.rank = rank;
 	}
 
-	public static Position of(final File file, final Rank rank) {
-		return PositionCache.BOARD.get(PositionCache.createKey(file, rank));
+	public static Position of(String position) {
+		validateInvalidPosition(position);
+		return PositionCache.BOARD.get(position);
+	}
+
+	private static void validateInvalidPosition(String position) {
+		if (!PositionCache.BOARD.containsKey(position)) {
+			throw new IllegalArgumentException("유효하지 않은 Position을 입력했습니다.");
+		}
 	}
 
 	private static class PositionCache {
@@ -39,7 +46,7 @@ public class Position {
 		}
 
 		private static String createKey(File file, Rank rank) {
-			return file.name() + rank.name();
+			return file.getFile() + rank.getRank();
 		}
 	}
 
