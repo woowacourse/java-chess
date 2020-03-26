@@ -21,11 +21,18 @@ public enum Row {
 		this.index = index;
 	}
 
-	public static Row find(String input) {
+	public static Row findRowType(String input) {
 		return Arrays.stream(values())
 				.filter(row -> row.row.equals(input))
 				.findFirst()
 				.orElseThrow(() -> new NotExistPointException("존재하지 않는 Row 입니다."));
+	}
+
+	public static Row findRowType(int index) {
+		return Arrays.stream(values())
+			.filter(row -> row.index == index)
+			.findFirst()
+			.orElseThrow(() -> new NotExistPointException("존재하지 않는 Row 입니다."));
 	}
 
 	@Override
@@ -35,5 +42,9 @@ public enum Row {
 
 	public int distance(Row row) {
 		return row.index - index;
+	}
+
+	public int getIndex() {
+		return index;
 	}
 }

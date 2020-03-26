@@ -15,7 +15,7 @@ public class Point {
 		String column = location.substring(0, 1);
 		String row = location.substring(1, 2);
 
-		return new Point(Row.find(row), Column.find(column));
+		return new Point(Row.findRowType(row), Column.findColumnType(column));
 	}
 
 	public int getRowDistance(Point point) {
@@ -24,6 +24,14 @@ public class Point {
 
 	public int getColumnDistance(Point point) {
 		return column.distance(point.column);
+	}
+
+	public int getRowIndex() {
+		return row.getIndex();
+	}
+
+	public int getColumnIndex() {
+		return column.getIndex();
 	}
 
 	@Override
@@ -42,6 +50,6 @@ public class Point {
 
 	@Override
 	public String toString() {
-		return row.toString() + column.toString();
+		return column.toString() + row.toString();
 	}
 }

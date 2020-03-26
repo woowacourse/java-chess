@@ -30,8 +30,29 @@ public enum Direction {
         this.column = column;
     }
 
-    public boolean isMovable(int row, int column) {
+    public boolean isMovableLimited(int row, int column) {
         return this.row == row && this.column == column;
+    }
+
+    public boolean isMovableUnlimited(int row, int column) {
+        int changeRow = 0;
+        int changeColumn = 0;
+        for (int i = 1; i < 8; i++) {
+            changeRow += this.row;
+            changeColumn += this.column;
+            if (row == changeRow && column == changeColumn) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 
     public static List<Direction> getBlackPawnDirection() {

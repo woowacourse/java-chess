@@ -15,7 +15,7 @@ public class Knight extends Piece {
     @Override
     public boolean isMovable(Map<Point, Piece> pieces, Point from, Point to) {
         for (Direction direction : Direction.getKnightDirection()) {
-            if (direction.isMovable(from.getRowDistance(to), from.getColumnDistance(to)) && !isSameTeamToTarget(pieces, to)) {
+            if (direction.isMovableLimited(from.getRowDistance(to), from.getColumnDistance(to)) && !isSameTeamToTarget(pieces, to)) {
                 return true;
             }
         }

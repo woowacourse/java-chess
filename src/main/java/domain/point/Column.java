@@ -21,11 +21,18 @@ public enum Column {
 		this.index = index;
 	}
 
-	public static Column find(String input) {
+	public static Column findColumnType(String input) {
 		return Arrays.stream(values())
 				.filter(column -> column.column.equals(input))
 				.findFirst()
 				.orElseThrow(() -> new NotExistPointException("존재하지 않는 Column 입니다."));
+	}
+
+	public static Column findColumnType(int index) {
+		return Arrays.stream(values())
+			.filter(column -> column.index == index)
+			.findFirst()
+			.orElseThrow(() -> new NotExistPointException("존재하지 않는 Row 입니다."));
 	}
 
 	@Override
@@ -35,5 +42,9 @@ public enum Column {
 
 	public int distance(Column column) {
 		return column.index - index;
+	}
+
+	public int getIndex() {
+		return index;
 	}
 }
