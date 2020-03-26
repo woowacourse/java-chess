@@ -17,6 +17,10 @@ public abstract class Piece {
 		return isBlack() == black;
 	}
 
+	public boolean isSameTeam(Piece piece) {
+		return isBlack() == piece.isBlack();
+	}
+
 	protected boolean isBlack() {
 		return Character.isUpperCase(name);
 	}
@@ -28,12 +32,19 @@ public abstract class Piece {
 
 	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
 		Location nowLocation = new Location(now);
-		for (int weight = 1; nowLocation != destination; weight++) {
+
+		for (int weight = 1; ;weight++) {
 			nowLocation = now.calculateNextLocation(destination, weight);
+			if(nowLocation.equals(destination)) {
+				break;
+			}
+			System.out.println(nowLocation);
 			if (board.containsKey(nowLocation)) {
 				return true;
 			}
+
 		}
+
 		return false;
 	}
 }

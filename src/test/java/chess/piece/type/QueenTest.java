@@ -38,7 +38,6 @@ class QueenTest {
 
 		boolean actual = givenPiece.hasObstacle(board, new Location(1, 'c'), new Location(3, 'e'));
 		assertThat(actual).isTrue();
-
 	}
 
 	@DisplayName("퀸 세로 목적지 중간에 장애물이 있는지 확인")

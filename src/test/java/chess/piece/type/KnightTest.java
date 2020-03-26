@@ -20,7 +20,6 @@ class KnightTest {
         boolean rightAfterActual = knight.canMove(now, rightAfter);
         assertThat(rightAfterActual).isTrue();
 
-
         Location cantAfter = new Location(2, 'c');
         boolean cantActual = knight.canMove(now, cantAfter);
         assertThat(cantActual).isFalse();

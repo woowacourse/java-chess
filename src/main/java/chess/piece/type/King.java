@@ -26,6 +26,6 @@ public class King extends Piece {
 
 	@Override
 	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
-		return true;
+		return false;
 	}
 }
