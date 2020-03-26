@@ -27,4 +27,14 @@ public class Rook extends Piece {
         return CACHE.get(color);
     }
 
+    @Override
+    public Set<Square> getAllCheatSheet(Square square) {
+        Set<Square> availableSquares = new HashSet<>();
+        for (int index = -7; index < 8; index++) {
+            availableSquares.add(square.addIfInBoundary(index, 0));
+            availableSquares.add(square.addIfInBoundary(0, index));
+        }
+        availableSquares.remove(square);
+        return availableSquares;
+    }
 }

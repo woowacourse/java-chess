@@ -18,7 +18,7 @@ public class QueenTest {
     @DisplayName("말의 위치(퀸)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeQueen(String input) {
         Piece piece = Queen.getPieceInstance(Color.WHITE);
-        Set<Square> availableSquares = piece.getCheatSheet(Square.of("c1"));
+        Set<Square> availableSquares = piece.getAllCheatSheet(Square.of("c1"));
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(21);
     }

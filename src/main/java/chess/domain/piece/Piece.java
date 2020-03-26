@@ -20,97 +20,25 @@ public abstract class Piece {
         return color.getApplyTypeName(type);
     }
 
-    public Set<Square> getCheatSheet(Square square) {
-        Set<Square> availableSquares = new HashSet<>();
-
-        if (type.equals(Type.QUEEN)) {
-            for (int index = -7; index < 8; index++) {
-                availableSquares.add(square.addIfInBoundary(index, 0));
-                availableSquares.add(square.addIfInBoundary(0, index));
-                availableSquares.add(square.addIfInBoundary(index * -1, index));
-                availableSquares.add(square.addIfInBoundary(index, index));
-            }
-            availableSquares.remove(square);
-            return availableSquares;
-        }
-
-        if (type.equals(Type.BISHOP)) {
-            for (int index = -7; index < 8; index++) {
-                availableSquares.add(square.addIfInBoundary(index * -1, index));
-                availableSquares.add(square.addIfInBoundary(index, index));
-            }
-            availableSquares.remove(square);
-            return availableSquares;
-        }
-
-        if (type.equals(Type.ROOK)) {
-            for (int index = -7; index < 8; index++) {
-                availableSquares.add(square.addIfInBoundary(index, 0));
-                availableSquares.add(square.addIfInBoundary(0, index));
-            }
-            availableSquares.remove(square);
-            return availableSquares;
-        }
-
-        if (type.equals(Type.KING)) {
-            int index = -1;
-            for (int i = 0; i < 2; i++) {
-                availableSquares.add(square.addIfInBoundary(index, 0));
-                availableSquares.add(square.addIfInBoundary(0, index));
-                availableSquares.add(square.addIfInBoundary(index * -1, index));
-                availableSquares.add(square.addIfInBoundary(index, index));
-                index *= -1;
-            }
-            return availableSquares;
-        }
-
-        if (type.equals(Type.KNIGHT)) {
-            int x = -1;
-            int y = 2;
-            for (int i = 0; i < 2; i++) {
-                availableSquares.add(square.addIfInBoundary(x, y));
-                availableSquares.add(square.addIfInBoundary(y, x));
-                availableSquares.add(square.addIfInBoundary(x, (-1) * y));
-                availableSquares.add(square.addIfInBoundary(y * -1, x));
-                x *= -1;
-                y *= -1;
-            }
-            return availableSquares;
-        }
-
-        if (type.equals(Type.PAWN)) {
-            int index = 1;
-            if (color.equals(Color.BLACK)) {
-                index *= -1;
-            }
-            if ((color.equals(Color.BLACK) && square.getRank() == 7) ||
-                    (color.equals(Color.WHITE) && square.getRank() == 2)) {
-                availableSquares.add(square.addIfInBoundary(0, index * 2));
-            }
-            availableSquares.add(square.addIfInBoundary(0, index));
-            return availableSquares;
-        }
-
-        throw new IllegalArgumentException("올바른 타입이 아닙니다");
-    }
+    public abstract Set<Square> getAllCheatSheet(Square square);
 
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         NullChecker.validateNotNull(square, board);
 
         if (type == Type.KNIGHT || type == Type.KING) {
-            return getCheatSheet(square).stream()
+            return getAllCheatSheet(square).stream()
                     .filter(s -> !(board.containsKey(s) && board.get(s).color == color))
                     .collect(Collectors.toSet());
         }
 
         if (type == Type.PAWN) {
-            Set<Square> squares = getCheatSheet(square);
+            Set<Square> squares = getAllCheatSheet(square);
             for (Square s : squares) {
                 if (Math.abs(square.getRank() - s.getRank()) == 1) {
                     Square squareRight = s.addIfInBoundary(-1, 0);
                     Square squareLeft = s.addIfInBoundary(1, 0);
                     if (board.containsKey(s) && color == board.get(s).color) {
-                        squares.removeAll(getCheatSheet(square));
+                        squares.removeAll(getAllCheatSheet(square));
                     }
                     if (board.containsKey(squareRight) && color != board.get(squareRight).color) {
                         squares.add(squareRight);
@@ -128,8 +56,8 @@ public abstract class Piece {
         }
 
         if (type == Type.QUEEN) {
-            Set<Square> squares = getCheatSheet(square);
-            Set<Square> squaresIter = getCheatSheet(square);
+            Set<Square> squares = getAllCheatSheet(square);
+            Set<Square> squaresIter = getAllCheatSheet(square);
             for (Square s : squaresIter) {
                 if (board.containsKey(s)) {
                     int fileDifference = s.getFile() - square.getFile();
@@ -183,8 +111,8 @@ public abstract class Piece {
         }
 
         if (type == Type.BISHOP) {
-            Set<Square> squares = getCheatSheet(square);
-            Set<Square> squaresIter = getCheatSheet(square);
+            Set<Square> squares = getAllCheatSheet(square);
+            Set<Square> squaresIter = getAllCheatSheet(square);
             for (Square s : squaresIter) {
                 if (board.containsKey(s)) {
                     int fileDifference = s.getFile() - square.getFile();
@@ -219,8 +147,8 @@ public abstract class Piece {
         }
 
         if (type == Type.ROOK) {
-            Set<Square> squares = getCheatSheet(square);
-            Set<Square> squaresIter = getCheatSheet(square);
+            Set<Square> squares = getAllCheatSheet(square);
+            Set<Square> squaresIter = getAllCheatSheet(square);
             for (Square s : squaresIter) {
                 if (board.containsKey(s)) {
                     int fileDifference = s.getFile() - square.getFile();

@@ -18,7 +18,7 @@ public class KingTest {
     @DisplayName("말의 위치(king)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeKing(String input) {
         Piece piece = King.getPieceInstance(Color.BLACK);
-        Set<Square> availableSquares = piece.getCheatSheet(Square.of("e7"));
+        Set<Square> availableSquares = piece.getAllCheatSheet(Square.of("e7"));
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(8);
     }

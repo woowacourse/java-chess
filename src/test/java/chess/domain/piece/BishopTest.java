@@ -17,7 +17,7 @@ public class BishopTest {
     @DisplayName("말의 위치(비숍)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeBishop(String input) {
         Piece piece = Bishop.getPieceInstance(Color.WHITE);
-        Set<Square> availableSquares = piece.getCheatSheet(Square.of("d2"));
+        Set<Square> availableSquares = piece.getAllCheatSheet(Square.of("d2"));
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(9);
     }

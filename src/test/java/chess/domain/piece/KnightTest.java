@@ -20,7 +20,7 @@ public class KnightTest {
     @DisplayName("말의 위치(knight)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeKnight(String input) {
         Piece piece = Knight.getPieceInstance(Color.BLACK);
-        Set<Square> availableSquares = piece.getCheatSheet(Square.of("c3"));
+        Set<Square> availableSquares = piece.getAllCheatSheet(Square.of("c3"));
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(8);
     }

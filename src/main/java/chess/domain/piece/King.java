@@ -27,4 +27,17 @@ public class King extends Piece {
         return CACHE.get(color);
     }
 
+    @Override
+    public Set<Square> getAllCheatSheet(Square square) {
+        Set<Square> availableSquares = new HashSet<>();
+        int index = -1;
+        for (int i = 0; i < 2; i++) {
+            availableSquares.add(square.addIfInBoundary(index, 0));
+            availableSquares.add(square.addIfInBoundary(0, index));
+            availableSquares.add(square.addIfInBoundary(index * -1, index));
+            availableSquares.add(square.addIfInBoundary(index, index));
+            index *= -1;
+        }
+        return availableSquares;
+    }
 }

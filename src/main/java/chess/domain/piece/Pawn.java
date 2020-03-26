@@ -27,4 +27,18 @@ public class Pawn extends Piece {
         return CACHE.get(color);
     }
 
+    @Override
+    public Set<Square> getAllCheatSheet(Square square) {
+        Set<Square> availableSquares = new HashSet<>();
+        int index = 1;
+        if (isBlack()) {
+            index *= -1;
+        }
+        if ((isBlack() && square.getRank() == 7) ||
+                (!isBlack() && square.getRank() == 2)) {
+            availableSquares.add(square.addIfInBoundary(0, index * 2));
+        }
+        availableSquares.add(square.addIfInBoundary(0, index));
+        return availableSquares;
+    }
 }

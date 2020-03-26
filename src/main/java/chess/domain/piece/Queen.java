@@ -26,4 +26,17 @@ public class Queen extends Piece {
         NullChecker.validateNotNull(color);
         return CACHE.get(color);
     }
+
+    @Override
+    public Set<Square> getAllCheatSheet(Square square) {
+        Set<Square> availableSquares = new HashSet<>();
+        for (int index = -7; index < 8; index++) {
+            availableSquares.add(square.addIfInBoundary(index, 0));
+            availableSquares.add(square.addIfInBoundary(0, index));
+            availableSquares.add(square.addIfInBoundary(index * -1, index));
+            availableSquares.add(square.addIfInBoundary(index, index));
+        }
+        availableSquares.remove(square);
+        return availableSquares;
+    }
 }
