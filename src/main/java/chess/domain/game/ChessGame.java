@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 import chess.domain.state.State;
 
@@ -9,19 +10,6 @@ public class ChessGame {
 
     public ChessGame(State state) {
         this.state = state;
-    }
-
-    public void command(String input) {
-        String[] tokens = input.split(" ");
-        if (tokens[0].equals("start")) {
-            start();
-        }
-        if (tokens[0].equals("end")) {
-            end();
-        }
-        if (tokens[0].equals("move")) {
-            move(Position.from(tokens[1]), Position.from(tokens[2]));
-        }
     }
 
     public void start() {
@@ -42,5 +30,11 @@ public class ChessGame {
 
     public boolean isFinished() {
         return state.isFinished();
+    }
+
+    public Status status() {
+        double whiteScore = board().calculateScore(Color.WHITE);
+        double blackScore = board().calculateScore(Color.BLACK);
+        return new Status(whiteScore, blackScore);
     }
 }

@@ -21,6 +21,11 @@ public class Ready implements State {
     }
 
     @Override
+    public State status() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Board board() {
         throw new UnsupportedOperationException();
     }
