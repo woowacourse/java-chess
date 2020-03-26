@@ -39,7 +39,7 @@ public class WhiteTeam implements TeamStrategy {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof WhiteTeam;
+	public boolean isBlackTeam() {
+		return false;
 	}
 }

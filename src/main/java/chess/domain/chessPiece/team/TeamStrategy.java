@@ -12,4 +12,6 @@ public interface TeamStrategy {
 	String knightName();
 
 	String rookName();
+
+	boolean isBlackTeam();
 }

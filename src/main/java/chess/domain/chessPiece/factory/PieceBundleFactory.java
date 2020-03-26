@@ -10,7 +10,6 @@ import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.piece.Queen;
 import chess.domain.chessPiece.piece.Rook;
-import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.TeamStrategy;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class PieceBundleFactory {
 		List<Piece> pieceBundle = new ArrayList<>();
 		Rank pawnRank = Rank.SEVEN;
 		Rank otherRank = Rank.EIGHT;
-		if (teamStrategy instanceof BlackTeam) {
+		if (teamStrategy.isBlackTeam()) {
 			pawnRank = Rank.TWO;
 			otherRank = Rank.ONE;
 		}
