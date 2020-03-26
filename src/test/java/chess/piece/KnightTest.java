@@ -22,7 +22,7 @@ public class KnightTest {
 	@DisplayName("나이트는 가로칸*세로칸 = 2를 성립하는 칸만큼 이동할수 있으며 이동 경로를 반환할 수 있다.")
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
-	void rookPathTest(Position start, Position destination, List<Position> trace) {
+	void knightPathTest(Position start, Position destination, List<Position> trace) {
 		Knight knight = new Knight(BLACK);
 		List<Position> actual = knight.findReachablePositions(start, destination);
 		assertThat(actual).isEqualTo(trace);

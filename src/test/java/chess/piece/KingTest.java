@@ -22,7 +22,7 @@ public class KingTest {
 	@DisplayName("킹은 직선, 대각선 1칸만큼 이동가능, 이동 경로를 반환할 수 있다.")
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
-	void rookPathTest(Position start, Position destination, List<Position> trace) {
+	void kingPathTest(Position start, Position destination, List<Position> trace) {
 		King king = new King(BLACK);
 		List<Position> actual = king.findReachablePositions(start, destination);
 		assertThat(actual).isEqualTo(trace);
@@ -45,7 +45,7 @@ public class KingTest {
 	@Test
 	void invalidMovementTest() {
 		King king = new King(BLACK);
-		assertThatThrownBy(() -> king.findReachablePositions(Position.of(A, ONE), Position.of(B, TWO)))
+		assertThatThrownBy(() -> king.findReachablePositions(Position.of(A, ONE), Position.of(B, THREE)))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

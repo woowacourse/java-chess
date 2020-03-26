@@ -21,7 +21,7 @@ import chess.position.Position;
 public class BishopTest {
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
-	void rookPathTest(Position start, Position destination, List<Position> trace) {
+	void bishopPathTest(Position start, Position destination, List<Position> trace) {
 		Bishop bishop = new Bishop(BLACK);
 		List<Position> actual = bishop.findReachablePositions(start, destination);
 		assertThat(actual).isEqualTo(trace);
