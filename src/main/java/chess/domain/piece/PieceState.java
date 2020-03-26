@@ -10,4 +10,6 @@ public interface PieceState {
     PieceState move(Position target, Map<Position, PieceDto> boardDto);
 
     Player getPlayer();
+
+    String getFigure();
 }

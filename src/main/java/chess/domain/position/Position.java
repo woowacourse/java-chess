@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.MovingDirection;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -43,15 +45,15 @@ public class Position {
         return file.toString() + rank.getRank();
     }
 
+    public Position moveByDirection(MovingDirection movingDirection) {
+        return of(this.file.add(movingDirection.getFileDirection()), this.rank.add(movingDirection.getRankDirection()));
+    }
+
     public int getFileDifference(Position target) {
         return file.getFileDifference(target.file);
     }
 
     public int getRankDifference(Position target) {
         return rank.getRankDifference(target.rank);
-    }
-
-    public Position getMovedPosition(int file, int rank) {
-        return of(this.file.add(file), this.rank.add(rank));
     }
 }

@@ -56,7 +56,7 @@ class KingTest {
     void movePolicyException(String input) {
         assertThatThrownBy(() -> whiteKing.move(Position.of(input), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("잘못된 이동 방향입니다.");
     }
 
     @ParameterizedTest
@@ -66,6 +66,6 @@ class KingTest {
         boardDto.put(Position.of(target), new PieceDto(Player.BLACK));
         assertThatThrownBy(() -> whiteKing.move(Position.of(target), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("잘못된 이동 방향입니다.");
     }
 }

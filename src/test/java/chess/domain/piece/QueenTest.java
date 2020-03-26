@@ -49,7 +49,7 @@ class QueenTest {
         boardDto.put(Position.of(path), new PieceDto(Player.WHITE));
         assertThatThrownBy(() -> whiteQueen.move(Position.of(target), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("이동 경로에 장애물이 있습니다.");
     }
 
     @ParameterizedTest
@@ -68,7 +68,7 @@ class QueenTest {
         boardDto.put(Position.of(path), new PieceDto(Player.BLACK));
         assertThatThrownBy(() -> whiteQueen.move(Position.of(target), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("이동 경로에 장애물이 있습니다.");
     }
 
     @ParameterizedTest
@@ -77,7 +77,7 @@ class QueenTest {
     void movePolicyException(String input) {
         assertThatThrownBy(() -> whiteQueen.move(Position.of(input), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("잘못된 이동 방향입니다.");
     }
 
     @ParameterizedTest
@@ -87,7 +87,7 @@ class QueenTest {
         boardDto.put(Position.of(target), new PieceDto(Player.BLACK));
         assertThatThrownBy(() -> whiteQueen.move(Position.of(target), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("잘못된 이동 방향입니다.");
     }
 
 

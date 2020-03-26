@@ -49,7 +49,7 @@ class BishopTest {
         boardDto.put(Position.of(path), new PieceDto(Player.WHITE));
         assertThatThrownBy(() -> whiteBishop.move(Position.of(target), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("이동 경로에 장애물이 있습니다.");
     }
 
     @ParameterizedTest
@@ -63,20 +63,21 @@ class BishopTest {
 
     @ParameterizedTest
     @CsvSource(value = {"A2:B3", "A6:B5", "E6:D5", "G8:F7"}, delimiter = ':')
+    @DisplayName("진행 경로에 적군이 있는 경우 이동 불가")
     void enemyOnPath(String target, String path) {
         boardDto.put(Position.of(path), new PieceDto(Player.BLACK));
         assertThatThrownBy(() -> whiteBishop.move(Position.of(target), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("이동 경로에 장애물이 있습니다.");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"A1", "B2", "D4"})
+    @ValueSource(strings = {"E5"})
     @DisplayName("진행 규칙에 어긋나는 경우 예외 발생")
     void movePolicyException(String target) {
         assertThatThrownBy(() -> whiteBishop.move(Position.of(target), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("잘못된 이동 방향입니다.");
     }
 
     @ParameterizedTest
@@ -86,6 +87,6 @@ class BishopTest {
         boardDto.put(Position.of(target), new PieceDto(Player.BLACK));
         assertThatThrownBy(() -> whiteBishop.move(Position.of(target), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("잘못된 이동 방향입니다.");
     }
 }

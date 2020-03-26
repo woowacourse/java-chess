@@ -18,22 +18,24 @@ public abstract class Piece implements PieceState {
 
     @Override
     public PieceState move(Position target, Map<Position, PieceDto> boardDto) {
-        if (!canMove(target, boardDto)) {
-            throw new IllegalArgumentException("움직일 수 없는 positon입니다.");
-        }
+        validateMove(target, boardDto);
         this.position = target;
         return makePieceState();
     }
 
-    private boolean canMove(Position target, Map<Position, PieceDto> boardDto) {
+    private void validateMove(Position target, Map<Position, PieceDto> boardDto) {
+        validateAlly(target, boardDto);
+        validateMovingPolicy(target, boardDto);
+    }
+
+    private void validateAlly(Position target, Map<Position, PieceDto> boardDto) {
         PieceDto pieceDto = boardDto.get(target);
         if (!Objects.isNull(pieceDto) && pieceDto.getPlayer() == player) {
             throw new IllegalArgumentException("아군의 말 위치로는 이동할 수 없습니다.");
         }
-        return checkMovingPolicy(target, boardDto);
     }
 
-    protected abstract boolean checkMovingPolicy(Position target, Map<Position, PieceDto> boardDto);
+    protected abstract void validateMovingPolicy(Position target, Map<Position, PieceDto> boardDto);
 
     protected abstract PieceState makePieceState();
 

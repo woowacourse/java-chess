@@ -1,12 +1,15 @@
 package chess.domain.piece;
 
+import chess.domain.MovingDirection;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
+import chess.exception.MovingDistanceException;
+import chess.exception.ObstacleOnPathException;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class MovedPawn extends NotMovedPawn {
+public class MovedPawn extends AttackablePawn {
 
     protected MovedPawn(Position position, Player player) {
         super(position, player);
@@ -17,25 +20,18 @@ public class MovedPawn extends NotMovedPawn {
     }
 
     @Override
-    protected boolean checkMovingPolicy(Position target, Map<Position, PieceDto> boardDto) {
-        int fileDifference = position.getFileDifference(target);
-        int rankDifference = position.getRankDifference(target);
-        PieceDto targetPiece = boardDto.get(target);
+    protected void validateMove(Position target, Map<Position, PieceDto> boardDto) {
+        MovingDirection movingDirection = MovingDirection.getDirection(position, target);
 
-        if (checkPawnDirection(rankDifference)) {
-            if (Objects.isNull(targetPiece)) {
-                return Math.abs(rankDifference) == 1 && fileDifference == 0;
+        if (MOVING_DIRECTION_BY_PLAYER.get(player).equals(movingDirection)) {
+            if (position.getRankDifference(target) != movingDirection.getRankDirection()) {
+                throw new MovingDistanceException();
             }
-            return Math.abs(rankDifference) == 1 && Math.abs(fileDifference) == 1;
+            PieceDto piece = boardDto.get(target);
+            if (!Objects.isNull(piece)) {
+                throw new ObstacleOnPathException();
+            }
         }
-        return false;
-    }
-
-    private boolean checkPawnDirection(int rankDifference) {
-        if (player == Player.WHITE) {
-            return rankDifference > 0;
-        }
-        return rankDifference < 0;
     }
 
     @Override

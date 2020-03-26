@@ -52,7 +52,7 @@ public class KnightTest {
     void movePolicyException() {
         assertThatThrownBy(() -> whiteKnight.move(Position.of("C4"), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("잘못된 이동 방향입니다.");
     }
 
     @Test
@@ -61,6 +61,6 @@ public class KnightTest {
         boardDto.put(Position.of("C4"), new PieceDto(Player.BLACK));
         assertThatThrownBy(() -> whiteKnight.move(Position.of("C4"), boardDto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("움직일 수 없는 positon입니다.");
+                .hasMessageContaining("잘못된 이동 방향입니다.");
     }
 }

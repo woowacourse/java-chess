@@ -8,6 +8,6 @@ public class RankTest {
 
     @Test
     void getRankDifferenceTest() {
-        assertThat(Rank.EIGHT.getRankDifference(Rank.FIVE)).isEqualTo(3);
+        assertThat(Rank.EIGHT.getRankDifference(Rank.FIVE)).isEqualTo(-3);
     }
 }

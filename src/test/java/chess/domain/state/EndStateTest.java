@@ -1,11 +1,15 @@
 package chess.domain.state;
 
+import chess.domain.MoveParameter;
+import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.EnumRepositoryBoardInitializer;
-import chess.domain.position.Position;
+import chess.domain.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -29,7 +33,7 @@ class EndStateTest {
     @Test
     @DisplayName("EndState는 move 메서드를 지원하지 않음")
     void move() {
-        assertThatThrownBy(() -> endState.move(Position.of("A1"), Position.of("A2")))
+        assertThatThrownBy(() -> endState.move(MoveParameter.of(Arrays.asList("B1", "A3")), Turn.from(Player.WHITE)))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 

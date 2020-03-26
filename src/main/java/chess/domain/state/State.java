@@ -1,16 +1,16 @@
 package chess.domain.state;
 
+import chess.domain.MoveParameter;
+import chess.domain.Turn;
 import chess.domain.board.Board;
-import chess.domain.position.Position;
 
 public interface State {
 
     State start();
 
-    State move(Position source, Position target);
+    State move(MoveParameter moveParameter, Turn turn);
 
     State end();
 
     Board getBoard();
-
 }

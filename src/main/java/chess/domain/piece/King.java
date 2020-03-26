@@ -1,30 +1,30 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
+import chess.domain.MovingDirection;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
+import chess.exception.MovingDirectionException;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class King extends Piece {
+public class King extends UnchangeablePiece {
 
     private static final String BLACK_KING_UNICODE = "\u265A";
     private static final String WHITE_KING_UNICODE = "\u2654";
-    private static final List<Direction> movingDirection;
-    private static final int MAXIMUM_DISTANCE = 1;
+    private static final List<MovingDirection> MOVING_DIRECTIONS;
 
     static {
-        movingDirection = Arrays.asList(
-                Direction.NORTH,
-                Direction.EAST,
-                Direction.SOUTH,
-                Direction.WEST,
-                Direction.NORTH_EAST,
-                Direction.NORTH_WEST,
-                Direction.SOUTH_EAST,
-                Direction.SOUTH_WEST
+        MOVING_DIRECTIONS = Arrays.asList(
+                MovingDirection.NORTH,
+                MovingDirection.EAST,
+                MovingDirection.SOUTH,
+                MovingDirection.WEST,
+                MovingDirection.NORTH_EAST,
+                MovingDirection.NORTH_WEST,
+                MovingDirection.SOUTH_EAST,
+                MovingDirection.SOUTH_WEST
         );
     }
 
@@ -37,33 +37,23 @@ public class King extends Piece {
     }
 
     @Override
-    protected boolean checkMovingPolicy(Position target, Map<Position, PieceDto> boardDto) {
-        //        List<Position> paths = new LinkedList<>();
-        Direction direction = Direction.getDirection(position, target);
+    protected void validateMovingPolicy(Position target, Map<Position, PieceDto> boardDto) {
+        MovingDirection movingDirection = MovingDirection.getDirection(position, target);
 
-        if (!movingDirection.contains(direction)) {
-            return false;
+        if (!MOVING_DIRECTIONS.contains(movingDirection)) {
+            throw new MovingDirectionException();
         }
 
-        int fileDirection = direction.getFileDirection();
-        int rankDirection = direction.getRankDirection();
-
-        int fileDifference = Math.abs(position.getFileDifference(target));
-        int rankDifference = Math.abs(position.getRankDifference(target));
-        if (rankDifference > MAXIMUM_DISTANCE || fileDifference > MAXIMUM_DISTANCE) {
-            return false;
+        int fileDifference = position.getFileDifference(target);
+        int rankDifference = position.getRankDifference(target);
+        if (!(movingDirection.getFileDirection() == fileDifference &&
+                movingDirection.getRankDirection() == rankDifference)) {
+            throw new MovingDirectionException();
         }
-        //                paths.add(startPathPosition);
-        return true;
     }
 
     @Override
-    protected PieceState makePieceState() {
-        return this;
-    }
-
-    @Override
-    public String toString() {
+    public String getFigure() {
         if (player == Player.BLACK) {
             return BLACK_KING_UNICODE;
         }

@@ -2,12 +2,14 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.EnumRepositoryBoardInitializer;
+import chess.domain.player.Player;
 import chess.domain.state.ReadyState;
 import chess.domain.state.State;
 
 public class ChessGame {
 
     private State state;
+    private Turn turn = Turn.from(Player.WHITE);
 
     public ChessGame() {
         this.state = new ReadyState(new EnumRepositoryBoardInitializer());
@@ -18,7 +20,7 @@ public class ChessGame {
     }
 
     public void move(MoveParameter moveParameter) {
-        state = state.move(moveParameter.getSource(), moveParameter.getTarget());
+        state = state.move(moveParameter, turn);
     }
 
     public void end() {

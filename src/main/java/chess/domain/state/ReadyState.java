@@ -1,8 +1,9 @@
 package chess.domain.state;
 
+import chess.domain.MoveParameter;
+import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
-import chess.domain.position.Position;
 
 public class ReadyState implements State {
 
@@ -18,7 +19,7 @@ public class ReadyState implements State {
     }
 
     @Override
-    public State move(Position source, Position target) {
+    public State move(MoveParameter moveParameter, Turn turn) {
         throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
     }
 

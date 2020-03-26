@@ -1,7 +1,8 @@
 package chess.domain.state;
 
+import chess.domain.MoveParameter;
+import chess.domain.Turn;
 import chess.domain.board.Board;
-import chess.domain.position.Position;
 
 public class EndState implements State {
 
@@ -17,7 +18,7 @@ public class EndState implements State {
     }
 
     @Override
-    public State move(Position source, Position target) {
+    public State move(MoveParameter moveParameter, Turn turn) {
         throw new UnsupportedOperationException("게임이 종료되었습니다.");
     }
 

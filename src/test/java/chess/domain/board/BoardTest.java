@@ -1,7 +1,9 @@
 package chess.domain.board;
 
+import chess.domain.Turn;
 import chess.domain.piece.Knight;
 import chess.domain.piece.PieceState;
+import chess.domain.player.Player;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +23,7 @@ class BoardTest {
     @Test
     void move() {
         Board board = Board.of(new EnumRepositoryBoardInitializer());
-        board.move(Position.of("B8"), Position.of("A6"));
+        board.move(Position.of("B8"), Position.of("A6"), Turn.from(Player.BLACK));
         Map<Position, PieceState> piecePosition = board.getBoard();
 
         assertThat(piecePosition.get(Position.of("A6")))

@@ -1,7 +1,8 @@
 package chess.domain.state;
 
+import chess.domain.MoveParameter;
+import chess.domain.Turn;
 import chess.domain.board.Board;
-import chess.domain.position.Position;
 
 public class RunningState implements State {
 
@@ -17,8 +18,8 @@ public class RunningState implements State {
     }
 
     @Override
-    public State move(Position source, Position target) {
-        board.move(source, target);
+    public State move(MoveParameter moveParameter, Turn turn) {
+        board.move(moveParameter.getSource(), moveParameter.getTarget(), turn);
         return this;
     }
 
