@@ -56,4 +56,12 @@ public class Rank {
 	public List<Piece> getPieces() {
 		return Collections.unmodifiableList(pieces);
 	}
+
+	public Piece findPiece(int x) {
+		return pieces.get(x);
+	}
+
+	public void changePiece(int x, Piece piece) {
+		pieces.set(x, piece);
+	}
 }

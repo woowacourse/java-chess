@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.Rook;
 
 public class RankTest {
 	@Test
@@ -54,5 +57,21 @@ public class RankTest {
 	@DisplayName("Piece 한 줄 생성")
 	void createPieces() {
 		assertThat(Rank.createPieces(0, Color.WHITE)).isInstanceOf(Rank.class);
+	}
+
+
+	@Test
+	@DisplayName("해당 위치의 피스를 반환")
+	void findPiece() {
+		assertThat(Rank.createPieces(0, Color.WHITE).findPiece(0)).isInstanceOf(Rook.class);
+	}
+
+	@Test
+	@DisplayName("해당 위치에 피스를 변경")
+	void changePiece() {
+		Rank rank = Rank.createBlanks(2);
+		Piece piece = new Pawn(Position.from("a3"), Color.WHITE);
+		rank.changePiece(0, piece);
+		assertThat(rank.findPiece(0)).isEqualTo(piece);
 	}
 }
