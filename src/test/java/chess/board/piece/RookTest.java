@@ -1,5 +1,7 @@
 package chess.board.piece;
 
+import chess.board.MoveInfo;
+import chess.board.Rank;
 import chess.board.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,6 +15,6 @@ class RookTest {
     @CsvSource(value = {"3,0,true", "3,-1,false"})
     void canMove(int file, int rank, boolean expect) {
         Piece rook = new Rook(Team.BLACK);
-        assertThat(rook.canMove(new Vector(file, rank))).isEqualTo(expect);
+        assertThat(rook.canMove(new MoveInfo(new Vector(file, rank), Rank.FIVE), new Blank())).isEqualTo(expect);
     }
 }

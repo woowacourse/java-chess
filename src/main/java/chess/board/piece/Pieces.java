@@ -15,7 +15,7 @@ public enum Pieces {
     WHITE_KNIGHT(new Knight(Team.WHITE), "n"),
     WHITE_ROOK(new Rook(Team.WHITE), "r"),
     WHITE_PAWN(new Pawn(Team.WHITE), "p"),
-    EMPTY(null, ".");
+    BLANK(new Blank(), ".");
 
     private final Piece piece;
     private final String token;
@@ -31,5 +31,9 @@ public enum Pieces {
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new)
                 .piece;
+    }
+
+    public Piece getPiece() {
+        return piece;
     }
 }

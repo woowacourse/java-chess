@@ -1,15 +1,20 @@
 package chess.board.piece;
 
-import chess.board.Vector;
+import chess.board.MoveInfo;
 
 public class Bishop extends Piece {
 
+    private static final int BISHOP_SCORE = 3;
+
     public Bishop(final Team team) {
-        super(team);
+        super(team, BISHOP_SCORE);
     }
 
     @Override
-    public boolean canMove(final Vector vector) {
-        return vector.isDiagonal();
+    public boolean canMove(final MoveInfo moveInfo, final Piece targetPiece) {
+        if (targetPiece.isSameTeam(this.team)) {
+            return false;
+        }
+        return moveInfo.isDiagonal();
     }
 }

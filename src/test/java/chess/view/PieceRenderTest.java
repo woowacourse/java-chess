@@ -4,7 +4,6 @@ import chess.board.piece.King;
 import chess.board.piece.Piece;
 import chess.board.piece.Team;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -26,16 +25,4 @@ class PieceRenderTest {
         assertThat(actual).isEqualTo(expect);
     }
 
-    @DisplayName("piece가 null인 경우 . 반환한다.")
-    @Test
-    void name() {
-        //given
-        Piece piece = null;
-
-        //when
-        String actual = PieceRender.findTokenByPiece(piece);
-
-        //then
-        assertThat(actual).isEqualTo(".");
-    }
 }

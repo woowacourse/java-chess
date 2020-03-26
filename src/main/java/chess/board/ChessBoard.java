@@ -1,58 +1,84 @@
 package chess.board;
 
+import chess.board.piece.Blank;
 import chess.board.piece.Direction;
-import chess.board.piece.Piece;
+import chess.board.piece.Team;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class ChessBoard {
-    private final Map<Coordinate, Piece> chessBoard;
+    private final Map<Coordinate, Tile> chessBoard;
 
-    public ChessBoard(BoardGenerator boardGenerator) {
-        this.chessBoard = boardGenerator.generate();
+    private ChessBoard(final Map<Coordinate, Tile> chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
-    public Map<Coordinate, Piece> getChessBoard() {
+    public static ChessBoard empty() {
+        Map<Coordinate, Tile> emptyBoard = new HashMap<>();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                Coordinate coordinate = Coordinate.of(file, rank);
+                emptyBoard.put(coordinate, new Tile(coordinate, new Blank()));
+            }
+        }
+        return new ChessBoard(emptyBoard);
+    }
+
+    public Map<Coordinate, Tile> getChessBoard() {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public boolean move(String sourceKey, String targetKey) {
-        Coordinate source = Coordinate.of(sourceKey);
-        Coordinate target = Coordinate.of(targetKey);
-        if (isAlliance(source, target)) {
-            return false;
+    public MoveResult move(String sourceKey, String targetKey) {
+        Tile sourceTile = chessBoard.get(Coordinate.of(sourceKey));
+        Tile targetTile = chessBoard.get(Coordinate.of(targetKey));
+
+        if (sourceTile.canNotReach(targetTile)) {
+            return MoveResult.FAIL;
         }
 
-        Vector vector = target.calculateVector(source);
-        Piece piece = chessBoard.get(source);
-        if (!piece.canMove(vector)) {
-            return false;
+        Directions directions = sourceTile.findPath(targetTile);
+
+        Coordinate next = Coordinate.of(sourceKey);
+        boolean notExist = true;
+        while (directions.isNotEmpty() && notExist) {
+            Direction direction = directions.poll();
+            next = next.move(direction);
+            notExist = chessBoard.get(next).isBlank();
+        }
+        if (!notExist) {
+            return MoveResult.FAIL;
         }
 
-        List<Direction> directions = piece.findPath(vector);
-        Coordinate next = source;
+        MoveResult moveResult = MoveResult.SUCCESS;
 
-        for (int i = 0; i < directions.size() - 1; i++) {
-            next = next.move(directions.get(i));
-            if (!Objects.isNull(chessBoard.get(next))) {
-                return false;
-            }
+        if (targetTile.isKing()) {
+            moveResult = MoveResult.WIN;
         }
 
-        chessBoard.put(source, null);
-        chessBoard.put(target, piece);
-        return true;
+        targetTile.replacePiece(sourceTile);
+        return moveResult;
     }
 
-    private boolean isAlliance(final Coordinate source, final Coordinate target) {
-        Piece sourcePiece = chessBoard.get(source);
-        Piece targetPiece = chessBoard.get(target);
-        if (Objects.isNull(sourcePiece) || Objects.isNull(targetPiece)) {
-            return false;
+    public double calculateScore(Team team) {
+        Score sum = Score.zero();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                Coordinate coordinate = Coordinate.of(file, rank);
+                sum = sum.add(chessBoard.get(coordinate), team);
+            }
+            sum = sum.subtractPawnScore();
         }
-        return sourcePiece.isSameTeam(targetPiece);
+        return sum.getSum();
+    }
+
+    public void put(final Tile tile) {
+        this.chessBoard.put(tile.getCoordinate(), tile);
+    }
+
+    public boolean isNotSameTeam(final String source, final Team currentTeam) {
+        Tile tile = this.chessBoard.get(Coordinate.of(source));
+        return !tile.isSameTeam(currentTeam);
     }
 }

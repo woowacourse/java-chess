@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.board.piece.Bishop;
+import chess.board.piece.Blank;
 import chess.board.piece.King;
 import chess.board.piece.Knight;
 import chess.board.piece.Pawn;
@@ -16,7 +17,8 @@ public enum PieceRender {
     BISHOP(Bishop.class, (piece) -> piece.isBlack() ? "B" : "b"),
     KNIGHT(Knight.class, (piece) -> piece.isBlack() ? "N" : "n"),
     ROOK(Rook.class, (piece) -> piece.isBlack() ? "R" : "r"),
-    PAWN(Pawn.class, (piece) -> piece.isBlack() ? "P" : "p");
+    PAWN(Pawn.class, (piece) -> piece.isBlack() ? "P" : "p"),
+    BLANK(Blank.class, (piece -> "."));
 
     private final Class<? extends Piece> pieceClass;
     private final RenderStrategy renderStrategy;
@@ -27,10 +29,6 @@ public enum PieceRender {
     }
 
     public static String findTokenByPiece(Piece piece) {
-        if (piece == null) {
-            return ".";
-        }
-
         return Arrays.stream(values())
                 .filter(render -> render.pieceClass.equals(piece.getClass()))
                 .findFirst()
