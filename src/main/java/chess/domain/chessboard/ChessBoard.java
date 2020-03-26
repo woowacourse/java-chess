@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-	private static final String ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다.";
 	private static final int INIT_KING_COUNT = 2;
 	private static final int ONE_PAWN_COUNT = 1;
 	private static final double ONE_PAWN_BONUS = 0.5;
 	private static final int ZERO = 0;
+	private static final String ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다.";
 
 	private final List<Position> chessBoard;
 	private final List<Piece> pieces;
