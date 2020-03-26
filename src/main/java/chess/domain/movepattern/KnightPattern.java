@@ -22,6 +22,6 @@ public class KnightPattern implements MovePattern {
 	}
 
 	public Position getTargetPosition() {
-		return targetPosition;
+		return this.targetPosition;
 	}
 }
