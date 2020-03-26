@@ -4,6 +4,7 @@ import chess.domain.Side;
 import chess.domain.position.Position;
 
 public abstract class Piece implements Movable {
+	protected String name;
 	protected Side side;
 	protected Position position;
 
