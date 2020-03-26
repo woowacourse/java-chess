@@ -28,9 +28,13 @@ public class ChessBoard {
 
 	public ChessBoard() {
 		this.chessBoard = ChessBoardFactory.create();
+		this.pieces = initPieces();
+	}
+
+	private List<Piece> initPieces() {
 		List<Piece> pieces = PieceBundleFactory.createPieceSet(new BlackTeam());
 		pieces.addAll(PieceBundleFactory.createPieceSet(new WhiteTeam()));
-		this.pieces = pieces;
+		return pieces;
 	}
 
 	public void movePiece(Position sourcePosition, Position targetPosition) {
@@ -42,12 +46,6 @@ public class ChessBoard {
 
 		removeAttackedPiece(findPieceByPosition(targetPosition));
 		pieceToMove.move(movePattern, this);
-	}
-
-	public void removeAttackedPiece(Piece targetPiece) {
-		if (targetPiece != null) {
-			pieces.remove(targetPiece);
-		}
 	}
 
 	private void validateTargetTeam(Position sourcePosition, Position targetPosition) {
@@ -73,6 +71,12 @@ public class ChessBoard {
 			return;
 		}
 		pieceToMove.validateMovable(movePattern);
+	}
+
+	public void removeAttackedPiece(Piece targetPiece) {
+		if (targetPiece != null) {
+			pieces.remove(targetPiece);
+		}
 	}
 
 	public Piece findPieceByPosition(Position position) {
