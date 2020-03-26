@@ -58,5 +58,4 @@ public class BoardFactory {
         }
         return new Row(chessPieces);
     }
-
 }

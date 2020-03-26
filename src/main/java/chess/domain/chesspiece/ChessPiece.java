@@ -20,7 +20,8 @@ public abstract class ChessPiece {
 
     public String getName() {
         String name = chessPieceInfo.getName();
-        if(team == Team.BLACK){
+
+        if (team == Team.BLACK) {
             return name.toUpperCase();
         }
         return name;

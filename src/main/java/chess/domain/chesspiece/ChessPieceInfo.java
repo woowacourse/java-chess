@@ -42,7 +42,11 @@ public enum ChessPieceInfo {
             LEFT,
             RIGHT
     )),
-    PAWN("p", 1, Collections.EMPTY_LIST),
+    PAWN("p", 1, Arrays.asList(
+            UP,
+            LEFT_UP,
+            RIGHT_UP
+    )),
     BLANK(".", 0, Collections.EMPTY_LIST);
 
     private String name;

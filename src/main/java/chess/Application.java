@@ -52,6 +52,7 @@ public class Application {
         try {
             chessBoard.move(movingInfo);
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
             OutputView.printWrongPositionMessage();
         }
     }
