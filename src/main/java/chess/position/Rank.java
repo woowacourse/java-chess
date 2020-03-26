@@ -30,11 +30,11 @@ public enum Rank {
 		if (start.getNumber() > end.getNumber()) {
 			return Arrays.stream(values())
 				.sorted(Comparator.reverseOrder())
-				.filter(rank -> rank.getNumber() < start.getNumber() && rank.getNumber() >= end.getNumber())
+				.filter(rank -> rank.getNumber() < start.getNumber() && rank.getNumber() > end.getNumber())
 				.collect(Collectors.toList());
 		}
 		return Arrays.stream(values())
-			.filter(rank -> rank.getNumber() > start.getNumber() && rank.getNumber() <= end.getNumber())
+			.filter(rank -> rank.getNumber() > start.getNumber() && rank.getNumber() < end.getNumber())
 			.collect(Collectors.toList());
 	}
 

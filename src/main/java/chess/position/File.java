@@ -30,11 +30,11 @@ public enum File {
 		if (start.getNumber() > end.getNumber()) {
 			return Arrays.stream(values())
 				.sorted(Comparator.reverseOrder())
-				.filter(file -> file.getNumber() < start.getNumber() && file.getNumber() >= end.getNumber())
+				.filter(file -> file.getNumber() < start.getNumber() && file.getNumber() > end.getNumber())
 				.collect(Collectors.toList());
 		}
 		return Arrays.stream(values())
-			.filter(file -> file.getNumber() > start.getNumber() && file.getNumber() <= end.getNumber())
+			.filter(file -> file.getNumber() > start.getNumber() && file.getNumber() < end.getNumber())
 			.collect(Collectors.toList());
 	}
 
