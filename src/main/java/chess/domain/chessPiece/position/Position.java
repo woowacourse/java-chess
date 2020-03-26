@@ -2,9 +2,9 @@ package chess.domain.chessPiece.position;
 
 import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.movetype.Direction;
-import chess.domain.movetype.KnightType;
-import chess.domain.movetype.MoveType;
+import chess.domain.movepattern.Direction;
+import chess.domain.movepattern.KnightPattern;
+import chess.domain.movepattern.MovePattern;
 
 import java.util.Objects;
 
@@ -63,23 +63,23 @@ public class Position {
 		return file.getNumber() - target.file.getNumber();
 	}
 
-	public void move(MoveType moveType, ChessBoard chessBoard) {
-		moveWhenKnightType(moveType);
-		moveWhenStraight(moveType, chessBoard);
-		moveWhenCross(moveType, chessBoard);
+	public void move(MovePattern movePattern, ChessBoard chessBoard) {
+		moveWhenKnightType(movePattern);
+		moveWhenStraight(movePattern, chessBoard);
+		moveWhenCross(movePattern, chessBoard);
 	}
 
-	private void moveWhenKnightType(MoveType moveType) {
-		if (moveType instanceof KnightType) {
-			Position target = ((KnightType) moveType).getTargetPosition();
+	private void moveWhenKnightType(MovePattern movePattern) {
+		if (movePattern instanceof KnightPattern) {
+			Position target = ((KnightPattern) movePattern).getTargetPosition();
 			this.file = target.file;
 			this.rank = target.rank;
 		}
 	}
 
-	private void moveWhenStraight(MoveType moveType, ChessBoard chessBoard) {
-		Direction direction = moveType.getDirection();
-		int count = moveType.getCount();
+	private void moveWhenStraight(MovePattern movePattern, ChessBoard chessBoard) {
+		Direction direction = movePattern.getDirection();
+		int count = movePattern.getCount();
 		int xDegree = this.file.getNumber();
 		int yDegree = this.rank.getNumber();
 
@@ -117,9 +117,9 @@ public class Position {
 		return;
 	}
 
-	private void moveWhenCross(MoveType moveType, ChessBoard chessBoard) {
-		Direction direction = moveType.getDirection();
-		int count = moveType.getCount();
+	private void moveWhenCross(MovePattern movePattern, ChessBoard chessBoard) {
+		Direction direction = movePattern.getDirection();
+		int count = movePattern.getCount();
 		int xDegree = this.file.getNumber();
 		int yDegree = this.rank.getNumber();
 

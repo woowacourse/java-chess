@@ -1,14 +1,14 @@
-package chess.domain.movetype;
+package chess.domain.movepattern;
 
 import chess.domain.chessPiece.position.Position;
 
-public class CrossType implements MoveType {
+public class CrossPattern implements MovePattern {
 	private static final int ZERO = 0;
 
 	private final Direction direction;
 	private final int count;
 
-	public CrossType(Position source, Position target) {
+	public CrossPattern(Position source, Position target) {
 		this.direction = findDirection(source, target);
 		this.count = findCount(source, target);
 	}

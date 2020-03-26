@@ -2,8 +2,8 @@ package chess.domain.chessPiece.piece;
 
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movetype.CrossType;
-import chess.domain.movetype.MoveType;
+import chess.domain.movepattern.CrossPattern;
+import chess.domain.movepattern.MovePattern;
 
 public class Bishop extends Piece {
 	private static final int BISHOP_SCORE = 3;
@@ -15,8 +15,8 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public boolean isMovable(MoveType moveType) {
-		return moveType instanceof CrossType;
+	public boolean isMovable(MovePattern movePattern) {
+		return movePattern instanceof CrossPattern;
 	}
 
 	@Override

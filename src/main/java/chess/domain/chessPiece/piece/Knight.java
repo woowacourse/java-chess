@@ -2,8 +2,8 @@ package chess.domain.chessPiece.piece;
 
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movetype.KnightType;
-import chess.domain.movetype.MoveType;
+import chess.domain.movepattern.KnightPattern;
+import chess.domain.movepattern.MovePattern;
 
 public class Knight extends Piece {
 	private static final double KNIGHT_SCORE = 2.5;
@@ -15,8 +15,8 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public boolean isMovable(MoveType moveType) {
-		return moveType instanceof KnightType;
+	public boolean isMovable(MovePattern movePattern) {
+		return movePattern instanceof KnightPattern;
 	}
 
 	@Override

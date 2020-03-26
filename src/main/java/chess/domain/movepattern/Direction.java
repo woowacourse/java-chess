@@ -1,4 +1,4 @@
-package chess.domain.movetype;
+package chess.domain.movepattern;
 
 public enum Direction {
 	UP,

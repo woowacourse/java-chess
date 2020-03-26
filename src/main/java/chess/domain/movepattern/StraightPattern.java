@@ -1,14 +1,14 @@
-package chess.domain.movetype;
+package chess.domain.movepattern;
 
 import chess.domain.chessPiece.position.Position;
 
-public class StraightType implements MoveType {
+public class StraightPattern implements MovePattern {
 	private static final int ZERO = 0;
 
 	private final Direction direction;
 	private final int count;
 
-	public StraightType(Position source, Position target) {
+	public StraightPattern(Position source, Position target) {
 		this.direction = findDirection(source, target);
 		this.count = findCount(source, target);
 	}

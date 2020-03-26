@@ -3,8 +3,8 @@ package chess.domain.chessPiece.piece;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movetype.Direction;
-import chess.domain.movetype.MoveType;
+import chess.domain.movepattern.Direction;
+import chess.domain.movepattern.MovePattern;
 
 public class Pawn extends Piece {
 	private static final int PAWN_NORMAL_MOVE_RANGE = 1;
@@ -18,38 +18,38 @@ public class Pawn extends Piece {
 		super(position, teamStrategy);
 	}
 
-	public boolean isMovable(MoveType moveType, Piece targetPiece) {
+	public boolean isMovable(MovePattern movePattern, Piece targetPiece) {
 		if (this.teamStrategy instanceof BlackTeam) {
-			return blackPawnMovable(moveType, targetPiece);
+			return blackPawnMovable(movePattern, targetPiece);
 		}
-		return whitePawnMovable(moveType, targetPiece);
+		return whitePawnMovable(movePattern, targetPiece);
 	}
 
-	private boolean whitePawnMovable(MoveType moveType, Piece targetPiece) {
+	private boolean whitePawnMovable(MovePattern movePattern, Piece targetPiece) {
 		if (targetPiece != null) {
-			return moveType.getDirection() == Direction.DOWN_RIGHT
-					|| moveType.getDirection() == Direction.DOWN_LEFT && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
+			return movePattern.getDirection() == Direction.DOWN_RIGHT
+					|| movePattern.getDirection() == Direction.DOWN_LEFT && movePattern.getCount() == PAWN_NORMAL_MOVE_RANGE;
 		}
 		if (this.position.isPawnStartLine(this)) {
-			return moveType.getDirection() == Direction.DOWN && moveType.getCount() <= PAWN_FIRST_MOVE_RANGE;
+			return movePattern.getDirection() == Direction.DOWN && movePattern.getCount() <= PAWN_FIRST_MOVE_RANGE;
 		}
-		return moveType.getDirection() == Direction.DOWN && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
+		return movePattern.getDirection() == Direction.DOWN && movePattern.getCount() == PAWN_NORMAL_MOVE_RANGE;
 	}
 
-	private boolean blackPawnMovable(MoveType moveType, Piece targetPiece) {
+	private boolean blackPawnMovable(MovePattern movePattern, Piece targetPiece) {
 		if (targetPiece != null) {
-			return moveType.getDirection() == Direction.UP_RIGHT
-					|| moveType.getDirection() == Direction.UP_LEFT && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
+			return movePattern.getDirection() == Direction.UP_RIGHT
+					|| movePattern.getDirection() == Direction.UP_LEFT && movePattern.getCount() == PAWN_NORMAL_MOVE_RANGE;
 		}
 		if (this.position.isPawnStartLine(this)) {
-			return moveType.getDirection() == Direction.UP && moveType.getCount() <= PAWN_FIRST_MOVE_RANGE;
+			return movePattern.getDirection() == Direction.UP && movePattern.getCount() <= PAWN_FIRST_MOVE_RANGE;
 		}
-		return moveType.getDirection() == Direction.UP && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
+		return movePattern.getDirection() == Direction.UP && movePattern.getCount() == PAWN_NORMAL_MOVE_RANGE;
 	}
 
 
 	@Override
-	public boolean isMovable(MoveType moveType) {
+	public boolean isMovable(MovePattern movePattern) {
 		throw new UnsupportedOperationException(ERROR_MESSAGE_UNSUPPORTED_METHOD);
 	}
 

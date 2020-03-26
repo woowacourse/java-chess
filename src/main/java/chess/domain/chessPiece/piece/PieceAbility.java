@@ -1,10 +1,10 @@
 package chess.domain.chessPiece.piece;
 
 import chess.domain.chessPiece.position.Position;
-import chess.domain.movetype.MoveType;
+import chess.domain.movepattern.MovePattern;
 
 public interface PieceAbility {
-	boolean isMovable(MoveType moveType);
+	boolean isMovable(MovePattern movePattern);
 
 	String pieceName();
 

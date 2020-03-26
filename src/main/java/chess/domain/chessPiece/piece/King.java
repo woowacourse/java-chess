@@ -2,9 +2,9 @@ package chess.domain.chessPiece.piece;
 
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movetype.CrossType;
-import chess.domain.movetype.MoveType;
-import chess.domain.movetype.StraightType;
+import chess.domain.movepattern.CrossPattern;
+import chess.domain.movepattern.MovePattern;
+import chess.domain.movepattern.StraightPattern;
 
 public class King extends Piece {
 	private static final int KING_SCORE = 0;
@@ -16,8 +16,8 @@ public class King extends Piece {
 	}
 
 	@Override
-	public boolean isMovable(MoveType moveType) {
-		return (moveType instanceof StraightType || moveType instanceof CrossType) && moveType.getCount() == 1;
+	public boolean isMovable(MovePattern movePattern) {
+		return (movePattern instanceof StraightPattern || movePattern instanceof CrossPattern) && movePattern.getCount() == 1;
 	}
 
 	@Override

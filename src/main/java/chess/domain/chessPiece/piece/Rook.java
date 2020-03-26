@@ -2,8 +2,8 @@ package chess.domain.chessPiece.piece;
 
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movetype.MoveType;
-import chess.domain.movetype.StraightType;
+import chess.domain.movepattern.MovePattern;
+import chess.domain.movepattern.StraightPattern;
 
 public class Rook extends Piece {
 	private static final int ROOK_SCORE = 5;
@@ -15,8 +15,8 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public boolean isMovable(MoveType moveType) {
-		return moveType instanceof StraightType;
+	public boolean isMovable(MovePattern movePattern) {
+		return movePattern instanceof StraightPattern;
 	}
 
 	@Override

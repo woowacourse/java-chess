@@ -2,8 +2,8 @@ package chess.domain.chessPiece.piece;
 
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.BlackTeam;
-import chess.domain.movetype.MoveType;
-import chess.domain.movetype.MoveTypeFactory;
+import chess.domain.movepattern.MovePattern;
+import chess.domain.movepattern.MovePatternFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +16,10 @@ class KnightTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("f3");
 
-		MoveType moveType = MoveTypeFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.of(source, target);
 		Piece knight = new Knight(source, new BlackTeam());
 
-		assertThat(knight.isMovable(moveType)).isTrue();
+		assertThat(knight.isMovable(movePattern)).isTrue();
 	}
 
 	@Test
@@ -28,9 +28,9 @@ class KnightTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("e3");
 
-		MoveType moveType = MoveTypeFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.of(source, target);
 		Piece knight = new Knight(source, new BlackTeam());
 
-		assertThat(knight.isMovable(moveType)).isFalse();
+		assertThat(knight.isMovable(movePattern)).isFalse();
 	}
 }

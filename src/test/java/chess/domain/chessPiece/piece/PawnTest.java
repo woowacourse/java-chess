@@ -3,8 +3,8 @@ package chess.domain.chessPiece.piece;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.WhiteTeam;
-import chess.domain.movetype.MoveType;
-import chess.domain.movetype.MoveTypeFactory;
+import chess.domain.movepattern.MovePattern;
+import chess.domain.movepattern.MovePatternFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +18,9 @@ class PawnTest {
 		Position targetPosition = Position.of("b4");
 
 		Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
-		MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
+		MovePattern movePattern = MovePatternFactory.of(sourcePosition, targetPosition);
 
-		assertThat(blackPawn.isMovable(moveType, null)).isTrue();
+		assertThat(blackPawn.isMovable(movePattern, null)).isTrue();
 	}
 
 	@Test
@@ -30,9 +30,9 @@ class PawnTest {
 		Position targetPosition = Position.of("b5");
 
 		Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
-		MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
+		MovePattern movePattern = MovePatternFactory.of(sourcePosition, targetPosition);
 
-		assertThat(blackPawn.isMovable(moveType, null)).isFalse();
+		assertThat(blackPawn.isMovable(movePattern, null)).isFalse();
 	}
 
 	@Test
@@ -40,15 +40,15 @@ class PawnTest {
 	void isMovableAttack() {
 		Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
 		Piece whitePawn = new Pawn(Position.of("c3"), new WhiteTeam());
-		MoveType moveType = MoveTypeFactory.of(blackPawn.position, whitePawn.position);
-		assertThat(blackPawn.isMovable(moveType, whitePawn)).isTrue();
+		MovePattern movePattern = MovePatternFactory.of(blackPawn.position, whitePawn.position);
+		assertThat(blackPawn.isMovable(movePattern, whitePawn)).isTrue();
 	}
 
 	@Test
 	@DisplayName("폰 뒤로 이동 테스트")
 	void isMovableFalse() {
 		Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
-		MoveType moveType = MoveTypeFactory.of(blackPawn.position, Position.of("b1"));
-		assertThat(blackPawn.isMovable(moveType, null)).isFalse();
+		MovePattern movePattern = MovePatternFactory.of(blackPawn.position, Position.of("b1"));
+		assertThat(blackPawn.isMovable(movePattern, null)).isFalse();
 	}
 }

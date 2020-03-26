@@ -8,7 +8,7 @@ import chess.domain.chessPiece.position.File;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.position.Rank;
 import chess.domain.chessPiece.team.BlackTeam;
-import chess.domain.movetype.MoveTypeFactory;
+import chess.domain.movepattern.MovePatternFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,7 +56,7 @@ public class ChessBoardTest {
 		Position source = Position.of("a3");
 		Position target = Position.of("a5");
 		Piece piece = new Rook(source, new BlackTeam());
-		piece.move(MoveTypeFactory.of(source, target), chessBoard);
+		piece.move(MovePatternFactory.of(source, target), chessBoard);
 
 		assertThat(piece.isEqualPosition(Position.of("a5"))).isTrue();
 	}
@@ -67,7 +67,7 @@ public class ChessBoardTest {
 		Position source = Position.of("a5");
 		Position target = Position.of("a3");
 		Piece piece = new Rook(source, new BlackTeam());
-		piece.move(MoveTypeFactory.of(source, target), chessBoard);
+		piece.move(MovePatternFactory.of(source, target), chessBoard);
 
 		assertThat(piece.isEqualPosition(Position.of("a3"))).isTrue();
 	}
@@ -78,7 +78,7 @@ public class ChessBoardTest {
 		Position source = Position.of("a3");
 		Position target = Position.of("h3");
 		Piece piece = new Rook(source, new BlackTeam());
-		piece.move(MoveTypeFactory.of(source, target), chessBoard);
+		piece.move(MovePatternFactory.of(source, target), chessBoard);
 
 		assertThat(piece.isEqualPosition(Position.of("h3"))).isTrue();
 	}
@@ -89,7 +89,7 @@ public class ChessBoardTest {
 		Position source = Position.of("g3");
 		Position target = Position.of("b3");
 		Piece piece = new Rook(source, new BlackTeam());
-		piece.move(MoveTypeFactory.of(source, target), chessBoard);
+		piece.move(MovePatternFactory.of(source, target), chessBoard);
 		assertThat(piece.isEqualPosition(Position.of("b3"))).isTrue();
 	}
 
@@ -99,7 +99,7 @@ public class ChessBoardTest {
 		Position source = Position.of("c3");
 		Position target = Position.of("e5");
 		Piece piece = new Bishop(source, new BlackTeam());
-		piece.move(MoveTypeFactory.of(source, target), chessBoard);
+		piece.move(MovePatternFactory.of(source, target), chessBoard);
 
 		assertThat(piece.isEqualPosition(Position.of("e5"))).isTrue();
 	}
@@ -110,7 +110,7 @@ public class ChessBoardTest {
 		Position source = Position.of("d4");
 		Position target = Position.of("e3");
 		Piece piece = new Bishop(source, new BlackTeam());
-		piece.move(MoveTypeFactory.of(source, target), chessBoard);
+		piece.move(MovePatternFactory.of(source, target), chessBoard);
 
 		assertThat(piece.isEqualPosition(Position.of("e3"))).isTrue();
 	}
@@ -121,7 +121,7 @@ public class ChessBoardTest {
 		Position source = Position.of("d4");
 		Position target = Position.of("c3");
 		Piece piece = new Bishop(source, new BlackTeam());
-		piece.move(MoveTypeFactory.of(source, target), chessBoard);
+		piece.move(MovePatternFactory.of(source, target), chessBoard);
 
 		assertThat(piece.isEqualPosition(Position.of("c3"))).isTrue();
 	}
@@ -132,7 +132,7 @@ public class ChessBoardTest {
 		Position source = Position.of("d4");
 		Position target = Position.of("c5");
 		Piece piece = new Bishop(source, new BlackTeam());
-		piece.move(MoveTypeFactory.of(source, target), chessBoard);
+		piece.move(MovePatternFactory.of(source, target), chessBoard);
 
 		assertThat(piece.isEqualPosition(Position.of("c5"))).isTrue();
 	}
