@@ -1,67 +1,77 @@
 package chess.domain.command;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class CommandTest {
 
     @ParameterizedTest
-    @DisplayName("from 팩토리 메서드")
+    @DisplayName("생성 확인")
     @MethodSource("createCommand")
-    void from(String command, Command expected) {
-        assertThat(Command.from(command)).isEqualTo(expected);
+    void create(List<String> input, List<String> expected) {
+        assertThat(Command.from(input).getFlags()).isEqualTo(expected);
     }
 
     static Stream<Arguments> createCommand() {
         return Stream.of(
-                Arguments.of("Start", Command.START),
-                Arguments.of("stArt", Command.START),
-                Arguments.of("end", Command.END),
-                Arguments.of("END", Command.END)
+                Arguments.of(Collections.singletonList("start"), Collections.emptyList()),
+                Arguments.of(Collections.singletonList("END"), Collections.emptyList()),
+                Arguments.of(Arrays.asList("move", "b1", "b2"), Arrays.asList("b1", "b2"))
         );
     }
 
-    @Test
-    @DisplayName("팩토리 메서드 검증")
-    void validate() {
-        assertThatThrownBy(() -> {
-            Command.from("strat");
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("strat는 잘못된 입력입니다.");
-    }
 
     @ParameterizedTest
-    @DisplayName("Command가 시작인지 확인")
+    @DisplayName("Command가 START인지 확인")
     @MethodSource("createBoolean")
-    void isStart(Command command, boolean expected) {
-        assertThat(command.isStart()).isEqualTo(expected);
+    void isStart(List<String> input, boolean expected) {
+        assertThat(Command.from(input).isStart()).isEqualTo(expected);
     }
 
     static Stream<Arguments> createBoolean() {
         return Stream.of(
-                Arguments.of(Command.START, true),
-                Arguments.of(Command.END, false)
+                Arguments.of(Collections.singletonList("start"), true),
+                Arguments.of(Collections.singletonList("end"), false),
+                Arguments.of(Arrays.asList("move", "b1", "b3"), false)
         );
     }
 
     @ParameterizedTest
     @DisplayName("Command가 End가 아닌지 확인")
     @MethodSource("createEnd")
-    void isNotEnd(Command command, boolean expected) {
-        assertThat(command.isStart()).isEqualTo(expected);
+    void isNotEnd(List<String> input, boolean expected) {
+        assertThat(Command.from(input).isNotEnd()).isEqualTo(expected);
     }
 
     static Stream<Arguments> createEnd() {
         return Stream.of(
-                Arguments.of(Command.START, true),
-                Arguments.of(Command.END, false)
+                Arguments.of(Collections.singletonList("start"), true),
+                Arguments.of(Collections.singletonList("end"), false),
+                Arguments.of(Arrays.asList("move", "b1", "b3"), true)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("Command가 Move인지 확인")
+    @MethodSource("createMove")
+    void isMove(List<String> input, boolean expected) {
+        assertThat(Command.from(input).isMove()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createMove() {
+        return Stream.of(
+                Arguments.of(Collections.singletonList("start"), false),
+                Arguments.of(Collections.singletonList("end"), false),
+                Arguments.of(Arrays.asList("move", "b1", "b3"), true)
         );
     }
 }

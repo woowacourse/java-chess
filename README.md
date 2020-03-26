@@ -34,7 +34,7 @@
 - [x] Command 구현
     - [x] Start 구현
     - [x] End 구현
-    - [ ] Move 구현
+    - [x] Move 구현
 - [x] Direction 구현
     - [x] 다음 File, Rank 찾는 기능 구현
 - [x] moveStrategy 구현

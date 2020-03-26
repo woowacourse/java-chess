@@ -1,30 +1,38 @@
 package chess.domain.command;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public enum Command {
-    // TODO: enum을 class로 변경
-    START("start"),
-    END("end");
+public class Command {
+    private final CommandType command;
+    private final List<String> flags;
 
-    private String command;
-
-    Command(String command) {
+    private Command(CommandType command, List<String> flags) {
         this.command = command;
+        this.flags = flags;
     }
 
-    public static Command from(String command) {
-        return Arrays.stream(values())
-                .filter(ele -> ele.command.equalsIgnoreCase(command))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("%s는 잘못된 입력입니다.", command)));
+    public static Command from(List<String> input) {
+        CommandType commandType = CommandType.from(input.get(0));
+        List<String> flags = input.subList(1, input.size());
+
+        return new Command(commandType, flags);
     }
 
     public boolean isStart() {
-        return this.equals(START);
+        return command.equals(CommandType.START);
     }
 
     public boolean isNotEnd() {
-        return !this.equals(END);
+        return !command.equals(CommandType.END);
+    }
+
+    public boolean isMove() {
+        return command.equals(CommandType.MOVE);
+    }
+
+    public List<String> getFlags() {
+        return Collections.unmodifiableList(flags);
     }
 }

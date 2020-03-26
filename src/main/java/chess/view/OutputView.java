@@ -22,4 +22,8 @@ public class OutputView {
             System.out.println();
         }
     }
+
+    public static void printExceptionMessage(String message) {
+        System.out.println(message);
+    }
 }
