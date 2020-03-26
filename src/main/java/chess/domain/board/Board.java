@@ -12,7 +12,6 @@ import chess.domain.piece.Path;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import chess.domain.piece.Symbol;
 import chess.domain.piece.exception.NotMovableException;
 
 public class Board {

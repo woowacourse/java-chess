@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import java.sql.Driver;
 import java.util.Arrays;
 import java.util.List;
 

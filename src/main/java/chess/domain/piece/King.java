@@ -4,7 +4,7 @@ import java.util.List;
 
 public class King extends Piece {
     public King(Position position, Color color) {
-        super(position, color,Symbol.KING);
+        super(position, color, Symbol.KING);
     }
 
     @Override
