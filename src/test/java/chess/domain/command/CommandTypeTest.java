@@ -1,14 +1,15 @@
 package chess.domain.command;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CommandTypeTest {
 
@@ -21,10 +22,15 @@ class CommandTypeTest {
 
     static Stream<Arguments> createCommand() {
         return Stream.of(
-                Arguments.of("Start", chess.domain.command.CommandType.START),
-                Arguments.of("stArt", chess.domain.command.CommandType.START),
-                Arguments.of("end", chess.domain.command.CommandType.END),
-                Arguments.of("END", chess.domain.command.CommandType.END)
+                Arguments.of("Start", CommandType.START),
+                Arguments.of("stArt", CommandType.START),
+                Arguments.of("end", CommandType.END),
+                Arguments.of("END", CommandType.END),
+                Arguments.of("moVE", CommandType.MOVE),
+                Arguments.of("Move", CommandType.MOVE),
+                Arguments.of("Status", CommandType.STATUS),
+                Arguments.of("STATUS", CommandType.STATUS)
+
         );
     }
 

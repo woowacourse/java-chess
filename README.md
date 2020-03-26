@@ -46,4 +46,4 @@
 ### view
 - [x] Command 입력
 - [x] Board 출력
-- [ ] Score 출력
+- [x] Score 출력

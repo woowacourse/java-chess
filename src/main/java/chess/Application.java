@@ -33,6 +33,9 @@ public class Application {
                 }
                 OutputView.printBoard(board);
             }
-        } while (command.isNotEnd());
+            if (command.isStatus()) {
+                OutputView.printScore(service.calculateScore(board));
+            }
+        } while (command.isNotEnd() && service.checkGameNotFinished(board));
     }
 }

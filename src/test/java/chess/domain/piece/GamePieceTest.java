@@ -84,4 +84,18 @@ class GamePieceTest {
                 Arguments.of(GamePiece.of(PAWN, WHITE), true)
         );
     }
+
+    @ParameterizedTest
+    @DisplayName("gamepiece가 king인지 확인")
+    @MethodSource("createKingPieces")
+    void isKing(GamePiece gamePiece, boolean expected) {
+        assertThat(gamePiece.isKing()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createKingPieces() {
+        return Stream.of(
+                Arguments.of(GamePiece.of(KING, BLACK), true),
+                Arguments.of(GamePiece.of(PAWN, WHITE), false)
+        );
+    }
 }

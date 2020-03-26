@@ -1,9 +1,12 @@
 package chess.view;
 
-import java.util.List;
-
 import chess.domain.board.Board;
 import chess.domain.piece.GamePiece;
+import chess.domain.player.Player;
+import chess.domain.score.Score;
+
+import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -25,5 +28,12 @@ public class OutputView {
 
     public static void printExceptionMessage(String message) {
         System.out.println(message);
+    }
+
+    public static void printScore(Map<Player, Score> scores) {
+        for (Player player : scores.keySet()) {
+            System.out.printf("%s: %.1f점", player.getName(), scores.get(player).getScore());
+            System.out.println();
+        }
     }
 }

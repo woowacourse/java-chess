@@ -1,40 +1,37 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.Player;
 import chess.domain.score.Score;
 
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 public class Board {
 
+    // TODO: 2020/03/26 STATUS ENUM 만들기
     private static final int INIT_TURN = 0;
-    public static Board EMPTY = new Board(createEmptyBoard(), INIT_TURN);
+    public static Board EMPTY = new Board(createEmptyBoard(), INIT_TURN, false);
 
     private final Map<Position, GamePiece> board;
     private final int turn;
+    private final boolean isFinished;
 
-    private Board(Map<Position, GamePiece> board, int turn) {
+    private Board(Map<Position, GamePiece> board, int turn, boolean isFinished) {
         this.board = Collections.unmodifiableMap(board);
         this.turn = turn;
+        this.isFinished = isFinished;
     }
 
     public static Board from(Map<Position, GamePiece> board, int turn) {
-        return new Board(board, turn);
+        return new Board(board, turn, false);
     }
 
     public static Board createInitial() {
-        return new Board(initializePositionsOfPieces(), INIT_TURN);
+        return new Board(initializePositionsOfPieces(), INIT_TURN, false);
     }
 
     private static Map<Position, GamePiece> initializePositionsOfPieces() {
@@ -81,6 +78,10 @@ public class Board {
 
         board.put(target, sourcePiece);
         board.put(source, GamePiece.EMPTY);
+
+        if (targetPiece.isKing()) {
+            return new Board(board, turn + 1, true);
+        }
 
         return from(board, turn + 1);
     }
@@ -152,6 +153,10 @@ public class Board {
             }
         }
         return sameFilePawnCount;
+    }
+
+    public boolean isNotFinished() {
+        return !isFinished;
     }
 
     public List<List<GamePiece>> gamePieces() {

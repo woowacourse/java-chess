@@ -60,6 +60,10 @@ public class GamePiece {
         return chessPiece.equals(ChessPiece.PAWN);
     }
 
+    public boolean isKing() {
+        return this != EMPTY && chessPiece.equals(ChessPiece.KING);
+    }
+
     public List<Position> getInitialPositions() {
         List<Position> positions = chessPiece.getOriginalPositions()
                 .stream()

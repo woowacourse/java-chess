@@ -1,10 +1,10 @@
 package chess.domain.command;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Command {
+
     private final CommandType command;
     private final List<String> flags;
 
@@ -30,6 +30,10 @@ public class Command {
 
     public boolean isMove() {
         return command.equals(CommandType.MOVE);
+    }
+
+    public boolean isStatus() {
+        return command.equals(CommandType.STATUS);
     }
 
     public List<String> getFlags() {

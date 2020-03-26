@@ -1,24 +1,25 @@
 package chess.domain.board;
 
-import static chess.domain.piece.ChessPiece.*;
-import static chess.domain.player.Player.*;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import chess.domain.exception.InvalidMovementException;
+import chess.domain.piece.GamePiece;
+import chess.domain.player.Player;
+import chess.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.exception.InvalidMovementException;
-import chess.domain.piece.GamePiece;
-import chess.domain.player.Player;
-import chess.domain.score.Score;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static chess.domain.piece.ChessPiece.*;
+import static chess.domain.player.Player.BLACK;
+import static chess.domain.player.Player.WHITE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
@@ -140,5 +141,25 @@ class BoardTest {
         Board board = Board.from(map, 0);
 
         assertThat(board.calculateScore().get(WHITE)).isEqualTo(Score.from(3.5));
+    }
+
+    @ParameterizedTest
+    @DisplayName("Board가 Finish 여부 확인")
+    @MethodSource("createFinish")
+    void isBoardFinished(Position source, Position target, boolean expected) {
+        Map<Position, GamePiece> map = new HashMap<>(Board.EMPTY.getBoard());
+        map.put(Position.from("c5"), GamePiece.of(KING, WHITE));
+        map.put(Position.from("d6"), GamePiece.of(PAWN, BLACK));
+        Board board = Board.from(map, 1);
+        board = board.move(source, target);
+
+        assertThat(board.isNotFinished()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createFinish() {
+        return Stream.of(
+                Arguments.of(Position.from("d6"), Position.from("d5"), true),
+                Arguments.of(Position.from("d6"), Position.from("c5"), false)
+        );
     }
 }

@@ -25,7 +25,8 @@ class CommandTest {
         return Stream.of(
                 Arguments.of(Collections.singletonList("start"), Collections.emptyList()),
                 Arguments.of(Collections.singletonList("END"), Collections.emptyList()),
-                Arguments.of(Arrays.asList("move", "b1", "b2"), Arrays.asList("b1", "b2"))
+                Arguments.of(Arrays.asList("move", "b1", "b2"), Arrays.asList("b1", "b2")),
+                Arguments.of(Collections.singletonList("status"), Collections.emptyList())
         );
     }
 
@@ -41,7 +42,8 @@ class CommandTest {
         return Stream.of(
                 Arguments.of(Collections.singletonList("start"), true),
                 Arguments.of(Collections.singletonList("end"), false),
-                Arguments.of(Arrays.asList("move", "b1", "b3"), false)
+                Arguments.of(Arrays.asList("move", "b1", "b3"), false),
+                Arguments.of(Collections.singletonList("status"), false)
         );
     }
 
@@ -56,7 +58,8 @@ class CommandTest {
         return Stream.of(
                 Arguments.of(Collections.singletonList("start"), true),
                 Arguments.of(Collections.singletonList("end"), false),
-                Arguments.of(Arrays.asList("move", "b1", "b3"), true)
+                Arguments.of(Arrays.asList("move", "b1", "b3"), true),
+                Arguments.of(Collections.singletonList("status"), true)
         );
     }
 
@@ -71,7 +74,25 @@ class CommandTest {
         return Stream.of(
                 Arguments.of(Collections.singletonList("start"), false),
                 Arguments.of(Collections.singletonList("end"), false),
-                Arguments.of(Arrays.asList("move", "b1", "b3"), true)
+                Arguments.of(Arrays.asList("move", "b1", "b3"), true),
+                Arguments.of(Collections.singletonList("status"), false)
         );
+    }
+
+
+    @ParameterizedTest
+    @DisplayName("Command가 Status인지 확인")
+    @MethodSource("createStatus")
+    void isStatus(List<String> input, boolean expected) {
+        assertThat(Command.from(input).isStatus()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createStatus() {
+        return Stream.of(
+                Arguments.of(Collections.singletonList("start"), false),
+                Arguments.of(Collections.singletonList("end"), false),
+                Arguments.of(Arrays.asList("move", "b1", "b3"), false),
+                Arguments.of(Collections.singletonList("status"), true)
+                );
     }
 }
