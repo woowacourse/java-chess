@@ -1,10 +1,6 @@
 package chess.view;
 
-import chess.domain.position.Board;
-import chess.domain.Piece.Piece;
-import chess.domain.position.Position;
-
-import java.util.LinkedHashMap;
+import chess.domain.board.Board;
 
 
 public class OutputView {
@@ -12,15 +8,6 @@ public class OutputView {
     private static final int COLUMN_SIZE = 8;
 
     public static void printInitializedBoard(Board board) {
-        LinkedHashMap<Position, Piece> initializedBoard = board.getBoard();
-        int count = 0;
-        for (Position position : initializedBoard.keySet()) {
-            System.out.print(initializedBoard.get(position));
-            count += 1;
-            if (count % COLUMN_SIZE == 0) {
-                System.out.println();
-            }
-        }
 
     }
 

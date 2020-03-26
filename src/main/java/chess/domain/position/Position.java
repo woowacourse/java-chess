@@ -27,7 +27,7 @@ public class Position {
         return of(convertedX,convertedY);
     }
 
-    static Position of(int x, int y) {
+    public static Position of(int x, int y) {
         return new Position(x,y);
     }
 

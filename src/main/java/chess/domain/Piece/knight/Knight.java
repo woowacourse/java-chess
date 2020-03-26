@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 
 public class Knight extends Running {
 
-    protected Knight(String name, Position position, Team team) {
+    public Knight(String name, Position position, Team team) {
         super(name, position, team);
     }
 

@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 
 public class Rook extends Running {
 
-    protected Rook(String name, Position position, Team team) {
+    public Rook(String name, Position position, Team team) {
         super(name, position, team);
     }
 

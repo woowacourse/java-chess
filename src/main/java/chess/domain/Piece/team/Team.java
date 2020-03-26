@@ -24,4 +24,24 @@ public enum Team {
     public boolean isSame(Team team) {
         return this == team;
     }
+
+    public String convertName(String name) {
+        if (isWhite()) {
+            return name.toLowerCase();
+        }
+
+        if (isBlack()) {
+            return name.toUpperCase();
+        }
+
+        return name;
+    }
+
+    private boolean isBlack() {
+        return this == BLACK;
+    }
+
+    private boolean isWhite() {
+        return this == WHITE;
+    }
 }

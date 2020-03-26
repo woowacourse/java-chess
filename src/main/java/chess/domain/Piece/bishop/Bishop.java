@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 
 public class Bishop extends Running {
 
-    protected Bishop(String name, Position position, Team team) {
+    public Bishop(String name, Position position, Team team) {
         super(name, position, team);
     }
 
