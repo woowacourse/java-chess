@@ -1,11 +1,13 @@
 package chess.domain;
 
+import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,6 +15,42 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 class PieceTypeTest {
+    @ParameterizedTest
+    @MethodSource("createFromPositionAndToPosition")
+    void 비숍이_fromPosition에서_toPosition으로_움직이는_경로_확인(Position fromPosition, Position toPosition, Route expected) {
+        PieceType bishop = PieceType.BISHOP;
+
+        Route actual = bishop.findRoute(fromPosition, toPosition, Team.WHITE);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> createFromPositionAndToPosition() {
+        return Stream.of(
+                Arguments.of(Position.of("e5"), Position.of("a1"), new Route(Arrays.asList(
+                        Position.of("d4"),
+                        Position.of("c3"),
+                        Position.of("b2"),
+                        Position.of("a1")))),
+
+                Arguments.of(Position.of("e5"), Position.of("h2"), new Route(Arrays.asList(
+                        Position.of("f4"),
+                        Position.of("g3"),
+                        Position.of("h2")))),
+
+                Arguments.of(Position.of("e5"), Position.of("b8"), new Route(Arrays.asList(
+                        Position.of("d6"),
+                        Position.of("c7"),
+                        Position.of("b8")))),
+
+
+                Arguments.of(Position.of("e5"), Position.of("h8"), new Route(Arrays.asList(
+                        Position.of("f6"),
+                        Position.of("g7"),
+                        Position.of("h8"))))
+        );
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"true:0.5", "false:1.0"}, delimiter = ':')
     void 인자있는_score_폰인_경우(boolean mustChange, double expected) {

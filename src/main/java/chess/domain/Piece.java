@@ -18,12 +18,19 @@ public class Piece {
         return pieceType.getAcronymToUpperCase();
     }
 
-    public boolean canMove(Position fromPosition, Position toPosition) {
-        // Todo : 다른 조건들도 추가해야함. 지금은 다른 말들의 영향을 안받음
-        return pieceType.canMove(fromPosition, toPosition, team);
+    public Route findRoute(Position fromPosition, Position toPosition) {
+        return pieceType.findRoute(fromPosition, toPosition, team);
     }
 
     public boolean isBlackTeam() {
         return this.team == Team.BLACK;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "team=" + team +
+                ", pieceType=" + pieceType +
+                '}';
     }
 }

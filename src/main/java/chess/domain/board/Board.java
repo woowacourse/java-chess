@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.Piece;
+import chess.domain.Route;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -14,17 +15,6 @@ public class Board {
 
     Board(Map<Position, Piece> board) {
         this.board = board;
-    }
-
-    public List<List<String>> getBoard() {
-        List<List<String>> resultBoard = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            resultBoard.add(new ArrayList<>());
-            addAcronymToRow(resultBoard, rank);
-        }
-
-        return Collections.unmodifiableList(resultBoard);
     }
 
     private void addAcronymToRow(List<List<String>> result, Rank rank) {
@@ -52,16 +42,31 @@ public class Board {
         Map<Position, Piece> boardForMoving = board;
 
         if (piece.isBlackTeam()) {
-            boardForMoving = reverseBoard();
+//            boardForMoving = reverseBoard(); // ToDo: reverse 로직 다시 확인
         }
 
-        if (piece.canMove(fromPosition, toPosition)) {
-            boardForMoving.remove(fromPosition);
-            boardForMoving.put(toPosition, piece);
+        Route route = piece.findRoute(fromPosition, toPosition);
+
+
+        if (positionsAreDisturbed(route)) {
+            throw new IllegalArgumentException("선택한 기물이 움직일 수 없는 위치입니다.");
         }
+
+        boardForMoving.remove(fromPosition);
+        boardForMoving.put(toPosition, piece);
     }
 
-    private Map<Position, Piece> reverseBoard() {
+    private boolean positionsAreDisturbed(Route route) {
+        for (Position position : route.getRoute()) {
+            if (board.get(position) != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private Board reverse() {
         Map<Position, Piece> reversedBoard = new HashMap<>();
 
         for (Position position : board.keySet()) {
@@ -70,6 +75,17 @@ public class Board {
             reversedBoard.put(reversedPosition, piece);
         }
 
-        return reversedBoard;
+        return BoardFactory.of(reversedBoard);
+    }
+
+    public List<List<String>> getBoard() {
+        List<List<String>> resultBoard = new ArrayList<>();
+
+        for (Rank rank : Rank.values()) {
+            resultBoard.add(new ArrayList<>());
+            addAcronymToRow(resultBoard, rank);
+        }
+
+        return Collections.unmodifiableList(resultBoard);
     }
 }

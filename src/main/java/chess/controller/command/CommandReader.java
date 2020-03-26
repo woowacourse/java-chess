@@ -15,6 +15,8 @@ public class CommandReader {
             return new Move(splitCommand.get(1), splitCommand.get(2));
         }
 
-        return null; // Todo: 나머지 커맨
+        // Todo: 나머지 커맨
+
+        throw new IllegalArgumentException("존재하지 않는 명령어입니다.");
     }
 }

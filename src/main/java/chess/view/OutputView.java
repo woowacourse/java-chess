@@ -16,4 +16,8 @@ public class OutputView {
             System.out.println();
         }
     }
+
+    public static void printExceptionMessage(RuntimeException e) {
+        System.err.println(e.getMessage());
+    }
 }

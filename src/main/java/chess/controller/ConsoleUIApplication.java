@@ -15,9 +15,18 @@ public class ConsoleUIApplication {
         OutputView.printStartInformation();
 
         do {
-            Command command = CommandReader.of(InputView.read());
-            gameStatus = command.execute(gameStatus);
+            gameStatus = runGame(gameStatus);
             OutputView.printChessBoard(gameStatus.getBoard());
         } while (gameStatus instanceof Running);
+    }
+
+    private static GameStatus runGame(GameStatus gameStatus) {
+        try {
+            Command command = CommandReader.of(InputView.read());
+            return command.execute(gameStatus);
+        } catch (RuntimeException e) {
+            OutputView.printExceptionMessage(e);
+            return runGame(gameStatus);
+        }
     }
 }

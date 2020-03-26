@@ -1,7 +1,10 @@
 package chess.domain.position;
 
+import chess.domain.Direction;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Position {
     private File file;
@@ -43,23 +46,36 @@ public class Position {
         this.rank = rank;
     }
 
-    public Position increaseFile(int number) {
-        return Position.of(this.file.plus(number), this.rank);
-    }
-
-    public Position increaseRank(int number) {
-        return Position.of(this.file, this.rank.plus(number));
-    }
-
-    public Position increaseDiagonal(int number) {
-        return Position.of(this.file.plus(number), this.rank.plus(number));
-    }
-
     public boolean isAt(Rank rank) {
         return this.rank == rank;
     }
 
     public Position reverse() {
         return new Position(file.reverse(), rank.reverse());
+    }
+
+    public Position moveTo(Direction direction) {
+        File movedFile = file.plus(direction.getXDegree());
+        Rank movedRank = rank.plus(direction.getYDegree());
+        return new Position(movedFile, movedRank);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return file == position.file &&
+                rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return file.toString() + rank.toString();
     }
 }

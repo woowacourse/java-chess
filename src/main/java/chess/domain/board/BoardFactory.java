@@ -13,6 +13,10 @@ public class BoardFactory {
         return new Board(createBoardSource());
     }
 
+    public static Board of(Map<Position, Piece> board) {
+        return new Board(board);
+    }
+
     private static Map<Position, Piece> createBoardSource() {
         Map<Position, Piece> board = new HashMap<>();
 
