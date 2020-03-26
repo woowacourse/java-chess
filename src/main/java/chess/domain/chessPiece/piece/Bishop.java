@@ -6,6 +6,7 @@ import chess.domain.movepattern.CrossPattern;
 import chess.domain.movepattern.MovePattern;
 
 public class Bishop extends Piece {
+	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다.";
 	private static final int BISHOP_SCORE = 3;
 
 	private final double score = BISHOP_SCORE;
@@ -15,8 +16,11 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public boolean isMovable(MovePattern movePattern) {
-		return movePattern instanceof CrossPattern;
+	public void validateMovable(MovePattern movePattern) {
+		if (movePattern instanceof CrossPattern) {
+			return;
+		}
+		throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
 	}
 
 	@Override

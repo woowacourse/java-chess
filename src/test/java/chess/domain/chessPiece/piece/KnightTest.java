@@ -19,7 +19,7 @@ class KnightTest {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece knight = new Knight(source, new BlackTeam());
 
-		assertThat(knight.isMovable(movePattern)).isTrue();
+		knight.validateMovable(movePattern);
 	}
 
 	@Test
@@ -31,6 +31,8 @@ class KnightTest {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece knight = new Knight(source, new BlackTeam());
 
-		assertThat(knight.isMovable(movePattern)).isFalse();
+		assertThatThrownBy(() -> knight.validateMovable(movePattern))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("해당 말이 갈 수 없는 칸입니다.");
 	}
 }

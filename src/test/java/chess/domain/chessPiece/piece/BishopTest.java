@@ -19,7 +19,7 @@ class BishopTest {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece bishop = new Bishop(source, new BlackTeam());
 
-		assertThat(bishop.isMovable(movePattern)).isTrue();
+		bishop.validateMovable(movePattern);
 	}
 
 	@Test
@@ -31,7 +31,9 @@ class BishopTest {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece bishop = new Bishop(source, new BlackTeam());
 
-		assertThat(bishop.isMovable(movePattern)).isFalse();
+		assertThatThrownBy(() -> bishop.validateMovable(movePattern))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("해당 말이 갈 수 없는 칸입니다.");
 	}
 
 }

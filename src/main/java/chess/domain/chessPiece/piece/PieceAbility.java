@@ -4,7 +4,7 @@ import chess.domain.chessPiece.position.Position;
 import chess.domain.movepattern.MovePattern;
 
 public interface PieceAbility {
-	boolean isMovable(MovePattern movePattern);
+	void validateMovable(MovePattern movePattern);
 
 	String pieceName();
 

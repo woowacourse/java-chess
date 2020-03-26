@@ -20,7 +20,7 @@ class PawnTest {
 		Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
 		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 
-		assertThat(blackPawn.isMovable(movePattern, null)).isTrue();
+		blackPawn.validateMovable(movePattern, null);
 	}
 
 	@Test
@@ -32,7 +32,9 @@ class PawnTest {
 		Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
 		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 
-		assertThat(blackPawn.isMovable(movePattern, null)).isFalse();
+		assertThatThrownBy(() -> blackPawn.validateMovable(movePattern, null))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("해당 말이 갈 수 없는 칸입니다.");
 	}
 
 	@Test
@@ -41,7 +43,8 @@ class PawnTest {
 		Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
 		Piece whitePawn = new Pawn(Position.of("c3"), new WhiteTeam());
 		MovePattern movePattern = MovePatternFactory.findMovePattern(blackPawn.position, whitePawn.position);
-		assertThat(blackPawn.isMovable(movePattern, whitePawn)).isTrue();
+
+		blackPawn.validateMovable(movePattern, whitePawn);
 	}
 
 	@Test
@@ -49,6 +52,8 @@ class PawnTest {
 	void isMovableFalse() {
 		Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
 		MovePattern movePattern = MovePatternFactory.findMovePattern(blackPawn.position, Position.of("b1"));
-		assertThat(blackPawn.isMovable(movePattern, null)).isFalse();
+		assertThatThrownBy(() -> blackPawn.validateMovable(movePattern, null))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("해당 말이 갈 수 없는 칸입니다.");
 	}
 }

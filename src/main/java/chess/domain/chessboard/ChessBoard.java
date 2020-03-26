@@ -35,8 +35,8 @@ public class ChessBoard {
 	}
 
 	public void movePiece(Position sourcePosition, Position targetPosition) {
-		validTargetTeam(sourcePosition, targetPosition);
-		validMovable(sourcePosition, targetPosition);
+		validateTargetTeam(sourcePosition, targetPosition);
+		validateMovable(sourcePosition, targetPosition);
 
 		Piece targetPiece = findPieceByPosition(targetPosition);
 		Piece pieceToMove = findPieceByPosition(sourcePosition);
@@ -49,7 +49,7 @@ public class ChessBoard {
 		pieceToMove.move(movePattern, this);
 	}
 
-	private void validTargetTeam(Position sourcePosition, Position targetPosition) {
+	private void validateTargetTeam(Position sourcePosition, Position targetPosition) {
 		Piece sourcePiece = findPieceByPosition(sourcePosition);
 		Piece targetPiece = findPieceByPosition(targetPosition);
 
@@ -61,23 +61,17 @@ public class ChessBoard {
 		}
 	}
 
-	private void validMovable(Position sourcePosition, Position targetPosition) {
-		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
+	private void validateMovable(Position sourcePosition, Position targetPosition) {
+		MovePattern movePattern = MovePatternFactory.findM ovePattern(sourcePosition, targetPosition);
 		Piece targetPiece = findPieceByPosition(targetPosition);
 		Piece pieceToMove = findPieceByPosition(sourcePosition);
 
 		if (pieceToMove instanceof Pawn) {
 			Pawn pawn = (Pawn) pieceToMove;
-			if (pawn.isMovable(movePattern, targetPiece)) {
-				return;
-			}
-			throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
-		}
-
-		if (pieceToMove.isMovable(movePattern)) {
+			pawn.validateMovable(movePattern, targetPiece);
 			return;
 		}
-		throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
+		pieceToMove.validateMovable(movePattern);
 	}
 
 	public Piece findPieceByPosition(Position position) {

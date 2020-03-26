@@ -19,7 +19,7 @@ class QueenTest {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece queen = new Queen(source, new BlackTeam());
 
-		assertThat(queen.isMovable(movePattern)).isTrue();
+		queen.validateMovable(movePattern);
 	}
 
 	@Test
@@ -31,7 +31,9 @@ class QueenTest {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece queen = new Queen(source, new BlackTeam());
 
-		assertThat(queen.isMovable(movePattern)).isFalse();
+		assertThatThrownBy(() -> queen.validateMovable(movePattern))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("해당 말이 갈 수 없는 칸입니다.");
 	}
 
 }
