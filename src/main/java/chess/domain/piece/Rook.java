@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Rook extends Piece {
     public Rook(Position position, Color color) {
-        super(position, color);
+        super(position, color, Symbol.ROOK);
     }
 
     @Override

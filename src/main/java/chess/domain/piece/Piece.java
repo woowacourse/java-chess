@@ -7,10 +7,16 @@ import chess.domain.piece.exception.NotMovableException;
 public abstract class Piece {
     private Position position;
     private Color color;
+    private Symbol symbol;
 
-    public Piece(Position position, Color color) {
+    public Piece(Position position, Color color, Symbol symbol) {
         this.position = position;
         this.color = color;
+        this.symbol = symbol;
+    }
+
+    public double getScore() {
+        return symbol.getScore();
     }
 
     public void move(Position position) {

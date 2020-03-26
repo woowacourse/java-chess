@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Blank extends Piece {
 	public Blank(Position position) {
-		super(position, Color.NONE);
+		super(position, Color.NONE, Symbol.BLANK);
 	}
 
 	@Override

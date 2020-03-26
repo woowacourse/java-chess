@@ -9,8 +9,10 @@ import chess.domain.board.exception.InvalidTurnException;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Path;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.Symbol;
 import chess.domain.piece.exception.NotMovableException;
 
 public class Board {
@@ -78,5 +80,34 @@ public class Board {
             reverseRanks.add(reverseIterator.previous());
         }
         return Collections.unmodifiableList(reverseRanks);
+    }
+
+    public double calculateScore(Color color) {
+        return calculateRawScore(color) - calculatePawnScoreOnSameFile(color);
+    }
+
+    private double calculateRawScore(Color color) {
+        return ranks.stream()
+            .mapToDouble(rank -> rank.calculateScore(color))
+            .sum();
+    }
+
+    private double calculatePawnScoreOnSameFile(Color color) {
+        int count = 0;
+        for (int x = 0; x < 8; x++) {
+            count += countPawnOnSameFile(color, x);
+        }
+        return count * Pawn.HALF_SCORE;
+    }
+
+    private int countPawnOnSameFile(Color color, int x) {
+        int count = 0;
+        for (int y = 0; y < 8; y++) {
+            Piece piece = findPiece(Position.of(x, y));
+            if (piece instanceof Pawn && piece.isSameColor(color)) {
+                count++;
+            }
+        }
+        return count > 1 ? count : 0;
     }
 }
