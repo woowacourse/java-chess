@@ -23,8 +23,11 @@ public class Pawn extends Piece {
 
     private boolean isBlackPawnMovable(Map<Point, Piece> pieces, Point from, Point to) {
         for (Direction direction : Direction.getBlackPawnDirection()) {
-            if (direction.isMovable(from.getRowDistance(to), from.getColumnDistance(to))) {
-                return true;
+            if (direction.isMovable(from.getRowDistance(to), from.getColumnDistance(to)) && !isSameTeamToTarget(pieces, to)) {
+                if (direction != Direction.DOWN && pieces.get(to).team == Team.WHITE) {
+                    return true;
+                }
+                return direction == Direction.DOWN && pieces.get(to).team == Team.NONE;
             }
         }
         return false;
@@ -32,8 +35,11 @@ public class Pawn extends Piece {
 
     private boolean isWhitePawnMovable(Map<Point, Piece> pieces, Point from, Point to) {
         for (Direction direction : Direction.getWhitePawnDirection()) {
-            if (direction.isMovable(from.getRowDistance(to), from.getColumnDistance(to))) {
-                return true;
+            if (direction.isMovable(from.getRowDistance(to), from.getColumnDistance(to)) && !isSameTeamToTarget(pieces, to)) {
+                if (direction != Direction.TOP && pieces.get(to).team == Team.BLACK) {
+                    return true;
+                }
+                return direction == Direction.TOP && pieces.get(to).team == Team.NONE;
             }
         }
         return false;

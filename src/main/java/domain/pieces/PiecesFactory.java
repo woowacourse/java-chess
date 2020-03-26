@@ -23,8 +23,8 @@ public class PiecesFactory {
 
     private static void createBlackTeamPieces() {
         pieces.put(new Point(EIGHT, A), new Rook(BLACK));
-        pieces.put(new Point(EIGHT, C), new Bishop(BLACK));
         pieces.put(new Point(EIGHT, B), new Knight(BLACK));
+        pieces.put(new Point(EIGHT, C), new Bishop(BLACK));
         pieces.put(new Point(EIGHT, D), new Queen(BLACK));
         pieces.put(new Point(EIGHT, E), new King(BLACK));
         pieces.put(new Point(EIGHT, F), new Bishop(BLACK));

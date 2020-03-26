@@ -23,6 +23,10 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Map<Point, Piece> pieces, Point from, Point to);
 
+    protected boolean isSameTeamToTarget(Map<Point, Piece> pieces, Point to) {
+        return pieces.get(to).team.equals(team);
+    }
+
     @Override
     public String toString() {
         return getInitial();
