@@ -5,6 +5,7 @@ import chess.board.BoardGenerator;
 import chess.board.MoveResult;
 import chess.manager.ChessManager;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +22,12 @@ public class Command {
 
     public void action() {
         String command = commandSupplier.get();
+        if ("start".equals(command)) {
+            this.chessManager = new ChessManager(new BoardGenerator().create());
+        }
+        if (Objects.isNull(chessManager)) {
+            return;
+        }
         Matcher matcher = MOVE.matcher(command);
         if (matcher.find()) {
             String source = matcher.group(1);
@@ -30,9 +37,6 @@ public class Command {
                 OutputView.showChessBoard(this.chessManager.getChessBoard());
                 return;
             }
-        }
-        if ("start".equals(command)) {
-            this.chessManager = new ChessManager(new BoardGenerator().create());
         }
         if ("status".equals(command)) {
             OutputView.showScore(this.chessManager.getCurrentTeam(),

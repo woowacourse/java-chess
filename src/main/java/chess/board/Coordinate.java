@@ -52,4 +52,8 @@ public final class Coordinate {
                     .map(rank -> new Coordinate(file, rank));
         }
     }
+
+    public Rank getRank() {
+        return rank;
+    }
 }

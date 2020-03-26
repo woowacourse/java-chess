@@ -18,7 +18,7 @@ public class Tile {
 
     public boolean canNotReach(final Tile targetTile) {
         Vector vector = targetTile.coordinate.calculateVector(this.coordinate);
-        return !this.piece.canMove(vector, targetTile.piece);
+        return !this.piece.canMove(new MoveInfo(vector, this.coordinate.getRank()), targetTile.piece);
     }
 
     public Directions findPath(final Tile targetTile) {

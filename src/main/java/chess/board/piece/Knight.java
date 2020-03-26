@@ -1,5 +1,6 @@
 package chess.board.piece;
 
+import chess.board.MoveInfo;
 import chess.board.Vector;
 
 import java.util.Collections;
@@ -14,11 +15,11 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(final Vector vector, final Piece targetPiece) {
+    public boolean canMove(final MoveInfo moveInfo, final Piece targetPiece) {
         if (targetPiece.isSameTeam(this.team)) {
             return false;
         }
-        return vector.sumOfAbsolute() == 3 && vector.subtractOfAbsolute() == 1;
+        return moveInfo.sumOfAbsolute() == 3 && moveInfo.subtractOfAbsolute() == 1;
     }
 
     @Override

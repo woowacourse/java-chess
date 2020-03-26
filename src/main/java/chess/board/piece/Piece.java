@@ -1,5 +1,6 @@
 package chess.board.piece;
 
+import chess.board.MoveInfo;
 import chess.board.Vector;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public abstract class Piece {
         return this.team == piece.team;
     }
 
-    public abstract boolean canMove(Vector vector, Piece targetPiece);
+    public abstract boolean canMove(MoveInfo moveInfo, Piece targetPiece);
 
     public double getScore() {
         return score;

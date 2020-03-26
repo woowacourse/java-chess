@@ -1,5 +1,7 @@
 package chess.board.piece;
 
+import chess.board.MoveInfo;
+import chess.board.Rank;
 import chess.board.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,6 +25,6 @@ class KingTest {
             "0,2,false"})
     void canMove(int file, int rank, boolean expect) {
         Piece king = new King(Team.BLACK);
-        assertThat(king.canMove(new Vector(file, rank), new Blank())).isEqualTo(expect);
+        assertThat(king.canMove(new MoveInfo(new Vector(file, rank), Rank.FIVE), new Blank())).isEqualTo(expect);
     }
 }

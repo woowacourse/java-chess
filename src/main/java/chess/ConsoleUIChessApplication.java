@@ -12,13 +12,5 @@ public class ConsoleUIChessApplication {
         while (command.isNotEnd()) {
             command.action();
         }
-
-//        while (!"end".equals(command)) {
-//            if ("start".equals(command)) {
-//
-//            }
-//            OutputView.showChessBoard(chessBoard);
-//            command = InputView.inputCommand();
-//        }
     }
 }
