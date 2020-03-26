@@ -9,7 +9,6 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.piece.PieceType;
 import chess.piece.type.Piece;
 
 class ChessBoardTest {

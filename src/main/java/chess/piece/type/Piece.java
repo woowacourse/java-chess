@@ -1,28 +1,17 @@
 package chess.piece.type;
 
-import java.util.List;
 
 import chess.board.Location;
-import chess.piece.location.strategy.LocationStrategy;
+import chess.team.Team;
 
 public abstract class Piece {
 	protected final char name;
-	protected final LocationStrategy locationStrategy;
 
-	Piece(char name, LocationStrategy locationStrategy) {
+	Piece(char name) {
 		this.name = name;
-		this.locationStrategy = locationStrategy;
 	}
 
 	public abstract boolean canMove(Location now, Location after);
-
-	public List<Location> getInitialLocation() {
-		return locationStrategy.getBlackTeamLocations();
-	}
-
-	public List<Location> reverseInitialLocation() {
-		return locationStrategy.getWhiteTeamLocations();
-	}
 
 	public boolean isSameTeam(boolean black) {
 		return Character.isUpperCase(name) == black;

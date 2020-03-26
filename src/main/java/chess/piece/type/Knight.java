@@ -1,19 +1,17 @@
 package chess.piece.type;
 
 import chess.board.Location;
-import chess.piece.location.strategy.KnightLocationStrategy;
-import chess.piece.location.strategy.LocationStrategy;
+import chess.team.Team;
 
 public class Knight extends Piece {
 	private static final char name = 'n';
-	private static final LocationStrategy LOCATION_STRATEGY = new KnightLocationStrategy();
 
-	public Knight(boolean isBlack) {
-		super(p(isBlack), LOCATION_STRATEGY);
+	public Knight(Team team) {
+		super(changeName(team));
 	}
 
-	private static char p(boolean isBlack) {
-		if (isBlack) {
+	private static char changeName(Team team) {
+		if (team.isBlack()) {
 			return Character.toUpperCase(name);
 		}
 		return name;

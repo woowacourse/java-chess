@@ -1,19 +1,17 @@
 package chess.piece.type;
 
 import chess.board.Location;
-import chess.piece.location.strategy.LocationStrategy;
-import chess.piece.location.strategy.RookLocationsStrategy;
+import chess.team.Team;
 
 public class Rook extends Piece {
 	private static final char name = 'r';
-	private static final LocationStrategy LOCATION_STRATEGY = new RookLocationsStrategy();
 
-	public Rook(boolean isBlack) {
-		super(p(isBlack), LOCATION_STRATEGY);
+	public Rook(Team team) {
+		super(changeName(team));
 	}
 
-	private static char p(boolean isBlack) {
-		if (isBlack) {
+	private static char changeName(Team team) {
+		if (team.isBlack()) {
 			return Character.toUpperCase(name);
 		}
 		return name;
