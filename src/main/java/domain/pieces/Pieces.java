@@ -4,7 +4,7 @@ import static domain.team.Team.BLACK;
 import static domain.team.Team.NONE;
 import static domain.team.Team.WHITE;
 
-import domain.commend.exceptions.IsNotMovableException;
+import domain.pieces.exceptions.IsNotMovableException;
 import domain.point.Point;
 import domain.team.Team;
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class Pieces {
     public void move(Team turn, Point from, Point to) {
         validateExistPiece(from);
         validateCorrectTurn(turn, from);
-        pieces.get(from).isMovable(pieces, from, to);
+        validatePieceMovable(from, to);
         pieces.put(to, pieces.get(from));
         pieces.put(from, new Empty(NONE));
     }
@@ -52,6 +52,12 @@ public class Pieces {
     private void validateCorrectTurn(Team turn, Point from) {
         if(!getPiece(from).isSameTeam(turn)) {
             throw new IsNotMovableException(turn.toString() + "차례입니다.");
+        }
+    }
+
+    private void validatePieceMovable(Point from, Point to) {
+        if (!pieces.get(from).isMovable(pieces, from, to)) {
+            throw new IsNotMovableException(pieces.get(from).toString() + "은 그 장소로 못 움직입니다.");
         }
     }
 }

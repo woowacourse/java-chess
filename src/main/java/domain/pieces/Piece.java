@@ -5,8 +5,8 @@ import domain.team.Team;
 import java.util.Map;
 
 public abstract class Piece {
-    private final String initial;
-    private final Team team;
+    protected final String initial;
+    protected final Team team;
 
     protected Piece(String initial, Team team) {
         this.initial = initial;

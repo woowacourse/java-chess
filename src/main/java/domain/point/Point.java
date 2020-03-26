@@ -18,6 +18,14 @@ public class Point {
 		return new Point(Row.find(row), Column.find(column));
 	}
 
+	public int getRowDistance(Point point) {
+		return row.distance(point.row);
+	}
+
+	public int getColumnDistance(Point point) {
+		return column.distance(point.column);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

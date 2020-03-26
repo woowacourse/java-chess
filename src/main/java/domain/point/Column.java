@@ -4,19 +4,21 @@ import domain.point.exceptions.NotExistPointException;
 import java.util.Arrays;
 
 public enum Column {
-	A("a"),
-	B("b"),
-	C("c"),
-	D("d"),
-	E("e"),
-	F("f"),
-	G("g"),
-	H("h");
+	A("a", 1),
+	B("b", 2),
+	C("c", 3),
+	D("d", 4),
+	E("e", 5),
+	F("f", 6),
+	G("g", 7),
+	H("h", 8);
 
 	private String column;
+	private int index;
 
-	Column(String column) {
+	Column(String column, int index) {
 		this.column = column;
+		this.index = index;
 	}
 
 	public static Column find(String input) {
@@ -29,5 +31,9 @@ public enum Column {
 	@Override
 	public String toString() {
 		return column;
+	}
+
+	public int distance(Column column) {
+		return column.index - index;
 	}
 }

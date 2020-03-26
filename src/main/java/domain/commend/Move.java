@@ -1,4 +1,4 @@
-package domain.move;
+package domain.commend;
 
 import domain.commend.exceptions.CommendTypeException;
 import domain.pieces.Pieces;

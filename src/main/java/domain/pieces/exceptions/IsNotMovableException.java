@@ -1,4 +1,4 @@
-package domain.commend.exceptions;
+package domain.pieces.exceptions;
 
 public class IsNotMovableException extends RuntimeException {
 
