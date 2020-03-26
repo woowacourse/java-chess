@@ -7,8 +7,9 @@ import chess.domain.Piece.team.Team;
 import chess.domain.position.Position;
 
 public class Bishop extends Running {
-    protected Bishop(Position position, Team team) {
-        super(position, team);
+
+    protected Bishop(String name, Position position, Team team) {
+        super(name, position, team);
     }
 
     @Override
@@ -18,6 +19,6 @@ public class Bishop extends Running {
 
     @Override
     public Piece move(Position to, Board board) {
-        return new Bishop(to, team);
+        return new Bishop(name, to, team);
     }
 }

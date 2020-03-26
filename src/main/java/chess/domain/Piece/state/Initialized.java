@@ -6,10 +6,12 @@ import chess.domain.Piece.team.Team;
 import chess.domain.position.Position;
 
 public abstract class Initialized implements Piece {
+    protected final String name;
     protected final Position position;
     protected final Team team;
 
-    protected Initialized(Position position, Team team) {
+    protected Initialized(String name, Position position, Team team) {
+        this.name = name;
         this.position = position;
         this.team = team;
     }

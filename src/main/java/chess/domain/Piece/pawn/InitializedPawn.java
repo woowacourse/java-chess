@@ -11,8 +11,8 @@ import chess.domain.position.Position;
 public class InitializedPawn extends Initialized {
     private static final int MAX_DISTANCE = 2;
 
-    protected InitializedPawn(Position position, Team team) {
-        super(position, team);
+    protected InitializedPawn(String name, Position position, Team team) {
+        super(name, position, team);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class InitializedPawn extends Initialized {
             throw new IllegalArgumentException("움직일 수 없습니다.");
         }
 
-        return new RunningPawn(to, team);
+        return new RunningPawn(name, to, team);
     }
 
     @Override

@@ -7,8 +7,9 @@ import chess.domain.Piece.team.Team;
 import chess.domain.position.Position;
 
 public class King extends Running {
-    protected King(Position position, Team team) {
-        super(position, team);
+
+    protected King(String name, Position position, Team team) {
+        super(name, position, team);
     }
 
     @Override
@@ -18,6 +19,6 @@ public class King extends Running {
 
     @Override
     public Piece move(Position to, Board board) {
-        return new King(to, team);
+        return new King(name, to, team);
     }
 }

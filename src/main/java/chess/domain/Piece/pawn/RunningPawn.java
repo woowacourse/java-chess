@@ -7,8 +7,9 @@ import chess.domain.Piece.team.Team;
 import chess.domain.position.Position;
 
 public class RunningPawn extends Running {
-    RunningPawn(Position position, Team team) {
-        super(position, team);
+
+    protected RunningPawn(String name, Position position, Team team) {
+        super(name, position, team);
     }
 
     //todo: add logic
@@ -20,6 +21,6 @@ public class RunningPawn extends Running {
     //todo: add logic
     @Override
     public Piece move(Position to, Board board) {
-        return new RunningPawn(to, team);
+        return new RunningPawn(name, to, team);
     }
 }

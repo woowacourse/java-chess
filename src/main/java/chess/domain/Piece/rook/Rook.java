@@ -7,8 +7,9 @@ import chess.domain.Piece.team.Team;
 import chess.domain.position.Position;
 
 public class Rook extends Running {
-    Rook(Position position, Team team) {
-        super(position, team);
+
+    protected Rook(String name, Position position, Team team) {
+        super(name, position, team);
     }
 
     @Override
@@ -18,6 +19,6 @@ public class Rook extends Running {
 
     @Override
     public Piece move(Position to, Board board) {
-        return new Rook(to, team);
+        return new Rook(name, to, team);
     }
 }
