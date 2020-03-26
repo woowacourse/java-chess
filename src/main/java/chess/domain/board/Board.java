@@ -36,10 +36,27 @@ public class Board {
         return board.get(position);
     }
 
-    // TODO: 경로 구하는 알고리즘 (직선, 대각선, 박스 형태)
-    // 직선(가로, 세로), 대각선, 나이트/폰 의 움직임 Map으로 모아서 구현
+    public Path generatePath(Position start, Position end) {
+        if (isOnLine(start, end)) {
+            return new Path(board.keySet()
+                .stream()
+                .filter(position -> position.inBetween(start, end))
+                .collect(toMap(Function.identity(), board::get)), start, end);
+        }
+        Position middle = Position.of(start.getRow(), end.getColumn());
+        return new Path(board.keySet()
+            .stream()
+            .filter(position -> position.inBetween(start, middle) || position.inBetween(end, middle))
+            .collect(toMap(Function.identity(), board::get)), start, end);
+    }
+
+    public boolean isOnLine(final Position start, final Position end) {
+        return Position.columnGap(start, end) == 0
+            || Position.rowGap(start, end) == 0
+            || Position.columnGap(start, end) == Position.rowGap(start, end);
+    }
+
     // TODO: 말을 실제로 옮기는 move 마무리
     // TODO: 게임 끝남 판단 (킹이 잡힌 경우)
     // TODO: 점수 구하기 (Board에서 count & 폰의 위치를 판단하는 로직 필요)
-
 }

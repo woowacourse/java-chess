@@ -35,6 +35,14 @@ public class Position {
         return this.column == column;
     }
 
+    public Row getRow() {
+        return row;
+    }
+
+    public Column getColumn() {
+        return column;
+    }
+
     public int row() {
         return row.getValue();
     }
@@ -61,5 +69,38 @@ public class Position {
 
     private static String key(final Row row, final Column column) {
         return row.toString() + column.toString();
+    }
+
+    public boolean inBetween(final Position start, final Position end) {
+        if (isOn(start.getRow()) && isOn(end.getRow())
+            && isBetweenComparingInt(this.column(), start.column(), end.column())) {
+            return true;
+        }
+
+        if (isOn(start.getColumn()) && isOn(end.getColumn())
+            && isBetweenComparingInt(this.row(), start.row(), end.row())) {
+            return true;
+        }
+
+        if (Position.rowGap(this, start) == Position.columnGap(this, start)
+            && Position.rowGap(this, end) == Position.columnGap(this, end)
+            && isBetweenComparingInt(this.column(), start.column(), end.column())
+            && isBetweenComparingInt(this.row(), start.row(), end.row())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isBetweenComparingInt(int middle, int start, int end) {
+        if (start > end) {
+            return middle >= end
+                && middle <= start;
+        }
+        if (end > start) {
+            return middle <= end
+                && middle >= start;
+        }
+        return false;
     }
 }
