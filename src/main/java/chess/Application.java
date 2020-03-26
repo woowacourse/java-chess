@@ -38,21 +38,20 @@ public class Application {
         String[] splitCommand = command.split(" ");
 
         if (splitCommand[0].equals("move")) {
-            MovingInfo movingInfo = new MovingInfo(Position.of(splitCommand[1]), Position.of(splitCommand[2]));
-            tryMove(chessBoard, movingInfo);
+            tryMove(splitCommand, chessBoard);
         }
-
         if (splitCommand[0].equals("status")) {
             OutputView.printScore(chessBoard);
         }
         OutputView.printBoard(chessBoard);
     }
 
-    private static void tryMove(ChessBoard chessBoard, MovingInfo movingInfo) {
+    private static void tryMove(String[] splitCommand, ChessBoard chessBoard) {
         try {
+            MovingInfo movingInfo = new MovingInfo(Position.of(splitCommand[1]), Position.of(splitCommand[2]));
+
             chessBoard.move(movingInfo);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             OutputView.printWrongPositionMessage();
         }
     }
