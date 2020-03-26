@@ -20,7 +20,7 @@ public enum Command {
 		this.isChessCommand = isChessCommand;
 	}
 
-	public static Command ofGameControlCommand(String inputCommand) {
+	public static Command ofGameCommand(String inputCommand) {
 		return Arrays.stream(Command.values())
 			.filter(command -> command.isGameCommand)
 			.filter(gameCommand -> gameCommand.getCommand().equals(inputCommand))

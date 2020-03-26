@@ -11,7 +11,7 @@ public class GameController {
 
 	private void run() {
 		OutputView.printChessGameStart();
-		Command command = Command.ofGameControlCommand(InputView.inputCommand());
+		Command command = Command.ofGameCommand(InputView.inputCommand());
 		if (Command.START == command) {
 			new ChessController();
 		}

@@ -15,12 +15,12 @@ public class CommandTest {
 	@ParameterizedTest
 	@CsvSource({"start, START", "end, END"})
 	void of_ValidInputCommand_returnCommand(String inputCommand, Command command) {
-		assertThat(Command.ofChessCommand(inputCommand)).isEqualTo(command);
+		assertThat(Command.ofGameCommand(inputCommand)).isEqualTo(command);
 	}
 
 	@DisplayName("start 혹은 end 외의 명령어가 입력됐을 경우 InvalidCommandException 발생")
 	@ParameterizedTest
-	@ValueSource(strings = {"StArT", "move", "run"})
+	@ValueSource(strings = {"start", "movE", "run"})
 	void of_InvalidInputCommand_returnCommand(String inputCommand) {
 		assertThatThrownBy(() -> Command.ofChessCommand(inputCommand))
 			.isInstanceOf(InvalidCommandException.class)
