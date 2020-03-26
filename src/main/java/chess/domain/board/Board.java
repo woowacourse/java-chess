@@ -8,7 +8,10 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class Board {
     private static final String EMPTY_POSITION_ACRONYM = ".";
@@ -41,11 +44,6 @@ public class Board {
 
     public void move(Position fromPosition, Position toPosition) {
         Piece piece = board.get(fromPosition);
-        Map<Position, Piece> boardForMoving = board;
-
-        if (piece.isBlackTeam()) {
-//            boardForMoving = reverseBoard(); // ToDo: reverse 로직 다시 확인
-        }
 
         Route route = piece.findRoute(fromPosition, toPosition);
 
@@ -53,8 +51,8 @@ public class Board {
             throw new IllegalArgumentException("선택한 기물이 움직일 수 없는 위치입니다.");
         }
 
-        boardForMoving.remove(fromPosition);
-        boardForMoving.put(toPosition, piece);
+        board.remove(fromPosition);
+        board.put(toPosition, piece);
     }
 
     private boolean positionsAreDisturbed(Route route) {
@@ -65,18 +63,6 @@ public class Board {
         }
 
         return false;
-    }
-
-    private Board reverse() {
-        Map<Position, Piece> reversedBoard = new HashMap<>();
-
-        for (Position position : board.keySet()) {
-            Piece piece = board.get(position);
-            Position reversedPosition = position.reverse();
-            reversedBoard.put(reversedPosition, piece);
-        }
-
-        return BoardFactory.of(reversedBoard);
     }
 
     public List<List<String>> getBoard() {

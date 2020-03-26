@@ -28,8 +28,4 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("파일의 범위를 초과하였습니다."));
     }
-
-    public File reverse() {
-        return File.of(values().length - index);
-    }
 }
