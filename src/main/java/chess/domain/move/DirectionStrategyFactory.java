@@ -3,7 +3,7 @@ package chess.domain.move;
 import chess.domain.move.direction.*;
 import chess.domain.position.Position;
 
-public class PathFinder {
+public class DirectionStrategyFactory {
     public static DirectionStrategy find(Position source, Position target) {
         int fileGap = target.calculateFileGap(source);
         int rankGap = target.calculateRankGap(source);

@@ -13,10 +13,8 @@ public abstract class MoveStrategy {
         return source.equals(target);
     }
 
-    public abstract boolean movable(Position source, Position target, Board board);
-
     protected boolean checkObstacle(Position source, Position target, Board board) {
-        DirectionStrategy directionStrategy = PathFinder.find(source, target);
+        DirectionStrategy directionStrategy = DirectionStrategyFactory.find(source, target);
         List<Position> path = directionStrategy.find(source, target);
 
         for (Position position : path) {
@@ -35,4 +33,6 @@ public abstract class MoveStrategy {
         Piece targetPiece = board.getPiece(target);
         return sourcePiece.isEnemy(targetPiece);
     }
+
+    public abstract boolean movable(Position source, Position target, Board board);
 }

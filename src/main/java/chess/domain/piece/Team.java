@@ -12,19 +12,19 @@ public enum Team {
         this.expression = expression;
     }
 
-    public static Team changeTurn(Team team) {
+    public static Team changeTeam(Team team) {
         if (team == BLACK) {
             return WHITE;
         }
         return BLACK;
     }
 
-    public String convert(final String name) {
+    public String symbolize(final String name) {
         return this.expression.apply(name);
     }
 
-    public boolean isEnemy(Team team) {
-        return this != team;
+    public boolean isSameTeamWith(Team team) {
+        return this == team;
     }
 
     public boolean isWhite() {
