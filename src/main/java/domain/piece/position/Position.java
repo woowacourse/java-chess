@@ -13,6 +13,14 @@ public class Position {
 		return PositionCache.of(position);
 	}
 
+	public int calculateColumnGap(Position targetPosition) {
+		return this.column.getNumber() - targetPosition.getColumn().getNumber();
+	}
+
+	public int calculateRowGap(Position targetPosition) {
+		return this.row - targetPosition.getRow();
+	}
+
 	public Column getColumn() {
 		return column;
 	}
