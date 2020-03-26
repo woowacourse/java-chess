@@ -1,9 +1,9 @@
-package chess.domain.Piece.pawn;
+package chess.domain.piece.pawn;
 
 import chess.domain.board.Board;
-import chess.domain.Piece.Piece;
-import chess.domain.Piece.state.Running;
-import chess.domain.Piece.team.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.state.Running;
+import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
 public class RunningPawn extends Running {

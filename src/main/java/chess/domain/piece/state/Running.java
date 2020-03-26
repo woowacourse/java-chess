@@ -1,6 +1,6 @@
-package chess.domain.Piece.state;
+package chess.domain.piece.state;
 
-import chess.domain.Piece.team.Team;
+import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
 public abstract class Running extends Initialized {

@@ -1,12 +1,13 @@
-package chess.domain.Piece.blank;
+package chess.domain.piece.blank;
 
-import chess.domain.Piece.Piece;
-import chess.domain.Piece.state.Initialized;
-import chess.domain.Piece.team.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.state.Initialized;
+import chess.domain.piece.state.Started;
+import chess.domain.piece.team.Team;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 
-public class Blank extends Initialized {
+public class Blank extends Started {
 
     public Blank(String name, Position position, Team team) {
         super(name, position, team);
@@ -18,7 +19,12 @@ public class Blank extends Initialized {
     }
 
     @Override
-    protected boolean canNotMove(Position to, Board board) {
+    public boolean isNotBlank() {
         return false;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return true;
     }
 }

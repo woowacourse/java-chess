@@ -1,12 +1,12 @@
-package chess.domain.Piece;
+package chess.domain.piece;
 
-import chess.domain.Piece.bishop.Bishop;
-import chess.domain.Piece.king.King;
-import chess.domain.Piece.knight.Knight;
-import chess.domain.Piece.queen.Queen;
-import chess.domain.Piece.rook.Rook;
-import chess.domain.Piece.state.Initialized;
-import chess.domain.Piece.team.Team;
+import chess.domain.piece.bishop.Bishop;
+import chess.domain.piece.king.King;
+import chess.domain.piece.knight.Knight;
+import chess.domain.piece.queen.Queen;
+import chess.domain.piece.rook.Rook;
+import chess.domain.piece.state.Initialized;
+import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
 public enum  PieceType {

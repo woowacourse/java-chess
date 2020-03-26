@@ -1,7 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.Piece.Distance;
-import chess.domain.position.Position;
+import chess.domain.piece.Distance;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

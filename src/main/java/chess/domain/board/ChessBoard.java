@@ -1,11 +1,11 @@
 package chess.domain.board;
 
-import chess.domain.Piece.Piece;
-import chess.domain.Piece.PieceType;
-import chess.domain.Piece.blank.Blank;
-import chess.domain.Piece.pawn.InitializedPawn;
-import chess.domain.Piece.state.Initialized;
-import chess.domain.Piece.team.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.blank.Blank;
+import chess.domain.piece.pawn.InitializedPawn;
+import chess.domain.piece.state.Initialized;
+import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
 import java.util.HashMap;
@@ -36,7 +36,13 @@ public class ChessBoard implements Board {
 
     @Override
     public Board movePiece(Position from, Position to) {
-        return null;
+        //todo: refac
+        Map<Position, Piece> pieces = (HashMap<Position, Piece>) ((HashMap<Position, Piece>) this.pieces).clone();
+        Piece piece = pieces.get(from);
+        piece = piece.move(to, this);
+        pieces.put(from, new Blank(".", from, Team.NOT_ASSIGNED));
+        pieces.put(to, piece);
+        return new ChessBoard(pieces);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.Piece.Distance;
+import chess.domain.piece.Distance;
 import chess.util.SmallLetterAsciiConverter;
 
 import java.util.Arrays;
@@ -24,8 +24,12 @@ public class Position {
 
     static Position of(String x, String y) {
         int convertedX = SmallLetterAsciiConverter.convert(x);
-        int convertedY = SmallLetterAsciiConverter.convert(y);
+        int convertedY = Integer.parseInt(y);
         return of(convertedX,convertedY);
+    }
+
+    public static Position of(String position) {
+        return of(position.substring(0,1), position.substring(1,2));
     }
 
     public static Position of(int x, int y) {

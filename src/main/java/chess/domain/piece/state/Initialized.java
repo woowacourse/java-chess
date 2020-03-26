@@ -1,25 +1,29 @@
-package chess.domain.Piece.state;
+package chess.domain.piece.state;
 
 import chess.domain.board.Board;
-import chess.domain.Piece.Piece;
-import chess.domain.Piece.team.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
 public abstract class Initialized extends Started {
-    protected final Position position;
 
     protected Initialized(String name, Position position, Team team) {
-        super(name, team);
-        this.position = position;
+        super(name, position, team);
     }
 
     protected abstract boolean canNotMove(Position to, Board board);
 
-    protected boolean isNotSameTeam(Piece piece) {
-        return team.isNotSame(piece.getTeam());
-    }
-
     protected boolean isSameTeam(Piece piece) {
         return team.isSame(piece.getTeam());
+    }
+
+    @Override
+    public boolean isNotBlank() {
+        return true;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return false;
     }
 }

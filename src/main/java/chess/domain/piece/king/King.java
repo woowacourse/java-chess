@@ -1,14 +1,14 @@
-package chess.domain.Piece.rook;
+package chess.domain.piece.king;
 
 import chess.domain.board.Board;
-import chess.domain.Piece.Piece;
-import chess.domain.Piece.state.Running;
-import chess.domain.Piece.team.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.state.Running;
+import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
-public class Rook extends Running {
+public class King extends Running {
 
-    public Rook(String name, Position position, Team team) {
+    public King(String name, Position position, Team team) {
         super(name, position, team);
     }
 
@@ -19,6 +19,6 @@ public class Rook extends Running {
 
     @Override
     public Piece move(Position to, Board board) {
-        return new Rook(name, to, team);
+        return new King(name, to, team);
     }
 }

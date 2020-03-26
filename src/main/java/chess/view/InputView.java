@@ -11,4 +11,9 @@ public class InputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
         return Command.of(SCANNER.nextLine());
     }
+
+    public static String[] inputMove() {
+        System.out.println("움직이세요");
+        return SCANNER.nextLine().split(" ");
+    }
 }

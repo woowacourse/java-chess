@@ -1,30 +1,23 @@
-package chess.domain.Piece.state;
+package chess.domain.piece.state;
 
-import chess.domain.Piece.Piece;
-import chess.domain.Piece.team.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.team.Team;
+import chess.domain.position.Position;
 
 public abstract class Started implements Piece {
     protected final String name;
     protected final Team team;
+    protected final Position position;
 
-    protected Started(String name, Team team) {
+    protected Started(String name, Position position, Team team) {
         this.name = team.convertName(name);
         this.team = team;
+        this.position = position;
     }
 
     @Override
     public Team getTeam() {
         return team;
-    }
-
-    @Override
-    public boolean isNotBlank() {
-        return true;
-    }
-
-    @Override
-    public boolean isBlank() {
-        return false;
     }
 
     @Override

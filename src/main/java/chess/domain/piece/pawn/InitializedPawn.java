@@ -1,10 +1,10 @@
-package chess.domain.Piece.pawn;
+package chess.domain.piece.pawn;
 
 import chess.domain.board.Board;
-import chess.domain.Piece.Distance;
-import chess.domain.Piece.Piece;
-import chess.domain.Piece.state.Initialized;
-import chess.domain.Piece.team.Team;
+import chess.domain.piece.Distance;
+import chess.domain.piece.Piece;
+import chess.domain.piece.state.Initialized;
+import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
 //todo: add tests
@@ -36,7 +36,7 @@ public class InitializedPawn extends Initialized {
         }
 
         Piece exPiece = board.getPiece(to);
-        if (isNotSameTeam(exPiece)) {
+        if (isSameTeam(exPiece)) {
             return true;
         }
 

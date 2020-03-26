@@ -1,4 +1,4 @@
-package chess.domain.Piece.team;
+package chess.domain.piece.team;
 
 import chess.domain.position.Direction;
 
