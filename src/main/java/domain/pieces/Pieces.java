@@ -1,6 +1,8 @@
 package domain.pieces;
 
+import static domain.team.Team.BLACK;
 import static domain.team.Team.NONE;
+import static domain.team.Team.WHITE;
 
 import domain.commend.exceptions.IsNotMovableException;
 import domain.point.Point;
@@ -29,19 +31,20 @@ public class Pieces {
         return pieces.get(point);
     }
 
-    public boolean isGetPoint(Point point) {
-        return pieces.containsKey(point);
+    public boolean isExistPiece(Point point) {
+        return getPiece(point).isSameTeam(BLACK) || getPiece(point).isSameTeam(WHITE);
     }
 
     public void move(Team turn, Point from, Point to) {
         validateExistPiece(from);
         validateCorrectTurn(turn, from);
+        pieces.get(from).isMovable(pieces, from, to);
         pieces.put(to, pieces.get(from));
         pieces.put(from, new Empty(NONE));
     }
 
     private void validateExistPiece(Point from) {
-        if (!isGetPoint(from)) {
+        if (!isExistPiece(from)) {
             throw new IsNotMovableException(from.toString() + "에 움직일 수 있는 말이 없습니다.");
         }
     }

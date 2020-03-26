@@ -2,6 +2,7 @@ package domain.pieces;
 
 import domain.point.Point;
 import domain.team.Team;
+import java.util.Map;
 
 public abstract class Piece {
     private final String initial;
@@ -20,7 +21,7 @@ public abstract class Piece {
         return this.team.equals(team);
     }
 
-    public abstract boolean isMovable(Point from, Point to);
+    public abstract boolean isMovable(Map<Point, Piece> pieces, Point from, Point to);
 
     @Override
     public String toString() {

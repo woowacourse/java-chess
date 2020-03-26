@@ -1,7 +1,7 @@
 package chess;
 
 import domain.commend.State;
-import domain.commend.Move;
+import domain.move.Move;
 import domain.pieces.Pieces;
 import domain.pieces.PiecesFactory;
 import view.InputView;

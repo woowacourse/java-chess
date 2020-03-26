@@ -4,21 +4,19 @@ import domain.point.exceptions.NotExistPointException;
 import java.util.Arrays;
 
 public enum Row {
-	EIGHT("8", 0),
-	SEVEN("7", 1),
-	SIX("6", 2),
-	FIVE("5", 3),
-	FOUR("4", 4),
-	THREE("3", 5),
-	TWO("2", 6),
-	ONE("1", 7);
+	EIGHT("8"),
+	SEVEN("7"),
+	SIX("6"),
+	FIVE("5"),
+	FOUR("4"),
+	THREE("3"),
+	TWO("2"),
+	ONE("1");
 
 	private final String row;
-	private final int index;
 
-	Row(String row, int index) {
+	Row(String row) {
 		this.row = row;
-		this.index = index;
 	}
 
 	public static Row find(String input) {

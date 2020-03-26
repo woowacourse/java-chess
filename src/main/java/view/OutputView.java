@@ -26,7 +26,7 @@ public class OutputView {
     }
 
     private static void printRowBoard(Pieces pieces, Point point) {
-        if (pieces.isGetPoint(point)) {
+        if (pieces.isExistPiece(point)) {
             System.out.print(pieces.getPiece(point).toString());
             return;
         }

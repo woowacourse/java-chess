@@ -1,10 +1,8 @@
-package domain.commend;
+package domain.move;
 
 import domain.commend.exceptions.CommendTypeException;
 import domain.pieces.Pieces;
-import domain.point.Column;
 import domain.point.Point;
-import domain.point.Row;
 import domain.team.Team;
 import java.util.Arrays;
 import java.util.List;

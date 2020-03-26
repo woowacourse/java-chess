@@ -2,6 +2,7 @@ package domain.pieces;
 
 import domain.point.Point;
 import domain.team.Team;
+import java.util.Map;
 
 public class Pawn extends Piece {
     private static final String INITIAL = "P";
@@ -11,7 +12,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point from, Point to) {
+    public boolean isMovable(Map<Point, Piece> pieces, Point from, Point to) {
+        
         return false;
     }
 }
