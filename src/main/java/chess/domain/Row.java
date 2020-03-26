@@ -14,4 +14,8 @@ public class Row {
     public ChessPiece get(int x) {
         return chessPieces.get(x);
     }
+
+    public void modifyRow(int index, ChessPiece chessPiece) {
+        chessPieces.set(index, chessPiece);
+    }
 }

@@ -1,26 +1,31 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Move;
-import chess.domain.Position;
 import chess.domain.Team;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+
+import static chess.domain.Direction.*;
+import static chess.domain.Direction.RIGHT_UP;
 
 public class Pawn extends ChessPiece {
     boolean isFirstMove = true;
 
-    public Pawn(Position position, Team team) {
-        super("p", position, team);
+    public Pawn(Team team) {
+        super("p", team, 1, Arrays.asList(
+                UP,
+                LEFT_UP,
+                RIGHT_UP
+        ));
     }
 
-    @Override
-    public boolean canMove(Position position) {
+
+
+    public boolean isFirstMove(){
+        if(isFirstMove == true){
+            isFirstMove = false;
+            return true;
+        }
         return false;
-    }
-
-    @Override
-    public List<Position> makeCanMovePositions() {
-
-        return Move.makePassablePath(MoveRules.PAWN, this.position);
     }
 }

@@ -1,22 +1,12 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Position;
 import chess.domain.Team;
 
-import java.util.List;
+import java.util.Collections;
 
 public class Blank extends ChessPiece {
-    public Blank(Position position, Team team) {
-        super(".", position, team);
+    public Blank(Team team) {
+        super(".", team, 0, Collections.EMPTY_LIST);
     }
 
-    @Override
-    public boolean canMove(Position position) {
-        return false;
-    }
-
-    @Override
-    public List<Position> makeCanMovePositions() {
-        return null;
-    }
 }

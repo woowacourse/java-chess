@@ -1,4 +1,4 @@
-package chess.domain.chesspiece;
+package chess.domain;
 
 public enum Direction {
     UP(0, 1),

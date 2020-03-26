@@ -1,23 +1,22 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Move;
-import chess.domain.Position;
 import chess.domain.Team;
 
-import java.util.List;
+import java.util.Arrays;
+
+import static chess.domain.Direction.*;
 
 public class King extends ChessPiece {
-    public King(Position position, Team team) {
-        super("k", position, team);
-    }
-
-    @Override
-    public boolean canMove(Position position) {
-        return false;
-    }
-
-    @Override
-    public List<Position> makeCanMovePositions() {
-        return Move.makePassablePathLengthOne(MoveRules.KING, this.position);
+    public King(Team team) {
+        super("k", team, 0, Arrays.asList(
+                UP,
+                DOWN,
+                LEFT,
+                RIGHT,
+                LEFT_DOWN,
+                LEFT_UP,
+                RIGHT_DOWN,
+                RIGHT_UP
+        ));
     }
 }
