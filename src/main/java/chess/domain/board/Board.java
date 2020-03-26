@@ -8,6 +8,5 @@ import java.util.Map;
 public interface Board {
     Board movePiece(Position from, Position to);
     Piece getPiece(Position position);
-    Map<Position, Piece> getPieces();
 
 }

@@ -5,6 +5,7 @@ import chess.util.SmallLetterAsciiConverter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 //todo: add validation logic
 public class Position {
@@ -78,5 +79,19 @@ public class Position {
     public boolean isNotForward(Position from, Direction teamForwardDirection) {
         int standard = (y - from.y) * teamForwardDirection.getVertical();
         return standard <= 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return x == position.x &&
+                y == position.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

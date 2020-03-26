@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class ChessBoard implements Board {
     private static final int SIZE = 64;
-    private static final int WHITE_EDGE_ROW = 1;
     private static final int COLLUMN_START = 1;
     private static final int COLLUMN_END = 8;
     public static final int BLACK_PAWN_ROW = 7;
@@ -28,6 +27,7 @@ public class ChessBoard implements Board {
     public static ChessBoard initiaize() {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
+
         initializeBlanks(pieces);
         initializeWhiteTeam(pieces);
         return new ChessBoard(pieces);
@@ -41,39 +41,35 @@ public class ChessBoard implements Board {
 
     @Override
     public Piece getPiece(Position position) {
-        return null;
-    }
-
-    @Override
-    public Map<Position, Piece> getPieces() {
-        return pieces;
+        return pieces.get(position);
     }
 
     private static void initializeBlackTeam(Map<Position, Piece> pieces) {
-        initializeEdge(pieces, Team.BLACK);
-        initializePawns(BLACK_PAWN_ROW, Team.BLACK);
+        initializeEdge(pieces, Team.BLACK, COLLUMN_END);
+        initializePawns(BLACK_PAWN_ROW, Team.BLACK, pieces);
+
     }
 
     private static void initializeWhiteTeam(Map<Position, Piece> pieces) {
-        initializeEdge(pieces, Team.WHITE);
-        initializePawns(WHITE_PAWN_ROW, Team.WHITE);
+        initializeEdge(pieces, Team.WHITE, COLLUMN_START);
+        initializePawns(WHITE_PAWN_ROW, Team.WHITE, pieces);
     }
 
-    private static void initializeEdge(Map<Position, Piece> pieces, Team team) {
+    private static void initializeEdge(Map<Position, Piece> pieces, Team team, int edgeRow) {
         for (int x = COLLUMN_START; x <= COLLUMN_END; x++) {
             PieceType pieceType = PieceType.valueOf(x);
-            Position position = Position.of(x, WHITE_EDGE_ROW);
+            Position position = Position.of(x, edgeRow);
             Initialized piece = pieceType.createInitializedPiece(position, team);
             pieces.put(position, piece);
-
         }
     }
 
-    private static void initializePawns(int row, Team team) {
+    private static void initializePawns(int row, Team team, Map<Position, Piece> pieces) {
         for (int y = row; y <= row; y++) {
             for (int x = 1; x <= 8; x++) {
                 Position position = Position.of(x, y);
-                new InitializedPawn("p", position, team);
+                InitializedPawn initializedPawn = new InitializedPawn("p", position, team);
+                pieces.put(position, initializedPawn);
 
             }
         }
