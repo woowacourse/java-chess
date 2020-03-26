@@ -6,6 +6,7 @@ import chess.domain.movefactory.CrossType;
 import chess.domain.movefactory.MoveType;
 
 public class Bishop extends Piece {
+    private final double score = 3;
     public Bishop(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
@@ -18,5 +19,10 @@ public class Bishop extends Piece {
     @Override
     public String pieceName() {
         return teamStrategy.bishopName();
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }

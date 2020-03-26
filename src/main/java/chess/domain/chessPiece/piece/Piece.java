@@ -1,5 +1,6 @@
 package chess.domain.chessPiece.piece;
 
+import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.chessboard.ChessBoard;
@@ -25,5 +26,11 @@ public abstract class Piece implements PieceAbility {
     public boolean isSameTeam(Piece targetPiece) {
         return teamStrategy.equals(targetPiece.teamStrategy);
     }
+
+    public boolean isSameFile(File file) {
+        return this.position.isSameFile(file);
+    }
+
+    ;
 }
 

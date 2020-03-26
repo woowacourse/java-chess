@@ -20,7 +20,7 @@ public class OutputView {
     }
 
     private static void seperateLine(Position position) {
-        if (position.isNewRank()) {
+        if (position.isNewLine()) {
             System.out.println();
         }
     }

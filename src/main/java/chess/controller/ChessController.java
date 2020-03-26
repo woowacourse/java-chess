@@ -1,6 +1,9 @@
 package chess.controller;
 
 import chess.domain.Position;
+import chess.domain.chessPiece.team.BlackTeam;
+import chess.domain.chessPiece.team.TeamStrategy;
+import chess.domain.chessPiece.team.WhiteTeam;
 import chess.domain.chessboard.ChessBoard;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -21,7 +24,7 @@ public class ChessController {
         if ("start".equalsIgnoreCase(gameState)) {
             chessStart();
         }
-        System.out.println("\n게임을 종료 합니다");
+        System.out.println("게임을 종료합니다.");
     }
 
     private static void chessStart() {
@@ -33,6 +36,16 @@ public class ChessController {
             pieceMove(positionsToMove, chessBoard);
             OutputView.printChessBoard(chessBoard);
         }
+        calculateScore(chessBoard);
+    }
+
+    private static void calculateScore(ChessBoard chessBoard) {
+        TeamStrategy blackMark = new BlackTeam();
+        TeamStrategy whiteMark = new WhiteTeam();
+        double blackTeamScore = chessBoard.calculateTeamScore(blackMark);
+        double whiteTeamScore = chessBoard.calculateTeamScore(whiteMark);
+
+        System.out.println(String.format("블랙팀 점수 : %.1f, 화이트 팀 점수 : %.1f", blackTeamScore, whiteTeamScore));
     }
 
     private static List<String> validateInputMoveCommand(String input) {

@@ -146,15 +146,12 @@ public class ChessBoardTest {
     @DisplayName("왕이 살아있는경우")
     @Test
     void isSurviveKings1() {
-        ChessBoard chessBoard = new ChessBoard();
-
         assertThat(chessBoard.isSurviveKings()).isTrue();
     }
 
     @DisplayName("왕이 하나 없는 경우")
     @Test
     void isSurviveKings2() {
-        ChessBoard chessBoard = new ChessBoard();
         Piece blackKing = chessBoard.findPieceByPosition(Position.of("e1"));
         chessBoard.removePiece(blackKing);
 

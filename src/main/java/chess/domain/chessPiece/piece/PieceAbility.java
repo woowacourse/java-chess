@@ -9,4 +9,6 @@ public interface PieceAbility {
     String pieceName();
 
     boolean isEqualPosition(Position position);
+
+    double getScore();
 }

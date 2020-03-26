@@ -33,7 +33,7 @@ public class Position {
         return new Position(file, rank);
     }
 
-    public boolean isNewRank() {
+    public boolean isNewLine() {
         return file == File.A;
     }
 
@@ -43,6 +43,10 @@ public class Position {
 
     public boolean isSameFile(Position target) {
         return this.file == target.file;
+    }
+
+    public boolean isSameFile(File file) {
+        return this.file == file;
     }
 
     public int calculateRankDistance(Position target) {

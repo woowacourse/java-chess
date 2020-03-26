@@ -7,7 +7,7 @@ import chess.domain.movefactory.MoveType;
 import chess.domain.movefactory.StraightType;
 
 public class King extends Piece {
-
+    private final double score = 0;
     public King(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
@@ -20,5 +20,10 @@ public class King extends Piece {
     @Override
     public String pieceName() {
         return teamStrategy.kingName();
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }

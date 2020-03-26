@@ -1,17 +1,21 @@
 package chess.domain.chessboard;
 
+import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.chessPiece.factory.PieceBundleFactory;
 import chess.domain.chessPiece.piece.King;
 import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessPiece.piece.Piece;
+import chess.domain.chessPiece.piece.PieceAbility;
 import chess.domain.chessPiece.team.BlackTeam;
+import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.chessPiece.team.WhiteTeam;
 import chess.domain.movefactory.MoveType;
 import chess.domain.movefactory.MoveTypeFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
     private final List<Position> chessBoard;
@@ -104,5 +108,23 @@ public class ChessBoard {
     public boolean isSurviveKings() {
         return blackTeam.stream().anyMatch(x -> x instanceof King)
                 && whiteTeam.stream().anyMatch(x -> x instanceof King);
+    }
+
+    public double calculateTeamScore(TeamStrategy teamStrategy) {
+        List<Piece> team = whiteTeam;
+        if (teamStrategy instanceof BlackTeam) {
+            team = blackTeam;
+        }
+
+        double result = 0;
+        for (File file : File.values()) {
+            List<Piece> pieces = team.stream().filter(x -> x.isSameFile(file)).collect(Collectors.toList());
+            boolean isOnePawn = pieces.stream().filter(x -> x instanceof Pawn).count() == 1;
+            if (isOnePawn) {
+                result += 0.5;
+            }
+            result += pieces.stream().map(PieceAbility::getScore).reduce((double) 0, Double::sum);
+        }
+        return result;
     }
 }

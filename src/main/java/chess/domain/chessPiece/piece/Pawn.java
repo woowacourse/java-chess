@@ -7,6 +7,7 @@ import chess.domain.movefactory.Direction;
 import chess.domain.movefactory.MoveType;
 
 public class Pawn extends Piece {
+    private final double score = 0.5;
     private final Position startPosition;
 
     public Pawn(Position position, TeamStrategy teamStrategy) {
@@ -53,6 +54,11 @@ public class Pawn extends Piece {
     @Override
     public String pieceName() {
         return teamStrategy.pawnName();
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 
     public boolean isBlackTeam() {

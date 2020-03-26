@@ -6,6 +6,7 @@ import chess.domain.movefactory.KnightType;
 import chess.domain.movefactory.MoveType;
 
 public class Knight extends Piece {
+    private final double score = 2.5;
     public Knight(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
@@ -18,5 +19,10 @@ public class Knight extends Piece {
     @Override
     public String pieceName() {
         return teamStrategy.knightName();
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }
