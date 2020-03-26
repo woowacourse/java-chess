@@ -1,6 +1,6 @@
 package chess.domain.chessPiece.piece;
 
-import chess.domain.Position;
+import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.WhiteTeam;
 import org.junit.jupiter.api.Test;

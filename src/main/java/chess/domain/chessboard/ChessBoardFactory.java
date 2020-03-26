@@ -1,8 +1,8 @@
 package chess.domain.chessboard;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.chessPiece.position.File;
+import chess.domain.chessPiece.position.Position;
+import chess.domain.chessPiece.position.Rank;
 
 import java.util.ArrayList;
 import java.util.List;

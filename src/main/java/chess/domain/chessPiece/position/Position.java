@@ -1,10 +1,10 @@
-package chess.domain;
+package chess.domain.chessPiece.position;
 
 import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.movefactory.Direction;
-import chess.domain.movefactory.KnightType;
-import chess.domain.movefactory.MoveType;
+import chess.domain.movetype.Direction;
+import chess.domain.movetype.KnightType;
+import chess.domain.movetype.MoveType;
 
 import java.util.Objects;
 

@@ -1,10 +1,10 @@
 package chess.domain.chessPiece.piece;
 
-import chess.domain.Position;
+import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movefactory.Direction;
-import chess.domain.movefactory.MoveType;
+import chess.domain.movetype.Direction;
+import chess.domain.movetype.MoveType;
 
 public class Pawn extends Piece {
 	private static final int PAWN_NORMAL_MOVE_RANGE = 1;

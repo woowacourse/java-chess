@@ -1,16 +1,13 @@
 package chess.view;
 
-import chess.domain.Position;
 import chess.domain.chessPiece.piece.Piece;
-import chess.domain.chessPiece.team.BlackTeam;
-import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.chessPiece.team.WhiteTeam;
+import chess.domain.chessPiece.position.Position;
 import chess.domain.chessboard.ChessBoard;
 
 public class OutputView {
 	private static final String EMPTY_MARK = ".";
-	private static final String STRING_FORMAT_PRINT_SCORE = "블랙팀 점수 : %.1f, 화이트 팀 점수 : %.1f";
-	private static final String MESSAGE_END_GAME = "게임을 종료 합니다";
+	private static final String STRING_FORMAT_PRINT_SCORE = "\n블랙팀 점수 : %.1f, 화이트팀 점수 : %.1f";
+	private static final String MESSAGE_END_GAME = "\n게임을 종료 합니다";
 
 	public static void printChessBoard(ChessBoard chessBoard) {
 		for (Position position : chessBoard.getChessBoard()) {
@@ -34,12 +31,7 @@ public class OutputView {
 		}
 	}
 
-	public static void calculateScore(ChessBoard chessBoard) {
-		TeamStrategy blackMark = new BlackTeam();
-		TeamStrategy whiteMark = new WhiteTeam();
-		double blackTeamScore = chessBoard.calculateTeamScore(blackMark);
-		double whiteTeamScore = chessBoard.calculateTeamScore(whiteMark);
-
+	public static void printGameResult(double blackTeamScore, double whiteTeamScore) {
 		System.out.println(String.format(STRING_FORMAT_PRINT_SCORE, blackTeamScore, whiteTeamScore));
 	}
 

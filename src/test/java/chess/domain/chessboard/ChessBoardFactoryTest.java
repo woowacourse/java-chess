@@ -1,6 +1,6 @@
 package chess.domain.chessboard;
 
-import chess.domain.Position;
+import chess.domain.chessPiece.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

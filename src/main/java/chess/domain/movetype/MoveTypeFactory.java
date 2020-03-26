@@ -1,6 +1,6 @@
-package chess.domain.movefactory;
+package chess.domain.movetype;
 
-import chess.domain.Position;
+import chess.domain.chessPiece.position.Position;
 
 public class MoveTypeFactory {
 	private static final int ONE_POINT = 1;

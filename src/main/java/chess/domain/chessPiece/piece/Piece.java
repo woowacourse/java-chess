@@ -1,10 +1,10 @@
 package chess.domain.chessPiece.piece;
 
-import chess.domain.File;
-import chess.domain.Position;
+import chess.domain.chessPiece.position.File;
+import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.movefactory.MoveType;
+import chess.domain.movetype.MoveType;
 
 public abstract class Piece implements PieceAbility {
 	protected final TeamStrategy teamStrategy;
@@ -30,7 +30,5 @@ public abstract class Piece implements PieceAbility {
 	public boolean isSameFile(File file) {
 		return this.position.isSameFile(file);
 	}
-
-	;
 }
 

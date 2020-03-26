@@ -1,17 +1,17 @@
 package chess.domain.chessboard;
 
-import chess.domain.File;
-import chess.domain.Position;
 import chess.domain.chessPiece.factory.PieceBundleFactory;
 import chess.domain.chessPiece.piece.King;
 import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.piece.PieceAbility;
+import chess.domain.chessPiece.position.File;
+import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.chessPiece.team.WhiteTeam;
-import chess.domain.movefactory.MoveType;
-import chess.domain.movefactory.MoveTypeFactory;
+import chess.domain.movetype.MoveType;
+import chess.domain.movetype.MoveTypeFactory;
 
 import java.util.Collections;
 import java.util.List;

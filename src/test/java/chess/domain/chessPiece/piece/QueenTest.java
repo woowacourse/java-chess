@@ -1,9 +1,9 @@
 package chess.domain.chessPiece.piece;
 
-import chess.domain.Position;
+import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.BlackTeam;
-import chess.domain.movefactory.MoveType;
-import chess.domain.movefactory.MoveTypeFactory;
+import chess.domain.movetype.MoveType;
+import chess.domain.movetype.MoveTypeFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
-package chess.domain.movefactory;
+package chess.domain.movetype;
 
-import chess.domain.Position;
+import chess.domain.chessPiece.position.Position;
 
 public class CrossType implements MoveType {
 	private static final int ZERO = 0;

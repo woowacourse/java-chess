@@ -1,8 +1,5 @@
 package chess.domain.chessPiece.factory;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
 import chess.domain.chessPiece.piece.Bishop;
 import chess.domain.chessPiece.piece.King;
 import chess.domain.chessPiece.piece.Knight;
@@ -10,6 +7,9 @@ import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.piece.Queen;
 import chess.domain.chessPiece.piece.Rook;
+import chess.domain.chessPiece.position.File;
+import chess.domain.chessPiece.position.Position;
+import chess.domain.chessPiece.position.Rank;
 import chess.domain.chessPiece.team.TeamStrategy;
 
 import java.util.ArrayList;

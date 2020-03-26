@@ -1,14 +1,14 @@
 package chess.domain.chessboard;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
 import chess.domain.chessPiece.piece.Bishop;
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.piece.Queen;
 import chess.domain.chessPiece.piece.Rook;
+import chess.domain.chessPiece.position.File;
+import chess.domain.chessPiece.position.Position;
+import chess.domain.chessPiece.position.Rank;
 import chess.domain.chessPiece.team.BlackTeam;
-import chess.domain.movefactory.MoveTypeFactory;
+import chess.domain.movetype.MoveTypeFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

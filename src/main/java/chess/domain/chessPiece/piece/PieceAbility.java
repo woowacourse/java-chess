@@ -1,7 +1,7 @@
 package chess.domain.chessPiece.piece;
 
-import chess.domain.Position;
-import chess.domain.movefactory.MoveType;
+import chess.domain.chessPiece.position.Position;
+import chess.domain.movetype.MoveType;
 
 public interface PieceAbility {
 	boolean isMovable(MoveType moveType);

@@ -1,6 +1,8 @@
 package chess.controller;
 
-import chess.domain.Position;
+import chess.domain.chessPiece.position.Position;
+import chess.domain.chessPiece.team.BlackTeam;
+import chess.domain.chessPiece.team.WhiteTeam;
 import chess.domain.chessboard.ChessBoard;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -16,16 +18,13 @@ public class ChessController {
 	private static final int FILE_INDEX = 0;
 	private static final int RANK_INDEX = 1;
 	private static final String MOVE_COMMAND = "move";
-	private static final String START_VALUE = "start";
 	private static final String BLANK = " ";
 
 	public static void run() {
-		String gameState = InputView.inputGameState();
-
-		if (START_VALUE.equalsIgnoreCase(gameState)) {
+		String userInputToStart = InputView.inputGameState();
+		if (InputView.START_COMMAND.equalsIgnoreCase(userInputToStart)) {
 			chessStart();
 		}
-
 		OutputView.printGameEndMessage();
 	}
 
@@ -36,7 +35,10 @@ public class ChessController {
 		while (chessBoard.isSurviveKings()) {
 			gameRun(chessBoard);
 		}
-		OutputView.calculateScore(chessBoard);
+
+		double blackTeamScore = chessBoard.calculateTeamScore(new BlackTeam());
+		double whiteTeamScore = chessBoard.calculateTeamScore(new WhiteTeam());
+		OutputView.printGameResult(blackTeamScore, whiteTeamScore);
 	}
 
 	private static void gameRun(ChessBoard chessBoard) {
