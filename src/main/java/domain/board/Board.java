@@ -4,6 +4,7 @@ import java.util.List;
 
 import domain.piece.Piece;
 import domain.piece.position.InvalidPositionException;
+import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Board {
@@ -24,19 +25,13 @@ public class Board {
 		int rankLine = Integer.parseInt(String.valueOf(sourcePosition.charAt(ROW_INDEX)));
 		Rank rank = ranks.get(rankLine - 1);
 		Piece piece = findPiece(sourcePosition, rank);
-		validateTurn(piece, turn);
-	}
-
-	private void validateTurn(Piece piece, Team nowTurn) {
-		if (!piece.isTeam(nowTurn)) {
-			throw new InvalidTurnException(InvalidTurnException.INVALID_TURN);
-		}
+		piece.canMove(Position.of(targetPosition), turn);
 	}
 
 	private Piece findPiece(String sourcePosition, Rank rank) {
 		return rank.getPieces().stream()
 			.filter(piece -> piece.getPosition().getColumn().getColumnName() == sourcePosition.charAt(COLUMN_INDEX))
 			.findFirst()
-			.orElseThrow(() -> new InvalidPositionException(""));
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
 	}
 }
