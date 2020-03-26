@@ -1,47 +1,26 @@
 package chess.domain.chessPiece;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
+import chess.domain.chessPiece.pieceType.PieceType;
+import chess.domain.chessPiece.pieceType.PieceTypeCache;
+
+// NOTE: 2020/03/26 여기에 state를 준다면? 새롬게 PieceTypeCache가 캐싱을 하고 있고, 여기선 PieceType을 가져와 state를 조합!
 public class ChessPiece {
-    private final static Map<String, ChessPiece> CHESS_PIECE_CACHE = new HashMap<>();
+	private final PieceType pieceType;
 
-    private final PieceType pieceType;
+	private ChessPiece(PieceType pieceType) {
+		this.pieceType = pieceType;
+	}
 
-    static {
-        for (PieceColor pieceColor : PieceColor.values()) {
-            King king = new King(pieceColor);
-            Queen queen = new Queen(pieceColor);
-            Bishop bishop = new Bishop(pieceColor);
-            Rook rook = new Rook(pieceColor);
-            Knight knight = new Knight(pieceColor);
-            Pawn pawn = new Pawn(pieceColor);
+	// TODO: 2020/03/26 추후 state가 추가될 경우, key와 state를 받아서 생성하는 from으로 변경
+	public static ChessPiece of(String key) {
+		Objects.requireNonNull(key, "체스 피스의 key가 null입니다.");
+		return new ChessPiece(PieceTypeCache.from(key));
+	}
 
-            CHESS_PIECE_CACHE.put(king.getName(), new ChessPiece(king));
-            CHESS_PIECE_CACHE.put(queen.getName(), new ChessPiece(queen));
-            CHESS_PIECE_CACHE.put(bishop.getName(), new ChessPiece(bishop));
-            CHESS_PIECE_CACHE.put(rook.getName(), new ChessPiece(rook));
-            CHESS_PIECE_CACHE.put(knight.getName(), new ChessPiece(knight));
-            CHESS_PIECE_CACHE.put(pawn.getName(), new ChessPiece(pawn));
-        }
-    }
-
-    private ChessPiece(PieceType pieceType) {
-        this.pieceType = pieceType;
-    }
-
-    public static ChessPiece of(String key) {
-        ChessPiece chessPiece = CHESS_PIECE_CACHE.get(key);
-
-        if (Objects.isNull(chessPiece)) {
-            throw new IllegalArgumentException();
-        }
-        return chessPiece;
-    }
-
-    @Override
-    public String toString() {
-        return this.pieceType.getName();
-    }
+	@Override
+	public String toString() {
+		return this.pieceType.getName();
+	}
 }
