@@ -42,7 +42,11 @@ public class Position {
 	}
 
 	public Position subtract(Position position) {
-		return new Position(this.x - position.x, this.y - position.y);
+		return of(this.x - position.x, this.y - position.y);
+	}
+
+	public Position add(int x, int y) {
+		return of(this.x + x, this.y + y);
 	}
 
 	public int getX() {
