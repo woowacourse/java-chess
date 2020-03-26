@@ -38,4 +38,9 @@ public class Queen extends Piece {
 	protected String getInitialCharacter() {
 		return INITIAL_CHARACTER;
 	}
+
+	@Override
+	public double getScore() {
+		return 9;
+	}
 }

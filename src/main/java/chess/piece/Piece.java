@@ -25,7 +25,13 @@ public abstract class Piece {
 		return this.team == piece.team;
 	}
 
+	public Team getTeam() {
+		return team;
+	}
+
 	protected abstract String getInitialCharacter();
 
 	public abstract List<Position> findReachablePositions(Position start, Position end);
+
+	public abstract double getScore();
 }

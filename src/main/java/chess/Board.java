@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import chess.piece.Bishop;
 import chess.piece.King;
@@ -63,6 +64,11 @@ public class Board {
 		return pieces;
 	}
 
+	public Map<Team, Double> status() {
+		return pieces.values().stream()
+			.collect(Collectors.groupingBy(Piece::getTeam, HashMap::new, Collectors.summingDouble(Piece::getScore)));
+	}
+
 	public void move(Position from, Position to) {
 		Piece piece = pieces.get(from);
 		List<Position> PositionsWherePiecesShouldNeverBeIncluded = piece.findReachablePositions(from, to);
@@ -74,9 +80,9 @@ public class Board {
 		}
 
 		Piece target = pieces.remove(from);
-		target.updateHasMoved();
 		Piece piece1 = pieces.get(to);
-		if (piece1 != null && piece instanceof King) {
+		if (piece1 instanceof King) {
+			System.out.println("여기 안지나나");
 			this.finished = true;
 		}
 		pieces.put(to, target);
@@ -85,7 +91,7 @@ public class Board {
 
 	public boolean isExistAnyPieceAt(List<Position> traces) {
 		return traces.stream()
-			.anyMatch(position -> pieces.containsKey(position));
+			.anyMatch(pieces::containsKey);
 	}
 
 	private boolean isExistAt(Position position) {
@@ -101,6 +107,6 @@ public class Board {
 	}
 
 	public boolean checkGameEnd() {
-		return this.finished;
+		return !this.finished;
 	}
 }

@@ -59,4 +59,9 @@ public class Pawn extends Piece {
 	public void updateHasMoved() {
 		this.hasMoved = true;
 	}
+
+	@Override
+	public double getScore() {
+		return 1;
+	}
 }

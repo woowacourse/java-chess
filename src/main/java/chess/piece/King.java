@@ -24,4 +24,9 @@ public class King extends Piece {
 	protected String getInitialCharacter() {
 		return INITIAL_CHARACTER;
 	}
+
+	@Override
+	public double getScore() {
+		return 0;
+	}
 }
