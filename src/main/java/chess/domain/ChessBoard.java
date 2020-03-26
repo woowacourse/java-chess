@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-    /*
+
     private List<Row> board;
 
     public ChessBoard(List<Row> board) {
@@ -31,7 +31,7 @@ public class ChessBoard {
     public List<Row> getBoard() {
         return board;
     }
-
+/*
     public void move(Position startPosition, Position targetPosition) {
         ChessPiece chessPiece = getChessPiece(startPosition);
 
@@ -144,6 +144,6 @@ public class ChessBoard {
         }
         return score - cnt * 0.5;
     }
-
 */
+
 }

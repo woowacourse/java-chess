@@ -7,7 +7,6 @@ import chess.domain.chesspiece.ChessPiece;
 import java.util.List;
 
 public class OutputView {
-    /*
     public static void printBoard(ChessBoard chessBoard) {
         List<Row> board = chessBoard.getBoard();
         for (int i = 8; i >= 1; i--) {
@@ -19,6 +18,7 @@ public class OutputView {
             System.out.println();
         }
     }
+    /*
 
     public static void printRule() {
         System.out.println("체스 게임을 시작합니다.");

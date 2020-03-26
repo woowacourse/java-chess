@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.Direction;
+import chess.domain.NameUtils;
 import chess.domain.Position;
 import chess.domain.Team;
 
@@ -22,7 +23,7 @@ public class Rook extends ValuablePiece {
 
 	@Override
 	public String getName() {
-		return null;
+		return NameUtils.parseName(NAME, team);
 	}
 
 	@Override
