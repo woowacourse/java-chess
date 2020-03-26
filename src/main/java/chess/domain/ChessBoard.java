@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.Pawn;
 import chess.generator.AllRouteGenerator;
 
 import java.util.ArrayList;
@@ -19,13 +20,12 @@ public class ChessBoard {
     }
 
     public void move(Position startPosition, Position targetPosition) {
-//        for (int i = 7; i >= 0; i--) {
-//            for (int j = 0; j < 8; j++) {
-//                System.out.print(board.get(i).get(j).getPosition() + " ");
+//        for(int i=0;i<8;i++){
+//            for(int j=0;j<8;j++){
+//                System.out.print(board.get(i).get(j).getName());
 //            }
 //            System.out.println();
 //        }
-
         ChessPiece chessPiece = getChessPiece(startPosition);
 
         Route canMoveRoute = findRoute(chessPiece, startPosition, targetPosition);
@@ -65,14 +65,17 @@ public class ChessBoard {
     }
 
     private boolean validateRoute(ChessPiece chessPiece, Route canMoveRoute, Position targetPosition) {
+        Position lastPosition = null;
         //해당하는 루트가 없을 때
         if (canMoveRoute == null) {
+            System.out.println("can't find route");
             return false;
         }
         System.out.println(canMoveRoute.getRoute().toString());
         for (Position position : canMoveRoute.getRoute()) {
             //목적지 도달하여 break;
-            if (position.equals(targetPosition)) {
+            if (position.equals(targetPosition)
+                    && checkPawnMove(chessPiece, lastPosition, targetPosition)) {
                 break;
             }
             //목적지로 가는 도중 말이 있을 경우
@@ -81,6 +84,7 @@ public class ChessBoard {
                 System.out.println("가는 길에 말이 있음");
                 return false;
             }
+            lastPosition = position;
         }
         //목적지의 말이 같은 팀일 경우
         if (getChessPiece(targetPosition).isSameTeam(chessPiece.getTeam())) {
@@ -89,6 +93,21 @@ public class ChessBoard {
         }
         //이동 성공
         System.out.println("\nmove success\n");
+        return true;
+    }
+
+    private boolean checkPawnMove(ChessPiece chessPiece, Position lastPosition, Position targetPosition) {
+        if (chessPiece instanceof Pawn) {
+            int dx = targetPosition.getX() - lastPosition.getX();
+            if (Math.abs(dx) == 1) {
+                //대각선 목적지에 적이 있으면 이동 가능 return true
+                return !isBlank(targetPosition);
+            }
+            if (Math.abs(dx) == 0) {
+                //정면 목적지에 적이 없으면 이동 가능 return true
+                return isBlank(targetPosition);
+            }
+        }
         return true;
     }
 

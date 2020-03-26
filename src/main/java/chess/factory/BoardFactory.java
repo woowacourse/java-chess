@@ -35,13 +35,13 @@ public class BoardFactory {
             }
             return new Row(chessPieces);
         }
-        if (i == 1) {
+        if (i == 2) {
             for (char col = 'a'; col <= 'h'; col++) {
                 chessPieces.add(new Pawn(Team.WHITE));
             }
             return new Row(chessPieces);
         }
-        if (i == 2) {
+        if (i == 1) {
             chessPieces.add(new Rook(Team.WHITE));
             chessPieces.add(new Knight(Team.WHITE));
             chessPieces.add(new Bishop(Team.WHITE));

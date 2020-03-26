@@ -20,8 +20,8 @@ public class AllRouteGenerator {
             return makeKnightRoute(initialPosition);
         }
 
-        if (chessPiece instanceof Pawn && ((Pawn)chessPiece).isFirstMove()) {
-            ((Pawn)chessPiece).firstMoveComplete();
+        if (chessPiece instanceof Pawn && ((Pawn) chessPiece).isFirstMove()) {
+            ((Pawn) chessPiece).firstMoveComplete();
             directions.add(Direction.DOUBLE_UP);
         }
 
@@ -29,6 +29,8 @@ public class AllRouteGenerator {
             positions = new ArrayList<>();
 
             makeRouteByDirection(chessPiece, positions, direction, initialPosition);
+            System.out.println(positions);
+            System.out.println("--");
             routes.add(new Route(positions));
         }
         return routes;

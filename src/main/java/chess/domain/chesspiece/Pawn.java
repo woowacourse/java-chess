@@ -1,28 +1,28 @@
 package chess.domain.chesspiece;
 
-import static chess.domain.Direction.*;
-
-import java.util.Arrays;
-
 import chess.domain.Team;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static chess.domain.Direction.*;
+
 public class Pawn extends ChessPiece {
-	boolean isFirstMove = true;
+    boolean isFirstMove = true;
 
-	public Pawn(Team team) {
-		super("p", team, 1, Arrays.asList(
-			UP,
-			LEFT_UP,
-			RIGHT_UP,
-			DOUBLE_UP
-		));
-	}
+    public Pawn(Team team) {
+        super("p", team, 1, new ArrayList<>(Arrays.asList(
+                DOWN,
+                LEFT_UP,
+                RIGHT_UP)
+        ));
+    }
 
-	public boolean isFirstMove() {
-		return isFirstMove;
-	}
+    public boolean isFirstMove() {
+        return isFirstMove;
+    }
 
-	public void firstMoveComplete() {
-		isFirstMove = false;
-	}
+    public void firstMoveComplete() {
+        isFirstMove = false;
+    }
 }
