@@ -79,11 +79,11 @@ public class Boards {
 		}
 	}
 
-	public boolean isBothKingAlive() {
+	public boolean isKingDead() {
 		return getTotal().values()
 			.stream()
 			.filter(piece -> piece.toLowerCase().equals(KING))
-			.count() == 2;
+			.count() < 2;
 	}
 
 	public double getScoreOf(Turn turn) {
