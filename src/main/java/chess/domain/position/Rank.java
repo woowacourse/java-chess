@@ -37,6 +37,10 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("Rank의 범위를 초과하였습니다."));
     }
 
+    public Rank reverse() {
+        return Rank.of(values().length - index);
+    }
+
     public int getRowNumber() {
         return index;
     }

@@ -5,10 +5,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
     private static final String EMPTY_POSITION_ACRONYM = ".";
@@ -52,10 +49,27 @@ public class Board {
 
     public void move(Position fromPosition, Position toPosition) {
         Piece piece = board.get(fromPosition);
+        Map<Position, Piece> boardForMoving = board;
+
+        if (piece.isBlackTeam()) {
+            boardForMoving = reverseBoard();
+        }
 
         if (piece.canMove(fromPosition, toPosition)) {
-            board.remove(fromPosition);
-            board.put(toPosition, piece);
+            boardForMoving.remove(fromPosition);
+            boardForMoving.put(toPosition, piece);
         }
+    }
+
+    private Map<Position, Piece> reverseBoard() {
+        Map<Position, Piece> reversedBoard = new HashMap<>();
+
+        for (Position position : board.keySet()) {
+            Piece piece = board.get(position);
+            Position reversedPosition = position.reverse();
+            reversedBoard.put(reversedPosition, piece);
+        }
+
+        return reversedBoard;
     }
 }

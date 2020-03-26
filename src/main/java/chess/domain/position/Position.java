@@ -58,4 +58,8 @@ public class Position {
     public boolean isAt(Rank rank) {
         return this.rank == rank;
     }
+
+    public Position reverse() {
+        return new Position(file.reverse(), rank.reverse());
+    }
 }
