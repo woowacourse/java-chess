@@ -19,6 +19,13 @@ public class ChessPiece {
         return new ChessPiece(PieceTypeCache.from(key));
     }
 
+    //    public boolean canMove(Position source, Position target) {
+//        if (pieceType instanceof Pawn) {
+//            return ((Pawn) pieceType).canCatch(source, target);
+//        }
+//        return pieceType.canMove(source, target);
+//    }
+//
     @Override
     public String toString() {
         return this.pieceType.getName();
