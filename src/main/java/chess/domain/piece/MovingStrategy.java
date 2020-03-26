@@ -1,35 +1,48 @@
 package chess.domain.piece;
 
-import java.util.Map;
-import java.util.Optional;
-
-import chess.domain.board.Position;
+import chess.domain.board.Path;
 
 @FunctionalInterface
 public interface MovingStrategy {
-    boolean test(Position start, Position end, Map<Position, Optional<Piece>> path);
+    boolean test(Path path);
 
-    static boolean king(Position start, Position end, Map<Position, Optional<Piece>> path) {
-        return Math.pow(Position.rowGap(start, end), 2) + Math.pow(Position.columnGap(start, end), 2) <= 2;
+    static boolean king(Path path) {
+        return path.distanceSquare() <= 2
+            && (path.isEndEmpty() || path.isEnemyOnEnd());
     }
 
-    static boolean queen(Position start, Position end, Map<Position, Optional<Piece>> path) {
-        return rook(start, end, path) || bishop(start, end, path);
+    static boolean queen(Path path) {
+        return rook(path) || bishop(path);
     }
 
-    static boolean rook(Position start, Position end, Map<Position, Optional<Piece>> path) {
-        return Position.columnGap(start, end) == 0 || Position.rowGap(start, end) == 0;
+    static boolean rook(Path path) {
+        return path.isStraight()
+            && (path.isEndEmpty() || path.isEnemyOnEnd())
+            && !path.isBlocked();
     }
 
-    static boolean bishop(Position start, Position end, Map<Position, Optional<Piece>> path) {
-        return Math.abs(Position.columnGap(start, end)) == Math.abs(Position.rowGap(start, end));
+    static boolean bishop(Path path) {
+        return path.isDiagonal()
+            && (path.isEndEmpty() || path.isEnemyOnEnd())
+            && !path.isBlocked();
     }
 
-    static boolean knight(Position start, Position end, Map<Position, Optional<Piece>> path) {
-        return Math.pow(Position.rowGap(start, end), 2) + Math.pow(Position.columnGap(start, end), 2) == 5;
+    static boolean knight(Path path) {
+        return path.distanceSquare() == 5
+            && (path.isEndEmpty() || path.isEnemyOnEnd());
     }
 
-    static boolean pawn(Position start, Position end, Map<Position, Optional<Piece>> path) {
-        throw new UnsupportedOperationException();
+    static boolean pawn(Path path) {
+        if (path.isInitalStart()) {
+            return (path.distanceSquare() == 4 || path.distanceSquare() == 1)
+                && path.headingForward()
+                && path.isEndEmpty();
+        }
+        if (path.isEnemyOnEnd()) {
+            return path.distanceSquare() == 2
+                && path.headingForward();
+        }
+        return path.distanceSquare() == 1
+            && path.headingForward() && path.isEndEmpty();
     }
 }

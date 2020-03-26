@@ -56,7 +56,18 @@ public class Board {
             || Position.columnGap(start, end) == Position.rowGap(start, end);
     }
 
-    // TODO: 말을 실제로 옮기는 move 마무리
+    public void move(final Position start, final Position end) {
+        Path path = generatePath(start, end);
+        if (!board.get(start).isPresent()) {
+            throw new IllegalArgumentException();
+        }
+        Piece mover = board.get(start).get();
+        if (mover.isMovable(path)) {
+            board.put(end, Optional.of(mover));
+            board.put(start, Optional.empty());
+        }
+    }
+
     // TODO: 게임 끝남 판단 (킹이 잡힌 경우)
     // TODO: 점수 구하기 (Board에서 count & 폰의 위치를 판단하는 로직 필요)
 }

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
 
 public class Path {
     private Map<Position, Optional<Piece>> path;
@@ -44,5 +45,30 @@ public class Path {
             .stream()
             .filter(key -> key != start && key != end)
             .anyMatch(key -> path.get(key).isPresent());
+    }
+
+    public double distanceSquare() {
+        return Math.pow(Position.rowGap(start, end), 2) + Math.pow(Position.columnGap(start, end), 2);
+    }
+
+    public boolean isStraight() {
+        return start.isOn(end.getRow()) || start.isOn(end.getColumn());
+    }
+
+    public boolean isDiagonal() {
+        return Math.abs(Position.rowGap(start, end)) == Math.abs(Position.columnGap(start, end));
+    }
+
+    public boolean isInitalStart() {
+        Piece piece = path.get(start).get();
+        return piece.isOnInitialPosition(start);
+    }
+
+    public boolean headingForward() {
+        Piece piece = path.get(start).get();
+        if (piece.getSide() == Side.BLACK) {
+            return start.row() > end.row();
+        }
+        return start.row() < end.row();
     }
 }

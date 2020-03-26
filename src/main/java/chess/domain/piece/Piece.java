@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
+import chess.domain.board.Path;
 import chess.domain.board.Position;
 
 public class Piece {
@@ -21,8 +21,8 @@ public class Piece {
         return PieceCache.pieces.get(PieceCache.key(type, side));
     }
 
-    public boolean isMovable(Position start, Position end, Map<Position, Optional<Piece>> path) {
-        return type.canMoveBetween(start, end, path);
+    public boolean isMovable(Path path) {
+        return type.canMoveBetween(path);
     }
 
     public String name() {
@@ -37,6 +37,10 @@ public class Piece {
         return side != other.side;
     }
 
+    public boolean isOnInitialPosition(Position position) {
+        return type.initPosition(position, side);
+    }
+
     @Override
     public String toString() {
         if (side == Side.WHITE) {
@@ -47,6 +51,14 @@ public class Piece {
 
     public static List<Piece> getPieces() {
         return new ArrayList<>(PieceCache.pieces.values());
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Side getSide() {
+        return side;
     }
 
     static class PieceCache {

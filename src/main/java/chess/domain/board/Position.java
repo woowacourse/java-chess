@@ -19,6 +19,10 @@ public class Position {
         return positions.get(key(row, column));
     }
 
+    public static Position of(String value) {
+        return positions.get(value);
+    }
+
     public static int rowGap(Position start, Position end) {
         return start.row() - end.row();
     }
@@ -68,7 +72,7 @@ public class Position {
     }
 
     private static String key(final Row row, final Column column) {
-        return row.toString() + column.toString();
+        return column.getName() + row.getValue();
     }
 
     public boolean inBetween(final Position start, final Position end) {
@@ -76,19 +80,16 @@ public class Position {
             && isBetweenComparingInt(this.column(), start.column(), end.column())) {
             return true;
         }
-
         if (isOn(start.getColumn()) && isOn(end.getColumn())
             && isBetweenComparingInt(this.row(), start.row(), end.row())) {
             return true;
         }
-
         if (Position.rowGap(this, start) == Position.columnGap(this, start)
             && Position.rowGap(this, end) == Position.columnGap(this, end)
             && isBetweenComparingInt(this.column(), start.column(), end.column())
             && isBetweenComparingInt(this.row(), start.row(), end.row())) {
             return true;
         }
-
         return false;
     }
 

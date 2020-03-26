@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
-import java.util.Map;
-import java.util.Optional;
-
+import chess.domain.board.Path;
 import chess.domain.board.Position;
 
 public enum Type {
@@ -27,11 +25,11 @@ public enum Type {
         return initialPosition.isRightOn(position, side);
     }
 
-    public boolean canMoveBetween(Position start, Position end, Map<Position, Optional<Piece>> path) {
-        if (start == end) {
+    public boolean canMoveBetween(Path path) {
+        if (path.distanceSquare() == 0) {
             return false;
         }
-        return movingStrategy.test(start, end, path);
+        return movingStrategy.test(path);
     }
 
     public String getName() {
