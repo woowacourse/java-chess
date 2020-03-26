@@ -3,7 +3,7 @@ package chess.util;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 public class ConsoleOutputRenderer {

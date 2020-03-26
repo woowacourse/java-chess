@@ -2,10 +2,10 @@ package chess;
 
 import static chess.view.OutputView.*;
 
-import chess.domain.Board;
 import chess.domain.GameManager;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.command.Command;
-import chess.domain.piece.BoardFactory;
 import chess.view.InputView;
 
 public class Application {

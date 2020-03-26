@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Color.*;
+import static chess.domain.piece.PieceScore.*;
 import static chess.domain.position.Direction.*;
 
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -17,7 +18,7 @@ public class Pawn extends FixedPiece {
 	private List<Direction> eatableDirections;
 
 	public Pawn(String name, Color color) {
-		super(name, color, createMovableDirection(color));
+		super(name, color, createMovableDirection(color), PAWN_SCORE);
 		this.eatableDirections = createEatableDirection(color);
 	}
 

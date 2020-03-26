@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public abstract class FixedPiece extends AbstractPiece {
-	protected FixedPiece(String name, Color color, List<Direction> movableDirections) {
-		super(name, color, movableDirections);
+	public FixedPiece(String name, Color color, List<Direction> movableDirections, PieceScore score) {
+		super(name, color, movableDirections, score);
 	}
 
 	@Override

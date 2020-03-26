@@ -1,7 +1,7 @@
 package chess.domain.position;
 
 public class PositionFixture {
-	public static final Position A1 = Position.of(Column.of("A"), Row.of("1"));
+	public static final Position A1 = Position.of("A1");
 	public static final Position A2 = Position.of(Column.of("A"), Row.of("2"));
 	public static final Position A3 = Position.of(Column.of("A"), Row.of("3"));
 	public static final Position A4 = Position.of(Column.of("A"), Row.of("4"));

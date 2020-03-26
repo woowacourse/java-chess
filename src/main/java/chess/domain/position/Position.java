@@ -86,6 +86,10 @@ public class Position {
 			row == position.row;
 	}
 
+	public Column getColumn() {
+		return column;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(column, row);

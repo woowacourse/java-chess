@@ -9,13 +9,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public abstract class StretchPiece extends AbstractPiece {
-	public StretchPiece(String name, Color color, List<Direction> movableDirections) {
-		super(name, color, movableDirections);
+	public StretchPiece(String name, Color color, List<Direction> movableDirections, PieceScore score) {
+		super(name, color, movableDirections, score);
 	}
 
 	@Override
