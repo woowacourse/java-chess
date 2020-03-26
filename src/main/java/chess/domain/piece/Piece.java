@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.piece.movable.Movable;
 import chess.domain.board.position.Position;
+import chess.domain.piece.movable.Movable;
 
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +39,16 @@ public abstract class Piece {
 
 	public void changePosition(Position position) { // TODO: 2020/03/25 테스트 자기자신 넣을 경우 오류.
 		this.position = position;
+	}
+
+	public boolean isSamePosition(Position position) {
+		Objects.requireNonNull(position, INVALID_INPUT_EXCEPTION_MESSAGE);
+		return this.position.equals(position);
+	}
+
+	public boolean isSameColor(Color color) {
+		Objects.requireNonNull(color, INVALID_INPUT_EXCEPTION_MESSAGE);
+		return this.color.isSame(color);
 	}
 
 	public Position getPosition() {
