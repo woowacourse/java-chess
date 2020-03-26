@@ -90,6 +90,14 @@ public class Position {
 		return this.rank.isNear(other.rank) && this.file.isNear(other.file);
 	}
 
+	public boolean isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(Position other) {
+		return !isMultiplicationOfDifferenceBetweenFileAndRankIsTwo(other);
+	}
+
+	private boolean isMultiplicationOfDifferenceBetweenFileAndRankIsTwo(Position other) {
+		return false;
+	}
+
 	public File getFile() {
 		return this.file;
 	}
