@@ -15,6 +15,8 @@ public enum File {
     G("G"),
     H("H");
 
+    private static final int NEXT_INDEX = 1;
+    private static final int PREVIOUS_INDEX = -1;
     private static Map<File, File> opposite;
 
     static {
@@ -27,7 +29,6 @@ public enum File {
         opposite.put(F, C);
         opposite.put(G, B);
         opposite.put(H, A);
-
     }
 
     private String name;
@@ -40,20 +41,20 @@ public enum File {
         return opposite.get(this);
     }
 
-    public Optional<File> next() {
+    public Optional<File> jump(int index) {
         try {
-            return Optional.of(values()[ordinal() + 1]);
+            return Optional.of(values()[ordinal() + index]);
         } catch (ArrayIndexOutOfBoundsException e) {
             return Optional.empty();
         }
     }
 
+    public Optional<File> next() {
+        return jump(NEXT_INDEX);
+    }
+
     public Optional<File> previous() {
-        try {
-            return Optional.of(values()[ordinal() - 1]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return Optional.empty();
-        }
+        return jump(PREVIOUS_INDEX);
     }
 
     public String getName() {

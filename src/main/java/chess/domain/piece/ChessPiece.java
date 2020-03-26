@@ -1,13 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
 
 public enum ChessPiece {
 
@@ -16,7 +16,8 @@ public enum ChessPiece {
     ROOK("r", Arrays.asList(Position.of(File.A, Rank.ONE), Position.of(File.H, Rank.ONE)), new RookStrategy()),
     BISHOP("b", Arrays.asList(Position.of(File.C, Rank.ONE), Position.of(File.F, Rank.ONE)), new BishopStrategy()),
     KNIGHT("n", Arrays.asList(Position.of(File.B, Rank.ONE), Position.of(File.G, Rank.ONE)), new KnightStrategy()),
-    PAWN("p", Arrays.stream(File.values()).map(file -> Position.of(file, Rank.TWO)).collect(Collectors.toList()), new PawnStrategy());
+    PAWN("p", Arrays.stream(File.values()).map(file -> Position.of(file, Rank.TWO)).collect(Collectors.toList()),
+            new PawnStrategy());
 
     private final String name;
     private final List<Position> initialPositions;

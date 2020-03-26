@@ -12,6 +12,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class RankTest {
 
+    @ParameterizedTest
+    @DisplayName("가로축에 대해 대칭")
+    @MethodSource("createOppositeCase")
+    void opposite(Rank actual, Rank expected) {
+        assertThat(actual.opposite()).isEqualTo(expected);
+    }
+
     static Stream<Arguments> createOppositeCase() {
         return Stream.of(
                 Arguments.of(ONE, EIGHT),
@@ -25,25 +32,20 @@ class RankTest {
         );
     }
 
-    static Stream<Arguments> createNextRank() {
-        return Stream.of(
-                Arguments.of(ONE, TWO),
-                Arguments.of(EIGHT, null)
-        );
-    }
-
-    static Stream<Arguments> createPreviousRank() {
-        return Stream.of(
-                Arguments.of(TWO, ONE),
-                Arguments.of(ONE, null)
-        );
-    }
-
     @ParameterizedTest
-    @DisplayName("가로축에 대해 대칭")
-    @MethodSource("createOppositeCase")
-    void opposite(Rank actual, Rank expected) {
-        assertThat(actual.opposite()).isEqualTo(expected);
+    @DisplayName("jump Rank")
+    @MethodSource("createJumpRank")
+    void jump(int index, Rank actual, Rank expected) {
+        assertThat(actual.jump(index).orElse(null)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createJumpRank() {
+        return Stream.of(
+                Arguments.of(3, ONE, FOUR),
+                Arguments.of(-2, EIGHT, SIX),
+                Arguments.of(2, SEVEN, null),
+                Arguments.of(-3, TWO, null)
+        );
     }
 
     @ParameterizedTest
@@ -53,10 +55,24 @@ class RankTest {
         assertThat(actual.next().orElse(null)).isEqualTo(expected);
     }
 
+    static Stream<Arguments> createNextRank() {
+        return Stream.of(
+                Arguments.of(ONE, TWO),
+                Arguments.of(EIGHT, null)
+        );
+    }
+
     @ParameterizedTest
     @DisplayName("이전 Rank")
     @MethodSource("createPreviousRank")
     void previous(Rank actual, Rank expected) {
         assertThat(actual.previous().orElse(null)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createPreviousRank() {
+        return Stream.of(
+                Arguments.of(TWO, ONE),
+                Arguments.of(ONE, null)
+        );
     }
 }

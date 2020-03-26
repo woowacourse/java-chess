@@ -1,8 +1,14 @@
 package chess.domain.board;
 
-import chess.domain.piece.Direction;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
-import java.util.*;
+import chess.domain.piece.Direction;
 
 public class Position implements Comparable<Position> {
 

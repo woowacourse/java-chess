@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.board.File;
-import chess.domain.board.Rank;
-
 import java.util.Optional;
 import java.util.function.Function;
+
+import chess.domain.board.File;
+import chess.domain.board.Rank;
 
 public enum Direction {
 
@@ -16,7 +16,15 @@ public enum Direction {
     SOUTH(Rank::previous, Optional::of),
     SOUTH_WEST(Rank::previous, File::previous),
     WEST(Optional::of, File::previous),
-    NORTH_WEST(Rank::next, File::previous);
+    NORTH_WEST(Rank::next, File::previous),
+    NNE(rank -> rank.jump(2), File::next),
+    NEE(Rank::next, file -> file.jump(2)),
+    SEE(Rank::previous, file -> file.jump(2)),
+    SSE(rank -> rank.jump(-2), File::next),
+    SSW(rank -> rank.jump(-2), File::previous),
+    SWW(Rank::previous, file -> file.jump(-2)),
+    NWW(Rank::next, file -> file.jump(-2)),
+    NNW(rank -> rank.jump(2), File::previous);
 
     private Function<Rank, Optional<Rank>> rankDestination;
     private Function<File, Optional<File>> fileDestination;
@@ -33,4 +41,4 @@ public enum Direction {
     public Optional<File> findFileDestination(File file) {
         return fileDestination.apply(file);
     }
-}
+    }

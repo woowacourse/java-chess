@@ -16,6 +16,25 @@ import chess.domain.exception.InvalidMovementException;
 
 class PawnStrategyTest {
 
+    static Stream<Arguments> createSourceToTarget() {
+        return Stream.of(
+                Arguments.of(Position.from("d3"), Collections.emptyList()),
+                Arguments.of(Position.from("d4"), Collections.singletonList(Position.from("d3")))
+        );
+    }
+
+    static Stream<Arguments> createInvalidTarget() {
+        return Stream.of(
+                Arguments.of(Position.from("c6")),
+                Arguments.of(Position.from("c5")),
+                Arguments.of(Position.from("c4")),
+                Arguments.of(Position.from("d4")),
+                Arguments.of(Position.from("e4")),
+                Arguments.of(Position.from("e5")),
+                Arguments.of(Position.from("e6"))
+        );
+    }
+
     @ParameterizedTest
     @DisplayName("이동 경로 찾기")
     @MethodSource("createSourceToTarget")
@@ -23,13 +42,6 @@ class PawnStrategyTest {
         Position source = Position.from("d2");
         MoveStrategy pawnStrategy = new PawnStrategy();
         assertThat(pawnStrategy.findMovePath(source, target)).isEqualTo(expected);
-    }
-
-    static Stream<Arguments> createSourceToTarget() {
-        return Stream.of(
-                Arguments.of(Position.from("d3"), Collections.emptyList()),
-                Arguments.of(Position.from("d4"), Collections.singletonList(Position.from("d3")))
-        );
     }
 
     @ParameterizedTest
@@ -44,17 +56,5 @@ class PawnStrategyTest {
             pawnStrategy.findMovePath(source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
-    }
-
-    static Stream<Arguments> createInvalidTarget() {
-        return Stream.of(
-                Arguments.of(Position.from("c6")),
-                Arguments.of(Position.from("c5")),
-                Arguments.of(Position.from("c4")),
-                Arguments.of(Position.from("d4")),
-                Arguments.of(Position.from("e4")),
-                Arguments.of(Position.from("e5")),
-                Arguments.of(Position.from("e6"))
-        );
     }
 }

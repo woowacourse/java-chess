@@ -3,7 +3,7 @@ package chess.domain.command;
 import java.util.Arrays;
 
 public enum Command {
-
+    // TODO: enum을 class로 변경
     START("start"),
     END("end");
 
@@ -22,9 +22,5 @@ public enum Command {
 
     public boolean isStart() {
         return this.equals(START);
-    }
-
-    public boolean isNotEnd() {
-        return !this.equals(END);
     }
 }

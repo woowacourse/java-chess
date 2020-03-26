@@ -1,10 +1,10 @@
 package chess.domain.board;
 
 import static chess.domain.piece.Direction.*;
-import static chess.domain.piece.Direction.NORTH_WEST;
 import static org.assertj.core.api.Assertions.*;
 
-import chess.domain.piece.Direction;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,9 +12,35 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.stream.Stream;
+import chess.domain.piece.Direction;
 
 class PositionTest {
+
+    static Stream<Arguments> createDirection() {
+        return Stream.of(
+                Arguments.of(NORTH, Position.from("d6")),
+                Arguments.of(NORTH_EAST, Position.from("e6")),
+                Arguments.of(EAST, Position.from("e5")),
+                Arguments.of(SOUTH_EAST, Position.from("e4")),
+                Arguments.of(SOUTH, Position.from("d4")),
+                Arguments.of(SOUTH_WEST, Position.from("c4")),
+                Arguments.of(WEST, Position.from("c5")),
+                Arguments.of(NORTH_WEST, Position.from("c6"))
+        );
+    }
+
+    static Stream<Arguments> createOutOfIndex() {
+        return Stream.of(
+                Arguments.of(NORTH, Position.from("h8")),
+                Arguments.of(NORTH_EAST, Position.from("h8")),
+                Arguments.of(EAST, Position.from("h8")),
+                Arguments.of(SOUTH_EAST, Position.from("h1")),
+                Arguments.of(SOUTH, Position.from("h1")),
+                Arguments.of(SOUTH_WEST, Position.from("a2")),
+                Arguments.of(WEST, Position.from("a5")),
+                Arguments.of(NORTH_WEST, Position.from("a8"))
+        );
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {"b1", "B1"})
@@ -64,36 +90,10 @@ class PositionTest {
         assertThat(pivot.destinationOf(direction).orElse(null)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> createDirection() {
-        return Stream.of(
-                Arguments.of(NORTH, Position.from("d6")),
-                Arguments.of(NORTH_EAST, Position.from("e6")),
-                Arguments.of(EAST, Position.from("e5")),
-                Arguments.of(SOUTH_EAST, Position.from("e4")),
-                Arguments.of(SOUTH, Position.from("d4")),
-                Arguments.of(SOUTH_WEST, Position.from("c4")),
-                Arguments.of(WEST, Position.from("c5")),
-                Arguments.of(NORTH_WEST, Position.from("c6"))
-        );
-    }
-
     @ParameterizedTest
     @DisplayName("주어진 방향으로 이동할 수 없을 경우")
     @MethodSource("createOutOfIndex")
     void destinationOutOfIndex(Direction direction, Position position) {
         assertThat(position.destinationOf(direction).orElse(null)).isEqualTo(null);
-    }
-
-    static Stream<Arguments> createOutOfIndex() {
-        return Stream.of(
-                Arguments.of(NORTH, Position.from("h8")),
-                Arguments.of(NORTH_EAST, Position.from("h8")),
-                Arguments.of(EAST, Position.from("h8")),
-                Arguments.of(SOUTH_EAST, Position.from("h1")),
-                Arguments.of(SOUTH, Position.from("h1")),
-                Arguments.of(SOUTH_WEST, Position.from("a2")),
-                Arguments.of(WEST, Position.from("a5")),
-                Arguments.of(NORTH_WEST, Position.from("a8"))
-        );
     }
 }

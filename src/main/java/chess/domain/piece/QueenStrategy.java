@@ -1,17 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
-
 import static chess.domain.piece.Direction.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import chess.domain.board.Position;
+import chess.domain.exception.InvalidMovementException;
+
 public class QueenStrategy implements MoveStrategy {
 
-    private final List<Direction> directions = Arrays.asList(Direction.values());
+    private final List<Direction> directions = Arrays.asList(NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST);
 
     @Override
     public List<Position> findMovePath(final Position source, final Position target) {

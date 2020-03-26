@@ -1,13 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
-
 import static chess.domain.piece.Direction.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import chess.domain.board.Position;
+import chess.domain.exception.InvalidMovementException;
 
 public class RookStrategy implements MoveStrategy {
 

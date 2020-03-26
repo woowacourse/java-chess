@@ -1,26 +1,30 @@
 package chess.domain.board;
 
-import chess.domain.exception.InvalidMovementException;
-import chess.domain.piece.GamePiece;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import static chess.domain.piece.ChessPiece.*;
+import static chess.domain.player.Player.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static chess.domain.piece.ChessPiece.BISHOP;
-import static chess.domain.piece.ChessPiece.ROOK;
-import static chess.domain.player.Player.BLACK;
-import static chess.domain.player.Player.WHITE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import chess.domain.exception.InvalidMovementException;
+import chess.domain.piece.GamePiece;
 
 class BoardTest {
+
+    static Stream<Arguments> createMovement() {
+        return Stream.of(
+                Arguments.of(GamePiece.of(ROOK, WHITE), Position.from("d3"), Position.from("f3"))
+        );
+    }
 
     @Test
     @DisplayName("보드 생성")
@@ -33,7 +37,6 @@ class BoardTest {
                 .collect(Collectors.joining(""));
         assertThat(map).isEqualTo("RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr");
     }
-
 
     // TODO: 2020/03/25 테스트 케이스 추가
     @ParameterizedTest
@@ -49,12 +52,6 @@ class BoardTest {
         assertThat(board.getBoard().get(target)).isEqualTo(piece);
     }
 
-    static Stream<Arguments> createMovement() {
-        return Stream.of(
-                Arguments.of(GamePiece.of(ROOK, WHITE), Position.from("d3"), Position.from("f3"))
-        );
-    }
-
     @Test
     @DisplayName("source 기물이 없는 경우")
     void moveWithEmptySource() {
@@ -63,7 +60,6 @@ class BoardTest {
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
     }
-
 
     @Test
     @DisplayName("경로에 기물이 있는 경우")

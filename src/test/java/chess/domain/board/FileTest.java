@@ -12,6 +12,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class FileTest {
 
+    @ParameterizedTest
+    @DisplayName("세로축에 대해 대칭")
+    @MethodSource("createOppositeCase")
+    void opposite(File actual, File expected) {
+        assertThat(actual.opposite()).isEqualTo(expected);
+    }
+
     static Stream<Arguments> createOppositeCase() {
         return Stream.of(
                 Arguments.of(A, H),
@@ -25,25 +32,20 @@ class FileTest {
         );
     }
 
-    static Stream<Arguments> createNextFile() {
-        return Stream.of(
-                Arguments.of(B, C),
-                Arguments.of(H, null)
-        );
-    }
-
-    static Stream<Arguments> createPreviousFile() {
-        return Stream.of(
-                Arguments.of(B, A),
-                Arguments.of(A, null)
-        );
-    }
-
     @ParameterizedTest
-    @DisplayName("세로축에 대해 대칭")
-    @MethodSource("createOppositeCase")
-    void opposite(File actual, File expected) {
-        assertThat(actual.opposite()).isEqualTo(expected);
+    @DisplayName("jump File")
+    @MethodSource("createJumpFile")
+    void jump(int index, File actual, File expected) {
+        assertThat(actual.jump(index).orElse(null)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createJumpFile() {
+        return Stream.of(
+                Arguments.of(3, A, D),
+                Arguments.of(-2, H, F),
+                Arguments.of(2, G, null),
+                Arguments.of(-3, B, null)
+        );
     }
 
     @ParameterizedTest
@@ -53,10 +55,24 @@ class FileTest {
         assertThat(actual.next().orElse(null)).isEqualTo(expected);
     }
 
+    static Stream<Arguments> createNextFile() {
+        return Stream.of(
+                Arguments.of(B, C),
+                Arguments.of(H, null)
+        );
+    }
+
     @ParameterizedTest
     @DisplayName("이전 File")
     @MethodSource("createPreviousFile")
     void previous(File actual, File expected) {
         assertThat(actual.previous().orElse(null)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createPreviousFile() {
+        return Stream.of(
+                Arguments.of(B, A),
+                Arguments.of(A, null)
+        );
     }
 }

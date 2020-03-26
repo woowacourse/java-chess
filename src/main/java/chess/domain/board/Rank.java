@@ -15,6 +15,8 @@ public enum Rank {
     SEVEN("7"),
     EIGHT("8");
 
+    private static final int NEXT_INDEX = 1;
+    private static final int PREVIOUS_INDEX = -1;
     private static Map<Rank, Rank> opposite;
 
     static {
@@ -39,20 +41,20 @@ public enum Rank {
         return opposite.get(this);
     }
 
-    public Optional<Rank> next() {
+    public Optional<Rank> jump(int index) {
         try {
-            return Optional.of(values()[ordinal() + 1]);
+            return Optional.of(values()[ordinal() + index]);
         } catch (ArrayIndexOutOfBoundsException e) {
             return Optional.empty();
         }
     }
 
+    public Optional<Rank> next() {
+        return jump(NEXT_INDEX);
+    }
+
     public Optional<Rank> previous() {
-        try {
-            return Optional.of(values()[ordinal() - 1]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return Optional.empty();
-        }
+        return jump(PREVIOUS_INDEX);
     }
 
     public String getName() {
