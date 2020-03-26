@@ -14,4 +14,6 @@ public interface TeamStrategy {
 	String rookName();
 
 	boolean isBlackTeam();
+
+	boolean isSameTeam(TeamStrategy teamStrategy);
 }

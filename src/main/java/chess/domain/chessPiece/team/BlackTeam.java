@@ -43,5 +43,8 @@ public class BlackTeam implements TeamStrategy {
 		return true;
 	}
 
-
+	@Override
+	public boolean isSameTeam(TeamStrategy teamStrategy) {
+		return teamStrategy instanceof BlackTeam;
+	}
 }
