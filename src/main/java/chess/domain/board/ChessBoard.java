@@ -3,10 +3,10 @@ package chess.domain.board;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.Team;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
 import chess.domain.move.Route;
-import chess.domain.chesspiece.Team;
 import chess.generator.AllRouteGenerator;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class ChessBoard {
     }
 
     private void updateIfPawn(ChessPiece chessPiece) {
-        if(chessPiece instanceof Pawn){
+        if (chessPiece instanceof Pawn) {
             ((Pawn) chessPiece).firstMoveComplete();
         }
     }

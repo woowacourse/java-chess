@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Coordinate {
     private final int coordinate;
-    private final int BOARD_UP_END = 8;
-    private final int BOARD_DOWN_END = 1;
-    private final char BOARD_LEFT_END = 'a';
-    private final char BOARD_RIGHT_END = 'h';
+    private static final int BOARD_UP_END = 8;
+    private static final int BOARD_DOWN_END = 1;
+    private static final char BOARD_LEFT_END = 'a';
+    private static final char BOARD_RIGHT_END = 'h';
 
     public Coordinate(int coordinate) {
         if (coordinate < BOARD_DOWN_END || coordinate > BOARD_UP_END) {

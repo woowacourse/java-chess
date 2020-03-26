@@ -5,6 +5,11 @@ import chess.domain.board.Coordinate;
 import java.util.Objects;
 
 public class Position {
+    private static final char BOARD_UP_END = '8';
+    private static final char BOARD_DOWN_END = '1';
+    private static final char BOARD_LEFT_END = 'a';
+    private static final char BOARD_RIGHT_END = 'h';
+
     private final Coordinate x;
     private final Coordinate y;
 
@@ -30,8 +35,8 @@ public class Position {
         char[] chars = position.toCharArray();
         char y = chars[0];
         char x = chars[1];
-        boolean xInField = (x >= '1') && (x <= '8');
-        boolean yInField = (y >= 'a') && (x <= 'h');
+        boolean xInField = (x >= BOARD_DOWN_END) && (x <= BOARD_UP_END);
+        boolean yInField = (y >= BOARD_LEFT_END) && (x <= BOARD_RIGHT_END);
 
         if (xInField && yInField) {
             return;

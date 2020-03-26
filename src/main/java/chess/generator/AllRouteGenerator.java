@@ -1,6 +1,7 @@
 package chess.generator;
 
 import chess.domain.chesspiece.*;
+import chess.domain.move.Direction;
 import chess.domain.move.Position;
 import chess.domain.move.Route;
 

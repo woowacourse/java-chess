@@ -2,7 +2,6 @@ package chess.factory;
 
 import chess.domain.board.Row;
 import chess.domain.chesspiece.*;
-import chess.domain.chesspiece.Team;
 
 import java.util.ArrayList;
 import java.util.List;

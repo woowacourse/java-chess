@@ -51,9 +51,8 @@ public class Application {
     private static void tryMove(ChessBoard chessBoard, MovingInfo movingInfo) {
         try {
             chessBoard.move(movingInfo);
-        }
-        catch (IllegalArgumentException e){
-            OutputView.printWrongCommandMessage();
+        } catch (IllegalArgumentException e) {
+            OutputView.printWrongPositionMessage();
         }
     }
 
