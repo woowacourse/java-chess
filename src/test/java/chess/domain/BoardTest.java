@@ -27,7 +27,7 @@ class BoardTest {
 
 	@Test
 	void getReversed() {
-		assertThat(board.getReversed().get("h8")).isEqualTo(rook);
+		assertThat(board.getReversedBoard().get("h8")).isEqualTo(rook);
 	}
 
 	@Test

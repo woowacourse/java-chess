@@ -14,7 +14,11 @@ public class Board {
 		this.board = board;
 	}
 
-	public Map<String, Piece> getReversed() {
+	public Map<String, Piece> getBoard() {
+		return Map.copyOf(board);
+	}
+
+	public Map<String, Piece> getReversedBoard() {
 		return board.entrySet()
 			.stream()
 			.collect(Collectors.toMap(
