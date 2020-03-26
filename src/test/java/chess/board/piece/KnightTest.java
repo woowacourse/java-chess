@@ -23,6 +23,6 @@ class KnightTest {
             "0,2,false"})
     void canMove(int file, int rank, boolean expect) {
         Piece knight = new Knight(Team.BLACK);
-        assertThat(knight.canMove(new Vector(file, rank))).isEqualTo(expect);
+        assertThat(knight.canMove(new Vector(file, rank), new Blank())).isEqualTo(expect);
     }
 }

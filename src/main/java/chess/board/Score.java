@@ -1,5 +1,7 @@
 package chess.board;
 
+import chess.board.piece.Team;
+
 public class Score {
     private final double sum;
     private final int pawnCount;
@@ -13,7 +15,10 @@ public class Score {
         return new Score(0, 0);
     }
 
-    public Score add(Tile tile) {
+    public Score add(Tile tile, Team team) {
+        if (!tile.isSameTeam(team)) {
+            return this;
+        }
         int pawnCount = this.pawnCount;
         if (tile.isPawn()) {
             pawnCount++;

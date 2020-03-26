@@ -17,7 +17,7 @@ class QueenTest {
         Piece piece = new Queen(Team.BLACK);
 
         //when
-        boolean actual = piece.canMove(new Vector(file, rank));
+        boolean actual = piece.canMove(new Vector(file, rank), new Blank());
 
         //then
         assertThat(actual).isEqualTo(expect);

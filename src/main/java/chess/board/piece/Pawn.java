@@ -11,7 +11,16 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(final Vector vector) {
-        return vector.isRangeUnderAbsolute(1) && team.isSameDirection(vector.getRankVariation());
+    public boolean canMove(final Vector vector, final Piece targetPiece) {
+        if (targetPiece.isSameTeam(this.team)) {
+            return false;
+        }
+        if (!(vector.isRangeUnderAbsolute(1) && team.isSameDirection(vector.getRankVariation()))) {
+            return false;
+        }
+        if (targetPiece.isBlank()) {
+            return vector.isStraight();
+        }
+        return vector.isDiagonal();
     }
 }

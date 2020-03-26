@@ -1,11 +1,8 @@
 package chess.view;
 
-import chess.board.ChessBoard;
-import chess.board.Coordinate;
-import chess.board.File;
-import chess.board.Rank;
-import chess.board.Tile;
+import chess.board.*;
 import chess.board.piece.Piece;
+import chess.board.piece.Team;
 
 import java.util.Map;
 
@@ -27,4 +24,7 @@ public class OutputView {
         }
     }
 
+    public static void showScore(Team team, double score) {
+        System.out.println(team + "팀 : " + score + "점");
+    }
 }

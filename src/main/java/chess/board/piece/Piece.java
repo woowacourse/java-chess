@@ -38,7 +38,7 @@ public abstract class Piece {
         return this.team == piece.team;
     }
 
-    public abstract boolean canMove(Vector vector);
+    public abstract boolean canMove(Vector vector, Piece targetPiece);
 
     public double getScore() {
         return score;

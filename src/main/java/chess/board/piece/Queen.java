@@ -11,7 +11,10 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(final Vector vector) {
+    public boolean canMove(final Vector vector, final Piece targetPiece) {
+        if (targetPiece.isSameTeam(this.team)) {
+            return false;
+        }
         return vector.isDiagonal() || vector.isStraight();
     }
 }

@@ -18,7 +18,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public boolean canMove(final Vector vector) {
+    public boolean canMove(final Vector vector, final Piece targetPiece) {
         return false;
     }
 }

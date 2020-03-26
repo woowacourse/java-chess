@@ -30,16 +30,12 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public boolean move(String sourceKey, String targetKey) {
+    public MoveResult move(String sourceKey, String targetKey) {
         Tile sourceTile = chessBoard.get(Coordinate.of(sourceKey));
         Tile targetTile = chessBoard.get(Coordinate.of(targetKey));
 
-        if (sourceTile.isAlliance(targetTile)) {
-            return false;
-        }
-
         if (sourceTile.canNotReach(targetTile)) {
-            return false;
+            return MoveResult.FAIL;
         }
 
         Directions directions = sourceTile.findPath(targetTile);
@@ -52,11 +48,17 @@ public class ChessBoard {
             notExist = chessBoard.get(next).isBlank();
         }
         if (!notExist) {
-            return false;
+            return MoveResult.FAIL;
+        }
+
+        MoveResult moveResult = MoveResult.SUCCESS;
+
+        if (targetTile.isKing()) {
+            moveResult = MoveResult.WIN;
         }
 
         targetTile.replacePiece(sourceTile);
-        return true;
+        return moveResult;
     }
 
     public double calculateScore(Team team) {
@@ -64,7 +66,7 @@ public class ChessBoard {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
                 Coordinate coordinate = Coordinate.of(file, rank);
-                sum = sum.add(chessBoard.get(coordinate));
+                sum = sum.add(chessBoard.get(coordinate), team);
             }
             sum = sum.subtractPawnScore();
         }
