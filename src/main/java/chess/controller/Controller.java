@@ -18,12 +18,19 @@ public class Controller {
 	}
 
 	private static void running() {
+		Command command;
+		do {
+			command = readCommand();
+		} while (command.isEnd() || kingDie());
+	}
 
+	private static boolean kingDie() {
+		return false;
 	}
 
 	private static void start() {
 		OutputView.printGameInstruction();
-		FirstCommand command = new FirstCommand(InputView.inputCommand());
+		FirstCommand command = FirstCommand.of(InputView.inputCommand());
 
 		if (command.isEnd()) {
 			end();
@@ -37,8 +44,7 @@ public class Controller {
 
 	private static Command readCommand() {
 		try {
-			String command = InputView.inputCommand();
-			return new Command(command);
+			return Command.of(InputView.inputCommand());
 		} catch (IllegalArgumentException e) {
 			OutputView.printException(e);
 			return readCommand();

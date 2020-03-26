@@ -2,40 +2,47 @@ package chess.domain;
 
 import java.util.Objects;
 
-/**
- *    class description
- *
- *    @author AnHyungJu, LeeHoBin
- */
-public class FirstCommand {
-	private String command;
+public enum FirstCommand {
+	START("start"),
+	END("end");
 
-	public FirstCommand(String[] command) {
-		validate(command);
-		this.command = command[0];
+	private final String command;
+
+	FirstCommand(String command) {
+		this.command = command;
 	}
 
-	private void validate(String[] command) {
-		valdiateNullAndEmpty(command);
-		validateStartOrEnd(command[0]);
+	public static FirstCommand of(String[] input) {
+		validate(input);
+		return FirstCommand.valueOf(input[0]);
 	}
 
-	private void valdiateNullAndEmpty(String[] command) {
-		if (Objects.isNull(command) || command.length < 1) {
+	private static void validate(String[] input) {
+		validateLength(input);
+		String command = input[0];
+		validateNullAndEmpty(command);
+		validateStartOrEnd(command);
+	}
+
+	private static void validateNullAndEmpty(String command) {
+		if (Objects.isNull(command) || command.isEmpty()) {
 			throw new IllegalArgumentException("null이나 빈 값은 들어올 수 없습니다.");
 		}
 	}
 
-	private void validateStartOrEnd(String s) {
-		boolean isNotStart = !s.equalsIgnoreCase("start");
-		boolean isNotEnd = !s.equalsIgnoreCase("end");
+	private static void validateLength(String[] command) {
+		if (command.length != 1) {
+			throw new IllegalArgumentException("입력값이 Command 길이가 1이 아닙니다.");
+		}
+	}
 
-		if (isNotStart && isNotEnd) {
+	private static void validateStartOrEnd(String input) {
+		if (!input.equals(START.command) && !input.equals(END.command)) {
 			throw new IllegalArgumentException("첫 명령은 start, end만 들어올 수 있습니다.");
 		}
 	}
 
 	public boolean isEnd() {
-		return command.equalsIgnoreCase("end");
+		return this == END;
 	}
 }
