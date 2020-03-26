@@ -15,6 +15,7 @@ public class KingMoveStrategy extends MoveStrategy {
         int fileGap = Math.abs(source.calculateFileGap(target));
         int rankGap = Math.abs(source.calculateRankGap(target));
 
-        return fileGap <= 1 && rankGap <= 1;
+        return (fileGap <= 1 && rankGap <= 1)
+                && checkTarget(source, target, board);
     }
 }

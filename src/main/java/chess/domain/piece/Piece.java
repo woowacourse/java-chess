@@ -6,12 +6,10 @@ import chess.domain.position.Position;
 public class Piece {
     private final PieceType pieceType;
     private final Team team;
-//    private final MoveStrategy moveStrategy;
 
     public Piece(final PieceType pieceType, final Team team) {
         this.pieceType = pieceType;
         this.team = team;
-//        this.moveStrategy = MoveStrategyFactory.create(pieceType, team);
     }
 
     public String toSymbol() {

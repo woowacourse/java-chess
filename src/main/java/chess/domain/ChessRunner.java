@@ -19,7 +19,7 @@ public class ChessRunner {
         Position targetPosition = Position.of(target);
         Piece selectedPiece = this.board.getPiece(sourcePosition);
 
-        if (!(currentTeam.isEnemy(selectedPiece.getTeam()))) {
+        if ((currentTeam.isEnemy(selectedPiece.getTeam()))) {
             throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
 

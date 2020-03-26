@@ -49,8 +49,6 @@ public class Position {
     }
 
     public static Position of(final int fileSymbol, final int rankSymbol) {
-
-
         return findPosition(File.of(fileSymbol), Rank.of(rankSymbol));
     }
 
@@ -72,7 +70,7 @@ public class Position {
     }
 
     public int getFile() {
-        return this.file.getSymbol();
+        return this.file.getNumber();
     }
 
     public int getRank() {

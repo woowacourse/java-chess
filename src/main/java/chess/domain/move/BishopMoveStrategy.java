@@ -14,7 +14,7 @@ public class BishopMoveStrategy extends MoveStrategy {
         int fileGap = Math.abs(source.calculateFileGap(target));
         int rankGap = Math.abs(source.calculateRankGap(target));
 
-        return fileGap == rankGap
+        return (fileGap == rankGap)
                 && checkObstacle(source, target, board)
                 && checkTarget(source, target, board);
     }

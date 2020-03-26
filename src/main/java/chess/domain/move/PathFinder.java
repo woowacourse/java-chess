@@ -1,8 +1,6 @@
 package chess.domain.move;
 
-import chess.domain.move.direction.DirectionStrategy;
-import chess.domain.move.direction.DownStrategy;
-import chess.domain.move.direction.UpStrategy;
+import chess.domain.move.direction.*;
 import chess.domain.position.Position;
 
 public class PathFinder {
@@ -17,23 +15,23 @@ public class PathFinder {
             return new DownStrategy();
         }
         if (fileGap > 0 && rankGap == 0) {
-
+            return new RightStrategy();
         }
         if (fileGap < 0 && rankGap == 0) {
-
+            return new LeftStrategy();
         }
         if (fileGap > 0 && rankGap > 0) {
-
+            return new RightUpStrategy();
         }
         if (fileGap > 0 && rankGap < 0) {
-
+            return new RightDownStrategy();
         }
         if (fileGap < 0 && rankGap > 0) {
-
+            return new LeftUpStrategy();
         }
         if (fileGap < 0 && rankGap < 0) {
-
+            return new LeftDownStrategy();
         }
-        return null;
+        throw new AssertionError();
     }
 }

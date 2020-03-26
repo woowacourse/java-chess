@@ -16,6 +16,8 @@ public class RookMoveStrategy extends MoveStrategy {
         int fileGap = Math.abs(source.calculateFileGap(target));
         int rankGap = Math.abs(source.calculateRankGap(target));
 
-        return fileGap == 0 && rankGap > 0 && checkObstacle(source, target, board);
+        return (fileGap == 0 && rankGap > 0)
+                && checkObstacle(source, target, board)
+                && checkTarget(source, target, board);
     }
 }
