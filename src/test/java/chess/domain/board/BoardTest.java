@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.board.exception.InvalidTurnException;
+import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Position;
 import chess.domain.piece.exception.NotMovableException;
@@ -32,7 +34,7 @@ public class BoardTest {
         board.initialize();
         Position source = Position.from("a2");
         Position target = Position.from("a3");
-        board.move(source, target);
+        board.move(source, target, Color.WHITE);
         assertThat(board.getRanks().get(target.getY()).findPiece(target.getX())).isInstanceOf(Pawn.class);
     }
 
@@ -44,6 +46,16 @@ public class BoardTest {
         Position source = Position.from("d1");
         Position target = Position.from("d7");
         assertThatExceptionOfType(NotMovableException.class).isThrownBy(
-            () -> board.move(source, target));
+            () -> board.move(source, target, Color.WHITE));
+    }
+
+    @Test
+    void move_invalid_turn() {
+        Board board = new Board();
+        board.initialize();
+        Position source = Position.from("a2");
+        Position target = Position.from("a3");
+        assertThatExceptionOfType(InvalidTurnException.class).isThrownBy(
+            () -> board.move(source, target, Color.BLACK));
     }
 }

@@ -46,6 +46,10 @@ public abstract class Piece {
         return color == piece.color;
     }
 
+    public final boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
     protected abstract List<Direction> movableDirections(Piece piece, Direction direction);
 
     protected abstract Direction findDirection(int x, int y);

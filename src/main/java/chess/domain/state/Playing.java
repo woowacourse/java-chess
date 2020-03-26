@@ -5,9 +5,11 @@ import chess.domain.piece.Position;
 
 public class Playing implements State {
     private Board board;
+    private Turn turn;
 
-    public Playing(Board board) {
+    public Playing(Board board, Turn turn) {
         this.board = board;
+        this.turn = turn;
         board.initialize();
     }
 
@@ -23,7 +25,8 @@ public class Playing implements State {
 
     @Override
     public State move(Position source, Position target) {
-        board.move(source, target);
+        board.move(source, target, turn.getColor());
+        turn = turn.next();
         return this;
     }
 
