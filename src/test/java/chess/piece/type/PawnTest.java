@@ -5,8 +5,10 @@ import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PawnTest {
     @Test
@@ -15,7 +17,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(7, 'a');
 
-        Location moveTwiceForward= new Location(5, 'a');
+        Location moveTwiceForward = new Location(5, 'a');
         boolean moveTwiceForwardActual = pawn.canMove(now, moveTwiceForward);
         assertThat(moveTwiceForwardActual).isTrue();
 
@@ -47,9 +49,73 @@ class PawnTest {
         boolean moveDiagonalAcutal = pawn.canMove(now, moveDiagonal);
         assertThat(moveDiagonalAcutal).isTrue();
 
-        Location moveTwiceForward= new Location(4, 'a');
+        Location moveTwiceForward = new Location(4, 'a');
         boolean moveTwiceForwardActual = pawn.canMove(now, moveTwiceForward);
         assertThat(moveTwiceForwardActual).isFalse();
     }
 
+    @DisplayName("폰의 대각선 위치에 적이 있는 경우")
+    @Test
+    void name() {
+        Map<Location, Piece> board = new HashMap<>();
+        Pawn givenPiece = new Pawn(Team.BLACK);
+        board.put(new Location(7, 'a'), givenPiece);
+        board.put(new Location(6, 'b'), new Bishop(Team.WHITE));
+
+        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(6, 'b'));
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("폰의 대각선 위치에 적이 없는 경우")
+    @Test
+    void name2() {
+        Map<Location, Piece> board = new HashMap<>();
+        Pawn givenPiece = new Pawn(Team.BLACK);
+        board.put(new Location(7, 'a'), givenPiece);
+
+        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(6, 'b'));
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("폰의 두 칸의 직선 위치로 가는 중 적이 있는 경우")
+    @Test
+    void name3() {
+        Map<Location, Piece> board = new HashMap<>();
+        Pawn givenPiece = new Pawn(Team.BLACK);
+        Pawn counterPiece = new Pawn(Team.WHITE);
+        Pawn destinaionPiece = new Pawn(Team.WHITE);
+
+        board.put(new Location(7, 'a'), givenPiece);
+        board.put(new Location(6, 'a'), counterPiece);
+        board.put(new Location(5, 'a'), destinaionPiece);
+
+        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(5, 'a'));
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("폰의 직선 위치에 적이 있는 경우")
+    @Test
+    void name4() {
+        Map<Location, Piece> board = new HashMap<>();
+        Pawn givenPiece = new Pawn(Team.BLACK);
+        Pawn counterPiece = new Pawn(Team.WHITE);
+        board.put(new Location(7, 'a'), givenPiece);
+        board.put(new Location(6, 'a'), counterPiece);
+
+        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(6, 'a'));
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("폰의 직선 위치에 적이 있는 경우")
+    @Test
+    void name5() {
+        Map<Location, Piece> board = new HashMap<>();
+        Pawn givenPiece = new Pawn(Team.BLACK);
+        Pawn destinaionPiece = new Pawn(Team.WHITE);
+        board.put(new Location(7, 'a'), givenPiece);
+        board.put(new Location(5, 'a'), destinaionPiece);
+
+        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(5, 'a'));
+        assertThat(actual).isTrue();
+    }
 }
