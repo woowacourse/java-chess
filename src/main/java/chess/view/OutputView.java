@@ -6,8 +6,11 @@ import chess.domain.chessboard.ChessBoard;
 
 public class OutputView {
 	private static final String EMPTY_MARK = ".";
-	private static final String STRING_FORMAT_PRINT_SCORE = "\n블랙팀 점수 : %.1f, 화이트팀 점수 : %.1f";
 	private static final String MESSAGE_END_GAME = "\n게임을 종료 합니다";
+	private static final String BLACK = "black";
+	private static final String WHITE = "white";
+	private static final String STRING_FORMAT_PRINT_SCORE = "\n블랙팀 점수 : %.1f, 화이트팀 점수 : %.1f";
+	private static final String STRING_FORMAT_PRINT_WINNER = "%s 팀이 이겼습니다.";
 
 	public static void printChessBoard(ChessBoard chessBoard) {
 		for (Position position : chessBoard.getChessBoard()) {
@@ -33,6 +36,11 @@ public class OutputView {
 
 	public static void printGameResult(double blackTeamScore, double whiteTeamScore) {
 		System.out.println(String.format(STRING_FORMAT_PRINT_SCORE, blackTeamScore, whiteTeamScore));
+		if (blackTeamScore > whiteTeamScore) {
+			System.out.println(String.format(STRING_FORMAT_PRINT_WINNER, BLACK));
+			return;
+		}
+		System.out.println(String.format(STRING_FORMAT_PRINT_WINNER, WHITE));
 	}
 
 	public static void printGameEndMessage() {
