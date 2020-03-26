@@ -16,7 +16,12 @@ public class Rook extends Piece {
     private static final List<Direction> movingDirection;
 
     static {
-        movingDirection = Arrays.asList(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
+        movingDirection = Arrays.asList(
+                Direction.NORTH,
+                Direction.EAST,
+                Direction.SOUTH,
+                Direction.WEST
+        );
     }
 
     private Rook(Position position, Player player) {

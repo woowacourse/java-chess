@@ -13,6 +13,14 @@ public enum Direction {
     SOUTH_WEST(-1, -1),
     WEST(-1, 0),
     NORTH_WEST(-1, 1);
+//    KNIGHT_RIGHT_UP(2,1),
+//    KNIGHT_RIGHT_DOWN(2,-1),
+//    KNIGHT_UP_RIGHT(1,2),
+//    KNIGHT_UP_LEFT(-1,2),
+//    KNIGHT_LEFT_UP(-2,1),
+//    KNIGHT_LEFT_DOWN(-2,-1),
+//    KNIGHT_DOWN_LEFT(-1,-2),
+//    KNIGHT_DOWN_RIGHT(1,-2),
 
     private final int fileDirection;
     private final int rankDirection;
@@ -21,7 +29,6 @@ public enum Direction {
         this.fileDirection = fileDirection;
         this.rankDirection = rankDirection;
     }
-
 
     public static Direction getDirection(Position source, Position target) {
         int fileDirection = getDirectionElement(source.getFileDifference(target));
