@@ -5,7 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
+import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Position;
 
 public class Board {
 	private List<Rank> ranks;
@@ -23,6 +26,15 @@ public class Board {
 		ranks.add(Rank.createBlanks(5));
 		ranks.add(Rank.createPawns(6, Color.BLACK));
 		ranks.add(Rank.createPieces(7, Color.BLACK));
+	}
+
+	private void updatePosition(Position source, Position target, Piece piece) {
+		ranks.get(source.getY()).changePiece(source.getX(), new Blank(source));
+		ranks.get(target.getY()).changePiece(target.getX(), piece);
+	}
+
+	private Piece findPiece(Position position) {
+		return ranks.get(position.getY()).findPiece(position.getX());
 	}
 
 	public List<Rank> getRanks() {
