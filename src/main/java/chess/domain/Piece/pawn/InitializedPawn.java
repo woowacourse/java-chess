@@ -1,6 +1,6 @@
 package chess.domain.Piece.pawn;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.Piece.Distance;
 import chess.domain.Piece.Piece;
 import chess.domain.Piece.state.Initialized;

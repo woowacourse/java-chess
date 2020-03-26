@@ -15,13 +15,16 @@ public class Position {
     private final int y;
 
     private Position(int x, int y) {
+        validateInRange(x, y);
         this.x = x;
         this.y = y;
     }
 
-    static Position of(int x, int y) {
-        validateInRange(x, y);
+    static Position of(String x, String y) {
+        return of(1,1);
+    }
 
+    static Position of(int x, int y) {
         return new Position(x,y);
     }
 
