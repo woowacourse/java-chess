@@ -10,6 +10,8 @@ import java.util.Objects;
 
 public class Position {
 	private static final String ERROR_MESSAGE_EXIST_PIECE_ON_PATH = "경로에 다른 말이 존재합니다.";
+	private static final int FILE_INDEX = 0;
+	private static final int RANK_INDEX = 1;
 
 	private File file;
 	private Rank rank;
@@ -21,7 +23,9 @@ public class Position {
 
 	public static Position of(String coordinate) {
 		String[] fileAndRank = coordinate.split("");
-		return new Position(File.of(fileAndRank[0]), Rank.of(fileAndRank[1]));
+		File file = File.of(fileAndRank[FILE_INDEX]);
+		Rank rank = Rank.of(fileAndRank[RANK_INDEX]);
+		return new Position(file, rank);
 	}
 
 	public static Position of(File file, Rank rank) {
