@@ -1,7 +1,7 @@
 package chess.factory;
 
-import chess.domain.Row;
-import chess.domain.Team;
+import chess.domain.board.Row;
+import chess.domain.team.Team;
 import chess.domain.chesspiece.*;
 
 import java.util.ArrayList;

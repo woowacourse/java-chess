@@ -1,7 +1,7 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.board.Position;
+import chess.domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

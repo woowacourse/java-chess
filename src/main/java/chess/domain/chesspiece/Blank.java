@@ -1,6 +1,6 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Team;
+import chess.domain.team.Team;
 
 import java.util.Collections;
 

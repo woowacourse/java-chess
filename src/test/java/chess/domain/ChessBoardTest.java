@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.chesspiece.ChessPiece;
 import chess.factory.RowFactory;
 import org.junit.jupiter.api.DisplayName;

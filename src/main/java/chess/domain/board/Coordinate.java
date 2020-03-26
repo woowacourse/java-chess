@@ -1,19 +1,23 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.Objects;
 
 public class Coordinate {
     private final int coordinate;
+    private final int BOARD_UP_END = 8;
+    private final int BOARD_DOWN_END = 1;
+    private final char BOARD_LEFT_END = 'a';
+    private final char BOARD_RIGHT_END = 'h';
 
     public Coordinate(int coordinate) {
-        if (coordinate < 1 || coordinate > 8) {
+        if (coordinate < BOARD_DOWN_END || coordinate > BOARD_UP_END) {
             throw new IllegalArgumentException();
         }
         this.coordinate = coordinate;
     }
 
     public Coordinate(char coordinate) {
-        if (coordinate < 'a' || coordinate > 'h') {
+        if (coordinate < BOARD_LEFT_END || coordinate > BOARD_RIGHT_END) {
             throw new IllegalArgumentException();
         }
         this.coordinate = coordinate - 'a' + 1;

@@ -1,11 +1,10 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Team;
+import chess.domain.team.Team;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import static chess.domain.Direction.*;
+import static chess.domain.board.Direction.*;
 
 public class Pawn extends ChessPiece {
     boolean isFirstMove = true;

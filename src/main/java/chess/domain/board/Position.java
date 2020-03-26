@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.Objects;
 
@@ -36,11 +36,6 @@ public class Position {
         }
         throw new IllegalArgumentException();
     }
-
-//    public static Position of(int x, char y) {
-//        return of(x, y);
-//    }
-
 
     @Override
     public String toString() {

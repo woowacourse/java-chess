@@ -1,8 +1,8 @@
 package chess.generator;
 
-import chess.domain.Direction;
-import chess.domain.Position;
-import chess.domain.Route;
+import chess.domain.board.Direction;
+import chess.domain.board.Position;
+import chess.domain.board.Route;
 import chess.domain.chesspiece.*;
 
 import java.util.ArrayList;

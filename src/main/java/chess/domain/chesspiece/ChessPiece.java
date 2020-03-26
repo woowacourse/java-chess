@@ -1,7 +1,7 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Direction;
-import chess.domain.Team;
+import chess.domain.board.Direction;
+import chess.domain.team.Team;
 
 import java.util.List;
 

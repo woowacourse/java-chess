@@ -1,7 +1,8 @@
 package chess;
 
-import chess.domain.ChessBoard;
-import chess.domain.Position;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Position;
+import chess.domain.command.Command;
 import chess.factory.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -10,33 +11,21 @@ public class Application {
     public static void main(String[] args) {
         OutputView.printInitialMessage();
         run();
-
-//        OutputView.printBoard(chessBoard);
-//        System.out.println(chessBoard.getTotalScore(Team.WHITE));
-//        chessBoard.move(new Position(2, 4), new Position(4, 4));
-//        OutputView.printBoard(chessBoard);
-//        System.out.println(chessBoard.getTotalScore(Team.WHITE));
-//        chessBoard.move(new Position(2, 4), new Position(4, 4));
-//        OutputView.printBoard(chessBoard);
-//        System.out.println(chessBoard.getTotalScore(Team.WHITE));
-//        chessBoard.move(new Position(4, 4), new Position(5, 5));
-//        OutputView.printBoard(chessBoard);
-//        System.out.println(chessBoard.getTotalScore(Team.WHITE));
-
     }
 
     private static void run() {
         ChessBoard chessBoard = new ChessBoard(BoardFactory.createBoard());
-        String command = getCommand();
+        String command = "";
 
-        while(!command.equals("end")){
-            executeCommand(chessBoard, command);
+        while(!command.equals("end") && !chessBoard.isGameEnd()){
             command = getCommand();
+            executeCommand(chessBoard, command);
         }
     }
 
     private static String getCommand() {
         String command = InputView.inputCommand();
+
         if(validateCommand(command)){
             return command;
         }
@@ -46,25 +35,19 @@ public class Application {
 
     private static void executeCommand(ChessBoard chessBoard, String command) {
         String[] splitCommand = command.split(" ");
+
         if(splitCommand[0].equals("move")){
             chessBoard.move(Position.of(splitCommand[1]), Position.of(splitCommand[2]) ) ;
+        }
+        if(splitCommand[0].equals("status")){
+            OutputView.printScore(chessBoard);
         }
         OutputView.printBoard(chessBoard);
     }
 
     private static boolean validateCommand(String nowCommand) {
-        boolean isStartCommand = nowCommand.equals("start");
-        boolean isEndCommand = nowCommand.equals("end");
-        String[] splitCommand = nowCommand.split(" ");
-        boolean isMoveCommand = splitCommand[0].equals("move");
-        boolean isCorrectMoveCommand = splitCommand.length == 3;
+        String splitCommand = nowCommand.split(" ")[0];
 
-        return isStartCommand || isEndCommand || (isMoveCommand && isCorrectMoveCommand);
+        return Command.isExistCommand(splitCommand);
     }
 }
-
-
-
-//미구현
-//- Input Outputview 이용해서 게임진행
-
