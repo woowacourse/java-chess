@@ -2,6 +2,7 @@ package chess.domain.chessboard;
 
 import chess.domain.Position;
 import chess.domain.chessPiece.factory.PieceBundleFactory;
+import chess.domain.chessPiece.piece.King;
 import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.team.BlackTeam;
@@ -88,7 +89,7 @@ public class ChessBoard {
         }
     }
 
-    private void removePiece(Piece targetPiece) {
+    public void removePiece(Piece targetPiece) {
         if (blackTeam.contains(targetPiece)) {
             blackTeam.remove(targetPiece);
             return;
@@ -98,5 +99,10 @@ public class ChessBoard {
 
     public boolean isExistPiece(Position position) {
         return findPieceByPosition(position) != null;
+    }
+
+    public boolean isSurviveKings() {
+        return blackTeam.stream().anyMatch(x -> x instanceof King)
+                && whiteTeam.stream().anyMatch(x -> x instanceof King);
     }
 }

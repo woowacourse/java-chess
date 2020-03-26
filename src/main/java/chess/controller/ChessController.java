@@ -19,17 +19,20 @@ public class ChessController {
         String gameState = InputView.inputGameState();
 
         if ("start".equalsIgnoreCase(gameState)) {
-            ChessBoard chessBoard = new ChessBoard();
-            OutputView.printChessBoard(chessBoard);
-
-            int count = 10;
-            while (count-- > 0) {
-                List<String> positionsToMove = validateInputMoveCommand(InputView.inputMoveCommand());
-                pieceMove(positionsToMove, chessBoard);
-                OutputView.printChessBoard(chessBoard);
-            }
+            chessStart();
         }
         System.out.println("\n게임을 종료 합니다");
+    }
+
+    private static void chessStart() {
+        ChessBoard chessBoard = new ChessBoard();
+        OutputView.printChessBoard(chessBoard);
+
+        while (chessBoard.isSurviveKings()) {
+            List<String> positionsToMove = validateInputMoveCommand(InputView.inputMoveCommand());
+            pieceMove(positionsToMove, chessBoard);
+            OutputView.printChessBoard(chessBoard);
+        }
     }
 
     private static List<String> validateInputMoveCommand(String input) {
