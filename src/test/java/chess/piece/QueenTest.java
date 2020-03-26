@@ -19,7 +19,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import chess.position.Position;
 
 public class QueenTest {
-    @DisplayName("체스말 퀸은 직선, 대각선 거리로 이동할수 있으며 이동 경로를 반환할 수 있다.")
+	@DisplayName("체스말 퀸은 직선, 대각선 거리로 이동할수 있으며 이동 경로를 반환할 수 있다.")
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
 	void rookPathTest(Position start, Position destination, List<Position> trace) {
