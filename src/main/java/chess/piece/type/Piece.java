@@ -6,7 +6,6 @@ import chess.board.Location;
 import chess.piece.location.strategy.LocationStrategy;
 
 public abstract class Piece {
-
 	protected final char name;
 	protected final LocationStrategy locationStrategy;
 
@@ -14,6 +13,8 @@ public abstract class Piece {
 		this.name = name;
 		this.locationStrategy = locationStrategy;
 	}
+
+	public abstract boolean canMove(Location now, Location after);
 
 	public List<Location> getInitialLocation() {
 		return locationStrategy.getBlackTeamLocations();

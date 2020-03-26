@@ -1,5 +1,6 @@
 package chess.piece.type;
 
+import chess.board.Location;
 import chess.piece.location.strategy.KingLocationStrategy;
 import chess.piece.location.strategy.LocationStrategy;
 
@@ -16,5 +17,10 @@ public class King extends Piece {
 			return Character.toUpperCase(name);
 		}
 		return name;
+	}
+
+	@Override
+	public boolean canMove(Location now, Location after) {
+		return now.isKingRange(after);
 	}
 }
