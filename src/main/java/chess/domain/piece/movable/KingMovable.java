@@ -18,10 +18,10 @@ public class KingMovable implements Movable {
 		List<Direction> moveDirection = Direction.everyDirection();
 		Set<Position> movablePositions = new HashSet<>();
 		for (Direction direction : moveDirection) {
-			Optional<Position> optionalPosition = checkBoundary(position, direction); // TODO: 2020/03/26 리팩터링
-			if(optionalPosition.isPresent()) {
+			Optional<Position> optionalPosition = checkBoundary(position, direction);
+			if (optionalPosition.isPresent()) {
 				Position movablePosition = optionalPosition.get();
-				if(checkMovable(movablePosition, pieces, color)) {
+				if (checkMovable(movablePosition, pieces, color)) {
 					movablePositions.add(movablePosition);
 				}
 			}
@@ -41,8 +41,8 @@ public class KingMovable implements Movable {
 	}
 
 	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
-		for(Piece piece : pieces) {
-			if(piece.getPosition().equals(position) && piece.getColor().isSame(color)) {
+		for (Piece piece : pieces) {
+			if (piece.isSamePosition(position) && piece.isSameColor(color)) {
 				return false;
 			}
 		}

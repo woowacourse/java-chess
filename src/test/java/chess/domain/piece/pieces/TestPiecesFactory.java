@@ -1,7 +1,9 @@
 package chess.domain.piece.pieces;
 
 import chess.domain.board.position.Position;
-import chess.domain.piece.*;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +14,7 @@ public class TestPiecesFactory {
 
 		for (Position position : positions) {
 			pieces.add(new Rook(position, "r", Color.WHITE));
-
 		}
-
 		return new Pieces(pieces);
 	}
 
@@ -28,11 +28,7 @@ public class TestPiecesFactory {
 	}
 
 	public static Pieces createBy(List<Piece> inputPieces) {
-		List<Piece> pieces = new ArrayList<>();
-
-		for (Piece piece : inputPieces) {
-			pieces.add(piece);
-		}
+		List<Piece> pieces = new ArrayList<>(inputPieces);
 		return new Pieces(pieces);
 	}
 }

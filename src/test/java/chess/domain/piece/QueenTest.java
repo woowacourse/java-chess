@@ -57,7 +57,7 @@ public class QueenTest {
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position 반환 테스트")
 	@ParameterizedTest
-	@ValueSource(strings = {"g1","f2", "e3", "c5", "b6", "a7", "a4", "b4", "c4", "e4",
+	@ValueSource(strings = {"g1", "f2", "e3", "c5", "b6", "a7", "a4", "b4", "c4", "e4",
 			"f4", "g4", "h4", "d1", "d2", "d3"})
 	void createMovablePositions_blocking_test(String input) {
 		Position position = Board.of("d4");

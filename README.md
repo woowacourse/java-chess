@@ -32,12 +32,12 @@
 - [x]  Movable interface 구현.(결과로 이동 가능한 position들 반환)
 - [x]  Color Enum 구현.
 - [x]  세부 유닛들 상속하여 구현.
-- [ ]  List<Piece>의 Player 일급 컬렉션
+- [x]  List<Piece>의 Player 일급 컬렉션
 - [x]  List<Piece> Factory 구현.
-- [ ]  ChessGame 구현.
+- [x]  ChessGame 구현.
 - [x]  OperationType 구현.
-- [ ]  컨트롤러.
-- [ ]  뷰.
-- [ ]  특수 이동 룰.
+- [x]  컨트롤러.
+- [x]  뷰.
+- [x]  특수 이동 룰.
 - [x]  King이 잡힐 시 게임 종료.
 

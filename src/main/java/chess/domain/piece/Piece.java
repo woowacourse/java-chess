@@ -41,7 +41,7 @@ public abstract class Piece {
 	}
 
 	public void changePosition(Position position) {
-		if(isSamePosition(position)) {
+		if (isSamePosition(position)) {
 			throw new UnsupportedOperationException("같은 위치로 이동할 수 없습니다.");
 		}
 		this.position = position;
@@ -67,10 +67,6 @@ public abstract class Piece {
 
 	public boolean isWhite() {
 		return color.isWhite();
-	}
-
-	public boolean isBlack() {
-		return color.isBlack();
 	}
 
 	public Position getPosition() {

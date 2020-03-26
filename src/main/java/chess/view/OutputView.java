@@ -1,11 +1,11 @@
 package chess.view;
 
-import chess.domain.game.ChessGame;
-import chess.domain.game.ScoreResult;
 import chess.domain.board.Board;
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Row;
+import chess.domain.game.ChessGame;
+import chess.domain.game.ScoreResult;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -35,7 +35,8 @@ public class OutputView {
 		}
 		return rowLineStringBuilder.toString();
 	}
-	public static void printFinishByKingDead(Color color){
+
+	public static void printFinishByKingDead(Color color) {
 		System.out.println(color.getName() + "가 승리하였습니다.");
 	}
 
@@ -49,7 +50,7 @@ public class OutputView {
 
 	public static void printScore(ScoreResult scores) {
 		printEmptyLine();
-		for(Color color : scores.keySet()) {
+		for (Color color : scores.keySet()) {
 			System.out.println(color.getName() + "의 점수는 " + scores.getScoreBy(color) + "점 입니다.");
 		}
 	}

@@ -12,6 +12,8 @@ public enum Row {
 	SEVENTH("g", 7),
 	EIGHTH("h", 8);
 
+	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 좌표 입력입니다.";
+
 	private final String name;
 	private final int value;
 
@@ -26,14 +28,14 @@ public enum Row {
 				return row;
 			}
 		}
-		throw new IllegalArgumentException("옳지 않은 좌표 입력입니다.");
+		throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
 	}
 
 	public Row calculate(int value) {
 		return Arrays.stream(Row.values())
 				.filter(row -> row.value == this.value + value)
 				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException(("옳지 않은 좌표 입력입니다.")));
+				.orElseThrow(() -> new IllegalArgumentException((INVALID_INPUT_EXCEPTION_MESSAGE)));
 	}
 
 	public boolean isSame(Row row) {

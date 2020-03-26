@@ -33,16 +33,4 @@ public class Position {
 	public Column getColumn() {
 		return column;
 	}
-
-	public boolean isSameDiagonal(Position position) {
-		return getRowColumnSum() == position.getRowColumnSum() || getRowColumnDifference() == position.getRowColumnDifference();
-	}
-
-	private int getRowColumnSum(){
-		return row.getValue() + column.getValue();
-	}
-
-	private int getRowColumnDifference(){
-		return row.getValue() - column.getValue();
-	}
 }

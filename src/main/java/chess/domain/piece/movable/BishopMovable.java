@@ -19,9 +19,9 @@ public class BishopMovable implements Movable {
 		Set<Position> movablePositions = new HashSet<>();
 		for (Direction direction : moveDirection) {
 			Position movablePosition = position;
-			while(true) {
-				Optional<Position> optionalPosition = checkBoundary(movablePosition, direction); // TODO: 2020/03/26 리팩터링
-				if(!optionalPosition.isPresent()) {
+			while (true) {
+				Optional<Position> optionalPosition = checkBoundary(movablePosition, direction);
+				if (!optionalPosition.isPresent()) {
 					break;
 				}
 				movablePosition = optionalPosition.get();
@@ -38,8 +38,8 @@ public class BishopMovable implements Movable {
 	}
 
 	private boolean isPossessed(Position movablePosition, List<Piece> pieces) {
-		for(Piece piece : pieces) {
-			if(piece.getPosition().equals(movablePosition)) {
+		for (Piece piece : pieces) {
+			if (piece.getPosition().equals(movablePosition)) {
 				return true;
 			}
 		}
@@ -58,8 +58,8 @@ public class BishopMovable implements Movable {
 	}
 
 	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
-		for(Piece piece : pieces) {
-			if(piece.getPosition().equals(position) && piece.getColor().isSame(color)) {
+		for (Piece piece : pieces) {
+			if (piece.getPosition().equals(position) && piece.getColor().isSame(color)) {
 				return false;
 			}
 		}

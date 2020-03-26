@@ -1,9 +1,9 @@
 package chess.domain.game;
 
-import chess.domain.piece.pieces.Pieces;
-import chess.domain.piece.pieces.PiecesFactory;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
+import chess.domain.piece.pieces.Pieces;
+import chess.domain.piece.pieces.PiecesFactory;
 
 public class ChessGame {
 	private final Pieces pieces;
@@ -19,8 +19,8 @@ public class ChessGame {
 		color = color.changeColor();
 	}
 
-	public Pieces getPieces() {
-		return pieces;
+	public ScoreResult calculateScore() {
+		return new ScoreResult(pieces.getPieces());
 	}
 
 	public boolean isKingDead() {
@@ -31,7 +31,7 @@ public class ChessGame {
 		return pieces.getAliveKingColor();
 	}
 
-	public ScoreResult calculateScore() {
-		return new ScoreResult(pieces.getPieces());
+	public Pieces getPieces() {
+		return pieces;
 	}
 }

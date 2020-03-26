@@ -19,30 +19,30 @@ public class PawnMovable implements Movable {
 		Set<Position> movablePositions = new HashSet<>();
 
 		if (position.getColumn().getValue() == 2 && color.isWhite()) {
-			Position checkPosition = Board.of(position.getRow(),position.getColumn().calculate(1));
+			Position checkPosition = Board.of(position.getRow(), position.getColumn().calculate(1));
 			if (!isPossessed(checkPosition, pieces)) {
 				moveDirection = Direction.whiteInitialPawnDirection();
 			}
 		}
 
 		if (position.getColumn().getValue() == 7 && color.isBlack()) {
-			Position checkPosition = Board.of(position.getRow(),position.getColumn().calculate(-1));
+			Position checkPosition = Board.of(position.getRow(), position.getColumn().calculate(-1));
 			if (!isPossessed(checkPosition, pieces)) {
 				moveDirection = Direction.blackInitialPawnDirection();
 			}
 		}
 
 		for (Direction direction : moveDirection) {
-			Optional<Position> optionalPosition = checkBoundary(position, direction); // TODO: 2020/03/26 리팩터링
-			if(optionalPosition.isPresent()) {
+			Optional<Position> optionalPosition = checkBoundary(position, direction);
+			if (optionalPosition.isPresent()) {
 				Position movablePosition = optionalPosition.get();
-				if (movablePosition.getRow().getValue() == position.getRow().getValue()) { // 정면
-					if(checkMovable(movablePosition,pieces,color) && !isPossessed(movablePosition,pieces)) {
+				if (movablePosition.getRow().getValue() == position.getRow().getValue()) {
+					if (checkMovable(movablePosition, pieces, color) && !isPossessed(movablePosition, pieces)) {
 						movablePositions.add(movablePosition);
 					}
 					continue;
 				}
-				if(checkMovable(movablePosition,pieces,color) && isPossessed(movablePosition,pieces)) {
+				if (checkMovable(movablePosition, pieces, color) && isPossessed(movablePosition, pieces)) {
 					movablePositions.add(movablePosition);
 				}
 			}
@@ -62,8 +62,8 @@ public class PawnMovable implements Movable {
 	}
 
 	private boolean isPossessed(Position movablePosition, List<Piece> pieces) {
-		for(Piece piece : pieces) {
-			if(piece.isSamePosition(movablePosition)) {
+		for (Piece piece : pieces) {
+			if (piece.isSamePosition(movablePosition)) {
 				return true;
 			}
 		}
@@ -71,8 +71,8 @@ public class PawnMovable implements Movable {
 	}
 
 	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
-		for(Piece piece : pieces) {
-			if(piece.isSamePosition(position) && piece.isSameColor(color)) {
+		for (Piece piece : pieces) {
+			if (piece.isSamePosition(position) && piece.isSameColor(color)) {
 				return false;
 			}
 		}

@@ -1,7 +1,6 @@
 package chess.domain.board.position;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public enum Column {
 	EIGHTH("8", 8),
@@ -12,6 +11,8 @@ public enum Column {
 	THIRD("3", 3),
 	SECOND("2", 2),
 	FIRST("1", 1);
+
+	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 좌표 입력입니다.";
 
 	private final String name;
 	private final int value;
@@ -27,14 +28,14 @@ public enum Column {
 				return column;
 			}
 		}
-		throw new IllegalArgumentException("옳지 않은 좌표 입력입니다.");
+		throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
 	}
 
 	public Column calculate(int value) {
 		return Arrays.stream(Column.values())
 				.filter(column -> column.value == this.value + value)
 				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException(("옳지 않은 좌표 입력입니다.")));
+				.orElseThrow(() -> new IllegalArgumentException((INVALID_INPUT_EXCEPTION_MESSAGE)));
 	}
 
 	public String getName() {

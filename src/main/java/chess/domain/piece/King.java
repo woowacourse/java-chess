@@ -6,7 +6,7 @@ import chess.domain.piece.movable.KingMovable;
 public class King extends Piece {
 
 	public King(Position position, String name, Color color) {
-		super(position, name, new KingMovable(), color,0);
+		super(position, name, new KingMovable(), color, 0);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ScoreResult {
+	private static final double PAWN_SPECIAL_SCORE = 0.5;
 	private final Map<Color, Double> scores;
 
 	public ScoreResult(List<Piece> pieces) {
@@ -29,7 +30,7 @@ public class ScoreResult {
 			pawnCountByRows.put(row, getPawnCountBy(row, pawns));
 		}
 
-		return scoreByColor - (0.5 * getTotalDuplicatedPawns(pawnCountByRows));
+		return scoreByColor - (PAWN_SPECIAL_SCORE * getTotalDuplicatedPawns(pawnCountByRows));
 	}
 
 	private Integer getTotalDuplicatedPawns(Map<Row, Integer> pawnCountByRows) {
