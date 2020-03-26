@@ -14,6 +14,7 @@ public class ChessController {
 	private static final int FILE_INDEX = 0;
 	private static final int RANK_INDEX = 1;
 	private static final String BLANK = " ";
+	private static final String STATUS = "status";
 
 	public static void run() {
 		String userInputToStart = InputView.inputGameState();
@@ -30,10 +31,12 @@ public class ChessController {
 		while (chessBoard.isSurviveKings()) {
 			gameRun(chessBoard);
 		}
-
-		double blackTeamScore = chessBoard.calculateTeamScore(chessBoard.findBlackTeam());
-		double whiteTeamScore = chessBoard.calculateTeamScore(chessBoard.findWhiteTeam());
-		OutputView.printGameResult(blackTeamScore, whiteTeamScore);
+		String inputStatus = InputView.inputStatus();
+		if (STATUS.equalsIgnoreCase(inputStatus)) {
+			double blackTeamScore = chessBoard.calculateTeamScore(chessBoard.findBlackTeam());
+			double whiteTeamScore = chessBoard.calculateTeamScore(chessBoard.findWhiteTeam());
+			OutputView.printGameResult(blackTeamScore, whiteTeamScore);
+		}
 	}
 
 	private static void gameRun(ChessBoard chessBoard) {

@@ -11,6 +11,7 @@ public class InputView {
 	private static final String MOVE_COMMAND = "move";
 	private static final String BLANK = " ";
 	private static final String END_COMMAND = "end";
+	private static final String INPUT_MESSAGE_STATUS = "\n게임이 종료 되었습니다\n'status' 를 입력하여 결과를 확인하세요";
 	private static final String INPUT_MESSAGE_GAME_START = "체스 게임을 시작합니다.\n게임 시작은 start, 종료 end 명령을 입력하세요";
 	private static final String INPUT_MESSAGE_MOVE_COMMAND = "\n게임 이동 : move source위치 tartget위치 - 예 : move b2 b3";
 	private static final String ERROR_MESSAGE_INPUT_GAME_START = "start 혹은 end 를 입력하세요";
@@ -61,5 +62,10 @@ public class InputView {
 
 	private static boolean isSourcePositionEqualTargetPosition(String[] commands) {
 		return commands[SOURCE_INDEX].equals(commands[TARGET_INDEX]);
+	}
+
+	public static String inputStatus() {
+		System.out.println(INPUT_MESSAGE_STATUS);
+		return scanner.nextLine();
 	}
 }
