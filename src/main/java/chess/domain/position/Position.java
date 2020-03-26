@@ -1,17 +1,28 @@
 package chess.domain.position;
 
+import java.util.Arrays;
 import java.util.Objects;
+
+import chess.domain.Direction;
 
 public class Position {
 	private Column col;
 	private Row row;
 
+	public Position(String position) {
+		this(position.substring(0, 1), Integer.parseInt(position.substring(1)));
+	}
+
 	public Position(int col, int row) {
 		this(Column.of(col), Row.of(row));
 	}
 
-	public Position(Column col, int row) {
-		this(col, Row.of(row));
+	public Position(String col, Row row) {
+		this(Column.of(col), row);
+	}
+
+	public Position(String col, int row) {
+		this(Column.of(col), Row.of(row));
 	}
 
 	public Position(Column col, Row row) {
@@ -31,11 +42,23 @@ public class Position {
 		return this.col == position.col;
 	}
 
-	public boolean isInDiagonal(Position position) {
-		return this.row.calculateDistance(position.row) == this.col.calculateDistance(position.col);
+	public boolean isSameCol(Column column) {
+		return this.col == column;
 	}
 
-	public boolean isLinear(Position position){
+	public boolean isInDiagonal(Position position) {
+		return isPositiveDiagonal(position) || isNegativeDiagonal(position);
+	}
+
+	public boolean isPositiveDiagonal(Position position) {
+		return this.row.calculateDifference(position.row) == this.col.calculateDifference(position.col);
+	}
+
+	public boolean isNegativeDiagonal(Position position) {
+		return this.row.calculateDifference(position.row) == this.col.calculateDifference(position.col) * -1;
+	}
+
+	public boolean isLinear(Position position) {
 		return isSameRow(position) || isSameCol(position) || isInDiagonal(position);
 	}
 
@@ -45,6 +68,22 @@ public class Position {
 
 	public boolean isInDistance(int distance, Position position) {
 		return calculateMaxDistance(position) <= distance;
+	}
+
+	public int compareToRow(Position position) {
+		return this.row.compareTo(position.row);
+	}
+
+	public int compareToCol(Position position) {
+		return this.col.compareTo(position.col);
+	}
+
+	public Column getCol() {
+		return col;
+	}
+
+	public Row getRow() {
+		return row;
 	}
 
 	@Override
@@ -63,3 +102,4 @@ public class Position {
 		return Objects.hash(col, row);
 	}
 }
+

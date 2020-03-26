@@ -27,7 +27,22 @@ public enum Column {
 				.orElseThrow(() -> new IllegalArgumentException("잘못된 값이 입력되었습니다."));
 	}
 
+	public static Column of(String col) {
+		return Arrays.stream(values())
+				.filter(column -> column.symbol.equals(col))
+				.findAny()
+				.orElseThrow(() -> new IllegalArgumentException("잘못된 값이 입력되었습니다."));
+	}
+
 	public int calculateDistance(Column column) {
-		return Math.abs(this.value - column.value);
+		return Math.abs(calculateDifference(column));
+	}
+
+	public int calculateDifference(Column column) {
+		return this.value - column.value;
+	}
+
+	public int getValue() {
+		return value;
 	}
 }

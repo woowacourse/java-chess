@@ -26,6 +26,14 @@ public enum Row {
 	}
 
 	public int calculateDistance(Row row) {
-		return Math.abs(this.symbol - row.symbol);
+		return Math.abs(calculateDifference(row));
+	}
+
+	public int calculateDifference(Row row) {
+		return this.symbol - row.symbol;
+	}
+
+	public int getSymbol() {
+		return symbol;
 	}
 }
