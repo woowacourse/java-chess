@@ -36,7 +36,7 @@ public class ChessController {
                 String targetPosition = moveSource[2];
                 chessRunner.update(sourcePosition, targetPosition);
                 printInitialize(chessRunner.getBoard());
-                if (checkWinner(chessRunner)) continue;
+                if (!checkWinner(chessRunner)) break;
 
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
