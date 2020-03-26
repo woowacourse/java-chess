@@ -94,4 +94,12 @@ class PositionTest {
 
 		assertThat(actual).isEqualTo(H8);
 	}
+
+	@Test
+	void reversedNameOf() {
+		String expected = "h8";
+		String actual = Position.getReversedNameOf("a1");
+
+		assertThat(actual).isEqualTo(expected);
+	}
 }

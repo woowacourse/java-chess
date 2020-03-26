@@ -40,6 +40,10 @@ public class Position {
 		return column.getName() + row.getName();
 	}
 
+	public static String getReversedNameOf(String name) {
+		return of(name).reverse().getName();
+	}
+
 	public Position up() {
 		return Position.of(column, row.plus());
 	}
