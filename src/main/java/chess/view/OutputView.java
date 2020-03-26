@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.controller.dto.ResponseDto;
+import chess.domain.player.Player;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -59,5 +60,12 @@ public class OutputView {
             return " ";
         }
         return piece;
+    }
+
+    public void printStatus(Map<Player, Double> status) {
+        status.entrySet()
+                .stream()
+                .map(entry -> entry.getKey().toString() + " : " + entry.getValue())
+                .forEach(System.out::println);
     }
 }

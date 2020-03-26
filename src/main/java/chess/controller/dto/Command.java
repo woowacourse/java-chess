@@ -5,6 +5,7 @@ public enum Command {
     START,
     END,
     MOVE,
+    STATUS,
     UNKNOWN;
 
     public static Command of(String command) {

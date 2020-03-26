@@ -5,8 +5,8 @@ import chess.domain.position.Position;
 
 public abstract class UnchangeablePiece extends Piece {
 
-    protected UnchangeablePiece(Position position, Player player) {
-        super(position, player);
+    protected UnchangeablePiece(PieceType pieceType, Position position, Player player) {
+        super(pieceType, position, player);
     }
 
     @Override

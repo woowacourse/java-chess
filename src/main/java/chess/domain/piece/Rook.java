@@ -27,7 +27,7 @@ public class Rook extends UnchangeablePiece {
     }
 
     private Rook(Position position, Player player) {
-        super(position, player);
+        super(PieceType.ROOK, position, player);
     }
 
     public static Rook of(Position position, Player player) {

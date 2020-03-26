@@ -35,7 +35,7 @@ public abstract class Pawn extends Piece {
     }
 
     protected Pawn(Position position, Player player) {
-        super(position, player);
+        super(PieceType.PAWN, position, player);
     }
 
     @Override

@@ -8,10 +8,12 @@ import java.util.Objects;
 
 public abstract class Piece implements PieceState {
 
+    protected PieceType pieceType;
     protected Position position;
     protected Player player;
 
-    protected Piece(Position position, Player player) {
+    protected Piece(PieceType pieceType, Position position, Player player) {
+        this.pieceType = pieceType;
         this.position = position;
         this.player = player;
     }
@@ -46,5 +48,10 @@ public abstract class Piece implements PieceState {
     @Override
     public Player getPlayer() {
         return player;
+    }
+
+    @Override
+    public double getPoint() {
+        return pieceType.getPoint();
     }
 }

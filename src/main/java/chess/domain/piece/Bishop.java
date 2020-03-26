@@ -28,7 +28,7 @@ public class Bishop extends UnchangeablePiece {
     }
 
     private Bishop(Position position, Player player) {
-        super(position, player);
+        super(PieceType.BISHOP, position, player);
     }
 
     public static Piece of(Position position, Player player) {

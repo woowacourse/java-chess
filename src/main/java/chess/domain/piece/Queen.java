@@ -31,7 +31,7 @@ public class Queen extends UnchangeablePiece {
     }
 
     private Queen(Position position, Player player) {
-        super(position, player);
+        super(PieceType.QUEEN, position, player);
     }
 
     public static Piece of(Position position, Player player) {

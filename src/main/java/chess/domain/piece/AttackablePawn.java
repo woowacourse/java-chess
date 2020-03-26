@@ -24,7 +24,7 @@ public abstract class AttackablePawn extends Pawn {
             if (Objects.isNull(pieceDto)) {
                 throw new MovingDirectionException();
             }
-            if (position.getRankDifference(target) != 1) {
+            if (position.getRankDifference(target) != direction.getRankDirection()) {
                 throw new MovingDistanceException();
             }
         }

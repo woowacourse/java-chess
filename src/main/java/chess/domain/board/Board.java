@@ -1,8 +1,10 @@
 package chess.domain.board;
 
 import chess.domain.Turn;
+import chess.domain.piece.King;
 import chess.domain.piece.PieceDto;
 import chess.domain.piece.PieceState;
+import chess.domain.player.Player;
 import chess.domain.position.Position;
 
 import java.util.Collections;
@@ -53,7 +55,20 @@ public class Board {
                 ));
     }
 
-    public void checkTurn(Turn turn) {
+    public Map<Position, PieceState> getRemainPieces(Player player) {
+        return board.entrySet()
+                .stream()
+                .filter(entry -> player.equals(entry.getValue().getPlayer()))
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(),
+                        entry -> entry.getValue()
+                ));
+    }
 
+    public boolean isLost(Player player) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece instanceof King)
+                .count() == 0;
     }
 }

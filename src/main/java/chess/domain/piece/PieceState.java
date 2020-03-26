@@ -11,5 +11,7 @@ public interface PieceState {
 
     Player getPlayer();
 
+    double getPoint();
+
     String getFigure();
 }

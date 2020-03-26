@@ -29,7 +29,7 @@ public class King extends UnchangeablePiece {
     }
 
     private King(Position position, Player player) {
-        super(position, player);
+        super(PieceType.KING, position, player);
     }
 
     public static Piece of(Position position, Player player) {
