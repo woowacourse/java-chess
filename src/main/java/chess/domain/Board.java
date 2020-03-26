@@ -23,4 +23,8 @@ public class Board {
 				(e1, e2) -> e1,
 				LinkedHashMap::new));
 	}
+
+	public Piece get(String key) {
+		return board.get(key);
+	}
 }
