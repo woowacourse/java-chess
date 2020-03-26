@@ -23,6 +23,14 @@ public class Position {
 		}
 	}
 
+	public int getRank() {
+		return rank.getRank();
+	}
+
+	public int getColumn() {
+		return file.getColumn();
+	}
+
 	private static class PositionCache {
 		private static final Map<String, Position> BOARD = new HashMap<>();
 

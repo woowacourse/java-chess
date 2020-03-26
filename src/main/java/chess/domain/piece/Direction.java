@@ -3,6 +3,8 @@ package chess.domain.piece;
 import java.util.Arrays;
 import java.util.List;
 
+import chess.domain.board.Position;
+
 /**
  *    방향을 의미하는 enum입니다.
  *
@@ -59,11 +61,59 @@ public enum Direction {
 		return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
 	}
 
-	public int getX() {
-		return x;
+	public static boolean canGoOneTimeTarget(List<Direction> directions, Position source, Position target) {
+		int locationOfX = source.getColumn();
+		int locationOfY = source.getRank();
+
+		for (Direction direction : directions) {
+			int afterMoveOfX = locationOfX + direction.x;
+			int afterMoveOfY = locationOfY + direction.y;
+
+			if (isOutOfBoundary(afterMoveOfX) || isOutOfBoundary(afterMoveOfY)) {
+				return false;
+			}
+
+			int targetOfX = target.getColumn();
+			int targetOfY = target.getRank();
+
+			if (afterMoveOfX == targetOfX && afterMoveOfY == targetOfY) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public int getY() {
-		return y;
+	public static boolean canGoManyTimesTarget(List<Direction> directions, Position source, Position target) {
+		int locationOfX = source.getColumn();
+		int locationOfY = source.getRank();
+
+		for (Direction direction : directions) {
+			int afterMoveOfX = locationOfX + direction.x;
+			int afterMoveOfY = locationOfY + direction.y;
+
+			while (true) {
+				if (isOutOfBoundary(afterMoveOfX) || isOutOfBoundary(afterMoveOfY)) {
+					return false;
+				}
+
+				int targetOfX = target.getColumn();
+				int targetOfY = target.getRank();
+
+				if (afterMoveOfX == targetOfX && afterMoveOfY == targetOfY) {
+					return true;
+				}
+
+				afterMoveOfX += direction.x;
+				afterMoveOfY += direction.y;
+			}
+		}
+		return false;
+	}
+
+	private static boolean isOutOfBoundary(int location) {
+		if (location < 1 || location > 8) {
+			return true;
+		}
+		return false;
 	}
 }

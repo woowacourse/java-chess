@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
 import chess.domain.piece.state.State;
 
 /**
@@ -8,7 +9,7 @@ import chess.domain.piece.state.State;
  *    @author AnHyungJu, LeeHoBin
  */
 public abstract class Piece {
-	private String color;
+	protected String color;
 	private String symbol;
 	private State state;
 
@@ -16,6 +17,8 @@ public abstract class Piece {
 		this.color = color;
 		// this.state = new Started();
 	}
+
+	public abstract void move(Position source, Position target);
 
 	public static boolean isPawn(Piece piece) {
 		return true;
