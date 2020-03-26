@@ -41,8 +41,8 @@ public class ChessBoard {
 		Piece pieceToMove = findPieceByPosition(sourcePosition);
 		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 
-		pieceToMove.move(movePattern, this);
 		removeAttackedPiece(findPieceByPosition(targetPosition));
+		pieceToMove.move(movePattern, this);
 	}
 
 	private void removeAttackedPiece(Piece targetPiece) {
