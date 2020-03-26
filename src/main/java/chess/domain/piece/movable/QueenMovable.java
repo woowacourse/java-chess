@@ -1,7 +1,10 @@
 package chess.domain.piece.movable;
 
 import chess.domain.board.position.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 
+import java.util.List;
 import java.util.Set;
 
 public class QueenMovable implements Movable {
@@ -9,9 +12,9 @@ public class QueenMovable implements Movable {
 	private Movable rookMovable = new RookMovable();
 
 	@Override
-	public Set<Position> move(Position position) {
-		Set<Position> movablePositions = bishopMovable.move(position);
-		movablePositions.addAll(rookMovable.move(position));
+	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
+		Set<Position> movablePositions = bishopMovable.createMovablePositions(position, pieces, color);
+		movablePositions.addAll(rookMovable.createMovablePositions(position, pieces, color));
 		return movablePositions;
 	}
 }

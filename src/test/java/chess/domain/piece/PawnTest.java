@@ -1,33 +1,57 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
+import chess.domain.piece.pieces.Pieces;
+import chess.domain.piece.pieces.TestPiecesFactory;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
 
-	@DisplayName("getAvailablePositions 유효한 position입력시 정상 동작")
+	@DisplayName("createMovablePositions 유효한 position입력시 정상 동작")
 	@ParameterizedTest
 	@ValueSource(strings = {"a3", "b3", "c3"})
-	void getAvailablePositions_normal_test(String input) {
+	void createMovablePositions_normal_test(String input) {
 		Position position = Board.of("b2");
-		Pawn pawn = new Pawn(position, "p", Direction.whitePawnDirection(), Color.WHITE);
+		Pawn pawn = new Pawn(position, "p", Color.WHITE);
 
-		assertThat(pawn.getAvailablePositions()).contains(Board.of(input));
+		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
+				Board.of("a3"),
+				Board.of("c3")
+		), Color.BLACK);
+
+		assertThat(pawn.createMovablePositions(pieces.getPieces())).contains(Board.of(input));
 	}
 
-	@DisplayName("getAvailablePositions 코너 유효한 position입력시 정상 동작")
+	@DisplayName("createMovablePositions 코너 유효한 position입력시 정상 동작")
 	@ParameterizedTest
 	@ValueSource(strings = {"a2", "b2"})
-	void getAvailablePositions_normal_corner_test(String input) {
+	void createMovablePositions_normal_corner_test(String input) {
 		Position position = Board.of("a1");
-		Pawn pawn = new Pawn(position, "p", Direction.whitePawnDirection(), Color.WHITE);
+		Pawn pawn = new Pawn(position, "p", Color.WHITE);
 
-		assertThat(pawn.getAvailablePositions()).contains(Board.of(input));
+		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
+				Board.of("b2"),
+				Board.of("c3")
+		), Color.BLACK);
+
+		assertThat(pawn.createMovablePositions(pieces.getPieces())).contains(Board.of(input));
+	}
+
+	@DisplayName("createMovablePositions 이동 가능한 경로에 아무 말도 없을시 직진 한 칸만 가능")
+	@Test
+	void createMovablePositions_all_empty_test() {
+		Position position = Board.of("b2");
+		Pawn pawn = new Pawn(position, "p", Color.WHITE);
+
+		assertThat(pawn.createMovablePositions(Collections.emptyList()).size()).isEqualTo(1);
 	}
 }

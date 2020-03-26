@@ -15,7 +15,7 @@ public enum OperationType {
 	}
 
 	public static OperationType of(String name) {
-		// validate
+		// todo validate
 		return Arrays.stream(OperationType.values())
 				.filter(operationType -> operationType.name.equals(name))
 				.findFirst()

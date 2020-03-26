@@ -2,12 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.piece.movable.Movable;
 import chess.domain.board.position.Position;
-import chess.domain.piece.remover.Remover;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class Piece implements Remover {
+public abstract class Piece {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "말을 생성할 수 없습니다.";
 
 	private Position position;
@@ -33,8 +33,8 @@ public abstract class Piece implements Remover {
 		}
 	}
 
-	public Set<Position> getAvailablePositions() {
-		return movable.move(position);
+	public Set<Position> createMovablePositions(List<Piece> pieces) {
+		return movable.createMovablePositions(position, pieces, color);
 	}
 
 	public void changePosition(Position position) { // TODO: 2020/03/25 테스트 자기자신 넣을 경우 오류.

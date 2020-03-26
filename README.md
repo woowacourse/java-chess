@@ -29,13 +29,14 @@
 - [x]  Board 구현.
 - [x]  추상 클래스 Piece 구현.
 - [x]  Direction Enum 구현.
-- [x]  Movable interface 구현.
-- [ ]  findRemovablePositions interface  구현.
-- [ ]  세부 유닛들 상속하여 구현.
+- [x]  Movable interface 구현.(결과로 이동 가능한 position들 반환)
+- [x]  Color Enum 구현.
+- [x]  세부 유닛들 상속하여 구현.
 - [ ]  List<Piece>의 Player 일급 컬렉션
-- [ ]  List<Piece> Factory 구현.
+- [x]  List<Piece> Factory 구현.
 - [ ]  ChessGame 구현.
-- [ ]  OperationType 구현.
-- [ ]  컨트롤러
-- [ ]  뷰
+- [x]  OperationType 구현.
+- [ ]  컨트롤러.
+- [ ]  뷰.
+- [ ]  특수 이동 룰. 
 

@@ -1,35 +1,69 @@
 package chess.domain.piece.movable;
 
+import chess.domain.Direction;
 import chess.domain.board.Board;
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Row;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class BishopMovable implements Movable {
-
 	@Override
-	public Set<Position> move(Position position) {
+	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
+		List<Direction> moveDirection = Direction.diagonalDirection();
 		Set<Position> movablePositions = new HashSet<>();
-
-		for (Row row : Row.values()) {
-			createByRow(position, movablePositions, row); // TODO: 2020/03/25 네이밍
+		for (Direction direction : moveDirection) {
+			Position movablePosition = position;
+			while(true) {
+				Optional<Position> optionalPosition = checkBoundary(movablePosition, direction); // TODO: 2020/03/26 리팩터링
+				if(!optionalPosition.isPresent()) {
+					break;
+				}
+				movablePosition = optionalPosition.get();
+				if (!checkMovable(movablePosition, pieces, color)) {
+					break;
+				}
+				movablePositions.add(movablePosition);
+				if (isPossessed(movablePosition, pieces)) {
+					break;
+				}
+			}
 		}
-		movablePositions.remove(position);
 		return movablePositions;
 	}
 
-	private void createByRow(Position position, Set<Position> movablePositions, Row row) {
-		for (Column column : Column.values()) {
-			addAvailable(position, movablePositions, row, column);
+	private boolean isPossessed(Position movablePosition, List<Piece> pieces) {
+		for(Piece piece : pieces) {
+			if(piece.getPosition().equals(movablePosition)) {
+				return true;
+			}
 		}
+		return false;
 	}
 
-	private void addAvailable(Position position, Set<Position> movablePositions, Row row, Column column) {
-		if (position.isSameDiagonal(Board.of(row, column))) {
-			movablePositions.add(Board.of(row, column));
+	private Optional<Position> checkBoundary(Position position, Direction direction) {
+		Row row = position.getRow();
+		Column column = position.getColumn();
+		if (Board.checkBound(position, direction)) {
+			Row validRow = row.calculate(direction.getXDegree());
+			Column validColumn = column.calculate(direction.getYDegree());
+			return Optional.ofNullable(Board.of(validRow, validColumn));
 		}
+		return Optional.empty();
+	}
+
+	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
+		for(Piece piece : pieces) {
+			if(piece.getPosition().equals(position) && piece.getColor().isSame(color)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
