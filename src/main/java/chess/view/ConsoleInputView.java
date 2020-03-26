@@ -37,19 +37,19 @@ public class ConsoleInputView implements InputView {
     }
 
     @Override
-    public String askMove() {
+    public String askMoveOrStatus() {
         try {
             String input = SCANNER.nextLine();
             validateMove(input);
             return input;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return askMove();
+            return askMoveOrStatus();
         }
     }
 
     private static void validateMove(String input) {
-        if (!input.contains("move")) {
+        if (!input.contains("move") && !input.equals("status") && !input.equals("end")) {
             throw new IllegalArgumentException("잘못된 명령어를 입력하였습니다.");
         }
     }

@@ -26,11 +26,8 @@ public class ChessRunner {
         if (!(selectedPiece.move(sourcePosition, targetPosition, board))) {
             throw new IllegalArgumentException("이동할 수 없는 곳입니다.");
         }
-
         this.board.updateBoard(sourcePosition, targetPosition, selectedPiece);
-
         changeTurn();
-
     }
 
     private void changeTurn() {
@@ -39,6 +36,14 @@ public class ChessRunner {
 
     public Team checkWinner() {
         return this.board.checkWinner();
+    }
+
+    public double calculateScore() {
+        return board.calculateScore(currentTeam);
+    }
+
+    public Team getCurrentTeam() {
+        return currentTeam;
     }
 
     public Board getBoard() {

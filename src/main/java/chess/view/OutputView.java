@@ -9,4 +9,6 @@ public interface OutputView {
     void printBoard(List<String> positions, Map<String, String> board);
 
     void printWinner(Team team);
+
+    void printStatus(double calculateScore, Team team);
 }

@@ -24,15 +24,19 @@ public class Piece {
         return this.team.isEnemy(targetPiece.getTeam());
     }
 
-    public Team getTeam() {
-        return this.team;
-    }
-
     public boolean isWhiteKing() {
         return this.pieceType.isKing() && this.team.isWhite();
     }
 
     public boolean isBlackKing() {
         return this.pieceType.isKing() && !this.team.isWhite();
+    }
+
+    public Team getTeam() {
+        return this.team;
+    }
+
+    public double getScore() {
+        return this.pieceType.getScore();
     }
 }

@@ -61,4 +61,14 @@ public class Board {
     public Piece getPiece(final Position position) {
         return this.board.get(position);
     }
+
+    public double calculateScore(Team team) {
+        double score = 0;
+        for (Piece piece : board.values()) {
+            if (piece.getTeam() == team) {
+                score += piece.getScore();
+            }
+        }
+        return score;
+    }
 }

@@ -4,5 +4,5 @@ public interface InputView {
 
     boolean askChessRun();
 
-    String askMove();
+    String askMoveOrStatus();
 }

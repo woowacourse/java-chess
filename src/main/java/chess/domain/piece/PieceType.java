@@ -33,4 +33,8 @@ public enum PieceType {
     public boolean isKing() {
         return this == KING;
     }
+
+    public double getScore() {
+        return score;
+    }
 }

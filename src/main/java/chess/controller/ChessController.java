@@ -20,7 +20,6 @@ public class ChessController {
         }
     }
 
-
     public static void run() {
         ChessRunner chessRunner = new ChessRunner();
         printInitialize(chessRunner.getBoard());
@@ -28,9 +27,13 @@ public class ChessController {
 
         while (moveFlag) {
             try {
-                String[] moveSource = inputView.askMove().split(" ");
-                if (moveSource[0].toUpperCase() == "END") {
+                String[] moveSource = inputView.askMoveOrStatus().split(" ");
+                if (moveSource[0].toUpperCase().equals("END")) {
                     break;
+                }
+                if (moveSource[0].toUpperCase().equals("STATUS")) {
+                    outputView.printStatus(chessRunner.calculateScore(), chessRunner.getCurrentTeam());
+                    continue;
                 }
                 String sourcePosition = moveSource[1];
                 String targetPosition = moveSource[2];
