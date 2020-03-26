@@ -25,7 +25,9 @@ class PawnTest {
 			Arguments.of(A2, A3, false),
 			Arguments.of(B2, B3, true),
 			Arguments.of(C2, C3, false),
-			Arguments.of(A2, B3, false)
+			Arguments.of(C2, C4, false),
+			Arguments.of(A2, B3, false),
+			Arguments.of(D2, D4, true)
 		);
 	}
 

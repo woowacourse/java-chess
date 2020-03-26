@@ -73,14 +73,6 @@ public class Position {
 		return Position.of(nextColumn, nextRow);
 	}
 
-	public boolean isSameRow(Position that) {
-		return column.equals(that.column);
-	}
-
-	public boolean isSameColumn(Position that) {
-		return row.equals(that.row);
-	}
-
 	private String key() {
 		return column.getName() + row.getName();
 	}
@@ -98,6 +90,10 @@ public class Position {
 
 	public Column getColumn() {
 		return column;
+	}
+
+	public Row getRow() {
+		return row;
 	}
 
 	@Override

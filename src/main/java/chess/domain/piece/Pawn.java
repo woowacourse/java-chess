@@ -13,8 +13,11 @@ import java.util.Set;
 import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import chess.domain.position.Row;
 
 public class Pawn extends FixedPiece {
+	private static final List<Row> INITIAL_ROW = Arrays.asList(Row.of("2"), Row.of("7"));
+
 	private List<Direction> eatableDirections;
 
 	public Pawn(String name, Color color) {
@@ -46,17 +49,27 @@ public class Pawn extends FixedPiece {
 		return movablePositions;
 	}
 
-	public Set<Position> findStraightNext(Position currentPosition, Direction direction, Board board) {
+	public Set<Position> findStraightNext(Position position, Direction direction, Board board) {
 		Set<Position> movablePositions = new HashSet<>();
-		if (currentPosition.canNotMoveNext(direction)) {
+		Position startPosition = position;
+		if (position.canNotMoveNext(direction)) {
 			return movablePositions;
 		}
-		currentPosition = currentPosition.next(direction);
-		if (board.isNotEmptyPosition(currentPosition)) {
+		position = position.next(direction);
+		if (board.isNotEmptyPosition(position)) {
 			return movablePositions;
 		}
-		movablePositions.add(currentPosition);
+		movablePositions.add(position);
+
+		if (isPawnAtDefaultPosition(startPosition)) {
+			movablePositions.addAll(findStraightNext(position, direction, board));
+		}
+
 		return movablePositions;
+	}
+
+	private boolean isPawnAtDefaultPosition(Position startPosition) {
+		return INITIAL_ROW.contains(startPosition.getRow());
 	}
 
 	private Set<Position> findEatablePosition(Position currentPosition, Board board) {

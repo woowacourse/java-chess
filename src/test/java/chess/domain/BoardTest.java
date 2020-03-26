@@ -12,7 +12,6 @@ import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
-import chess.view.OutputView;
 
 class BoardTest {
 	@Test
@@ -38,10 +37,5 @@ class BoardTest {
 	void isNotEmptyPositionTest() {
 		Board board = BoardFactory.create();
 		assertThat(board.isNotEmptyPosition(A6)).isFalse();
-	}
-
-	@Test
-	void showBoard() {
-		OutputView.printBoard(BoardFactory.create());
 	}
 }

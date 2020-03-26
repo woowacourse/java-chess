@@ -1,13 +1,8 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import chess.domain.board.Board;
 import chess.domain.position.Direction;
@@ -42,22 +37,5 @@ public abstract class StretchPiece extends AbstractPiece {
 			movablePositions.add(currentPosition);
 		}
 		return movablePositions;
-	}
-
-	@Deprecated
-	public List<Position> findNext1(Position startPosition, Position currentPosition, Direction direction,
-		Board board) {
-		if (!currentPosition.canMoveNext(direction) || board.isNotEmptyPosition(currentPosition)) {
-			return Collections.emptyList();
-		}
-		if (isEnemy(board.findPieceBy(currentPosition))) {
-			return Collections.singletonList(currentPosition);
-		}
-		List<Position> availablePositions = new ArrayList<>();
-		availablePositions.add(currentPosition);
-		availablePositions.addAll(Stream.of(findNext1(startPosition, currentPosition.next(direction), direction, board))
-			.flatMap(Collection::stream)
-			.collect(Collectors.toList()));
-		return availablePositions;
 	}
 }
