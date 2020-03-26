@@ -94,14 +94,11 @@ public class Position {
     }
 
     private boolean isBetweenComparingInt(int middle, int start, int end) {
-        if (start > end) {
+        if (start >= end) {
             return middle >= end
                 && middle <= start;
         }
-        if (end > start) {
-            return middle <= end
-                && middle >= start;
-        }
-        return false;
+        return middle <= end
+            && middle >= start;
     }
 }

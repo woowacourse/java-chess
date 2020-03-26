@@ -13,7 +13,7 @@ import chess.domain.piece.Type;
 public class Board {
     private final Map<Position, Optional<Piece>> board;
 
-    private Board(final Map<Position, Optional<Piece>> board) {
+    public Board(final Map<Position, Optional<Piece>> board) {
         this.board = board;
     }
 
