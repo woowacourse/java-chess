@@ -14,6 +14,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.exception.PositionOutOfBoundsException;
+
 public class PositionTest {
 	@Test
 	@DisplayName("위치 정보를 String으로 받아 좌표값으로 변환")
@@ -27,7 +29,7 @@ public class PositionTest {
 	void invalidPositionTest(int x, int y) {
 		assertThatThrownBy(() ->
 			new Position(x, y)
-		).isInstanceOf(IllegalArgumentException.class)
+		).isInstanceOf(PositionOutOfBoundsException.class)
 			.hasMessageContaining("체스판 범위");
 
 	}

@@ -7,8 +7,10 @@ import java.util.List;
 
 import chess.domain.Direction;
 import chess.domain.Position;
+import chess.exception.IllegalMoveException;
 
 public class Knight extends Piece {
+	public static final String ILLEGAL_MOVE = "말이 움직일 수 없는 자리입니다.";
 	private static List<Direction> possibleDirections = Arrays.asList(NNE, NEE, NNW, NWW, SSE, SEE, SSW, SWW);
 
 	public Knight(Position position, Team team) {
@@ -21,7 +23,7 @@ public class Knight extends Piece {
 	public void validateMove(Position destination) {
 		Direction direction = position.calculateDirection(destination);
 		if (!possibleDirections.contains(direction)) {
-			throw new IllegalArgumentException("말이 움직일 수 없는 자리입니다.");
+			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
 	}
 

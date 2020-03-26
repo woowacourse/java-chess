@@ -50,4 +50,8 @@ public abstract class Piece {
 	public double getScore() {
 		return this.score;
 	}
+
+	public Team getTeam() {
+		return team;
+	}
 }

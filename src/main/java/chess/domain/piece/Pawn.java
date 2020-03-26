@@ -5,6 +5,7 @@ import java.util.List;
 
 import chess.domain.Direction;
 import chess.domain.Position;
+import chess.exception.IllegalMoveException;
 
 public class Pawn extends Piece {
 
@@ -12,6 +13,7 @@ public class Pawn extends Piece {
 		Direction.NORTHNORTH, Direction.NORTHEAST, Direction.NORTHWEST);
 	public static final List<Direction> UPPER_TEAM_POSSIBLE_DIRECTIONS = Arrays.asList(Direction.SOUTH,
 		Direction.SOUTHSOUTH, Direction.SOUTHEAST, Direction.SOUTHWEST);
+	public static final String ILLEGAL_MOVE = "말이 움직일 수 없는 자리입니다.";
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
@@ -31,10 +33,10 @@ public class Pawn extends Piece {
 	private void validateMoveByDirection(Position destination, List<Direction> possibleDirections) {
 		Direction direction = this.position.calculateDirection(destination);
 		if (!this.position.isPawnInOriginalPosition() && direction.isGoingForwardDouble()) {
-			throw new IllegalArgumentException("말이 움직일 수 없는 자리입니다.");
+			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
 		if (!possibleDirections.contains(direction)) {
-			throw new IllegalArgumentException("말이 움직일 수 없는 자리입니다.");
+			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
 	}
 
