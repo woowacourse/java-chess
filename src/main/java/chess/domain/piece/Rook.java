@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
+import chess.domain.piece.movable.Direction;
 import chess.domain.board.position.Position;
 import chess.domain.piece.movable.RookMovable;
 

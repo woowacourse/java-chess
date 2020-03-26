@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.ChessGame;
-import chess.domain.ScoreResult;
+import chess.domain.game.ChessGame;
+import chess.domain.game.ScoreResult;
 import chess.domain.board.Board;
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
@@ -9,8 +9,6 @@ import chess.domain.board.position.Row;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-
-import java.util.Map;
 
 public class OutputView {
 	public static void printOperationsFormat() {

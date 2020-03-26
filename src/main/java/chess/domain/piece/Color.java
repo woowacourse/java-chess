@@ -11,11 +11,14 @@ public enum Color {
 		this.name = name;
 	}
 
-	public Color changeColor() { // TODO: 2020/03/25 테스트 블랭크일 경우 블랭크 돌리게 수정
+	public Color changeColor() {
 		if (isWhite()) {
 			return BLACK;
 		}
-		return WHITE;
+		if (isBlack()) {
+			return WHITE;
+		}
+		return BLANK;
 	}
 
 	public boolean isWhite() {

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece.movable;
 
 import chess.domain.piece.Color;
 

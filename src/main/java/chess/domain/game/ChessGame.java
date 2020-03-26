@@ -1,11 +1,9 @@
-package chess.domain;
+package chess.domain.game;
 
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.PiecesFactory;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
-
-import java.util.Map;
 
 public class ChessGame {
 	private final Pieces pieces;

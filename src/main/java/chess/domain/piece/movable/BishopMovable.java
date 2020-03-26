@@ -1,6 +1,5 @@
 package chess.domain.piece.movable;
 
-import chess.domain.Direction;
 import chess.domain.board.Board;
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;

@@ -37,7 +37,7 @@ public class Pieces {
 	}
 
 	public Optional<Piece> findBy(Position start) {
-		for (Piece piece : pieces) { // TODO: 2020/03/26 refactor
+		for (Piece piece : pieces) {
 			if (piece.isSamePosition(start)) {
 				return Optional.ofNullable(piece);
 			}
