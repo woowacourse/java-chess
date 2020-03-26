@@ -1,7 +1,9 @@
 package chess.domain.board;
 
 import chess.domain.Piece;
+import chess.domain.Pieces;
 import chess.domain.Route;
+import chess.domain.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -47,7 +49,6 @@ public class Board {
 
         Route route = piece.findRoute(fromPosition, toPosition);
 
-
         if (positionsAreDisturbed(route)) {
             throw new IllegalArgumentException("선택한 기물이 움직일 수 없는 위치입니다.");
         }
@@ -87,5 +88,18 @@ public class Board {
         }
 
         return Collections.unmodifiableList(resultBoard);
+    }
+
+    public Pieces findPiecesOf(Team team) {
+        List<Piece> piecesSource = new ArrayList<>();
+
+        for (Position position : board.keySet()) {
+            Piece piece = board.get(position);
+            if (piece != null && piece.isTeam(team)) {
+                piecesSource.add(piece);
+            }
+        }
+
+        return new Pieces(piecesSource);
     }
 }

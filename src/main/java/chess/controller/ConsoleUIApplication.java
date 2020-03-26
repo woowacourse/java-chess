@@ -16,8 +16,10 @@ public class ConsoleUIApplication {
 
         do {
             gameStatus = runGame(gameStatus);
-            OutputView.printChessBoard(gameStatus.getBoard());
+            OutputView.printChessBoard(gameStatus);
         } while (gameStatus instanceof Running);
+
+        OutputView.printScoreResult(gameStatus);
     }
 
     private static GameStatus runGame(GameStatus gameStatus) {

@@ -19,6 +19,7 @@ public class KingRouteFinder implements RouteFinder {
                 movableRoute = Route.findOneRoute(fromPosition, toPosition, direction);
                 if (movableRoute.contains(toPosition)) {
                     isMovable = true;
+                    movableRoute.remove(toPosition);
                     break;
                 }
             }

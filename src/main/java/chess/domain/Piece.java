@@ -33,4 +33,12 @@ public class Piece {
                 ", pieceType=" + pieceType +
                 '}';
     }
+
+    public boolean isTeam(Team team) {
+        return this.team == team;
+    }
+
+    public double getScore() {
+        return pieceType.score();
+    }
 }

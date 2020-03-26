@@ -91,4 +91,8 @@ public class Route {
         }
         return stringBuilder.toString();
     }
+
+    public void remove(Position position) {
+        route.remove(position);
+    }
 }
