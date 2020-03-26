@@ -48,7 +48,7 @@ public class Pawn extends FixedPiece {
 
 	public Set<Position> findStraightNext(Position currentPosition, Direction direction, Board board) {
 		Set<Position> movablePositions = new HashSet<>();
-		if (!currentPosition.canMoveNext(direction)) {
+		if (currentPosition.canNotMoveNext(direction)) {
 			return movablePositions;
 		}
 		currentPosition = currentPosition.next(direction);
@@ -62,8 +62,20 @@ public class Pawn extends FixedPiece {
 	private Set<Position> findEatablePosition(Position currentPosition, Board board) {
 		Set<Position> eatablePositions = new HashSet<>();
 		for (Direction direction : eatableDirections) {
-			eatablePositions.addAll(findNext(currentPosition, direction, board));
+			eatablePositions.addAll(findEatableNext(currentPosition, direction, board));
 		}
 		return eatablePositions;
+	}
+
+	protected Set<Position> findEatableNext(Position currentPosition, Direction direction, Board board) {
+		Set<Position> eatablePosition = new HashSet<>();
+		if (currentPosition.canNotMoveNext(direction)) {
+			return eatablePosition;
+		}
+		currentPosition = currentPosition.next(direction);
+		if (board.isNotEmptyPosition(currentPosition) && isEnemy(board.findPieceBy(currentPosition))) {
+			eatablePosition.add(currentPosition);
+		}
+		return eatablePosition;
 	}
 }

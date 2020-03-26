@@ -58,4 +58,12 @@ public class GameManager {
 		ScoreRule scoreRule = new ScoreRule(board.getPieces());
 		return scoreRule.calculateScore();
 	}
+
+	public Color getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public boolean isKingAlive() {
+		return board.isKingAliveOf(currentTurn);
+	}
 }

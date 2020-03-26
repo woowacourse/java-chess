@@ -7,6 +7,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.command.Command;
 import chess.view.InputView;
+import chess.view.OutputView;
 
 public class Application {
 	public static void main(String[] args) {
@@ -22,10 +23,14 @@ public class Application {
 		return Command.of(command);
 	}
 
-	public static Command startGame() {
+	public static void startGame() {
 		Board board = BoardFactory.create();
 		GameManager gameManager = new GameManager(board);
 
+		Command command = resumeGame(board, gameManager);
+	}
+
+	private static Command resumeGame(Board board, GameManager gameManager) {
 		Command command;
 		do {
 			printBoard(board);
@@ -34,10 +39,16 @@ public class Application {
 				break;
 			}
 			gameManager.move(command);
-
-		} while (command.isMove());
-		// 게임 결과 도출
-
+		} while (command.isMove() && gameManager.isKingAlive());
+		printResult(gameManager, command);
 		return command;
+	}
+
+	private static void printResult(GameManager gameManager, Command command) {
+		if (command.isStatus()) {
+			OutputView.printResultScore(gameManager.calculateEachScore());
+		} else {
+			OutputView.printWinner(gameManager.getCurrentTurn().reverse());
+		}
 	}
 }

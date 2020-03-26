@@ -45,6 +45,10 @@ public class Command {
 		return commandType == MOVE;
 	}
 
+	public boolean isStatus() {
+		return commandType == STATUS;
+	}
+
 	public Position getTargetPosition() {
 		return targetPosition;
 	}

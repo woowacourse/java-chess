@@ -1,6 +1,9 @@
 package chess.view;
 
+import java.util.Map;
+
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.util.ConsoleOutputRenderer;
 
 public class OutputView {
@@ -16,5 +19,13 @@ public class OutputView {
 
 	public static void printBoard(Board board) {
 		System.out.println(ConsoleOutputRenderer.renderBoard(board));
+	}
+
+	public static void printResultScore(Map<Color, Double> eachScore) {
+		eachScore.forEach((a, b) -> System.out.println(a + " : " + b));
+	}
+
+	public static void printWinner(Color color) {
+		System.out.printf("우승자: %s\n", color.name());
 	}
 }

@@ -43,6 +43,16 @@ public class Position {
 			).collect(Collectors.toMap(Position::key, position -> position));
 	}
 
+	public boolean canNotMoveNext(Direction direction) {
+		int columnDirection = direction.getColumnDirection();
+		int rowDirection = direction.getRowDirection();
+
+		Column nextColumn = column.nextColumn(columnDirection);
+		Row nextRow = row.nextRow(rowDirection);
+
+		return nextColumn == null || nextRow == null;
+	}
+
 	public boolean canMoveNext(Direction direction) {
 		int columnDirection = direction.getColumnDirection();
 		int rowDirection = direction.getRowDirection();

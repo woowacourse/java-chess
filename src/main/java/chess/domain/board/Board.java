@@ -1,7 +1,10 @@
 package chess.domain.board;
 
+import static chess.domain.piece.PieceScore.*;
+
 import java.util.Map;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -27,5 +30,14 @@ public class Board {
 
 	public Map<Position, Piece> getPieces() {
 		return pieces;
+	}
+
+	public boolean isKingAliveOf(Color color) {
+		return pieces.values().stream()
+			.anyMatch(piece -> isKingOf(color, piece));
+	}
+
+	private boolean isKingOf(Color color, Piece piece) {
+		return piece.isSameColor(color) && KING_SCORE.isSameScore(piece.getScore());
 	}
 }
