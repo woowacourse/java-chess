@@ -22,7 +22,7 @@ public class ChessController {
             ChessBoard chessBoard = new ChessBoard();
             OutputView.printChessBoard(chessBoard);
 
-            int count = 5;
+            int count = 10;
             while (count-- > 0) {
                 List<String> positionsToMove = validateInputMoveCommand(InputView.inputMoveCommand());
                 pieceMove(positionsToMove, chessBoard);

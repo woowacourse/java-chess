@@ -6,7 +6,6 @@ import chess.domain.movefactory.KnightType;
 import chess.domain.movefactory.MoveType;
 
 public class Knight extends Piece {
-
     public Knight(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }

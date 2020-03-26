@@ -2,6 +2,7 @@ package chess.domain.chessboard;
 
 import chess.domain.Position;
 import chess.domain.chessPiece.factory.PieceBundleFactory;
+import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.WhiteTeam;
@@ -42,12 +43,12 @@ public class ChessBoard {
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
-        MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
+        validSameTeam(sourcePosition, targetPosition);
+        validMovable(sourcePosition, targetPosition);
+
         Piece targetPiece = findPieceByPosition(targetPosition);
         Piece pieceToMove = findPieceByPosition(sourcePosition);
-
-        validSameTeam(pieceToMove, targetPiece);
-        validMovable(pieceToMove, moveType);
+        MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
 
         if (targetPiece != null) {
             removePiece(targetPiece);
@@ -56,14 +57,32 @@ public class ChessBoard {
         pieceToMove.move(moveType, this);
     }
 
-    private void validMovable(Piece pieceToMove, MoveType moveType) {
+    private void validMovable(Position sourcePosition, Position targetPosition) {
+        MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
+        Piece targetPiece = findPieceByPosition(targetPosition);
+        Piece pieceToMove = findPieceByPosition(sourcePosition);
+
+        if (pieceToMove instanceof Pawn) {
+            Pawn pawn = (Pawn) pieceToMove;
+            if (pawn.isMovable(moveType, targetPiece)) {
+                return;
+            }
+            throw new IllegalArgumentException("잘못된 움직임 입니다");
+        }
+
         if (pieceToMove.isMovable(moveType)) {
             return;
         }
         throw new IllegalArgumentException("해당 말이 갈 수 없는 칸입니다.");
     }
 
-    private void validSameTeam(Piece pieceToMove, Piece targetPiece) {
+    private void validSameTeam(Position sourcePosition, Position targetPosition) {
+        Piece pieceToMove = findPieceByPosition(sourcePosition);
+        Piece targetPiece = findPieceByPosition(targetPosition);
+
+        if (targetPiece == null) {
+            return;
+        }
         if (pieceToMove.isSameTeam(targetPiece)) {
             throw new IllegalArgumentException("해당 칸에 같은 팀의 말이 존재 합니다.");
         }

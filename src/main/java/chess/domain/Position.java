@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.movefactory.Direction;
 import chess.domain.movefactory.KnightType;
@@ -14,6 +15,13 @@ public class Position {
     private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public boolean isPawnStartLine(Pawn pawn) {
+        if (pawn.isBlackTeam()) {
+            return this.rank == Rank.TWO;
+        }
+        return this.rank == Rank.SEVEN;
     }
 
     public static Position of(String coordinate) {
@@ -46,14 +54,14 @@ public class Position {
     }
 
     public void move(MoveType moveType, ChessBoard chessBoard) {
-        moveWhenKnightType((KnightType) moveType);
+        moveWhenKnightType(moveType);
         moveWhenStraight(moveType, chessBoard);
         moveWhenCross(moveType, chessBoard);
     }
 
-    private void moveWhenKnightType(KnightType moveType) {
+    private void moveWhenKnightType(MoveType moveType) {
         if (moveType instanceof KnightType) {
-            Position target = moveType.getTargetPosition();
+            Position target = ((KnightType) moveType).getTargetPosition();
             this.file = target.file;
             this.rank = target.rank;
         }

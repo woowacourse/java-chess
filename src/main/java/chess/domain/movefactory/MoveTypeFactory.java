@@ -14,7 +14,6 @@ public class MoveTypeFactory {
                 || (Math.abs(source.calculateRankDistance(target)) == 1 && Math.abs(source.calculateFileDistance(target)) == 2)) {
             return new KnightType(target);
         }
-//        return NONE;
-        return new StraightType(source, target);
+        return null;
     }
 }
