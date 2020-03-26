@@ -8,6 +8,7 @@ import chess.generator.AllRouteGenerator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
     private List<Row> board;
@@ -31,24 +32,14 @@ public class ChessBoard {
     }
 
     public void move(Position startPosition, Position targetPosition) {
-//        for(int i=0;i<8;i++){
-//            for(int j=0;j<8;j++){
-//                System.out.print(board.get(i).get(j).getName());
-//            }
-//            System.out.println();
-//        }
         ChessPiece chessPiece = getChessPiece(startPosition);
 
         Route canMoveRoute = findRoute(chessPiece, startPosition, targetPosition);
 
         if (!validateRoute(chessPiece, canMoveRoute, startPosition, targetPosition)) {
-            System.out.println("fail to move");
-            System.out.println();
             return;
         }
 
-        //move 동작
-//        Row row = board.get(startPosition.getX() - 1);
         clearPosition(startPosition);
         setPosition(chessPiece, targetPosition);
         reverseBoard();
@@ -78,35 +69,25 @@ public class ChessBoard {
 
     private boolean validateRoute(ChessPiece chessPiece, Route canMoveRoute, Position startPosition, Position targetPosition) {
         Position lastPosition = startPosition;
-        //해당하는 루트가 없을 때
         if (canMoveRoute == null) {
-            System.out.println("can't find route");
             return false;
         }
         System.out.println(canMoveRoute.getRoute().toString());
         for (Position position : canMoveRoute.getRoute()) {
-            //목적지 도달하여 break;
             if (position.equals(targetPosition)) {
                 if (!checkPawnMove(chessPiece, lastPosition, targetPosition)) {
                     return false;
                 }
                 break;
             }
-            //목적지로 가는 도중 말이 있을 경우
             if (!isBlank(position)) {
-                System.out.println(position.toString());
-                System.out.println("가는 길에 말이 있음");
                 return false;
             }
             lastPosition = position;
         }
-        //목적지의 말이 같은 팀일 경우
         if (getChessPiece(targetPosition).isSameTeam(chessPiece.getTeam())) {
-            System.out.println("같은 팀");
             return false;
         }
-        //이동 성공
-        System.out.println("\nmove success\n");
         return true;
     }
 
@@ -114,13 +95,9 @@ public class ChessBoard {
         if (chessPiece instanceof Pawn && lastPosition != null) {
             int dy = targetPosition.getY() - lastPosition.getY();
             if (Math.abs(dy) == 1) {
-                System.out.println("aa");
-                //대각선 목적지에 적이 있으면 이동 가능 return true
                 return !isBlank(targetPosition);
             }
             if (Math.abs(dy) == 0) {
-                System.out.println("bb");
-                //정면 목적지에 적이 없으면 이동 가능 return true
                 return isBlank(targetPosition);
             }
         }
@@ -156,5 +133,14 @@ public class ChessBoard {
 			}
         }
         return score - cnt * 0.5;
+    }
+
+    public double sumTeamScore(Team team) {
+        for (Row row : board) {
+            List<ChessPiece> chessPieces = row.findByTeam(team);
+            chessPieces.stream()
+                .mapToDouble(chessPiece -> chessPiece.getScore())
+                .sum();
+        }
     }
 }

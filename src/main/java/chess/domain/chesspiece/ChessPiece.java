@@ -22,6 +22,11 @@ public abstract class ChessPiece {
 
     }
 
+    public boolean isMatchTeam(Team team) {
+        return this.team == team;
+    }
+
+
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }

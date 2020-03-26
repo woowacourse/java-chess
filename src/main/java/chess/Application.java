@@ -1,27 +1,29 @@
 package chess;
 
 import chess.domain.ChessBoard;
+import chess.domain.ChessGame;
+import chess.domain.Menu;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.factory.BoardFactory;
+import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Application {
+    private static Menu menu;
     public static void main(String[] args) {
-        ChessBoard chessBoard = new ChessBoard(BoardFactory.createBoard());
+        OutputView.printRule();
+        ChessGame chessGame = new ChessGame();
+        initMenu();
+       while (menu.isNotEnd()){
+           ChessBoard chessBoard = chessGame.play(menu, OutputView::printScore);
+           OutputView.printBoard(chessBoard);
+           initMenu();
+       }
 
-        OutputView.printBoard(chessBoard);
-        System.out.println(chessBoard.getTotalScore(Team.WHITE));
-        chessBoard.move(new Position(2, 4), new Position(4, 4));
-        OutputView.printBoard(chessBoard);
-        System.out.println(chessBoard.getTotalScore(Team.WHITE));
-        chessBoard.move(new Position(2, 4), new Position(4, 4));
-        OutputView.printBoard(chessBoard);
-        System.out.println(chessBoard.getTotalScore(Team.WHITE));
-        chessBoard.move(new Position(4, 4), new Position(5, 5));
-        OutputView.printBoard(chessBoard);
-        System.out.println(chessBoard.getTotalScore(Team.WHITE));
-
+    }
+    private static void initMenu() {
+        menu = new Menu(InputView.input());
     }
 }
 
