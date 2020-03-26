@@ -15,4 +15,8 @@ public class ChessService {
 		}
 		boards.move(from, to, turn);
 	}
+
+	public static double getScore(Boards boards, Turn turn) {
+		return boards.getScoreOf(turn);
+	}
 }

@@ -25,7 +25,11 @@ public class ConsoleUIChessApplication {
 			OutputView.printBoard(boards.getTotal());
 			Turn turn = Turn.UPPER;
 			String moveOrStatus = InputView.inputMoveInfo();
-			while (moveOrStatus != "status" && boards.isBothKingAlive()) {
+			while (boards.isBothKingAlive()) {
+				if ("status".equals(moveOrStatus)) {
+					OutputView.printScore(turn.getName(), ChessService.getScore(boards, turn));
+					continue;
+				}
 				ChessService.move(boards, turn = turn.next(), MoveInfo.of(moveOrStatus));
 				OutputView.printBoard(boards.getTotal());
 				moveOrStatus = InputView.inputMoveInfo();

@@ -22,8 +22,12 @@ public class OutputView {
 				}
 				System.out.print(".");
 			}
-			System.out.println(NEW_LINE);
+			System.out.print(NEW_LINE);
 		}
-		System.out.println(NEW_LINE);
+		System.out.print(NEW_LINE);
+	}
+
+	public static void printScore(String name, double score) {
+		System.out.println(name + "팀 점수: " + score);
 	}
 }

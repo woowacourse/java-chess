@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,6 +51,17 @@ public class Board {
 		board.put(to, piece);
 
 		remove(from);
+	}
+
+	public double getScore() {
+		return board.entrySet()
+			.stream()
+			.collect(groupingBy(
+					entry -> entry.getKey().substring(0, 1),
+					mapping(entry -> entry.getValue().getName(), toList())))
+			.values().stream()
+			.mapToDouble(Score::calculateScoreOf)
+			.sum();
 	}
 
 	public void remove(String key) {

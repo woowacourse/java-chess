@@ -8,12 +8,14 @@ import java.util.stream.Collectors;
 
 import chess.domain.Turn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.position.Position;
 
 public class Boards {
 	private static final int LOWER_BOARD = 0;
 	private static final int UPPER_BOARD = 1;
 	private static final String KING = "k";
+	private static final String PAWN = "p";
 
 	private final List<Board> boards;
 
@@ -60,8 +62,21 @@ public class Boards {
 	}
 
 	public void move(String from, String to, Turn turn) {
+		if (boards.get(turn.self()).get(from) instanceof Pawn) {
+			pawnMove(from, to, turn);
+		}
 		boards.get(turn.self()).update(from, to);
 		boards.get(turn.enemy()).remove(Position.getReversedNameOf(to));
+	}
+
+	private void pawnMove(String from, String to, Turn turn) {
+		int columnGap = Position.of(from).getColumnGap(Position.of(to));
+		if (columnGap == 0 && boards.get(turn.enemy()).containsKey(Position.getReversedNameOf(to))) {
+			throw new IllegalArgumentException("폰은 전방의 적을 공격할 수 없습니다.");
+		}
+		if (columnGap == 1 && !boards.get(turn.enemy()).containsKey(Position.getReversedNameOf(to))){
+			throw new IllegalArgumentException("폰은 공격이 아니면 대각선 이동이 불가합니다.");
+		}
 	}
 
 	public boolean isBothKingAlive() {
@@ -69,5 +84,9 @@ public class Boards {
 			.stream()
 			.filter(piece -> piece.toLowerCase().equals(KING))
 			.count() == 2;
+	}
+
+	public double getScoreOf(Turn turn) {
+		return boards.get(turn.self()).getScore();
 	}
 }

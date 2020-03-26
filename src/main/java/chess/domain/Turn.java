@@ -6,14 +6,16 @@ import java.util.function.Function;
 import chess.domain.position.Position;
 
 public enum Turn {
-	LOWER(0, 1, key -> key),
-	UPPER(1, 0, Position::getReversedNameOf);
+	LOWER("백", 0, 1, key -> key),
+	UPPER("흑", 1, 0, Position::getReversedNameOf);
 
+	private final String name;
 	private final int self;
 	private final int enemy;
 	private final Function<String, String> getKey;
 
-	Turn(int self, int enemy, Function<String, String> getKey) {
+	Turn(String name, int self, int enemy, Function<String, String> getKey) {
+		this.name = name;
 		this.self = self;
 		this.enemy = enemy;
 		this.getKey = getKey;
@@ -28,6 +30,10 @@ public enum Turn {
 
 	public String key(String position) {
 		return getKey.apply(position);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public int self() {
