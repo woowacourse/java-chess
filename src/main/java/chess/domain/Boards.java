@@ -50,4 +50,9 @@ public class Boards {
 				entry -> entry.getValue().getUpperName(),
 				(e1, e2) -> e1, LinkedHashMap::new));
 	}
+
+	public boolean hasPieceIn(List<String> path) {
+		return path.stream()
+			.anyMatch(key -> getTotal().containsKey(key));
+	}
 }
