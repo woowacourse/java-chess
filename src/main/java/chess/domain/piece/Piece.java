@@ -10,6 +10,8 @@ public interface Piece {
 
 	boolean isEnemy(Piece that);
 
+	boolean isNotSameColor(Color color);
+
 	Color getColor();
 
 	String getName();

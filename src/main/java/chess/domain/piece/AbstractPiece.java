@@ -27,6 +27,11 @@ public abstract class AbstractPiece implements Piece {
 	}
 
 	@Override
+	public boolean isNotSameColor(Color color) {
+		return !getColor().equals(color);
+	}
+
+	@Override
 	public Color getColor() {
 		return color;
 	}

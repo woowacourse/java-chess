@@ -20,6 +20,11 @@ public class Position {
 		return POSITION_CACHE.get(columnInput.getName() + rowInput.getName());
 	}
 
+	public static Position of(String input) {
+		String[] position = input.split("");
+		return Position.of(Column.of(position[0]), Row.of(position[1]));
+	}
+
 	public static Position of(int column, int row) {
 		return of(Column.of(column), Row.of(row));
 	}
