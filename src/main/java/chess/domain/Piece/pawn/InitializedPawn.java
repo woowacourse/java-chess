@@ -11,7 +11,7 @@ import chess.domain.position.Position;
 public class InitializedPawn extends Initialized {
     private static final int MAX_DISTANCE = 2;
 
-    protected InitializedPawn(String name, Position position, Team team) {
+    public InitializedPawn(String name, Position position, Team team) {
         super(name, position, team);
     }
 
