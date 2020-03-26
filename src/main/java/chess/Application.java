@@ -12,7 +12,7 @@ public class Application {
 
         OutputView.printBoard(chessBoard);
 
-        chessBoard.move(new Position(2, 1), new Position(3, 1));
+        chessBoard.move(new Position(2, 1), new Position(4, 1));
 
         OutputView.printBoard(chessBoard);
         System.out.println(chessBoard.getTotalScore(Team.WHITE));

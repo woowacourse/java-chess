@@ -12,7 +12,7 @@ public class Pawn extends ChessPiece {
 
     public Pawn(Team team) {
         super("p", team, 1, new ArrayList<>(Arrays.asList(
-                DOWN,
+                UP,
                 LEFT_UP,
                 RIGHT_UP)
         ));

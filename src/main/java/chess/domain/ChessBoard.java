@@ -30,7 +30,7 @@ public class ChessBoard {
 
         Route canMoveRoute = findRoute(chessPiece, startPosition, targetPosition);
 
-        if (!validateRoute(chessPiece, canMoveRoute, targetPosition)) {
+        if (!validateRoute(chessPiece, canMoveRoute, startPosition, targetPosition)) {
             System.out.println("fail to move");
             System.out.println();
             return;
@@ -64,8 +64,8 @@ public class ChessBoard {
         return null;
     }
 
-    private boolean validateRoute(ChessPiece chessPiece, Route canMoveRoute, Position targetPosition) {
-        Position lastPosition = null;
+    private boolean validateRoute(ChessPiece chessPiece, Route canMoveRoute, Position startPosition, Position targetPosition) {
+        Position lastPosition = startPosition;
         //해당하는 루트가 없을 때
         if (canMoveRoute == null) {
             System.out.println("can't find route");
@@ -74,8 +74,10 @@ public class ChessBoard {
         System.out.println(canMoveRoute.getRoute().toString());
         for (Position position : canMoveRoute.getRoute()) {
             //목적지 도달하여 break;
-            if (position.equals(targetPosition)
-                    && checkPawnMove(chessPiece, lastPosition, targetPosition)) {
+            if (position.equals(targetPosition)){
+                if(!checkPawnMove(chessPiece, lastPosition, targetPosition)) {
+                    return false;
+                }
                 break;
             }
             //목적지로 가는 도중 말이 있을 경우
@@ -97,13 +99,16 @@ public class ChessBoard {
     }
 
     private boolean checkPawnMove(ChessPiece chessPiece, Position lastPosition, Position targetPosition) {
-        if (chessPiece instanceof Pawn) {
-            int dx = targetPosition.getX() - lastPosition.getX();
-            if (Math.abs(dx) == 1) {
+        if (chessPiece instanceof Pawn && lastPosition != null) {
+            int dy = targetPosition.getY()
+                    - lastPosition.getY();
+            if (Math.abs(dy) == 1)             {
+                System.out.println("aa");
                 //대각선 목적지에 적이 있으면 이동 가능 return true
                 return !isBlank(targetPosition);
             }
-            if (Math.abs(dx) == 0) {
+            if (Math.abs(dy) == 0) {
+                System.out.println("bb");
                 //정면 목적지에 적이 없으면 이동 가능 return true
                 return isBlank(targetPosition);
             }
