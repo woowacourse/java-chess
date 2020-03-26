@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.Position;
-import chess.domain.chessPiece.Piece;
+import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessboard.ChessBoard;
 
 public class OutputView {

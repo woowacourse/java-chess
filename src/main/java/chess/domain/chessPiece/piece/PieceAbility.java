@@ -1,4 +1,4 @@
-package chess.domain.chessPiece;
+package chess.domain.chessPiece.piece;
 
 import chess.domain.Position;
 import chess.domain.movefactory.MoveType;

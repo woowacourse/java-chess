@@ -3,10 +3,10 @@ package chess.domain.chessboard;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.chessPiece.Bishop;
-import chess.domain.chessPiece.Piece;
-import chess.domain.chessPiece.Queen;
-import chess.domain.chessPiece.Rook;
+import chess.domain.chessPiece.piece.Bishop;
+import chess.domain.chessPiece.piece.Piece;
+import chess.domain.chessPiece.piece.Queen;
+import chess.domain.chessPiece.piece.Rook;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.movefactory.MoveFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +53,7 @@ public class ChessBoardTest {
 
         assertThatThrownBy(() -> chessBoard.movePiece(Position.of("c1"), Position.of("b2")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은팀이 있는 칸으로 이동할수 없습니다.");
+                .hasMessage("해당 칸에 같은 팀의 말이 존재 합니다.");
     }
 
     @Test

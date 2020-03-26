@@ -3,7 +3,7 @@ package chess.domain.chessPiece.factory;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.chessPiece.*;
+import chess.domain.chessPiece.piece.*;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.TeamStrategy;
 

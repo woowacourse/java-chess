@@ -1,8 +1,8 @@
 package chess.domain.chessboard;
 
 import chess.domain.Position;
-import chess.domain.chessPiece.Piece;
 import chess.domain.chessPiece.factory.PieceBundleFactory;
+import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.WhiteTeam;
 import chess.domain.movefactory.MoveFactory;
