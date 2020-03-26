@@ -19,6 +19,13 @@ public class PawnMovable implements Movable {
 		List<Direction> moveDirection = Direction.getPawnDirectionBy(color);
 		Set<Position> movablePositions = new HashSet<>();
 
+		if (position.getColumn().getValue() == 2 && color.isWhite()) {
+			moveDirection = Direction.whiteInitialPawnDirection();
+		}
+		if (position.getColumn().getValue() == 7 && color.isBlack()) {
+			moveDirection = Direction.blackInitialPawnDirection();
+		}
+
 		for (Direction direction : moveDirection) {
 			Optional<Position> optionalPosition = checkBoundary(position, direction); // TODO: 2020/03/26 리팩터링
 			if(optionalPosition.isPresent()) {
