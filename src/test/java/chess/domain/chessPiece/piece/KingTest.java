@@ -16,7 +16,7 @@ class KingTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("d3");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece king = new King(source, new BlackTeam());
 
 		assertThat(king.isMovable(movePattern)).isTrue();
@@ -28,7 +28,7 @@ class KingTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("d4");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece king = new King(source, new BlackTeam());
 
 		assertThat(king.isMovable(movePattern)).isFalse();

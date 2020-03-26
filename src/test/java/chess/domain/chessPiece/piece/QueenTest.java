@@ -16,7 +16,7 @@ class QueenTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("f2");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece queen = new Queen(source, new BlackTeam());
 
 		assertThat(queen.isMovable(movePattern)).isTrue();
@@ -28,7 +28,7 @@ class QueenTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("f3");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece queen = new Queen(source, new BlackTeam());
 
 		assertThat(queen.isMovable(movePattern)).isFalse();

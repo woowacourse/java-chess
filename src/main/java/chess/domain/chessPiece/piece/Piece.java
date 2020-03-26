@@ -15,8 +15,19 @@ public abstract class Piece implements PieceAbility {
 		this.teamStrategy = teamStrategy;
 	}
 
+	@Override
 	public boolean isEqualPosition(Position position) {
 		return this.position.equals(position);
+	}
+
+	@Override
+	public boolean isBlackTeam() {
+		return teamStrategy.isBlackTeam();
+	}
+
+	@Override
+	public boolean isWhiteTeam() {
+		return teamStrategy.isWhiteTeam();
 	}
 
 	public void move(MovePattern movePattern, ChessBoard chessBoard) {

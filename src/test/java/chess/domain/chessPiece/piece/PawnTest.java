@@ -18,7 +18,7 @@ class PawnTest {
 		Position targetPosition = Position.of("b4");
 
 		Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
-		MovePattern movePattern = MovePatternFactory.of(sourcePosition, targetPosition);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 
 		assertThat(blackPawn.isMovable(movePattern, null)).isTrue();
 	}
@@ -30,7 +30,7 @@ class PawnTest {
 		Position targetPosition = Position.of("b5");
 
 		Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
-		MovePattern movePattern = MovePatternFactory.of(sourcePosition, targetPosition);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 
 		assertThat(blackPawn.isMovable(movePattern, null)).isFalse();
 	}
@@ -40,7 +40,7 @@ class PawnTest {
 	void isMovableAttack() {
 		Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
 		Piece whitePawn = new Pawn(Position.of("c3"), new WhiteTeam());
-		MovePattern movePattern = MovePatternFactory.of(blackPawn.position, whitePawn.position);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(blackPawn.position, whitePawn.position);
 		assertThat(blackPawn.isMovable(movePattern, whitePawn)).isTrue();
 	}
 
@@ -48,7 +48,7 @@ class PawnTest {
 	@DisplayName("폰 뒤로 이동 테스트")
 	void isMovableFalse() {
 		Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
-		MovePattern movePattern = MovePatternFactory.of(blackPawn.position, Position.of("b1"));
+		MovePattern movePattern = MovePatternFactory.findMovePattern(blackPawn.position, Position.of("b1"));
 		assertThat(blackPawn.isMovable(movePattern, null)).isFalse();
 	}
 }

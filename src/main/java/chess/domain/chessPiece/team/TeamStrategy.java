@@ -15,5 +15,7 @@ public interface TeamStrategy {
 
 	boolean isBlackTeam();
 
+	boolean isWhiteTeam();
+
 	boolean isSameTeam(TeamStrategy teamStrategy);
 }

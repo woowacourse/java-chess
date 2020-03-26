@@ -16,7 +16,7 @@ class RookTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("d4");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece rook = new Rook(source, new BlackTeam());
 
 		assertThat(rook.isMovable(movePattern)).isTrue();
@@ -28,7 +28,7 @@ class RookTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("e3");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece rook = new Rook(source, new BlackTeam());
 
 		assertThat(rook.isMovable(movePattern)).isFalse();

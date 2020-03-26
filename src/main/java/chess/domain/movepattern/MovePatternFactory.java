@@ -6,7 +6,7 @@ public class MovePatternFactory {
 	private static final int ONE_POINT = 1;
 	private static final int TWO_POINT = 2;
 
-	public static MovePattern of(Position source, Position target) {
+	public static MovePattern findMovePattern(Position source, Position target) {
 		if (source.isSameRank(target) || source.isSameFile(target)) {
 			return new StraightPattern(source, target);
 		}

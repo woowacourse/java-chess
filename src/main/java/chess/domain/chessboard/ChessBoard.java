@@ -19,18 +19,19 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다.";
 	private static final String ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다.";
-	private static final int ZERO = 0;
+	private static final int INIT_KING_COUNT = 2;
 	private static final int ONE_PAWN_COUNT = 1;
 	private static final double ONE_PAWN_BONUS = 0.5;
+	private static final int ZERO = 0;
 
 	private final List<Position> chessBoard;
-	private final List<Piece> blackTeam;
-	private final List<Piece> whiteTeam;
+	private final List<Piece> pieces;
 
 	public ChessBoard() {
 		this.chessBoard = ChessBoardFactory.create();
-		this.blackTeam = PieceBundleFactory.createPieceSet(new BlackTeam());
-		this.whiteTeam = PieceBundleFactory.createPieceSet(new WhiteTeam());
+		List<Piece> pieces = PieceBundleFactory.createPieceSet(new BlackTeam());
+		pieces.addAll(PieceBundleFactory.createPieceSet(new WhiteTeam()));
+		this.pieces = pieces;
 	}
 
 	public void movePiece(Position sourcePosition, Position targetPosition) {
@@ -39,7 +40,7 @@ public class ChessBoard {
 
 		Piece targetPiece = findPieceByPosition(targetPosition);
 		Piece pieceToMove = findPieceByPosition(sourcePosition);
-		MovePattern movePattern = MovePatternFactory.of(sourcePosition, targetPosition);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 
 		if (targetPiece != null) {
 			removePiece(targetPiece);
@@ -61,7 +62,7 @@ public class ChessBoard {
 	}
 
 	private void validMovable(Position sourcePosition, Position targetPosition) {
-		MovePattern movePattern = MovePatternFactory.of(sourcePosition, targetPosition);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 		Piece targetPiece = findPieceByPosition(targetPosition);
 		Piece pieceToMove = findPieceByPosition(sourcePosition);
 
@@ -80,25 +81,14 @@ public class ChessBoard {
 	}
 
 	public Piece findPieceByPosition(Position position) {
-		Piece piece = blackTeam.stream()
+		return pieces.stream()
 				.filter(x -> x.isEqualPosition(position))
 				.findAny()
 				.orElse(null);
-		if (piece == null) {
-			return whiteTeam.stream()
-					.filter(x -> x.isEqualPosition(position))
-					.findAny()
-					.orElse(null);
-		}
-		return piece;
 	}
 
 	public void removePiece(Piece targetPiece) {
-		if (blackTeam.contains(targetPiece)) {
-			blackTeam.remove(targetPiece);
-			return;
-		}
-		whiteTeam.remove(targetPiece);
+		pieces.remove(targetPiece);
 	}
 
 	public boolean isExistPieceOnPosition(Position position) {
@@ -106,8 +96,7 @@ public class ChessBoard {
 	}
 
 	public boolean isSurviveKings() {
-		return blackTeam.stream().anyMatch(x -> x instanceof King)
-				&& whiteTeam.stream().anyMatch(x -> x instanceof King);
+		return pieces.stream().filter(x -> x instanceof King).count() == INIT_KING_COUNT;
 	}
 
 	public double calculateTeamScore(List<Piece> team) {
@@ -130,12 +119,16 @@ public class ChessBoard {
 		return pieces.stream().filter(x -> x instanceof Pawn).count() == ONE_PAWN_COUNT;
 	}
 
-	public List<Piece> getBlackTeam() {
-		return Collections.unmodifiableList(this.blackTeam);
+	public List<Piece> findBlackTeam() {
+		return pieces.stream()
+				.filter(Piece::isBlackTeam)
+				.collect(Collectors.toList());
 	}
 
-	public List<Piece> getWhiteTeam() {
-		return Collections.unmodifiableList(this.whiteTeam);
+	public List<Piece> findWhiteTeam() {
+		return pieces.stream()
+				.filter(Piece::isWhiteTeam)
+				.collect(Collectors.toList());
 	}
 
 	public List<Position> getChessBoard() {

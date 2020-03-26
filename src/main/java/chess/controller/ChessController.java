@@ -31,8 +31,8 @@ public class ChessController {
 			gameRun(chessBoard);
 		}
 
-		double blackTeamScore = chessBoard.calculateTeamScore(chessBoard.getBlackTeam());
-		double whiteTeamScore = chessBoard.calculateTeamScore(chessBoard.getWhiteTeam());
+		double blackTeamScore = chessBoard.calculateTeamScore(chessBoard.findBlackTeam());
+		double whiteTeamScore = chessBoard.calculateTeamScore(chessBoard.findWhiteTeam());
 		OutputView.printGameResult(blackTeamScore, whiteTeamScore);
 	}
 

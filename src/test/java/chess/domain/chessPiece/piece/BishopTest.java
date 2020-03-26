@@ -16,7 +16,7 @@ class BishopTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("g5");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece bishop = new Bishop(source, new BlackTeam());
 
 		assertThat(bishop.isMovable(movePattern)).isTrue();
@@ -28,7 +28,7 @@ class BishopTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("d4");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece bishop = new Bishop(source, new BlackTeam());
 
 		assertThat(bishop.isMovable(movePattern)).isFalse();

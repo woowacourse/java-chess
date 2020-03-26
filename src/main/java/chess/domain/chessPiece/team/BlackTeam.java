@@ -44,6 +44,11 @@ public class BlackTeam implements TeamStrategy {
 	}
 
 	@Override
+	public boolean isWhiteTeam() {
+		return false;
+	}
+
+	@Override
 	public boolean isSameTeam(TeamStrategy teamStrategy) {
 		return teamStrategy instanceof BlackTeam;
 	}

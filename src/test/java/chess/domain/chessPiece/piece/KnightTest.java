@@ -16,7 +16,7 @@ class KnightTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("f3");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece knight = new Knight(source, new BlackTeam());
 
 		assertThat(knight.isMovable(movePattern)).isTrue();
@@ -28,7 +28,7 @@ class KnightTest {
 		Position source = Position.of("d2");
 		Position target = Position.of("e3");
 
-		MovePattern movePattern = MovePatternFactory.of(source, target);
+		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece knight = new Knight(source, new BlackTeam());
 
 		assertThat(knight.isMovable(movePattern)).isFalse();

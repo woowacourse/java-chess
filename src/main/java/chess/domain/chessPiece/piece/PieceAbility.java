@@ -10,5 +10,9 @@ public interface PieceAbility {
 
 	boolean isEqualPosition(Position position);
 
+	boolean isBlackTeam();
+
+	boolean isWhiteTeam();
+
 	double getScore();
 }

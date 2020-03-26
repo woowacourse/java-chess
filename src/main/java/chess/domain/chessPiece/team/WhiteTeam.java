@@ -44,6 +44,11 @@ public class WhiteTeam implements TeamStrategy {
 	}
 
 	@Override
+	public boolean isWhiteTeam() {
+		return true;
+	}
+
+	@Override
 	public boolean isSameTeam(TeamStrategy teamStrategy) {
 		return teamStrategy instanceof WhiteTeam;
 	}
