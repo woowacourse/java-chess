@@ -7,8 +7,10 @@ import java.util.List;
 
 public class Knight extends Piece {
 
+    private static final double KNIGHT_SCORE = 2.5;
+
     public Knight(final Team team) {
-        super(team);
+        super(team, KNIGHT_SCORE);
     }
 
     @Override

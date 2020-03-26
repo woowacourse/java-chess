@@ -5,8 +5,11 @@ import chess.board.Vector;
 import java.util.List;
 
 public class Blank extends Piece {
+
+    private static final int BLACK_SCORE = 0;
+
     public Blank() {
-        super(Team.NOTHING);
+        super(Team.NOTHING, BLACK_SCORE);
     }
 
     @Override

@@ -7,9 +7,11 @@ import java.util.List;
 
 public abstract class Piece {
     protected final Team team;
+    private final double score;
 
-    public Piece(final Team team) {
+    public Piece(final Team team, final double score) {
         this.team = team;
+        this.score = score;
     }
 
     public boolean isBlack() {
@@ -38,4 +40,7 @@ public abstract class Piece {
 
     public abstract boolean canMove(Vector vector);
 
+    public double getScore() {
+        return score;
+    }
 }

@@ -4,8 +4,10 @@ import chess.board.Vector;
 
 public class Rook extends Piece {
 
+    private static final int ROOK_SCORE = 5;
+
     public Rook(final Team team) {
-        super(team);
+        super(team, ROOK_SCORE);
     }
 
     @Override

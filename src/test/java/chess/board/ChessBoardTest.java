@@ -13,7 +13,21 @@ class ChessBoardTest {
     @CsvSource(value = {"b1,c3,true", "b1,c4,false", "a1,a3,false", "a7,a6,true"})
     void moveTest(String sourceKey, String targetKey, boolean expect) {
         //given
-        ChessBoard chessBoard = new ChessBoard(new OriginalBoardGenerator());
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator(BoardGenerator.Template.BASIC_BOARD.getTemplate()));
+
+        //when
+        boolean actual = chessBoard.move(sourceKey, targetKey);
+
+        //then
+        assertThat(actual).isEqualTo(expect);
+    }
+
+    @DisplayName("체스판 계산 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"b1,c3,true", "b1,c4,false", "a1,a3,false", "a7,a6,true"})
+    void calcalateScore(String sourceKey, String targetKey, boolean expect) {
+        //given
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator(BoardGenerator.Template.EMPTY_BOARD.getTemplate()));
 
         //when
         boolean actual = chessBoard.move(sourceKey, targetKey);

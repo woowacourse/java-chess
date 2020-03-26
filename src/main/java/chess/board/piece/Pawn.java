@@ -4,8 +4,10 @@ import chess.board.Vector;
 
 public class Pawn extends Piece {
 
+    private static final int PAWN_SCORE = 1;
+
     public Pawn(final Team team) {
-        super(team);
+        super(team, PAWN_SCORE);
     }
 
     @Override

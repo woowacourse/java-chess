@@ -1,5 +1,6 @@
 package chess.board;
 
+import chess.board.piece.Pawn;
 import chess.board.piece.Piece;
 import chess.board.piece.Pieces;
 
@@ -37,5 +38,13 @@ public class Tile {
 
     public Piece getPiece() {
         return piece;
+    }
+
+    public double getScore() {
+        return piece.getScore();
+    }
+
+    public boolean isPawn() {
+        return this.piece instanceof Pawn;
     }
 }

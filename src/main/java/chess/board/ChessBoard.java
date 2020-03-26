@@ -1,6 +1,7 @@
 package chess.board;
 
 import chess.board.piece.Direction;
+import chess.board.piece.Team;
 
 import java.util.Collections;
 import java.util.Map;
@@ -45,4 +46,15 @@ public class ChessBoard {
         return true;
     }
 
+    public double calculateScore(Team team) {
+        Score sum = Score.zero();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                Coordinate coordinate = Coordinate.of(file, rank);
+                sum = sum.add(chessBoard.get(coordinate));
+            }
+            sum = sum.subtractPawnScore();
+        }
+        return sum.getSum();
+    }
 }
