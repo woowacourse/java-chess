@@ -12,8 +12,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	protected boolean validDirection(int rowGap, int columnGap) {
-		return Direction.knightDirection().stream()
-			.anyMatch(direction -> direction.getColumnGap() == columnGap && direction.getRowGap() == rowGap);
+	protected boolean validDirection(Direction direction) {
+		return Direction.knightDirection().contains(direction);
 	}
 }

@@ -2,33 +2,41 @@ package domain.piece.position;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 
 public enum Direction {
-	N(1, 0),
-	S(-1, 0),
-	E(0, 1),
-	W(0, -1),
+	N(1, 0, (rowGap, columnGap) -> rowGap > 0 && columnGap == 0),
+	S(-1, 0, (rowGap, columnGap) -> rowGap < 0 && columnGap == 0),
+	E(0, 1, (rowGap, columnGap) -> rowGap == 0 && columnGap > 0),
+	W(0, -1, (rowGap, columnGap) -> rowGap == 0 && columnGap < 0),
 
-	NE(1, 1),
-	NW(1, -1),
-	SE(-1, 1),
-	SW(-1, -1),
+	NE(1, 1, (rowGap, columnGap) -> isSameAbs(rowGap, columnGap) && rowGap > 0 && columnGap > 0),
+	NW(1, -1, (rowGap, columnGap) -> isSameAbs(rowGap, columnGap) && rowGap > 0 && columnGap < 0),
+	SE(-1, 1, (rowGap, columnGap) -> isSameAbs(rowGap, columnGap) && rowGap < 0 && columnGap > 0),
+	SW(-1, -1, (rowGap, columnGap) -> isSameAbs(rowGap, columnGap) && rowGap < 0 && columnGap < 0),
 
-	NNE(2, 1),
-	NNW(2, -1),
-	SSE(-2, 1),
-	SSW(-2, -1),
-	NEE(1, 2),
-	NWW(1, -2),
-	SEE(-1, 2),
-	SWW(-1, -2);
+	NNE(2, 1, (rowGap, columnGap) -> rowGap == 2 && columnGap == 1),
+	NNW(2, -1, (rowGap, columnGap) -> rowGap == 2 && columnGap == -1),
+	SSE(-2, 1, (rowGap, columnGap) -> rowGap == -2 && columnGap == 1),
+	SSW(-2, -1, (rowGap, columnGap) -> rowGap == -2 && columnGap == -1),
+	NEE(1, 2, (rowGap, columnGap) -> rowGap == 1 && columnGap == 2),
+	NWW(1, -2, (rowGap, columnGap) -> rowGap == 1 && columnGap == -2),
+	SEE(-1, 2, (rowGap, columnGap) -> rowGap == -1 && columnGap == 2),
+	SWW(-1, -2, (rowGap, columnGap) -> rowGap == -1 && columnGap == -2);
 
 	private int rowGap;
-	private int columnGap;
 
-	Direction(int rowGap, int columnGap) {
+	private int columnGap;
+	private BiFunction<Integer, Integer, Boolean> find;
+
+	Direction(int rowGap, int columnGap, BiFunction<Integer, Integer, Boolean> find) {
 		this.rowGap = rowGap;
 		this.columnGap = columnGap;
+		this.find = find;
+	}
+
+	private static boolean isSameAbs(int rowGap, int columnGap) {
+		return Math.abs(rowGap) == Math.abs(columnGap);
 	}
 
 	public static List<Direction> everyDirection() {
@@ -61,5 +69,9 @@ public enum Direction {
 
 	public int getColumnGap() {
 		return columnGap;
+	}
+
+	public BiFunction<Integer, Integer, Boolean> getFind() {
+		return find;
 	}
 }

@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.piece.position.Direction;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
@@ -11,10 +12,7 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	protected boolean validDirection(int rowGap, int columnGap) {
-		int absRowGap = Math.abs(rowGap);
-		int absColumnGap = Math.abs(columnGap);
-
-		return (absColumnGap == absRowGap) && (absColumnGap > 0);
+	protected boolean validDirection(Direction direction) {
+		return Direction.diagonalDirection().contains(direction);
 	}
 }

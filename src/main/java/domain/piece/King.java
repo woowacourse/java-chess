@@ -12,8 +12,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	protected boolean validDirection(int rowGap, int columnGap) {
-		return Direction.everyDirection().stream()
-			.anyMatch(direction -> direction.getColumnGap() == columnGap && direction.getRowGap() == rowGap);
+	protected boolean validDirection(Direction direction) {
+		return Direction.everyDirection().contains(direction);
 	}
 }

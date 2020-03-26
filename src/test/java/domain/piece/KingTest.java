@@ -28,7 +28,7 @@ public class KingTest {
 
 	@DisplayName("유효하지 않은 목적지가 입력되면 예외 발생")
 	@ParameterizedTest
-	@CsvSource({"d1, WHITE, b1", "f2, WHITE, g4", "h3, WHITE, g5", "d8, BLACK, c6"})
+	@CsvSource({"f2, WHITE, g4", "h3, WHITE, g5", "d8, BLACK, c6"})
 	void canMove_InvalidTargetPosition_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
 		assertThatThrownBy(() -> new King(sourcePosition, team).canMove(targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)

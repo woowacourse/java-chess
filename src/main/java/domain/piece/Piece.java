@@ -1,8 +1,10 @@
 package domain.piece;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import domain.board.InvalidTurnException;
+import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
@@ -34,14 +36,22 @@ public abstract class Piece implements Movable {
 		}
 	}
 
-	abstract boolean validDirection(int rowGap, int columnGap);
+	private Direction findDirection(int rowGap, int columnGap) {
+		return Arrays.stream(Direction.values())
+			.filter(d -> d.getFind().apply(rowGap, columnGap))
+			.findFirst()
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_TARGET_POSITION));
+	}
+
+	abstract boolean validDirection(Direction direction);
 
 	@Override
 	public boolean canMove(Position targetPosition, Team turn) {
 		validateTurn(turn);
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		int columnGap = this.position.calculateColumnGap(targetPosition);
-		if (validDirection(rowGap, columnGap)) {
+		Direction direction = findDirection(rowGap, columnGap);
+		if (validDirection(direction)) {
 			return true;
 		}
 		throw new InvalidPositionException(InvalidPositionException.INVALID_TARGET_POSITION);
@@ -49,7 +59,6 @@ public abstract class Piece implements Movable {
 
 	@Override
 	public void move() {
-
 	}
 
 	@Override
