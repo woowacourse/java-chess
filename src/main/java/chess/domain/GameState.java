@@ -6,7 +6,8 @@ import java.util.Objects;
 public enum GameState {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String name;
 

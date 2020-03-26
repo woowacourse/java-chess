@@ -22,7 +22,7 @@ public class ChessController {
         String input;
         GameState gameState;
         boolean blackTurn = false;
-        do {
+        while (true) {
             input = InputView.inputStart();
             List<Square> squares = new ArrayList<>();
             if (input.length() == 10) {
@@ -48,7 +48,19 @@ public class ChessController {
                 OutputView.printWinner(Color.BLACK);
                 break;
             }
-        } while (gameState != GameState.END);
+            if (gameState == GameState.END) {
+                printScoreAndWinners(chessBoard);
+                break;
+            }
+            if (gameState == GameState.STATUS) {
+                printScoreAndWinners(chessBoard);
+            }
+        }
+    }
+
+    private static void printScoreAndWinners(ChessBoard chessBoard) {
+        OutputView.printScore(chessBoard.getTeamScore());
+        OutputView.printWinners(chessBoard.getWinners());
     }
 
     private static boolean proceed(ChessBoard chessBoard, List<Square> squares, boolean blackTurn) {

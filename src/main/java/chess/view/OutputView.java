@@ -5,6 +5,7 @@ import chess.domain.Color;
 import chess.domain.Piece;
 import chess.domain.Square;
 
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -37,6 +38,20 @@ public class OutputView {
 
     public static void printWinner(Color color) {
         System.out.println(color.getName() + "가 이겼습니다");
+    }
+
+    public static void printScore(Map<Color, Double> teamScore) {
+        for (Color color : teamScore.keySet()) {
+            System.out.println(color.getName() + "의 점수는 " + teamScore.get(color) + "입니다");
+        }
+    }
+
+    public static void printWinners(List<Color> winners) {
+        System.out.print("최고점은 ");
+        for (Color color : winners) {
+            System.out.print(color.getName() + " ");
+        }
+        System.out.println("입니다.");
     }
 }
 

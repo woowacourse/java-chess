@@ -1,8 +1,10 @@
 package chess.domain;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -55,5 +57,51 @@ public class ChessBoard {
     public boolean isKingCaptured() {
         return !(chessBoard.containsValue(Piece.of(Color.WHITE, Type.KING))
                 && chessBoard.containsValue(Piece.of(Color.BLACK, Type.KING)));
+    }
+
+    public Map<Color, Double> getTeamScore() {
+        Map<Color, Double> teamScore = new HashMap<>();
+        double blackScore = 0;
+        double whiteScore = 0;
+        for (Piece piece : chessBoard.values()) {
+            if (piece.isBlack()) {
+                blackScore += piece.getScore();
+                continue;
+            }
+            whiteScore += piece.getScore();
+        }
+        blackScore -= calculatePawnScore(Color.BLACK);
+        whiteScore -= calculatePawnScore(Color.WHITE);
+        teamScore.put(Color.BLACK, blackScore);
+        teamScore.put(Color.WHITE, whiteScore);
+        return teamScore;
+    }
+
+
+    private double calculatePawnScore(Color color) {
+        int count;
+        List<Square> squares = chessBoard.keySet().stream()
+                .filter(square -> chessBoard.get(square) == Piece.of(color, Type.PAWN))
+                .collect(Collectors.toList());
+        count = 0;
+        for (Square square : squares) {
+            for (Square squareCompared : squares) {
+                if (square.isJustSameFile(squareCompared)) {
+                    count++;
+                }
+            }
+        }
+        return count * 0.5;
+    }
+
+    public List<Color> getWinners() {
+        Map<Color, Double> teamScore = getTeamScore();
+        if (teamScore.get(Color.BLACK) > teamScore.get(Color.WHITE)) {
+            return Arrays.asList(Color.BLACK);
+        }
+        if (teamScore.get(Color.BLACK) < teamScore.get(Color.WHITE)) {
+            return Arrays.asList(Color.WHITE);
+        }
+        return Arrays.asList(Color.WHITE, Color.BLACK);
     }
 }

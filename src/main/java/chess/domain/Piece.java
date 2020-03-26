@@ -310,6 +310,10 @@ public class Piece {
     public boolean isBlack() {
         return color == Color.BLACK;
     }
+
+    public double getScore() {
+        return type.getScore();
+    }
     // Todo 칸-말 맵 받아서 자기가 움직일 수 있는 리스트 보내줌
 
 

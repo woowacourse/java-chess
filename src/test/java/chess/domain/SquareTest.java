@@ -35,4 +35,14 @@ public class SquareTest {
         assertThat(Square.hasCacheAdded(square, -1, 1)).isFalse();
     }
 
+    @DisplayName("같은 File의 Square인지 확인")
+    @Test
+    void isSameFile() {
+        Square squareA2 = Square.of("a2");
+        Square squareA3 = Square.of("a3");
+        Square squareB2 = Square.of("b2");
+        assertThat(squareA2.isJustSameFile(squareA3)).isTrue();
+        assertThat(squareA2.isJustSameFile(squareB2)).isFalse();
+    }
+
 }

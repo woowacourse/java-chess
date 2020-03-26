@@ -56,4 +56,8 @@ public class Square {
     public int getRank() {
         return rank;
     }
+
+    public boolean isJustSameFile(Square square) {
+        return (this != square) && (this.file == square.file);
+    }
 }

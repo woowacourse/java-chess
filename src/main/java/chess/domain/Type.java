@@ -1,20 +1,26 @@
 package chess.domain;
 
 public enum Type {
-    ROOK("R"),
-    KNIGHT("N"),
-    BISHOP("B"),
-    QUEEN("Q"),
-    KING("K"),
-    PAWN("P");
+    ROOK("R", 5),
+    KNIGHT("N", 2.5),
+    BISHOP("B", 3),
+    QUEEN("Q", 9),
+    KING("K", 0),
+    PAWN("P", 1);
 
     private final String name;
+    private final double score;
 
-    Type(String name) {
+    Type(String name, double score) {
         this.name = name;
+        this.score = score;
     }
 
     public String getName() {
         return name;
+    }
+
+    public double getScore() {
+        return score;
     }
 }
