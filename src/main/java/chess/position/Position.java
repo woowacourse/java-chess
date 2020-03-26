@@ -83,6 +83,10 @@ public class Position {
 		return this.rank == other.rank;
 	}
 
+	public boolean isSameFile(Position other) {
+		return this.file == other.file;
+	}
+
 	public boolean isNotDistanceOneSquare(Position other) {
 		return !isDistanceOneSquare(other);
 	}
