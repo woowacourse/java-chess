@@ -3,8 +3,6 @@ package chess.domain.chesspieces;
 import chess.domain.Player;
 import chess.domain.moverules.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.component.Column;
-import chess.domain.position.component.Row;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,27 +13,17 @@ public abstract class Piece extends Square{
 
     protected List<Direction> directions = new ArrayList<>();
 
-    public Piece(Player player, PieceName name) {
-        super(name.getName(player));
+    public Piece(Player player, PieceName pieceName) {
+        super(pieceName.getName(player));
+
+        Objects.requireNonNull(player);
         this.player = player;
     }
 
-    public boolean movable(Position source, Position target){
-        Objects.requireNonNull(source);
-        Objects.requireNonNull(target);
-        int rowDiff = Row.getDiff(source.getRow(), target.getRow());
-        int columnDiff = Column.getDiff(source.getColumn(), target.getColumn());
-        if (!hasMoveRule(Direction.getMoveRule(source, target))) {
-            return false;
-        }
-        return validateMovableTileSize(rowDiff, columnDiff);
-    }
+    abstract boolean validateMovableTileSize(Position from, Position to);
 
-    public abstract boolean validateMovableTileSize(int rowDiff, int columnDiff);
-
-    public boolean hasMoveRule(Direction direction) {
-        return directions.stream()
-                .anyMatch(x -> x == direction);
+    public boolean hasDirection(Direction direction) {
+        return directions.contains(direction);
     }
 
     public List<Direction> getDirections() {
@@ -44,5 +32,21 @@ public abstract class Piece extends Square{
 
     public Player getPlayer() {
         return player;
+    }
+
+    @Override
+    public boolean movable(Position from, Position to){
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
+        return hasDirection(Direction.getDirection(from, to))
+                && validateMovableTileSize(from, to);
+    }
+
+    @Override
+    public boolean isSamePlayer(Square target) {
+        if (target.getClass() == Empty.class) {
+            return false;
+        }
+        return player == ((Piece)target).getPlayer();
     }
 }

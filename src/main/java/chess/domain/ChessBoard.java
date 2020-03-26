@@ -1,91 +1,58 @@
 package chess.domain;
 
+import chess.PieceInitPositionFactory;
 import chess.domain.chesspieces.*;
 import chess.domain.moverules.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.position.component.Column;
-import chess.domain.position.component.Row;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ChessBoard {
     private final Map<Position, Square> chessBoard = new LinkedHashMap<>();
 
     public ChessBoard() {
-        Positions.getValues().forEach(position -> chessBoard.put(position, new Empty()));
-
-        Map<Piece, List<Position>> locationInfo = new LinkedHashMap<>();
-
-        Player blackPlayer = Player.BLACK;
-        locationInfo.put(new Rook(blackPlayer), Arrays.asList(Positions.of(Row.A, Column.EIGHT), Positions.of(Row.H, Column.EIGHT)));
-        locationInfo.put(new Knight(blackPlayer), Arrays.asList(Positions.of(Row.B, Column.EIGHT), Positions.of(Row.G, Column.EIGHT)));
-        locationInfo.put(new Bishop(blackPlayer), Arrays.asList(Positions.of(Row.C, Column.EIGHT), Positions.of(Row.F, Column.EIGHT)));
-        locationInfo.put(new Queen(blackPlayer), Arrays.asList(Positions.of(Row.D, Column.EIGHT)));
-        locationInfo.put(new King(blackPlayer), Arrays.asList(Positions.of(Row.E, Column.EIGHT)));
-        locationInfo.put(new Pawn(blackPlayer), Arrays.stream(Row.values()).map(row -> Positions.of(row, Column.SEVEN)).collect(Collectors.toList()));
-
-        Player whitePlayer = Player.WHITE;
-        locationInfo.put(new Rook(whitePlayer), Arrays.asList(Positions.of(Row.A, Column.ONE), Positions.of(Row.H, Column.ONE)));
-        locationInfo.put(new Knight(whitePlayer), Arrays.asList(Positions.of(Row.B, Column.ONE), Positions.of(Row.G, Column.ONE)));
-        locationInfo.put(new Bishop(whitePlayer), Arrays.asList(Positions.of(Row.C, Column.ONE), Positions.of(Row.F, Column.ONE)));
-        locationInfo.put(new Queen(whitePlayer), Arrays.asList(Positions.of(Row.D, Column.ONE)));
-        locationInfo.put(new Queen(whitePlayer), Arrays.asList(Positions.of(Row.E, Column.ONE)));
-        locationInfo.put(new Pawn(whitePlayer), Arrays.stream(Row.values()).map(row -> Positions.of(row, Column.TWO)).collect(Collectors.toList()));
-
-        for (Map.Entry<Piece, List<Position>> entry : locationInfo.entrySet()) {
+        Positions.getValues().forEach(position -> chessBoard.put(position, Empty.getInstance()));
+        for (Map.Entry<Piece, List<Position>> entry : PieceInitPositionFactory.create().entrySet()) {
             entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
         }
     }
 
-    public boolean move(Position source, Position target) {
-        if (chessBoard.get(source).getClass() != Empty.class
-                && ((Piece) chessBoard.get(source)).movable(source, target)
-                && validateObstacles(getRoutes(source, target))
-                && !isSamePlayer(source, target)
-                && !cannotMove_Pawn(source, target)) {
-            chessBoard.put(target, chessBoard.get(source));
-            chessBoard.put(source, new Empty());
+    public boolean move(Position from, Position to) {
+        Square source = chessBoard.get(from);
+        Square target = chessBoard.get(to);
+        if (source.movable(from, to)
+                && validateObstacles(getRoutes(from, to))
+                && !source.isSamePlayer(target)
+                && validatePawnException(source, target, Direction.getDirection(from, to))) {
+            chessBoard.put(to, source);
+            chessBoard.put(from, Empty.getInstance());
             return true;
         }
         return false;
     }
 
-    // (할 것) Black White에 따라 Top Down 달라지는 것
-    private boolean cannotMove_Pawn(Position source, Position target) {
-        // pawn 이동 예외
-        return (chessBoard.get(target).getClass() == Empty.class
-                && ((Piece) chessBoard.get(source)).getClass() == Pawn.class)
-                && (Direction.getMoveRule(source, target) == Direction.DIAGONAL_TOP_LEFT
-                || Direction.getMoveRule(source, target) == Direction.DIAGONAL_TOP_RIGHT);
+    // Source가 예외일 때 1) 전진 예외 (전진의 target은 무조건 empty여야 한다.)
+    // 2) 대각선 공격일 때, 같은 팀이면 안되고, empty이면 안된다. 무조건 다른 팀이어야 한다.
+    private boolean validatePawnException(Square source, Square target, Direction direction) {
+        if (source.getClass() != Pawn.class) {
+            return true;
+        }
+        return ((Pawn) source).validateMoveForward(target, direction)
+                && ((Pawn) source).validateAttack(target, direction);
     }
 
-    private boolean isSamePlayer(Position source, Position target) {
-        if (chessBoard.get(source).getClass() == (Empty.class)
-                || chessBoard.get(target).getClass() == (Empty.class)) {
-            return false;
-        }
-
-        return ((Piece) chessBoard.get(source)).getPlayer() == ((Piece) chessBoard.get(target)).getPlayer();
+    public boolean validateObstacles(List<Position> routes) {
+        return routes.stream()
+                .anyMatch(position -> chessBoard.get(position).getClass() == Empty.class);
     }
 
     public Map<Position, Square> getChessBoard() {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public List<Position> getRoutes(Position source, Position target) {
-        Direction direction = Direction.getMoveRule(source, target);
-        List<Position> routes = direction.getPositionsBetween(source, target);
-        return routes;
-    }
-
-    public boolean validateObstacles(List<Position> routes) {
-        for (Position position : routes) {
-            if (!(chessBoard.get(position).getClass() == Empty.class)) {
-                return false;
-            }
-        }
-        return true;
+    public List<Position> getRoutes(Position from, Position to) {
+        Direction direction = Direction.getDirection(from, to);
+        return direction.getPositionsBetween(from, to);
     }
 }

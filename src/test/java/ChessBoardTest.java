@@ -32,7 +32,7 @@ public class ChessBoardTest {
     static Stream<Arguments> generatePositionAndPiece() {
         return Stream.of(
                 Arguments.of(Positions.of(Row.A, Column.ONE), new Rook(Player.WHITE)),
-                Arguments.of(Positions.of(Row.C, Column.FIVE), new Empty()));
+                Arguments.of(Positions.of(Row.C, Column.FIVE), Empty.getInstance()));
     }
 
     @DisplayName("체스 기물의 이동 확인: 정상적일 때")
@@ -53,6 +53,6 @@ public class ChessBoardTest {
         Position source = Positions.of("a1");
         Position target = Positions.of("a2");
         List<Position> routes = chessBoard.getRoutes(source, target);
-        assertThat(chessBoard.validateObstacles(routes)).isFalse();
+        assertThat(chessBoard.validateObstacles(routes)).isTrue();
     }
 }

@@ -15,13 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DirectionTest {
 
+    @DisplayName("Position source, target으로 어떤 방향 이동인지 확인")
     @ParameterizedTest
     @MethodSource("generatePositionsAndMoveRule")
-    void 방향찾기테스트(String sourceInput, String targetInput, Direction direction) {
+    void 방향찾기(String sourceInput, String targetInput, Direction direction) {
         Position source = Positions.of(sourceInput);
         Position target = Positions.of(targetInput);
 
-        assertThat(Direction.getMoveRule(source, target)).isEqualTo(direction);
+        assertThat(Direction.getDirection(source, target)).isEqualTo(direction);
     }
 
     static Stream<Arguments> generatePositionsAndMoveRule() {
@@ -36,10 +37,10 @@ public class DirectionTest {
                 Arguments.of("a1", "h8", Direction.DIAGONAL_TOP_RIGHT));
     }
 
-    @DisplayName( "top/down 이동했을 경우 source와 target 사이의 position들 확인")
+    @DisplayName( "top/down 방향 이동 시, Postition source와 target 사이의 position 확인")
     @ParameterizedTest
     @MethodSource("generateTopDownPositions")
-    void opDownTest(String sourceInput, String targetValue, Direction direction) {
+    void topDownTest(String sourceInput, String targetValue, Direction direction) {
         Position source = Positions.of(sourceInput);
         Position target = Positions.of(targetValue);
 
@@ -61,7 +62,7 @@ public class DirectionTest {
                 Arguments.of("a8", "a1", Direction.DOWN));
     }
 
-    @DisplayName("Left/Right 이동했을 경우 source와 target 사이의 position들 확인")
+    @DisplayName( "left/right 방향 이동 시, Postition source와 target 사이의 position 확인")
     @ParameterizedTest
     @MethodSource("generateLeftRightPositions")
     void leftRightTest(String sourceInput, String targetValue, Direction direction) {
@@ -86,7 +87,7 @@ public class DirectionTest {
                 Arguments.of("h1", "a1", Direction.RIGHT));
     }
 
-    @DisplayName("왼쪽 아래, 오른쪽 위 이동했을 경우 source와 target 사이의 position들 확인")
+    @DisplayName( "'\' 대각선 방향 이동 시, Postition source와 target 사이의 position 확인")
     @ParameterizedTest
     @MethodSource("generateTopLeftDownRightPositions")
     void diagonalTopLeftDownRightTest(String sourceInput, String targetValue, Direction direction) {
@@ -111,7 +112,7 @@ public class DirectionTest {
                 Arguments.of("h8", "a1", Direction.DIAGONAL_DOWN_LEFT));
     }
 
-    @DisplayName("왼쪽 위, 오른쪽 아래 이동했을 경우 source와 target 사이의 position들 확인")
+    @DisplayName( "'/' 대각선 방향 이동 시, Postition source와 target 사이의 position 확인")
     @ParameterizedTest
     @MethodSource("generateTopRightDownLeftPositions")
     void diagonalTopRightDownLeftTest(String sourceInput, String targetValue, Direction direction) {

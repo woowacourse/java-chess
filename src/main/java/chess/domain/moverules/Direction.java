@@ -15,57 +15,57 @@ import java.util.stream.Collectors;
 // 중복 코드 개선하기
 public enum Direction {
     LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isZero(columnDiff),
-            (source, target) -> {
-                Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
-                Row biggerRow = Row.getBigger(source.getRow(), target.getRow());
+            (from, to) -> {
+                Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
+                Row biggerRow = Row.getBigger(from.getRow(), to.getRow());
                 List<Row> rows = Arrays.asList(Row.values())
                         .subList(smallerRow.ordinal() + 1, biggerRow.ordinal());
                 List<Position> positions = rows.stream()
-                        .map(row -> Positions.of(row, source.getColumn()))
+                        .map(row -> Positions.of(row, from.getColumn()))
                         .collect(Collectors.toList());
                 return positions;
             }
     ),
     RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isZero(columnDiff),
-            (source, target) -> {
-                Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
-                Row biggerRow = Row.getBigger(source.getRow(), target.getRow());
+            (from, to) -> {
+                Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
+                Row biggerRow = Row.getBigger(from.getRow(), to.getRow());
                 List<Row> rows = Arrays.asList(Row.values())
                         .subList(smallerRow.ordinal() + 1, biggerRow.ordinal());
                 List<Position> positions = rows.stream()
-                        .map(row -> Positions.of(row, source.getColumn()))
+                        .map(row -> Positions.of(row, from.getColumn()))
                         .collect(Collectors.toList());
                 return positions;
             }
     ),
     TOP((rowDiff, columnDiff) -> isZero(rowDiff) && isNegative(columnDiff),
-            (source, target) -> {
-                Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
-                Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
+            (from, to) -> {
+                Column smallerColumn = Column.getSmaller(from.getColumn(), to.getColumn());
+                Column biggerColumn = Column.getBigger(from.getColumn(), to.getColumn());
                 List<Column> columns = Arrays.asList(Column.values())
                         .subList(smallerColumn.ordinal() + 1, biggerColumn.ordinal());
                 List<Position> positions = columns.stream()
-                        .map(column -> Positions.of(source.getRow(), column))
+                        .map(column -> Positions.of(from.getRow(), column))
                         .collect(Collectors.toList());
                 return positions;
             }),
     DOWN((rowDiff, columnDiff) -> isZero(rowDiff) && isPositive(columnDiff),
-            (source, target) -> {
-                Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
-                Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
+            (from, to) -> {
+                Column smallerColumn = Column.getSmaller(from.getColumn(), to.getColumn());
+                Column biggerColumn = Column.getBigger(from.getColumn(), to.getColumn());
                 List<Column> columns = Arrays.asList(Column.values())
                         .subList(smallerColumn.ordinal() + 1, biggerColumn.ordinal());
                 List<Position> positions = columns.stream()
-                        .map(column -> Positions.of(source.getRow(), column))
+                        .map(column -> Positions.of(from.getRow(), column))
                         .collect(Collectors.toList());
                 return positions;
             }),
     DIAGONAL_TOP_LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isNegative(columnDiff),
-            (source, target) -> {
-                Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
-                Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
-                Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
-                Row biggerRow = Row.getBigger(source.getRow(), target.getRow());
+            (from, to) -> {
+                Column smallerColumn = Column.getSmaller(from.getColumn(), to.getColumn());
+                Column biggerColumn = Column.getBigger(from.getColumn(), to.getColumn());
+                Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
+                Row biggerRow = Row.getBigger(from.getRow(), to.getRow());
 
                 List<Row> rows = Arrays.asList(Row.values())
                         .subList(smallerRow.ordinal() + 1, biggerRow.ordinal());
@@ -79,11 +79,11 @@ public enum Direction {
                 return positions;
             }),
     DIAGONAL_TOP_RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isNegative(columnDiff),
-            (source, target) -> {
-                Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
-                Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
-                Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
-                Row biggerRow = Row.getBigger(source.getRow(), target.getRow());
+            (from, to) -> {
+                Column smallerColumn = Column.getSmaller(from.getColumn(), to.getColumn());
+                Column biggerColumn = Column.getBigger(from.getColumn(), to.getColumn());
+                Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
+                Row biggerRow = Row.getBigger(from.getRow(), to.getRow());
 
                 List<Row> rows = Arrays.asList(Row.values())
                         .subList(smallerRow.ordinal() + 1, biggerRow.ordinal());
@@ -97,11 +97,11 @@ public enum Direction {
                 return positions;
             }),
     DIAGONAL_DOWN_LEFT((rowDiff, columnDiff) -> isPositive(rowDiff) && isPositive(columnDiff),
-            (source, target) -> {
-                Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
-                Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
-                Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
-                Row biggerRow = Row.getBigger(source.getRow(), target.getRow());
+            (from, to) -> {
+                Column smallerColumn = Column.getSmaller(from.getColumn(), to.getColumn());
+                Column biggerColumn = Column.getBigger(from.getColumn(), to.getColumn());
+                Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
+                Row biggerRow = Row.getBigger(from.getRow(), to.getRow());
 
                 List<Row> rows = Arrays.asList(Row.values())
                         .subList(smallerRow.ordinal() + 1, biggerRow.ordinal());
@@ -115,11 +115,11 @@ public enum Direction {
                 return positions;
             }),
     DIAGONAL_DOWN_RIGHT((rowDiff, columnDiff) -> isNegative(rowDiff) && isPositive(columnDiff),
-            (source, target) -> {
-                Column smallerColumn = Column.getSmaller(source.getColumn(), target.getColumn());
-                Column biggerColumn = Column.getBigger(source.getColumn(), target.getColumn());
-                Row smallerRow = Row.getSmaller(source.getRow(), target.getRow());
-                Row biggerRow = Row.getBigger(source.getRow(), target.getRow());
+            (from, to) -> {
+                Column smallerColumn = Column.getSmaller(from.getColumn(), to.getColumn());
+                Column biggerColumn = Column.getBigger(from.getColumn(), to.getColumn());
+                Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
+                Row biggerRow = Row.getBigger(from.getRow(), to.getRow());
 
                 List<Row> rows = Arrays.asList(Row.values())
                         .subList(smallerRow.ordinal() + 1, biggerRow.ordinal());
@@ -153,19 +153,19 @@ public enum Direction {
         return number < 0;
     }
 
-    public boolean getJudge(Position source, Position target) {
-        int rowDiff = Row.getDiff(source.getRow(), target.getRow());
-        int columnDiff = Column.getDiff(source.getColumn(), target.getColumn());
+    public boolean getJudge(Position from, Position to) {
+        int rowDiff = Row.getDiff(from.getRow(), to.getRow());
+        int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
         return judge.test(rowDiff, columnDiff);
     }
 
-    public List<Position> getPositionsBetween(Position source, Position target) {
-        return positionsBetween.apply(source, target);
+    public List<Position> getPositionsBetween(Position from, Position to) {
+        return positionsBetween.apply(from, to);
     }
 
-    public static Direction getMoveRule(Position source, Position target) {
+    public static Direction getDirection(Position from, Position to) {
        return  Arrays.stream(Direction.values())
-                .filter(x -> x.getJudge(source, target))
+                .filter(x -> x.getJudge(from, to))
                 .findFirst()
                .orElseThrow(() -> new IllegalArgumentException("이동 방식을 찾을 수 없습니다."));
     }

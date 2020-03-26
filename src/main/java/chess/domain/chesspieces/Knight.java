@@ -3,8 +3,6 @@ package chess.domain.chesspieces;
 import chess.domain.Player;
 import chess.domain.moverules.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.component.Column;
-import chess.domain.position.component.Row;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -18,16 +16,13 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean movable(Position source, Position target) {
-        Objects.requireNonNull(source);
-        Objects.requireNonNull(target);
-        int rowDiff = Row.getDiff(source.getRow(), target.getRow());
-        int columnDiff = Column.getDiff(source.getColumn(), target.getColumn());
-        if (!hasMoveRule(Direction.getMoveRule(source, target))
-        && !validateMovePosition(source, target)) {
-            return false;
-        }
-        return validateMovableTileSize(rowDiff, columnDiff);
+    public boolean movable(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
+
+        return hasDirection(Direction.getDirection(from, to))
+                && validateMovePosition(from, to)
+                && validateMovableTileSize(from, to);
     }
 
     public boolean validateMovePosition(Position source, Position target) {
@@ -36,7 +31,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean validateMovableTileSize(int rowDiff, int columnDiff) {
+    public boolean validateMovableTileSize(Position from, Position to) {
         return false;
     }
 

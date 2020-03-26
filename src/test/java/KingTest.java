@@ -14,14 +14,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class KingTest {
     private final King king = new King(Player.WHITE);
 
-    @DisplayName("moveRules Test : 움직일 수 있는 방향을 가지고 있는지에 테스트")
+    @DisplayName("King: 이동 가능한 방향 확인")
     @Test
     void kingMoveRulesTest() {
         List<Direction> directions = king.getDirections();
         Assertions.assertThat(directions.contains(Direction.DIAGONAL_DOWN_LEFT)).isTrue();
     }
 
-    @DisplayName("movable test: 정상 범위로 입력했을 때 ")
+    @DisplayName("이동 확인: 정상")
     @Test
     void test() {
         Position source = Positions.of("a1");
@@ -29,7 +29,7 @@ public class KingTest {
         assertThat(king.movable(source, target)).isTrue();
     }
 
-    @DisplayName("두칸 이상 움직였을때 예외처리")
+    @DisplayName("이동 확인: (예외) 2칸 이동")
     @Test
     void test2() {
         Position source = Positions.of("a1");

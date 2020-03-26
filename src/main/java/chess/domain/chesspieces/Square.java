@@ -1,13 +1,23 @@
 package chess.domain.chesspieces;
 
-public class Square {
+import chess.domain.position.Position;
+
+import java.util.Objects;
+
+public abstract class Square {
     protected final String display;
 
     public Square(String display) {
+        Objects.requireNonNull(display);
         this.display = display;
     }
 
     public String getDisplay() {
         return display;
     }
+
+    public abstract boolean movable(Position source, Position target);
+
+    public abstract boolean isSamePlayer(Square target);
+
 }
