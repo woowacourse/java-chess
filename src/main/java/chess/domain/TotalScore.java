@@ -32,4 +32,8 @@ public class TotalScore {
 		}
 		return plainSum;
 	}
+
+	public double getTotalScore() {
+		return totalScore;
+	}
 }
