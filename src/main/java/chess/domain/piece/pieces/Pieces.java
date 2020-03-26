@@ -56,4 +56,19 @@ public class Pieces {
 	public List<Piece> getPieces() {
 		return pieces;
 	}
+
+	public boolean isKingDead() {
+		int kingCount = (int) pieces.stream()
+				.filter(Piece::isKing)
+				.count();
+		return kingCount != 2;
+	}
+
+	public Color getAliveKingColor() {
+		return pieces.stream()
+				.filter(Piece::isKing)
+				.map(Piece::getColor)
+				.findFirst()
+				.orElseThrow(() -> new UnsupportedOperationException("현재상황에서 사용할 수 없는 메서드입니다."));
+	}
 }

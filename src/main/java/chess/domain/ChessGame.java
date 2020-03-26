@@ -22,4 +22,12 @@ public class ChessGame {
 	public Pieces getPieces() {
 		return pieces;
 	}
+
+	public boolean isKingDead() {
+		return pieces.isKingDead();
+	}
+
+	public Color getAliveKingColor() {
+		return pieces.getAliveKingColor();
+	}
 }

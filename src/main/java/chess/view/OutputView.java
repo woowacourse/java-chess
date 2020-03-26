@@ -6,6 +6,7 @@ import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Row;
 import chess.domain.piece.Blank;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
 public class OutputView {
@@ -14,9 +15,11 @@ public class OutputView {
 	}
 
 	public static void printBoard(ChessGame chessGame) {
+		printEmptyLine();
 		for (Column column : Column.values()) {
 			System.out.println(createRowLine(chessGame, column));
 		}
+		printEmptyLine();
 	}
 
 	private static String createRowLine(ChessGame chessGame, Column column) {
@@ -30,5 +33,12 @@ public class OutputView {
 			rowLineStringBuilder.append(piece.getName());
 		}
 		return rowLineStringBuilder.toString();
+	}
+	public static void printFinishByKingDead(Color color){
+		System.out.println(color.getName() + "가 승리하였습니다.");
+	}
+
+	private static void printEmptyLine() {
+		System.out.println("");
 	}
 }

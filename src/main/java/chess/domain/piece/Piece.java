@@ -51,6 +51,10 @@ public abstract class Piece {
 		return this.color.isSame(color);
 	}
 
+	public boolean isKing() {
+		return false;
+	}
+
 	public Position getPosition() {
 		return position;
 	}

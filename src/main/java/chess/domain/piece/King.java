@@ -9,4 +9,8 @@ public class King extends Piece {
 		super(position, name, new KingMovable(), color);
 	}
 
+	@Override
+	public boolean isKing() {
+		return true;
+	}
 }

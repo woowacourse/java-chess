@@ -36,8 +36,12 @@ public class ChessController {
 			if (operationType.isMove()) {
 				//추가입력
 				chessGame.move(Board.of(operations.get(1)), Board.of(operations.get(2)));
-
+				//calculate score
 				OutputView.printBoard(chessGame);
+				if(chessGame.isKingDead()){
+					OutputView.printFinishByKingDead(chessGame.getAliveKingColor());
+					return;
+				}
 			}
 			//isStatus
 		}
