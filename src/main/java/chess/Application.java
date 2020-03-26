@@ -27,7 +27,7 @@ public class Application {
 		Board board = BoardFactory.create();
 		GameManager gameManager = new GameManager(board);
 
-		Command command = resumeGame(board, gameManager);
+		resumeGame(board, gameManager);
 	}
 
 	private static Command resumeGame(Board board, GameManager gameManager) {

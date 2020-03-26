@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
@@ -7,8 +7,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
