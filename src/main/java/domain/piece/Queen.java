@@ -16,4 +16,9 @@ public class Queen extends Piece {
 		return Direction.diagonalDirection().contains(direction) ||
 			Direction.linearDirection().contains(direction);
 	}
+
+	@Override
+	boolean validStepSize(int rowGap, int columnGap) {
+		return true;
+	}
 }

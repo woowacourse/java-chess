@@ -30,7 +30,7 @@ public abstract class Piece implements Movable {
 		return this.SYMBOL.toUpperCase();
 	}
 
-	protected void validateTurn(Team nowTurn) {
+	private void validateTurn(Team nowTurn) {
 		if (this.team != nowTurn) {
 			throw new InvalidTurnException(InvalidTurnException.INVALID_TURN);
 		}
@@ -45,20 +45,22 @@ public abstract class Piece implements Movable {
 
 	abstract boolean validDirection(Direction direction);
 
+	abstract boolean validStepSize(int rowGap, int columnGap);
+
+	@Override
+	public void move() {
+	}
+
 	@Override
 	public boolean canMove(Position targetPosition, Team turn) {
 		validateTurn(turn);
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		int columnGap = this.position.calculateColumnGap(targetPosition);
 		Direction direction = findDirection(rowGap, columnGap);
-		if (validDirection(direction)) {
+		if (validDirection(direction) && validStepSize(rowGap, columnGap)) {
 			return true;
 		}
 		throw new InvalidPositionException(InvalidPositionException.INVALID_TARGET_POSITION);
-	}
-
-	@Override
-	public void move() {
 	}
 
 	@Override

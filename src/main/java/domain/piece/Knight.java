@@ -15,4 +15,9 @@ public class Knight extends Piece {
 	protected boolean validDirection(Direction direction) {
 		return Direction.knightDirection().contains(direction);
 	}
+
+	@Override
+	boolean validStepSize(int rowGap, int columnGap) {
+		return true;
+	}
 }

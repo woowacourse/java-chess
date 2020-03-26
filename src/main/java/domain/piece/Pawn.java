@@ -19,4 +19,8 @@ public class Pawn extends Piece {
 		return Direction.blackPawnDirection().contains(direction);
 	}
 
+	@Override
+	boolean validStepSize(int rowGap, int columnGap) {
+		return true;
+	}
 }

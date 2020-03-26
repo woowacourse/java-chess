@@ -15,4 +15,9 @@ public class Rook extends Piece {
 	protected boolean validDirection(Direction direction) {
 		return Direction.linearDirection().contains(direction);
 	}
+
+	@Override
+	boolean validStepSize(int rowGap, int columnGap) {
+		return true;
+	}
 }

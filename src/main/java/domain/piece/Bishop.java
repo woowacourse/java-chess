@@ -15,4 +15,9 @@ public class Bishop extends Piece {
 	protected boolean validDirection(Direction direction) {
 		return Direction.diagonalDirection().contains(direction);
 	}
+
+	@Override
+	boolean validStepSize(int rowGap, int columnGap) {
+		return true;
+	}
 }
