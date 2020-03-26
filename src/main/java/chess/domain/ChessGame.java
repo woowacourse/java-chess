@@ -17,7 +17,7 @@ public class ChessGame {
 		}
 
 		if (menu.isStatus()) {
-			consumer.accept(chessBoard.getTotalScore(Team.BLACK));
+			consumer.accept(chessBoard.getWinScore());
 		}
 		return this.chessBoard;
 	}

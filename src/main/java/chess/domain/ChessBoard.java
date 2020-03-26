@@ -113,7 +113,16 @@ public class ChessBoard {
         return board.get(position.getX() - 1).get(position.getY() - 1);
     }
 
-    public double getTotalScore(Team team) {
+    public double getWinScore() {
+        double blackTeamScore = sumScore(Team.BLACK);
+        double whiteTeamScore = sumScore(Team.WHITE);
+        if (blackTeamScore > whiteTeamScore) {
+            return blackTeamScore;
+        }
+        return whiteTeamScore;
+    }
+
+    public double sumScore(Team team) {
         double score = 0;
         int cnt = 0;
         for (int i = 0; i < 8; i++) {
@@ -135,12 +144,5 @@ public class ChessBoard {
         return score - cnt * 0.5;
     }
 
-    public double sumTeamScore(Team team) {
-        for (Row row : board) {
-            List<ChessPiece> chessPieces = row.findByTeam(team);
-            chessPieces.stream()
-                .mapToDouble(chessPiece -> chessPiece.getScore())
-                .sum();
-        }
-    }
+
 }
