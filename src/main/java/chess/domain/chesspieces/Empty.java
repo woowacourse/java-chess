@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 public class Empty extends Square {
     private static final Empty instance = new Empty();
-    public final static String EMPTY_DISPLAY = ".";
+    private static final String EMPTY_DISPLAY = ".";
 
     public Empty() {
         super(EMPTY_DISPLAY);

@@ -1,148 +1,179 @@
-import chess.domain.ChessBoard;
 import chess.domain.Player;
 import chess.domain.chesspieces.Empty;
-import chess.domain.chesspieces.King;
+import chess.domain.chesspieces.Knight;
 import chess.domain.chesspieces.Pawn;
+import chess.domain.chesspieces.Rook;
 import chess.domain.moverules.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.views.OutputView;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
-    @DisplayName("Pawn: 이동 가능한 방향 확인 (White User)")
-    @Test
-    void pawnMoveRulesTest_whiteUser() {
-//        P                                                                                                                                                                                                                                     tions.assertThat(directions.contains(Direction.DIAGONAL_DOWN_LEFT)).isTrue();
+    @DisplayName("이동 가능한 방향 - 전진, 앞 대각선")
+    @ParameterizedTest
+    @MethodSource("generateDirection")
+    void pawnDirectionsTest(Player player, Direction[] directions) {
+        Pawn pawn = new Pawn(player, Positions.of("a2"));
+        assertThat(pawn.getDirections()).containsExactly(directions);
     }
 
-    @DisplayName("Pawn: 이동 가능한 방향 확인 (Black User)")
-    @Test
-    void pawnMoveRulesTest_blackUser() {
-//        Pawn pawn = new Pawn(Player.WHITE);
-//        List<Direction> directions = king.getDirections();
-//        Assertions.assertThat(directions.contains(Direction.DIAGONAL_DOWN_LEFT)).isTrue();
+    static Stream<Arguments> generateDirection() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, new Direction[]{Direction.TOP, Direction.DIAGONAL_TOP_LEFT, Direction.DIAGONAL_TOP_RIGHT}),
+                Arguments.of(Player.BLACK, new Direction[]{Direction.DOWN, Direction.DIAGONAL_DOWN_LEFT, Direction.DIAGONAL_DOWN_RIGHT})
+        );
     }
 
 
-    @Test
-    void 초기_1칸_이동_정상() {
-        Pawn pawn = new Pawn(Player.WHITE, Positions.of("a2"));
-        Position source = Positions.of("a2");
-        Position target = Positions.of("a3");
-        assertThat(pawn.movable(source, target)).isTrue();
+    @DisplayName("이동 칸 수 확인: 초기 이동 성공 (1칸, 2칸)")
+    @ParameterizedTest
+    @MethodSource("generatePositions")
+    void tileSize_1(Player player, Position from, Position to) {
+        Pawn pawn = new Pawn(player, from);
+        assertThat(pawn.validateMovableTileSize(from, to)).isTrue();
     }
 
-    @Test
-    void 초기_2칸_이동_정상() {
-        Pawn pawn = new Pawn(Player.WHITE, Positions.of("a2"));
-        Position source = Positions.of("a2");
-        Position target = Positions.of("a4");
-        assertThat(pawn.movable(source, target)).isTrue();
+    static Stream<Arguments> generatePositions() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, Positions.of("a2"), Positions.of("a3")),
+                Arguments.of(Player.WHITE, Positions.of("a2"), Positions.of("a4")),
+                Arguments.of(Player.BLACK, Positions.of("a7"), Positions.of("a6")),
+                Arguments.of(Player.BLACK, Positions.of("a7"), Positions.of("a5"))
+        );
     }
 
-    @Test
-    void 예외_이동한_후_2번_이동했을때() {
-        ChessBoard chessBoard = new ChessBoard();
-
-        Position source = Positions.of("a2");
-        Position target = Positions.of("a4");
-        chessBoard.move(source, target);
-
-        source = Positions.of("a4");
-        target = Positions.of("a6");
-        assertThat(chessBoard.move(source, target)).isFalse();
+    @DisplayName("이동 칸 수 확인: 초기 이동 실패 (2칸 초과)")
+    @ParameterizedTest
+    @MethodSource("generatePositions4")
+    void tileSize_4(Player player, Position from, Position to) {
+        Pawn pawn = new Pawn(player, from);
+        assertThat(pawn.validateMovableTileSize(from, to)).isFalse();
     }
 
-    @Test
-    void 초기x_전진_앞에_아무도없다() {
-        ChessBoard chessBoard = new ChessBoard();
-        Position source = Positions.of("a2");
-        Position target = Positions.of("a4");
-        chessBoard.move(source, target);
-
-        source = Positions.of("a4");
-        target = Positions.of("a5");
-        chessBoard.move(source, target);
-        assertThat(chessBoard.getChessBoard().get(target)).isInstanceOf(Pawn.class);
+    static Stream<Arguments> generatePositions4() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, Positions.of("a2"), Positions.of("a5")),
+                Arguments.of(Player.BLACK, Positions.of("a7"), Positions.of("a4"))
+        );
     }
 
-    @Test
-    void 초기x_전진불가_앞에_누가있다() {
-        ChessBoard chessBoard = new ChessBoard();
-        Position source = Positions.of("a7");
-        Position target = Positions.of("a5");
-        chessBoard.move(source, target);
-        OutputView.printChessBoard(chessBoard.getChessBoard());
-
-        source = Positions.of("a5");
-        target = Positions.of("a4");
-        chessBoard.move(source, target);
-        OutputView.printChessBoard(chessBoard.getChessBoard());
-
-        source = Positions.of("a2");
-        target = Positions.of("a4");
-        chessBoard.move(source, target);
-        OutputView.printChessBoard(chessBoard.getChessBoard());
-
-        assertThat(chessBoard.getChessBoard().get(target)).isInstanceOf(Pawn.class);
-        assertThat(chessBoard.getChessBoard().get(source)).isInstanceOf(Pawn.class);
+    @DisplayName("이동 칸 수 확인: 초기가 아닐 때 이동 (1칸)")
+    @ParameterizedTest
+    @MethodSource("generatePositions2")
+    void tileSize_1(Player player, Position initPosition, Position from, Position to) {
+        Pawn pawn = new Pawn(player, initPosition);
+        assertThat(pawn.validateMovableTileSize(from, to)).isTrue();
     }
 
-    @Test
-    void 초기x_공격_대각선_공격가능_적이있을때_공격성공() {
-        ChessBoard chessBoard = new ChessBoard();
-        Position source = Positions.of("b7");
-        Position target = Positions.of("b5");
-        chessBoard.move(source, target);
-//        OutputView.printChessBoard(chessBoard.getChessBoard());
-
-        source = Positions.of("a2");
-        target = Positions.of("a4");
-        chessBoard.move(source, target);
-//        OutputView.printChessBoard(chessBoard.getChessBoard());
-
-        source = Positions.of("a4");
-        target = Positions.of("b5");
-        chessBoard.move(source, target);
-
-//        OutputView.printChessBoard(chessBoard.getChessBoard());
-
-        assertThat(chessBoard.getChessBoard().get(target)).isInstanceOf(Pawn.class);
-        assertThat(chessBoard.getChessBoard().get(source)).isInstanceOf(Empty.class);
+    static Stream<Arguments> generatePositions2() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, Positions.of("a2"), Positions.of("a3"), Positions.of("a4")),
+                Arguments.of(Player.BLACK, Positions.of("a7"), Positions.of("a6"), Positions.of("a5"))
+                );
     }
 
-    @Test
-    void 공격불가_같은팀이있을때() {
-        ChessBoard chessBoard = new ChessBoard();
-        Position source = Positions.of("a2");
-        Position target = Positions.of("a3");
-        chessBoard.move(source, target);
-
-        source = Positions.of("b2");
-        target = Positions.of("b4");
-        chessBoard.move(source, target);
-
-        source = Positions.of("a3");
-        target = Positions.of("b4");
-
-        assertThat(chessBoard.move(source, target)).isFalse();
+    @DisplayName("이동 칸 수 확인: 초기가 아닐 때 이동 실패 (1칸 초과)")
+    @ParameterizedTest
+    @MethodSource("generatePositions3")
+    void tileSize_2(Player player, Position initPosition, Position from, Position to) {
+        Pawn pawn = new Pawn(player, initPosition);
+        assertThat(pawn.validateMovableTileSize(from, to)).isFalse();
     }
 
-    @Test
-    void 공격불가_아무도없을때() {
-        ChessBoard chessBoard = new ChessBoard();
+    static Stream<Arguments> generatePositions3() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, Positions.of("a2"), Positions.of("a3"), Positions.of("a5")),
+                Arguments.of(Player.BLACK, Positions.of("a7"), Positions.of("a6"), Positions.of("a4"))
+        );
+    }
 
-        Position source = Positions.of("a1");
-        Position target = Positions.of("b2");
+    // (예외 상황) 대각선 공격 (1) 대각선이여야 하고, (2) 같은 편이 아니여야 한다.
+    @ParameterizedTest
+    @MethodSource("generatePositions5")
+    void 대각선_공격_성공_다른_팀(Player sourcePlayer, Position from, Player targetPlayer, Position to) {
+        Pawn source = new Pawn(sourcePlayer, from);
+        Pawn target = new Pawn(targetPlayer, to);
 
-        assertThat(chessBoard.move(source, target)).isFalse();
+        assertThat(source.validateAttack(target, Direction.getDirection(from, to))).isTrue();
+    }
+
+    static Stream<Arguments> generatePositions5() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, Positions.of("b2"), Player.BLACK, Positions.of("a3")),
+                Arguments.of(Player.WHITE, Positions.of("b2"), Player.BLACK, Positions.of("c3")),
+                Arguments.of(Player.BLACK, Positions.of("e7"), Player.WHITE, Positions.of("f6")),
+                Arguments.of(Player.BLACK, Positions.of("e7"), Player.WHITE, Positions.of("d6"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("generatePositions6")
+    void 대각선_공격시_empty(Player sourcePlayer, Position from, Position to) {
+        Pawn source = new Pawn(sourcePlayer, from);
+        assertThat(source.validateAttack(Empty.getInstance(), Direction.getDirection(from, to))).isFalse();
+    }
+
+
+    static Stream<Arguments> generatePositions6() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, Positions.of("b2"), Positions.of("a3")),
+                Arguments.of(Player.WHITE, Positions.of("b2"), Positions.of("c3")),
+                Arguments.of(Player.BLACK, Positions.of("e7"), Positions.of("f6")),
+                Arguments.of(Player.BLACK, Positions.of("e7"), Positions.of("d6"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("generatePositions7")
+    void 대각선_공격_같은_팀(Player player, Position from, Position to) {
+        Pawn source = new Pawn(player, from);
+        Knight target = new Knight(player);
+        assertThat(source.validateAttack(target, Direction.getDirection(from, to))).isFalse();
+    }
+
+    static Stream<Arguments> generatePositions7() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, Positions.of("b2"), Positions.of("a3")),
+                Arguments.of(Player.WHITE, Positions.of("b2"), Positions.of("c3")),
+                Arguments.of(Player.BLACK, Positions.of("e7"), Positions.of("f6")),
+                Arguments.of(Player.BLACK, Positions.of("e7"), Positions.of("d6"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("generatePositions8")
+    void 전진_성공_empty(Player player, Position from, Position to) {
+        Pawn source = new Pawn(player, from);
+        assertThat(source.validateMoveForward(Empty.getInstance(), Direction.getDirection(from, to)));
+    }
+
+    static Stream<Arguments> generatePositions8() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, Positions.of("b2"), Positions.of("b3")),
+                Arguments.of(Player.BLACK, Positions.of("e7"), Positions.of("e6"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("generatePositions9")
+    void 전진_실패_장애물(Player player, Position from, Position to) {
+        Pawn source = new Pawn(player, from);
+        Rook target = new Rook(player);
+        assertThat(source.validateMoveForward(target, Direction.getDirection(from, to))).isFalse();
+    }
+
+    static Stream<Arguments> generatePositions9() {
+        return Stream.of(
+                Arguments.of(Player.WHITE, Positions.of("b2"), Positions.of("b3")),
+                Arguments.of(Player.BLACK, Positions.of("e7"), Positions.of("e6"))
+        );
     }
 }
 

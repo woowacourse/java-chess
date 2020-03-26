@@ -21,6 +21,6 @@ public class King extends Piece {
     public boolean validateMovableTileSize(Position from, Position to) {
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
-        return Math.abs(rowDiff) == MOVABLE_TILE_SIZE || Math.abs(columnDiff) == MOVABLE_TILE_SIZE;
+        return Math.abs(rowDiff) <= MOVABLE_TILE_SIZE && Math.abs(columnDiff) <= MOVABLE_TILE_SIZE;
     }
 }
