@@ -16,19 +16,7 @@ public class Bishop extends Piece {
         if (start.isNotDiagonal(end)) {
             throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
         }
-        if (start.isLeftDiagonal(end)) {// \방향일때
-            return Position.findDiagonalTrace(start, end);
-        }
-//        if (start.isSameRank(end)) {
-//            List<File> files = File.valuesBetween(start.getFile(), end.getFile());
-//            return files.stream()
-//                .map(file -> Position.of(file, start.getRank()))
-//                .collect(Collectors.toList());
-//        }
-//        List<Rank> ranks = Rank.valuesBetween(start.getRank(), end.getRank());
-//        return ranks.stream()
-//            .map(rank -> Position.of(start.getFile(), rank))
-//            .collect(Collectors.toList());
+        return Position.findDiagonalTrace(start, end);
     }
 
     @Override
