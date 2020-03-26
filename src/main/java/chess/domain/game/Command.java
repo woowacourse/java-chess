@@ -18,4 +18,8 @@ public enum Command {
         return Arrays.stream(values())
                 .anyMatch((o) -> (o.command.equals(inputCommand)));
     }
+
+    public boolean equals(String command){
+        return this.command.equals(command);
+    }
 }

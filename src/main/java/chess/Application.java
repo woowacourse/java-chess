@@ -8,6 +8,8 @@ import chess.factory.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import static chess.domain.game.Command.*;
+
 public class Application {
     public static void main(String[] args) {
         OutputView.printInitialMessage();
@@ -17,8 +19,7 @@ public class Application {
     private static void run() {
         ChessBoard chessBoard = new ChessBoard(BoardFactory.createBoard());
         String command = "";
-
-        while (!command.equals("end") && !chessBoard.isGameEnd()) {
+        while (!END.equals(command) && !chessBoard.isGameEnd()) {
             command = getCommand();
             executeCommand(chessBoard, command);
         }
@@ -37,10 +38,10 @@ public class Application {
     private static void executeCommand(ChessBoard chessBoard, String command) {
         String[] splitCommand = command.split(" ");
 
-        if (splitCommand[0].equals("move")) {
+        if (MOVE.equals(splitCommand[0])) {
             tryMove(splitCommand, chessBoard);
         }
-        if (splitCommand[0].equals("status")) {
+        if (STATUS.equals(splitCommand[0])) {
             OutputView.printScore(chessBoard);
         }
         OutputView.printBoard(chessBoard);
