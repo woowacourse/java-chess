@@ -16,24 +16,24 @@ public class Position implements Comparable<Position> {
 
     static {
         positions = new HashMap<>();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                String name = nameOf(file, rank);
-                positions.put(name, new Position(file, rank));
+        for (Column column : Column.values()) {
+            for (Row row : Row.values()) {
+                String name = nameOf(column, row);
+                positions.put(name, new Position(column, row));
             }
         }
     }
 
-    private final File file;
-    private final Rank rank;
+    private final Column column;
+    private final Row row;
 
-    private Position(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
+    private Position(Column column, Row row) {
+        this.column = column;
+        this.row = row;
     }
 
-    public static Position of(File file, Rank rank) {
-        return from(nameOf(file, rank));
+    public static Position of(Column column, Row row) {
+        return from(nameOf(column, row));
     }
 
     public static Position from(String name) {
@@ -48,8 +48,8 @@ public class Position implements Comparable<Position> {
         }
     }
 
-    private static String nameOf(File file, Rank rank) {
-        return file.getName() + rank.getName();
+    private static String nameOf(Column column, Row row) {
+        return column.getName() + row.getName();
     }
 
     public static List<Position> list() {
@@ -57,29 +57,29 @@ public class Position implements Comparable<Position> {
     }
 
     public Position opposite() {
-        return of(file.opposite(), rank.opposite());
+        return of(column.opposite(), row.opposite());
     }
 
     public Position horizontalFlip() {
-        return of(file, rank.opposite());
+        return of(column, row.opposite());
     }
 
     public Optional<Position> destinationOf(Direction direction) {
-        File fileDestination = direction.findFileDestination(file).orElse(null);
-        Rank rankDestination = direction.findRankDestination(rank).orElse(null);
+        Column columnDestination = direction.findColumnDestination(column).orElse(null);
+        Row rowDestination = direction.findRowDestination(row).orElse(null);
 
-        if (fileDestination == null || rankDestination == null) {
+        if (columnDestination == null || rowDestination == null) {
             return Optional.empty();
         }
 
-        return Optional.of(of(fileDestination, rankDestination));
+        return Optional.of(of(columnDestination, rowDestination));
     }
 
     @Override
     public int compareTo(Position position) {
-        if (rank.compareTo(position.rank) == 0) {
-            return file.compareTo(position.file);
+        if (row.compareTo(position.row) == 0) {
+            return column.compareTo(position.column);
         }
-        return -rank.compareTo(position.rank);
+        return -row.compareTo(position.row);
     }
 }

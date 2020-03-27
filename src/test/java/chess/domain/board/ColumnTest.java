@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import static chess.domain.board.File.*;
+import static chess.domain.board.Column.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
@@ -10,12 +10,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class FileTest {
+class ColumnTest {
 
     @ParameterizedTest
     @DisplayName("세로축에 대해 대칭")
     @MethodSource("createOppositeCase")
-    void opposite(File actual, File expected) {
+    void opposite(Column actual, Column expected) {
         assertThat(actual.opposite()).isEqualTo(expected);
     }
 
@@ -35,7 +35,7 @@ class FileTest {
     @ParameterizedTest
     @DisplayName("jump File")
     @MethodSource("createJumpFile")
-    void jump(int index, File actual, File expected) {
+    void jump(int index, Column actual, Column expected) {
         assertThat(actual.jump(index).orElse(null)).isEqualTo(expected);
     }
 
@@ -51,7 +51,7 @@ class FileTest {
     @ParameterizedTest
     @DisplayName("다음 File")
     @MethodSource("createNextFile")
-    void next(File actual, File expected) {
+    void next(Column actual, Column expected) {
         assertThat(actual.next().orElse(null)).isEqualTo(expected);
     }
 
@@ -65,7 +65,7 @@ class FileTest {
     @ParameterizedTest
     @DisplayName("이전 File")
     @MethodSource("createPreviousFile")
-    void previous(File actual, File expected) {
+    void previous(Column actual, Column expected) {
         assertThat(actual.previous().orElse(null)).isEqualTo(expected);
     }
 

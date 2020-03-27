@@ -18,27 +18,27 @@ class PositionTest {
 
     static Stream<Arguments> createDirection() {
         return Stream.of(
-                Arguments.of(NORTH, Position.from("d6")),
-                Arguments.of(NORTH_EAST, Position.from("e6")),
-                Arguments.of(EAST, Position.from("e5")),
-                Arguments.of(SOUTH_EAST, Position.from("e4")),
-                Arguments.of(SOUTH, Position.from("d4")),
-                Arguments.of(SOUTH_WEST, Position.from("c4")),
-                Arguments.of(WEST, Position.from("c5")),
-                Arguments.of(NORTH_WEST, Position.from("c6"))
+                Arguments.of(N, Position.from("d6")),
+                Arguments.of(NE, Position.from("e6")),
+                Arguments.of(E, Position.from("e5")),
+                Arguments.of(SE, Position.from("e4")),
+                Arguments.of(S, Position.from("d4")),
+                Arguments.of(SW, Position.from("c4")),
+                Arguments.of(W, Position.from("c5")),
+                Arguments.of(NW, Position.from("c6"))
         );
     }
 
     static Stream<Arguments> createOutOfIndex() {
         return Stream.of(
-                Arguments.of(NORTH, Position.from("h8")),
-                Arguments.of(NORTH_EAST, Position.from("h8")),
-                Arguments.of(EAST, Position.from("h8")),
-                Arguments.of(SOUTH_EAST, Position.from("h1")),
-                Arguments.of(SOUTH, Position.from("h1")),
-                Arguments.of(SOUTH_WEST, Position.from("a2")),
-                Arguments.of(WEST, Position.from("a5")),
-                Arguments.of(NORTH_WEST, Position.from("a8"))
+                Arguments.of(N, Position.from("h8")),
+                Arguments.of(NE, Position.from("h8")),
+                Arguments.of(E, Position.from("h8")),
+                Arguments.of(SE, Position.from("h1")),
+                Arguments.of(S, Position.from("h1")),
+                Arguments.of(SW, Position.from("a2")),
+                Arguments.of(W, Position.from("a5")),
+                Arguments.of(NW, Position.from("a8"))
         );
     }
 
@@ -52,7 +52,7 @@ class PositionTest {
     @Test
     @DisplayName("of 생성")
     void createOf() {
-        assertThat(Position.of(File.C, Rank.SEVEN)).isEqualTo(Position.from("C7"));
+        assertThat(Position.of(Column.C, Row.SEVEN)).isEqualTo(Position.from("C7"));
     }
 
     @Test

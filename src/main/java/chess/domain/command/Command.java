@@ -1,9 +1,16 @@
 package chess.domain.command;
 
+import chess.domain.board.Position;
+
 import java.util.Collections;
 import java.util.List;
 
 public class Command {
+
+    private static final int COMMAND_TYPE_INDEX = 0;
+    private static final int FLAG_START_INDEX = 1;
+    private static final int SOURCE_INDEX = 0;
+    private static final int TARGET_INDEX = 1;
 
     private final CommandType command;
     private final List<String> flags;
@@ -14,8 +21,8 @@ public class Command {
     }
 
     public static Command from(List<String> input) {
-        CommandType commandType = CommandType.from(input.get(0));
-        List<String> flags = input.subList(1, input.size());
+        CommandType commandType = CommandType.from(input.get(COMMAND_TYPE_INDEX));
+        List<String> flags = input.subList(FLAG_START_INDEX, input.size());
 
         return new Command(commandType, flags);
     }
@@ -34,6 +41,14 @@ public class Command {
 
     public boolean isStatus() {
         return command.equals(CommandType.STATUS);
+    }
+
+    public Position getSource() {
+        return Position.from(flags.get(SOURCE_INDEX));
+    }
+
+    public Position getTarget() {
+        return Position.from(flags.get(TARGET_INDEX));
     }
 
     public List<String> getFlags() {

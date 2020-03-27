@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    // TODO: 2020/03/26 STATUS ENUM 만들기
+    // TODO: 2020/03/26 STATUS ENUM 만들기, 생성자 정리하기
     private static final int INIT_TURN = 0;
-    public static Board EMPTY = new Board(createEmptyBoard(), INIT_TURN, false);
+    private static final int NEXT = 1;
 
     private final Map<Position, GamePiece> board;
     private final int turn;
@@ -26,8 +26,12 @@ public class Board {
         this.isFinished = isFinished;
     }
 
-    public static Board from(Map<Position, GamePiece> board, int turn) {
+    protected static Board from(Map<Position, GamePiece> board, int turn) {
         return new Board(board, turn, false);
+    }
+
+    public static Board createEmpty() {
+        return new Board(createEmptyBoard(), INIT_TURN, false);
     }
 
     public static Board createInitial() {
@@ -140,10 +144,10 @@ public class Board {
 
     private int getSameFilePawnCount(Predicate<Boolean> player) {
         int sameFilePawnCount = 0;
-        for (File file : File.values()) {
+        for (Column column : Column.values()) {
             int count = 0;
-            for (Rank rank : Rank.values()) {
-                GamePiece gamePiece = board.get(Position.of(file, rank));
+            for (Row row : Row.values()) {
+                GamePiece gamePiece = board.get(Position.of(column, row));
                 if (gamePiece != GamePiece.EMPTY && gamePiece.isPawn() && player.test(gamePiece.isWhite())) {
                     count++;
                 }
@@ -159,19 +163,17 @@ public class Board {
         return !isFinished;
     }
 
-    public List<List<GamePiece>> gamePieces() {
-        List<List<GamePiece>> gamePieces = new ArrayList<>();
-        Iterator<GamePiece> iterator = getBoard().values().iterator();
+    public List<Line> getRows() {
+        List<Line> rows = new ArrayList<>();
+        List<GamePiece> gamePieces = new ArrayList<>(getBoard().values());
 
-        for (int i = 0; i < Rank.values().length; i++) {
-            List<GamePiece> eachRank = new ArrayList<>();
-            for (int j = 0; j < File.values().length; j++) {
-                eachRank.add(iterator.next());
-            }
-            gamePieces.add(eachRank);
+        int columnLength = Column.values().length;
+        for (int rowNumber = 0; rowNumber < Row.values().length; rowNumber++) {
+            Line row = new Line(gamePieces.subList(rowNumber * columnLength, (rowNumber + NEXT) * columnLength));
+            rows.add(row);
         }
 
-        return Collections.unmodifiableList(gamePieces);
+        return rows;
     }
 
     public Map<Position, GamePiece> getBoard() {

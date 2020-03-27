@@ -10,9 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.File;
+import chess.domain.board.Column;
 import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.Row;
 
 class DirectionTest {
 
@@ -20,22 +20,22 @@ class DirectionTest {
     @DisplayName("주어진 방향으로 이동했을 때의 포지션")
     @MethodSource("createDirection")
     void findDestination(Direction direction, Position expected) {
-        File file = direction.findFileDestination(File.D).orElse(null);
-        Rank rank = direction.findRankDestination(Rank.FIVE).orElse(null);
+        Column column = direction.findColumnDestination(Column.D).orElse(null);
+        Row row = direction.findRowDestination(Row.FIVE).orElse(null);
 
-        assertThat(Position.of(file, rank)).isEqualTo(expected);
+        assertThat(Position.of(column, row)).isEqualTo(expected);
     }
 
     static Stream<Arguments> createDirection() {
         return Stream.of(
-                Arguments.of(NORTH, Position.from("d6")),
-                Arguments.of(NORTH_EAST, Position.from("e6")),
-                Arguments.of(EAST, Position.from("e5")),
-                Arguments.of(SOUTH_EAST, Position.from("e4")),
-                Arguments.of(SOUTH, Position.from("d4")),
-                Arguments.of(SOUTH_WEST, Position.from("c4")),
-                Arguments.of(WEST, Position.from("c5")),
-                Arguments.of(NORTH_WEST, Position.from("c6")),
+                Arguments.of(N, Position.from("d6")),
+                Arguments.of(NE, Position.from("e6")),
+                Arguments.of(E, Position.from("e5")),
+                Arguments.of(SE, Position.from("e4")),
+                Arguments.of(S, Position.from("d4")),
+                Arguments.of(SW, Position.from("c4")),
+                Arguments.of(W, Position.from("c5")),
+                Arguments.of(NW, Position.from("c6")),
                 Arguments.of(NNE, Position.from("e7")),
                 Arguments.of(NEE, Position.from("f6")),
                 Arguments.of(SEE, Position.from("f4")),

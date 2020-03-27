@@ -11,7 +11,7 @@ import chess.domain.exception.InvalidMovementException;
 
 public class RookStrategy implements MoveStrategy {
 
-    private final List<Direction> directions = Arrays.asList(NORTH, EAST, WEST, SOUTH);
+    private final List<Direction> directions = Arrays.asList(N, E, W, S);
 
     @Override
     public List<Position> findMovePath(final Position source, final Position target, final boolean isKill) {

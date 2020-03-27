@@ -7,10 +7,14 @@ import java.util.Scanner;
 public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String DELIMITER = " ";
 
     public static List<String> receiveCommand() {
-        String input = scanner.nextLine();
-
-        return Arrays.asList(input.split((" ")));
+        try {
+            String input = scanner.nextLine();
+            return Arrays.asList(input.split(DELIMITER));
+        } catch (NullPointerException e) {
+            return receiveCommand();
+        }
     }
 }

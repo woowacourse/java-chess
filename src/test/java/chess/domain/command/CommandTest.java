@@ -1,6 +1,8 @@
 package chess.domain.command;
 
+import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -94,5 +96,23 @@ class CommandTest {
                 Arguments.of(Arrays.asList("move", "b1", "b3"), false),
                 Arguments.of(Collections.singletonList("status"), true)
                 );
+    }
+
+    @Test
+    @DisplayName("source position 확인")
+    void getSource() {
+        List<String> input = Arrays.asList("move", "b1", "b2");
+        Command command = Command.from(input);
+
+        assertThat(command.getSource()).isEqualTo(Position.from("b1"));
+    }
+
+    @Test
+    @DisplayName("target position 확인")
+    void getTarget() {
+        List<String> input = Arrays.asList("move", "b1", "b2");
+        Command command = Command.from(input);
+
+        assertThat(command.getTarget()).isEqualTo(Position.from("b2"));
     }
 }

@@ -35,13 +35,11 @@ class BoardTest {
         assertThat(map).isEqualTo("RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr");
     }
 
-    // TODO: 2020/03/25 테스트 케이스 추가
-
     @ParameterizedTest
     @DisplayName("기물 이동")
     @MethodSource("createMovement")
     void move(GamePiece piece, Position source, Position target, int turn) {
-        Map<Position, GamePiece> map = new HashMap<>(Board.EMPTY.getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(source, piece);
         Board board = Board.from(map, turn);
         board = board.move(source, target);
@@ -62,7 +60,7 @@ class BoardTest {
     @Test
     @DisplayName("Black Pawn이 위로 올라갈 경우")
     void moveWithImpossiblePawnMovement() {
-        Map<Position, GamePiece> map = new HashMap<>(Board.EMPTY.getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("d5"), GamePiece.of(PAWN, BLACK));
         Board board = Board.from(map, 1);
 
@@ -76,7 +74,7 @@ class BoardTest {
     @DisplayName("source 기물이 없는 경우")
     void moveWithEmptySource() {
         assertThatThrownBy(() -> {
-            Board.EMPTY.move(Position.from("d3"), Position.from("d5"));
+            Board.createEmpty().move(Position.from("d3"), Position.from("d5"));
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
     }
@@ -85,7 +83,7 @@ class BoardTest {
     @DisplayName("자기턴이 아닌 때 움직이려고 하는 경우")
     @MethodSource("createBoardAndTurn")
     void moveWhenInvalidTurn(int turn, GamePiece gamePiece) {
-        Map<Position, GamePiece> map = new HashMap<>(Board.EMPTY.getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("d5"), gamePiece);
         Board board = Board.from(map, turn);
 
@@ -105,7 +103,7 @@ class BoardTest {
     @Test
     @DisplayName("경로에 기물이 있는 경우")
     void moveWithObstacle() {
-        Map<Position, GamePiece> map = new HashMap<>(Board.EMPTY.getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
         map.put(Position.from("d6"), GamePiece.of(BISHOP, BLACK));
         Board board = Board.from(map, 0);
@@ -131,7 +129,7 @@ class BoardTest {
     @Test
     @DisplayName("같은 팀, 같은 화일의 pawn이 여러개 있는 경우 score 계산")
     void calculateScoreWhiteSameFilePawn() {
-        Map<Position, GamePiece> map = new HashMap<>(Board.EMPTY.getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
         map.put(Position.from("d6"), GamePiece.of(PAWN, WHITE));
         map.put(Position.from("f3"), GamePiece.of(PAWN, WHITE));
@@ -147,7 +145,7 @@ class BoardTest {
     @DisplayName("Board가 Finish 여부 확인")
     @MethodSource("createFinish")
     void isBoardFinished(Position source, Position target, boolean expected) {
-        Map<Position, GamePiece> map = new HashMap<>(Board.EMPTY.getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("c5"), GamePiece.of(KING, WHITE));
         map.put(Position.from("d6"), GamePiece.of(PAWN, BLACK));
         Board board = Board.from(map, 1);

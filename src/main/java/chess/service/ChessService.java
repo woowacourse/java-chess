@@ -13,10 +13,7 @@ public class ChessService {
         return Board.createInitial();
     }
 
-    public Board move(Board board, String sourceInput, String targetInput) {
-        Position source = Position.from(sourceInput);
-        Position target = Position.from(targetInput);
-
+    public Board move(Board board, Position source, Position target) {
         return board.move(source, target);
     }
 

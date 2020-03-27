@@ -10,8 +10,8 @@ import chess.domain.exception.InvalidMovementException;
 
 public class PawnStrategy implements MoveStrategy {
 
-    private final List<Direction> directions = Collections.singletonList(Direction.NORTH);
-    private final List<Direction> killDirections = Arrays.asList(Direction.NORTH_EAST, Direction.NORTH_WEST);
+    private final List<Direction> directions = Collections.singletonList(Direction.N);
+    private final List<Direction> killDirections = Arrays.asList(Direction.NE, Direction.NW);
 
     @Override
     public List<Position> findMovePath(final Position source, final Position target, final boolean isKill) {

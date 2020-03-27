@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public enum File {
+public enum Column {
 
     A("A"),
     B("B"),
@@ -17,7 +17,7 @@ public enum File {
 
     private static final int NEXT_INDEX = 1;
     private static final int PREVIOUS_INDEX = -1;
-    private static Map<File, File> opposite;
+    private static Map<Column, Column> opposite;
 
     static {
         opposite = new HashMap<>();
@@ -33,15 +33,15 @@ public enum File {
 
     private String name;
 
-    File(String name) {
+    Column(String name) {
         this.name = name;
     }
 
-    public File opposite() {
+    public Column opposite() {
         return opposite.get(this);
     }
 
-    public Optional<File> jump(int index) {
+    public Optional<Column> jump(int index) {
         try {
             return Optional.of(values()[ordinal() + index]);
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -49,11 +49,11 @@ public enum File {
         }
     }
 
-    public Optional<File> next() {
+    public Optional<Column> next() {
         return jump(NEXT_INDEX);
     }
 
-    public Optional<File> previous() {
+    public Optional<Column> previous() {
         return jump(PREVIOUS_INDEX);
     }
 

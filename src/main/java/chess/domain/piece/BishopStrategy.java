@@ -11,7 +11,7 @@ import chess.domain.exception.InvalidMovementException;
 
 public class BishopStrategy implements MoveStrategy {
 
-    private final List<Direction> directions = Arrays.asList(NORTH_EAST, SOUTH_EAST, NORTH_WEST, SOUTH_WEST);
+    private final List<Direction> directions = Arrays.asList(NE, SE, NW, SW);
 
     @Override
     public List<Position> findMovePath(final Position source, final Position target, final boolean isKill) {

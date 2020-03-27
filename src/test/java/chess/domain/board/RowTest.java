@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import static chess.domain.board.Rank.*;
+import static chess.domain.board.Row.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
@@ -10,12 +10,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class RankTest {
+class RowTest {
 
     @ParameterizedTest
     @DisplayName("가로축에 대해 대칭")
     @MethodSource("createOppositeCase")
-    void opposite(Rank actual, Rank expected) {
+    void opposite(Row actual, Row expected) {
         assertThat(actual.opposite()).isEqualTo(expected);
     }
 
@@ -35,7 +35,7 @@ class RankTest {
     @ParameterizedTest
     @DisplayName("jump Rank")
     @MethodSource("createJumpRank")
-    void jump(int index, Rank actual, Rank expected) {
+    void jump(int index, Row actual, Row expected) {
         assertThat(actual.jump(index).orElse(null)).isEqualTo(expected);
     }
 
@@ -51,7 +51,7 @@ class RankTest {
     @ParameterizedTest
     @DisplayName("다음 Rank")
     @MethodSource("createNextRank")
-    void next(Rank actual, Rank expected) {
+    void next(Row actual, Row expected) {
         assertThat(actual.next().orElse(null)).isEqualTo(expected);
     }
 
@@ -65,7 +65,7 @@ class RankTest {
     @ParameterizedTest
     @DisplayName("이전 Rank")
     @MethodSource("createPreviousRank")
-    void previous(Rank actual, Rank expected) {
+    void previous(Row actual, Row expected) {
         assertThat(actual.previous().orElse(null)).isEqualTo(expected);
     }
 

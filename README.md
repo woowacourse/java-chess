@@ -19,7 +19,7 @@
     - [x] Player, ChessPiece, name
     - [x] list 생성
 - [x] Position 구현
-    - [x] rank, file
+    - [x] row, column
         - [x] opposite 구현
         - [x] next, previous 구현
     - [x] list 생성

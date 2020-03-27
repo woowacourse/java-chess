@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public enum Rank {
+public enum Row {
 
     ONE("1"),
     TWO("2"),
@@ -17,7 +17,7 @@ public enum Rank {
 
     private static final int NEXT_INDEX = 1;
     private static final int PREVIOUS_INDEX = -1;
-    private static Map<Rank, Rank> opposite;
+    private static Map<Row, Row> opposite;
 
     static {
         opposite = new HashMap<>();
@@ -33,15 +33,15 @@ public enum Rank {
 
     private String name;
 
-    Rank(String name) {
+    Row(String name) {
         this.name = name;
     }
 
-    public Rank opposite() {
+    public Row opposite() {
         return opposite.get(this);
     }
 
-    public Optional<Rank> jump(int index) {
+    public Optional<Row> jump(int index) {
         try {
             return Optional.of(values()[ordinal() + index]);
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -49,11 +49,11 @@ public enum Rank {
         }
     }
 
-    public Optional<Rank> next() {
+    public Optional<Row> next() {
         return jump(NEXT_INDEX);
     }
 
-    public Optional<Rank> previous() {
+    public Optional<Row> previous() {
         return jump(PREVIOUS_INDEX);
     }
 

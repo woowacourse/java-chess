@@ -7,13 +7,11 @@ import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.List;
-
 public class Application {
 
     public static void main(String[] args) {
         ChessService service = new ChessService();
-        Board board = Board.EMPTY;
+        Board board = Board.createEmpty();
         Command command;
 
         OutputView.printStart();
@@ -24,9 +22,8 @@ public class Application {
                 OutputView.printBoard(board);
             }
             if (command.isMove()) {
-                List<String> flags = command.getFlags();
                 try {
-                    board = service.move(board, flags.get(0), flags.get(1));
+                    board = service.move(board, command.getSource(), command.getTarget());
                 } catch (IllegalArgumentException | InvalidMovementException e) {
                     OutputView.printExceptionMessage(e.getMessage());
                     continue;
