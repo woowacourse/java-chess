@@ -55,6 +55,10 @@ public abstract class Piece {
         return this.pieceColor == pieceColor;
     }
 
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
+
     public static List<Piece> getBlackPieces() {
         return blackPieces;
     }

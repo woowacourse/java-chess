@@ -37,10 +37,10 @@ public class Board {
         PlayingPiece targetPiece = findPiece(target);
 
         sourcePiece.checkMyTurn(teamColor);
-        sourcePiece.validMove(target);
+        sourcePiece.validMove(targetPiece);
 
         if (!sourcePiece.isKnight()) {
-            List<Position> route = sourcePiece.findRoute(target);
+            List<Position> route = sourcePiece.findRoute(targetPiece);
             validRoute(route);
         }
 
@@ -64,9 +64,7 @@ public class Board {
     }
 
     private void exchange(PlayingPiece sourcePiece, PlayingPiece targetPiece) {
-        if (sourcePiece.isMine(targetPiece)) {
-            throw new IllegalStateException("자신의 말 위치로 이동할 수 없습니다.");
-        }
+
         this.board.remove(targetPiece);
         this.board.remove(sourcePiece);
         this.board.addAll(sourcePiece.moveTo(targetPiece));

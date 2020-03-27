@@ -13,10 +13,13 @@ public class Pawn extends Piece {
             return canFirstMove(current, target);
         }
 
+        int xGap = current.xGapBetween(target);
+        int yGap = current.yGapBetween(target);
+
         if (pieceColor == PieceColor.WHITE) {
-            return current.xGapBetween(target) == 0 && current.yGapBetween(target) == 1;
+            return (xGap == 0 || xGap == 1 || xGap == -1) && yGap == 1;
         }
-        return current.xGapBetween(target) == 0 && current.yGapBetween(target) == -1;
+        return (xGap == 0 || xGap == 1 || xGap == -1) && yGap == -1;
     }
 
     private boolean isInitialPosition(Position current) {
@@ -30,4 +33,5 @@ public class Pawn extends Piece {
         }
         return current.xGapBetween(target) == 0 && current.yGapBetween(target) >= -2 && current.yGapBetween(target) < 0;
     }
+
 }

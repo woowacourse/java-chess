@@ -20,6 +20,12 @@ public enum Direction {
         this.yGap = yGap;
     }
 
+    public static Direction findDirection(Position source, Position target) {
+        int xGap = source.xGapBetween(target);
+        int yGap = source.yGapBetween(target);
+        return Direction.findDirection(xGap, yGap);
+    }
+
     public static Direction findDirection(int xGap, int yGap) {
         if (xGap == 0 && yGap == 0) {
             throw new NullPointerException("방향을 잡지 못했어요.");
@@ -46,7 +52,15 @@ public enum Direction {
                 .orElseThrow(() -> new NullPointerException("안돼요"));
     }
 
+    public boolean isDiagonal() {
+        return Arrays.asList(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST).contains(this);
+    }
+
     private boolean has(int xGap, int yGap) {
         return this.xGap == xGap && this.yGap == yGap;
+    }
+
+    public boolean isVertical() {
+        return Arrays.asList(Direction.NORTH, Direction.SOUTH).contains(this);
     }
 }
