@@ -1,7 +1,7 @@
 package chess.domain.piece.pawn;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Distance;
+import chess.domain.position.Distance;
 import chess.domain.piece.Piece;
 import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;

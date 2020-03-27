@@ -1,6 +1,7 @@
 package chess.domain.piece.state;
 
 import chess.domain.board.Board;
+import chess.domain.position.Distance;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
@@ -33,5 +34,9 @@ public abstract class Initialized extends Started {
 
     public boolean isStayed(Position to) {
         return position.equals(to);
+    }
+
+    public Distance calculateDistance(Position to) {
+        return position.calculateDistance(to);
     }
 }
