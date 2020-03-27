@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.piece.Distance;
 import chess.util.SmallLetterAsciiConverter;
 
 import java.util.Arrays;

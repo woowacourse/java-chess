@@ -1,6 +1,4 @@
-package chess.domain.piece;
-
-import chess.domain.position.Position;
+package chess.domain.position;
 
 import java.util.Objects;
 
@@ -13,7 +11,11 @@ public class Distance {
     }
 
 
-    public static Distance of(double xDifference, double yDifference) {
+    static Distance of(double value) {
+        return new Distance(value);
+    }
+
+    static Distance of(double xDifference, double yDifference) {
         return new Distance(Math.sqrt(Math.pow(xDifference, 2) + Math.pow(yDifference, 2)));
     }
 
