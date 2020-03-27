@@ -12,10 +12,10 @@ public enum Team {
     }
 
     public static Team getOpponentTeam(Team team) {
-        if (team == Team.BLACK) {
-            return Team.WHITE;
+        if (team == BLACK) {
+            return WHITE;
         }
-        return Team.BLACK;
+        return BLACK;
     }
 
     public String getTeamName() {

@@ -5,6 +5,8 @@ import chess.domain.move.Direction;
 
 import java.util.List;
 
+import static chess.domain.game.Team.BLACK;
+
 public abstract class ChessPiece {
     private final ChessPieceInfo chessPieceInfo;
     private final Team team;
@@ -14,6 +16,7 @@ public abstract class ChessPiece {
         this.team = team;
     }
 
+
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }
@@ -21,7 +24,7 @@ public abstract class ChessPiece {
     public String getName() {
         String name = chessPieceInfo.getName();
 
-        if (team == Team.BLACK) {
+        if (team == BLACK) {
             return name.toUpperCase();
         }
         return name;

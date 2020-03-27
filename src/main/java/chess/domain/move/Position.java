@@ -7,6 +7,8 @@ public class Position {
     private static final char BOARD_DOWN_END = '1';
     private static final char BOARD_LEFT_END = 'a';
     private static final char BOARD_RIGHT_END = 'h';
+    private static final char X_ASCII_BASE = '0';
+    private static final char Y_ASCII_BASE = ('a' - 1);
 
     private final Coordinate x;
     private final Coordinate y;
@@ -26,7 +28,7 @@ public class Position {
         char y = chars[0];
         char x = chars[1];
 
-        return of(x - '0', (y + 1) - 'a');
+        return of(x - X_ASCII_BASE, y - Y_ASCII_BASE);
     }
 
     private static void validate(String position) {

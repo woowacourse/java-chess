@@ -15,9 +15,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static chess.domain.chesspiece.ChessPieceInfo.KING;
+import static chess.domain.game.Team.*;
 
 public class ChessBoard {
-    private static final Team INIT_TEAM = Team.WHITE;
+    private static final Team INIT_TEAM = WHITE;
 
     private List<Row> board;
     private Team nowPlayingTeam;
@@ -37,7 +38,7 @@ public class ChessBoard {
         ChessPiece chessPiece = getChessPiece(movingInfo.getStartPosition());
 
         checkNowPlayingTeam(chessPiece);
-        if (nowPlayingTeam == Team.BLACK) {
+        if (nowPlayingTeam == BLACK) {
             reverseMove(chessPiece, movingInfo);
             return;
         }
@@ -168,7 +169,7 @@ public class ChessBoard {
     private void clearPosition(Position startPosition) {
         Row row = board.get(startPosition.getX() - 1);
 
-        row.modifyRow(startPosition.getY() - 1, new Blank(Team.BLANK));
+        row.modifyRow(startPosition.getY() - 1, new Blank(BLANK));
         board.set(startPosition.getX() - 1, row);
     }
 

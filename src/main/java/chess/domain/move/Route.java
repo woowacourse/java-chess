@@ -13,7 +13,7 @@ public class Route {
         return route;
     }
 
-    public boolean hasPosition(Position targetPosition) {
-        return route.contains(targetPosition);
+    public boolean hasPosition(Position position) {
+        return route.contains(position);
     }
 }

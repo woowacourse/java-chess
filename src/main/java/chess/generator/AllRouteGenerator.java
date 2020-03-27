@@ -11,14 +11,17 @@ import java.util.List;
 public class AllRouteGenerator {
     private static final int[][] KNIGHT_DIRECTION = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
 
-    public static List<Route> getAllRoute(ChessPiece chessPiece, Position initialPosition) {
+    private AllRouteGenerator() {
+    }
+
+    public static List<Route> getAllRoute(ChessPiece chessPiece, Position position) {
         List<Route> routes = new ArrayList<>();
 
         if (chessPiece instanceof Knight) {
-            return makeKnightRoute(initialPosition);
+            return makeKnightRoute(position);
         }
-        makeInitialPawnRoutes(chessPiece, routes, initialPosition);
-        makeRoutes(chessPiece, routes, initialPosition);
+        makeInitialPawnRoutes(chessPiece, routes, position);
+        makeRoutes(chessPiece, routes, position);
         return routes;
     }
 

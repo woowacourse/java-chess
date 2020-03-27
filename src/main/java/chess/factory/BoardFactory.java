@@ -7,18 +7,23 @@ import chess.domain.game.Team;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chess.domain.game.Team.*;
+
 public class BoardFactory {
+    private BoardFactory() {
+    }
+
     public static List<Row> createBoard() {
         List<Row> board = new ArrayList<>();
 
-        addTeamRow(board, Team.WHITE);
+        addTeamRow(board, WHITE);
         addBlankRows(board);
-        addTeamRow(board, Team.BLACK);
+        addTeamRow(board, BLACK);
         return board;
     }
 
     private static void addTeamRow(List<Row> board, Team team) {
-        if (team == Team.WHITE) {
+        if (team == WHITE) {
             addMainPieces(board, team);
             addPawn(board, team);
             return;
@@ -60,7 +65,7 @@ public class BoardFactory {
         List<ChessPiece> chessPieces = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
-            chessPieces.add(new Blank(Team.BLANK));
+            chessPieces.add(new Blank(BLANK));
         }
         board.add(Row.of(chessPieces));
     }
