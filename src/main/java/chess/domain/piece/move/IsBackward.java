@@ -7,6 +7,6 @@ import chess.domain.position.Position;
 public class IsBackward implements MoveStrategy {
     @Override
     public boolean canNotMove(Initialized initializedPiece, Position to, Board board) {
-        return false;
+        return initializedPiece.isHeadingBackward(to);
     }
 }
