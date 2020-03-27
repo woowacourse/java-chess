@@ -31,14 +31,14 @@ public class KingTest {
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position.of(E, FIVE), Position.of(D, SIX), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(E, SIX), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, SIX), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(D, FIVE), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, FIVE), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(D, FOUR), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(E, FOUR), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, FOUR), Collections.emptyList())
+			Arguments.of(Position.of("e5"), Position.of("d6"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("e6"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("f6"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("d5"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("f5"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("d4"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("e4"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("f4"), Collections.emptyList())
 		);
 	}
 
@@ -46,7 +46,7 @@ public class KingTest {
 	@Test
 	void invalidMovementTest() {
 		King king = new King(BLACK);
-		assertThatThrownBy(() -> king.findReachablePositions(Position.of(A, ONE), Position.of(B, THREE)))
+		assertThatThrownBy(() -> king.findReachablePositions(Position.of("a1"), Position.of("b3")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

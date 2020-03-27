@@ -38,8 +38,8 @@ public class PawnTest {
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position.of(E, FIVE), Position.of(E, SIX), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(E, SEVEN), singletonList(Position.of(E, SIX)))
+			Arguments.of(Position.of("e5"), Position.of("e6"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("e7"), singletonList(Position.of("e6")))
 		);
 	}
 
@@ -47,7 +47,7 @@ public class PawnTest {
 	@Test
 	void invalidMovementTest() {
 		Pawn king = new Pawn(BLACK);
-		assertThatThrownBy(() -> king.findReachablePositions(Position.of(A, ONE), Position.of(B, THREE)))
+		assertThatThrownBy(() -> king.findReachablePositions(Position.of("a1"), Position.of("b3")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}
@@ -72,6 +72,7 @@ public class PawnTest {
 	@DisplayName("맨 처음 움직임 이후부터는 2칸을 움직였을때 예외가 발생하는지 테스트")
 	@Test
 	void afterInitialMoveTest() {
+		Pawn pawn = new Pawn(BLACK);
 
 	}
 }

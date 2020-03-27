@@ -16,7 +16,7 @@ public class ChessGame {
 			OutputView.printBoard(board);
 		}
 
-		while (Command.of(InputView.requestCommand()).isMove() && board.checkGameEnd()) {
+		while (Command.of(InputView.requestCommand()).isMove() && board.isNotGameFinished()) {
 			Position startPosition = Position.of(InputView.requestPosition());
 			Position endPosition = Position.of(InputView.requestPosition());
 			board.move(startPosition, endPosition);

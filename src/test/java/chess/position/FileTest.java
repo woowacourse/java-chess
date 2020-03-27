@@ -22,9 +22,4 @@ class FileTest {
 	void ofTest(String name) {
 		assertThat(File.of(name)).isInstanceOf(File.class);
 	}
-
-	@DisplayName("displayName")
-	@Test
-	void valuesBetween() {
-	}
 }

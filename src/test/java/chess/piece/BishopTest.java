@@ -29,14 +29,10 @@ public class BishopTest {
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position.of(C, SIX), Position.of(F, THREE),
-				Arrays.asList(Position.of(D, FIVE), Position.of(E, FOUR))),
-			Arguments.of(Position.of(F, THREE), Position.of(C, SIX),
-				Arrays.asList(Position.of(E, FOUR), Position.of(D, FIVE))),
-			Arguments.of(Position.of(C, THREE), Position.of(F, SIX),
-				Arrays.asList(Position.of(D, FOUR), Position.of(E, FIVE))),
-			Arguments.of(Position.of(F, SIX), Position.of(C, THREE),
-				Arrays.asList(Position.of(E, FIVE), Position.of(D, FOUR)))
+			Arguments.of(Position.of("c6"), Position.of("f3"), Arrays.asList(Position.of("d5"), Position.of("e4"))),
+			Arguments.of(Position.of("f3"), Position.of("c6"), Arrays.asList(Position.of("e4"), Position.of("d5"))),
+			Arguments.of(Position.of("c3"), Position.of("f6"), Arrays.asList(Position.of("d4"), Position.of("e5"))),
+			Arguments.of(Position.of("f6"), Position.of("c3"), Arrays.asList(Position.of("e5"), Position.of("d4")))
 		);
 	}
 
@@ -44,7 +40,7 @@ public class BishopTest {
 	@Test
 	void invalidMovementTest() {
 		Bishop bishop = new Bishop(BLACK);
-		assertThatThrownBy(() -> bishop.findReachablePositions(Position.of(A, ONE), Position.of(B, ONE)))
+		assertThatThrownBy(() -> bishop.findReachablePositions(Position.of("a1"), Position.of("b1")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

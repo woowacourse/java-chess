@@ -30,19 +30,19 @@ public class QueenTest {
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position.of(C, SIX), Position.of(F, THREE),
-				Arrays.asList(Position.of(D, FIVE), Position.of(E, FOUR))),
-			Arguments.of(Position.of(F, THREE), Position.of(C, SIX),
-				Arrays.asList(Position.of(E, FOUR), Position.of(D, FIVE))),
-			Arguments.of(Position.of(C, THREE), Position.of(F, SIX),
-				Arrays.asList(Position.of(D, FOUR), Position.of(E, FIVE))),
-			Arguments.of(Position.of(F, SIX), Position.of(C, THREE),
-				Arrays.asList(Position.of(E, FIVE), Position.of(D, FOUR))),
+			Arguments.of(Position.of("c6"), Position.of("f3"),
+				Arrays.asList(Position.of("d5"), Position.of("e4"))),
+			Arguments.of(Position.of("f3"), Position.of("c6"),
+				Arrays.asList(Position.of("e4"), Position.of("d5"))),
+			Arguments.of(Position.of("c3"), Position.of("f6"),
+				Arrays.asList(Position.of("d4"), Position.of("e5"))),
+			Arguments.of(Position.of("f6"), Position.of("c3"),
+				Arrays.asList(Position.of("e5"), Position.of("d4"))),
 
-			Arguments.of(Position.of(B, FOUR), Position.of(B, SIX),
-				Arrays.asList(Position.of(B, FIVE))),
-			Arguments.of(Position.of(B, FOUR), Position.of(E, FOUR),
-				Arrays.asList(Position.of(C, FOUR), Position.of(D, FOUR)))
+			Arguments.of(Position.of("b4"), Position.of("b6"),
+				Arrays.asList(Position.of("b5"))),
+			Arguments.of(Position.of("b4"), Position.of("e4"),
+				Arrays.asList(Position.of("c4"), Position.of("d4")))
 		);
 	}
 
@@ -50,7 +50,7 @@ public class QueenTest {
 	@Test
 	void invalidMovementTest() {
 		Queen queen = new Queen(BLACK);
-		assertThatThrownBy(() -> queen.findReachablePositions(Position.of(A, ONE), Position.of(C, TWO)))
+		assertThatThrownBy(() -> queen.findReachablePositions(Position.of("a1"), Position.of("c2")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

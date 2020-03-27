@@ -31,14 +31,14 @@ public class KnightTest {
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position.of(E, FIVE), Position.of(D, SEVEN), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, SEVEN), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(G, SIX), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(G, FOUR), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, THREE), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(D, THREE), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(C, FOUR), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(C, SIX), Collections.emptyList())
+			Arguments.of(Position.of("e5"), Position.of("d7"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("f7"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("g6"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("g4"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("f3"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("d3"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("c4"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("c6"), Collections.emptyList())
 		);
 	}
 
@@ -46,7 +46,7 @@ public class KnightTest {
 	@Test
 	void invalidMovementTest() {
 		Knight knight = new Knight(BLACK);
-		assertThatThrownBy(() -> knight.findReachablePositions(Position.of(A, ONE), Position.of(B, ONE)))
+		assertThatThrownBy(() -> knight.findReachablePositions(Position.of("a1"), Position.of("b1")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

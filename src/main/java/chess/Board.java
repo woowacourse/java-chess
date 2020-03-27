@@ -64,8 +64,9 @@ public class Board {
 	}
 
 	public void move(Position from, Position to) {
-		Piece piece = pieces.get(from);
-		List<Position> PositionsWherePiecesShouldNeverBeIncluded = piece.findReachablePositions(from, to);
+		//여기서 먼저 각 말의 룰상 움직일 수 있는 출발 -> 도착지인지 판단(보드에 어떤 말이 있던말건 그건 상관 ㄴㄴ하는 인터페이스)
+		Piece pieceToBeMoved = pieces.get(from);
+		List<Position> PositionsWherePiecesShouldNeverBeIncluded = pieceToBeMoved.findReachablePositions(from, to);
 		if (isExistAnyPieceAt(PositionsWherePiecesShouldNeverBeIncluded)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
@@ -76,7 +77,7 @@ public class Board {
 		Piece target = pieces.remove(from);
 		target.updateHasMoved();
 		Piece piece1 = pieces.get(to);
-		if (piece1 != null && piece instanceof King) {
+		if (piece1 != null && pieceToBeMoved instanceof King) {
 			this.finished = true;
 		}
 		pieces.put(to, target);
@@ -100,7 +101,7 @@ public class Board {
 		return Collections.unmodifiableMap(this.pieces);
 	}
 
-	public boolean checkGameEnd() {
-		return this.finished;
+	public boolean isNotGameFinished() {
+		return !this.finished;
 	}
 }

@@ -29,10 +29,10 @@ public class RookTest {
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position.of(B, FOUR), Position.of(B, SIX),
-				Arrays.asList(Position.of(B, FIVE))),
-			Arguments.of(Position.of(B, FOUR), Position.of(E, FOUR),
-				Arrays.asList(Position.of(C, FOUR), Position.of(D, FOUR)))
+			Arguments.of(Position.of("b4"), Position.of("b6"),
+				Arrays.asList(Position.of("b5"))),
+			Arguments.of(Position.of("b4"), Position.of("e4"),
+				Arrays.asList(Position.of("c4"), Position.of("d4")))
 		);
 	}
 
@@ -40,7 +40,7 @@ public class RookTest {
 	@Test
 	void invalidMovementTest() {
 		Rook rook = new Rook(BLACK);
-		assertThatThrownBy(() -> rook.findReachablePositions(Position.of(A, ONE), Position.of(B, TWO)))
+		assertThatThrownBy(() -> rook.findReachablePositions(Position.of("a1"), Position.of("b2")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}
