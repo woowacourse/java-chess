@@ -11,29 +11,27 @@ import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
 import chess.piece.type.Queen;
 import chess.piece.type.Rook;
+import chess.score.Score;
 import chess.team.Team;
 
 public class ChessBoard {
+    private static final int MINIMUM_LINE = 0;
+    private static final int LIMIT_LINE = 8;
+
     private final Map<Location, Piece> board;
 
     public ChessBoard() {
         this.board = new HashMap<>();
         putNoble(1, Team.WHITE);
-//        putPawns(2, Team.WHITE);
+        putPawns(2, Team.WHITE);
 
-//        putPawns(7, Team.BLACK);
+        putPawns(7, Team.BLACK);
         putNoble(8, Team.BLACK);
     }
 
     public boolean canMove(Location now, Location destination) {
         Piece piece = board.get(now);
         boolean isNotSameTeam = isNotSameTeam(destination, piece);
-
-        System.out.println("같은 팀 : " + isNotSameTeam);
-        System.out.println("전략 : " + piece.canMove(now, destination));
-        System.out.println("장애물 : " + !piece.hasObstacle(board, now, destination));
-
-
         return isNotSameTeam
                 && piece.canMove(now, destination)
                 && !piece.hasObstacle(board, now, destination);
@@ -41,7 +39,7 @@ public class ChessBoard {
 
     private boolean isNotSameTeam(Location destination, Piece piece) {
         boolean isNotSameTeam = true;
-        if(board.containsKey(destination)) {
+        if (board.containsKey(destination)) {
             isNotSameTeam = !piece.isSameTeam(board.get(destination));
         }
         return isNotSameTeam;
@@ -59,7 +57,7 @@ public class ChessBoard {
     }
 
     private void putPawns(int row, Team team) {
-        for (int i = 0; i < 8; i++) {
+        for (int i = MINIMUM_LINE; i < LIMIT_LINE; i++) {
             board.put(new Location(row, (char) (i + 'a')), new Pawn(team));
         }
     }
@@ -81,5 +79,19 @@ public class ChessBoard {
         }
         Piece piece = board.remove(now);
         board.put(destination, piece);
+    }
+
+    public Score calculateReducePawnScore(Team team) {
+        int reducePawnScroe = 0;
+        for (int row = MINIMUM_LINE; row < LIMIT_LINE; row++) {
+            int finalRow = row;
+            int sameRowPawnSize = (int) board.keySet().stream()
+                    .filter(location -> location.is(finalRow))
+                    .filter(location -> board.get(location).isSameTeam(team.isBlack()))
+                    .filter(location -> board.get(location) instanceof Pawn)
+                    .count();
+            reducePawnScroe += sameRowPawnSize * 0.5;
+        }
+        return new Score(reducePawnScroe);
     }
 }

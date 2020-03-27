@@ -1,17 +1,19 @@
-//package chess.board;
-//
-//import static org.assertj.core.api.Assertions.*;
-//
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
-//
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//
-//import chess.piece.type.Piece;
-//
-//class ChessBoardTest {
+package chess.board;
+
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import chess.score.Score;
+import chess.team.Team;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import chess.piece.type.Piece;
+
+class ChessBoardTest {
 //	@DisplayName("생성자 테스트")
 //	@Test
 //	void name() {
@@ -40,4 +42,12 @@
 //			expect.put(location, Piece.of(pieceType, true));
 //		}
 //	}
-//}
+
+    @DisplayName("팀 별로 감점해야하는 폰의 점수를 계산한다.")
+    @Test
+    void calculateReducePawnScore() {
+        ChessBoard chessBoard = new ChessBoard();
+        Score reduceScore = chessBoard.calculateReducePawnScore(Team.WHITE);
+        assertThat(reduceScore.getValue()).isEqualTo(new Score(4).getValue());
+    }
+}

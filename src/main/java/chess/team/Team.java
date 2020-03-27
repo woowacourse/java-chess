@@ -1,5 +1,7 @@
 package chess.team;
 
+import java.util.Arrays;
+
 public enum Team {
     BLACK(true),
     WHITE(false);

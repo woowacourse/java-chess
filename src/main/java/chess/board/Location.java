@@ -159,5 +159,9 @@ public class Location {
 	public boolean isVertical(Location destination) {
 		return col == destination.col;
 	}
+
+	public boolean is(int row) {
+		return this.row == row;
+	}
 }
 
