@@ -25,13 +25,6 @@ public class Controller {
 		end();
 	}
 
-	private static void init() {
-		whitePieces = WhitePiecesFactory.create();
-		blackPieces = BlackPiecesFactory.create();
-
-		OutputView.printChessBoard(whitePieces, blackPieces);
-	}
-
 	private static void running() {
 		Command command;
 		Position source = Position.of("b2");
@@ -58,7 +51,6 @@ public class Controller {
 		OutputView.printGameInstruction();
 		FirstCommand command = FirstCommand.of(InputView.inputCommand());
 
-		init();
 		if (command.isEnd()) {
 			end();
 		}

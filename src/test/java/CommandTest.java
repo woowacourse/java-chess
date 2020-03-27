@@ -15,7 +15,7 @@ public class CommandTest {
 	@ParameterizedTest
 	@NullAndEmptySource
 	void null_test(String command) {
-		assertThatThrownBy(() -> new Command(command))
+		assertThatThrownBy(() -> Command.of(command.split(" ")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("null이나 빈 값");
 	}
@@ -24,7 +24,7 @@ public class CommandTest {
 	void test() {
 		String command = "start";
 
-		assertThatThrownBy(() -> new Command(command))
+		assertThatThrownBy(() -> Command.of(command.split(" ")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("처음 한 번");
 	}

@@ -1,51 +1,48 @@
 package chess.domain.piece;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.board.File;
 import chess.domain.board.Position;
 
 public class BlackPiecesFactory {
-	public static BlackPieces create() {
-		Map<Position, Piece> pieces = new HashMap<>();
+	private static final String COLOR = "black";
 
-		initBlackPawn(pieces);
-		initBlackRook(pieces);
-		initBlackBishop(pieces);
-		initBlackKnight(pieces);
-		initBlackQueen(pieces);
-		initBlackKing(pieces);
-
-		return new BlackPieces(pieces);
+	public static void create(Map<Position, Piece> pieces) {
+		initPawn(pieces);
+		initRook(pieces);
+		initBishop(pieces);
+		initKnight(pieces);
+		initQueen(pieces);
+		initKing(pieces);
 	}
 
-	private static void initBlackKing(Map<Position, Piece> pieces) {
-		pieces.put(Position.of("e8"), new King("black", "K"));
+	private static void initKing(Map<Position, Piece> pieces) {
+		pieces.put(Position.of("e8"), new King(COLOR, "K"));
 	}
 
-	private static void initBlackQueen(Map<Position, Piece> pieces) {
-		pieces.put(Position.of("d8"), new Queen("black", "Q"));
+	private static void initQueen(Map<Position, Piece> pieces) {
+		pieces.put(Position.of("d8"), new Queen(COLOR, "Q"));
 	}
 
-	private static void initBlackKnight(Map<Position, Piece> pieces) {
-		pieces.put(Position.of("b8"), new Knight("black", "N"));
-		pieces.put(Position.of("g8"), new Knight("black", "N"));
+	private static void initKnight(Map<Position, Piece> pieces) {
+		pieces.put(Position.of("b8"), new Knight(COLOR, "N"));
+		pieces.put(Position.of("g8"), new Knight(COLOR, "N"));
 	}
 
-	private static void initBlackBishop(Map<Position, Piece> pieces) {
-		pieces.put(Position.of("c8"), new Bishop("black", "B"));
-		pieces.put(Position.of("f8"), new Bishop("black", "B"));
+	private static void initBishop(Map<Position, Piece> pieces) {
+		pieces.put(Position.of("c8"), new Bishop(COLOR, "B"));
+		pieces.put(Position.of("f8"), new Bishop(COLOR, "B"));
 	}
 
-	private static void initBlackRook(Map<Position, Piece> pieces) {
-		pieces.put(Position.of("a8"), new Rook("black", "R"));
-		pieces.put(Position.of("h8"), new Rook("black", "R"));
+	private static void initRook(Map<Position, Piece> pieces) {
+		pieces.put(Position.of("a8"), new Rook(COLOR, "R"));
+		pieces.put(Position.of("h8"), new Rook(COLOR, "R"));
 	}
 
-	private static void initBlackPawn(Map<Position, Piece> pieces) {
+	private static void initPawn(Map<Position, Piece> pieces) {
 		for (File file : File.values()) {
-			pieces.put(Position.of(file.getFile() + "7"), new Pawn("black", "P"));
+			pieces.put(Position.of(file.getFile() + "7"), new Pawn(COLOR, "P"));
 		}
 	}
 }
