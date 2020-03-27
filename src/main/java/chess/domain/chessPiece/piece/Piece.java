@@ -33,8 +33,6 @@ public abstract class Piece implements PieceAbility {
 		this.position = position;
 	}
 
-	;
-
 	@Override
 	public boolean isKnight() {
 		return this instanceof Knight;
