@@ -109,8 +109,8 @@ public class Board {
 
 	private void updatePosition(Position source, Position target) {
 		Piece piece = board.get(source);
-		board.put(source, PieceFactory.createBlank(source));
 		board.put(target, piece);
+		setBlank(source);
 	}
 
 	public Map<Position, Piece> getBoard() {
