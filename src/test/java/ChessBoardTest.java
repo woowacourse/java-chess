@@ -1,3 +1,4 @@
+import chess.Status;
 import chess.domain.ChessBoard;
 import chess.domain.Player;
 import chess.domain.chesspieces.*;
@@ -37,11 +38,13 @@ public class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("각각의_플레이어_점수_계산_테스트")
     @ParameterizedTest
     @EnumSource(value = Player.class)
-    void 각각의_플레이어_점수_계산_테스트_pawn처리안한것(Player player) {
+    void computeScoreTest(Player player) {
         ChessBoard chessBoard = new ChessBoard();
-        double actual = chessBoard.computeScore(player);
+        Status result = chessBoard.createStatus(player);
+        double actual = result.getScore();
         double expected = 38;
         assertThat(actual).isEqualTo(expected);
     }
@@ -87,18 +90,8 @@ public class ChessBoardTest {
         );
     }
 
-//    @DisplayName("한 가로 줄에 같은 편인 Pawn만 추출")
-//    @Test
-//    void 폰의점수를확인하는테스트(){
-//        ChessBoard chessBoard = new ChessBoard();
-//        Position position1 = Positions.of("a1");
-//        Position position2 = Positions.of("a2");
-//        Position position3 = Positions.of("a3");
-//
-//        // list --> getPawnList(Row, Player);
-//        List<Square> list = Arrays.asList(new Pawn(Player.WHITE, position1),
-//                new Pawn(Player.WHITE, position2));
-//        int actual = chessBoard.getPawnCountAtRowLine(list); // -
-//        int expected = 2;
-//    }
+    @Test
+    void 우승자_확인() {
+
+    }
 }

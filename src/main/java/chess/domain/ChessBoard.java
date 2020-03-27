@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.PieceInitPositionFactory;
+import chess.Status;
 import chess.domain.chesspieces.*;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
@@ -62,13 +63,13 @@ public class ChessBoard {
         return direction.getPositionsBetween(from, to);
     }
 
-    public double computeScore(Player player) {
+    public Status createStatus(Player player) {
         double result = getPlayerPieces(player)
                 .stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
         result -= PieceInfo.PAWN_DIFF * getPawnCount(player);
-        return result;
+        return new Status(player, result);
     }
 
     private List<Piece> getPlayerPieces(Player player) {
