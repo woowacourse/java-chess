@@ -6,16 +6,15 @@ import chess.domain.RuleStrategy.RuleStrategy;
 import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.BlackPawnRuleStrategy;
 import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnRuleStrategy;
 
-// TODO: 2020/03/26 Initial Position 또는 Promotion Position을 가질 수 있도록
-// TODO: 2020/03/26 Pawn의 색에 따른 이동 규칙 전략을 변수로 가지도록 변경
 public enum PieceColor {
-	WHITE(String::toLowerCase, new WhitePawnRuleStrategy()),
-	BLACK(String::toUpperCase, new BlackPawnRuleStrategy());
+
+	WHITE(String::toLowerCase, WhitePawnRuleStrategy::new),
+	BLACK(String::toUpperCase, BlackPawnRuleStrategy::new);
 
 	private final Function<String, String> convertName;
-	private final RuleStrategy pawnRuleStrategy;
+	private final Function<Integer, RuleStrategy> pawnRuleStrategy;
 
-	PieceColor(Function<String, String> convertName, RuleStrategy pawnRuleStrategy) {
+	PieceColor(Function<String, String> convertName, Function<Integer, RuleStrategy> pawnRuleStrategy) {
 		this.convertName = convertName;
 		this.pawnRuleStrategy = pawnRuleStrategy;
 	}
@@ -27,7 +26,8 @@ public enum PieceColor {
 		return convertName.apply(pieceName);
 	}
 
-	public RuleStrategy getPawnRuleStrategy() {
-		return pawnRuleStrategy;
+	public RuleStrategy getPawnRuleStrategyBy(int movableRange) {
+		return pawnRuleStrategy.apply(movableRange);
 	}
+
 }

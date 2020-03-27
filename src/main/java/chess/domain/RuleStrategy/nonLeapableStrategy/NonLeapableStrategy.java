@@ -13,6 +13,11 @@ public abstract class NonLeapableStrategy implements RuleStrategy {
 	protected final List<MoveDirection> movableDirections = new ArrayList<>();
 
 	@Override
+	public boolean canLeap() {
+		return false;
+	}
+
+	@Override
 	public boolean canMove(Position sourcePosition, Position targetPosition) {
 		validate(sourcePosition, targetPosition);
 		return canMoveDirection(sourcePosition, targetPosition) && canMoveRange(sourcePosition, targetPosition);
@@ -29,10 +34,5 @@ public abstract class NonLeapableStrategy implements RuleStrategy {
 	}
 
 	protected abstract boolean canMoveRange(Position source, Position target);
-
-	@Override
-	public boolean canLeap() {
-		return false;
-	}
 
 }

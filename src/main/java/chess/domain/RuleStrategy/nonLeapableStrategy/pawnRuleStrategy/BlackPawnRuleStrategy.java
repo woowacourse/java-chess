@@ -6,7 +6,8 @@ import chess.domain.position.MoveDirection;
 
 public class BlackPawnRuleStrategy extends PawnRuleStrategy {
 
-	public BlackPawnRuleStrategy() {
+	public BlackPawnRuleStrategy(int movableRange) {
+		super(movableRange);
 		this.movableDirections.add(MoveDirection.S);
 		this.catchableDirections.addAll(Arrays.asList(MoveDirection.SW, MoveDirection.SE));
 	}

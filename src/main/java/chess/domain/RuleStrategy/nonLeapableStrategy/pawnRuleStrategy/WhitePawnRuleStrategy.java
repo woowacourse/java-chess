@@ -6,7 +6,8 @@ import chess.domain.position.MoveDirection;
 
 public class WhitePawnRuleStrategy extends PawnRuleStrategy {
 
-	public WhitePawnRuleStrategy() {
+	public WhitePawnRuleStrategy(int movableRange) {
+		super(movableRange);
 		this.movableDirections.add(MoveDirection.N);
 		this.catchableDirections.addAll(Arrays.asList(MoveDirection.NW, MoveDirection.NE));
 	}

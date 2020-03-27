@@ -8,13 +8,14 @@ import org.junit.jupiter.params.provider.NullSource;
 
 import chess.domain.RuleStrategy.KingRuleStrategy;
 import chess.domain.RuleStrategy.RuleStrategy;
+import chess.domain.chessPiece.ChessPiece;
 
-class PieceTypeTest {
+class ChessPieceTest {
 	@Test
 	void PieceType_PieceColorAndMovableStrategy_GenerateInstance() {
-		PieceType pieceType = new King(PieceColor.BLACK, new KingRuleStrategy());
+		ChessPiece chessPiece = new King(PieceColor.BLACK, new KingRuleStrategy());
 
-		assertThat(pieceType).isInstanceOf(PieceType.class);
+		assertThat(chessPiece).isInstanceOf(ChessPiece.class);
 	}
 
 	@ParameterizedTest

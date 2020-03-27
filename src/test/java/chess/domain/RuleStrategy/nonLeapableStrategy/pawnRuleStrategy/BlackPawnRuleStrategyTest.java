@@ -10,17 +10,19 @@ import chess.domain.position.Position;
 
 class BlackPawnRuleStrategyTest {
 
+	private static final int MOVABLE_RANGE = 1;
+
 	@Test
 	void BlackPawnRuleStrategy_MovableAndCatchableDirections_GenerateInstance() {
-		assertThat(new BlackPawnRuleStrategy()).isInstanceOf(BlackPawnRuleStrategy.class);
+		assertThat(new BlackPawnRuleStrategy(MOVABLE_RANGE)).isInstanceOf(BlackPawnRuleStrategy.class);
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"c2"})
-	void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
+	@CsvSource(value = {"1,c2", "2,c1"})
+	void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(int movableRange, Position targetPosition) {
 		Position sourcePosition = Position.of("c3");
 
-		assertThat(new BlackPawnRuleStrategy().canMove(sourcePosition, targetPosition)).isTrue();
+		assertThat(new BlackPawnRuleStrategy(movableRange).canMove(sourcePosition, targetPosition)).isTrue();
 	}
 
 	@ParameterizedTest
@@ -28,7 +30,7 @@ class BlackPawnRuleStrategyTest {
 	void canMove_NonMovableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
 		Position sourcePosition = Position.of("c3");
 
-		assertThat(new BlackPawnRuleStrategy().canMove(sourcePosition, targetPosition)).isFalse();
+		assertThat(new BlackPawnRuleStrategy(MOVABLE_RANGE).canMove(sourcePosition, targetPosition)).isFalse();
 	}
 
 	@ParameterizedTest
@@ -36,7 +38,7 @@ class BlackPawnRuleStrategyTest {
 	void canMoveToCatch_CatchableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
 		Position sourcePosition = Position.of("c3");
 
-		assertThat(new BlackPawnRuleStrategy().canMoveToCatch(sourcePosition, targetPosition)).isTrue();
+		assertThat(new BlackPawnRuleStrategy(MOVABLE_RANGE).canMoveToCatch(sourcePosition, targetPosition)).isTrue();
 	}
 
 	@ParameterizedTest
@@ -44,7 +46,7 @@ class BlackPawnRuleStrategyTest {
 	void canMoveToCatch_NonCatchableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
 		Position sourcePosition = Position.of("c3");
 
-		assertThat(new BlackPawnRuleStrategy().canMoveToCatch(sourcePosition, targetPosition)).isFalse();
+		assertThat(new BlackPawnRuleStrategy(MOVABLE_RANGE).canMoveToCatch(sourcePosition, targetPosition)).isFalse();
 	}
 
 }

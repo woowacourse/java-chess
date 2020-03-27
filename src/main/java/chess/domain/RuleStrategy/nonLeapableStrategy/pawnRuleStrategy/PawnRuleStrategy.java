@@ -10,7 +10,15 @@ import chess.domain.position.Position;
 
 public abstract class PawnRuleStrategy extends NonLeapableStrategy {
 
+	public static final int INITIAL_STATE_MOVABLE_RANGE = 2;
+	public static final int MOVED_STATE_MOVABLE_RANGE = 1;
+
+	protected final int movableRange;
 	protected final List<MoveDirection> catchableDirections = new ArrayList<>();
+
+	public PawnRuleStrategy(int movableRange) {
+		this.movableRange = movableRange;
+	}
 
 	public boolean canMoveToCatch(Position sourcePosition, Position targetPosition) {
 		validate(sourcePosition, targetPosition);
@@ -31,7 +39,7 @@ public abstract class PawnRuleStrategy extends NonLeapableStrategy {
 		int chessFileGap = Math.abs(sourcePosition.calculateChessFileGapTo(targetPosition));
 		int chessRankGap = Math.abs(sourcePosition.calculateChessRankGapTo(targetPosition));
 
-		return chessFileGap == 1 && chessRankGap == 1;
+		return (chessFileGap == 1) && (chessRankGap == 1);
 	}
 
 	@Override
@@ -39,7 +47,7 @@ public abstract class PawnRuleStrategy extends NonLeapableStrategy {
 		int chessFileGap = Math.abs(sourcePosition.calculateChessFileGapTo(targetPosition));
 		int chessRankGap = Math.abs(sourcePosition.calculateChessRankGapTo(targetPosition));
 
-		return chessFileGap == 0 && chessRankGap == 1;
+		return (chessFileGap == 0) && (chessRankGap == this.movableRange);
 	}
 
 }

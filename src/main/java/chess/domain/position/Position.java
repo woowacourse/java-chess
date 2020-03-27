@@ -78,6 +78,10 @@ public class Position {
 		return this.chessRank.intervalTo(targetPosition.chessRank);
 	}
 
+	public boolean isSameFilePosition(ChessFile chessFile) {
+		return this.chessFile.equals(chessFile);
+	}
+
 	@Override
 	public String toString() {
 		return key(this.chessFile, this.chessRank);

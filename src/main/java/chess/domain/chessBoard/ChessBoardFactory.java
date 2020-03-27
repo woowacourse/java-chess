@@ -3,7 +3,14 @@ package chess.domain.chessBoard;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.RuleStrategy.KingRuleStrategy;
+import chess.domain.RuleStrategy.KnightRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.BishopRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.QueenRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.RookRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnRuleStrategy;
 import chess.domain.chessPiece.ChessPiece;
+import chess.domain.chessPiece.pieceState.InitialState;
 import chess.domain.chessPiece.pieceType.Bishop;
 import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.Knight;
@@ -17,6 +24,7 @@ import chess.domain.position.Position;
 
 // TODO: 2020/03/26 InitialChessBoard로 명명 수정? test는 삭제해도 괜찮을 듯, Factory 패턴에 대해서 찾아보기
 public class ChessBoardFactory {
+
 	public static Map<Position, ChessPiece> create() {
 		Map<Position, ChessPiece> chessBoard = new HashMap<>();
 
@@ -29,18 +37,20 @@ public class ChessBoardFactory {
 
 	private static void addPawnPiecesBy(Map<Position, ChessPiece> chessBoard, PieceColor pieceColor, int rank) {
 		for (ChessFile file : ChessFile.values()) {
-			chessBoard.put(Position.of(file, ChessRank.from(rank)), ChessPiece.of(pieceColor.convertName(Pawn.NAME)));
+			chessBoard.put(Position.of(file, ChessRank.from(rank)), new Pawn(pieceColor,
+				new InitialState(pieceColor.getPawnRuleStrategyBy(PawnRuleStrategy.INITIAL_STATE_MOVABLE_RANGE))));
 		}
 	}
 
 	private static void addOtherPiecesBy(Map<Position, ChessPiece> chessBoard, PieceColor pieceColor, int rank) {
-		chessBoard.put(Position.of("a" + rank), ChessPiece.of(pieceColor.convertName(Rook.NAME)));
-		chessBoard.put(Position.of("b" + rank), ChessPiece.of(pieceColor.convertName(Knight.NAME)));
-		chessBoard.put(Position.of("c" + rank), ChessPiece.of(pieceColor.convertName(Bishop.NAME)));
-		chessBoard.put(Position.of("d" + rank), ChessPiece.of(pieceColor.convertName(Queen.NAME)));
-		chessBoard.put(Position.of("e" + rank), ChessPiece.of(pieceColor.convertName(King.NAME)));
-		chessBoard.put(Position.of("f" + rank), ChessPiece.of(pieceColor.convertName(Bishop.NAME)));
-		chessBoard.put(Position.of("g" + rank), ChessPiece.of(pieceColor.convertName(Knight.NAME)));
-		chessBoard.put(Position.of("h" + rank), ChessPiece.of(pieceColor.convertName(Rook.NAME)));
+		chessBoard.put(Position.of("a" + rank), new Rook(pieceColor, new InitialState(new RookRuleStrategy())));
+		chessBoard.put(Position.of("b" + rank), new Knight(pieceColor, new InitialState(new KnightRuleStrategy())));
+		chessBoard.put(Position.of("c" + rank), new Bishop(pieceColor, new InitialState(new BishopRuleStrategy())));
+		chessBoard.put(Position.of("d" + rank), new Queen(pieceColor, new InitialState(new QueenRuleStrategy())));
+		chessBoard.put(Position.of("e" + rank), new King(pieceColor, new InitialState(new KingRuleStrategy())));
+		chessBoard.put(Position.of("f" + rank), new Bishop(pieceColor, new InitialState(new BishopRuleStrategy())));
+		chessBoard.put(Position.of("g" + rank), new Knight(pieceColor, new InitialState(new KnightRuleStrategy())));
+		chessBoard.put(Position.of("h" + rank), new Rook(pieceColor, new InitialState(new RookRuleStrategy())));
 	}
+
 }

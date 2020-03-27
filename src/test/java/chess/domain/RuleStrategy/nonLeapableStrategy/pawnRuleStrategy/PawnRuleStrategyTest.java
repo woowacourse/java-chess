@@ -10,9 +10,11 @@ import chess.domain.position.Position;
 
 class PawnRuleStrategyTest {
 
+	private final static int MOVABLE_RANGE = 1;
+
 	@Test
 	void PawnRuleStrategy_MovableAndCatchableDirections_GenerateInstance() {
-		PawnRuleStrategy pawnRuleStrategy = new BlackPawnRuleStrategy();
+		PawnRuleStrategy pawnRuleStrategy = new BlackPawnRuleStrategy(MOVABLE_RANGE);
 
 		assertThat(pawnRuleStrategy).isInstanceOf(PawnRuleStrategy.class);
 	}
@@ -20,7 +22,7 @@ class PawnRuleStrategyTest {
 	@ParameterizedTest
 	@NullSource
 	void validate_NullSourcePosition_ExceptionThrown(Position sourcePosition) {
-		PawnRuleStrategy pawnRuleStrategy = new BlackPawnRuleStrategy();
+		PawnRuleStrategy pawnRuleStrategy = new BlackPawnRuleStrategy(MOVABLE_RANGE);
 		Position targetPosition = Position.of("b1");
 
 		assertThatThrownBy(() -> pawnRuleStrategy.canMoveToCatch(sourcePosition, targetPosition))
@@ -31,7 +33,7 @@ class PawnRuleStrategyTest {
 	@ParameterizedTest
 	@NullSource
 	void validate_NullTargetPosition_ExceptionThrown(Position targetPosition) {
-		PawnRuleStrategy pawnRuleStrategy = new BlackPawnRuleStrategy();
+		PawnRuleStrategy pawnRuleStrategy = new BlackPawnRuleStrategy(MOVABLE_RANGE);
 		Position sourcePosition = Position.of("b1");
 
 		assertThatThrownBy(() -> pawnRuleStrategy.canMoveToCatch(sourcePosition, targetPosition))
