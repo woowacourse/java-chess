@@ -37,8 +37,4 @@ public enum File {
     public int getNumber() {
         return number;
     }
-
-    public int getSymbol() {
-        return this.symbol;
-    }
 }

@@ -15,7 +15,11 @@ public class Board {
     private final Map<Position, Piece> board;
 
     public Board() {
-        this.board = BoardInitializer.initializeAll();
+        this(BoardInitializer.initializeAll());
+    }
+
+    public Board(Map<Position, Piece> board) {
+        this.board = board;
     }
 
     public Map<String, String> parse() {
@@ -27,7 +31,8 @@ public class Board {
         return Collections.unmodifiableMap(parseResult);
     }
 
-    public void updateBoard(Position sourcePosition, Position targetPosition, Piece selectedPiece) {
+    public void updateBoard(Position sourcePosition, Position targetPosition) {
+        Piece selectedPiece = this.board.get(sourcePosition);
         this.board.put(targetPosition, selectedPiece);
         this.board.remove(sourcePosition);
     }
@@ -65,18 +70,24 @@ public class Board {
     }
 
     public double calculateScore(Team team) {
-        double score = 0;
-        for (Piece piece : board.values()) {
-            if (piece.getTeam() == team) {
-                score += piece.getScore();
-            }
-        }
+        double totalScore = calculateTotalScore(team);
+        return calculatePawnScore(team, totalScore);
+    }
 
+    private double calculateTotalScore(Team team) {
+        return board.values().stream()
+                .filter(piece -> team.isSameTeamWith(piece.getTeam()))
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private double calculatePawnScore(Team team, double score) {
         for (File file : File.values()) {
             List<Map.Entry<Position, Piece>> sameFile = this.board.entrySet().stream()
                     .filter(entry -> File.of(entry.getKey().getFile()).equals(file))
                     .filter(entry -> entry.getValue().isPawn() && !entry.getValue().isEnemy(team))
                     .collect(Collectors.toList());
+
             if (sameFile.size() > 1) {
                 score -= sameFile.size() * 0.5;
             }

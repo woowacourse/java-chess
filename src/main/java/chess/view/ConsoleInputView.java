@@ -15,7 +15,7 @@ public class ConsoleInputView implements InputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
         try {
             String input = SCANNER.nextLine();
-            validateCommand(input);
+            validateRunCommand(input);
             return runFlag(input);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -23,17 +23,14 @@ public class ConsoleInputView implements InputView {
         }
     }
 
-    private void validateCommand(String input) {
+    private void validateRunCommand(String input) {
         if (!input.equals(START_COMMAND) && !input.equals(END_COMMAND)) {
             throw new IllegalArgumentException("start 또는 end 를 입력해주세요.");
         }
     }
 
     private boolean runFlag(String input) {
-        if (input.equals(START_COMMAND)) {
-            return true;
-        }
-        return false;
+        return input.equals(START_COMMAND);
     }
 
     @Override

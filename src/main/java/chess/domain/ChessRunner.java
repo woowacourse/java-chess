@@ -19,22 +19,26 @@ public class ChessRunner {
         Position targetPosition = Position.of(target);
         Piece selectedPiece = this.board.getPiece(sourcePosition);
 
-        if ((currentTeam.isEnemy(selectedPiece.getTeam()))) {
+        if (!(currentTeam.isSameTeamWith(selectedPiece.getTeam()))) {
             throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
 
-        if (!(selectedPiece.move(sourcePosition, targetPosition, board))) {
+        if (!(selectedPiece.movable(sourcePosition, targetPosition, board))) {
             throw new IllegalArgumentException("이동할 수 없는 곳입니다.");
         }
-        this.board.updateBoard(sourcePosition, targetPosition, selectedPiece);
-        changeTurn();
+        updateBoard(sourcePosition, targetPosition);
+        changeTeam();
     }
 
-    private void changeTurn() {
-        this.currentTeam = Team.changeTurn(this.currentTeam);
+    private void updateBoard(Position sourcePosition, Position targetPosition) {
+        this.board.updateBoard(sourcePosition, targetPosition);
     }
 
-    public Team checkWinner() {
+    private void changeTeam() {
+        this.currentTeam = Team.changeTeam(this.currentTeam);
+    }
+
+    public Team findWinner() {
         return this.board.checkWinner();
     }
 

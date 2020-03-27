@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.move.*;
 import chess.domain.position.Position;
+import chess.domain.strategy.move.*;
 
 public enum PieceType {
     KING("k", 0, new KingMoveStrategy()),
@@ -22,11 +22,7 @@ public enum PieceType {
         this.moveStrategy = moveStrategy;
     }
 
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public boolean move(Position source, Position target, Board board) {
+    public boolean movable(Position source, Position target, Board board) {
         return this.moveStrategy.movable(source, target, board);
     }
 
@@ -34,11 +30,15 @@ public enum PieceType {
         return this == KING;
     }
 
+    public boolean isPawn() {
+        return this == PAWN;
+    }
+
     public double getScore() {
         return score;
     }
 
-    public boolean isPawn() {
-        return this == PAWN;
+    public String getSymbol() {
+        return symbol;
     }
 }

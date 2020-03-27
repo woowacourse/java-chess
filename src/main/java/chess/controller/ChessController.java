@@ -4,6 +4,7 @@ import chess.controller.dto.BoardDto;
 import chess.controller.dto.PositionDto;
 import chess.domain.ChessRunner;
 import chess.domain.board.Board;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.view.ConsoleInputView;
 import chess.view.ConsoleOutputView;
@@ -22,7 +23,7 @@ public class ChessController {
 
     public static void run() {
         ChessRunner chessRunner = new ChessRunner();
-        printInitialize(chessRunner.getBoard());
+        printBoard(chessRunner.getBoard());
         boolean moveFlag = true;
 
         while (moveFlag) {
@@ -38,8 +39,8 @@ public class ChessController {
                 String sourcePosition = moveSource[1];
                 String targetPosition = moveSource[2];
                 chessRunner.update(sourcePosition, targetPosition);
-                printInitialize(chessRunner.getBoard());
-                if (!checkWinner(chessRunner)) break;
+                printBoard(chessRunner.getBoard());
+                if (!findWinner(chessRunner)) break;
 
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -47,14 +48,16 @@ public class ChessController {
         }
     }
 
-    private static boolean checkWinner(ChessRunner chessRunner) {
-        if (chessRunner.checkWinner() != null) {
-            outputView.printWinner(chessRunner.checkWinner());
+    private static boolean findWinner(ChessRunner chessRunner) {
+        Team winner = chessRunner.findWinner();
+        if (winner != null) {
+            outputView.printWinner(winner);
+            return false;
         }
         return true;
     }
 
-    private static void printInitialize(Board board) {
+    private static void printBoard(Board board) {
         BoardDto boardDto = new BoardDto(board.parse());
         PositionDto positionDto = new PositionDto(Position.getPositions());
         outputView.printBoard(positionDto.getPositions(), boardDto.get());

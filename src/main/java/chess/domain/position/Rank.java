@@ -29,13 +29,12 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(f -> f.symbol == rank)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 x 좌표값을 입력하였습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 y 좌표값을 입력하였습니다."));
     }
 
     public int getSymbol() {
         return this.symbol;
     }
-
 
     public int getDifference(Rank rank) {
         return this.symbol - rank.symbol;
