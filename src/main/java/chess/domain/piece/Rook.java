@@ -8,7 +8,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	protected List<Direction> movableDirections(Piece piece, Direction direction) {
+	protected List<Direction> movableDirections(Piece piece) {
 		return Direction.LINEAR_DIRECTION;
 	}
 

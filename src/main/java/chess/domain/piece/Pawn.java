@@ -25,7 +25,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected List<Direction> movableDirections(Piece piece, Direction direction) {
+	protected List<Direction> movableDirections(Piece piece) {
 		List<Direction> directions = new ArrayList<>(directions());
 		if (piece.isBlank() || piece.isBlack() == isBlack()) {
 			directions.remove(Direction.NORTH_EAST);

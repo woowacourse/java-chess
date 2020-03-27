@@ -37,7 +37,7 @@ public abstract class Piece {
 	public void move(Piece piece) {
 		RelativePosition relativePosition = RelativePosition.of(position, piece.position);
 		Direction direction = findDirection(relativePosition.getX(), relativePosition.getY());
-		validateDirections(direction, movableDirections(piece, direction));
+		validateDirection(direction, movableDirections(piece));
 		Path path = new Path(position, piece.position, direction);
 		notifyMoveEventListeners(new MoveEvent(this, piece, path));
 		position = piece.position;
@@ -53,7 +53,7 @@ public abstract class Piece {
 		}
 	}
 
-	private void validateDirections(Direction direction, List<Direction> directions) {
+	private void validateDirection(Direction direction, List<Direction> directions) {
 		if (!directions.contains(direction)) {
 			throw new NotMovableException();
 		}
@@ -83,7 +83,7 @@ public abstract class Piece {
 		return false;
 	}
 
-	protected abstract List<Direction> movableDirections(Piece piece, Direction direction);
+	protected abstract List<Direction> movableDirections(Piece piece);
 
 	protected abstract Direction findDirection(int x, int y);
 }
