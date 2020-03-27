@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.strategy.move.*;
 import chess.domain.position.Position;
+import chess.domain.strategy.move.*;
 
 public enum PieceType {
     KING("k", 0, new KingMoveStrategy()),

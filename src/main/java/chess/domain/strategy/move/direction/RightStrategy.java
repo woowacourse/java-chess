@@ -7,7 +7,7 @@ import java.util.List;
 
 public class RightStrategy implements DirectionStrategy {
     @Override
-    public List<Position> find(Position source, Position target) {
+    public List<Position> findPath(Position source, Position target) {
         List<Position> path = new ArrayList<>();
 
         for (int i = target.getFile() - 1; i > source.getFile(); i--) {

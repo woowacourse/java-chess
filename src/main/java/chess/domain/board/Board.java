@@ -15,7 +15,11 @@ public class Board {
     private final Map<Position, Piece> board;
 
     public Board() {
-        this.board = BoardInitializer.initializeAll();
+        this(BoardInitializer.initializeAll());
+    }
+
+    public Board(Map<Position, Piece> board) {
+        this.board = board;
     }
 
     public Map<String, String> parse() {

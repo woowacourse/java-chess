@@ -3,6 +3,7 @@ package chess.domain.strategy.move.direction;
 import chess.domain.position.Position;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiPredicate;
 
 public enum Direction {
@@ -23,14 +24,16 @@ public enum Direction {
         this.condition = condition;
     }
 
-    public static DirectionStrategy find(Position source, Position target) {
+    public static Direction findDirection(Position source, Position target) {
         int fileGap = target.calculateFileGap(source);
         int rankGap = target.calculateRankGap(source);
-
         return Arrays.stream(values())
                 .filter(direction -> direction.condition.test(fileGap, rankGap))
                 .findFirst()
-                .map(direction -> direction.directionStrategy)
                 .orElseThrow(AssertionError::new);
+    }
+
+    public List<Position> findPath(Position source, Position target) {
+        return this.directionStrategy.findPath(source, target);
     }
 }

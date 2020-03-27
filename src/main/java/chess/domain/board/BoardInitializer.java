@@ -1,8 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.strategy.initialize.*;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.strategy.initialize.*;
 
 import java.util.*;
 
