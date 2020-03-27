@@ -31,7 +31,7 @@ class ChessBoardTest {
         //given
         ChessBoard chessBoard = ChessBoard.empty();
 
-        chessBoard.put(new Tile(Coordinate.of(File.A, Rank.EIGHT), Pieces.BLACK_PAWN.getPiece()));
+        chessBoard.put(new Tile(Coordinate.of(File.A, Rank.EIGHT), Pieces.BLACK_NOT_MOVED_PAWN.getPiece()));
         chessBoard.put(new Tile(Coordinate.of(File.A, Rank.SEVEN), pieces.getPiece()));
 
         //when

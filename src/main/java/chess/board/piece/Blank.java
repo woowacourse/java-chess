@@ -1,6 +1,5 @@
 package chess.board.piece;
 
-import chess.board.MoveInfo;
 import chess.board.Vector;
 
 import java.util.List;
@@ -19,7 +18,12 @@ public class Blank extends Piece {
     }
 
     @Override
-    public boolean canMove(final MoveInfo moveInfo, final Piece targetPiece) {
+    public boolean canMove(final Vector vector, final Piece targetPiece) {
         return false;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return true;
     }
 }

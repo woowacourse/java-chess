@@ -1,6 +1,6 @@
 package chess.board.piece;
 
-import chess.board.MoveInfo;
+import chess.board.Vector;
 
 public class King extends Piece {
 
@@ -11,10 +11,15 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(final MoveInfo moveInfo, final Piece targetPiece) {
+    public boolean canMove(final Vector vector, final Piece targetPiece) {
         if (targetPiece.isSameTeam(this.team)) {
             return false;
         }
-        return moveInfo.isRangeUnderAbsolute(1);
+        return vector.isRangeUnderAbsolute(1);
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

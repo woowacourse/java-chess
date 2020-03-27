@@ -1,6 +1,5 @@
 package chess.board.piece;
 
-import chess.board.MoveInfo;
 import chess.board.Vector;
 
 import java.util.ArrayList;
@@ -28,20 +27,24 @@ public abstract class Piece {
     }
 
     public boolean isBlank() {
-        return this instanceof Blank;
+        return false;
+    }
+
+    public boolean isKing() {
+        return false;
     }
 
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }
 
-    public boolean isSameTeam(Piece piece) {
-        return this.team == piece.team;
-    }
-
-    public abstract boolean canMove(MoveInfo moveInfo, Piece targetPiece);
+    public abstract boolean canMove(Vector vector, Piece targetPiece);
 
     public double getScore() {
         return score;
+    }
+
+    public Piece move() {
+        return this;
     }
 }

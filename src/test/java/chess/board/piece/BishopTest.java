@@ -1,7 +1,5 @@
 package chess.board.piece;
 
-import chess.board.MoveInfo;
-import chess.board.Rank;
 import chess.board.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,6 +14,6 @@ class BishopTest {
     @CsvSource(value = {"3,-3,true", "3,-2,false"})
     void canMove(int fileVariation, int rankVariation, boolean expect) {
         Bishop bishop = new Bishop(Team.BLACK);
-        assertThat(bishop.canMove(new MoveInfo(new Vector(fileVariation, rankVariation), Rank.FIVE), new Blank())).isEqualTo(expect);
+        assertThat(bishop.canMove(new Vector(fileVariation, rankVariation), new Blank())).isEqualTo(expect);
     }
 }

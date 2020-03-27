@@ -12,13 +12,13 @@ public class Tile {
     }
 
     public void replacePiece(Tile sourceTile) {
-        this.piece = sourceTile.piece;
+        this.piece = sourceTile.piece.move();
         sourceTile.piece = Pieces.BLANK.getPiece();
     }
 
     public boolean canNotReach(final Tile targetTile) {
         Vector vector = targetTile.coordinate.calculateVector(this.coordinate);
-        return !this.piece.canMove(new MoveInfo(vector, this.coordinate.getRank()), targetTile.piece);
+        return !this.piece.canMove(vector, targetTile.piece);
     }
 
     public Directions findPath(final Tile targetTile) {
@@ -43,7 +43,7 @@ public class Tile {
     }
 
     public boolean isPawn() {
-        return this.piece instanceof Pawn;
+        return this.piece instanceof AbstractPawn;
     }
 
     public boolean isSameTeam(final Team currentTeam) {
