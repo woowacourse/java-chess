@@ -11,7 +11,7 @@ public class Pawn extends Piece {
 	private static final int PAWN_FIRST_MOVE_RANGE = 2;
 	private static final double PAWN_SCORE = 0.5;
 	private static final String ERROR_MESSAGE_UNSUPPORTED_METHOD = "지원하지 않는 메소드 입니다";
-	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다.";
+	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 
 	private final double score = PAWN_SCORE;
 
@@ -19,15 +19,15 @@ public class Pawn extends Piece {
 		super(position, teamStrategy);
 	}
 
-	public void validateMovable(MovePattern movePattern, Piece targetPiece) {
+	public void validateMovePattern(MovePattern movePattern, Piece targetPiece) {
 		if (this.teamStrategy.isBlackTeam()) {
-			blackPawnMovable(movePattern, targetPiece);
+			blackPawnMovePattern(movePattern, targetPiece);
 			return;
 		}
-		whitePawnMovable(movePattern, targetPiece);
+		whitePawnMovePattern(movePattern, targetPiece);
 	}
 
-	private void blackPawnMovable(MovePattern movePattern, Piece targetPiece) {
+	private void blackPawnMovePattern(MovePattern movePattern, Piece targetPiece) {
 		if (targetPiece != null && isMovePatternAttackOfBlackPawn(movePattern)) {
 			return;
 		}
@@ -54,7 +54,7 @@ public class Pawn extends Piece {
 		return movePattern.getDirection() == Direction.UP && movePattern.getCount() == PAWN_NORMAL_MOVE_RANGE;
 	}
 
-	private void whitePawnMovable(MovePattern movePattern, Piece targetPiece) {
+	private void whitePawnMovePattern(MovePattern movePattern, Piece targetPiece) {
 		if (targetPiece != null && isMovePatternAttackOfWhitePawn(movePattern)) {
 			return;
 		}
@@ -83,12 +83,12 @@ public class Pawn extends Piece {
 
 
 	@Override
-	public void validateMovable(MovePattern movePattern) {
+	public void validateMovePattern(MovePattern movePattern) {
 		throw new UnsupportedOperationException(ERROR_MESSAGE_UNSUPPORTED_METHOD);
 	}
 
 	@Override
-	public String pieceName() {
+	public String getPieceName() {
 		return teamStrategy.pawnName();
 	}
 

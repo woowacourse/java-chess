@@ -7,7 +7,7 @@ import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.StraightPattern;
 
 public class Queen extends Piece {
-	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다.";
+	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 	private static final int QUEEN_SCORE = 9;
 
 	private final double score = QUEEN_SCORE;
@@ -17,7 +17,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public void validateMovable(MovePattern movePattern) {
+	public void validateMovePattern(MovePattern movePattern) {
 		if (movePattern instanceof StraightPattern || movePattern instanceof CrossPattern) {
 			return;
 		}
@@ -25,7 +25,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public String pieceName() {
+	public String getPieceName() {
 		return teamStrategy.queenName();
 	}
 

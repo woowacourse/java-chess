@@ -21,10 +21,16 @@ import static org.assertj.core.api.Assertions.*;
 
 public class ChessBoardTest {
 	private ChessBoard chessBoard;
+	Position pawnInitPosition;
+	Position rookInitPosition;
+	Position knightInitPosition;
 
 	@BeforeEach
 	void setUp() {
 		chessBoard = new ChessBoard();
+		pawnInitPosition = Position.of("a2");
+		rookInitPosition = Position.of("a1");
+		knightInitPosition = Position.of("b1");
 	}
 
 	@Test
@@ -67,6 +73,82 @@ public class ChessBoardTest {
 
 		assertThat(chessBoard.isSurviveKings()).isFalse();
 	}
+
+	@DisplayName("Pawn 1칸 전진 테스트")
+	@Test
+	void movePiecePawn() {
+		Piece pawn = chessBoard.findPieceByPosition(pawnInitPosition);
+		Position targetPosition = Position.of("a3");
+		chessBoard.movePiece(pawnInitPosition, targetPosition);
+
+		assertThat(pawn.isEqualPosition(targetPosition)).isTrue();
+	}
+
+	@DisplayName("Pawn 2칸 전진 테스트")
+	@Test
+	void movePiecePawn2() {
+		Piece pawn = chessBoard.findPieceByPosition(pawnInitPosition);
+		Position targetPosition = Position.of("a4");
+		chessBoard.movePiece(pawnInitPosition, targetPosition);
+
+		assertThat(pawn.isEqualPosition(targetPosition)).isTrue();
+	}
+
+	@DisplayName("Pawn 3칸 전진 테스트")
+	@Test
+	void movePiecePawn3() {
+		Position targetPosition = Position.of("a5");
+
+		assertThatThrownBy(() -> chessBoard.movePiece(pawnInitPosition, targetPosition))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("해당 말이 갈 수 없는 칸입니다");
+	}
+
+	@DisplayName("rook 전진 테스트, 성공")
+	@Test
+	void movePieceRook() {
+		Piece rook = chessBoard.findPieceByPosition(rookInitPosition);
+		Position targetPosition = Position.of("a2");
+
+		chessBoard.movePiece(pawnInitPosition, Position.of("a4"));
+		chessBoard.movePiece(rookInitPosition, targetPosition);
+
+		assertThat(rook.isEqualPosition(targetPosition)).isTrue();
+	}
+
+	@DisplayName("rook 전진 테스트, 실패, 장애물")
+	@Test
+	void movePieceRook2() {
+		Position targetPosition = Position.of("a5");
+
+		chessBoard.movePiece(pawnInitPosition, Position.of("a4"));
+
+		assertThatThrownBy(() -> chessBoard.movePiece(rookInitPosition, targetPosition))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("경로에 다른 말이 존재합니다.");
+	}
+
+	@DisplayName("knight 전진 테스트, 성공")
+	@Test
+	void movePieceKnight() {
+		Piece knight = chessBoard.findPieceByPosition(knightInitPosition);
+		Position targetPosition = Position.of("a3");
+
+		chessBoard.movePiece(knightInitPosition, targetPosition);
+
+		assertThat(knight.isEqualPosition(targetPosition)).isTrue();
+	}
+
+	@DisplayName("knight 전진 테스트, 실패")
+	@Test
+	void movePieceKnight2() {
+		Position targetPosition = Position.of("b3");
+
+		assertThatThrownBy(() -> chessBoard.movePiece(knightInitPosition, targetPosition))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("해당 말이 갈 수 없는 칸입니다");
+	}
+
 
 	@DisplayName("점수 계산 - 폰이 하나")
 	@Test

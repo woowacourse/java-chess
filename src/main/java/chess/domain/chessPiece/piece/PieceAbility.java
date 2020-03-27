@@ -4,9 +4,9 @@ import chess.domain.chessPiece.position.Position;
 import chess.domain.movepattern.MovePattern;
 
 public interface PieceAbility {
-	void validateMovable(MovePattern movePattern);
+	void validateMovePattern(MovePattern movePattern);
 
-	String pieceName();
+	void move(Position position);
 
 	boolean isEqualPosition(Position position);
 
@@ -15,4 +15,8 @@ public interface PieceAbility {
 	boolean isWhiteTeam();
 
 	double getScore();
+
+	boolean isKnight();
+
+	String getPieceName();
 }

@@ -3,8 +3,6 @@ package chess.domain.chessPiece.piece;
 import chess.domain.chessPiece.position.File;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.chessboard.ChessBoard;
-import chess.domain.movepattern.MovePattern;
 
 public abstract class Piece implements PieceAbility {
 	protected Position position;
@@ -30,8 +28,16 @@ public abstract class Piece implements PieceAbility {
 		return teamStrategy.isWhiteTeam();
 	}
 
-	public void move(MovePattern movePattern, ChessBoard chessBoard) {
-		position.move(movePattern, chessBoard);
+	@Override
+	public void move(Position position) {
+		this.position = position;
+	}
+
+	;
+
+	@Override
+	public boolean isKnight() {
+		return this instanceof Knight;
 	}
 
 	public boolean isSameTeam(Piece targetPiece) {

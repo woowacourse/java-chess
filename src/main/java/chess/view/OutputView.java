@@ -25,7 +25,7 @@ public class OutputView {
 			System.out.print(EMPTY_MARK);
 			return;
 		}
-		System.out.print(piece.pieceName());
+		System.out.print(piece.getPieceName());
 	}
 
 	private static void separateLine(Position position) {

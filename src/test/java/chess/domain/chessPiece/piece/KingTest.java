@@ -18,7 +18,7 @@ class KingTest {
 
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece king = new King(source, new BlackTeam());
-		king.validateMovable(movePattern);
+		king.validateMovePattern(movePattern);
 	}
 
 	@Test
@@ -30,9 +30,9 @@ class KingTest {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece king = new King(source, new BlackTeam());
 
-		assertThatThrownBy(() -> king.validateMovable(movePattern))
+		assertThatThrownBy(() -> king.validateMovePattern(movePattern))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessage("해당 말이 갈 수 없는 칸입니다.");
+				.hasMessage("해당 말이 갈 수 없는 칸입니다");
 	}
 
 }
