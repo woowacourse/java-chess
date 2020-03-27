@@ -33,13 +33,11 @@ public class Pawn extends Piece {
 			directions.remove(Direction.SOUTH_EAST);
 			directions.remove(Direction.SOUTH_WEST);
 		}
-		if (piece.isBlack() == isBlack()) {
-			directions.remove(Direction.SOUTH);
-			directions.remove(Direction.SOUTH_SOUTH);
-		}
 		if (!piece.isBlank()) {
 			directions.remove(Direction.NORTH);
 			directions.remove(Direction.NORTH_NORTH);
+			directions.remove(Direction.SOUTH);
+			directions.remove(Direction.SOUTH_SOUTH);
 		}
 		return directions;
 	}
