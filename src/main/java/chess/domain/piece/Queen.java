@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.position.Position;
+import chess.domain.position.Position;
 import chess.domain.piece.movable.QueenMovable;
 
 public class Queen extends Piece {

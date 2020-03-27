@@ -1,9 +1,13 @@
-package chess.domain.board.position;
+package chess.domain.position;
+
+import chess.domain.piece.movable.Direction;
 
 import java.util.Objects;
 
 public class Position {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 좌표 입력입니다.";
+	private static final int MIN_BOUND = 1;
+	private static final int MAX_BOUND = 8;
 
 	private final Row row;
 	private final Column column;
@@ -24,6 +28,17 @@ public class Position {
 		if (position.isEmpty()) {
 			throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
 		}
+	}
+
+
+	public boolean checkBound(Direction direction) {
+		int checkingRow = row.getValue() + direction.getXDegree();
+		int checkingColumn = column.getValue() + direction.getYDegree();
+		return isValidBound(checkingRow) && isValidBound(checkingColumn);
+	}
+
+	private static boolean isValidBound(int value) {
+		return value >= MIN_BOUND && value <= MAX_BOUND;
 	}
 
 	public Row getRow() {

@@ -1,9 +1,9 @@
 package chess.domain.piece.movable;
 
-import chess.domain.board.Board;
-import chess.domain.board.position.Column;
-import chess.domain.board.position.Position;
-import chess.domain.board.position.Row;
+import chess.domain.position.PositionFactory;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
@@ -19,14 +19,14 @@ public class PawnMovable implements Movable {
 		Set<Position> movablePositions = new HashSet<>();
 
 		if (position.getColumn().getValue() == 2 && color.isWhite()) {
-			Position checkPosition = Board.of(position.getRow(), position.getColumn().calculate(1));
+			Position checkPosition = PositionFactory.of(position.getRow(), position.getColumn().calculate(1));
 			if (!isPossessed(checkPosition, pieces)) {
 				moveDirection = Direction.whiteInitialPawnDirection();
 			}
 		}
 
 		if (position.getColumn().getValue() == 7 && color.isBlack()) {
-			Position checkPosition = Board.of(position.getRow(), position.getColumn().calculate(-1));
+			Position checkPosition = PositionFactory.of(position.getRow(), position.getColumn().calculate(-1));
 			if (!isPossessed(checkPosition, pieces)) {
 				moveDirection = Direction.blackInitialPawnDirection();
 			}
@@ -53,10 +53,10 @@ public class PawnMovable implements Movable {
 	private Optional<Position> checkBoundary(Position position, Direction direction) {
 		Row row = position.getRow();
 		Column column = position.getColumn();
-		if (Board.checkBound(position, direction)) {
+		if (position.checkBound(direction)) {
 			Row validRow = row.calculate(direction.getXDegree());
 			Column validColumn = column.calculate(direction.getYDegree());
-			return Optional.ofNullable(Board.of(validRow, validColumn));
+			return Optional.ofNullable(PositionFactory.of(validRow, validColumn));
 		}
 		return Optional.empty();
 	}

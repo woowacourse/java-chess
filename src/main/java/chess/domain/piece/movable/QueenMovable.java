@@ -1,6 +1,6 @@
 package chess.domain.piece.movable;
 
-import chess.domain.board.position.Position;
+import chess.domain.position.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 

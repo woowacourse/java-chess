@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.board.Board;
+import chess.domain.position.PositionFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.OperationType;
 import chess.view.OutputView;
@@ -52,7 +52,7 @@ public class ChessController {
 		}
 
 		if (operationType.isMove()) {
-			chessGame.move(Board.of(operations.get(START_POSITION_INDEX)), Board.of(operations.get(DESTINATION_POSITION_INDEX)));
+			chessGame.move(PositionFactory.of(operations.get(START_POSITION_INDEX)), PositionFactory.of(operations.get(DESTINATION_POSITION_INDEX)));
 			return isMoveOperating(chessGame);
 		}
 

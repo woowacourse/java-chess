@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.domain.board.Board;
-import chess.domain.board.position.Column;
-import chess.domain.board.position.Position;
-import chess.domain.board.position.Row;
+import chess.domain.position.PositionFactory;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ScoreResult;
 import chess.domain.piece.Blank;
@@ -27,7 +27,7 @@ public class OutputView {
 		StringBuilder rowLineStringBuilder = new StringBuilder();
 
 		for (Row row : Row.values()) {
-			Position position = Board.of(row, column);
+			Position position = PositionFactory.of(row, column);
 			Piece piece = chessGame.getPieces()
 					.findBy(position)
 					.orElseGet(Blank::new);

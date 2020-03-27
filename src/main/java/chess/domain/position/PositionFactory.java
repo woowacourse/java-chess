@@ -1,18 +1,11 @@
-package chess.domain.board;
-
-import chess.domain.board.position.Column;
-import chess.domain.board.position.Position;
-import chess.domain.board.position.Row;
-import chess.domain.piece.movable.Direction;
+package chess.domain.position;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Board {
+public class PositionFactory {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 좌표 입력입니다.";
-	private static final int MIN_BOUND = 1;
-	private static final int MAX_BOUND = 8;
 
 	private static final Map<String, Position> positionCache;
 
@@ -49,14 +42,4 @@ public class Board {
 		}
 	}
 
-	public static boolean checkBound(Position position, Direction direction) {
-		Row row = position.getRow();
-		Column column = position.getColumn();
-
-		return isValidBound(row.getValue() + direction.getXDegree()) && isValidBound(column.getValue() + direction.getYDegree());
-	}
-
-	private static boolean isValidBound(int value) {
-		return value >= MIN_BOUND && value <= MAX_BOUND;
-	}
 }
