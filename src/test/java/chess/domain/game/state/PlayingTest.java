@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.board.Board;
+import chess.domain.game.Board;
 import chess.domain.game.Turn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Position;
