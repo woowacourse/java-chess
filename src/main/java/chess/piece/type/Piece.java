@@ -17,6 +17,10 @@ public abstract class Piece {
 
     public abstract boolean canMove(Location now, Location after);
 
+    public boolean isSameTeam(Team team) {
+        return isSameTeam(team.isBlack());
+    }
+
     public boolean isSameTeam(boolean black) {
         return isBlack() == black;
     }
@@ -37,6 +41,10 @@ public abstract class Piece {
         return Character.isUpperCase(name);
     }
 
+    public char getName() {
+        return name;
+    }
+
     public Score getScore() {
         return score;
     }
@@ -54,7 +62,6 @@ public abstract class Piece {
             if (nowLocation.equals(destination)) {
                 break;
             }
-            System.out.println(nowLocation);
             if (board.containsKey(nowLocation)) {
                 return true;
             }

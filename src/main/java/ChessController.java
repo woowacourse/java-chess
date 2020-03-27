@@ -1,3 +1,6 @@
+import chess.ChessGame;
+import chess.ChessResult;
+import chess.Progress;
 import chess.team.Team;
 import view.InputView;
 import view.OutputView;
@@ -13,7 +16,7 @@ public class ChessController {
             turn = turn.changeTurn();
             OutputView.printPresentPlayer(turn);
         }
-        // TODO : King의 유무 혹은 Score보고 승자 결정하기.
+        printResult(chessGame);
     }
 
     private static Progress getProgress(ChessGame chessGame, Team turn) {
@@ -29,5 +32,10 @@ public class ChessController {
             OutputView.printBoard(chessGame.getChessBoard());
         }
         return progress;
+    }
+
+    private static void printResult(ChessGame chessGame) {
+        ChessResult chessResult = chessGame.findWinner();
+        OutputView.print(chessResult);
     }
 }

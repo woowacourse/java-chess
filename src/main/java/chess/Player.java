@@ -1,4 +1,7 @@
+package chess;
+
 import chess.board.Location;
+import chess.score.Score;
 import chess.team.Team;
 
 public class Player {
@@ -10,7 +13,7 @@ public class Player {
         this.team = team;
     }
 
-    public boolean isNotSameTeam(Team team) {
+    public boolean isSame(Team team) {
         return this.team.equals(team);
     }
 
@@ -20,6 +23,23 @@ public class Player {
 
     public boolean hasNotKing() {
         return chessSet.hasNotKing();
+    }
+
+    public Score calculateScoreExceptPawnReduce() {
+        return chessSet.calculateScoreExceptPawnReduce();
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public String getTeamName() {
+        return team.name();
+    }
+
+    @Override
+    public String toString() {
+        return team.name() + chessSet.toString();
     }
 }
 

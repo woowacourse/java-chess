@@ -1,5 +1,6 @@
+package chess;
+
 import chess.board.Location;
-import chess.piece.type.King;
 import chess.piece.type.Piece;
 import chess.score.Score;
 
@@ -19,17 +20,20 @@ public class ChessSet {
                 .get();
     }
 
-    public boolean contain(Location location) {
-        return chessSet.containsKey(location);
-    }
-
-    public void remove(Location location) {
-        chessSet.remove(location);
+    public Piece remove(Location location) {
+        return chessSet.remove(location);
     }
 
     public boolean hasNotKing() {
         return chessSet.values().stream()
                 .anyMatch(Piece::isKing) == false;
+    }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        chessSet.keySet().stream()
+                .forEach(location -> sb.append(location.getCol() + ", " + location.getRow() + " : " + chessSet.get(location).getName() + "\n"));
+        return sb.toString();
     }
 }

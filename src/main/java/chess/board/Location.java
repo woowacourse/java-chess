@@ -78,10 +78,7 @@ public class Location {
 
 	@Override
 	public String toString() {
-		return "Location{" +
-			"row=" + row +
-			", col=" + col +
-			'}';
+		return "[" + col + ", " + row + "]";
 	}
 
 	@Override
@@ -162,6 +159,14 @@ public class Location {
 
 	public boolean is(int row) {
 		return this.row == row;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public char getCol() {
+		return col;
 	}
 }
 

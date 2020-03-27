@@ -42,4 +42,16 @@ public class Score {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    public boolean isHigherThan(Score score2) {
+        return value > score2.value;
+    }
+
+    public boolean isEqualThan(Score score2) {
+        return value == score2.value;
+    }
+
+    public boolean isLowerThan(Score score2) {
+        return value == score2.value;
+    }
 }

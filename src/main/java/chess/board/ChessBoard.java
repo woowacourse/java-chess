@@ -23,9 +23,9 @@ public class ChessBoard {
     public ChessBoard() {
         this.board = new HashMap<>();
         putNoble(1, Team.WHITE);
-        putPawns(2, Team.WHITE);
+//        putPawns(2, Team.WHITE);
 
-        putPawns(7, Team.BLACK);
+//        putPawns(7, Team.BLACK);
         putNoble(8, Team.BLACK);
     }
 
@@ -66,9 +66,10 @@ public class ChessBoard {
     }
 
     // 팀별 위치, 체스 정보를 가져온다.
-    public Map<Location, Piece> giveMyPiece(boolean black) {
+    // 클론될 가능성
+    public Map<Location, Piece> giveMyPiece(Team team) {
         return board.keySet().stream()
-                .filter(location -> board.get(location).isSameTeam(black))
+                .filter(location -> board.get(location).isSameTeam(team))
                 .collect(Collectors.toMap(location -> location, board::get));
     }
 

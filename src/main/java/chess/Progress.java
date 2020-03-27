@@ -1,3 +1,5 @@
+package chess;
+
 public enum Progress {
     CONTINUE(true),
     ERROR(true),

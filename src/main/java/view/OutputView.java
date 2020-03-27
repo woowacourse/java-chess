@@ -2,6 +2,8 @@ package view;
 
 import java.util.Map;
 
+import chess.ChessResult;
+import chess.Player;
 import chess.board.ChessBoard;
 import chess.board.Location;
 import chess.piece.type.Piece;
@@ -53,5 +55,13 @@ public class OutputView {
 
 	public static void printPresentPlayer(Team turn) {
 		System.out.println(turn.name() + "의 차례입니다.");
+	}
+
+	public static void print(ChessResult chessResult) {
+		if(chessResult.isDraw()) {
+			System.out.println("무승부");
+			return;
+		}
+		System.out.println(chessResult.getName() + "가 이겼습니다.");
 	}
 }
