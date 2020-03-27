@@ -10,53 +10,58 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private Map<Square, Piece> chessBoard = new HashMap<>();
+    private Map<BoardSquare, Piece> chessBoard = new HashMap<>();
 
     public ChessBoard() {
-        chessBoard.put(Square.of("a1"), Rook.getPieceInstance(Color.WHITE));
-        chessBoard.put(Square.of("h1"), Rook.getPieceInstance(Color.WHITE));
-        chessBoard.put(Square.of("a8"), Rook.getPieceInstance(Color.BLACK));
-        chessBoard.put(Square.of("h8"), Rook.getPieceInstance(Color.BLACK));
+        chessBoard.put(BoardSquare.of("a1"), Rook.getPieceInstance(Color.WHITE));
+        chessBoard.put(BoardSquare.of("h1"), Rook.getPieceInstance(Color.WHITE));
+        chessBoard.put(BoardSquare.of("a8"), Rook.getPieceInstance(Color.BLACK));
+        chessBoard.put(BoardSquare.of("h8"), Rook.getPieceInstance(Color.BLACK));
 
-        chessBoard.put(Square.of("b1"), Knight.getPieceInstance(Color.WHITE));
-        chessBoard.put(Square.of("g1"), Knight.getPieceInstance(Color.WHITE));
-        chessBoard.put(Square.of("b8"), Knight.getPieceInstance(Color.BLACK));
-        chessBoard.put(Square.of("g8"), Knight.getPieceInstance(Color.BLACK));
+        chessBoard.put(BoardSquare.of("b1"), Knight.getPieceInstance(Color.WHITE));
+        chessBoard.put(BoardSquare.of("g1"), Knight.getPieceInstance(Color.WHITE));
+        chessBoard.put(BoardSquare.of("b8"), Knight.getPieceInstance(Color.BLACK));
+        chessBoard.put(BoardSquare.of("g8"), Knight.getPieceInstance(Color.BLACK));
 
-        chessBoard.put(Square.of("c1"), Bishop.getPieceInstance(Color.WHITE));
-        chessBoard.put(Square.of("f1"), Bishop.getPieceInstance(Color.WHITE));
-        chessBoard.put(Square.of("c8"), Bishop.getPieceInstance(Color.BLACK));
-        chessBoard.put(Square.of("f8"), Bishop.getPieceInstance(Color.BLACK));
+        chessBoard.put(BoardSquare.of("c1"), Bishop.getPieceInstance(Color.WHITE));
+        chessBoard.put(BoardSquare.of("f1"), Bishop.getPieceInstance(Color.WHITE));
+        chessBoard.put(BoardSquare.of("c8"), Bishop.getPieceInstance(Color.BLACK));
+        chessBoard.put(BoardSquare.of("f8"), Bishop.getPieceInstance(Color.BLACK));
 
-        chessBoard.put(Square.of("d1"), Queen.getPieceInstance(Color.WHITE));
-        chessBoard.put(Square.of("e8"), Queen.getPieceInstance(Color.BLACK));
-        chessBoard.put(Square.of("d8"), King.getPieceInstance(Color.BLACK));
-        chessBoard.put(Square.of("e1"), King.getPieceInstance(Color.WHITE));
+        chessBoard.put(BoardSquare.of("d1"), Queen.getPieceInstance(Color.WHITE));
+        chessBoard.put(BoardSquare.of("e8"), Queen.getPieceInstance(Color.BLACK));
+        chessBoard.put(BoardSquare.of("d8"), King.getPieceInstance(Color.BLACK));
+        chessBoard.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
 
         for (int i = 0; i < 8; i++) {
             char file = (char) ('a' + i);
-            chessBoard.put(Square.of(String.valueOf(file) + 2), Pawn.getPieceInstance(Color.WHITE));
-            chessBoard.put(Square.of(String.valueOf(file) + 7), Pawn.getPieceInstance(Color.BLACK));
-
+            chessBoard.put(BoardSquare.of(String.valueOf(file) + 2), Pawn.getPieceInstance(Color.WHITE));
+            chessBoard.put(BoardSquare.of(String.valueOf(file) + 7), Pawn.getPieceInstance(Color.BLACK));
         }
     }
 
-    public Map<Square, Piece> getChessBoard() {
+    public Map<BoardSquare, Piece> getChessBoard() {
         return chessBoard;
     }
 
-    public boolean canMove(List<Square> squares, boolean blackTurn) {
-        Square before = squares.get(0);
-        Square after = squares.get(1);
+    public boolean canMove(List<BoardSquare> boardSquares, boolean blackTurn) {
+        BoardSquare before = boardSquares.get(0);
+        BoardSquare after = boardSquares.get(1);
         if (!chessBoard.containsKey(before) || chessBoard.get(before).isBlack() != blackTurn) {
             return false;
         }
         return chessBoard.get(before).getCheatSheet(before, chessBoard).contains(after);
     }
 
-    public void movePiece(List<Square> squares) {
-        Square before = squares.get(0);
-        Square after = squares.get(1);
+    public void movePieceWhenCanMove(List<BoardSquare> boardSquares, boolean blackTurn) {
+        if (canMove(boardSquares, blackTurn)) {
+            movePiece(boardSquares);
+        }
+    }
+
+    public void movePiece(List<BoardSquare> boardSquares) {
+        BoardSquare before = boardSquares.get(0);
+        BoardSquare after = boardSquares.get(1);
         Piece currentPiece = chessBoard.remove(before);
         chessBoard.put(after, currentPiece);
     }
@@ -87,13 +92,13 @@ public class ChessBoard {
 
     private double calculatePawnScore(Color color) {
         int count;
-        List<Square> squares = chessBoard.keySet().stream()
+        List<BoardSquare> boardSquares = chessBoard.keySet().stream()
                 .filter(square -> chessBoard.get(square) == Pawn.getPieceInstance(color))
                 .collect(Collectors.toList());
         count = 0;
-        for (Square square : squares) {
-            for (Square squareCompared : squares) {
-                if (square.isJustSameFile(squareCompared)) {
+        for (BoardSquare boardSquare : boardSquares) {
+            for (BoardSquare boardSquareCompared : boardSquares) {
+                if (boardSquare.isSameFile(boardSquareCompared) && boardSquare != boardSquareCompared) {
                     count++;
                 }
             }

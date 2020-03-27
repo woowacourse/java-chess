@@ -1,9 +1,9 @@
 package chess.controller;
 
+import chess.domain.GameState;
+import chess.domain.board.BoardSquare;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
-import chess.domain.GameState;
-import chess.domain.board.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -24,19 +24,19 @@ public class ChessController {
         boolean blackTurn = false;
         while (true) {
             input = InputView.inputStart();
-            List<Square> squares = new ArrayList<>();
+            List<BoardSquare> boardSquares = new ArrayList<>();
             if (input.length() == 10) {
                 List<String> inputs = Arrays.asList(input.split(" "));
                 input = inputs.get(0);
-                squares.add(Square.of(inputs.get(1)));
-                squares.add(Square.of(inputs.get(2)));
+                boardSquares.add(BoardSquare.of(inputs.get(1)));
+                boardSquares.add(BoardSquare.of(inputs.get(2)));
             }
             gameState = GameState.of(input);
             if (gameState == GameState.START) {
                 throw new IllegalArgumentException("왜 시작하세요");
             }
             if (gameState == GameState.MOVE) {
-                if (proceed(chessBoard, squares, blackTurn)) {
+                if (proceed(chessBoard, boardSquares, blackTurn)) {
                     blackTurn = !blackTurn;
                 }
             }
@@ -63,9 +63,9 @@ public class ChessController {
         OutputView.printWinners(chessBoard.getWinners());
     }
 
-    private static boolean proceed(ChessBoard chessBoard, List<Square> squares, boolean blackTurn) {
-        if (chessBoard.canMove(squares, blackTurn)) {
-            chessBoard.movePiece(squares);
+    private static boolean proceed(ChessBoard chessBoard, List<BoardSquare> boardSquares, boolean blackTurn) {
+        if (chessBoard.canMove(boardSquares, blackTurn)) {
+            chessBoard.movePieceWhenCanMove(boardSquares, blackTurn);
             OutputView.printChessBoard(chessBoard);
             return true;
         }

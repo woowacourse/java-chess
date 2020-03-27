@@ -1,9 +1,9 @@
 package chess.view;
 
+import chess.domain.board.BoardSquare;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.board.Square;
 
 import java.util.List;
 import java.util.Map;
@@ -19,11 +19,11 @@ public class OutputView {
     }
 
     public static void printChessBoard(ChessBoard chessBoard) {
-        Map<Square, Piece> gameBoard = chessBoard.getChessBoard();
+        Map<BoardSquare, Piece> gameBoard = chessBoard.getChessBoard();
         for (int rank = 8; rank >= 1; rank--) {
             for (char file = 'a'; file <= 'h'; file++) {
-                if (gameBoard.containsKey(Square.of(String.valueOf(file) + rank))) {
-                    System.out.print(gameBoard.get(Square.of(String.valueOf(file) + rank)).getLetter());
+                if (gameBoard.containsKey(BoardSquare.of(String.valueOf(file) + rank))) {
+                    System.out.print(gameBoard.get(BoardSquare.of(String.valueOf(file) + rank)).getLetter());
                     continue;
                 }
                 System.out.print(".");

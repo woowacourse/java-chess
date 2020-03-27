@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Square;
+import chess.domain.board.BoardSquare;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -20,13 +20,13 @@ public abstract class Piece implements Movable {
         return color.getApplyTypeName(type);
     }
 
-    public abstract Set<Square> getAllCheatSheet(Square square);
+    public abstract Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare);
 
     @Override
-    public abstract Set<Square> getCheatSheet(Square square, Map<Square, Piece> board);
+    public abstract Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board);
 
-    protected Set<Square> findSquaresToRemove(Square s, int fileAddAmount, int rankAddAmount) {
-        Set<Square> squaresToRemove = new HashSet<>();
+    protected Set<BoardSquare> findSquaresToRemove(BoardSquare s, int fileAddAmount, int rankAddAmount) {
+        Set<BoardSquare> squaresToRemove = new HashSet<>();
         int file = 0;
         int rank = 0;
         for (int i = 0; i < 8; i++, file += fileAddAmount, rank += rankAddAmount) {
@@ -46,5 +46,9 @@ public abstract class Piece implements Movable {
 
     public boolean isSameColor(Piece piece) {
         return this.color == piece.color;
+    }
+
+    public boolean isMoveRepeat() {
+        return type.isRepeat();
     }
 }

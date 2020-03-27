@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.Direction.*;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static chess.domain.piece.Direction.*;
 
 public enum Type {
     ROOK("R", 5, true, Arrays.asList(UP, DOWN, LEFT, RIGHT)),
@@ -29,6 +29,14 @@ public enum Type {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isRepeat() {
+        return repeat;
+    }
+
+    public List<Direction> getDirections() {
+        return directions;
     }
 
     public double getScore() {

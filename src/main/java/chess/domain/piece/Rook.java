@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Square;
+import chess.domain.board.BoardSquare;
 import util.NullChecker;
 
 import java.util.HashMap;
@@ -10,9 +10,9 @@ import java.util.Set;
 
 public class Rook extends Piece {
     private final static Map<Color, Piece> CACHE = new HashMap<>();
+    private final static Type type = Type.ROOK;
 
     static {
-        Type type = Type.ROOK;
         for (Color color : Color.values()) {
             CACHE.put(color, new Rook(color, type));
         }
@@ -28,52 +28,52 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Set<Square> getAllCheatSheet(Square square) {
-        NullChecker.validateNotNull(square);
-        Set<Square> availableSquares = new HashSet<>();
+    public Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
+        NullChecker.validateNotNull(boardSquare);
+        Set<BoardSquare> availableBoardSquares = new HashSet<>();
         for (int index = -7; index < 8; index++) {
-            availableSquares.add(square.addIfInBoundary(index, 0));
-            availableSquares.add(square.addIfInBoundary(0, index));
+            availableBoardSquares.add(boardSquare.addIfInBoundary(index, 0));
+            availableBoardSquares.add(boardSquare.addIfInBoundary(0, index));
         }
-        availableSquares.remove(square);
-        return availableSquares;
+        availableBoardSquares.remove(boardSquare);
+        return availableBoardSquares;
     }
 
     @Override
-    public Set<Square> getCheatSheet(Square square, Map<Square, Piece> board) {
-        NullChecker.validateNotNull(square, board);
-        Set<Square> squares = getAllCheatSheet(square);
-        Set<Square> squaresIter = getAllCheatSheet(square);
-        for (Square s : squaresIter) {
+    public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
+        NullChecker.validateNotNull(boardSquare, board);
+        Set<BoardSquare> boardSquares = getAllCheatSheet(boardSquare);
+        Set<BoardSquare> squaresIter = getAllCheatSheet(boardSquare);
+        for (BoardSquare s : squaresIter) {
             if (board.containsKey(s)) {
-                int fileDifference = s.getFile() - square.getFile();
-                int rankDifference = s.getRank() - square.getRank();
+                int fileDifference = s.getFileSubtract(boardSquare);
+                int rankDifference = s.getRankSubtract(boardSquare);
                 if (fileDifference == 0 && rankDifference > 0) {
-                    Set<Square> squaresToRemove = findSquaresToRemove(s, 0, 1);
-                    squares.removeAll(squaresToRemove);
+                    Set<BoardSquare> squaresToRemove = findSquaresToRemove(s, 0, 1);
+                    boardSquares.removeAll(squaresToRemove);
                 }
 
                 if (fileDifference > 0 && rankDifference == 0) {
-                    Set<Square> squaresToRemove = findSquaresToRemove(s, 1, 0);
-                    squares.removeAll(squaresToRemove);
+                    Set<BoardSquare> squaresToRemove = findSquaresToRemove(s, 1, 0);
+                    boardSquares.removeAll(squaresToRemove);
                 }
 
                 if (fileDifference < 0 && rankDifference == 0) {
-                    Set<Square> squaresToRemove = findSquaresToRemove(s, -1, 0);
-                    squares.removeAll(squaresToRemove);
+                    Set<BoardSquare> squaresToRemove = findSquaresToRemove(s, -1, 0);
+                    boardSquares.removeAll(squaresToRemove);
                 }
 
                 if (fileDifference == 0 && rankDifference < 0) {
-                    Set<Square> squaresToRemove = findSquaresToRemove(s, 0, -1);
-                    squares.removeAll(squaresToRemove);
+                    Set<BoardSquare> squaresToRemove = findSquaresToRemove(s, 0, -1);
+                    boardSquares.removeAll(squaresToRemove);
                 }
 
                 if (isSameColor(board.get(s))) {
-                    squares.remove(s);
+                    boardSquares.remove(s);
                 }
             }
         }
-        return squares;
+        return boardSquares;
 
     }
 }

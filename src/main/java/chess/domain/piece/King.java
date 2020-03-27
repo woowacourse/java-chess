@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Square;
+import chess.domain.board.BoardSquare;
 import util.NullChecker;
 
 import java.util.HashMap;
@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 public class King extends Piece {
     private final static Map<Color, Piece> CACHE = new HashMap<>();
+    private final static Type type = Type.KING;
 
     static {
-        Type type = Type.KING;
         for (Color color : Color.values()) {
             CACHE.put(color, new King(color, type));
         }
@@ -29,24 +29,25 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<Square> getAllCheatSheet(Square square) {
-        NullChecker.validateNotNull(square);
-        Set<Square> availableSquares = new HashSet<>();
+    public Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
+        NullChecker.validateNotNull(boardSquare);
+        Set<BoardSquare> availableBoardSquares = new HashSet<>();
+
         int index = -1;
         for (int i = 0; i < 2; i++) {
-            availableSquares.add(square.addIfInBoundary(index, 0));
-            availableSquares.add(square.addIfInBoundary(0, index));
-            availableSquares.add(square.addIfInBoundary(index * -1, index));
-            availableSquares.add(square.addIfInBoundary(index, index));
+            availableBoardSquares.add(boardSquare.addIfInBoundary(index, 0));
+            availableBoardSquares.add(boardSquare.addIfInBoundary(0, index));
+            availableBoardSquares.add(boardSquare.addIfInBoundary(index * -1, index));
+            availableBoardSquares.add(boardSquare.addIfInBoundary(index, index));
             index *= -1;
         }
-        return availableSquares;
+        return availableBoardSquares;
     }
 
     @Override
-    public Set<Square> getCheatSheet(Square square, Map<Square, Piece> board) {
-        NullChecker.validateNotNull(square, board);
-        return getAllCheatSheet(square).stream()
+    public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
+        NullChecker.validateNotNull(boardSquare, board);
+        return getAllCheatSheet(boardSquare).stream()
                 .filter(s -> !(board.containsKey(s) && isSameColor(board.get(s))))
                 .collect(Collectors.toSet());
     }

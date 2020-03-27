@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Square;
+import chess.domain.board.BoardSquare;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,23 +20,23 @@ public class KnightTest {
     @DisplayName("말의 위치(knight)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeKnight(String input) {
         Piece piece = Knight.getPieceInstance(Color.BLACK);
-        Set<Square> availableSquares = piece.getAllCheatSheet(Square.of("c3"));
-        assertThat(availableSquares.contains(Square.of(input))).isTrue();
-        assertThat(availableSquares.size()).isEqualTo(8);
+        Set<BoardSquare> availableBoardSquares = piece.getAllCheatSheet(BoardSquare.of("c3"));
+        assertThat(availableBoardSquares.contains(BoardSquare.of(input))).isTrue();
+        assertThat(availableBoardSquares.size()).isEqualTo(8);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"c4", "d5", "d1", "f1", "f5", "g2"})
     @DisplayName("판의 정보를 가져와서 나이트가 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")
     void movableKnightSquareTest(String input) {
-        Map<Square, Piece> board = new HashMap<>();
-        board.put(Square.of("d5"), King.getPieceInstance(Color.BLACK));
-        board.put(Square.of("c2"), Queen.getPieceInstance(Color.WHITE));
-        board.put(Square.of("g4"), Pawn.getPieceInstance(Color.WHITE));
+        Map<BoardSquare, Piece> board = new HashMap<>();
+        board.put(BoardSquare.of("d5"), King.getPieceInstance(Color.BLACK));
+        board.put(BoardSquare.of("c2"), Queen.getPieceInstance(Color.WHITE));
+        board.put(BoardSquare.of("g4"), Pawn.getPieceInstance(Color.WHITE));
         Piece piece = Knight.getPieceInstance(Color.WHITE);
-        Set<Square> availableSquares = piece.getCheatSheet(Square.of("e3"), board);
-        assertThat(availableSquares.contains(Square.of(input))).isTrue();
-        assertThat(availableSquares.size()).isEqualTo(6);
+        Set<BoardSquare> availableBoardSquares = piece.getCheatSheet(BoardSquare.of("e3"), board);
+        assertThat(availableBoardSquares.contains(BoardSquare.of(input))).isTrue();
+        assertThat(availableBoardSquares.size()).isEqualTo(6);
     }
 
     @Test
