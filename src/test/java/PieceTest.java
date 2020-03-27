@@ -2,14 +2,11 @@ import chess.domain.Player;
 import chess.domain.chesspieces.Empty;
 import chess.domain.chesspieces.King;
 import chess.domain.chesspieces.Queen;
-import javafx.beans.binding.When;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PieceTest {
     @DisplayName("기물과 빈칸의 Player 비교")

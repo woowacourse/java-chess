@@ -1,12 +1,8 @@
 import chess.domain.Player;
-import chess.domain.chesspieces.Empty;
 import chess.domain.chesspieces.King;
-import chess.domain.chesspieces.Rook;
-import chess.domain.moverules.Direction;
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.position.component.Column;
-import chess.domain.position.component.Row;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-import chess.domain.moverules.Direction;
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;

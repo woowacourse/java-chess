@@ -1,23 +1,25 @@
 package chess.domain.chesspieces;
 
 import chess.domain.Player;
-import chess.domain.moverules.Direction;
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece extends Square{
+public abstract class Piece extends Square {
     private final Player player;
+    private final PieceInfo pieceInfo;
 
     protected List<Direction> directions = new ArrayList<>();
 
-    public Piece(Player player, PieceName pieceName) {
-        super(pieceName.getName(player));
+    public Piece(Player player, PieceInfo pieceInfo) {
+        super(pieceInfo.getName(player));
 
         Objects.requireNonNull(player);
         this.player = player;
+        this.pieceInfo = pieceInfo;
     }
 
     abstract boolean validateMovableTileSize(Position from, Position to);
@@ -34,8 +36,12 @@ public abstract class Piece extends Square{
         return player;
     }
 
+    public double getScore() {
+        return pieceInfo.getScore();
+    }
+
     @Override
-    public boolean movable(Position from, Position to){
+    public boolean movable(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
         return hasDirection(Direction.getDirection(from, to))
@@ -47,6 +53,10 @@ public abstract class Piece extends Square{
         if (target.getClass() == Empty.class) {
             return false;
         }
-        return player == ((Piece)target).getPlayer();
+        return player == ((Piece) target).getPlayer();
+    }
+
+    public PieceInfo getPieceInfo() {
+        return pieceInfo;
     }
 }

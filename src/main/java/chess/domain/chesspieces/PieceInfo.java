@@ -1,21 +1,26 @@
 package chess.domain.chesspieces;
 
+import chess.domain.ChessBoard;
 import chess.domain.Player;
 
-public enum PieceName {
-    KING("K", "k"),
-    QUEEN("Q", "q"),
-    BISHOP("B", "b"),
-    ROOK("R", "r"),
-    KNIGHT("N", "n"),
-    PAWN("P", "p");
+public enum PieceInfo {
+    KING("K", "k", 0),
+    QUEEN("Q", "q", 9),
+    BISHOP("B", "b", 3),
+    ROOK("R", "r", 5),
+    KNIGHT("N", "n", 2.5),
+    PAWN("P", "p", 1);
+
+    public static final double PAWN_DIFF = 0.5;
 
     private final String blackName;
     private final String whiteName;
+    private final double score;
 
-    PieceName(String blackName, String whiteName) {
+    PieceInfo(String blackName, String whiteName, double score) {
         this.blackName = blackName;
         this.whiteName = whiteName;
+        this.score = score;
     }
 
     public String getName(Player player) {
@@ -28,4 +33,7 @@ public enum PieceName {
         throw new IllegalArgumentException("처리할 수 없는 사용자입니다.");
     }
 
+    public double getScore() {
+        return score;
+    }
 }

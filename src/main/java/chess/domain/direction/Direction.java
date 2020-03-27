@@ -1,4 +1,4 @@
-package chess.domain.moverules;
+package chess.domain.direction;
 
 import chess.domain.position.Position;
 import chess.domain.position.Positions;

@@ -1,7 +1,7 @@
 package chess.domain.chesspieces;
 
 import chess.domain.Player;
-import chess.domain.moverules.Direction;
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
@@ -12,30 +12,31 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pawn extends Piece {
-    private final static int AVAILABLE_ROW_MOVE_DIFF = 1;
-    private final static int INIT_AVAILABLE_COLUMN_DIFF = 1;
-    private final static int AVAILABLE_COLUMN_DIFF = 2;
-    private final static PieceName pieceName = PieceName.valueOf("PAWN");
-    private final static List<Direction> attackDirections = new ArrayList<>();
+    private static final int AVAILABLE_ROW_MOVE_DIFF = 1;
+    private static final int INIT_AVAILABLE_COLUMN_DIFF = 1;
+    private static final int AVAILABLE_COLUMN_DIFF = 2;
+    private static final PieceInfo PIECE_INFO = PieceInfo.valueOf("PAWN");
+
+    private final List<Direction> attackDirections = new ArrayList<>();
 
     private final Position initPosition;
 
     private Direction forwardDirection;
 
     public Pawn(Player player, Position position) {
-        super(player, pieceName);
+        super(player, PIECE_INFO);
         this.initPosition = position;
 
         if (player.equals(Player.BLACK)) {
-            attackDirections.addAll(Arrays.asList(Direction.DIAGONAL_DOWN_LEFT, Direction.DIAGONAL_DOWN_RIGHT));
             forwardDirection = Direction.DOWN;
+            attackDirections.addAll(Arrays.asList(Direction.DIAGONAL_DOWN_LEFT, Direction.DIAGONAL_DOWN_RIGHT));
             directions.add(forwardDirection);
             directions.addAll(attackDirections);
         }
 
         if (player.equals(Player.WHITE)) {
-            attackDirections.addAll(Arrays.asList(Direction.DIAGONAL_TOP_LEFT, Direction.DIAGONAL_TOP_RIGHT));
             forwardDirection = Direction.TOP;
+            attackDirections.addAll(Arrays.asList(Direction.DIAGONAL_TOP_LEFT, Direction.DIAGONAL_TOP_RIGHT));
             directions.add(forwardDirection);
             directions.addAll(attackDirections);
         }
@@ -63,6 +64,10 @@ public class Pawn extends Piece {
 
     // (예외 상황) 대각선 공격 (1) 대각선이여야 하고, (2) 같은 편이 아니여야 한다.
     public boolean validateAttack(Square target, Direction direction) {
+        if(target.getClass() == Empty.class){
+            return false;
+        }
+
         if (attackDirections.contains(direction)) {
             return !isSamePlayer(target);
         }

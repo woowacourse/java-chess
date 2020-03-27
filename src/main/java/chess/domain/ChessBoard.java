@@ -2,11 +2,15 @@ package chess.domain;
 
 import chess.PieceInitPositionFactory;
 import chess.domain.chesspieces.*;
-import chess.domain.moverules.Direction;
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.domain.position.component.Row;
+import chess.domain.status.Result;
+import chess.domain.status.Status;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
     private final Map<Position, Square> chessBoard = new LinkedHashMap<>();
@@ -46,7 +50,7 @@ public class ChessBoard {
                 && ((Pawn) source).validateAttack(target, direction);
     }
 
-    public boolean validateObstacles(List<Position> routes) {
+    private boolean validateObstacles(List<Position> routes) {
         return routes.stream()
                 .anyMatch(position -> chessBoard.get(position).getClass() == Empty.class);
     }
@@ -55,8 +59,59 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public List<Position> getRoutes(Position from, Position to) {
+    private List<Position> getRoutes(Position from, Position to) {
         Direction direction = Direction.getDirection(from, to);
         return direction.getPositionsBetween(from, to);
+    }
+
+    public Status createStatus(Player player) {
+        double result = getPlayerPieces(player)
+                .stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+        result -= PieceInfo.PAWN_DIFF * getPawnCount(player);
+        return new Status(player, result);
+    }
+
+    private List<Piece> getPlayerPieces(Player player) {
+        return chessBoard.values()
+                .stream()
+                .filter(square -> square instanceof Piece)
+                .map(square -> (Piece) square)
+                .filter(piece -> piece.getPlayer() == player)
+                .collect(Collectors.toList());
+    }
+
+    public int getPawnCountPerStage(List<Square> columnLine, Player player) {
+        return (int) columnLine.stream()
+                .filter(square -> square.getClass() == Pawn.class)
+                .map(square -> (Pawn) square)
+                .filter(pawn -> pawn.getPlayer() == player)
+                .count();
+    }
+
+    public int getPawnCount(Player player) {
+        int count = 0;
+        for (Row row : Row.values()) {
+            int value = getPawnCountPerStage(getStage(row), player);
+            if (value != 1) {
+                count += value;
+            }
+        }
+        return count;
+    }
+
+    public List<Square> getStage(Row row) {
+        List<Square> squares = new ArrayList<>();
+        for (Map.Entry<Position, Square> entry : chessBoard.entrySet()) {
+            if (entry.getKey().getRow() == row)
+                squares.add(entry.getValue());
+        }
+        return squares;
+    }
+
+    public Result getResult() {
+        List<Status> statuses = Arrays.asList(createStatus(Player.WHITE), createStatus(Player.BLACK));
+        return new Result(statuses);
     }
 }
