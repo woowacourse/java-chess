@@ -20,8 +20,4 @@ public class KnightPattern implements MovePattern {
 	public int getCount() {
 		throw new UnsupportedOperationException(ERROR_MESSAGE_UNSUPPORTED_METHOD);
 	}
-
-	public Position getTargetPosition() {
-		return this.targetPosition;
-	}
 }
