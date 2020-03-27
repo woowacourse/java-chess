@@ -4,7 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {
-	public Knight(Position position) {
-		super(position, "n", new KnightMoveStrategy());
-	}
+    public Knight(Position position) {
+        super(position, "n", new KnightMoveStrategy());
+    }
 }

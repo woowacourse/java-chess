@@ -1,12 +1,12 @@
 package chess.domain.board;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class BoardFactoryTest {
-	@Test
-	void create() {
-		assertThat(BoardFactory.create()).isInstanceOf(Boards.class);
-	}
+    @Test
+    void create() {
+        assertThat(BoardFactory.create()).isInstanceOf(Boards.class);
+    }
 }
