@@ -1,6 +1,6 @@
 package chess.board.piece;
 
-import chess.board.MoveInfo;
+import chess.board.Vector;
 
 public class Queen extends Piece {
 
@@ -11,10 +11,10 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(final MoveInfo moveInfo, final Piece targetPiece) {
+    public boolean canMove(final Vector vector, final Piece targetPiece) {
         if (targetPiece.isSameTeam(this.team)) {
             return false;
         }
-        return moveInfo.isDiagonal() || moveInfo.isStraight();
+        return vector.isDiagonal() || vector.isStraight();
     }
 }

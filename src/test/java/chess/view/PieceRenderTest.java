@@ -1,8 +1,7 @@
 package chess.view;
 
-import chess.board.piece.King;
 import chess.board.piece.Piece;
-import chess.board.piece.Team;
+import chess.board.piece.Pieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,10 +12,10 @@ class PieceRenderTest {
 
     @DisplayName("피스에 따라 뷰에 보여지는 토큰을 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK,K", "WHITE,k"})
-    void findTokenByPiece(Team team, String expect) {
+    @CsvSource(value = {"BLACK_KING,K", "WHITE_KING,k", "BLACK_MOVED_PAWN,P", "BLACK_NOT_MOVED_PAWN,P", "WHITE_MOVED_PAWN,p", "WHITE_NOT_MOVED_PAWN,p"})
+    void findTokenByPiece(Pieces pieces, String expect) {
         //given
-        Piece piece = new King(team);
+        Piece piece = pieces.getPiece();
 
         //when
         String actual = PieceRender.findTokenByPiece(piece);
@@ -24,5 +23,4 @@ class PieceRenderTest {
         //then
         assertThat(actual).isEqualTo(expect);
     }
-
 }
