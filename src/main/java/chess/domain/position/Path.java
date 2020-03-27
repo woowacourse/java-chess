@@ -5,13 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Path {
-	private final List<Position> path;
-
-	private Path(List<Position> path) {
-		this.path = path;
-	}
-
-	public static Path of(Position start, Position end) {
+	public static List<String> valueOf(Position start, Position end) {
 		List<Position> path = new ArrayList<>();
 
 		Position current = start;
@@ -19,16 +13,12 @@ public class Path {
 			current = Direction.of(current, end).move(current);
 			path.add(current);
 		}
-		return new Path(path);
-	}
-
-	public static Path of(String start, String end) {
-		return of(Position.of(start), Position.of(end));
-	}
-
-	public List<String> path() {
 		return path.stream()
-			.map(Position::getName)
-			.collect(Collectors.toUnmodifiableList());
+				.map(Position::getName)
+				.collect(Collectors.toUnmodifiableList());
+	}
+
+	public static List<String> valueOf(String start, String end) {
+		return valueOf(Position.of(start), Position.of(end));
 	}
 }

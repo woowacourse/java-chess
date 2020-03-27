@@ -37,9 +37,8 @@ class BoardsTest {
 		Map<String, Piece> upperBoard = new LinkedHashMap<>();
 
 		Boards boards = Boards.of(lowerBoard, upperBoard);
-		Path path = Path.of(A1, A3);
 
-		assertThat(boards.hasPieceIn(path.path())).isTrue();
+		assertThat(boards.hasPieceIn(Path.valueOf(A1, A3))).isTrue();
 	}
 
 	@Test
@@ -49,8 +48,7 @@ class BoardsTest {
 		upperBoard.put("g7", new Rook(G7));
 
 		Boards boards = Boards.of(lowerBoard, upperBoard);
-		Path path = Path.of(B1, B3);
 
-		assertThat(boards.hasPieceIn(path.path())).isTrue();
+		assertThat(boards.hasPieceIn(Path.valueOf(B1, B3))).isTrue();
 	}
 }
