@@ -70,13 +70,17 @@ public class Boards {
 	}
 
 	private void pawnMove(String from, String to, Turn turn) {
-		int columnGap = Position.of(from).getColumnGap(Position.of(to));
-		if (columnGap == 0 && boards.get(turn.enemy()).containsKey(Position.getReversedNameOf(to))) {
+		int columnGap = Math.abs(Position.of(from).getColumnGap(Position.of(to)));
+		if (columnGap == 0 && isEnemy(to, turn)) {
 			throw new IllegalArgumentException("폰은 전방의 적을 공격할 수 없습니다.");
 		}
-		if (columnGap == 1 && !boards.get(turn.enemy()).containsKey(Position.getReversedNameOf(to))){
+		if (columnGap == 1 && !isEnemy(to, turn)){
 			throw new IllegalArgumentException("폰은 공격이 아니면 대각선 이동이 불가합니다.");
 		}
+	}
+
+	private boolean isEnemy(String to, Turn turn) {
+		return boards.get(turn.enemy()).containsKey(Position.getReversedNameOf(to));
 	}
 
 	public boolean isKingDead() {
