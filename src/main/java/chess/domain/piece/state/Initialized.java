@@ -26,4 +26,8 @@ public abstract class Initialized extends Started {
     public boolean isBlank() {
         return false;
     }
+
+    public boolean isStayed(Position to) {
+        return position.equals(to);
+    }
 }
