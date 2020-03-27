@@ -8,12 +8,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -83,48 +80,12 @@ public class ChessBoard {
     }
 
     public Map<Color, Double> getTeamScore() {
-        Map<Color, Double> teamScore = new HashMap<>();
-        double blackScore = 0;
-        double whiteScore = 0;
-        for (Piece piece : chessBoard.values()) {
-            if (piece.isBlack()) {
-                blackScore += piece.getScore();
-                continue;
-            }
-            whiteScore += piece.getScore();
-        }
-        blackScore -= calculatePawnScore(Color.BLACK);
-        whiteScore -= calculatePawnScore(Color.WHITE);
-        teamScore.put(Color.BLACK, blackScore);
-        teamScore.put(Color.WHITE, whiteScore);
-        return teamScore;
+        return new TeamScore(chessBoard).getTeamScore();
     }
 
-
-    private double calculatePawnScore(Color color) {
-        int count;
-        List<BoardSquare> boardSquares = chessBoard.keySet().stream()
-                .filter(square -> chessBoard.get(square) == Pawn.getPieceInstance(color))
-                .collect(Collectors.toList());
-        count = 0;
-        for (BoardSquare boardSquare : boardSquares) {
-            for (BoardSquare boardSquareCompared : boardSquares) {
-                if (boardSquare.isSameFile(boardSquareCompared) && boardSquare != boardSquareCompared) {
-                    count++;
-                }
-            }
-        }
-        return count * 0.5;
-    }
 
     public List<Color> getWinners() {
-        Map<Color, Double> teamScore = getTeamScore();
-        if (teamScore.get(Color.BLACK) > teamScore.get(Color.WHITE)) {
-            return Collections.singletonList(Color.BLACK);
-        }
-        if (teamScore.get(Color.BLACK) < teamScore.get(Color.WHITE)) {
-            return Collections.singletonList(Color.WHITE);
-        }
-        return Arrays.asList(Color.WHITE, Color.BLACK);
+        return new TeamScore(chessBoard).getWinners();
     }
+
 }

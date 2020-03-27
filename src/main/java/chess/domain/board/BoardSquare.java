@@ -72,6 +72,7 @@ public class BoardSquare {
         return Integer.compare(this.rank, boardSquare.rank);
     }
 
+
     public boolean isPawnStartPoint(boolean black) {
         if (black) {
             return rank == RANK_BLACK_PAWN_STAT;
