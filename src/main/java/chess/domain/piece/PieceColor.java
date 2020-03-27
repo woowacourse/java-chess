@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import java.util.Objects;
 import java.util.function.UnaryOperator;
+
+import static chess.util.NullValidator.validateNull;
 
 public enum PieceColor {
     WHITE(String::toLowerCase),
@@ -17,11 +18,5 @@ public enum PieceColor {
     public String getPieceName(String pieceName) {
         validateNull(pieceName);
         return this.operator.apply(pieceName);
-    }
-
-    private void validateNull(String name) {
-        if (Objects.isNull(name)) {
-            throw new IllegalArgumentException("null이 들어왔습니다.");
-        }
     }
 }

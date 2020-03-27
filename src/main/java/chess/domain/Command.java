@@ -6,6 +6,8 @@ import chess.domain.service.GameStartService;
 
 import java.util.Arrays;
 
+import static chess.util.NullValidator.validateNull;
+
 public enum Command {
     START("start", new GameStartService()),
     END("end", new GameEndService());
@@ -19,6 +21,7 @@ public enum Command {
     }
 
     public static Command of(String input) {
+        validateNull(input);
         return Arrays.stream(values())
                 .filter(v -> v.isEqualTo(input))
                 .findFirst()
