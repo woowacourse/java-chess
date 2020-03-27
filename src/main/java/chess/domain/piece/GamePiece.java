@@ -1,17 +1,24 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import chess.domain.board.Position;
 import chess.domain.player.Player;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GamePiece {
 
     public static final GamePiece EMPTY = new GamePiece(null, null, ".");
+    private static final Map<String, GamePiece> GAME_PIECES;
+
+    static {
+        GAME_PIECES = new HashMap<>();
+        for (ChessPiece piece : ChessPiece.values()) {
+            for (Player player : Player.values()) {
+                GAME_PIECES.put(key(piece, player), new GamePiece(piece, player, player.decideName(piece.getName())));
+            }
+        }
+    }
 
     private final ChessPiece chessPiece;
     private final Player player;
@@ -24,18 +31,15 @@ public class GamePiece {
     }
 
     public static GamePiece of(ChessPiece piece, Player player) {
-        return new GamePiece(piece, player, player.decideName(piece.getName()));
+        return GAME_PIECES.get(key(piece, player));
+    }
+
+    private static String key(ChessPiece piece, Player player) {
+        return piece.toString() + player.toString();
     }
 
     public static List<GamePiece> list() {
-        List<GamePiece> gamePieces = new ArrayList<>();
-        for (ChessPiece piece : ChessPiece.values()) {
-            for (Player player : Player.values()) {
-                gamePieces.add(GamePiece.of(piece, player));
-            }
-        }
-
-        return gamePieces;
+        return new ArrayList<>(GAME_PIECES.values());
     }
 
     public List<Position> searchPath(Position source, Position target, boolean isKill) {
@@ -50,16 +54,16 @@ public class GamePiece {
         return player.equals(Player.WHITE);
     }
 
-    public double calculateScore(int count) {
-        return chessPiece.calculateScore(count);
-    }
-
     public boolean isPawn() {
         return chessPiece.equals(ChessPiece.PAWN);
     }
 
     public boolean isKing() {
         return this != EMPTY && chessPiece.equals(ChessPiece.KING);
+    }
+
+    public double calculateScore(int count) {
+        return chessPiece.calculateScore(count);
     }
 
     public List<Position> getInitialPositions() {

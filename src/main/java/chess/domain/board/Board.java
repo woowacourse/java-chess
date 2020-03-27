@@ -91,19 +91,19 @@ public class Board {
 
     private void validateSourcePiece(GamePiece sourcePiece) {
         if (sourcePiece.equals(GamePiece.EMPTY)) {
-            throw new InvalidMovementException();
+            throw new InvalidMovementException("기물이 존재하지 않습니다.");
         }
         if (status.isWhiteTurn() && !sourcePiece.isWhite()) {
-            throw new InvalidMovementException();
+            throw new InvalidMovementException("해당 플레이어의 턴이 아닙니다.");
         }
         if (status.isBlackTurn() && sourcePiece.isWhite()) {
-            throw new InvalidMovementException();
+            throw new InvalidMovementException("해당 플레이어의 턴이 아닙니다.");
         }
     }
 
     private void validateMovable(GamePiece obstacle) {
         if (obstacle != GamePiece.EMPTY) {
-            throw new InvalidMovementException();
+            throw new InvalidMovementException("경로에 기물이 존재합니다.");
         }
     }
 

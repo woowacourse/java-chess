@@ -75,7 +75,7 @@ class BoardTest {
         assertThatThrownBy(() -> {
             Board.createEmpty().move(Position.from("d3"), Position.from("d5"));
         }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.");
+                .hasMessage("이동할 수 없습니다.\n기물이 존재하지 않습니다.");
     }
 
     @ParameterizedTest
@@ -89,7 +89,7 @@ class BoardTest {
         assertThatThrownBy(() -> {
             board.move(Position.from("d5"), Position.from("g8"));
         }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.");
+                .hasMessage("이동할 수 없습니다.\n해당 플레이어의 턴이 아닙니다.");
     }
 
     static Stream<Arguments> createBoardAndTurn() {
@@ -102,6 +102,7 @@ class BoardTest {
     @Test
     @DisplayName("경로에 기물이 있는 경우")
     void moveWithObstacle() {
+        // TODO: 2020/03/27 테스트 케이스 추가
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
         map.put(Position.from("d6"), GamePiece.of(BISHOP, BLACK));
@@ -110,7 +111,7 @@ class BoardTest {
         assertThatThrownBy(() -> {
             board.move(Position.from("d5"), Position.from("d6"));
         }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.");
+                .hasMessage("이동할 수 없습니다.\n경로에 기물이 존재합니다.");
     }
 
     @Test
