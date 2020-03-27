@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
-import chess.domain.piece.abstraction.Movable;
-import chess.domain.piece.abstraction.RepeatMovePiece;
+import chess.domain.movement.Direction;
+import chess.domain.movement.Movable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;

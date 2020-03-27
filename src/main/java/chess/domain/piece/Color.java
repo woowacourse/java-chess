@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import util.NullChecker;
-
+import chess.domain.movement.Direction;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import util.NullChecker;
 
 public enum Color {
     BLACK("BLACK", String::toUpperCase, cheatSheets -> cheatSheets.stream().map(Direction::reverse).collect(Collectors.toList())),

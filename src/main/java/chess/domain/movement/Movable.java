@@ -1,4 +1,4 @@
-package chess.domain.piece.abstraction;
+package chess.domain.movement;
 
 import chess.domain.board.BoardSquare;
 import chess.domain.piece.Piece;

@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.abstraction.RepeatMovePiece;
 import java.util.HashMap;
 import java.util.Map;
 import util.NullChecker;

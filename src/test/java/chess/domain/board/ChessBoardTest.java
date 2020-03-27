@@ -1,17 +1,16 @@
 package chess.domain.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class ChessBoardTest {
     @Test
@@ -30,17 +29,17 @@ public class ChessBoardTest {
         List<BoardSquare> boardSquares = new ArrayList<>();
         boardSquares.add(BoardSquare.of("a2"));
         boardSquares.add(BoardSquare.of("a3"));
-        assertThat(chessBoard.canMove(boardSquares, blackTurn)).isFalse();
+        assertThat(chessBoard.movePieceWhenCanMove(boardSquares, blackTurn)).isFalse();
 
         boardSquares.clear();
         boardSquares.add(BoardSquare.of("a7"));
         boardSquares.add(BoardSquare.of("a6"));
-        assertThat(chessBoard.canMove(boardSquares, blackTurn)).isTrue();
+        assertThat(chessBoard.movePieceWhenCanMove(boardSquares, blackTurn)).isTrue();
 
         boardSquares.clear();
         boardSquares.add(BoardSquare.of("a7"));
         boardSquares.add(BoardSquare.of("b1"));
-        assertThat(chessBoard.canMove(boardSquares, blackTurn)).isFalse();
+        assertThat(chessBoard.movePieceWhenCanMove(boardSquares, blackTurn)).isFalse();
     }
 
     @Test

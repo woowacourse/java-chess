@@ -1,4 +1,4 @@
-package chess.domain.piece.abstraction;
+package chess.domain.movement;
 
 @FunctionalInterface
 public interface RepeatMovable extends Movable {

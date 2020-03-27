@@ -1,8 +1,15 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
-
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +42,10 @@ public class ChessBoard {
 
         for (int i = 0; i < 8; i++) {
             char file = (char) ('a' + i);
-            chessBoard.put(BoardSquare.of(String.valueOf(file) + 2), Pawn.getPieceInstance(Color.WHITE));
-            chessBoard.put(BoardSquare.of(String.valueOf(file) + 7), Pawn.getPieceInstance(Color.BLACK));
+            chessBoard
+                .put(BoardSquare.of(String.valueOf(file) + 2), Pawn.getPieceInstance(Color.WHITE));
+            chessBoard
+                .put(BoardSquare.of(String.valueOf(file) + 7), Pawn.getPieceInstance(Color.BLACK));
         }
     }
 
@@ -44,19 +53,21 @@ public class ChessBoard {
         return chessBoard;
     }
 
-    public boolean canMove(List<BoardSquare> boardSquares, boolean blackTurn) {
+    public boolean movePieceWhenCanMove(List<BoardSquare> boardSquares, boolean blackTurn) {
+        if (canMove(boardSquares, blackTurn)) {
+            movePiece(boardSquares);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean canMove(List<BoardSquare> boardSquares, boolean blackTurn) {
         BoardSquare before = boardSquares.get(0);
         BoardSquare after = boardSquares.get(1);
         if (!chessBoard.containsKey(before) || chessBoard.get(before).isBlack() != blackTurn) {
             return false;
         }
         return chessBoard.get(before).getCheatSheet(before, chessBoard).contains(after);
-    }
-
-    public void movePieceWhenCanMove(List<BoardSquare> boardSquares, boolean blackTurn) {
-        if (canMove(boardSquares, blackTurn)) {
-            movePiece(boardSquares);
-        }
     }
 
     public void movePiece(List<BoardSquare> boardSquares) {
@@ -109,10 +120,10 @@ public class ChessBoard {
     public List<Color> getWinners() {
         Map<Color, Double> teamScore = getTeamScore();
         if (teamScore.get(Color.BLACK) > teamScore.get(Color.WHITE)) {
-            return Arrays.asList(Color.BLACK);
+            return Collections.singletonList(Color.BLACK);
         }
         if (teamScore.get(Color.BLACK) < teamScore.get(Color.WHITE)) {
-            return Arrays.asList(Color.WHITE);
+            return Collections.singletonList(Color.WHITE);
         }
         return Arrays.asList(Color.WHITE, Color.BLACK);
     }

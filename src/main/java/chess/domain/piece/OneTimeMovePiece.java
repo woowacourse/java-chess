@@ -1,9 +1,7 @@
-package chess.domain.piece.abstraction;
+package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Type;
+import chess.domain.movement.Movable;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;

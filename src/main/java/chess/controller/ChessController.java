@@ -6,7 +6,6 @@ import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,11 +18,13 @@ public class ChessController {
         ChessBoard chessBoard = new ChessBoard();
 
         start(chessBoard);
-        String input;
-        GameState gameState;
+        proceed(chessBoard);
+    }
+
+    private static void proceed(ChessBoard chessBoard) {
         boolean blackTurn = false;
         while (true) {
-            input = InputView.inputStart();
+            String input = InputView.inputStart();
             List<BoardSquare> boardSquares = new ArrayList<>();
             if (input.length() == 10) {
                 List<String> inputs = Arrays.asList(input.split(" "));
@@ -31,12 +32,12 @@ public class ChessController {
                 boardSquares.add(BoardSquare.of(inputs.get(1)));
                 boardSquares.add(BoardSquare.of(inputs.get(2)));
             }
-            gameState = GameState.of(input);
+            GameState gameState = GameState.of(input);
             if (gameState == GameState.START) {
                 throw new IllegalArgumentException("왜 시작하세요");
             }
             if (gameState == GameState.MOVE) {
-                if (proceed(chessBoard, boardSquares, blackTurn)) {
+                if (move(chessBoard, boardSquares, blackTurn)) {
                     blackTurn = !blackTurn;
                 }
             }
@@ -63,9 +64,9 @@ public class ChessController {
         OutputView.printWinners(chessBoard.getWinners());
     }
 
-    private static boolean proceed(ChessBoard chessBoard, List<BoardSquare> boardSquares, boolean blackTurn) {
-        if (chessBoard.canMove(boardSquares, blackTurn)) {
-            chessBoard.movePieceWhenCanMove(boardSquares, blackTurn);
+    private static boolean move(ChessBoard chessBoard, List<BoardSquare> boardSquares,
+        boolean blackTurn) {
+        if (chessBoard.movePieceWhenCanMove(boardSquares, blackTurn)) {
             OutputView.printChessBoard(chessBoard);
             return true;
         }
