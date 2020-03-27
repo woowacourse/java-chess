@@ -20,8 +20,8 @@ public class ChessBoard {
 		validate(sourcePosition, targetPosition);
 
 		ChessPiece sourceChessPiece = findSourceChessPieceFrom(sourcePosition);
-		checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
 		checkLeapable(sourceChessPiece, sourcePosition, targetPosition);
+		checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
 		moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
 	}
 
@@ -37,6 +37,35 @@ public class ChessBoard {
 			throw new IllegalArgumentException("해당 위치에 체스 피스가 존재하지 않습니다.");
 		}
 		return sourceChessPiece;
+	}
+
+	private void checkLeapable(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
+		if (!sourceChessPiece.canLeap()) {
+			checkChessPieceRoute(sourcePosition, targetPosition);
+		}
+	}
+
+	private void checkChessPieceRoute(Position sourcePosition, Position targetPosition) {
+		MoveDirection checkingDirection = findDirectionOf(sourcePosition, targetPosition);
+		Position checkingPosition = checkingDirection.move(sourcePosition);
+
+		while (!checkingPosition.equals(targetPosition) && isChessPieceNotExistAt(checkingPosition)) {
+			checkingPosition = checkingDirection.move(checkingPosition);
+		}
+	}
+
+	private MoveDirection findDirectionOf(Position sourcePosition, Position targetPosition) {
+		return Arrays.stream(MoveDirection.values())
+			.filter(moveDirection -> moveDirection.isSameDirectionFrom(sourcePosition, targetPosition))
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException("체스 피스가 이동할 수 없는 위치를 입력하였습니다."));
+	}
+
+	private boolean isChessPieceNotExistAt(Position checkingPosition) {
+		if (Objects.nonNull(chessBoard.get(checkingPosition))) {
+			throw new NullPointerException("체스 피스의 이동 경로에 다른 체스 피스가 존재합니다.");
+		}
+		return true;
 	}
 
 	private void checkMovableOrCatchable(ChessPiece sourceChessPiece, Position sourcePosition,
@@ -67,35 +96,6 @@ public class ChessBoard {
 		if (!sourceChessPiece.canMove(sourcePosition, targetPosition)) {
 			throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
 		}
-	}
-
-	private void checkLeapable(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
-		if (!sourceChessPiece.canLeap()) {
-			checkChessPieceRoute(sourcePosition, targetPosition);
-		}
-	}
-
-	private void checkChessPieceRoute(Position sourcePosition, Position targetPosition) {
-		MoveDirection checkingDirection = findDirectionOf(sourcePosition, targetPosition);
-		Position checkingPosition = checkingDirection.move(sourcePosition);
-
-		while (!checkingPosition.equals(targetPosition) && isChessPieceNotExistAt(checkingPosition)) {
-			checkingPosition = checkingDirection.move(checkingPosition);
-		}
-	}
-
-	private MoveDirection findDirectionOf(Position sourcePosition, Position targetPosition) {
-		return Arrays.stream(MoveDirection.values())
-			.filter(moveDirection -> moveDirection.isSameDirectionFrom(sourcePosition, targetPosition))
-			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException("체스 피스가 이동할 수 없는 위치를 입력하였습니다."));
-	}
-
-	private boolean isChessPieceNotExistAt(Position checkingPosition) {
-		if (Objects.nonNull(chessBoard.get(checkingPosition))) {
-			throw new NullPointerException("체스 피스의 이동 경로에 다른 체스 피스가 존재합니다.");
-		}
-		return true;
 	}
 
 	private void moveChessPiece(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
