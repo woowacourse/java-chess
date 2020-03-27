@@ -20,7 +20,7 @@ class DirectionTest {
 
     @DisplayName("예외 테스트: 입력한 이동 방향에 맞는 Direction이 없는 경우 예외 발생")
     @ParameterizedTest
-    @CsvSource(value = {"2,1", "0,0"})
+    @CsvSource(value = {"3,1", "0,0"})
     void findDirection_1(int xGap, int yGap) {
         assertThatThrownBy(() -> Direction.findDirection(xGap, yGap))
                 .isInstanceOf(NullPointerException.class);

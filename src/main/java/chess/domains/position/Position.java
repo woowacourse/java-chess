@@ -101,4 +101,8 @@ public class Position implements Comparable<Position> {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    public boolean isColumn(char column) {
+        return this.x == column;
+    }
 }
