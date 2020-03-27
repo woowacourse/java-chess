@@ -24,7 +24,8 @@ public class AllRouteGenerator {
 
     private static void makeInitialPawnRoutes(ChessPiece chessPiece, List<Route> routes, Position initialPosition) {
         List<Position> positions;
-        if (chessPiece instanceof Pawn && ((Pawn) chessPiece).isFirstMove()) {
+        boolean isPawn = chessPiece instanceof Pawn;
+        if (isPawn && ((Pawn) chessPiece).isFirstMove()) {
             positions = new ArrayList<>();
 
             positions.add(Position.of(initialPosition.getX() + Direction.UP.getX(), initialPosition.getY()));

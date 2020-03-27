@@ -19,6 +19,7 @@ public class Application {
     private static void run() {
         ChessBoard chessBoard = new ChessBoard(BoardFactory.createBoard());
         String command = "";
+
         while (!END.equals(command) && !chessBoard.isGameEnd()) {
             command = getCommand();
             executeCommand(chessBoard, command);

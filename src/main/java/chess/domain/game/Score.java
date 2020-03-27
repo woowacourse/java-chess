@@ -7,11 +7,11 @@ public class Score {
         this.score = score;
     }
 
-    public static Score of(double score){
+    public static Score of(double score) {
         return new Score(score);
     }
 
-    public Score add(double addScore){
+    public Score add(double addScore) {
         return of(score + addScore);
     }
 

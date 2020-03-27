@@ -22,6 +22,7 @@ public class OutputView {
         for (int j = 0; j <= 7; j++) {
             Row row = board.get(index - 1);
             ChessPiece chessPiece = row.get(j);
+
             System.out.print(chessPiece.getName());
         }
     }
