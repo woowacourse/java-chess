@@ -15,7 +15,7 @@ public class MovePatternFactory {
 		}
 		if ((Math.abs(source.calculateFileDistance(target)) == ONE_POINT && Math.abs(source.calculateRankDistance(target)) == TWO_POINT)
 				|| (Math.abs(source.calculateRankDistance(target)) == ONE_POINT && Math.abs(source.calculateFileDistance(target)) == TWO_POINT)) {
-			return new KnightPattern(target);
+			return new KnightPattern();
 		}
 		return null;
 	}
