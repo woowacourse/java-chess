@@ -23,6 +23,14 @@ public class PawnTest {
 	}
 
 	@Test
+	@DisplayName("폰 처음 2칸 이동")
+	void move_start() {
+		Piece piece = new Pawn(Position.from("a2"), Color.WHITE);
+		piece.move(new Pawn(Position.from("a4"), Color.BLACK));
+		assertThat(piece.getPosition()).isEqualTo(Position.from("a4"));
+	}
+
+	@Test
 	@DisplayName("폰의 대각선에 적이 있으면 이동")
 	void move_enemy() {
 		Piece piece = new Pawn(Position.from("a2"), Color.WHITE);
@@ -32,7 +40,7 @@ public class PawnTest {
 
 	@ParameterizedTest
 	@DisplayName("폰이 이동할 수 없는 위치인 경우 예외 발생")
-	@CsvSource(value = {"a2,a4", "a2,b3"})
+	@CsvSource(value = {"a2,a5", "a2,b3"})
 	void move_invalid_direction(String source, String target) {
 		Piece piece = new Pawn(Position.from(source), Color.WHITE);
 		assertThatExceptionOfType(RuntimeException.class).isThrownBy(

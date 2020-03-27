@@ -65,6 +65,10 @@ public class Position {
 		return this.x == x;
 	}
 
+	public boolean equalsY(int y) {
+		return this.y == y;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
