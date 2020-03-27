@@ -17,10 +17,10 @@ public class OutputView {
 
 	public static void printBoard(Board board) {
 		board.getBoard()
-				.forEach(OutputView::printFile);
+				.forEach(OutputView::printPiece);
 	}
 
-	private static void printFile(Position position, Piece piece) {
+	private static void printPiece(Position position, Piece piece) {
 		System.out.print(drawPiece(piece));
 		if (position.equalsX(Position.END_X - 1)) {
 			System.out.println();
