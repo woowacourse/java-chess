@@ -28,10 +28,15 @@ public class Position {
     }
 
     public static Position of(String key) {
-//        if (CACHE.get(key) == null) {
-//			throw new IllegalArgumentException("")
-//        }
-        return CACHE.get(key);
+        String lowerCaseKey = key.toLowerCase();
+        validate(lowerCaseKey);
+        return CACHE.get(lowerCaseKey);
+    }
+
+    private static void validate(String key){
+        if (CACHE.get(key) == null) {
+            throw new IllegalArgumentException("위치 입력값이 올바르지 않습니다.");
+        }
     }
 
     private static String getKey(File file, Rank rank) {
