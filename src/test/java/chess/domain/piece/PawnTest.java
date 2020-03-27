@@ -37,9 +37,7 @@ public class PawnTest {
         Piece pieceWhite = Pawn.getPieceInstance(Color.WHITE);
 
         Set<BoardSquare> availableSquaresBlack = pieceBlack.getCheatSheet(BoardSquare.of("a7"), board);
-        System.out.println("Blacks" + availableSquaresBlack);
         Set<BoardSquare> availableSquaresWhite = pieceWhite.getCheatSheet(BoardSquare.of("a2"), board);
-        System.out.println("whites" + availableSquaresWhite);
 
         assertThat(availableSquaresBlack.contains(BoardSquare.of("a5"))).isTrue();
         assertThat(availableSquaresBlack.contains(BoardSquare.of("a6"))).isTrue();

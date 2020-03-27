@@ -13,6 +13,7 @@ public abstract class Piece implements Movable {
     private final Type type;
 
     protected Piece(Color color, Type type) {
+        NullChecker.validateNotNull(color, type);
         this.color = color;
         this.type = type;
     }
@@ -21,17 +22,22 @@ public abstract class Piece implements Movable {
         return color.getApplyTypeName(type);
     }
 
-    public Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
-        NullChecker.validateNotNull(boardSquare);
+    protected Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
         Set<BoardSquare> availableBoardSquares = new HashSet<>();
         int repeatCount = type.getRepeatCount(BoardSquare.MAX_FILE_AND_RANK_COUNT, BoardSquare.MIN_FILE_AND_RANK_COUNT);
-        for (int i = 1; i <= repeatCount; i++) {
-            for (Direction direction : color.getChangeDirection(type.getDirections())) {
-                availableBoardSquares.add(boardSquare.addIfInBoundary(direction.getMultiplyFileAddAmount(i), direction.getMultiplyRankAddAmount(i)));
-            }
+        for (int count = 1; count <= repeatCount; count++) {
+            addCheatSheet(boardSquare, availableBoardSquares, count);
+        }
+        return availableBoardSquares;
+    }
+
+    private void addCheatSheet(BoardSquare boardSquare, Set<BoardSquare> availableBoardSquares, int count) {
+        for (Direction direction : color.getChangeDirection(type.getDirections())) {
+            int fileIncrementBy = direction.getMultiplyFileAddAmount(count);
+            int rankIncrementBy = direction.getMultiplyRankAddAmount(count);
+            availableBoardSquares.add(boardSquare.addIfInBoundary(fileIncrementBy, rankIncrementBy));
         }
         availableBoardSquares.remove(boardSquare);
-        return availableBoardSquares;
     }
 
     @Override
@@ -39,9 +45,7 @@ public abstract class Piece implements Movable {
 
     protected Set<BoardSquare> findSquaresToRemove(BoardSquare s, int fileAddAmount, int rankAddAmount) {
         Set<BoardSquare> squaresToRemove = new HashSet<>();
-        int file = 0;
-        int rank = 0;
-        for (int i = 0; i < 8; i++, file += fileAddAmount, rank += rankAddAmount) {
+        for (int i = 0, file = 0, rank = 0; i < 8; i++, file += fileAddAmount, rank += rankAddAmount) {
             squaresToRemove.add(s.addIfInBoundary(file, rank));
         }
         squaresToRemove.remove(s);

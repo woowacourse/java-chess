@@ -29,7 +29,6 @@ public class King extends Piece {
 
     @Override
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
-        NullChecker.validateNotNull(boardSquare, board);
         return getAllCheatSheet(boardSquare).stream()
                 .filter(s -> !(board.containsKey(s) && isSameColor(board.get(s))))
                 .collect(Collectors.toSet());

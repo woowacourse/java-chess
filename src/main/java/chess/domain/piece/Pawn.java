@@ -28,13 +28,12 @@ public class Pawn extends Piece {
 
     @Override
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
-        NullChecker.validateNotNull(boardSquare, board);
         Set<BoardSquare> boardSquares = getAllCheatSheet(boardSquare);
         for (BoardSquare s : boardSquares) {
             BoardSquare boardSquareRight = s.addIfInBoundary(-1, 0);
             BoardSquare boardSquareLeft = s.addIfInBoundary(1, 0);
             if (boardSquare.isPawnStartPoint(isBlack())) {
-                boardSquares.add(s.addIfInBoundary(0, s.getRankSubtract(boardSquare)));
+                boardSquares.add(s.addIfInBoundary(0, s.getRankCompare(boardSquare)));
             }
             if (board.containsKey(s)) {
                 boardSquares.removeAll(getAllCheatSheet(boardSquare));

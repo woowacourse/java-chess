@@ -50,9 +50,9 @@ public class BoardSquareTest {
         BoardSquare boardSquareA3 = BoardSquare.of("a3");
         BoardSquare boardSquareB2 = BoardSquare.of("b2");
         BoardSquare boardSquareC1 = BoardSquare.of("c1");
-        assertThat(boardSquareB2.getFileSubtract(boardSquareA3)).isEqualTo(1);
-        assertThat(boardSquareB2.getFileSubtract(boardSquareB2)).isEqualTo(0);
-        assertThat(boardSquareB2.getFileSubtract(boardSquareC1)).isEqualTo(-1);
+        assertThat(boardSquareB2.getFileCompare(boardSquareA3)).isEqualTo(1);
+        assertThat(boardSquareB2.getFileCompare(boardSquareB2)).isEqualTo(0);
+        assertThat(boardSquareB2.getFileCompare(boardSquareC1)).isEqualTo(-1);
     }
 
     @DisplayName("Rank의 차이를 가져옴")
@@ -61,9 +61,9 @@ public class BoardSquareTest {
         BoardSquare boardSquareA3 = BoardSquare.of("a3");
         BoardSquare boardSquareB2 = BoardSquare.of("b2");
         BoardSquare boardSquareC1 = BoardSquare.of("c1");
-        assertThat(boardSquareB2.getRankSubtract(boardSquareA3)).isEqualTo(-1);
-        assertThat(boardSquareB2.getRankSubtract(boardSquareB2)).isEqualTo(0);
-        assertThat(boardSquareB2.getRankSubtract(boardSquareC1)).isEqualTo(1);
+        assertThat(boardSquareB2.getRankCompare(boardSquareA3)).isEqualTo(-1);
+        assertThat(boardSquareB2.getRankCompare(boardSquareB2)).isEqualTo(0);
+        assertThat(boardSquareB2.getRankCompare(boardSquareC1)).isEqualTo(1);
     }
 
 }

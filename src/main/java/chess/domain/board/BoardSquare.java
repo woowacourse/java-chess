@@ -64,12 +64,12 @@ public class BoardSquare {
         return "{" + file + rank + '}';
     }
 
-    public int getFileSubtract(BoardSquare boardSquare) {
-        return this.file - boardSquare.file;
+    public int getFileCompare(BoardSquare boardSquare) {
+        return Integer.compare(this.file, boardSquare.file);
     }
 
-    public int getRankSubtract(BoardSquare boardSquare) {
-        return this.rank - boardSquare.rank;
+    public int getRankCompare(BoardSquare boardSquare) {
+        return Integer.compare(this.rank, boardSquare.rank);
     }
 
     public boolean isPawnStartPoint(boolean black) {
