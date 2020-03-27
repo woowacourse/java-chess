@@ -23,7 +23,7 @@ public class ChessGameController {
 			put("end", tokenizer -> chessGame.end());
 			put("move", tokenizer -> chessGame.move(Position.from(tokenizer.nextToken()),
 					Position.from(tokenizer.nextToken())));
-			put("status", tokenizer -> chessGame.status());
+			put("status", tokenizer -> OutputView.printStatus(chessGame.status()));
 		}};
 	}
 
