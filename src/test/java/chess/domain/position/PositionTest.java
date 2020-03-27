@@ -46,6 +46,16 @@ class PositionTest {
         assertThat(distance).isEqualTo(Distance.of(toX - fromX, toY - fromY));
     }
 
+    @ParameterizedTest
+    @DisplayName("#isBackward() : should return boolean as to Position 'to' is forward than 'from'")
+    @MethodSource({"getCasesForIsBackward"})
+    void isBackward(Position from, Direction teamForwardDirection, boolean expected) {
+        Position to = Position.of(1,2);
+        assertThat(to.isBackward(from, teamForwardDirection)).isEqualTo(expected);
+
+    }
+
+
     private static Stream<Arguments> getValidCasesForOf() {
         return Stream.of(
                 Arguments.of(1,1),
@@ -57,6 +67,13 @@ class PositionTest {
         return Stream.of(
                 Arguments.of(0,0),
                 Arguments.of(9,9)
+        );
+    }
+
+    private static Stream<Arguments> getCasesForIsBackward() {
+        return Stream.of(
+                Arguments.of(Position.of(1,1), Direction.NORTH, false),
+                Arguments.of(Position.of(1,3), Direction.NORTH, true)
         );
     }
 }

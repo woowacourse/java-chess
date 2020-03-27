@@ -31,7 +31,7 @@ public class InitializedPawn extends Initialized {
             return true;
         }
 
-        if (to.isNotForward(position, team.getForwardDirection())) {
+        if (to.isBackward(position, team.getForwardDirection())) {
             return true;
         }
 

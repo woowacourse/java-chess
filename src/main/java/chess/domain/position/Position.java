@@ -80,7 +80,7 @@ public class Position {
         return Arrays.asList(eastDiagonal, westDiagonal);
     }
 
-    public boolean isNotForward(Position from, Direction teamForwardDirection) {
+    public boolean isBackward(Position from, Direction teamForwardDirection) {
         int standard = (y - from.y) * teamForwardDirection.getVertical();
         return standard <= 0;
     }
