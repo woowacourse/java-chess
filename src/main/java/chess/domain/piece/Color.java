@@ -1,15 +1,9 @@
 package chess.domain.piece;
 
 public enum Color {
-	WHITE("white"),
-	BLACK("black"),
-	BLANK("blank");
-
-	private final String name;
-
-	Color(String name) {
-		this.name = name;
-	}
+	WHITE,
+	BLACK,
+	BLANK;
 
 	public Color changeColor() {
 		if (isWhite()) {
@@ -35,9 +29,5 @@ public enum Color {
 
 	public boolean isSame(Color color) {
 		return this.equals(color);
-	}
-
-	public String getName() {
-		return name;
 	}
 }

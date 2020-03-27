@@ -37,7 +37,7 @@ public class OutputView {
 	}
 
 	public static void printFinishByKingDead(Color color) {
-		System.out.println(color.getName() + "가 승리하였습니다.");
+		System.out.println(color + "가 승리하였습니다.");
 	}
 
 	private static void printEmptyLine() {
@@ -51,7 +51,7 @@ public class OutputView {
 	public static void printScore(ScoreResult scores) {
 		printEmptyLine();
 		for (Color color : scores.keySet()) {
-			System.out.println(color.getName() + "의 점수는 " + scores.getScoreBy(color) + "점 입니다.");
+			System.out.println(color + "의 점수는 " + scores.getScoreBy(color) + "점 입니다.");
 		}
 	}
 }
