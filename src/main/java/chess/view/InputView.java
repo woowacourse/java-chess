@@ -3,14 +3,14 @@ package chess.view;
 import java.util.Scanner;
 
 public class InputView {
-	public static final String START_COMMAND = "start";
 	private static final int MOVE_COMMAND_LENGTH = 3;
 	private static final int MOVE_COMMAND_INDEX = 0;
 	private static final int SOURCE_INDEX = 1;
 	private static final int TARGET_INDEX = 2;
-	private static final String MOVE_COMMAND = "move";
 	private static final String BLANK = " ";
+	private static final String MOVE_COMMAND = "move";
 	private static final String END_COMMAND = "end";
+	public static final String START_COMMAND = "start";
 	private static final String INPUT_MESSAGE_STATUS = "\n게임이 종료 되었습니다\n'status' 를 입력하여 결과를 확인하세요";
 	private static final String INPUT_MESSAGE_GAME_START = "체스 게임을 시작합니다.\n게임 시작은 start, 종료 end 명령을 입력하세요";
 	private static final String INPUT_MESSAGE_MOVE_COMMAND = "\n게임 이동 : move source위치 tartget위치 - 예 : move b2 b3";
