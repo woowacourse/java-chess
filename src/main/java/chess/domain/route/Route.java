@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Route {
+public class Route implements Movable {
     private final List<Position> route;
 
     public Route(List<Position> route) {
@@ -23,6 +23,13 @@ public class Route {
     public static Route findRoute(Position fromPosition, Direction direction, PieceType pieceType) {
         List<Position> movablePositions = findAllMovablePositions(fromPosition, direction);
         movablePositions = subListByPieceType(movablePositions, fromPosition, pieceType);
+
+        if (pieceType == PieceType.PAWN) {
+            if (direction == Direction.NORTH || direction == Direction.SOUTH) {
+                return new RouteToProceed(movablePositions);
+            }
+            return new RouteToAttack(movablePositions);
+        }
 
         return new Route(movablePositions);
     }

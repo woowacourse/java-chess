@@ -22,11 +22,23 @@ public class Piece {
         return this.team == team;
     }
 
+    public boolean isType(PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
+
     public String getAcronym() {
         return pieceType.getAcronym(team);
     }
 
     public double getScore() {
         return pieceType.getScore();
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public boolean isOppositeTeam(Team team) {
+        return this.team != team;
     }
 }
