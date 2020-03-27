@@ -28,18 +28,18 @@ public enum Direction {
         this.rankAddAmount = rankAddAmount;
     }
 
-    public int getFileAddAmount() {
-        return fileAddAmount;
+    public int getMultiplyFileAddAmount(int value) {
+        return fileAddAmount * value;
     }
 
-    public int getRankAddAmount() {
-        return rankAddAmount;
+    public int getMultiplyRankAddAmount(int value) {
+        return rankAddAmount * value;
     }
 
     public Direction reverse() {
         return Arrays.stream(Direction.values())
-                .filter(direction -> direction.fileAddAmount == this.fileAddAmount - 1)
-                .filter(direction -> direction.rankAddAmount == this.rankAddAmount - 1)
+                .filter(direction -> direction.fileAddAmount == this.fileAddAmount * -1)
+                .filter(direction -> direction.rankAddAmount == this.rankAddAmount * -1)
                 .findFirst()
                 .orElseThrow(IllegalAccessError::new);
     }

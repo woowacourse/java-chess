@@ -4,7 +4,6 @@ import chess.domain.board.BoardSquare;
 import util.NullChecker;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,22 +25,6 @@ public class King extends Piece {
     public static Piece getPieceInstance(Color color) {
         NullChecker.validateNotNull(color);
         return CACHE.get(color);
-    }
-
-    @Override
-    public Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
-        NullChecker.validateNotNull(boardSquare);
-        Set<BoardSquare> availableBoardSquares = new HashSet<>();
-
-        int index = -1;
-        for (int i = 0; i < 2; i++) {
-            availableBoardSquares.add(boardSquare.addIfInBoundary(index, 0));
-            availableBoardSquares.add(boardSquare.addIfInBoundary(0, index));
-            availableBoardSquares.add(boardSquare.addIfInBoundary(index * -1, index));
-            availableBoardSquares.add(boardSquare.addIfInBoundary(index, index));
-            index *= -1;
-        }
-        return availableBoardSquares;
     }
 
     @Override

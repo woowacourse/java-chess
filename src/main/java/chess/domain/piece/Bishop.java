@@ -4,7 +4,6 @@ import chess.domain.board.BoardSquare;
 import util.NullChecker;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,18 +24,6 @@ public class Bishop extends Piece {
     public static Piece getPieceInstance(Color color) {
         NullChecker.validateNotNull(color);
         return CACHE.get(color);
-    }
-
-    @Override
-    public Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
-        NullChecker.validateNotNull(boardSquare);
-        Set<BoardSquare> availableBoardSquares = new HashSet<>();
-        for (int index = -7; index < 8; index++) {
-            availableBoardSquares.add(boardSquare.addIfInBoundary(index * -1, index));
-            availableBoardSquares.add(boardSquare.addIfInBoundary(index, index));
-        }
-        availableBoardSquares.remove(boardSquare);
-        return availableBoardSquares;
     }
 
     @Override

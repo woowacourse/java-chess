@@ -4,7 +4,6 @@ import chess.domain.board.BoardSquare;
 import util.NullChecker;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,38 +27,23 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
-        NullChecker.validateNotNull(boardSquare);
-        Set<BoardSquare> availableBoardSquares = new HashSet<>();
-        int index = 1;
-        if (isBlack()) {
-            index *= -1;
-        }
-        if (boardSquare.isPawnStartPoint(isBlack())) {
-            availableBoardSquares.add(boardSquare.addIfInBoundary(0, index * 2));
-        }
-        availableBoardSquares.add(boardSquare.addIfInBoundary(0, index));
-        return availableBoardSquares;
-    }
-
-    @Override
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
         NullChecker.validateNotNull(boardSquare, board);
         Set<BoardSquare> boardSquares = getAllCheatSheet(boardSquare);
         for (BoardSquare s : boardSquares) {
-            if (Math.abs(boardSquare.getRankSubtract(s)) == 1) {
-                BoardSquare boardSquareRight = s.addIfInBoundary(-1, 0);
-                BoardSquare boardSquareLeft = s.addIfInBoundary(1, 0);
-                if (board.containsKey(s)) {
-                    boardSquares.removeAll(getAllCheatSheet(boardSquare));
-                }
-                if (board.containsKey(boardSquareRight) && !isSameColor(board.get(boardSquareRight))) {
-                    boardSquares.add(boardSquareRight);
-                }
-                if (board.containsKey(boardSquareLeft) && !isSameColor(board.get(boardSquareLeft))) {
-                    boardSquares.add(boardSquareLeft);
-                }
-                continue;
+            BoardSquare boardSquareRight = s.addIfInBoundary(-1, 0);
+            BoardSquare boardSquareLeft = s.addIfInBoundary(1, 0);
+            if (boardSquare.isPawnStartPoint(isBlack())) {
+                boardSquares.add(s.addIfInBoundary(0, s.getRankSubtract(boardSquare)));
+            }
+            if (board.containsKey(s)) {
+                boardSquares.removeAll(getAllCheatSheet(boardSquare));
+            }
+            if (board.containsKey(boardSquareRight) && !isSameColor(board.get(boardSquareRight))) {
+                boardSquares.add(boardSquareRight);
+            }
+            if (board.containsKey(boardSquareLeft) && !isSameColor(board.get(boardSquareLeft))) {
+                boardSquares.add(boardSquareLeft);
             }
             if (board.containsKey(s) && isSameColor(board.get(s))) {
                 boardSquares.remove(s);

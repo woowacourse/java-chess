@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
+import util.NullChecker;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -20,7 +21,18 @@ public abstract class Piece implements Movable {
         return color.getApplyTypeName(type);
     }
 
-    public abstract Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare);
+    public Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
+        NullChecker.validateNotNull(boardSquare);
+        Set<BoardSquare> availableBoardSquares = new HashSet<>();
+        int repeatCount = type.getRepeatCount(BoardSquare.MAX_FILE_AND_RANK_COUNT, BoardSquare.MIN_FILE_AND_RANK_COUNT);
+        for (int i = 1; i <= repeatCount; i++) {
+            for (Direction direction : color.getChangeDirection(type.getDirections())) {
+                availableBoardSquares.add(boardSquare.addIfInBoundary(direction.getMultiplyFileAddAmount(i), direction.getMultiplyRankAddAmount(i)));
+            }
+        }
+        availableBoardSquares.remove(boardSquare);
+        return availableBoardSquares;
+    }
 
     @Override
     public abstract Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board);
@@ -48,7 +60,4 @@ public abstract class Piece implements Movable {
         return this.color == piece.color;
     }
 
-    public boolean isMoveRepeat() {
-        return type.isRepeat();
-    }
 }

@@ -3,9 +3,7 @@ package chess.domain.board;
 import util.NullChecker;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class BoardSquare {
 
@@ -14,6 +12,8 @@ public class BoardSquare {
     private final static int FILE_COUNT = 8;
     private final static int RANK_START = 1;
     private final static int RANK_COUNT = 8;
+    public final static int MAX_FILE_AND_RANK_COUNT = Integer.max(RANK_COUNT, FILE_COUNT);
+    public final static int MIN_FILE_AND_RANK_COUNT = 1;
     private static final int RANK_BLACK_PAWN_STAT = 7;
     private static final int RANK_WHITE_PAWN_START = 2;
 
@@ -81,9 +81,5 @@ public class BoardSquare {
 
     public boolean isSameFile(BoardSquare boardSquare) {
         return this.file == boardSquare.file;
-    }
-
-    public Set<BoardSquare> getAllBoardSquares() {
-        return new HashSet<>(CACHE.values());
     }
 }

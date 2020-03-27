@@ -12,12 +12,12 @@ public enum Color {
 
     private final String name;
     private final Function<String, String> typeNameChanger;
-    private final Function<List<Direction>, List<Direction>> cheatSheetChanger;
+    private final Function<List<Direction>, List<Direction>> directionChanger;
 
-    Color(String name,Function<String, String> typeNameChanger, Function<List<Direction>, List<Direction>> cheatSheetChanger) {
+    Color(String name, Function<String, String> typeNameChanger, Function<List<Direction>, List<Direction>> directionChanger) {
         this.name = name;
         this.typeNameChanger = typeNameChanger;
-        this.cheatSheetChanger = cheatSheetChanger;
+        this.directionChanger = directionChanger;
     }
 
     public String getName() {
@@ -29,8 +29,8 @@ public enum Color {
         return typeNameChanger.apply(type.getName());
     }
 
-    public List<Direction> getApplyCheatSheet(List<Direction> directions) {
+    public List<Direction> getChangeDirection(List<Direction> directions) {
         NullChecker.validateNotNull(directions);
-        return cheatSheetChanger.apply(directions);
+        return directionChanger.apply(directions);
     }
 }

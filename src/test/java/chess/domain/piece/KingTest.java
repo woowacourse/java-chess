@@ -34,7 +34,7 @@ public class KingTest {
         Set<BoardSquare> availableBoardSquares = piece.getCheatSheet(BoardSquare.of("a6"), board);
 
         assertThat(availableBoardSquares.contains(BoardSquare.of(input))).isTrue();
-        assertThat(availableBoardSquares.size()).isEqualTo(5);
+        assertThat(availableBoardSquares.size()).isEqualTo(4);
     }
 
 }
