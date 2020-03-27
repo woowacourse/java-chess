@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Pawn;
+import chess.domain.game.Score;
 import chess.domain.game.Team;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
@@ -204,23 +205,45 @@ public class ChessBoard {
     }
 
     public double getTotalScore() {
-        double score = 0;
+        Score score = Score.of(0);
 
         for (int j = 0; j < 8; j++) {
-            int pawnCnt = 0;
-            for (int i = 0; i < 8; i++) {
-                ChessPiece chessPiece = board.get(i).get(j);
+            score = getColumnScore(score, j);
+        }
+        return score.getScore();
+    }
 
-                if (chessPiece.getTeam() == nowPlayingTeam) {
-                    if (chessPiece instanceof Pawn) {
-                        pawnCnt++;
-                    }
-                    score += chessPiece.getPoint();
-                }
-            }
-            if (pawnCnt >= 2) {
-                score -= pawnCnt * 0.5;
-            }
+    private Score getColumnScore(Score score, int j) {
+        int pawnCount = 0;
+
+        for (int i = 0; i < 8; i++) {
+            ChessPiece chessPiece = board.get(i).get(j);
+
+            pawnCount = getColumnPawnCount(chessPiece);
+            score = addIfSameTeam(score, chessPiece);
+        }
+        score = subtractSameColumnPawnScore(score, pawnCount);
+        return score;
+    }
+
+    private int getColumnPawnCount(ChessPiece chessPiece) {
+        int pawnCount = 0;
+        if (chessPiece.getTeam() == nowPlayingTeam && chessPiece instanceof Pawn) {
+            pawnCount++;
+        }
+        return pawnCount;
+    }
+
+    private Score addIfSameTeam(Score score, ChessPiece chessPiece) {
+        if (chessPiece.getTeam() == nowPlayingTeam) {
+            return score.add(chessPiece.getPoint());
+        }
+        return score;
+    }
+
+    private Score subtractSameColumnPawnScore(Score score, int pawnCount) {
+        if (pawnCount >= 2) {
+            return score.subtract(pawnCount * 0.5);
         }
         return score;
     }
