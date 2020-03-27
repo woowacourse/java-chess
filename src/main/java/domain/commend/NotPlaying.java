@@ -27,6 +27,6 @@ public abstract class NotPlaying extends GameState {
 
 	@Override
 	public State status() {
-		return new Status(getPieces());
+		return new Status(pieces);
 	}
 }

@@ -3,6 +3,7 @@ package chess;
 import domain.board.Board;
 import domain.commend.End;
 import domain.commend.State;
+import domain.commend.Status;
 import domain.pieces.Piece;
 import domain.pieces.Pieces;
 import domain.pieces.StartPieces;
@@ -18,7 +19,12 @@ public class WebUIChessApplication {
         State state = new End(startPieces);
         while (true) {
             state = state.pushCommend(InputView.inputGameCommend());
-            OutputView.printBoard(Board.of(state.getSet()));
+            if (state.isPlaying()) {
+                OutputView.printBoard(Board.of(state.getSet()));
+            }
+            if (state.isStatus()) {
+                OutputView.printStatus(state.getPieces());
+            }
         }
     }
 

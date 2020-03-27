@@ -1,6 +1,8 @@
 package domain.commend;
 
+import domain.board.Board;
 import domain.pieces.Piece;
+import domain.pieces.Pieces;
 
 import java.util.Set;
 
@@ -17,4 +19,10 @@ public interface State {
 	State pushCommend(String input);
 
 	Set<Piece> getSet();
+
+	Pieces getPieces();
+
+	boolean isStatus();
+
+	boolean isPlaying();
 }

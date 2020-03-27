@@ -13,14 +13,10 @@ public abstract class GameState implements State {
     private static final int THIRD_TOKEN_INDEX = 2;
     private static final int MOVE_COMMEND_SIZE = 3;
 
-    private Pieces pieces;
+    protected Pieces pieces;
 
     protected GameState(Pieces pieces) {
         this.pieces = pieces;
-    }
-
-    protected Pieces getPieces() {
-        return pieces;
     }
 
     @Override
@@ -51,6 +47,21 @@ public abstract class GameState implements State {
         if (tokens.size() != MOVE_COMMEND_SIZE) {
             throw new StateException("잘못된 명령어입니다.");
         }
+    }
+
+    @Override
+    public boolean isStatus() {
+        return this instanceof Status;
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return this instanceof Playing;
+    }
+
+    @Override
+    public Pieces getPieces() {
+        return new Pieces(pieces.getSet());
     }
 
     @Override

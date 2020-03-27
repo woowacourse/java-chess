@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Pieces {
-	private Set<Piece> pieces;
+	private final Set<Piece> pieces;
 
 	public Pieces(Set<Piece> pieces) {
 		this.pieces = new HashSet<>(pieces);
@@ -63,7 +63,7 @@ public class Pieces {
 
 	private boolean isEmptyPoint(Point point) {
 		return pieces.stream()
-				.noneMatch(piece -> piece.getPoint().equals(point));
+				.noneMatch(piece -> piece.matchPoint(point));
 	}
 
 	private void attack(Piece subject, Piece target, Direction direction) {
@@ -71,6 +71,32 @@ public class Pieces {
 		pieces.remove(subject);
 		pieces.remove(target);
 		pieces.add(subject.move(target.getPoint()));
+	}
+
+	public double computeBlackTeamScore() {
+		return pieces.stream()
+				.filter(Piece::isBlack)
+				.mapToDouble(Piece::getScore)
+				.sum();
+	}
+
+	public double computeWhiteTeamScore() {
+		return pieces.stream()
+				.filter(Piece::isWhite)
+				.mapToDouble(Piece::getScore)
+				.sum();
+	}
+
+	public boolean isBlackKingKilled() {
+		return pieces.stream()
+				.filter(Piece::isBlack)
+				.noneMatch(Piece::isKing);
+	}
+
+	public boolean isWhiteKingKilled() {
+		return pieces.stream()
+				.filter(Piece::isWhite)
+				.noneMatch(Piece::isKing);
 	}
 
 	public Set<Piece> getSet() {

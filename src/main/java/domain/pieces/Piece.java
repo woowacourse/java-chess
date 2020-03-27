@@ -62,7 +62,15 @@ public abstract class Piece {
         return point;
     }
 
+    public double getScore() {
+        return score;
+    }
+
     public void canReach(Distance distance) {
+    }
+
+    public boolean isKing() {
+        return this instanceof King;
     }
 
     public boolean matchPoint(Point point) {
