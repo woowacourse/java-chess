@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.status;
 
 import chess.domain.Player;
 
@@ -18,4 +18,5 @@ public class Status {
     public double getScore() {
         return score;
     }
+
 }

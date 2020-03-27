@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.PieceInitPositionFactory;
-import chess.Status;
+import chess.domain.status.Status;
 import chess.domain.chesspieces.*;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;

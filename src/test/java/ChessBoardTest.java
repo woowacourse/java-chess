@@ -1,4 +1,5 @@
-import chess.Status;
+import chess.domain.status.Result;
+import chess.domain.status.Status;
 import chess.domain.ChessBoard;
 import chess.domain.Player;
 import chess.domain.chesspieces.*;
@@ -13,6 +14,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,7 +43,7 @@ public class ChessBoardTest {
     @DisplayName("각각의_플레이어_점수_계산_테스트")
     @ParameterizedTest
     @EnumSource(value = Player.class)
-    void computeScoreTest(Player player) {
+    void createStatusTest(Player player) {
         ChessBoard chessBoard = new ChessBoard();
         Status result = chessBoard.createStatus(player);
         double actual = result.getScore();
@@ -92,6 +94,11 @@ public class ChessBoardTest {
 
     @Test
     void 우승자_확인() {
+        List<Status> statuses = new ArrayList<>();
+        statuses.add(new Status(Player.WHITE, 10));
+        statuses.add(new Status(Player.BLACK, 20));
 
+        Result result = new Result(statuses);
+        assertThat(result.getWinner()).isEqualTo(Player.BLACK);
     }
 }
