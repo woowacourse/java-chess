@@ -25,14 +25,14 @@ public class ChessController {
             // (to do) state 상태 관리 필요하다.
             if (command.equals(Command.MOVE)) {
                 chessBoard.move(Positions.of(input.split(" ")[1]), Positions.of(input.split(" ")[2]));
+                OutputView.printChessBoard(chessBoard.getChessBoard());
             }
             if (command.equals(Command.STATUS)) {
-                // do something
+                OutputView.printStatus(chessBoard.getResult());
             }
             if (command.equals(Command.END)) {
                 return;
             }
-            OutputView.printChessBoard(chessBoard.getChessBoard());
         }
     }
 }

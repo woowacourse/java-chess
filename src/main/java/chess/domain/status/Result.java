@@ -15,7 +15,7 @@ public class Result {
     }
 
     private Player createWinner() {
-        return statuses.stream()
+         return statuses.stream()
                 .max(Comparator.comparingDouble(Status::getScore))
                 .orElseThrow(() -> new IllegalArgumentException("계산 오류 입니다."))
                 .getPlayer();
@@ -23,5 +23,9 @@ public class Result {
 
     public Player getWinner() {
         return winner;
+    }
+
+    public List<Status> getStatuses() {
+        return statuses;
     }
 }

@@ -18,5 +18,4 @@ public class Status {
     public double getScore() {
         return score;
     }
-
 }

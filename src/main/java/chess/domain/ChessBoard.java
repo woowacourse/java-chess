@@ -1,12 +1,13 @@
 package chess.domain;
 
 import chess.PieceInitPositionFactory;
-import chess.domain.status.Status;
 import chess.domain.chesspieces.*;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Row;
+import chess.domain.status.Result;
+import chess.domain.status.Status;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -107,5 +108,10 @@ public class ChessBoard {
                 squares.add(entry.getValue());
         }
         return squares;
+    }
+
+    public Result getResult() {
+        List<Status> statuses = Arrays.asList(createStatus(Player.WHITE), createStatus(Player.BLACK));
+        return new Result(statuses);
     }
 }
