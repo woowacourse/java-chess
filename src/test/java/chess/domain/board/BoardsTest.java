@@ -1,16 +1,19 @@
 package chess.domain.board;
 
-import static chess.domain.position.Fixtures.*;
-import static org.assertj.core.api.Assertions.*;
+import chess.domain.Turn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.king.King;
+import chess.domain.piece.pawn.Pawn;
+import chess.domain.piece.rook.Rook;
+import chess.domain.position.Path;
+import chess.domain.position.Position;
+import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
-
-import chess.domain.piece.Piece;
-import chess.domain.piece.rook.Rook;
-import chess.domain.position.Path;
+import static chess.domain.position.Fixtures.*;
+import static org.assertj.core.api.Assertions.*;
 
 class BoardsTest {
 	@Test
@@ -50,5 +53,67 @@ class BoardsTest {
 		Boards boards = Boards.of(lowerBoard, upperBoard);
 
 		assertThat(boards.hasPieceIn(Path.valueOf(B1, B3))).isTrue();
+	}
+
+	@Test
+	void pawnMove_Success() {
+		Map<String, Piece> lowerBoard = new LinkedHashMap<>();
+		lowerBoard.put("a2", new Pawn(A2));
+		Map<String, Piece> upperBoard = new LinkedHashMap<>();
+
+		Boards boards = Boards.of(lowerBoard, upperBoard);
+
+		assertThatCode(() -> boards.move("a2", "a3", Turn.LOWER))
+				.doesNotThrowAnyException();
+	}
+
+	@Test
+	void pawnMove_Throw_Exception_When_TryFrontAttack() {
+		Map<String, Piece> lowerBoard = new LinkedHashMap<>();
+		lowerBoard.put("a2", new Pawn(A2));
+		Map<String, Piece> upperBoard = new LinkedHashMap<>();
+		upperBoard.put(Position.getReversedNameOf("a3"), new Pawn(A3.reverse()));
+
+		Boards boards = Boards.of(lowerBoard, upperBoard);
+
+		assertThatIllegalArgumentException()
+				.isThrownBy(() -> boards.move("a2", "a3", Turn.LOWER))
+				.withMessage("폰은 전방의 적을 공격할 수 없습니다.");
+	}
+
+	@Test
+	void pawnMove_Throw_Exception_When_TryDiagonalMoveToEmptyPosition() {
+		Map<String, Piece> lowerBoard = new LinkedHashMap<>();
+		lowerBoard.put("a2", new Pawn(A2));
+		Map<String, Piece> upperBoard = new LinkedHashMap<>();
+
+		Boards boards = Boards.of(lowerBoard, upperBoard);
+
+		assertThatIllegalArgumentException()
+				.isThrownBy(() -> boards.move("a2", "b3", Turn.LOWER))
+				.withMessage("폰은 공격이 아니면 대각선 이동이 불가합니다.");
+	}
+
+	@Test
+	void isKingDead_Return_True_When_BoardsHasNotTwoKing() {
+		Map<String, Piece> lowerBoard = new LinkedHashMap<>();
+		lowerBoard.put("a2", new King(A2));
+		Map<String, Piece> upperBoard = new LinkedHashMap<>();
+
+		Boards boards = Boards.of(lowerBoard, upperBoard);
+
+		assertThat(boards.isKingDead()).isTrue();
+	}
+
+	@Test
+	void isKingDead_Return_False_When_BoardsHasTwoKing() {
+		Map<String, Piece> lowerBoard = new LinkedHashMap<>();
+		lowerBoard.put("a2", new King(A2));
+		Map<String, Piece> upperBoard = new LinkedHashMap<>();
+		upperBoard.put("a2", new King(A2));
+
+		Boards boards = Boards.of(lowerBoard, upperBoard);
+
+		assertThat(boards.isKingDead()).isFalse();
 	}
 }
