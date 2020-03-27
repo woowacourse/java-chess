@@ -12,51 +12,43 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    // TODO: 2020/03/26 STATUS ENUM 만들기, 생성자 정리하기
-    private static final int INIT_TURN = 0;
     private static final int NEXT = 1;
 
     private final Map<Position, GamePiece> board;
-    private final int turn;
-    private final boolean isFinished;
+    private final Status status;
 
-    private Board(Map<Position, GamePiece> board, int turn, boolean isFinished) {
+    private Board(Map<Position, GamePiece> board, Status status) {
         this.board = Collections.unmodifiableMap(board);
-        this.turn = turn;
-        this.isFinished = isFinished;
-    }
-
-    protected static Board from(Map<Position, GamePiece> board, int turn) {
-        return new Board(board, turn, false);
+        this.status = status;
     }
 
     public static Board createEmpty() {
-        return new Board(createEmptyBoard(), INIT_TURN, false);
+        return new Board(createEmptyMap(), Status.READY_STATUS);
     }
 
-    public static Board createInitial() {
-        return new Board(initializePositionsOfPieces(), INIT_TURN, false);
-    }
-
-    private static Map<Position, GamePiece> initializePositionsOfPieces() {
-        Map<Position, GamePiece> emptyBoard = createEmptyBoard();
-        for (GamePiece piece : GamePiece.list()) {
-            placeChessPieces(emptyBoard, piece);
-        }
-
-        return emptyBoard;
-    }
-
-    private static Map<Position, GamePiece> createEmptyBoard() {
+    private static Map<Position, GamePiece> createEmptyMap() {
         return Position.list()
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), position -> GamePiece.EMPTY));
     }
 
-    private static void placeChessPieces(Map<Position, GamePiece> board, GamePiece piece) {
+    public Board initialize() {
+        Map<Position, GamePiece> initialBoard = createEmptyMap();
+        for (GamePiece piece : GamePiece.list()) {
+            placePiecesOnInitialPositions(initialBoard, piece);
+        }
+
+        return new Board(initialBoard, Status.INITIAL_STATUS);
+    }
+
+    private void placePiecesOnInitialPositions(Map<Position, GamePiece> board, GamePiece piece) {
         for (Position position : piece.getInitialPositions()) {
             board.put(position, piece);
         }
+    }
+
+    protected static Board from(Map<Position, GamePiece> board, Status status) {
+        return new Board(board, status);
     }
 
     public Board move(Position source, Position target) {
@@ -70,7 +62,7 @@ public class Board {
         boolean isKill = !targetPiece.equals(GamePiece.EMPTY) && targetPiece.isEnemy(sourcePiece);
 
         List<Position> path;
-        if (isWhiteTurn()) {
+        if (status.isWhiteTurn()) {
             path = sourcePiece.searchPath(source, target, isKill);
         } else {
             path = backWard(sourcePiece.searchPath(source.opposite(), target.opposite(), isKill));
@@ -84,10 +76,11 @@ public class Board {
         board.put(source, GamePiece.EMPTY);
 
         if (targetPiece.isKing()) {
-            return new Board(board, turn + 1, true);
+            Status nextStatus = status.nextTurn();
+            return new Board(board, nextStatus.finish());
         }
 
-        return from(board, turn + 1);
+        return new Board(board, status.nextTurn());
     }
 
     private List<Position> backWard(List<Position> path) {
@@ -96,18 +89,14 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    private boolean isWhiteTurn() {
-        return turn % 2 == 0;
-    }
-
     private void validateSourcePiece(GamePiece sourcePiece) {
         if (sourcePiece.equals(GamePiece.EMPTY)) {
             throw new InvalidMovementException();
         }
-        if (isWhiteTurn() && !sourcePiece.isWhite()) {
+        if (status.isWhiteTurn() && !sourcePiece.isWhite()) {
             throw new InvalidMovementException();
         }
-        if (!isWhiteTurn() && sourcePiece.isWhite()) {
+        if (status.isBlackTurn() && sourcePiece.isWhite()) {
             throw new InvalidMovementException();
         }
     }
@@ -160,7 +149,7 @@ public class Board {
     }
 
     public boolean isNotFinished() {
-        return !isFinished;
+        return status.isNotFinished();
     }
 
     public List<Line> getRows() {

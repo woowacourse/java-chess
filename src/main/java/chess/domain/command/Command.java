@@ -44,11 +44,19 @@ public class Command {
     }
 
     public Position getSource() {
+        validateMoveType();
         return Position.from(flags.get(SOURCE_INDEX));
     }
 
     public Position getTarget() {
+        validateMoveType();
         return Position.from(flags.get(TARGET_INDEX));
+    }
+
+    private void validateMoveType() {
+        if (command != CommandType.MOVE) {
+            throw new UnsupportedOperationException("move 명령만 사용할 수 있습니다.");
+        }
     }
 
     public List<String> getFlags() {

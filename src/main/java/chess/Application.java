@@ -18,7 +18,7 @@ public class Application {
         do {
             command = Command.from(InputView.receiveCommand());
             if (command.isStart()) {
-                board = service.initialize();
+                board = service.initialize(board);
                 OutputView.printBoard(board);
             }
             if (command.isMove()) {

@@ -5,6 +5,7 @@ import chess.domain.piece.GamePiece;
 import java.util.List;
 
 public class Line {
+
     private final List<GamePiece> line;
 
     public Line(List<GamePiece> line) {

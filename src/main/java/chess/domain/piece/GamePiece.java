@@ -27,8 +27,6 @@ public class GamePiece {
         return new GamePiece(piece, player, player.decideName(piece.getName()));
     }
 
-    // TODO: 2020/03/25 싱글톤
-
     public static List<GamePiece> list() {
         List<GamePiece> gamePieces = new ArrayList<>();
         for (ChessPiece piece : ChessPiece.values()) {
@@ -74,22 +72,5 @@ public class GamePiece {
 
     public String getName() {
         return name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        GamePiece gamePiece = (GamePiece)o;
-        return chessPiece == gamePiece.chessPiece &&
-                player == gamePiece.player &&
-                Objects.equals(name, gamePiece.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(chessPiece, player, name);
     }
 }

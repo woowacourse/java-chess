@@ -1,5 +1,7 @@
 package chess.domain.command;
 
+import static org.assertj.core.api.Assertions.*;
+
 import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,8 +13,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class CommandTest {
 
@@ -114,5 +114,15 @@ class CommandTest {
         Command command = Command.from(input);
 
         assertThat(command.getTarget()).isEqualTo(Position.from("b2"));
+    }
+
+    @Test
+    void moveWithAnotherCommand() {
+        List<String> input = Collections.singletonList("start");
+        Command command = Command.from(input);
+
+        assertThatThrownBy(() -> command.getSource())
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("move 명령만 사용할 수 있습니다.");
     }
 }

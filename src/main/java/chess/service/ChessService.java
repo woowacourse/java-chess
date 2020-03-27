@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class ChessService {
 
-    public Board initialize() {
-        return Board.createInitial();
+    public Board initialize(Board board) {
+        return board.initialize();
     }
 
     public Board move(Board board, Position source, Position target) {

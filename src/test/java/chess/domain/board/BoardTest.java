@@ -1,32 +1,31 @@
 package chess.domain.board;
 
-import chess.domain.exception.InvalidMovementException;
-import chess.domain.piece.GamePiece;
-import chess.domain.player.Player;
-import chess.domain.score.Score;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import static chess.domain.piece.ChessPiece.*;
+import static chess.domain.player.Player.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static chess.domain.piece.ChessPiece.*;
-import static chess.domain.player.Player.BLACK;
-import static chess.domain.player.Player.WHITE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import chess.domain.exception.InvalidMovementException;
+import chess.domain.piece.GamePiece;
+import chess.domain.player.Player;
+import chess.domain.score.Score;
 
 class BoardTest {
 
     @Test
     @DisplayName("보드 생성")
     void create() {
-        Board board = Board.createInitial();
+        Board board = Board.createEmpty().initialize();
         String map = board.getBoard()
                 .values()
                 .stream()
@@ -41,7 +40,7 @@ class BoardTest {
     void move(GamePiece piece, Position source, Position target, int turn) {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(source, piece);
-        Board board = Board.from(map, turn);
+        Board board = Board.from(map, new Status(turn, StatusType.PROCESSING));
         board = board.move(source, target);
 
         assertThat(board.getBoard().get(source)).isEqualTo(GamePiece.EMPTY);
@@ -62,7 +61,7 @@ class BoardTest {
     void moveWithImpossiblePawnMovement() {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("d5"), GamePiece.of(PAWN, BLACK));
-        Board board = Board.from(map, 1);
+        Board board = Board.from(map, new Status(1, StatusType.PROCESSING));
 
         assertThatThrownBy(() -> {
             board.move(Position.from("d5"), Position.from("d6"));
@@ -85,7 +84,7 @@ class BoardTest {
     void moveWhenInvalidTurn(int turn, GamePiece gamePiece) {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("d5"), gamePiece);
-        Board board = Board.from(map, turn);
+        Board board = Board.from(map, new Status(turn, StatusType.PROCESSING));
 
         assertThatThrownBy(() -> {
             board.move(Position.from("d5"), Position.from("g8"));
@@ -106,7 +105,7 @@ class BoardTest {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
         map.put(Position.from("d6"), GamePiece.of(BISHOP, BLACK));
-        Board board = Board.from(map, 0);
+        Board board = Board.from(map, new Status(0, StatusType.PROCESSING));
 
         assertThatThrownBy(() -> {
             board.move(Position.from("d5"), Position.from("d6"));
@@ -117,7 +116,7 @@ class BoardTest {
     @Test
     @DisplayName("초기 board score 계산")
     void calculateScore() {
-        Board board = Board.createInitial();
+        Board board = Board.createEmpty().initialize();
         Map<Player, Score> scores = board.calculateScore();
         Map<Player, Score> expected = new HashMap<>();
         expected.put(BLACK, Score.from(38));
@@ -136,7 +135,7 @@ class BoardTest {
         map.put(Position.from("f4"), GamePiece.of(PAWN, WHITE));
         map.put(Position.from("f6"), GamePiece.of(PAWN, WHITE));
         map.put(Position.from("h3"), GamePiece.of(PAWN, WHITE));
-        Board board = Board.from(map, 0);
+        Board board = Board.from(map, new Status(0, StatusType.PROCESSING));
 
         assertThat(board.calculateScore().get(WHITE)).isEqualTo(Score.from(3.5));
     }
@@ -148,7 +147,7 @@ class BoardTest {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("c5"), GamePiece.of(KING, WHITE));
         map.put(Position.from("d6"), GamePiece.of(PAWN, BLACK));
-        Board board = Board.from(map, 1);
+        Board board = Board.from(map, new Status(1, StatusType.PROCESSING));
         board = board.move(source, target);
 
         assertThat(board.isNotFinished()).isEqualTo(expected);
