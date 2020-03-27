@@ -16,8 +16,8 @@ public class Pieces {
 		this.pieces = new HashSet<>(pieces);
 	}
 
-	public static Pieces of(PiecesFactory piecesFactory) {
-		return new Pieces(piecesFactory.getInstance());
+	public static Pieces of(StartPieces startPieces) {
+		return new Pieces(startPieces.getInstance());
 	}
 
 	public void move(Point from, Point to) {

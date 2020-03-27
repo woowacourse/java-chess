@@ -2,7 +2,7 @@ package domain.commend;
 
 import domain.commend.exceptions.StateException;
 import domain.pieces.Pieces;
-import domain.pieces.PiecesFactory;
+import domain.pieces.StartPieces;
 
 public abstract class NotPlaying extends GameState {
 	protected NotPlaying(Pieces pieces) {
@@ -11,7 +11,7 @@ public abstract class NotPlaying extends GameState {
 
 	@Override
 	public State start() {
-		return new Start(Pieces.of(new PiecesFactory()));
+		return new Start(Pieces.of(new StartPieces()));
 	}
 
 	@Override

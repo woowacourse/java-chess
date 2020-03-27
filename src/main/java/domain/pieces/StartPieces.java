@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PiecesFactory {
+public class StartPieces {
     private static Set<Piece> pieces;
 
     static {
