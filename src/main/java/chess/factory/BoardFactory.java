@@ -38,7 +38,7 @@ public class BoardFactory {
         chessPieces.add(new Bishop(team));
         chessPieces.add(new Knight(team));
         chessPieces.add(new Rook(team));
-        board.add(new Row(chessPieces));
+        board.add(Row.of(chessPieces));
     }
 
     private static void addPawn(List<Row> board, Team team) {
@@ -47,7 +47,7 @@ public class BoardFactory {
         for (int i = 0; i < 8; i++) {
             chessPieces.add(new Pawn(team));
         }
-        board.add(new Row(chessPieces));
+        board.add(Row.of(chessPieces));
     }
 
     private static void addBlankRows(List<Row> board) {
@@ -62,6 +62,6 @@ public class BoardFactory {
         for (int i = 0; i < 8; i++) {
             chessPieces.add(new Blank(Team.BLANK));
         }
-        board.add(new Row(chessPieces));
+        board.add(Row.of(chessPieces));
     }
 }

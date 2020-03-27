@@ -17,7 +17,7 @@ public class Position {
     }
 
     public static Position of(int x, int y) {
-        return new Position(new Coordinate(x), new Coordinate(y));
+        return new Position(Coordinate.of(x), Coordinate.of(y));
     }
 
     public static Position of(String position) {

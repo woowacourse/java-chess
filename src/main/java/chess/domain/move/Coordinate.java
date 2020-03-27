@@ -9,19 +9,23 @@ public class Coordinate {
     private static final char BOARD_LEFT_END = 'a';
     private static final char BOARD_RIGHT_END = 'h';
 
-    public Coordinate(int coordinate) {
+    private Coordinate(int coordinate) {
         if (coordinate < BOARD_DOWN_END || coordinate > BOARD_UP_END) {
             throw new IllegalArgumentException();
         }
         this.coordinate = coordinate;
     }
 
-    public Coordinate(char coordinate) {
-        if (coordinate < BOARD_LEFT_END || coordinate > BOARD_RIGHT_END) {
-            throw new IllegalArgumentException();
-        }
-        this.coordinate = coordinate - 'a' + 1;
+    public static Coordinate of(int coordinate) {
+        return new Coordinate(coordinate);
     }
+
+//    public Coordinate(char coordinate) {
+//        if (coordinate < BOARD_LEFT_END || coordinate > BOARD_RIGHT_END) {
+//            throw new IllegalArgumentException();
+//        }
+//        this.coordinate = coordinate - 'a' + 1;
+//    }
 
     public int getCoordinate() {
         return coordinate;

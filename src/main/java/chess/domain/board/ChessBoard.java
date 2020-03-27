@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static chess.domain.chesspiece.ChessPieceInfo.KING;
+
 public class ChessBoard {
     private static final Team INIT_TEAM = Team.WHITE;
-    private static final String KING = "k";
 
     private List<Row> board;
     private Team nowPlayingTeam;
@@ -33,10 +34,59 @@ public class ChessBoard {
 
     public void move(MovingInfo movingInfo) {
         ChessPiece chessPiece = getChessPiece(movingInfo.getStartPosition());
+
+        checkNowPlayingTeam(chessPiece);
+        if (nowPlayingTeam == Team.BLACK) {
+            reverseMove(chessPiece, movingInfo);
+            return;
+        }
+        moveOperation(chessPiece, movingInfo);
+    }
+
+    private void reverseMove(ChessPiece chessPiece, MovingInfo movingInfo) {
+        movingInfo = reverseMovingInfo(movingInfo);
+        reverseBoard();
+        moveOperation(chessPiece, movingInfo);
+        reverseBoard();
+    }
+
+    private void moveOperation(ChessPiece chessPiece, MovingInfo movingInfo) {
         Route canMoveRoute = findRoute(chessPiece, movingInfo);
 
         validateRoute(chessPiece, canMoveRoute, movingInfo);
         executeMove(chessPiece, movingInfo);
+    }
+
+    private void checkNowPlayingTeam(ChessPiece chessPiece) {
+        if (chessPiece.getTeam() != nowPlayingTeam) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private MovingInfo reverseMovingInfo(MovingInfo movingInfo) {
+        MovingInfo reverseMovingInfo;
+        Position startPosition = movingInfo.getStartPosition();
+        Position targetPosition = movingInfo.getTargetPosition();
+        Position ReverseStartPosition = Position.of(reverseCoordinate(startPosition.getX()), reverseCoordinate(startPosition.getY()));
+        Position ReverseTargetPosition = Position.of(reverseCoordinate(targetPosition.getX()), reverseCoordinate(targetPosition.getY()));
+
+        reverseMovingInfo = new MovingInfo(ReverseStartPosition, ReverseTargetPosition);
+        return reverseMovingInfo;
+    }
+
+    private int reverseCoordinate(int coordinate) {
+        return ((8 + 1) - coordinate);
+    }
+
+    private void reverseBoard() {
+        List<Row> reversedBoard = new ArrayList<>();
+
+        for (int i = 7; i >= 0; i--) {
+            Row reversedRow = board.get(i);
+            Collections.reverse(reversedRow.getChessPieces());
+            reversedBoard.add(reversedRow);
+        }
+        this.board = reversedBoard;
     }
 
     private Route findRoute(ChessPiece chessPiece, MovingInfo movingInfo) {
@@ -111,7 +161,6 @@ public class ChessBoard {
         clearPosition(movingInfo.getStartPosition());
         setPosition(chessPiece, movingInfo.getTargetPosition());
         changePlayingTeam();
-        reverseBoard();
         updateIfPawn(chessPiece);
     }
 
@@ -135,24 +184,13 @@ public class ChessBoard {
         String chessPieceName = targetChessPiece.getName();
         String lowerCaseChessPieceName = chessPieceName.toLowerCase();
 
-        if (lowerCaseChessPieceName.equals(KING)) {
+        if (lowerCaseChessPieceName.equals(KING.getName())) {
             isGameEnd = true;
         }
     }
 
     private void changePlayingTeam() {
         this.nowPlayingTeam = Team.getOpponentTeam(this.nowPlayingTeam);
-    }
-
-    private void reverseBoard() {
-        List<Row> reversedBoard = new ArrayList<>();
-
-        for (int i = 7; i >= 0; i--) {
-            Row reversedRow = board.get(i);
-            Collections.reverse(reversedRow.getChessPieces());
-            reversedBoard.add(reversedRow);
-        }
-        this.board = reversedBoard;
     }
 
     private void updateIfPawn(ChessPiece chessPiece) {
