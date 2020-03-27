@@ -45,4 +45,8 @@ public class OutputView {
 			+ "> 게임 종료 : end\n"
 			+ "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
 	}
+
+	public static void printMoveErrorMessage() {
+		System.out.println("이동할 수 없는 명령입니다. 다시 입력해주세요.");
+	}
 }

@@ -17,7 +17,7 @@ public class ChessController {
         String command = InputView.inputCommand();
         progress = chessGame.doOneCommand(command);
         while (progress.isError()) {
-            System.out.println("이동할 수 없는 명령입니다. 다시 입력해주세요.");
+            OutputView.printMoveErrorMessage();
             command = InputView.inputCommand();
             progress = chessGame.doOneCommand(command);
         }
