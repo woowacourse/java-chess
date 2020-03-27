@@ -1,9 +1,6 @@
 package chess.domains.board;
 
-import chess.domains.piece.Blank;
-import chess.domains.piece.King;
-import chess.domains.piece.Knight;
-import chess.domains.piece.Piece;
+import chess.domains.piece.*;
 import chess.domains.position.Position;
 
 import java.util.HashSet;
@@ -64,6 +61,12 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
 
     public boolean isMine(PlayingPiece targetPiece) {
         return this.piece.isMine(targetPiece.piece);
+    }
+
+    public void checkMyTurn(PieceColor pieceColor) {
+        if (!this.piece.isMine(pieceColor)) {
+            throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다.");
+        }
     }
 
     public Piece getPiece() {

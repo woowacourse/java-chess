@@ -19,13 +19,14 @@ public class GameController {
         PieceColor teamColor = PieceColor.WHITE;
 
         while (!board.isGameOver()) {
+            OutputView.printTeamColor(teamColor);
             String command = InputView.inputCommand();
             if (command.startsWith(MOVE)) {
                 String[] moveCommand = command.split(DELIMITER);
                 Position source = Position.ofPositionName(moveCommand[SOUCE_POSITION]);
                 Position target = Position.ofPositionName(moveCommand[TARGET_POSITION]);
 
-                board.move(source, target);
+                board.move(source, target, teamColor);
 
                 OutputView.printBoard(board.showBoard());
 

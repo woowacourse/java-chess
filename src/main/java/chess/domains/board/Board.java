@@ -1,5 +1,6 @@
 package chess.domains.board;
 
+import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
 
 import java.util.ArrayList;
@@ -31,10 +32,11 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_LOCATION_ERR_MSG));
     }
 
-    public void move(Position source, Position target) {
+    public void move(Position source, Position target, PieceColor teamColor) {
         PlayingPiece sourcePiece = findPiece(source);
         PlayingPiece targetPiece = findPiece(target);
 
+        sourcePiece.checkMyTurn(teamColor);
         sourcePiece.validMove(target);
 
         if (!sourcePiece.isKnight()) {

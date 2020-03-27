@@ -51,6 +51,10 @@ public abstract class Piece {
         return this.pieceColor == piece.pieceColor;
     }
 
+    public boolean isMine(PieceColor pieceColor) {
+        return this.pieceColor == pieceColor;
+    }
+
     public static List<Piece> getBlackPieces() {
         return blackPieces;
     }
