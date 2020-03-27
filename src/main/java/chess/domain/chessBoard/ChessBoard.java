@@ -3,8 +3,12 @@ package chess.domain.chessBoard;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import chess.domain.chessPiece.ChessPiece;
+import chess.domain.chessPiece.pieceType.Pawn;
+import chess.domain.chessPiece.pieceType.PieceColor;
+import chess.domain.position.ChessFile;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
@@ -90,6 +94,7 @@ public class ChessBoard {
 		if (!sourceChessPiece.canCatch(sourcePosition, targetPosition)) {
 			throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
 		}
+		// TODO: 2020/03/28 isKingCatchChessPiece!? -> throw new KingCatchedException();
 	}
 
 	private void checkCanMoveWith(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
@@ -101,6 +106,32 @@ public class ChessBoard {
 	private void moveChessPiece(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
 		chessBoard.put(targetPosition, sourceChessPiece);
 		chessBoard.remove(sourcePosition);
+	}
+
+	public double calculateScoreOf(PieceColor pieceColor) {
+		return ChessFile.values().stream()
+			.map(chessFile -> getChessPiecesOn(chessFile, pieceColor))
+			.mapToDouble(this::calculateTotalScore)
+			.sum();
+	}
+
+	private Stream<ChessPiece> getChessPiecesOn(ChessFile chessFile, PieceColor pieceColor) {
+		return chessBoard.entrySet().stream()
+			.filter(entry -> entry.getKey().isSameFilePosition(chessFile))
+			.map(Map.Entry::getValue)
+			.filter(chessPiece -> chessPiece.isSamePieceColorWith(pieceColor));
+	}
+
+	private double calculateTotalScore(Stream<ChessPiece> chessPieceStream) {
+		double totalScore = chessPieceStream.mapToDouble(ChessPiece::getScore).sum();
+
+		Stream<ChessPiece> pawns = chessPieceStream.filter(chessPiece -> chessPiece instanceof Pawn);
+		double pawnTotalScore = pawns.mapToDouble(ChessPiece::getScore).sum();
+
+		if (pawns.count() > 1) {
+			return totalScore - (pawnTotalScore / 2);
+		}
+		return totalScore;
 	}
 
 }
