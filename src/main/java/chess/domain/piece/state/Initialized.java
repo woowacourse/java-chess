@@ -27,6 +27,10 @@ public abstract class Initialized extends Started {
         return false;
     }
 
+    protected boolean isHeadingBackward(Position to) {
+        return to.isBackward(position, team.getForwardDirection());
+    }
+
     public boolean isStayed(Position to) {
         return position.equals(to);
     }
