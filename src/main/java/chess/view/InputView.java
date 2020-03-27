@@ -13,7 +13,7 @@ public class InputView {
 	public static final String START_COMMAND = "start";
 	private static final String INPUT_MESSAGE_STATUS = "\n게임이 종료 되었습니다\n'status' 를 입력하여 결과를 확인하세요";
 	private static final String INPUT_MESSAGE_GAME_START = "체스 게임을 시작합니다.\n게임 시작은 start, 종료 end 명령을 입력하세요";
-	private static final String INPUT_MESSAGE_MOVE_COMMAND = "\n게임 이동 : move source위치 tartget위치 - 예 : move b2 b3";
+	private static final String INPUT_MESSAGE_MOVE_COMMAND = "\n게임 이동 : move source위치 target위치 - 예 : move b2 b3";
 	private static final String ERROR_MESSAGE_INPUT_GAME_START = "start 혹은 end 를 입력하세요";
 	private static final String ERROR_MESSAGE_COMMAND_LENGTH = "형식이 잘못되었습니다 예 : move b2 b3";
 	private static final String ERROR_MESSAGE_COMMAND_KEYWARD = "체스말의 움직이는 명령어의 시작은 move 입니다. 예 : move b2 b3";
