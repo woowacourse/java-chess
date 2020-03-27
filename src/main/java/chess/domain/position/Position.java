@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.Direction;
+import chess.domain.route.Direction;
 
 import java.util.HashMap;
 import java.util.Map;

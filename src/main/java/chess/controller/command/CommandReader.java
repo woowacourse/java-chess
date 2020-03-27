@@ -15,7 +15,7 @@ public class CommandReader {
         COMMAND_CACHE.put("move", splitCommand -> new Move(splitCommand.get(1), splitCommand.get(2)));
         COMMAND_CACHE.put("status", splitCommand -> new Status());
     }
-    
+
     public static Command of(String command) {
         List<String> splitCommand = StringUtils.splitIntoList(command);
 

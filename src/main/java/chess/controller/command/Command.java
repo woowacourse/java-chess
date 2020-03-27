@@ -1,7 +1,7 @@
 package chess.controller.command;
 
-import chess.domain.gamestatus.GameStatus;
+import chess.domain.gamestate.GameState;
 
 public interface Command {
-    GameStatus execute(GameStatus gameStatus);
+    GameState execute(GameState gameState);
 }

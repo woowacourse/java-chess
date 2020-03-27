@@ -1,9 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.Piece;
-import chess.domain.PieceType;
 import chess.domain.Pieces;
 import chess.domain.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

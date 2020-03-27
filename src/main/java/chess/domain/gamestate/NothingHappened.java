@@ -1,13 +1,13 @@
-package chess.domain.gamestatus;
+package chess.domain.gamestate;
 
 import java.util.List;
 
-public class NothingHappened implements GameStatus {
+public class NothingHappened implements GameState {
 
     private static final String GAME_NOT_RUNNING_MESSAGE = "아직 게임을 시작하지 않았습니다.";
 
     @Override
-    public GameStatus move(String fromPosition, String toPosition) {
+    public GameState move(String fromPosition, String toPosition) {
         throw new UnsupportedOperationException(GAME_NOT_RUNNING_MESSAGE);
     }
 
@@ -17,7 +17,7 @@ public class NothingHappened implements GameStatus {
     }
 
     @Override
-    public GameStatus finish() {
+    public GameState finish() {
         throw new UnsupportedOperationException(GAME_NOT_RUNNING_MESSAGE);
     }
 

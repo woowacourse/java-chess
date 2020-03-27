@@ -1,11 +1,11 @@
 package chess.controller.command;
 
-import chess.domain.gamestatus.GameStatus;
-import chess.domain.gamestatus.Running;
+import chess.domain.gamestate.GameState;
+import chess.domain.gamestate.Running;
 
 public class Start implements Command {
     @Override
-    public GameStatus execute(GameStatus gameStatus) {
+    public GameState execute(GameState gameState) {
         return new Running();
     }
 }

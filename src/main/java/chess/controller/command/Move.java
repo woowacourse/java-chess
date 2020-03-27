@@ -1,6 +1,6 @@
 package chess.controller.command;
 
-import chess.domain.gamestatus.GameStatus;
+import chess.domain.gamestate.GameState;
 
 public class Move implements Command {
     private String fromPosition;
@@ -12,7 +12,7 @@ public class Move implements Command {
     }
 
     @Override
-    public GameStatus execute(GameStatus gameStatus) {
-        return gameStatus.move(fromPosition, toPosition);
+    public GameState execute(GameState gameState) {
+        return gameState.move(fromPosition, toPosition);
     }
 }

@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.Direction;
+import chess.domain.route.Direction;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -108,5 +108,26 @@ public class PositionTest {
                 Arguments.of(Position.of("a4"), Direction.WEST),
                 Arguments.of(Position.of("h4"), Direction.EAST)
         );
+    }
+
+    @Test
+    void of() {
+    }
+
+    @Test
+    void of1() {
+    }
+
+    @Test
+    void isAt() {
+    }
+
+    @Test
+    void isAt1() {
+    }
+
+    @Test
+    void moveTo() {
+        assertThat(Position.of("b3").moveTo(Direction.NORTH)).isEqualTo(Position.of("b4"));
     }
 }

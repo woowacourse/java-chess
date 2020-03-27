@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.gamestatus.GameStatus;
+import chess.domain.gamestate.GameState;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static void printChessBoard(GameStatus gameStatus) {
-        for (List<String> raw : gameStatus.getBoard()) {
+    public static void printChessBoard(GameState gameState) {
+        for (List<String> raw : gameState.getBoard()) {
             for (String acronym : raw) {
                 System.out.print(acronym);
             }
@@ -25,14 +25,14 @@ public class OutputView {
         System.err.println(e.getMessage());
     }
 
-    public static void printScoreResult(GameStatus gameStatus) {
+    public static void printScoreResult(GameState gameState) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("White 점수 : ")
-                .append(gameStatus.getWhiteTeamScore())
+                .append(gameState.getWhiteTeamScore())
                 .append(ENTER)
                 .append("Black 점수 : ")
-                .append(gameStatus.getBlackTeamScore());
+                .append(gameState.getBlackTeamScore());
 
         System.out.println(stringBuilder.toString());
     }

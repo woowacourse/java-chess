@@ -1,8 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.Piece;
-import chess.domain.PieceType;
 import chess.domain.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 import java.util.HashMap;

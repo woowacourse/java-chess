@@ -1,17 +1,14 @@
 package chess.domain.board;
 
-import chess.domain.Piece;
 import chess.domain.Pieces;
-import chess.domain.Route;
 import chess.domain.Team;
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.route.Route;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
     private static final String EMPTY_POSITION_ACRONYM = ".";
@@ -22,29 +19,12 @@ public class Board {
         this.board = board;
     }
 
-    private void addAcronymToRow(List<List<String>> result, Rank rank) {
-        for (File file : File.values()) {
-            result.get(Rank.size() - rank.getRowNumber())
-                    .add(acronym(file, rank));
-        }
-    }
-
-    private String acronym(File file, Rank rank) {
-        try {
-            return board.get(Position.of(file, rank))
-                    .getAcronym();
-        } catch (NullPointerException e) {
-            return EMPTY_POSITION_ACRONYM;
-        }
-    }
-
     public void move(String keyFromPosition, String keyToPosition) {
         move(Position.of(keyFromPosition), Position.of(keyToPosition));
     }
 
     public void move(Position fromPosition, Position toPosition) {
         Piece piece = board.get(fromPosition);
-
         Route route = piece.findRoute(fromPosition, toPosition);
 
         if (positionsAreDisturbed(route)) {
@@ -61,8 +41,20 @@ public class Board {
                 return true;
             }
         }
-
         return false;
+    }
+
+    public Pieces findPiecesOf(Team team) {
+        Set<Piece> piecesSource = new HashSet<>();
+
+        for (Position position : board.keySet()) {
+            Piece piece = board.get(position);
+            if (piece != null && piece.isTeam(team)) {
+                piecesSource.add(piece);
+            }
+        }
+
+        return new Pieces(piecesSource);
     }
 
     public List<List<String>> getBoard() {
@@ -76,16 +68,17 @@ public class Board {
         return Collections.unmodifiableList(resultBoard);
     }
 
-    public Pieces findPiecesOf(Team team) {
-        List<Piece> piecesSource = new ArrayList<>();
-
-        for (Position position : board.keySet()) {
-            Piece piece = board.get(position);
-            if (piece != null && piece.isTeam(team)) {
-                piecesSource.add(piece);
-            }
+    private void addAcronymToRow(List<List<String>> result, Rank rank) {
+        for (File file : File.values()) {
+            result.get(Rank.size() - rank.getRowNumber()).add(acronym(file, rank));
         }
+    }
 
-        return new Pieces(piecesSource);
+    private String acronym(File file, Rank rank) {
+        try {
+            return board.get(Position.of(file, rank)).getAcronym();
+        } catch (NullPointerException e) {
+            return EMPTY_POSITION_ACRONYM;
+        }
     }
 }

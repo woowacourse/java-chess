@@ -1,4 +1,4 @@
-package chess.domain.gamestatus;
+package chess.domain.gamestate;
 
 import chess.domain.Pieces;
 import chess.domain.Team;
@@ -19,13 +19,13 @@ public class Finished extends Started {
     }
 
     @Override
-    public GameStatus move(String fromPosition, String toPosition) {
+    public GameState move(String fromPosition, String toPosition) {
         throw new UnsupportedOperationException("게임이 종료되었으므로 기물을 움직일 수 없습니다.");
 
     }
 
     @Override
-    public GameStatus finish() {
+    public GameState finish() {
         throw new UnsupportedOperationException("게임이 이미 종료되었습니다.");
     }
 
