@@ -13,7 +13,7 @@ public abstract class Initialized extends Started {
 
     protected abstract boolean canNotMove(Position to, Board board);
 
-    protected boolean isSameTeam(Piece piece) {
+    public boolean isSameTeam(Piece piece) {
         return team.isSame(piece.getTeam());
     }
 

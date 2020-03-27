@@ -1,12 +1,14 @@
 package chess.domain.piece.move;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.piece.state.Initialized;
 import chess.domain.position.Position;
 
-public class IsBackward implements CanNotMoveStrategy {
+public class IsAttackingSameTeam implements CanNotMoveStrategy {
     @Override
     public boolean canNotMove(Initialized initializedPiece, Position to, Board board) {
-        return initializedPiece.isHeadingBackward(to);
+        Piece exPiece = board.getPiece(to);
+        return initializedPiece.isSameTeam(exPiece);
     }
 }
