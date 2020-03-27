@@ -9,17 +9,18 @@ import domain.point.Point;
 import domain.team.Team;
 
 public class Pawn extends Piece {
+	private static final double SCORE = 1;
 	private static final String INITIAL = "P";
 
 	private final boolean canMoveTwoDistance;
 
 	public Pawn(Team team, Point point) {
-		super(INITIAL, team, point);
+		super(INITIAL, team, point, SCORE);
 		canMoveTwoDistance = true;
 	}
 
     public Pawn(Team team, Point point, boolean canMoveTwoDistance) {
-        super(INITIAL, team, point);
+        super(INITIAL, team, point, SCORE);
         this.canMoveTwoDistance = canMoveTwoDistance;
     }
 

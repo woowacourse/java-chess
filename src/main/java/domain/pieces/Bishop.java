@@ -6,10 +6,11 @@ import domain.point.Point;
 import domain.team.Team;
 
 public class Bishop extends Piece {
+    private static final double SCORE = 3;
     private static final String INITIAL = "B";
 
     public Bishop(Team team, Point point) {
-        super(INITIAL, team, point);
+        super(INITIAL, team, point, SCORE);
     }
 
     @Override

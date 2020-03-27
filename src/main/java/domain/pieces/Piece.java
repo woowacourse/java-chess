@@ -10,11 +10,13 @@ public abstract class Piece {
     private final String initial;
     private final Team team;
     private final Point point;
+    private final double score;
 
-    protected Piece(String initial, Team team, Point point) {
+    protected Piece(String initial, Team team, Point point, double score) {
         this.initial = initial;
         this.team = team;
         this.point = point;
+        this.score = score;
     }
 
     public String getInitial() {
