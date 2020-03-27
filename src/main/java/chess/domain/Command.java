@@ -22,7 +22,7 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(v -> v.isEqualTo(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("start와 end가 아닌 값이 들어왔습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령어입니다."));
     }
 
     private boolean isEqualTo(String input) {
