@@ -27,7 +27,8 @@ public class Board {
                 .stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().toString(),
                         entry -> entry.getValue().toSymbol(),
-                        (e1, e2) -> e1, LinkedHashMap::new));
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new));
         return Collections.unmodifiableMap(parseResult);
     }
 

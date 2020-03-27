@@ -1,8 +1,10 @@
 package chess.view;
 
+import chess.controller.dto.MoveCommandDto;
+
 public interface InputView {
 
-    boolean askChessRun();
+    boolean askStartCommand();
 
-    String askMoveOrStatus();
+    MoveCommandDto askRunCommand();
 }

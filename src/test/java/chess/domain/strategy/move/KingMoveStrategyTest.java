@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,16 +27,16 @@ public class KingMoveStrategyTest {
     void moveTest() {
         Map<Position, Piece> emptyBoard = new HashMap<>();
         Board board = new Board(emptyBoard);
-        Position source = Position.of("d4");
+        Position source = Positions.of("d4");
 
-        Position up = Position.of("d5");
-        Position down = Position.of("d3");
-        Position left = Position.of("c4");
-        Position right = Position.of("e4");
-        Position rightUp = Position.of("e5");
-        Position rightDown = Position.of("e3");
-        Position leftUp = Position.of("c5");
-        Position leftDown = Position.of("c3");
+        Position up = Positions.of("d5");
+        Position down = Positions.of("d3");
+        Position left = Positions.of("c4");
+        Position right = Positions.of("e4");
+        Position rightUp = Positions.of("e5");
+        Position rightDown = Positions.of("e3");
+        Position leftUp = Positions.of("c5");
+        Position leftDown = Positions.of("c3");
 
         Assertions.assertThat(kingStrategy.movable(source, up, board)).isTrue();
         Assertions.assertThat(kingStrategy.movable(source, down, board)).isTrue();
@@ -52,8 +53,8 @@ public class KingMoveStrategyTest {
     void moveWhenEnemyTest() {
         Piece king = new Piece(PieceType.KING, Team.BLACK);
         Piece enemy = new Piece(PieceType.PAWN, Team.WHITE);
-        Position source = Position.of("d4");
-        Position target = Position.of("e5");
+        Position source = Positions.of("d4");
+        Position target = Positions.of("e5");
         Map<Position, Piece> enemyEntry = new HashMap<>();
         enemyEntry.put(source, king);
         enemyEntry.put(target, enemy);

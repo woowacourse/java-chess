@@ -5,18 +5,20 @@ import chess.controller.dto.PositionDto;
 import chess.domain.ChessRunner;
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
-import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.view.ConsoleInputView;
 import chess.view.ConsoleOutputView;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.List;
 
 public class ChessController {
     private static InputView inputView = new ConsoleInputView();
     private static OutputView outputView = new ConsoleOutputView();
 
     public static void start() {
-        if (inputView.askChessRun()) {
+        if (inputView.askStartCommand()) {
             run();
         }
     }
@@ -28,19 +30,21 @@ public class ChessController {
 
         while (moveFlag) {
             try {
-                String[] moveSource = inputView.askMoveOrStatus().split(" ");
-                if (moveSource[0].toUpperCase().equals("END")) {
+                List<String> runCommand = inputView.askRunCommand().get();
+                if (runCommand.get(0).toUpperCase().equals("END")) {
                     break;
                 }
-                if (moveSource[0].toUpperCase().equals("STATUS")) {
+                if (runCommand.get(0).toUpperCase().equals("STATUS")) {
                     outputView.printStatus(chessRunner.calculateScore(), chessRunner.getCurrentTeam());
                     continue;
                 }
-                String sourcePosition = moveSource[1];
-                String targetPosition = moveSource[2];
+                String sourcePosition = runCommand.get(1);
+                String targetPosition = runCommand.get(2);
                 chessRunner.update(sourcePosition, targetPosition);
                 printBoard(chessRunner.getBoard());
-                if (!findWinner(chessRunner)) break;
+                if (findWinner(chessRunner)) {
+                    break;
+                }
 
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -52,14 +56,14 @@ public class ChessController {
         Team winner = chessRunner.findWinner();
         if (winner != null) {
             outputView.printWinner(winner);
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private static void printBoard(Board board) {
         BoardDto boardDto = new BoardDto(board.parse());
-        PositionDto positionDto = new PositionDto(Position.getPositions());
-        outputView.printBoard(positionDto.getPositions(), boardDto.get());
+        PositionDto positionDto = new PositionDto(Positions.get());
+        outputView.printBoard(positionDto.get(), boardDto.get());
     }
 }

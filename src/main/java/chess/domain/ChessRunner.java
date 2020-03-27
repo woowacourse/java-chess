@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 
 public class ChessRunner {
     private Board board;
@@ -15,8 +16,8 @@ public class ChessRunner {
     }
 
     public void update(String source, String target) {
-        Position sourcePosition = Position.of(source);
-        Position targetPosition = Position.of(target);
+        Position sourcePosition = Positions.of(source);
+        Position targetPosition = Positions.of(target);
         Piece selectedPiece = this.board.getPiece(sourcePosition);
 
         if (!(currentTeam.isSameTeamWith(selectedPiece.getTeam()))) {

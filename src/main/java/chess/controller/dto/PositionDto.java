@@ -10,7 +10,7 @@ public class PositionDto {
         this.positions = positions;
     }
 
-    public List<String> getPositions() {
+    public List<String> get() {
         return Collections.unmodifiableList(positions);
     }
 }
