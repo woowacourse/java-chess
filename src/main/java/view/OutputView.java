@@ -1,10 +1,7 @@
 package view;
 
 import domain.board.Board;
-import domain.pieces.Piece;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import domain.board.RowOfBoard;
 
 public class OutputView {
 
@@ -17,8 +14,8 @@ public class OutputView {
 
     public static void printBoard(Board board) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (List<String> row : board.getBoard()) {
-            stringBuilder.append(String.join("", row))
+        for (RowOfBoard row : board.getBoard()) {
+            stringBuilder.append(String.join("", row.getRowOfBoard()))
                     .append(NEW_LINE);
         }
 
