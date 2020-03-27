@@ -15,4 +15,15 @@ public enum Team {
     public boolean isBlack() {
         return isBlack;
     }
+
+    public boolean isNot(Team team) {
+        return this != team;
+    }
+
+    public Team changeTurn() {
+        if(this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }

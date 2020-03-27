@@ -94,4 +94,8 @@ public class ChessBoard {
         }
         return new Score(reducePawnScroe);
     }
+
+    public boolean isCorrectTeam(Location location, Team team) {
+        return board.get(location).isSameTeam(team.isBlack());
+    }
 }

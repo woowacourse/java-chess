@@ -1,30 +1,29 @@
-import chess.board.ChessBoard;
-import chess.board.Location;
+import chess.team.Team;
 import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-	public static void main(String[] args) {
-		OutputView.printInformation();
-		String command = InputView.inputStartCommand();
-		ChessBoard chessBoard = new ChessBoard();
-		OutputView.printBoard(chessBoard);
-		while (command.equals("start") || command.substring(0, 4).equals("move")) {
-			command = InputView.inputStartCommand();
+    public static void main(String[] args) {
+        OutputView.printInformation();
+        Progress progress = Progress.CONTINUE;
+        ChessGame chessGame = new ChessGame();
+        while (!progress.isEnd()) {
+            progress = getProgress(chessGame);
+        }
+    }
 
-			char nowCol = command.split(" ")[1].charAt(0);
-			int nowRow = command.split(" ")[1].charAt(1) - '0';
-			char destCol = command.split(" ")[2].charAt(0);
-			int destRow = command.split(" ")[2].charAt(1) - '0';
-
-			Location now = new Location(nowRow, nowCol);
-			Location destination = new Location(destRow, destCol);
-			while (!chessBoard.canMove(now, destination)) {
-				System.out.println("이동할 수 없는 명령입니다.");
-				command = InputView.inputStartCommand();
-			}
-			chessBoard.move(now, destination);
-			OutputView.printBoard(chessBoard);
-		}
-	}
+    private static Progress getProgress(ChessGame chessGame) {
+        Progress progress;
+        String command = InputView.inputCommand();
+        progress = chessGame.doOneCommand(command);
+        while (progress.isError()) {
+            System.out.println("이동할 수 없는 명령입니다. 다시 입력해주세요.");
+            command = InputView.inputCommand();
+            progress = chessGame.doOneCommand(command);
+        }
+        if (!progress.isEnd()) {
+            OutputView.printBoard(chessGame.getChessBoard());
+        }
+        return progress;
+    }
 }
