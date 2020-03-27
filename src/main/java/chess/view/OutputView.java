@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.domain.Turn;
+
 import java.util.Map;
 
 public class OutputView {
@@ -27,7 +29,11 @@ public class OutputView {
 		System.out.print(NEW_LINE);
 	}
 
-	public static void printScore(String name, double score) {
-		System.out.println(name + "팀 점수: " + score);
+	public static void printScore(Map<Turn, Double> result) {
+		result.forEach((key, value) -> System.out.println(key.getName() + "팀 점수: " + value));
+	}
+
+	public static void printWinner(String winner) {
+		System.out.println("승자 : " + winner);
 	}
 }

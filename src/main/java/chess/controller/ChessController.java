@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.MoveInfo;
+import chess.domain.Status;
 import chess.domain.Turn;
 import chess.domain.board.Boards;
 import chess.service.ChessService;
@@ -49,7 +50,8 @@ public class ChessController {
     }
 
     private static void status(Boards boards) {
-        OutputView.printScore(turn.getName(), ChessService.getScore(boards, turn));
+        OutputView.printScore(Status.result(boards));
+        OutputView.printWinner(Status.winner(boards));
         exit();
     }
 }
