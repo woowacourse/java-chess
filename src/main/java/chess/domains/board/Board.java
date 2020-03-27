@@ -1,10 +1,12 @@
 package chess.domains.board;
 
+import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class Board {
     public static final String INVALID_LOCATION_ERR_MSG = "위치를 잘못 입력하였습니다.";
@@ -31,14 +33,15 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_LOCATION_ERR_MSG));
     }
 
-    public void move(Position source, Position target) {
+    public void move(Position source, Position target, PieceColor teamColor) {
         PlayingPiece sourcePiece = findPiece(source);
         PlayingPiece targetPiece = findPiece(target);
 
-        sourcePiece.validMove(target);
+        sourcePiece.checkMyTurn(teamColor);
+        sourcePiece.validMove(targetPiece);
 
         if (!sourcePiece.isKnight()) {
-            List<Position> route = sourcePiece.findRoute(target);
+            List<Position> route = sourcePiece.findRoute(targetPiece);
             validRoute(route);
         }
 
@@ -62,9 +65,7 @@ public class Board {
     }
 
     private void exchange(PlayingPiece sourcePiece, PlayingPiece targetPiece) {
-        if (sourcePiece.isMine(targetPiece)) {
-            throw new IllegalStateException("자신의 말 위치로 이동할 수 없습니다.");
-        }
+
         this.board.remove(targetPiece);
         this.board.remove(sourcePiece);
         this.board.addAll(sourcePiece.moveTo(targetPiece));
@@ -75,5 +76,33 @@ public class Board {
                 .filter(PlayingPiece::isKing)
                 .count();
         return count != 2;
+    }
+
+    public double calculateScore(PieceColor teamColor) {
+        double score = board.stream()
+                .filter(playingPiece -> playingPiece.isMine(teamColor))
+                .mapToDouble(PlayingPiece::score)
+                .sum();
+
+        int pawnCount = countPawnInSameColumn(teamColor);
+
+        return score - pawnCount * 0.5;
+    }
+
+    private int countPawnInSameColumn(PieceColor teamColor) {
+        Stream<PlayingPiece> myPawns = board.stream()
+                .filter(playingPiece -> playingPiece.isMine(teamColor))
+                .filter(PlayingPiece::isPawn);
+
+        int pawnCount = 0;
+
+        for (char c = 'a'; c <= 'h'; c++) {
+            char column = c;
+            int count = (int) myPawns.filter(myPiece -> myPiece.isColumn(column)).count();
+            if (count > 1) {
+                pawnCount += count;
+            }
+        }
+        return pawnCount;
     }
 }
