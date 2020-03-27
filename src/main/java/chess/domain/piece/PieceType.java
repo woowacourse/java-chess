@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.move.*;
+import chess.domain.strategy.move.*;
 import chess.domain.position.Position;
 
 public enum PieceType {

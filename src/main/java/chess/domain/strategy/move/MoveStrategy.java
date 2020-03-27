@@ -1,7 +1,8 @@
-package chess.domain.move;
+package chess.domain.strategy.move;
 
 import chess.domain.board.Board;
-import chess.domain.move.direction.DirectionStrategy;
+import chess.domain.strategy.move.direction.Direction;
+import chess.domain.strategy.move.direction.DirectionStrategy;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -14,15 +15,11 @@ public abstract class MoveStrategy {
     }
 
     protected boolean checkObstacle(Position source, Position target, Board board) {
-        DirectionStrategy directionStrategy = DirectionStrategyFactory.find(source, target);
+        DirectionStrategy directionStrategy = Direction.find(source, target);
         List<Position> path = directionStrategy.find(source, target);
 
-        for (Position position : path) {
-            if (!board.isEmpty(position)) {
-                return false;
-            }
-        }
-        return true;
+        return path.stream()
+                .anyMatch(position -> !board.isEmpty(position));
     }
 
     protected boolean checkTarget(Position source, Position target, Board board) {

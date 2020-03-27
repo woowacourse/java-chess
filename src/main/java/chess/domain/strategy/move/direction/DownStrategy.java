@@ -1,17 +1,17 @@
-package chess.domain.move.direction;
+package chess.domain.strategy.move.direction;
 
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RightStrategy implements DirectionStrategy {
+public class DownStrategy implements DirectionStrategy {
     @Override
     public List<Position> find(Position source, Position target) {
         List<Position> path = new ArrayList<>();
 
-        for (int i = target.getFile() - 1; i > source.getFile(); i--) {
-            path.add(Position.of(i, source.getRank()));
+        for (int i = target.getRank() + 1; i < source.getRank(); i++) {
+            path.add(Position.of(source.getFile(), i));
         }
         return path;
     }
