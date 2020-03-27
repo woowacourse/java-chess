@@ -37,28 +37,30 @@ public class BoardFactory {
 
 	public static List<Row> createBoard() {
 		List<Row> board = new ArrayList<>();
-		board.addAll(createBlackTeam());
-		board.addAll(createBlankTeam());
 		board.addAll(createWhiteTeam());
+		board.addAll(createBlankTeam());
+		board.addAll(createBlackTeam());
 		return board;
 	}
 
-	private static List<Row>createBlackTeam() {
-		return 	Arrays.asList(createExecutive(BLACK_TEAM_EXECUTIVE_INDEX, Team.BLACK),
-			createPawns(BLACK_TEAM_PAWN_INDEX, Team.BLACK));
+	private static List<Row> createBlackTeam() {
+		return Arrays.asList(
+			createPawns(BLACK_TEAM_PAWN_INDEX, Team.BLACK),
+			createExecutive(BLACK_TEAM_EXECUTIVE_INDEX, Team.BLACK));
 	}
 
-	private static List<Row>createBlankTeam() {
+	private static List<Row> createBlankTeam() {
 		List<Row> rows = new ArrayList<>();
-		for (int index = BLACK_TO_INDEX; index >= BLACK_FROM_INDEX; index--) {
+		for (int index = BLACK_FROM_INDEX; index <= BLACK_TO_INDEX; index++) {
 			rows.add(createBlacks(index));
 		}
 		return rows;
 	}
 
-	private static List<Row>createWhiteTeam() {
-		return 	Arrays.asList(createPawns(WHITE_TEAM_PAWN_INDEX, Team.WHITE),
-			createExecutive(WHITE_TEAM_EXECUTIVE_INDEX, Team.WHITE));
+	private static List<Row> createWhiteTeam() {
+		return Arrays.asList(
+			createExecutive(WHITE_TEAM_EXECUTIVE_INDEX, Team.WHITE),
+			createPawns(WHITE_TEAM_PAWN_INDEX, Team.WHITE));
 	}
 
 	public static Row createExecutive(int index, Team team) {
@@ -73,7 +75,6 @@ public class BoardFactory {
 		chessPieces.add(new Rook(Position.of(index, ROOK_SECOND_INDEX), team));
 		return new Row(chessPieces);
 	}
-
 
 	public static Row createPawns(int index, Team team) {
 		List<ChessPiece> chessPieces = new ArrayList<>();

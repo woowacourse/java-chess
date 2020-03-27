@@ -41,8 +41,4 @@ public abstract class ChessPiece {
 	public void changePosition(Position position) {
 		this.position = position;
 	}
-
-	public Position getPisition() {
-		return position;
-	}
 }

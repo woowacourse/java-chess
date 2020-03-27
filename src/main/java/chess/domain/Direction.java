@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Direction {
     UP(1, 0),
     RIGHT_UP(1, 1),
@@ -30,6 +33,13 @@ public enum Direction {
         return isMatch(gapX, gapY, ++count);
     }
 
+    public static List<Direction> getPawnDirections(Team team) {
+        if (team == Team.WHITE) {
+            return Arrays.asList(UP, LEFT_UP, RIGHT_UP);
+        }
+        return Arrays.asList(DOWN, LEFT_DOWN, RIGHT_DOWN);
+    }
+
     public int plusX(int x) {
         return this.x + x;
     }
@@ -38,11 +48,4 @@ public enum Direction {
         return this.y + y;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
 }

@@ -10,6 +10,7 @@ public class Position {
     private static final char MIN_VER_CHAR = 'a';
     private static final char MAX_VER_CHAR = 'h';
     private static final int CHAR_DEFORMATION_VALUE = 96;
+    private static final int BLACK_TEAM_CONVERSION_VALUE = 9;
 
     private final int x;
     private final int y;
