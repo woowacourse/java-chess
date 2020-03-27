@@ -3,6 +3,10 @@ package domain.point;
 import java.util.Objects;
 
 public class Point {
+	private static final int FIRST_INDEX = 0;
+	private static final int SECOND_INDEX = 1;
+	private static final int END_INDEX = 2;
+
 	private Row row;
 	private Column column;
 
@@ -12,26 +16,14 @@ public class Point {
 	}
 
 	public static Point of(String before) {
-		String column = before.substring(0, 1);
-		String row = before.substring(1, 2);
+		String column = before.substring(FIRST_INDEX, SECOND_INDEX);
+		String row = before.substring(SECOND_INDEX, END_INDEX);
 
 		return new Point(Row.find(row), Column.find(column));
 	}
 
 	public Point add(int rowIndex, int columnIndex) {
 		return new Point(row.add(rowIndex), column.add(columnIndex));
-	}
-
-	public boolean isRowAndColumnEqual() {
-		return row.getIndex() == column.getIndex();
-	}
-
-	public boolean isRowIndexZero() {
-		return row.getIndex() == 0;
-	}
-
-	public boolean isColumnIndexZero() {
-		return row.getIndex() == 0;
 	}
 
 	public int getRowIndex() {
