@@ -7,19 +7,23 @@ public class ChessController {
         OutputView.printInformation();
         Progress progress = Progress.CONTINUE;
         ChessGame chessGame = new ChessGame();
+        Team turn = Team.WHITE;
         while (!progress.isEnd()) {
-            progress = getProgress(chessGame);
+            progress = getProgress(chessGame, turn);
+            turn = turn.changeTurn();
+            OutputView.printPresentPlayer(turn);
         }
+        // TODO : King의 유무 혹은 Score보고 승자 결정하기.
     }
 
-    private static Progress getProgress(ChessGame chessGame) {
+    private static Progress getProgress(ChessGame chessGame, Team turn) {
         Progress progress;
         String command = InputView.inputCommand();
-        progress = chessGame.doOneCommand(command);
+        progress = chessGame.doOneCommand(command, turn);
         while (progress.isError()) {
             OutputView.printMoveErrorMessage();
             command = InputView.inputCommand();
-            progress = chessGame.doOneCommand(command);
+            progress = chessGame.doOneCommand(command, turn);
         }
         if (!progress.isEnd()) {
             OutputView.printBoard(chessGame.getChessBoard());

@@ -12,6 +12,7 @@ import chess.board.Location;
 import chess.team.Team;
 
 class BishopTest {
+
 	@Test
 	void canMove() {
 		Bishop bishop = new Bishop(Team.BLACK);

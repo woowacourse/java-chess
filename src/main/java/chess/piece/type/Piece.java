@@ -25,8 +25,12 @@ public abstract class Piece {
         return isBlack() == piece.isBlack();
     }
 
-    public boolean is(Piece piece) {
+    public boolean isSameType(Piece piece) {
         return piece.getClass().equals(this.getClass());
+    }
+
+    public boolean isKing() {
+        return this.name == 'K' || this.name == 'k';
     }
 
     protected boolean isBlack() {

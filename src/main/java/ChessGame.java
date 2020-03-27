@@ -7,37 +7,50 @@ import java.util.List;
 
 public class ChessGame {
     private final ChessBoard chessBoard;
-    private Team turn;
-    private final List<ChessSet> teams;
+    private final List<Player> players;
 
     public ChessGame() {
         chessBoard = new ChessBoard();
-        turn = Team.WHITE;
-        teams = new ArrayList<>();
-        teams.add(new ChessSet(chessBoard.giveMyPiece(Team.WHITE.isBlack())));
-        teams.add(new ChessSet(chessBoard.giveMyPiece(Team.BLACK.isBlack())));
+        Player white = new Player(new ChessSet(chessBoard.giveMyPiece(Team.WHITE.isBlack())), Team.WHITE);
+        Player black = new Player(new ChessSet(chessBoard.giveMyPiece(Team.BLACK.isBlack())), Team.BLACK);
+        players = new ArrayList<>();
+        players.add(white);
+        players.add(black);
     }
 
-    public ChessGame(ChessBoard chessBoard, Team turn, List<ChessSet> teams) {
-        this.chessBoard = chessBoard;
-        this.turn = turn;
-        this.teams = teams;
-    }
-
-    public Progress doOneCommand(String command) {
+    public Progress doOneCommand(String command, Team turn) {
         if (command.equals("end")) {
             return Progress.END;
         }
         if (command.substring(0, 4).equals("move")) {
             Location now = substring(command, 1);
             Location destination = substring(command, 2);
-            if (!chessBoard.canMove(now, destination) || !chessBoard.isCorrectTeam(now, this.turn)) {
+            if (!chessBoard.canMove(now, destination) || !chessBoard.isCorrectTeam(now, turn)) {
                 return Progress.ERROR;
             }
             chessBoard.move(now, destination);
+            deletePieceIfExistIn(destination, turn);
         }
-        turn = turn.changeTurn();
+        return finishIfKingDie();
+    }
+
+    private void deletePieceIfExistIn(Location destination, Team turn) {
+        Player present = players.stream()
+                .filter(player -> player.isNotSameTeam(turn))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+        present.deletePieceIfExistIn(destination);
+    }
+
+    private Progress finishIfKingDie() {
+        if(isExistKingDiePlayer()) {
+            return Progress.END;
+        }
         return Progress.CONTINUE;
+    }
+
+    private boolean isExistKingDiePlayer() {
+        return players.stream().anyMatch(Player::hasNotKing);
     }
 
     private Location substring(String str, int index) {

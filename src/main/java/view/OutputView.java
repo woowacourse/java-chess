@@ -5,6 +5,7 @@ import java.util.Map;
 import chess.board.ChessBoard;
 import chess.board.Location;
 import chess.piece.type.Piece;
+import chess.team.Team;
 
 public class OutputView {
 
@@ -48,5 +49,9 @@ public class OutputView {
 
 	public static void printMoveErrorMessage() {
 		System.out.println("이동할 수 없는 명령입니다. 다시 입력해주세요.");
+	}
+
+	public static void printPresentPlayer(Team turn) {
+		System.out.println(turn.name() + "의 차례입니다.");
 	}
 }

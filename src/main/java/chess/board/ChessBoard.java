@@ -32,9 +32,12 @@ public class ChessBoard {
     public boolean canMove(Location now, Location destination) {
         Piece piece = board.get(now);
         boolean isNotSameTeam = isNotSameTeam(destination, piece);
-        return isNotSameTeam
-                && piece.canMove(now, destination)
-                && !piece.hasObstacle(board, now, destination);
+        if (board.containsKey(now)) {
+            return isNotSameTeam
+                    && piece.canMove(now, destination)
+                    && !piece.hasObstacle(board, now, destination);
+        }
+        return false;
     }
 
     private boolean isNotSameTeam(Location destination, Piece piece) {
