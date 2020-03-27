@@ -6,6 +6,7 @@ import java.util.List;
 public class Pawn extends Piece {
 	private static final int START_BLACK_Y = 6;
 	private static final int START_WHITE_Y = 1;
+
 	public Pawn(Position position, Color color) {
 		super(position, color, Symbol.PAWN);
 	}

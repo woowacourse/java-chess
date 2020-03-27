@@ -1,9 +1,9 @@
-package chess.domain.state;
+package chess.domain.game.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.exception.InvalidTurnException;
 import chess.domain.game.Score;
 import chess.domain.game.Turn;
+import chess.domain.game.exception.InvalidTurnException;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;

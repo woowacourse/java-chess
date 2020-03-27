@@ -1,4 +1,4 @@
-package chess.domain.board.exception;
+package chess.domain.game.exception;
 
 public class InvalidTurnException extends RuntimeException {
 	private static final String INVALID_TURN_MESSAGE = "상대방 턴 입니다.";
