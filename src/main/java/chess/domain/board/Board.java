@@ -52,6 +52,9 @@ public class Board {
     }
 
     public Board move(Position source, Position target) {
+        if (status.isNotProcessing()) {
+            throw new UnsupportedOperationException();
+        }
         // TODO: 2020/03/25 리팩토링 확인
         Map<Position, GamePiece> board = new HashMap<>(this.board);
         GamePiece sourcePiece = board.get(source);

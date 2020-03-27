@@ -11,28 +11,29 @@ public class Application {
 
     public static void main(String[] args) {
         ChessService service = new ChessService();
-        Board board = Board.createEmpty();
         Command command;
 
         OutputView.printStart();
         do {
             command = Command.from(InputView.receiveCommand());
             if (command.isStart()) {
-                board = service.initialize(board);
-                OutputView.printBoard(board);
+                OutputView.printBoard(service.initialize());
             }
             if (command.isMove()) {
-                try {
-                    board = service.move(board, command.getSource(), command.getTarget());
-                } catch (IllegalArgumentException | InvalidMovementException e) {
-                    OutputView.printExceptionMessage(e.getMessage());
-                    continue;
-                }
-                OutputView.printBoard(board);
+                execute(service, command);
             }
             if (command.isStatus()) {
-                OutputView.printScore(service.calculateScore(board));
+                OutputView.printScore(service.calculateScore());
             }
-        } while (command.isNotEnd() && service.checkGameNotFinished(board));
+        } while (command.isNotEnd() && service.checkGameNotFinished());
+    }
+
+    private static void execute(ChessService service, Command command) {
+        try {
+            Board board = service.move(command.getSource(), command.getTarget());
+            OutputView.printBoard(board);
+        } catch (IllegalArgumentException | InvalidMovementException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+        }
     }
 }

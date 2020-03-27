@@ -9,19 +9,27 @@ import java.util.Map;
 
 public class ChessService {
 
-    public Board initialize(Board board) {
-        return board.initialize();
+    private Board board;
+
+    public ChessService() {
+        board = Board.createEmpty();
     }
 
-    public Board move(Board board, Position source, Position target) {
-        return board.move(source, target);
+    public Board initialize() {
+        board = board.initialize();
+        return board;
     }
 
-    public Map<Player, Score> calculateScore(Board board) {
+    public Board move(Position source, Position target) {
+        board = board.move(source, target);
+        return board;
+    }
+
+    public Map<Player, Score> calculateScore() {
         return board.calculateScore();
     }
 
-    public boolean checkGameNotFinished(Board board) {
+    public boolean checkGameNotFinished() {
         return board.isNotFinished();
     }
 }

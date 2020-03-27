@@ -73,7 +73,7 @@ class BoardTest {
     @DisplayName("source 기물이 없는 경우")
     void moveWithEmptySource() {
         assertThatThrownBy(() -> {
-            Board.createEmpty().move(Position.from("d3"), Position.from("d5"));
+            Board.createEmpty().initialize().move(Position.from("d3"), Position.from("d5"));
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n기물이 존재하지 않습니다.");
     }
