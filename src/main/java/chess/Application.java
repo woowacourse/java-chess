@@ -7,7 +7,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Application {
-	/*
 	private static Menu menu;
 
 	public static void main(String[] args) {
@@ -30,7 +29,6 @@ public class Application {
 			initMenu();
 		}
 	}
-	*/
 }
 
 

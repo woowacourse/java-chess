@@ -1,11 +1,7 @@
 package chess.domain;
 
-import static chess.domain.Direction.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
-import chess.domain.chesspiece.ChessPiece;
 
 public class MoveManager {
 	public static final String CANNOT_MOVE_POSITION = "이동할 수 없는 좌표 입니다.";

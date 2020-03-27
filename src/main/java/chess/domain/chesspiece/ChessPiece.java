@@ -17,6 +17,14 @@ public abstract class ChessPiece {
 	public boolean isMatchTeam(Team team) {
 		return this.team == team;
 	}
+	
+	public boolean isNotBlankTeam() {
+		return isMatchTeam(Team.BLANK) == false;
+	}
+
+	public boolean equalsPosition(Position position) {
+		return this.position.equals(position);
+	}
 
 	public abstract String getName();
 
@@ -26,4 +34,15 @@ public abstract class ChessPiece {
 
 	public abstract void validateMove(ChessPiece chessPiece);
 
+	public boolean isSameTeam(ChessPiece chessPiece) {
+		return chessPiece.isMatchTeam(this.team);
+	}
+
+	public void changePosition(Position position) {
+		this.position = position;
+	}
+
+	public Position getPisition() {
+		return position;
+	}
 }

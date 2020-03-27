@@ -26,14 +26,14 @@ public class BoardFactory {
 	private static final int WHITE_TEAM_EXECUTIVE_INDEX = 1;
 	private static final int BOARD_FROM_INDEX = 1;
 	private static final int BOARD_TO_INDEX = 8;
+	private static final int ROOK_FIRST_INDEX = 1;
+	private static final int KNIGHT_FIRST_INDEX = 2;
+	private static final int BISHOP_FIRST_INDEX = 3;
 	private static final int QUEEN_INDEX = 4;
 	private static final int KING_INDEX = 5;
-	private static final int ROOK_FIRST_INDEX = 1;
-	private static final int ROOK_SECOND_INDEX = 8;
-	private static final int KNIGHT_FIRST_INDEX = 2;
-	private static final int KNIGHT_SECOND_INDEX = 7;
-	private static final int BISHOP_FIRST_INDEX = 3;
 	private static final int BISHOP_SECOND_INDEX = 6;
+	private static final int KNIGHT_SECOND_INDEX = 7;
+	private static final int ROOK_SECOND_INDEX = 8;
 
 	public static List<Row> createBoard() {
 		List<Row> board = new ArrayList<>();

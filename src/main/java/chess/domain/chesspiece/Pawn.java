@@ -38,7 +38,7 @@ public class Pawn extends WorthlessPiece {
     @Override
     public void validateMove(ChessPiece chessPiece) {
         Direction direction = moveManager.calculateDirection(chessPiece.position, DIRECTIONS);
-        if (direction == UP && isMatchTeam(Team.BLANK)) {
+        if (direction == UP && chessPiece.isMatchTeam(Team.BLANK)) {
             return;
         }
         if (isLeftUpOrRightUp(direction) && isNotBlank(chessPiece)) {

@@ -18,7 +18,6 @@ public class OutputView {
             System.out.println();
         }
     }
-    /*
 
     public static void printRule() {
         System.out.println("체스 게임을 시작합니다.");
@@ -34,6 +33,4 @@ public class OutputView {
     public static void printErrorMessage(RuntimeException e) {
         System.out.println(e.getMessage());
     }
-
-     */
 }

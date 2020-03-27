@@ -51,15 +51,6 @@ public class Position {
         return new Position(direction.plusX(x), direction.plusY(y));
     }
 
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -90,5 +81,13 @@ public class Position {
 
     private boolean isNotEquals(Position targetPosition) {
         return this.equals(targetPosition) == false;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+            "x=" + x +
+            ", y=" + y +
+            '}';
     }
 }

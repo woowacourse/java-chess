@@ -5,7 +5,6 @@ import java.util.function.Consumer;
 import chess.factory.BoardFactory;
 
 public class ChessGame {
-	/*
 	private final ChessBoard chessBoard;
 
 	public ChessGame() {
@@ -17,11 +16,10 @@ public class ChessGame {
 			chessBoard.move(menu.getStartPosition(), menu.getTargetPosition());
 		}
 
-		if (menu.isStatus()) {
-			consumer.accept(chessBoard.getWinScore());
-		}
+		// if (menu.isStatus()) {
+		// 	consumer.accept(chessBoard.getWinScore());
+		// }
 		return this.chessBoard;
 	}
 
-	 */
 }
