@@ -1,6 +1,7 @@
 package chess.domain.piece.pawn;
 
 import chess.domain.board.Board;
+import chess.domain.position.Direction;
 import chess.domain.position.Distance;
 import chess.domain.piece.Piece;
 import chess.domain.piece.state.Initialized;
@@ -45,27 +46,33 @@ public class InitializedPawn extends Initialized {
             return true;
         }
 
-        if (isSameTeam(exPiece)) {
-            return true;
-        }
-
         return hasHindrance(to, board);
 
     }
 
-    private boolean hasHindrance(Position to, Board board) {
-        if (position.isDiagonalDirection(to)) {
+    public boolean hasHindrance(Position to, Board board) {
+        if (isHeadingDiagonal(to)) {
             return false;
         }
 
-        Position forward = position.go(team.getForwardDirection());
-        Piece piece = board.getPiece(forward);
-        if (forward.equals(to) && piece.isBlank()) {
-            return false;
-        }
+        return hasHindrance(board);
+    }
 
-        forward = forward.go(team.getForwardDirection());
-        piece = board.getPiece(forward);
-        return piece.isNotBlank();
+    private boolean isHeadingDiagonal(Position to) {
+        return position.isDiagonalDirection(to);
+    }
+
+    private boolean hasHindrance(Board board) {
+        Position forwardPosition = position;
+        for (int i = 0; i < MAX_DISTANCE; i++) {
+            forwardPosition = forwardPosition.go(team.getForwardDirection());
+            Piece forward = board.getPiece(forwardPosition);
+            if (forward.isNotBlank()) {
+                return true;
+            }
+        }
+        return false;
+
+
     }
 }
