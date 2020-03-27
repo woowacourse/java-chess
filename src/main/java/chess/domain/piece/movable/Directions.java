@@ -1,9 +1,9 @@
 package chess.domain.piece.movable;
 
 import chess.domain.piece.Color;
-import chess.domain.position.Position;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static chess.domain.piece.movable.Direction.*;
@@ -15,11 +15,7 @@ public enum Directions {
 	KNIGHT(Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS)),
 	WHITEPAWN(Arrays.asList(NORTH, NORTHEAST, NORTHWEST)),
 	BLACKPAWN(Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST)),
-	WHITEPAWNINITIAL(Arrays.asList(NORTH, NORTHEAST, NORTHWEST, NORTHDOUBLE)),
-	BLACKPAWNINITIAL(Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST, SOUTHDOUBLE));
-
-	private static final int WHITE_PAWN_INITIAL_COLUMN = 2;
-	private static final int BLACK_PAWN_INITIAL_COLUMN = 7;
+	NONE(Collections.emptyList());
 
 	private List<Direction> directions;
 
@@ -31,15 +27,7 @@ public enum Directions {
 		return directions;
 	}
 
-	public static Directions getPawnDirectionsBy(Color color, Position position) {
-		if (color.isWhite() && position.getColumn().getValue() == WHITE_PAWN_INITIAL_COLUMN) {
-			return WHITEPAWNINITIAL;
-		}
-
-		if (color.isBlack() && position.getColumn().getValue() == BLACK_PAWN_INITIAL_COLUMN) {
-			return BLACKPAWNINITIAL;
-		}
-
+	public static Directions getPawnDirectionsBy(Color color) {
 		if (color.isWhite()) {
 			return WHITEPAWN;
 		}

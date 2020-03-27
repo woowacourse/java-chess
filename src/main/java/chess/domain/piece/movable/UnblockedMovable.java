@@ -8,14 +8,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class KingMovable implements Movable {
+public class UnblockedMovable implements Movable {
+	private final Directions moveDirections;
+
+	public UnblockedMovable(Directions moveDirections) {
+		this.moveDirections = moveDirections;
+	}
+
 	@Override
 	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
-		Directions moveDirections = Directions.EVERY;
 		Set<Position> movablePositions = new HashSet<>();
 		for (Direction direction : moveDirections.getDirections()) {
 			Position movablePosition = position.getMovedPositionBy(direction);
-			if (!position.equals(movablePosition) && checkMovable(movablePosition, pieces, color)) {
+			if (checkMovable(movablePosition, pieces, color)) {
 				movablePositions.add(movablePosition);
 			}
 		}
@@ -23,11 +28,7 @@ public class KingMovable implements Movable {
 	}
 
 	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
-		for (Piece piece : pieces) {
-			if (piece.getPosition().equals(position) && piece.getColor().isSame(color)) {
-				return false;
-			}
-		}
-		return true;
+		return pieces.stream()
+				.noneMatch(piece -> piece.isSamePosition(position) && piece.isSameColor(color));
 	}
 }

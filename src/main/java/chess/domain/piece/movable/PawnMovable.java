@@ -1,67 +1,59 @@
 package chess.domain.piece.movable;
 
-import chess.domain.position.PositionFactory;
-import chess.domain.position.Column;
-import chess.domain.position.Position;
-import chess.domain.position.Row;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public class PawnMovable implements Movable {
 	@Override
 	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
-		Directions moveDirections = Directions.getPawnDirectionsBy(color,position);
+		Directions moveDirections = Directions.getPawnDirectionsBy(color);
 		Set<Position> movablePositions = new HashSet<>();
 
 		for (Direction direction : moveDirections.getDirections()) {
-			Optional<Position> optionalPosition = checkBoundary(position, direction);
-			if (optionalPosition.isPresent()) {
-				Position movablePosition = optionalPosition.get();
-				if (movablePosition.getRow().getValue() == position.getRow().getValue()) {
-					if (checkMovable(movablePosition, pieces, color) && !isPossessed(movablePosition, pieces)) {
-						movablePositions.add(movablePosition);
-					}
+			Position movablePosition = position.getMovedPositionBy(direction);
+
+			if (position.isSameRow(movablePosition)) { // 같은 로우 위
+				if (isPossessed(movablePosition, pieces)) { // 아무도 없을 때
 					continue;
 				}
-				if (checkMovable(movablePosition, pieces, color) && isPossessed(movablePosition, pieces)) {
-					movablePositions.add(movablePosition);
+				movablePositions.add(movablePosition);
+				if (isInitial(position, color)) {
+					movablePosition = movablePosition.getMovedPositionBy(direction);
+					if (!isPossessed(movablePosition, pieces)) { // 아무도 없을 때
+						movablePositions.add(movablePosition);
+					}
 				}
+				continue;
+			}
+			if (checkMovable(movablePosition, pieces, color)) { // 대각선
+				movablePositions.add(movablePosition);
 			}
 		}
 		return movablePositions;
 	}
 
-	private Optional<Position> checkBoundary(Position position, Direction direction) {
-		Row row = position.getRow();
-		Column column = position.getColumn();
-		if (position.checkBound(direction)) {
-			Row validRow = row.calculate(direction.getXDegree());
-			Column validColumn = column.calculate(direction.getYDegree());
-			return Optional.ofNullable(PositionFactory.of(validRow, validColumn));
+	private boolean isInitial(Position position, Color color) {
+		if (position.getColumn().getValue() == 2 && color.isWhite()) {
+			return true;
 		}
-		return Optional.empty();
-	}
-
-	private boolean isPossessed(Position movablePosition, List<Piece> pieces) {
-		for (Piece piece : pieces) {
-			if (piece.isSamePosition(movablePosition)) {
-				return true;
-			}
+		if (position.getColumn().getValue() == 7 && color.isBlack()) {
+			return true;
 		}
 		return false;
 	}
 
+	private boolean isPossessed(Position movablePosition, List<Piece> pieces) {
+		return pieces.stream()
+				.anyMatch(piece -> piece.isSamePosition(movablePosition));
+	}
+
 	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
-		for (Piece piece : pieces) {
-			if (piece.isSamePosition(position) && piece.isSameColor(color)) {
-				return false;
-			}
-		}
-		return true;
+		return pieces.stream()
+				.anyMatch(piece -> piece.isSamePosition(position) && piece.isNotSameColor(color));
 	}
 }

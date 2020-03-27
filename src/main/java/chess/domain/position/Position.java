@@ -45,6 +45,10 @@ public class Position {
 		return isValidBound(checkingRow) && isValidBound(checkingColumn);
 	}
 
+	public boolean isSameRow(Position position) {
+		return this.row.equals(position.row);
+	}
+
 	private static boolean isValidBound(int value) {
 		return value >= MIN_BOUND && value <= MAX_BOUND;
 	}
