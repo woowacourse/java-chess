@@ -19,7 +19,7 @@ public class Pawn extends Piece {
         if (!(piece instanceof Blank) && (direction == Direction.NORTH || direction == Direction.SOUTH)) {
             throw new NotMovableException();
         }
-        return isBlack() ? Direction.blackPawnDirection() : Direction.whitePawnDirection();
+        return isBlack() ? Direction.BLACK_PAWN_DIRECTION: Direction.WHITE_PAWN_DIRECTION;
     }
 
     @Override

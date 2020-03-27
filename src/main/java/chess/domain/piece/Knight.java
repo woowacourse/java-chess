@@ -9,7 +9,7 @@ public class Knight extends Piece {
 
     @Override
     protected List<Direction> movableDirections(Piece piece, Direction direction) {
-        return Direction.knightDirection();
+        return Direction.KNIGHT_DIRECTION;
     }
 
     @Override

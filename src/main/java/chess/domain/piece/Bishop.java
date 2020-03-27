@@ -9,7 +9,7 @@ public class Bishop extends Piece {
 
     @Override
     protected List<Direction> movableDirections(Piece piece, Direction direction) {
-        return Direction.diagonalDirection();
+        return Direction.DIAGONAL_DIRECTION;
     }
 
     @Override

@@ -48,19 +48,19 @@ public class DirectionTest {
     @Test
     @DisplayName("대각선 방향을 입력한 경우 정상적으로 반환")
     void ofDiagonal() {
-        assertThat(Direction.ofDiagonal(1, 1)).isEqualTo(Direction.NE);
-        assertThat(Direction.ofDiagonal(-1, -1)).isEqualTo(Direction.SW);
-        assertThat(Direction.ofDiagonal(1, -1)).isEqualTo(Direction.SE);
-        assertThat(Direction.ofDiagonal(-1, 1)).isEqualTo(Direction.NW);
+        assertThat(Direction.ofDiagonal(1, 1)).isEqualTo(Direction.NORTH_EAST);
+        assertThat(Direction.ofDiagonal(-1, -1)).isEqualTo(Direction.SOUTH_WEST);
+        assertThat(Direction.ofDiagonal(1, -1)).isEqualTo(Direction.SOUTH_EAST);
+        assertThat(Direction.ofDiagonal(-1, 1)).isEqualTo(Direction.NORTH_WEST);
     }
 
     @Test
     @DisplayName("8방향을 입력한 경우 정상적으로 반환")
     void ofEvery() {
-        assertThat(Direction.ofEvery(1, 1)).isEqualTo(Direction.NE);
-        assertThat(Direction.ofEvery(-1, -1)).isEqualTo(Direction.SW);
-        assertThat(Direction.ofEvery(1, -1)).isEqualTo(Direction.SE);
-        assertThat(Direction.ofEvery(-1, 1)).isEqualTo(Direction.NW);
+        assertThat(Direction.ofEvery(1, 1)).isEqualTo(Direction.NORTH_EAST);
+        assertThat(Direction.ofEvery(-1, -1)).isEqualTo(Direction.SOUTH_WEST);
+        assertThat(Direction.ofEvery(1, -1)).isEqualTo(Direction.SOUTH_EAST);
+        assertThat(Direction.ofEvery(-1, 1)).isEqualTo(Direction.NORTH_WEST);
         assertThat(Direction.ofEvery(1, 0)).isEqualTo(Direction.EAST);
         assertThat(Direction.ofEvery(0, 1)).isEqualTo(Direction.NORTH);
         assertThat(Direction.ofEvery(-1, 0)).isEqualTo(Direction.WEST);
@@ -86,18 +86,18 @@ public class DirectionTest {
             Arguments.of(Direction.of(0, -1), Direction.SOUTH),
             Arguments.of(Direction.of(1, 0), Direction.EAST),
             Arguments.of(Direction.of(-1, 0), Direction.WEST),
-            Arguments.of(Direction.of(1, 1), Direction.NE),
-            Arguments.of(Direction.of(-1, 1), Direction.NW),
-            Arguments.of(Direction.of(1, -1), Direction.SE),
-            Arguments.of(Direction.of(-1, -1), Direction.SW),
-            Arguments.of(Direction.of(1, 2), Direction.NNE),
-            Arguments.of(Direction.of(-1, 2), Direction.NNW),
-            Arguments.of(Direction.of(1, -2), Direction.SSE),
-            Arguments.of(Direction.of(-1, -2), Direction.SSW),
-            Arguments.of(Direction.of(2, 1), Direction.EEN),
-            Arguments.of(Direction.of(2, -1), Direction.EES),
-            Arguments.of(Direction.of(-2, 1), Direction.WWN),
-            Arguments.of(Direction.of(-2, -1), Direction.WWS)
+            Arguments.of(Direction.of(1, 1), Direction.NORTH_EAST),
+            Arguments.of(Direction.of(-1, 1), Direction.NORTH_WEST),
+            Arguments.of(Direction.of(1, -1), Direction.SOUTH_EAST),
+            Arguments.of(Direction.of(-1, -1), Direction.SOUTH_WEST),
+            Arguments.of(Direction.of(1, 2), Direction.NORTH_NORTH_EAST),
+            Arguments.of(Direction.of(-1, 2), Direction.NORTH_NORTH_WEST),
+            Arguments.of(Direction.of(1, -2), Direction.SOUTH_SOUTH_EAST),
+            Arguments.of(Direction.of(-1, -2), Direction.SOUTH_SOUTH_WEST),
+            Arguments.of(Direction.of(2, 1), Direction.EAST_EAST_NORTH),
+            Arguments.of(Direction.of(2, -1), Direction.EAST_EAST_SOUTH),
+            Arguments.of(Direction.of(-2, 1), Direction.WEST_WEST_NORTH),
+            Arguments.of(Direction.of(-2, -1), Direction.WEST_WEST_SOUTH)
         );
     }
 }
