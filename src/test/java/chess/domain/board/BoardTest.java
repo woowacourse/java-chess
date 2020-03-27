@@ -99,19 +99,28 @@ class BoardTest {
         );
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("경로에 기물이 있는 경우")
-    void moveWithObstacle() {
-        // TODO: 2020/03/27 테스트 케이스 추가
+    @MethodSource("createPathWithObstacle")
+    void moveWithObstacle(GamePiece gamePiece, Position source, Position target) {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
-        map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("d6"), GamePiece.of(BISHOP, BLACK));
+        map.put(source, gamePiece);
+        map.put(Position.from("e3"), GamePiece.of(BISHOP, BLACK));
         Board board = Board.from(map, new Status(0, StatusType.PROCESSING));
 
         assertThatThrownBy(() -> {
-            board.move(Position.from("d5"), Position.from("d6"));
+            board.move(source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n경로에 기물이 존재합니다.");
+    }
+
+    static Stream<Arguments> createPathWithObstacle() {
+        return Stream.of(
+                Arguments.of(GamePiece.of(PAWN, WHITE), Position.from("e2"), Position.from("e4")),
+                Arguments.of(GamePiece.of(BISHOP, WHITE), Position.from("d2"), Position.from("f4")),
+                Arguments.of(GamePiece.of(ROOK, WHITE), Position.from("e2"), Position.from("e5")),
+                Arguments.of(GamePiece.of(QUEEN, WHITE), Position.from("e2"), Position.from("e4"))
+        );
     }
 
     @Test

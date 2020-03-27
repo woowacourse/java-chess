@@ -42,8 +42,12 @@ public class GamePiece {
         return new ArrayList<>(GAME_PIECES.values());
     }
 
-    public List<Position> searchPath(Position source, Position target, boolean isKill) {
-        return chessPiece.searchPath(source, target, isKill);
+    public List<Position> searchMovePath(Position source, Position target) {
+        return chessPiece.searchMovePath(source, target);
+    }
+
+    public List<Position> searchKillPath(Position source, Position target) {
+        return chessPiece.searchKillPath(source, target);
     }
 
     public boolean isEnemy(GamePiece sourcePiece) {

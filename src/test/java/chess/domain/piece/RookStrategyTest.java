@@ -23,7 +23,7 @@ class RookStrategyTest {
     @MethodSource("createSourceToTarget")
     void findMovePath(Position source, Position target, List<Position> expected) {
         MoveStrategy rookStrategy = new RookStrategy();
-        assertThat(rookStrategy.findMovePath(source, target, false)).isEqualTo(expected);
+        assertThat(rookStrategy.findMovePath(source, target)).isEqualTo(expected);
     }
 
     static Stream<Arguments> createSourceToTarget() {
@@ -49,7 +49,7 @@ class RookStrategyTest {
         Position target = Position.from("b2");
 
         assertThatThrownBy(() -> {
-            rookStrategy.findMovePath(source, target, false);
+            rookStrategy.findMovePath(source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
     }

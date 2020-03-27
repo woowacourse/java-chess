@@ -62,10 +62,18 @@ public class Board {
         boolean isKill = !targetPiece.equals(GamePiece.EMPTY) && targetPiece.isEnemy(sourcePiece);
 
         List<Position> path;
-        if (status.isWhiteTurn()) {
-            path = sourcePiece.searchPath(source, target, isKill);
+        if (isKill) {
+            if (status.isWhiteTurn()) {
+                path = sourcePiece.searchKillPath(source, target);
+            } else {
+                path = backWard(sourcePiece.searchKillPath(source.opposite(), target.opposite()));
+            }
         } else {
-            path = backWard(sourcePiece.searchPath(source.opposite(), target.opposite(), isKill));
+            if (status.isWhiteTurn()) {
+                path = sourcePiece.searchMovePath(source, target);
+            } else {
+                path = backWard(sourcePiece.searchMovePath(source.opposite(), target.opposite()));
+            }
         }
 
         for (Position position : path) {

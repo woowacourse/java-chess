@@ -9,25 +9,12 @@ import java.util.List;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
 
-public class RookStrategy implements MoveStrategy {
+public class RookStrategy extends InfiniteMovement {
 
     private final List<Direction> directions = Arrays.asList(N, E, W, S);
 
     @Override
-    public List<Position> findMovePath(final Position source, final Position target, final boolean isKill) {
-        for (Direction direction : directions) {
-            List<Position> path = new ArrayList<>();
-            Position position = source;
-
-            do {
-                position = position.destinationOf(direction).orElse(null);
-                if (target.equals(position)) {
-                    return path;
-                }
-                path.add(position);
-            } while (position != null);
-        }
-
-        throw new InvalidMovementException();
+    public List<Direction> getDirection() {
+        return directions;
     }
 }

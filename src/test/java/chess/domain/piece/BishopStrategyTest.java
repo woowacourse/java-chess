@@ -23,7 +23,7 @@ class BishopStrategyTest {
     @MethodSource("createSourceToTarget")
     void findMovePath(Position source, Position target, List<Position> expected) {
         MoveStrategy bishopStrategy = new BishopStrategy();
-        assertThat(bishopStrategy.findMovePath(source, target, false)).isEqualTo(expected);
+        assertThat(bishopStrategy.findMovePath(source, target)).isEqualTo(expected);
     }
 
     static Stream<Arguments> createSourceToTarget() {
@@ -49,7 +49,7 @@ class BishopStrategyTest {
         Position target = Position.from("d3");
 
         assertThatThrownBy(() -> {
-            bishopStrategy.findMovePath(source, target, false);
+            bishopStrategy.findMovePath(source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
     }

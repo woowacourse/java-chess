@@ -22,7 +22,7 @@ class PawnStrategyTest {
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d2");
         MoveStrategy pawnStrategy = new PawnStrategy();
-        assertThat(pawnStrategy.findMovePath(source, target, false)).isEqualTo(expected);
+        assertThat(pawnStrategy.findMovePath(source, target)).isEqualTo(expected);
     }
 
     static Stream<Arguments> createSourceToTarget() {
@@ -41,7 +41,7 @@ class PawnStrategyTest {
         Position source = Position.from("d5");
 
         assertThatThrownBy(() -> {
-            pawnStrategy.findMovePath(source, target, false);
+            pawnStrategy.findMovePath(source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
     }
@@ -64,7 +64,7 @@ class PawnStrategyTest {
     void findKillPath(Position target, List<Position> expected) {
         Position source = Position.from("d2");
         MoveStrategy pawnStrategy = new PawnStrategy();
-        assertThat(pawnStrategy.findMovePath(source, target, true)).isEqualTo(expected);
+        assertThat(pawnStrategy.findKillPath(source, target)).isEqualTo(expected);
     }
 
     static Stream<Arguments> createKillSourceToTarget() {
@@ -83,7 +83,7 @@ class PawnStrategyTest {
         Position source = Position.from("d5");
 
         assertThatThrownBy(() -> {
-            pawnStrategy.findMovePath(source, target, true);
+            pawnStrategy.findKillPath(source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.");
     }

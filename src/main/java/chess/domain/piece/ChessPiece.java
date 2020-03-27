@@ -31,16 +31,20 @@ public enum ChessPiece {
         this.score = score;
     }
 
-    public List<Position> getOriginalPositions() {
-        return initialPositions;
+    public List<Position> searchMovePath(Position source, Position target) {
+        return moveStrategy.findMovePath(source, target);
     }
 
-    public List<Position> searchPath(Position source, Position target, boolean isKill) {
-        return moveStrategy.findMovePath(source, target, isKill);
+    public List<Position> searchKillPath(Position source, Position target) {
+        return moveStrategy.findKillPath(source, target);
     }
 
     public double calculateScore(int count) {
         return score * count;
+    }
+
+    public List<Position> getOriginalPositions() {
+        return initialPositions;
     }
 
     public String getName() {
