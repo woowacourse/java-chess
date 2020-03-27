@@ -10,6 +10,6 @@ public class BlankTest {
 	@DisplayName("move 하는 경우 예외 발생")
 	void move() {
 		assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(
-				() -> new Blank(Position.from("a3")).move(Position.from("a4")));
+				() -> new Blank(Position.from("a3")).move(new Blank(Position.from("a4"))));
 	}
 }

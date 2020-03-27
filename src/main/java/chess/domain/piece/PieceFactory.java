@@ -4,26 +4,30 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum PieceFactory {
-    PAWN("p", Pawn::new),
-    ROOK("r", Rook::new),
-    KNIGHT("n", Knight::new),
-    BISHOP("b", Bishop::new),
-    QUEEN("q", Queen::new),
-    KING("k", King::new);
+	PAWN(Symbol.PAWN, Pawn::new),
+	ROOK(Symbol.ROOK, Rook::new),
+	KNIGHT(Symbol.KNIGHT, Knight::new),
+	BISHOP(Symbol.BISHOP, Bishop::new),
+	QUEEN(Symbol.QUEEN, Queen::new),
+	KING(Symbol.KING, King::new);
 
-    private final String symbol;
-    private final BiFunction<Position, Color, Piece> creator;
+	private final Symbol symbol;
+	private final BiFunction<Position, Color, Piece> creator;
 
-    PieceFactory(String symbol, BiFunction<Position, Color, Piece> creator) {
-        this.symbol = symbol;
-        this.creator = creator;
-    }
+	PieceFactory(Symbol symbol, BiFunction<Position, Color, Piece> creator) {
+		this.symbol = symbol;
+		this.creator = creator;
+	}
 
-    public static Piece create(String symbol, Position position, Color color) {
-        return Arrays.stream(values())
-            .filter(pieceFactory -> pieceFactory.symbol.equals(symbol))
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new)
-            .creator.apply(position, color);
-    }
+	public static Piece create(Symbol symbol, Position position, Color color) {
+		return Arrays.stream(values())
+				.filter(pieceFactory -> pieceFactory.symbol == symbol)
+				.findFirst()
+				.orElseThrow(IllegalArgumentException::new)
+				.creator.apply(position, color);
+	}
+
+	public static Piece createBlank(Position position) {
+		return new Blank(position);
+	}
 }

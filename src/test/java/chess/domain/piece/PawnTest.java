@@ -15,25 +15,27 @@ public class PawnTest {
 	}
 
 	@Test
-	@DisplayName("폰의 이동 가능한 경로가 존재")
-	void pathTo() {
+	@DisplayName("폰 이동")
+	void move() {
 		Piece piece = new Pawn(Position.from("a2"), Color.WHITE);
-		assertThat(piece.pathTo(new Blank(Position.from("a3")))).isInstanceOf(Path.class);
+		piece.move(new Blank(Position.from("a3")));
+		assertThat(piece.getPosition()).isEqualTo(Position.from("a3"));
 	}
 
 	@Test
-	@DisplayName("폰의 대각선에 적이 있는 경우 경로가 존재")
-	void pathTo_enemy() {
+	@DisplayName("폰의 대각선에 적이 있으면 이동")
+	void move_enemy() {
 		Piece piece = new Pawn(Position.from("a2"), Color.WHITE);
-		assertThat(piece.pathTo(new Pawn(Position.from("b3"), Color.BLACK))).isInstanceOf(Path.class);
+		piece.move(new Pawn(Position.from("b3"), Color.BLACK));
+		assertThat(piece.getPosition()).isEqualTo(Position.from("b3"));
 	}
 
 	@ParameterizedTest
-	@DisplayName("폰의 이동 가능한 경로가 아닌 경우 예외 발생")
+	@DisplayName("폰이 이동할 수 없는 위치인 경우 예외 발생")
 	@CsvSource(value = {"a2,a4", "a2,b3"})
-	void pathTo_invalid_direction(String source, String target) {
+	void move_invalid_direction(String source, String target) {
 		Piece piece = new Pawn(Position.from(source), Color.WHITE);
 		assertThatExceptionOfType(RuntimeException.class).isThrownBy(
-				() -> piece.pathTo(new Blank(Position.from(target))));
+				() -> piece.move(new Blank(Position.from(target))));
 	}
 }
