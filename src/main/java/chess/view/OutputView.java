@@ -28,9 +28,7 @@ public class OutputView {
 
 		for (Row row : Row.values()) {
 			Position position = PositionFactory.of(row, column);
-			Piece piece = chessGame.getPieces()
-					.findBy(position)
-					.orElseGet(Blank::new);
+			Piece piece = chessGame.getPieces().findBy(position); // TODO: 2020/03/27 체스게임한테 시켜라 혹은 보드에게 이양
 			rowLineStringBuilder.append(piece.getName());
 		}
 		return rowLineStringBuilder.toString();
