@@ -26,7 +26,7 @@ public class PawnTest {
 	@DisplayName("폰 처음 2칸 이동")
 	void move_start() {
 		Piece piece = new Pawn(Position.from("a2"), Color.WHITE);
-		piece.move(new Pawn(Position.from("a4"), Color.BLACK));
+		piece.move(new Blank(Position.from("a4")));
 		assertThat(piece.getPosition()).isEqualTo(Position.from("a4"));
 	}
 
@@ -36,6 +36,14 @@ public class PawnTest {
 		Piece piece = new Pawn(Position.from("a2"), Color.WHITE);
 		piece.move(new Pawn(Position.from("b3"), Color.BLACK));
 		assertThat(piece.getPosition()).isEqualTo(Position.from("b3"));
+	}
+
+	@Test
+	@DisplayName("폰 앞에 적이 있으면 예외 발생")
+	void move_forward_enemy() {
+		Piece piece = new Pawn(Position.from("a2"), Color.WHITE);
+		assertThatExceptionOfType(RuntimeException.class).isThrownBy(
+				() -> piece.move(new Pawn(Position.from("a3"), Color.BLACK)));
 	}
 
 	@ParameterizedTest

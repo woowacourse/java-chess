@@ -27,11 +27,19 @@ public class Pawn extends Piece {
 	@Override
 	protected List<Direction> movableDirections(Piece piece) {
 		List<Direction> directions = new ArrayList<>(directions());
-		if (piece.isBlank() || piece.isBlack() == isBlack()) {
+		if (piece.isBlank()) {
 			directions.remove(Direction.NORTH_EAST);
 			directions.remove(Direction.NORTH_WEST);
 			directions.remove(Direction.SOUTH_EAST);
 			directions.remove(Direction.SOUTH_WEST);
+		}
+		if (piece.isBlack() == isBlack()) {
+			directions.remove(Direction.SOUTH);
+			directions.remove(Direction.SOUTH_SOUTH);
+		}
+		if (!piece.isBlank()) {
+			directions.remove(Direction.NORTH);
+			directions.remove(Direction.NORTH_NORTH);
 		}
 		return directions;
 	}
