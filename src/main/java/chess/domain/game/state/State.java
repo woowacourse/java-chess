@@ -14,7 +14,7 @@ public interface State {
 
 	Board board();
 
-	boolean isFinished();
-
 	Score score(Color color);
+
+	boolean isFinished();
 }

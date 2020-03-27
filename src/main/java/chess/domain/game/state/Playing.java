@@ -56,12 +56,12 @@ public class Playing implements State {
 	}
 
 	@Override
-	public boolean isFinished() {
-		return false;
+	public Score score(Color color) {
+		return Score.calculate(board.findPiecesByColor(color));
 	}
 
 	@Override
-	public Score score(Color color) {
-		return Score.calculate(board.findPiecesByColor(color));
+	public boolean isFinished() {
+		return false;
 	}
 }
