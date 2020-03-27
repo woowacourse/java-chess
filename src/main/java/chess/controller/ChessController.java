@@ -29,7 +29,7 @@ public class ChessController {
     }
 
     public static void playTurn(String input, Boards boards) {
-        if (!moveOrStatus.contains(input)) {
+        if (!moveOrStatus.contains(List.of(input.split(" ")).get(0))) {
             throw new IllegalArgumentException("잘못된 명령어 입력입니다.");
         }
 
