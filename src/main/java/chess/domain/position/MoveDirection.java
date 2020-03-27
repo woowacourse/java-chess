@@ -7,25 +7,18 @@ import java.util.function.UnaryOperator;
 public enum MoveDirection {
 	N((fileInterval, rankInterval) -> fileInterval == 0 && rankInterval > 0,
 		(sourcePosition) -> sourcePosition.move(0, 1)),
-
 	NE((fileInterval, rankInterval) -> fileInterval - rankInterval == 0,
 		(sourcePosition) -> sourcePosition.move(1, 1)),
-
 	E((fileInterval, rankInterval) -> fileInterval > 0 && rankInterval == 0,
 		(sourcePosition) -> sourcePosition.move(1, 0)),
-
 	SE((fileInterval, rankInterval) -> fileInterval - (-rankInterval) == 0,
 		(sourcePosition) -> sourcePosition.move(1, -1)),
-
 	S((fileInterval, rankInterval) -> fileInterval == 0 && rankInterval < 0,
 		(sourcePosition) -> sourcePosition.move(0, -1)),
-
 	SW((fileInterval, rankInterval) -> (-fileInterval) - (-rankInterval) == 0,
 		(sourcePosition) -> sourcePosition.move(-1, -1)),
-
 	W((fileInterval, rankInterval) -> fileInterval < 0 && rankInterval == 0,
 		(sourcePosition) -> sourcePosition.move(-1, 0)),
-
 	NW((fileInterval, rankInterval) -> (-fileInterval) - rankInterval == 0,
 		(sourcePosition) -> sourcePosition.move(-1, 1));
 

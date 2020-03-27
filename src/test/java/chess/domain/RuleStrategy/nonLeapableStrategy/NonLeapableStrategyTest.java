@@ -14,9 +14,9 @@ class NonLeapableStrategyTest {
 	@NullSource
 	void validate_NullSource_ExceptionThrown(Position sourcePosition) {
 		NonLeapableStrategy nonLeapableStrategy = new QueenRuleStrategy();
-		Position targetPostion = Position.of("b1");
+		Position targetPosition = Position.of("b1");
 
-		assertThatThrownBy(() -> nonLeapableStrategy.canMove(sourcePosition, targetPostion))
+		assertThatThrownBy(() -> nonLeapableStrategy.canMove(sourcePosition, targetPosition))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("소스 위치가 존재하지 않습니다.");
 	}

@@ -6,6 +6,8 @@ import chess.domain.position.Position;
 
 public class KnightRuleStrategy implements RuleStrategy {
 
+	public static final int KNIGHT_MOVABLE_RANGE = 3;
+
 	@Override
 	public boolean canMove(Position sourcePosition, Position targetPosition) {
 		validate(sourcePosition, targetPosition);
@@ -26,7 +28,7 @@ public class KnightRuleStrategy implements RuleStrategy {
 	}
 
 	private boolean isKnightCanMoveRange(int chessFileGap, int chessRankGap) {
-		return (chessFileGap + chessRankGap) == 3;
+		return (chessFileGap + chessRankGap) == KNIGHT_MOVABLE_RANGE;
 	}
 
 	@Override
