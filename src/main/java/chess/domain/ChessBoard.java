@@ -1,14 +1,11 @@
 package chess.domain;
 
-import java.util.Arrays;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import chess.domain.piece.King;
-import chess.domain.piece.Piece;
-import chess.domain.position.Column;
-import chess.domain.position.Position;
 
 public class ChessBoard {
 	private List<Piece> pieces;
@@ -27,35 +24,48 @@ public class ChessBoard {
 	public void move(Position source, Position target, Side turn) {
 		Piece sourcePiece = findByPosition(source);
 
+		validateBlock(source, target);
 		validateTurn(sourcePiece, turn);
-		validateMove(source, target);
-		if (sourcePiece.isPawn() && sourcePiece.canMove(target) && isPresentPiece(target)) {
-			throw new IllegalArgumentException("폰은 앞에 있는 말을 공격할 수 없습니다.");
-		}
+		validateAction(target, sourcePiece);
 		pieces.removeIf(piece -> piece.isSamePosition(target));
 		sourcePiece.move(target);
 	}
 
-	private void validateTurn(Piece sourcePiece, Side turn) {
-		if (!sourcePiece.isSameSide(turn)) {
+	private void validateAction(Position target, Piece sourcePiece) {
+		if (isPresentPiece(target)) {
+			validateMove(sourcePiece, findByPosition(target));
+			return;
+		}
+		validateAttack(sourcePiece, target);
+	}
+
+	private void validateTurn(Piece source, Side turn) {
+		if (!source.isSameSide(turn)) {
 			throw new IllegalArgumentException("본인의 말만 움직일 수 있습니다.");
 		}
 	}
 
-	private void validateMove(Position source, Position target) {
-		if (canPawnAttack(source, target)) {
-			return;
-		}
-		if (findByPosition(source).canNotMove(target) || isBlock(source, target) || canNotAttack(source, target)) {
+	private void validateMove(Piece source, Piece target) {
+		if (source.canNotAttack(target)) {
 			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
 		}
-
 	}
 
-	private boolean canPawnAttack(Position source, Position target) {
-		return findByPosition(source).isPawn() && source.isInDiagonal(target) && source.isInDistance(1,
-				target) && findByPosition(source).isAttackForward(
-				target) && isPresentPiece(target) && !findByPosition(source).isSameSide(findByPosition(target));
+	private void validateAttack(Piece source, Position target) {
+		if (source.canNotMove(target)) {
+			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
+		}
+	}
+
+	private void validateBlock(Position source, Position target) {
+		if (isBlock(source, target)) {
+			throw new IllegalArgumentException("해당 위치로 가는 길이 막혀있습니다.");
+		}
+	}
+
+	private boolean isBlock(Position source, Position target) {
+		return pieces.stream()
+				.anyMatch(piece -> piece.isBlock(source, target));
 	}
 
 	private Piece findByPosition(Position position) {
@@ -65,43 +75,22 @@ public class ChessBoard {
 				.orElseThrow(() -> new IllegalArgumentException("입력에 해당하는 말이 없습니다."));
 	}
 
-	private boolean canNotAttack(Position source, Position target) {
-		return isPresentPiece(target) && findByPosition(source).isSameSide(findByPosition(target));
-	}
-
-	private boolean isBlock(Position source, Position target) {
-		return pieces.stream()
-				.anyMatch(piece -> piece.isBlock(source, target));
-	}
-
 	private boolean isPresentPiece(Position position) {
 		return pieces.stream()
 				.anyMatch(piece -> piece.isSamePosition(position));
 	}
 
+	public ChessStatus createStatus() {
+		return new ChessStatus(pieces);
+	}
+
 	public boolean isEnd() {
-		return pieces.stream()
-				.filter(piece -> piece.getClass() == King.class)
-				.count() != 2;
+		return calculateKingPiece() != Side.size();
 	}
 
-	public double calculateScore(Side side) {
-		return pieces.stream()
-				.filter(piece -> piece.isSameSide(side))
-				.mapToDouble(Piece::getScore)
-				.sum() + calculatePawnInSameCol(side);
-	}
-
-	public double calculatePawnInSameCol(Side side) {
-		return Arrays.stream(Column.values())
-				.mapToLong(col -> countColumnPawn(col, side))
-				.filter(i -> i == 1)
-				.count() * 0.5;
-	}
-
-	public long countColumnPawn(Column column, Side side) {
-		return pieces.stream()
-				.filter(piece -> piece.isPawn() && piece.isSameSide(side) && piece.isSameCol(column))
+	private int calculateKingPiece() {
+		return (int) pieces.stream()
+				.filter(Piece::isKing)
 				.count();
 	}
 

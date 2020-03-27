@@ -10,12 +10,21 @@ public class Knight extends Piece {
 
 	public Knight(Side side, Position position) {
 		super(side, position);
-		this.name = NAME;
-		this.score = SCORE;
 	}
 
 	@Override
 	public boolean isInPath(Position targetPosition) {
-		return !position.isLinear(targetPosition) && position.isInDistance(KNIGHT_DISTANCE, targetPosition);
+		return !position.isLinear(targetPosition) &&
+				position.isInDistance(KNIGHT_DISTANCE, targetPosition);
+	}
+
+	@Override
+	public String getName() {
+		return NAME;
+	}
+
+	@Override
+	public double getScore() {
+		return SCORE;
 	}
 }

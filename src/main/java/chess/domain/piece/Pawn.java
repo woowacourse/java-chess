@@ -4,23 +4,34 @@ import chess.domain.Side;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
+	public static final double SCORE = 0.5;
 	private static final String NAME = "p";
 	private static final int INIT_PAWN_DISTANCE = 2;
 	private static final int PAWN_DISTANCE = 1;
-	private static final double SCORE = 0.5;
 
 	public Pawn(Side side, Position position) {
 		super(side, position);
-		this.name = NAME;
-		this.score = SCORE;
+	}
+
+	@Override
+	public boolean canAttack(Piece piece) {
+		return position.isInDiagonal(piece.position) &&
+				position.isInDistance(PAWN_DISTANCE, piece.position) &&
+				isAttackForward(piece.position) && !isSameSide(piece);
+	}
+
+	@Override
+	public boolean canNotAttack(Piece piece) {
+		return !this.canAttack(piece);
 	}
 
 	@Override
 	public boolean isInPath(Position targetPosition) {
+		int pawnDistance = PAWN_DISTANCE;
 		if (isFirstState()) {
-			return isPawnPath(targetPosition, INIT_PAWN_DISTANCE);
+			pawnDistance = INIT_PAWN_DISTANCE;
 		}
-		return isPawnPath(targetPosition, PAWN_DISTANCE);
+		return isPawnPath(targetPosition, pawnDistance);
 	}
 
 	private boolean isFirstState() {
@@ -28,11 +39,22 @@ public class Pawn extends Piece {
 	}
 
 	private boolean isPawnPath(Position target, int distance) {
-		return position.isSameCol(target) && position.isInDistance(distance, target) && isAttackForward(target);
+		return position.isSameCol(target) && position.isInDistance(distance,
+				target) && isAttackForward(target);
 	}
 
 	@Override
 	public boolean isPawn() {
 		return true;
+	}
+
+	@Override
+	public String getName() {
+		return NAME;
+	}
+
+	@Override
+	public double getScore() {
+		return SCORE;
 	}
 }

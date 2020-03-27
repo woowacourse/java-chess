@@ -1,10 +1,10 @@
 package chess.domain;
 
-import java.util.Arrays;
-import java.util.function.BiPredicate;
-
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+
+import java.util.Arrays;
+import java.util.function.BiPredicate;
 
 public enum Side {
 	BLACK(Row.SEVEN, Row.EIGHT, (source, target) -> source.compareToRow(target) > 0),
@@ -18,6 +18,10 @@ public enum Side {
 		this.initPawnRow = initPawnRow;
 		this.initNobleRow = initNobleRow;
 		this.attackForwardFilter = attackForwardFilter;
+	}
+
+	public static int size() {
+		return values().length;
 	}
 
 	public boolean isInitPawnRow(Position position) {

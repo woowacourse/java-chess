@@ -1,17 +1,18 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
 import chess.domain.Side;
 import chess.domain.position.Column;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
+import java.util.Objects;
+
 public abstract class Piece implements Movable {
-	protected double score;
-	protected String name;
 	protected Side side;
 	protected Position position;
 
 	public Piece(Side side, Position position) {
+		Objects.requireNonNull(position, "null값이 입력되었습니다.");
 		this.side = side;
 		this.position = position;
 	}
@@ -33,8 +34,16 @@ public abstract class Piece implements Movable {
 		return !this.canMove(targetPosition);
 	}
 
+	public boolean canAttack(Piece piece) {
+		return this.canMove(piece.position) && !isSameSide(piece);
+	}
+
+	public boolean canNotAttack(Piece piece) {
+		return !this.canAttack(piece);
+	}
+
 	public boolean isBlock(Position source, Position target) {
-		return isBetween(source, target) && findDirection(target).isSameDirection(position, source);
+		return isBetween(source, target) && findDirection(target).isMatch(position, source);
 	}
 
 	public boolean isBetween(Position source, Position target) {
@@ -47,14 +56,14 @@ public abstract class Piece implements Movable {
 		return isBetweenRow(source, target) && isBetweenCol(source, target);
 	}
 
-	public boolean isBetweenRow(Position source, Position target) {
+	private boolean isBetweenRow(Position source, Position target) {
 		if (source.compareToRow(target) > 0) {
 			return isBetweenRow(target, source);
 		}
 		return source.compareToRow(position) < 0 && position.compareToRow(target) < 0;
 	}
 
-	public boolean isBetweenCol(Position source, Position target) {
+	private boolean isBetweenCol(Position source, Position target) {
 		if (source.compareToCol(target) > 0) {
 			return isBetweenCol(target, source);
 		}
@@ -73,36 +82,37 @@ public abstract class Piece implements Movable {
 		return this.position.equals(position);
 	}
 
-	public boolean isSameSide(Piece piece) {
-		return this.side.equals(piece.side);
+	public boolean isPawn() {
+		return false;
+	}
+
+	public boolean isKing() {
+		return false;
 	}
 
 	public boolean isSameSide(Side side) {
 		return this.side.equals(side);
 	}
 
-	public boolean isPawn() {
-		return false;
+	public boolean isSameSide(Piece piece) {
+		return this.side.equals(piece.side);
 	}
 
-	public boolean isSameCol(Column column){
+	public boolean isSameCol(Column column) {
 		return position.isSameCol(column);
-	}
-
-	public String getName() {
-		if (side == Side.BLACK) {
-			return name.toUpperCase();
-		}
-		return name;
 	}
 
 	public Position getPosition() {
 		return position;
 	}
 
-	public double getScore() {
-		return score;
+	public Side getSide() {
+		return side;
 	}
+
+	public abstract String getName();
+
+	public abstract double getScore();
 
 	public abstract boolean isInPath(Position targetPosition);
 }

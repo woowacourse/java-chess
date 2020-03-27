@@ -1,7 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.ChessBoard;
-import chess.domain.Side;
+import chess.domain.ChessStatus;
 import chess.domain.position.Position;
 
 public class End extends Started {
@@ -15,7 +15,7 @@ public class End extends Started {
 	}
 
 	@Override
-	public double status(Side side) {
+	public ChessStatus calculateStatus() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -9,12 +9,20 @@ public class Queen extends Piece {
 
 	public Queen(Side side, Position position) {
 		super(side, position);
-		this.name = NAME;
-		this.score = SCORE;
 	}
 
 	@Override
 	public boolean isInPath(Position targetPosition) {
 		return position.isLinear(targetPosition);
+	}
+
+	@Override
+	public String getName() {
+		return NAME;
+	}
+
+	@Override
+	public double getScore() {
+		return SCORE;
 	}
 }

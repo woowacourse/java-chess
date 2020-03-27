@@ -9,8 +9,16 @@ public class Bishop extends Piece {
 
 	public Bishop(Side side, Position position) {
 		super(side, position);
-		this.name = NAME;
-		this.score = SCORE;
+	}
+
+	@Override
+	public String getName() {
+		return NAME;
+	}
+
+	@Override
+	public double getScore() {
+		return SCORE;
 	}
 
 	@Override

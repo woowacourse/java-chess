@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.ChessBoard;
+import chess.domain.ChessStatus;
 import chess.domain.Side;
 import chess.domain.position.Position;
 
@@ -25,8 +26,8 @@ public class Running extends Started {
 	}
 
 	@Override
-	public double status(Side side) {
-		return chessBoard.calculateScore(side);
+	public ChessStatus calculateStatus() {
+		return chessBoard.createStatus();
 	}
 
 	@Override
