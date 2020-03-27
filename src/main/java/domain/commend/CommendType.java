@@ -8,7 +8,7 @@ public enum CommendType {
     START("start"),
     END("end");
 
-    private String commend;
+    private final String commend;
 
     CommendType(String commend) {
         this.commend = commend;
