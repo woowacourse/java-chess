@@ -2,10 +2,8 @@ package chess.domain.chesspiece;
 
 import static chess.domain.Direction.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import chess.domain.Direction;
 import chess.domain.NameUtils;
@@ -35,11 +33,9 @@ public class King extends WorthlessPiece {
 		return NameUtils.parseName(NAME, team);
 	}
 
-
 	@Override
 	public boolean isNeedCheckPath() {
 		return false;
 	}
-
 
 }

@@ -28,7 +28,10 @@ public class ChessGame {
 
 	private void proceed() {
 		if (menu.isMove()) {
-			chessBoard.move(menu.getStartPosition(), menu.getTargetPosition());
+			Position startPosition = menu.getStartPosition();
+			Position targetPosition = menu.getTargetPosition();
+			turn.validateTurn(chessBoard.findByPosition(startPosition));
+			chessBoard.move(startPosition, targetPosition);
 			turn.changeTurn();
 		}
 

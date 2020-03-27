@@ -11,6 +11,7 @@ public class ChessBoard {
 
 	private static final String CANNOT_MOVE_PATH = "이동할 수 없는 경로 입니다.";
 	private static final String SAME_TEAM_MESSAGE = "같은 팀입니다.";
+	private static final String NOT_CHESS_PIECE_MESSAGE = "체스 말이 아닙니다.";
 
 	private List<Row> board;
 
@@ -26,21 +27,46 @@ public class ChessBoard {
 		ChessPiece startPiece = findByPosition(startPosition);
 		ChessPiece targetPiece = findByPosition(targetPosition);
 
-		if (startPiece.isSameTeam(targetPiece)) {
-			throw new IllegalArgumentException(SAME_TEAM_MESSAGE);
-		}
-
-		if (startPiece.isNeedCheckPath()) {
-			List<Position> pathPositions = startPiece.makePath(targetPiece);
-			validatePath(pathPositions);
-		}
-		if (startPiece.isNeedCheckPath() == false) {
-			startPiece.validateMove(targetPiece);
-		}
+		checkTeam(startPiece, targetPiece);
+		validateCanMove(startPiece, targetPiece);
 
 		replace(startPosition, new Blank(startPosition));
 		replace(targetPosition, startPiece);
 		startPiece.changePosition(targetPosition);
+	}
+
+	public ChessPiece findByPosition(Position position) {
+		return board.stream()
+			.filter(row -> row.contains(position))
+			.map(row -> row.findByPosition(position))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(CANNOT_MOVE_PATH));
+	}
+
+	private void checkTeam(ChessPiece startPiece, ChessPiece targetPiece) {
+		validateNotBlank(startPiece);
+		validateOtherTeam(startPiece, targetPiece);
+	}
+
+	private void validateNotBlank(ChessPiece startPiece) {
+		if (startPiece.isMatchTeam(Team.BLANK)) {
+			throw new IllegalArgumentException(NOT_CHESS_PIECE_MESSAGE);
+		}
+	}
+
+	private void validateOtherTeam(ChessPiece startPiece, ChessPiece targetPiece) {
+		if (startPiece.isSameTeam(targetPiece)) {
+			throw new IllegalArgumentException(SAME_TEAM_MESSAGE);
+		}
+	}
+
+	private void validateCanMove(ChessPiece startPiece, ChessPiece targetPiece) {
+		if (startPiece.isNeedCheckPath()) {
+			validatePath(startPiece.makePath(targetPiece));
+		}
+		if (startPiece.isNeedCheckPath() == false) {
+			startPiece.validateMove(targetPiece);
+		}
 	}
 
 	private void replace(Position targetPosition, ChessPiece startPiece) {
@@ -55,25 +81,16 @@ public class ChessBoard {
 			.orElseThrow(() -> new IllegalArgumentException(CANNOT_MOVE_PATH));
 	}
 
-	private ChessPiece findByPosition(Position position) {
-		return board.stream()
-			.filter(row -> row.contains(position))
-			.map(row -> row.findByPosition(position))
-			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException(CANNOT_MOVE_PATH));
-	}
-
 	private void validatePath(List<Position> positions) {
 		if (containsNotBlankTeam(positions)) {
 			throw new IllegalArgumentException(CANNOT_MOVE_PATH);
 		}
-
 	}
 
 	private boolean containsNotBlankTeam(List<Position> positions) {
 		return positions.stream()
 			.map(this::findByPosition)
-			.anyMatch(chessPiece -> chessPiece.isNotBlankTeam());
+			.anyMatch(chessPiece -> chessPiece.isNotMatchTeam(Team.BLANK));
 	}
 /*
     public double getWinScore() {

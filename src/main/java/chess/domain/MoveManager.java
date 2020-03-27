@@ -8,6 +8,7 @@ public class MoveManager {
 
 	private Position nowPosition;
 
+
 	public MoveManager(Position nowPosition) {
 		this.nowPosition = nowPosition;
 	}
@@ -37,5 +38,9 @@ public class MoveManager {
 		if (positionGap.cannotMoveKnight()) {
 			throw new IllegalArgumentException(CANNOT_MOVE_POSITION);
 		}
+	}
+
+	public void changePosition(Position position) {
+		this.nowPosition = position;
 	}
 }

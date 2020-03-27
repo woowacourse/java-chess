@@ -33,20 +33,28 @@ public class Pawn extends WorthlessPiece {
 	@Override
 	public void validateMove(ChessPiece chessPiece) {
 		Direction direction = moveManager.calculateDirection(chessPiece.position, directions);
-		if (direction == UP && chessPiece.isMatchTeam(Team.BLANK)) {
+		if (directions.contains(direction) == false) {
+			throw new IllegalArgumentException(MoveManager.CANNOT_MOVE_POSITION);
+		}
+		if (isUpOrDown(direction) && chessPiece.isMatchTeam(Team.BLANK)) {
 			return;
 		}
-		if (isLeftUpOrRightUp(direction) && isNotBlank(chessPiece)) {
+		if (isDiagonal(direction) && isNotBlank(chessPiece)) {
 			return;
 		}
 		throw new IllegalArgumentException(MoveManager.CANNOT_MOVE_POSITION);
+	}
+
+	private boolean isUpOrDown(Direction direction) {
+		return direction == UP || direction == DOWN;
 	}
 
 	private boolean isNotBlank(ChessPiece chessPiece) {
 		return chessPiece.isMatchTeam(Team.BLANK) == false;
 	}
 
-	private boolean isLeftUpOrRightUp(Direction direction) {
-		return direction == RIGHT_UP || direction == LEFT_UP;
+	private boolean isDiagonal(Direction direction) {
+		return direction == RIGHT_UP || direction == LEFT_UP
+			|| direction == RIGHT_DOWN || direction == LEFT_DOWN;
 	}
 }
