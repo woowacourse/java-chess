@@ -25,7 +25,7 @@ public class Board {
 		int rankLine = Integer.parseInt(String.valueOf(sourcePosition.charAt(ROW_INDEX)));
 		Rank rank = ranks.get(rankLine - 1);
 		Piece piece = findPiece(sourcePosition, rank);
-		piece.canMove(Position.of(targetPosition), turn);
+		piece.canMove(Position.of(targetPosition), turn, ranks);
 	}
 
 	private Piece findPiece(String sourcePosition, Rank rank) {

@@ -1,5 +1,8 @@
 package domain.piece;
 
+import java.util.List;
+
+import domain.board.Rank;
 import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -15,11 +18,22 @@ public class King extends Piece {
 
 	@Override
 	protected boolean validDirection(Direction direction) {
-		return Direction.everyDirection().contains(direction);
+		if (Direction.everyDirection().contains(direction)) {
+			return true;
+		}
+		throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 	}
 
 	@Override
-	boolean validStepSize(int rowGap, int columnGap) {
-		return (Math.abs(rowGap) < MAX_STEP_SIZE) && (Math.abs(columnGap) < MAX_STEP_SIZE);
+	protected boolean validStepSize(int rowGap, int columnGap) {
+		if ((Math.abs(rowGap) < MAX_STEP_SIZE) && (Math.abs(columnGap) < MAX_STEP_SIZE)) {
+			return true;
+		}
+		throw new InvalidPositionException(InvalidPositionException.INVALID_STEP_SIZE);
+	}
+
+	@Override
+	protected boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
+		return false;
 	}
 }

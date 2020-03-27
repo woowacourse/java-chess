@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
 
+import domain.board.Rank;
+
 public enum Direction {
 	N(1, 0, (rowGap, columnGap) -> rowGap > 0 && columnGap == 0),
 	S(-1, 0, (rowGap, columnGap) -> rowGap < 0 && columnGap == 0),
@@ -73,5 +75,32 @@ public enum Direction {
 
 	public BiFunction<Integer, Integer, Boolean> getFind() {
 		return find;
+	}
+
+	public boolean hasPieceInRoute(Position position, Position targetPosition, List<Rank> ranks) {
+		int loopCount = calculateLoopCount(position, targetPosition);
+		int routeRow = 0;
+		int routeColumn = 0;
+		for (int i = 0; i < loopCount; i++) {
+			routeRow = position.getRow() + this.getRowGap();
+			routeColumn = position.getColumn().getNumber() + this.getColumnGap();
+			if (hasPieceInBoard(ranks, routeRow, routeColumn)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private int calculateLoopCount(Position position, Position targetPosition) {
+		int columnGap = Math.abs(position.calculateColumnGap(targetPosition));
+		int rowGap = Math.abs(position.calculateRowGap(targetPosition));
+		return Math.max(columnGap, rowGap);
+	}
+
+	private boolean hasPieceInBoard(List<Rank> ranks, int routeRow, int routeColumn) {
+		return ranks.stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.anyMatch(piece -> piece.getPosition().getColumn().getNumber() == routeColumn
+				&& piece.getPosition().getRow() == routeRow);
 	}
 }

@@ -14,10 +14,10 @@ import domain.piece.position.Column;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public class BoardFactory {
+public class BoardFixture {
 	private static final String WHITE_OTHER_PIECE_RANK = "1";
 	private static final String WHITE_PAWN_RANK = "2";
-	private static final String BLACK_PAWN_RANK = "7";
+	private static final String BLACK_PAWN_RANK = "3";
 	private static final String BLACK_OTHER_PIECE_RANK = "8";
 	private static final int EMPTY_RANK_SIZE = 4;
 	private static List<Rank> ranks = new ArrayList<>();

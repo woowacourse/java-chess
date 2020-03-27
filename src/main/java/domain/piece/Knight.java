@@ -1,6 +1,10 @@
 package domain.piece;
 
+import java.util.List;
+
+import domain.board.Rank;
 import domain.piece.position.Direction;
+import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
@@ -13,11 +17,18 @@ public class Knight extends Piece {
 
 	@Override
 	protected boolean validDirection(Direction direction) {
-		return Direction.knightDirection().contains(direction);
+		if (Direction.knightDirection().contains(direction)) {
+			return true;
+		}
+		throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
+	}
+	@Override
+	protected boolean validStepSize(int rowGap, int columnGap) {
+		return true;
 	}
 
 	@Override
-	boolean validStepSize(int rowGap, int columnGap) {
-		return true;
+	protected boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
+		return false;
 	}
 }
