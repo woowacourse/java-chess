@@ -65,44 +65,11 @@ public class Position {
 	}
 
 	public void move(MovePattern movePattern, ChessBoard chessBoard) {
-		Direction direction = movePattern.getDirection();
-		int count = movePattern.getCount();
-
 		if (movePattern instanceof KnightPattern) {
 			moveKnightPattern(movePattern);
 			return;
 		}
-		if (direction == Direction.UP) {
-			moveUp(chessBoard, count);
-			return;
-		}
-		if (direction == Direction.DOWN) {
-			moveDown(chessBoard, count);
-			return;
-		}
-		if (direction == Direction.RIGHT) {
-			moveRight(chessBoard, count);
-			return;
-		}
-		if (direction == Direction.LEFT) {
-			moveLeft(chessBoard, count);
-			return;
-		}
-		if (direction == Direction.UP_RIGHT) {
-			moveUpRight(chessBoard, count);
-			return;
-		}
-		if (direction == Direction.UP_LEFT) {
-			moveUpLeft(chessBoard, count);
-			return;
-		}
-		if (direction == Direction.DOWN_RIGHT) {
-			moveDownRight(chessBoard, count);
-			return;
-		}
-		if (direction == Direction.DOWN_LEFT) {
-			moveDownLeft(chessBoard, count);
-		}
+		moveNotKnightPattern(movePattern, chessBoard);
 	}
 
 	private void moveKnightPattern(MovePattern movePattern) {
@@ -112,97 +79,36 @@ public class Position {
 		this.rank = target.rank;
 	}
 
-	private void moveDownLeft(ChessBoard chessBoard, int count) {
-		int xDegree = this.file.getNumber();
-		int yDegree = this.rank.getNumber();
+	private void moveNotKnightPattern(MovePattern movePattern, ChessBoard chessBoard) {
+		ValidatePath(movePattern, chessBoard);
+
+		Direction direction = movePattern.getDirection();
+		int count = movePattern.getCount();
 		for (int i = 0; i < count; i++) {
-			xDegree--;
-			yDegree--;
-			isExistPieceOnPath(chessBoard, xDegree, yDegree);
+			this.move(direction);
 		}
-		this.file = File.of(xDegree);
-		this.rank = Rank.of(yDegree);
 	}
 
-	private void moveDownRight(ChessBoard chessBoard, int count) {
-		int xDegree = this.file.getNumber();
-		int yDegree = this.rank.getNumber();
+	private void ValidatePath(MovePattern movePattern, ChessBoard chessBoard) {
+		Direction direction = movePattern.getDirection();
+		int count = movePattern.getCount();
+
+		Position temp = Position.of(file, rank);
 		for (int i = 0; i < count; i++) {
-			xDegree++;
-			yDegree--;
-			isExistPieceOnPath(chessBoard, xDegree, yDegree);
+			temp.move(direction);
+			checkIsExistPieceOnPath(chessBoard, temp);
 		}
-		this.file = File.of(xDegree);
-		this.rank = Rank.of(yDegree);
 	}
 
-	private void moveUpLeft(ChessBoard chessBoard, int count) {
-		int xDegree = this.file.getNumber();
-		int yDegree = this.rank.getNumber();
-		for (int i = 0; i < count; i++) {
-			xDegree--;
-			yDegree++;
-			isExistPieceOnPath(chessBoard, xDegree, yDegree);
-		}
-		this.file = File.of(xDegree);
-		this.rank = Rank.of(yDegree);
+	private void move(Direction direction) {
+		int x = direction.getXDegree();
+		int y = direction.getYDegree();
+		this.file = File.of(this.file.getNumber() + x);
+		this.rank = Rank.of(this.rank.getNumber() + y);
 	}
 
-	private void moveUpRight(ChessBoard chessBoard, int count) {
-		int xDegree = this.file.getNumber();
-		int yDegree = this.rank.getNumber();
-		for (int i = 0; i < count; i++) {
-			xDegree++;
-			yDegree++;
-			isExistPieceOnPath(chessBoard, xDegree, yDegree);
-		}
-		this.file = File.of(xDegree);
-		this.rank = Rank.of(yDegree);
-	}
-
-	private void moveUp(ChessBoard chessBoard, int count) {
-		int xDegree = this.file.getNumber();
-		int yDegree = this.rank.getNumber();
-		for (int i = 0; i < count; i++) {
-			yDegree++;
-			isExistPieceOnPath(chessBoard, xDegree, yDegree);
-		}
-		this.rank = Rank.of(yDegree);
-	}
-
-	private void moveDown(ChessBoard chessBoard, int count) {
-		int xDegree = this.file.getNumber();
-		int yDegree = this.rank.getNumber();
-		for (int i = 0; i < count; i++) {
-			yDegree--;
-			isExistPieceOnPath(chessBoard, xDegree, yDegree);
-		}
-		this.rank = Rank.of(yDegree);
-	}
-
-	private void moveRight(ChessBoard chessBoard, int count) {
-		int xDegree = this.file.getNumber();
-		int yDegree = this.rank.getNumber();
-		for (int i = 0; i < count; i++) {
-			xDegree++;
-			isExistPieceOnPath(chessBoard, xDegree, yDegree);
-		}
-		this.file = File.of(xDegree);
-	}
-
-	private void moveLeft(ChessBoard chessBoard, int count) {
-		int xDegree = this.file.getNumber();
-		int yDegree = this.rank.getNumber();
-		for (int i = 0; i < count; i++) {
-			xDegree--;
-			isExistPieceOnPath(chessBoard, xDegree, yDegree);
-		}
-		this.file = File.of(xDegree);
-	}
-
-	private void isExistPieceOnPath(ChessBoard chessBoard, int xDegree, int yDegree) {
-		Position positionOfPath = Position.of(File.of(xDegree), Rank.of(yDegree));
-		if (chessBoard.isExistPieceOnPosition(positionOfPath)) {
+	private void checkIsExistPieceOnPath(ChessBoard chessBoard, Position tmp) {
+		if (chessBoard.isExistPieceOnPosition(tmp)) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_PIECE_ON_PATH);
 		}
 	}

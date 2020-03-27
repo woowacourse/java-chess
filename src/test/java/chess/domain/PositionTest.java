@@ -16,4 +16,6 @@ class PositionTest {
 
 		assertThat(Position.of("f6")).isEqualTo(result);
 	}
+
+
 }
