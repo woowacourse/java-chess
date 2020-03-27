@@ -14,7 +14,7 @@ public class Ready implements State {
 
 	@Override
 	public State end() {
-		return new Finished();
+		return new Finished(Board.EMPTY);
 	}
 
 	@Override
@@ -28,12 +28,12 @@ public class Ready implements State {
 	}
 
 	@Override
-	public boolean isFinished() {
-		return false;
+	public Score score(Color color) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Score score(Color color) {
-		throw new UnsupportedOperationException();
+	public boolean isFinished() {
+		return false;
 	}
 }

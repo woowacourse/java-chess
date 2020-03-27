@@ -24,7 +24,7 @@ public class Playing implements State {
 
 	@Override
 	public State end() {
-		return new Finished();
+		return new Finished(board);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class Playing implements State {
 		validateTurn(sourcePiece);
 		sourcePiece.move(targetPiece);
 		if (board.isKingDead()) {
-			return new Finished();
+			return end();
 		}
 		nextTurn();
 		return this;

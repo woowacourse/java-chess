@@ -38,5 +38,6 @@ public class ChessGameController {
 			command(InputView.inputCommand());
 			OutputView.printBoard(chessGame.board());
 		}
+		OutputView.printStatus(chessGame.status());
 	}
 }

@@ -2,9 +2,9 @@ package chess.domain.board;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import chess.domain.piece.Color;
@@ -16,6 +16,7 @@ import chess.domain.piece.Symbol;
 import chess.domain.piece.exception.NotMovableException;
 
 public class Board {
+	public static final Board EMPTY = new Board();
 	private static final int BLACK_PIECES_Y = 7;
 	private static final int BLACK_PAWNS_Y = 6;
 	private static final int WHITE_PIECES_Y = 0;
@@ -24,8 +25,8 @@ public class Board {
 
 	private Map<Position, Piece> board;
 
-	public Board() {
-		this.board = new LinkedHashMap<>();
+	private Board() {
+		this.board = new TreeMap<>();
 	}
 
 	public static Board create() {
@@ -37,7 +38,7 @@ public class Board {
 		);
 
 		for (Position position : Position.values()) {
-			board.setPiece(position, PieceFactory.createBlank(position));
+			board.setBlank(position);
 		}
 
 		for (int x = Position.BEGIN_X; x < Position.END_X; x++) {
@@ -52,6 +53,10 @@ public class Board {
 		}
 
 		return board;
+	}
+
+	private void setBlank(Position position) {
+		board.put(position, PieceFactory.createBlank(position));
 	}
 
 	private void setPiece(Position position, Piece piece) {

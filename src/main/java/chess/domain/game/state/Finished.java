@@ -6,6 +6,12 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public class Finished implements State {
+	private Board board;
+
+	public Finished(Board board) {
+		this.board = board;
+	}
+
 	@Override
 	public State start() {
 		throw new UnsupportedOperationException();
@@ -23,7 +29,7 @@ public class Finished implements State {
 
 	@Override
 	public Board board() {
-		return Board.create();
+		return board;
 	}
 
 	@Override
@@ -33,6 +39,6 @@ public class Finished implements State {
 
 	@Override
 	public Score score(Color color) {
-		throw new UnsupportedOperationException();
+		return Score.calculate(board.findPiecesByColor(color));
 	}
 }

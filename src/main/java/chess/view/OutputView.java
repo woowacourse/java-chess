@@ -1,14 +1,12 @@
 package chess.view;
 
-import java.util.Map;
-
 import chess.domain.board.Board;
 import chess.domain.game.Status;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
 public class OutputView {
-	private static final String STATUS_FORMAT = "WHITE: %.1f BLACK: %.1f - %s진영 승\n";
+	private static final String STATUS_FORMAT = "WHITE: %.1f\nBLACK: %.1f\nWINNER: %s\n";
 
 	public static void printGameStart() {
 		System.out.println("> 체스 게임을 시작합니다.");
@@ -18,17 +16,15 @@ public class OutputView {
 	}
 
 	public static void printBoard(Board board) {
-		Map<Position, Piece> values = board.getBoard();
-		for (int y = Position.END_Y - 1; y >= Position.BEGIN_Y; y--) {
-			printFile(values, y);
-		}
+		board.getBoard()
+				.forEach(OutputView::printFile);
 	}
 
-	private static void printFile(Map<Position, Piece> values, int y) {
-		for (int x = Position.BEGIN_X; x < Position.END_X; x++) {
-			System.out.print(drawPiece(values.get(Position.of(x, y))));
+	private static void printFile(Position position, Piece piece) {
+		System.out.print(drawPiece(piece));
+		if (position.equalsX(Position.END_X - 1)) {
+			System.out.println();
 		}
-		System.out.println();
 	}
 
 	private static String drawPiece(Piece piece) {

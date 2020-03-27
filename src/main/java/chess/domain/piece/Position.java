@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
 	public static final int BEGIN_X = 0;
 	public static final int BEGIN_Y = 0;
 	public static final int END_X = 8;
@@ -85,5 +85,16 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
+	}
+
+	@Override
+	public int compareTo(Position position) {
+		if (y > position.y) {
+			return -1;
+		}
+		if (y < position.y) {
+			return 1;
+		}
+		return x - position.x;
 	}
 }
