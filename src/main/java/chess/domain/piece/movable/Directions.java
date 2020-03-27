@@ -18,6 +18,9 @@ public enum Directions {
 	WHITEPAWNINITIAL(Arrays.asList(NORTH, NORTHEAST, NORTHWEST, NORTHDOUBLE)),
 	BLACKPAWNINITIAL(Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST, SOUTHDOUBLE));
 
+	private static final int WHITE_PAWN_INITIAL_COLUMN = 2;
+	private static final int BLACK_PAWN_INITIAL_COLUMN = 7;
+
 	private List<Direction> directions;
 
 	Directions(List<Direction> directions) {
@@ -29,11 +32,11 @@ public enum Directions {
 	}
 
 	public static Directions getPawnDirectionsBy(Color color, Position position) {
-		if (color.isWhite() && position.getColumn().getValue() == 2) {
+		if (color.isWhite() && position.getColumn().getValue() == WHITE_PAWN_INITIAL_COLUMN) {
 			return WHITEPAWNINITIAL;
 		}
 
-		if (color.isBlack() && position.getColumn().getValue() == 7) {
+		if (color.isBlack() && position.getColumn().getValue() == BLACK_PAWN_INITIAL_COLUMN) {
 			return BLACKPAWNINITIAL;
 		}
 
