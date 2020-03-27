@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class GameState implements State {
+    private static final int FIRST_TOKEN_INDEX = 0;
+    private static final int SECOND_TOKEN_INDEX = 1;
+    private static final int THIRD_TOKEN_INDEX = 2;
+    private static final int MOVE_COMMEND_SIZE = 3;
+
     private Pieces pieces;
 
     protected GameState(Pieces pieces) {
@@ -34,16 +39,16 @@ public abstract class GameState implements State {
 
     private State parseAndPushCommend(String input) {
         List<String> tokens = Arrays.asList(input.split(" "));
-        if (tokens.get(0).equals("move")) {
-            validateTokensSize(tokens);
-            return move(tokens.get(1), tokens.get(2));
+        if (tokens.get(FIRST_TOKEN_INDEX).equals("move")) {
+            validateTokenSizeIsMoveCommendSize(tokens);
+            return move(tokens.get(SECOND_TOKEN_INDEX), tokens.get(THIRD_TOKEN_INDEX));
         }
 
         throw new StateException("올바른 명령어가 아닙니다.");
     }
 
-    private void validateTokensSize(List<String> tokens) {
-        if (tokens.size() != 3) {
+    private void validateTokenSizeIsMoveCommendSize(List<String> tokens) {
+        if (tokens.size() != MOVE_COMMEND_SIZE) {
             throw new StateException("잘못된 명령어입니다.");
         }
     }
