@@ -17,6 +17,8 @@ import static domain.team.Team.WHITE;
 
 import domain.point.Column;
 import domain.point.Point;
+
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,6 +51,6 @@ public class PiecesFactory {
     }
 
     public Set<Piece> getInstance() {
-        return pieces;
+        return Collections.unmodifiableSet(pieces);
     }
 }
