@@ -34,12 +34,6 @@ public class Playing implements State {
     }
 
     @Override
-    public State status() {
-        
-        return this;
-    }
-
-    @Override
     public Board board() {
         return board;
     }

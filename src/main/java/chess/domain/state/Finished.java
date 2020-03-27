@@ -20,11 +20,6 @@ public class Finished implements State {
     }
 
     @Override
-    public State status() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Board board() {
         return new Board();
     }

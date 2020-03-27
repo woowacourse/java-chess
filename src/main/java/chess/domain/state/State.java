@@ -4,16 +4,14 @@ import chess.domain.board.Board;
 import chess.domain.piece.Position;
 
 public interface State {
-    State start();
+	State start();
 
-    State end();
+	State end();
 
-    State move(Position source, Position target);
+	State move(Position source, Position target);
 
-    State status();
+	Board board();
 
-    Board board();
-
-    boolean isFinished();
+	boolean isFinished();
 
 }
