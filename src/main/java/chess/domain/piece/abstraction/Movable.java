@@ -1,7 +1,7 @@
-package chess.domain.piece;
+package chess.domain.piece.abstraction;
 
 import chess.domain.board.BoardSquare;
-
+import chess.domain.piece.Piece;
 import java.util.Map;
 import java.util.Set;
 

@@ -1,14 +1,16 @@
-package chess.domain.piece;
+package chess.domain.piece.abstraction;
 
 import chess.domain.board.BoardSquare;
-
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class RepeatPiece extends Piece {
+public abstract class RepeatMovePiece extends Piece implements RepeatMovable {
 
-    protected RepeatPiece(Color color, Type type) {
+    protected RepeatMovePiece(Color color, Type type) {
         super(color, type);
     }
 
@@ -16,7 +18,7 @@ public abstract class RepeatPiece extends Piece {
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
         Set<BoardSquare> boardSquares = getAllCheatSheet(boardSquare);
         Set<BoardSquare> containSquares = boardSquares.stream()
-                .filter(board::containsKey)
+            .filter(board::containsKey)
                 .collect(Collectors.toSet());
         for (BoardSquare containSquare : containSquares) {
             int fileCompare = containSquare.getFileCompare(boardSquare);

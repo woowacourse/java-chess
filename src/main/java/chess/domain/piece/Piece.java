@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
-import util.NullChecker;
-
+import chess.domain.piece.abstraction.Movable;
+import chess.domain.piece.abstraction.RepeatMovePiece;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import util.NullChecker;
 
 public abstract class Piece implements Movable {
 
@@ -24,18 +25,27 @@ public abstract class Piece implements Movable {
 
     protected Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
         Set<BoardSquare> availableBoardSquares = new HashSet<>();
-        int repeatCount = type.getRepeatCount(BoardSquare.MAX_FILE_AND_RANK_COUNT, BoardSquare.MIN_FILE_AND_RANK_COUNT);
+        int repeatCount = getRepeatCount();
         for (int count = 1; count <= repeatCount; count++) {
             addCheatSheet(boardSquare, availableBoardSquares, count);
         }
         return availableBoardSquares;
     }
 
-    private void addCheatSheet(BoardSquare boardSquare, Set<BoardSquare> availableBoardSquares, int count) {
+    private int getRepeatCount() {
+        if (this instanceof RepeatMovePiece) {
+            return BoardSquare.MAX_FILE_AND_RANK_COUNT - BoardSquare.MIN_FILE_AND_RANK_COUNT;
+        }
+        return BoardSquare.MIN_FILE_AND_RANK_COUNT;
+    }
+
+    private void addCheatSheet(BoardSquare boardSquare, Set<BoardSquare> availableBoardSquares,
+        int count) {
         for (Direction direction : color.getChangeDirection(type.getDirections())) {
             int fileIncrementBy = direction.getMultiplyFileAddAmount(count);
             int rankIncrementBy = direction.getMultiplyRankAddAmount(count);
-            availableBoardSquares.add(boardSquare.addIfInBoundary(fileIncrementBy, rankIncrementBy));
+            availableBoardSquares
+                .add(boardSquare.addIfInBoundary(fileIncrementBy, rankIncrementBy));
         }
         availableBoardSquares.remove(boardSquare);
     }

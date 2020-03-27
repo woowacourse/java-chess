@@ -1,14 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.board.BoardSquare;
-import util.NullChecker;
-
+import chess.domain.piece.abstraction.OneTimeMovePiece;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import util.NullChecker;
 
-public class King extends Piece {
+public class King extends OneTimeMovePiece {
+
     private final static Map<Color, Piece> CACHE = new HashMap<>();
     private final static Type type = Type.KING;
 
@@ -27,10 +25,4 @@ public class King extends Piece {
         return CACHE.get(color);
     }
 
-    @Override
-    public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
-        return getAllCheatSheet(boardSquare).stream()
-                .filter(s -> !(board.containsKey(s) && isSameColor(board.get(s))))
-                .collect(Collectors.toSet());
-    }
 }

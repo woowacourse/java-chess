@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
-import util.NullChecker;
-
+import chess.domain.piece.abstraction.RepeatMovePiece;
 import java.util.HashMap;
 import java.util.Map;
+import util.NullChecker;
 
-public class Queen extends RepeatPiece {
+public class Queen extends RepeatMovePiece {
+
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
     private final static Type type = Type.QUEEN;
