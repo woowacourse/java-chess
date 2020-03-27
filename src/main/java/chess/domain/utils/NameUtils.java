@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.utils;
+
+import chess.domain.Team;
 
 public class NameUtils {
 

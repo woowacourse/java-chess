@@ -3,17 +3,20 @@ package chess.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import chess.domain.position.Position;
+import chess.domain.position.PositionGap;
+import chess.domain.position.Positions;
+
 public class MoveManager {
 	public static final String CANNOT_MOVE_POSITION = "이동할 수 없는 좌표 입니다.";
 
 	private Position nowPosition;
 
-
 	public MoveManager(Position nowPosition) {
 		this.nowPosition = nowPosition;
 	}
 
-	public List<Position> makePath(Position targetPosition, List<Direction> directions) {
+	public Positions makePath(Position targetPosition, List<Direction> directions) {
 		Direction direction = calculateDirection(targetPosition, directions);
 		return nowPosition.calculatePath(targetPosition, direction);
 	}

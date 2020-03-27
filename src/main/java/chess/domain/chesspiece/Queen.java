@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.Direction;
-import chess.domain.NameUtils;
-import chess.domain.Position;
+import chess.domain.utils.NameUtils;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.Team;
 
 public class Queen extends ValuablePiece {
@@ -31,7 +32,7 @@ public class Queen extends ValuablePiece {
 	}
 
 	@Override
-	public List<Position> makePath(ChessPiece chessPiece) {
+	public Positions makePath(ChessPiece chessPiece) {
 		return moveManager.makePath(chessPiece.position, DIRECTIONS);
 	}
 }

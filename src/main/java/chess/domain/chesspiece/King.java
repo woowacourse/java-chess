@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.Direction;
-import chess.domain.NameUtils;
-import chess.domain.Position;
+import chess.domain.utils.NameUtils;
+import chess.domain.position.Position;
 import chess.domain.Team;
 
 public class King extends WorthlessPiece {

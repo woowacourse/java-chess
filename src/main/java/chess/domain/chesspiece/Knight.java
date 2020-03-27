@@ -1,8 +1,7 @@
 package chess.domain.chesspiece;
 
-import chess.domain.NameUtils;
-import chess.domain.Position;
-import chess.domain.PositionGap;
+import chess.domain.utils.NameUtils;
+import chess.domain.position.Position;
 import chess.domain.Team;
 
 public class Knight extends WorthlessPiece {

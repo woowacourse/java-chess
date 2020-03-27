@@ -1,16 +1,14 @@
 package chess.domain.chesspiece;
 
-import java.util.List;
-
 import chess.domain.MoveManager;
-import chess.domain.Position;
 import chess.domain.Team;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 
 public abstract class ChessPiece {
 	protected final Team team;
 	protected Position position;
 	protected final MoveManager moveManager;
-
 
 	public ChessPiece(Position position, Team team) {
 		this.position = position;
@@ -30,14 +28,6 @@ public abstract class ChessPiece {
 		return this.position.equals(position);
 	}
 
-	public abstract String getName();
-
-	public abstract boolean isNeedCheckPath();
-
-	public abstract List<Position> makePath(ChessPiece chessPiece);
-
-	public abstract void validateMove(ChessPiece chessPiece);
-
 	public boolean isSameTeam(ChessPiece chessPiece) {
 		return chessPiece.isMatchTeam(this.team);
 	}
@@ -46,4 +36,12 @@ public abstract class ChessPiece {
 		this.position = position;
 		this.moveManager.changePosition(position);
 	}
+	public abstract String getName();
+
+	public abstract boolean isNeedCheckPath();
+
+	public abstract Positions makePath(ChessPiece chessPiece);
+
+	public abstract void validateMove(ChessPiece chessPiece);
+
 }

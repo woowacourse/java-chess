@@ -1,6 +1,8 @@
-package chess.domain;
+package chess.domain.position;
 
 import java.util.List;
+
+import chess.domain.Direction;
 
 public class PositionGap {
 	private static final String WRONG_POSITION_MESSAGE = "올지않은 좌표입니다.";

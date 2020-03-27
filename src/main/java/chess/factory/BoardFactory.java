@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.Row;
 import chess.domain.Team;
 import chess.domain.chesspiece.Bishop;

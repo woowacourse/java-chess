@@ -12,7 +12,7 @@ public class Turn {
 	}
 
 	public void validateTurn(ChessPiece chessPiece) {
-		if (checkWhiteTeamTurn(chessPiece)|| checkBlackTeamTurn(chessPiece)) {
+		if (checkWhiteTeamTurn(chessPiece) || checkBlackTeamTurn(chessPiece)) {
 			throw new UnsupportedOperationException(NOT_THIS_TEAM_TURN_MESSAGE);
 		}
 	}

@@ -6,6 +6,8 @@ import java.util.List;
 
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 
 public class ChessBoard {
 
@@ -17,10 +19,6 @@ public class ChessBoard {
 
 	public ChessBoard(List<Row> board) {
 		this.board = new ArrayList<>(board);
-	}
-
-	public List<Row> getBoard() {
-		return board;
 	}
 
 	public void move(Position startPosition, Position targetPosition) {
@@ -62,7 +60,8 @@ public class ChessBoard {
 
 	private void validateCanMove(ChessPiece startPiece, ChessPiece targetPiece) {
 		if (startPiece.isNeedCheckPath()) {
-			validatePath(startPiece.makePath(targetPiece));
+			Positions positions = startPiece.makePath(targetPiece);
+			positions.validatePath(this::findByPosition);
 		}
 		if (startPiece.isNeedCheckPath() == false) {
 			startPiece.validateMove(targetPiece);
@@ -70,59 +69,18 @@ public class ChessBoard {
 	}
 
 	private void replace(Position targetPosition, ChessPiece startPiece) {
-		Row row = getRow(targetPosition);
+		Row row = findRow(targetPosition);
 		row.replace(targetPosition, startPiece);
 	}
 
-	private Row getRow(Position targetPosition) {
+	private Row findRow(Position targetPosition) {
 		return board.stream()
 			.filter(row -> row.contains(targetPosition))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException(CANNOT_MOVE_PATH));
 	}
 
-	private void validatePath(List<Position> positions) {
-		if (containsNotBlankTeam(positions)) {
-			throw new IllegalArgumentException(CANNOT_MOVE_PATH);
-		}
+	public List<Row> getBoard() {
+		return Collections.unmodifiableList(board);
 	}
-
-	private boolean containsNotBlankTeam(List<Position> positions) {
-		return positions.stream()
-			.map(this::findByPosition)
-			.anyMatch(chessPiece -> chessPiece.isNotMatchTeam(Team.BLANK));
-	}
-/*
-    public double getWinScore() {
-        double blackTeamScore = sumScore(Team.BLACK);
-        double whiteTeamScore = sumScore(Team.WHITE);
-        if (blackTeamScore > whiteTeamScore) {
-            return blackTeamScore;
-        }
-        return whiteTeamScore;
-    }
-
-    public double sumScore(Team team) {
-        double score = 0;
-        int cnt = 0;
-        for (int i = 0; i < 8; i++) {
-            	int pawnCnt = 0;
-            for (int j = 0; j < 8; j++) {
-                ChessPiece chessPiece = board.get(j).get(i);
-
-                if (chessPiece.getTeam() == team) {
-					if (chessPiece.getClass() == Pawn.class) {
-						pawnCnt++;
-					}
-                //    score += board.get(j).get(i).getScore();
-                }
-            }
-            if (pawnCnt >= 2) {
-            	cnt += pawnCnt;
-			}
-        }
-        return score - cnt * 0.5;
-    }
-
- */
 }

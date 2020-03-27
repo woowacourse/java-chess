@@ -1,6 +1,6 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.Team;
 
 public abstract class ValuablePiece extends ChessPiece {

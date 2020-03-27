@@ -1,8 +1,7 @@
 package chess.domain.chesspiece;
 
-import java.util.List;
-
-import chess.domain.Position;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.Team;
 
 public class Blank extends ChessPiece {
@@ -24,7 +23,7 @@ public class Blank extends ChessPiece {
 	}
 
 	@Override
-	public List<Position> makePath(ChessPiece chessPiece) {
+	public Positions makePath(ChessPiece chessPiece) {
 		throw new UnsupportedOperationException();
 	}
 

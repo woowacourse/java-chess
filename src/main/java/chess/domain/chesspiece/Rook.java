@@ -6,8 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.Direction;
-import chess.domain.NameUtils;
-import chess.domain.Position;
+import chess.domain.utils.NameUtils;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.Team;
 
 public class Rook extends ValuablePiece {
@@ -17,6 +18,7 @@ public class Rook extends ValuablePiece {
 	static {
 		DIRECTIONS = Arrays.asList(UP, DOWN, LEFT, RIGHT);
 	}
+
 	public Rook(Position position, Team team) {
 		super(position, team);
 	}
@@ -32,7 +34,7 @@ public class Rook extends ValuablePiece {
 	}
 
 	@Override
-	public List<Position> makePath(ChessPiece chessPiece) {
+	public Positions makePath(ChessPiece chessPiece) {
 		return moveManager.makePath(chessPiece.position, DIRECTIONS);
 	}
 

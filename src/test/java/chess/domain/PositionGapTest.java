@@ -7,6 +7,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.position.PositionGap;
+
 public class PositionGapTest {
 
 	@DisplayName("오른쪽 위 대각선")

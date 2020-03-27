@@ -1,15 +1,24 @@
 package chess.domain;
 
 public enum Team {
-    BLACK(),
-    WHITE(),
-    BLANK();
+	BLACK("BLACK"),
+	WHITE("WHITE"),
+	BLANK("BLANK");
 
-	public boolean isNotWhite() {
-		return (this == WHITE) == false;
+	private final String name;
+
+	Team(String name) {
+		this.name = name;
 	}
 
-	public boolean isNotBlack() {
-		return (this == BLACK) == false;
+	@Override
+	public String toString() {
+		return "Team{" +
+			"name='" + name + '\'' +
+			'}';
+	}
+
+	public String getName() {
+		return name;
 	}
 }
