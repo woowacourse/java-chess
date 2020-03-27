@@ -1,35 +1,36 @@
 package chess.domain.piece.movable;
 
-import chess.domain.position.PositionFactory;
-import chess.domain.position.Column;
-import chess.domain.position.Position;
-import chess.domain.position.Row;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public class RookMovable implements Movable {
 	@Override
 	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
-		List<Direction> moveDirection = Direction.linearDirection();
+		Directions moveDirections = Directions.LINEAR;
 		Set<Position> movablePositions = new HashSet<>();
 
-		for (Direction direction : moveDirection) {
+		for (Direction direction : moveDirections.getDirections()) {
 			Position movablePosition = position;
+			Position lastPosition = position;
 			while (true) {
-				Optional<Position> optionalPosition = checkBoundary(movablePosition, direction);
-				if (!optionalPosition.isPresent()) {
+				movablePosition = movablePosition.getMovedPositionBy(direction);
+				if (!lastPosition.equals(movablePosition)) {
 					break;
 				}
-				movablePosition = optionalPosition.get();
+
+				lastPosition = movablePosition;
+
 				if (!checkMovable(movablePosition, pieces, color)) {
 					break;
 				}
+
 				movablePositions.add(movablePosition);
+
 				if (isPossessed(movablePosition, pieces)) {
 					break;
 				}
@@ -45,17 +46,6 @@ public class RookMovable implements Movable {
 			}
 		}
 		return false;
-	}
-
-	private Optional<Position> checkBoundary(Position position, Direction direction) {
-		Row row = position.getRow();
-		Column column = position.getColumn();
-		if (position.checkBound(direction)) {
-			Row validRow = row.calculate(direction.getXDegree());
-			Column validColumn = column.calculate(direction.getYDegree());
-			return Optional.ofNullable(PositionFactory.of(validRow, validColumn));
-		}
-		return Optional.empty();
 	}
 
 	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {

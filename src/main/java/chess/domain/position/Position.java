@@ -30,6 +30,14 @@ public class Position {
 		}
 	}
 
+	public Position getMovedPositionBy(Direction direction) {
+		if(!checkBound(direction)){
+			return this;
+		}
+		Row movedRow = row.calculate(direction.getXDegree());
+		Column movedColumn = column.calculate(direction.getYDegree());
+		return PositionFactory.of(movedRow,movedColumn);
+	}
 
 	public boolean checkBound(Direction direction) {
 		int checkingRow = row.getValue() + direction.getXDegree();

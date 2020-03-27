@@ -15,24 +15,10 @@ import java.util.Set;
 public class PawnMovable implements Movable {
 	@Override
 	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
-		List<Direction> moveDirection = Direction.getPawnDirectionBy(color);
+		Directions moveDirections = Directions.getPawnDirectionsBy(color,position);
 		Set<Position> movablePositions = new HashSet<>();
 
-		if (position.getColumn().getValue() == 2 && color.isWhite()) {
-			Position checkPosition = PositionFactory.of(position.getRow(), position.getColumn().calculate(1));
-			if (!isPossessed(checkPosition, pieces)) {
-				moveDirection = Direction.whiteInitialPawnDirection();
-			}
-		}
-
-		if (position.getColumn().getValue() == 7 && color.isBlack()) {
-			Position checkPosition = PositionFactory.of(position.getRow(), position.getColumn().calculate(-1));
-			if (!isPossessed(checkPosition, pieces)) {
-				moveDirection = Direction.blackInitialPawnDirection();
-			}
-		}
-
-		for (Direction direction : moveDirection) {
+		for (Direction direction : moveDirections.getDirections()) {
 			Optional<Position> optionalPosition = checkBoundary(position, direction);
 			if (optionalPosition.isPresent()) {
 				Position movablePosition = optionalPosition.get();

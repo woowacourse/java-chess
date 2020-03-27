@@ -15,9 +15,9 @@ import java.util.Set;
 public class BishopMovable implements Movable {
 	@Override
 	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
-		List<Direction> moveDirection = Direction.diagonalDirection();
+		Directions moveDirections = Directions.DIAGONAL;
 		Set<Position> movablePositions = new HashSet<>();
-		for (Direction direction : moveDirection) {
+		for (Direction direction : moveDirections.getDirections()) {
 			Position movablePosition = position;
 			while (true) {
 				Optional<Position> optionalPosition = checkBoundary(movablePosition, direction);
