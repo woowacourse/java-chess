@@ -29,10 +29,10 @@ public abstract class GameState implements State {
         if (input.equals("status")) {
             return status();
         }
-        return otherState(input);
+        return parseAndPushCommend(input);
     }
 
-    private State otherState(String input) {
+    private State parseAndPushCommend(String input) {
         List<String> tokens = Arrays.asList(input.split(" "));
         if (tokens.get(0).equals("move")) {
             validateTokensSize(tokens);
