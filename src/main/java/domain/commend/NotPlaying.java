@@ -11,7 +11,8 @@ public abstract class NotPlaying extends GameState {
 
 	@Override
 	public State start() {
-		return new Start(Pieces.of(new StartPieces()));
+		Pieces startPieces = new Pieces(new StartPieces().getInstance());
+		return new Start(startPieces);
 	}
 
 	@Override

@@ -16,10 +16,6 @@ public class Pieces {
 		this.pieces = new HashSet<>(pieces);
 	}
 
-	public static Pieces of(StartPieces startPieces) {
-		return new Pieces(startPieces.getInstance());
-	}
-
 	public void move(Point from, Point to) {
 		Piece subject = find(from);
 		Direction direction = Direction.of(from, to);
@@ -49,7 +45,7 @@ public class Pieces {
 
 	private Piece find(Point point) {
 		return pieces.stream()
-					.filter(piece -> piece.getPoint().equals(point))
+					.filter(piece -> piece.matchPoint(point))
 					.findFirst()
 					.orElseThrow(() -> new CanNotMoveException("대상이 없습니다."));
 	}

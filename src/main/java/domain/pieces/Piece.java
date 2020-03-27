@@ -60,11 +60,15 @@ public abstract class Piece {
         return point;
     }
 
+    public void canReach(Distance distance) {
+    }
+
+    public boolean matchPoint(Point point) {
+        return this.point.equals(point);
+    }
+
     @Override
     public String toString() {
         return initial;
-    }
-
-    public void canReach(Distance distance) {
     }
 }
