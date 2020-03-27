@@ -1,7 +1,8 @@
 package chess.controller;
 
+import chess.BeforeGameCommand;
 import chess.Board;
-import chess.Command;
+import chess.InGameCommand;
 import chess.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,20 +12,21 @@ public class ChessGame {
 
     public void run() {
         OutputView.printGameIntro();
-        Command command = Command.of(InputView.requestCommand());
-        if (command.isStart()) {
-            OutputView.printBoard(board);
+        BeforeGameCommand beforeGameCommand = BeforeGameCommand.of(InputView.requestCommand());
+        if (beforeGameCommand.isEnd()) {
+            System.exit(0);
         }
+        OutputView.printBoard(board);
 
         while (board.isNotGameFinished()) {
-            command = Command.of(InputView.requestCommand());
-            if (command.isMove()) {
+            InGameCommand inGameCommand = InGameCommand.of(InputView.requestCommand());
+            if (inGameCommand.isMove()) {
                 Position startPosition = Position.of(InputView.requestPosition());
                 Position endPosition = Position.of(InputView.requestPosition());
                 board.move(startPosition, endPosition);
                 OutputView.printBoard(board);
             }
-            else if (command.isStatus()) {
+            else if (inGameCommand.isStatus()) {
                 //점수계산
             }
 
