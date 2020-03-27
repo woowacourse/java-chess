@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 public class King extends Piece {
     private static final String NAME = "k";
 
-    public King(TeamColor teamColor, Position position) {
-        super(NAME, teamColor, position);
+    public King(PieceColor pieceColor, Position position) {
+        super(NAME, pieceColor, position);
     }
 }

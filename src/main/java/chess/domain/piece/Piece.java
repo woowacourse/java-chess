@@ -3,17 +3,17 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 
 public abstract class Piece {
-    protected final TeamColor teamColor;
+    protected final PieceColor pieceColor;
     private final String name;
     private Position position;
 
-    public Piece(String name, TeamColor teamColor, Position position) {
+    public Piece(String name, PieceColor pieceColor, Position position) {
         this.name = name;
-        this.teamColor = teamColor;
+        this.pieceColor = pieceColor;
         this.position = position;
     }
 
     public String getName() {
-        return teamColor.getPieceName(name);
+        return pieceColor.getPieceName(name);
     }
 }
