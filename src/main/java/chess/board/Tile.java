@@ -1,6 +1,9 @@
 package chess.board;
 
-import chess.board.piece.*;
+import chess.board.piece.AbstractPawn;
+import chess.board.piece.Piece;
+import chess.board.piece.Pieces;
+import chess.board.piece.Team;
 
 public class Tile {
     private final Coordinate coordinate;
@@ -51,6 +54,6 @@ public class Tile {
     }
 
     public boolean isKing() {
-        return this.piece instanceof King;
+        return this.piece.isKing();
     }
 }
