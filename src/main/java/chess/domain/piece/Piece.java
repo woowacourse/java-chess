@@ -5,6 +5,8 @@ import chess.domain.position.Position;
 import chess.domain.route.Route;
 import chess.domain.route.RouteFinder;
 
+import java.util.Objects;
+
 public class Piece {
     private Team team;
     private PieceType pieceType;
@@ -22,10 +24,6 @@ public class Piece {
         return this.team == team;
     }
 
-    public boolean isType(PieceType pieceType) {
-        return this.pieceType == pieceType;
-    }
-
     public String getAcronym() {
         return pieceType.getAcronym(team);
     }
@@ -38,7 +36,33 @@ public class Piece {
         return team;
     }
 
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
     public boolean isOppositeTeam(Team team) {
         return this.team != team;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return team == piece.team &&
+                pieceType == piece.pieceType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team, pieceType);
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "team=" + team +
+                ", pieceType=" + pieceType +
+                '}';
     }
 }

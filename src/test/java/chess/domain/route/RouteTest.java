@@ -1,9 +1,7 @@
-package chess.domain;
+package chess.domain.route;
 
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import chess.domain.route.Direction;
-import chess.domain.route.Route;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

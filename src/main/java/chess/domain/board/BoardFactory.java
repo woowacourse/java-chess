@@ -72,13 +72,7 @@ public class BoardFactory {
         addToBoard(board, "h1", Team.WHITE, PieceType.ROOK);
     }
 
-    private static void addToBoard(
-            Map<Position, Piece> board,
-            String position,
-            Team team,
-            PieceType pieceType
-    ) {
-        board.put(Position.of(position),
-                new Piece(team, pieceType));
+    private static void addToBoard(Map<Position, Piece> board, String position, Team team, PieceType pieceType) {
+        board.put(Position.of(position), new Piece(team, pieceType));
     }
 }

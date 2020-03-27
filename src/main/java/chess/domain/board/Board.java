@@ -3,12 +3,10 @@ package chess.domain.board;
 import chess.domain.Pieces;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.route.Route;
-import chess.domain.route.RouteToAttack;
 
 import java.util.*;
 
@@ -27,53 +25,10 @@ public class Board {
 
     public void move(Position fromPosition, Position toPosition) {
         Piece piece = board.get(fromPosition);
-        Team team = piece.getTeam();
         Route route = piece.findRoute(fromPosition, toPosition);
 
-        if (piece.isType(PieceType.PAWN)) {
-            if (route instanceof RouteToAttack) {
-                Piece pieceToAttack = board.get(toPosition);
-                if (pieceToAttack != null || pieceToAttack.isOppositeTeam(team)) {
-                    board.remove(fromPosition);
-                    board.put(toPosition, piece);
-                    return;
-                }
-            }
-
-            if (board.get(toPosition) == null) {
-                board.remove(fromPosition);
-                board.put(toPosition, piece);
-                return;
-            }
-        }
-
-        if (piece.isType(PieceType.KNIGHT)) {
-            for (Position position : route.getRoute()) {
-                Piece pieceToRemove = board.get(position);
-                board.remove(pieceToRemove);
-            }
-
-            board.remove(fromPosition);
-            board.put(toPosition, piece);
-
-            return;
-        }
-
-        if (positionsAreDisturbed(route)) {
-            throw new IllegalArgumentException("선택한 기물이 움직일 수 없는 위치입니다.");
-        }
-
-        board.remove(fromPosition);
-        board.put(toPosition, piece);
-    }
-
-    private boolean positionsAreDisturbed(Route route) {
-        for (Position position : route.getRoute()) {
-            if (board.get(position) != null) {
-                return true;
-            }
-        }
-        return false;
+        MovingExecutor movingExecutor = MovingExecutorFactory.from(piece);
+        movingExecutor.move(route, board, toPosition, fromPosition);
     }
 
     public Pieces findPiecesOf(Team team) {
