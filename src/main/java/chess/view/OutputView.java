@@ -17,12 +17,16 @@ public class OutputView {
 
 	public static void printBoard(Board board) {
 		Map<Position, Piece> values = board.getBoard();
-		for (int i = 7; i >= 0; i--) {
-			for (int j = 0; j < 8; j++) {
-				System.out.print(drawPiece(values.get(Position.of(j, i))));
-			}
-			System.out.println();
+		for (int y = Position.END_Y - 1; y >= Position.BEGIN_Y; y--) {
+			printFile(values, y);
 		}
+	}
+
+	private static void printFile(Map<Position, Piece> values, int y) {
+		for (int x = Position.BEGIN_X; x < Position.END_X; x++) {
+			System.out.print(drawPiece(values.get(Position.of(x, y))));
+		}
+		System.out.println();
 	}
 
 	private static String drawPiece(Piece piece) {
