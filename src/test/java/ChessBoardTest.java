@@ -1,5 +1,6 @@
 import chess.domain.ChessBoard;
 import chess.domain.Player;
+import chess.domain.chesspieces.*;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
@@ -7,7 +8,13 @@ import chess.domain.position.component.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -38,4 +45,60 @@ public class ChessBoardTest {
         double expected = 38;
         assertThat(actual).isEqualTo(expected);
     }
+
+    @DisplayName("ChessBoard의 한 column에 같은 Player 소유의 Pawn 개수 확인")
+    @ParameterizedTest
+    @MethodSource("generatePositions3")
+    void 폰의점수를확인하는테스트(List<Square> columnLine, Player player, int exptectd) {
+        ChessBoard chessBoard = new ChessBoard();
+        assertThat(chessBoard.getPawnCountPerStage(columnLine, player)).isEqualTo(exptectd);
+    }
+
+    static Stream<Arguments> generatePositions3() {
+        Stream<Piece> whitePawnWhiteKing = Stream.of(new Pawn(Player.WHITE, Positions.of("a1")),
+                new King(Player.WHITE));
+        Stream<Piece> whitePawn3 = Stream.of(new Pawn(Player.WHITE, Positions.of("a1")),
+                new Pawn(Player.WHITE, Positions.of("a2")),
+                new Pawn(Player.WHITE, Positions.of("a3"))
+        );
+        Stream<Piece> whitePawn1BlackPawn2 = Stream.of(new Pawn(Player.WHITE, Positions.of("a1")),
+                new Pawn(Player.BLACK, Positions.of("a2")),
+                new Pawn(Player.BLACK, Positions.of("a3")));
+        Stream<Piece> whiteKingBlackQueen = Stream.of(new King(Player.WHITE), new Queen(Player.BLACK));
+
+        List<Empty> emptyStream_Size5 = Stream.generate(Empty::getInstance)
+                .limit(5).collect(Collectors.toList());
+        List<Empty> emptyStream_Size6 = Stream.generate(Empty::getInstance)
+                .limit(6).collect(Collectors.toList());
+        return Stream.of(
+                Arguments.of(
+                        Stream.concat(whitePawnWhiteKing, emptyStream_Size6.stream())
+                                .collect(Collectors.toList()), Player.WHITE, 1
+                ), Arguments.of(
+                        Stream.concat(whitePawn3, emptyStream_Size5.stream())
+                                .collect(Collectors.toList()), Player.WHITE, 3
+                ), Arguments.of(
+                        Stream.concat(whitePawn1BlackPawn2, emptyStream_Size5.stream())
+                                .collect(Collectors.toList()), Player.WHITE, 1
+                ), Arguments.of(
+                        Stream.concat(whiteKingBlackQueen, emptyStream_Size6.stream())
+                                .collect(Collectors.toList()), Player.WHITE, 0
+                )
+        );
+    }
+
+//    @DisplayName("한 가로 줄에 같은 편인 Pawn만 추출")
+//    @Test
+//    void 폰의점수를확인하는테스트(){
+//        ChessBoard chessBoard = new ChessBoard();
+//        Position position1 = Positions.of("a1");
+//        Position position2 = Positions.of("a2");
+//        Position position3 = Positions.of("a3");
+//
+//        // list --> getPawnList(Row, Player);
+//        List<Square> list = Arrays.asList(new Pawn(Player.WHITE, position1),
+//                new Pawn(Player.WHITE, position2));
+//        int actual = chessBoard.getPawnCountAtRowLine(list); // -
+//        int expected = 2;
+//    }
 }

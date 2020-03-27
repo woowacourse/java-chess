@@ -1,5 +1,6 @@
 package chess.domain.chesspieces;
 
+import chess.domain.ChessBoard;
 import chess.domain.Player;
 
 public enum PieceInfo {
@@ -9,6 +10,8 @@ public enum PieceInfo {
     ROOK("R", "r", 5),
     KNIGHT("N", "n", 2.5),
     PAWN("P", "p", 1);
+
+    public static final double PAWN_DIFF = 0.5;
 
     private final String blackName;
     private final String whiteName;

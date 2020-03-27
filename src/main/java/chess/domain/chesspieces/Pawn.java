@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pawn extends Piece {
-    private final static int AVAILABLE_ROW_MOVE_DIFF = 1;
-    private final static int INIT_AVAILABLE_COLUMN_DIFF = 1;
-    private final static int AVAILABLE_COLUMN_DIFF = 2;
-    private final static PieceInfo PIECE_INFO = PieceInfo.valueOf("PAWN");
+    private static final int AVAILABLE_ROW_MOVE_DIFF = 1;
+    private static final int INIT_AVAILABLE_COLUMN_DIFF = 1;
+    private static final int AVAILABLE_COLUMN_DIFF = 2;
+    private static final PieceInfo PIECE_INFO = PieceInfo.valueOf("PAWN");
+
     private final List<Direction> attackDirections = new ArrayList<>();
 
     private final Position initPosition;

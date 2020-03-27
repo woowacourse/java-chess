@@ -5,6 +5,7 @@ import chess.domain.chesspieces.*;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.domain.position.component.Row;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -62,18 +63,48 @@ public class ChessBoard {
     }
 
     public double computeScore(Player player) {
-        return getPlayerPieces(player)
+        double result = getPlayerPieces(player)
                 .stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
+        result -= PieceInfo.PAWN_DIFF * getPawnCount(player);
+        return result;
     }
 
     private List<Piece> getPlayerPieces(Player player) {
         return chessBoard.values()
                 .stream()
-                .filter(square -> square != Empty.getInstance())
+                .filter(square -> square instanceof Piece)
                 .map(square -> (Piece) square)
                 .filter(piece -> piece.getPlayer() == player)
                 .collect(Collectors.toList());
+    }
+
+    public int getPawnCountPerStage(List<Square> columnLine, Player player) {
+        return (int) columnLine.stream()
+                .filter(square -> square.getClass() == Pawn.class)
+                .map(square -> (Pawn) square)
+                .filter(pawn -> pawn.getPlayer() == player)
+                .count();
+    }
+
+    public int getPawnCount(Player player) {
+        int count = 0;
+        for (Row row : Row.values()) {
+            int value = getPawnCountPerStage(getStage(row), player);
+            if (value != 1) {
+                count += value;
+            }
+        }
+        return count;
+    }
+
+    public List<Square> getStage(Row row) {
+        List<Square> squares = new ArrayList<>();
+        for (Map.Entry<Position, Square> entry : chessBoard.entrySet()) {
+            if (entry.getKey().getRow() == row)
+                squares.add(entry.getValue());
+        }
+        return squares;
     }
 }
