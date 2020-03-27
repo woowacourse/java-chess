@@ -29,7 +29,7 @@ public class OutputView {
 	}
 
 	private static void separateLine(Position position) {
-		if (position.isNewLine()) {
+		if (position.isFileA()) {
 			System.out.println();
 		}
 	}

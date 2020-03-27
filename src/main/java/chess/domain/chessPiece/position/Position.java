@@ -47,7 +47,7 @@ public class Position {
 		return this.rank == Rank.SEVEN;
 	}
 
-	public boolean isNewLine() {
+	public boolean isFileA() {
 		return file == File.A;
 	}
 
