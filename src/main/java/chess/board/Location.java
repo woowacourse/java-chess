@@ -15,11 +15,6 @@ public class Location {
 		this.col = col;
 	}
 
-	public Location(Location now) {
-		this.row = now.row;
-		this.col = now.col;
-	}
-
 	public Location moveTo(final int row, final char col) {
 		return new Location(row, col);
 	}

@@ -1,4 +1,5 @@
-package chess;
+package chess.result;
+
 
 public class ChessResult {
     private final Result result;
@@ -11,10 +12,6 @@ public class ChessResult {
 
     public boolean isDraw() {
         return result.isDraw();
-    }
-
-    public Result getResult() {
-        return result;
     }
 
     public String getName() {

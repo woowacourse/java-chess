@@ -1,4 +1,4 @@
-package chess;
+package chess.progress;
 
 public enum Progress {
     CONTINUE(true),

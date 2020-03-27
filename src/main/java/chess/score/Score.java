@@ -30,6 +30,18 @@ public class Score {
         return value;
     }
 
+    public boolean isHigherThan(Score score2) {
+        return value > score2.value;
+    }
+
+    public boolean isEqualThan(Score score2) {
+        return value == score2.value;
+    }
+
+    public boolean isLowerThan(Score score2) {
+        return value == score2.value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,15 +55,5 @@ public class Score {
         return Objects.hash(value);
     }
 
-    public boolean isHigherThan(Score score2) {
-        return value > score2.value;
-    }
 
-    public boolean isEqualThan(Score score2) {
-        return value == score2.value;
-    }
-
-    public boolean isLowerThan(Score score2) {
-        return value == score2.value;
-    }
 }

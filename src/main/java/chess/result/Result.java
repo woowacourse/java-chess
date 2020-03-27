@@ -1,4 +1,4 @@
-package chess;
+package chess.result;
 
 import chess.score.Score;
 

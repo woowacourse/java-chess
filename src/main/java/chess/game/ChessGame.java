@@ -1,17 +1,17 @@
-package chess;
+package chess.game;
 
 import chess.board.ChessBoard;
 import chess.board.Location;
+import chess.progress.Progress;
+import chess.player.Player;
+import chess.result.ChessResult;
+import chess.result.Result;
 import chess.score.Score;
 import chess.team.Team;
 
-import static chess.Progress.*;
+import static chess.progress.Progress.*;
 import static chess.team.Team.BLACK;
 import static chess.team.Team.WHITE;
-
-// TODO : 점수 계산 로직에서 폰 전략을 빼지 못함
-// TODO : 제대로된 점수가 나오는지 로그 찍어서 확인해보기
-// TODO : 킹 죽었을 때 게임 종료되는지 확인하기
 
 public class ChessGame {
     private final ChessBoard chessBoard;

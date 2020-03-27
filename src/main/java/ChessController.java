@@ -1,6 +1,6 @@
-import chess.ChessGame;
-import chess.ChessResult;
-import chess.Progress;
+import chess.game.ChessGame;
+import chess.result.ChessResult;
+import chess.progress.Progress;
 import chess.team.Team;
 import view.InputView;
 import view.OutputView;

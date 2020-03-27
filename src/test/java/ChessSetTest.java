@@ -1,15 +1,10 @@
-import chess.ChessSet;
-import chess.Player;
+import chess.game.ChessSet;
 import chess.board.ChessBoard;
 import chess.board.Location;
 import chess.score.Score;
 import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +13,7 @@ class ChessSetTest {
     @Test
     void calculateScore() {
         ChessBoard chessBoard = new ChessBoard();
-        ChessSet chessSet = new ChessSet(chessBoard.giveMyPiece(Team.BLACK.isBlack()));
+        ChessSet chessSet = new ChessSet(chessBoard.giveMyPiece(Team.BLACK));
 
         Score result = chessSet.calculateScoreExceptPawnReduce();
         assertThat(result).isEqualTo(new Score(38));

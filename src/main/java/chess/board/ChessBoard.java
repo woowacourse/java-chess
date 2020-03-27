@@ -1,5 +1,6 @@
 package chess.board;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,15 +18,16 @@ import chess.team.Team;
 public class ChessBoard {
     private static final int MINIMUM_LINE = 0;
     private static final int LIMIT_LINE = 8;
+    private static final double PAWN_REDUCE_VALUE = 0.5;
+    private static final char COL_START = 'a';
 
     private final Map<Location, Piece> board;
 
     public ChessBoard() {
         this.board = new HashMap<>();
         putNoble(1, Team.WHITE);
-//        putPawns(2, Team.WHITE);
-
-//        putPawns(7, Team.BLACK);
+        putPawns(2, Team.WHITE);
+        putPawns(7, Team.BLACK);
         putNoble(8, Team.BLACK);
     }
 
@@ -61,12 +63,11 @@ public class ChessBoard {
 
     private void putPawns(int row, Team team) {
         for (int i = MINIMUM_LINE; i < LIMIT_LINE; i++) {
-            board.put(new Location(row, (char) (i + 'a')), new Pawn(team));
+            board.put(new Location(row, (char) (i + COL_START)), new Pawn(team));
         }
     }
 
     // 팀별 위치, 체스 정보를 가져온다.
-    // 클론될 가능성
     public Map<Location, Piece> giveMyPiece(Team team) {
         return board.keySet().stream()
                 .filter(location -> board.get(location).isSameTeam(team))
@@ -74,7 +75,7 @@ public class ChessBoard {
     }
 
     public Map<Location, Piece> getBoard() {
-        return board;
+        return Collections.unmodifiableMap(board);
     }
 
     public void move(Location now, Location destination) {
@@ -88,18 +89,18 @@ public class ChessBoard {
     public Score calculateReducePawnScore(Team team) {
         int reducePawnScroe = 0;
         for (int row = MINIMUM_LINE; row < LIMIT_LINE; row++) {
-            int finalRow = row;
+            int fixRow = row;
             int sameRowPawnSize = (int) board.keySet().stream()
-                    .filter(location -> location.is(finalRow))
-                    .filter(location -> board.get(location).isSameTeam(team.isBlack()))
+                    .filter(location -> location.is(fixRow))
+                    .filter(location -> board.get(location).isSameTeam(team))
                     .filter(location -> board.get(location) instanceof Pawn)
                     .count();
-            reducePawnScroe += sameRowPawnSize * 0.5;
+            reducePawnScroe += sameRowPawnSize * PAWN_REDUCE_VALUE;
         }
         return new Score(reducePawnScroe);
     }
 
     public boolean isCorrectTeam(Location location, Team team) {
-        return board.get(location).isSameTeam(team.isBlack());
+        return board.get(location).isSameTeam(team);
     }
 }

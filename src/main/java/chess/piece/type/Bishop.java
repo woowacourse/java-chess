@@ -5,7 +5,7 @@ import chess.score.Score;
 import chess.team.Team;
 
 public class Bishop extends Piece {
-    private static final char name = 'b';
+    public static final char NAME = 'b';
     private static final int BISHOP_SCORE = 3;
 
     public Bishop(Team team) {
@@ -14,9 +14,9 @@ public class Bishop extends Piece {
 
     private static char changeName(Team team) {
         if (team.isBlack()) {
-            return Character.toUpperCase(name);
+            return Character.toUpperCase(NAME);
         }
-        return name;
+        return NAME;
     }
 
     @Override

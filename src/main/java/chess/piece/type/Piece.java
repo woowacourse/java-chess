@@ -1,13 +1,17 @@
 package chess.piece.type;
 
 import java.util.Map;
+import java.util.Objects;
 
 import chess.board.Location;
 import chess.score.Score;
 import chess.team.Team;
 
 public abstract class Piece {
-    protected final char name;
+    private static final char BLACk_KING_VALUE = 'K';
+    private static final char WHITE_KING_VALUE = 'k';
+
+    public final char name;
     protected final Score score;
 
     Piece(char name, Score score) {
@@ -18,7 +22,7 @@ public abstract class Piece {
     public abstract boolean canMove(Location now, Location after);
 
     public boolean isSameTeam(Team team) {
-        return isSameTeam(team.isBlack());
+        return isBlack() == team.isBlack();
     }
 
     public boolean isSameTeam(boolean black) {
@@ -29,12 +33,8 @@ public abstract class Piece {
         return isBlack() == piece.isBlack();
     }
 
-    public boolean isSameType(Piece piece) {
-        return piece.getClass().equals(this.getClass());
-    }
-
     public boolean isKing() {
-        return this.name == 'K' || this.name == 'k';
+        return this.name == BLACk_KING_VALUE || this.name == WHITE_KING_VALUE;
     }
 
     protected boolean isBlack() {
@@ -49,15 +49,9 @@ public abstract class Piece {
         return score;
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(name);
-    }
-
     public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
-        Location nowLocation = new Location(now);
-
-        for (int weight = 1; ; weight++) {
+        Location nowLocation;
+        for (int weight = 1;; weight++) {
             nowLocation = now.calculateNextLocation(destination, weight);
             if (nowLocation.equals(destination)) {
                 break;
@@ -65,9 +59,26 @@ public abstract class Piece {
             if (board.containsKey(nowLocation)) {
                 return true;
             }
-
         }
-
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return name == piece.name &&
+                Objects.equals(score, piece.score);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, score);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(name);
     }
 }

@@ -7,7 +7,7 @@ import chess.score.Score;
 import chess.team.Team;
 
 public class Pawn extends Piece {
-    private static final char name = 'p';
+    public static final char NAME = 'p';
     private static final int PAWN_SCORE = 1;
 
     public Pawn(Team team) {
@@ -16,9 +16,9 @@ public class Pawn extends Piece {
 
     private static char changeName(Team team) {
         if (team.isBlack()) {
-            return Character.toUpperCase(name);
+            return Character.toUpperCase(NAME);
         }
-        return name;
+        return NAME;
     }
 
     @Override

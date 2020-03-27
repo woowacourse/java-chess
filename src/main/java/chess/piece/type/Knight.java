@@ -7,7 +7,7 @@ import chess.score.Score;
 import chess.team.Team;
 
 public class Knight extends Piece {
-	private static final char name = 'n';
+	public static final char NAME = 'n';
 	private static final double KNIGHT_SCORE = 2.5;
 
 	public Knight(Team team) {
@@ -16,9 +16,9 @@ public class Knight extends Piece {
 
 	private static char changeName(Team team) {
 		if (team.isBlack()) {
-			return Character.toUpperCase(name);
+			return Character.toUpperCase(NAME);
 		}
-		return name;
+		return NAME;
 	}
 
 	@Override

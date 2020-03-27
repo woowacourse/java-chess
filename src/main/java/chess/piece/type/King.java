@@ -7,7 +7,7 @@ import chess.score.Score;
 import chess.team.Team;
 
 public class King extends Piece {
-	private static final char name = 'k';
+	public static final char NAME = 'k';
 	private static final int KING_SCORE = 0;
 
 	public King(Team team) {
@@ -16,9 +16,9 @@ public class King extends Piece {
 
 	private static char changeName(Team team) {
 		if (team.isBlack()) {
-			return Character.toUpperCase(name);
+			return Character.toUpperCase(NAME);
 		}
-		return name;
+		return NAME;
 	}
 
 	@Override
