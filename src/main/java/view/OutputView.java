@@ -5,7 +5,7 @@ import domain.board.RowOfBoard;
 
 public class OutputView {
 
-    private static final String NEW_LINE = "\n";
+    private static final String NEW_LINE = System.lineSeparator();
 
     public static void printStart() {
         System.out.println("체스 게임을 시작합니다.");
