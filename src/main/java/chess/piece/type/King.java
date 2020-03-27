@@ -3,13 +3,15 @@ package chess.piece.type;
 import java.util.Map;
 
 import chess.board.Location;
+import chess.score.Score;
 import chess.team.Team;
 
 public class King extends Piece {
 	private static final char name = 'k';
+	private static final int KING_SCORE = 0;
 
 	public King(Team team) {
-		super(changeName(team));
+		super(changeName(team), new Score(KING_SCORE));
 	}
 
 	private static char changeName(Team team) {

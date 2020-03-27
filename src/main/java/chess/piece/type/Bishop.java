@@ -1,13 +1,15 @@
 package chess.piece.type;
 
 import chess.board.Location;
+import chess.score.Score;
 import chess.team.Team;
 
 public class Bishop extends Piece {
     private static final char name = 'b';
+    private static final int BISHOP_SCORE = 3;
 
     public Bishop(Team team) {
-        super(changeName(team));
+        super(changeName(team), new Score(BISHOP_SCORE));
     }
 
     private static char changeName(Team team) {
