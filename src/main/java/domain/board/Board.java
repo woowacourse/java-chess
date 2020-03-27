@@ -14,7 +14,7 @@ public class Board {
 
     public static Board of(Set<Piece> pieces) {
         Board board = createEmptyBoard();
-        board.putAllOnBoard(pieces);
+        board.putPiecesOnBoard(pieces);
         return board;
     }
 
@@ -28,18 +28,18 @@ public class Board {
         return new Board(board);
     }
 
-    public void putAllOnBoard(Set<Piece> pieces) {
+    public void putPiecesOnBoard(Set<Piece> pieces) {
         for (Piece piece : pieces) {
-            putOnBoard(piece);
+            putPieceOnBoard(piece);
         }
     }
 
-    private void putOnBoard(Piece piece) {
-        putOnBoard(piece.getRowIndex(), piece.getColumnIndex(), piece.getInitial());
+    private void putPieceOnBoard(Piece piece) {
+        putInitialOnBoard(piece.getRowIndex(), piece.getColumnIndex(), piece.getInitial());
     }
 
-    private void putOnBoard(int row, int column, String initial) {
-        board.get(row).putOnColumn(column, initial);
+    private void putInitialOnBoard(int row, int column, String initialOfPiece) {
+        board.get(row).putOnColumn(column, initialOfPiece);
     }
 
     public List<RowOfBoard> getBoard() {
