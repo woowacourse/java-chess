@@ -19,10 +19,16 @@ public class ChessGameController {
 	public ChessGameController(ChessGame chessGame) {
 		this.chessGame = chessGame;
 		this.commands = new HashMap<String, Consumer<StringTokenizer>>() {{
-			put("start", tokenizer -> chessGame.start());
+			put("start", tokenizer -> {
+				chessGame.start();
+				OutputView.printBoard(chessGame.board());
+			});
 			put("end", tokenizer -> chessGame.end());
-			put("move", tokenizer -> chessGame.move(Position.from(tokenizer.nextToken()),
-					Position.from(tokenizer.nextToken())));
+			put("move", tokenizer -> {
+				chessGame.move(Position.from(tokenizer.nextToken()),
+						Position.from(tokenizer.nextToken()));
+				OutputView.printBoard(chessGame.board());
+			});
 			put("status", tokenizer -> OutputView.printStatus(chessGame.status()));
 		}};
 	}
@@ -36,8 +42,6 @@ public class ChessGameController {
 		OutputView.printGameStart();
 		while (!chessGame.isFinished()) {
 			command(InputView.inputCommand());
-			OutputView.printBoard(chessGame.board());
 		}
-		OutputView.printStatus(chessGame.status());
 	}
 }
