@@ -90,8 +90,6 @@ public class DirectionTest {
 				Arguments.of(Direction.of(-1, 1), Direction.NORTH_WEST),
 				Arguments.of(Direction.of(1, -1), Direction.SOUTH_EAST),
 				Arguments.of(Direction.of(-1, -1), Direction.SOUTH_WEST),
-				Arguments.of(Direction.of(0, 2), Direction.NORTH_NORTH),
-				Arguments.of(Direction.of(0, -2), Direction.SOUTH_SOUTH),
 				Arguments.of(Direction.of(1, 2), Direction.NORTH_NORTH_EAST),
 				Arguments.of(Direction.of(-1, 2), Direction.NORTH_NORTH_WEST),
 				Arguments.of(Direction.of(1, -2), Direction.SOUTH_SOUTH_EAST),

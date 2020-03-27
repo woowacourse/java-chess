@@ -14,9 +14,6 @@ public enum Direction {
 	SOUTH_WEST(-1, -1),
 	SOUTH_EAST(1, -1),
 
-	NORTH_NORTH(0, 2),
-	SOUTH_SOUTH(0, -2),
-
 	NORTH_NORTH_EAST(1, 2),
 	NORTH_NORTH_WEST(-1, 2),
 	SOUTH_SOUTH_EAST(1, -2),
@@ -33,10 +30,6 @@ public enum Direction {
 			NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
 	public static final List<Direction> KNIGHT_DIRECTION = Arrays.asList(NORTH_NORTH_EAST, NORTH_NORTH_WEST,
 			SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST, EAST_EAST_NORTH, EAST_EAST_SOUTH, WEST_WEST_NORTH, WEST_WEST_SOUTH);
-	public static final List<Direction> START_WHITE_PAWN_DIRECTION = Arrays.asList(NORTH_NORTH, NORTH_EAST, NORTH_WEST,
-			NORTH);
-	public static final List<Direction> START_BLACK_PAWN_DIRECTION = Arrays.asList(SOUTH_SOUTH, SOUTH_EAST, SOUTH_WEST,
-			SOUTH);
 	public static final List<Direction> WHITE_PAWN_DIRECTION = Arrays.asList(NORTH_EAST, NORTH_WEST, NORTH);
 	public static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(SOUTH_EAST, SOUTH_WEST, SOUTH);
 
@@ -59,20 +52,31 @@ public enum Direction {
 		if (Math.abs(x) - Math.abs(y) != 0) {
 			throw new IllegalArgumentException("대각선 방향이 아닙니다.");
 		}
-		return of(Integer.compare(x, 0), Integer.compare(y, 0));
+		return convert(x, y);
 	}
 
 	public static Direction ofLinear(int x, int y) {
 		if (Math.abs(x - y) != Math.abs(x + y)) {
 			throw new IllegalArgumentException("직선 방향이 아닙니다.");
 		}
-		return of(Integer.compare(x, 0), Integer.compare(y, 0));
+		return convert(x, y);
 	}
 
 	public static Direction ofEvery(int x, int y) {
 		if (Math.abs(x) - Math.abs(y) != 0 && Math.abs(x - y) != Math.abs(x + y)) {
 			throw new IllegalArgumentException("8방향이 아닙니다.");
 		}
+		return convert(x, y);
+	}
+
+	public static Direction ofStart(int x, int y) {
+		if (Math.abs(y) == 2) {
+			return convert(x, y);
+		}
+		return of(x, y);
+	}
+
+	private static Direction convert(int x, int y) {
 		return of(Integer.compare(x, 0), Integer.compare(y, 0));
 	}
 

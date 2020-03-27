@@ -11,15 +11,16 @@ public class Pawn extends Piece {
 		super(position, color, Symbol.PAWN);
 	}
 
-	private List<Direction> directions() {
+	private boolean isStarting() {
 		if (getPosition().equalsY(START_BLACK_Y) && isBlack()) {
-			return Direction.START_BLACK_PAWN_DIRECTION;
+			return true;
 		}
+		return getPosition().equalsY(START_WHITE_Y) && !isBlack();
+	}
+
+	private List<Direction> directions() {
 		if (isBlack()) {
 			return Direction.BLACK_PAWN_DIRECTION;
-		}
-		if (getPosition().equalsY(START_WHITE_Y)) {
-			return Direction.START_WHITE_PAWN_DIRECTION;
 		}
 		return Direction.WHITE_PAWN_DIRECTION;
 	}
@@ -35,15 +36,16 @@ public class Pawn extends Piece {
 		}
 		if (!piece.isBlank()) {
 			directions.remove(Direction.NORTH);
-			directions.remove(Direction.NORTH_NORTH);
 			directions.remove(Direction.SOUTH);
-			directions.remove(Direction.SOUTH_SOUTH);
 		}
 		return directions;
 	}
 
 	@Override
 	protected Direction findDirection(int x, int y) {
+		if (isStarting()) {
+			return Direction.ofStart(x, y);
+		}
 		return Direction.of(x, y);
 	}
 
