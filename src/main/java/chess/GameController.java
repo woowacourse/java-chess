@@ -21,6 +21,9 @@ public class GameController {
         while (!board.isGameOver()) {
             OutputView.printTeamColor(teamColor);
             String command = InputView.inputCommand();
+            if (command.startsWith("status")) {
+                OutputView.printScore(board.calculateScore(teamColor));
+            }
             if (command.startsWith(MOVE)) {
                 String[] moveCommand = command.split(DELIMITER);
                 Position source = Position.ofPositionName(moveCommand[SOUCE_POSITION]);

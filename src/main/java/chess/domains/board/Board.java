@@ -6,6 +6,7 @@ import chess.domains.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class Board {
     public static final String INVALID_LOCATION_ERR_MSG = "위치를 잘못 입력하였습니다.";
@@ -75,5 +76,33 @@ public class Board {
                 .filter(PlayingPiece::isKing)
                 .count();
         return count != 2;
+    }
+
+    public double calculateScore(PieceColor teamColor) {
+        double score = board.stream()
+                .filter(playingPiece -> playingPiece.isMine(teamColor))
+                .mapToDouble(PlayingPiece::score)
+                .sum();
+
+        int pawnCount = countPawnInSameColumn(teamColor);
+
+        return score - pawnCount * 0.5;
+    }
+
+    private int countPawnInSameColumn(PieceColor teamColor) {
+        Stream<PlayingPiece> myPawns = board.stream()
+                .filter(playingPiece -> playingPiece.isMine(teamColor))
+                .filter(PlayingPiece::isPawn);
+
+        int pawnCount = 0;
+
+        for (char c = 'a'; c <= 'h'; c++) {
+            char column = c;
+            int count = (int) myPawns.filter(myPiece -> myPiece.isColumn(column)).count();
+            if (count > 1) {
+                pawnCount += count;
+            }
+        }
+        return pawnCount;
     }
 }

@@ -33,4 +33,8 @@ public class OutputView {
     public static void printTeamColor(PieceColor teamColor) {
         System.out.println(teamColor.name() + "의 차례입니다.");
     }
+
+    public static void printScore(double calculateScore) {
+        System.out.println(calculateScore + "점");
+    }
 }

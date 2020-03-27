@@ -4,7 +4,7 @@ import chess.domains.position.Position;
 
 public class Pawn extends Piece {
     public Pawn(PieceColor pieceColor) {
-        super(pieceColor, "p");
+        super(pieceColor, "p", 1);
     }
 
     @Override
@@ -17,9 +17,9 @@ public class Pawn extends Piece {
         int yGap = current.yGapBetween(target);
 
         if (pieceColor == PieceColor.WHITE) {
-            return (xGap == 0 || xGap == 1 || xGap == -1) && yGap == 1;
+            return Math.abs(xGap) <= 1 && yGap == 1;
         }
-        return (xGap == 0 || xGap == 1 || xGap == -1) && yGap == -1;
+        return Math.abs(xGap) <= 1 && yGap == -1;
     }
 
     private boolean isInitialPosition(Position current) {
@@ -28,10 +28,13 @@ public class Pawn extends Piece {
     }
 
     private boolean canFirstMove(Position current, Position target) {
+        int xGap = current.xGapBetween(target);
+        int yGap = current.yGapBetween(target);
+
         if (pieceColor == PieceColor.WHITE) {
-            return current.xGapBetween(target) == 0 && current.yGapBetween(target) <= 2 && current.yGapBetween(target) > 0;
+            return Math.abs(xGap) <= 1 && yGap > 0 && yGap <= 2;
         }
-        return current.xGapBetween(target) == 0 && current.yGapBetween(target) >= -2 && current.yGapBetween(target) < 0;
+        return Math.abs(xGap) <= 1 && yGap >= -2 && yGap < 0;
     }
 
 }

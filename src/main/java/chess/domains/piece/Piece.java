@@ -18,12 +18,14 @@ public abstract class Piece {
 
     protected final PieceColor pieceColor;
     private final String name;
+    private final double score;
 
     public abstract boolean isValidMove(Position currentPosition, Position targetPosition);
 
-    public Piece(PieceColor pieceColor, String name) {
+    public Piece(PieceColor pieceColor, String name, double score) {
         this.pieceColor = pieceColor;
         this.name = selectName(pieceColor, name);
+        this.score = score;
     }
 
     private static List<Piece> createBundleByColor(PieceColor color) {
@@ -55,10 +57,6 @@ public abstract class Piece {
         return this.pieceColor == pieceColor;
     }
 
-    public boolean isPawn() {
-        return this instanceof Pawn;
-    }
-
     public static List<Piece> getBlackPieces() {
         return blackPieces;
     }
@@ -69,6 +67,10 @@ public abstract class Piece {
 
     public String getName() {
         return name;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     @Override

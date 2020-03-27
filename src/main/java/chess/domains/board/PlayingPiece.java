@@ -64,6 +64,10 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
         return this.piece.isMine(targetPiece.piece);
     }
 
+    public boolean isMine(PieceColor pieceColor) {
+        return this.piece.isMine(pieceColor);
+    }
+
     public void checkMyTurn(PieceColor pieceColor) {
         if (!this.piece.isMine(pieceColor)) {
             throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다.");
@@ -93,6 +97,14 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
 
     public boolean isPawn() {
         return this.piece instanceof Pawn;
+    }
+
+    public double score() {
+        return piece.getScore();
+    }
+
+    public boolean isColumn(char column) {
+        return this.position.isColumn(column);
     }
 
     @Override

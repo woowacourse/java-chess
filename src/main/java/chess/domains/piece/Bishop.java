@@ -3,8 +3,9 @@ package chess.domains.piece;
 import chess.domains.position.Position;
 
 public class Bishop extends Piece {
+
     public Bishop(PieceColor pieceColor) {
-        super(pieceColor, "b");
+        super(pieceColor, "b", 3);
     }
 
     @Override
