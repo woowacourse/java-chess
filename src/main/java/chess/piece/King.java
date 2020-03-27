@@ -13,7 +13,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	public List<Position> findReachablePositions(Position start, Position end) {
+	public List<Position> findTraceBetween(Position start, Position end) {
 		if (start.isNotDistanceOneSquare(end)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}

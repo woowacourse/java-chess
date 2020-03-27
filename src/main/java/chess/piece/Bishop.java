@@ -12,7 +12,7 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public List<Position> findReachablePositions(Position start, Position end) {
+	public List<Position> findTraceBetween(Position start, Position end) {
 		if (start.isNotDiagonal(end)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}

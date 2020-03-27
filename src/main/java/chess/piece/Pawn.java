@@ -19,7 +19,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public List<Position> findReachablePositions(Position start, Position end) {
+	public List<Position> findTraceBetween(Position start, Position end) {
 		//한칸또는두칸앞으로 가지않는경우 || 처음이 아닌데 앞으로 두칸 가려고 하는경우
 		if (isNotMovable(start, end) || isNotAbleToMoveDoubleSquare(start, end)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
@@ -32,7 +32,6 @@ public class Pawn extends Piece {
 		}
 		return Collections.emptyList();
 	}
-
 
 	private boolean isNotMovable(Position start, Position end) {
 		return !isMovable(start, end);

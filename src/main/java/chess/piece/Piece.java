@@ -27,5 +27,5 @@ public abstract class Piece {
 
 	protected abstract String getInitialCharacter();
 
-	public abstract List<Position> findReachablePositions(Position start, Position end);
+	public abstract List<Position> findTraceBetween(Position start, Position end);
 }

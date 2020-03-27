@@ -66,7 +66,7 @@ public class Board {
 	public void move(Position from, Position to) {
 		//여기서 먼저 각 말의 룰상 움직일 수 있는 출발 -> 도착지인지 판단(보드에 어떤 말이 있던말건 그건 상관 ㄴㄴ하는 인터페이스)
 		Piece pieceToBeMoved = pieces.get(from);
-		List<Position> PositionsWherePiecesShouldNeverBeIncluded = pieceToBeMoved.findReachablePositions(from, to);
+		List<Position> PositionsWherePiecesShouldNeverBeIncluded = pieceToBeMoved.findTraceBetween(from, to);
 		if (isExistAnyPieceAt(PositionsWherePiecesShouldNeverBeIncluded)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}

@@ -1,8 +1,6 @@
 package chess.piece;
 
 import static chess.piece.Team.*;
-import static chess.position.File.*;
-import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -23,7 +21,7 @@ public class BishopTest {
 	@MethodSource("startDestinationTraceProvider")
 	void bishopPathTest(Position start, Position destination, List<Position> trace) {
 		Bishop bishop = new Bishop(BLACK);
-		List<Position> actual = bishop.findReachablePositions(start, destination);
+		List<Position> actual = bishop.findTraceBetween(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
@@ -40,7 +38,7 @@ public class BishopTest {
 	@Test
 	void invalidMovementTest() {
 		Bishop bishop = new Bishop(BLACK);
-		assertThatThrownBy(() -> bishop.findReachablePositions(Position.of("a1"), Position.of("b1")))
+		assertThatThrownBy(() -> bishop.findTraceBetween(Position.of("a1"), Position.of("b1")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

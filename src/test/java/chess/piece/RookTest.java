@@ -1,8 +1,6 @@
 package chess.piece;
 
 import static chess.piece.Team.*;
-import static chess.position.File.*;
-import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -23,7 +21,7 @@ public class RookTest {
 	@MethodSource("startDestinationTraceProvider")
 	void rookPathTest(Position start, Position destination, List<Position> trace) {
 		Rook rook = new Rook(BLACK);
-		List<Position> actual = rook.findReachablePositions(start, destination);
+		List<Position> actual = rook.findTraceBetween(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
@@ -40,7 +38,7 @@ public class RookTest {
 	@Test
 	void invalidMovementTest() {
 		Rook rook = new Rook(BLACK);
-		assertThatThrownBy(() -> rook.findReachablePositions(Position.of("a1"), Position.of("b2")))
+		assertThatThrownBy(() -> rook.findTraceBetween(Position.of("a1"), Position.of("b2")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

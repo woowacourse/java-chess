@@ -1,9 +1,6 @@
 package chess.piece;
 
 import static chess.piece.Team.*;
-import static chess.position.File.*;
-import static chess.position.Rank.*;
-import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Collections;
@@ -25,7 +22,7 @@ public class KnightTest {
 	@MethodSource("startDestinationTraceProvider")
 	void knightPathTest(Position start, Position destination, List<Position> trace) {
 		Knight knight = new Knight(BLACK);
-		List<Position> actual = knight.findReachablePositions(start, destination);
+		List<Position> actual = knight.findTraceBetween(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
@@ -46,7 +43,7 @@ public class KnightTest {
 	@Test
 	void invalidMovementTest() {
 		Knight knight = new Knight(BLACK);
-		assertThatThrownBy(() -> knight.findReachablePositions(Position.of("a1"), Position.of("b1")))
+		assertThatThrownBy(() -> knight.findTraceBetween(Position.of("a1"), Position.of("b1")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

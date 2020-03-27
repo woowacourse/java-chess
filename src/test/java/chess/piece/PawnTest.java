@@ -1,8 +1,6 @@
 package chess.piece;
 
 import static chess.piece.Team.*;
-import static chess.position.File.*;
-import static chess.position.Rank.*;
 import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -32,7 +30,7 @@ public class PawnTest {
 	@MethodSource("startDestinationTraceProvider")
 	void pawnPathTest(Position start, Position destination, List<Position> trace) {
 		Pawn pawn = new Pawn(BLACK);
-		List<Position> actual = pawn.findReachablePositions(start, destination);
+		List<Position> actual = pawn.findTraceBetween(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
@@ -47,7 +45,7 @@ public class PawnTest {
 	@Test
 	void invalidMovementTest() {
 		Pawn king = new Pawn(BLACK);
-		assertThatThrownBy(() -> king.findReachablePositions(Position.of("a1"), Position.of("b3")))
+		assertThatThrownBy(() -> king.findTraceBetween(Position.of("a1"), Position.of("b3")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}
@@ -65,7 +63,7 @@ public class PawnTest {
 	@CsvSource(value = {"a1,a2", "a1,a3"})
 	void initialMoveTest(String start, String end) {
 		Pawn pawn = new Pawn(BLACK);
-		assertThatCode(() -> pawn.findReachablePositions(Position.of(start), Position.of(end)))
+		assertThatCode(() -> pawn.findTraceBetween(Position.of(start), Position.of(end)))
 			.doesNotThrowAnyException();
 	}
 
