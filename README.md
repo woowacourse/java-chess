@@ -25,7 +25,7 @@
     - [x] 초기화된 위치를 갖고 있는 piece 들로 이루어진 List 생성
     - [x] 정적 팩터리 메서드로 초기화된 보드(Board) 생성
 - [ ] Board
-    - [ ] a5 같은 문자열 포지션으로 해당 포지션에 있는 piece 를 찾음 (from && to)
+    - [x] a5 같은 문자열 포지션으로 해당 포지션에 있는 piece 를 찾음 (from && to)
     - [ ] piece 의 포지션을 바꿀 때마다 포지션 순서대로 정렬 
     - [ ] piece 가 이동 가능하면 board 리스트 에서, 
         - [ ] from piece 는 to position 으로 변경

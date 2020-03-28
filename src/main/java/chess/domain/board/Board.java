@@ -21,4 +21,14 @@ public class Board {
     public Piece getPiece(int index) {
         return board.get(index);
     }
+
+    public Piece findPieceByStringPosition(String position) {
+        String x = String.valueOf(position.charAt(0));
+        String y = String.valueOf(position.charAt(1));
+
+        int col = x.charAt(0) - 96;
+        int row = Integer.parseInt(y);
+
+        return getPiece((row - 1) * 8 + col - 1);
+    }
 }
