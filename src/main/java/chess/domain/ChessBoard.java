@@ -25,15 +25,19 @@ public class ChessBoard {
 	}
 
 	public void move(Position source, Position target, Side turn) {
-		Piece sourcePiece = findByPosition(source);
+		Piece sourcePiece = findPieceBy(source);
 
 		validateTurn(sourcePiece, turn);
 		validateMove(source, target);
+		checkIfPawn(sourcePiece, target);
+		pieces.removeIf(piece -> piece.isSamePosition(target));
+		sourcePiece.move(target);
+	}
+
+	private void checkIfPawn(Piece sourcePiece, Position target) {
 		if (sourcePiece.isPawn() && sourcePiece.canMove(target) && isPresentPiece(target)) {
 			throw new IllegalArgumentException("폰은 앞에 있는 말을 공격할 수 없습니다.");
 		}
-		pieces.removeIf(piece -> piece.isSamePosition(target));
-		sourcePiece.move(target);
 	}
 
 	private void validateTurn(Piece sourcePiece, Side turn) {
@@ -46,19 +50,22 @@ public class ChessBoard {
 		if (canPawnAttack(source, target)) {
 			return;
 		}
-		if (findByPosition(source).canNotMove(target) || isBlock(source, target) || canNotAttack(source, target)) {
+		if (findPieceBy(source).canNotMove(target) || isBlock(source, target) || canNotAttack(source, target)) {
 			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
 		}
 
 	}
 
 	private boolean canPawnAttack(Position source, Position target) {
-		return findByPosition(source).isPawn() && source.isInDiagonal(target) && source.isInDistance(1,
-				target) && findByPosition(source).isForwardAttack(
-				target) && isPresentPiece(target) && !findByPosition(source).isSameSide(findByPosition(target));
+		Piece sourcePiece = findPieceBy(source);
+		Piece targetPiece = findPieceBy(target);
+
+		return sourcePiece.isPawn() && source.isInDiagonal(target) && source.isInDistance(1,
+				target) && sourcePiece.isForwardAttack(
+				target) && isPresentPiece(target) && !sourcePiece.isSameSide(targetPiece);
 	}
 
-	private Piece findByPosition(Position position) {
+	private Piece findPieceBy(Position position) {
 		return pieces.stream()
 				.filter(piece -> piece.isSamePosition(position))
 				.findAny()
@@ -66,7 +73,7 @@ public class ChessBoard {
 	}
 
 	private boolean canNotAttack(Position source, Position target) {
-		return isPresentPiece(target) && findByPosition(source).isSameSide(findByPosition(target));
+		return isPresentPiece(target) && findPieceBy(source).isSameSide(findPieceBy(target));
 	}
 
 	private boolean isBlock(Position source, Position target) {
