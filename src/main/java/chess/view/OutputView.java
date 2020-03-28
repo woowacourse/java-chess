@@ -21,16 +21,21 @@ public class OutputView {
 
     public static void showChessBoard(Map<Coordinate, Tile> board) {
         for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                Piece piece = board.get(Coordinate.of(file, rank)).getPiece();
-                System.out.print(PieceRender.findTokenByPiece(piece));
-            }
+            showPieces(board, rank);
             System.out.println();
         }
         System.out.println();
     }
 
+    private static void showPieces(Map<Coordinate, Tile> board, Rank rank) {
+        for (File file : File.values()) {
+            Piece piece = board.get(Coordinate.of(file, rank)).getPiece();
+            System.out.print(PieceRender.findTokenByPiece(piece));
+        }
+    }
+
     public static void showScore(Team team, double score) {
         System.out.println(team + "팀 : " + score + "점");
     }
+
 }
