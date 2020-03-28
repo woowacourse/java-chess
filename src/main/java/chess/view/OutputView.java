@@ -8,15 +8,22 @@ import chess.domain.chesspiece.ChessPiece;
 import java.util.List;
 
 public class OutputView {
+
+	private static final int BOARD_FIRST_INDEX = 0;
+	private static final int BOARD_LAST_INDEX = 7;
+
 	public static void printBoard(ChessBoard chessBoard) {
 		List<Row> board = chessBoard.getBoard();
-		for (int i = 8; i >= 1; i--) {
-			for (int j = 0; j <= 7; j++) {
-				Row row = board.get(i - 1);
-				ChessPiece chessPiece = row.get(j);
-				System.out.print(chessPiece.getName());
-			}
+		for (int column = BOARD_LAST_INDEX; column >= BOARD_FIRST_INDEX; column--) {
+			printRow(board.get(column));
 			System.out.println();
+		}
+	}
+
+	private static void printRow(Row row) {
+		for (int index = BOARD_FIRST_INDEX; index <= BOARD_LAST_INDEX; index++) {
+			ChessPiece chessPiece = row.get(index);
+			System.out.print(chessPiece.getName());
 		}
 	}
 
