@@ -1,4 +1,4 @@
-package chess.view;
+package chess.util;
 
 import static java.util.stream.Collectors.*;
 
