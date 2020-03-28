@@ -9,7 +9,7 @@ public enum OperationType {
 	END("end"),
 	STATUS("status");
 
-	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "잘못된 입력입니다.";
+	private static final String INVALID_OPERATION_EXCEPTION_MESSAGE = "잘못된 명령입니다.";
 
 	private final String name;
 
@@ -18,17 +18,15 @@ public enum OperationType {
 	}
 
 	public static OperationType of(String name) {
-		validate(name);
 		return Arrays.stream(OperationType.values())
 				.filter(operationType -> operationType.name.equals(name))
 				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE));
+				.orElseThrow(() -> new IllegalArgumentException(INVALID_OPERATION_EXCEPTION_MESSAGE));
 	}
 
-	private static void validate(String name) {
-		Objects.requireNonNull(name, INVALID_INPUT_EXCEPTION_MESSAGE);
-		if (name.isEmpty()) {
-			throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
+	public void validateFirstOperations() {// TODO: 2020/03/28 validate?check? 이름 이슈
+		if (!isStart() && !isEnd()) {
+			throw new UnsupportedOperationException(INVALID_OPERATION_EXCEPTION_MESSAGE);
 		}
 	}
 

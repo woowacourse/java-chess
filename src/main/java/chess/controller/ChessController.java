@@ -5,7 +5,6 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.OperationType;
 import chess.view.OutputView;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static chess.view.InputView.inputOperation;
@@ -23,7 +22,7 @@ public class ChessController {
 		List<String> operations = inputOperation();
 		OperationType operationType = OperationType.of(operations.get(OPERATION_TYPE_INDEX));
 
-		validateFirstOperations(operationType);
+		operationType.validateFirstOperations();
 		if (operationType.isEnd()) {
 			OutputView.printFinish();
 			return;
@@ -34,12 +33,6 @@ public class ChessController {
 			operations = inputOperation();
 			operationType = OperationType.of(operations.get(OPERATION_TYPE_INDEX));
 		} while (operateByType(chessGame, operations, operationType));
-	}
-
-	private void validateFirstOperations(OperationType operationType) {
-		if (!operationType.isStart() && !operationType.isEnd()) {
-			throw new UnsupportedOperationException(INVALID_OPERATION_EXCEPTION_MESSAGE);
-		}
 	}
 
 	private boolean operateByType(ChessGame chessGame, List<String> operations, OperationType operationType) {
