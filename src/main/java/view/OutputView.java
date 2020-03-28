@@ -2,7 +2,7 @@ package view;
 
 import java.util.Map;
 
-import chess.board.ChessBoard;
+import chess.GameManager;
 import chess.board.Location;
 import chess.piece.type.Piece;
 
@@ -12,8 +12,8 @@ public class OutputView {
 	private static final char FIRST_COLUMN_VALUE = 'a';
 	private static final String EMPTY_SHAPE = ".";
 
-	public static void printBoard(ChessBoard chessBoard) {
-		Map<Location, Piece> board = chessBoard.getBoard();
+	public static void printBoard(GameManager gameManager) {
+		Map<Location, Piece> board = gameManager.getBoard();
 
 		for (int row = 0; row < MAXIMUM_BOARD_SIZE; row++) {
 			for (int col = 0; col < MAXIMUM_BOARD_SIZE; col++) {
@@ -44,5 +44,9 @@ public class OutputView {
 			+ "> 게임 시작 : start\n"
 			+ "> 게임 종료 : end\n"
 			+ "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+	}
+
+	public static void printStatus(GameManager gameManager) {
+		System.out.println("결과출력");
 	}
 }
