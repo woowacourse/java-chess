@@ -1,27 +1,26 @@
-package chess.domain.piece.bishop;
+package chess.domain.piece;
 
-import chess.domain.piece.Piece;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.position.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class BishopTest {
+class RookTest {
 
     @Test
     void moveTo_When_Success() {
-        Piece bishop = new Bishop(C3);
-        bishop.moveTo(H8);
+        Piece rook = new Rook(C3);
+        rook.moveTo(H3);
 
-        assertThat(bishop.getPosition()).isEqualTo(H8);
+        assertThat(rook.getPosition()).isEqualTo(H3);
     }
 
     @Test
     void moveTo_When_Fail() {
-        Piece bishop = new Bishop(C3);
+        Piece rook = new Rook(C3);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> bishop.moveTo(D3))
+                .isThrownBy(() -> rook.moveTo(D4))
                 .withMessage("기물의 이동 범위에 속하지 않습니다.");
     }
 }

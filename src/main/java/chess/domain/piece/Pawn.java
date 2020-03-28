@@ -1,15 +1,18 @@
-package chess.domain.piece.pawn;
+package chess.domain.piece;
 
-import chess.domain.piece.MoveStrategy;
 import chess.domain.position.MovableAreaFactory;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.util.List;
 
-public class PawnMoveStrategy implements MoveStrategy {
+public class Pawn extends Piece {
+    public Pawn(Position position) {
+        super(position, "p");
+    }
+
     @Override
-    public boolean isNotMovableTo(Position start, Position destination) {
+    protected boolean isNotMovableTo(Position start, Position destination) {
         List<Position> movable = MovableAreaFactory.pawnOf(start);
         if (isInitialPawnRow(start.getRow())) {
             movable.add(Position.of(start.getColumn(), Row.FOUR));

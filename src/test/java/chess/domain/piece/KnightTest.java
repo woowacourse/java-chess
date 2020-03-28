@@ -1,27 +1,27 @@
-package chess.domain.piece.rook;
+package chess.domain.piece;
 
-import chess.domain.piece.Piece;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.position.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class RookTest {
+public class KnightTest {
 
     @Test
     void moveTo_When_Success() {
-        Piece rook = new Rook(C3);
-        rook.moveTo(H3);
+        Piece knight = new Knight(C3);
+        knight.moveTo(D1);
+        knight.moveTo(B2);
 
-        assertThat(rook.getPosition()).isEqualTo(H3);
+        assertThat(knight.getPosition()).isEqualTo(B2);
     }
 
     @Test
     void moveTo_When_Fail() {
-        Piece rook = new Rook(C3);
+        Piece knight = new Knight(C3);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> rook.moveTo(D4))
+                .isThrownBy(() -> knight.moveTo(D3))
                 .withMessage("기물의 이동 범위에 속하지 않습니다.");
     }
 }

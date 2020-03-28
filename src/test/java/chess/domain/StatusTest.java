@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Boards;
 import chess.domain.piece.Piece;
-import chess.domain.piece.rook.Rook;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

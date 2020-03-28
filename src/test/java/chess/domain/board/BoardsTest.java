@@ -1,10 +1,10 @@
 package chess.domain.board;
 
 import chess.domain.Turn;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.king.King;
-import chess.domain.piece.pawn.Pawn;
-import chess.domain.piece.rook.Rook;
+import chess.domain.piece.Rook;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
