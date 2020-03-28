@@ -19,10 +19,7 @@ public enum Rank {
 	}
 
 	public static Rank of(String rankValue) {
-		return Arrays.stream(Rank.values())
-				.filter(x -> x.number == Integer.parseInt(rankValue))
-				.findAny()
-				.orElseThrow(IllegalAccessError::new);
+		return of(Integer.parseInt(rankValue));
 	}
 
 	public static Rank of(int number) {
