@@ -40,6 +40,14 @@ public enum Direction {
         return xPoint == xPointDirectionValue && yPoint == row;
     }
 
+    public boolean isSouth() {
+        return this == SOUTH;
+    }
+
+    public boolean isNorth() {
+        return this == NORTH;
+    }
+
     public int getXPoint() {
         return xPoint;
     }
