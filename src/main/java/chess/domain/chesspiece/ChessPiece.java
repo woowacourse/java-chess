@@ -1,6 +1,7 @@
 package chess.domain.chesspiece;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 import chess.domain.MoveManager;
 import chess.domain.Team;
@@ -39,13 +40,27 @@ public abstract class ChessPiece {
 		this.moveManager.changePosition(position);
 	}
 
-	public abstract String getName();
+	public void canMove(ChessPiece chessPiece, Function<Position, ChessPiece> findByPosition) {
+		validateMovablePosition(chessPiece);
+		if (isNeedCheckPath()) {
+			Positions positions = makePath(chessPiece);
+			positions.validateCanMovePath(findByPosition);
+		}
+	}
+
+	private void validateMovablePosition(ChessPiece chessPiece) {
+		if (isNeedCheckPath() == false) {
+			validateCanGo(chessPiece);
+		}
+	}
 
 	public abstract boolean isNeedCheckPath();
 
-	public abstract Positions makePath(ChessPiece chessPiece);
+	public abstract Positions makePath(ChessPiece targetPiece);
 
-	public abstract void validateMove(ChessPiece chessPiece);
+	public abstract void validateCanGo(ChessPiece targetPiece);
+
+	public abstract String getName();
 
 	@Override
 	public boolean equals(Object o) {

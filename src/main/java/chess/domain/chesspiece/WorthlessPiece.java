@@ -11,7 +11,7 @@ public abstract class WorthlessPiece extends ChessPiece {
 	}
 
 	@Override
-	public Positions makePath(ChessPiece chessPiece) {
+	public Positions makePath(ChessPiece targetPiece) {
 		throw new UnsupportedOperationException();
 	}
 }

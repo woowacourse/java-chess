@@ -22,12 +22,12 @@ public class Blank extends ChessPiece {
 	}
 
 	@Override
-	public Positions makePath(ChessPiece chessPiece) {
+	public Positions makePath(ChessPiece targetPiece) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void validateMove(ChessPiece chessPiece) {
+	public void validateCanGo(ChessPiece targetPiece) {
 		throw new UnsupportedOperationException();
 	}
 

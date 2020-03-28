@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.Direction;
+import chess.domain.MoveManager;
 import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.utils.NameUtils;
@@ -24,11 +25,6 @@ public class King extends WorthlessPiece {
 	}
 
 	@Override
-	public void validateMove(ChessPiece chessPiece) {
-		moveManager.validateMove(chessPiece.position, DIRECTIONS);
-	}
-
-	@Override
 	public String getName() {
 		return NameUtils.parseName(NAME, team);
 	}
@@ -38,4 +34,8 @@ public class King extends WorthlessPiece {
 		return false;
 	}
 
+	@Override
+	public void validateCanGo(ChessPiece targetPiece) {
+		moveManager.calculateDirection(targetPiece.position, DIRECTIONS);
+	}
 }

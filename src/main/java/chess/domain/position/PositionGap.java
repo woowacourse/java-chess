@@ -19,7 +19,7 @@ public class PositionGap {
 		this.y = y;
 	}
 
-	public Direction calculateDirection(List<Direction> directions) {
+	public Direction getMatchDirection(List<Direction> directions) {
 		return directions.stream()
 			.filter(direction -> direction.isMatch(x, y, START_COUNT))
 			.findFirst()

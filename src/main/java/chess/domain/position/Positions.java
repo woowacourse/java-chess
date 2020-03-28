@@ -17,7 +17,7 @@ public class Positions {
 		this.positions = new ArrayList<>(positions);
 	}
 
-	public void validatePath(Function<Position, ChessPiece> function) {
+	public void validateCanMovePath(Function<Position, ChessPiece> function) {
 		if (containsNotBlank(function)) {
 			throw new IllegalArgumentException(HAVE_ROADBLOCK_MESSAGE);
 		}

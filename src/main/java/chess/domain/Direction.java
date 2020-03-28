@@ -11,7 +11,9 @@ public enum Direction {
 	DOWN(-1, 0),
 	LEFT_DOWN(-1, -1),
 	LEFT(0, -1),
-	LEFT_UP(1, -1);
+	LEFT_UP(1, -1),
+	DOUBLE_UP(2, 0),
+	DOUBLE_DOWN(-2, 0);
 
 	private static final int MAX_COUNT = 7;
 

@@ -10,7 +10,7 @@ public abstract class ValuablePiece extends ChessPiece {
 	}
 
 	@Override
-	public void validateMove(ChessPiece chessPiece) {
+	public void validateCanGo(ChessPiece targetPiece) {
 		throw new UnsupportedOperationException();
 	}
 }

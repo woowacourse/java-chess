@@ -22,7 +22,7 @@ public class Knight extends WorthlessPiece {
 	}
 
 	@Override
-	public void validateMove(ChessPiece chessPiece) {
-		moveManager.validateKnightMove(chessPiece.position);
+	public void validateCanGo(ChessPiece targetPiece) {
+		moveManager.validateKnightMove(targetPiece.position);
 	}
 }

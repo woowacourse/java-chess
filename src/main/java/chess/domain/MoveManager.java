@@ -1,7 +1,6 @@
 package chess.domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import chess.domain.position.Position;
 import chess.domain.position.PositionGap;
@@ -23,17 +22,7 @@ public class MoveManager {
 
 	public Direction calculateDirection(Position targetPosition, List<Direction> directions) {
 		PositionGap positionGap = nowPosition.calculateDiff(targetPosition);
-		return positionGap.calculateDirection(directions);
-	}
-
-	public void validateMove(Position targetPosition, List<Direction> directions) {
-		List<Position> positions = directions.stream()
-			.map(direction -> nowPosition.plus(direction))
-			.collect(Collectors.toList());
-
-		if (positions.contains(targetPosition) == false) {
-			throw new IllegalArgumentException(CANNOT_MOVE_POSITION);
-		}
+		return positionGap.getMatchDirection(directions);
 	}
 
 	public void validateKnightMove(Position targetPosition) {

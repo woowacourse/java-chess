@@ -27,7 +27,7 @@ public class ChessBoard {
 		ChessPiece targetPiece = findByPosition(targetPosition);
 
 		checkTeam(startPiece, targetPiece);
-		validateCanMove(startPiece, targetPiece);
+		startPiece.canMove(targetPiece, this::findByPosition);
 
 		replace(startPosition, new Blank(startPosition));
 		replace(targetPosition, startPiece);
@@ -56,16 +56,6 @@ public class ChessBoard {
 	private void validateOtherTeam(ChessPiece startPiece, ChessPiece targetPiece) {
 		if (startPiece.isSameTeam(targetPiece)) {
 			throw new IllegalArgumentException(SAME_TEAM_MESSAGE);
-		}
-	}
-
-	private void validateCanMove(ChessPiece startPiece, ChessPiece targetPiece) {
-		if (startPiece.isNeedCheckPath()) {
-			Positions positions = startPiece.makePath(targetPiece);
-			positions.validatePath(this::findByPosition);
-		}
-		if (startPiece.isNeedCheckPath() == false) {
-			startPiece.validateMove(targetPiece);
 		}
 	}
 
