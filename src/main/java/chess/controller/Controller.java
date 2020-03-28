@@ -53,19 +53,25 @@ public class Controller {
 
 	private static void running() {
 		Command command;
-		Position source = Position.of("b2");
-		Position target = Position.of("b2");
-
-		if (whitePieces.hasPiece(source) && blackPieces.hasPiece(target)) {
-			whitePieces.moveFromTo(source, target);
-		}
-
-		if (blackPieces.hasPiece(source) && whitePieces.hasPiece(target)) {
-			blackPieces.moveFromTo(source, target);
-		}
 
 		do {
 			command = readCommand();
+			if (command.isMove()) {
+				//move
+				Position source = command.getSource();
+				Position target = command.getTarget();
+
+				if (whitePieces.hasPiece(source) && blackPieces.hasPiece(target)) {
+					whitePieces.moveFromTo(source, target);
+				}
+
+				if (blackPieces.hasPiece(source) && whitePieces.hasPiece(target)) {
+					blackPieces.moveFromTo(source, target);
+				}
+			}
+			if (command.isStatus()) {
+				//status
+			}
 		} while (!command.isEnd() || kingDie());
 	}
 
