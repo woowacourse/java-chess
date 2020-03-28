@@ -27,6 +27,7 @@ public class OutputView {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public static void showScore(Team team, double score) {

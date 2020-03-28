@@ -14,4 +14,14 @@ public enum Team {
     public boolean isSameDirection(int direction) {
         return this.direction * direction > 0;
     }
+
+    public Team getOppositeTeam() {
+        if (this == Team.NOTHING) {
+            throw new IllegalArgumentException();
+        }
+        if (this == Team.WHITE) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
+    }
 }

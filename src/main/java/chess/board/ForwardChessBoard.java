@@ -30,7 +30,7 @@ public class ForwardChessBoard implements Publishable {
     }
 
     public boolean move(final String source, final String target) {
-        return chessBoard.move(source, target);
+        return chessBoard.move(source, target, this::push);
     }
 
     public double calculateScore(final Team currentTeam) {

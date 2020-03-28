@@ -20,10 +20,6 @@ public class Directions {
         return !this.directions.isEmpty();
     }
 
-    public Direction poll() {
-        return this.directions.poll();
-    }
-
     public boolean isExist(String sourceKey, Function<Coordinate, Tile> tileFinder) {
         Coordinate next = Coordinate.of(sourceKey);
         boolean exist = false;

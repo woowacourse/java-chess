@@ -9,6 +9,7 @@ import chess.piece.Team;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class ChessBoard {
     private final Map<Coordinate, Tile> chessBoard;
@@ -32,7 +33,7 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public boolean move(String sourceKey, String targetKey) {
+    public boolean move(String sourceKey, String targetKey, Consumer<Object> pushEvent) {
         Tile sourceTile = chessBoard.get(Coordinate.of(sourceKey));
         Tile targetTile = chessBoard.get(Coordinate.of(targetKey));
 
@@ -46,7 +47,7 @@ public class ChessBoard {
             return false;
         }
 
-        targetTile.replacePiece(sourceTile);
+        pushEvent.accept(targetTile.replacePiece(sourceTile));
         return true;
     }
 

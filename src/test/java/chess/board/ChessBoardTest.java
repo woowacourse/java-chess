@@ -3,6 +3,7 @@ package chess.board;
 import chess.coordinate.Coordinate;
 import chess.coordinate.File;
 import chess.coordinate.Rank;
+import chess.manager.ChessManager;
 import chess.piece.Pieces;
 import chess.piece.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +20,7 @@ class ChessBoardTest {
     void moveTest(String sourceKey, String targetKey, boolean expect) {
         //given
         ForwardChessBoard chessBoard = new BoardGenerator().create();
+        ChessManager chessManager = new ChessManager(chessBoard);
 
         //when
         boolean actual = chessBoard.move(sourceKey, targetKey);

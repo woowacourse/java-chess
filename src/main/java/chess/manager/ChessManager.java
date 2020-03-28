@@ -3,35 +3,28 @@ package chess.manager;
 import chess.board.ForwardChessBoard;
 import chess.board.Tile;
 import chess.coordinate.Coordinate;
+import chess.observer.Observable;
+import chess.piece.King;
+import chess.piece.Piece;
 import chess.piece.Team;
 
 import java.util.Map;
 
-public class ChessManager {
+public class ChessManager implements Observable {
     private final ForwardChessBoard chessBoard;
     private Team currentTeam = Team.WHITE;
+    private boolean isKingAlive = true;
 
     public ChessManager(final ForwardChessBoard chessBoard) {
         this.chessBoard = chessBoard;
+        chessBoard.subscribe(this);
     }
 
     public boolean move(String source, String target) {
         if (chessBoard.isNotSameTeam(source, currentTeam)) {
             return false;
         }
-        boolean moveResult = chessBoard.move(source, target);
-        if (moveResult) {
-            turnOver();
-        }
-        return moveResult;
-    }
-
-    private void turnOver() {
-        if (currentTeam == Team.WHITE) {
-            currentTeam = Team.BLACK;
-            return;
-        }
-        currentTeam = Team.WHITE;
+        return chessBoard.move(source, target);
     }
 
     public Map<Coordinate, Tile> getChessBoard() {
@@ -42,8 +35,23 @@ public class ChessManager {
         return this.chessBoard.calculateScore(this.currentTeam);
     }
 
+    public boolean isKingAlive() {
+        return isKingAlive;
+    }
 
     public Team getCurrentTeam() {
         return currentTeam;
+    }
+
+    @Override
+    public void update(final Object object) {
+        if (!(object instanceof Piece)) {
+            throw new IllegalArgumentException();
+        }
+        if (object instanceof King) {
+            isKingAlive = false;
+            return;
+        }
+        currentTeam = currentTeam.getOppositeTeam();
     }
 }

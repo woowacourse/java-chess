@@ -16,9 +16,11 @@ public class Tile {
         this.piece = piece;
     }
 
-    public void replacePiece(Tile sourceTile) {
+    public Piece replacePiece(Tile sourceTile) {
+        Piece removedPiece = this.piece;
         this.piece = sourceTile.piece.move();
         sourceTile.piece = Pieces.BLANK.getPiece();
+        return removedPiece;
     }
 
     public boolean canNotReach(final Tile targetTile) {
