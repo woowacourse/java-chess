@@ -4,15 +4,15 @@ import chess.domain.ChessBoard;
 import chess.domain.Side;
 import chess.domain.position.Position;
 
-public abstract class Started implements State {
+public abstract class Starting implements State {
 	public ChessBoard chessBoard;
 	public Side turn;
 
-	public Started(ChessBoard chessBoard) {
+	public Starting(ChessBoard chessBoard) {
 		this(chessBoard, Side.WHITE);
 	}
 
-	public Started(ChessBoard chessBoard, Side side) {
+	public Starting(ChessBoard chessBoard, Side side) {
 		this.chessBoard = chessBoard;
 		this.turn = side;
 	}

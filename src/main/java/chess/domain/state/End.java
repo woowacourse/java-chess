@@ -4,7 +4,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Side;
 import chess.domain.position.Position;
 
-public class End extends Started {
+public class End extends Starting {
 	public End(ChessBoard chessBoard) {
 		super(chessBoard);
 	}
