@@ -52,4 +52,25 @@ class PawnTest {
         MoveType moveType = MoveTypeFactory.of(blackPawn.position, Position.of("b1"));
         assertThat(blackPawn.isMovable(moveType, null)).isFalse();
     }
+
+    @Test
+    @DisplayName("폰의 이름이 블랙팀이면 폰의 이름이 'p' 가 된다.")
+    void blackTeamBishopNameTest() {
+        Piece pawn = new Pawn(Position.of("e1"), new BlackTeam());
+        assertThat(pawn.pieceName()).isEqualTo("p");
+    }
+
+    @Test
+    @DisplayName("폰의 이름이 화이트팀이면 폰의 이름이 'P' 가 된다.")
+    void whiteTeamBishopNameTest() {
+        Piece pawn = new Pawn(Position.of("e1"), new WhiteTeam());
+        assertThat(pawn.pieceName()).isEqualTo("P");
+    }
+
+    @Test
+    @DisplayName("폰의 점수가 0.5점이다")
+    void bishopScoreTest() {
+        Piece pawn = new Pawn(Position.of("e1"), new BlackTeam());
+        assertThat(pawn.getScore()).isEqualTo(0.5);
+    }
 }

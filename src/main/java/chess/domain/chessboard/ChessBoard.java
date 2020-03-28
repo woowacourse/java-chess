@@ -123,7 +123,9 @@ public class ChessBoard {
 
         double result = INIT_SCORE;
         for (File file : File.values()) {
-            List<Piece> pieces = team.stream().filter(x -> x.isSameFile(file)).collect(Collectors.toList());
+            List<Piece> pieces = team.stream()
+                    .filter(x -> x.isSameFile(file))
+                    .collect(Collectors.toList());
             result = addBonusWhenOnePawn(result, pieces);
             result += pieces.stream().map(PieceAbility::getScore).reduce((double) INIT_SCORE, Double::sum);
         }

@@ -2,6 +2,7 @@ package chess.domain.chessPiece.piece;
 
 import chess.domain.Position;
 import chess.domain.chessPiece.team.BlackTeam;
+import chess.domain.chessPiece.team.WhiteTeam;
 import chess.domain.movefactory.MoveType;
 import chess.domain.movefactory.MoveTypeFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -34,4 +35,24 @@ class KingTest {
         assertThat(king.isMovable(moveType)).isFalse();
     }
 
+    @Test
+    @DisplayName("킹의 이름이 블랙팀이면 킹의 이름이 'b' 가 된다.")
+    void blackTeamBishopNameTest() {
+        Piece king = new King(Position.of("e1"), new BlackTeam());
+        assertThat(king.pieceName()).isEqualTo("k");
+    }
+
+    @Test
+    @DisplayName("킹의 이름이 화이트팀이면 킹의 이름이 'B' 가 된다.")
+    void whiteTeamBishopNameTest() {
+        Piece king = new King(Position.of("e1"), new WhiteTeam());
+        assertThat(king.pieceName()).isEqualTo("K");
+    }
+
+    @Test
+    @DisplayName("킹의 점수가 0점이다")
+    void bishopScoreTest() {
+        Piece king = new King(Position.of("e1"), new BlackTeam());
+        assertThat(king.getScore()).isEqualTo(0);
+    }
 }
