@@ -63,8 +63,8 @@ public class Board {
 		return pieces;
 	}
 
+	//TODO:여기서 먼저 각 말의 룰상 움직일 수 있는 출발 -> 도착지인지 판단(보드에 어떤 말이 있던말건 그건 상관 ㄴㄴ하는 인터페이스)
 	public void move(Position from, Position to) {
-		//여기서 먼저 각 말의 룰상 움직일 수 있는 출발 -> 도착지인지 판단(보드에 어떤 말이 있던말건 그건 상관 ㄴㄴ하는 인터페이스)
 		Piece pieceToBeMoved = pieces.get(from);
 		List<Position> PositionsWherePiecesShouldNeverBeIncluded = pieceToBeMoved.findTraceBetween(from, to);
 		if (isExistAnyPieceAt(PositionsWherePiecesShouldNeverBeIncluded)) {
@@ -84,9 +84,12 @@ public class Board {
 		this.turn = turn.getOppositeTeam();
 	}
 
+	public void moveIfPossible(Position startPosition, Position endPosition) {
+	}
+
 	public boolean isExistAnyPieceAt(List<Position> traces) {
 		return traces.stream()
-			.anyMatch(position -> pieces.containsKey(position));
+			.anyMatch(pieces::containsKey);
 	}
 
 	private boolean isExistAt(Position position) {
@@ -104,4 +107,15 @@ public class Board {
 	public boolean isNotGameFinished() {
 		return !this.finished;
 	}
+
+	public Scores calculateScores() {
+		//TODO:점수계산
+		return null;
+	}
+
+	public boolean isNotCheckmate() {
+		//TODO:체크메이트 여부 확인
+		return false;
+	}
+
 }

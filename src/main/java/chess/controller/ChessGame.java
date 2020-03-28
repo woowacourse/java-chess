@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.BeforeGameCommand;
 import chess.Board;
-import chess.InGameCommand;
+import chess.Command;
+import chess.CommandException;
 import chess.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,25 +11,44 @@ public class ChessGame {
     private final Board board = Board.createInitialBoard();
 
     public void run() {
-        OutputView.printGameIntro();
-        BeforeGameCommand beforeGameCommand = BeforeGameCommand.of(InputView.requestCommand());
-        if (beforeGameCommand.isEnd()) {
-            System.exit(0);
+        start();
+        while (board.isNotCheckmate()) {
+            play();
         }
-        OutputView.printBoard(board);
+    }
 
-        while (board.isNotGameFinished()) {
-            InGameCommand inGameCommand = InGameCommand.of(InputView.requestCommand());
-            if (inGameCommand.isMove()) {
+    private void start() {
+        OutputView.printGameIntro();
+        requestCommand();
+        OutputView.printBoard(board);
+    }
+
+    private void requestCommand() {
+        try {
+            Command command = Command.beforeGameCommandOf(InputView.requestCommand());
+            if (command.isEnd()) {
+                System.exit(0);
+            }
+        } catch (CommandException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            requestCommand();
+        }
+    }
+
+    private void play() {
+        try {
+            Command command = Command.inGameCommandOf(InputView.requestCommand());
+            if (command.isMove()) {
                 Position startPosition = Position.of(InputView.requestPosition());
                 Position endPosition = Position.of(InputView.requestPosition());
-                board.move(startPosition, endPosition);
+                board.moveIfPossible(startPosition, endPosition);
                 OutputView.printBoard(board);
+            } else if (command.isStatus()) {
+                OutputView.printScores(board.calculateScores());
             }
-            else if (inGameCommand.isStatus()) {
-                //점수계산
-            }
-
+        } catch (CommandException | IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            play();
         }
     }
 }
