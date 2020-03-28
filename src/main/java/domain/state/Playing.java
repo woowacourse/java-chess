@@ -1,6 +1,6 @@
-package domain.commend;
+package domain.state;
 
-import domain.commend.exceptions.StateException;
+import domain.state.exceptions.StateException;
 import domain.pieces.Pieces;
 import domain.point.Point;
 

@@ -42,7 +42,4 @@ public enum Column {
 		return index;
 	}
 
-	public Column subtract(Column column) {
-		return find(this.index - column.index);
-	}
 }

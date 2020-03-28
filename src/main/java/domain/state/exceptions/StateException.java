@@ -1,4 +1,4 @@
-package domain.commend.exceptions;
+package domain.state.exceptions;
 
 public class StateException extends RuntimeException {
 	public StateException(String message) {

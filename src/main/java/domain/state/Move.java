@@ -1,4 +1,4 @@
-package domain.commend;
+package domain.state;
 
 import domain.pieces.Pieces;
 

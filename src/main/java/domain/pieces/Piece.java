@@ -7,6 +7,8 @@ import domain.point.Distance;
 import domain.point.Point;
 import domain.team.Team;
 
+import java.util.Objects;
+
 public abstract class Piece {
     private final String initial;
     private final Team team;
@@ -87,7 +89,28 @@ public abstract class Piece {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return Double.compare(piece.score, score) == 0 &&
+                Objects.equals(initial, piece.initial) &&
+                team == piece.team &&
+                Objects.equals(point, piece.point);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(initial, team, point, score);
+    }
+
+    @Override
     public String toString() {
-        return initial;
+        return "Piece{" +
+                "initial='" + initial + '\'' +
+                ", team=" + team +
+                ", point=" + point +
+                ", score=" + score +
+                '}';
     }
 }

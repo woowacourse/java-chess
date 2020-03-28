@@ -1,16 +1,12 @@
 package chess;
 
 import domain.board.Board;
-import domain.commend.End;
-import domain.commend.State;
-import domain.commend.Status;
-import domain.pieces.Piece;
+import domain.state.End;
+import domain.state.State;
 import domain.pieces.Pieces;
 import domain.pieces.StartPieces;
 import view.InputView;
 import view.OutputView;
-
-import java.util.Set;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {

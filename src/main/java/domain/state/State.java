@@ -1,6 +1,5 @@
-package domain.commend;
+package domain.state;
 
-import domain.board.Board;
 import domain.pieces.Piece;
 import domain.pieces.Pieces;
 

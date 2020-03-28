@@ -1,26 +1,26 @@
 package domain.point;
 
+import java.util.Arrays;
+import java.util.function.BiFunction;
+
 public enum Distance {
-	ONE,
-	TWO_VERTICAL,
-	ELSE;
+	ONE(DistanceFilter::isOne),
+	TWO_VERTICAL(DistanceFilter::isVerticalTwo),
+	ELSE(DistanceFilter::isElse);
+
+	private final BiFunction<Integer, Integer, Boolean> distanceFilter;
+
+	Distance(BiFunction<Integer, Integer, Boolean> distanceFilter) {
+		this.distanceFilter = distanceFilter;
+	}
 
 	public static Distance of(Point a, Point b) {
 		int rowDifference = Math.abs(b.getRowIndex() - a.getRowIndex());
 		int columnDifference = Math.abs(b.getColumnIndex() - a.getColumnIndex());
 
-		if (rowDifference == 1 && columnDifference == 1) {
-			return ONE;
-		}
-		if (rowDifference == 1 && columnDifference == 0) {
-			return ONE;
-		}
-		if (rowDifference == 0 && columnDifference == 1) {
-			return ONE;
-		}
-		if (rowDifference == 2 && columnDifference == 0) {
-			return TWO_VERTICAL;
-		}
-		return ELSE;
+		return Arrays.stream(values())
+				.filter(distance -> distance.distanceFilter.apply(rowDifference, columnDifference))
+				.findFirst()
+				.orElseThrow(RuntimeException::new);
 	}
 }
