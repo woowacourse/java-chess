@@ -1,9 +1,11 @@
 package chess.board;
 
-import chess.board.piece.AbstractPawn;
-import chess.board.piece.Piece;
-import chess.board.piece.Pieces;
-import chess.board.piece.Team;
+import chess.coordinate.Coordinate;
+import chess.coordinate.Vector;
+import chess.piece.AbstractPawn;
+import chess.piece.Piece;
+import chess.piece.Pieces;
+import chess.piece.Team;
 
 public class Tile {
     private final Coordinate coordinate;
@@ -14,9 +16,11 @@ public class Tile {
         this.piece = piece;
     }
 
-    public void replacePiece(Tile sourceTile) {
+    public Piece replacePiece(Tile sourceTile) {
+        Piece removedPiece = this.piece;
         this.piece = sourceTile.piece.move();
         sourceTile.piece = Pieces.BLANK.getPiece();
+        return removedPiece;
     }
 
     public boolean canNotReach(final Tile targetTile) {

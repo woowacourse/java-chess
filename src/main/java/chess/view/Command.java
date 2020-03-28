@@ -1,8 +1,6 @@
 package chess.view;
 
-
 import chess.board.BoardGenerator;
-import chess.board.MoveResult;
 import chess.manager.ChessManager;
 
 import java.util.Objects;
@@ -23,7 +21,7 @@ public class Command {
     public void action() {
         String command = commandSupplier.get();
         if ("start".equals(command)) {
-            this.chessManager = new ChessManager(new BoardGenerator().create());
+            this.chessManager = new ChessManager(BoardGenerator.create());
         }
         if (Objects.isNull(chessManager)) {
             return;
@@ -32,11 +30,7 @@ public class Command {
         if (matcher.find()) {
             String source = matcher.group(1);
             String target = matcher.group(2);
-            if (MoveResult.WIN == chessManager.move(source, target)) {
-                isNotEnd = false;
-                OutputView.showChessBoard(this.chessManager.getChessBoard());
-                return;
-            }
+            chessManager.move(source, target);
         }
         if ("status".equals(command)) {
             OutputView.showScore(this.chessManager.getCurrentTeam(),
@@ -45,9 +39,8 @@ public class Command {
 
         OutputView.showChessBoard(this.chessManager.getChessBoard());
 
-        isNotEnd = !"end".equals(command);
+        isNotEnd = !"end".equals(command) && chessManager.isKingAlive();
     }
-
 
     public boolean isNotEnd() {
         return isNotEnd;

@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.board.piece.Piece;
-import chess.board.piece.Pieces;
+import chess.piece.Piece;
+import chess.piece.Pieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

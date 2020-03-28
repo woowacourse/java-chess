@@ -1,8 +1,11 @@
 package chess.view;
 
-import chess.board.*;
-import chess.board.piece.Piece;
-import chess.board.piece.Team;
+import chess.board.Tile;
+import chess.coordinate.Coordinate;
+import chess.coordinate.File;
+import chess.coordinate.Rank;
+import chess.piece.Piece;
+import chess.piece.Team;
 
 import java.util.Map;
 
@@ -16,8 +19,7 @@ public class OutputView {
                 "> 점수 출력 : status");
     }
 
-    public static void showChessBoard(ChessBoard chessBoard) {
-        Map<Coordinate, Tile> board = chessBoard.getChessBoard();
+    public static void showChessBoard(Map<Coordinate, Tile> board) {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 Piece piece = board.get(Coordinate.of(file, rank)).getPiece();
@@ -25,6 +27,7 @@ public class OutputView {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public static void showScore(Team team, double score) {
