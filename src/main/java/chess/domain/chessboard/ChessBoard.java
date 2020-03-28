@@ -51,28 +51,15 @@ public class ChessBoard {
 		sourcePiece.move(targetPosition);
 	}
 
-	private void validateTargetTeam(Piece sourcePiece, Position targetPosition) {
-		findPieceByPosition(targetPosition).filter(sourcePiece::isSameTeam)
-				.ifPresent(x -> {
-					throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM);
-				});
-	}
-
 	private void validateMovable(Position sourcePosition, Position targetPosition) {
-		checkMovePattern(sourcePosition, targetPosition);
-		checkObstacleOnPath(sourcePosition, targetPosition);
-	}
-
-	private void checkMovePattern(Position sourcePosition, Position targetPosition) {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 		findPieceByPosition(sourcePosition)
-				.ifPresent(x -> x.validateMovePattern(movePattern, findPieceByPosition(targetPosition)));
-	}
+				.ifPresent(piece -> {
+					piece.validateMovePattern(movePattern, findPieceByPosition(targetPosition));
+				});
 
-	private void checkObstacleOnPath(Position sourcePosition, Position targetPosition) {
-		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 		findPieceByPosition(sourcePosition).filter(Piece::isNotKnight)
-				.ifPresent(x -> validatePath(sourcePosition, movePattern));
+				.ifPresent(piece -> validatePath(sourcePosition, movePattern));
 	}
 
 	private void validatePath(Position sourcePosition, MovePattern movePattern) {
@@ -92,8 +79,11 @@ public class ChessBoard {
 		}
 	}
 
-	public void removeAttackedPiece(Position targetPosition) {
-		findPieceByPosition(targetPosition).ifPresent(pieces::remove);
+	private void validateTargetTeam(Piece sourcePiece, Position targetPosition) {
+		findPieceByPosition(targetPosition).filter(sourcePiece::isSameTeam)
+				.ifPresent(piece -> {
+					throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM);
+				});
 	}
 
 	public Optional<Piece> findPieceByPosition(Position position) {
@@ -125,15 +115,17 @@ public class ChessBoard {
 			result += piecesInOneFile.stream()
 					.mapToDouble(PieceAbility::getScore)
 					.reduce(ZERO, Double::sum);
-			if (isPawnCountOne(piecesInOneFile)) {
-				result += ONE_PAWN_BONUS;
-			}
+			result += OnePawnBonus(piecesInOneFile);
 		}
 		return result;
 	}
 
-	private boolean isPawnCountOne(List<Piece> pieces) {
-		return pieces.stream().filter(x -> x instanceof Pawn).count() == ONE_PAWN_COUNT;
+	private double OnePawnBonus(List<Piece> piecesInOneFile) {
+		long pawnCount = piecesInOneFile.stream().filter(x -> x instanceof Pawn).count();
+		if (pawnCount == ONE_PAWN_COUNT) {
+			return ONE_PAWN_BONUS;
+		}
+		return ZERO;
 	}
 
 	public List<Piece> findBlackTeam() {
@@ -150,5 +142,9 @@ public class ChessBoard {
 
 	public List<Position> getChessBoard() {
 		return Collections.unmodifiableList(chessBoard);
+	}
+
+	public void removeAttackedPiece(Position position) {
+		findPieceByPosition(position).ifPresent(pieces::remove);
 	}
 }
