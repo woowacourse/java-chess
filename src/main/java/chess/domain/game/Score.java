@@ -35,8 +35,7 @@ public class Score {
 
 	private static int countOfPawnIfOverOne(List<Piece> pieces, int x) {
 		long count = pieces.stream()
-				.filter(Piece::isPawn)
-				.filter(piece -> piece.getPosition().equalsX(x))
+				.filter(piece -> piece.isPawn() && piece.getPosition().equalsX(x))
 				.count();
 		if (count >= PAWN_COUNT) {
 			return (int)count;
