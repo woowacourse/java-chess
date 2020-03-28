@@ -40,7 +40,7 @@ public class RowTest {
 	@Test
 	void findByPositionTest() {
 		assertThat(row.findByPosition(Position.of(1, 1)))
-			.isEqualTo(new Rook(Position.of(1,1 ), Team.WHITE));
+			.isEqualTo(new Rook(Position.of(1, 1), Team.WHITE));
 	}
 
 	@Test

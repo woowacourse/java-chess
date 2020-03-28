@@ -1,7 +1,7 @@
 package chess.domain.chesspiece;
 
-import chess.domain.position.Position;
 import chess.domain.Team;
+import chess.domain.position.Position;
 
 public abstract class ValuablePiece extends ChessPiece {
 
@@ -13,5 +13,4 @@ public abstract class ValuablePiece extends ChessPiece {
 	public void validateMove(ChessPiece chessPiece) {
 		throw new UnsupportedOperationException();
 	}
-
 }

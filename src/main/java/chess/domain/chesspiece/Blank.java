@@ -1,11 +1,10 @@
 package chess.domain.chesspiece;
 
+import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.Team;
 
 public class Blank extends ChessPiece {
-
 	private static final String NAME = ".";
 
 	public Blank(Position position) {

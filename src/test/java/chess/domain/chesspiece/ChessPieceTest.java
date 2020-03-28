@@ -5,8 +5,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.position.Position;
 import chess.domain.Team;
+import chess.domain.position.Position;
 
 public class ChessPieceTest {
 	private ChessPiece pawn;

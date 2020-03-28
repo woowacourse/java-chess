@@ -6,9 +6,9 @@ import java.util.List;
 
 import chess.domain.Direction;
 import chess.domain.MoveManager;
-import chess.domain.utils.NameUtils;
-import chess.domain.position.Position;
 import chess.domain.Team;
+import chess.domain.position.Position;
+import chess.domain.utils.NameUtils;
 
 public class Pawn extends WorthlessPiece {
 	private static final String NAME = "p";

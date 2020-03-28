@@ -38,6 +38,7 @@ public abstract class ChessPiece {
 		this.position = position;
 		this.moveManager.changePosition(position);
 	}
+
 	public abstract String getName();
 
 	public abstract boolean isNeedCheckPath();

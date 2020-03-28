@@ -1,11 +1,11 @@
 package chess.view;
 
-import chess.domain.chessboard.ChessBoard;
+import java.util.List;
+
 import chess.domain.Result;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Row;
 import chess.domain.chesspiece.ChessPiece;
-
-import java.util.List;
 
 public class OutputView {
 	private static final int BOARD_FIRST_INDEX = 0;
@@ -33,11 +33,11 @@ public class OutputView {
 		System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
 	}
 
-	public static void printErrorMessage(RuntimeException e) {
-		System.out.println(e.getMessage());
-	}
-
 	public static void printResult(Result result) {
 		System.out.println(result.getWinTeam() + "팀 승리! 점수 : " + result.getScore());
+	}
+
+	public static void printErrorMessage(RuntimeException e) {
+		System.out.println(e.getMessage());
 	}
 }

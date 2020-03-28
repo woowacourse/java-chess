@@ -3,14 +3,11 @@ package chess.domain.position;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.Direction;
-import chess.domain.position.Position;
-import chess.domain.position.Positions;
 
 public class PositionTest {
 
@@ -46,7 +43,7 @@ public class PositionTest {
 		Positions actualPositions = position.calculatePath(Position.of(6, 6), Direction.RIGHT_UP);
 		Positions expectedPositions = new Positions(
 			Arrays.asList(Position.of(4, 4),
-			Position.of(5, 5)));
+				Position.of(5, 5)));
 
 		assertThat(actualPositions).isEqualTo(expectedPositions);
 	}

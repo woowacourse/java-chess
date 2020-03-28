@@ -1,11 +1,11 @@
 package chess.domain.game;
 
-import chess.domain.chessboard.ChessBoard;
 import chess.domain.Menu;
-import chess.domain.position.Position;
 import chess.domain.Result;
 import chess.domain.Status;
 import chess.domain.Turn;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.position.Position;
 import chess.factory.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -49,7 +49,7 @@ public class ChessGame {
 
 	private void initMenu() {
 		try {
-			menu = new Menu(InputView.input());
+			menu = new Menu(InputView.inputMenu());
 		} catch (RuntimeException e) {
 			OutputView.printErrorMessage(e);
 			initMenu();

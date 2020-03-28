@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.Direction;
-import chess.domain.utils.NameUtils;
+import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.Team;
+import chess.domain.utils.NameUtils;
 
 public class Rook extends ValuablePiece {
 	private static final List<Direction> DIRECTIONS;

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.Direction;
-import chess.domain.position.PositionGap;
 
 public class PositionGapTest {
 

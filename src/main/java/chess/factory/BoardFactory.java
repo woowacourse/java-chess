@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import chess.domain.position.Position;
-import chess.domain.chessboard.Row;
 import chess.domain.Team;
+import chess.domain.chessboard.Row;
 import chess.domain.chesspiece.Bishop;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
@@ -15,9 +14,9 @@ import chess.domain.chesspiece.Knight;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Queen;
 import chess.domain.chesspiece.Rook;
+import chess.domain.position.Position;
 
 public class BoardFactory {
-
 	private static final int BLACK_TEAM_EXECUTIVE_INDEX = 8;
 	private static final int BLACK_TEAM_PAWN_INDEX = 7;
 	private static final int BLACK_TO_INDEX = 6;
