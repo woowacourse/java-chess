@@ -19,4 +19,8 @@ public enum PieceColor {
         validateNull(pieceName);
         return this.operator.apply(pieceName);
     }
+
+    public boolean isNoneColor() {
+        return this == NONE;
+    }
 }
