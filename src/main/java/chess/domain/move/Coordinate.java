@@ -10,7 +10,7 @@ public class Coordinate {
 
     private Coordinate(int coordinate) {
         if (coordinate < BOARD_DOWN_END || coordinate > BOARD_UP_END) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("보드의 크기를 벗어났습니다.");
         }
         this.coordinate = coordinate;
     }

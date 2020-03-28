@@ -61,7 +61,7 @@ public class Board {
 
     private void checkNowPlayingTeam(ChessPiece chessPiece) {
         if (chessPiece.getTeam() != nowPlayingTeam) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(nowPlayingTeam.getTeamName() + " 차례입니다.");
         }
     }
 
@@ -110,7 +110,7 @@ public class Board {
 
     private void validateRouteNull(Route candidateRoute) {
         if (candidateRoute == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("말이 해당 위치로 이동할 수 없습니다.");
         }
     }
 
@@ -123,7 +123,7 @@ public class Board {
     private void checkBlank(Position position, MovingInfo movingInfo) {
         Position targetPosition = movingInfo.getTargetPosition();
         if (!position.equals(targetPosition) && !isBlank(position)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("말 이동경로에 다른 말이 있습니다.");
         }
     }
 
@@ -136,7 +136,7 @@ public class Board {
 
     private void checkTargetTeam(ChessPiece chessPiece, MovingInfo movingInfo) {
         if (getChessPiece(movingInfo.getTargetPosition()).isSameTeam(chessPiece.getTeam())) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("말의 도착점에 아군의 말이 있습니다.");
         }
     }
 
@@ -146,10 +146,10 @@ public class Board {
         int dy = targetPosition.getY() - startPosition.getY();
 
         if (Math.abs(dy) == 1 && isBlank(targetPosition)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("대각선으로는 공격할 때만 움직 수 있습니다.");
         }
         if (Math.abs(dy) == 0 && !isBlank(targetPosition)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("상대의 말이 있어 움직일 수 없습니다.");
         }
     }
 

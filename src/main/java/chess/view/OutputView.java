@@ -38,8 +38,8 @@ public class OutputView {
         System.out.println("잘못된 커맨드입니다.");
     }
 
-    public static void printWrongPositionMessage() {
-        System.out.println("이동할 수 없습니다.");
+    public static void printWrongPositionMessage(Exception error) {
+        System.out.println(error.getMessage());
     }
 
     public static void printScore(Board board) {

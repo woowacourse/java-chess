@@ -53,8 +53,8 @@ public class Application {
             MovingInfo movingInfo = new MovingInfo(Position.of(splitCommand[1]), Position.of(splitCommand[2]));
 
             board.move(movingInfo);
-        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            OutputView.printWrongPositionMessage();
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException error) {
+            OutputView.printWrongPositionMessage(error);
         }
     }
 
