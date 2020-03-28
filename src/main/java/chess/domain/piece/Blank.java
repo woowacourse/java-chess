@@ -12,6 +12,6 @@ public class Blank extends Piece {
 
     @Override
     public List<Position> getPossiblePositions(Board board) {
-        return null;
+        throw new UnsupportedOperationException("빈 칸은 이동할 수 없습니다.");
     }
 }

@@ -35,7 +35,7 @@ public class QueenTest {
         INITIALIZED_POSITIONS.set(20, new WhitePawn('p', Team.WHITE, new Position(5, 3)));
         INITIALIZED_POSITIONS.set(33, new Knight('N', Team.BLACK, new Position(2, 5)));
         INITIALIZED_POSITIONS.set(54, new Rook('R', Team.BLACK, new Position(7, 7)));
-        INITIALIZED_POSITIONS.set(0, new Queen('q', Team.WHITE, new Position(1,1)));
+        INITIALIZED_POSITIONS.set(0, new Queen('q', Team.WHITE, new Position(1, 1)));
         Board board = new Board(INITIALIZED_POSITIONS);
         assertThat(piece.getPossiblePositions(board)).isEqualTo(expectedToPositions);
     }

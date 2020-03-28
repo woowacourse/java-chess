@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.util.Direction;
 
@@ -8,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Queen extends Piece {
+public class Queen extends MultipleStep {
     private static final List<Direction> DIRECTIONS = new ArrayList<>(
             Arrays.asList(
                     Direction.NORTH,
@@ -27,24 +26,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Position> getPossiblePositions(Board board) {
-        List<Position> possiblePositions = new ArrayList<>();
-        for (Direction direction : DIRECTIONS) {
-            Position nextPosition = direction.move(position);
-
-            while (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
-                possiblePositions.add(nextPosition);
-                nextPosition = direction.move(nextPosition);
-            }
-            if (isInBoardRange(nextPosition) && board.isOtherTeam(position, nextPosition)) {
-                possiblePositions.add(nextPosition);
-            }
-        }
-        return possiblePositions;
+    protected List<Direction> getDirections() {
+        return DIRECTIONS;
     }
 
-    private boolean isInBoardRange(Position nextPosition) {
-        return nextPosition.getX() <= 8 && nextPosition.getX() >= 1 &&
-                nextPosition.getY() <= 8 && nextPosition.getY() >= 1;
-    }
 }

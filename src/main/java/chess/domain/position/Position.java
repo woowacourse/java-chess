@@ -7,7 +7,7 @@ public class Position {
     private final String y;
 
     public Position(int x, int y) {
-        this(String.valueOf((char)(x + 96)), String.valueOf(y));
+        this(String.valueOf((char) (x + 96)), String.valueOf(y));
     }
 
     public Position(String x, String y) {

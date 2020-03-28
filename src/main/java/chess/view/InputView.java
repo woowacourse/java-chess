@@ -11,7 +11,7 @@ public class InputView {
         OutputView.printInputStartGuideMessage();
         try {
             return Run.of(SCANNER.nextLine());
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
             return inputStart();
         }

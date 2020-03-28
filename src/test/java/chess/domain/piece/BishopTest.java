@@ -33,7 +33,7 @@ public class BishopTest {
     void bishopMove(Piece piece, List<Position> expectedToPositions) {
         INITIALIZED_POSITIONS.set(36, new Bishop('b', Team.WHITE, new Position(5, 5)));
         INITIALIZED_POSITIONS.set(54, new Rook('R', Team.BLACK, new Position(7, 7)));
-        INITIALIZED_POSITIONS.set(0, new Queen('q', Team.WHITE, new Position(1,1)));
+        INITIALIZED_POSITIONS.set(0, new Queen('q', Team.WHITE, new Position(1, 1)));
         Board board = new Board(INITIALIZED_POSITIONS);
         assertThat(piece.getPossiblePositions(board)).isEqualTo(expectedToPositions);
     }

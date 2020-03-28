@@ -18,7 +18,8 @@ public enum Direction {
     EES(2, -1),
     EEN(2, 1),
     WWS(-2, -1),
-    WWN(-2, 1);
+    WWN(-2, 1),
+    NONE(0, 0);
 
     private final int col;
     private final int row;

@@ -17,7 +17,7 @@ public class OutputView {
             if (count % 8 == 0) {
                 System.out.print(NEW_LINE);
             }
-            count ++;
+            count++;
         }
     }
 

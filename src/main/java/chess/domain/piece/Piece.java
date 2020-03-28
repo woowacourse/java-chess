@@ -29,6 +29,11 @@ public abstract class Piece {
         return this.team.isNotSame(nextPiece.team);
     }
 
+    protected boolean isInBoardRange(Position nextPosition) {
+        return nextPosition.getX() <= 8 && nextPosition.getX() >= 1 &&
+                nextPosition.getY() <= 8 && nextPosition.getY() >= 1;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(representation);
