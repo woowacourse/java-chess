@@ -32,20 +32,20 @@ public enum MovingDirection {
     }
 
     public static MovingDirection getDirection(Position source, Position target) {
-        double fileDifference = source.getFileDifference(target);
-        double rankDifference = source.getRankDifference(target);
-
-        Double tangent = rankDifference / fileDifference;
-
         return Arrays.stream(values())
-                .filter(direction -> direction.isSameDirection(tangent))
-                .filter(direction -> direction.isSameFileDirection(fileDifference))
-                .filter(direction -> direction.isSameRankDirection(rankDifference))
+                .filter(direction -> direction.isSameDirection(source, target))
                 .findFirst()
-                .orElseThrow(() -> new MovingDirectionException());
+                .orElseThrow(MovingDirectionException::new);
     }
 
-    private boolean isSameDirection(Double tangent) {
+    private boolean isSameDirection(Position source, Position target) {
+        double fileDifference = source.getFileDifference(target);
+        double rankDifference = source.getRankDifference(target);
+        Double tangent = rankDifference / fileDifference;
+        return isSameTangent(tangent) && isSameFileDirection(fileDifference) && isSameRankDirection(rankDifference);
+    }
+
+    private boolean isSameTangent(Double tangent) {
         Double directionTangent = this.rankDirection / (double) this.fileDirection;
         return directionTangent.equals(tangent);
     }
