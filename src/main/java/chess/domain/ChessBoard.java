@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
@@ -11,31 +8,52 @@ public class ChessBoard {
     private Map<Square, Piece> chessBoard = new HashMap<>();
 
     public ChessBoard() {
+        initPawnLocation();
         for (char file = 'a'; file <= 'h'; file++) {
-            chessBoard.put(Square.of(file + "2"), Piece.of(Color.WHITE, Type.PAWN));
-            chessBoard.put(Square.of(file + "7"), Piece.of(Color.BLACK, Type.PAWN));
-        }
-
-        Type[] arr = new Type[]{Type.ROOK, Type.KNIGHT, Type.BISHOP, Type.QUEEN, Type.KING, Type.BISHOP, Type.KNIGHT, Type.ROOK};
-        for (int i = 0; i < 8; i++) {
-            char file = (char) ('a' + i);
-            if (i == 3) {
-                chessBoard.put(Square.of(file + "1"), Piece.of(Color.WHITE, arr[i]));
-                chessBoard.put(Square.of(file + "8"), Piece.of(Color.BLACK, arr[i + 1]));
-                continue;
-            }
-            if (i == 4) {
-                chessBoard.put(Square.of(file + "1"), Piece.of(Color.WHITE, arr[i]));
-                chessBoard.put(Square.of(file + "8"), Piece.of(Color.BLACK, arr[i - 1]));
-                continue;
-            }
-            chessBoard.put(Square.of(file + "1"), Piece.of(Color.WHITE, arr[i]));
-            chessBoard.put(Square.of(file + "8"), Piece.of(Color.BLACK, arr[i]));
+            initRookLocation(file);
+            initKnightLocation(file);
+            initBishopLocation(file);
+            initQueenAndKingLocation(file);
         }
     }
 
-    public Map<Square, Piece> getChessBoard() {
-        return chessBoard;
+    private void initQueenAndKingLocation(char file) {
+        if (file == 'd') {
+            chessBoard.put(Square.of(file + "1"), Queen.of(Color.WHITE));
+            chessBoard.put(Square.of(file + "8"), King.of(Color.BLACK));
+        }
+        if (file == 'e') {
+            chessBoard.put(Square.of(file + "1"), King.of(Color.WHITE));
+            chessBoard.put(Square.of(file + "8"), Queen.of(Color.BLACK));
+        }
+    }
+
+    private void initBishopLocation(char file) {
+        if (file == 'c' || file == 'f') {
+            chessBoard.put(Square.of(file + "1"), Bishop.of(Color.WHITE));
+            chessBoard.put(Square.of(file + "8"), Bishop.of(Color.BLACK));
+        }
+    }
+
+    private void initKnightLocation(char file) {
+        if (file == 'b' || file == 'g') {
+            chessBoard.put(Square.of(file + "1"), Knight.of(Color.WHITE));
+            chessBoard.put(Square.of(file + "8"), Knight.of(Color.BLACK));
+        }
+    }
+
+    private void initRookLocation(char file) {
+        if (file == 'a' || file == 'h') {
+            chessBoard.put(Square.of(file + "1"), Rook.of(Color.WHITE));
+            chessBoard.put(Square.of(file + "8"), Rook.of(Color.BLACK));
+        }
+    }
+
+    private void initPawnLocation() {
+        for (char file = 'a'; file <= 'h'; file++) {
+            chessBoard.put(Square.of(file + "2"), Pawn.of(Color.WHITE));
+            chessBoard.put(Square.of(file + "7"), Pawn.of(Color.BLACK));
+        }
     }
 
     public boolean canMove(List<Square> squares, boolean blackTurn) {
@@ -55,8 +73,8 @@ public class ChessBoard {
     }
 
     public boolean isKingCaptured() {
-        return !(chessBoard.containsValue(Piece.of(Color.WHITE, Type.KING))
-                && chessBoard.containsValue(Piece.of(Color.BLACK, Type.KING)));
+        return !(chessBoard.containsValue(King.of(Color.WHITE))
+                && chessBoard.containsValue(King.of(Color.BLACK)));
     }
 
     public Map<Color, Double> getTeamScore() {
@@ -81,7 +99,7 @@ public class ChessBoard {
     private double calculatePawnScore(Color color) {
         int count;
         List<Square> squares = chessBoard.keySet().stream()
-                .filter(square -> chessBoard.get(square) == Piece.of(color, Type.PAWN))
+                .filter(square -> chessBoard.get(square) == Pawn.of(color))
                 .collect(Collectors.toList());
         count = 0;
         for (Square square : squares) {
@@ -97,11 +115,16 @@ public class ChessBoard {
     public List<Color> getWinners() {
         Map<Color, Double> teamScore = getTeamScore();
         if (teamScore.get(Color.BLACK) > teamScore.get(Color.WHITE)) {
-            return Arrays.asList(Color.BLACK);
+            return Collections.singletonList(Color.BLACK);
         }
         if (teamScore.get(Color.BLACK) < teamScore.get(Color.WHITE)) {
-            return Arrays.asList(Color.WHITE);
+            return Collections.singletonList(Color.WHITE);
         }
         return Arrays.asList(Color.WHITE, Color.BLACK);
     }
+
+    public Map<Square, Piece> getChessBoard() {
+        return chessBoard;
+    }
+
 }

@@ -50,7 +50,7 @@ public class ChessBoardTest {
         chessBoard.movePiece(squares);
         assertThat(chessBoard.getChessBoard().containsKey(Square.of("a2"))).isFalse();
         assertThat(chessBoard.getChessBoard().containsKey(Square.of("a3"))).isTrue();
-        assertThat(chessBoard.getChessBoard().get(Square.of("a3"))).isEqualTo(Piece.of(Color.WHITE, Type.PAWN));
+        assertThat(chessBoard.getChessBoard().get(Square.of("a3"))).isEqualTo(Pawn.of(Color.WHITE));
     }
 
     @Test

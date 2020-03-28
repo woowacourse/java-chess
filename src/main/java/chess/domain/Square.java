@@ -5,6 +5,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Square {
+    /*
+     *
+     * 64개 칸에 대한 클래스. 미리 캐싱
+     */
+
     private final static Map<String, Square> CACHE = new HashMap<>();
 
     static {
@@ -35,13 +40,17 @@ public class Square {
         if (Objects.isNull(square)) {
             throw new IllegalArgumentException("잘못된 square의 입력입니다");
         }
-         return Square.of(String.valueOf((char) (square.file + fileIncrementBy)) + (square.rank + rankIncrementBy));
+        return Square.of(String.valueOf((char) (square.file + fileIncrementBy)) + (square.rank + rankIncrementBy));
     }
 
     public static boolean hasCacheAdded(Square square, int fileIncrementBy, int rankIncrementBy) {
         char fileAdd = (char) (square.getFile() + fileIncrementBy);
         int rankAdd = square.getRank() + rankIncrementBy;
         return fileAdd >= 'a' && fileAdd <= 'h' && rankAdd >= 1 && rankAdd <= 8;
+    }
+
+    public boolean isJustSameFile(Square square) {
+        return (this != square) && (this.file == square.file);
     }
 
     @Override
@@ -55,9 +64,5 @@ public class Square {
 
     public int getRank() {
         return rank;
-    }
-
-    public boolean isJustSameFile(Square square) {
-        return (this != square) && (this.file == square.file);
     }
 }

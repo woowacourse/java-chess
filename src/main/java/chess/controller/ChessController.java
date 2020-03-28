@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ChessController {
 
+
     public static void run() {
         OutputView.printStartGame();
         OutputView.printStartEndOption();
