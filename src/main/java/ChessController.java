@@ -1,4 +1,5 @@
 import chess.GameManager;
+import chess.PieceFactory;
 import chess.board.Location;
 import view.InputView;
 import view.OutputView;
@@ -7,7 +8,7 @@ public class ChessController {
 	public static void main(String[] args) {
 		String command = "";
 		OutputView.printInformation();
-		GameManager gameManager = new GameManager();
+		GameManager gameManager = new GameManager(PieceFactory.createPieces());
 
 		while (gameManager.isRunning()) {
 			command = InputView.inputStartCommand();
