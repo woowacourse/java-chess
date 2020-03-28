@@ -16,6 +16,7 @@ public class ConsoleOutputView implements OutputView {
             System.out.print(printPiece(piece));
             checkNewLine(i);
         }
+        System.out.println();
     }
 
     private void checkNewLine(final int i) {
@@ -32,12 +33,12 @@ public class ConsoleOutputView implements OutputView {
     }
 
     @Override
-    public void printWinner(Team team) {
-        System.out.println(String.format("%s 팀이 이겼습니다.", team.name()));
+    public void printStatus(double calculateScore, Team team) {
+        System.out.println(String.format("%s 팀의 점수는 %.1f 점입니다.", team.name(), calculateScore));
     }
 
     @Override
-    public void printStatus(double calculateScore, Team team) {
-        System.out.println(String.format("%s 팀의 점수는 %.1f 점입니다.", team.name(), calculateScore));
+    public void printWinner(Team team) {
+        System.out.println(String.format("%s 팀이 이겼습니다.", team.name()));
     }
 }

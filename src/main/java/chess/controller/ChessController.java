@@ -12,39 +12,65 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
+    private static final String DELIMITER = " ";
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
+
     private static InputView inputView = new ConsoleInputView();
     private static OutputView outputView = new ConsoleOutputView();
 
     public static void start() {
-        if (inputView.askChessRun()) {
-            run();
+        try {
+            Command command = Command.of(inputView.askChessRun());
+            run(command);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            start();
         }
     }
 
-    public static void run() {
-        ChessRunner chessRunner = new ChessRunner();
+    private static void run(Command command) {
+        if (command.isStart()) {
+            ChessRunner chessRunner = new ChessRunner();
+            printBoard(chessRunner.getBoard());
+            runChess(chessRunner);
+        }
+    }
+
+    public static void runChess(ChessRunner chessRunner) {
+        try {
+            String input = inputView.askGameCommand();
+            Command command = Command.of(input);
+
+            runByCommand(chessRunner, input, command);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            runChess(chessRunner);
+        }
+    }
+
+    private static void runByCommand(ChessRunner chessRunner, String input, Command command) {
+        switch (command) {
+            case MOVE:
+                runMove(chessRunner, input);
+                break;
+            case STATUS:
+                runStatus(chessRunner);
+                break;
+            case END:
+            default:
+                break;
+        }
+    }
+
+    private static void runMove(ChessRunner chessRunner, String input) {
+        String[] commands = input.split(DELIMITER);
+        String source = commands[SOURCE_INDEX];
+        String target = commands[TARGET_INDEX];
+        chessRunner.update(source, target);
         printBoard(chessRunner.getBoard());
-        boolean moveFlag = true;
-
-        while (moveFlag) {
-            try {
-                String[] moveSource = inputView.askMoveOrStatus().split(" ");
-                if (moveSource[0].toUpperCase().equals("END")) {
-                    break;
-                }
-                if (moveSource[0].toUpperCase().equals("STATUS")) {
-                    outputView.printStatus(chessRunner.calculateScore(), chessRunner.getCurrentTeam());
-                    continue;
-                }
-                String sourcePosition = moveSource[1];
-                String targetPosition = moveSource[2];
-                chessRunner.update(sourcePosition, targetPosition);
-                printBoard(chessRunner.getBoard());
-                if (!findWinner(chessRunner)) break;
-
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
+        if (findWinner(chessRunner)) {
+            runChess(chessRunner);
         }
     }
 
@@ -55,6 +81,13 @@ public class ChessController {
             return false;
         }
         return true;
+    }
+
+    private static void runStatus(ChessRunner chessRunner) {
+        double score = chessRunner.calculateScore();
+        outputView.printStatus(score, chessRunner.getCurrentTeam());
+        printBoard(chessRunner.getBoard());
+        runChess(chessRunner);
     }
 
     private static void printBoard(final Board board) {
