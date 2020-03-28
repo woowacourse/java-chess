@@ -53,9 +53,9 @@ public class Board {
     }
 
     private void moveOperation(ChessPiece chessPiece, MovingInfo movingInfo) {
-        Route canMoveRoute = findRoute(chessPiece, movingInfo);
+        Route candidateRoute = findRoute(chessPiece, movingInfo);
 
-        validateRoute(chessPiece, canMoveRoute, movingInfo);
+        validateRoute(chessPiece, candidateRoute, movingInfo);
         executeMove(chessPiece, movingInfo);
     }
 
@@ -102,20 +102,20 @@ public class Board {
                 .orElse(null);
     }
 
-    private void validateRoute(ChessPiece chessPiece, Route canMoveRoute, MovingInfo movingInfo) {
-        validateRouteNull(canMoveRoute);
-        validateRouteLocation(canMoveRoute, movingInfo);
+    private void validateRoute(ChessPiece chessPiece, Route candidateRoute, MovingInfo movingInfo) {
+        validateRouteNull(candidateRoute);
+        validateRouteLocation(candidateRoute, movingInfo);
         validateRouteTarget(chessPiece, movingInfo);
     }
 
-    private void validateRouteNull(Route canMoveRoute) {
-        if (canMoveRoute == null) {
+    private void validateRouteNull(Route candidateRoute) {
+        if (candidateRoute == null) {
             throw new IllegalArgumentException();
         }
     }
 
-    private void validateRouteLocation(Route canMoveRoute, MovingInfo movingInfo) {
-        for (Position position : canMoveRoute.getRoute()) {
+    private void validateRouteLocation(Route candidateRoute, MovingInfo movingInfo) {
+        for (Position position : candidateRoute.getRoute()) {
             checkBlank(position, movingInfo);
         }
     }
