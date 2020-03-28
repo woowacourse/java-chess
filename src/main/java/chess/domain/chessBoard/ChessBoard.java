@@ -1,39 +1,38 @@
 package chess.domain.chessBoard;
 
+import chess.domain.chessBoard.chessBoardState.BlackTurnState;
+import chess.domain.chessBoard.chessBoardState.PlayerTurnState;
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.pieceType.King;
-import chess.domain.chessPiece.pieceType.Pawn;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.ChessFile;
 import chess.domain.position.ChessRank;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class ChessBoard {
 
     private final Map<Position, ChessPiece> chessBoard;
+    private PlayerTurnState playerTurnState;
 
     public ChessBoard(Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
+        playerTurnState = new BlackTurnState();
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
-        validate(sourcePosition, targetPosition);
-
-        ChessPiece sourceChessPiece = findSourceChessPieceFrom(sourcePosition);
-        checkLeapable(sourceChessPiece, sourcePosition, targetPosition);
-        checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
-        moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
-    }
-
-    private void validate(Position sourcePosition, Position targetPosition) {
         Objects.requireNonNull(sourcePosition, "소스 위치가 null입니다.");
         Objects.requireNonNull(targetPosition, "타겟 위치가 null입니다.");
+
+        ChessPiece sourceChessPiece = findSourceChessPieceFrom(sourcePosition);
+
+        checkLeapablePiece(sourceChessPiece, sourcePosition, targetPosition);
+        checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
+        moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
+        playerTurnState = playerTurnState.changePlayerTurn();
     }
 
     private ChessPiece findSourceChessPieceFrom(Position sourcePosition) {
@@ -42,29 +41,24 @@ public class ChessBoard {
         if (Objects.isNull(chessBoard.get(sourcePosition))) {
             throw new IllegalArgumentException("해당 위치에 체스 피스가 존재하지 않습니다.");
         }
+        playerTurnState.validatePlayerTurn(sourceChessPiece);
+
         return sourceChessPiece;
     }
 
-    private void checkLeapable(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
+    private void checkLeapablePiece(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
         if (!sourceChessPiece.canLeap()) {
             checkChessPieceRoute(sourcePosition, targetPosition);
         }
     }
 
     private void checkChessPieceRoute(Position sourcePosition, Position targetPosition) {
-        MoveDirection checkingDirection = findDirectionOf(sourcePosition, targetPosition);
+        MoveDirection checkingDirection = MoveDirection.findDirectionOf(sourcePosition, targetPosition);
         Position checkingPosition = checkingDirection.move(sourcePosition);
 
         while (!checkingPosition.equals(targetPosition) && isChessPieceNotExistAt(checkingPosition)) {
             checkingPosition = checkingDirection.move(checkingPosition);
         }
-    }
-
-    private MoveDirection findDirectionOf(Position sourcePosition, Position targetPosition) {
-        return Arrays.stream(MoveDirection.values())
-                .filter(moveDirection -> moveDirection.isSameDirectionFrom(sourcePosition, targetPosition))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("체스 피스가 이동할 수 없는 위치를 입력하였습니다."));
     }
 
     private boolean isChessPieceNotExistAt(Position checkingPosition) {
@@ -79,36 +73,12 @@ public class ChessBoard {
         ChessPiece targetChessPiece = chessBoard.get(targetPosition);
 
         if (Objects.nonNull(targetChessPiece)) {
-            checkIsSamePieceColorWith(sourceChessPiece, targetChessPiece);
-            checkCanCatchWith(sourceChessPiece, sourcePosition, targetPosition);
+            sourceChessPiece.checkIsSamePieceColorWith(targetChessPiece);
+            sourceChessPiece.checkCanCatchWith(sourcePosition, targetPosition);
+            targetChessPiece.checkCaughtPieceIsKing();
             return;
         }
-        checkCanMoveWith(sourceChessPiece, sourcePosition, targetPosition);
-    }
-
-    private void checkIsSamePieceColorWith(ChessPiece sourceChessPiece, ChessPiece targetChessPiece) {
-        if (sourceChessPiece.isSamePieceColorWith(targetChessPiece)) {
-            throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
-        }
-    }
-
-    private void checkCanCatchWith(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
-        if (!sourceChessPiece.canCatch(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
-        }
-        if (isKingCatchChessPiece(targetPosition)) {
-            throw new KingCatchException("왕이 잡혔습니다.");
-        }
-    }
-
-    private boolean isKingCatchChessPiece(Position targetPosition) {
-        return chessBoard.get(targetPosition) instanceof King;
-    }
-
-    private void checkCanMoveWith(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
-        if (!sourceChessPiece.canMove(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
-        }
+        sourceChessPiece.checkCanMoveWith(sourcePosition, targetPosition);
     }
 
     private void moveChessPiece(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
@@ -116,30 +86,8 @@ public class ChessBoard {
         chessBoard.remove(sourcePosition);
     }
 
-    public double calculateScoreOf(PieceColor pieceColor) {
-        return ChessFile.values().stream()
-                .map(chessFile -> getChessPiecesOn(chessFile, pieceColor))
-                .mapToDouble(this::calculateTotalScore)
-                .sum();
-    }
-
-    private Stream<ChessPiece> getChessPiecesOn(ChessFile chessFile, PieceColor pieceColor) {
-        return chessBoard.entrySet().stream()
-                .filter(entry -> entry.getKey().isSameFilePosition(chessFile))
-                .map(Map.Entry::getValue)
-                .filter(chessPiece -> chessPiece.isSamePieceColorWith(pieceColor));
-    }
-
-    private double calculateTotalScore(Stream<ChessPiece> chessPieceStream) {
-        double totalScore = chessPieceStream.mapToDouble(ChessPiece::getScore).sum();
-
-        Stream<ChessPiece> pawns = chessPieceStream.filter(chessPiece -> chessPiece instanceof Pawn);
-        double pawnTotalScore = pawns.mapToDouble(ChessPiece::getScore).sum();
-
-        if (pawns.count() > 1) {
-            return totalScore - (pawnTotalScore / 2);
-        }
-        return totalScore;
+    public Map<Position, ChessPiece> getChessBoard() {
+        return Collections.unmodifiableMap(chessBoard);
     }
 
     public boolean contains(String key) {
@@ -148,5 +96,9 @@ public class ChessBoard {
 
     public ChessPiece getChessPiece(ChessFile file, ChessRank rank) {
         return chessBoard.get(Position.of(file.toString() + rank.toString()));
+    }
+
+    public PieceColor getPlayerColor() {
+        return playerTurnState.getPlayerColor();
     }
 }
