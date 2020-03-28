@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Square;
-import chess.domain.Type;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -14,7 +13,7 @@ public abstract class Piece {
     private final String name;
     private final double score;
 
-    public Piece(Color color, Type type, String name, double score) {
+    public Piece(Color color, String name, double score) {
         Objects.requireNonNull(color, "color은 필수입니다");
         Objects.requireNonNull(name, "name은 필수입니다");
 

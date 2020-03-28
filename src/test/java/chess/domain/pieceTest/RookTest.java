@@ -4,6 +4,7 @@ import chess.domain.Color;
 import chess.domain.Square;
 import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -14,6 +15,13 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RookTest {
+    @Test
+    @DisplayName("두 동일한 객체를 가져왔을 때 같은지 확인")
+    void checkSameInstance() {
+        Piece piece = Rook.of(Color.BLACK);
+        assertThat(piece).isEqualTo(Rook.of(Color.BLACK));
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"d1", "d3", "d4", "d5", "d6", "d7", "d8", "a2", "b2", "c2", "e2", "f2", "g2", "h2"})
     @DisplayName("말의 위치(룩)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")

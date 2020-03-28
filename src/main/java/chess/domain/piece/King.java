@@ -13,7 +13,6 @@ public class King extends Piece {
     private final static String NAME_WHITE = "k";
     private final static double SCORE = 0;
 
-
     static {
         Stream.of(Color.values())
                 .forEach(King::putIntoCache);
@@ -39,7 +38,7 @@ public class King extends Piece {
     }
 
     private King(Color color, String name, double score) {
-        super(color, null, name, score);
+        super(color, name, score);
     }
 
     @Override

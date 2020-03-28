@@ -4,6 +4,7 @@ import chess.domain.Color;
 import chess.domain.Square;
 import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -14,6 +15,12 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QueenTest {
+    @Test
+    @DisplayName("두 동일한 객체를 가져왔을 때 같은지 확인")
+    void checkSameInstance() {
+        Piece piece = Queen.of(Color.BLACK);
+        assertThat(piece).isEqualTo(Queen.of(Color.BLACK));
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {"a1", "b1", "d1", "e1", "f1", "g1", "h1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "d2", "e3", "f4", "g5", "h6", "b2", "a3"})

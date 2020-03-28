@@ -37,7 +37,7 @@ public class Bishop extends Piece {
     }
 
     private Bishop(Color color, String name, double score) {
-        super(color, null, name, score);
+        super(color, name, score);
     }
 
     @Override

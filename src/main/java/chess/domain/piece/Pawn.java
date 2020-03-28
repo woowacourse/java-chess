@@ -37,7 +37,7 @@ public class Pawn extends Piece {
     }
 
     private Pawn(Color color, String name, double score) {
-        super(color, null, name, score);
+        super(color, name, score);
     }
 
     @Override

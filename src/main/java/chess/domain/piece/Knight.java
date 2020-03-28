@@ -38,7 +38,7 @@ public class Knight extends Piece {
     }
 
     private Knight(Color color, String name, double score) {
-        super(color, null, name, score);
+        super(color, name, score);
     }
 
     @Override

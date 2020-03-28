@@ -4,6 +4,7 @@ import chess.domain.Color;
 import chess.domain.Square;
 import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -14,6 +15,13 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BishopTest {
+    @Test
+    @DisplayName("두 동일한 객체를 가져왔을 때 같은지 확인")
+    void checkSameInstance() {
+        Piece piece = Bishop.of(Color.BLACK);
+        assertThat(piece).isEqualTo(Bishop.of(Color.BLACK));
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"b7", "d7", "b5", "d5", "a4", "e4", "e8"})
     @DisplayName("판의 정보를 가져와서 bishop이 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")

@@ -15,6 +15,13 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
+    @Test
+    @DisplayName("두 동일한 객체를 가져왔을 때 같은지 확인")
+    void checkSameInstance() {
+        Piece piece = Pawn.of(Color.BLACK);
+        assertThat(piece).isEqualTo(Pawn.of(Color.BLACK));
+    }
+
 
     @Test
     @DisplayName("말의 위치(pawn)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
