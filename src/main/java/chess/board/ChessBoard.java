@@ -1,7 +1,6 @@
 package chess.board;
 
 import chess.coordinate.Coordinate;
-import chess.coordinate.Direction;
 import chess.coordinate.File;
 import chess.coordinate.Rank;
 import chess.piece.Blank;
@@ -43,14 +42,7 @@ public class ChessBoard {
 
         Directions directions = sourceTile.findPath(targetTile);
 
-        Coordinate next = Coordinate.of(sourceKey);
-        boolean notExist = true;
-        while (directions.isNotEmpty() && notExist) {
-            Direction direction = directions.poll();
-            next = next.move(direction);
-            notExist = chessBoard.get(next).isBlank();
-        }
-        if (!notExist) {
+        if (directions.isExist(sourceKey, chessBoard::get)) {
             return MoveResult.FAIL;
         }
 
@@ -65,15 +57,7 @@ public class ChessBoard {
     }
 
     public double calculateScore(Team team) {
-        Score sum = Score.zero();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Coordinate coordinate = Coordinate.of(file, rank);
-                sum = sum.add(chessBoard.get(coordinate), team);
-            }
-            sum = sum.subtractPawnScore();
-        }
-        return sum.getSum();
+        return Score.calculateScore(team, chessBoard::get);
     }
 
     public void put(final Tile tile) {

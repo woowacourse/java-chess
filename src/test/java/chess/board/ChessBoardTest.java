@@ -29,7 +29,7 @@ class ChessBoardTest {
 
     @DisplayName("체스판 하나의 열에 대한 점수 합산 확인")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK_PAWN,1", "BLACK_KING,1", "BLACK_QUEEN,10", "BLACK_ROOK,6", "BLACK_BISHOP,4", "BLACK_KNIGHT,3.5"})
+    @CsvSource(value = {"BLACK_MOVED_PAWN,1", "BLACK_KING,1", "BLACK_QUEEN,10", "BLACK_ROOK,6", "BLACK_BISHOP,4", "BLACK_KNIGHT,3.5"})
     void calculateScore(Pieces pieces, double expect) {
         //given
         ChessBoard chessBoard = ChessBoard.empty();

@@ -1,6 +1,11 @@
 package chess.board;
 
+import chess.coordinate.Coordinate;
+import chess.coordinate.File;
+import chess.coordinate.Rank;
 import chess.piece.Team;
+
+import java.util.function.Function;
 
 public class Score {
     private final double sum;
@@ -32,6 +37,18 @@ public class Score {
             sum -= 0.5 * this.pawnCount;
         }
         return new Score(sum, 0);
+    }
+
+    public static double calculateScore(Team team, Function<Coordinate, Tile> tileFinder) {
+        Score sum = zero();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                Coordinate coordinate = Coordinate.of(file, rank);
+                sum = sum.add(tileFinder.apply(coordinate), team);
+            }
+            sum = sum.subtractPawnScore();
+        }
+        return sum.getSum();
     }
 
     public double getSum() {
