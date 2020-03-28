@@ -20,7 +20,7 @@ public class Position {
 
     public Position(String position) {
         validateNull(position);
-        this.xPoint = Xpoint.of(position.charAt(0) - 'a');
+        this.xPoint = Xpoint.of(position.charAt(0) - 'a' + 1);
         this.yPoint = Ypoint.of(Integer.parseInt(String.valueOf(position.charAt(1))));
     }
 
