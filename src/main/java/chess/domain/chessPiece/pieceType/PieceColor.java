@@ -8,13 +8,15 @@ import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnR
 
 public enum PieceColor {
 
-	WHITE(String::toLowerCase, WhitePawnRuleStrategy::new),
-	BLACK(String::toUpperCase, BlackPawnRuleStrategy::new);
+	WHITE("white", String::toLowerCase, WhitePawnRuleStrategy::new),
+	BLACK("black", String::toUpperCase, BlackPawnRuleStrategy::new);
 
+	private final String color;
 	private final Function<String, String> convertName;
 	private final Function<Integer, RuleStrategy> pawnRuleStrategy;
 
-	PieceColor(Function<String, String> convertName, Function<Integer, RuleStrategy> pawnRuleStrategy) {
+	PieceColor(String color, Function<String, String> convertName, Function<Integer, RuleStrategy> pawnRuleStrategy) {
+		this.color = color;
 		this.convertName = convertName;
 		this.pawnRuleStrategy = pawnRuleStrategy;
 	}
@@ -30,4 +32,7 @@ public enum PieceColor {
 		return pawnRuleStrategy.apply(movableRange);
 	}
 
+	public String getColor() {
+		return color;
+	}
 }

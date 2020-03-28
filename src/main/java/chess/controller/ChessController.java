@@ -7,8 +7,8 @@ import static chess.view.ConsoleOutputView.*;
 import java.util.List;
 import java.util.Objects;
 
-import chess.domain.ChessCommand;
-import chess.domain.ChessGame;
+import chess.domain.chessGame.ChessCommand;
+import chess.domain.chessGame.ChessGame;
 import chess.view.ConsoleOutputView;
 
 public class ChessController {
@@ -38,7 +38,7 @@ public class ChessController {
 		if (chessCommand.isStartChessCommand()) {
 			throw new IllegalArgumentException("start 명령어은 최초 시작 때만 사용 가능합니다.");
 		}
-		chessCommand.playChessGame(chessGame, chessCommandArguments);
+		chessCommand.playChessGame(chessGame, chessCommandArguments, ConsoleOutputView::printStatus);
 	}
 
 	private boolean isEndState() {
@@ -50,7 +50,7 @@ public class ChessController {
 
 	private boolean checkKingCaught() {
 		if (chessGame.isKingCaught()) {
-			printKingCaught(chessGame.getCurrentTurnPieceColor());
+			printKingCaught(chessGame.getCurrentTurnColor());
 		}
 		return true;
 	}

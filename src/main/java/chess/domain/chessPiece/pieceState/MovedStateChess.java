@@ -3,14 +3,14 @@ package chess.domain.chessPiece.pieceState;
 import chess.domain.RuleStrategy.RuleStrategy;
 import chess.domain.chessPiece.pieceType.PieceColor;
 
-public class MovedState extends PieceState {
+public class MovedStateChess extends ChessPieceState {
 
-	public MovedState(RuleStrategy ruleStrategy) {
+	public MovedStateChess(RuleStrategy ruleStrategy) {
 		super(ruleStrategy);
 	}
 
 	@Override
-	public State shiftNextState(PieceColor pieceColor) {
+	public PieceState shiftNextState(PieceColor pieceColor) {
 		return this;
 	}
 

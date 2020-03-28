@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import chess.domain.chessPiece.ChessPiece;
+import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.Pawn;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.ChessFile;
@@ -144,6 +145,10 @@ public class ChessBoard {
 
 	public String getChessPieceNameAt(ChessFile chessFile, ChessRank chessRank) {
 		return chessBoard.get(Position.of(chessFile, chessRank)).toString();
+	}
+
+	public boolean isKingCaughtAt(Position targetPosition) {
+		return chessBoard.get(targetPosition) instanceof King;
 	}
 
 }

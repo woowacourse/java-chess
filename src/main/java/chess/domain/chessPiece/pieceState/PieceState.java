@@ -1,37 +1,18 @@
 package chess.domain.chessPiece.pieceState;
 
-import chess.domain.RuleStrategy.RuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnRuleStrategy;
+import chess.domain.chessPiece.Catchable;
+import chess.domain.chessPiece.Movable;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 
-public abstract class PieceState implements State {
+public interface PieceState extends Movable, Catchable {
 
-	protected final RuleStrategy ruleStrategy;
+	boolean canLeap();
 
-	public PieceState(RuleStrategy ruleStrategy) {
-		this.ruleStrategy = ruleStrategy;
-	}
+	boolean canMove(Position sourcePosition, Position targetPosition);
 
-	@Override
-	public boolean canLeap() {
-		return ruleStrategy.canLeap();
-	}
+	boolean canCatch(Position sourcePosition, Position targetPosition);
 
-	@Override
-	public boolean canMove(Position sourcePosition, Position targetPosition) {
-		return ruleStrategy.canMove(sourcePosition, targetPosition);
-	}
-
-	@Override
-	public boolean canCatch(Position sourcePosition, Position targetPosition) {
-		if (ruleStrategy instanceof PawnRuleStrategy) {
-			return ((PawnRuleStrategy)ruleStrategy).canMoveToCatch(sourcePosition, targetPosition);
-		}
-		return ruleStrategy.canMove(sourcePosition, targetPosition);
-	}
-
-	@Override
-	public abstract State shiftNextState(PieceColor pieceColor);
+	PieceState shiftNextState(PieceColor pieceColor);
 
 }

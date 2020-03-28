@@ -12,10 +12,15 @@ import chess.domain.position.ChessRank;
 public class ChessBoardRenderer {
 
 	private static final String EMPTY_POSITION = ".";
+	private static final String EMPTY_SPACE = "";
 
 	public static List<String> render(ChessBoard chessBoard) {
 		List<String> renderedChessBoard = renderEachChessFileFrom(chessBoard);
 		Collections.reverse(renderedChessBoard);
+		renderedChessBoard.add(EMPTY_SPACE);
+		renderedChessBoard.add(ChessFile.values().stream()
+			.map(ChessFile::toString)
+			.collect(joining()));
 
 		return renderedChessBoard;
 	}
@@ -29,7 +34,7 @@ public class ChessBoardRenderer {
 	private static String renderChessRankFrom(ChessBoard chessBoard, ChessRank chessRank) {
 		return ChessFile.values().stream()
 			.map(chessFile -> renderChessPieceFrom(chessBoard, chessRank, chessFile))
-			.collect(joining());
+			.collect(collectingAndThen(joining(), renderedRank -> String.format("%s	%s", renderedRank, chessRank)));
 	}
 
 	private static String renderChessPieceFrom(ChessBoard chessBoard, ChessRank chessRank, ChessFile chessFile) {

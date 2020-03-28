@@ -2,6 +2,8 @@ package chess.view;
 
 import java.util.List;
 
+import chess.domain.chessPiece.pieceType.PieceColor;
+
 public class ConsoleOutputView {
 
 	static final String PROMPT = "> ";
@@ -23,8 +25,12 @@ public class ConsoleOutputView {
 		renderedChessBoard.forEach(System.out::println);
 	}
 
-	public static void printKingCaught(String catchingPieceColor) {
-		System.out.println(String.format("%s가 킹을 잡았습니다.", catchingPieceColor));
+	public static void printStatus(PieceColor statusPieceColor, double score) {
+		System.out.println(String.format("%s 점수 : %f", statusPieceColor.getColor(), score));
+	}
+
+	public static void printKingCaught(PieceColor catchingPieceColor) {
+		System.out.println(String.format("%s가 킹을 잡았습니다.", catchingPieceColor.getColor()));
 	}
 
 	public static void printChessEnd() {

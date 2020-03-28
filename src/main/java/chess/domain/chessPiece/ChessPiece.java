@@ -2,31 +2,31 @@ package chess.domain.chessPiece;
 
 import java.util.Objects;
 
-import chess.domain.chessPiece.pieceState.State;
+import chess.domain.chessPiece.pieceState.PieceState;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 
 public abstract class ChessPiece implements Movable, Catchable {
 
 	protected final PieceColor pieceColor;
-	protected State state;
+	protected PieceState pieceState;
 
-	public ChessPiece(PieceColor pieceColor, State state) {
+	public ChessPiece(PieceColor pieceColor, PieceState pieceState) {
 		Objects.requireNonNull(pieceColor, "피스 색상이 null입니다.");
-		Objects.requireNonNull(state, "피스 전략이 null입니다.");
+		Objects.requireNonNull(pieceState, "피스 전략이 null입니다.");
 		this.pieceColor = pieceColor;
-		this.state = state;
+		this.pieceState = pieceState;
 	}
 
 	@Override
 	public boolean canLeap() {
-		return state.canLeap();
+		return pieceState.canLeap();
 	}
 
 	@Override
 	public boolean canMove(Position sourcePosition, Position targetPosition) {
-		if (state.canMove(sourcePosition, targetPosition)) {
-			state = state.shiftNextState(pieceColor);
+		if (pieceState.canMove(sourcePosition, targetPosition)) {
+			pieceState = pieceState.shiftNextState(pieceColor);
 			return true;
 		}
 		return false;
@@ -34,8 +34,8 @@ public abstract class ChessPiece implements Movable, Catchable {
 
 	@Override
 	public boolean canCatch(Position sourcePosition, Position targetPosition) {
-		if (state.canCatch(sourcePosition, targetPosition)) {
-			state = state.shiftNextState(pieceColor);
+		if (pieceState.canCatch(sourcePosition, targetPosition)) {
+			pieceState = pieceState.shiftNextState(pieceColor);
 			return true;
 		}
 		return false;

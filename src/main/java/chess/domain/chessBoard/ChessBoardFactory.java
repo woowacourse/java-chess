@@ -10,7 +10,7 @@ import chess.domain.RuleStrategy.nonLeapableStrategy.QueenRuleStrategy;
 import chess.domain.RuleStrategy.nonLeapableStrategy.RookRuleStrategy;
 import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnRuleStrategy;
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.pieceState.InitialState;
+import chess.domain.chessPiece.pieceState.InitialStateChess;
 import chess.domain.chessPiece.pieceType.Bishop;
 import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.Knight;
@@ -38,19 +38,23 @@ public class ChessBoardFactory {
 	private static void addPawnPiecesBy(Map<Position, ChessPiece> chessBoard, PieceColor pieceColor, int rank) {
 		for (ChessFile file : ChessFile.values()) {
 			chessBoard.put(Position.of(file, ChessRank.from(rank)), new Pawn(pieceColor,
-				new InitialState(pieceColor.getPawnRuleStrategyBy(PawnRuleStrategy.INITIAL_STATE_MOVABLE_RANGE))));
+				new InitialStateChess(pieceColor.getPawnRuleStrategyBy(PawnRuleStrategy.INITIAL_STATE_MOVABLE_RANGE))));
 		}
 	}
 
 	private static void addOtherPiecesBy(Map<Position, ChessPiece> chessBoard, PieceColor pieceColor, int rank) {
-		chessBoard.put(Position.of("a" + rank), new Rook(pieceColor, new InitialState(new RookRuleStrategy())));
-		chessBoard.put(Position.of("b" + rank), new Knight(pieceColor, new InitialState(new KnightRuleStrategy())));
-		chessBoard.put(Position.of("c" + rank), new Bishop(pieceColor, new InitialState(new BishopRuleStrategy())));
-		chessBoard.put(Position.of("d" + rank), new Queen(pieceColor, new InitialState(new QueenRuleStrategy())));
-		chessBoard.put(Position.of("e" + rank), new King(pieceColor, new InitialState(new KingRuleStrategy())));
-		chessBoard.put(Position.of("f" + rank), new Bishop(pieceColor, new InitialState(new BishopRuleStrategy())));
-		chessBoard.put(Position.of("g" + rank), new Knight(pieceColor, new InitialState(new KnightRuleStrategy())));
-		chessBoard.put(Position.of("h" + rank), new Rook(pieceColor, new InitialState(new RookRuleStrategy())));
+		chessBoard.put(Position.of("a" + rank), new Rook(pieceColor, new InitialStateChess(new RookRuleStrategy())));
+		chessBoard.put(Position.of("b" + rank),
+			new Knight(pieceColor, new InitialStateChess(new KnightRuleStrategy())));
+		chessBoard.put(Position.of("c" + rank),
+			new Bishop(pieceColor, new InitialStateChess(new BishopRuleStrategy())));
+		chessBoard.put(Position.of("d" + rank), new Queen(pieceColor, new InitialStateChess(new QueenRuleStrategy())));
+		chessBoard.put(Position.of("e" + rank), new King(pieceColor, new InitialStateChess(new KingRuleStrategy())));
+		chessBoard.put(Position.of("f" + rank),
+			new Bishop(pieceColor, new InitialStateChess(new BishopRuleStrategy())));
+		chessBoard.put(Position.of("g" + rank),
+			new Knight(pieceColor, new InitialStateChess(new KnightRuleStrategy())));
+		chessBoard.put(Position.of("h" + rank), new Rook(pieceColor, new InitialStateChess(new RookRuleStrategy())));
 	}
 
 }

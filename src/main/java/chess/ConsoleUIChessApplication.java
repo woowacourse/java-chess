@@ -6,16 +6,17 @@ import static chess.view.ConsoleOutputView.*;
 import java.util.Objects;
 
 import chess.controller.ChessController;
-import chess.domain.ChessCommand;
-import chess.domain.ChessGame;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessBoardFactory;
+import chess.domain.chessGame.ChessCommand;
+import chess.domain.chessGame.ChessGame;
+import chess.domain.chessGame.gameState.WhiteTurnState;
 
 public class ConsoleUIChessApplication {
 
 	public static void main(String[] args) {
 		ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.create());
-		ChessGame chessGame = new ChessGame(chessBoard);
+		ChessGame chessGame = new ChessGame(chessBoard, new WhiteTurnState());
 		ChessController chessController = new ChessController(chessGame);
 
 		printChessStart();

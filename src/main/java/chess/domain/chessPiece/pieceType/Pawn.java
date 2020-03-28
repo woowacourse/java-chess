@@ -1,7 +1,7 @@
 package chess.domain.chessPiece.pieceType;
 
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.pieceState.State;
+import chess.domain.chessPiece.pieceState.PieceState;
 
 public class Pawn extends ChessPiece {
 
@@ -9,8 +9,8 @@ public class Pawn extends ChessPiece {
 	public static final int PAWN_STANDARD_SCORE_BOUND = 1;
 	private static final int SCORE = 1;
 
-	public Pawn(PieceColor pieceColor, State state) {
-		super(pieceColor, state);
+	public Pawn(PieceColor pieceColor, PieceState pieceState) {
+		super(pieceColor, pieceState);
 	}
 
 	@Override
