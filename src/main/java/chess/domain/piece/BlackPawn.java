@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.util.Direction;
 
@@ -16,12 +17,12 @@ public class BlackPawn extends Pawn {
             )
     );
 
-    public BlackPawn(char representation, Position position) {
-        super(representation, position);
+    public BlackPawn(char representation, Team team, Position position) {
+        super(representation, team, position);
     }
 
     @Override
-    public List<Position> getPossiblePositions() {
+    public List<Position> getPossiblePositions(Board board) {
         List<Position> possiblePositions = new ArrayList<>();
         for (Direction direction : DIRECTIONS) {
             if (direction.move(position).getX() > 8 | direction.move(position).getX() < 1 | direction.move(position).getY() > 8 |

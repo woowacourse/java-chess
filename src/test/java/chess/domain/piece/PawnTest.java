@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,21 +19,22 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("getCasesForPawnMoveByDirection")
     void pawnMove(Piece piece, List<Position> expectedToPositions) {
-        assertThat(piece.getPossiblePositions()).isEqualTo(expectedToPositions);
+        Board board = BoardFactory.createBoard();
+        assertThat(piece.getPossiblePositions(board)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForPawnMoveByDirection() {
         return Stream.of(
-                Arguments.of(new WhitePawn('p', new Position(2, 2)),
+                Arguments.of(new WhitePawn('p', Team.WHITE, new Position(2, 2)),
                         Arrays.asList(new Position(2, 3), new Position(2, 4))),
 
-                Arguments.of(new WhitePawn('p', new Position(3, 4)),
+                Arguments.of(new WhitePawn('p', Team.WHITE, new Position(3, 4)),
                         Arrays.asList(new Position(3, 5))),
 
-                Arguments.of(new BlackPawn('P', new Position(2, 7)),
+                Arguments.of(new BlackPawn('P', Team.BLACK, new Position(2, 7)),
                         Arrays.asList(new Position(2, 6), new Position(2, 5))),
 
-                Arguments.of(new BlackPawn('P', new Position(4, 6)),
+                Arguments.of(new BlackPawn('P', Team.BLACK, new Position(4, 6)),
                         Arrays.asList(new Position(4, 5)))
         );
     }

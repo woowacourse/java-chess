@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class KnightTest {
+public class RookTest {
     private static final List<Piece> INITIALIZED_POSITIONS = new ArrayList<>();
 
     @BeforeEach
@@ -27,23 +27,25 @@ public class KnightTest {
         }
     }
 
-    @DisplayName("나이트의 이동 가능 위치")
+    @DisplayName("룩의 이동 가능 위치")
     @ParameterizedTest
-    @MethodSource("getCasesForKnightMoveByDirection")
-    void knightMove(Piece piece, List<Position> expectedToPositions) {
-        INITIALIZED_POSITIONS.set(36, new Knight('n', Team.WHITE, new Position(5, 5)));
+    @MethodSource("getCasesForRookMoveByDirection")
+    void rookMove(Piece piece, List<Position> expectedToPositions) {
+        INITIALIZED_POSITIONS.set(36, new Rook('r', Team.WHITE, new Position(5, 5)));
         Board board = new Board(INITIALIZED_POSITIONS);
         assertThat(piece.getPossiblePositions(board)).isEqualTo(expectedToPositions);
     }
 
-    private static Stream<Arguments> getCasesForKnightMoveByDirection() {
+    private static Stream<Arguments> getCasesForRookMoveByDirection() {
         return Stream.of(
-                Arguments.of(new Knight('n', Team.WHITE, new Position(5, 5)),
-                        Arrays.asList(
-                                new Position(6, 7), new Position(7, 6),
-                                new Position(7, 4), new Position(6, 3),
-                                new Position(4, 3), new Position(3, 4),
-                                new Position(3, 6), new Position(4, 7)
+                Arguments.of(new Rook('r', Team.WHITE, new Position(5, 5)),
+                        Arrays.asList(new Position(5, 6), new Position(5, 7),
+                                new Position(5, 8), new Position(6, 5),
+                                new Position(7, 5), new Position(8, 5),
+                                new Position(5, 4), new Position(5, 3),
+                                new Position(5, 2), new Position(5, 1),
+                                new Position(4, 5), new Position(3, 5),
+                                new Position(2, 5), new Position(1, 5)
                         )
                 )
         );

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -7,10 +8,12 @@ import java.util.Objects;
 
 public abstract class Piece {
     protected final char representation;
+    protected final Team team;
     protected final Position position;
 
-    public Piece(char representation, Position position) {
+    public Piece(char representation, Team team, Position position) {
         this.representation = representation;
+        this.team = team;
         this.position = position;
     }
 
@@ -20,6 +23,10 @@ public abstract class Piece {
 
     public Position getPosition() {
         return position;
+    }
+
+    public boolean isOtherTeam(Piece nextPiece) {
+        return this.team.isNotSame(nextPiece.team);
     }
 
     @Override
@@ -45,5 +52,5 @@ public abstract class Piece {
         return Objects.hash(representation, position);
     }
 
-    public abstract List<Position> getPossiblePositions();
+    public abstract List<Position> getPossiblePositions(Board board);
 }

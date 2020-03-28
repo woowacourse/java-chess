@@ -17,39 +17,39 @@ public class BoardFactory {
     }
 
     private static void setUpWhitePiece() {
-        INITIALIZED_BOARD.add(new Rook('r', new Position(1, 1)));
-        INITIALIZED_BOARD.add(new Knight('n', new Position(2, 1)));
-        INITIALIZED_BOARD.add(new Bishop('b', new Position(3, 1)));
-        INITIALIZED_BOARD.add(new Queen('q', new Position(4, 1)));
-        INITIALIZED_BOARD.add(new King('k', new Position(5, 1)));
-        INITIALIZED_BOARD.add(new Bishop('b', new Position(6, 1)));
-        INITIALIZED_BOARD.add(new Knight('n', new Position(7, 1)));
-        INITIALIZED_BOARD.add(new Rook('r', new Position(8, 1)));
+        INITIALIZED_BOARD.add(new Rook('r', Team.WHITE, new Position(1, 1)));
+        INITIALIZED_BOARD.add(new Knight('n', Team.WHITE, new Position(2, 1)));
+        INITIALIZED_BOARD.add(new Bishop('b', Team.WHITE, new Position(3, 1)));
+        INITIALIZED_BOARD.add(new Queen('q', Team.WHITE, new Position(4, 1)));
+        INITIALIZED_BOARD.add(new King('k', Team.WHITE, new Position(5, 1)));
+        INITIALIZED_BOARD.add(new Bishop('b', Team.WHITE, new Position(6, 1)));
+        INITIALIZED_BOARD.add(new Knight('n', Team.WHITE, new Position(7, 1)));
+        INITIALIZED_BOARD.add(new Rook('r', Team.WHITE, new Position(8, 1)));
 
         IntStream.rangeClosed(1, 8)
-                .forEach(col -> INITIALIZED_BOARD.add(new WhitePawn('p', new Position(col, 2))));
+                .forEach(col -> INITIALIZED_BOARD.add(new WhitePawn('p', Team.WHITE, new Position(col, 2))));
     }
 
     private static void setUpBlankPiece() {
         for (int row = 3; row <= 6; row++) {
             for (int col = 1; col <= 8; col++) {
-                INITIALIZED_BOARD.add(new Blank('.', new Position(col, row)));
+                INITIALIZED_BOARD.add(new Blank('.', Team.BLANK, new Position(col, row)));
             }
         }
     }
 
     private static void setUpBlackPiece() {
         IntStream.rangeClosed(1, 8)
-                .forEach(col -> INITIALIZED_BOARD.add(new BlackPawn('P', new Position(col, 7))));
+                .forEach(col -> INITIALIZED_BOARD.add(new BlackPawn('P', Team.BLACK, new Position(col, 7))));
 
-        INITIALIZED_BOARD.add(new Rook('R', new Position(1, 8)));
-        INITIALIZED_BOARD.add(new Knight('N', new Position(2, 8)));
-        INITIALIZED_BOARD.add(new Bishop('B', new Position(3, 8)));
-        INITIALIZED_BOARD.add(new Queen('Q', new Position(4, 8)));
-        INITIALIZED_BOARD.add(new King('K', new Position(5, 8)));
-        INITIALIZED_BOARD.add(new Bishop('B', new Position(6, 8)));
-        INITIALIZED_BOARD.add(new Knight('N', new Position(7, 8)));
-        INITIALIZED_BOARD.add(new Rook('R', new Position(8, 8)));
+        INITIALIZED_BOARD.add(new Rook('R', Team.BLACK, new Position(1, 8)));
+        INITIALIZED_BOARD.add(new Knight('N', Team.BLACK, new Position(2, 8)));
+        INITIALIZED_BOARD.add(new Bishop('B', Team.BLACK, new Position(3, 8)));
+        INITIALIZED_BOARD.add(new Queen('Q', Team.BLACK, new Position(4, 8)));
+        INITIALIZED_BOARD.add(new King('K', Team.BLACK, new Position(5, 8)));
+        INITIALIZED_BOARD.add(new Bishop('B', Team.BLACK, new Position(6, 8)));
+        INITIALIZED_BOARD.add(new Knight('N', Team.BLACK, new Position(7, 8)));
+        INITIALIZED_BOARD.add(new Rook('R', Team.BLACK, new Position(8, 8)));
     }
 
     private BoardFactory() {

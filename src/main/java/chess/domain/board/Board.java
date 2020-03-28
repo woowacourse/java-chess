@@ -1,6 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 import java.util.List;
 
@@ -29,6 +31,20 @@ public class Board {
         int col = x.charAt(0) - 96;
         int row = Integer.parseInt(y);
 
-        return getPiece((row - 1) * 8 + col - 1);
+        return getPiece(getBoardIndex(col, row));
+    }
+
+    private int getBoardIndex(int col, int row) {
+        return (row - 1) * 8 + col - 1;
+    }
+
+    public boolean isBlank(Position nextPosition) {
+        return getPiece(getBoardIndex(nextPosition.getX(), nextPosition.getY()))
+                .getClass().equals(Blank.class);
+    }
+
+    public boolean isOtherTeam(Position position, Position nextPosition) {
+        return getPiece(getBoardIndex(position.getX(), position.getY()))
+                .isOtherTeam(getPiece(getBoardIndex(nextPosition.getX(), nextPosition.getY())));
     }
 }

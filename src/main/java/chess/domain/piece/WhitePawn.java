@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.util.Direction;
 
@@ -16,13 +17,13 @@ public class WhitePawn extends Pawn {
             )
     );
 
-    public WhitePawn(char representation, Position position) {
-        super(representation, position);
+    public WhitePawn(char representation, Team team, Position position) {
+        super(representation, team, position);
     }
 
 
     @Override
-    public List<Position> getPossiblePositions() {
+    public List<Position> getPossiblePositions(Board board) {
         List<Position> possiblePositions = new ArrayList<>();
         if (representation == 'p') {
             for (Direction direction : DIRECTIONS) {

@@ -20,18 +20,18 @@ public class PieceTest {
 
     private static Stream<Arguments> getCasesForPieceRepresentation() {
         return Stream.of(
-                Arguments.of(new WhitePawn('p', new Position(1, 2)), 'p'),
-                Arguments.of(new BlackPawn('P', new Position(1, 7)), 'P'),
-                Arguments.of(new Rook('r', new Position(1, 1)), 'r'),
-                Arguments.of(new Rook('R', new Position(1, 8)), 'R'),
-                Arguments.of(new Knight('n', new Position(2, 1)), 'n'),
-                Arguments.of(new Knight('N', new Position(2, 8)), 'N'),
-                Arguments.of(new Bishop('b', new Position(3, 1)), 'b'),
-                Arguments.of(new Bishop('B', new Position(3, 8)), 'B'),
-                Arguments.of(new Queen('q', new Position(4, 1)), 'q'),
-                Arguments.of(new Queen('Q', new Position(4, 8)), 'Q'),
-                Arguments.of(new King('k', new Position(5, 1)), 'k'),
-                Arguments.of(new King('K', new Position(5, 8)), 'K')
+                Arguments.of(new WhitePawn('p', Team.WHITE, new Position(1, 2)), 'p'),
+                Arguments.of(new BlackPawn('P', Team.BLACK, new Position(1, 7)), 'P'),
+                Arguments.of(new Rook('r', Team.WHITE, new Position(1, 1)), 'r'),
+                Arguments.of(new Rook('R', Team.BLACK, new Position(1, 8)), 'R'),
+                Arguments.of(new Knight('n', Team.WHITE, new Position(2, 1)), 'n'),
+                Arguments.of(new Knight('N', Team.BLACK, new Position(2, 8)), 'N'),
+                Arguments.of(new Bishop('b', Team.WHITE, new Position(3, 1)), 'b'),
+                Arguments.of(new Bishop('B', Team.BLACK, new Position(3, 8)), 'B'),
+                Arguments.of(new Queen('q', Team.WHITE, new Position(4, 1)), 'q'),
+                Arguments.of(new Queen('Q', Team.BLACK, new Position(4, 8)), 'Q'),
+                Arguments.of(new King('k', Team.WHITE, new Position(5, 1)), 'k'),
+                Arguments.of(new King('K', Team.BLACK, new Position(5, 8)), 'K')
         );
     }
 
@@ -44,18 +44,18 @@ public class PieceTest {
 
     private static Stream<Arguments> getCasesForPieceInitialPosition() {
         return Stream.of(
-                Arguments.of(new WhitePawn('p', new Position(1, 2)), new Position(1, 2)),
-                Arguments.of(new BlackPawn('P', new Position(1, 7)), new Position(1, 7)),
-                Arguments.of(new Rook('r', new Position(1, 1)), new Position(1, 1)),
-                Arguments.of(new Rook('R', new Position(1, 8)), new Position(1, 8)),
-                Arguments.of(new Knight('n', new Position(2, 1)), new Position(2, 1)),
-                Arguments.of(new Knight('N', new Position(2, 8)), new Position(2, 8)),
-                Arguments.of(new Bishop('b', new Position(3, 1)), new Position(3, 1)),
-                Arguments.of(new Bishop('B', new Position(3, 8)), new Position(3, 8)),
-                Arguments.of(new Queen('q', new Position(4, 1)), new Position(4, 1)),
-                Arguments.of(new Queen('Q', new Position(4, 8)), new Position(4, 8)),
-                Arguments.of(new King('k', new Position(5, 1)), new Position(5, 1)),
-                Arguments.of(new King('K', new Position(5, 8)), new Position(5, 8))
+                Arguments.of(new WhitePawn('p', Team.WHITE, new Position(1, 2)), new Position(1, 2)),
+                Arguments.of(new BlackPawn('P', Team.BLACK, new Position(1, 7)), new Position(1, 7)),
+                Arguments.of(new Rook('r', Team.WHITE, new Position(1, 1)), new Position(1, 1)),
+                Arguments.of(new Rook('R', Team.BLACK, new Position(1, 8)), new Position(1, 8)),
+                Arguments.of(new Knight('n', Team.WHITE, new Position(2, 1)), new Position(2, 1)),
+                Arguments.of(new Knight('N', Team.BLACK, new Position(2, 8)), new Position(2, 8)),
+                Arguments.of(new Bishop('b', Team.WHITE, new Position(3, 1)), new Position(3, 1)),
+                Arguments.of(new Bishop('B', Team.BLACK, new Position(3, 8)), new Position(3, 8)),
+                Arguments.of(new Queen('q', Team.WHITE, new Position(4, 1)), new Position(4, 1)),
+                Arguments.of(new Queen('Q', Team.BLACK, new Position(4, 8)), new Position(4, 8)),
+                Arguments.of(new King('k', Team.WHITE, new Position(5, 1)), new Position(5, 1)),
+                Arguments.of(new King('K', Team.BLACK, new Position(5, 8)), new Position(5, 8))
         );
     }
 }
