@@ -22,7 +22,7 @@ public abstract class SingleStep extends Piece {
                 possiblePositions.add(nextPosition);
             }
 
-            if (board.isOtherTeam(position, nextPosition)) {
+            if (isInBoardRange(nextPosition) && board.isOtherTeam(position, nextPosition)) {
                 possiblePositions.add(nextPosition);
             }
         }

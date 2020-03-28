@@ -25,6 +25,10 @@ public abstract class Piece {
         return position;
     }
 
+    public boolean isMovable(Board board, Position to) {
+        return getPossiblePositions(board).contains(to);
+    }
+
     public boolean isOtherTeam(Piece nextPiece) {
         return this.team.isNotSame(nextPiece.team);
     }

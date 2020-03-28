@@ -22,6 +22,7 @@ public abstract class MultipleStep extends Piece {
                 possiblePositions.add(nextPosition);
                 nextPosition = direction.move(nextPosition);
             }
+
             if (isInBoardRange(nextPosition) && board.isOtherTeam(position, nextPosition)) {
                 possiblePositions.add(nextPosition);
             }

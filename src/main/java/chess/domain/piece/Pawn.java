@@ -29,13 +29,13 @@ public abstract class Pawn extends Piece {
             if (isForwardDirection(direction, team.getForwardDirection())) {
                 if (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
                     possiblePositions.add(nextPosition);
-                    if (isFirstMove(team.getInitialPawnRow())) {
-                        possiblePositions.add(direction.move(nextPosition));
-                    }
+                }
+                if (isFirstMove(team.getInitialPawnRow())) {
+                    possiblePositions.add(direction.move(nextPosition));
                 }
             }
 
-            if (board.isOtherTeam(position, nextPosition)) {
+            if (isInBoardRange(nextPosition) && board.isOtherTeam(position, nextPosition)) {
                 possiblePositions.add(nextPosition);
             }
         }

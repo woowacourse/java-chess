@@ -18,7 +18,8 @@
     - [x] 체스 말 표식 representation 으로 화이트/블랙 구분
     - [x] 각 체스 말(Pawn, Rook, Knight, Bishop, Queen, King)이 현재 포지션을 가지고 있음
     - [x] Blank Piece 를 추가하여 .으로 표시되는 보드 상의 공백 부분을 나타냄
-    - [ ] to position 을 받아서 이동 가능한지 확인
+    - [x] 이동 가능 한 포지션들 추출
+    - [x] to position 을 받아서 이동 가능한지 확인
     - [ ] 이동 가능 여부 출력. 
     - [ ] 이동 불가능 하면 예외 발생.
 - [ ] BoardFactory

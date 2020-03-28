@@ -24,5 +24,4 @@ public class WhitePawn extends Pawn {
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }
-
 }
