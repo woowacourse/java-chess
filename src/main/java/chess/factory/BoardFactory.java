@@ -17,20 +17,26 @@ public class BoardFactory {
     public static Board createBoard() {
         List<Row> board = new ArrayList<>();
 
-        addTeamRow(board, WHITE);
+        addWhiteTeamRow(board);
         addBlankRows(board);
-        addTeamRow(board, BLACK);
+        addBlackTeamRow(board);
         return new Board(board);
     }
 
-    private static void addTeamRow(List<Row> board, Team team) {
-        if (team == WHITE) {
-            addMainPieces(board, team);
-            addPawn(board, team);
-            return;
+    private static void addWhiteTeamRow(List<Row> board) {
+        addMainPieces(board, WHITE);
+        addPawn(board, WHITE);
+    }
+
+    private static void addBlankRows(List<Row> board) {
+        for (int i = 0; i < 4; i++) {
+            addBlankRow(board);
         }
-        addPawn(board, team);
-        addMainPieces(board, team);
+    }
+
+    private static void addBlackTeamRow(List<Row> board) {
+        addPawn(board, BLACK);
+        addMainPieces(board, BLACK);
     }
 
     private static void addMainPieces(List<Row> board, Team team) {
@@ -54,12 +60,6 @@ public class BoardFactory {
             chessPieces.add(new Pawn(team));
         }
         board.add(Row.of(chessPieces));
-    }
-
-    private static void addBlankRows(List<Row> board) {
-        for (int i = 0; i < 4; i++) {
-            addBlankRow(board);
-        }
     }
 
     private static void addBlankRow(List<Row> board) {
