@@ -44,6 +44,14 @@ public enum Ypoint {
 		return this.yPointValue - yPoint.yPointValue;
 	}
 
+	public boolean isTwo() {
+		return this == TWO;
+	}
+
+	public boolean isSeven() {
+		return this == SEVEN;
+	}
+
 	public int getValue() {
 		return yPointValue;
 	}

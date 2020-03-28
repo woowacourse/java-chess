@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.piece.direction.Direction;
-
 import java.util.Objects;
 
 import static chess.util.NullValidator.validateNull;
@@ -26,8 +24,16 @@ public class Position {
         this.yPoint = Ypoint.of(Integer.parseInt(String.valueOf(position.charAt(1))));
     }
 
+    public int getXPointGap(Position targetPosition) {
+        return targetPosition.xPoint.getGapValue(this.xPoint);
+    }
+
+    public int getYPointGap(Position targetPosition) {
+        return targetPosition.yPoint.getGapValue(this.yPoint);
+    }
+
     public int getXPointDirectionValueTo(Position targetPosition) {
-        int xPointGap = targetPosition.xPoint.getGapValue(this.xPoint);
+        int xPointGap = getXPointGap(targetPosition);
         if (xPointGap == 0) {
             return xPointGap;
         }
@@ -35,18 +41,35 @@ public class Position {
     }
 
     public int getYPointDirectionValueTo(Position targetPosition) {
-        int yPointGap = targetPosition.yPoint.getGapValue(this.yPoint);
+        int yPointGap = getYPointGap(targetPosition);
         if (yPointGap == 0) {
             return yPointGap;
         }
         return yPointGap / Math.abs(yPointGap);
     }
 
-    public void plus(Direction direction) {
-        validateNull(direction);
+    public boolean isDifferentXPoint(Position position) {
+        return this.xPoint != position.xPoint;
+    }
 
-        this.xPoint = Xpoint.of(direction.getXPoint() + this.xPoint.getValue());
-        this.yPoint = Ypoint.of(direction.getYPoint() + this.yPoint.getValue());
+    public boolean isDifferentYPoint(Position position) {
+        return this.yPoint != position.yPoint;
+    }
+
+    public boolean isYPointEqualsTwo() {
+        return this.yPoint.isTwo();
+    }
+
+    public boolean isYPointEqualsSeven() {
+        return this.yPoint.isSeven();
+    }
+
+    public Xpoint getXPoint() {
+        return xPoint;
+    }
+
+    public Ypoint getYPoint() {
+        return yPoint;
     }
 
     @Override
