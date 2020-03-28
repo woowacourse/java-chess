@@ -28,7 +28,7 @@ public class Board {
         Route route = piece.findRoute(fromPosition, toPosition);
 
         MovingExecutor movingExecutor = MovingExecutorFactory.from(piece);
-        movingExecutor.move(route, board, toPosition, fromPosition);
+        movingExecutor.move(route, board, fromPosition, toPosition);
     }
 
     public Pieces findPiecesOf(Team team) {
@@ -53,6 +53,10 @@ public class Board {
         }
 
         return Collections.unmodifiableList(resultBoard);
+    }
+
+    public Piece findPieceBy(Position position) {
+        return board.get(position);
     }
 
     private void addAcronymToRow(List<List<String>> result, Rank rank) {

@@ -17,10 +17,10 @@ class RouteFinderTest {
 
     @ParameterizedTest
     @MethodSource("createPositionAndPieceType")
-    void findRoute() {
-        Route foundRoute = RouteFinder.findRoute(Position.of("a2"), Position.of("a3"), Team.WHITE, PieceType.PAWN);
+    void findRoute(Position fromPosition, Position toPosition, Team team, PieceType pieceType, Route expected) {
+        Route foundRoute = RouteFinder.findRoute(fromPosition, toPosition, team, pieceType);
 
-        assertThat(foundRoute).isEqualTo(Route.emptyRoute());
+        assertThat(foundRoute).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createPositionAndPieceType() {

@@ -4,6 +4,7 @@ import chess.domain.Pieces;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.position.Position;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,6 +16,24 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
+
+    @ParameterizedTest
+    @MethodSource("createFromPositionAndToPosition")
+    void move(Position fromPosition, Position toPosition) {
+        Board board = BoardFactory.createInitially();
+        Piece pieceToMove = board.findPieceBy(fromPosition);
+        board.move(fromPosition, toPosition);
+
+        assertThat(board.findPieceBy(fromPosition)).isNull();
+        assertThat(board.findPieceBy(toPosition)).isEqualTo(pieceToMove);
+    }
+
+    private static Stream<Arguments> createFromPositionAndToPosition() {
+        return Stream.of(
+                Arguments.of(Position.of("b2"), Position.of("b3"))
+        );
+    }
+
 
     @ParameterizedTest
     @MethodSource("createTeamAndPieces")

@@ -49,7 +49,10 @@ class RouteTest {
                         new Route(Arrays.asList(
                                 Position.of("c3"),
                                 Position.of("d5"),
-                                Position.of("e7"))))
+                                Position.of("e7")))),
+                Arguments.of(Position.of("b1"), Direction.NORTH, PieceType.PAWN,
+                        new RouteToProceed(Arrays.asList(
+                                Position.of("b2"))))
         );
     }
 

@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Route implements Movable {
-    private final List<Position> route;
+public class Route {
+    private List<Position> route;
 
     public Route(List<Position> route) {
         this.route = route;
@@ -37,9 +37,9 @@ public class Route implements Movable {
     private static List<Position> subListByPieceType(List<Position> movablePositions, Position fromPosition, PieceType pieceType) {
         if (pieceType == PieceType.PAWN) {
             if (fromPosition.isAt(Rank.TWO)) {
-                movablePositions = movablePositions.subList(0, 2);
+                return movablePositions.subList(0, 2);
             }
-            movablePositions = movablePositions.subList(0, 1);
+            return movablePositions.subList(0, 1);
         }
 
         if (pieceType == PieceType.KING) {
@@ -70,8 +70,8 @@ public class Route implements Movable {
     }
 
     Route cutBefore(Position position) {
-        List<Position> cutRoute = route.subList(0, route.indexOf(position));
-        return new Route(cutRoute);
+        route = route.subList(0, route.indexOf(position));
+        return this;
     }
 
     public List<Position> getRoute() {
