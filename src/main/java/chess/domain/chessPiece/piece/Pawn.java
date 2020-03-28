@@ -13,8 +13,6 @@ public class Pawn extends Piece {
 	private static final String ERROR_MESSAGE_UNSUPPORTED_METHOD = "지원하지 않는 메소드 입니다";
 	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 
-	private final double score = PAWN_SCORE;
-
 	public Pawn(Position position, TeamStrategy teamStrategy) {
 		super(position, teamStrategy);
 	}
@@ -94,7 +92,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public double getScore() {
-		return score;
+		return PAWN_SCORE;
 	}
 
 	public boolean isBlackTeam() {

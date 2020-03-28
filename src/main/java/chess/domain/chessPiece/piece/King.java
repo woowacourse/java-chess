@@ -10,8 +10,6 @@ public class King extends Piece {
 	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 	private static final int KING_SCORE = 0;
 
-	private final double score = KING_SCORE;
-
 	public King(Position position, TeamStrategy teamStrategy) {
 		super(position, teamStrategy);
 	}
@@ -32,6 +30,6 @@ public class King extends Piece {
 
 	@Override
 	public double getScore() {
-		return score;
+		return KING_SCORE;
 	}
 }

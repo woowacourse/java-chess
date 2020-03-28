@@ -9,8 +9,6 @@ public class Bishop extends Piece {
 	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 	private static final int BISHOP_SCORE = 3;
 
-	private final double score = BISHOP_SCORE;
-
 	public Bishop(Position position, TeamStrategy teamStrategy) {
 		super(position, teamStrategy);
 	}
@@ -30,6 +28,6 @@ public class Bishop extends Piece {
 
 	@Override
 	public double getScore() {
-		return score;
+		return BISHOP_SCORE;
 	}
 }

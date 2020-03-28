@@ -9,8 +9,6 @@ public class Rook extends Piece {
 	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 	private static final int ROOK_SCORE = 5;
 
-	private final double score = ROOK_SCORE;
-
 	public Rook(Position position, TeamStrategy teamStrategy) {
 		super(position, teamStrategy);
 	}
@@ -30,6 +28,6 @@ public class Rook extends Piece {
 
 	@Override
 	public double getScore() {
-		return score;
+		return ROOK_SCORE;
 	}
 }
