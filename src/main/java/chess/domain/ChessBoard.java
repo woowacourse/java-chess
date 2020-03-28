@@ -54,7 +54,7 @@ public class ChessBoard {
 
 	private boolean canPawnAttack(Position source, Position target) {
 		return findByPosition(source).isPawn() && source.isInDiagonal(target) && source.isInDistance(1,
-				target) && findByPosition(source).isAttackForward(
+				target) && findByPosition(source).isForwardAttack(
 				target) && isPresentPiece(target) && !findByPosition(source).isSameSide(findByPosition(target));
 	}
 

@@ -12,20 +12,20 @@ public enum Side {
 
 	private Row initPawnRow;
 	private Row initNobleRow;
-	private BiPredicate<Position, Position> attackForwardFilter;
+	private BiPredicate<Position, Position> forwardAttackFilter;
 
-	Side(Row initPawnRow, Row initNobleRow, BiPredicate<Position, Position> attackForwardFilter) {
+	Side(Row initPawnRow, Row initNobleRow, BiPredicate<Position, Position> forwardAttackFilter) {
 		this.initPawnRow = initPawnRow;
 		this.initNobleRow = initNobleRow;
-		this.attackForwardFilter = attackForwardFilter;
+		this.forwardAttackFilter = forwardAttackFilter;
 	}
 
 	public boolean isInitPawnRow(Position position) {
 		return position.isSameRow(initPawnRow);
 	}
 
-	public boolean isAttackForward(Position source, Position target) {
-		return attackForwardFilter.test(source, target);
+	public boolean isForwardAttack(Position source, Position target) {
+		return forwardAttackFilter.test(source, target);
 	}
 
 	public Side reverse() {
