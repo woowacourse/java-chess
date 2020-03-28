@@ -2,8 +2,6 @@ package chess.domain.piece.pawn;
 
 import chess.domain.board.Board;
 import chess.domain.piece.move.CanNotMoveStrategy;
-import chess.domain.position.Direction;
-import chess.domain.position.Distance;
 import chess.domain.piece.Piece;
 import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
@@ -13,7 +11,7 @@ import java.util.List;
 
 //todo: add tests
 public class InitializedPawn extends Initialized {
-    static final int MAX_DISTANCE = 2;
+    public static final int MAX_DISTANCE = 2;
 
     public InitializedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
         super(name, position, team, canNotMoveStrategies);
