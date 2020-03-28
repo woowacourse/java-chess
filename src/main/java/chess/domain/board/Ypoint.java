@@ -44,7 +44,7 @@ public enum Ypoint {
 		return this.yPointValue - yPoint.yPointValue;
 	}
 
-	private int getValue() {
+	public int getValue() {
 		return yPointValue;
 	}
 }

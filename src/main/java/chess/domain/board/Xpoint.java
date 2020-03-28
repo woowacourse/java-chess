@@ -44,7 +44,7 @@ public enum Xpoint {
 		return this.xPointValue - xpoint.xPointValue;
 	}
 
-	private int getValue() {
+	public int getValue() {
 		return xPointValue;
 	}
 }
