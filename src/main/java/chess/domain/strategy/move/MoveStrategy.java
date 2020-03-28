@@ -8,12 +8,11 @@ import chess.domain.strategy.move.direction.Direction;
 import java.util.List;
 
 public abstract class MoveStrategy {
-
-    protected boolean isSamePosition(Position source, Position target) {
+    protected boolean isSamePosition(final Position source, final Position target) {
         return source.equals(target);
     }
 
-    protected boolean checkObstacle(Position source, Position target, Board board) {
+    protected boolean checkObstacle(final Position source, final Position target, final Board board) {
         Direction direction = Direction.findDirection(source, target);
         List<Position> path = direction.findPath(source, target);
 
@@ -21,7 +20,7 @@ public abstract class MoveStrategy {
                 .allMatch(board::isEmpty);
     }
 
-    protected boolean checkTarget(Position source, Position target, Board board) {
+    protected boolean checkTarget(final Position source, final Position target, final Board board) {
         Piece sourcePiece = board.getPiece(source);
         if (board.isEmpty(target)) {
             return true;
@@ -30,5 +29,5 @@ public abstract class MoveStrategy {
         return sourcePiece.isEnemy(targetPiece);
     }
 
-    public abstract boolean movable(Position source, Position target, Board board);
+    public abstract boolean movable(final Position source, final Position target, final Board board);
 }

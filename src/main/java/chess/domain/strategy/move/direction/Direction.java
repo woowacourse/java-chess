@@ -16,24 +16,25 @@ public enum Direction {
     RIGHT_UP(new RightUpStrategy(), (fileGap, rankGap) -> fileGap > 0 && rankGap > 0),
     RIGHT_DOWN(new RightDownStrategy(), (fileGap, rankGap) -> fileGap > 0 && rankGap < 0);
 
-    private DirectionStrategy directionStrategy;
-    private BiPredicate<Integer, Integer> condition;
+    private final DirectionStrategy directionStrategy;
+    private final BiPredicate<Integer, Integer> condition;
 
     Direction(DirectionStrategy directionStrategy, BiPredicate<Integer, Integer> condition) {
         this.directionStrategy = directionStrategy;
         this.condition = condition;
     }
 
-    public static Direction findDirection(Position source, Position target) {
+    public static Direction findDirection(final Position source, final Position target) {
         int fileGap = target.calculateFileGap(source);
         int rankGap = target.calculateRankGap(source);
+
         return Arrays.stream(values())
                 .filter(direction -> direction.condition.test(fileGap, rankGap))
                 .findFirst()
                 .orElseThrow(AssertionError::new);
     }
 
-    public List<Position> findPath(Position source, Position target) {
+    public List<Position> findPath(final Position source, final Position target) {
         return this.directionStrategy.findPath(source, target);
     }
 }

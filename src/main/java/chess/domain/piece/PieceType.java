@@ -22,7 +22,7 @@ public enum PieceType {
         this.moveStrategy = moveStrategy;
     }
 
-    public boolean movable(Position source, Position target, Board board) {
+    public boolean movable(final Position source, final Position target, final Board board) {
         return this.moveStrategy.movable(source, target, board);
     }
 

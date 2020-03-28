@@ -20,14 +20,14 @@ public enum File {
         this.number = number;
     }
 
-    public static File of(String file) {
+    public static File of(final String file) {
         return Arrays.stream(values())
                 .filter(f -> f.symbol == file.toLowerCase().charAt(0))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 x 좌표값을 입력하였습니다."));
     }
 
-    public static File of(int file) {
+    public static File of(final int file) {
         return Arrays.stream(values())
                 .filter(f -> f.number == file)
                 .findFirst()

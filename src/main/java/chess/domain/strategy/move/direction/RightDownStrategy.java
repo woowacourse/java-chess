@@ -5,10 +5,10 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RightDownStrategy implements DirectionStrategy {
+public final class RightDownStrategy implements DirectionStrategy {
 
     @Override
-    public List<Position> findPath(Position source, Position target) {
+    public List<Position> findPath(final Position source, final Position target) {
         List<Position> path = new ArrayList<>();
 
         for (int i = target.getFile() - 1; i > source.getFile(); i--) {

@@ -5,12 +5,12 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-public class PawnMoveStrategy extends MoveStrategy {
+public final class PawnMoveStrategy extends MoveStrategy {
     private static final int WHITE_POSITION = 2;
     private static final int BLACK_POSITION = 7;
 
     @Override
-    public boolean movable(Position source, Position target, Board board) {
+    public boolean movable(final Position source, final Position target, final Board board) {
         if (isSamePosition(source, target)) {
             return false;
         }

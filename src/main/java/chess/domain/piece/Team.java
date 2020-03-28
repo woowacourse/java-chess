@@ -12,7 +12,7 @@ public enum Team {
         this.expression = expression;
     }
 
-    public static Team changeTeam(Team team) {
+    public static Team changeTeam(final Team team) {
         if (team == BLACK) {
             return WHITE;
         }
@@ -23,7 +23,7 @@ public enum Team {
         return this.expression.apply(name);
     }
 
-    public boolean isSameTeamWith(Team team) {
+    public boolean isSameTeamWith(final Team team) {
         return this == team;
     }
 

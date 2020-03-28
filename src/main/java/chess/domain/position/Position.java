@@ -59,12 +59,11 @@ public class Position {
         return Collections.unmodifiableList(parseResult);
     }
 
-    public int calculateFileGap(Position target) {
-        int fileGap = this.file.compareTo(target.file);
-        return fileGap;
+    public int calculateFileGap(final Position target) {
+        return this.file.compareTo(target.file);
     }
 
-    public int calculateRankGap(Position target) {
+    public int calculateRankGap(final Position target) {
         return this.rank.getDifference(target.rank);
     }
 

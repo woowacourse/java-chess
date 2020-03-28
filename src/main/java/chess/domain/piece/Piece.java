@@ -16,15 +16,15 @@ public class Piece {
         return this.team.symbolize(this.pieceType.getSymbol());
     }
 
-    public boolean movable(Position source, Position target, Board board) {
+    public boolean movable(final Position source, final Position target, final Board board) {
         return this.pieceType.movable(source, target, board);
     }
 
-    public boolean isEnemy(Piece targetPiece) {
+    public boolean isEnemy(final Piece targetPiece) {
         return !this.team.isSameTeamWith(targetPiece.getTeam());
     }
 
-    public boolean isEnemy(Team team) {
+    public boolean isEnemy(final Team team) {
         return !this.team.isSameTeamWith(team);
     }
 

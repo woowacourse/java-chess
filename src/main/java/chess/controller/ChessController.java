@@ -48,7 +48,7 @@ public class ChessController {
         }
     }
 
-    private static boolean findWinner(ChessRunner chessRunner) {
+    private static boolean findWinner(final ChessRunner chessRunner) {
         Team winner = chessRunner.findWinner();
         if (winner != null) {
             outputView.printWinner(winner);
@@ -57,7 +57,7 @@ public class ChessController {
         return true;
     }
 
-    private static void printBoard(Board board) {
+    private static void printBoard(final Board board) {
         BoardDto boardDto = new BoardDto(board.parse());
         PositionDto positionDto = new PositionDto(Position.getPositions());
         outputView.printBoard(positionDto.getPositions(), boardDto.get());

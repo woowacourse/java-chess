@@ -18,25 +18,25 @@ public enum Rank {
         this.symbol = symbol;
     }
 
-    public static Rank of(String rank) {
+    public static Rank of(final String rank) {
         return Arrays.stream(values())
                 .filter(pv -> pv.symbol == Integer.parseInt(rank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 y 좌표값을 입력하였습니다."));
     }
 
-    public static Rank of(int rank) {
+    public static Rank of(final int rank) {
         return Arrays.stream(values())
                 .filter(f -> f.symbol == rank)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 y 좌표값을 입력하였습니다."));
     }
 
-    public int getSymbol() {
-        return this.symbol;
+    public int getDifference(final Rank rank) {
+        return this.symbol - rank.symbol;
     }
 
-    public int getDifference(Rank rank) {
-        return this.symbol - rank.symbol;
+    public int getSymbol() {
+        return this.symbol;
     }
 }
