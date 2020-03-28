@@ -19,15 +19,4 @@ public class Position {
     public Column getColumn() {
         return column;
     }
-
-    public static String key(Position position) {
-        return key(position.getRow(), position.getColumn());
-    }
-
-    public static String key(Row row, Column column) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(row.getValue());
-        stringBuffer.append(column.getValue());
-        return stringBuffer.toString();
-    }
 }

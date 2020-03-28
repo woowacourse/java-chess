@@ -11,8 +11,9 @@ import java.util.Arrays;
 public class Rook extends Piece {
     private static final int MOVABLE_ROW_SIZE = Row.values().length;
     private static final int MOVABLE_COLUMN_SIZE = Column.values().length;
+    private static final String ROOK_NAME = "ROOK";
 
-    private static PieceInfo pieceInfo = PieceInfo.valueOf("ROOK");
+    private static PieceInfo pieceInfo = PieceInfo.valueOf(ROOK_NAME);
 
     public Rook(Player player) {
         super(player, pieceInfo);

@@ -1,7 +1,9 @@
 package chess.domain.chesspieces;
 
-import chess.domain.ChessBoard;
+import chess.Exceptions.IllegalPlayerException;
 import chess.domain.Player;
+
+import java.util.Objects;
 
 public enum PieceInfo {
     KING("K", "k", 0),
@@ -11,7 +13,7 @@ public enum PieceInfo {
     KNIGHT("N", "n", 2.5),
     PAWN("P", "p", 1);
 
-    public static final double PAWN_DIFF = 0.5;
+    public static final double PAWN_SCORE_DIFF = 0.5;
 
     private final String blackName;
     private final String whiteName;
@@ -24,13 +26,14 @@ public enum PieceInfo {
     }
 
     public String getName(Player player) {
+        Objects.requireNonNull(player);
         if (player == Player.WHITE){
             return this.whiteName;
         }
         if (player == Player.BLACK) {
             return this.blackName;
         }
-        throw new IllegalArgumentException("처리할 수 없는 사용자입니다.");
+        throw new IllegalPlayerException();
     }
 
     public double getScore() {

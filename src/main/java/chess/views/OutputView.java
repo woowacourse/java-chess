@@ -14,17 +14,11 @@ public class OutputView {
     private final static int OFFSET = Row.values().length;
 
     public static void printInitialGuide() {
-        StringBuilder initialGuide = new StringBuilder();
-        initialGuide.append("> 체스 게임을 시작합니다.")
-                .append(NEW_LINE)
-                .append("> 게임 시작 : start")
-                .append(NEW_LINE)
-                .append("> 게임 종료 : end")
-                .append(NEW_LINE)
-                .append("> 게임 이동 : move source 위치 target위치 - 예. move b2 b3")
-                .append(NEW_LINE)
-                .append("> 게임 상황 : status");
-        System.out.println(initialGuide.toString());
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 종료 : end");
+        System.out.println("> 게임 이동 : move source 위치 target위치 - 예. move b2 b3");
+        System.out.println("> 게임 상황 : status");
     }
 
     public static void printChessBoard(Map<Position, Square> chessBoard) {
@@ -41,11 +35,10 @@ public class OutputView {
             stringBuilder.insert(0, NEW_LINE);
         }
         stringBuilder.append(NEW_LINE);
+
         System.out.println(stringBuilder.toString());
     }
 
-    // 각 플레어의 점수
-    // 승패 결과
     public static void printStatus(Result result) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Status status : result.getStatuses()) {

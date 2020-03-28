@@ -1,5 +1,6 @@
 package chess.domain.chesspieces;
 
+import chess.Exceptions.NotMoveException;
 import chess.domain.Player;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
@@ -9,13 +10,13 @@ import chess.domain.position.component.Row;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Pawn extends Piece {
     private static final int AVAILABLE_ROW_MOVE_DIFF = 1;
     private static final int INIT_AVAILABLE_COLUMN_DIFF = 1;
     private static final int AVAILABLE_COLUMN_DIFF = 2;
-    private static final PieceInfo PIECE_INFO = PieceInfo.valueOf("PAWN");
+    private static final String PAWN_NAME = "PAWN";
+    private static final PieceInfo PIECE_INFO = PieceInfo.valueOf(PAWN_NAME);
 
     private final List<Direction> attackDirections = new ArrayList<>();
 
@@ -43,15 +44,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean movable(Position from, Position to) {
-        Objects.requireNonNull(from);
-        Objects.requireNonNull(to);
-        return hasDirection(Direction.getDirection(from, to))
-                && validateMovableTileSize(from, to);
-    }
-
-    // 상수에 대한 이름 수정 리팩토링
-    @Override
     public boolean validateMovableTileSize(Position from, Position to) {
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
@@ -62,23 +54,18 @@ public class Pawn extends Piece {
         return Math.abs(rowDiff) <= AVAILABLE_ROW_MOVE_DIFF && Math.abs(columnDiff) <= availableColumnDiff;
     }
 
-    // (예외 상황) 대각선 공격 (1) 대각선이여야 하고, (2) 같은 편이 아니여야 한다.
     public boolean validateAttack(Square target, Direction direction) {
-        if(target.getClass() == Empty.class){
+        if (target.getClass() == Empty.class) {
             return false;
         }
 
         if (attackDirections.contains(direction)) {
             return !isSamePlayer(target);
         }
-        return true;
+        throw new NotMoveException("잘못된 이동입니다.");
     }
 
-    // (예외 상황) 전진일 때 empty여야 한다.
     public boolean validateMoveForward(Square target, Direction direction) {
-        if (direction == forwardDirection) {
-            return target.getClass() == Empty.class;
-        }
-        return true;
+        return direction == forwardDirection && target.getClass() == Empty.class;
     }
 }

@@ -8,12 +8,12 @@ import chess.domain.position.component.Row;
 
 import java.util.Arrays;
 
-// 대각선
 public class Bishop extends Piece {
     private static final int MOVABLE_ROW_SIZE = Row.values().length;
     private static final int MOVABLE_COLUMN_SIZE = Column.values().length;
+    private static final String BISHOP_NAME = "BISHOP";
 
-    private static PieceInfo pieceInfo = PieceInfo.valueOf("BISHOP");
+    private static PieceInfo pieceInfo = PieceInfo.valueOf(BISHOP_NAME);
 
     public Bishop(Player player) {
         super(player, pieceInfo);

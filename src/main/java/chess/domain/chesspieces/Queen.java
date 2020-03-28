@@ -11,8 +11,9 @@ import java.util.Arrays;
 public class Queen extends Piece {
     private static final int MOVABLE_ROW_SIZE = Row.values().length;
     private static final int MOVABLE_COLUMN_SIZE = Column.values().length;
+    private static final String QUEEN_NAME = "QUEEN";
 
-    private static PieceInfo pieceInfo = PieceInfo.valueOf("QUEEN");
+    private static PieceInfo pieceInfo = PieceInfo.valueOf(QUEEN_NAME);
 
     public Queen(Player player) {
         super(player, pieceInfo);

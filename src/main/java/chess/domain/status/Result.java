@@ -4,12 +4,14 @@ import chess.domain.Player;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public class Result {
     private final List<Status> statuses;
     private final Player winner;
 
     public Result(List<Status> statuses) {
+        Objects.requireNonNull(statuses);
         this.statuses = statuses;
         this.winner = createWinner();
     }

@@ -1,3 +1,4 @@
+import chess.Exceptions.NotMoveException;
 import chess.domain.status.Result;
 import chess.domain.status.Status;
 import chess.domain.ChessBoard;
@@ -37,7 +38,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
         Position position = Positions.of("a1");
         assertThatThrownBy(() -> chessBoard.move(position, position))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(NotMoveException.class);
     }
 
     @DisplayName("각각의_플레이어_점수_계산_테스트")

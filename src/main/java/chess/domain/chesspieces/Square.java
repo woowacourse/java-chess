@@ -19,5 +19,4 @@ public abstract class Square {
     public abstract boolean movable(Position from, Position to);
 
     public abstract boolean isSamePlayer(Square target);
-
 }
