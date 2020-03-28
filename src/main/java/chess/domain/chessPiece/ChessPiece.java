@@ -45,7 +45,7 @@ public abstract class ChessPiece implements Movable, Catchable {
 		return this.pieceColor.equals(chessPiece.pieceColor);
 	}
 
-	public boolean isSamePieceColorWith(PieceColor pieceColor) {
+	public boolean isSame(PieceColor pieceColor) {
 		return this.pieceColor.equals(pieceColor);
 	}
 

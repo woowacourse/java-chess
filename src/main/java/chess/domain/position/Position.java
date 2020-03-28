@@ -78,8 +78,12 @@ public class Position {
 		return this.chessRank.intervalTo(targetPosition.chessRank);
 	}
 
-	public boolean isSameFilePosition(ChessFile chessFile) {
+	public boolean isSame(ChessFile chessFile) {
 		return this.chessFile.equals(chessFile);
+	}
+
+	public boolean isSame(ChessRank chessRank) {
+		return this.chessRank.equals(chessRank);
 	}
 
 	@Override

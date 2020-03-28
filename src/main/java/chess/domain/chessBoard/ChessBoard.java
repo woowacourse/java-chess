@@ -9,9 +9,11 @@ import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.pieceType.Pawn;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.ChessFile;
+import chess.domain.position.ChessRank;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
+// TODO: 2020/03/28 ChessBoard 책임 분리하기 -> 경로 확인, 계산 부분
 public class ChessBoard {
 
 	private final Map<Position, ChessPiece> chessBoard;
@@ -110,28 +112,38 @@ public class ChessBoard {
 
 	public double calculateScoreOf(PieceColor pieceColor) {
 		return ChessFile.values().stream()
-			.map(chessFile -> getChessPiecesOn(chessFile, pieceColor))
-			.mapToDouble(this::calculateTotalScore)
+			.map(chessFile -> findChessPieceOn(chessFile, pieceColor))
+			.mapToDouble(this::calculateScoreOf)
 			.sum();
 	}
 
-	private Stream<ChessPiece> getChessPiecesOn(ChessFile chessFile, PieceColor pieceColor) {
+	private Stream<ChessPiece> findChessPieceOn(ChessFile chessFile, PieceColor pieceColor) {
 		return chessBoard.entrySet().stream()
-			.filter(entry -> entry.getKey().isSameFilePosition(chessFile))
+			.filter(entry -> entry.getKey().isSame(chessFile))
 			.map(Map.Entry::getValue)
-			.filter(chessPiece -> chessPiece.isSamePieceColorWith(pieceColor));
+			.filter(chessPiece -> chessPiece.isSame(pieceColor));
 	}
 
-	private double calculateTotalScore(Stream<ChessPiece> chessPieceStream) {
-		double totalScore = chessPieceStream.mapToDouble(ChessPiece::getScore).sum();
+	private double calculateScoreOf(Stream<ChessPiece> chessPieces) {
+		Stream<ChessPiece> pawns = chessPieces.filter(chessPiece -> chessPiece instanceof Pawn);
+		double pawnsScore = pawns.mapToDouble(ChessPiece::getScore)
+			.sum();
+		double excludingPawnScore = chessPieces.filter(chessPiece -> !(chessPiece instanceof Pawn))
+			.mapToDouble(ChessPiece::getScore)
+			.sum();
 
-		Stream<ChessPiece> pawns = chessPieceStream.filter(chessPiece -> chessPiece instanceof Pawn);
-		double pawnTotalScore = pawns.mapToDouble(ChessPiece::getScore).sum();
-
-		if (pawns.count() > 1) {
-			return totalScore - (pawnTotalScore / 2);
+		if (pawns.count() <= Pawn.PAWN_STANDARD_SCORE_BOUND) {
+			return excludingPawnScore + pawnsScore;
 		}
-		return totalScore;
+		return excludingPawnScore + (pawnsScore / 2);
+	}
+
+	public boolean contains(ChessFile chessFile, ChessRank chessRank) {
+		return chessBoard.containsKey(Position.of(chessFile, chessRank));
+	}
+
+	public String getChessPieceNameAt(ChessFile chessFile, ChessRank chessRank) {
+		return chessBoard.get(Position.of(chessFile, chessRank)).toString();
 	}
 
 }

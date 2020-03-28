@@ -6,6 +6,7 @@ import chess.domain.chessPiece.pieceState.State;
 public class Pawn extends ChessPiece {
 
 	public static final String NAME = "P";
+	public static final int PAWN_STANDARD_SCORE_BOUND = 1;
 	private static final int SCORE = 1;
 
 	public Pawn(PieceColor pieceColor, State state) {

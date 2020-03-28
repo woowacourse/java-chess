@@ -12,7 +12,6 @@ public class InitialState extends PieceState {
 
 	@Override
 	public State shiftNextState(PieceColor pieceColor) {
-
 		if (this.ruleStrategy instanceof PawnRuleStrategy) {
 			return new MovedState(pieceColor.getPawnRuleStrategyBy(PawnRuleStrategy.MOVED_STATE_MOVABLE_RANGE));
 		}
