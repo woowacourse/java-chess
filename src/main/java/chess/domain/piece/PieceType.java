@@ -8,6 +8,9 @@ public enum PieceType {
     QUEEN(9.0, "q"),
     KING(0.0, "k");
 
+    public static final String NONSUPPORT_TO_PAWN_MESSAGE = "폰이 사용할 수 없는 메서드입니다.";
+    public static final String ONLY_SUPPORT_TO_PAWN_MESSAGE = "폰만 사용할 수 있는 메서드입니다.";
+
     private double score;
     private String expression;
 
@@ -26,5 +29,26 @@ public enum PieceType {
 
     public boolean canMove() {
         return true;
+    }
+
+    public double score(boolean mustChange) {
+        if (this != PAWN) {
+            throw new UnsupportedOperationException(ONLY_SUPPORT_TO_PAWN_MESSAGE);
+        }
+        return scoring(mustChange);
+    }
+
+    private double scoring(boolean mustChange) {
+        if (mustChange) {
+            return 0.5;
+        }
+        return score;
+    }
+
+    public double score() {
+        if (this == PAWN) {
+            throw new UnsupportedOperationException(NONSUPPORT_TO_PAWN_MESSAGE);
+        }
+        return score;
     }
 }
