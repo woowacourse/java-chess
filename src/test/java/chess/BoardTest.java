@@ -60,7 +60,7 @@ public class BoardTest {
     @ParameterizedTest
     @MethodSource("inputAndPositionProvider")
     void upperCaseTest(String input, Position position) {
-		assertThat(Position.of(input)).isEqualTo(position);
+        assertThat(Position.of(input)).isEqualTo(position);
     }
 
     @DisplayName("move메서드를 실행하면 Map이 수정되는지 테스트")
@@ -68,7 +68,7 @@ public class BoardTest {
     void moveTest() {
         Position from = Position.of(A, ONE);
         Position to = Position.of(A, TWO);
-        board.move(from, to);
+        board.move(board.getPieces(), from, to);
         assertThat(board.getPiece(to)).isEqualTo(rook);
     }
 }

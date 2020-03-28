@@ -50,12 +50,12 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected String getInitialCharacter() {
-		return this.initialCharacter;
+	public void updateHasMoved() {
+		this.hasMoved = true;
 	}
 
 	@Override
-	public void updateHasMoved() {
-		this.hasMoved = true;
+	public List<Position> getMovablePositionsRegardlessOtherPieces(Position position) {
+		return null;
 	}
 }

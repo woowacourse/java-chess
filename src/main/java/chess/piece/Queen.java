@@ -13,6 +13,11 @@ public class Queen extends Piece {
 	}
 
 	@Override
+	public List<Position> getMovablePositionsRegardlessOtherPieces(Position position) {
+		return null;
+	}
+
+	@Override
 	public List<Position> findTraceBetween(Position start, Position end) {
 		if (start.isNotStraight(end) && start.isNotDiagonal(end)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
@@ -30,10 +35,5 @@ public class Queen extends Piece {
 		return ranks.stream()
 			.map(rank -> Position.of(start.getFile(), rank))
 			.collect(Collectors.toList());
-	}
-
-	@Override
-	protected String getInitialCharacter() {
-		return this.initialCharacter;
 	}
 }

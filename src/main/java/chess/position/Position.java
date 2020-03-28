@@ -119,6 +119,14 @@ public class Position {
                 == KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE;
     }
 
+    public File[] fileValuesWithDifferenceBelow(int distance){
+        return this.file.valuesWithDifferenceBelow(distance);
+    }
+
+    public Rank[] rankValuesWithDifferenceBelow(int distance){
+        return this.rank.valuesWithDifferenceBelow(distance);
+    }
+
     public File getFile() {
         return this.file;
     }
@@ -133,13 +141,5 @@ public class Position {
 
     public int getRankNumber() {
         return this.rank.getNumber();
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
     }
 }

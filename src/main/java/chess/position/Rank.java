@@ -71,6 +71,12 @@ public enum Rank {
 			.collect(Collectors.toList());
 	}
 
+	public Rank[] valuesWithDifferenceBelow(int distance) {
+		return Arrays.stream(values())
+				.filter(rank -> findDifference(rank) <= distance)
+				.toArray(Rank[]::new);
+	}
+
 	public String getName() {
 		return this.name;
 	}

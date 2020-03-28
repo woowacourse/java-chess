@@ -51,7 +51,6 @@ public class OutputView {
 
     private static String findSymbol(Piece piece) {
         return piece.getSymbol();
-
     }
 
     public static void printExceptionMessage(String message) {

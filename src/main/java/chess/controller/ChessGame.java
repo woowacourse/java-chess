@@ -26,29 +26,42 @@ public class ChessGame {
     private void requestCommand() {
         try {
             Command command = Command.beforeGameCommandOf(InputView.requestCommand());
-            if (command.isEnd()) {
-                System.exit(0);
-            }
+            terminateIfCommandIsEnd(command);
         } catch (CommandException e) {
             OutputView.printExceptionMessage(e.getMessage());
             requestCommand();
         }
     }
 
+    private void terminateIfCommandIsEnd(Command command) {
+        if (command.isEnd()) {
+            System.exit(0);
+        }
+    }
+
     private void play() {
         try {
             Command command = Command.inGameCommandOf(InputView.requestCommand());
-            if (command.isMove()) {
-                Position startPosition = Position.of(InputView.requestPosition());
-                Position endPosition = Position.of(InputView.requestPosition());
-                board.moveIfPossible(startPosition, endPosition);
-                OutputView.printBoard(board);
-            } else if (command.isStatus()) {
-                OutputView.printScores(board.calculateScores());
-            }
+            proceedIfCommandIsMove(command);
+            printScoresIfCommandIsState(command);
         } catch (CommandException | IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
             play();
+        }
+    }
+
+    private void proceedIfCommandIsMove(Command command) {
+        if (command.isMove()) {
+            Position source = Position.of(InputView.requestPosition());
+            Position target = Position.of(InputView.requestPosition());
+            board.moveIfPossible(source, target);
+            OutputView.printBoard(board);
+        }
+    }
+
+    private void printScoresIfCommandIsState(Command command) {
+        if (command.isStatus()) {
+            OutputView.printScores(board.calculateScores());
         }
     }
 }
