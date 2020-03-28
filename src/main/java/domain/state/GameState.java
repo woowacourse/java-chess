@@ -59,7 +59,7 @@ public abstract class GameState implements State {
 
     @Override
     public boolean isStatus() {
-        return this instanceof Status;
+        return this instanceof Reported;
     }
 
     @Override

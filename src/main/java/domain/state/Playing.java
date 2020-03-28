@@ -22,11 +22,11 @@ public abstract class Playing extends GameState {
 	@Override
 	public State move(String from, String to) {
 		pieces.move(Point.of(from), Point.of(to));
-		return new Move(pieces);
+		return new Moved(pieces);
 	}
 
 	@Override
 	public State end() {
-		return new End(pieces);
+		return new Ended(pieces);
 	}
 }

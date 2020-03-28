@@ -2,8 +2,8 @@ package domain.state;
 
 import domain.pieces.Pieces;
 
-public class Move extends Playing {
-    protected Move(Pieces pieces) {
+public class Reported extends NotPlaying {
+    protected Reported(Pieces pieces) {
         super(pieces);
     }
 }

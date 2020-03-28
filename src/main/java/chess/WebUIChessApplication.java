@@ -1,7 +1,7 @@
 package chess;
 
 import domain.board.Board;
-import domain.state.End;
+import domain.state.Ended;
 import domain.state.State;
 import domain.pieces.Pieces;
 import domain.pieces.StartPieces;
@@ -12,7 +12,7 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         OutputView.printStart();
         Pieces startPieces = new Pieces(new StartPieces().getInstance());
-        State state = new End(startPieces);
+        State state = new Ended(startPieces);
         while (true) {
             state = state.pushCommend(InputView.inputGameCommend());
             if (state.isPlaying()) {

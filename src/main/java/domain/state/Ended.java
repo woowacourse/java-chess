@@ -2,8 +2,8 @@ package domain.state;
 
 import domain.pieces.Pieces;
 
-public class Start extends Playing {
-	protected Start(Pieces pieces) {
+public class Ended extends NotPlaying {
+	public Ended(Pieces pieces) {
 		super(pieces);
 	}
 }
