@@ -7,6 +7,7 @@ import chess.team.Team;
 
 public class King extends Piece {
 	private static final char name = 'k';
+	private static final double score = 0;
 
 	public King(Team team) {
 		super(changeName(team));
@@ -22,6 +23,11 @@ public class King extends Piece {
 	@Override
 	public boolean canMove(Location now, Location after) {
 		return now.isKingRange(after);
+	}
+
+	@Override
+	public double getScore(boolean hasVerticalEnemy) {
+		return score;
 	}
 
 	@Override

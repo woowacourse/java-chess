@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.Score.Score;
 import chess.piece.type.Bishop;
 import chess.piece.type.King;
 import chess.piece.type.Knight;
@@ -19,11 +20,27 @@ public class ChessBoard {
 	public ChessBoard() {
 		this.board = new HashMap<>();
 		putNoble(1, Team.WHITE);
-		//        putPawns(2, Team.WHITE);
+		putPawns(2, Team.WHITE);
 
-		//        putPawns(7, Team.BLACK);
+		putPawns(7, Team.BLACK);
 		putNoble(8, Team.BLACK);
 	}
+
+	//. ....nq.  4
+	// .....p.p  3
+	// .....pp.  2
+	// ....rk..  1
+	// abcdefgh
+	// private void putTest(Team team) {
+	// 	board.put(new Location(1, 'e'), new Rook(team));
+	// 	board.put(new Location(1, 'f'), new King(team));
+	// 	board.put(new Location(2, 'f'), new Pawn(team));
+	// 	board.put(new Location(2, 'g'), new Pawn(team));
+	// 	board.put(new Location(3, 'f'), new Pawn(team));
+	// 	board.put(new Location(3, 'h'), new Pawn(team));
+	// 	board.put(new Location(4, 'f'), new Knight(team));
+	// 	board.put(new Location(4, 'g'), new Queen(team));
+	// }
 
 	public boolean canMove(Location now, Location destination) {
 		Piece piece = board.get(now);
@@ -64,9 +81,9 @@ public class ChessBoard {
 	}
 
 	// 팀별 위치, 체스 정보를 가져온다.
-	public Map<Location, Piece> giveMyPiece(boolean black) {
+	public Map<Location, Piece> giveMyPiece(Team team) {
 		return board.keySet().stream()
-			.filter(location -> board.get(location).isSameTeam(black))
+			.filter(location -> board.get(location).isSameTeam(team))
 			.collect(Collectors.toMap(location -> location, board::get));
 	}
 
@@ -87,5 +104,20 @@ public class ChessBoard {
 			.filter(piece -> piece instanceof King)
 			.count();
 		return kingCount == 2;
+	}
+
+	public Score calculateScore(Team team) {
+		// 2개이상의 폰이 있는 라인을 들고있으면 좋지않을까?
+		Map<Location, Piece> map = giveMyPiece(team);
+
+		Map<Piece, Boolean> collect = map.keySet().stream()
+			.collect(Collectors.toMap(map::get,
+				location -> map.keySet().stream()
+					.filter(targetLocation -> targetLocation.isSameCol(location))
+					.filter(targetLocation -> map.get(targetLocation) instanceof Pawn)
+					.count() >= 2)
+			);
+
+		return new Score(collect);
 	}
 }

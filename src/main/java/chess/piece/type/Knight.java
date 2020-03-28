@@ -7,6 +7,7 @@ import chess.team.Team;
 
 public class Knight extends Piece {
 	private static final char name = 'n';
+	private static final double score = 2.5;
 
 	public Knight(Team team) {
 		super(changeName(team));
@@ -22,6 +23,11 @@ public class Knight extends Piece {
 	@Override
 	public boolean canMove(Location now, Location after) {
 		return now.isKnightRange(after);
+	}
+
+	@Override
+	public double getScore(boolean hasVerticalEnemy) {
+		return score;
 	}
 
 	@Override

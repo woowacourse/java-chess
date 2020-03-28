@@ -9,17 +9,28 @@ public class ChessController {
 		OutputView.printInformation();
 		GameManager gameManager = new GameManager();
 
-		do {
-			command = InputView.inputStartCommand();
-		} while (!command.equals("start"));
-
-		OutputView.printBoard(gameManager);
-
 		while (gameManager.isRunning()) {
 			command = InputView.inputStartCommand();
+			start(command, gameManager);
 			movePiece(command, gameManager);
+			status(command, gameManager);
+			if (command.equals("end")) {
+				break;
+			}
 		}
 		OutputView.printStatus(gameManager);
+	}
+
+	private static void status(String command, GameManager gameManager) {
+		if (command.equals("status")) {
+			OutputView.printStatus(gameManager);
+		}
+	}
+
+	private static void start(String command, GameManager gameManager) {
+		if (command.equals("start")) {
+			OutputView.printBoard(gameManager);
+		}
 	}
 
 	private static void movePiece(String command, GameManager gameManager) {

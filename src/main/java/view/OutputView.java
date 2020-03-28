@@ -5,6 +5,7 @@ import java.util.Map;
 import chess.GameManager;
 import chess.board.Location;
 import chess.piece.type.Piece;
+import chess.team.Team;
 
 public class OutputView {
 
@@ -48,5 +49,7 @@ public class OutputView {
 
 	public static void printStatus(GameManager gameManager) {
 		System.out.println("결과출력");
+		System.out.println("흰색팀 점수 : " + gameManager.calculateScore(Team.WHITE).getAmount());
+		System.out.println("블랙팀 점수 : " + gameManager.calculateScore(Team.BLACK).getAmount());
 	}
 }

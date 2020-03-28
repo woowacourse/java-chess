@@ -5,6 +5,7 @@ import chess.team.Team;
 
 public class Rook extends Piece {
 	private static final char name = 'r';
+	private static final double score = 5;
 
 	public Rook(Team team) {
 		super(changeName(team));
@@ -20,5 +21,10 @@ public class Rook extends Piece {
 	@Override
 	public boolean canMove(Location now, Location after) {
 		return now.isStraight(after);
+	}
+
+	@Override
+	public double getScore(boolean hasVerticalEnemy) {
+		return score;
 	}
 }

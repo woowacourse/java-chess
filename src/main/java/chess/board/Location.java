@@ -20,6 +20,10 @@ public class Location {
 		this.col = now.col;
 	}
 
+	public boolean isSameCol(Location other) {
+		return this.col == other.col;
+	}
+
 	public Location moveTo(final int row, final char col) {
 		return new Location(row, col);
 	}
@@ -159,5 +163,6 @@ public class Location {
 	public boolean isVertical(Location destination) {
 		return col == destination.col;
 	}
+
 }
 
