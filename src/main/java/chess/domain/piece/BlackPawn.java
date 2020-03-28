@@ -11,9 +11,9 @@ import java.util.List;
 public class BlackPawn extends Pawn {
     private static final List<Direction> DIRECTIONS = new ArrayList<>(
             Arrays.asList(
-                    Direction.SOUTH
-//                    Direction.SE,
-//                    Direction.SW
+                    Direction.SOUTH,
+                    Direction.SE,
+                    Direction.SW
             )
     );
 
@@ -24,18 +24,24 @@ public class BlackPawn extends Pawn {
     @Override
     public List<Position> getPossiblePositions(Board board) {
         List<Position> possiblePositions = new ArrayList<>();
-        for (Direction direction : DIRECTIONS) {
-            if (direction.move(position).getX() > 8 | direction.move(position).getX() < 1 | direction.move(position).getY() > 8 |
-                    direction.move(position).getY() < 1) {
-                break;
+
+        if (representation == 'P') {
+            for (Direction direction : DIRECTIONS) {
+                Position nextPosition = direction.move(position);
+
+                if (isForwardDirection(direction, Direction.SOUTH)) {
+                    if (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
+                        possiblePositions.add(nextPosition);
+                        if (isFirstMove(7)) {
+                            possiblePositions.add(direction.move(nextPosition));
+                        }
+                    }
+                }
+
+                if (board.isOtherTeam(position, nextPosition)) {
+                    possiblePositions.add(nextPosition);
+                }
             }
-            if (direction == Direction.SOUTH && position.getY() == 7) {
-                Position movedPosition = direction.move(position);
-                possiblePositions.add(movedPosition);
-                possiblePositions.add(direction.move(movedPosition));
-                continue;
-            }
-            possiblePositions.add(direction.move(position));
         }
         return possiblePositions;
     }

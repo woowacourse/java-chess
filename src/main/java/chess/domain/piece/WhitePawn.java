@@ -11,9 +11,9 @@ import java.util.List;
 public class WhitePawn extends Pawn {
     private static final List<Direction> DIRECTIONS = new ArrayList<>(
             Arrays.asList(
-                    Direction.NORTH
-//                    Direction.NE,
-//                    Direction.NW
+                    Direction.NORTH,
+                    Direction.NE,
+                    Direction.NW
             )
     );
 
@@ -25,19 +25,23 @@ public class WhitePawn extends Pawn {
     @Override
     public List<Position> getPossiblePositions(Board board) {
         List<Position> possiblePositions = new ArrayList<>();
+
         if (representation == 'p') {
             for (Direction direction : DIRECTIONS) {
-                if (direction.move(position).getX() > 8 | direction.move(position).getX() < 1 | direction.move(position).getY() > 8 |
-                        direction.move(position).getY() < 1) {
-                    break;
+                Position nextPosition = direction.move(position);
+
+                if (isForwardDirection(direction, Direction.NORTH)) {
+                    if (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
+                        possiblePositions.add(nextPosition);
+                        if (isFirstMove(2)) {
+                            possiblePositions.add(direction.move(nextPosition));
+                        }
+                    }
                 }
-                if (direction == Direction.NORTH && position.getY() == 2) {
-                    Position movedPosition = direction.move(position);
-                    possiblePositions.add(movedPosition);
-                    possiblePositions.add(direction.move(movedPosition));
-                    continue;
+
+                if (board.isOtherTeam(position, nextPosition)) {
+                    possiblePositions.add(nextPosition);
                 }
-                possiblePositions.add(direction.move(position));
             }
         }
         return possiblePositions;

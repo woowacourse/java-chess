@@ -29,13 +29,23 @@ public class Knight extends Piece {
     @Override
     public List<Position> getPossiblePositions(Board board) {
         List<Position> possiblePositions = new ArrayList<>();
+
         for (Direction direction : DIRECTIONS) {
-            if (direction.move(position).getX() > 8 | direction.move(position).getX() < 1 | direction.move(position).getY() > 8 |
-                    direction.move(position).getY() < 1) {
-                break;
+            Position nextPosition = direction.move(position);
+            if (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
+                possiblePositions.add(nextPosition);
             }
-            possiblePositions.add(direction.move(position));
+
+            if (board.isOtherTeam(position, nextPosition)) {
+                possiblePositions.add(nextPosition);
+            }
         }
         return possiblePositions;
     }
+
+    private boolean isInBoardRange(Position nextPosition) {
+        return nextPosition.getX() <= 8 && nextPosition.getX() >= 1 &&
+                nextPosition.getY() <= 8 && nextPosition.getY() >= 1;
+    }
+
 }
