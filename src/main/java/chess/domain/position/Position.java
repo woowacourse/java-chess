@@ -12,7 +12,7 @@ public class Position {
 	private static final char MIN_VER_CHAR = 'a';
 	private static final char MAX_VER_CHAR = 'h';
 	private static final int CHAR_DEFORMATION_VALUE = 96;
-	private static final int BLACK_TEAM_CONVERSION_VALUE = 9;
+	private static final String NOT_ABLE_VALUE_MESSAGE = "허용되는 좌표 값이 아닙니다.";
 
 	private final int x;
 	private final int y;
@@ -31,13 +31,13 @@ public class Position {
 
 	private static void validateIntRange(int num) {
 		if (num < MIN_VER_INT || num > MAX_VER_INT) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(NOT_ABLE_VALUE_MESSAGE);
 		}
 	}
 
 	private static void validateCharRange(char num) {
 		if (num < MIN_VER_CHAR || num > MAX_VER_CHAR) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(NOT_ABLE_VALUE_MESSAGE);
 		}
 	}
 
@@ -46,28 +46,12 @@ public class Position {
 		this.y = y;
 	}
 
-	public PositionGap calculateDiff(Position targetPosition) {
-		return new PositionGap(targetPosition.x - this.x, targetPosition.y - this.y);
-	}
-
 	public Position plus(Direction direction) {
 		return new Position(direction.plusX(x), direction.plusY(y));
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Position position = (Position)o;
-		return x == position.x &&
-			y == position.y;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(x, y);
+	public PositionGap calculateDiff(Position targetPosition) {
+		return new PositionGap(targetPosition.x - this.x, targetPosition.y - this.y);
 	}
 
 	public Positions calculatePath(Position targetPosition, Direction direction) {
@@ -84,6 +68,22 @@ public class Position {
 
 	private boolean isNotEquals(Position targetPosition) {
 		return this.equals(targetPosition) == false;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Position position = (Position)o;
+		return x == position.x &&
+			y == position.y;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y);
 	}
 
 	@Override

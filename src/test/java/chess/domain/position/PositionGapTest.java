@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
@@ -7,6 +7,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.Direction;
 import chess.domain.position.PositionGap;
 
 public class PositionGapTest {
@@ -79,5 +80,18 @@ public class PositionGapTest {
 		PositionGap positionGap = new PositionGap(7, -7);
 		assertThat(positionGap.calculateDirection(Arrays.asList(Direction.values())))
 			.isEqualTo(Direction.LEFT_UP);
+	}
+
+	@DisplayName("나이트 이동 가능한 경우")
+	@Test
+	void cannotMoveKnightTest() {
+		assertThat(new PositionGap(2, 1).cannotMoveKnight()).isFalse();
+	}
+
+	@DisplayName("나이트 이동 불가능한 경우")
+	@Test
+	void cannotMoveKnightTest2() {
+		assertThat(new PositionGap(0, 1).cannotMoveKnight()).isTrue();
+
 	}
 }

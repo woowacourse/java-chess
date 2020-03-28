@@ -10,6 +10,7 @@ import chess.domain.chesspiece.ChessPiece;
 
 public class Positions {
 	private static final String HAVE_ROADBLOCK_MESSAGE = "이동 경로에 장애물이 있습니다.";
+
 	private final List<Position> positions;
 
 	public Positions(List<Position> positions) {
