@@ -42,14 +42,14 @@ public class BoardFactory {
         IntStream.rangeClosed(1, 8)
                 .forEach(col -> INITIALIZED_BOARD.add(new Pawn('p', new Position(col, 2))));
 
-        INITIALIZED_BOARD.add(new Rook('R', new Position(1, 1)));
-        INITIALIZED_BOARD.add(new Knight('N', new Position(2, 1)));
-        INITIALIZED_BOARD.add(new Bishop('B', new Position(3, 1)));
-        INITIALIZED_BOARD.add(new Queen('Q', new Position(4, 1)));
-        INITIALIZED_BOARD.add(new King('K', new Position(5, 1)));
-        INITIALIZED_BOARD.add(new Bishop('B', new Position(6, 1)));
-        INITIALIZED_BOARD.add(new Knight('N', new Position(7, 1)));
-        INITIALIZED_BOARD.add(new Rook('R', new Position(8, 1)));
+        INITIALIZED_BOARD.add(new Rook('r', new Position(1, 1)));
+        INITIALIZED_BOARD.add(new Knight('n', new Position(2, 1)));
+        INITIALIZED_BOARD.add(new Bishop('b', new Position(3, 1)));
+        INITIALIZED_BOARD.add(new Queen('q', new Position(4, 1)));
+        INITIALIZED_BOARD.add(new King('k', new Position(5, 1)));
+        INITIALIZED_BOARD.add(new Bishop('b', new Position(6, 1)));
+        INITIALIZED_BOARD.add(new Knight('n', new Position(7, 1)));
+        INITIALIZED_BOARD.add(new Rook('r', new Position(8, 1)));
     }
 
     private BoardFactory() {

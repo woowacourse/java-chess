@@ -18,4 +18,9 @@ public abstract class Piece {
     public Position getPosition() {
         return position;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(representation);
+    }
 }

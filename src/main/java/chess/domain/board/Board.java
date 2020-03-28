@@ -17,4 +17,8 @@ public class Board {
     private boolean isNotProperBoardSize(final List<Piece> board) {
         return board.size() != 64;
     }
+
+    public Piece getPiece(int index) {
+        return board.get(index);
+    }
 }
