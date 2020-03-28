@@ -5,7 +5,6 @@ import chess.coordinate.Vector;
 public abstract class AbstractPawn extends Piece {
 
     private static final int PAWN_SCORE = 1;
-    private static final int PAWN_MOVE_RANGE = 1;
 
     public AbstractPawn(final Team team) {
         super(team, PAWN_SCORE);
@@ -19,7 +18,7 @@ public abstract class AbstractPawn extends Piece {
         if (canMoveTwoStep(vector, targetPiece)) {
             return true;
         }
-        if (vector.isRangeUnderAbsolute(PAWN_MOVE_RANGE) && team.isSameDirection(vector.getRankVariation())) {
+        if (!(vector.isRangeUnderAbsolute(1) && team.isSameDirection(vector.getRankVariation()))) {
             return false;
         }
         if (targetPiece.isBlank()) {

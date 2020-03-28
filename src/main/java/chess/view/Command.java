@@ -1,6 +1,5 @@
 package chess.view;
 
-
 import chess.board.BoardGenerator;
 import chess.manager.ChessManager;
 
@@ -42,7 +41,6 @@ public class Command {
 
         isNotEnd = !"end".equals(command) && chessManager.isKingAlive();
     }
-
 
     public boolean isNotEnd() {
         return isNotEnd;
