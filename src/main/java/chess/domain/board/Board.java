@@ -50,11 +50,11 @@ public class Board {
         return new Board(board, status);
     }
 
+    // TODO: 2020/03/28 리팩토링
     public Board move(Position source, Position target) {
         if (status.isNotProcessing()) {
             throw new UnsupportedOperationException();
         }
-        // TODO: 2020/03/25 리팩토링 확인
         Map<Position, GamePiece> board = new HashMap<>(this.board);
         GamePiece sourcePiece = board.get(source);
         GamePiece targetPiece = board.get(target);
@@ -63,19 +63,12 @@ public class Board {
 
         boolean isKill = !GamePiece.EMPTY.equals(targetPiece) && sourcePiece.isEnemy(targetPiece);
 
-        List<Position> path;
+        List<Position> path = new ArrayList<>();
         if (isKill) {
-            if (status.isWhiteTurn()) {
-                path = sourcePiece.searchKillPath(source, target);
-            } else {
-                path = backWard(sourcePiece.searchKillPath(source.opposite(), target.opposite()));
-            }
-        } else {
-            if (status.isWhiteTurn()) {
-                path = sourcePiece.searchMovePath(source, target);
-            } else {
-                path = backWard(sourcePiece.searchMovePath(source.opposite(), target.opposite()));
-            }
+            path = searchKillPath(source, target, sourcePiece);
+        }
+        if (!isKill){
+            path = searchMovePath(source, target, sourcePiece);
         }
 
         for (Position position : path) {
@@ -91,6 +84,20 @@ public class Board {
         }
 
         return new Board(board, status.nextTurn());
+    }
+
+    private List<Position> searchMovePath(Position source, Position target, GamePiece sourcePiece) {
+        if (status.isWhiteTurn()) {
+            return sourcePiece.searchMovePath(source, target);
+        }
+        return backWard(sourcePiece.searchMovePath(source.opposite(), target.opposite()));
+    }
+
+    private List<Position> searchKillPath(Position source, Position target, GamePiece sourcePiece) {
+        if (status.isWhiteTurn()) {
+            return sourcePiece.searchKillPath(source, target);
+        }
+        return backWard(sourcePiece.searchKillPath(source.opposite(), target.opposite()));
     }
 
     private List<Position> backWard(List<Position> path) {

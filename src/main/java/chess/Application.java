@@ -20,7 +20,7 @@ public class Application {
                 OutputView.printBoard(service.initialize());
             }
             if (command.isMove()) {
-                execute(service, command);
+                executeMovement(service, command);
             }
             if (command.isStatus()) {
                 OutputView.printScore(service.calculateScore());
@@ -28,7 +28,7 @@ public class Application {
         } while (command.isNotEnd() && service.checkGameNotFinished());
     }
 
-    private static void execute(ChessService service, Command command) {
+    private static void executeMovement(ChessService service, Command command) {
         try {
             Board board = service.move(command.getSource(), command.getTarget());
             OutputView.printBoard(board);
