@@ -6,6 +6,10 @@ import domain.point.Distance;
 import domain.point.Point;
 import domain.team.Team;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class creationAssistant {
 	public static Team createTeam(String string) {
 		return Team.valueOf(string.toUpperCase());
@@ -49,5 +53,12 @@ public class creationAssistant {
 
 	public static Rook createRook(String team, String point) {
 		return new Rook(createTeam(team), createPoint(point));
+	}
+
+	public static Pieces createPieces(Piece... pieces) {
+		Set<Piece> pieceSet = Arrays.stream(pieces)
+				.collect(Collectors.toSet());
+
+		return new Pieces(pieceSet);
 	}
 }

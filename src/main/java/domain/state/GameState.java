@@ -19,6 +19,14 @@ public abstract class GameState implements State {
         this.pieces = pieces;
     }
 
+    protected abstract State start();
+
+    protected abstract State status();
+
+    protected abstract State end();
+
+    protected abstract State move(String from, String to);
+
     @Override
     public final State pushCommend(String input) {
         if (input.equals("end")) {
