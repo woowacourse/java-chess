@@ -8,6 +8,8 @@ import domain.point.Distance;
 import domain.point.Point;
 import domain.team.Team;
 
+import java.util.Objects;
+
 public class Pawn extends Piece {
 	public static final double SCORE = 1;
 	private static final int TWO = 2;
@@ -77,4 +79,20 @@ public class Pawn extends Piece {
 			throw new CanNotReachException();
 		}
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+		Pawn pawn = (Pawn) o;
+		return canMoveTwoDistance == pawn.canMoveTwoDistance;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), canMoveTwoDistance);
+	}
 }
+
+
