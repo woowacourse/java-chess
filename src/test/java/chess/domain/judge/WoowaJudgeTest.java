@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Side;
-import chess.domain.view.OutputView;
 
 class WoowaJudgeTest {
 
@@ -30,7 +29,6 @@ class WoowaJudgeTest {
         board.move(Position.of("d7"), Position.of("d6"));
         board.move(Position.of("d1"), Position.of("a4"));
         board.move(Position.of("a4"), Position.of("e8"));
-        OutputView.showBoard(board);
         assertThat(judge.isGameOver()).isTrue();
     }
 

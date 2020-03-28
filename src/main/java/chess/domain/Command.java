@@ -21,9 +21,9 @@ public enum Command {
     }
 
     public static void validate(String value) {
-        if (Arrays.stream(Command.values())
-            .noneMatch(command -> command.is(value))) {
-            throw new InvalidInputException();
-        }
+        Arrays.stream(Command.values())
+            .filter(command -> command.is(value))
+            .findAny()
+            .orElseThrow(InvalidInputException::new);
     }
 }

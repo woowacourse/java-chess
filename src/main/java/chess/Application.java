@@ -2,9 +2,6 @@ package chess;
 
 import static chess.domain.Command.*;
 
-import java.util.Arrays;
-import java.util.List;
-
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.judge.Judge;
@@ -58,8 +55,8 @@ public class Application {
     }
 
     public static void move(final String command) {
-        List<Position> positions = getMovePositions(command);
-        tryToMove(positions.get(0), positions.get(1));
+        System.out.println(command.split(DELIMITER)[1] + " " + command.split(DELIMITER)[2]);
+        tryToMove(Position.of(command.split(DELIMITER)[1]), Position.of(command.split(DELIMITER)[2]));
         OutputView.showBoard(board);
     }
 
@@ -69,11 +66,5 @@ public class Application {
         } catch (InvalidInputException e) {
             OutputView.showError(e);
         }
-    }
-
-    private static List<Position> getMovePositions(String command) {
-        String start = command.split(DELIMITER)[1];
-        String end = command.split(DELIMITER)[2];
-        return Arrays.asList(Position.of(start), Position.of(end));
     }
 }

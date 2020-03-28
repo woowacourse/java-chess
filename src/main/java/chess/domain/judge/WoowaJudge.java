@@ -1,9 +1,11 @@
 package chess.domain.judge;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Side;
@@ -13,14 +15,8 @@ public class WoowaJudge implements Judge {
     private static final double PAWN_SCORE_DEDUCTION_IF_ON_SAME_COLUMN = 0.5;
 
     private final Board board;
-    private Map<Type, Double> scoreboard = new HashMap<Type, Double>() {{
-        put(Type.KING, 0.0);
-        put(Type.QUEEN, 9.0);
-        put(Type.ROOK, 5.0);
-        put(Type.BISHOP, 3.0);
-        put(Type.KNIGHT, 2.5);
-        put(Type.PAWN, 1.0);
-    }};
+    private Map<Type, Double> scoreboard = Arrays.stream(Type.values())
+        .collect(toMap(Function.identity(), Type::getScore));
 
     public WoowaJudge(final Board board) {
         this.board = board;

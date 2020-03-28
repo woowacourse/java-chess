@@ -102,9 +102,12 @@ public class Board {
     private int getPawnCount(final Side side, final Column column) {
         return board.keySet()
             .stream()
-            .filter(position -> board.get(position).isPresent())
-            .filter(position -> position.isOn(column)
+            .filter(position -> board.get(position).isPresent() && position.isOn(column)
                 && board.get(position).get().is(Type.PAWN, side))
             .collect(summingInt(x -> 1));
+    }
+
+    public Map<Position, Optional<Piece>> getBoard() {
+        return board;
     }
 }
