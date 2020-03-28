@@ -32,28 +32,22 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public MoveResult move(String sourceKey, String targetKey) {
+    public boolean move(String sourceKey, String targetKey) {
         Tile sourceTile = chessBoard.get(Coordinate.of(sourceKey));
         Tile targetTile = chessBoard.get(Coordinate.of(targetKey));
 
         if (sourceTile.canNotReach(targetTile)) {
-            return MoveResult.FAIL;
+            return false;
         }
 
         Directions directions = sourceTile.findPath(targetTile);
 
         if (directions.isExist(sourceKey, chessBoard::get)) {
-            return MoveResult.FAIL;
-        }
-
-        MoveResult moveResult = MoveResult.SUCCESS;
-
-        if (targetTile.isKing()) {
-            moveResult = MoveResult.WIN;
+            return false;
         }
 
         targetTile.replacePiece(sourceTile);
-        return moveResult;
+        return true;
     }
 
     public double calculateScore(Team team) {

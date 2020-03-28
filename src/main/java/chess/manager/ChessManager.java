@@ -1,7 +1,6 @@
 package chess.manager;
 
 import chess.board.ChessBoard;
-import chess.board.MoveResult;
 import chess.piece.Team;
 
 public class ChessManager {
@@ -12,15 +11,15 @@ public class ChessManager {
         this.chessBoard = chessBoard;
     }
 
-    public MoveResult move(String source, String target) {
+    public boolean move(String source, String target) {
         if (chessBoard.isNotSameTeam(source, currentTeam)) {
-            return MoveResult.FAIL;
+            return false;
         }
-        MoveResult move = chessBoard.move(source, target);
-        if (move == MoveResult.SUCCESS) {
+        boolean moveResult = chessBoard.move(source, target);
+        if (moveResult) {
             turnOver();
         }
-        return move;
+        return moveResult;
     }
 
     private void turnOver() {

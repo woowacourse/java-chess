@@ -15,13 +15,13 @@ class ChessBoardTest {
 
     @DisplayName("체스말이 움직였는지 확인")
     @ParameterizedTest
-    @CsvSource(value = {"b1,c3,SUCCESS", "b1,c4,FAIL", "a1,a3,FAIL", "a7,a6,SUCCESS"})
-    void moveTest(String sourceKey, String targetKey, MoveResult expect) {
+    @CsvSource(value = {"b1,c3,true", "b1,c4,false", "a1,a3,false", "a7,a6,true"})
+    void moveTest(String sourceKey, String targetKey, boolean expect) {
         //given
         ChessBoard chessBoard = new BoardGenerator().create();
 
         //when
-        MoveResult actual = chessBoard.move(sourceKey, targetKey);
+        boolean actual = chessBoard.move(sourceKey, targetKey);
 
         //then
         assertThat(actual).isEqualTo(expect);

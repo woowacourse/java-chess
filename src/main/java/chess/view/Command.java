@@ -2,7 +2,6 @@ package chess.view;
 
 
 import chess.board.BoardGenerator;
-import chess.board.MoveResult;
 import chess.manager.ChessManager;
 
 import java.util.Objects;
@@ -32,7 +31,7 @@ public class Command {
         if (matcher.find()) {
             String source = matcher.group(1);
             String target = matcher.group(2);
-            if (MoveResult.WIN == chessManager.move(source, target)) {
+            if (chessManager.move(source, target)) {
                 isNotEnd = false;
                 OutputView.showChessBoard(this.chessManager.getChessBoard());
                 return;
