@@ -60,11 +60,6 @@ public class BoardSquare {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "{" + file + rank + '}';
-    }
-
     public int getFileCompare(BoardSquare boardSquare) {
         return Integer.compare(this.file, boardSquare.file);
     }

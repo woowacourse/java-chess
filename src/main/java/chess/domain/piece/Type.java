@@ -25,24 +25,24 @@ import java.util.List;
 public enum Type {
     ROOK("R", 5, Arrays.asList(UP, DOWN, LEFT, RIGHT)),
     KNIGHT("N", 2.5, Arrays.asList(UP_LEFT_L, UP_RIGHT_L, DOWN_LEFT_L, DOWN_RIGHT_L
-            , RIGHT_DOWN_L, RIGHT_UP_L, LEFT_DOWN_L, LEFT_UP_L)),
+        , RIGHT_DOWN_L, RIGHT_UP_L, LEFT_DOWN_L, LEFT_UP_L)),
     BISHOP("B", 3, Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN)),
     QUEEN("Q", 9, Arrays.asList(UP, DOWN, LEFT, RIGHT, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN)),
     KING("K", 0, Arrays.asList(UP, DOWN, LEFT, RIGHT, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN)),
     PAWN("P", 1, Collections.singletonList(UP));
 
-    private final String name;
+    private final String letter;
     private final double score;
     private final List<Direction> directions;
 
-    Type(String name, double score, List<Direction> directions) {
-        this.name = name;
+    Type(String letter, double score, List<Direction> directions) {
+        this.letter = letter;
         this.score = score;
         this.directions = directions;
     }
 
-    public String getName() {
-        return name;
+    public String getLetter() {
+        return letter;
     }
 
     public List<Direction> getDirections() {

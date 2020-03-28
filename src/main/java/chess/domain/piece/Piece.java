@@ -19,10 +19,6 @@ public abstract class Piece implements Movable {
         this.type = type;
     }
 
-    public String getLetter() {
-        return color.getApplyTypeName(type);
-    }
-
     protected Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
         Set<BoardSquare> availableBoardSquares = new HashSet<>();
         int repeatCount = getRepeatCount();
@@ -72,6 +68,10 @@ public abstract class Piece implements Movable {
 
     public boolean isSameColor(Piece piece) {
         return this.color == piece.color;
+    }
+
+    public String getLetter() {
+        return type.getLetter();
     }
 
 }

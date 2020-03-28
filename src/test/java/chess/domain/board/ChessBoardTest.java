@@ -78,5 +78,4 @@ public class ChessBoardTest {
 
         assertThat(chessBoard.isKingCaptured()).isTrue();
     }
-
 }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import util.NullChecker;
 
 public class Pawn extends Piece {
@@ -31,20 +32,36 @@ public class Pawn extends Piece {
     @Override
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
         Set<BoardSquare> allCheatSheet = getAllCheatSheet(boardSquare);
+        Set<BoardSquare> containsCheatSheet = allCheatSheet.stream()
+            .filter(cheatSheet -> !board.containsKey(cheatSheet))
+            .collect(Collectors.toSet());
         Set<BoardSquare> totalCheatSheet = new HashSet<>();
-        boolean initialPoint = ChessBoard.isInitialPoint(boardSquare, this);
-        for (BoardSquare cheatSheet : allCheatSheet) {
-            if (!board.containsKey(cheatSheet)) {
-                BoardSquare oneMore = cheatSheet
-                    .addIfInBoundary(0, cheatSheet.getRankCompare(boardSquare));
-                if (initialPoint && !board.containsKey(oneMore)) {
-                    totalCheatSheet.add(oneMore);
-                }
-                totalCheatSheet.add(cheatSheet);
-            }
-        }
+        totalCheatSheet.addAll(getStraightCheatSheet(boardSquare, board, containsCheatSheet));
         totalCheatSheet.addAll(getDiagonalCheatSheet(board, allCheatSheet));
         return totalCheatSheet;
+    }
+
+    private Set<BoardSquare> getStraightCheatSheet(BoardSquare boardSquare,
+        Map<BoardSquare, Piece> board, Set<BoardSquare> containsCheatSheet) {
+        Set<BoardSquare> straightCheatSheet = new HashSet<>();
+        for (BoardSquare cheatSheet : containsCheatSheet) {
+            BoardSquare oneMore = cheatSheet
+                .addIfInBoundary(0, cheatSheet.getRankCompare(boardSquare));
+            straightCheatSheet.addAll(getOneMoreCheatSheet(boardSquare, board, oneMore));
+            straightCheatSheet.add(cheatSheet);
+        }
+        return straightCheatSheet;
+    }
+
+    private Set<BoardSquare> getOneMoreCheatSheet(BoardSquare boardSquare,
+        Map<BoardSquare, Piece> board, BoardSquare oneMore) {
+        Set<BoardSquare> oneMoreCheatSheet = new HashSet<>();
+        boolean initialPoint = ChessBoard.isInitialPoint(boardSquare, this);
+        boolean containsOneMore = !board.containsKey(oneMore);
+        if (initialPoint && containsOneMore) {
+            oneMoreCheatSheet.add(oneMore);
+        }
+        return oneMoreCheatSheet;
     }
 
     private Set<BoardSquare> getDiagonalCheatSheet(Map<BoardSquare, Piece> board,

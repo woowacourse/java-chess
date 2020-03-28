@@ -90,7 +90,7 @@ public class ChessBoard {
         BoardSquare after = boardSquares.get(1);
         Piece currentPiece = chessBoard.remove(before);
         chessBoard.put(after, currentPiece);
-        gameTurn = gameTurn.nextTurnIfNotMySelf();
+        gameTurn = gameTurn.nextTurnIfEmptyMySelf();
     }
 
     public boolean isKingCaptured() {
@@ -99,11 +99,11 @@ public class ChessBoard {
             .count() != Color.values().length;
     }
 
-    public Color getWinnerTurn() {
-        return gameTurn.nextTurnIfNotMySelf();
-    }
-
     public TeamScore getTeamScore() {
         return new TeamScore(chessBoard);
+    }
+
+    public Color getWinnerTurn() {
+        return gameTurn.previousTurnIfEmptyMySelf();
     }
 }
