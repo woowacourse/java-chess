@@ -38,9 +38,10 @@ public enum Direction {
 	}
 
 	public static Direction of(int x, int y) {
-		return Arrays.stream(Direction.values()).filter(d -> d.xDegree == x && d.yDegree == y)
-			.findFirst()
-			.orElseThrow(() -> new IllegalMoveException(INVALID_DIRECTION));
+		return Arrays.stream(Direction.values())
+				.filter(d -> d.xDegree == x && d.yDegree == y)
+				.findFirst()
+				.orElseThrow(() -> new IllegalMoveException(INVALID_DIRECTION));
 	}
 
 	public boolean isDiagonal() {

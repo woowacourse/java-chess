@@ -72,7 +72,7 @@ public class ChessController {
 
 	private void validateMultiArguments(List<String> multiArguments) {
 		if (multiArguments.size() != COMMAND_ARGUMENTS_SIZE) {
-			throw new IllegalArgumentException("올바른 좌표값을 입력해 주세요.");
+			throw new IllegalArgumentException("명령에 인자가 부족합니다.");
 		}
 	}
 }

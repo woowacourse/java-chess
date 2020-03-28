@@ -16,7 +16,8 @@ public class TotalScore {
 	}
 
 	private double calculateTotalScore() {
-		double plainSum = pieces.getAlivePieces().stream().mapToDouble(Piece::getScore).sum();
+		double plainSum = pieces.getAlivePieces().stream()
+				.mapToDouble(Piece::getScore).sum();
 		return sameColumnPawnHandler(plainSum);
 	}
 
@@ -26,7 +27,8 @@ public class TotalScore {
 			.map(p -> (Pawn)p)
 			.collect(Collectors.toList());
 		for (Pawn pawn : pawns) {
-			if (pawns.stream().anyMatch(p -> !p.equals(pawn) && p.isInSameColumn(pawn))) {
+			if (pawns.stream()
+					.anyMatch(p -> !p.equals(pawn) && p.isInSameColumn(pawn))) {
 				plainSum -= 0.5;
 			}
 		}

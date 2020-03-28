@@ -8,6 +8,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 public class Pieces {
+	private static final int KING_DEFAULT_AMOUNT = 2;
 	private final List<Piece> pieces;
 
 	public Pieces(List<Piece> pieces) {
@@ -15,11 +16,15 @@ public class Pieces {
 	}
 
 	public List<Piece> getAlivePieces() {
-		return pieces.stream().filter(Piece::isAlive).collect(Collectors.toList());
+		return pieces.stream()
+				.filter(Piece::isAlive)
+				.collect(Collectors.toList());
 	}
 
 	public Pieces getAlivePiecesByTeam(Team team) {
-		return new Pieces(this.getAlivePieces().stream().filter(p -> p.isInTeam(team)).collect(Collectors.toList()));
+		return new Pieces(this.getAlivePieces().stream()
+				.filter(p -> p.isInTeam(team))
+				.collect(Collectors.toList()));
 	}
 
 	public Piece findByPosition(Position position) {
@@ -32,7 +37,7 @@ public class Pieces {
 	public boolean isBothKingAlive() {
 		return this.getAlivePieces().stream()
 			.filter(p -> p instanceof King)
-			.count() == 2;
+			.count() == KING_DEFAULT_AMOUNT;
 	}
 
 	public Team teamWithAliveKing() {
