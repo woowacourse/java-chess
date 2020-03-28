@@ -24,7 +24,7 @@ public enum Direction {
         return Arrays.stream(values())
                 .filter(direction -> direction.isSameDirection(fileVariation, rankVariation))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException(String.format("fileVariation : %d, rankVariation : %d, 입력값을 확인하시오.", fileVariation, rankVariation)));
     }
 
     private boolean isSameDirection(int fileVariation, int rankVariation) {
