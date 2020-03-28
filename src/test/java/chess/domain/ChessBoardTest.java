@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -50,7 +52,7 @@ public class ChessBoardTest {
         chessBoard.movePiece(squares);
         assertThat(chessBoard.getChessBoard().containsKey(Square.of("a2"))).isFalse();
         assertThat(chessBoard.getChessBoard().containsKey(Square.of("a3"))).isTrue();
-        assertThat(chessBoard.getChessBoard().get(Square.of("a3"))).isEqualTo(Piece.of(Color.WHITE, Type.PAWN));
+        assertThat(chessBoard.getChessBoard().get(Square.of("a3"))).isEqualTo(PieceImpl.of(Color.WHITE, Type.PAWN));
     }
 
     @Test

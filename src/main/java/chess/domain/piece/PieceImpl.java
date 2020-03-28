@@ -1,28 +1,23 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.Color;
+import chess.domain.Square;
+import chess.domain.Type;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Piece {
-    private final static Map<String, Piece> CACHE = new HashMap<>();
+public class PieceImpl extends Piece {
+    private final static Map<String, PieceImpl> CACHE = new HashMap<>();
 
-    static {
-        for (Color color : Color.values()) {
-            for (Type type : Type.values()) {
-                CACHE.put(color.getName() + type.getName(), new Piece(color, type));
-            }
-        }
+    public Type type;
+
+    public PieceImpl(Color color, Type type, String name, double score) {
+        super(color, type, name, score);
     }
 
-    private final Color color;
-    private final Type type;
 
-    private Piece(Color color, Type type) {
-        this.color = color;
-        this.type = type;
-    }
-
-    public static Piece of(Color color, Type type) {
+    public static PieceImpl of(Color color, Type type) {
         validateInput(color, type);
         return CACHE.get(color.getName() + type.getName());
     }
@@ -33,7 +28,7 @@ public class Piece {
         }
     }
 
-    public String getLetter() {
+    public String getName() {
         if (color == Color.BLACK) {
             return type.getName();
         }
@@ -115,7 +110,7 @@ public class Piece {
     }
 
 
-    private Square addIfInBoundary(Square square, int fileIncrementBy, int rankIncrementBy) {
+    public Square addIfInBoundary(Square square, int fileIncrementBy, int rankIncrementBy) {
         if (Square.hasCacheAdded(square, fileIncrementBy, rankIncrementBy)) {
             return Square.of(square, fileIncrementBy, rankIncrementBy);
         }
@@ -124,7 +119,6 @@ public class Piece {
 
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         validateNotNull(square, board);
-        // Todo 색비교 메서드로 분리 요청
         if (type == Type.KNIGHT || type == Type.KING) {
             return calculateScope(square).stream()
                     .filter(s -> !(board.containsKey(s) && board.get(s).color == color))
@@ -290,7 +284,7 @@ public class Piece {
         throw new IllegalArgumentException("no type");
     }
 
-    private Set<Square> findSquaresToRemove(Square s, int fileAddAmount, int rankAddAmount) {
+    public Set<Square> findSquaresToRemove(Square s, int fileAddAmount, int rankAddAmount) {
         Set<Square> squaresToRemove = new HashSet<>();
         int file = 0;
         int rank = 0;
@@ -301,12 +295,6 @@ public class Piece {
         return squaresToRemove;
     }
 
-    private void validateNotNull(Square square, Map<Square, Piece> board) {
-        if (Objects.isNull(square) || Objects.isNull(board)) {
-            throw new IllegalArgumentException("null 안댐");
-        }
-    }
-
     public boolean isBlack() {
         return color == Color.BLACK;
     }
@@ -314,7 +302,5 @@ public class Piece {
     public double getScore() {
         return type.getScore();
     }
-    // Todo 칸-말 맵 받아서 자기가 움직일 수 있는 리스트 보내줌
-
 
 }

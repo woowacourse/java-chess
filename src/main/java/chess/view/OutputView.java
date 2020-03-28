@@ -2,8 +2,8 @@ package chess.view;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
-import chess.domain.Piece;
 import chess.domain.Square;
+import chess.domain.piece.Piece;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class OutputView {
     private static void printOneRow(Map<Square, Piece> gameBoard, int rank) {
         for (char file = 'a'; file <= 'h'; file++) {
             if (gameBoard.containsKey(Square.of(String.valueOf(file) + rank))) {
-                System.out.print(gameBoard.get(Square.of(String.valueOf(file) + rank)).getLetter());
+                System.out.print(gameBoard.get(Square.of(String.valueOf(file) + rank)).getName());
                 continue;
             }
             System.out.print(".");
