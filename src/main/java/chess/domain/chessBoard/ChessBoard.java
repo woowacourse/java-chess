@@ -1,6 +1,9 @@
 package chess.domain.chessBoard;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -126,14 +129,22 @@ public class ChessBoard {
 	}
 
 	private double calculateScoreOf(Stream<ChessPiece> chessPieces) {
-		Stream<ChessPiece> pawns = chessPieces.filter(chessPiece -> chessPiece instanceof Pawn);
-		double pawnsScore = pawns.mapToDouble(ChessPiece::getScore)
-			.sum();
-		double excludingPawnScore = chessPieces.filter(chessPiece -> !(chessPiece instanceof Pawn))
+		List<ChessPiece> chessPieceList = chessPieces.collect(toList());
+
+		List<ChessPiece> pawns = chessPieceList.stream()
+			.filter(chessPiece -> chessPiece instanceof Pawn)
+			.collect(toList());
+
+		double pawnsScore = pawns.stream()
 			.mapToDouble(ChessPiece::getScore)
 			.sum();
 
-		if (pawns.count() <= Pawn.PAWN_STANDARD_SCORE_BOUND) {
+		double excludingPawnScore = chessPieceList.stream()
+			.filter(chessPiece -> !(chessPiece instanceof Pawn))
+			.mapToDouble(ChessPiece::getScore)
+			.sum();
+
+		if (pawns.size() <= Pawn.PAWN_STANDARD_SCORE_BOUND) {
 			return excludingPawnScore + pawnsScore;
 		}
 		return excludingPawnScore + (pawnsScore / 2);

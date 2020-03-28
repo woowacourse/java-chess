@@ -47,7 +47,7 @@ public abstract class PawnRuleStrategy extends NonLeapableStrategy {
 		int chessFileGap = Math.abs(sourcePosition.calculateChessFileGapTo(targetPosition));
 		int chessRankGap = Math.abs(sourcePosition.calculateChessRankGapTo(targetPosition));
 
-		return (chessFileGap == 0) && (chessRankGap == this.movableRange);
+		return (chessFileGap == 0) && (chessRankGap <= this.movableRange);
 	}
 
 }

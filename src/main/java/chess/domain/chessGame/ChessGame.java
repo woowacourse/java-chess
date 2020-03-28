@@ -28,9 +28,10 @@ public class ChessGame {
 
 	public void move(List<String> arguments) {
 		validate(arguments);
+		boolean isCaughtTargetKing = chessBoard.isKingCaughtAt(Position.of(arguments.get(TARGET_INDEX)));
 		chessBoard.move(Position.of(arguments.get(SOURCE_INDEX)), Position.of(arguments.get(TARGET_INDEX)));
 
-		if (chessBoard.isKingCaughtAt(Position.of(arguments.get(TARGET_INDEX)))) {
+		if (isCaughtTargetKing) {
 			gameState = gameState.shiftEndState(KING_CAUGHT_STATE);
 			return;
 		}
@@ -39,7 +40,7 @@ public class ChessGame {
 
 	public double status(List<String> arguments) {
 		validate(arguments);
-		return chessBoard.calculateScoreOf(gameState.getTurnPieceColor());
+		return chessBoard.calculateScoreOf(PieceColor.of(arguments.get(0)));
 	}
 
 	private void validate(List<String> arguments) {

@@ -26,6 +26,12 @@ public class ChessFile {
 		this.chessFile = chessFile;
 	}
 
+	private void validate(char chessFile) {
+		if (chessFile < LOWER_BOUND || chessFile > UPPER_BOUND) {
+			throw new IllegalArgumentException("유효한 체스 파일이 아닙니다.");
+		}
+	}
+
 	public static ChessFile from(char chessFile) {
 		return CHESS_FILE_CACHE.getOrDefault(chessFile, new ChessFile(chessFile));
 	}
@@ -33,12 +39,6 @@ public class ChessFile {
 	// TODO: 2020/03/28 unmodifiable로 수정
 	public static List<ChessFile> values() {
 		return new ArrayList<>(CHESS_FILE_CACHE.values());
-	}
-
-	private void validate(char chessFile) {
-		if (chessFile < LOWER_BOUND || chessFile > UPPER_BOUND) {
-			throw new IllegalArgumentException("유효한 체스 파일이 아닙니다.");
-		}
 	}
 
 	public ChessFile move(int fileMovingUnit) {

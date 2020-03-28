@@ -1,5 +1,6 @@
 package chess.domain.chessPiece.pieceType;
 
+import java.util.Arrays;
 import java.util.function.Function;
 
 import chess.domain.RuleStrategy.RuleStrategy;
@@ -19,6 +20,13 @@ public enum PieceColor {
 		this.color = color;
 		this.convertName = convertName;
 		this.pawnRuleStrategy = pawnRuleStrategy;
+	}
+
+	public static PieceColor of(String color) {
+		return Arrays.stream(values())
+			.filter(pieceColor -> pieceColor.color.equals(color))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 색상의 피스입니다."));
 	}
 
 	public String convertName(String pieceName) {

@@ -5,21 +5,21 @@ import java.util.function.BiPredicate;
 import java.util.function.UnaryOperator;
 
 public enum MoveDirection {
-	N((fileInterval, rankInterval) -> fileInterval == 0 && rankInterval > 0,
+	N((fileGap, rankGap) -> fileGap == 0 && rankGap > 0,
 		(sourcePosition) -> sourcePosition.move(0, 1)),
-	NE((fileInterval, rankInterval) -> fileInterval - rankInterval == 0,
+	NE((fileGap, rankGap) -> isSameGapFrom(fileGap, rankGap) && fileGap >= 0 && rankGap >= 0,
 		(sourcePosition) -> sourcePosition.move(1, 1)),
-	E((fileInterval, rankInterval) -> fileInterval > 0 && rankInterval == 0,
+	E((fileGap, rankGap) -> fileGap > 0 && rankGap == 0,
 		(sourcePosition) -> sourcePosition.move(1, 0)),
-	SE((fileInterval, rankInterval) -> fileInterval - (-rankInterval) == 0,
+	SE((fileGap, rankGap) -> isSameGapFrom(fileGap, rankGap) && fileGap >= 0 && rankGap <= 0,
 		(sourcePosition) -> sourcePosition.move(1, -1)),
-	S((fileInterval, rankInterval) -> fileInterval == 0 && rankInterval < 0,
+	S((fileGap, rankGap) -> fileGap == 0 && rankGap < 0,
 		(sourcePosition) -> sourcePosition.move(0, -1)),
-	SW((fileInterval, rankInterval) -> (-fileInterval) - (-rankInterval) == 0,
+	SW((fileGap, rankGap) -> isSameGapFrom(fileGap, rankGap) && fileGap <= 0 && rankGap <= 0,
 		(sourcePosition) -> sourcePosition.move(-1, -1)),
-	W((fileInterval, rankInterval) -> fileInterval < 0 && rankInterval == 0,
+	W((fileGap, rankGap) -> fileGap < 0 && rankGap == 0,
 		(sourcePosition) -> sourcePosition.move(-1, 0)),
-	NW((fileInterval, rankInterval) -> (-fileInterval) - rankInterval == 0,
+	NW((fileGap, rankGap) -> isSameGapFrom(fileGap, rankGap) && fileGap <= 0 && rankGap >= 0,
 		(sourcePosition) -> sourcePosition.move(-1, 1));
 
 	private BiPredicate<Integer, Integer> isSameDirection;
@@ -28,6 +28,10 @@ public enum MoveDirection {
 	MoveDirection(BiPredicate<Integer, Integer> isSameDirection, UnaryOperator<Position> moveByUnit) {
 		this.isSameDirection = isSameDirection;
 		this.moveByUnit = moveByUnit;
+	}
+
+	public static boolean isSameGapFrom(int fileGap, int rankGap) {
+		return (Math.abs(fileGap) - Math.abs(rankGap)) == 0;
 	}
 
 	public boolean isSameDirectionFrom(Position sourcePosition, Position targetPosition) {
