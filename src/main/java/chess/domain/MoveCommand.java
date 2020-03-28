@@ -11,6 +11,7 @@ public class MoveCommand {
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 8;
     private static final String WRONG_POSITION_INPUT_MESSAGE = "잘못된 형태의 위치가 입력되었습니다.";
+    private static final int MAX_WORD_LENGTH = 2;
 
     private final Position sourcePosition;
     private final Position targetPosition;
@@ -41,8 +42,15 @@ public class MoveCommand {
     }
 
     private void validatePositionWord(String position) {
+        validateWordLength(position);
         validateFirstCharacter(position.charAt(0));
         validateSecondCharacter(position.charAt(1));
+    }
+
+    private void validateWordLength(String position) {
+        if (MAX_WORD_LENGTH < position.length()) {
+            throw new IllegalArgumentException(WRONG_POSITION_INPUT_MESSAGE);
+        }
     }
 
     private void validateFirstCharacter(char firstCharacter) {
