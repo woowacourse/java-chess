@@ -3,13 +3,13 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.blank.Blank;
+import chess.domain.piece.move.*;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ChessBoard implements Board {
     private static final int SIZE = 64;
@@ -65,7 +65,8 @@ public class ChessBoard implements Board {
         for (int x = COLLUMN_START; x <= COLLUMN_END; x++) {
             PieceType pieceType = PieceType.valueOf(x);
             Position position = Position.of(x, edgeRow);
-            Initialized piece = pieceType.createInitializedPiece(position, team);
+            //todo: refac
+            Initialized piece = pieceType.createInitializedPiece(position, team, new ArrayList<>());
             pieces.put(position, piece);
         }
     }
@@ -74,7 +75,17 @@ public class ChessBoard implements Board {
         for (int y = row; y <= row; y++) {
             for (int x = 1; x <= 8; x++) {
                 Position position = Position.of(x, y);
-                InitializedPawn initializedPawn = new InitializedPawn("p", position, team);
+
+                //todo: refac
+                List<CanNotMoveStrategy> canNotMoveStrategies = Arrays.asList(
+                        new IsStayed(),
+                        new IsNotForward(),
+                        new InitializedPawnCanNotReach(2),
+                        new InitializedPawnHasHindrance(),
+                        new IsAttackingSameTeam()
+                );
+
+                InitializedPawn initializedPawn = new InitializedPawn("p", position, team, canNotMoveStrategies);
                 pieces.put(position, initializedPawn);
 
             }

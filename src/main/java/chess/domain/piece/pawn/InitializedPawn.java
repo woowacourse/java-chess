@@ -1,6 +1,7 @@
 package chess.domain.piece.pawn;
 
 import chess.domain.board.Board;
+import chess.domain.piece.move.CanNotMoveStrategy;
 import chess.domain.position.Direction;
 import chess.domain.position.Distance;
 import chess.domain.piece.Piece;
@@ -8,46 +9,23 @@ import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
+import java.util.List;
+
 //todo: add tests
 public class InitializedPawn extends Initialized {
-    private static final int MAX_DISTANCE = 2;
+    static final int MAX_DISTANCE = 2;
 
-    public InitializedPawn(String name, Position position, Team team) {
-        super(name, position, team);
+    public InitializedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
+        super(name, position, team, canNotMoveStrategies);
     }
 
     @Override
     public Piece move(Position to, Board board) {
         if (canNotMove(to, board)) {
-            //todo: change error message
-            throw new IllegalArgumentException("움직일 수 없습니다.");
+            throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
         }
-
-        return new RunningPawn(name, to, team);
-    }
-
-    @Override
-    protected boolean canNotMove(Position to, Board board) {
-        if (position.equals(to)) {
-            return true;
-        }
-
-        if (to.isBackward(position, team.getForwardDirection())) {
-            return true;
-        }
-
-        Piece exPiece = board.getPiece(to);
-        if (isSameTeam(exPiece)) {
-            return true;
-        }
-
-        Distance distance = position.calculateDistance(to);
-        if (distance.isBiggerThan(MAX_DISTANCE)) {
-            return true;
-        }
-
-        return hasHindrance(to, board);
-
+        //todo: refac
+        return new InitializedPawn(name, position, team, canNotMoveStrategies);
     }
 
     public boolean hasHindrance(Position to, Board board) {
@@ -58,7 +36,7 @@ public class InitializedPawn extends Initialized {
         return hasHindrance(board);
     }
 
-    private boolean isHeadingDiagonal(Position to) {
+    public boolean isHeadingDiagonal(Position to) {
         return position.isDiagonalDirection(to);
     }
 

@@ -46,11 +46,11 @@ class PositionTest {
     }
 
     @ParameterizedTest
-    @DisplayName("#isBackward() : should return boolean as to Position 'to' is forward than 'from'")
+    @DisplayName("#isNotForward() : should return boolean as to Position 'to' is forward than 'from'")
     @MethodSource({"getCasesForIsBackward"})
     void isBackward(Position from, Direction teamForwardDirection, boolean expected) {
         Position to = Position.of(1,2);
-        assertThat(to.isBackward(from, teamForwardDirection)).isEqualTo(expected);
+        assertThat(to.isNotForward(from, teamForwardDirection)).isEqualTo(expected);
 
     }
 

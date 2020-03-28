@@ -54,11 +54,11 @@ public class Position {
         return Position.of(newX, newY);
     }
 
-    public int getX() {
+    int getX() {
         return x;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
@@ -79,7 +79,7 @@ public class Position {
         return Arrays.asList(eastDiagonal, westDiagonal);
     }
 
-    public boolean isBackward(Position from, Direction teamForwardDirection) {
+    public boolean isNotForward(Position from, Direction teamForwardDirection) {
         int standard = (y - from.y) * teamForwardDirection.getVertical();
         return standard <= 0;
     }
@@ -96,5 +96,10 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "x=" + x + ", y=" + y;
     }
 }

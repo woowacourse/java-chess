@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class InitializedTest {
 
     @ParameterizedTest
-    @DisplayName("#isHeadingBackward : return boolean as to current position and to")
+    @DisplayName("#isHeadingNotForward : return boolean as to current position and to")
     @MethodSource({"getCasesForIsHeadingBackward"})
     void isHeadingBackward(Position from, Position to, Team team, boolean expected) {
-        Initialized initialized = new Initialized("testInitiaiizedPiece", from, team) {
+        Initialized initialized = new Initialized("testInitiaiizedPiece", from, team, new ArrayList<>()) {
             @Override
             protected boolean canNotMove(Position to, Board board) {
                 return false;
@@ -31,7 +32,7 @@ class InitializedTest {
             }
         };
 
-        boolean isHeadingBackward = initialized.isHeadingBackward(to);
+        boolean isHeadingBackward = initialized.isHeadingNotForward(to);
         assertThat(isHeadingBackward).isEqualTo(expected);
     }
 

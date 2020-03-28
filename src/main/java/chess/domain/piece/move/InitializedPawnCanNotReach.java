@@ -6,7 +6,7 @@ import chess.domain.position.Distance;
 import chess.domain.position.Position;
 
 public class InitializedPawnCanNotReach extends CanNotReach {
-    InitializedPawnCanNotReach(int maxDistance) {
+    public InitializedPawnCanNotReach(int maxDistance) {
         super(maxDistance);
     }
 

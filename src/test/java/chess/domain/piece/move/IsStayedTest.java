@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +24,7 @@ class IsStayedTest {
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
         //given
-        Initialized initialized = new InitializedPawn("testPawn", from, Team.BLACK);
+        Initialized initialized = new InitializedPawn("testPawn", from, Team.BLACK, new ArrayList<>());
         Board board = ChessBoard.initiaize();
 
         boolean canNotMove = isStayed.canNotMove(initialized, to, board);

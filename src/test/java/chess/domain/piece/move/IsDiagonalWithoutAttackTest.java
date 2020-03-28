@@ -3,6 +3,7 @@ package chess.domain.piece.move;
 import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
+import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
@@ -18,37 +19,29 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class IsAttackingSameTeamTest {
+class IsDiagonalWithoutAttackTest {
 
-    private IsAttackingSameTeam isAttackingSameTeam = new IsAttackingSameTeam();
+    private IsDiagonalWithoutAttack isDiagonalWithoutAttack = new IsDiagonalWithoutAttack();
 
     @ParameterizedTest
-    @DisplayName("#canNotMove : return boolean as to isHeading to team which piece in the position belong to")
+    @DisplayName("#canNotMove : return boolean as to Position 'from', 'to', team and the Piece at the position")
     @MethodSource({"getCasesForCanNotMove"})
-    void canNotMove(Team team, boolean expected) {
-        Initialized initializedPiece = new Initialized("testInitializedPiece", Position.of(1,1), team, new ArrayList<>()) {
-            @Override
-            protected boolean canNotMove(Position to, Board board) {
-                return false;
+    void canNotMove(Team team, Position from, Position to, boolean expected) {
+        InitializedPawn initializedPawn = new InitializedPawn("testInitializedPawn", from, team, new ArrayList<>());
 
-            }
 
-            @Override
-            public Piece move(Position to, Board board) {
-                return null;
-            }
-        };
-        
         Board board = ChessBoard.initiaize();
-        Position to = Position.of(1,7);
-        boolean canNotMove = isAttackingSameTeam.canNotMove(initializedPiece, to, board);
+        boolean canNotMove = isDiagonalWithoutAttack.canNotMove(initializedPawn, to, board);
         assertThat(canNotMove).isEqualTo(expected);
     }
 
     private static Stream<Arguments> getCasesForCanNotMove() {
         return Stream.of(
-                Arguments.of(Team.WHITE, false),
-                Arguments.of(Team.BLACK, true)
+                Arguments.of(Team.WHITE, Position.of(1,2), Position.of(2,3), true),
+                Arguments.of(Team.WHITE, Position.of(1,1), Position.of(2,2), true),
+                Arguments.of(Team.WHITE, Position.of(1,6), Position.of(2,7), false),
+                Arguments.of(Team.WHITE, Position.of(1,2), Position.of(1,3), false)
+
         );
     }
 }
