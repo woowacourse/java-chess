@@ -28,9 +28,9 @@ public class Pawn extends Piece {
 		}
 		// now가 초기위치인지 검사
 		if (now.isInitialPawnLocation(isBlack())) {
-			return now.isInitialPawnForwardRange(after, value) || now.isForwardDiagonal(after, value);
+			return now.isInitialPawnForwardRange(after, Team.of(isBlack())) || now.isForwardDiagonal(after, value);
 		}
-		return now.isForwardDiagonal(after, value) || now.isPawnForwardRange(after, value);
+		return now.isForwardDiagonal(after, value) || now.isPawnForwardRange(after, Team.of(isBlack()));
 	}
 
 	@Override

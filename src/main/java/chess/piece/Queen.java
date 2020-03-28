@@ -20,7 +20,7 @@ public class Queen extends Piece {
 
 	@Override
 	public boolean canMove(Location now, Location after) {
-		return now.isQueenRang(after);
+		return now.isQueenRange(after);
 	}
 
 	@Override

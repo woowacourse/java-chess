@@ -33,19 +33,21 @@ public class ChessBoard {
 
 	public boolean canMove(Location now, Location destination) {
 		Piece piece = board.get(now);
-		boolean isNotSameTeam = isNotSameTeam(destination, piece);
+		checkSameTeam(piece, destination);
 
-		return isNotSameTeam
-			&& piece.canMove(now, destination)
+		return piece.canMove(now, destination)
 			&& !piece.hasObstacle(board, now, destination);
 	}
 
-	private boolean isNotSameTeam(Location destination, Piece piece) {
-		boolean isNotSameTeam = true;
+	private void checkSameTeam(Piece piece, Location destination) {
+		boolean sameTeam = false;
 		if (board.containsKey(destination)) {
-			isNotSameTeam = !piece.isSameTeam(board.get(destination));
+			Piece other = board.get(destination);
+			sameTeam = piece.isSameTeam(other);
 		}
-		return isNotSameTeam;
+		if (sameTeam) {
+			throw new IllegalArgumentException("같은 팀으로 이동했습니다.");
+		}
 	}
 
 	public Map<Location, Piece> giveMyPiece(Team team) {

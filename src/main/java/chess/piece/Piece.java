@@ -1,6 +1,7 @@
 package chess.piece;
 
 import java.util.Map;
+import java.util.Objects;
 
 import chess.board.Location;
 import chess.team.Team;
@@ -35,6 +36,21 @@ public abstract class Piece {
 	@Override
 	public String toString() {
 		return String.valueOf(name);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Piece piece = (Piece)o;
+		return name == piece.name;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
 	}
 
 	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {

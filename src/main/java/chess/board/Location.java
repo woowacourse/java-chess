@@ -5,6 +5,8 @@ import static java.lang.Math.*;
 import java.util.Arrays;
 import java.util.Objects;
 
+import chess.team.Team;
+
 // 팀별 초기위치를 갖고있는다.
 public class Location {
 	private final int row;
@@ -22,18 +24,6 @@ public class Location {
 
 	public boolean isSameCol(Location other) {
 		return this.col == other.col;
-	}
-
-	public Location moveTo(final int row, final char col) {
-		return new Location(row, col);
-	}
-
-	public Location moveRowBy(final int rowValue) {
-		return moveTo(this.row + rowValue, col);
-	}
-
-	public Location moveColBy(final int colValue) {
-		return moveTo(row, (char)(this.col + colValue));
 	}
 
 	public boolean isDiagonal(Location destination) {
@@ -61,7 +51,7 @@ public class Location {
 		return false;
 	}
 
-	public boolean isQueenRang(Location destination) {
+	public boolean isQueenRange(Location destination) {
 		return isDiagonal(destination) || isStraight(destination);
 	}
 
@@ -122,14 +112,24 @@ public class Location {
 			.contains(this);
 	}
 
-	public boolean isInitialPawnForwardRange(Location after, int value) {
-		boolean result = row + value == after.row || row + (value * 2) == after.row;
+	public boolean isInitialPawnForwardRange(Location after, Team team) {
+		int weight = 1;
+		if (team == Team.BLACK) {
+			weight = -1;
+		}
+
+		boolean result = row + weight == after.row || row + (weight * 2) == after.row;
 
 		return result && col == after.col;
 	}
 
-	public boolean isPawnForwardRange(Location after, int value) {
-		boolean result = row + value == after.row;
+	public boolean isPawnForwardRange(Location after, Team team) {
+		int weight = 1;
+		if (team == Team.BLACK) {
+			weight = -1;
+		}
+
+		boolean result = (row + weight) == after.row;
 
 		return result && col == after.col;
 	}
@@ -163,6 +163,5 @@ public class Location {
 	public boolean isVertical(Location destination) {
 		return col == destination.col;
 	}
-
 }
 

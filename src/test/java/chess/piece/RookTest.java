@@ -12,6 +12,7 @@ import chess.board.Location;
 import chess.team.Team;
 
 class RookTest {
+	@DisplayName("룩의 이동범위 테스트")
 	@Test
 	void canMove() {
 		Rook rook = new Rook(Team.BLACK);
