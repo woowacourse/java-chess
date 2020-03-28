@@ -31,7 +31,8 @@ public class ChessOutputView {
     }
 
     public static void scoreOf(PieceColor pieceColor, ChessBoard chessBoard) {
-        System.out.println(String.format("%s점수: %.1f", pieceColor, ChessCalculator.calculateScoreOf(pieceColor, chessBoard)));
+        System.out.println(String.format("%s점수: %.1f", pieceColor,
+                ChessCalculator.calculateScoreOf(pieceColor, chessBoard)));
     }
 
     public static void printCaughtKing(String gameOverMessage, ChessBoard chessBoard) {

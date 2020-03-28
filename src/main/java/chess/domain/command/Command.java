@@ -1,7 +1,5 @@
 package chess.domain.command;
 
-import chess.View.ChessOutputView;
-import chess.domain.chessBoard.ChessBoard;
 import chess.domain.position.Position;
 import utils.CommandParser;
 
@@ -31,16 +29,6 @@ public class Command {
             return;
         }
         throw new IllegalArgumentException("잘못된 명령입니다.");
-    }
-
-    public void runChessByCommand(ChessBoard chessBoard) {
-        if (isMove()) {
-            chessBoard.move(sourcePosition(), targetPosition());
-            ChessOutputView.printChessBoard(chessBoard);
-        }
-        if (isStatus()) {
-            ChessOutputView.scoreOf(chessBoard.getPlayerColor(), chessBoard);
-        }
     }
 
     public Position sourcePosition() {
