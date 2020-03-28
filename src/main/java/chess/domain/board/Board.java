@@ -50,7 +50,6 @@ public class Board {
         return new Board(board, status);
     }
 
-    // TODO: 2020/03/28 리팩토링
     public Board move(Position source, Position target) {
         if (status.isNotProcessing()) {
             throw new UnsupportedOperationException();
@@ -61,17 +60,7 @@ public class Board {
 
         validateSourcePiece(sourcePiece);
 
-        boolean isKill = !GamePiece.EMPTY.equals(targetPiece) && sourcePiece.isEnemy(targetPiece);
-
-        List<Position> path = new ArrayList<>();
-        if (isKill) {
-            path = searchKillPath(source, target, sourcePiece);
-        }
-        if (!isKill){
-            path = searchMovePath(source, target, sourcePiece);
-        }
-
-        for (Position position : path) {
+        for (Position position : findPath(source, target)) {
             validateMovable(board.get(position));
         }
 
@@ -84,6 +73,16 @@ public class Board {
         }
 
         return new Board(board, status.nextTurn());
+    }
+
+    private List<Position> findPath(Position source, Position target) {
+        GamePiece sourcePiece = board.get(source);
+        GamePiece targetPiece = board.get(target);
+
+        if (!GamePiece.EMPTY.equals(targetPiece) && sourcePiece.isEnemy(targetPiece)) {
+            return searchKillPath(source, target, sourcePiece);
+        }
+        return searchMovePath(source, target, sourcePiece);
     }
 
     private List<Position> searchMovePath(Position source, Position target, GamePiece sourcePiece) {

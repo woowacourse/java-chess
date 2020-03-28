@@ -16,7 +16,6 @@ public class Score {
         this.score = score;
     }
 
-    // TODO: 2020/03/26 리팩토링
     public static Score of(Map<GamePiece, Integer> piecesCount, int sameFilePawnCount) {
         Score score = Score.ZERO;
         for (Map.Entry<GamePiece, Integer> entry : piecesCount.entrySet()) {
