@@ -109,14 +109,6 @@ public class PieceImpl extends Piece {
         throw new IllegalArgumentException("올바른 타입이 아닙니다");
     }
 
-
-    public Square addIfInBoundary(Square square, int fileIncrementBy, int rankIncrementBy) {
-        if (Square.hasCacheAdded(square, fileIncrementBy, rankIncrementBy)) {
-            return Square.of(square, fileIncrementBy, rankIncrementBy);
-        }
-        return square;
-    }
-
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         validateNotNull(square, board);
         if (type == Type.KNIGHT || type == Type.KING) {

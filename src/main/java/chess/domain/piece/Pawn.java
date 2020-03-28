@@ -10,7 +10,9 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 public class Pawn extends Piece {
-    private final static Map<String, Pawn> CACHE = new HashMap<>();
+    private final static Map<Color, Pawn> CACHE = new HashMap<>();
+    private final static String NAME_BLACK = "P";
+    private final static String NAME_WHITE = "p";
 
     static {
         Stream.of(Color.values())
@@ -22,12 +24,12 @@ public class Pawn extends Piece {
         if (color == Color.WHITE) {
             name = "p";
         }
-        CACHE.putIfAbsent(color.getName(), new Pawn(color, name, 0));
+        CACHE.putIfAbsent(color, new Pawn(color, name, 0));
     }
 
     public static Pawn of(Color color) {
         validateInput(color);
-        return CACHE.get(color.getName());
+        return CACHE.get(color);
     }
 
     private static void validateInput(Color color) {
