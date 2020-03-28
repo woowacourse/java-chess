@@ -40,4 +40,8 @@ public class OutputView {
 	public static void printErrorMessage(RuntimeException e) {
 		System.out.println(e.getMessage());
 	}
+
+	public static void printEndGame() {
+		System.out.println("킹이 잡혔습니다! 게임을 종료합니다.");
+	}
 }

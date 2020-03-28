@@ -3,8 +3,8 @@ package chess.domain;
 import chess.domain.position.Position;
 
 public class Menu {
+	public static final String END = "end";
 	private static final String START = "start";
-	private static final String END = "end";
 	private static final String MOVE = "move";
 	private static final String STATUS = "status";
 	private static final String BLANK = " ";

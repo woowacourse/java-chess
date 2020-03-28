@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.Menu;
 import chess.domain.Result;
 import chess.domain.Status;
+import chess.domain.Team;
 import chess.domain.Turn;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.position.Position;
@@ -31,6 +32,20 @@ public class ChessGame {
 		}
 	}
 
+	private void initMenu() {
+		if (isDieKing()) {
+			OutputView.printEndGame();
+			menu = new Menu(Menu.END);
+			return;
+		}
+		try {
+			menu = new Menu(InputView.inputMenu());
+		} catch (RuntimeException e) {
+			OutputView.printErrorMessage(e);
+			initMenu();
+		}
+	}
+
 	private void proceed() {
 		if (menu.isMove()) {
 			Position startPosition = menu.getStartPosition();
@@ -47,13 +62,8 @@ public class ChessGame {
 		}
 	}
 
-	private void initMenu() {
-		try {
-			menu = new Menu(InputView.inputMenu());
-		} catch (RuntimeException e) {
-			OutputView.printErrorMessage(e);
-			initMenu();
-		}
+	private boolean isDieKing() {
+		return chessBoard.isDieKing(Team.BLACK) || chessBoard.isDieKing(Team.WHITE);
 	}
 
 }

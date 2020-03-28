@@ -7,8 +7,8 @@ import java.util.List;
 import chess.domain.Team;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.King;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
 
 public class ChessBoard {
 
@@ -20,6 +20,18 @@ public class ChessBoard {
 
 	public ChessBoard(List<Row> board) {
 		this.board = new ArrayList<>(board);
+	}
+
+	public boolean isDieKing(Team team) {
+		return findByTeam(team).stream()
+			.anyMatch(chessPiece -> chessPiece.getClass() == King.class)
+			== false;
+	}
+
+	private List<ChessPiece> findByTeam(Team team) {
+		List<ChessPiece> chessPieces = new ArrayList<>();
+		board.forEach(row -> chessPieces.addAll(row.findByTeam(team)));
+		return chessPieces;
 	}
 
 	public void move(Position startPosition, Position targetPosition) {
