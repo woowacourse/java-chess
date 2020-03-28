@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import chess.Command;
-import chess.RequestDto;
+import chess.dto.RequestDto;
+import chess.exception.IllegalCommandException;
+import chess.state.Command;
 
 public class InputView {
 	private static final Scanner scanner = new Scanner(System.in);

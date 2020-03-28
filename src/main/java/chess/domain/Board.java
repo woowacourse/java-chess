@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.exception.InvalidTurnException;
 
 public class Board {
 	private final Map<Position, Piece> board;

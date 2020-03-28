@@ -1,7 +1,9 @@
 package chess;
 
+import chess.dto.RequestDto;
 import chess.dto.ResponseDto;
 import chess.state.ChessGameState;
+import chess.state.Command;
 import chess.state.Ready;
 
 public class ChessService {
@@ -20,6 +22,12 @@ public class ChessService {
 	}
 
 	public ResponseDto play(RequestDto request) {
-		return null;
+		Command command = request.getCommand();
+		if (command == Command.MOVE) {
+			state = request.getCommand().move(state, request.getParameters());
+			return state.getResponse();
+		}
+		state = request.getCommand().run(state);
+		return state.getResponse();
 	}
 }

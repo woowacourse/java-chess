@@ -1,6 +1,8 @@
-package chess;
+package chess.dto;
 
 import java.util.List;
+
+import chess.state.Command;
 
 public class RequestDto {
 	private final Command command;

@@ -1,9 +1,7 @@
-package chess;
+package chess.state;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
-
-import chess.state.ChessGameState;
 
 public enum Command {
 	START(ChessGameState::start),

@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.ChessService;
-import chess.RequestDto;
+import chess.dto.RequestDto;
 import chess.dto.ResponseDto;
 import chess.view.InputView;
 import chess.view.OutputView;
