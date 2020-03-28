@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
+import java.util.Map;
+
 import chess.domain.Team;
+import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
 
 public class King extends Piece {
@@ -21,5 +24,10 @@ public class King extends Piece {
 			return WHITE_KING;
 		}
 		return BLACK_KING;
+	}
+
+	@Override
+	public Piece move(Position from, Position to, Map<Position, Team> dto) {
+		return null;
 	}
 }

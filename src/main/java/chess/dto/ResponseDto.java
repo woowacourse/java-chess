@@ -2,6 +2,7 @@ package chess.dto;
 
 import java.util.Map;
 
+import chess.domain.Team;
 import chess.domain.position.Position;
 
 public class ResponseDto {

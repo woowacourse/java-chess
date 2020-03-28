@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Map;
+
 import chess.domain.Team;
 import chess.domain.position.Position;
 
@@ -21,5 +23,10 @@ public class Knight extends Piece {
 			return WHITE_KNIGHT;
 		}
 		return BLACK_KNIGHT;
+	}
+
+	@Override
+	public Piece move(Position from, Position to, Map<Position, Team> dto) {
+		return null;
 	}
 }

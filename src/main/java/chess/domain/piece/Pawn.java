@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
+import java.util.Map;
+
 import chess.domain.Team;
+import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
@@ -22,5 +25,10 @@ public class Pawn extends Piece {
 			return WHITE_PAWN;
 		}
 		return BLACK_PAWN;
+	}
+
+	@Override
+	public Piece move(Position from, Position to, Map<Position, Team> dto) {
+		return null;
 	}
 }

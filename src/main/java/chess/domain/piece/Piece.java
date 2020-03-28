@@ -1,21 +1,30 @@
 package chess.domain.piece;
 
+import java.util.Map;
+
 import chess.domain.Team;
+import chess.domain.Turn;
+import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
 
 public abstract class Piece {
-	protected static MovingStrategy movingStrategy;
+    protected final Team team;
+    protected final Position position;
 
-	protected final Team team;
-	protected final Position position;
+    public Piece(Team team, Position position) {
+        this.team = team;
+        this.position = position;
+    }
 
-	public Piece(Team team, Position position) {
-		this.team = team;
-		this.position = position;
-		movingStrategy = setMovingStrategy(team);
-	}
+    public abstract String toString();
 
-	public abstract MovingStrategy setMovingStrategy(Team team);
+    public boolean isTurn(Turn turn) {
+        return turn.isSameTeam(team);
+    }
 
-	public abstract String toString();
+    public abstract Piece move(Position from, Position to, Map<Position, Team> dto);
+
+    public Team getTeam() {
+        return team;
+    }
 }
