@@ -23,4 +23,12 @@ public enum PieceColor {
     public boolean isNoneColor() {
         return this == NONE;
     }
+
+    public boolean isBlack() {
+        return this == BLACK;
+    }
+
+    public boolean isWhite() {
+        return this == WHITE;
+    }
 }
