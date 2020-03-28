@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import java.util.Arrays;
-
 public enum Rank {
 
     EIGHT(8),
@@ -28,9 +26,6 @@ public enum Rank {
     }
 
     public Rank add(int rank) {
-        int newRank = this.value + rank;
-        return Arrays.stream(values()).filter(ranks -> ranks.value == newRank)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 positon입니다."));
+        return values()[ordinal() - rank];
     }
 }

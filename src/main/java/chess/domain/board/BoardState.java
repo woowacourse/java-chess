@@ -19,10 +19,6 @@ public class BoardState {
         return new BoardState(boardState);
     }
 
-    public boolean isEmpty(Position target) {
-        return Objects.isNull(boardState.get(target));
-    }
-
     public boolean canMove(Position target) {
         PieceDto pieceDto = boardState.get(target);
         return Objects.isNull(pieceDto);
@@ -31,10 +27,5 @@ public class BoardState {
     public boolean canAttack(Position target, Team team) {
         PieceDto pieceDto = boardState.get(target);
         return !Objects.isNull(pieceDto) && !team.isSamePlayer(pieceDto.getTeam());
-    }
-
-    public boolean isAlly(Position target, Team team) {
-        PieceDto pieceDto = boardState.get(target);
-        return !Objects.isNull(pieceDto) && team.isSamePlayer(pieceDto.getTeam());
     }
 }

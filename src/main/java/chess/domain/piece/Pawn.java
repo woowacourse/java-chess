@@ -56,7 +56,7 @@ public abstract class Pawn extends Piece {
 
     private void canAttackBy(MovingDirection attackDirection, BoardState boardState, List<Position> attackPositions) {
         Position startPosition = position;
-        if (startPosition.canMove(attackDirection)) {
+        if (startPosition.canMoveBy(attackDirection)) {
             startPosition = startPosition.moveByDirection(attackDirection);
             if (boardState.canAttack(startPosition, team)) {
                 attackPositions.add(startPosition);

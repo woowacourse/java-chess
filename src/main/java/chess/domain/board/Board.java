@@ -41,7 +41,7 @@ public class Board {
         if (Objects.isNull(sourcePiece)) {
             throw new IllegalArgumentException("잘못된 위치를 선택하셨습니다.");
         }
-        if (!turn.isSamePlayer(sourcePiece.getTeam())) {
+        if (!turn.isSameTeam(sourcePiece.getTeam())) {
             throw new IllegalArgumentException("해당 플레이어의 턴이 아닙니다.");
         }
     }

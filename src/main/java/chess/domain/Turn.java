@@ -18,7 +18,7 @@ public class Turn {
         turn = turn.toggle();
     }
 
-    public boolean isSamePlayer(Team team) {
+    public boolean isSameTeam(Team team) {
         return turn.equals(team);
     }
 }

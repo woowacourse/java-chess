@@ -24,7 +24,7 @@ public class MovedPawn extends Pawn {
         MovingDirection moveDirection = MOVING_DIRECTION_BY_TEAM.get(team);
         List<Position> positions = new ArrayList<>();
         Position startPosition = position;
-        if (startPosition.canMove(moveDirection)) {
+        if (startPosition.canMoveBy(moveDirection)) {
             startPosition = startPosition.moveByDirection(moveDirection);
             if (boardState.canMove(startPosition)) {
                 positions.add(startPosition);

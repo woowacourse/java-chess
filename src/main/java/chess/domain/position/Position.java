@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Position {
-    private final static Map<String, Position> matcher = new HashMap<>();
+    private static final Map<String, Position> matcher = new HashMap<>();
 
     static {
         for (File file : File.values()) {
@@ -61,11 +61,11 @@ public class Position {
         return this.file == file;
     }
 
-    public boolean canMove(MovingDirection movingDirection) {
+    public boolean canMoveBy(MovingDirection movingDirection) {
         try {
             file.add(movingDirection.getFileDirection());
             rank.add(movingDirection.getRankDirection());
-        } catch (IllegalArgumentException ie) {
+        } catch (RuntimeException ie) {
             return false;
         }
         return true;

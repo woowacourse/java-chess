@@ -26,7 +26,7 @@ public abstract class MoveByDirectionPiece extends Piece {
     private List<Position> getMovableBy(MovingDirection movingDirection, BoardState boardState) {
         List<Position> positions = new ArrayList<>();
         Position startPosition = position;
-        while (startPosition.canMove(movingDirection)) {
+        while (startPosition.canMoveBy(movingDirection)) {
             startPosition = startPosition.moveByDirection(movingDirection);
             if (boardState.canMove(startPosition) || boardState.canAttack(startPosition, team)) {
                 positions.add(startPosition);

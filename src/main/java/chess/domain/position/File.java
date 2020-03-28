@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import java.util.Arrays;
-
 public enum File {
     A(1),
     B(2),
@@ -23,9 +21,6 @@ public enum File {
     }
 
     public File add(int file) {
-        int newFile = value + file;
-        return Arrays.stream(values()).filter(files -> files.value == newFile)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 positon입니다."));
+        return values()[ordinal() + file];
     }
 }

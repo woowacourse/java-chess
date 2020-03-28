@@ -25,13 +25,13 @@ public class NotMovedPawn extends Pawn {
         MovingDirection moveDirection = MOVING_DIRECTION_BY_TEAM.get(team);
         List<Position> positions = new ArrayList<>();
         Position startPosition = position;
-        if (startPosition.canMove(moveDirection)) {
+        if (startPosition.canMoveBy(moveDirection)) {
             startPosition = startPosition.moveByDirection(moveDirection);
             if (boardState.canMove(startPosition)) {
                 positions.add(startPosition);
             }
         }
-        if (startPosition.canMove(moveDirection) && boardState.canMove(startPosition)) {
+        if (startPosition.canMoveBy(moveDirection) && boardState.canMove(startPosition)) {
             startPosition = startPosition.moveByDirection(moveDirection);
             if (boardState.canMove(startPosition)) {
                 positions.add(startPosition);
