@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,6 +32,17 @@ class ChessBoardTest {
 	void construct(List<Piece> pieces) {
 		assertThatThrownBy(() -> new ChessBoard(pieces))
 				.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	@DisplayName("적의 말을 공격할 경우 상대 말을 없애고 말 위치 변경이 되었는지 확인")
+	void attack() {
+		List<Piece> pieces = new ArrayList<>(Arrays.asList(new King(Side.WHITE, new Position("d4")), new Pawn(Side.BLACK, new Position("c5"))));
+		ChessBoard newChessBoard = new ChessBoard(pieces);
+		newChessBoard.move(new Position("d4"), new Position("c5"), Side.WHITE);
+		assertThat(newChessBoard.getPieces())
+				.extracting("position")
+				.isEqualTo(Collections.singletonList(new Position("c5")));
 	}
 
 	@Test
