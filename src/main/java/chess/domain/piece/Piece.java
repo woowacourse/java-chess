@@ -25,4 +25,8 @@ public class Piece {
     public boolean canMove() {
         return pieceType.canMove();
     }
+
+    public boolean is(PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
 }

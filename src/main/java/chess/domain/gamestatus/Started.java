@@ -14,4 +14,9 @@ public abstract class Started implements GameStatus {
     protected Started(Board board) {
         this.board = board;
     }
+
+    @Override
+    public String getBoardString() {
+        return board.toString();
+    }
 }

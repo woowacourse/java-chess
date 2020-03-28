@@ -10,6 +10,7 @@ public class Running extends Started {
 
     Running() {
         super();
+        currentTeam = Team.WHITE;
     }
 
     private Running(Board board, Team thisTurn) {
@@ -24,7 +25,6 @@ public class Running extends Started {
 
     @Override
     public GameStatus move(String fromPosition, String toPosition) {
-
         board.move(fromPosition, toPosition);
         return decideNextStatus();
     }
@@ -32,14 +32,9 @@ public class Running extends Started {
     private GameStatus decideNextStatus() {
         Team nextTeam = currentTeam.opponent();
 
-        if (board.isPieceOnBoard(nextTeam, PieceType.KING)) {
-            return new Running(this.board, nextTeam);
+        if (!board.isPieceOnBoard(nextTeam, PieceType.KING)) {
+            return new Finished();
         }
-        return new Finished();
-    }
-
-    @Override
-    public String getBoardString() {
-        return board.toString();
+        return new Running(this.board, nextTeam);
     }
 }

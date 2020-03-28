@@ -16,12 +16,20 @@ public class Board {
         this.board = board;
     }
 
-    public void move(String fromPosition, String toPosition) {
+    public void move(String keyFromPosition, String keyToPosition) {
+        move(Position.of(keyFromPosition), Position.of(keyToPosition));
+    }
 
+    public void move(Position fromPosition, Position toPosition) {
+        Piece piece = board.get(fromPosition);
+
+        board.remove(fromPosition);
+        board.put(toPosition, piece);
     }
 
     public boolean isPieceOnBoard(Team team, PieceType pieceType) {
-        return false;
+        return this.board.entrySet().stream()
+            .anyMatch(entry -> entry.getValue().is(pieceType));
     }
 
     @Override
@@ -46,7 +54,8 @@ public class Board {
 
     private String makeStringByPosition(Position position) {
         if (board.containsKey(position)) {
-            return board.get(position).getAcronym();
+            return board.get(position)
+                .getAcronym();
         }
         return ".";
     }
