@@ -35,15 +35,12 @@ public class Route {
     }
 
     private static List<Position> subListByPieceType(List<Position> movablePositions, Position fromPosition, PieceType pieceType) {
-        if (pieceType == PieceType.PAWN) {
-            if (fromPosition.isAt(Rank.TWO)) {
-                return movablePositions.subList(0, 2);
-            }
-            return movablePositions.subList(0, 1);
+        if (pieceType == PieceType.PAWN && fromPosition.isAt(Rank.TWO)) {
+            return movablePositions.subList(0, 2);
         }
 
-        if (pieceType == PieceType.KING) {
-            movablePositions = movablePositions.subList(0, 1);
+        if (pieceType == PieceType.KING || pieceType == PieceType.PAWN) {
+            return movablePositions.subList(0, 1);
         }
 
         return movablePositions;
