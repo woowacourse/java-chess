@@ -22,6 +22,8 @@ public class Board {
     private static final int BOARD_MIN_INDEX = 0;
     private static final Team INIT_TEAM = WHITE;
     private static final int DIAGONAL_GAP = 1;
+    private static final int COUNT_INIT = 0;
+    private static final int REVERSE_BASE = 9;
 
     private List<Row> board;
     private Team nowPlayingTeam;
@@ -81,7 +83,7 @@ public class Board {
     }
 
     private int reverseCoordinate(int coordinate) {
-        return ((8 + 1) - coordinate);
+        return (REVERSE_BASE - coordinate);
     }
 
     private void reverseBoard() {
@@ -226,7 +228,7 @@ public class Board {
     }
 
     private Score getColumnScore(Score score, int j) {
-        int pawnCount = 0;
+        int pawnCount = COUNT_INIT;
 
         for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
             ChessPiece chessPiece = board.get(i).get(j);
@@ -239,7 +241,7 @@ public class Board {
     }
 
     private int getColumnPawnCount(ChessPiece chessPiece) {
-        int pawnCount = 0;
+        int pawnCount = COUNT_INIT;
         if (chessPiece.getTeam() == nowPlayingTeam && chessPiece instanceof Pawn) {
             pawnCount++;
         }
