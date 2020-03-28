@@ -1,50 +1,46 @@
 package chess.domain.piece;
 
-import chess.domain.BoardState;
-import chess.domain.player.Player;
+import chess.domain.board.BoardState;
+import chess.domain.player.Team;
 import chess.domain.position.Position;
+
+import java.util.List;
 
 public abstract class Piece implements PieceState {
 
-    protected PieceType pieceType;
-    protected Position position;
-    protected Player player;
+    private final PieceType pieceType;
+    protected final Position position;
+    protected final Team team;
 
-    protected Piece(PieceType pieceType, Position position, Player player) {
+    protected Piece(PieceType pieceType, Position position, Team team) {
         this.pieceType = pieceType;
         this.position = position;
-        this.player = player;
+        this.team = team;
     }
 
     @Override
     public PieceState move(Position target, BoardState boardState) {
-        validateMove(target, boardState);
-        this.position = target;
-        return makePieceState();
-    }
-
-    private void validateMove(Position target, BoardState boardState) {
-        validateMovingPolicy(target, boardState);
-        validateAlly(target, boardState);
-    }
-
-    private void validateAlly(Position target, BoardState boardState) {
-        if (boardState.isSameTeam(target, player)) {
-            throw new IllegalArgumentException("아군의 말 위치로는 이동할 수 없습니다.");
+        List<Position> positions = getMovablePositions(boardState);
+        if (!positions.contains(target)) {
+            throw new IllegalArgumentException("이동 할 수 없는 position입니다.");
         }
+        return movedPieceState(target);
     }
 
-    protected abstract void validateMovingPolicy(Position target, BoardState boardState);
+    protected abstract PieceState movedPieceState(Position target);
 
-    protected abstract PieceState makePieceState();
-
-    public Position getPosition() {
-        return position;
+    public PieceType getPieceType() {
+        return pieceType;
     }
 
     @Override
-    public Player getPlayer() {
-        return player;
+    public Team getTeam() {
+        return team;
+    }
+
+    @Override
+    public String getFigure() {
+        return pieceType.getFigure(team);
     }
 
     @Override

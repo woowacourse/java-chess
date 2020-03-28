@@ -4,7 +4,7 @@ import chess.domain.MoveParameter;
 import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.piece.PieceState;
-import chess.domain.player.Player;
+import chess.domain.player.Team;
 import chess.domain.position.Position;
 
 import java.util.Map;
@@ -21,5 +21,5 @@ public interface State {
 
     boolean isEnd();
 
-    Map<Position, PieceState> getRemainPiece(Player player);
+    Map<Position, PieceState> getRemainPiece(Team team);
 }

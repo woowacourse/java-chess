@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.MovingDirection;
+import chess.domain.direction.MovingDirection;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class Position {
     }
 
     public Position moveByDirection(MovingDirection movingDirection) {
-        return of(this.file.add(movingDirection.getFileDirection()), this.rank.add(movingDirection.getRankDirection()));
+        return matcher.get(key(file.add(movingDirection.getFileDirection()), rank.add(movingDirection.getRankDirection())));
     }
 
     public int getFileDifference(Position target) {
@@ -59,5 +59,15 @@ public class Position {
 
     public boolean isSameFile(File file) {
         return this.file == file;
+    }
+
+    public boolean canMove(MovingDirection movingDirection) {
+        try {
+            file.add(movingDirection.getFileDirection());
+            rank.add(movingDirection.getRankDirection());
+        } catch (IllegalArgumentException ie) {
+            return false;
+        }
+        return true;
     }
 }

@@ -1,16 +1,16 @@
 package chess.domain.piece;
 
-import chess.domain.player.Player;
+import chess.domain.player.Team;
 
 public class PieceDto {
 
-    private Player player;
+    private Team team;
 
-    public PieceDto(Player player) {
-        this.player = player;
+    public PieceDto(Team team) {
+        this.team = team;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Team getTeam() {
+        return team;
     }
 }

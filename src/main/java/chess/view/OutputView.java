@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.controller.dto.ResponseDto;
-import chess.domain.player.Player;
+import chess.domain.player.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -62,7 +62,7 @@ public class OutputView {
         return piece;
     }
 
-    public void printStatus(Map<Player, Double> status) {
+    public void printStatus(Map<Team, Double> status) {
         status.entrySet()
                 .stream()
                 .map(entry -> entry.getKey().toString() + " : " + entry.getValue())

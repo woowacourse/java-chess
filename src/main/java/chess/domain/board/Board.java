@@ -1,11 +1,10 @@
 package chess.domain.board;
 
-import chess.domain.BoardState;
 import chess.domain.Turn;
-import chess.domain.piece.King;
 import chess.domain.piece.PieceDto;
 import chess.domain.piece.PieceState;
-import chess.domain.player.Player;
+import chess.domain.piece.implementation.King;
+import chess.domain.player.Team;
 import chess.domain.position.Position;
 
 import java.util.Collections;
@@ -42,7 +41,7 @@ public class Board {
         if (Objects.isNull(sourcePiece)) {
             throw new IllegalArgumentException("잘못된 위치를 선택하셨습니다.");
         }
-        if (!turn.isSamePlayer(sourcePiece.getPlayer())) {
+        if (!turn.isSamePlayer(sourcePiece.getTeam())) {
             throw new IllegalArgumentException("해당 플레이어의 턴이 아닙니다.");
         }
     }
@@ -52,25 +51,25 @@ public class Board {
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
-                        entry -> new PieceDto(entry.getValue().getPlayer())
+                        entry -> new PieceDto(entry.getValue().getTeam())
                 ));
         return BoardState.of(boardState);
     }
 
-    public Map<Position, PieceState> getRemainPieces(Player player) {
+    public Map<Position, PieceState> getRemainPieces(Team team) {
         return board.entrySet()
                 .stream()
-                .filter(entry -> player.equals(entry.getValue().getPlayer()))
+                .filter(entry -> team.equals(entry.getValue().getTeam()))
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
                         entry -> entry.getValue()
                 ));
     }
 
-    public boolean isLost(Player player) {
+    public boolean isLost(Team team) {
         return board.values()
                 .stream()
-                .filter(piece -> player.equals(piece.getPlayer()))
+                .filter(piece -> team.equals(piece.getTeam()))
                 .filter(piece -> piece instanceof King)
                 .count() == 0;
     }

@@ -1,16 +1,16 @@
 package chess.domain;
 
-import chess.domain.player.Player;
+import chess.domain.player.Team;
 
 public class Turn {
 
-    private Player turn;
+    private Team turn;
 
-    private Turn(Player turn) {
+    private Turn(Team turn) {
         this.turn = turn;
     }
 
-    public static Turn from(Player turn) {
+    public static Turn from(Team turn) {
         return new Turn(turn);
     }
 
@@ -18,7 +18,7 @@ public class Turn {
         turn = turn.toggle();
     }
 
-    public boolean isSamePlayer(Player player) {
-        return turn.equals(player);
+    public boolean isSamePlayer(Team team) {
+        return turn.equals(team);
     }
 }
