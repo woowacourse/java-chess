@@ -34,8 +34,8 @@ public class ChessController {
 
 		String inputStatus = InputView.inputStatus();
 		if (STATUS.equalsIgnoreCase(inputStatus)) {
-			double blackTeamScore = chessBoard.calculateTeamScore(chessBoard.findBlackTeam());
-			double whiteTeamScore = chessBoard.calculateTeamScore(chessBoard.findWhiteTeam());
+			double blackTeamScore = chessBoard.calculateBlackTeamScore();
+			double whiteTeamScore = chessBoard.calculateWhiteTeamScore();
 			OutputView.printGameResult(blackTeamScore, whiteTeamScore);
 		}
 	}

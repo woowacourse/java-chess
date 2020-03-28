@@ -122,6 +122,16 @@ public class ChessBoard {
 		return pieces.stream().filter(x -> x instanceof King).count() == INIT_KING_COUNT;
 	}
 
+	public double calculateBlackTeamScore() {
+		List<Piece> blackTeam = findBlackTeam();
+		return calculateTeamScore(blackTeam);
+	}
+
+	public double calculateWhiteTeamScore() {
+		List<Piece> whiteTeam = findWhiteTeam();
+		return calculateTeamScore(whiteTeam);
+	}
+
 	public double calculateTeamScore(List<Piece> team) {
 		double result = ZERO;
 		for (File file : File.values()) {

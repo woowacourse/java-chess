@@ -149,7 +149,6 @@ public class ChessBoardTest {
 				.hasMessage("해당 말이 갈 수 없는 칸입니다");
 	}
 
-
 	@DisplayName("점수 계산 - 폰이 하나")
 	@Test
 	void calculateTeamScore() {
