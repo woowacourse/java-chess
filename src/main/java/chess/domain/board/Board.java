@@ -50,6 +50,7 @@ public class Board {
 
     private void reverseMove(ChessPiece chessPiece, MovingInfo movingInfo) {
         movingInfo = reverseMovingInfo(movingInfo);
+
         reverseBoard();
         moveOperation(chessPiece, movingInfo);
         reverseBoard();
@@ -118,14 +119,17 @@ public class Board {
     }
 
     private void validateRouteLocation(Route candidateRoute, MovingInfo movingInfo) {
+        Position targetPosition = movingInfo.getTargetPosition();
         for (Position position : candidateRoute.getRoute()) {
+            if (position.equals(targetPosition)){
+                break;
+            }
             checkBlank(position, movingInfo);
         }
     }
 
     private void checkBlank(Position position, MovingInfo movingInfo) {
-        Position targetPosition = movingInfo.getTargetPosition();
-        if (!position.equals(targetPosition) && !isBlank(position)) {
+        if (!isBlank(position)) {;
             throw new IllegalArgumentException("말 이동경로에 다른 말이 있습니다.");
         }
     }
