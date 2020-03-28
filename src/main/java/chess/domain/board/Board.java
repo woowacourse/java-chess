@@ -3,9 +3,9 @@ package chess.domain.board;
 import chess.domain.Pieces;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.Row;
 import chess.domain.route.Route;
 
 import java.util.*;
@@ -47,9 +47,9 @@ public class Board {
     public List<List<String>> getBoard() {
         List<List<String>> resultBoard = new ArrayList<>();
 
-        for (Rank rank : Rank.values()) {
+        for (Row row : Row.values()) {
             resultBoard.add(new ArrayList<>());
-            addAcronymToRow(resultBoard, rank);
+            addAcronymToRow(resultBoard, row);
         }
 
         return Collections.unmodifiableList(resultBoard);
@@ -59,15 +59,15 @@ public class Board {
         return board.get(position);
     }
 
-    private void addAcronymToRow(List<List<String>> result, Rank rank) {
-        for (File file : File.values()) {
-            result.get(Rank.size() - rank.getRowNumber()).add(acronym(file, rank));
+    private void addAcronymToRow(List<List<String>> result, Row row) {
+        for (Column column : Column.values()) {
+            result.get(Row.size() - row.getRowNumber()).add(acronym(column, row));
         }
     }
 
-    private String acronym(File file, Rank rank) {
+    private String acronym(Column column, Row row) {
         try {
-            return board.get(Position.of(file, rank)).getAcronym();
+            return board.get(Position.of(column, row)).getAcronym();
         } catch (NullPointerException e) {
             return EMPTY_POSITION_ACRONYM;
         }

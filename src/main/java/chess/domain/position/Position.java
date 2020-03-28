@@ -7,25 +7,25 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Position {
-    private File file;
-    private Rank rank;
+    private Column column;
+    private Row row;
 
     private static final Map<String, Position> cache = new HashMap<>();
 
     static {
-        for (File file : File.values()) {
-            createCacheByRank(cache, file);
+        for (Column column : Column.values()) {
+            createCacheByRank(cache, column);
         }
     }
 
-    private static void createCacheByRank(Map<String, Position> cache, File file) {
-        for (Rank rank : Rank.values()) {
-            cache.put(key(file, rank), new Position(file, rank));
+    private static void createCacheByRank(Map<String, Position> cache, Column column) {
+        for (Row row : Row.values()) {
+            cache.put(key(column, row), new Position(column, row));
         }
     }
 
-    private static String key(File file, Rank rank) {
-        return file.toString() + rank.toString();
+    private static String key(Column column, Row row) {
+        return column.toString() + row.toString();
     }
 
     public static Position of(String key) {
@@ -38,27 +38,27 @@ public class Position {
         return position;
     }
 
-    public static Position of(File file, Rank rank) {
-        return of(file.toString() + rank.toString());
+    public static Position of(Column column, Row row) {
+        return of(column.toString() + row.toString());
     }
 
-    private Position(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
+    private Position(Column column, Row row) {
+        this.column = column;
+        this.row = row;
     }
 
-    public boolean isAt(Rank rank) {
-        return this.rank == rank;
+    public boolean isAt(Row row) {
+        return this.row == row;
     }
 
-    public boolean isAt(File file) {
-        return this.file == file;
+    public boolean isAt(Column column) {
+        return this.column == column;
     }
 
     public Position moveTo(Direction direction) {
-        File movedFile = file.plus(direction.getXDegree());
-        Rank movedRank = rank.plus(direction.getYDegree());
-        return new Position(movedFile, movedRank);
+        Column movedColumn = column.plus(direction.getXDegree());
+        Row movedRow = row.plus(direction.getYDegree());
+        return new Position(movedColumn, movedRow);
     }
 
     @Override
@@ -66,17 +66,17 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return file == position.file &&
-                rank == position.rank;
+        return column == position.column &&
+                row == position.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(column, row);
     }
 
     @Override
     public String toString() {
-        return file.toString() + rank.toString();
+        return column.toString() + row.toString();
     }
 }

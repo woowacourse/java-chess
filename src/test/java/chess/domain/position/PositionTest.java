@@ -16,7 +16,7 @@ public class PositionTest {
 
     @Test
     void Position_생성() {
-        assertThat(Position.of("b3")).isEqualTo(Position.of(File.b, Rank.THREE));
+        assertThat(Position.of("b3")).isEqualTo(Position.of(Column.B, Row.THREE));
     }
 
     @ParameterizedTest
@@ -30,40 +30,40 @@ public class PositionTest {
 
     @ParameterizedTest
     @MethodSource("createPositionAndRank")
-    void Position이_주어진_rank에_있는지_확인(Position position, Rank rank, boolean expected) {
-        assertThat(position.isAt(rank)).isEqualTo(expected);
+    void Position이_주어진_rank에_있는지_확인(Position position, Row row, boolean expected) {
+        assertThat(position.isAt(row)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createPositionAndRank() {
         return Stream.of(
-                Arguments.of(Position.of("a1"), Rank.ONE, true),
-                Arguments.of(Position.of("a1"), Rank.THREE, false),
+                Arguments.of(Position.of("a1"), Row.ONE, true),
+                Arguments.of(Position.of("a1"), Row.THREE, false),
 
-                Arguments.of(Position.of("b3"), Rank.THREE, true),
-                Arguments.of(Position.of("b3"), Rank.ONE, false),
+                Arguments.of(Position.of("b3"), Row.THREE, true),
+                Arguments.of(Position.of("b3"), Row.ONE, false),
 
-                Arguments.of(Position.of("h8"), Rank.EIGHT, true),
-                Arguments.of(Position.of("h8"), Rank.THREE, false)
+                Arguments.of(Position.of("h8"), Row.EIGHT, true),
+                Arguments.of(Position.of("h8"), Row.THREE, false)
         );
     }
 
     @ParameterizedTest
     @MethodSource("createPositionAndFile")
-    void Position이_주어진_file에_있는지_확인(Position position, File file, boolean expected) {
-        assertThat(position.isAt(file)).isEqualTo(expected);
+    void Position이_주어진_file에_있는지_확인(Position position, Column column, boolean expected) {
+        assertThat(position.isAt(column)).isEqualTo(expected);
     }
 
 
     private static Stream<Arguments> createPositionAndFile() {
         return Stream.of(
-                Arguments.of(Position.of("a1"), File.a, true),
-                Arguments.of(Position.of("a1"), File.c, false),
+                Arguments.of(Position.of("a1"), Column.A, true),
+                Arguments.of(Position.of("a1"), Column.C, false),
 
-                Arguments.of(Position.of("b3"), File.b, true),
-                Arguments.of(Position.of("b3"), File.a, false),
+                Arguments.of(Position.of("b3"), Column.B, true),
+                Arguments.of(Position.of("b3"), Column.A, false),
 
-                Arguments.of(Position.of("h8"), File.h, true),
-                Arguments.of(Position.of("h8"), File.a, false)
+                Arguments.of(Position.of("h8"), Column.H, true),
+                Arguments.of(Position.of("h8"), Column.A, false)
         );
     }
 
@@ -82,12 +82,12 @@ public class PositionTest {
     private static Stream<Arguments> createDirectionAndExpected() {
         return Stream.of(
                 Arguments.of(Direction.NORTH, Position.of("d5")),
-                Arguments.of(Direction.NORTHEAST, Position.of("e5")),
-                Arguments.of(Direction.NNE, Position.of("e6")),
+                Arguments.of(Direction.NORTH_EAST, Position.of("e5")),
+                Arguments.of(Direction.NORTH_NORTH_EAST, Position.of("e6")),
 
                 Arguments.of(Direction.SOUTH, Position.of("d3")),
-                Arguments.of(Direction.SOUTHWEST, Position.of("c3")),
-                Arguments.of(Direction.SSW, Position.of("c2"))
+                Arguments.of(Direction.SOUTH_WEST, Position.of("c3")),
+                Arguments.of(Direction.SOUTH_SOUTH_WEST, Position.of("c2"))
         );
     }
 

@@ -2,7 +2,7 @@ package chess.domain.route;
 
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.Row;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +35,7 @@ public class Route {
     }
 
     private static List<Position> subListByPieceType(List<Position> movablePositions, Position fromPosition, PieceType pieceType) {
-        if (pieceType == PieceType.PAWN && fromPosition.isAt(Rank.TWO)) {
+        if (pieceType == PieceType.PAWN && fromPosition.isAt(Row.TWO)) {
             return movablePositions.subList(0, 2);
         }
 

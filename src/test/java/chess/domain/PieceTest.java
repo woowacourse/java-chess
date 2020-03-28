@@ -29,7 +29,7 @@ public class PieceTest {
                 Arguments.of(Team.BLACK, PieceType.KNIGHT, "N"),
 
                 Arguments.of(Team.WHITE, PieceType.PAWN, "p"),
-                Arguments.of(Team.WHITE, PieceType.BISHOP, "b"),
+                Arguments.of(Team.WHITE, PieceType.BISHOP, "B"),
                 Arguments.of(Team.WHITE, PieceType.ROOK, "r"),
                 Arguments.of(Team.WHITE, PieceType.QUEEN, "q"),
                 Arguments.of(Team.WHITE, PieceType.KING, "k"),

@@ -2,7 +2,7 @@ package chess.domain.position;
 
 import java.util.Arrays;
 
-public enum Rank {
+public enum Row {
     EIGHT(8),
     SEVEN(7),
     SIX(6),
@@ -12,9 +12,9 @@ public enum Rank {
     TWO(2),
     ONE(1);
 
-    private int index;
+    private final int index;
 
-    Rank(int index) {
+    Row(int index) {
         this.index = index;
     }
 
@@ -22,16 +22,16 @@ public enum Rank {
         return values().length;
     }
 
-    public Rank plus(int number) {
-        return Rank.of(this.index + number);
+    public Row plus(int number) {
+        return Row.of(this.index + number);
     }
 
-    public Rank minus(int number) {
-        return Rank.of(this.index - number);
+    public Row minus(int number) {
+        return Row.of(this.index - number);
     }
 
-    private static Rank of(int number) {
-        return Arrays.stream(Rank.values())
+    private static Row of(int number) {
+        return Arrays.stream(Row.values())
                 .filter(file -> file.index == number)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Rank의 범위를 초과하였습니다."));
