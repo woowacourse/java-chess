@@ -6,7 +6,6 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ScoreResult;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 

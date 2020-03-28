@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public class ScoreResult {
 	private static final double PAWN_SPECIAL_SCORE = 0.5;
+	private static final int DEFAULT_COUNT = 0;
+	private static final int PAWN_SPECIAL_SCORE_COUNT_BOUNDARY = 1;
 	private final Map<Color, Double> scores;
 
 	public ScoreResult(List<Piece> pieces) {
@@ -36,8 +38,8 @@ public class ScoreResult {
 	private Integer getTotalDuplicatedPawns(Map<Row, Integer> pawnCountByRows) {
 		return pawnCountByRows.values()
 				.stream()
-				.filter(x -> x > 1)
-				.reduce(0, Integer::sum);
+				.filter(x -> x > PAWN_SPECIAL_SCORE_COUNT_BOUNDARY)
+				.reduce(DEFAULT_COUNT, Integer::sum);
 	}
 
 	private int getPawnCountBy(Row row, List<Piece> pawns) {

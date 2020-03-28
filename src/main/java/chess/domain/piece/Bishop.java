@@ -6,7 +6,9 @@ import chess.domain.position.Position;
 
 
 public class Bishop extends Piece {
+	private static final int BISHOP_SCORE = 3;
+
 	public Bishop(Position position, String name, Color color) {
-		super(position, name, new BlockedMovable(Directions.DIAGONAL), color, 3);
+		super(position, name, new BlockedMovable(Directions.DIAGONAL), color, BISHOP_SCORE);
 	}
 }
