@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Run;
+import chess.domain.util.Run;
 
 import java.util.Scanner;
 

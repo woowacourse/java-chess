@@ -13,7 +13,30 @@
 2. 각 말은 알파벳 한 글자로 표현한다. P는 pawn, R은 rook, N은 knight, B는 bishop, Q는 queen, K는 King을 의미한다.
 3. move source_위치 target_위치를 실행해 이동한다.
 
-## 4. 체스 말의 이동 규칙
+## 4. 구현 목록
+- [ ] Piece
+    - [x] 체스 말 표식 representation 으로 화이트/블랙 구분
+    - [x] 각 체스 말(Pawn, Rook, Knight, Bishop, Queen, King)이 현재 포지션을 가지고 있음
+    - [x] Blank Piece 를 추가하여 .으로 표시되는 보드 상의 공백 부분을 나타냄
+    - [ ] to position 을 받아서 이동 가능한지 확인
+    - [ ] 이동 가능 여부 출력. 
+    - [ ] 이동 불가능 하면 예외 발생.
+- [ ] BoardFactory
+    - [x] 초기화된 위치를 갖고 있는 piece 들로 이루어진 List 생성
+    - [x] 정적 팩터리 메서드로 초기화된 보드(Board) 생성
+- [ ] Board
+    - [ ] a5 같은 문자열 포지션으로 해당 포지션에 있는 piece 를 찾음 (from && to)
+    - [ ] piece 의 포지션을 바꿀 때마다 포지션 순서대로 정렬 
+    - [ ] piece 가 이동 가능하면 board 리스트 에서, 
+        - [ ] from piece 는 to position 으로 변경
+        - [ ] from position 을 갖는 Blank piece 추가
+        - [ ] to position 을 갖고 있었던 piece 는 리스트에서 제거
+- [ ] Run
+    - [x] 게임 실행 여부를 조정
+        - [x] start : 게임시작
+        - [x] end : 게임종료
+
+## 5. 체스 말의 이동 규칙
 * 폰(PAWN)
 > 전진만 가능하며 첫회 한정으로 2칸 이동이 가능하다. 
 > 그 다음부터는 1칸씩. 단, 첫 이동을 할 때 바로 앞에 다른 말이 있으면 뛰어 넘을 수 없다. 
