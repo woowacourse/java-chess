@@ -8,7 +8,7 @@ import chess.domain.movepattern.MovePattern;
 import java.util.Optional;
 
 public abstract class Piece implements PieceAbility {
-	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
+	public static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 
 	protected Position position;
 	protected final TeamStrategy teamStrategy;

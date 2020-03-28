@@ -1,22 +1,27 @@
 package chess.domain.movepattern;
 
+import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.position.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MovePatternFactory {
-	private static final int ONE_POINT = 1;
-	private static final int TWO_POINT = 2;
+	private static final List<MovePattern> movePatterns = new ArrayList<>();
+
+	static {
+		movePatterns.add(new StraightPattern(Position.of("a1"), Position.of("a1")));
+		movePatterns.add(new CrossPattern(Position.of("a1"), Position.of("a1")));
+		movePatterns.add(new KnightPattern());
+	}
 
 	public static MovePattern findMovePattern(Position source, Position target) {
-		if (source.isSameRank(target) || source.isSameFile(target)) {
-			return new StraightPattern(source, target);
-		}
-		if (Math.abs(source.calculateRankDistance(target)) == Math.abs(source.calculateFileDistance(target))) {
-			return new CrossPattern(source, target);
-		}
-		if ((Math.abs(source.calculateFileDistance(target)) == ONE_POINT && Math.abs(source.calculateRankDistance(target)) == TWO_POINT)
-				|| (Math.abs(source.calculateRankDistance(target)) == ONE_POINT && Math.abs(source.calculateFileDistance(target)) == TWO_POINT)) {
-			return new KnightPattern();
-		}
-		return null;
+		return movePatterns.stream()
+				.filter(x -> x.isMatchedPoints(source, target))
+				.map(x -> x.valueOf(source, target))
+				.findFirst()
+				.orElseThrow(() -> {
+					throw new IllegalArgumentException(Piece.ERROR_MESSAGE_NOT_MOVABLE);
+				});
 	}
 }

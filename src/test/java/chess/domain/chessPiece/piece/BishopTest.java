@@ -41,12 +41,8 @@ class BishopTest {
 	@DisplayName("이동 실패 테스트")
 	void validateMovePatternWithError() {
 		Position target = Position.of("a4");
-
-		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
-
-		assertThatThrownBy(() -> bishop.validateMovePattern(movePattern, null))
+		assertThatThrownBy(() -> MovePatternFactory.findMovePattern(source, target))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("해당 말이 갈 수 없는 칸입니다");
 	}
-
 }
