@@ -75,17 +75,12 @@ public class ChessBoard {
     }
 
     public boolean isKingCaptured() {
-        return !(chessBoard.containsValue(King.getPieceInstance(Color.WHITE))
-                && chessBoard.containsValue(King.getPieceInstance(Color.BLACK)));
+        return chessBoard.values().stream()
+            .filter(piece -> piece instanceof King)
+            .count() != Color.values().length;
     }
 
-    public Map<Color, Double> getTeamScore() {
-        return new TeamScore(chessBoard).getTeamScore();
+    public TeamScore getTeamScore() {
+        return new TeamScore(chessBoard);
     }
-
-
-    public List<Color> getWinners() {
-        return new TeamScore(chessBoard).getWinners();
-    }
-
 }

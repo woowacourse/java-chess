@@ -74,33 +74,4 @@ public class ChessBoardTest {
         assertThat(chessBoard.isKingCaptured()).isTrue();
     }
 
-    @Test
-    @DisplayName("게임 점수 계산")
-    void calculateScore() {
-        ChessBoard chessBoard = new ChessBoard();
-        Map<Color, Double> teamScore = chessBoard.getTeamScore();
-        assertThat(teamScore.get(Color.BLACK)).isEqualTo(38);
-        assertThat(teamScore.get(Color.WHITE)).isEqualTo(38);
-
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("c2"), BoardSquare.of("c4")));
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("d7"), BoardSquare.of("d5")));
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("c4"), BoardSquare.of("d5")));
-
-        teamScore = chessBoard.getTeamScore();
-        assertThat(teamScore.get(Color.BLACK)).isEqualTo(37);
-        assertThat(teamScore.get(Color.WHITE)).isEqualTo(37);
-    }
-
-    @Test
-    @DisplayName("승자 구하기")
-    void calculateWinnerByScore() {
-        ChessBoard chessBoard = new ChessBoard();
-        assertThat(chessBoard.getWinners().size()).isEqualTo(2);
-
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("b1"), BoardSquare.of("c3")));
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("d7"), BoardSquare.of("d5")));
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("c3"), BoardSquare.of("d5")));
-        assertThat(chessBoard.getWinners().size()).isEqualTo(1);
-        assertThat(chessBoard.getWinners().get(0)).isEqualTo(Color.WHITE);
-    }
 }

@@ -66,6 +66,10 @@ public abstract class Piece implements Movable {
         return color == Color.BLACK;
     }
 
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
     public double getScore() {
         return type.getScore();
     }

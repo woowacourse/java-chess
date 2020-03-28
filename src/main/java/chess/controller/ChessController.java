@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.GameState;
 import chess.domain.board.BoardSquare;
 import chess.domain.board.ChessBoard;
+import chess.domain.board.TeamScore;
 import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -60,8 +61,9 @@ public class ChessController {
     }
 
     private static void printScoreAndWinners(ChessBoard chessBoard) {
-        OutputView.printScore(chessBoard.getTeamScore());
-        OutputView.printWinners(chessBoard.getWinners());
+        TeamScore teamScore = chessBoard.getTeamScore();
+        OutputView.printScore(teamScore.getTeamScore());
+        OutputView.printWinners(teamScore.getWinners());
     }
 
     private static boolean move(ChessBoard chessBoard, List<BoardSquare> boardSquares,

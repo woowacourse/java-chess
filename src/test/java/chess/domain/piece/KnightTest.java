@@ -55,10 +55,12 @@ public class KnightTest {
     }
 
     @Test
-    @DisplayName("체스 말이 블랙인지 검증하는 테스트")
+    @DisplayName("체스 말이 같은 색인지 검증하는 테스트")
     void isBlack() {
-        assertThat(Knight.getPieceInstance(Color.BLACK).isBlack()).isTrue();
-        assertThat(Knight.getPieceInstance(Color.WHITE).isBlack()).isFalse();
+        assertThat(Knight.getPieceInstance(Color.BLACK).isSameColor(Color.BLACK)).isTrue();
+        assertThat(Knight.getPieceInstance(Color.BLACK).isSameColor(Color.WHITE)).isFalse();
+        assertThat(Knight.getPieceInstance(Color.WHITE).isSameColor(Color.BLACK)).isFalse();
+        assertThat(Knight.getPieceInstance(Color.WHITE).isSameColor(Color.WHITE)).isTrue();
     }
 
 
