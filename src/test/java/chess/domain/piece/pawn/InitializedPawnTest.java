@@ -26,7 +26,8 @@ class InitializedPawnTest {
             new IsNotForward(),
             new InitializedPawnCanNotReach(InitializedPawn.MAX_DISTANCE),
             new InitializedPawnHasHindrance(),
-            new IsAttackingSameTeam()
+            new IsAttackingSameTeam(),
+            new IsDiagonalWithoutAttack()
     );
 
     @ParameterizedTest
