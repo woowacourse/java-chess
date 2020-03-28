@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public enum Run {
     START("start"),
-    END("end");
+    END("end"),
+    MOVE("move");
 
     private final String name;
 
@@ -19,7 +20,15 @@ public enum Run {
                 .orElseThrow(() -> new IllegalArgumentException("선택할 수 없는 옵션입니다."));
     }
 
+    public boolean isNotEnd() {
+        return this != END;
+    }
+
     public boolean isStart() {
         return this == START;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
     }
 }

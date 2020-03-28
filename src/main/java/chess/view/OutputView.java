@@ -7,17 +7,17 @@ public class OutputView {
 
     public static void printInputStartGuideMessage() {
         System.out.println("체스 게임을 시작합니다.");
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+        System.out.println("게임 시작 : start");
+        System.out.println("게임 종료 : end");
+        System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printInitializedBoard(Board board) {
-        int count = 1;
-        for (int index = 0; index < 64; index++) {
-            System.out.print(board.findPieceBy(index));
-            if (count % 8 == 0) {
-                System.out.print(NEW_LINE);
+    public static void printBoard(Board board) {
+        for (int row = 8; row >= 1; row--) {
+            for (int col = 1; col <= 8; col++) {
+                System.out.print(board.findPieceBy((row - 1) * 8 + col - 1));
             }
-            count++;
+            System.out.print(NEW_LINE);
         }
     }
 
