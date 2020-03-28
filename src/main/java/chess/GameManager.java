@@ -1,14 +1,18 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.Score.Score;
 import chess.board.ChessBoard;
 import chess.board.Location;
 import chess.gamestate.GameState;
 import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
+import chess.result.GameResult;
+import chess.result.GameStatistic;
+import chess.result.Score;
 import chess.team.Team;
 
 public class GameManager {
@@ -32,16 +36,28 @@ public class GameManager {
 		gameState = GameState.of(chessBoard.hasTwoKings());
 	}
 
-	public Score calculateScore(Team team) {
+	public List<GameStatistic> createStatistics() {
+		Score blackTeamScore = calculateScore(Team.WHITE);
+		Score whiteTeamScore = calculateScore(Team.BLACK);
+
+		List<GameStatistic> gameStatistics = new ArrayList<>();
+		gameStatistics.add(
+			new GameStatistic(Team.WHITE, whiteTeamScore, GameResult.findResult(whiteTeamScore, blackTeamScore)));
+		gameStatistics.add(
+			new GameStatistic(Team.BLACK, blackTeamScore, GameResult.findResult(blackTeamScore, whiteTeamScore)));
+		return gameStatistics;
+	}
+
+	private Score calculateScore(Team team) {
 		Map<Location, Piece> map = chessBoard.giveMyPiece(team);
 
-		Map<Piece, Boolean> collect = map.keySet().stream()
+		Map<Piece, Boolean> pieceAndVerticalPawnCheck = map.keySet().stream()
 			.collect(Collectors.toMap(
 				map::get,
 				location -> findSameColumnPawnCount(map, location) >= COLUMN_PAWN_COUNT)
 			);
 
-		return new Score(collect);
+		return new Score(team, pieceAndVerticalPawnCheck);
 	}
 
 	private long findSameColumnPawnCount(Map<Location, Piece> map, Location location) {

@@ -3,13 +3,15 @@ package chess.team;
 import java.util.Arrays;
 
 public enum Team {
-	BLACK(true),
-	WHITE(false);
+	BLACK(true, "블랙팀"),
+	WHITE(false, "흰색팀");
 
 	private final boolean isBlack;
+	private final String name;
 
-	Team(boolean isBlack) {
+	Team(boolean isBlack, String name) {
 		this.isBlack = isBlack;
+		this.name = name;
 	}
 
 	public static Team of(boolean black) {

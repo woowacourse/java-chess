@@ -1,11 +1,12 @@
 package view;
 
+import java.util.List;
 import java.util.Map;
 
 import chess.GameManager;
 import chess.board.Location;
 import chess.piece.type.Piece;
-import chess.team.Team;
+import chess.result.GameStatistic;
 
 public class OutputView {
 
@@ -47,9 +48,16 @@ public class OutputView {
 			+ "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
 	}
 
-	public static void printStatus(GameManager gameManager) {
+	public static void printStatus(List<GameStatistic> teamScore) {
 		System.out.println("결과출력");
-		System.out.println("흰색팀 점수 : " + gameManager.calculateScore(Team.WHITE).getAmount());
-		System.out.println("블랙팀 점수 : " + gameManager.calculateScore(Team.BLACK).getAmount());
+		for (GameStatistic gameStatistic : teamScore) {
+			System.out.println(
+				String.format("%s : %1.1f - %s",
+					gameStatistic.getTeam().name(),
+					gameStatistic.getScore().getAmount(),
+					gameStatistic.getGameResult().getMessage()
+				)
+			);
+		}
 	}
 }

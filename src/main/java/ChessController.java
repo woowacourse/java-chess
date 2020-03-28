@@ -19,12 +19,12 @@ public class ChessController {
 				break;
 			}
 		}
-		OutputView.printStatus(gameManager);
+		OutputView.printStatus(gameManager.createStatistics());
 	}
 
 	private static void status(String command, GameManager gameManager) {
 		if (command.equals("status")) {
-			OutputView.printStatus(gameManager);
+			OutputView.printStatus(gameManager.createStatistics());
 		}
 	}
 

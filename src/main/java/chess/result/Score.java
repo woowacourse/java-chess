@@ -1,14 +1,17 @@
-package chess.Score;
+package chess.result;
 
 import java.util.Map;
 
 import chess.piece.type.Piece;
+import chess.team.Team;
 
 public class Score {
+	private final Team team;
 	private final double amount;
 
-	public Score(Map<Piece, Boolean> pieces) {
+	public Score(Team team, Map<Piece, Boolean> pieces) {
 		this.amount = calculateScore(pieces);
+		this.team = team;
 	}
 
 	public double calculateScore(Map<Piece, Boolean> pieces) {
@@ -17,7 +20,15 @@ public class Score {
 			.sum();
 	}
 
+	public Team getTeam() {
+		return team;
+	}
+
 	public double getAmount() {
 		return amount;
+	}
+
+	public int compare(Score other) {
+		return Double.compare(this.amount, other.amount);
 	}
 }
