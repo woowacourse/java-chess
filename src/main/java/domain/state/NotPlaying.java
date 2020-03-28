@@ -10,23 +10,23 @@ public abstract class NotPlaying extends GameState {
 	}
 
 	@Override
-	public State start() {
+	protected State start() {
 		Pieces startPieces = new Pieces(new StartPieces().getInstance());
 		return new Started(startPieces);
 	}
 
 	@Override
-	public State end() {
+	protected State end() {
 		throw new StateException("NotPlaying 상태에서 end 명령어는 유효하지 않습니다.");
 	}
 
 	@Override
-	public State move(String from, String to) {
+	protected State move(String from, String to) {
 		throw new StateException("NotPlaying 상태에서 move 명령어는 유효하지 않습니다.");
 	}
 
 	@Override
-	public State status() {
+	protected State status() {
 		return new Reported(pieces);
 	}
 }

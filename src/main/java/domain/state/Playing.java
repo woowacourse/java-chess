@@ -10,23 +10,23 @@ public abstract class Playing extends GameState {
 	}
 
 	@Override
-	public State start() {
+	protected State start() {
 		throw new StateException("Playing 상태에서 start 명령어는 유효하지 않습니다.");
 	}
 
 	@Override
-	public State status() {
+	protected State status() {
 		throw new StateException("Playing 상태에서 status 명령어는 유효하지 않습니다.");
 	}
 
 	@Override
-	public State move(String from, String to) {
+	protected State move(String from, String to) {
 		pieces.move(Point.of(from), Point.of(to));
 		return new Moved(pieces);
 	}
 
 	@Override
-	public State end() {
+	protected State end() {
 		return new Ended(pieces);
 	}
 }
