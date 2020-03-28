@@ -31,6 +31,9 @@
         - [ ] from piece 는 to position 으로 변경
         - [ ] from position 을 갖는 Blank piece 추가
         - [ ] to position 을 갖고 있었던 piece 는 리스트에서 제거
+- [x] Direction
+    - [x] 이동 가능한 방향별 enum 요소
+    - [x] 현재 위치에서 해당 방향으로 이동한 후의 포지셔 반환
 - [ ] Run
     - [x] 게임 실행 여부를 조정
         - [x] start : 게임시작

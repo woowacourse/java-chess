@@ -15,6 +15,14 @@ public class Position {
         this.y = y;
     }
 
+    public int getX() {
+        return x.charAt(0) - 96;
+    }
+
+    public int getY() {
+        return Integer.parseInt(y);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
