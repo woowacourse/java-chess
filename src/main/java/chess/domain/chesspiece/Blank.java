@@ -22,7 +22,7 @@ public class Blank extends ChessPiece {
 	}
 
 	@Override
-	public Positions makePath(ChessPiece targetPiece) {
+	public Positions makePathAndValidate(ChessPiece targetPiece) {
 		throw new UnsupportedOperationException();
 	}
 

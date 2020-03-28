@@ -15,7 +15,7 @@ public class MoveManager {
 		this.nowPosition = nowPosition;
 	}
 
-	public Positions makePath(Position targetPosition, List<Direction> directions) {
+	public Positions makePathAndValidate(Position targetPosition, List<Direction> directions) {
 		Direction direction = calculateDirection(targetPosition, directions);
 		return nowPosition.calculatePath(targetPosition, direction);
 	}

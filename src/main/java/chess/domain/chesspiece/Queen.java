@@ -32,7 +32,7 @@ public class Queen extends ValuablePiece {
 	}
 
 	@Override
-	public Positions makePath(ChessPiece targetPiece) {
-		return moveManager.makePath(targetPiece.position, DIRECTIONS);
+	public Positions makePathAndValidate(ChessPiece targetPiece) {
+		return moveManager.makePathAndValidate(targetPiece.position, DIRECTIONS);
 	}
 }

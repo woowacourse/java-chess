@@ -23,7 +23,7 @@ public class BishopTest {
 	@DisplayName("오른쪽 위 대각선의 경우")
 	@Test
 	void makePathTest() {
-		Positions actualPositions = bishop.makePath(new Blank(Position.of(7, 7)));
+		Positions actualPositions = bishop.makePathAndValidate(new Blank(Position.of(7, 7)));
 		Positions expectedPositions = new Positions(
 			Arrays.asList(Position.of(5, 5), Position.of(6, 6)));
 
@@ -33,7 +33,7 @@ public class BishopTest {
 	@DisplayName("오른쪽 아래 대각선의 경우")
 	@Test
 	void makePathTest2() {
-		Positions actualPositions = bishop.makePath(new Blank(Position.of(1, 7)));
+		Positions actualPositions = bishop.makePathAndValidate(new Blank(Position.of(1, 7)));
 		Positions expectedPositions = new Positions(
 			Arrays.asList(Position.of(3, 5), Position.of(2, 6)));
 
@@ -43,7 +43,7 @@ public class BishopTest {
 	@DisplayName("못 가는 경우")
 	@Test
 	void makePathTest3() {
-		assertThatThrownBy(() -> bishop.makePath(new Blank(Position.of(3, 4))))
+		assertThatThrownBy(() -> bishop.makePathAndValidate(new Blank(Position.of(3, 4))))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 }

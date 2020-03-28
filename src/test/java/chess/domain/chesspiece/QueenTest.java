@@ -18,7 +18,7 @@ public class QueenTest {
 	void makePathTest1() {
 		ChessPiece queen = new Queen(Position.of(4, 4), Team.WHITE);
 
-		assertThatThrownBy(() -> queen.makePath(new Blank(Position.of(2, 5))))
+		assertThatThrownBy(() -> queen.makePathAndValidate(new Blank(Position.of(2, 5))))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -26,7 +26,7 @@ public class QueenTest {
 	@Test
 	void makePathTest2() {
 		ChessPiece queen = new Queen(Position.of(4, 4), Team.WHITE);
-		Positions actualPositions = queen.makePath(new Blank(Position.of(1, 7)));
+		Positions actualPositions = queen.makePathAndValidate(new Blank(Position.of(1, 7)));
 		Positions expectedPositions = new Positions(
 			Arrays.asList(Position.of(3, 5), Position.of(2, 6)));
 

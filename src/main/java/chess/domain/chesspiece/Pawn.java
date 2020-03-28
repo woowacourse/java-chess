@@ -31,20 +31,26 @@ public class Pawn extends ChessPiece {
 
 	@Override
 	public boolean isNeedCheckPath() {
-		System.out.println(isNotMoved);
 		return isNotMoved;
 	}
 
 	@Override
-	public Positions makePath(ChessPiece targetPiece) {
+	public Positions makePathAndValidate(ChessPiece targetPiece) {
 		isNotMoved = false;
+		validateCanGo(targetPiece);
+		return moveManager.makePathAndValidate(
+			targetPiece.position, getFirstMoveDirection(team));
+	}
+
+	private List<Direction> getFirstMoveDirection(Team team) {
 		List<Direction> firstMoveDirections = new ArrayList<>(this.directions);
 		if (team == Team.WHITE) {
 			firstMoveDirections.add(DOUBLE_UP);
-			return moveManager.makePath(targetPiece.position, firstMoveDirections);
 		}
-		firstMoveDirections.add(DOUBLE_DOWN);
-		return moveManager.makePath(targetPiece.position, firstMoveDirections);
+		if (team == Team.BLACK) {
+			firstMoveDirections.add(DOUBLE_DOWN);
+		}
+		return firstMoveDirections;
 	}
 
 	@Override
@@ -61,14 +67,19 @@ public class Pawn extends ChessPiece {
 	}
 
 	private boolean canMoveForward(Direction direction, ChessPiece chessPiece) {
-		return (direction == UP || direction == DOWN) && chessPiece.isMatchTeam(Team.BLANK);
+		return isCanMoveDirection(direction) && chessPiece.isMatchTeam(Team.BLANK);
+	}
+
+	private boolean isCanMoveDirection(Direction direction) {
+		return direction == UP || direction == DOWN
+			|| direction == DOUBLE_UP || direction == DOUBLE_DOWN;
 	}
 
 	private boolean canToCatch(Direction direction, ChessPiece targetPiece) {
-		return isDiagonal(direction) && targetPiece.isNotMatchTeam(Team.BLANK);
+		return isCanCatchDirection(direction) && targetPiece.isNotMatchTeam(Team.BLANK);
 	}
 
-	private boolean isDiagonal(Direction direction) {
+	private boolean isCanCatchDirection(Direction direction) {
 		return direction == RIGHT_UP || direction == LEFT_UP
 			|| direction == RIGHT_DOWN || direction == LEFT_DOWN;
 	}

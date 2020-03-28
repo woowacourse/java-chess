@@ -43,7 +43,7 @@ public abstract class ChessPiece {
 	public void canMove(ChessPiece chessPiece, Function<Position, ChessPiece> findByPosition) {
 		validateMovablePosition(chessPiece);
 		if (isNeedCheckPath()) {
-			Positions positions = makePath(chessPiece);
+			Positions positions = makePathAndValidate(chessPiece);
 			positions.validateCanMovePath(findByPosition);
 		}
 	}
@@ -56,7 +56,7 @@ public abstract class ChessPiece {
 
 	public abstract boolean isNeedCheckPath();
 
-	public abstract Positions makePath(ChessPiece targetPiece);
+	public abstract Positions makePathAndValidate(ChessPiece targetPiece);
 
 	public abstract void validateCanGo(ChessPiece targetPiece);
 
