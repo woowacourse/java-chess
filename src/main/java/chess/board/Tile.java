@@ -1,6 +1,11 @@
 package chess.board;
 
-import chess.board.piece.*;
+import chess.coordinate.Coordinate;
+import chess.coordinate.Vector;
+import chess.piece.AbstractPawn;
+import chess.piece.Piece;
+import chess.piece.Pieces;
+import chess.piece.Team;
 
 public class Tile {
     private final Coordinate coordinate;
@@ -11,14 +16,16 @@ public class Tile {
         this.piece = piece;
     }
 
-    public void replacePiece(Tile sourceTile) {
-        this.piece = sourceTile.piece;
+    public Piece replacePiece(Tile sourceTile) {
+        Piece removedPiece = this.piece;
+        this.piece = sourceTile.piece.move();
         sourceTile.piece = Pieces.BLANK.getPiece();
+        return removedPiece;
     }
 
     public boolean canNotReach(final Tile targetTile) {
         Vector vector = targetTile.coordinate.calculateVector(this.coordinate);
-        return !this.piece.canMove(new MoveInfo(vector, this.coordinate.getRank()), targetTile.piece);
+        return !this.piece.canMove(vector, targetTile.piece);
     }
 
     public Directions findPath(final Tile targetTile) {
@@ -43,7 +50,7 @@ public class Tile {
     }
 
     public boolean isPawn() {
-        return this.piece instanceof Pawn;
+        return this.piece instanceof AbstractPawn;
     }
 
     public boolean isSameTeam(final Team currentTeam) {
@@ -51,6 +58,6 @@ public class Tile {
     }
 
     public boolean isKing() {
-        return this.piece instanceof King;
+        return this.piece.isKing();
     }
 }

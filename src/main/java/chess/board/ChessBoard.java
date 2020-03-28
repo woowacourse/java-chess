@@ -1,12 +1,15 @@
 package chess.board;
 
-import chess.board.piece.Blank;
-import chess.board.piece.Direction;
-import chess.board.piece.Team;
+import chess.coordinate.Coordinate;
+import chess.coordinate.File;
+import chess.coordinate.Rank;
+import chess.piece.Blank;
+import chess.piece.Team;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class ChessBoard {
     private final Map<Coordinate, Tile> chessBoard;
@@ -30,47 +33,26 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public MoveResult move(String sourceKey, String targetKey) {
+    public boolean move(String sourceKey, String targetKey, Consumer<Object> pushEvent) {
         Tile sourceTile = chessBoard.get(Coordinate.of(sourceKey));
         Tile targetTile = chessBoard.get(Coordinate.of(targetKey));
 
         if (sourceTile.canNotReach(targetTile)) {
-            return MoveResult.FAIL;
+            return false;
         }
 
         Directions directions = sourceTile.findPath(targetTile);
 
-        Coordinate next = Coordinate.of(sourceKey);
-        boolean notExist = true;
-        while (directions.isNotEmpty() && notExist) {
-            Direction direction = directions.poll();
-            next = next.move(direction);
-            notExist = chessBoard.get(next).isBlank();
-        }
-        if (!notExist) {
-            return MoveResult.FAIL;
+        if (directions.isExist(sourceKey, chessBoard::get)) {
+            return false;
         }
 
-        MoveResult moveResult = MoveResult.SUCCESS;
-
-        if (targetTile.isKing()) {
-            moveResult = MoveResult.WIN;
-        }
-
-        targetTile.replacePiece(sourceTile);
-        return moveResult;
+        pushEvent.accept(targetTile.replacePiece(sourceTile));
+        return true;
     }
 
     public double calculateScore(Team team) {
-        Score sum = Score.zero();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Coordinate coordinate = Coordinate.of(file, rank);
-                sum = sum.add(chessBoard.get(coordinate), team);
-            }
-            sum = sum.subtractPawnScore();
-        }
-        return sum.getSum();
+        return Score.calculateScore(team, chessBoard::get);
     }
 
     public void put(final Tile tile) {

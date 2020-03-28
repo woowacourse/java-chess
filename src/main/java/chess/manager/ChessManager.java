@@ -1,46 +1,57 @@
 package chess.manager;
 
-import chess.board.ChessBoard;
-import chess.board.MoveResult;
-import chess.board.piece.Team;
+import chess.board.ForwardChessBoard;
+import chess.board.Tile;
+import chess.coordinate.Coordinate;
+import chess.observer.Observable;
+import chess.piece.King;
+import chess.piece.Piece;
+import chess.piece.Team;
 
-public class ChessManager {
-    private final ChessBoard chessBoard;
+import java.util.Map;
+
+public class ChessManager implements Observable {
+    private final ForwardChessBoard chessBoard;
     private Team currentTeam = Team.WHITE;
+    private boolean isKingAlive = true;
 
-    public ChessManager(final ChessBoard chessBoard) {
+    public ChessManager(final ForwardChessBoard chessBoard) {
         this.chessBoard = chessBoard;
+        chessBoard.subscribe(this);
     }
 
-    public MoveResult move(String source, String target) {
+    public boolean move(String source, String target) {
         if (chessBoard.isNotSameTeam(source, currentTeam)) {
-            return MoveResult.FAIL;
+            return false;
         }
-        MoveResult move = chessBoard.move(source, target);
-        if (move == MoveResult.SUCCESS) {
-            turnOver();
-        }
-        return move;
+        return chessBoard.move(source, target);
     }
 
-    private void turnOver() {
-        if (currentTeam == Team.WHITE) {
-            currentTeam = Team.BLACK;
-            return;
-        }
-        currentTeam = Team.WHITE;
-    }
-
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public Map<Coordinate, Tile> getChessBoard() {
+        return chessBoard.getChessBoard();
     }
 
     public double calculateCurrentTeamScore() {
         return this.chessBoard.calculateScore(this.currentTeam);
     }
 
+    public boolean isKingAlive() {
+        return isKingAlive;
+    }
 
     public Team getCurrentTeam() {
         return currentTeam;
+    }
+
+    @Override
+    public void update(final Object object) {
+        if (!(object instanceof Piece)) {
+            throw new IllegalArgumentException();
+        }
+        if (object instanceof King) {
+            isKingAlive = false;
+            return;
+        }
+        currentTeam = currentTeam.getOppositeTeam();
     }
 }

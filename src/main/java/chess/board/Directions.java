@@ -1,10 +1,12 @@
 package chess.board;
 
-import chess.board.piece.Direction;
+import chess.coordinate.Coordinate;
+import chess.coordinate.Direction;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Function;
 
 public class Directions {
     private final Queue<Direction> directions;
@@ -18,7 +20,15 @@ public class Directions {
         return !this.directions.isEmpty();
     }
 
-    public Direction poll() {
-        return this.directions.poll();
+    public boolean isExist(String sourceKey, Function<Coordinate, Tile> tileFinder) {
+        Coordinate next = Coordinate.of(sourceKey);
+        boolean exist = false;
+        while (isNotEmpty() && !exist) {
+            Direction direction = directions.poll();
+            next = next.move(direction);
+            exist = !tileFinder.apply(next).isBlank();
+        }
+
+        return exist;
     }
 }
