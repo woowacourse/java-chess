@@ -8,8 +8,8 @@ import chess.domain.board.Position;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Pawn extends Piece {
-	public Pawn(String color, String symbol) {
-		super(color, symbol);
+	public Pawn(String symbol) {
+		super(symbol);
 	}
 
 	@Override
