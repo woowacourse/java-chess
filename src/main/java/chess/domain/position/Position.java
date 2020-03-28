@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO: 2020/03/25 패키지 옮길수도 있음
 public class Position {
     private static final Map<String, Position> POSITIONS = new HashMap<>();
 
