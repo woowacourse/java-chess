@@ -75,6 +75,20 @@ public class Position implements Comparable<Position> {
         return Optional.of(of(columnDestination, rowDestination));
     }
 
+    public List<Position> pathTo(Direction direction, int count) {
+        List<Position> path = new ArrayList<>();
+        Position next = this;
+
+        for (int i = 0; i < count; i++) {
+            next = next.destinationOf(direction).orElse(null);
+            if (next == null) {
+                return path;
+            }
+            path.add(next);
+        }
+        return path;
+    }
+
     @Override
     public int compareTo(Position position) {
         if (row.compareTo(position.row) == 0) {

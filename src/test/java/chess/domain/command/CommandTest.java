@@ -1,7 +1,5 @@
 package chess.domain.command;
 
-import static org.assertj.core.api.Assertions.*;
-
 import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +11,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CommandTest {
 
@@ -95,7 +96,7 @@ class CommandTest {
                 Arguments.of(Collections.singletonList("end"), false),
                 Arguments.of(Arrays.asList("move", "b1", "b3"), false),
                 Arguments.of(Collections.singletonList("status"), true)
-                );
+        );
     }
 
     @Test

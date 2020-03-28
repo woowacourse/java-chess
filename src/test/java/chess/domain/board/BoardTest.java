@@ -1,24 +1,25 @@
 package chess.domain.board;
 
-import static chess.domain.piece.ChessPiece.*;
-import static chess.domain.player.Player.*;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import chess.domain.exception.InvalidMovementException;
+import chess.domain.piece.GamePiece;
+import chess.domain.player.Player;
+import chess.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.exception.InvalidMovementException;
-import chess.domain.piece.GamePiece;
-import chess.domain.player.Player;
-import chess.domain.score.Score;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static chess.domain.piece.ChessPiece.*;
+import static chess.domain.player.Player.BLACK;
+import static chess.domain.player.Player.WHITE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 

@@ -55,7 +55,7 @@ public class GamePiece {
     }
 
     public boolean is(Player player) {
-        return this.player.equals(player);
+        return player.equals(this.player);
     }
 
     public boolean isPawn() {
@@ -63,7 +63,7 @@ public class GamePiece {
     }
 
     public boolean isKing() {
-        return this != EMPTY && chessPiece.equals(ChessPiece.KING);
+        return ChessPiece.KING.equals(chessPiece);
     }
 
     public double calculateScore(int count) {

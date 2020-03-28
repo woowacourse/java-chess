@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
+import chess.domain.exception.InvalidMovementException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
 
 public class PawnStrategy implements MoveStrategy {
 

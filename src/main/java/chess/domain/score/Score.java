@@ -1,9 +1,9 @@
 package chess.domain.score;
 
+import chess.domain.piece.GamePiece;
+
 import java.util.Map;
 import java.util.Objects;
-
-import chess.domain.piece.GamePiece;
 
 public class Score {
 
@@ -48,7 +48,7 @@ public class Score {
             return true;
         if (!(o instanceof Score))
             return false;
-        Score score1 = (Score)o;
+        Score score1 = (Score) o;
         return Double.compare(score1.score, score) == 0;
     }
 
