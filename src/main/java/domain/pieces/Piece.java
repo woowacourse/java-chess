@@ -1,6 +1,7 @@
 package domain.pieces;
 
 import domain.pieces.exceptions.CanNotAttackException;
+import domain.point.Column;
 import domain.point.Direction;
 import domain.point.Distance;
 import domain.point.Point;
@@ -75,6 +76,14 @@ public abstract class Piece {
 
     public boolean matchPoint(Point point) {
         return this.point.equals(point);
+    }
+
+    public boolean matchColumnPoint(Column column) {
+        return this.point.getColumn().equals(column);
+    }
+
+    public boolean isNotPawn() {
+        return !(this instanceof Pawn);
     }
 
     @Override

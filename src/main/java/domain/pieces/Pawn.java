@@ -9,7 +9,9 @@ import domain.point.Point;
 import domain.team.Team;
 
 public class Pawn extends Piece {
-	private static final double SCORE = 1;
+	public static final double SCORE = 1;
+	private static final int TWO = 2;
+	public static final double HALF_SCORE = SCORE / TWO;
 	private static final String INITIAL = "P";
 
 	private final boolean canMoveTwoDistance;

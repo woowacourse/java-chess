@@ -34,6 +34,10 @@ public class Point {
 		return column.getIndex();
 	}
 
+	public Column getColumn() {
+		return column;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

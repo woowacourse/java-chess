@@ -1,6 +1,7 @@
 package domain.pieces;
 
 import domain.pieces.exceptions.CanNotMoveException;
+import domain.point.Column;
 import domain.point.Direction;
 import domain.point.Distance;
 import domain.point.Point;
@@ -74,17 +75,27 @@ public class Pieces {
 	}
 
 	public double computeBlackTeamScore() {
-		return pieces.stream()
+		double simpleSum = pieces.stream()
 				.filter(Piece::isBlack)
 				.mapToDouble(Piece::getScore)
 				.sum();
+		return simpleSum - sumHalfScoreOfBlackPawn();
+	}
+
+	private double sumHalfScoreOfBlackPawn() {
+		return countHalfScoreBlackPawnNumber() * Pawn.HALF_SCORE;
 	}
 
 	public double computeWhiteTeamScore() {
-		return pieces.stream()
+		double simpleSum = pieces.stream()
 				.filter(Piece::isWhite)
 				.mapToDouble(Piece::getScore)
 				.sum();
+		return simpleSum - sumHalfScoreOfWhitePawn();
+	}
+
+	private double sumHalfScoreOfWhitePawn() {
+		return countHalfScoreWhitePawnNumber() * Pawn.HALF_SCORE;
 	}
 
 	public boolean isBlackKingKilled() {
@@ -97,6 +108,73 @@ public class Pieces {
 		return pieces.stream()
 				.filter(Piece::isWhite)
 				.noneMatch(Piece::isKing);
+	}
+
+	private int countHalfScoreBlackPawnNumber() {
+		int halfScorePawnNumber = 0;
+		for (Column column : Column.values()) {
+			halfScorePawnNumber += countBlackPawnInColumnIfMoreThanTwo(column);
+		}
+		return halfScorePawnNumber;
+	}
+
+	private int countBlackPawnInColumnIfMoreThanTwo(Column column) {
+		int count = 0;
+		for (Piece piece : pieces) {
+			count += addBlackPawnCount(column, piece);
+		}
+
+		return decideZeroOrCount(count);
+	}
+
+	private int addBlackPawnCount(Column column, Piece piece) {
+		if (piece.isWhite()) {
+			return 0;
+		}
+		if (piece.isNotPawn()) {
+			return 0;
+		}
+		if (piece.matchColumnPoint(column)) {
+			return 1;
+		}
+		return 0;
+	}
+
+	private int decideZeroOrCount(int count) {
+		if (count > 1) {
+			return count;
+		}
+		return 0;
+	}
+
+	private int countHalfScoreWhitePawnNumber() {
+		int halfScorePawnNumber = 0;
+		for (Column column : Column.values()) {
+			halfScorePawnNumber += countWhitePawnInColumnIfMoreThanTwo(column);
+		}
+		return halfScorePawnNumber;
+	}
+
+	private int countWhitePawnInColumnIfMoreThanTwo(Column column) {
+		int count = 0;
+		for (Piece piece : pieces) {
+			count += addWhitePawnCount(column, piece);
+		}
+
+		return decideZeroOrCount(count);
+	}
+
+	private int addWhitePawnCount(Column column, Piece piece) {
+		if (piece.isBlack()) {
+			return 0;
+		}
+		if (piece.isNotPawn()) {
+			return 0;
+		}
+		if (piece.matchColumnPoint(column)) {
+			return 1;
+		}
+		return 0;
 	}
 
 	public Set<Piece> getSet() {
