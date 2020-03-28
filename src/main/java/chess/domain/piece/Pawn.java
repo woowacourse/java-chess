@@ -4,9 +4,9 @@ import chess.domain.Side;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
-	private static final String NAME = "p";
 	private static final int INIT_PAWN_DISTANCE = 2;
 	private static final int PAWN_DISTANCE = 1;
+	private static final String NAME = "p";
 	private static final double SCORE = 0.5;
 
 	public Pawn(Side side, Position position) {

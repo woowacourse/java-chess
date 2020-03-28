@@ -37,7 +37,7 @@ public abstract class Piece implements Movable {
 		return isBetween(source, target) && findDirection(target).isSameDirection(position, source);
 	}
 
-	public boolean isBetween(Position source, Position target) {
+	private boolean isBetween(Position source, Position target) {
 		if (source.isSameCol(target)) {
 			return isBetweenRow(source, target);
 		}
@@ -47,21 +47,21 @@ public abstract class Piece implements Movable {
 		return isBetweenRow(source, target) && isBetweenCol(source, target);
 	}
 
-	public boolean isBetweenRow(Position source, Position target) {
+	private boolean isBetweenRow(Position source, Position target) {
 		if (source.compareToRow(target) > 0) {
 			return isBetweenRow(target, source);
 		}
 		return source.compareToRow(position) < 0 && position.compareToRow(target) < 0;
 	}
 
-	public boolean isBetweenCol(Position source, Position target) {
+	private boolean isBetweenCol(Position source, Position target) {
 		if (source.compareToCol(target) > 0) {
 			return isBetweenCol(target, source);
 		}
 		return source.compareToCol(position) < 0 && position.compareToCol(target) < 0;
 	}
 
-	public Direction findDirection(Position target) {
+	private Direction findDirection(Position target) {
 		return position.findDirection(target);
 	}
 
@@ -74,7 +74,7 @@ public abstract class Piece implements Movable {
 	}
 
 	public boolean isSameSide(Piece piece) {
-		return this.side.equals(piece.side);
+		return this.isSameSide(piece.side);
 	}
 
 	public boolean isSameSide(Side side) {
@@ -85,7 +85,7 @@ public abstract class Piece implements Movable {
 		return false;
 	}
 
-	public boolean isSameCol(Column column){
+	public boolean isSameCol(Column column) {
 		return position.isSameCol(column);
 	}
 
