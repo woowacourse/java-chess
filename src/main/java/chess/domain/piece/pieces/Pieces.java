@@ -1,12 +1,11 @@
 package chess.domain.piece.pieces;
 
-import chess.domain.board.position.Position;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public class Pieces {
@@ -19,7 +18,7 @@ public class Pieces {
 	}
 
 	public void move(Position start, Position end, Color color) {
-		Piece piece = findBy(start, color).orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE));
+		Piece piece = findBy(start, color);
 
 		Set<Position> movablePositions = piece.createMovablePositions(pieces);
 
@@ -36,26 +35,24 @@ public class Pieces {
 		piece.changePosition(end);
 	}
 
-	public Optional<Piece> findBy(Position start) {
-		for (Piece piece : pieces) {
-			if (piece.isSamePosition(start)) {
-				return Optional.ofNullable(piece);
-			}
-		}
-		return Optional.empty();
+	public Piece findBy(Position start) {
+		return pieces.stream()
+				.filter(piece -> piece.isSamePosition(start))
+				.findFirst()
+				.orElseGet(Blank::new);
 	}
 
-	public Optional<Piece> findBy(Position start, Color color) {
-		Piece piece = findBy(start).orElseGet(Blank::new);
+	private Piece findBy(Position start, Color color) {
+		Piece piece = findBy(start);
 		if (piece.isSameColor(color)) {
-			return Optional.ofNullable(piece);
+			return piece;
 		}
-		return Optional.empty();
+		throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
 	}
 
 	public List<Piece> getPieces() {
 		return pieces;
-	}
+	} // TODO: 2020/03/27 최후 : 겟을 없에자
 
 	public boolean isKingDead() {
 		int kingCount = (int) pieces.stream()

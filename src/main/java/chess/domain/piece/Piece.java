@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.position.Position;
+import chess.domain.position.Position;
 import chess.domain.piece.movable.Movable;
 
 import java.util.List;
@@ -55,6 +55,10 @@ public abstract class Piece {
 	public boolean isSameColor(Color color) {
 		Objects.requireNonNull(color, INVALID_INPUT_EXCEPTION_MESSAGE);
 		return this.color.isSame(color);
+	}
+
+	public boolean isNotSameColor(Color color) {
+		return !isSameColor(color);
 	}
 
 	public boolean isKing() {

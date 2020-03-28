@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.board.position.Position;
-import chess.domain.piece.movable.RookMovable;
+import chess.domain.piece.movable.BlockedMovable;
+import chess.domain.piece.movable.Directions;
+import chess.domain.position.Position;
 
 public class Rook extends Piece {
 	public Rook(Position position, String name, Color color) {
-		super(position, name, new RookMovable(), color, 5);
+		super(position, name, new BlockedMovable(Directions.LINEAR), color, 5);
 	}
 }

@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.domain.board.Board;
-import chess.domain.board.position.Column;
-import chess.domain.board.position.Position;
-import chess.domain.board.position.Row;
+import chess.domain.position.PositionFactory;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ScoreResult;
 import chess.domain.piece.Blank;
@@ -27,17 +27,15 @@ public class OutputView {
 		StringBuilder rowLineStringBuilder = new StringBuilder();
 
 		for (Row row : Row.values()) {
-			Position position = Board.of(row, column);
-			Piece piece = chessGame.getPieces()
-					.findBy(position)
-					.orElseGet(Blank::new);
+			Position position = PositionFactory.of(row, column);
+			Piece piece = chessGame.getPieces().findBy(position); // TODO: 2020/03/27 체스게임한테 시켜라 혹은 보드에게 이양
 			rowLineStringBuilder.append(piece.getName());
 		}
 		return rowLineStringBuilder.toString();
 	}
 
 	public static void printFinishByKingDead(Color color) {
-		System.out.println(color.getName() + "가 승리하였습니다.");
+		System.out.println(color + "가 승리하였습니다.");
 	}
 
 	private static void printEmptyLine() {
@@ -51,7 +49,7 @@ public class OutputView {
 	public static void printScore(ScoreResult scores) {
 		printEmptyLine();
 		for (Color color : scores.keySet()) {
-			System.out.println(color.getName() + "의 점수는 " + scores.getScoreBy(color) + "점 입니다.");
+			System.out.println(color + "의 점수는 " + scores.getScoreBy(color) + "점 입니다.");
 		}
 	}
 }

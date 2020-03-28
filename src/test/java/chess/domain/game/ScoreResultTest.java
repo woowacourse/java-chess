@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.domain.board.Board;
+import chess.domain.position.PositionFactory;
 import chess.domain.piece.*;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.TestPiecesFactory;
@@ -16,14 +16,14 @@ public class ScoreResultTest {
 	@Test
 	void getScoreBy_normal_test() {
 		Pieces pieces = TestPiecesFactory.createBy(Arrays.asList(
-				new Queen(Board.of("a1"), "q", Color.WHITE),
-				new Rook(Board.of("b1"), "q", Color.WHITE),
-				new Knight(Board.of("c1"), "q", Color.WHITE),
-				new Bishop(Board.of("d1"), "q", Color.WHITE),
-				new Queen(Board.of("a8"), "q", Color.BLACK),
-				new Rook(Board.of("b8"), "q", Color.BLACK),
-				new Knight(Board.of("c8"), "q", Color.BLACK),
-				new King(Board.of("d8"), "k", Color.BLACK)
+				new Queen(PositionFactory.of("a1"), "q", Color.WHITE),
+				new Rook(PositionFactory.of("b1"), "q", Color.WHITE),
+				new Knight(PositionFactory.of("c1"), "q", Color.WHITE),
+				new Bishop(PositionFactory.of("d1"), "q", Color.WHITE),
+				new Queen(PositionFactory.of("a8"), "q", Color.BLACK),
+				new Rook(PositionFactory.of("b8"), "q", Color.BLACK),
+				new Knight(PositionFactory.of("c8"), "q", Color.BLACK),
+				new King(PositionFactory.of("d8"), "k", Color.BLACK)
 		));
 		ScoreResult scoreResult = new ScoreResult(pieces.getPieces());
 

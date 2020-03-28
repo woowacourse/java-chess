@@ -1,13 +1,7 @@
 package chess.domain.piece.movable;
 
-import chess.domain.piece.Color;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 public enum Direction {
+	// TODO: 2020/03/27 이름을 축약하지 말라. 주석이라도 달라
 	NORTH(0, 1),
 	NORTHEAST(1, 1),
 	EAST(1, 0),
@@ -24,11 +18,7 @@ public enum Direction {
 	EEN(2, 1),
 	EES(2, -1),
 	WWN(-2, 1),
-	WWS(-2, -1),
-
-	NORTHDOUBLE(0, 2),
-	SOUTHDOUBLE(0, -2);
-
+	WWS(-2, -1);
 
 	private int xDegree;
 	private int yDegree;
@@ -44,48 +34,5 @@ public enum Direction {
 
 	public int getYDegree() {
 		return yDegree;
-	}
-
-	public static List<Direction> linearDirection() {
-		return Arrays.asList(NORTH, EAST, SOUTH, WEST);
-	}
-
-	public static List<Direction> diagonalDirection() {
-		return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
-	}
-
-	public static List<Direction> everyDirection() {
-		return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
-	}
-
-	public static List<Direction> knightDirection() {
-		return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
-	}
-
-	public static List<Direction> getPawnDirectionBy(Color color) {
-		Objects.requireNonNull(color, "없는 색상입니다.");
-		if (color.isWhite()) {
-			return whitePawnDirection();
-		}
-		if (color.isBlack()) {
-			return blackPawnDirection();
-		}
-		return Collections.emptyList();
-	}
-
-	public static List<Direction> whitePawnDirection() {
-		return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
-	}
-
-	public static List<Direction> whiteInitialPawnDirection() {
-		return Arrays.asList(NORTH, NORTHEAST, NORTHWEST, NORTHDOUBLE);
-	}
-
-	public static List<Direction> blackPawnDirection() {
-		return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
-	}
-
-	public static List<Direction> blackInitialPawnDirection() {
-		return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST, SOUTHDOUBLE);
 	}
 }
