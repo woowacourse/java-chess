@@ -15,10 +15,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(final Vector vector, final Piece targetPiece) {
-        if (targetPiece.isSameTeam(this.team)) {
-            return false;
-        }
+    protected boolean canReach(Vector vector, Piece targetPiece) {
         return vector.sumOfAbsolute() == 3 && vector.subtractOfAbsolute() == 1;
     }
 

@@ -10,9 +10,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class NotMovedPawnTest {
     @DisplayName("2칸 움직일 수 있는지 확인")
     @ParameterizedTest
-    @CsvSource(value = {"0,2,WHITE,true", "2,1,WHITE,false"})
-    void canMove(int fileVariation, int rankVariation, Team team, boolean expect) {
+    @CsvSource(value = {
+            "0,2,WHITE,BLANK,true",
+            "0,2,WHITE,BLACK_KING,false"})
+    void canMove(int fileVariation, int rankVariation, Team team, Pieces pieces, boolean expect) {
         Piece piece = new NotMovedPawn(team);
-        assertThat(piece.canMove(new Vector(fileVariation, rankVariation), new Blank())).isEqualTo(expect);
+
+        boolean actual = piece.canMove(new Vector(fileVariation, rankVariation), pieces.getPiece());
+
+        assertThat(actual).isEqualTo(expect);
     }
 }

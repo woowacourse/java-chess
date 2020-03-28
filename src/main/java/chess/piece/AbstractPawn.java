@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.coordinate.Vector;
+import chess.piece.movestrategy.PawnMoveStrategyGroup;
 
 public abstract class AbstractPawn extends Piece {
 
@@ -11,20 +12,17 @@ public abstract class AbstractPawn extends Piece {
     }
 
     @Override
-    public boolean canMove(final Vector vector, final Piece targetPiece) {
-        if (targetPiece.isSameTeam(this.team)) {
-            return false;
-        }
+    protected boolean canReach(Vector vector, Piece targetPiece) {
         if (canMoveTwoStep(vector, targetPiece)) {
-            return true;
+            return targetPiece.isBlank();
         }
+
+        // 같은방향이면서 방향의 절대값이 1,1 혹은 0,1을 만족해야함
         if (!(vector.isRangeUnderAbsolute(1) && team.isSameDirection(vector.getRankVariation()))) {
             return false;
         }
-        if (targetPiece.isBlank()) {
-            return vector.isStraight();
-        }
-        return vector.isDiagonal();
+
+        return PawnMoveStrategyGroup.movable(vector, targetPiece);
     }
 
     protected abstract boolean canMoveTwoStep(final Vector vector, final Piece targetPiece);

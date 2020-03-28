@@ -19,7 +19,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public boolean canMove(final Vector vector, final Piece targetPiece) {
+    protected boolean canReach(Vector vector, Piece targetPiece) {
         return false;
     }
 

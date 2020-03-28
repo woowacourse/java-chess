@@ -39,7 +39,15 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public abstract boolean canMove(Vector vector, Piece targetPiece);
+    public boolean canMove(Vector vector, Piece targetPiece) {
+        if (targetPiece.isSameTeam(this.team)) {
+            return false;
+        }
+
+        return canReach(vector, targetPiece);
+    }
+
+    protected abstract boolean canReach(Vector vector, Piece targetPiece);
 
     public double getScore() {
         return score;
