@@ -53,5 +53,9 @@ public class OutputView {
         }
         System.out.println("입니다.");
     }
+
+    public static void printStartedErrorMessage() {
+        System.out.println("이미 체스게임이 진행되고 있습니다.");
+    }
 }
 
