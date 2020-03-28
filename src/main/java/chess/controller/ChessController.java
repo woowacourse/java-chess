@@ -16,15 +16,20 @@ public class ChessController {
 
     public static void run() {
         List<Square> squares = new ArrayList<>();
-        boolean blackTurn = false;
-
         OutputView.printStartGame();
         OutputView.printStartEndOption();
         ChessBoard chessBoard = new ChessBoard();
-
         String state = InputView.inputStart();
         GameState gameState = GameState.of(state);
         start(chessBoard, gameState);
+        if (checkGameState(squares, chessBoard, gameState)) {
+            printScoreAndWinners(chessBoard);
+        }
+    }
+
+    private static boolean checkGameState(List<Square> squares, ChessBoard chessBoard, GameState gameState) {
+        String state;
+        boolean blackTurn = false;
         while (!isEnd(gameState)) {
             squares.clear();
             state = splitInputWhenMove(InputView.inputStart(), squares);
@@ -34,7 +39,7 @@ public class ChessController {
             }
             if (chessBoard.isKingCaptured()) {
                 endWhenKingCaptured(blackTurn);
-                break;
+                return false;
             }
             if (gameState == GameState.STATUS) {
                 printScoreAndWinners(chessBoard);
@@ -43,7 +48,7 @@ public class ChessController {
                 OutputView.printStartedErrorMessage();
             }
         }
-        printScoreAndWinners(chessBoard);
+        return true;
     }
 
     private static boolean changeTurn(ChessBoard chessBoard, boolean blackTurn, List<Square> squares) {
