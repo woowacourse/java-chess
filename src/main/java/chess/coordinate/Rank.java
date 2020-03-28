@@ -22,7 +22,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(aRank -> aRank.value == value)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%d : 1 ~ 8 을 벗어났습니다.", value)));
     }
 
     public int subtract(Rank rank) {
