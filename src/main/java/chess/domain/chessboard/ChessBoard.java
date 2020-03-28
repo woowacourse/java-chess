@@ -1,9 +1,10 @@
-package chess.domain;
+package chess.domain.chessboard;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import chess.domain.Team;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;

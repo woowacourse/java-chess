@@ -27,7 +27,7 @@ public enum Direction {
 		if (count > MAX_COUNT) {
 			return false;
 		}
-		if (gapX == x * count && gapY == y * count) {
+		if (gapX == (x * count) && gapY == (y * count)) {
 			return true;
 		}
 		return isMatch(gapX, gapY, ++count);

@@ -11,13 +11,6 @@ public enum Team {
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "Team{" +
-			"name='" + name + '\'' +
-			'}';
-	}
-
 	public String getName() {
 		return name;
 	}

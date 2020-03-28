@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import chess.domain.chessboard.Row;
 import chess.domain.chesspiece.ChessPiece;
 
 public class Status {
@@ -25,7 +26,7 @@ public class Status {
 		return new Result(Team.WHITE.getName(), whiteTeamScore);
 	}
 
-	public double sumScore(Team team) {
+	private double sumScore(Team team) {
 		List<ChessPiece> chessPieces = new ArrayList<>();
 		for (Row row : board) {
 			chessPieces.addAll(row.findByTeam(team));

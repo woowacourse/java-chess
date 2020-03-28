@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.domain.ChessBoard;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.Menu;
 import chess.domain.position.Position;
 import chess.domain.Result;

@@ -13,7 +13,7 @@ import chess.domain.Team;
 
 public class Bishop extends ValuablePiece {
 	private static final List<Direction> DIRECTIONS;
-	private static final String NAME = "d";
+	private static final String NAME = "b";
 
 	static {
 		DIRECTIONS = Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_DOWN, RIGHT_UP);

@@ -1,14 +1,13 @@
 package chess.view;
 
-import chess.domain.ChessBoard;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.Result;
-import chess.domain.Row;
+import chess.domain.chessboard.Row;
 import chess.domain.chesspiece.ChessPiece;
 
 import java.util.List;
 
 public class OutputView {
-
 	private static final int BOARD_FIRST_INDEX = 0;
 	private static final int BOARD_LAST_INDEX = 7;
 

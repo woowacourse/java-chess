@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.position.Position;
-import chess.domain.Row;
+import chess.domain.chessboard.Row;
 import chess.domain.Team;
 import chess.domain.chesspiece.Bishop;
 import chess.domain.chesspiece.Blank;
@@ -52,7 +52,7 @@ public class BoardFactory {
 	private static List<Row> createBlankTeam() {
 		List<Row> rows = new ArrayList<>();
 		for (int index = BLACK_FROM_INDEX; index <= BLACK_TO_INDEX; index++) {
-			rows.add(createBlacks(index));
+			rows.add(createBlanks(index));
 		}
 		return rows;
 	}
@@ -63,7 +63,7 @@ public class BoardFactory {
 			createPawns(WHITE_TEAM_PAWN_INDEX, Team.WHITE));
 	}
 
-	public static Row createExecutive(int index, Team team) {
+	private static Row createExecutive(int index, Team team) {
 		List<ChessPiece> chessPieces = new ArrayList<>();
 		chessPieces.add(new Rook(Position.of(index, ROOK_FIRST_INDEX), team));
 		chessPieces.add(new Knight(Position.of(index, KNIGHT_FIRST_INDEX), team));
@@ -76,7 +76,7 @@ public class BoardFactory {
 		return new Row(chessPieces);
 	}
 
-	public static Row createPawns(int index, Team team) {
+	private static Row createPawns(int index, Team team) {
 		List<ChessPiece> chessPieces = new ArrayList<>();
 		for (int y = BOARD_FROM_INDEX; y <= BOARD_TO_INDEX; y++) {
 			chessPieces.add(new Pawn(Position.of(index, y), team));
@@ -84,7 +84,7 @@ public class BoardFactory {
 		return new Row(chessPieces);
 	}
 
-	public static Row createBlacks(int index) {
+	private static Row createBlanks(int index) {
 		List<ChessPiece> chessPieces = new ArrayList<>();
 		for (int y = BOARD_FROM_INDEX; y <= BOARD_TO_INDEX; y++) {
 			chessPieces.add(new Blank(Position.of(index, y)));

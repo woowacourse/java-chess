@@ -1,5 +1,7 @@
 package chess.domain.chesspiece;
 
+import java.util.Objects;
+
 import chess.domain.MoveManager;
 import chess.domain.Team;
 import chess.domain.position.Position;
@@ -44,4 +46,19 @@ public abstract class ChessPiece {
 
 	public abstract void validateMove(ChessPiece chessPiece);
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		ChessPiece that = (ChessPiece)o;
+		return team == that.team &&
+			Objects.equals(position, that.position);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(team, position);
+	}
 }
