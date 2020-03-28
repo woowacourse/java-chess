@@ -1,6 +1,6 @@
 package chess;
 
-import chess.domain.board.ChessBoard;
+import chess.domain.board.Board;
 import chess.domain.game.Command;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
@@ -17,12 +17,12 @@ public class Application {
     }
 
     private static void run() {
-        ChessBoard chessBoard = new ChessBoard(BoardFactory.createBoard());
+        Board board = BoardFactory.createBoard();
         String command = "";
 
-        while (!END.equals(command) && !chessBoard.isGameEnd()) {
+        while (!END.equals(command) && !board.isGameEnd()) {
             command = getCommand();
-            executeCommand(chessBoard, command);
+            executeCommand(board, command);
         }
     }
 
@@ -36,23 +36,23 @@ public class Application {
         return getCommand();
     }
 
-    private static void executeCommand(ChessBoard chessBoard, String command) {
+    private static void executeCommand(Board board, String command) {
         String[] splitCommand = command.split(" ");
 
         if (MOVE.equals(splitCommand[0])) {
-            tryMove(splitCommand, chessBoard);
+            tryMove(splitCommand, board);
         }
         if (STATUS.equals(splitCommand[0])) {
-            OutputView.printScore(chessBoard);
+            OutputView.printScore(board);
         }
-        OutputView.printBoard(chessBoard);
+        OutputView.printBoard(board);
     }
 
-    private static void tryMove(String[] splitCommand, ChessBoard chessBoard) {
+    private static void tryMove(String[] splitCommand, Board board) {
         try {
             MovingInfo movingInfo = new MovingInfo(Position.of(splitCommand[1]), Position.of(splitCommand[2]));
 
-            chessBoard.move(movingInfo);
+            board.move(movingInfo);
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             OutputView.printWrongPositionMessage();
         }

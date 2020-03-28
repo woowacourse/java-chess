@@ -17,14 +17,14 @@ import java.util.List;
 import static chess.domain.chesspiece.ChessPieceInfo.KING;
 import static chess.domain.game.Team.*;
 
-public class ChessBoard {
+public class Board {
     private static final Team INIT_TEAM = WHITE;
 
     private List<Row> board;
     private Team nowPlayingTeam;
     private boolean isGameEnd;
 
-    public ChessBoard(List<Row> board) {
+    public Board(List<Row> board) {
         this.board = new ArrayList<>(board);
         this.nowPlayingTeam = INIT_TEAM;
         this.isGameEnd = false;

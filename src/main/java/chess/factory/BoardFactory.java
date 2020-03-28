@@ -1,5 +1,6 @@
 package chess.factory;
 
+import chess.domain.board.Board;
 import chess.domain.board.Row;
 import chess.domain.chesspiece.*;
 import chess.domain.game.Team;
@@ -13,13 +14,13 @@ public class BoardFactory {
     private BoardFactory() {
     }
 
-    public static List<Row> createBoard() {
+    public static Board createBoard() {
         List<Row> board = new ArrayList<>();
 
         addTeamRow(board, WHITE);
         addBlankRows(board);
         addTeamRow(board, BLACK);
-        return board;
+        return new Board(board);
     }
 
     private static void addTeamRow(List<Row> board, Team team) {

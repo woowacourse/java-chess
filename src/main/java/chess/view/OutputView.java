@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.board.ChessBoard;
+import chess.domain.board.Board;
 import chess.domain.board.Row;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.game.Team;
@@ -8,7 +8,7 @@ import chess.domain.game.Team;
 import java.util.List;
 
 public class OutputView {
-    public static void printBoard(ChessBoard chessBoard) {
+    public static void printBoard(Board chessBoard) {
         List<Row> board = chessBoard.getBoard();
 
         System.out.println();
@@ -42,10 +42,10 @@ public class OutputView {
         System.out.println("이동할 수 없습니다.");
     }
 
-    public static void printScore(ChessBoard chessBoard) {
-        Team nowPlayingTeam = chessBoard.getNowPlayingTeam();
+    public static void printScore(Board board) {
+        Team nowPlayingTeam = board.getNowPlayingTeam();
         String nowPlayingTeamName = nowPlayingTeam.getTeamName();
-        double nowPlayingTeamScore = chessBoard.getTotalScore();
+        double nowPlayingTeamScore = board.getTotalScore();
 
         System.out.println("Score: " + nowPlayingTeamScore + " (" + nowPlayingTeamName + ")");
     }
