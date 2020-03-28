@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.piece.direction.Direction;
+
 import java.util.Objects;
 
 import static chess.util.NullValidator.validateNull;
@@ -38,6 +40,13 @@ public class Position {
             return yPointGap;
         }
         return yPointGap / Math.abs(yPointGap);
+    }
+
+    public void plus(Direction direction) {
+        validateNull(direction);
+
+        this.xPoint = Xpoint.of(direction.getXPoint() + this.xPoint.getValue());
+        this.yPoint = Ypoint.of(direction.getYPoint() + this.yPoint.getValue());
     }
 
     @Override
