@@ -41,14 +41,22 @@ public class ChessController {
                 endWhenKingCaptured(blackTurn);
                 return false;
             }
-            if (gameState == GameState.STATUS) {
-                printScoreAndWinners(chessBoard);
-            }
-            if (gameState == GameState.START) {
-                OutputView.printStartedErrorMessage();
-            }
+            isStateStatus(chessBoard, gameState);
+            isStateStart(gameState);
         }
         return true;
+    }
+
+    private static void isStateStatus(ChessBoard chessBoard, GameState gameState) {
+        if (gameState == GameState.STATUS) {
+            printScoreAndWinners(chessBoard);
+        }
+    }
+
+    private static void isStateStart(GameState gameState) {
+        if (gameState == GameState.START) {
+            OutputView.printStartedErrorMessage();
+        }
     }
 
     private static boolean changeTurn(ChessBoard chessBoard, boolean blackTurn, List<Square> squares) {
