@@ -35,6 +35,6 @@ public abstract class PieceState implements State {
     }
 
     @Override
-    public abstract State shiftNextState(PieceColor pieceColor);
+    public abstract State movedState(PieceColor pieceColor);
 
 }

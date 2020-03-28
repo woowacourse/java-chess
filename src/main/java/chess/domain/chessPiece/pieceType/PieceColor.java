@@ -8,15 +8,13 @@ import java.util.function.Function;
 
 public enum PieceColor {
 
-    WHITE("화이트", String::toLowerCase, WhitePawnRuleStrategy::new),
-    BLACK("블랙", String::toUpperCase, BlackPawnRuleStrategy::new);
+    WHITE(String::toLowerCase, WhitePawnRuleStrategy::new),
+    BLACK(String::toUpperCase, BlackPawnRuleStrategy::new);
 
-    private final String color;
     private final Function<String, String> convertName;
     private final Function<Integer, RuleStrategy> pawnRuleStrategy;
 
-    PieceColor(String color, Function<String, String> convertName, Function<Integer, RuleStrategy> pawnRuleStrategy) {
-        this.color = color;
+    PieceColor(Function<String, String> convertName, Function<Integer, RuleStrategy> pawnRuleStrategy) {
         this.convertName = convertName;
         this.pawnRuleStrategy = pawnRuleStrategy;
     }
@@ -32,7 +30,4 @@ public enum PieceColor {
         return pawnRuleStrategy.apply(movableRange);
     }
 
-    public String getColor() {
-        return color;
-    }
 }

@@ -5,13 +5,13 @@ import chess.domain.chessPiece.pieceType.PieceColor;
 
 public class MovedState extends PieceState {
 
-	public MovedState(RuleStrategy ruleStrategy) {
-		super(ruleStrategy);
-	}
+    public MovedState(RuleStrategy ruleStrategy) {
+        super(ruleStrategy);
+    }
 
-	@Override
-	public State shiftNextState(PieceColor pieceColor) {
-		return this;
-	}
+    @Override
+    public State movedState(PieceColor pieceColor) {
+        return this;
+    }
 
 }

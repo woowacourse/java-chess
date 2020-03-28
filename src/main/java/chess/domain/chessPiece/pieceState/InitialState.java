@@ -6,17 +6,17 @@ import chess.domain.chessPiece.pieceType.PieceColor;
 
 public class InitialState extends PieceState {
 
-	public InitialState(RuleStrategy ruleStrategy) {
-		super(ruleStrategy);
-	}
+    public InitialState(RuleStrategy ruleStrategy) {
+        super(ruleStrategy);
+    }
 
-	@Override
-	public State shiftNextState(PieceColor pieceColor) {
+    @Override
+    public State movedState(PieceColor pieceColor) {
 
-		if (this.ruleStrategy instanceof PawnRuleStrategy) {
-			return new MovedState(pieceColor.getPawnRuleStrategyBy(PawnRuleStrategy.MOVED_STATE_MOVABLE_RANGE));
-		}
-		return new MovedState(this.ruleStrategy);
-	}
+        if (this.ruleStrategy instanceof PawnRuleStrategy) {
+            return new MovedState(pieceColor.getPawnRuleStrategyBy(PawnRuleStrategy.MOVED_STATE_MOVABLE_RANGE));
+        }
+        return new MovedState(this.ruleStrategy);
+    }
 
 }

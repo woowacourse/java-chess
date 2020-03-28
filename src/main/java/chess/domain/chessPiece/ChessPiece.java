@@ -1,6 +1,8 @@
 package chess.domain.chessPiece;
 
+import chess.domain.chessBoard.CatchKingException;
 import chess.domain.chessPiece.pieceState.State;
+import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 
@@ -26,7 +28,7 @@ public abstract class ChessPiece implements Movable, Catchable {
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition) {
         if (state.canMove(sourcePosition, targetPosition)) {
-            state = state.shiftNextState(pieceColor);
+            state = state.movedState(pieceColor);
             return true;
         }
         return false;
@@ -35,7 +37,7 @@ public abstract class ChessPiece implements Movable, Catchable {
     @Override
     public boolean canCatch(Position sourcePosition, Position targetPosition) {
         if (state.canCatch(sourcePosition, targetPosition)) {
-            state = state.shiftNextState(pieceColor);
+            state = state.movedState(pieceColor);
             return true;
         }
         return false;
@@ -47,6 +49,30 @@ public abstract class ChessPiece implements Movable, Catchable {
 
     public boolean isSamePieceColorWith(PieceColor pieceColor) {
         return this.pieceColor.equals(pieceColor);
+    }
+
+    public void checkIsSamePieceColorWith(ChessPiece targetChessPiece) {
+        if (isSamePieceColorWith(targetChessPiece)) {
+            throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
+        }
+    }
+
+    public void checkCaughtPieceIsKing() {
+        if (this instanceof King) {
+            throw new CatchKingException("왕이 잡혔습니다.");
+        }
+    }
+
+    public void checkCanCatchWith(Position sourcePosition, Position targetPosition) {
+        if (!canCatch(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
+        }
+    }
+
+    public void checkCanMoveWith(Position sourcePosition, Position targetPosition) {
+        if (!canMove(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
+        }
     }
 
     public abstract String getName();
