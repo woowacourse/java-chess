@@ -6,7 +6,7 @@ public class InputView {
 
     private final static Scanner SCANNER = new Scanner(System.in);
 
-    public static String inputStart() {
+    public static String inputGameState() {
         return SCANNER.nextLine();
     }
 }

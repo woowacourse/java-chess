@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
-
     private static final int RANK_BLACK_PAWN_INIT = 7;
     private static final int RANK_WHITE_PAWN_INIT = 2;
     private static final Map<BoardSquare, Piece> INITIAL_BOARD;
@@ -53,6 +52,7 @@ public class ChessBoard {
     }
 
     private Map<BoardSquare, Piece> chessBoard = new HashMap<>();
+    private Color gameTurn = Color.WHITE;
 
     public ChessBoard() {
         for (BoardSquare boardSquare : INITIAL_BOARD.keySet()) {
@@ -68,18 +68,18 @@ public class ChessBoard {
         return chessBoard;
     }
 
-    public boolean movePieceWhenCanMove(List<BoardSquare> boardSquares, boolean blackTurn) {
-        if (canMove(boardSquares, blackTurn)) {
+    public boolean movePieceWhenCanMove(List<BoardSquare> boardSquares) {
+        if (canMove(boardSquares)) {
             movePiece(boardSquares);
             return true;
         }
         return false;
     }
 
-    private boolean canMove(List<BoardSquare> boardSquares, boolean blackTurn) {
+    private boolean canMove(List<BoardSquare> boardSquares) {
         BoardSquare before = boardSquares.get(0);
         BoardSquare after = boardSquares.get(1);
-        if (!chessBoard.containsKey(before) || chessBoard.get(before).isBlack() != blackTurn) {
+        if (!chessBoard.containsKey(before) || !chessBoard.get(before).isSameColor(gameTurn)) {
             return false;
         }
         return chessBoard.get(before).getCheatSheet(before, chessBoard).contains(after);
@@ -90,12 +90,17 @@ public class ChessBoard {
         BoardSquare after = boardSquares.get(1);
         Piece currentPiece = chessBoard.remove(before);
         chessBoard.put(after, currentPiece);
+        gameTurn = gameTurn.nextTurnIfNotMySelf();
     }
 
     public boolean isKingCaptured() {
         return chessBoard.values().stream()
             .filter(piece -> piece instanceof King)
             .count() != Color.values().length;
+    }
+
+    public Color getWinnerTurn() {
+        return gameTurn.nextTurnIfNotMySelf();
     }
 
     public TeamScore getTeamScore() {

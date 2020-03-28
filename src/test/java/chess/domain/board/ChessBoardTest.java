@@ -25,21 +25,26 @@ public class ChessBoardTest {
     @DisplayName("move 수행이 가능한지 판단")
     void canMove() {
         ChessBoard chessBoard = new ChessBoard();
-        boolean blackTurn = true;
         List<BoardSquare> boardSquares = new ArrayList<>();
+
+        boardSquares.add(BoardSquare.of("a7"));
+        boardSquares.add(BoardSquare.of("a6"));
+        assertThat(chessBoard.movePieceWhenCanMove(boardSquares)).isFalse();
+
+        boardSquares.clear();
         boardSquares.add(BoardSquare.of("a2"));
         boardSquares.add(BoardSquare.of("a3"));
-        assertThat(chessBoard.movePieceWhenCanMove(boardSquares, blackTurn)).isFalse();
+        assertThat(chessBoard.movePieceWhenCanMove(boardSquares)).isTrue();
 
         boardSquares.clear();
         boardSquares.add(BoardSquare.of("a7"));
         boardSquares.add(BoardSquare.of("a6"));
-        assertThat(chessBoard.movePieceWhenCanMove(boardSquares, blackTurn)).isTrue();
+        assertThat(chessBoard.movePieceWhenCanMove(boardSquares)).isTrue();
 
         boardSquares.clear();
         boardSquares.add(BoardSquare.of("a7"));
         boardSquares.add(BoardSquare.of("b1"));
-        assertThat(chessBoard.movePieceWhenCanMove(boardSquares, blackTurn)).isFalse();
+        assertThat(chessBoard.movePieceWhenCanMove(boardSquares)).isFalse();
     }
 
     @Test
