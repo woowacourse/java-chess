@@ -1,6 +1,8 @@
 package chess.domain.game;
 
 public class Score {
+    public static final Score DEFAULT = new Score(0);
+
     private final double score;
 
     private Score(double score) {

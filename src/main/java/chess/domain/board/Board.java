@@ -206,7 +206,7 @@ public class Board {
     }
 
     public double getTotalScore() {
-        Score score = Score.of(0);
+        Score score = Score.DEFAULT;
 
         for (int j = 0; j < 8; j++) {
             score = getColumnScore(score, j);
