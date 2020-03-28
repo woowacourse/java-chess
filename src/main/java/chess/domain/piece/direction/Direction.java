@@ -39,4 +39,12 @@ public enum Direction {
     private boolean isEqualPoint(int xPointDirectionValue, int row) {
         return xPoint == xPointDirectionValue && yPoint == row;
     }
+
+    public int getXPoint() {
+        return xPoint;
+    }
+
+    public int getYPoint() {
+        return yPoint;
+    }
 }
