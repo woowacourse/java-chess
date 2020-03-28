@@ -1,54 +1,38 @@
 package domain.point;
 
 import java.util.Arrays;
+import java.util.function.BiFunction;
 
 public enum  Direction {
-	N(-1, 0),
-	NE(-1, 1),
-	E(0, 1),
-	SE(1, 1),
-	S(1, 0),
-	SW(1, -1),
-	W(0, -1),
-	NW(-1, -1),
-	KNIGHT(0, 0),
-	ELSE(0, 0);
+	N(-1, 0, DirectionFilters::isN),
+	NE(-1, 1, DirectionFilters::isNe),
+	E(0, 1,DirectionFilters::isE),
+	SE(1, 1, DirectionFilters::isSe),
+	S(1, 0, DirectionFilters::isS),
+	SW(1, -1, DirectionFilters::isSw),
+	W(0, -1, DirectionFilters::isW),
+	NW(-1, -1, DirectionFilters::isNw),
+	KNIGHT(0, 0, DirectionFilters::isKnight),
+	ELSE(0, 0, DirectionFilters::isElse);
 
 	private int rowIndex;
 	private int columnIndex;
+	private BiFunction<Integer, Integer, Boolean> directionFilter;
 
-	Direction(int rowIndex, int columnIndex) {
+	Direction(int rowIndex, int columnIndex, BiFunction<Integer, Integer, Boolean> directionFilter) {
 		this.rowIndex = rowIndex;
 		this.columnIndex = columnIndex;
+		this.directionFilter = directionFilter;
 	}
 
 	public static Direction of(Point from, Point to) {
 		int rowDifference = getRowDifference(from, to);
 		int columnDifference = getColumnDifference(from, to);
 
-		if (isKnightDirection(rowDifference, columnDifference)) {
-			return KNIGHT;
-		}
-		if (rowDifference == 0) {
-			return getHorizon(columnDifference);
-		}
-		if (columnDifference == 0) {
-			return getVertical(rowDifference);
-		}
-		if (Math.abs(rowDifference) == Math.abs(columnDifference)) {
-			return getDiagonal(rowDifference, columnDifference);
-		}
-		return ELSE;
-	}
-
-	private static boolean isKnightDirection(int rowDifference, int columnDifference) {
-		int absRow = Math.abs(rowDifference);
-		int absColumn = Math.abs(columnDifference);
-
-		if (absRow == 2 && absColumn == 1) {
-			return true;
-		}
-		return absRow == 1 && absColumn == 2;
+		return Arrays.stream(values())
+				.filter(direction -> direction.directionFilter.apply(rowDifference, columnDifference))
+				.findFirst()
+				.orElseThrow(RuntimeException::new);
 	}
 
 	private static int getRowDifference(Point from, Point to) {
@@ -57,44 +41,6 @@ public enum  Direction {
 
 	private static int getColumnDifference(Point from, Point to) {
 		return to.getColumnIndex() - from.getColumnIndex();
-	}
-
-	private static Direction getVertical(int rowDifference) {
-		if (rowDifference < 0) {
-			return N;
-		}
-		if (rowDifference > 0) {
-			return S;
-		}
-
-		throw new IllegalArgumentException();
-	}
-
-	private static Direction getHorizon(int columnDifference) {
-		if (columnDifference < 0) {
-			return W;
-		}
-		if (columnDifference > 0) {
-			return E;
-		}
-		return ELSE;
-	}
-
-	private static Direction getDiagonal(int rowDifference, int columnDifference) {
-		if (rowDifference < 0 && columnDifference < 0) {
-			return NW;
-		}
-		if (rowDifference < 0 && columnDifference > 0) {
-			return NE;
-		}
-		if (rowDifference > 0 && columnDifference < 0) {
-			return SW;
-		}
-		if (rowDifference > 0 && columnDifference > 0) {
-			return SE;
-		}
-
-		throw new IllegalArgumentException();
 	}
 
 	public boolean isNotStraight() {
