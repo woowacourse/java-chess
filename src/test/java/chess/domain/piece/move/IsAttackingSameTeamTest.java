@@ -28,6 +28,11 @@ class IsAttackingSameTeamTest {
     void canNotMove(Team team, boolean expected) {
         Initialized initializedPiece = new Initialized("testInitializedPiece", Position.of(1,1), team, new ArrayList<>()) {
             @Override
+            public boolean hasHindrance(Position to, Board board) {
+                return false;
+            }
+
+            @Override
             protected boolean canNotMove(Position to, Board board) {
                 return false;
 

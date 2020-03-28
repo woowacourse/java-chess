@@ -11,13 +11,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InitializedPawnCanNotReachTest {
-    private InitializedPawnCanNotReach initializedPawnCanNotReach = new InitializedPawnCanNotReach(2);
+class CanNotReachTest {
+    private CanNotReach canNotReach = new CanNotReach(2);
 
     @ParameterizedTest
     @DisplayName("#canNotMove() : should return boolean measuring Position to against MAX_DISTANCE")
@@ -25,7 +24,7 @@ class InitializedPawnCanNotReachTest {
     void canNotMove(Position from, Position to, boolean expected) {
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, Team.WHITE);
         Board board = ChessBoard.initiaize();
-        boolean canNotMove = initializedPawnCanNotReach.canNotMove(initializedPawn, to, board);
+        boolean canNotMove = canNotReach.canNotMove(initializedPawn, to, board);
         assertThat(canNotMove).isEqualTo(expected);
     }
 

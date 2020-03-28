@@ -2,7 +2,6 @@ package chess.domain.position;
 
 import java.util.Objects;
 
-//todo: test
 public class Distance {
     private final double value;
 
@@ -39,7 +38,7 @@ public class Distance {
         return Objects.hash(value);
     }
 
-    public boolean isBiggerThan(int maxDistance) {
-        return maxDistance < value;
+    public boolean isBiggerThan(int value) {
+        return value < this.value;
     }
 }

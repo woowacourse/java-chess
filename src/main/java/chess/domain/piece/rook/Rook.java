@@ -16,6 +16,11 @@ public class Rook extends Running {
     }
 
     @Override
+    public boolean hasHindrance(Position to, Board board) {
+        return false;
+    }
+
+    @Override
     protected boolean canNotMove(Position to, Board board) {
         return false;
     }

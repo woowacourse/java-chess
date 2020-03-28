@@ -81,7 +81,7 @@ public class ChessBoard implements Board {
                 List<CanNotMoveStrategy> canNotMoveStrategies = Arrays.asList(
                         new IsStayed(),
                         new IsNotForward(),
-                        new InitializedPawnCanNotReach(2),
+                        new CanNotReach(2),
                         new InitializedPawnHasHindrance(),
                         new IsAttackingSameTeam()
                 );

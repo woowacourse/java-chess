@@ -3,12 +3,26 @@ package chess.domain.piece.factory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.*;
 import chess.domain.piece.pawn.InitializedPawn;
+import chess.domain.piece.pawn.RunningPawn;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum PieceType {
-    INITIALIZED_PAWN("p", InitializedPawn.class, getCanNotMoveStrategiesForInitializedPawn());
+    INITIALIZED_PAWN("p", InitializedPawn.class, getCanNotMoveStrategiesForInitializedPawn()),
+    RUNNING_PAWN("p", RunningPawn.class, getCanNotMoveStrategiesForRunningPawn());
+
+    private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForRunningPawn() {
+        return Arrays.asList(
+                new IsStayed(),
+                new IsNotForward(),
+                new CanNotReach(RunningPawn.MAX_DISTANCE),
+                new RunningPawnHasHindrance(),
+                new IsAttackingSameTeam(),
+                new PawnIsDiagonalWithoutAttack()
+
+        );
+    }
 
     private final String name;
     private final Class<? extends Piece> type;
@@ -33,10 +47,10 @@ public enum PieceType {
         return Arrays.asList(
                 new IsStayed(),
                 new IsNotForward(),
-                new InitializedPawnCanNotReach(InitializedPawn.MAX_DISTANCE),
+                new CanNotReach(InitializedPawn.MAX_DISTANCE),
                 new InitializedPawnHasHindrance(),
                 new IsAttackingSameTeam(),
-                new IsDiagonalWithoutAttack()
+                new PawnIsDiagonalWithoutAttack()
         );
     }
 

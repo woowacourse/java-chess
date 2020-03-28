@@ -22,6 +22,11 @@ class InitializedTest {
     void isHeadingBackward(Position from, Position to, Team team, boolean expected) {
         Initialized initialized = new Initialized("testInitiaiizedPiece", from, team, new ArrayList<>()) {
             @Override
+            public boolean hasHindrance(Position to, Board board) {
+                return false;
+            }
+
+            @Override
             protected boolean canNotMove(Position to, Board board) {
                 return false;
             }

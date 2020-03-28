@@ -5,7 +5,6 @@ import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.move.*;
-import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +12,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -26,10 +24,10 @@ class InitializedPawnTest {
     private List<CanNotMoveStrategy> initializedPawnCanNotMoveStrategies = Arrays.asList(
             new IsStayed(),
             new IsNotForward(),
-            new InitializedPawnCanNotReach(InitializedPawn.MAX_DISTANCE),
+            new CanNotReach(InitializedPawn.MAX_DISTANCE),
             new InitializedPawnHasHindrance(),
             new IsAttackingSameTeam(),
-            new IsDiagonalWithoutAttack()
+            new PawnIsDiagonalWithoutAttack()
     );
 
     @ParameterizedTest
@@ -53,7 +51,7 @@ class InitializedPawnTest {
         Board board = ChessBoard.initiaize();
 
         Piece moved = initializedPawn.move(to, board);
-        assertThat(moved).isNotNull();
+        assertThat(moved).isInstanceOf(RunningPawn.class);
     }
 
     @ParameterizedTest

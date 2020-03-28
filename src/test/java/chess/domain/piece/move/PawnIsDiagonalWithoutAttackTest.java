@@ -2,27 +2,22 @@ package chess.domain.piece.move;
 
 import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
-import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.pawn.InitializedPawn;
-import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-class IsDiagonalWithoutAttackTest {
+class PawnIsDiagonalWithoutAttackTest {
 
-    private IsDiagonalWithoutAttack isDiagonalWithoutAttack = new IsDiagonalWithoutAttack();
+    private PawnIsDiagonalWithoutAttack pawnIsDiagonalWithoutAttack = new PawnIsDiagonalWithoutAttack();
 
     @ParameterizedTest
     @DisplayName("#canNotMove : return boolean as to Position 'from', 'to', team and the Piece at the position")
@@ -32,7 +27,7 @@ class IsDiagonalWithoutAttackTest {
 
 
         Board board = ChessBoard.initiaize();
-        boolean canNotMove = isDiagonalWithoutAttack.canNotMove(initializedPawn, to, board);
+        boolean canNotMove = pawnIsDiagonalWithoutAttack.canNotMove(initializedPawn, to, board);
         assertThat(canNotMove).isEqualTo(expected);
     }
 

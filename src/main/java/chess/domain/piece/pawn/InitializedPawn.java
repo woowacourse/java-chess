@@ -1,16 +1,16 @@
 package chess.domain.piece.pawn;
 
 import chess.domain.board.Board;
+import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.move.CanNotMoveStrategy;
 import chess.domain.piece.Piece;
-import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
 import java.util.List;
 
 //todo: add tests
-public class InitializedPawn extends Initialized {
+public class InitializedPawn extends Pawn {
     public static final int MAX_DISTANCE = 2;
 
     public InitializedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
@@ -22,20 +22,17 @@ public class InitializedPawn extends Initialized {
         if (canNotMove(to, board)) {
             throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
         }
-        //todo: refac
-        return new InitializedPawn(name, position, team, canNotMoveStrategies);
+
+        return PieceFactory.createPiece(RunningPawn.class, to, team);
     }
 
+    @Override
     public boolean hasHindrance(Position to, Board board) {
         if (isHeadingDiagonal(to)) {
             return false;
         }
 
         return hasHindrance(board);
-    }
-
-    public boolean isHeadingDiagonal(Position to) {
-        return position.isDiagonalDirection(to);
     }
 
     private boolean hasHindrance(Board board) {

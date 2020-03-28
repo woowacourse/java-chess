@@ -2,6 +2,7 @@ package chess.domain.piece.factory;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.pawn.InitializedPawn;
+import chess.domain.piece.pawn.RunningPawn;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,8 @@ class PieceFactoryTest {
 
     private static Stream<Arguments> getCasesForCreatePiece() {
         return Stream.of(
-                Arguments.of(InitializedPawn.class)
+                Arguments.of(InitializedPawn.class),
+                Arguments.of(RunningPawn.class)
         );
     }
 }
