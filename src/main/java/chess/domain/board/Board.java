@@ -51,12 +51,14 @@ public class Board {
                 .isOtherTeam(findPieceBy(getBoardIndex(nextPosition.getX(), nextPosition.getY())));
     }
 
-    public Board movePiece(String from, String to) {
+    public Board movePiece(String from, String to, int turnFlag) throws IllegalAccessException {
         List<Piece> movedBoard = new ArrayList<>(board);
 
         Piece fromPiece = findPieceBy(getBoardIndexByStringPosition(from));
         Position fromPosition = fromPiece.getPosition();
-
+        if (Team.isSameTeam(turnFlag, fromPiece)) {
+            throw new IllegalAccessException("체스 게임 순서를 지켜주세요.");
+        }
         Piece toPiece = findPieceBy(getBoardIndexByStringPosition(to));
         Position toPosition = toPiece.getPosition();
         try {
