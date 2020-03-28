@@ -15,6 +15,9 @@ public class ChessController {
 	private static final String STATUS = "status";
 	private static final String END = "end";
 	private static final int COMMAND_ARGUMENTS_SIZE = 3;
+	private static final String WRONG_COMMAND_DIALOGUE = "올바른 명령을 입력해 주십시오.";
+	private static final String NOT_ENOUGH_ARGUMENTS = "명령에 인자가 부족합니다.";
+
 	private State state = State.BEFORESTART;
 
 	public void run() {
@@ -67,12 +70,12 @@ public class ChessController {
 			state = State.FINISHED;
 			return;
 		}
-		throw new IllegalArgumentException("올바른 명령을 입력해 주십시오.");
+		throw new IllegalArgumentException(WRONG_COMMAND_DIALOGUE);
 	}
 
 	private void validateMultiArguments(List<String> multiArguments) {
 		if (multiArguments.size() != COMMAND_ARGUMENTS_SIZE) {
-			throw new IllegalArgumentException("명령에 인자가 부족합니다.");
+			throw new IllegalArgumentException(NOT_ENOUGH_ARGUMENTS);
 		}
 	}
 }
