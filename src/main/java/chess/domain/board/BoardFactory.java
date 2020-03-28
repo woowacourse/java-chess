@@ -27,7 +27,7 @@ public class BoardFactory {
         INITIALIZED_BOARD.add(new Rook('r', new Position(8, 1)));
 
         IntStream.rangeClosed(1, 8)
-                .forEach(col -> INITIALIZED_BOARD.add(new Pawn('p', new Position(col, 2))));
+                .forEach(col -> INITIALIZED_BOARD.add(new WhitePawn('p', new Position(col, 2))));
     }
 
     private static void setUpBlankPiece() {
@@ -40,7 +40,7 @@ public class BoardFactory {
 
     private static void setUpBlackPiece() {
         IntStream.rangeClosed(1, 8)
-                .forEach(col -> INITIALIZED_BOARD.add(new Pawn('P', new Position(col, 7))));
+                .forEach(col -> INITIALIZED_BOARD.add(new BlackPawn('P', new Position(col, 7))));
 
         INITIALIZED_BOARD.add(new Rook('R', new Position(1, 8)));
         INITIALIZED_BOARD.add(new Knight('N', new Position(2, 8)));

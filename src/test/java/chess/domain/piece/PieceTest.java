@@ -20,8 +20,8 @@ public class PieceTest {
 
     private static Stream<Arguments> getCasesForPieceRepresentation() {
         return Stream.of(
-                Arguments.of(new Pawn('p', new Position(1, 2)), 'p'),
-                Arguments.of(new Pawn('P', new Position(1, 7)), 'P'),
+                Arguments.of(new WhitePawn('p', new Position(1, 2)), 'p'),
+                Arguments.of(new BlackPawn('P', new Position(1, 7)), 'P'),
                 Arguments.of(new Rook('r', new Position(1, 1)), 'r'),
                 Arguments.of(new Rook('R', new Position(1, 8)), 'R'),
                 Arguments.of(new Knight('n', new Position(2, 1)), 'n'),
@@ -44,8 +44,8 @@ public class PieceTest {
 
     private static Stream<Arguments> getCasesForPieceInitialPosition() {
         return Stream.of(
-                Arguments.of(new Pawn('p', new Position(1, 2)), new Position(1, 2)),
-                Arguments.of(new Pawn('P', new Position(1, 7)), new Position(1, 7)),
+                Arguments.of(new WhitePawn('p', new Position(1, 2)), new Position(1, 2)),
+                Arguments.of(new BlackPawn('P', new Position(1, 7)), new Position(1, 7)),
                 Arguments.of(new Rook('r', new Position(1, 1)), new Position(1, 1)),
                 Arguments.of(new Rook('R', new Position(1, 8)), new Position(1, 8)),
                 Arguments.of(new Knight('n', new Position(2, 1)), new Position(2, 1)),

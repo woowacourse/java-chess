@@ -2,11 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-    private char representation;
-    private Position position;
+    protected final char representation;
+    protected final Position position;
 
     public Piece(char representation, Position position) {
         this.representation = representation;
@@ -43,4 +44,6 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(representation, position);
     }
+
+    public abstract List<Position> getPossiblePositions();
 }
