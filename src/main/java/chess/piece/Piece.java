@@ -40,6 +40,6 @@ public abstract class Piece {
 	public abstract List<Position> findMoveModeTrace(Position from, Position to);
 
 	public List<Position> findCatchModeTrace(Position from, Position to) {
-		return null;
+		return findMoveModeTrace(from, to);
 	}
 }

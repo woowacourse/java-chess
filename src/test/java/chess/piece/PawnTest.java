@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.Board2;
+import chess.Board;
 import chess.position.Position;
 
 public class PawnTest {
@@ -68,7 +68,7 @@ public class PawnTest {
 		HashMap<Position, Piece> pieces = new HashMap<>();
 		pieces.put(start, new Pawn(WHITE));
 		pieces.put(destination, new Rook(BLACK));
-		Board2 board = new Board2(pieces);
+		Board board = new Board(pieces);
 
 		assertThatCode(() -> board.move(start, destination)).doesNotThrowAnyException();
 	}
@@ -88,7 +88,7 @@ public class PawnTest {
 		pieces.put(start, new Pawn(BLACK));
 		pieces.put(destination, new Rook(WHITE));
 		pieces.put(Position.of("d4"), new Rook(WHITE));
-		Board2 board = new Board2(pieces);
+		Board board = new Board(pieces);
 		board.move(Position.of("d4"), Position.of("d8"));
 
 		assertThatCode(() -> board.move(start, destination)).doesNotThrowAnyException();
@@ -100,7 +100,6 @@ public class PawnTest {
 			Arguments.of(Position.of(E, FIVE), Position.of(F, FOUR))
 		);
 	}
-
 
 	@DisplayName("허용되지 않은 출발위치와 도착위치인 경우 예외가 발생하는지 테스트")
 	@Test
@@ -125,7 +124,7 @@ public class PawnTest {
 		HashMap<Position, Piece> pieces = new HashMap<>();
 		pieces.put(Position.of("a2"), new Pawn(WHITE));
 		pieces.put(Position.of("d4"), new Rook(BLACK));
-		Board2 board = new Board2(pieces);
+		Board board = new Board(pieces);
 		board.move(Position.of("a2"), Position.of("a3"));
 		board.move(Position.of("d4"), Position.of("d7"));
 		assertThatThrownBy(() -> board.move(Position.of("a3"), Position.of("a5")))

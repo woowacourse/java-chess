@@ -12,7 +12,7 @@ public enum Team {
 	}
 
 	public Team getOppositeTeam() {
-		if(this.isBlack()){
+		if (this.isBlack()) {
 			return WHITE;
 		}
 		return BLACK;

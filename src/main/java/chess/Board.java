@@ -70,27 +70,36 @@ public class Board {
 	}
 
 	public void move(Position from, Position to) {
-		Piece piece = pieces.get(from);
-		if (!piece.isRightTeam(turn)) {
+		Piece source = pieces.get(from);
+		Piece target = pieces.get(to);
+		//현재 턴 확인
+		if (!source.isRightTeam(turn)) {
 			throw new IllegalArgumentException("현재 차례가 아닙니다.");
 		}
-		List<Position> PositionsWherePiecesShouldNeverBeIncluded = piece.findMoveModeTrace(from, to);
-		if (isExistAnyPieceAt(PositionsWherePiecesShouldNeverBeIncluded)) {
-			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+		//이동모드
+		if (target == null) {
+			if (isExistAnyPieceAt(source.findMoveModeTrace(from, to))) {
+				throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다1.");
+			}
 		}
-		if (isExistAt(to) && pieces.get(to).isSameTeam(pieces.get(from))) {
+		//예외모드
+		else if (target.isSameTeam(source)) {
 			throw new IllegalArgumentException("본인의 말은 잡을 수 없습니다.");
 		}
+		//적인경우
+		else if (!target.isSameTeam(source)) {
+			if (isExistAnyPieceAt(source.findCatchModeTrace(from, to))) {
+				throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다2.");
+			}
+		}
 
-		Piece target = pieces.remove(from);
-		Piece piece1 = pieces.get(to);
-		if (piece1 instanceof King) {
-			System.out.println("여기 안지나나");
+		if (target instanceof King) {
 			this.finished = true;
 		}
-		pieces.put(to, target);
-		target.updateHasMoved();
+		pieces.remove(from);
+		pieces.put(to, source);
 		this.turn = turn.getOppositeTeam();
+		source.updateHasMoved();
 	}
 
 	public boolean isExistAnyPieceAt(List<Position> traces) {
@@ -117,28 +126,4 @@ public class Board {
 	public void setGameEnd() {
 		finished = true;
 	}
-
-	/*
-	* public void move(Position from, Position to) {
-			Piece 기물 = pieces.get(from);
-		  Piece 목적지 = pieces.get(to);
-		  //이동모드
-		  if (목적지 == null) {
-			if (isExistAnyPieceAt(기물.getMoveTrace(from, to))) {
-					throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
-				}
-		  }
-		  //예외모드
-		  if (목적지.isSameTeam(기물)) {
-			throw new IllegalArgumentException("본인의 말은 잡을 수 없습니다.");
-		  }
-		  if (!목적지.isSameTeam(기물)) {
-			if (isExistAnyPieceAt(기물.getCatchTrace(from, to))) {
-			  throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
-			}
-		  }
-
-		}
-	*
-	* */
 }
