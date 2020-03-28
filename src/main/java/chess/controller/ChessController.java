@@ -11,19 +11,17 @@ import java.util.List;
 import static chess.view.InputView.inputOperation;
 
 public class ChessController {
-
-	private static final String DELIMITER = " ";
 	private static final String INVALID_OPERATION_EXCEPTION_MESSAGE = "잘못된 명령입니다.";
 	private static final int START_POSITION_INDEX = 1;
 	private static final int DESTINATION_POSITION_INDEX = 2;
-	private static final int OPERATIONTYPE_INDEX = 0;
+	private static final int OPERATION_TYPE_INDEX = 0;
 
 	public void run() {
 		ChessGame chessGame = new ChessGame();
 
 		OutputView.printOperationsFormat();
-		List<String> operations = Arrays.asList(inputOperation().split(DELIMITER));
-		OperationType operationType = OperationType.of(operations.get(OPERATIONTYPE_INDEX));
+		List<String> operations = inputOperation();
+		OperationType operationType = OperationType.of(operations.get(OPERATION_TYPE_INDEX));
 
 		validateFirstOperations(operationType);
 		if (operationType.isEnd()) {
@@ -33,8 +31,8 @@ public class ChessController {
 
 		do {
 			OutputView.printBoard(chessGame);
-			operations = Arrays.asList(inputOperation().split(DELIMITER));
-			operationType = OperationType.of(operations.get(OPERATIONTYPE_INDEX));
+			operations = inputOperation();
+			operationType = OperationType.of(operations.get(OPERATION_TYPE_INDEX));
 		} while (operateByType(chessGame, operations, operationType));
 	}
 
