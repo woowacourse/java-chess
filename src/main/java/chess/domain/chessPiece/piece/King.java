@@ -7,20 +7,17 @@ import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.StraightPattern;
 
 public class King extends Piece {
-	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 	private static final int KING_SCORE = 0;
+	private static final int KING_MOVABLE_RANGE = 1;
 
 	public King(Position position, TeamStrategy teamStrategy) {
 		super(position, teamStrategy);
 	}
 
 	@Override
-	public void validateMovePattern(MovePattern movePattern) {
-		if ((movePattern instanceof StraightPattern || movePattern instanceof CrossPattern)
-				&& movePattern.getCount() == 1) {
-			return;
-		}
-		throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
+	protected boolean isMovablePattern(MovePattern movePattern, Piece targetPiece) {
+		return (movePattern instanceof StraightPattern || movePattern instanceof CrossPattern)
+				&& movePattern.getCount() == KING_MOVABLE_RANGE;
 	}
 
 	@Override

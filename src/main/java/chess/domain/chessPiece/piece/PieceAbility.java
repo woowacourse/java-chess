@@ -4,7 +4,7 @@ import chess.domain.chessPiece.position.Position;
 import chess.domain.movepattern.MovePattern;
 
 public interface PieceAbility {
-	void validateMovePattern(MovePattern movePattern);
+	void validateMovePattern(MovePattern movePattern, Piece targetPiece);
 
 	void move(Position position);
 

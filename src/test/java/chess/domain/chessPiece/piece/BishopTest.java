@@ -23,7 +23,7 @@ class BishopTest {
 	@DisplayName("movable 의 인자가 null 일때 테스트")
 	@Test
 	void validateMovePatternNull() {
-		assertThatThrownBy(() -> bishop.validateMovePattern(null))
+		assertThatThrownBy(() -> bishop.validateMovePattern(null, null))
 				.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -34,7 +34,7 @@ class BishopTest {
 
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 
-		bishop.validateMovePattern(movePattern);
+		bishop.validateMovePattern(movePattern, null);
 	}
 
 	@Test
@@ -44,7 +44,7 @@ class BishopTest {
 
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 
-		assertThatThrownBy(() -> bishop.validateMovePattern(movePattern))
+		assertThatThrownBy(() -> bishop.validateMovePattern(movePattern, null))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("해당 말이 갈 수 없는 칸입니다");
 	}

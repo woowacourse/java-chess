@@ -9,21 +9,15 @@ public class Pawn extends Piece {
 	private static final int PAWN_NORMAL_MOVE_RANGE = 1;
 	private static final int PAWN_START_LINE_MOVE_RANGE = 2;
 	private static final double PAWN_SCORE = 0.5;
-	private static final String ERROR_MESSAGE_UNSUPPORTED_METHOD = "지원하지 않는 메소드 입니다";
-	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 
 	public Pawn(Position position, TeamStrategy teamStrategy) {
 		super(position, teamStrategy);
 	}
 
-	public void validateMovePattern(MovePattern movePattern, Piece targetPiece) {
-		if (targetPiece != null && isAttackMovePattern(movePattern)) {
-			return;
-		}
-		if (targetPiece == null && isNotAttackMovePattern(movePattern)) {
-			return;
-		}
-		throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
+	@Override
+	protected boolean isMovablePattern(MovePattern movePattern, Piece targetPiece) {
+		return targetPiece != null && isAttackMovePattern(movePattern)
+				|| targetPiece == null && isNotAttackMovePattern(movePattern);
 	}
 
 	private boolean isAttackMovePattern(MovePattern movePattern) {
@@ -54,12 +48,6 @@ public class Pawn extends Piece {
 
 		return movePattern.getDirection() == forwardDirection
 				&& movePattern.getCount() <= validRange;
-	}
-
-
-	@Override
-	public void validateMovePattern(MovePattern movePattern) {
-		throw new UnsupportedOperationException(ERROR_MESSAGE_UNSUPPORTED_METHOD);
 	}
 
 	@Override

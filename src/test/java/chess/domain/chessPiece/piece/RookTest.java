@@ -19,7 +19,7 @@ class RookTest {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece rook = new Rook(source, new BlackTeam());
 
-		rook.validateMovePattern(movePattern);
+		rook.validateMovePattern(movePattern, null);
 	}
 
 	@Test
@@ -31,7 +31,7 @@ class RookTest {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(source, target);
 		Piece rook = new Rook(source, new BlackTeam());
 
-		assertThatThrownBy(() -> rook.validateMovePattern(movePattern))
+		assertThatThrownBy(() -> rook.validateMovePattern(movePattern, null))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("해당 말이 갈 수 없는 칸입니다");
 	}

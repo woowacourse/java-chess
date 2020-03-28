@@ -70,12 +70,7 @@ public class ChessBoard {
 		Piece pieceToMove = findPieceByPosition(sourcePosition);
 		Piece targetPiece = findPieceByPosition(targetPosition);
 
-		if (pieceToMove instanceof Pawn) {
-			Pawn pawn = (Pawn) pieceToMove;
-			pawn.validateMovePattern(movePattern, targetPiece);
-			return;
-		}
-		pieceToMove.validateMovePattern(movePattern);
+		pieceToMove.validateMovePattern(movePattern, targetPiece);
 	}
 
 	private void checkObstacleOnPath(Position sourcePosition, Position targetPosition) {
