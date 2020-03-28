@@ -7,21 +7,19 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 public class TotalScore {
-	private final Pieces pieces;
 	private final double totalScore;
 
 	public TotalScore(Pieces pieces) {
-		this.pieces = pieces;
-		this.totalScore = calculateTotalScore();
+		this.totalScore = calculateTotalScore(pieces);
 	}
 
-	private double calculateTotalScore() {
+	private double calculateTotalScore(Pieces pieces) {
 		double plainSum = pieces.getAlivePieces().stream()
 				.mapToDouble(Piece::getScore).sum();
-		return sameColumnPawnHandler(plainSum);
+		return sameColumnPawnHandler(pieces, plainSum);
 	}
 
-	private double sameColumnPawnHandler(double plainSum) {
+	private double sameColumnPawnHandler(Pieces pieces, double plainSum) {
 		List<Pawn> pawns = pieces.getAlivePieces().stream()
 			.filter(p -> p instanceof Pawn)
 			.map(p -> (Pawn)p)
