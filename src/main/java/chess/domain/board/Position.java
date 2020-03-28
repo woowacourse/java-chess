@@ -24,6 +24,22 @@ public class Position {
         this.yPoint = Ypoint.of(Integer.parseInt(String.valueOf(position.charAt(1))));
     }
 
+    public int getXPointDirectionValueTo(Position targetPosition) {
+        int xPointGap = targetPosition.xPoint.getGapValue(this.xPoint);
+        if (xPointGap == 0) {
+            return xPointGap;
+        }
+        return xPointGap / Math.abs(xPointGap);
+    }
+
+    public int getYPointDirectionValueTo(Position targetPosition) {
+        int yPointGap = targetPosition.yPoint.getGapValue(this.yPoint);
+        if (yPointGap == 0) {
+            return yPointGap;
+        }
+        return yPointGap / Math.abs(yPointGap);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
