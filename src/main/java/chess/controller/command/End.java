@@ -5,6 +5,6 @@ import chess.domain.gamestate.GameState;
 public class End implements Command {
     @Override
     public GameState execute(GameState gameState) {
-        return null;
+        return gameState.finish();
     }
 }

@@ -18,7 +18,7 @@ public class NothingHappened implements GameState {
 
     @Override
     public GameState finish() {
-        throw new UnsupportedOperationException(GAME_NOT_RUNNING_MESSAGE);
+        return new NothingHappened();
     }
 
     @Override
