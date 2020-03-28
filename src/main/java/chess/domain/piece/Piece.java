@@ -7,9 +7,9 @@ import chess.domain.piece.exception.NotMovableException;
 
 public abstract class Piece {
 	private Position position;
-	private Color color;
-	private Symbol symbol;
-	private List<MoveEventListener> moveEventListeners;
+	private final Color color;
+	private final Symbol symbol;
+	private final List<MoveEventListener> moveEventListeners;
 
 	public Piece(Position position, Color color, Symbol symbol) {
 		this.position = position;
@@ -18,15 +18,15 @@ public abstract class Piece {
 		this.moveEventListeners = new ArrayList<>();
 	}
 
-	public Position getPosition() {
+	public final Position getPosition() {
 		return position;
 	}
 
-	public double score() {
+	public final double score() {
 		return symbol.getScore();
 	}
 
-	public String symbol() {
+	public final String symbol() {
 		return symbol.getName();
 	}
 
@@ -43,19 +43,19 @@ public abstract class Piece {
 		position = piece.position;
 	}
 
-	public void onMoveEvent(MoveEventListener moveEventListener) {
-		moveEventListeners.add(moveEventListener);
-	}
-
-	public void notifyMoveEventListeners(MoveEvent moveEvent) {
-		for (MoveEventListener listener : moveEventListeners) {
-			listener.call(moveEvent);
-		}
-	}
-
 	private void validateDirection(Direction direction, List<Direction> directions) {
 		if (!directions.contains(direction)) {
 			throw new NotMovableException();
+		}
+	}
+
+	public final void onMoveEvent(MoveEventListener moveEventListener) {
+		moveEventListeners.add(moveEventListener);
+	}
+
+	private void notifyMoveEventListeners(MoveEvent moveEvent) {
+		for (MoveEventListener listener : moveEventListeners) {
+			listener.call(moveEvent);
 		}
 	}
 
@@ -63,11 +63,11 @@ public abstract class Piece {
 		return color == piece.color;
 	}
 
-	public boolean isSameColor(Color color) {
+	public final boolean isSameColor(Color color) {
 		return this.color == color;
 	}
 
-	public boolean isDifferentColor(Color color) {
+	public final boolean isDifferentColor(Color color) {
 		return this.color != color;
 	}
 
