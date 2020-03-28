@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.blank.Blank;
+import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.move.*;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.state.Initialized;
@@ -85,7 +86,7 @@ public class ChessBoard implements Board {
                         new IsAttackingSameTeam()
                 );
 
-                InitializedPawn initializedPawn = new InitializedPawn("p", position, team, canNotMoveStrategies);
+                Piece initializedPawn = PieceFactory.createPiece(InitializedPawn.class, position, team);
                 pieces.put(position, initializedPawn);
 
             }

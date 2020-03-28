@@ -3,6 +3,7 @@ package chess.domain.piece.move;
 import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
+import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
@@ -27,7 +28,7 @@ class IsDiagonalWithoutAttackTest {
     @DisplayName("#canNotMove : return boolean as to Position 'from', 'to', team and the Piece at the position")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Team team, Position from, Position to, boolean expected) {
-        InitializedPawn initializedPawn = new InitializedPawn("testInitializedPawn", from, team, new ArrayList<>());
+        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, team);
 
 
         Board board = ChessBoard.initiaize();
