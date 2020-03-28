@@ -26,4 +26,7 @@ public class OutputView {
         }
     }
 
+    public static void printNoPieceMessage(String message) {
+        System.out.println(message);
+    }
 }
