@@ -23,7 +23,6 @@ class ScoreTest {
         piecesCount.put(GamePiece.of(PAWN, BLACK), 2);
     }
 
-    // TODO: 2020/03/26 테스트 케이스 추가
     @Test
     void create() {
         int sameFilePawnCount = 2;

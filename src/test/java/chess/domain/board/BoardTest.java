@@ -136,8 +136,8 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("같은 팀, 같은 화일의 pawn이 여러개 있는 경우 score 계산")
-    void calculateScoreWhiteSameFilePawn() {
+    @DisplayName("같은 player, 같은 column의 pawn이 여러개 있는 경우 score 계산")
+    void calculateScoreWhiteSameColumnPawn() {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
         map.put(Position.from("d6"), GamePiece.of(PAWN, WHITE));

@@ -54,12 +54,12 @@ public class GamePiece {
         return player != sourcePiece.player;
     }
 
-    public boolean isWhite() {
-        return player.equals(Player.WHITE);
+    public boolean is(Player player) {
+        return this.player.equals(player);
     }
 
     public boolean isPawn() {
-        return chessPiece.equals(ChessPiece.PAWN);
+        return ChessPiece.PAWN.equals(chessPiece);
     }
 
     public boolean isKing() {

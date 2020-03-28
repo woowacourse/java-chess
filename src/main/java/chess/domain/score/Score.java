@@ -2,13 +2,13 @@ package chess.domain.score;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Scanner;
 
 import chess.domain.piece.GamePiece;
 
 public class Score {
 
     private static final Score ZERO = new Score(0);
+    private static final double SAME_COLUMN_PAWN_SCORE = 0.5;
 
     private final double score;
 
@@ -22,7 +22,7 @@ public class Score {
         for (Map.Entry<GamePiece, Integer> entry : piecesCount.entrySet()) {
             score = score.plus(entry.getKey().calculateScore(entry.getValue()));
         }
-        score = score.minus(sameFilePawnCount * 0.5);
+        score = score.minus(sameFilePawnCount * SAME_COLUMN_PAWN_SCORE);
         return score;
     }
 

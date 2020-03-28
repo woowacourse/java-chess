@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.player.Player;
 
 class GamePieceTest {
 
@@ -61,7 +62,7 @@ class GamePieceTest {
     @DisplayName("gamepiece player가 white인지 확인")
     @MethodSource("createWhitePieces")
     void isWhite(GamePiece gamePiece, boolean expected) {
-        assertThat(gamePiece.isWhite()).isEqualTo(expected);
+        assertThat(gamePiece.is(WHITE)).isEqualTo(expected);
     }
 
     static Stream<Arguments> createWhitePieces() {

@@ -1,14 +1,19 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import chess.domain.command.Command;
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.Player;
 import chess.domain.score.Score;
-
-import java.util.*;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -104,10 +109,10 @@ public class Board {
         if (sourcePiece.equals(GamePiece.EMPTY)) {
             throw new InvalidMovementException("기물이 존재하지 않습니다.");
         }
-        if (status.isWhiteTurn() && !sourcePiece.isWhite()) {
+        if (status.isWhiteTurn() && sourcePiece.is(Player.BLACK)) {
             throw new InvalidMovementException("해당 플레이어의 턴이 아닙니다.");
         }
-        if (status.isBlackTurn() && sourcePiece.isWhite()) {
+        if (status.isBlackTurn() && sourcePiece.is(Player.WHITE)) {
             throw new InvalidMovementException("해당 플레이어의 턴이 아닙니다.");
         }
     }
@@ -122,11 +127,11 @@ public class Board {
         Map<Player, Score> scores = new HashMap<>();
         List<GamePiece> gamePieces = new ArrayList<>(board.values());
 
-        Map<GamePiece, Integer> gameWhitePiecesCount = getGamePieceCount(gamePieces, white -> white);
-        Map<GamePiece, Integer> gameBlackPiecesCount = getGamePieceCount(gamePieces, white -> !white);
+        Map<GamePiece, Integer> gameWhitePiecesCount = getGamePieceCount(gamePieces, Player.WHITE);
+        Map<GamePiece, Integer> gameBlackPiecesCount = getGamePieceCount(gamePieces, Player.BLACK);
 
-        int sameFileWhitePawnCount = getSameFilePawnCount(white -> white);
-        int sameFileBlackPawnCount = getSameFilePawnCount(white -> !white);
+        int sameFileWhitePawnCount = getSameColumnPawnCount(Player.WHITE);
+        int sameFileBlackPawnCount = getSameColumnPawnCount(Player.BLACK);
 
         scores.put(Player.WHITE, Score.of(gameWhitePiecesCount, sameFileWhitePawnCount));
         scores.put(Player.BLACK, Score.of(gameBlackPiecesCount, sameFileBlackPawnCount));
@@ -134,29 +139,33 @@ public class Board {
         return scores;
     }
 
-    private Map<GamePiece, Integer> getGamePieceCount(List<GamePiece> gamePieces, Predicate<Boolean> player) {
+    private Map<GamePiece, Integer> getGamePieceCount(List<GamePiece> gamePieces, Player player) {
         return gamePieces.stream()
                 .distinct()
                 .filter(gamePiece -> gamePiece != GamePiece.EMPTY)
-                .filter(gamePiece -> player.test(gamePiece.isWhite()))
+                .filter(gamePiece -> gamePiece.is(player))
                 .collect(Collectors.toMap(gamePiece -> gamePiece, gamePiece -> Collections.frequency(gamePieces, gamePiece)));
     }
 
-    private int getSameFilePawnCount(Predicate<Boolean> player) {
-        int sameFilePawnCount = 0;
-        for (Column column : Column.values()) {
-            int count = 0;
-            for (Row row : Row.values()) {
-                GamePiece gamePiece = board.get(Position.of(column, row));
-                if (gamePiece != GamePiece.EMPTY && gamePiece.isPawn() && player.test(gamePiece.isWhite())) {
-                    count++;
-                }
-            }
-            if (count >= 2) {
-                sameFilePawnCount += count;
+    private int getSameColumnPawnCount(Player player) {
+        Map<Integer, Integer> sameColumnPawnCount = new HashMap<>();
+        for (int i = 0; i < Column.values().length; i++) {
+            sameColumnPawnCount.put(i, 0);
+        }
+        List<GamePiece> gamePieces = new ArrayList<>(getBoard().values());
+
+        int rowLength = Row.values().length;
+        for (int i = 0; i < gamePieces.size(); i++) {
+            GamePiece gamePiece = gamePieces.get(i);
+            if (gamePiece.isPawn() && gamePiece.is(player)) {
+                sameColumnPawnCount.computeIfPresent(i % rowLength, (key, value) -> value + 1);
             }
         }
-        return sameFilePawnCount;
+
+        return sameColumnPawnCount.values()
+                .stream()
+                .filter(count -> count >= 2)
+                .reduce(0, Integer::sum);
     }
 
     public boolean isNotFinished() {
