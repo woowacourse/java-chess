@@ -40,7 +40,11 @@ public enum Ypoint {
 		return this.yPointName.equals(String.valueOf(input));
 	}
 
-	public int getValue() {
+	public int getGapValue(Ypoint yPoint) {
+		return this.yPointValue - yPoint.yPointValue;
+	}
+
+	private int getValue() {
 		return yPointValue;
 	}
 }

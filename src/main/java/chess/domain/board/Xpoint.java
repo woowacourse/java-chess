@@ -40,7 +40,11 @@ public enum Xpoint {
 		return this.xPointName.equals(String.valueOf(input));
 	}
 
-	public int getValue() {
+	public int getGapValue(Xpoint xpoint) {
+		return this.xPointValue - xpoint.xPointValue;
+	}
+
+	private int getValue() {
 		return xPointValue;
 	}
 }
