@@ -56,7 +56,7 @@ public class ChessBoardTest {
 	void movePieceWithError() {
 		assertThatThrownBy(() -> chessBoard.movePiece(Position.of("c1"), Position.of("b2")))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessage("해당 칸에 같은 팀의 말이 존재 합니다.");
+				.hasMessage("해당 칸에 같은 팀의 말이 존재 합니다");
 	}
 
 	@DisplayName("왕이 살아있는경우")
@@ -104,6 +104,14 @@ public class ChessBoardTest {
 				.hasMessage("해당 말이 갈 수 없는 칸입니다");
 	}
 
+	@Test
+	@DisplayName("폰 공격 테스트")
+	void movePiecePawn4() {
+		chessBoard.movePiece(Position.of("a2"), Position.of("a4"));
+		chessBoard.movePiece(Position.of("b7"), Position.of("b5"));
+		chessBoard.movePiece(Position.of("a4"), Position.of("b5"));
+	}
+
 	@DisplayName("rook 전진 테스트, 성공")
 	@Test
 	void movePieceRook() {
@@ -116,7 +124,7 @@ public class ChessBoardTest {
 		assertThat(rook.isEqualPosition(targetPosition)).isTrue();
 	}
 
-	@DisplayName("rook 전진 테스트, 실패, 장애물")
+	@DisplayName("rook 전진 실패 테스트, 도착지점 앞에 장애물")
 	@Test
 	void movePieceRook2() {
 		Position targetPosition = Position.of("a5");
@@ -125,7 +133,15 @@ public class ChessBoardTest {
 
 		assertThatThrownBy(() -> chessBoard.movePiece(rookInitPosition, targetPosition))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessage("경로에 다른 말이 존재합니다.");
+				.hasMessage("경로에 다른 말이 존재합니다");
+	}
+
+	@DisplayName("rook 전진 실패 테스트, 출발지점 앞에 장애물")
+	@Test
+	void movePieceObstacle() {
+		assertThatThrownBy(() -> chessBoard.movePiece(Position.of("a1"), Position.of("a3")))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("경로에 다른 말이 존재합니다");
 	}
 
 	@DisplayName("knight 전진 테스트, 성공")

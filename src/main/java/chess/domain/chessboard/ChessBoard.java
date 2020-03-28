@@ -22,8 +22,8 @@ public class ChessBoard {
 	private static final int ONE_PAWN_COUNT = 1;
 	private static final double ONE_PAWN_BONUS = 0.5;
 	private static final int ZERO = 0;
-	private static final String ERROR_MESSAGE_EXIST_PIECE_ON_PATH = "경로에 다른 말이 존재합니다.";
-	private static final String ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다.";
+	private static final String ERROR_MESSAGE_EXIST_PIECE_ON_PATH = "경로에 다른 말이 존재합니다";
+	private static final String ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다";
 
 	private final List<Position> chessBoard;
 	private final List<Piece> pieces;
@@ -93,7 +93,7 @@ public class ChessBoard {
 		Direction direction = movePattern.getDirection();
 		int count = movePattern.getCount();
 
-		for (int i = 0; i < count; i++) {
+		for (int i = 1; i < count; i++) {
 			testPosition.move(direction);
 			checkIsExistPieceOnPath(testPosition);
 		}

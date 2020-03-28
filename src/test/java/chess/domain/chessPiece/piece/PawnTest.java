@@ -50,8 +50,9 @@ class PawnTest {
 	@Test
 	@DisplayName("폰 뒤로 이동 테스트")
 	void isMovableFalse() {
-		Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
-		MovePattern movePattern = MovePatternFactory.findMovePattern(blackPawn.position, Position.of("b1"));
+		Pawn blackPawn = new Pawn(Position.of("b5"), new WhiteTeam());
+		MovePattern movePattern = MovePatternFactory.findMovePattern(blackPawn.position, Position.of("b6"));
+
 		assertThatThrownBy(() -> blackPawn.validateMovePattern(movePattern, null))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("해당 말이 갈 수 없는 칸입니다");
