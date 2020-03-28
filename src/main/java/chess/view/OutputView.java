@@ -29,7 +29,7 @@ public class OutputView {
 	public static void printChessBoard(WhitePieces whitePieces, BlackPieces blackPieces) {
 		for (Rank rank : Rank.values()) {
 			for (File file : File.values()) {
-				Position position = Position.of(file.getFile() + rank.getRank());
+				Position position = Position.of(file.getFile() + rank.getRow());
 				if (whitePieces.hasPiece(position)) {
 					System.out.print(whitePieces.getPiece(position).getSymbol());
 				}

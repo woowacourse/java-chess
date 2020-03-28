@@ -25,6 +25,25 @@ public class Controller {
 		end();
 	}
 
+	private static void start() {
+		OutputView.printGameInstruction();
+
+		FirstCommand command = readFirstCommand();
+		if (command.isEnd()) {
+			end();
+		}
+		init();
+	}
+
+	private static FirstCommand readFirstCommand() {
+		try {
+			return FirstCommand.of(InputView.inputCommand());
+		} catch (IllegalArgumentException e) {
+			OutputView.printException(e);
+			return readFirstCommand();
+		}
+	}
+
 	private static void init() {
 		whitePieces = WhitePiecesFactory.create();
 		blackPieces = BlackPiecesFactory.create();
@@ -50,25 +69,6 @@ public class Controller {
 		} while (!command.isEnd() || kingDie());
 	}
 
-	private static boolean kingDie() {
-		return false;
-	}
-
-	private static void start() {
-		OutputView.printGameInstruction();
-		FirstCommand command = FirstCommand.of(InputView.inputCommand());
-
-		init();
-		if (command.isEnd()) {
-			end();
-		}
-	}
-
-	private static void end() {
-		OutputView.printGameEnd();
-		System.exit(0);
-	}
-
 	private static Command readCommand() {
 		try {
 			return Command.of(InputView.inputCommand());
@@ -76,5 +76,14 @@ public class Controller {
 			OutputView.printException(e);
 			return readCommand();
 		}
+	}
+
+	private static boolean kingDie() {
+		return false;
+	}
+
+	private static void end() {
+		OutputView.printGameEnd();
+		System.exit(0);
 	}
 }
