@@ -4,6 +4,8 @@ import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessboard.ChessBoard;
 
+import java.util.Optional;
+
 public class OutputView {
 	private static final String EMPTY_MARK = ".";
 	private static final String MESSAGE_END_GAME = "\n게임을 종료합니다.";
@@ -15,17 +17,16 @@ public class OutputView {
 	public static void printChessBoard(ChessBoard chessBoard) {
 		for (Position position : chessBoard.getChessBoard()) {
 			separateLine(position);
-			Piece piece = chessBoard.findPieceByPosition(position);
-			printPiece(piece);
+			printPiece(chessBoard.findPieceByPosition(position));
 		}
 	}
 
-	private static void printPiece(Piece piece) {
-		if (piece == null) {
-			System.out.print(EMPTY_MARK);
+	private static void printPiece(Optional<Piece> piece) {
+		if (piece.isPresent()) {
+			System.out.print(piece.get().getPieceName());
 			return;
 		}
-		System.out.print(piece.getPieceName());
+		System.out.print(EMPTY_MARK);
 	}
 
 	private static void separateLine(Position position) {

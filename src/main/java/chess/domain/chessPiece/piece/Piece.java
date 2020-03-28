@@ -5,6 +5,8 @@ import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.movepattern.MovePattern;
 
+import java.util.Optional;
+
 public abstract class Piece implements PieceAbility {
 	private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
 
@@ -17,14 +19,14 @@ public abstract class Piece implements PieceAbility {
 	}
 
 	@Override
-	public void validateMovePattern(MovePattern movePattern, Piece targetPiece) {
+	public void validateMovePattern(MovePattern movePattern, Optional<Piece> targetPiece) {
 		if (isMovablePattern(movePattern, targetPiece)) {
 			return;
 		}
 		throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
 	}
 
-	protected abstract boolean isMovablePattern(MovePattern movePattern, Piece targetPiece);
+	protected abstract boolean isMovablePattern(MovePattern movePattern, Optional<Piece> targetPiece);
 
 	@Override
 	public boolean isEqualPosition(Position position) {
@@ -47,8 +49,8 @@ public abstract class Piece implements PieceAbility {
 	}
 
 	@Override
-	public boolean isKnight() {
-		return this instanceof Knight;
+	public boolean isNotKnight() {
+		return !(this instanceof Knight);
 	}
 
 	public boolean isSameTeam(Piece targetPiece) {

@@ -15,6 +15,7 @@ import chess.domain.movepattern.MovePatternFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
@@ -24,6 +25,7 @@ public class ChessBoard {
 	private static final int ZERO = 0;
 	private static final String ERROR_MESSAGE_EXIST_PIECE_ON_PATH = "경로에 다른 말이 존재합니다";
 	private static final String ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다";
+	private static final String ERROR_MESSAGE_SOURCE_EMPTY = "해당 칸은 비어있습니다";
 
 	private final List<Position> chessBoard;
 	private final List<Piece> pieces;
@@ -40,24 +42,20 @@ public class ChessBoard {
 	}
 
 	public void movePiece(Position sourcePosition, Position targetPosition) {
-		validateTargetTeam(sourcePosition, targetPosition);
+		Piece sourcePiece = findPieceByPosition(sourcePosition)
+				.orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_SOURCE_EMPTY));
 		validateMovable(sourcePosition, targetPosition);
+		validateTargetTeam(sourcePiece, targetPosition);
 
-		Piece pieceToMove = findPieceByPosition(sourcePosition);
-		removeAttackedPiece(findPieceByPosition(targetPosition));
-		pieceToMove.move(targetPosition);
+		removeAttackedPiece(targetPosition);
+		sourcePiece.move(targetPosition);
 	}
 
-	private void validateTargetTeam(Position sourcePosition, Position targetPosition) {
-		Piece sourcePiece = findPieceByPosition(sourcePosition);
-		Piece targetPiece = findPieceByPosition(targetPosition);
-
-		if (targetPiece == null) {
-			return;
-		}
-		if (sourcePiece.isSameTeam(targetPiece)) {
-			throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM);
-		}
+	private void validateTargetTeam(Piece sourcePiece, Position targetPosition) {
+		findPieceByPosition(targetPosition).filter(sourcePiece::isSameTeam)
+				.ifPresent(x -> {
+					throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM);
+				});
 	}
 
 	private void validateMovable(Position sourcePosition, Position targetPosition) {
@@ -67,20 +65,14 @@ public class ChessBoard {
 
 	private void checkMovePattern(Position sourcePosition, Position targetPosition) {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
-		Piece pieceToMove = findPieceByPosition(sourcePosition);
-		Piece targetPiece = findPieceByPosition(targetPosition);
-
-		pieceToMove.validateMovePattern(movePattern, targetPiece);
+		findPieceByPosition(sourcePosition)
+				.ifPresent(x -> x.validateMovePattern(movePattern, findPieceByPosition(targetPosition)));
 	}
 
 	private void checkObstacleOnPath(Position sourcePosition, Position targetPosition) {
 		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
-		Piece pieceToMove = findPieceByPosition(sourcePosition);
-
-		if (pieceToMove.isKnight()) {
-			return;
-		}
-		validatePath(sourcePosition, movePattern);
+		findPieceByPosition(sourcePosition).filter(Piece::isNotKnight)
+				.ifPresent(x -> validatePath(sourcePosition, movePattern));
 	}
 
 	private void validatePath(Position sourcePosition, MovePattern movePattern) {
@@ -95,22 +87,19 @@ public class ChessBoard {
 	}
 
 	private void checkIsExistPieceOnPath(Position path) {
-		if (findPieceByPosition(path) != null) {
+		if (findPieceByPosition(path).isPresent()) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_PIECE_ON_PATH);
 		}
 	}
 
-	public void removeAttackedPiece(Piece targetPiece) {
-		if (targetPiece != null) {
-			pieces.remove(targetPiece);
-		}
+	public void removeAttackedPiece(Position targetPosition) {
+		findPieceByPosition(targetPosition).ifPresent(pieces::remove);
 	}
 
-	public Piece findPieceByPosition(Position position) {
+	public Optional<Piece> findPieceByPosition(Position position) {
 		return pieces.stream()
 				.filter(x -> x.isEqualPosition(position))
-				.findAny()
-				.orElse(null);
+				.findAny();
 	}
 
 	public boolean isSurviveKings() {

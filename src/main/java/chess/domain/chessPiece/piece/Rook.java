@@ -5,6 +5,8 @@ import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.StraightPattern;
 
+import java.util.Optional;
+
 public class Rook extends Piece {
 	private static final int ROOK_SCORE = 5;
 
@@ -13,7 +15,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	protected boolean isMovablePattern(MovePattern movePattern, Piece targetPiece) {
+	protected boolean isMovablePattern(MovePattern movePattern, Optional<Piece> targetPiece) {
 		return movePattern instanceof StraightPattern;
 	}
 

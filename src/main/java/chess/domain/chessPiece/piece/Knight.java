@@ -5,6 +5,8 @@ import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.movepattern.KnightPattern;
 import chess.domain.movepattern.MovePattern;
 
+import java.util.Optional;
+
 public class Knight extends Piece {
 	private static final double KNIGHT_SCORE = 2.5;
 
@@ -13,7 +15,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	protected boolean isMovablePattern(MovePattern movePattern, Piece targetPiece) {
+	protected boolean isMovablePattern(MovePattern movePattern, Optional<Piece> targetPiece) {
 		return movePattern instanceof KnightPattern;
 	}
 

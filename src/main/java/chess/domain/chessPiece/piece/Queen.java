@@ -6,6 +6,8 @@ import chess.domain.movepattern.CrossPattern;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.StraightPattern;
 
+import java.util.Optional;
+
 public class Queen extends Piece {
 	private static final int QUEEN_SCORE = 9;
 
@@ -14,7 +16,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	protected boolean isMovablePattern(MovePattern movePattern, Piece targetPiece) {
+	protected boolean isMovablePattern(MovePattern movePattern, Optional<Piece> targetPiece) {
 		return movePattern instanceof StraightPattern || movePattern instanceof CrossPattern;
 	}
 

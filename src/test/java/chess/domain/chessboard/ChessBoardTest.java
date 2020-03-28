@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -36,19 +37,20 @@ public class ChessBoardTest {
 	@Test
 	@DisplayName("포지션에 맞는 피스를 찾는 기능 테스트 : QueenBlack")
 	void findPieceByPositionTestQueenBlack() {
-		assertThat(chessBoard.findPieceByPosition(Position.of(File.D, Rank.ONE))).isInstanceOf(Queen.class);
+		assertThat(chessBoard.findPieceByPosition(Position.of(File.D, Rank.ONE)).get())
+				.isInstanceOf(Queen.class);
 	}
 
 	@Test
 	@DisplayName("포지션에 맞는 피스를 찾는 기능 테스트 : null")
 	void findPieceByPositionTestNull() {
-		assertThat(chessBoard.findPieceByPosition(Position.of(File.D, Rank.THREE))).isEqualTo(null);
+		assertThat(chessBoard.findPieceByPosition(Position.of(File.D, Rank.THREE))).isEqualTo(Optional.empty());
 	}
 
 	@Test
 	@DisplayName("포지션에 맞는 피스를 찾는 기능 테스트 : QueenWhite")
 	void findPieceByPositionTestQueenWhite() {
-		assertThat(chessBoard.findPieceByPosition(Position.of(File.D, Rank.EIGHT))).isInstanceOf(Queen.class);
+		assertThat(chessBoard.findPieceByPosition(Position.of(File.D, Rank.EIGHT)).get()).isInstanceOf(Queen.class);
 	}
 
 	@Test
@@ -68,8 +70,7 @@ public class ChessBoardTest {
 	@DisplayName("왕이 하나 없는 경우")
 	@Test
 	void isSurviveKings2() {
-		Piece blackKing = chessBoard.findPieceByPosition(Position.of("e1"));
-		chessBoard.removeAttackedPiece(blackKing);
+		chessBoard.removeAttackedPiece(Position.of("e1"));
 
 		assertThat(chessBoard.isSurviveKings()).isFalse();
 	}
@@ -77,7 +78,7 @@ public class ChessBoardTest {
 	@DisplayName("Pawn 1칸 전진 테스트")
 	@Test
 	void movePiecePawn() {
-		Piece pawn = chessBoard.findPieceByPosition(pawnInitPosition);
+		Piece pawn = chessBoard.findPieceByPosition(pawnInitPosition).get();
 		Position targetPosition = Position.of("a3");
 		chessBoard.movePiece(pawnInitPosition, targetPosition);
 
@@ -87,7 +88,7 @@ public class ChessBoardTest {
 	@DisplayName("Pawn 2칸 전진 테스트")
 	@Test
 	void movePiecePawn2() {
-		Piece pawn = chessBoard.findPieceByPosition(pawnInitPosition);
+		Piece pawn = chessBoard.findPieceByPosition(pawnInitPosition).get();
 		Position targetPosition = Position.of("a4");
 		chessBoard.movePiece(pawnInitPosition, targetPosition);
 
@@ -115,7 +116,7 @@ public class ChessBoardTest {
 	@DisplayName("rook 전진 테스트, 성공")
 	@Test
 	void movePieceRook() {
-		Piece rook = chessBoard.findPieceByPosition(rookInitPosition);
+		Piece rook = chessBoard.findPieceByPosition(rookInitPosition).get();
 		Position targetPosition = Position.of("a2");
 
 		chessBoard.movePiece(pawnInitPosition, Position.of("a4"));
@@ -147,7 +148,7 @@ public class ChessBoardTest {
 	@DisplayName("knight 전진 테스트, 성공")
 	@Test
 	void movePieceKnight() {
-		Piece knight = chessBoard.findPieceByPosition(knightInitPosition);
+		Piece knight = chessBoard.findPieceByPosition(knightInitPosition).get();
 		Position targetPosition = Position.of("a3");
 
 		chessBoard.movePiece(knightInitPosition, targetPosition);

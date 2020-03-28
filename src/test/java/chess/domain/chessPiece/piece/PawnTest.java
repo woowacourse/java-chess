@@ -8,6 +8,8 @@ import chess.domain.movepattern.MovePatternFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.*;
 
 class PawnTest {
@@ -20,7 +22,7 @@ class PawnTest {
 		Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
 		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 
-		blackPawn.validateMovePattern(movePattern, null);
+		blackPawn.validateMovePattern(movePattern, Optional.empty());
 	}
 
 	@Test
@@ -32,7 +34,7 @@ class PawnTest {
 		Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
 		MovePattern movePattern = MovePatternFactory.findMovePattern(sourcePosition, targetPosition);
 
-		assertThatThrownBy(() -> blackPawn.validateMovePattern(movePattern, null))
+		assertThatThrownBy(() -> blackPawn.validateMovePattern(movePattern, Optional.empty()))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("해당 말이 갈 수 없는 칸입니다");
 	}
@@ -40,9 +42,12 @@ class PawnTest {
 	@Test
 	@DisplayName("폰 공격 테스트")
 	void isMovableAttack() {
-		Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
-		Piece whitePawn = new Pawn(Position.of("c3"), new WhiteTeam());
-		MovePattern movePattern = MovePatternFactory.findMovePattern(blackPawn.position, whitePawn.position);
+		Position blackPosition = Position.of("b2");
+		Position whitePosition = Position.of("c3");
+
+		Pawn blackPawn = new Pawn(blackPosition, new BlackTeam());
+		Optional<Piece> whitePawn = Optional.of(new Pawn(whitePosition, new WhiteTeam()));
+		MovePattern movePattern = MovePatternFactory.findMovePattern(blackPawn.position, whitePosition);
 
 		blackPawn.validateMovePattern(movePattern, whitePawn);
 	}
@@ -53,7 +58,7 @@ class PawnTest {
 		Pawn blackPawn = new Pawn(Position.of("b5"), new WhiteTeam());
 		MovePattern movePattern = MovePatternFactory.findMovePattern(blackPawn.position, Position.of("b6"));
 
-		assertThatThrownBy(() -> blackPawn.validateMovePattern(movePattern, null))
+		assertThatThrownBy(() -> blackPawn.validateMovePattern(movePattern, Optional.empty()))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("해당 말이 갈 수 없는 칸입니다");
 	}

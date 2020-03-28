@@ -3,8 +3,10 @@ package chess.domain.chessPiece.piece;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.movepattern.MovePattern;
 
+import java.util.Optional;
+
 public interface PieceAbility {
-	void validateMovePattern(MovePattern movePattern, Piece targetPiece);
+	void validateMovePattern(MovePattern movePattern, Optional<Piece> targetPiece);
 
 	void move(Position position);
 
@@ -16,7 +18,7 @@ public interface PieceAbility {
 
 	double getScore();
 
-	boolean isKnight();
+	boolean isNotKnight();
 
 	String getPieceName();
 }

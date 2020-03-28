@@ -5,6 +5,8 @@ import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.movepattern.Direction;
 import chess.domain.movepattern.MovePattern;
 
+import java.util.Optional;
+
 public class Pawn extends Piece {
 	private static final int PAWN_NORMAL_MOVE_RANGE = 1;
 	private static final int PAWN_START_LINE_MOVE_RANGE = 2;
@@ -15,9 +17,9 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected boolean isMovablePattern(MovePattern movePattern, Piece targetPiece) {
-		return targetPiece != null && isAttackMovePattern(movePattern)
-				|| targetPiece == null && isNotAttackMovePattern(movePattern);
+	protected boolean isMovablePattern(MovePattern movePattern, Optional<Piece> targetPiece) {
+		return targetPiece.isPresent() && isAttackMovePattern(movePattern)
+				|| !targetPiece.isPresent() && isNotAttackMovePattern(movePattern);
 	}
 
 	private boolean isAttackMovePattern(MovePattern movePattern) {
