@@ -121,15 +121,15 @@ public class Board {
     private void validateRouteLocation(Route candidateRoute, MovingInfo movingInfo) {
         Position targetPosition = movingInfo.getTargetPosition();
         for (Position position : candidateRoute.getRoute()) {
-            if (position.equals(targetPosition)){
+            if (position.equals(targetPosition)) {
                 break;
             }
-            checkBlank(position, movingInfo);
+            checkBlank(position);
         }
     }
 
-    private void checkBlank(Position position, MovingInfo movingInfo) {
-        if (!isBlank(position)) {;
+    private void checkBlank(Position position) {
+        if (!isBlank(position)) {
             throw new IllegalArgumentException("말 이동경로에 다른 말이 있습니다.");
         }
     }

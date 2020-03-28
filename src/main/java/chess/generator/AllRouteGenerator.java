@@ -12,6 +12,8 @@ public class AllRouteGenerator {
     private static final int[][] KNIGHT_DIRECTION = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
     private static final int KNIGHT_DIRECTION_MIN = 0;
     private static final int KNIGHT_DIRECTION_MAX = 8;
+    private static final int FIELD_MAX_SIZE = 8;
+    private static final int FIELD_MIN_SIZE = 1;
 
     private AllRouteGenerator() {
     }
@@ -111,8 +113,8 @@ public class AllRouteGenerator {
     }
 
     private static boolean validateCoordinate(int x, int y) {
-        boolean xInField = (x >= 1 && x <= 8);
-        boolean yInField = (y >= 1 && y <= 8);
+        boolean xInField = (x >= FIELD_MIN_SIZE && x <= FIELD_MAX_SIZE);
+        boolean yInField = (y >= FIELD_MIN_SIZE && y <= FIELD_MAX_SIZE);
 
         return xInField && yInField;
     }

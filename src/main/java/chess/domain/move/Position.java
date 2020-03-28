@@ -36,12 +36,11 @@ public class Position {
         char y = chars[0];
         char x = chars[1];
         boolean xInField = (x >= BOARD_DOWN_END) && (x <= BOARD_UP_END);
-        boolean yInField = (y >= BOARD_LEFT_END) && (x <= BOARD_RIGHT_END);
+        boolean yInField = (y >= BOARD_LEFT_END) && (y <= BOARD_RIGHT_END);
 
-        if (xInField && yInField) {
-            return;
+        if (!xInField || !yInField) {
+            throw new IllegalArgumentException("보드의 크기를 벗어났습니다.");
         }
-        throw new IllegalArgumentException();
     }
 
     @Override
