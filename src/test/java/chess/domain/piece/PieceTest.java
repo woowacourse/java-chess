@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,18 +20,42 @@ public class PieceTest {
 
     private static Stream<Arguments> getCasesForPieceRepresentation() {
         return Stream.of(
-                Arguments.of(new Pawn('p'), 'p'),
-                Arguments.of(new Pawn('P'), 'P'),
-                Arguments.of(new Rook('r'), 'r'),
-                Arguments.of(new Rook('R'), 'R'),
-                Arguments.of(new Knight('n'), 'n'),
-                Arguments.of(new Knight('N'), 'N'),
-                Arguments.of(new Bishop('b'), 'b'),
-                Arguments.of(new Bishop('B'), 'B'),
-                Arguments.of(new King('k'), 'k'),
-                Arguments.of(new King('K'), 'K'),
-                Arguments.of(new Queen('q'), 'q'),
-                Arguments.of(new Queen('Q'), 'Q')
+                Arguments.of(new Pawn('p', new Position(1, 2)), 'p'),
+                Arguments.of(new Pawn('P', new Position(1, 7)), 'P'),
+                Arguments.of(new Rook('r', new Position(1, 1)), 'r'),
+                Arguments.of(new Rook('R', new Position(1, 8)), 'R'),
+                Arguments.of(new Knight('n', new Position(2, 1)), 'n'),
+                Arguments.of(new Knight('N', new Position(2, 8)), 'N'),
+                Arguments.of(new Bishop('b', new Position(3, 1)), 'b'),
+                Arguments.of(new Bishop('B', new Position(3, 8)), 'B'),
+                Arguments.of(new Queen('q', new Position(4, 1)), 'q'),
+                Arguments.of(new Queen('Q', new Position(4, 8)), 'Q'),
+                Arguments.of(new King('k', new Position(5, 1)), 'k'),
+                Arguments.of(new King('K', new Position(5, 8)), 'K')
+        );
+    }
+
+    @DisplayName("각 말들의 처음 포지션 초기화")
+    @ParameterizedTest
+    @MethodSource("getCasesForPieceInitialPosition")
+    void initializePiecePosition(Piece piece, Position expectedPosition) {
+        assertThat(piece.getPosition()).isEqualTo(expectedPosition);
+    }
+
+    private static Stream<Arguments> getCasesForPieceInitialPosition() {
+        return Stream.of(
+                Arguments.of(new Pawn('p', new Position(1, 2)), new Position(1, 2)),
+                Arguments.of(new Pawn('P', new Position(1, 7)), new Position(1, 7)),
+                Arguments.of(new Rook('r', new Position(1, 1)), new Position(1, 1)),
+                Arguments.of(new Rook('R', new Position(1, 8)), new Position(1, 8)),
+                Arguments.of(new Knight('n', new Position(2, 1)), new Position(2, 1)),
+                Arguments.of(new Knight('N', new Position(2, 8)), new Position(2, 8)),
+                Arguments.of(new Bishop('b', new Position(3, 1)), new Position(3, 1)),
+                Arguments.of(new Bishop('B', new Position(3, 8)), new Position(3, 8)),
+                Arguments.of(new Queen('q', new Position(4, 1)), new Position(4, 1)),
+                Arguments.of(new Queen('Q', new Position(4, 8)), new Position(4, 8)),
+                Arguments.of(new King('k', new Position(5, 1)), new Position(5, 1)),
+                Arguments.of(new King('K', new Position(5, 8)), new Position(5, 8))
         );
     }
 }
