@@ -84,7 +84,8 @@ public class Board {
 		this.turn = turn.getOppositeTeam();
 	}
 
-	public void moveIfPossible(Position startPosition, Position endPosition) {
+	public void moveIfPossible(Position source, Position target) {
+
 	}
 
 	public boolean isExistAnyPieceAt(List<Position> traces) {
@@ -115,7 +116,7 @@ public class Board {
 
 	public boolean isNotCheckmate() {
 		//TODO:체크메이트 여부 확인
-		return false;
+		return true;
 	}
 
 }

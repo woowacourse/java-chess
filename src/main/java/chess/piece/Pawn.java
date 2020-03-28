@@ -8,13 +8,12 @@ import chess.position.Position;
 import chess.position.Rank;
 
 public class Pawn extends Piece {
-	private static final String INITIAL_CHARACTER = "P";
 	private static final int MAXIMUM_MOVE_DISTANCE = 2;
 
 	private boolean hasMoved;
 
 	public Pawn(Team team) {
-		super(team);
+		super(team, "P");
 		hasMoved = false;
 	}
 
@@ -52,7 +51,7 @@ public class Pawn extends Piece {
 
 	@Override
 	protected String getInitialCharacter() {
-		return INITIAL_CHARACTER;
+		return this.initialCharacter;
 	}
 
 	@Override

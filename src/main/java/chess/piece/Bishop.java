@@ -5,10 +5,8 @@ import java.util.List;
 import chess.position.Position;
 
 public class Bishop extends Piece {
-	private static final String INITIAL_CHARACTER = "B";
-
 	public Bishop(Team team) {
-		super(team);
+		super(team, "B");
 	}
 
 	@Override
@@ -21,6 +19,6 @@ public class Bishop extends Piece {
 
 	@Override
 	protected String getInitialCharacter() {
-		return INITIAL_CHARACTER;
+		return this.initialCharacter;
 	}
 }

@@ -8,10 +8,8 @@ import chess.position.Position;
 import chess.position.Rank;
 
 public class Queen extends Piece {
-	private static final String INITIAL_CHARACTER = "Q";
-
 	public Queen(Team team) {
-		super(team);
+		super(team, "Q");
 	}
 
 	@Override
@@ -36,6 +34,6 @@ public class Queen extends Piece {
 
 	@Override
 	protected String getInitialCharacter() {
-		return INITIAL_CHARACTER;
+		return this.initialCharacter;
 	}
 }

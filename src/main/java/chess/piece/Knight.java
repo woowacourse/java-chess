@@ -7,10 +7,8 @@ import java.util.List;
 import chess.position.Position;
 
 public class Knight extends Piece {
-	private static final String INITIAL_CHARACTER = "N";
-
 	public Knight(Team team) {
-		super(team);
+		super(team, "N");
 	}
 
 	@Override
@@ -23,6 +21,6 @@ public class Knight extends Piece {
 
 	@Override
 	protected String getInitialCharacter() {
-		return INITIAL_CHARACTER;
+		return this.initialCharacter;
 	}
 }
