@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.move.*;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -12,23 +11,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InitializedPawnTest {
-
-    private List<CanNotMoveStrategy> initializedPawnCanNotMoveStrategies = Arrays.asList(
-            new IsStayed(),
-            new IsNotForward(),
-            new CanNotReach(InitializedPawn.MAX_DISTANCE),
-            new HasHindrance(),
-            new IsAttackingSameTeam(),
-            new PawnIsDiagonalWithoutAttack()
-    );
 
     @ParameterizedTest
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
@@ -58,8 +46,7 @@ class InitializedPawnTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to team and Position 'to'")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Team team, Position from, Position to) {
-
-        //todo: check convention
+        //todo: check convention, 타입캐스팅 해도 될 지
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, team);
 
         Board board = ChessBoard.initiaize();

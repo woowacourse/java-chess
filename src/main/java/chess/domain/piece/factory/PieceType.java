@@ -11,18 +11,19 @@ import java.util.List;
 
 public enum PieceType {
     INITIALIZED_PAWN("p", InitializedPawn.class, getCanNotMoveStrategiesForInitializedPawn()),
-    RUNNING_PAWN("p", MovedPawn.class, getCanNotMoveStrategiesForRunningPawn()),
+    RUNNING_PAWN("p", MovedPawn.class, getCanNotMoveStrategiesForMovedPawn()),
     ROOK("r", Rook.class, getCanNotMoveStrategiesForRook());
 
     private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForRook() {
         return Arrays.asList(
                 new IsStayed(),
+                new HasHindrance(),
                 new IsAttackingSameTeam(),
                 new IsHeadingDiagonal()
         );
     }
 
-    private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForRunningPawn() {
+    private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForMovedPawn() {
         return Arrays.asList(
                 new IsStayed(),
                 new IsNotForward(),
