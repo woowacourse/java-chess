@@ -40,7 +40,7 @@ class ScoreTest {
         Map<Coordinate, Tile> board = chessBoard.getChessBoard();
 
         //when
-        double sumOfBlack = Score.calculateScore(Team.BLACK, board::get);
+        double sumOfBlack = Score.calculateScore(Team.BLACK, board::get).getSum();
 
         //then
         assertThat(sumOfBlack).isEqualTo(9);

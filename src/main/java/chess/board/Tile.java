@@ -37,14 +37,6 @@ public class Tile {
         return piece.isBlank();
     }
 
-    public Piece getPiece() {
-        return piece;
-    }
-
-    public Coordinate getCoordinate() {
-        return coordinate;
-    }
-
     public double getScore() {
         return piece.getScore();
     }
@@ -53,11 +45,16 @@ public class Tile {
         return this.piece instanceof AbstractPawn;
     }
 
-    public boolean isSameTeam(final Team currentTeam) {
-        return this.piece.isSameTeam(currentTeam);
+    public boolean isNotSameTeam(final Team currentTeam) {
+        return !this.piece.isSameTeam(currentTeam);
     }
 
-    public boolean isKing() {
-        return this.piece.isKing();
+    public Piece getPiece() {
+        return piece;
     }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
 }

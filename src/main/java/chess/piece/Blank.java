@@ -13,6 +13,10 @@ public class Blank extends Piece {
         super(Team.NOTHING, BLACK_SCORE);
     }
 
+    public static Piece getInstance() {
+        return Pieces.BLANK.getPiece();
+    }
+
     @Override
     public List<Direction> findPath(final Vector vector) {
         throw new UnsupportedOperationException();

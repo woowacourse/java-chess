@@ -22,8 +22,25 @@ public class Score {
         return new Score(0, 0);
     }
 
-    public Score add(Tile tile, Team team) {
-        if (!tile.isSameTeam(team)) {
+    public static Score calculateScore(Team team, Function<Coordinate, Tile> tileFinder) {
+        Score sum = zero();
+        for (File file : File.values()) {
+            sum = getScore(team, tileFinder, sum, file);
+            sum = sum.subtractPawnScore();
+        }
+        return sum;
+    }
+
+    private static Score getScore(Team team, Function<Coordinate, Tile> tileFinder, Score sum, File file) {
+        for (Rank rank : Rank.values()) {
+            Coordinate coordinate = Coordinate.of(file, rank);
+            sum = sum.add(tileFinder.apply(coordinate), team);
+        }
+        return sum;
+    }
+
+    private Score add(Tile tile, Team team) {
+        if (tile.isNotSameTeam(team)) {
             return this;
         }
         int pawnCount = this.pawnCount;
@@ -31,18 +48,6 @@ public class Score {
             pawnCount++;
         }
         return new Score(this.sum + tile.getScore(), pawnCount);
-    }
-
-    public static double calculateScore(Team team, Function<Coordinate, Tile> tileFinder) {
-        Score sum = zero();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Coordinate coordinate = Coordinate.of(file, rank);
-                sum = sum.add(tileFinder.apply(coordinate), team);
-            }
-            sum = sum.subtractPawnScore();
-        }
-        return sum.getSum();
     }
 
     private Score subtractPawnScore() {

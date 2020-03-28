@@ -3,7 +3,15 @@ package chess.board;
 import chess.coordinate.Coordinate;
 import chess.coordinate.File;
 import chess.coordinate.Rank;
-import chess.piece.*;
+import chess.piece.Bishop;
+import chess.piece.Blank;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.NotMovedPawn;
+import chess.piece.Pieces;
+import chess.piece.Queen;
+import chess.piece.Rook;
+import chess.piece.Team;
 
 public class BoardGenerator {
 
@@ -39,9 +47,13 @@ public class BoardGenerator {
 
     private static void addBlank(ChessBoard chessBoard) {
         for (File file : File.values()) {
-            for (int rank = Rank.THREE.getValue(); rank <= Rank.SIX.getValue(); rank++) {
-                chessBoard.put(new Tile(Coordinate.of(file, Rank.findByValue(rank)), Pieces.findBy(Blank.class, Team.NOTHING)));
-            }
+            addBlanks(chessBoard, file);
+        }
+    }
+
+    private static void addBlanks(ChessBoard chessBoard, File file) {
+        for (int rank = Rank.THREE.getValue(); rank <= Rank.SIX.getValue(); rank++) {
+            chessBoard.put(new Tile(Coordinate.of(file, Rank.findByValue(rank)), Blank.getInstance()));
         }
     }
 }

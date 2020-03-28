@@ -17,7 +17,7 @@ public abstract class AbstractPawn extends Piece {
             return targetPiece.isBlank();
         }
 
-        // 같은방향이면서 방향의 절대값이 1,1 혹은 0,1을 만족해야함
+        // 같은방향이면서 방향의 절대값이 1,1 혹은 0,1을 만족해야 한다.
         if (!(vector.isRangeUnderAbsolute(1) && team.isSameDirection(vector.getRankVariation()))) {
             return false;
         }

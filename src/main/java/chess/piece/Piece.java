@@ -31,10 +31,6 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isKing() {
-        return false;
-    }
-
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }

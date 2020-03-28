@@ -21,12 +21,16 @@ public class ChessBoard {
     public static ChessBoard empty() {
         Map<Coordinate, Tile> emptyBoard = new HashMap<>();
         for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Coordinate coordinate = Coordinate.of(file, rank);
-                emptyBoard.put(coordinate, new Tile(coordinate, new Blank()));
-            }
+            makeEmpty(emptyBoard, file);
         }
         return new ChessBoard(emptyBoard);
+    }
+
+    private static void makeEmpty(Map<Coordinate, Tile> emptyBoard, File file) {
+        for (Rank rank : Rank.values()) {
+            Coordinate coordinate = Coordinate.of(file, rank);
+            emptyBoard.put(coordinate, new Tile(coordinate, Blank.getInstance()));
+        }
     }
 
     public Map<Coordinate, Tile> getChessBoard() {
@@ -42,7 +46,6 @@ public class ChessBoard {
         }
 
         Directions directions = sourceTile.findPath(targetTile);
-
         if (directions.isExist(sourceKey, chessBoard::get)) {
             return false;
         }
@@ -52,7 +55,7 @@ public class ChessBoard {
     }
 
     public double calculateScore(Team team) {
-        return Score.calculateScore(team, chessBoard::get);
+        return Score.calculateScore(team, chessBoard::get).getSum();
     }
 
     public void put(final Tile tile) {
@@ -61,6 +64,6 @@ public class ChessBoard {
 
     public boolean isNotSameTeam(final String source, final Team currentTeam) {
         Tile tile = this.chessBoard.get(Coordinate.of(source));
-        return !tile.isSameTeam(currentTeam);
+        return tile.isNotSameTeam(currentTeam);
     }
 }
