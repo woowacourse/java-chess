@@ -68,7 +68,7 @@ public class Pawn extends Piece {
 	@Override
 	public void canReach(Distance distance) {
 	    if (canMoveTwoDistance) {
-	        if (distance == Distance.TWO_VERTICAL) {
+	        if (distance == Distance.VERTICAL_TWO) {
 	            return;
             }
         }

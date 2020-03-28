@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 
 public enum Distance {
 	ONE(DistanceFilter::isOne),
-	TWO_VERTICAL(DistanceFilter::isVerticalTwo),
+	VERTICAL_TWO(DistanceFilter::isVerticalTwo),
 	ELSE(DistanceFilter::isElse);
 
 	private final BiFunction<Integer, Integer, Boolean> distanceFilter;
@@ -14,9 +14,9 @@ public enum Distance {
 		this.distanceFilter = distanceFilter;
 	}
 
-	public static Distance of(Point a, Point b) {
-		int rowDifference = Math.abs(b.getRowIndex() - a.getRowIndex());
-		int columnDifference = Math.abs(b.getColumnIndex() - a.getColumnIndex());
+	public static Distance of(Point from, Point to) {
+		int rowDifference = Math.abs(to.getRowIndex() - from.getRowIndex());
+		int columnDifference = Math.abs(to.getColumnIndex() - from.getColumnIndex());
 
 		return Arrays.stream(values())
 				.filter(distance -> distance.distanceFilter.apply(rowDifference, columnDifference))
