@@ -1,20 +1,20 @@
 package chess.domain.chessPiece.pieceType;
 
-import static org.assertj.core.api.Assertions.*;
-
+import chess.domain.RuleStrategy.KnightRuleStrategy;
+import chess.domain.chessPiece.pieceState.InitialState;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.RuleStrategy.KnightRuleStrategy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
-	@Test
-	void Knight_PieceColor_GenerateInstance() {
-		assertThat(new Knight(PieceColor.BLACK, new KnightRuleStrategy())).isInstanceOf(Knight.class);
-	}
+    @Test
+    void Knight_PieceColor_GenerateInstance() {
+        assertThat(new Knight(PieceColor.BLACK, new InitialState(new KnightRuleStrategy()))).isInstanceOf(Knight.class);
+    }
 
-	@Test
-	void getName_ReturnName() {
-		assertThat(new Knight(PieceColor.BLACK, new KnightRuleStrategy()).getName()).isEqualTo("N");
-		assertThat(new Knight(PieceColor.WHITE, new KnightRuleStrategy()).getName()).isEqualTo("n");
-	}
+    @Test
+    void getName_ReturnName() {
+        assertThat(new Knight(PieceColor.BLACK, new InitialState(new KnightRuleStrategy())).getName()).isEqualTo("N");
+        assertThat(new Knight(PieceColor.WHITE, new InitialState(new KnightRuleStrategy())).getName()).isEqualTo("n");
+    }
 }
