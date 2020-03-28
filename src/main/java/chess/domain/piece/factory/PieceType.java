@@ -3,7 +3,7 @@ package chess.domain.piece.factory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.*;
 import chess.domain.piece.pawn.InitializedPawn;
-import chess.domain.piece.pawn.RunningPawn;
+import chess.domain.piece.pawn.MovedPawn;
 import chess.domain.piece.rook.Rook;
 
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public enum PieceType {
     INITIALIZED_PAWN("p", InitializedPawn.class, getCanNotMoveStrategiesForInitializedPawn()),
-    RUNNING_PAWN("p", RunningPawn.class, getCanNotMoveStrategiesForRunningPawn()),
+    RUNNING_PAWN("p", MovedPawn.class, getCanNotMoveStrategiesForRunningPawn()),
     ROOK("r", Rook.class, getCanNotMoveStrategiesForRook());
 
     private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForRook() {
@@ -26,8 +26,8 @@ public enum PieceType {
         return Arrays.asList(
                 new IsStayed(),
                 new IsNotForward(),
-                new CanNotReach(RunningPawn.MAX_DISTANCE),
-                new RunningPawnHasHindrance(),
+                new CanNotReach(MovedPawn.MAX_DISTANCE),
+                new HasHindrance(),
                 new IsAttackingSameTeam(),
                 new PawnIsDiagonalWithoutAttack()
 
@@ -58,7 +58,7 @@ public enum PieceType {
                 new IsStayed(),
                 new IsNotForward(),
                 new CanNotReach(InitializedPawn.MAX_DISTANCE),
-                new InitializedPawnHasHindrance(),
+                new HasHindrance(),
                 new IsAttackingSameTeam(),
                 new PawnIsDiagonalWithoutAttack()
         );

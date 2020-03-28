@@ -7,7 +7,6 @@ import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,7 +15,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RunningPawnTest {
 
@@ -25,7 +23,7 @@ class RunningPawnTest {
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Team team, Position from, Position to, Piece expected) {
         //todo: check convention
-        RunningPawn runningPawn = (RunningPawn) PieceFactory.createPiece(RunningPawn.class, from, team);
+        MovedPawn runningPawn = (MovedPawn) PieceFactory.createPiece(MovedPawn.class, from, team);
 
         Board board = ChessBoard.initiaize();
 
@@ -38,7 +36,7 @@ class RunningPawnTest {
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Team team, Position from, Position to) {
         //todo: check convention
-        RunningPawn initializedPawn = (RunningPawn) PieceFactory.createPiece(RunningPawn.class, from, team);
+        MovedPawn initializedPawn = (MovedPawn) PieceFactory.createPiece(MovedPawn.class, from, team);
 
         Board board = ChessBoard.initiaize();
 
@@ -51,7 +49,7 @@ class RunningPawnTest {
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
-        RunningPawn runningPawn = (RunningPawn) PieceFactory.createPiece(RunningPawn.class, from, team);
+        MovedPawn runningPawn = (MovedPawn) PieceFactory.createPiece(MovedPawn.class, from, team);
         Board board = ChessBoard.initiaize();
         boolean hasHindrance = runningPawn.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
@@ -62,7 +60,7 @@ class RunningPawnTest {
                 Arguments.of(Team.WHITE,
                         Position.of(1, 2),
                         Position.of(1, 3),
-                        PieceFactory.createPiece(RunningPawn.class, Position.of(1, 3), Team.WHITE))
+                        PieceFactory.createPiece(MovedPawn.class, Position.of(1, 3), Team.WHITE))
         );
     }
 

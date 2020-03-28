@@ -25,7 +25,7 @@ class InitializedPawnTest {
             new IsStayed(),
             new IsNotForward(),
             new CanNotReach(InitializedPawn.MAX_DISTANCE),
-            new InitializedPawnHasHindrance(),
+            new HasHindrance(),
             new IsAttackingSameTeam(),
             new PawnIsDiagonalWithoutAttack()
     );
@@ -51,7 +51,7 @@ class InitializedPawnTest {
         Board board = ChessBoard.initiaize();
 
         Piece moved = initializedPawn.move(to, board);
-        assertThat(moved).isInstanceOf(RunningPawn.class);
+        assertThat(moved).isInstanceOf(MovedPawn.class);
     }
 
     @ParameterizedTest

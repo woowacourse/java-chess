@@ -9,12 +9,12 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class RunningPawn extends Pawn {
+public class MovedPawn extends Pawn {
 
 
     public static final int MAX_DISTANCE = 1;
 
-    public RunningPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
+    public MovedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
         super(name, position, team, canNotMoveStrategies);
     }
 
@@ -23,7 +23,7 @@ public class RunningPawn extends Pawn {
         if (canNotMove(to, board)) {
             throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
         }
-        return PieceFactory.createPiece(RunningPawn.class, to, team);
+        return PieceFactory.createPiece(MovedPawn.class, to, team);
     }
 
     @Override

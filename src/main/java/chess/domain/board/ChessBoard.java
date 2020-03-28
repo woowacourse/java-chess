@@ -82,7 +82,7 @@ public class ChessBoard implements Board {
                         new IsStayed(),
                         new IsNotForward(),
                         new CanNotReach(2),
-                        new InitializedPawnHasHindrance(),
+                        new HasHindrance(),
                         new IsAttackingSameTeam()
                 );
 

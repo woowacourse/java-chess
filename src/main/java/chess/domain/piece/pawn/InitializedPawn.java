@@ -23,7 +23,7 @@ public class InitializedPawn extends Pawn {
             throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
         }
 
-        return PieceFactory.createPiece(RunningPawn.class, to, team);
+        return PieceFactory.createPiece(MovedPawn.class, to, team);
     }
 
     @Override
