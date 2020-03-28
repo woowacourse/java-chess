@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.board.Location;
-import chess.piece.type.Bishop;
-import chess.piece.type.King;
-import chess.piece.type.Knight;
-import chess.piece.type.Pawn;
-import chess.piece.type.Piece;
-import chess.piece.type.Queen;
-import chess.piece.type.Rook;
+import chess.piece.Bishop;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.Queen;
+import chess.piece.Rook;
 import chess.team.Team;
 
 public class PieceFactory {

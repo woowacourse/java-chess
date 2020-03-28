@@ -1,15 +1,15 @@
-package chess.piece.type;
+package chess.piece;
 
 import java.util.Map;
 
 import chess.board.Location;
 import chess.team.Team;
 
-public class King extends Piece {
-	private static final char name = 'k';
-	private static final double score = 0;
+public class Knight extends Piece {
+	private static final char name = 'n';
+	private static final double score = 2.5;
 
-	public King(Team team) {
+	public Knight(Team team) {
 		super(changeName(team));
 	}
 
@@ -22,7 +22,7 @@ public class King extends Piece {
 
 	@Override
 	public boolean canMove(Location now, Location after) {
-		return now.isKingRange(after);
+		return now.isKnightRange(after);
 	}
 
 	@Override

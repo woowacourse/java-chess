@@ -1,4 +1,4 @@
-package chess.piece.type;
+package chess.piece;
 
 import java.util.Map;
 

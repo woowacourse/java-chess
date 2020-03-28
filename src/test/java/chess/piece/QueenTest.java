@@ -1,4 +1,4 @@
-package chess.piece.type;
+package chess.piece;
 
 import static org.assertj.core.api.Assertions.*;
 

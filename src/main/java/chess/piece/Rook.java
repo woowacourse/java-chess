@@ -1,4 +1,4 @@
-package chess.piece.type;
+package chess.piece;
 
 import chess.board.Location;
 import chess.team.Team;

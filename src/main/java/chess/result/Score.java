@@ -2,7 +2,7 @@ package chess.result;
 
 import java.util.Map;
 
-import chess.piece.type.Piece;
+import chess.piece.Piece;
 import chess.team.Team;
 
 public class Score {

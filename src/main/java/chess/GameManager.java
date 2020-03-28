@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import chess.board.ChessBoard;
 import chess.board.Location;
 import chess.gamestate.GameState;
-import chess.piece.type.Pawn;
-import chess.piece.type.Piece;
+import chess.piece.Pawn;
+import chess.piece.Piece;
 import chess.result.GameResult;
 import chess.result.GameStatistic;
 import chess.result.Score;
@@ -22,7 +22,7 @@ public class GameManager {
 
 	public GameManager(Map<Location, Piece> pieces) {
 		this.chessBoard = new ChessBoard(pieces);
-		this.gameState = GameState.of(chessBoard.hasTwoKings());
+		this.gameState = GameState.RUNNING_BLACK_TURN;
 	}
 
 	public boolean isRunning() {
@@ -30,10 +30,18 @@ public class GameManager {
 	}
 
 	public void movePiece(Location now, Location destination) {
+		checkTurn(now);
+
 		if (chessBoard.canMove(now, destination)) {
 			chessBoard.move(now, destination);
+			gameState = gameState.of(chessBoard.hasTwoKings());
 		}
-		gameState = GameState.of(chessBoard.hasTwoKings());
+	}
+
+	private void checkTurn(Location now) {
+		if (chessBoard.isTurn(now, gameState)) {
+			throw new IllegalArgumentException("유저의 턴이 아닙니다.");
+		}
 	}
 
 	public List<GameStatistic> createStatistics() {

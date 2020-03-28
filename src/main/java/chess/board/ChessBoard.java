@@ -3,8 +3,9 @@ package chess.board;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.piece.type.King;
-import chess.piece.type.Piece;
+import chess.gamestate.GameState;
+import chess.piece.King;
+import chess.piece.Piece;
 import chess.team.Team;
 
 public class ChessBoard {
@@ -47,7 +48,6 @@ public class ChessBoard {
 		return isNotSameTeam;
 	}
 
-	// 팀별 위치, 체스 정보를 가져온다.
 	public Map<Location, Piece> giveMyPiece(Team team) {
 		return board.keySet().stream()
 			.filter(location -> board.get(location).isSameTeam(team))
@@ -71,5 +71,10 @@ public class ChessBoard {
 
 	public Map<Location, Piece> getBoard() {
 		return board;
+	}
+
+	public boolean isTurn(Location now, GameState gameState) {
+		Piece startingPiece = board.get(now);
+		return gameState.isSameTeam(startingPiece);
 	}
 }

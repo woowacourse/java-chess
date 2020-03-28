@@ -24,4 +24,8 @@ public enum Team {
 	public boolean isBlack() {
 		return isBlack;
 	}
+
+	public String getName() {
+		return this.name;
+	}
 }

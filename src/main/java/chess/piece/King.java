@@ -1,13 +1,15 @@
-package chess.piece.type;
+package chess.piece;
+
+import java.util.Map;
 
 import chess.board.Location;
 import chess.team.Team;
 
-public class Bishop extends Piece {
-	private static final char name = 'b';
-	private static final double score = 3;
+public class King extends Piece {
+	private static final char name = 'k';
+	private static final double score = 0;
 
-	public Bishop(Team team) {
+	public King(Team team) {
 		super(changeName(team));
 	}
 
@@ -20,12 +22,16 @@ public class Bishop extends Piece {
 
 	@Override
 	public boolean canMove(Location now, Location after) {
-		return now.isDiagonal(after);
+		return now.isKingRange(after);
 	}
 
 	@Override
 	public double getScore(boolean hasVerticalEnemy) {
 		return score;
 	}
-}
 
+	@Override
+	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
+		return false;
+	}
+}

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import chess.GameManager;
 import chess.board.Location;
-import chess.piece.type.Piece;
+import chess.piece.Piece;
 import chess.result.GameStatistic;
 
 public class OutputView {
@@ -53,7 +53,7 @@ public class OutputView {
 		for (GameStatistic gameStatistic : teamScore) {
 			System.out.println(
 				String.format("%s : %1.1f - %s",
-					gameStatistic.getTeam().name(),
+					gameStatistic.getTeam().getName(),
 					gameStatistic.getScore().getAmount(),
 					gameStatistic.getGameResult().getMessage()
 				)
