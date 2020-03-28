@@ -10,6 +10,7 @@ public class Queen extends Piece {
     private final static Map<Color, Queen> CACHE = new HashMap<>();
     private final static String NAME_BLACK = "Q";
     private final static String NAME_WHITE = "q";
+    private final static double SCORE = 9;
 
     static {
         Stream.of(Color.values())
@@ -21,7 +22,7 @@ public class Queen extends Piece {
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new Queen(color, name, 0));
+        CACHE.putIfAbsent(color, new Queen(color, name, SCORE));
     }
 
     public static Queen of(Color color) {

@@ -1,7 +1,6 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceImpl;
+import chess.domain.piece.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,26 +11,27 @@ public class ChessBoard {
 
     public ChessBoard() {
         for (char file = 'a'; file <= 'h'; file++) {
-            chessBoard.put(Square.of(file + "2"), PieceImpl.of(Color.WHITE, Type.PAWN));
-            chessBoard.put(Square.of(file + "7"), PieceImpl.of(Color.BLACK, Type.PAWN));
+            chessBoard.put(Square.of(file + "2"), Pawn.of(Color.WHITE));
+            chessBoard.put(Square.of(file + "7"), Pawn.of(Color.BLACK));
         }
 
-        Type[] arr = new Type[]{Type.ROOK, Type.KNIGHT, Type.BISHOP, Type.QUEEN, Type.KING, Type.BISHOP, Type.KNIGHT, Type.ROOK};
-        for (int i = 0; i < 8; i++) {
-            char file = (char) ('a' + i);
-            if (i == 3) {
-                chessBoard.put(Square.of(file + "1"), PieceImpl.of(Color.WHITE, arr[i]));
-                chessBoard.put(Square.of(file + "8"), PieceImpl.of(Color.BLACK, arr[i + 1]));
-                continue;
-            }
-            if (i == 4) {
-                chessBoard.put(Square.of(file + "1"), PieceImpl.of(Color.WHITE, arr[i]));
-                chessBoard.put(Square.of(file + "8"), PieceImpl.of(Color.BLACK, arr[i - 1]));
-                continue;
-            }
-            chessBoard.put(Square.of(file + "1"), PieceImpl.of(Color.WHITE, arr[i]));
-            chessBoard.put(Square.of(file + "8"), PieceImpl.of(Color.BLACK, arr[i]));
-        }
+        chessBoard.put(Square.of("a1"), Rook.of(Color.WHITE));
+        chessBoard.put(Square.of("b1"), Knight.of(Color.WHITE));
+        chessBoard.put(Square.of("c1"), Bishop.of(Color.WHITE));
+        chessBoard.put(Square.of("d1"), Queen.of(Color.WHITE));
+        chessBoard.put(Square.of("e1"), King.of(Color.WHITE));
+        chessBoard.put(Square.of("f1"), Bishop.of(Color.WHITE));
+        chessBoard.put(Square.of("g1"), Knight.of(Color.WHITE));
+        chessBoard.put(Square.of("h1"), Rook.of(Color.WHITE));
+
+        chessBoard.put(Square.of("A8"), Rook.of(Color.BLACK));
+        chessBoard.put(Square.of("B8"), Knight.of(Color.BLACK));
+        chessBoard.put(Square.of("C8"), Bishop.of(Color.BLACK));
+        chessBoard.put(Square.of("D8"), Queen.of(Color.BLACK));
+        chessBoard.put(Square.of("E8"), King.of(Color.BLACK));
+        chessBoard.put(Square.of("F8"), Bishop.of(Color.BLACK));
+        chessBoard.put(Square.of("G8"), Knight.of(Color.BLACK));
+        chessBoard.put(Square.of("H8"), Rook.of(Color.BLACK));
     }
 
     public Map<Square, Piece> getChessBoard() {
@@ -55,8 +55,8 @@ public class ChessBoard {
     }
 
     public boolean isKingCaptured() {
-        return !(chessBoard.containsValue(PieceImpl.of(Color.WHITE, Type.KING))
-                && chessBoard.containsValue(PieceImpl.of(Color.BLACK, Type.KING)));
+        return !(chessBoard.containsValue(King.of(Color.WHITE))
+                && chessBoard.containsValue(King.of(Color.BLACK)));
     }
 
     public Map<Color, Double> getTeamScore() {
@@ -81,7 +81,7 @@ public class ChessBoard {
     private double calculatePawnScore(Color color) {
         int count;
         List<Square> squares = chessBoard.keySet().stream()
-                .filter(square -> chessBoard.get(square) == PieceImpl.of(color, Type.PAWN))
+                .filter(square -> chessBoard.get(square) == Pawn.of(color))
                 .collect(Collectors.toList());
         count = 0;
         for (Square square : squares) {

@@ -10,6 +10,7 @@ public class Rook extends Piece {
     private final static Map<Color, Rook> CACHE = new HashMap<>();
     private final static String NAME_BLACK = "R";
     private final static String NAME_WHITE = "r";
+    private final static double SCORE = 5;
 
     static {
         Stream.of(Color.values())
@@ -21,7 +22,7 @@ public class Rook extends Piece {
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new Rook(color, name, 0));
+        CACHE.putIfAbsent(color, new Rook(color, name, SCORE));
     }
 
     public static Rook of(Color color) {

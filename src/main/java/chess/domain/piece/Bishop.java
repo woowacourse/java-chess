@@ -10,6 +10,7 @@ public class Bishop extends Piece {
     private final static Map<Color, Bishop> CACHE = new HashMap<>();
     private final static String NAME_BLACK = "B";
     private final static String NAME_WHITE = "b";
+    private final static double SCORE = 3;
 
     static {
         Stream.of(Color.values())
@@ -21,7 +22,7 @@ public class Bishop extends Piece {
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new Bishop(color, name, 0));
+        CACHE.putIfAbsent(color, new Bishop(color, name, SCORE));
     }
 
     public static Bishop of(Color color) {

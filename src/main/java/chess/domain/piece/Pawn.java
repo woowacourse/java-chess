@@ -10,6 +10,7 @@ public class Pawn extends Piece {
     private final static Map<Color, Pawn> CACHE = new HashMap<>();
     private final static String NAME_BLACK = "P";
     private final static String NAME_WHITE = "p";
+    private final static double SCORE = 1;
 
     static {
         Stream.of(Color.values())
@@ -21,7 +22,7 @@ public class Pawn extends Piece {
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new Pawn(color, name, 0));
+        CACHE.putIfAbsent(color, new Pawn(color, name, SCORE));
     }
 
     public static Pawn of(Color color) {

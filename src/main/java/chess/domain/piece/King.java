@@ -11,6 +11,8 @@ public class King extends Piece {
     private final static Map<Color, King> CACHE = new HashMap<>();
     private final static String NAME_BLACK = "K";
     private final static String NAME_WHITE = "k";
+    private final static double SCORE = 0;
+
 
     static {
         Stream.of(Color.values())
@@ -22,7 +24,7 @@ public class King extends Piece {
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new King(color, name, 0));
+        CACHE.putIfAbsent(color, new King(color, name, SCORE));
     }
 
     public static King of(Color color) {

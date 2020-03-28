@@ -11,6 +11,7 @@ public class Knight extends Piece {
     private final static Map<Color, Knight> CACHE = new HashMap<>();
     private final static String NAME_BLACK = "N";
     private final static String NAME_WHITE = "n";
+    private final static double SCORE = 2.5;
 
     static {
         Stream.of(Color.values())
@@ -22,7 +23,7 @@ public class Knight extends Piece {
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new Knight(color, name, 0));
+        CACHE.putIfAbsent(color, new Knight(color, name, SCORE));
     }
 
     public static Knight of(Color color) {
