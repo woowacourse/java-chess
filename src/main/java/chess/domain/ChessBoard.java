@@ -24,14 +24,14 @@ public class ChessBoard {
         chessBoard.put(Square.of("g1"), Knight.of(Color.WHITE));
         chessBoard.put(Square.of("h1"), Rook.of(Color.WHITE));
 
-        chessBoard.put(Square.of("A8"), Rook.of(Color.BLACK));
-        chessBoard.put(Square.of("B8"), Knight.of(Color.BLACK));
-        chessBoard.put(Square.of("C8"), Bishop.of(Color.BLACK));
-        chessBoard.put(Square.of("D8"), Queen.of(Color.BLACK));
-        chessBoard.put(Square.of("E8"), King.of(Color.BLACK));
-        chessBoard.put(Square.of("F8"), Bishop.of(Color.BLACK));
-        chessBoard.put(Square.of("G8"), Knight.of(Color.BLACK));
-        chessBoard.put(Square.of("H8"), Rook.of(Color.BLACK));
+        chessBoard.put(Square.of("a8"), Rook.of(Color.BLACK));
+        chessBoard.put(Square.of("b8"), Knight.of(Color.BLACK));
+        chessBoard.put(Square.of("c8"), Bishop.of(Color.BLACK));
+        chessBoard.put(Square.of("d8"), Queen.of(Color.BLACK));
+        chessBoard.put(Square.of("e8"), King.of(Color.BLACK));
+        chessBoard.put(Square.of("f8"), Bishop.of(Color.BLACK));
+        chessBoard.put(Square.of("g8"), Knight.of(Color.BLACK));
+        chessBoard.put(Square.of("h8"), Rook.of(Color.BLACK));
     }
 
     public Map<Square, Piece> getChessBoard() {
