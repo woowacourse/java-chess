@@ -1,61 +1,51 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Position {
-    private File file;
-    private Rank rank;
 
-    private static final Map<String, Position> cache = new HashMap<>();
+    private static final Map<String, Position> CACHE;
+
+    private X x;
+    private Y y;
+
+    private Position(X x, Y y) {
+        this.x = x;
+        this.y = y;
+    }
 
     static {
-        for (File file : File.values()) {
-            createCacheByRank(cache, file);
+        Map<String, Position> positions = new HashMap<>();
+
+        for (X x : X.values()) {
+            createPositionsByY(positions, x);
+        }
+        CACHE = Collections.unmodifiableMap(positions);
+    }
+
+    private static void createPositionsByY(Map<String, Position> positions, X x) {
+        for (Y y : Y.values()) {
+            positions.put(getKey(x, y), new Position(x, y));
         }
     }
 
-    private static String key(File file, Rank rank) {
-        return file.toString() + rank.toString();
+    private static String getKey(X x, Y y) {
+        return x.toString() + y.toString();
     }
 
-    private static void createCacheByRank(Map<String, Position> cache, File file) {
-        for (Rank rank : Rank.values()) {
-            cache.put(key(file, rank), new Position(file, rank));
-        }
+    public static List<Position> values() {
+        return Collections.unmodifiableList(new ArrayList<>(CACHE.values()));
     }
 
-    public static Position of(String key) {
-        Position position = cache.get(key);
-
-        if (position == null) {
-            throw new IllegalArgumentException("존재하지 않는 위치입니다.");
-        }
-        return position;
+    public static Position of(X x, Y y) {
+        return of(x.toString() + y.toString());
     }
 
-    public static Position of(File file, Rank rank) {
-        return of(file.toString() + rank.toString());
-    }
-
-    private Position(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
-    }
-
-    public Position increaseFile(int number) {
-        return Position.of(this.file.plus(number), this.rank);
-    }
-
-    public Position increaseRank(int number) {
-        return Position.of(this.file, this.rank.plus(number));
-    }
-
-    public Position increaseDiagonal(int number) {
-        return Position.of(this.file.plus(number), this.rank.plus(number));
-    }
-
-    public boolean isAt(Rank rank) {
-        return this.rank == rank;
+    public static Position of(String expression) {
+        return CACHE.get(expression);
     }
 }

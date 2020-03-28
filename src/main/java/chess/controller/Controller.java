@@ -8,8 +8,17 @@ import chess.domain.gamestatus.Running;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ConsoleUIApplication {
-    public static void main(String[] args) {
+public class Controller {
+
+    public static void run() {
+        try {
+            runWithoutExceptionCatch();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void runWithoutExceptionCatch() {
         GameStatus gameStatus = new NothingHappened();
 
         OutputView.printStartInformation();
@@ -17,7 +26,7 @@ public class ConsoleUIApplication {
         do {
             Command command = CommandReader.of(InputView.read());
             gameStatus = command.execute(gameStatus);
-            OutputView.printChessBoard(gameStatus.getBoard());
+            OutputView.printChessBoard(gameStatus.getBoardString());
         } while (gameStatus instanceof Running);
     }
 }

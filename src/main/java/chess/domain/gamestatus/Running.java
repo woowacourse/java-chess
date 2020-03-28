@@ -1,17 +1,45 @@
 package chess.domain.gamestatus;
 
-import java.util.List;
+import chess.domain.Team;
+import chess.domain.board.Board;
+import chess.domain.piece.PieceType;
 
 public class Running extends Started {
-    @Override
-    public GameStatus move(String keyFromPosition, String keyToPosition) {
-        board.move(keyFromPosition, keyToPosition);
 
-        return this; // Todo: 체크메이트일 경우 Finished를 리턴하도록
+    Team currentTeam;
+
+    Running() {
+        super();
+    }
+
+    private Running(Board board, Team thisTurn) {
+        super(board);
+        this.currentTeam = thisTurn;
     }
 
     @Override
-    public List<List<String>> getBoard() {
-        return board.getBoard();
+    public GameStatus start() {
+        throw new UnsupportedOperationException("게임이 이미 시작되었습니다.");
+    }
+
+    @Override
+    public GameStatus move(String fromPosition, String toPosition) {
+
+        board.move(fromPosition, toPosition);
+        return decideNextStatus();
+    }
+
+    private GameStatus decideNextStatus() {
+        Team nextTeam = currentTeam.opponent();
+
+        if (board.isPieceOnBoard(nextTeam, PieceType.KING)) {
+            return new Running(this.board, nextTeam);
+        }
+        return new Finished();
+    }
+
+    @Override
+    public String getBoardString() {
+        return board.toString();
     }
 }

@@ -1,10 +1,14 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.Team;
 
 public class Piece {
+
     private Team team;
     private PieceType pieceType;
+
+    protected Piece() {
+    }
 
     public Piece(Team team, PieceType pieceType) {
         this.team = team;
@@ -18,8 +22,7 @@ public class Piece {
         return pieceType.getAcronymToUpperCase();
     }
 
-    public boolean canMove(Position fromPosition, Position toPosition) {
-        // Todo : 다른 조건들도 추가해야함. 지금은 다른 말들의 영향을 안받음
-        return pieceType.canMove(fromPosition, toPosition, team);
+    public boolean canMove() {
+        return pieceType.canMove();
     }
 }

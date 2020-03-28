@@ -1,12 +1,12 @@
 package chess.controller.command;
 
-import utils.StringUtils;
-
 import java.util.List;
+import utils.StringUtils;
 
 public class CommandReader {
     public static Command of(String command) {
         List<String> splitCommand = StringUtils.splitIntoList(command);
+
         if ("start".equals(splitCommand.get(0))) {
             return new Start();
         }
@@ -15,6 +15,6 @@ public class CommandReader {
             return new Move(splitCommand.get(1), splitCommand.get(2));
         }
 
-        return null; // Todo: 나머지 커맨
+        throw new IllegalArgumentException(command + " : 존재하지 않는 명령어입니다.");
     }
 }

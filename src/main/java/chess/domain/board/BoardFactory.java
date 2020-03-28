@@ -1,14 +1,14 @@
 package chess.domain.board;
 
-import chess.domain.Piece;
-import chess.domain.PieceType;
 import chess.domain.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
+
     public static Board createInitially() {
         return new Board(createBoardSource());
     }
@@ -69,12 +69,11 @@ public class BoardFactory {
     }
 
     private static void addToBoard(
-            Map<Position, Piece> board,
-            String position,
-            Team team,
-            PieceType pieceType
+        Map<Position, Piece> board,
+        String position,
+        Team team,
+        PieceType pieceType
     ) {
-        board.put(Position.of(position),
-                new Piece(team, pieceType));
+        board.put(Position.of(position), new Piece(team, pieceType));
     }
 }

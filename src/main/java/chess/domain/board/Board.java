@@ -1,61 +1,53 @@
 package chess.domain.board;
 
-import chess.domain.Piece;
-import chess.domain.position.File;
+import chess.domain.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import chess.domain.position.X;
+import chess.domain.position.Y;
 import java.util.Map;
 
 public class Board {
-    private static final String EMPTY_POSITION_ACRONYM = ".";
 
-    private Map<Position, Piece> board;
+    private final Map<Position, Piece> board;
 
-    Board(Map<Position, Piece> board) {
+    public Board(Map<Position, Piece> board) {
         this.board = board;
     }
 
-    public List<List<String>> getBoard() {
-        List<List<String>> resultBoard = new ArrayList<>();
+    public void move(String fromPosition, String toPosition) {
 
-        for (Rank rank : Rank.values()) {
-            resultBoard.add(new ArrayList<>());
-            addAcronymToRow(resultBoard, rank);
-        }
-
-        return Collections.unmodifiableList(resultBoard);
     }
 
-    private void addAcronymToRow(List<List<String>> result, Rank rank) {
-        for (File file : File.values()) {
-            result.get(Rank.size() - rank.getRowNumber())
-                    .add(acronym(file, rank));
-        }
+    public boolean isPieceOnBoard(Team team, PieceType pieceType) {
+        return false;
     }
 
-    private String acronym(File file, Rank rank) {
-        try {
-            return board.get(Position.of(file, rank))
-                    .getAcronym();
-        } catch (NullPointerException e) {
-            return EMPTY_POSITION_ACRONYM;
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Y y : Y.values()) {
+            stringBuilder.append(makeStringByX(y));
+            stringBuilder.append("\n");
         }
+        return stringBuilder.toString();
     }
 
-    public void move(String keyFromPosition, String keyToPosition) {
-        move(Position.of(keyFromPosition), Position.of(keyToPosition));
+    private String makeStringByX(Y y) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (X x : X.values()) {
+            stringBuilder.append(makeStringByPosition(Position.of(x, y)));
+        }
+        return stringBuilder.toString();
     }
 
-    public void move(Position fromPosition, Position toPosition) {
-        Piece piece = board.get(fromPosition);
-
-        if (piece.canMove(fromPosition, toPosition)) {
-            board.remove(fromPosition);
-            board.put(toPosition, piece);
+    private String makeStringByPosition(Position position) {
+        if (board.containsKey(position)) {
+            return board.get(position).getAcronym();
         }
+        return ".";
     }
 }
