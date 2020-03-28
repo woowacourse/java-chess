@@ -1,11 +1,15 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import chess.domain.piece.direction.Direction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static chess.util.NullValidator.validateNull;
 
 public abstract class Piece {
-    private final PieceColor pieceColor;
+    protected final PieceColor pieceColor;
     private final String name;
     protected Position position;
 
@@ -23,4 +27,47 @@ public abstract class Piece {
     public String getName() {
         return pieceColor.getPieceName(name);
     }
+
+    public abstract List<Position> getPathTo(Position target);
+
+    protected void validateEqualPosition(Position targetPosition) {
+        validateNull(targetPosition);
+
+        if (this.position.equals(targetPosition)) {
+            throw new IllegalArgumentException("현재 자리한 위치로는 이동할 수 없습니다.");
+        }
+    }
+
+    protected Direction getDirection(Position targetPosition) {
+        validateNull(targetPosition);
+
+        int xPointDirectionValue = this.position.getXPointDirectionValueTo(targetPosition);
+        int yPointDirectionValue = this.position.getYPointDirectionValueTo(targetPosition);
+        return Direction.of(xPointDirectionValue, yPointDirectionValue);
+    }
+
+    protected List<Position> createPath(Position targetPosition, Direction direction) {
+        validateNull(targetPosition, direction);
+
+        List<Position> path = new ArrayList<>();
+
+        Position currentPosition = this.position;
+        while (!currentPosition.equals(targetPosition)) {
+            Position changePosition = getChangePosition(currentPosition, direction);
+            currentPosition = changePosition;
+            path.add(changePosition);
+        }
+
+        return path;
+    }
+
+    private Position getChangePosition(Position currentPosition, Direction direction) {
+        validateNull(currentPosition, direction);
+
+        int changedXPoint = currentPosition.getXPoint().getValue() + direction.getXPoint();
+        int changedYPoint = currentPosition.getYPoint().getValue() + direction.getYPoint();
+        return new Position(changedXPoint, changedYPoint);
+    }
+
+    protected abstract void validateDistance(Position targetPosition);
 }
