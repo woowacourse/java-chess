@@ -23,8 +23,8 @@ public final class Coordinate {
     }
 
     public Coordinate move(Direction direction) {
-        File nextFile = file.sum(direction.getFile());
-        Rank nextRank = rank.sum(direction.getRank());
+        File nextFile = file.sum(direction.getFileVariation());
+        Rank nextRank = rank.sum(direction.getRankVariation());
         return of(nextFile, nextRank);
     }
 

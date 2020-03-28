@@ -22,7 +22,7 @@ public class Command {
     public void action() {
         String command = commandSupplier.get();
         if ("start".equals(command)) {
-            this.chessManager = new ChessManager(new BoardGenerator().create());
+            this.chessManager = new ChessManager(BoardGenerator.create());
         }
         if (Objects.isNull(chessManager)) {
             return;

@@ -8,6 +8,8 @@ import chess.piece.Team;
 import java.util.function.Function;
 
 public class Score {
+    private static final int PAWN_REDUCIBLE_COUNT = 2;
+    private static final double PAWN_REDUCE_SCORE = 0.5;
     private final double sum;
     private final int pawnCount;
 
@@ -31,14 +33,6 @@ public class Score {
         return new Score(this.sum + tile.getScore(), pawnCount);
     }
 
-    public Score subtractPawnScore() {
-        double sum = this.sum;
-        if (this.pawnCount >= 2) {
-            sum -= 0.5 * this.pawnCount;
-        }
-        return new Score(sum, 0);
-    }
-
     public static double calculateScore(Team team, Function<Coordinate, Tile> tileFinder) {
         Score sum = zero();
         for (File file : File.values()) {
@@ -49,6 +43,14 @@ public class Score {
             sum = sum.subtractPawnScore();
         }
         return sum.getSum();
+    }
+
+    private Score subtractPawnScore() {
+        double sum = this.sum;
+        if (this.pawnCount >= PAWN_REDUCIBLE_COUNT) {
+            sum -= PAWN_REDUCE_SCORE * this.pawnCount;
+        }
+        return new Score(sum, 0);
     }
 
     public double getSum() {

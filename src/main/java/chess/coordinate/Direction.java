@@ -12,27 +12,30 @@ public enum Direction {
     DOWN(0, -1),
     RIGHT_DOWN(1, -1);
 
-    private final int file;
-    private final int rank;
+    private final int fileVariation;
+    private final int rankVariation;
 
-    Direction(final int file, final int rank) {
-        this.file = file;
-        this.rank = rank;
+    Direction(final int fileVariation, final int rankVariation) {
+        this.fileVariation = fileVariation;
+        this.rankVariation = rankVariation;
     }
 
-    public static Direction findByValue(int file, int rank) {
+    public static Direction findByValue(int fileVariation, int rankVariation) {
         return Arrays.stream(values())
-                .filter(aFile -> aFile.file == file)
-                .filter(aRank -> aRank.rank == rank)
+                .filter(direction -> direction.isSameDirection(fileVariation, rankVariation))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public int getFile() {
-        return file;
+    private boolean isSameDirection(int fileVariation, int rankVariation) {
+        return this.fileVariation == fileVariation && this.rankVariation == rankVariation;
     }
 
-    public int getRank() {
-        return rank;
+    public int getFileVariation() {
+        return fileVariation;
+    }
+
+    public int getRankVariation() {
+        return rankVariation;
     }
 }
