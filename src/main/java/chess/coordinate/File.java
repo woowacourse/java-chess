@@ -24,7 +24,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(aFile -> aFile.value == value)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException(String.format("file : %d, file의 value는 1부터 8까지 입니다.", value)));
     }
 
     public int subtract(File file) {
