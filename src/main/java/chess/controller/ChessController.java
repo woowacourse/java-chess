@@ -10,11 +10,11 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-	public static final String MOVE = "move";
-	public static final String DELIMITER = " ";
-	public static final String STATUS = "status";
-	public static final String END = "end";
-	public static final int COMMAND_ARGUMENTS_SIZE = 3;
+	private static final String MOVE = "move";
+	private static final String DELIMITER = " ";
+	private static final String STATUS = "status";
+	private static final String END = "end";
+	private static final int COMMAND_ARGUMENTS_SIZE = 3;
 	private State state = State.BEFORESTART;
 
 	public void run() {
