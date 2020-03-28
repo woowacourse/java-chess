@@ -3,10 +3,7 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.Square;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class Pawn extends Piece {
@@ -20,9 +17,9 @@ public class Pawn extends Piece {
     }
 
     private static void putIntoCache(Color color) {
-        String name = "P";
+        String name = NAME_BLACK;
         if (color == Color.WHITE) {
-            name = "p";
+            name = NAME_WHITE;
         }
         CACHE.putIfAbsent(color, new Pawn(color, name, 0));
     }
@@ -44,11 +41,47 @@ public class Pawn extends Piece {
 
     @Override
     public Set<Square> calculateScope(Square square) {
-        return null;
+        Set<Square> availableSquares = new HashSet<>();
+        int index = 1;
+        if (color.equals(Color.BLACK)) {
+            index *= -1;
+        }
+        if ((color.equals(Color.BLACK) && square.getRank() == 7) ||
+                (color.equals(Color.WHITE) && square.getRank() == 2)) {
+            availableSquares.add(addIfInBoundary(square, 0, index * 2));
+        }
+        availableSquares.add(addIfInBoundary(square, 0, index));
+        return availableSquares;
     }
 
     @Override
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
-        return null;
+        Set<Square> squares = calculateScope(square);
+        for (Square s : squares) {
+            if (Math.abs(square.getRank() - s.getRank()) == 1) {
+                Square squareRight = s;
+                Square squareLeft = s;
+                if (s.getFile() != 'a') {
+                    squareLeft = Square.of(s, -1, 0);
+                }
+                if (s.getFile() != 'h') {
+                    squareRight = Square.of(s, 1, 0);
+                }
+                if (board.containsKey(s) && color == board.get(s).color) {
+                    squares.removeAll(calculateScope(square));
+                }
+                if (board.containsKey(squareRight) && color != board.get(squareRight).color) {
+                    squares.add(squareRight);
+                }
+                if (board.containsKey(squareLeft) && color != board.get(squareLeft).color) {
+                    squares.add(squareLeft);
+                }
+                continue;
+            }
+            if (board.containsKey(s) && color == board.get(s).color) {
+                squares.remove(s);
+            }
+        }
+        return squares;
     }
 }
