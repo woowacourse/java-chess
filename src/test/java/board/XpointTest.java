@@ -25,14 +25,14 @@ public class XpointTest {
     @ParameterizedTest
     @DisplayName("필드 변수에 없는 문자를 입력받으면 예외가 발생해야 함")
     @ValueSource(strings = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "i", "L", "m"})
-    void inputNotVarCharThenReturnException(char input) {
+    void inputNotVarCharThenThrowException(char input) {
         Assertions.assertThatThrownBy(() -> Xpoint.of(input)).hasMessage("존재하지 않는 가로열입니다.");
     }
 
     @ParameterizedTest
     @DisplayName("필드 변수에 없는 숫자를 입력받으면 예외가 발생해야 함")
     @ValueSource(strings = {"-2", "-1", "0", "9", "10", "11", "12"})
-    void inputNotVarNumThenReturnException(int input) {
+    void inputNotVarNumThenThrowException(int input) {
         Assertions.assertThatThrownBy(() -> Xpoint.of(input)).hasMessage("존재하지 않는 가로열입니다.");
     }
 }

@@ -12,7 +12,7 @@ public class NullValidatorTest {
     @ParameterizedTest
     @DisplayName("null이 입력되면 예외가 발생해야 함")
     @NullSource
-    void inputNullThenReturnException(String input) {
+    void inputNullThenThrowException(String input) {
         assertThatThrownBy(() -> NullValidator.validateNull(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("null이 들어왔습니다.");

@@ -25,14 +25,14 @@ public class YpointTest {
     @ParameterizedTest
     @DisplayName("필드 변수에 없는 문자를 입력받으면 예외가 발생해야 함")
     @ValueSource(strings = {"9", "0", "a", "ㄱ", "-"})
-    void inputNotVarCharThenReturnException(char input) {
+    void inputNotVarCharThenThrowException(char input) {
         Assertions.assertThatThrownBy(() -> Ypoint.of(input)).hasMessage("존재하지 않는 세로행입니다.");
     }
 
     @ParameterizedTest
     @DisplayName("필드 변수에 없는 숫자를 입력받으면 예외가 발생해야 함")
     @ValueSource(strings = {"10", "9", "0", "-1"})
-    void inputNotVarNumThenReturnException(int input) {
+    void inputNotVarNumThenThrowException(int input) {
         Assertions.assertThatThrownBy(() -> Ypoint.of(input)).hasMessage("존재하지 않는 세로행입니다.");
     }
 }

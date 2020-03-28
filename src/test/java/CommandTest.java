@@ -16,7 +16,7 @@ public class CommandTest {
     @ParameterizedTest
     @DisplayName("필드 변수에 없는 문자를 입력받으면 예외가 발생해야 함")
     @ValueSource(strings = {"시작", "끝", "start~", "end!"})
-    void inputNotVarStringThenReturnException(String input) {
+    void inputNotVarStringThenThrowException(String input) {
         Assertions.assertThatThrownBy(() -> Command.of(input)).hasMessage("유효하지 않은 명령어입니다.");
     }
 }
