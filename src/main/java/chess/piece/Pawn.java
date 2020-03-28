@@ -18,18 +18,25 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public List<Position> findReachablePositions(Position start, Position end) {
-		//한칸또는두칸앞으로 가지않는경우 || 처음이 아닌데 앞으로 두칸 가려고 하는경우
-		if (isNotMovable(start, end) || isNotAbleToMoveDoubleSquare(start, end)) {
+	public List<Position> findMoveModeTrace(Position from, Position to) {
+		if (isNotMovable(from, to) || isNotAbleToMoveDoubleSquare(from, to) || !from.isSameFile(to)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
-		if ((Math.abs(end.getRankNumber() - start.getRankNumber()) == 2)) {
-			List<Rank> ranks = Rank.valuesBetween(start.getRank(), end.getRank());
+
+		if ((Math.abs(to.getRankNumber() - from.getRankNumber()) == 2)) {
+			List<Rank> ranks = Rank.valuesBetween(from.getRank(), to.getRank());
 			return ranks.stream()
-				.map(rank -> Position.of(start.getFile(), rank))
+				.map(rank -> Position.of(from.getFile(), rank))
 				.collect(Collectors.toList());
 		}
-		//여기!
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<Position> findCatchModeTrace(Position from, Position to) {
+		if (from.isNotDistanceOneSquare(to) || from.isNotDiagonal(to) || isNotMovable(from, to)) {
+			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+		}
 		return Collections.emptyList();
 	}
 
@@ -39,11 +46,12 @@ public class Pawn extends Piece {
 
 	private boolean isMovable(Position start, Position end) {
 		int rankMoveDistance = end.getRankNumber() - start.getRankNumber();
-		return start.isSameFile(end) && rankMoveDistance > 0 && rankMoveDistance <= 2;
+		rankMoveDistance *= team.isBlack() ? -1 : 1;
+		return rankMoveDistance > 0 && rankMoveDistance <= 2;
 	}
 
 	private boolean isAbleToMoveDoubleSquare(Position start, Position end) {
-		return !hasMoved || (Math.abs(end.getFileNumber() - start.getFileNumber()) != 2);
+		return !hasMoved || (Math.abs(end.getRankNumber() - start.getRankNumber()) != 2);
 	}
 
 	private boolean isNotAbleToMoveDoubleSquare(Position start, Position end) {

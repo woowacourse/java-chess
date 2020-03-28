@@ -29,9 +29,17 @@ public abstract class Piece {
 		return team;
 	}
 
+	public boolean isRightTeam(Team turn) {
+		return team == turn;
+	}
+
 	protected abstract String getInitialCharacter();
 
-	public abstract List<Position> findReachablePositions(Position start, Position end);
-
 	public abstract double getScore();
+
+	public abstract List<Position> findMoveModeTrace(Position from, Position to);
+
+	public List<Position> findCatchModeTrace(Position from, Position to) {
+		return null;
+	}
 }

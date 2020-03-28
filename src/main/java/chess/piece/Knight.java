@@ -14,8 +14,8 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public List<Position> findReachablePositions(Position start, Position end) {
-		if (start.isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(end)) {
+	public List<Position> findMoveModeTrace(Position from, Position to) {
+		if (from.isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(to)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
 		return new ArrayList<>(Collections.emptyList());

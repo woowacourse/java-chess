@@ -11,17 +11,22 @@ public class ChessGame {
 
 	public void run() {
 		OutputView.printGameIntro();
-		Command command = Command.of(InputView.requestCommand());
-		if (command.isStart()) {
-			OutputView.printBoard(board);
-		}
 
-		while (board.checkGameEnd() && Command.of(InputView.requestCommand()).isMove()) {
-			Position startPosition = Position.of(InputView.requestPosition());
-			Position endPosition = Position.of(InputView.requestPosition());
-			board.move(startPosition, endPosition);
-			OutputView.printBoard(board);
-			System.out.println(board.checkGameEnd());
+		while (board.checkGameEnd()) {
+			Command command = Command.of(InputView.requestCommand());
+			System.out.println(command);
+			if (command.isStart()) {
+				OutputView.printBoard(board);
+			} else if (command.isMove()) {
+				Position startPosition = Position.of(InputView.requestPosition());
+				Position endPosition = Position.of(InputView.requestPosition());
+				board.move(startPosition, endPosition);
+				OutputView.printBoard(board);
+			} else if (command.isStatus()) {
+				System.out.println(board.status());
+			} else if (command.isEnd()) {
+				board.setGameEnd();
+			}
 		}
 	}
 }

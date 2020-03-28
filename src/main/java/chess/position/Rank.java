@@ -38,26 +38,6 @@ public enum Rank {
 			.collect(Collectors.toList());
 	}
 
-	private static boolean between(Rank target, Rank smaller, Rank bigger) {
-		return target.compareTo(smaller) >= 0 && target.compareTo(bigger) <= 0;
-	}
-
-	private static Rank max(Rank rank1, Rank rank2) {
-		if (rank1.compareTo(rank2) > 0) {
-			return rank1;
-		} else {
-			return rank2;
-		}
-	}
-
-	private static Rank min(Rank rank1, Rank rank2) {
-		if (rank1.compareTo(rank2) < 0) {
-			return rank1;
-		} else {
-			return rank2;
-		}
-	}
-
 	public static Rank of(String name) {
 		return Arrays.stream(values())
 			.filter(value -> value.name.equals(name))

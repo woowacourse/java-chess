@@ -24,7 +24,7 @@ public class QueenTest {
 	@MethodSource("startDestinationTraceProvider")
 	void queenPathTest(Position start, Position destination, List<Position> trace) {
 		Queen queen = new Queen(BLACK);
-		List<Position> actual = queen.findReachablePositions(start, destination);
+		List<Position> actual = queen.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
@@ -50,7 +50,7 @@ public class QueenTest {
 	@Test
 	void invalidMovementTest() {
 		Queen queen = new Queen(BLACK);
-		assertThatThrownBy(() -> queen.findReachablePositions(Position.of(A, ONE), Position.of(C, TWO)))
+		assertThatThrownBy(() -> queen.findMoveModeTrace(Position.of(A, ONE), Position.of(C, TWO)))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

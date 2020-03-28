@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum File {
+public enum File implements Coordinate {
 	A("a", 1),
 	B("b", 2),
 	C("c", 3),
@@ -36,26 +36,6 @@ public enum File {
 		return Arrays.stream(values())
 			.filter(file -> file.getNumber() > start.getNumber() && file.getNumber() < end.getNumber())
 			.collect(Collectors.toList());
-	}
-
-	private static boolean between(File target, File smaller, File bigger) {
-		return target.compareTo(smaller) >= 0 && target.compareTo(bigger) <= 0;
-	}
-
-	private static File max(File file1, File file2) {
-		if (file1.compareTo(file2) > 0) {
-			return file1;
-		} else {
-			return file2;
-		}
-	}
-
-	private static File min(File file1, File file2) {
-		if (file1.compareTo(file2) < 0) {
-			return file1;
-		} else {
-			return file2;
-		}
 	}
 
 	public static File of(String name) {

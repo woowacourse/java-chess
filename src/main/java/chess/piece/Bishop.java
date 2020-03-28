@@ -12,11 +12,11 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public List<Position> findReachablePositions(Position start, Position end) {
-		if (start.isNotDiagonal(end)) {
+	public List<Position> findMoveModeTrace(Position from, Position to) {
+		if (from.isNotDiagonal(to)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
-		return Position.findDiagonalTrace(start, end);
+		return Position.findDiagonalTrace(from, to);
 	}
 
 	@Override

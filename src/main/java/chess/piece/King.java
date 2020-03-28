@@ -13,8 +13,8 @@ public class King extends Piece {
 	}
 
 	@Override
-	public List<Position> findReachablePositions(Position start, Position end) {
-		if (start.isNotDistanceOneSquare(end)) {
+	public List<Position> findMoveModeTrace(Position from, Position to) {
+		if (from.isNotDistanceOneSquare(to)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
 		return Collections.emptyList();

@@ -23,7 +23,7 @@ public class RookTest {
 	@MethodSource("startDestinationTraceProvider")
 	void rookPathTest(Position start, Position destination, List<Position> trace) {
 		Rook rook = new Rook(BLACK);
-		List<Position> actual = rook.findReachablePositions(start, destination);
+		List<Position> actual = rook.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
@@ -40,7 +40,7 @@ public class RookTest {
 	@Test
 	void invalidMovementTest() {
 		Rook rook = new Rook(BLACK);
-		assertThatThrownBy(() -> rook.findReachablePositions(Position.of(A, ONE), Position.of(B, TWO)))
+		assertThatThrownBy(() -> rook.findMoveModeTrace(Position.of(A, ONE), Position.of(B, TWO)))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

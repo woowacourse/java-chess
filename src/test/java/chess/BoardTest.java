@@ -23,7 +23,7 @@ public class BoardTest {
 	@BeforeEach
 	void setup() {
 		Map<Position, Piece> pieces = new HashMap<>();
-		rook = new Rook(Team.BLACK);
+		rook = new Rook(Team.WHITE);
 		pieces.put(Position.of(A, ONE), rook);
 		board = new Board(pieces);
 	}

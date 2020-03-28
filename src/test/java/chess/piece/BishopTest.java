@@ -23,7 +23,7 @@ public class BishopTest {
 	@MethodSource("startDestinationTraceProvider")
 	void bishopPathTest(Position start, Position destination, List<Position> trace) {
 		Bishop bishop = new Bishop(BLACK);
-		List<Position> actual = bishop.findReachablePositions(start, destination);
+		List<Position> actual = bishop.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
@@ -44,7 +44,7 @@ public class BishopTest {
 	@Test
 	void invalidMovementTest() {
 		Bishop bishop = new Bishop(BLACK);
-		assertThatThrownBy(() -> bishop.findReachablePositions(Position.of(A, ONE), Position.of(B, ONE)))
+		assertThatThrownBy(() -> bishop.findMoveModeTrace(Position.of(A, ONE), Position.of(B, ONE)))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

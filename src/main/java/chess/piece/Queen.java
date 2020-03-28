@@ -15,22 +15,22 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public List<Position> findReachablePositions(Position start, Position end) {
-		if (start.isNotStraight(end) && start.isNotDiagonal(end)) {
+	public List<Position> findMoveModeTrace(Position from, Position to) {
+		if (from.isNotStraight(to) && from.isNotDiagonal(to)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
-		if (start.isSameRank(end)) {
-			List<File> files = File.valuesBetween(start.getFile(), end.getFile());
+		if (from.isSameRank(to)) {
+			List<File> files = File.valuesBetween(from.getFile(), to.getFile());
 			return files.stream()
-				.map(file -> Position.of(file, start.getRank()))
+				.map(file -> Position.of(file, from.getRank()))
 				.collect(Collectors.toList());
 		}
-		if (start.isDiagonal(end)) {
-			return Position.findDiagonalTrace(start, end);
+		if (from.isDiagonal(to)) {
+			return Position.findDiagonalTrace(from, to);
 		}
-		List<Rank> ranks = Rank.valuesBetween(start.getRank(), end.getRank());
+		List<Rank> ranks = Rank.valuesBetween(from.getRank(), to.getRank());
 		return ranks.stream()
-			.map(rank -> Position.of(start.getFile(), rank))
+			.map(rank -> Position.of(from.getFile(), rank))
 			.collect(Collectors.toList());
 	}
 
