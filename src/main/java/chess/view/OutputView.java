@@ -8,19 +8,22 @@ import chess.domain.game.Team;
 import java.util.List;
 
 public class OutputView {
+    private static final int BOARD_MAX_INDEX = 7;
+    private static final int BOARD_MIN_INDEX = 0;
+
     public static void printBoard(Board chessBoard) {
         List<Row> board = chessBoard.getBoard();
 
         System.out.println();
-        for (int i = 8; i >= 1; i--) {
+        for (int i = BOARD_MAX_INDEX; i >= BOARD_MIN_INDEX; i--) {
             printRow(i, board);
             System.out.println();
         }
     }
 
     private static void printRow(int index, List<Row> board) {
-        for (int j = 0; j <= 7; j++) {
-            Row row = board.get(index - 1);
+        for (int j = BOARD_MIN_INDEX; j <= BOARD_MAX_INDEX; j++) {
+            Row row = board.get(index);
             ChessPiece chessPiece = row.get(j);
 
             System.out.print(chessPiece.getName());

@@ -10,6 +10,8 @@ import java.util.List;
 
 public class AllRouteGenerator {
     private static final int[][] KNIGHT_DIRECTION = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
+    private static final int KNIGHT_DIRECTION_MIN = 0;
+    private static final int KNIGHT_DIRECTION_MAX = 8;
 
     private AllRouteGenerator() {
     }
@@ -51,10 +53,10 @@ public class AllRouteGenerator {
         List<Position> positions;
         List<Route> routes = new ArrayList<>();
 
-        for (int index = 0; index < 8; index++) {
+        for (int i = KNIGHT_DIRECTION_MIN; i < KNIGHT_DIRECTION_MAX; i++) {
             positions = new ArrayList<>();
 
-            addKnightRoute(positions, initialPosition, index);
+            addKnightRoute(positions, initialPosition, i);
             routes.add(new Route(positions));
         }
         return routes;

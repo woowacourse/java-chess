@@ -11,6 +11,12 @@ import java.util.List;
 import static chess.domain.game.Team.*;
 
 public class BoardFactory {
+    private static final int BOARD_MAX_INDEX = 7;
+    private static final int BOARD_MIN_INDEX = 0;
+    private static final int BLANK_ROW_SIZE_BASE = 0;
+    private static final int BLANK_ROW_SIZE = 4;
+
+
     private BoardFactory() {
     }
 
@@ -29,7 +35,7 @@ public class BoardFactory {
     }
 
     private static void addBlankRows(List<Row> board) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = BLANK_ROW_SIZE_BASE; i < BLANK_ROW_SIZE; i++) {
             addBlankRow(board);
         }
     }
@@ -56,7 +62,7 @@ public class BoardFactory {
     private static void addPawn(List<Row> board, Team team) {
         List<ChessPiece> chessPieces = new ArrayList<>();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
             chessPieces.add(new Pawn(team));
         }
         board.add(Row.of(chessPieces));
@@ -65,7 +71,7 @@ public class BoardFactory {
     private static void addBlankRow(List<Row> board) {
         List<ChessPiece> chessPieces = new ArrayList<>();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
             chessPieces.add(new Blank(BLANK));
         }
         board.add(Row.of(chessPieces));

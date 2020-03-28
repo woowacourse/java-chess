@@ -18,7 +18,10 @@ import static chess.domain.chesspiece.ChessPieceInfo.KING;
 import static chess.domain.game.Team.*;
 
 public class Board {
+    private static final int BOARD_MAX_INDEX = 7;
+    private static final int BOARD_MIN_INDEX = 0;
     private static final Team INIT_TEAM = WHITE;
+    private static final int DIAGONAL_GAP = 1;
 
     private List<Row> board;
     private Team nowPlayingTeam;
@@ -83,7 +86,7 @@ public class Board {
     private void reverseBoard() {
         List<Row> reversedBoard = new ArrayList<>();
 
-        for (int i = 7; i >= 0; i--) {
+        for (int i = BOARD_MAX_INDEX; i >= BOARD_MIN_INDEX; i--) {
             Row reversedRow = board.get(i);
             Collections.reverse(reversedRow.getChessPieces());
             reversedBoard.add(reversedRow);
@@ -145,12 +148,16 @@ public class Board {
         Position targetPosition = movingInfo.getTargetPosition();
         int dy = targetPosition.getY() - startPosition.getY();
 
-        if (Math.abs(dy) == 1 && isBlank(targetPosition)) {
+        if (isDiagonalMovement(dy) && isBlank(targetPosition)) {
             throw new IllegalArgumentException("대각선으로는 공격할 때만 움직 수 있습니다.");
         }
-        if (Math.abs(dy) == 0 && !isBlank(targetPosition)) {
+        if (!isDiagonalMovement(dy) && !isBlank(targetPosition)) {
             throw new IllegalArgumentException("상대의 말이 있어 움직일 수 없습니다.");
         }
+    }
+
+    private boolean isDiagonalMovement(int dy) {
+        return Math.abs(dy) == DIAGONAL_GAP;
     }
 
     private boolean isBlank(Position position) {
@@ -208,7 +215,7 @@ public class Board {
     public double getTotalScore() {
         Score score = Score.DEFAULT;
 
-        for (int j = 0; j < 8; j++) {
+        for (int j = BOARD_MIN_INDEX; j <= BOARD_MAX_INDEX; j++) {
             score = getColumnScore(score, j);
         }
         return score.getScore();
@@ -217,7 +224,7 @@ public class Board {
     private Score getColumnScore(Score score, int j) {
         int pawnCount = 0;
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
             ChessPiece chessPiece = board.get(i).get(j);
 
             pawnCount = getColumnPawnCount(chessPiece);
