@@ -1,13 +1,17 @@
 package chess.manager;
 
-import chess.board.ChessBoard;
+import chess.board.ForwardChessBoard;
+import chess.board.Tile;
+import chess.coordinate.Coordinate;
 import chess.piece.Team;
 
+import java.util.Map;
+
 public class ChessManager {
-    private final ChessBoard chessBoard;
+    private final ForwardChessBoard chessBoard;
     private Team currentTeam = Team.WHITE;
 
-    public ChessManager(final ChessBoard chessBoard) {
+    public ChessManager(final ForwardChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
 
@@ -30,8 +34,8 @@ public class ChessManager {
         currentTeam = Team.WHITE;
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public Map<Coordinate, Tile> getChessBoard() {
+        return chessBoard.getChessBoard();
     }
 
     public double calculateCurrentTeamScore() {

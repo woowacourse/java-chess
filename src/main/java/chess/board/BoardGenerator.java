@@ -10,14 +10,14 @@ public class BoardGenerator {
     public BoardGenerator() {
     }
 
-    public ChessBoard create() {
+    public ForwardChessBoard create() {
         ChessBoard chessBoard = ChessBoard.empty();
         addTopAndBottom(chessBoard, Rank.EIGHT, Team.BLACK);
         addTopAndBottom(chessBoard, Rank.ONE, Team.WHITE);
         addPawn(chessBoard, Rank.SEVEN, Team.BLACK);
         addPawn(chessBoard, Rank.TWO, Team.WHITE);
         addBlank(chessBoard);
-        return chessBoard;
+        return new ForwardChessBoard(chessBoard);
     }
 
     private void addTopAndBottom(ChessBoard chessBoard, Rank rank, Team team) {

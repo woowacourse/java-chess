@@ -18,7 +18,7 @@ class ChessBoardTest {
     @CsvSource(value = {"b1,c3,true", "b1,c4,false", "a1,a3,false", "a7,a6,true"})
     void moveTest(String sourceKey, String targetKey, boolean expect) {
         //given
-        ChessBoard chessBoard = new BoardGenerator().create();
+        ForwardChessBoard chessBoard = new BoardGenerator().create();
 
         //when
         boolean actual = chessBoard.move(sourceKey, targetKey);

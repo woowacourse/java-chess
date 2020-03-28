@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.board.ChessBoard;
 import chess.board.Tile;
 import chess.coordinate.Coordinate;
 import chess.coordinate.File;
@@ -20,8 +19,7 @@ public class OutputView {
                 "> 점수 출력 : status");
     }
 
-    public static void showChessBoard(ChessBoard chessBoard) {
-        Map<Coordinate, Tile> board = chessBoard.getChessBoard();
+    public static void showChessBoard(Map<Coordinate, Tile> board) {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 Piece piece = board.get(Coordinate.of(file, rank)).getPiece();
