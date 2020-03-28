@@ -134,8 +134,8 @@ public class ChessBoard {
 					.filter(x -> x.isSameFile(file))
 					.collect(Collectors.toList());
 			result += piecesInOneFile.stream()
-					.map(PieceAbility::getScore)
-					.reduce((double) ZERO, Double::sum);
+					.mapToDouble(PieceAbility::getScore)
+					.reduce(ZERO, Double::sum);
 			if (isPawnCountOne(piecesInOneFile)) {
 				result += ONE_PAWN_BONUS;
 			}
