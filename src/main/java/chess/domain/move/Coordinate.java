@@ -3,9 +3,10 @@ package chess.domain.move;
 import java.util.Objects;
 
 public class Coordinate {
-    private final int coordinate;
     private static final int BOARD_UP_END = 8;
     private static final int BOARD_DOWN_END = 1;
+
+    private final int coordinate;
 
     private Coordinate(int coordinate) {
         if (coordinate < BOARD_DOWN_END || coordinate > BOARD_UP_END) {
