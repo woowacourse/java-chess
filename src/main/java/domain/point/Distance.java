@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum Distance {
-	ONE(DistanceFilter::isOne),
-	VERTICAL_TWO(DistanceFilter::isVerticalTwo),
-	ELSE(DistanceFilter::isElse);
+	ONE(DistanceFilters::isOne),
+	VERTICAL_TWO(DistanceFilters::isVerticalTwo),
+	ELSE(DistanceFilters::isElse);
 
 	private final BiFunction<Integer, Integer, Boolean> distanceFilter;
 

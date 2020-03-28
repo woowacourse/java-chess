@@ -1,6 +1,6 @@
 package domain.point;
 
-public class DistanceFilter {
+public class DistanceFilters {
 	public static boolean isOne(int rowDifference, int columnDifference) {
 		if (rowDifference == 1 && columnDifference == 1) {
 			return true;
