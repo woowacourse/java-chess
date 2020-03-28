@@ -72,15 +72,8 @@ public class BoardSquare {
         return Integer.compare(this.rank, boardSquare.rank);
     }
 
-
-    public boolean isPawnStartPoint(boolean black) {
-        if (black) {
-            return rank == RANK_BLACK_PAWN_STAT;
-        }
-        return rank == RANK_WHITE_PAWN_START;
-    }
-
     public boolean isSameFile(BoardSquare boardSquare) {
         return this.file == boardSquare.file;
     }
 }
+

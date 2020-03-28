@@ -8,42 +8,60 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
 
-    private Map<BoardSquare, Piece> chessBoard = new HashMap<>();
+    private static final int RANK_BLACK_PAWN_INIT = 7;
+    private static final int RANK_WHITE_PAWN_INIT = 2;
+    private static final Map<BoardSquare, Piece> INITIAL_BOARD;
 
-    public ChessBoard() {
-        chessBoard.put(BoardSquare.of("a1"), Rook.getPieceInstance(Color.WHITE));
-        chessBoard.put(BoardSquare.of("h1"), Rook.getPieceInstance(Color.WHITE));
-        chessBoard.put(BoardSquare.of("a8"), Rook.getPieceInstance(Color.BLACK));
-        chessBoard.put(BoardSquare.of("h8"), Rook.getPieceInstance(Color.BLACK));
+    static {
+        Map<BoardSquare, Piece> initialBoard = new HashMap<>();
+        initialBoard.put(BoardSquare.of("a1"), Rook.getPieceInstance(Color.WHITE));
+        initialBoard.put(BoardSquare.of("h1"), Rook.getPieceInstance(Color.WHITE));
+        initialBoard.put(BoardSquare.of("a8"), Rook.getPieceInstance(Color.BLACK));
+        initialBoard.put(BoardSquare.of("h8"), Rook.getPieceInstance(Color.BLACK));
 
-        chessBoard.put(BoardSquare.of("b1"), Knight.getPieceInstance(Color.WHITE));
-        chessBoard.put(BoardSquare.of("g1"), Knight.getPieceInstance(Color.WHITE));
-        chessBoard.put(BoardSquare.of("b8"), Knight.getPieceInstance(Color.BLACK));
-        chessBoard.put(BoardSquare.of("g8"), Knight.getPieceInstance(Color.BLACK));
+        initialBoard.put(BoardSquare.of("b1"), Knight.getPieceInstance(Color.WHITE));
+        initialBoard.put(BoardSquare.of("g1"), Knight.getPieceInstance(Color.WHITE));
+        initialBoard.put(BoardSquare.of("b8"), Knight.getPieceInstance(Color.BLACK));
+        initialBoard.put(BoardSquare.of("g8"), Knight.getPieceInstance(Color.BLACK));
 
-        chessBoard.put(BoardSquare.of("c1"), Bishop.getPieceInstance(Color.WHITE));
-        chessBoard.put(BoardSquare.of("f1"), Bishop.getPieceInstance(Color.WHITE));
-        chessBoard.put(BoardSquare.of("c8"), Bishop.getPieceInstance(Color.BLACK));
-        chessBoard.put(BoardSquare.of("f8"), Bishop.getPieceInstance(Color.BLACK));
+        initialBoard.put(BoardSquare.of("c1"), Bishop.getPieceInstance(Color.WHITE));
+        initialBoard.put(BoardSquare.of("f1"), Bishop.getPieceInstance(Color.WHITE));
+        initialBoard.put(BoardSquare.of("c8"), Bishop.getPieceInstance(Color.BLACK));
+        initialBoard.put(BoardSquare.of("f8"), Bishop.getPieceInstance(Color.BLACK));
 
-        chessBoard.put(BoardSquare.of("d1"), Queen.getPieceInstance(Color.WHITE));
-        chessBoard.put(BoardSquare.of("e8"), Queen.getPieceInstance(Color.BLACK));
-        chessBoard.put(BoardSquare.of("d8"), King.getPieceInstance(Color.BLACK));
-        chessBoard.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
+        initialBoard.put(BoardSquare.of("d1"), Queen.getPieceInstance(Color.WHITE));
+        initialBoard.put(BoardSquare.of("e8"), Queen.getPieceInstance(Color.BLACK));
+        initialBoard.put(BoardSquare.of("d8"), King.getPieceInstance(Color.BLACK));
+        initialBoard.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
 
         for (int i = 0; i < 8; i++) {
             char file = (char) ('a' + i);
-            chessBoard
-                .put(BoardSquare.of(String.valueOf(file) + 2), Pawn.getPieceInstance(Color.WHITE));
-            chessBoard
-                .put(BoardSquare.of(String.valueOf(file) + 7), Pawn.getPieceInstance(Color.BLACK));
+            initialBoard.put(BoardSquare.of(String.valueOf(file) + RANK_BLACK_PAWN_INIT)
+                , Pawn.getPieceInstance(Color.BLACK));
+            initialBoard.put(BoardSquare.of(String.valueOf(file) + RANK_WHITE_PAWN_INIT)
+                , Pawn.getPieceInstance(Color.WHITE));
         }
+
+        INITIAL_BOARD = Collections.unmodifiableMap(initialBoard);
+    }
+
+    private Map<BoardSquare, Piece> chessBoard = new HashMap<>();
+
+    public ChessBoard() {
+        for (BoardSquare boardSquare : INITIAL_BOARD.keySet()) {
+            chessBoard.put(boardSquare, INITIAL_BOARD.get(boardSquare));
+        }
+    }
+
+    public static boolean isInitialPoint(BoardSquare boardSquare, Piece piece) {
+        return INITIAL_BOARD.containsKey(boardSquare) && INITIAL_BOARD.get(boardSquare) == piece;
     }
 
     public Map<BoardSquare, Piece> getChessBoard() {

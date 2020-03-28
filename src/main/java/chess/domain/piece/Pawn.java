@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
+import chess.domain.board.ChessBoard;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class Pawn extends Piece {
         for (BoardSquare s : boardSquares) {
             BoardSquare boardSquareRight = s.addIfInBoundary(-1, 0);
             BoardSquare boardSquareLeft = s.addIfInBoundary(1, 0);
-            if (boardSquare.isPawnStartPoint(isBlack())
+            if (ChessBoard.isInitialPoint(boardSquare, this)
                 && !board.containsKey(s.addIfInBoundary(0, s.getRankCompare(boardSquare)))) {
                 boardSquares.add(s.addIfInBoundary(0, s.getRankCompare(boardSquare)));
             }
