@@ -47,6 +47,10 @@ public abstract class Initialized extends Started {
         return position.calculateDistance(to);
     }
 
+    public boolean isHeadingDiagonal(Position to) {
+        return position.isDiagonalDirection(to);
+    }
+
     protected boolean canNotMove(Position to, Board board) {
         return canNotMoveStrategies.stream()
                 .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(this, to, board));

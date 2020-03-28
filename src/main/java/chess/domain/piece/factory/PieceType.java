@@ -4,13 +4,23 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.move.*;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.pawn.RunningPawn;
+import chess.domain.piece.rook.Rook;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum PieceType {
     INITIALIZED_PAWN("p", InitializedPawn.class, getCanNotMoveStrategiesForInitializedPawn()),
-    RUNNING_PAWN("p", RunningPawn.class, getCanNotMoveStrategiesForRunningPawn());
+    RUNNING_PAWN("p", RunningPawn.class, getCanNotMoveStrategiesForRunningPawn()),
+    ROOK("r", Rook.class, getCanNotMoveStrategiesForRook());
+
+    private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForRook() {
+        return Arrays.asList(
+                new IsStayed(),
+                new IsAttackingSameTeam(),
+                new IsHeadingDiagonal()
+        );
+    }
 
     private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForRunningPawn() {
         return Arrays.asList(

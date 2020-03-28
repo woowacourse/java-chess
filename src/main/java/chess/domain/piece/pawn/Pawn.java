@@ -11,8 +11,4 @@ public abstract class Pawn extends Initialized {
     Pawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
         super(name, position, team, canNotMoveStrategies);
     }
-
-    public boolean isHeadingDiagonal(Position to) {
-        return position.isDiagonalDirection(to);
-    }
 }

@@ -54,11 +54,11 @@ public class Position {
         return Position.of(newX, newY);
     }
 
-    int getX() {
+    public int getX() {
         return x;
     }
 
-    int getY() {
+    public int getY() {
         return y;
     }
 

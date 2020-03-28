@@ -3,13 +3,13 @@ package chess.domain.piece.knight;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.CanNotMoveStrategy;
-import chess.domain.piece.state.Running;
+import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
 import java.util.List;
 
-public class Knight extends Running {
+public class Knight extends Initialized {
 
     public Knight(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
         super(name, position, team, canNotMoveStrategies);
