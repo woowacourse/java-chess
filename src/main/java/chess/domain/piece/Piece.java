@@ -65,8 +65,8 @@ public abstract class Piece implements Movable {
 		return position.findDirection(target);
 	}
 
-	public boolean isAttackForward(Position target) {
-		return side.isAttackForward(position, target);
+	public boolean isForwardAttack(Position target) {
+		return side.isForwardAttack(position, target);
 	}
 
 	public boolean isSamePosition(Position position) {
