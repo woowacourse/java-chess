@@ -20,13 +20,13 @@ public class BoardTest {
     @Test
     @DisplayName("ChessBoard 생성")
     void create() {
-        assertThat(new Board(BoardFactory.createBoard())).isInstanceOf(Board.class);
+        assertThat(BoardFactory.createBoard()).isInstanceOf(Board.class);
     }
 
     @Test
     @DisplayName("getBoard 테스트")
     void getBoard() {
-        Board board = new Board(BoardFactory.createBoard());
+        Board board = BoardFactory.createBoard();
 
         assertThat(board.getBoard()).isInstanceOf(List.class);
     }
@@ -34,7 +34,7 @@ public class BoardTest {
     @Test
     @DisplayName("move 테스트")
     void move() {
-        Board board = new Board(BoardFactory.createBoard());
+        Board board = BoardFactory.createBoard();
         Position startPosition = Position.of(2, 1);
         Position targetPosition = Position.of(4, 1);
         MovingInfo movingInfo = new MovingInfo(startPosition, targetPosition);
@@ -49,7 +49,7 @@ public class BoardTest {
     @Test
     @DisplayName("isGameEnd 테스트 - 게임이 끝났을 경우")
     void isGameEnd() {
-        Board board = new Board(BoardFactory.createBoard());
+        Board board = BoardFactory.createBoard();
 
         board.move(new MovingInfo(Position.of(2, 6), Position.of(3, 6)));
         board.move(new MovingInfo(Position.of(7, 5), Position.of(6, 5)));
@@ -63,7 +63,7 @@ public class BoardTest {
     @Test
     @DisplayName("isGameEnd 테스트 - 게임이 끝나지 않았을 경우")
     void isGameEnd_IfNotEnd_ReturnFalse() {
-        Board board = new Board(BoardFactory.createBoard());
+        Board board = BoardFactory.createBoard();
 
         board.move(new MovingInfo(Position.of(2, 6), Position.of(3, 6)));
         board.move(new MovingInfo(Position.of(7, 5), Position.of(6, 5)));
@@ -76,7 +76,7 @@ public class BoardTest {
     @Test
     @DisplayName("getTotalScore 테스트")
     void getTotalScore() {
-        Board board = new Board(BoardFactory.createBoard());
+        Board board = BoardFactory.createBoard();
 
         board.move(new MovingInfo(Position.of(2, 4), Position.of(4, 4)));
         board.move(new MovingInfo(Position.of(7, 5), Position.of(5, 5)));
@@ -87,7 +87,7 @@ public class BoardTest {
     @Test
     @DisplayName("getNowPlayingTeam 테스트")
     void getNowPlayingTeam() {
-        Board board = new Board(BoardFactory.createBoard());
+        Board board = BoardFactory.createBoard();
 
         board.move(new MovingInfo(Position.of(2, 4), Position.of(4, 4)));
         assertThat(board.getNowPlayingTeam()).isEqualTo(BLACK);
