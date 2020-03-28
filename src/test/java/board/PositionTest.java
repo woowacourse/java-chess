@@ -1,7 +1,6 @@
 package board;
 
 import chess.domain.board.Position;
-import chess.domain.piece.direction.Direction;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,17 +22,5 @@ public class PositionTest {
     void getYPointDirectionValueToTest(String source, String target, int expected) {
         int result = new Position(source).getYPointDirectionValueTo(new Position(target));
         Assertions.assertThat(result).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @DisplayName("현재 위치값에 방향값만큼 더하면 위치값이 정상적으로 변경되야 함")
-    @CsvSource(value = {"b2,NORTH,b3", "b2,EAST,c2", "b2,SOUTH,b1", "b2,WEST,a2",
-            "b2,NORTHEAST,c3", "b2,SOUTHEAST,c1", "b2,SOUTHWEST,a1", "b2,NORTHWEST,a3",
-            "d4,NNE,e6", "d4,NNW,c6", "d4,SSE,e2", "d4,SSW,c2",
-            "d4,EEN,f5", "d4,EES,f3", "d4,WWN,b5", "d4,WWS,b3"})
-    void positionPlusDirectionThenChangePosition(String source, String direction, String target) {
-        Position position = new Position(source);
-        position.plus(Direction.valueOf(direction));
-        Assertions.assertThat(position).isEqualTo(new Position(target));
     }
 }
