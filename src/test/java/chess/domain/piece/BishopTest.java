@@ -15,7 +15,7 @@ public class BishopTest {
 	void invalidBishopMove(String destination) {
 		Bishop bishop = new Bishop(new Position("d4"), Team.BLACK);
 		assertThatThrownBy(() ->
-			bishop.validateMove(new Position(destination))
+			bishop.move(new Position(destination))
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 

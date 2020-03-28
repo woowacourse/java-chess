@@ -15,7 +15,7 @@ public class QueenTest {
 	void invalidQueenMove(String destination) {
 		Queen queen = new Queen(new Position("d3"), Team.BLACK);
 		assertThatThrownBy(() ->
-			queen.validateMove(new Position(destination))
+			queen.move(new Position(destination))
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 

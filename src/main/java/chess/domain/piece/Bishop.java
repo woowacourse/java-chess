@@ -12,7 +12,7 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public void validateMove(Position destination) {
+	protected void validateMove(Position destination) {
 		if (this.position.isNonDiagonalDirection(destination)) {
 			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}

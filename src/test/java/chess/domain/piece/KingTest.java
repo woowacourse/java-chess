@@ -16,7 +16,7 @@ public class KingTest {
 	void invalidKingMove(String destination) {
 		King king = new King(new Position("e1"), Team.WHITE);
 		assertThatThrownBy(() ->
-			king.validateMove(new Position(destination))
+			king.move(new Position(destination))
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 

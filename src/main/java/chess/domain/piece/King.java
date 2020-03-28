@@ -17,7 +17,7 @@ public class King extends Piece {
 		this.score = 0;
 	}
 
-	public void validateMove(Position destination) {
+	protected void validateMove(Position destination) {
 		Direction direction = position.calculateDirection(destination);
 		if (!possibleDirections.contains(direction)) {
 			throw new IllegalMoveException(ILLEGAL_MOVE);

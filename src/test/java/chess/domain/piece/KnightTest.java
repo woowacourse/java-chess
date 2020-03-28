@@ -16,7 +16,7 @@ public class KnightTest {
 	void invalidKingMove(String destination) {
 		Knight knight = new Knight(new Position("e1"), Team.WHITE);
 		assertThatThrownBy(() ->
-			knight.validateMove(new Position(destination))
+			knight.move(new Position(destination))
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 

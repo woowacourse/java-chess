@@ -17,7 +17,7 @@ public abstract class Piece {
 		this.isAlive = true;
 	}
 
-	public abstract void validateMove(Position destination);
+	protected abstract void validateMove(Position destination);
 
 	public void move(Position destination) {
 		validateMove(destination);

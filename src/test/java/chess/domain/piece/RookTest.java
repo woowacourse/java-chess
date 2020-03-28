@@ -16,7 +16,7 @@ public class RookTest {
 	void invalidRookMove(String destination) {
 		Rook rook = new Rook(new Position("e4"), Team.WHITE);
 		assertThatThrownBy(() ->
-			rook.validateMove(new Position(destination))
+			rook.move(new Position(destination))
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 

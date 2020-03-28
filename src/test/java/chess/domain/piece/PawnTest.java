@@ -15,7 +15,7 @@ public class PawnTest {
 	void invalidQueenMove(Team team, String destination) {
 		Pawn pawn = new Pawn(new Position("d3"), team);
 		assertThatThrownBy(() ->
-			pawn.validateMove(new Position(destination))
+			pawn.move(new Position(destination))
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 
