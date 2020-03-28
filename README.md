@@ -1,4 +1,4 @@
-# java-chess
+# java-controller
 ## 기능 요구사항
 
 ### 1단계

@@ -1,53 +1,35 @@
 package domain.commend;
 
-import domain.commend.exceptions.CommendTypeException;
-import domain.team.Team;
-import java.util.Arrays;
+import domain.pieces.Pieces;
 
 public class State {
-    private Team turn;
-    private CommendType commendType;
+    private GameState gameState;
 
-    public State() {
-        this.turn = Team.WHITE;
-        this.commendType = CommendType.START;
+    private State(Pieces pieces) {
+        gameState = new Waiting(pieces);
     }
 
-    public void changeTurn() {
-        this.turn = findTurn();
+    public static State of(Pieces pieces) {
+        return new State(pieces);
     }
 
-    private Team findTurn() {
-        if (this.turn == Team.BLACK) {
-            return Team.WHITE;
-        }
-        return Team.BLACK;
+    public void start() {
+        gameState = gameState.start();
     }
 
-    public void changeCommend(String input) {
-        commendType = findCommend(input);
+    public void end() {
+        gameState = gameState.end();
     }
 
-    private CommendType findCommend(String input) {
-        return Arrays.stream(CommendType.values())
-            .filter(type -> type.isCommend(input))
-            .findFirst()
-            .orElseThrow(() -> new CommendTypeException("잘못된 Commend 입력입니다."));
+    public void move() {
+        gameState = gameState.move();
     }
 
-    public boolean isEnd() {
-        return commendType == CommendType.END;
+    public boolean isFinished() {
+        return gameState.isFinished();
     }
 
-    public boolean isMove() {
-        return commendType == CommendType.MOVE;
-    }
-
-    public boolean isStatus() {
-        return commendType == CommendType.STATUS;
-    }
-
-    public Team getTurn() {
-        return this.turn;
+    public Pieces getPieces() {
+        return gameState.pieces();
     }
 }
