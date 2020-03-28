@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    private static final int RUNNING_KING_COUNT = 2;
     private Map<Position, PieceState> board;
 
     private Board(Map<Position, PieceState> board) {
@@ -66,11 +67,10 @@ public class Board {
                 ));
     }
 
-    public boolean isLost(Team team) {
+    public boolean isEnd() {
         return board.values()
                 .stream()
-                .filter(piece -> team.equals(piece.getTeam()))
                 .filter(piece -> piece instanceof King)
-                .count() == 0;
+                .count() < RUNNING_KING_COUNT;
     }
 }

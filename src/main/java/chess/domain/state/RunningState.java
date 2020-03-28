@@ -25,7 +25,7 @@ public class RunningState implements State {
     @Override
     public State move(MoveParameter moveParameter, Turn turn) {
         board.move(moveParameter.getSource(), moveParameter.getTarget(), turn);
-        if (board.isLost(Team.WHITE) || board.isLost(Team.BLACK)) {
+        if (board.isEnd()) {
             return new EndState(board);
         }
         return this;

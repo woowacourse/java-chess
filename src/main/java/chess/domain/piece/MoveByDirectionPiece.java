@@ -38,11 +38,5 @@ public abstract class MoveByDirectionPiece extends Piece {
         return positions;
     }
 
-    private void addIfMoveOrAttack(BoardState boardState, List<Position> positions, Position startPathPosition) {
-        if (boardState.canMove(startPathPosition) || boardState.canAttack(startPathPosition, team)) {
-            positions.add(startPathPosition);
-        }
-    }
-
     protected abstract List<MovingDirection> getMovingDirections();
 }
