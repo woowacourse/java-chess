@@ -12,8 +12,8 @@ public class ChessFile {
 
 
     static {
-        for (char c = LOWER_BOUND; c <= UPPER_BOUND; c++) {
-            CHESS_FILE_CACHE.put(c, new ChessFile(c));
+        for (char character = LOWER_BOUND; character <= UPPER_BOUND; character++) {
+            CHESS_FILE_CACHE.put(character, new ChessFile(character));
         }
     }
 
