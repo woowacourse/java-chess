@@ -1,33 +1,26 @@
 package chess.domain.state;
 
 import chess.domain.ChessBoard;
-import chess.domain.ChessStatus;
 import chess.domain.Side;
 import chess.domain.position.Position;
 
 public class Running extends Started {
+	public Running(ChessBoard chessBoard) {
+		super(chessBoard);
+	}
+
 	public Running(ChessBoard chessBoard, Side turn) {
 		super(chessBoard, turn);
 	}
 
 	@Override
 	public State move(Position source, Position target) {
-		try {
-			chessBoard.move(source, target, turn);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return new Running(chessBoard, turn);
-		}
+		chessBoard.move(source, target, turn);
 
 		if (chessBoard.isEnd()) {
-			return new End(chessBoard);
+			return new End(chessBoard, turn.reverse());
 		}
 		return new Running(chessBoard, turn.reverse());
-	}
-
-	@Override
-	public ChessStatus calculateStatus() {
-		return chessBoard.createStatus();
 	}
 
 	@Override

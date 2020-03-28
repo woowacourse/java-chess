@@ -26,12 +26,12 @@ public class ChessBoard {
 
 		validateBlock(source, target);
 		validateTurn(sourcePiece, turn);
-		validateAction(target, sourcePiece);
+		validateAction(sourcePiece, target);
 		pieces.removeIf(piece -> piece.isSamePosition(target));
 		sourcePiece.move(target);
 	}
 
-	private void validateAction(Position target, Piece sourcePiece) {
+	private void validateAction(Piece sourcePiece, Position target) {
 		if (isPresentPiece(target)) {
 			validateMove(sourcePiece, findByPosition(target));
 			return;

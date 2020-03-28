@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.ChessBoard;
+import chess.domain.ChessStatus;
 import chess.domain.Side;
 import chess.domain.position.Position;
 
@@ -18,15 +19,25 @@ public abstract class Started implements State {
 	}
 
 	@Override
+	public abstract State move(Position source, Position target);
+
+	@Override
+	public ChessStatus calculateStatus() {
+		return chessBoard.createStatus();
+	}
+
+	@Override
+	public State end() {
+		return new End(chessBoard, turn);
+	}
+
+	@Override
 	public ChessBoard getChessBoard() {
 		return chessBoard;
 	}
 
 	@Override
-	public abstract State move(Position source, Position target);
-
-	@Override
-	public State end() {
-		return new End(chessBoard);
+	public Side getTurn() {
+		return turn;
 	}
 }

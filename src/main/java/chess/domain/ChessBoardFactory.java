@@ -7,6 +7,7 @@ import chess.domain.position.Row;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,7 @@ public class ChessBoardFactory {
 	}
 
 	public static ChessBoard create() {
-		List<Piece> chessBoard = new ArrayList<>();
+		List<Piece> chessBoard = new LinkedList<>();
 		chessBoard.addAll(createNoble(Side.BLACK));
 		chessBoard.addAll(createPawn(Side.BLACK));
 		chessBoard.addAll(createNoble(Side.WHITE));
@@ -23,13 +24,13 @@ public class ChessBoardFactory {
 		return new ChessBoard(chessBoard);
 	}
 
-	public static List<Piece> createPawn(Side side) {
+	private static List<Piece> createPawn(Side side) {
 		return Arrays.stream(Column.values())
 				.map(col -> new Pawn(side, new Position(col, side.getInitPawnRow())))
 				.collect(Collectors.toList());
 	}
 
-	public static List<Piece> createNoble(Side side) {
+	private static List<Piece> createNoble(Side side) {
 		Row row = side.getInitNobleRow();
 		return Arrays.asList(
 				new Rook(side, new Position("a", row)),

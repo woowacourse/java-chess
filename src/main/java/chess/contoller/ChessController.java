@@ -10,10 +10,18 @@ public class ChessController {
 	public void run() {
 		OutputView.printInitMessage();
 		State state = StateFactory.create();
-
 		while (!state.isEnd()) {
+			state = actCommand(state);
+		}
+	}
+
+	private State actCommand(State state) {
+		try {
 			UserCommand command = UserCommand.of(InputView.inputCommand());
 			state = command.execute(state);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
+		return state;
 	}
 }
