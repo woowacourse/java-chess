@@ -1,58 +1,62 @@
 package chess.domain.position;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 public class ChessRankTest {
 
-    @Test
-    void from_RankPosition_ReturnInstance() {
-        assertThat(ChessRank.from(1)).isInstanceOf(ChessRank.class);
-    }
+	@ParameterizedTest
+	@ValueSource(ints = {1, 8})
+	void from_IntegerChessRank_ReturnInstance(int chessRank) {
+		assertThat(ChessRank.from(chessRank)).isInstanceOf(ChessRank.class);
+	}
 
-    @Test
-    void from_EqualInstance_ReturnTrue() {
-        ChessRank chessRank1 = ChessRank.from(1);
-        ChessRank chessRank2 = ChessRank.from(1);
+	@ParameterizedTest
+	@ValueSource(ints = {0, 9})
+	void from_InvalidIntegerChessRank_ExceptionThrown(int chessRank) {
+		assertThatThrownBy(() -> ChessRank.from(chessRank))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("체스 랭크가 존재하지 않습니다.");
+	}
 
-        assertThat(chessRank1.equals(chessRank2)).isTrue();
-        assertThat(chessRank1 == chessRank2).isTrue();
-    }
+	@ParameterizedTest
+	@ValueSource(chars = {'1', '8'})
+	void from_CharacterChessRank_ReturnInstance(char chessRank) {
+		assertThat(ChessRank.from(chessRank)).isInstanceOf(ChessRank.class);
+	}
 
-    @ParameterizedTest
-    @ValueSource(ints = {0, 9})
-    void validate_InvalidChessRank_ExceptionThrown(int invalidChessRank) {
-        assertThatThrownBy(() -> ChessRank.from(invalidChessRank))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
+	@ParameterizedTest
+	@ValueSource(chars = {'0', '9'})
+	void from_InvalidCharacterChessRank_ExceptionThrown(char chessRank) {
+		assertThatThrownBy(() -> ChessRank.from(chessRank))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("체스 랭크가 존재하지 않습니다.");
+	}
 
-    @Test
-    void move_RankMovingUnit_ReturnMovedChessRank() {
-        ChessRank sourceRank = ChessRank.from(1);
+	@ParameterizedTest
+	@CsvSource(value = {"1,1,2", "3,4,7"})
+	void move_MovingRankValue_ReturnMovedChessRank(int chessRank, int movingRankValue, int expected) {
+		assertThat(ChessRank.from(chessRank).move(movingRankValue)).isEqualTo(ChessRank.from(expected));
+	}
 
-        ChessRank expected = ChessRank.from(2);
-        assertThat(sourceRank.move(1)).isEqualTo(expected);
-    }
+	@ParameterizedTest
+	@CsvSource(value = {"1,2,1", "8,3,-5"})
+	void gapTo_TargetChessRank_CalculateGapFromTargetChessRank(int sourceChessRank, int targetChessRank, int expected) {
+		assertThat(ChessRank.from(sourceChessRank).gapTo(ChessRank.from(targetChessRank))).isEqualTo(expected);
+	}
 
-    @Test
-    void intervalTo_TargetChessRank_CalculateInterval() {
-        ChessRank sourceRank = ChessRank.from(1);
-        ChessRank targetRank = ChessRank.from(2);
+	@ParameterizedTest
+	@NullSource
+	void gapTo_NullChessRank_ExceptionThrown(ChessRank targetChessRank) {
+		ChessRank sourceChessRank = ChessRank.FOUR;
 
-        int expected = 2 - 1;
-        assertThat(sourceRank.intervalTo(targetRank)).isEqualTo(expected);
-    }
+		assertThatThrownBy(() -> sourceChessRank.gapTo(targetChessRank))
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("체스 랭크가 null입니다.");
+	}
 
-    @ParameterizedTest
-    @NullSource
-    void intervalTo_NullChessRank_ExceptionThrown(ChessRank chessRank) {
-        assertThatThrownBy(() -> ChessRank.from(1).intervalTo(chessRank))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("비교할 타겟 랭크가 존재하지 않습니다.");
-    }
 }

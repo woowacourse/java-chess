@@ -11,14 +11,6 @@ public class Position {
 	private static final int POSITION_KEY_VALID_LENGTH = 2;
 	private static final Map<String, Position> POSITION_CACHE = new HashMap<>();
 
-	static {
-		for (ChessFile chessFile : ChessFile.values()) {
-			for (ChessRank chessRank : ChessRank.values()) {
-				POSITION_CACHE.put(key(chessFile, chessRank), new Position(chessFile, chessRank));
-			}
-		}
-	}
-
 	private final ChessFile chessFile;
 	private final ChessRank chessRank;
 
@@ -27,20 +19,29 @@ public class Position {
 		this.chessRank = chessRank;
 	}
 
-	private Position(String key) {
-		this(ChessFile.from(key.charAt(FILE_INDEX)), ChessRank.from(key.charAt(RANK_INDEX)));
+	static {
+		for (ChessFile chessFile : ChessFile.values()) {
+			for (ChessRank chessRank : ChessRank.values()) {
+				POSITION_CACHE.put(key(chessFile, chessRank), new Position(chessFile, chessRank));
+			}
+		}
+	}
+
+	private static String key(ChessFile chessFile, ChessRank chessRank) {
+		return String.format("%s%s", chessFile, chessRank);
 	}
 
 	public static Position of(ChessFile chessFile, ChessRank chessRank) {
-		Objects.requireNonNull(chessFile, "유효한 체스파일이 아닙니다.");
-		Objects.requireNonNull(chessRank, "유효한 체스랭크가 아닙니다.");
+		Objects.requireNonNull(chessFile, "체스 파일이 null입니다.");
+		Objects.requireNonNull(chessRank, "체스 랭크가 null입니다.");
 
 		return POSITION_CACHE.getOrDefault(key(chessFile, chessRank), new Position(chessFile, chessRank));
 	}
 
 	public static Position of(String key) {
 		validate(key);
-		return POSITION_CACHE.getOrDefault(key, new Position(key));
+		return POSITION_CACHE.getOrDefault(key,
+			new Position(ChessFile.from(key.charAt(FILE_INDEX)), ChessRank.from(key.charAt(RANK_INDEX))));
 	}
 
 	private static void validate(String key) {
@@ -60,34 +61,23 @@ public class Position {
 		}
 	}
 
-	private static String key(ChessFile chessFile, ChessRank chessRank) {
-		return String.format("%s%s", chessFile, chessRank);
-	}
-
-	public Position move(int fileMovingUnit, int rankMovingUnit) {
-		return Position.of(chessFile.move(fileMovingUnit), chessRank.move(rankMovingUnit));
+	Position move(int movingFileValue, int movingRankValue) {
+		return Position.of(chessFile.move(movingFileValue), chessRank.move(movingRankValue));
 	}
 
 	public int calculateChessFileGapTo(Position targetPosition) {
-		Objects.requireNonNull(targetPosition, "비교할 타겟 위치가 존재하지 않습니다.");
-		return this.chessFile.intervalTo(targetPosition.chessFile);
+		Objects.requireNonNull(targetPosition, "타겟 위치가 null입니다.");
+		return this.chessFile.gapTo(targetPosition.chessFile);
 	}
 
 	public int calculateChessRankGapTo(Position targetPosition) {
-		Objects.requireNonNull(targetPosition, "비교할 타겟 위치가 존재하지 않습니다.");
-		return this.chessRank.intervalTo(targetPosition.chessRank);
+		Objects.requireNonNull(targetPosition, "타겟 위치가 null입니다.");
+		return this.chessRank.gapTo(targetPosition.chessRank);
 	}
 
 	public boolean isSame(ChessFile chessFile) {
+		Objects.requireNonNull(chessFile, "체스 파일이 null입니다.");
 		return this.chessFile.equals(chessFile);
 	}
 
-	public boolean isSame(ChessRank chessRank) {
-		return this.chessRank.equals(chessRank);
-	}
-
-	@Override
-	public String toString() {
-		return key(this.chessFile, this.chessRank);
-	}
 }

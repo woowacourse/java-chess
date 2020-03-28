@@ -1,57 +1,61 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.Objects;
 
 // TODO: 2020/03/28 Enum으로 변경하기
-public class ChessFile {
+public enum ChessFile {
 
-	private static final char LOWER_BOUND = 'a';
-	private static final char UPPER_BOUND = 'h';
-	private static final Map<Character, ChessFile> CHESS_FILE_CACHE = new HashMap<>();
+	A("a", 1),
+	B("b", 2),
+	C("c", 3),
+	D("d", 4),
+	E("e", 5),
+	F("f", 6),
+	G("g", 7),
+	H("h", 8);
 
-	static {
-		for (char c = LOWER_BOUND; c <= UPPER_BOUND; c++) {
-			CHESS_FILE_CACHE.put(c, new ChessFile(c));
-		}
-	}
+	private final String chessFile;
+	private final int fileValue;
 
-	private final char chessFile;
-
-	private ChessFile(char chessFile) {
-		validate(chessFile);
+	ChessFile(String chessFile, int fileValue) {
 		this.chessFile = chessFile;
-	}
-
-	private void validate(char chessFile) {
-		if (chessFile < LOWER_BOUND || chessFile > UPPER_BOUND) {
-			throw new IllegalArgumentException("유효한 체스 파일이 아닙니다.");
-		}
+		this.fileValue = fileValue;
 	}
 
 	public static ChessFile from(char chessFile) {
-		return CHESS_FILE_CACHE.getOrDefault(chessFile, new ChessFile(chessFile));
+		return Arrays.stream(values())
+			.filter(value -> value.chessFile.equals(String.valueOf(chessFile)))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("체스 파일이 존재하지 않습니다."));
 	}
 
-	// TODO: 2020/03/28 unmodifiable로 수정
-	public static List<ChessFile> values() {
-		return new ArrayList<>(CHESS_FILE_CACHE.values());
+	public static ChessFile from(String chessFile) {
+		return Arrays.stream(values())
+			.filter(value -> value.chessFile.equals(chessFile))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("체스 파일이 존재하지 않습니다."));
 	}
 
-	public ChessFile move(int fileMovingUnit) {
-		return from((char)(this.chessFile + fileMovingUnit));
+	public static ChessFile from(int fileValue) {
+		return Arrays.stream(values())
+			.filter(value -> value.fileValue == fileValue)
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("체스 파일이 존재하지 않습니다."));
 	}
 
-	public int intervalTo(ChessFile targetFile) {
-		Objects.requireNonNull(targetFile, "비교할 타겟 파일이 존재하지 않습니다.");
-		return targetFile.chessFile - this.chessFile;
+	ChessFile move(int movingFileValue) {
+		return from(this.fileValue + movingFileValue);
+	}
+
+	public int gapTo(ChessFile targetChessFile) {
+		Objects.requireNonNull(targetChessFile, "체스 파일이 null입니다.");
+		return targetChessFile.fileValue - this.fileValue;
 	}
 
 	@Override
 	public String toString() {
 		return String.valueOf(chessFile);
 	}
+
 }

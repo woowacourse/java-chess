@@ -2,28 +2,31 @@ package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class MoveDirectionTest {
-	@Test
-	void isSameDirection_SourcePosition_SamePositionResult() {
-		Position sourcePosition = Position.of("d4");
-		Position targetPosition = Position.of("d6");
 
-		assertThat(MoveDirection.N.isSameDirectionFrom(sourcePosition, targetPosition)).isTrue();
+	@ParameterizedTest
+	@CsvSource(value = {"N,d5,d6", "NE,d5,e6", "E,d5,e5", "SE,d5,e4", "S,d5,d4", "SW,d5,c4", "W,d5,c5", "NW,d5,c6"})
+	void isSameDirection_SourcePositionAndTargetPosition_ReturnTrue(MoveDirection moveDirection,
+		Position sourcePosition, Position targetPosition) {
+		assertThat(moveDirection.isSameDirectionFrom(sourcePosition, targetPosition)).isTrue();
 	}
 
-	@Test
-	void move_SourcePosition_MovedPosition() {
-		Position sourcePosition = Position.of("d4");
-
-		assertThat(MoveDirection.N.move(sourcePosition)).isEqualTo(Position.of("d5"));
-		assertThat(MoveDirection.NE.move(sourcePosition)).isEqualTo(Position.of("e5"));
-		assertThat(MoveDirection.E.move(sourcePosition)).isEqualTo(Position.of("e4"));
-		assertThat(MoveDirection.SE.move(sourcePosition)).isEqualTo(Position.of("e3"));
-		assertThat(MoveDirection.S.move(sourcePosition)).isEqualTo(Position.of("d3"));
-		assertThat(MoveDirection.SW.move(sourcePosition)).isEqualTo(Position.of("c3"));
-		assertThat(MoveDirection.W.move(sourcePosition)).isEqualTo(Position.of("c4"));
-		assertThat(MoveDirection.NW.move(sourcePosition)).isEqualTo(Position.of("c5"));
+	@ParameterizedTest
+	@CsvSource(value = {"N,d5,e8", "NE,d5,a6", "E,c6,e5", "SE,e5,e4", "S,h5,d4", "SW,d5,c5", "W,f5,c8", "NW,d8,c6"})
+	void isSameDirection_NotExistDirection_ReturnFalse(MoveDirection moveDirection, Position sourcePosition,
+		Position targetPosition) {
+		assertThat(moveDirection.isSameDirectionFrom(sourcePosition, targetPosition)).isFalse();
 	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"N,d5", "NE,e5", "E,e4", "SE,e3", "S,d3", "SW,c3", "W,c4", "NW,c5"})
+	void move_SourcePosition_MovedPosition(MoveDirection moveDirection, Position expected) {
+		Position position = Position.of("d4");
+
+		assertThat(moveDirection.move(position)).isEqualTo(expected);
+	}
+
 }

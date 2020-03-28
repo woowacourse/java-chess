@@ -115,7 +115,7 @@ public class ChessBoard {
 	}
 
 	public double calculateScoreOf(PieceColor pieceColor) {
-		return ChessFile.values().stream()
+		return Arrays.stream(ChessFile.values())
 			.map(chessFile -> findChessPieceOn(chessFile, pieceColor))
 			.mapToDouble(this::calculateScoreOf)
 			.sum();
