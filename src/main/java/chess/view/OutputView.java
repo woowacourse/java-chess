@@ -13,7 +13,7 @@ public class OutputView {
     public static void printInitializedBoard(Board board) {
         int count = 1;
         for (int index = 0; index < 64; index++) {
-            System.out.print(board.getPiece(index));
+            System.out.print(board.findPieceBy(index));
             if (count % 8 == 0) {
                 System.out.print(NEW_LINE);
             }

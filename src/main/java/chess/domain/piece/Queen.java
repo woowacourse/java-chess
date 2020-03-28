@@ -26,6 +26,11 @@ public class Queen extends MultipleStep {
     }
 
     @Override
+    public Piece movePiecePosition(Position toPosition) {
+        return new Queen(representation, team, toPosition);
+    }
+
+    @Override
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }

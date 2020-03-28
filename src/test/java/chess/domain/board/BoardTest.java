@@ -36,8 +36,8 @@ public class BoardTest {
     @MethodSource("getCasesForFindingPieceByStringPosition")
     void findPiece(String position, Piece expectedPiece) {
         Board board = BoardFactory.createBoard();
-        Piece piece = board.findPieceByStringPosition(position);
-        assertThat(piece).isEqualTo(expectedPiece);
+        int index = board.getBoardIndexByStringPosition(position);
+        assertThat(board.findPieceBy(index)).isEqualTo(expectedPiece);
     }
 
     private static Stream<Arguments> getCasesForFindingPieceByStringPosition() {
@@ -113,6 +113,30 @@ public class BoardTest {
                 Arguments.of("f8", new Bishop('B', Team.BLACK, new Position(6, 8))),
                 Arguments.of("g8", new Knight('N', Team.BLACK, new Position(7, 8))),
                 Arguments.of("h8", new Rook('R', Team.BLACK, new Position(8, 8)))
+        );
+    }
+
+    @DisplayName("피스 위치 변경")
+    @ParameterizedTest
+    @MethodSource("getCasesForPieceMove")
+    void movePiece(String from, String to, Object fromPieceType, Object toPieceType) {
+        Board board = BoardFactory.createBoard();
+        Board movedBoard = board.movePiece(from, to);
+
+        int fromIndex = movedBoard.getBoardIndexByStringPosition(from);
+        Piece afterFromPiece = movedBoard.findPieceBy(fromIndex);
+
+        int toIndex = movedBoard.getBoardIndexByStringPosition(to);
+        Piece afterToPiece = movedBoard.findPieceBy(toIndex);
+
+        assertThat(afterFromPiece.getClass()).isEqualTo(toPieceType);
+        assertThat(afterToPiece.getClass()).isEqualTo(fromPieceType);
+    }
+
+    private static Stream<Arguments> getCasesForPieceMove() {
+        return Stream.of(
+                Arguments.of("a2", "a4", WhitePawn.class, Blank.class),
+                Arguments.of("b1", "c3", Knight.class, Blank.class)
         );
     }
 }

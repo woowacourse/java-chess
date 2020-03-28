@@ -22,6 +22,11 @@ public class Bishop extends MultipleStep {
     }
 
     @Override
+    public Piece movePiecePosition(Position toPosition) {
+        return new Bishop(representation, team, toPosition);
+    }
+
+    @Override
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }

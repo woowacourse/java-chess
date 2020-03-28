@@ -26,6 +26,11 @@ public class King extends SingleStep {
     }
 
     @Override
+    public Piece movePiecePosition(Position toPosition) {
+        return new King(representation, team, toPosition);
+    }
+
+    @Override
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }

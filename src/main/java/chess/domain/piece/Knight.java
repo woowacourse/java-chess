@@ -26,6 +26,11 @@ public class Knight extends SingleStep {
     }
 
     @Override
+    public Piece movePiecePosition(Position toPosition) {
+        return new Knight(representation, team, toPosition);
+    }
+
+    @Override
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }

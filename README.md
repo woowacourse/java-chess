@@ -14,28 +14,26 @@
 3. move source_위치 target_위치를 실행해 이동한다.
 
 ## 4. 구현 목록
-- [ ] Piece
+- [x] Piece
     - [x] 체스 말 표식 representation 으로 화이트/블랙 구분
     - [x] 각 체스 말(Pawn, Rook, Knight, Bishop, Queen, King)이 현재 포지션을 가지고 있음
     - [x] Blank Piece 를 추가하여 .으로 표시되는 보드 상의 공백 부분을 나타냄
     - [x] 이동 가능 한 포지션들 추출
     - [x] to position 을 받아서 이동 가능한지 확인
-    - [ ] 이동 가능 여부 출력. 
-    - [ ] 이동 불가능 하면 예외 발생.
-- [ ] BoardFactory
+    - [x] 이동 불가능 하면 예외 발생.
+- [x] BoardFactory
     - [x] 초기화된 위치를 갖고 있는 piece 들로 이루어진 List 생성
     - [x] 정적 팩터리 메서드로 초기화된 보드(Board) 생성
-- [ ] Board
+- [x] Board
     - [x] a5 같은 문자열 포지션으로 해당 포지션에 있는 piece 를 찾음 (from && to)
-    - [ ] piece 의 포지션을 바꿀 때마다 포지션 순서대로 정렬 
-    - [ ] piece 가 이동 가능하면 board 리스트 에서, 
-        - [ ] from piece 는 to position 으로 변경
-        - [ ] from position 을 갖는 Blank piece 추가
-        - [ ] to position 을 갖고 있었던 piece 는 리스트에서 제거
+    - [x] piece 의 포지션을 바꾼 후 불변 객체 (보드) 반환
+    - [x] piece 가 이동 가능하면 board 리스트 에서, 
+        - [x] from piece 는 to position 으로 변경
+        - [x] from position 을 갖는 Blank piece 추가
 - [x] Direction
     - [x] 이동 가능한 방향별 enum 요소
     - [x] 현재 위치에서 해당 방향으로 이동한 후의 포지셔 반환
-- [ ] Run
+- [x] Run
     - [x] 게임 실행 여부를 조정
         - [x] start : 게임시작
         - [x] end : 게임종료

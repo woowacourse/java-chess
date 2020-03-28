@@ -22,6 +22,11 @@ public class Rook extends MultipleStep {
     }
 
     @Override
+    public Piece movePiecePosition(Position toPosition) {
+        return new Rook(representation, team, toPosition);
+    }
+
+    @Override
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }

@@ -21,6 +21,11 @@ public class WhitePawn extends Pawn {
     }
 
     @Override
+    public Piece movePiecePosition(Position toPosition) {
+        return new WhitePawn(representation, team, toPosition);
+    }
+
+    @Override
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }

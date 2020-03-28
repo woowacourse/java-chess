@@ -26,7 +26,11 @@ public abstract class Piece {
     }
 
     public boolean isMovable(Board board, Position to) {
-        return getPossiblePositions(board).contains(to);
+        try {
+            return getPossiblePositions(board).contains(to);
+        } catch(UnsupportedOperationException e) {
+            throw new UnsupportedOperationException(e.getMessage());
+        }
     }
 
     public boolean isOtherTeam(Piece nextPiece) {
@@ -62,4 +66,6 @@ public abstract class Piece {
     }
 
     public abstract List<Position> getPossiblePositions(Board board);
+
+    public abstract Piece movePiecePosition(Position toPosition);
 }

@@ -21,6 +21,11 @@ public class BlackPawn extends Pawn {
     }
 
     @Override
+    public Piece movePiecePosition(Position toPosition) {
+        return new BlackPawn(representation, team, toPosition);
+    }
+
+    @Override
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }
