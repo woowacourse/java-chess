@@ -18,9 +18,9 @@ public class ChessController {
 	private static final String WRONG_COMMAND_DIALOGUE = "올바른 명령을 입력해 주십시오.";
 	private static final String NOT_ENOUGH_ARGUMENTS = "명령에 인자가 부족합니다.";
 
-	private State state = State.BEFORESTART;
+	private State state;
 
-	public void run() {
+	public synchronized void run() {
 		OutputView.printGameStartInstruction();
 		Board board = new Board();
 		setInitialStatus();
