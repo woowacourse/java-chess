@@ -1,12 +1,15 @@
 package domain.commend;
 
 import domain.pieces.Pieces;
+import domain.team.Team;
 
 public class State {
     private GameState gameState;
+    private Team team;
 
     private State(Pieces pieces) {
         gameState = new Waiting(pieces);
+        team = Team.WHITE;
     }
 
     public static State of(Pieces pieces) {
@@ -21,8 +24,13 @@ public class State {
         gameState = gameState.end();
     }
 
-    public void move() {
-        gameState = gameState.move();
+    public void move(String input) {
+        gameState = gameState.move(team, input);
+        changeTurn();
+    }
+
+    private void changeTurn() {
+        team = Team.opposite(team);
     }
 
     public boolean isFinished() {

@@ -20,7 +20,7 @@ public enum CommendType {
         return Arrays.stream(CommendType.values())
             .filter(type -> type.isSameType(inputSplit.get(0)))
             .findFirst()
-            .orElseThrow(() -> new CommendTypeException(""));
+            .orElseThrow(() -> new CommendTypeException("올바른 명령어가 아닙니다."));
     }
 
     private boolean isSameType(String input) {

@@ -1,6 +1,7 @@
 package domain.commend;
 
 import domain.pieces.Pieces;
+import domain.team.Team;
 
 public class Playing extends Commend {
 
@@ -19,7 +20,8 @@ public class Playing extends Commend {
     }
 
     @Override
-    public GameState move() {
+    public GameState move(Team team, String input) {
+        Move.movePiece(team, pieces, input);
         return this;
     }
 

@@ -16,4 +16,11 @@ public enum Team {
     public String caseInitial(String initial) {
         return operator.apply(initial);
     }
+
+    public static Team opposite(Team team) {
+        if (BLACK.equals(team)) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }

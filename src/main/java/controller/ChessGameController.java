@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 import view.InputView;
 import view.OutputView;
 
-
 public class ChessGameController {
     private State state;
     private Map<CommendType, Consumer<String>> commends = new HashMap<>();
@@ -18,7 +17,7 @@ public class ChessGameController {
         state = State.of(pieces);
         commends.put(CommendType.START, (input -> state.start()));
         commends.put(CommendType.END, (input -> state.end()));
-        commends.put(CommendType.MOVE, (input -> state.move()));
+        commends.put(CommendType.MOVE, (input -> state.move(input)));
     }
 
     public void gameChess() {

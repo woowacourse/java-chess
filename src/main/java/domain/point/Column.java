@@ -32,7 +32,7 @@ public enum Column {
 		return Arrays.stream(values())
 			.filter(column -> column.index == index)
 			.findFirst()
-			.orElseThrow(() -> new NotExistPointException("존재하지 않는 Row 입니다."));
+			.orElseThrow(() -> new NotExistPointException("존재하지 않는 Column 입니다."));
 	}
 
 	@Override
