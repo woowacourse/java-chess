@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RunningTest {
 	@Test
@@ -37,6 +37,14 @@ class RunningTest {
 		assertThat(running).isInstanceOf(End.class);
 	}
 
+	@Test
+	@DisplayName("자기 턴이 아닌 경우에 상대 말을 움직이면 에러 처리")
+	void moveWithOtherSidePiece() {
+		State running = new Running(ChessBoardFactory.create());
+		assertThatThrownBy(() -> running.move(new Position("a7"), new Position("a6")))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("본인의 말만 움직일 수 있습니다.");
+	}
 
 	@Test
 	@DisplayName("종료된 상태를 반환하는지 테스트")

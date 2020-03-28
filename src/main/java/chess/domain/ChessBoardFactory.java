@@ -5,7 +5,6 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;

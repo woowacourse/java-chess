@@ -21,11 +21,10 @@ public class ChessBoard {
 		}
 	}
 
-	public void move(Position source, Position target, Side turn) {
+	public void move(Position source, Position target) {
 		Piece sourcePiece = findByPosition(source);
 
 		validateBlock(source, target);
-		validateTurn(sourcePiece, turn);
 		validateAction(sourcePiece, target);
 		pieces.removeIf(piece -> piece.isSamePosition(target));
 		sourcePiece.move(target);
@@ -39,10 +38,8 @@ public class ChessBoard {
 		validateAttack(sourcePiece, target);
 	}
 
-	private void validateTurn(Piece source, Side turn) {
-		if (!source.isSameSide(turn)) {
-			throw new IllegalArgumentException("본인의 말만 움직일 수 있습니다.");
-		}
+	public boolean isRightTurn(Position source, Side turn) {
+		return findByPosition(source).isSameSide(turn);
 	}
 
 	private void validateMove(Piece source, Piece target) {

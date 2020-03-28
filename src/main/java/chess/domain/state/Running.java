@@ -15,12 +15,19 @@ public class Running extends Started {
 
 	@Override
 	public State move(Position source, Position target) {
-		chessBoard.move(source, target, turn);
+		validateTurn(source, turn);
+		chessBoard.move(source, target);
 
 		if (chessBoard.isEnd()) {
 			return new End(chessBoard, turn.reverse());
 		}
 		return new Running(chessBoard, turn.reverse());
+	}
+
+	private void validateTurn(Position source, Side turn) {
+		if (!chessBoard.isRightTurn(source, turn)) {
+			throw new IllegalArgumentException("본인의 말만 움직일 수 있습니다.");
+		}
 	}
 
 	@Override
