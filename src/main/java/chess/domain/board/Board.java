@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static chess.util.NullValidator.validateNull;
+
 public class Board {
     private final Map<Position, Piece> board = createBoard();
 
@@ -54,6 +56,14 @@ public class Board {
         cells.put(new Position(6, 1), new Bishop(PieceColor.WHITE, new Position(6, 1)));
         cells.put(new Position(7, 1), new Knight(PieceColor.WHITE, new Position(7, 1)));
         cells.put(new Position(8, 1), new Rook(PieceColor.WHITE, new Position(8, 1)));
+    }
+
+    public Piece findPiece(Position sourcePosition) {
+        validateNull(sourcePosition);
+        if (board.get(sourcePosition).isNoneColor()) {
+            throw new IllegalArgumentException("움직일 수 있는 체스말이 없습니다.");
+        }
+        return board.get(sourcePosition);
     }
 
     public Map<Position, Piece> getBoard() {
