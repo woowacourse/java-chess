@@ -10,8 +10,13 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessController {
-    private static List<String> startOrEnd = List.of("start", "end");
-    private static List<String> moveOrStatus = List.of("move", "status");
+    private static final String START = "start";
+    private static final String END = "end";
+    private static final String MOVE = "move";
+    private static final String STATUS = "status";
+
+    private static List<String> startOrEnd = List.of(START, END);
+    private static List<String> moveOrStatus = List.of(MOVE, STATUS);
     private static Turn turn = Turn.LOWER;
 
     public static void start(String input) {
@@ -19,7 +24,7 @@ public class ChessController {
             throw new IllegalArgumentException("잘못된 명령어 입력입니다.");
         }
 
-        if ("end".equals(input)) {
+        if (END.equals(input)) {
             exit();
         }
     }
@@ -33,7 +38,7 @@ public class ChessController {
             throw new IllegalArgumentException("잘못된 명령어 입력입니다.");
         }
 
-        if ("status".equals(input)) {
+        if (STATUS.equals(input)) {
             status(boards);
         }
         move(input, boards);
