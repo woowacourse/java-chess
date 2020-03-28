@@ -38,4 +38,9 @@ public class Finished extends Started {
     public double getBlackTeamScore() {
         return blackTeamScore;
     }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
 }

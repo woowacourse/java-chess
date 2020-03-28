@@ -4,7 +4,6 @@ import chess.controller.command.Command;
 import chess.controller.command.CommandReader;
 import chess.domain.gamestate.GameState;
 import chess.domain.gamestate.NothingHappened;
-import chess.domain.gamestate.Running;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -17,7 +16,7 @@ public class ConsoleUIApplication {
         do {
             gameState = runGame(gameState);
             OutputView.printChessBoard(gameState);
-        } while (gameState instanceof Running);
+        } while (gameState.isRunning());
 
         OutputView.printScoreResult(gameState);
     }

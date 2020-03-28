@@ -30,4 +30,9 @@ public class NothingHappened implements GameState {
     public double getBlackTeamScore() {
         throw new UnsupportedOperationException(GAME_NOT_RUNNING_MESSAGE);
     }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
 }

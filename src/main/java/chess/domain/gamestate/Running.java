@@ -32,4 +32,9 @@ public class Running extends Started {
         throw new UnsupportedOperationException(IMPOSSIBLE_TO_CALCULATE_SCORE_MESSAGE);
 
     }
+
+    @Override
+    public boolean isRunning() {
+        return true;
+    }
 }

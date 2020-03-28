@@ -12,4 +12,6 @@ public interface GameState {
     double getWhiteTeamScore();
 
     double getBlackTeamScore();
+
+    boolean isRunning();
 }
