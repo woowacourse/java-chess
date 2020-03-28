@@ -87,9 +87,8 @@ public class Pawn extends Piece {
         }
     }
 
-
-    // Todo Piece2의 추상메서드로 분리해야함
-    private void removeSquareIfSameColor(Map<Square, Piece> board, Set<Square> squares, Square pawnScopeSquare) {
+    @Override
+    public void removeSquareIfSameColor(Map<Square, Piece> board, Set<Square> squares, Square pawnScopeSquare) {
         if (board.containsKey(pawnScopeSquare) && color == board.get(pawnScopeSquare).color) {
             squares.remove(pawnScopeSquare);
         }

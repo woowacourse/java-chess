@@ -30,6 +30,13 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public void removeSquareIfSameColor(Map<Square, Piece> board, Set<Square> squares, Square pawnScopeSquare) {
+        if (board.containsKey(pawnScopeSquare) && color == board.get(pawnScopeSquare).color) {
+            squares.remove(pawnScopeSquare);
+        }
+    }
+
+    @Override
     public Set<Square> calculateScope(Square square) {
         Set<Square> availableSquares = new HashSet<>();
         for (int index = -7; index < 8; index++) {

@@ -60,6 +60,13 @@ public class Queen extends Piece {
     }
 
     @Override
+    public void removeSquareIfSameColor(Map<Square, Piece> board, Set<Square> squares, Square pawnScopeSquare) {
+        if (board.containsKey(pawnScopeSquare) && color == board.get(pawnScopeSquare).color) {
+            squares.remove(pawnScopeSquare);
+        }
+    }
+
+    @Override
     public double getScore() {
         return type.getScore();
     }

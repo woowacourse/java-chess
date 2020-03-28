@@ -43,6 +43,11 @@ public abstract class Piece {
     //각 말에 따른 타입 반환하도록 구현
     public abstract double getScore();
 
+    //각 말 별 타입에 맞게
+    public abstract String getLetter();
+
+    //
+    public abstract void removeSquareIfSameColor(Map<Square, Piece> board, Set<Square> squares, Square pawnScopeSquare);
 
     void removeSquareWhenSameColor(Map<Square, Piece> board, Set<Square> squares, Square square) {
         if (board.containsKey(square) && board.get(square).color == color) {
@@ -94,9 +99,6 @@ public abstract class Piece {
     public boolean isBlack() {
         return color == Color.BLACK;
     }
-
-    //각 말 별 타입에 맞게
-    public abstract String getLetter();
 
 
 }
