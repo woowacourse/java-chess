@@ -108,32 +108,35 @@ abcdefgh
 
 ## 기능
 
-### 1단계 
+### 1 단계 
 
-좌표를 표현
- -  Row
- -  Column
-
-부모 Class - Chess
-
-- chesspiece
+ - 좌표를 표현
+    - Row
+    - Column
+- 체스 말
   - 종류별로 생성
-
-부모 Class - Gamer
-
-- has a Chess
-
-- 흑팀, 백팀
-  - chesspiece를 가짐
-
-gameBorad
-
+- 팀
+    - 흑팀
+    - 백팀
 - 게임판
   - 초기화(8 x 8)
+  - 체스 규칙에 맞게
+- 명령어
+    - Start 
+    - End
 
-startAndEnd
+### 2 단계
 
-- Start && End 선택
+ - 체스 말 이동
+    - 체스 규칙에 맞게
+    - 명령어 형식 `move source target`
+    - 가로 a ~ h, 세로 1 ~ 8
+    
+### 3 단계
 
-
-
+ - King이 잡혔을 때 게임 종료
+ - 점수 계산
+    - status 명령
+    - Queen: 9, Rook: 5, Bishop: 3, Knight: 2.5
+    - Pawn: 기본 1, 세로줄에 같은 팀 폰이 있다면 0.5
+    - King: 점수 X
