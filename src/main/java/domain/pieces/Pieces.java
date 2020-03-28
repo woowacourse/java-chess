@@ -8,6 +8,7 @@ import domain.point.Point;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Pieces {
@@ -180,4 +181,25 @@ public class Pieces {
 	public Set<Piece> getSet() {
 		return Collections.unmodifiableSet(pieces);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Pieces pieces1 = (Pieces) o;
+		return Objects.equals(pieces, pieces1.pieces);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(pieces);
+	}
+
+	@Override
+	public String toString() {
+		return "Pieces{" +
+				"pieces=" + pieces +
+				'}';
+	}
 }
+

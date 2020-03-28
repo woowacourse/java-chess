@@ -5,6 +5,7 @@ import domain.pieces.Piece;
 import domain.pieces.Pieces;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public abstract class GameState implements State {
@@ -75,5 +76,25 @@ public abstract class GameState implements State {
     @Override
     public Set<Piece> getSet() {
         return pieces.getSet();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameState gameState = (GameState) o;
+        return Objects.equals(pieces, gameState.pieces);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieces);
+    }
+
+    @Override
+    public String toString() {
+        return "GameState{" +
+                "pieces=" + pieces +
+                '}';
     }
 }

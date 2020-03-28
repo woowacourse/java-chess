@@ -4,6 +4,9 @@ import domain.pieces.*;
 import domain.point.Direction;
 import domain.point.Distance;
 import domain.point.Point;
+import domain.state.Ended;
+import domain.state.Moved;
+import domain.state.Started;
 import domain.team.Team;
 
 import java.util.Arrays;
@@ -60,5 +63,21 @@ public class creationAssistant {
 				.collect(Collectors.toSet());
 
 		return new Pieces(pieceSet);
+	}
+
+	public static StartPieces createStartPieces() {
+		return new StartPieces();
+	}
+
+	public static Ended createEnded(Piece... pieces) {
+		return new Ended(createPieces(pieces));
+	}
+
+	public static Started createStartedWithStartPieces(Piece... pieces) {
+		return new Started(new Pieces(createStartPieces().getInstance()));
+	}
+
+	public static Moved createMoved(Piece... pieces) {
+		return new Moved(createPieces(pieces));
 	}
 }
