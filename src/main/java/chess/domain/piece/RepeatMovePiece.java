@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
 import chess.domain.movement.RepeatMovable;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,23 +15,30 @@ public abstract class RepeatMovePiece extends Piece implements RepeatMovable {
 
     @Override
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
-        Set<BoardSquare> boardSquares = getAllCheatSheet(boardSquare);
-        Set<BoardSquare> containSquares = boardSquares.stream()
-            .filter(board::containsKey)
-                .collect(Collectors.toSet());
-        for (BoardSquare containSquare : containSquares) {
-            int fileCompare = containSquare.getFileCompare(boardSquare);
-            int rankCompare = containSquare.getRankCompare(boardSquare);
-            Set<BoardSquare> squaresToRemove = findSquaresToRemove(containSquare, fileCompare, rankCompare);
-            addSameColorSquare(board, containSquare, squaresToRemove);
-            boardSquares.removeAll(squaresToRemove);
+        Set<BoardSquare> allCheatSheet = getAllCheatSheet(boardSquare);
+        Set<BoardSquare> containSquares = getContainsSquares(board, allCheatSheet);
+        for (BoardSquare cheatSheet : containSquares) {
+            int fileCompare = cheatSheet.getFileCompare(boardSquare);
+            int rankCompare = cheatSheet.getRankCompare(boardSquare);
+            allCheatSheet.removeAll(findSquaresToRemove(cheatSheet, fileCompare, rankCompare));
+            allCheatSheet.removeAll(getSameColorSquare(board, cheatSheet));
         }
-        return boardSquares;
+        return allCheatSheet;
     }
 
-    private void addSameColorSquare(Map<BoardSquare, Piece> board, BoardSquare containSquare, Set<BoardSquare> squaresToRemove) {
+    private Set<BoardSquare> getContainsSquares(Map<BoardSquare, Piece> board,
+        Set<BoardSquare> allCheatSheet) {
+        return allCheatSheet.stream()
+            .filter(board::containsKey)
+            .collect(Collectors.toSet());
+    }
+
+    private Set<BoardSquare> getSameColorSquare(Map<BoardSquare, Piece> board,
+        BoardSquare containSquare) {
+        Set<BoardSquare> sameColorSquare = new HashSet<>();
         if (isSameColor(board.get(containSquare))) {
-            squaresToRemove.add(containSquare);
+            sameColorSquare.add(containSquare);
         }
+        return sameColorSquare;
     }
 }

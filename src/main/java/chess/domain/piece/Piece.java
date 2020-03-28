@@ -62,10 +62,6 @@ public abstract class Piece implements Movable {
         return squaresToRemove;
     }
 
-    public boolean isBlack() {
-        return color == Color.BLACK;
-    }
-
     public boolean isSameColor(Color color) {
         return this.color == color;
     }

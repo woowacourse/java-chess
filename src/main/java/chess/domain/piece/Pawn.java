@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.BoardSquare;
 import chess.domain.board.ChessBoard;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import util.NullChecker;
@@ -29,24 +30,39 @@ public class Pawn extends Piece {
 
     @Override
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
-        Set<BoardSquare> boardSquares = getAllCheatSheet(boardSquare);
-        for (BoardSquare s : boardSquares) {
-            BoardSquare boardSquareRight = s.addIfInBoundary(-1, 0);
-            BoardSquare boardSquareLeft = s.addIfInBoundary(1, 0);
-            if (ChessBoard.isInitialPoint(boardSquare, this)
-                && !board.containsKey(s.addIfInBoundary(0, s.getRankCompare(boardSquare)))) {
-                boardSquares.add(s.addIfInBoundary(0, s.getRankCompare(boardSquare)));
-            }
-            if (board.containsKey(s)) {
-                boardSquares.remove(s);
-            }
-            if (board.containsKey(boardSquareRight) && !isSameColor(board.get(boardSquareRight))) {
-                boardSquares.add(boardSquareRight);
-            }
-            if (board.containsKey(boardSquareLeft) && !isSameColor(board.get(boardSquareLeft))) {
-                boardSquares.add(boardSquareLeft);
+        Set<BoardSquare> allCheatSheet = getAllCheatSheet(boardSquare);
+        Set<BoardSquare> totalCheatSheet = new HashSet<>();
+        boolean initialPoint = ChessBoard.isInitialPoint(boardSquare, this);
+        for (BoardSquare cheatSheet : allCheatSheet) {
+            if (!board.containsKey(cheatSheet)) {
+                BoardSquare oneMore = cheatSheet
+                    .addIfInBoundary(0, cheatSheet.getRankCompare(boardSquare));
+                if (initialPoint && !board.containsKey(oneMore)) {
+                    totalCheatSheet.add(oneMore);
+                }
+                totalCheatSheet.add(cheatSheet);
             }
         }
-        return boardSquares;
+        totalCheatSheet.addAll(getDiagonalCheatSheet(board, allCheatSheet));
+        return totalCheatSheet;
+    }
+
+    private Set<BoardSquare> getDiagonalCheatSheet(Map<BoardSquare, Piece> board,
+        Set<BoardSquare> allCheatSheet) {
+        Set<BoardSquare> diagonalCheatSheet = new HashSet<>();
+        for (BoardSquare cheatSheet : allCheatSheet) {
+            BoardSquare cheatSheetRight = cheatSheet.addIfInBoundary(-1, 0);
+            BoardSquare cheatSheetLeft = cheatSheet.addIfInBoundary(1, 0);
+            addDiagonalCheatSheet(board, diagonalCheatSheet, cheatSheetRight);
+            addDiagonalCheatSheet(board, diagonalCheatSheet, cheatSheetLeft);
+        }
+        return diagonalCheatSheet;
+    }
+
+    private void addDiagonalCheatSheet(Map<BoardSquare, Piece> board,
+        Set<BoardSquare> diagonalCheatSheet, BoardSquare cheatSheet) {
+        if (board.containsKey(cheatSheet) && !isSameColor(board.get(cheatSheet))) {
+            diagonalCheatSheet.add(cheatSheet);
+        }
     }
 }

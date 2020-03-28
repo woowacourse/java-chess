@@ -2,27 +2,28 @@ package chess.domain.board;
 
 import util.NullChecker;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BoardSquare {
 
-    private final static Map<String, BoardSquare> CACHE = new HashMap<>();
+    private final static Map<String, BoardSquare> CACHE;
     private final static char FILE_START = 'a';
     private final static int FILE_COUNT = 8;
     private final static int RANK_START = 1;
     private final static int RANK_COUNT = 8;
     public final static int MAX_FILE_AND_RANK_COUNT = Integer.max(RANK_COUNT, FILE_COUNT);
     public final static int MIN_FILE_AND_RANK_COUNT = 1;
-    private static final int RANK_BLACK_PAWN_STAT = 7;
-    private static final int RANK_WHITE_PAWN_START = 2;
 
     static {
+        Map<String, BoardSquare> cache = new HashMap<>();
         for (char file = FILE_START; file < FILE_COUNT + FILE_START; file++) {
             for (int rank = RANK_START; rank < RANK_START + RANK_COUNT; rank++) {
-                CACHE.put(String.valueOf(file) + rank, new BoardSquare(file, rank));
+                cache.put(String.valueOf(file) + rank, new BoardSquare(file, rank));
             }
         }
+        CACHE = Collections.unmodifiableMap(cache);
     }
 
     private final char file;

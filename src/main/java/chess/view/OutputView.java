@@ -23,16 +23,24 @@ public class OutputView {
     public static void printChessBoard(ChessBoard chessBoard) {
         Map<BoardSquare, Piece> gameBoard = chessBoard.getChessBoard();
         for (int rank = 8; rank >= 1; rank--) {
-            for (char file = 'a'; file <= 'h'; file++) {
-                if (gameBoard.containsKey(BoardSquare.of(String.valueOf(file) + rank))) {
-                    System.out.print(
-                        gameBoard.get(BoardSquare.of(String.valueOf(file) + rank)).getLetter());
-                    continue;
-                }
-                System.out.print(".");
-            }
-            System.out.println();
+            printRankRaw(gameBoard, rank);
         }
+    }
+
+    private static void printRankRaw(Map<BoardSquare, Piece> gameBoard, int rank) {
+        for (char file = 'a'; file <= 'h'; file++) {
+            printFileColumn(gameBoard, rank, file);
+        }
+        System.out.println();
+    }
+
+    private static void printFileColumn(Map<BoardSquare, Piece> gameBoard, int rank, char file) {
+        if (gameBoard.containsKey(BoardSquare.of(String.valueOf(file) + rank))) {
+            System.out
+                .print(gameBoard.get(BoardSquare.of(String.valueOf(file) + rank)).getLetter());
+            return;
+        }
+        System.out.print(".");
     }
 
     public static void printCanNotMove() {
@@ -45,7 +53,7 @@ public class OutputView {
 
     public static void printScore(Map<Color, Double> teamScore) {
         for (Color color : teamScore.keySet()) {
-            System.out.println(color.getName() + "의 점수는 " + teamScore.get(color) + "입니다");
+            System.out.println(color.getName() + "의 점수는 " + teamScore.get(color) + "입니다.");
         }
     }
 

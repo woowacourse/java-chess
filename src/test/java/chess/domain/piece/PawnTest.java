@@ -1,14 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.board.BoardSquare;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.BoardSquare;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class PawnTest {
 
@@ -32,25 +31,31 @@ public class PawnTest {
     @DisplayName("폰이 두 칸 움직일 수 있는지 테스트")
     void movablePawnTwoSquareTest() {
         Map<BoardSquare, Piece> board = new HashMap<>();
+        board.put(BoardSquare.of("b6"), Knight.getPieceInstance(Color.BLACK));
 
         Piece pieceBlack = Pawn.getPieceInstance(Color.BLACK);
         Piece pieceWhite = Pawn.getPieceInstance(Color.WHITE);
 
-        Set<BoardSquare> availableSquaresBlack = pieceBlack.getCheatSheet(BoardSquare.of("a7"), board);
-        Set<BoardSquare> availableSquaresWhite = pieceWhite.getCheatSheet(BoardSquare.of("a2"), board);
+        Set<BoardSquare> availableSquaresBlack = pieceBlack
+            .getCheatSheet(BoardSquare.of("a7"), board);
+        Set<BoardSquare> availableSquaresBlack2 = pieceBlack
+            .getCheatSheet(BoardSquare.of("b7"), board);
+        Set<BoardSquare> availableSquaresWhite = pieceWhite
+            .getCheatSheet(BoardSquare.of("a2"), board);
 
         assertThat(availableSquaresBlack.contains(BoardSquare.of("a5"))).isTrue();
         assertThat(availableSquaresBlack.contains(BoardSquare.of("a6"))).isTrue();
         assertThat(availableSquaresWhite.contains(BoardSquare.of("a3"))).isTrue();
         assertThat(availableSquaresWhite.contains(BoardSquare.of("a4"))).isTrue();
+        assertThat(availableSquaresBlack2.contains(BoardSquare.of("b5"))).isFalse();
 
         assertThat(availableSquaresBlack.size()).isEqualTo(2);
         assertThat(availableSquaresWhite.size()).isEqualTo(2);
-
+        assertThat(availableSquaresBlack2.size()).isEqualTo(0);
     }
 
     @Test
-    @DisplayName("판의 정보를 가져와서 폰이 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")
+    @DisplayName("폰 대각선 이동 테스트")
     void movablePawnSquareTest() {
         Map<BoardSquare, Piece> board = new HashMap<>();
 
