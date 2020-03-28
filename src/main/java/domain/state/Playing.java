@@ -22,6 +22,9 @@ public abstract class Playing extends GameState {
 	@Override
 	protected State move(String from, String to) {
 		pieces.move(Point.of(from), Point.of(to));
+		if (pieces.isWhiteKingKilled() || pieces.isBlackKingKilled()) {
+			return new Ended(pieces);
+		}
 		return new Moved(pieces);
 	}
 

@@ -18,8 +18,12 @@ class GameStateTest {
 
 	@Test
 	void pushCommend_Move() {
-		Moved moved = createMoved(createPawn("white", "a2"));
-		Moved expect = createMoved(createPawnOnceMoved("white", "a4"));
+		Moved moved = createMoved(createPawn("white", "a2"),
+				createKing("white", "c1"),
+				createKing("black", "d1"));
+		Moved expect = createMoved(createPawnOnceMoved("white", "a4"),
+				createKing("white", "c1"),
+				createKing("black", "d1"));
 
 		assertThat(moved.pushCommend("move a2 a4")).isEqualTo(expect);
 	}
