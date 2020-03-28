@@ -33,6 +33,7 @@ public abstract class Pawn extends Piece {
                 if (isFirstMove(team.getInitialPawnRow())) {
                     possiblePositions.add(direction.move(nextPosition));
                 }
+                continue;
             }
 
             if (isInBoardRange(nextPosition) && board.isOtherTeam(position, nextPosition)) {
