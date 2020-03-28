@@ -1,4 +1,4 @@
-package chess.board.piece;
+package chess.piece;
 
 public enum Team {
     BLACK(-1),

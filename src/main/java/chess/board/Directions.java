@@ -1,6 +1,6 @@
 package chess.board;
 
-import chess.board.piece.Direction;
+import chess.coordinate.Direction;
 
 import java.util.LinkedList;
 import java.util.List;

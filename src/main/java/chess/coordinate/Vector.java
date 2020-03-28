@@ -1,6 +1,4 @@
-package chess.board;
-
-import chess.board.piece.Direction;
+package chess.coordinate;
 
 import java.util.Objects;
 

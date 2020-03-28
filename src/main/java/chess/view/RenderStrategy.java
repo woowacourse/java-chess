@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.board.piece.Piece;
+import chess.piece.Piece;
 
 public interface RenderStrategy {
     String render(Piece piece);

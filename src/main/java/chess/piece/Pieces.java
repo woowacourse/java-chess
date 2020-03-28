@@ -1,4 +1,4 @@
-package chess.board.piece;
+package chess.piece;
 
 import java.util.Arrays;
 

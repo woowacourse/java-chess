@@ -1,8 +1,11 @@
 package chess.board;
 
-import chess.board.piece.Blank;
-import chess.board.piece.Direction;
-import chess.board.piece.Team;
+import chess.coordinate.Coordinate;
+import chess.coordinate.Direction;
+import chess.coordinate.File;
+import chess.coordinate.Rank;
+import chess.piece.Blank;
+import chess.piece.Team;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package chess.board;
+package chess.coordinate;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

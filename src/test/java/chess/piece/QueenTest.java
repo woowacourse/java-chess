@@ -1,6 +1,6 @@
-package chess.board.piece;
+package chess.piece;
 
-import chess.board.Vector;
+import chess.coordinate.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

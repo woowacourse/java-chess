@@ -1,6 +1,6 @@
 package chess.board;
 
-import chess.board.piece.Team;
+import chess.piece.Team;
 
 public class Score {
     private final double sum;

@@ -1,6 +1,9 @@
 package chess.board;
 
-import chess.board.piece.*;
+import chess.coordinate.Coordinate;
+import chess.coordinate.File;
+import chess.coordinate.Rank;
+import chess.piece.*;
 
 public class BoardGenerator {
 

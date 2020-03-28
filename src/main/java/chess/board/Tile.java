@@ -1,9 +1,11 @@
 package chess.board;
 
-import chess.board.piece.AbstractPawn;
-import chess.board.piece.Piece;
-import chess.board.piece.Pieces;
-import chess.board.piece.Team;
+import chess.coordinate.Coordinate;
+import chess.coordinate.Vector;
+import chess.piece.AbstractPawn;
+import chess.piece.Piece;
+import chess.piece.Pieces;
+import chess.piece.Team;
 
 public class Tile {
     private final Coordinate coordinate;

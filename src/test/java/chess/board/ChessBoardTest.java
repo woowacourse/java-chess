@@ -1,7 +1,10 @@
 package chess.board;
 
-import chess.board.piece.Pieces;
-import chess.board.piece.Team;
+import chess.coordinate.Coordinate;
+import chess.coordinate.File;
+import chess.coordinate.Rank;
+import chess.piece.Pieces;
+import chess.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

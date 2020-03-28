@@ -2,7 +2,7 @@ package chess.manager;
 
 import chess.board.ChessBoard;
 import chess.board.MoveResult;
-import chess.board.piece.Team;
+import chess.piece.Team;
 
 public class ChessManager {
     private final ChessBoard chessBoard;

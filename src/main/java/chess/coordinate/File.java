@@ -1,4 +1,4 @@
-package chess.board;
+package chess.coordinate;
 
 import java.util.Arrays;
 

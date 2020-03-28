@@ -1,6 +1,6 @@
-package chess.board.piece;
+package chess.piece;
 
-import chess.board.Vector;
+import chess.coordinate.Vector;
 
 public abstract class AbstractPawn extends Piece {
 
