@@ -12,7 +12,9 @@ class CommandTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"hello", "star!"})
 	void ofTest(String input) {
-		assertThatThrownBy(() -> InGameCommand.of(input)).isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("존재하지 않는 명령어입니다.");
+		assertThatThrownBy(() -> Command.beforeGameCommandOf(input)).isInstanceOf(CommandException.class)
+				.hasMessage("잘못된 명령어를 입력하셨습니다.");
+		assertThatThrownBy(() -> Command.inGameCommandOf(input)).isInstanceOf(CommandException.class)
+				.hasMessage("잘못된 명령어를 입력하셨습니다.");
 	}
 }
