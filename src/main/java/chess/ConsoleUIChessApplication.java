@@ -1,12 +1,10 @@
 package chess;
 
-import chess.view.GameManger;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.view.GameManager;
 
 public class ConsoleUIChessApplication {
     public static void main(String[] args) {
-        GameManger gameManger = new GameManger();
-        gameManger.runGame();
+        GameManager gameManager = new GameManager();
+        gameManager.runGame();
     }
 }

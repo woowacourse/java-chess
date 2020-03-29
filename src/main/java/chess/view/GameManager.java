@@ -5,14 +5,14 @@ import chess.manager.ChessManager;
 
 import java.util.Objects;
 
-public class GameManger {
+public class GameManager {
     public static final int SOURCE_INDEX = 1;
     public static final int TARGET_INDEX = 2;
     public static final String DELIMITER = " ";
     private ChessManager chessManager;
     private boolean isNotEnd;
 
-    public GameManger() {
+    public GameManager() {
         isNotEnd = true;
     }
 
