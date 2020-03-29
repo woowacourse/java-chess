@@ -16,22 +16,22 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public enum PieceType {
+enum PieceType {
     INITIALIZED_PAWN("p", InitializedPawn.class, initializedPawnCanNotMoveStrategies(), new NullList()),
     RUNNING_PAWN("p", MovedPawn.class, movedPawnCanNotMoveStrategies(), new NullList()),
-    ROOK("r", Rook.class, rookCanNotMoveStrategies(), Arrays.asList(1,8)),
-    KNIGHT("n", Knight.class, knightCanNotMoveStrategies(), Arrays.asList(2,7)),
-    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies(), Arrays.asList(3,6)),
-    QUEEN("q", Queen.class, queenCanNotMoveStrategies(), Collections.singletonList(4)),
-    KING("k", King.class, kingCanNotMoveStrategies(), Collections.singletonList(5));
+    ROOK("r", Rook.class, rookCanNotMoveStrategies(), Arrays.asList(new InitialColumn(1),new InitialColumn(8))),
+    KNIGHT("n", Knight.class, knightCanNotMoveStrategies(), Arrays.asList(new InitialColumn(2),new InitialColumn(7))),
+    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies(), Arrays.asList(new InitialColumn(3), new InitialColumn(6))),
+    QUEEN("q", Queen.class, queenCanNotMoveStrategies(), Collections.singletonList(new InitialColumn(4))),
+    KING("k", King.class, kingCanNotMoveStrategies(), Collections.singletonList(new InitialColumn(5)));
 
 
     private final String name;
     private final Class<? extends Piece> type;
     private final List<CanNotMoveStrategy> canNotMoveStrategies;
-    private final List<Integer> initialColumns;
+    private final List<InitialColumn> initialColumns;
 
-    PieceType(String name, Class<? extends Piece> type, List<CanNotMoveStrategy> canNotMoveStrategies, List<Integer> initialColumns) {
+    PieceType(String name, Class<? extends Piece> type, List<CanNotMoveStrategy> canNotMoveStrategies, List<InitialColumn> initialColumns) {
         this.name = name;
         this.type = type;
         this.canNotMoveStrategies = canNotMoveStrategies;
@@ -47,9 +47,9 @@ public enum PieceType {
         throw new IllegalArgumentException("해당하는 PieceType을 찾을 수 없습니다.");
     }
 
-    static Class findTypeByInitialColumn(int initialColumn) {
+    static Class<? extends Piece> findTypeByInitialColumn(int initialColumn) {
         for (PieceType piece : values()) {
-            if (piece.initialColumns.contains(initialColumn)) {
+            if (piece.initialColumns.contains(new InitialColumn(initialColumn))) {
                 return piece.type;
             }
         }

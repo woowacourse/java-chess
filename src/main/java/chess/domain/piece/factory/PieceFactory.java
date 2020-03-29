@@ -21,6 +21,10 @@ public class PieceFactory {
                 | InstantiationException e) {
             throw new IllegalArgumentException(String.format("%s를 생성할 수 없습니다.", type));
         }
+    }
 
+    public static Piece createPieceWithInitialColumn(int initialColumn, Position position, Team team) {
+        Class<? extends Piece> type = PieceType.findTypeByInitialColumn(initialColumn);
+        return createPiece(type, position, team);
     }
 }
