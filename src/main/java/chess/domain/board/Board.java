@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import static chess.domain.board.BoardFactory.*;
+import static chess.domain.piece.Piece.*;
 
 import java.util.Map;
 

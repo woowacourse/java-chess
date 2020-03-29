@@ -12,12 +12,6 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public class BoardFactory {
-	public static final double KING_SCORE = 0;
-	public static final double BISHOP_SCORE = 3;
-	public static final double KNIGHT_SCORE = 2.5;
-	public static final double PAWN_SCORE = 1;
-	public static final double QUEEN_SCORE = 9;
-	public static final double ROOK_SCORE = 5;
 
 	private BoardFactory() {
 	}

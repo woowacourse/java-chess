@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import static chess.domain.board.BoardFactory.*;
+import static chess.domain.piece.Piece.*;
 import static chess.domain.position.Direction.*;
 
 import java.util.Arrays;
