@@ -4,8 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.pawn.InitializedPawn;
-import chess.domain.piece.pawn.MovedPawn;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;

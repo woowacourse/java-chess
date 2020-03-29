@@ -9,9 +9,7 @@ public enum Direction {
     NORTH_WEST(-1,1),
     SOUTH_EAST(1,-1),
     SOUTH_WEST(-1,-1),
-    STAY(0,0),
-    //todo: refac using NULL
-    UNKNOWN(0,0);
+    STAY(0,0);
 
     private final int horizontal;
     private final int vertical;
@@ -21,7 +19,7 @@ public enum Direction {
         this.vertical = vertical;
     }
 
-    //todo refac uing
+    //todo refac
     public static Direction calculate(Position from, Position to) {
         if (from.equals(to)) {
             return STAY;
@@ -43,7 +41,23 @@ public enum Direction {
             return WEST;
         }
 
-        return UNKNOWN;
+        if ((from.getX() < to.getX()) && (from.getY() < to.getY())) {
+            return NORTH_EAST;
+        }
+
+        if ((to.getX()) < from.getX() && (from.getY() < to.getY())) {
+            return NORTH_WEST;
+        }
+
+        if ((from.getX() < to.getX()) && (to.getY() < from.getY())) {
+            return SOUTH_EAST;
+        }
+
+        if ((to.getX() < from.getX()) && (to.getY() < from.getY())) {
+            return SOUTH_WEST;
+        }
+
+        throw new IllegalArgumentException(String.format("%s에서 %s로의 방향을 알 수 없습니다.", from, to));
     }
 
     //todo: refac logic - not allow oppoisite(etc: right,left) compose

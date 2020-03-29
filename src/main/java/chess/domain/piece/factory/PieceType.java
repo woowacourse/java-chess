@@ -14,8 +14,7 @@ public enum PieceType {
     INITIALIZED_PAWN("p", InitializedPawn.class, initializedPawnCanNotMoveStrategies()),
     RUNNING_PAWN("p", MovedPawn.class, movedPawnCanNotMoveStrategies()),
     ROOK("r", Rook.class, rookCanNotMoveStrategies()),
-    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies()),
-    ;
+    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies());
 
     private static List<CanNotMoveStrategy> bishopCanNotMoveStrategies() {
         return Arrays.asList(

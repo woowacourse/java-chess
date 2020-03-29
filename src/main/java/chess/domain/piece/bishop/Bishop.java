@@ -5,6 +5,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.move.CanNotMoveStrategy;
 import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
+import chess.domain.position.Direction;
+import chess.domain.position.Distance;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -17,6 +19,25 @@ public class Bishop extends Initialized {
 
     @Override
     public boolean hasHindrance(Position to, Board board) {
+        if (position.isNotStraightDiagonalDirection(to)) {
+            return true;
+        }
+
+        return hasHindranceInBetween(to, board);
+    }
+
+    private boolean hasHindranceInBetween(Position to, Board board) {
+        Distance amount = position.calculateHorizontalDistance(to);
+        Direction direction = position.calculateDirection(to);
+        Position targetPosition = position;
+        for (int i = 1; i < amount.getValue(); i++) {
+            targetPosition = targetPosition.go(direction);
+            Piece piece = board.getPiece(targetPosition);
+            if (piece.isNotBlank()) {
+                return true;
+            }
+        }
+
         return false;
     }
 

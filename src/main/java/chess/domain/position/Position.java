@@ -39,9 +39,19 @@ public class Position {
         return Distance.calculate(this, to);
     }
 
+    public Distance calculateHorizontalDistance(Position to) {
+        return Distance.calculateHorizontal(this, to);
+    }
+
+
     public boolean isDiagonalDirection(Position to) {
         return Direction.isDiagonal(this, to);
+    }
 
+    public boolean isNotStraightDiagonalDirection(Position to) {
+        Distance verticalDistance = Distance.calculateVertical(this, to);
+        Distance horizontalDistance = Distance.calculateHorizontal(this, to);
+        return !verticalDistance.equals(horizontalDistance);
     }
 
     public Direction calculateDirection(Position to) {

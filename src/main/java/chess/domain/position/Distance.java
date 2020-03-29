@@ -18,12 +18,27 @@ public class Distance {
         return new Distance(Math.sqrt(Math.pow(xDifference, 2) + Math.pow(yDifference, 2)));
     }
 
-    public static Distance calculate(Position from, Position to) {
+    static Distance calculate(Position from, Position to) {
         int xDifference = from.getX() - to.getX();
         int yDifference = from.getY() - to.getY();
         double calculated = Math.sqrt(Math.pow(xDifference, 2) + Math.pow(yDifference, 2));
         return new Distance(calculated);
     }
+
+    static Distance calculateVertical(Position from, Position to) {
+        int calculated = Math.abs(from.getY() - to.getY());
+        return new Distance(calculated);
+    }
+
+    static Distance calculateHorizontal(Position from, Position to) {
+        int calculated = Math.abs(from.getX() - to.getX());
+        return new Distance(calculated);
+    }
+
+    public double getValue() {
+        return value;
+    }
+
 
     @Override
     public boolean equals(Object o) {
