@@ -25,10 +25,10 @@ public class ChessGame {
 
     public void run() {
         OutputView.printInputStartGuideMessage();
-        Run runner = inputCommandWithValidation();
         int turnFlag = INITIAL_TURN_OF_WHITE;
 
-        while(inputCommandWithValidation().isNotEnd()) {
+        Run runner;
+        while((runner = inputCommandWithValidation()).isNotEnd()) {
             if (runner.isStart()) {
                 board = BoardFactory.createBoard();
                 OutputView.printBoard(board);
