@@ -15,17 +15,19 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
     private final static Map<Position, Square> chessBoard = new LinkedHashMap<>();
+    private boolean isKingTaken;
 
     public ChessBoard() {
         Positions.getValues().forEach(position -> chessBoard.put(position, Empty.getInstance()));
         for (Map.Entry<Piece, List<Position>> entry : PieceInitPositionFactory.create().entrySet()) {
             entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
         }
+        isKingTaken = false;
     }
 
     public boolean move(Position from, Position to) {
         if (from == to) {
-            throw new NotMoveException("같은 위치로는 이동을 못합니다.");
+            throw new NotMoveException("같은 위치로 이동할 수 없습니다.");
         }
 
         Square source = chessBoard.get(from);
@@ -36,9 +38,32 @@ public class ChessBoard {
                 && validatePawnException(source, target, Direction.getDirection(from, to))) {
             chessBoard.put(to, source);
             chessBoard.put(from, Empty.getInstance());
+
+            if (target instanceof King) {
+                this.isKingTaken = isKingTaken();
+            }
+
             return true;
         }
         return false;
+    }
+
+    public boolean isKingTaken() {
+        if (this.isKingTaken) {
+            return true;
+        }
+        return getKingCount() < 2;
+    }
+
+    public int getKingCount() {
+        return (int) chessBoard.values()
+                .stream()
+                .filter(square -> square instanceof King)
+                .count();
+    }
+
+    public boolean isGameOver() {
+        return isKingTaken;
     }
 
     // Source가 예외일 때 1) 전진 예외 (전진의 target은 무조건 empty여야 한다.)

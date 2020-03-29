@@ -36,6 +36,10 @@ public class ChessController {
             if (command.equals(Command.STATUS)) {
                 OutputView.printStatus(chessBoard.getResult());
             }
+            if (chessBoard.isGameOver()) {
+                OutputView.printGameOver();
+                return;
+            }
         }while (!command.equals(Command.END));
     }
 }

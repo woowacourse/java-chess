@@ -59,4 +59,9 @@ public class OutputView {
 
         System.out.println(stringBuilder.toString());
     }
+
+
+    public static void printGameOver() {
+        System.out.println("King이 잡혀서 게임을 종료합니다.");
+    }
 }
