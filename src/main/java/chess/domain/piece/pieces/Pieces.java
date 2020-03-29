@@ -40,7 +40,7 @@ public class Pieces {
 		return pieces.stream()
 				.filter(piece -> piece.isSamePosition(start))
 				.findFirst()
-				.orElseGet(Blank::new);// TODO: 2020/03/29 개선가능할까? 블랭크도 팩토리에서?
+				.orElseGet(Blank::new);
 	}
 
 	private Piece findBy(Position start, Color color) {
@@ -53,19 +53,18 @@ public class Pieces {
 
 	public List<Piece> getPieces() {
 		return pieces;
-	} // TODO: 2020/03/27 최후 : 겟을 없에자
+	}
 
 	public boolean isKingDead() {
 		int kingCount = (int) pieces.stream()
-				.map(Piece::getPieceType)
-				.filter(PieceType::isKing)
+				.filter(Piece::isKing)
 				.count();
 		return kingCount != 2;
 	}
 
 	public Color getAliveKingColor() {
 		return pieces.stream()
-				.filter(piece -> piece.getPieceType().isKing())//// TODO: 2020/03/28 고치자!! 이부분
+				.filter(Piece::isKing)
 				.map(Piece::getColor)
 				.findFirst()
 				.orElseThrow(() -> new UnsupportedOperationException("현재상황에서 사용할 수 없는 메서드입니다."));

@@ -63,6 +63,14 @@ public class Piece {
 		return color.isWhite();
 	}
 
+	public boolean isKing() {
+		return pieceType.isKing();
+	}
+
+	public boolean isPawn() {
+		return pieceType.isPawn();
+	}
+
 	public Position getPosition() {
 		return position;
 	}
@@ -71,12 +79,7 @@ public class Piece {
 		return color;
 	}
 
-	public PieceType getPieceType() {
-		return pieceType;
-	}
-
-	public String getResource() {//add
-		//// TODO: 2020/03/28 웹기반으로 할때는 path를 바꾸는 식으로 변경하면 될듯~~
+	public String getResource() {
 		if(color.isWhite()) {
 			return pieceType.getResource().toLowerCase();
 		}

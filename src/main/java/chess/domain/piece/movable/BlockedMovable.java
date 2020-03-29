@@ -23,8 +23,7 @@ public class BlockedMovable implements Movable {
 			Position movablePosition = position;
 			while (movablePosition.checkBound(direction)) {
 				movablePosition = movablePosition.getMovedPositionBy(direction);
-
-				if (!checkMovable(movablePosition, pieces, color)) {
+				if (isPossessedBySameColor(movablePosition, pieces, color)) {
 					break;
 				}
 				movablePositions.add(movablePosition);
@@ -42,8 +41,8 @@ public class BlockedMovable implements Movable {
 				.anyMatch(piece -> piece.isSamePosition(movablePosition));
 	}
 
-	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
+	private boolean isPossessedBySameColor(Position position, List<Piece> pieces, Color color) {
 		return pieces.stream()
-				.noneMatch(piece -> piece.isSamePosition(position) && piece.isSameColor(color));
+				.anyMatch(piece -> piece.isSamePosition(position) && piece.isSameColor(color));
 	}
 }

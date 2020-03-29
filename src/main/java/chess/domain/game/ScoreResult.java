@@ -53,7 +53,7 @@ public class ScoreResult {
     private List<Piece> getPawnsBy(Color color, List<Piece> pieces) {
         return pieces.stream()
                 .filter(piece -> piece.isSameColor(color))
-                .filter(piece -> piece.getPieceType().isPawn())
+                .filter(Piece::isPawn)
                 .collect(Collectors.toList());
     }
 
