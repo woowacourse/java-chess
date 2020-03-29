@@ -44,6 +44,10 @@ public enum Xpoint {
 		return this.xPointValue - xpoint.xPointValue;
 	}
 
+	public String getName() {
+		return xPointName;
+	}
+
 	public int getValue() {
 		return xPointValue;
 	}

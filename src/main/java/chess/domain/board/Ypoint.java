@@ -52,6 +52,10 @@ public enum Ypoint {
 		return this == SEVEN;
 	}
 
+	public String getName() {
+		return yPointName;
+	}
+
 	public int getValue() {
 		return yPointValue;
 	}
