@@ -35,7 +35,7 @@ public class Position implements Comparable<Position> {
     }
 
     public int xGapBetween(Position target) {
-        return target.x.columnGap(this.x);
+        return this.x.columnGap(target.x);
     }
 
     public int yGapBetween(Position target) {

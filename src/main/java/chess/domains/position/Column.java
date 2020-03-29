@@ -23,12 +23,8 @@ public enum Column {
         return target.column - this.column;
     }
 
-    public boolean isBiggerThan(Column target) {
-        return this.column > target.column;
-    }
-
     public boolean isSmallerThan(Column target) {
-        return this.column > target.column;
+        return this.column < target.column;
     }
 
     public Column moveBy(int block) {
