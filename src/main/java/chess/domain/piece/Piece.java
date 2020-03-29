@@ -7,12 +7,25 @@ public class Piece {
     private Team team;
     private PieceType pieceType;
 
-    protected Piece() {
-    }
-
     public Piece(Team team, PieceType pieceType) {
         this.team = team;
         this.pieceType = pieceType;
+    }
+
+    public boolean canMove(MoveInformation moveInformation) {
+        return pieceType.canMove(moveInformation);
+    }
+
+    public boolean isSameTeam(Piece piece) {
+        return this.belongs(piece.team);
+    }
+
+    public boolean is(PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
+
+    public boolean belongs(Team team) {
+        return this.team == team;
     }
 
     public String getAcronym() {
@@ -20,13 +33,5 @@ public class Piece {
             return pieceType.getAcronymToLowerCase();
         }
         return pieceType.getAcronymToUpperCase();
-    }
-
-    public boolean canMove() {
-        return pieceType.canMove();
-    }
-
-    public boolean is(PieceType pieceType) {
-        return this.pieceType == pieceType;
     }
 }

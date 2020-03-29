@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.Team;
+import chess.domain.piece.MoveInformation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
@@ -12,7 +13,7 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board(Map<Position, Piece> board) {
+    Board(Map<Position, Piece> board) {
         this.board = board;
     }
 
@@ -20,11 +21,14 @@ public class Board {
         move(Position.of(keyFromPosition), Position.of(keyToPosition));
     }
 
-    public void move(Position fromPosition, Position toPosition) {
-        Piece piece = board.get(fromPosition);
+    public void move(Position from, Position to) {
+        Piece piece = board.get(from);
 
-        board.remove(fromPosition);
-        board.put(toPosition, piece);
+        if (!piece.canMove(new MoveInformation(board, from, to))) {
+            throw new IllegalArgumentException(from + "에서 " + to + "로 이동할 수 없습니다.");
+        }
+        board.remove(from);
+        board.put(to, piece);
     }
 
     public boolean isPieceOnBoard(Team team, PieceType pieceType) {
