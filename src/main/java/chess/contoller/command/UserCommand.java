@@ -7,6 +7,7 @@ import java.util.Queue;
 
 public class UserCommand {
 	private static final String DELIMITER = " ";
+	private static final int MOVE_OPTION_NEED = 2;
 
 	private Command command;
 	private Queue<String> options;
@@ -34,5 +35,11 @@ public class UserCommand {
 
 	public String pollOption() {
 		return options.poll();
+	}
+
+	public void validateOptionCount() {
+		if (options.size() < MOVE_OPTION_NEED) {
+			throw new IllegalArgumentException("옵션의 개수가 부족합니다.");
+		}
 	}
 }

@@ -36,6 +36,7 @@ public class ChessController {
 				OutputView.printBoard(ChessBoardAssembler.create(chessGame.getChessBoard()));
 				break;
 			case MOVE:
+				userCommand.validateOptionCount();
 				chessGame = chessGame.move(new Position(userCommand.pollOption()), new Position(userCommand.pollOption()));
 				OutputView.printBoard(ChessBoardAssembler.create(chessGame.getChessBoard()));
 				break;
