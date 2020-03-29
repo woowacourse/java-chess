@@ -11,9 +11,18 @@ import domain.piece.team.Team;
 
 public class Knight extends Piece {
 	private static final String SYMBOL = "n";
+	private static final double score = 2.5;
 
 	public Knight(Position position, Team team) {
 		super(position, team);
+	}
+
+	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
+		return ranks.stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.filter(piece -> piece.getPosition().getColumn().getNumber() == targetPosition.getColumn().getNumber()
+				&& piece.getPosition().getRow() == targetPosition.getRow())
+			.findFirst();
 	}
 
 	@Override
@@ -46,11 +55,13 @@ public class Knight extends Piece {
 		this.changePosition(targetPosition, ranks);
 	}
 
-	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
-		return ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece.getPosition().getColumn().getNumber() == targetPosition.getColumn().getNumber()
-				&& piece.getPosition().getRow() == targetPosition.getRow())
-			.findFirst();
+	@Override
+	protected String getSymbol() {
+		return SYMBOL;
+	}
+
+	@Override
+	public double getScore(){
+		return score;
 	}
 }

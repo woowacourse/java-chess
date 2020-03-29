@@ -15,10 +15,19 @@ public class Pawn extends Piece {
 	private static final String SYMBOL = "p";
 	private static final int MiN_STEP_SIZE_OF_DIAGONAL = 1;
 	private State state;
+	private static final double DEFAULT_SCORE = 1;
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
 		state = State.START;
+	}
+
+	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
+		return ranks.stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.filter(piece -> piece.getPosition().getColumn().getNumber() == targetPosition.getColumn().getNumber()
+				&& piece.getPosition().getRow() == targetPosition.getRow())
+			.findFirst();
 	}
 
 	@Override
@@ -53,7 +62,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void move(Position targetPosition, List<Rank> ranks) throws InvalidPositionException {
+	public void move(Position targetPosition, List<Rank> ranks){
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		Direction direction = this.findDirection(rowGap, this.position.calculateColumnGap(targetPosition));
 		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
@@ -72,11 +81,15 @@ public class Pawn extends Piece {
 		this.state = State.RUN;
 	}
 
-	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
-		return ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece.getPosition().getColumn().getNumber() == targetPosition.getColumn().getNumber()
-				&& piece.getPosition().getRow() == targetPosition.getRow())
-			.findFirst();
+	@Override
+	protected String getSymbol() {
+		return SYMBOL;
 	}
+
+	@Override
+	public double getScore() {
+		return DEFAULT_SCORE;
+	}
+
+
 }

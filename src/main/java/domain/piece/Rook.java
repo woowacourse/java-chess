@@ -11,9 +11,17 @@ import domain.piece.team.Team;
 
 public class Rook extends Piece {
 	private static final String SYMBOL = "r";
+	private static final double score = 5;
 
 	public Rook(Position position, Team team) {
 		super(position, team);
+	}
+
+	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
+		int rankIndex = targetPosition.getRow() - 1;
+		return ranks.get(rankIndex).getPieces().stream()
+			.filter(piece -> piece.getPosition().isSamePosition(targetPosition))
+			.findFirst();
 	}
 
 	@Override
@@ -49,10 +57,13 @@ public class Rook extends Piece {
 		this.changePosition(targetPosition, ranks);
 	}
 
-	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
-		int rankIndex = targetPosition.getRow() - 1;
-		return ranks.get(rankIndex).getPieces().stream()
-			.filter(piece -> piece.getPosition().isSamePosition(targetPosition))
-			.findFirst();
+	@Override
+	protected String getSymbol() {
+		return SYMBOL;
+	}
+
+	@Override
+	public double getScore(){
+		return score;
 	}
 }

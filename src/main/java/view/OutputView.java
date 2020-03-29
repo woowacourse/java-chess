@@ -1,10 +1,12 @@
 package view;
 
 import java.util.List;
+import java.util.Map;
 
 import domain.board.Board;
 import domain.board.Rank;
 import domain.piece.Piece;
+import domain.piece.team.Team;
 
 public class OutputView {
 	public static void printChessGameStart() {
@@ -33,5 +35,11 @@ public class OutputView {
 			System.out.print(".");
 		}
 		System.out.println();
+	}
+
+	public static void printScore(Map<Team, Double> score) {
+		for(Team team : score.keySet()){
+			System.out.print(team+":"+score.get(team)+"점\n");
+		}
 	}
 }

@@ -3,6 +3,7 @@ package domain.piece;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.DoubleStream;
 
 import domain.board.InvalidTurnException;
 import domain.board.Rank;
@@ -14,7 +15,6 @@ import domain.piece.team.Team;
 public abstract class Piece implements Movable {
 	protected Position position;
 	protected Team team;
-	protected String SYMBOL;
 
 	public Piece(Position position, Team team) {
 		this.position = position;
@@ -27,9 +27,9 @@ public abstract class Piece implements Movable {
 
 	public String showSymbol() {
 		if (this.team == Team.WHITE) {
-			return this.SYMBOL;
+			return getSymbol();
 		}
-		return this.SYMBOL.toUpperCase();
+		return getSymbol().toUpperCase();
 	}
 
 	private void validateTurn(Team nowTurn) {
@@ -39,7 +39,6 @@ public abstract class Piece implements Movable {
 	}
 
 	protected Direction findDirection(int rowGap, int columnGap) {
-		System.out.println(rowGap + ":" + columnGap);
 		return Arrays.stream(Direction.values())
 			.filter(d -> d.getFind().apply(rowGap, columnGap))
 			.findFirst()
@@ -47,17 +46,32 @@ public abstract class Piece implements Movable {
 	}
 
 	protected void capture(Piece targetPiece, List<Rank> ranks) {
-		int targetPieceRowIndex = targetPiece.position.getRow() - 1;
+		int targetRankIndex = targetPiece.position.getRow() - 1;
 		if(targetPiece instanceof King){
 			System.exit(0);
 		}
-		ranks.get(targetPieceRowIndex).getPieces().remove(targetPiece);
+		ranks.get(targetRankIndex).getPieces().remove(targetPiece);
+		System.out.println("잡았다!");
 	}
 
 	protected void changePosition(Position targetPosition, List<Rank> ranks) {
+		int sourceRankIndex = this.position.getRow() - 1;
+		ranks.get(sourceRankIndex).getPieces().remove(this);
+		System.out.println(this.showSymbol()+"난죽었다");
+
 		this.position = targetPosition;
-		int rankIndex = targetPosition.getRow() - 1;
-		ranks.get(rankIndex).getPieces().add(this);
+		int targetRankIndex = targetPosition.getRow() - 1;
+		ranks.get(targetRankIndex).getPieces().add(this);
+		System.out.println(this.showSymbol()+"난 추가요");
+
+	}
+
+	private boolean isInPlace(Position sourcePosition, Position targetPosition) {
+		return sourcePosition.equals(targetPosition);
+	}
+
+	public boolean isTeam(Team team) {
+		return this.team.equals(team);
 	}
 
 	protected abstract boolean validDirection(Direction direction);
@@ -66,9 +80,9 @@ public abstract class Piece implements Movable {
 
 	protected abstract boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
 
-	private boolean isInPlace(Position sourcePosition, Position targetPosition) {
-		return sourcePosition.equals(targetPosition);
-	}
+	public abstract double getScore();
+
+	protected abstract String getSymbol();
 
 	@Override
 	public boolean canMove(Position targetPosition, Team turn, List<Rank> ranks) {
