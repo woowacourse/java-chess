@@ -61,6 +61,10 @@ public class Position {
         return this.file == position.file;
     }
 
+    public boolean isSameRank(Rank rank) {
+        return this.rank == rank;
+    }
+
     public boolean canMoveBy(MovingDirection movingDirection) {
         try {
             file.add(movingDirection.getFileDirection());

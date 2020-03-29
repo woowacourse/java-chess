@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class BoardState {
 
+    private static final int DUPLICATE_THRESHOLD = 1;
     private Map<Position, PieceDto> boardState;
 
     private BoardState(Map<Position, PieceDto> boardState) {
@@ -36,6 +37,6 @@ public class BoardState {
                 .filter(entry -> team.isSameTeam(entry.getValue().getTeam()))
                 .filter(entry -> pieceType.isSameType(entry.getValue().getPieceType()))
                 .filter(entry -> position.isSameFile(entry.getKey()))
-                .count() > 1;
+                .count() > DUPLICATE_THRESHOLD;
     }
 }

@@ -1,8 +1,8 @@
 package chess.domain.game;
 
 import chess.domain.MoveParameter;
+import chess.domain.board.AutomatedBoardInitializer;
 import chess.domain.board.Board;
-import chess.domain.board.EnumRepositoryBoardInitializer;
 import chess.domain.player.Team;
 import chess.domain.state.ReadyState;
 import chess.domain.state.State;
@@ -17,7 +17,7 @@ public class ChessGame {
     private Turn turn = Turn.from(Team.WHITE);
 
     public ChessGame() {
-        this.state = new ReadyState(new EnumRepositoryBoardInitializer());
+        this.state = new ReadyState(new AutomatedBoardInitializer());
     }
 
     public void start() {

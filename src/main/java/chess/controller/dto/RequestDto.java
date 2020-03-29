@@ -3,8 +3,8 @@ package chess.controller.dto;
 import java.util.List;
 
 public class RequestDto {
-    Command command;
-    List<String> parameter;
+    private Command command;
+    private List<String> parameter;
 
     public RequestDto(Command command, List<String> parameter) {
         this.command = command;
