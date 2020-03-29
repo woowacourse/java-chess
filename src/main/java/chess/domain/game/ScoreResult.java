@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.piece.pieces.Pieces;
 import chess.domain.position.Row;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -11,11 +12,12 @@ public class ScoreResult {
 	private static final double PAWN_SPECIAL_SCORE = 0.5;
 	private static final int DEFAULT_COUNT = 0;
 	private static final int PAWN_SPECIAL_SCORE_COUNT_BOUNDARY = 1;
+
 	private final Map<Color, Double> scores;
 
-	public ScoreResult(List<Piece> pieces) {
-		scores = new HashMap<>();
-		calculateScore(pieces);
+	public ScoreResult(Pieces pieces) {
+		scores = new EnumMap<>(Color.class);
+		calculateScore(pieces.getPieces());
 	}
 
 	private void calculateScore(List<Piece> pieces) {
@@ -26,7 +28,7 @@ public class ScoreResult {
 	private double calculateScoreBy(Color color, List<Piece> pieces) {
 		double scoreByColor = calculateTotalScoreBy(color, pieces);
 		List<Piece> pawns = getPawnsBy(color, pieces);
-		Map<Row, Integer> pawnCountByRows = new HashMap<>();
+		Map<Row, Integer> pawnCountByRows = new EnumMap<>(Row.class);
 
 		for (Row row : Row.values()) {
 			pawnCountByRows.put(row, getPawnCountBy(row, pawns));
@@ -65,7 +67,7 @@ public class ScoreResult {
 	}
 
 	private void validate(Color color) {
-		if (Objects.isNull(color) || color.isBlank()) {
+		if (Objects.isNull(color) || color.isNone()) {
 			throw new IllegalArgumentException("잘못된 입력입니다.");
 		}
 	}
