@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -31,18 +30,13 @@ class QueenTest {
 		);
 	}
 
-	@Test
-	public void initTest() {
-		assertThat(new Queen("q", Color.WHITE)).isInstanceOf(Queen.class);
-	}
-
 	@ParameterizedTest
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(B1, new Bishop("b", Color.BLACK));
-		pieces.put(B3, new Bishop("b", Color.BLACK));
-		pieces.put(F3, new Bishop("B", Color.WHITE));
+		pieces.put(B1, new Piece("b", Color.BLACK, PieceType.BISHOP));
+		pieces.put(B3, new Piece("b", Color.BLACK, PieceType.BISHOP));
+		pieces.put(F3, new Piece("B", Color.WHITE, PieceType.BISHOP));
 		Board board = new Board(BoardFactory.initializeKingQueen(pieces));
 		Piece queen = board.findPieceBy(currentPosition);
 

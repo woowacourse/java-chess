@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.*;
 import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -8,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -31,17 +31,12 @@ class PawnTest {
 		);
 	}
 
-	@Test
-	public void initTest() {
-		assertThat(new Pawn("k", Color.WHITE)).isInstanceOf(Pawn.class);
-	}
-
 	@ParameterizedTest
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(A3, new Bishop("b", Color.BLACK));
-		pieces.put(C3, new Bishop("b", Color.WHITE));
+		pieces.put(A3, new Piece("b", Color.BLACK, BISHOP));
+		pieces.put(C3, new Piece("b", Color.WHITE, BISHOP));
 		Board board = new Board(BoardFactory.initializePawn(pieces));
 		Piece pawn = board.findPieceBy(currentPosition);
 

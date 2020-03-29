@@ -8,9 +8,11 @@ import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
-public abstract class FixedPiece extends AbstractPiece {
-	public FixedPiece(String name, Color color, List<Direction> movableDirections, double score) {
-		super(name, color, movableDirections, score);
+public class FixedMovingStrategy implements MovingStrategy {
+	private List<Direction> movableDirections;
+
+	public FixedMovingStrategy(List<Direction> movableDirections) {
+		this.movableDirections = movableDirections;
 	}
 
 	@Override
@@ -24,6 +26,7 @@ public abstract class FixedPiece extends AbstractPiece {
 
 	protected Set<Position> findNext(Position currentPosition, Direction direction, Board board) {
 		Set<Position> movablePositions = new HashSet<>();
+		Piece target = board.findPieceBy(currentPosition);
 		if (!currentPosition.canMoveNext(direction)) {
 			return movablePositions;
 		}
@@ -31,7 +34,7 @@ public abstract class FixedPiece extends AbstractPiece {
 		if (!board.isNotEmptyPosition(currentPosition)) {
 			movablePositions.add(currentPosition);
 		}
-		if (board.isNotEmptyPosition(currentPosition) && isEnemy(board.findPieceBy(currentPosition))) {
+		if (board.isNotEmptyPosition(currentPosition) && target.isEnemy(board.findPieceBy(currentPosition))) {
 			movablePositions.add(currentPosition);
 		}
 		return movablePositions;

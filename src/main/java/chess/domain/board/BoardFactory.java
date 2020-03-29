@@ -1,22 +1,24 @@
 package chess.domain.board;
 
-import static chess.domain.piece.Pawn.*;
+import static chess.domain.piece.Color.*;
+import static chess.domain.piece.PawnMovingStrategy.*;
+import static chess.domain.piece.PieceType.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public class BoardFactory {
+	public static final double KING_SCORE = 0;
+	public static final double BISHOP_SCORE = 3;
+	public static final double KNIGHT_SCORE = 2.5;
+	public static final double PAWN_SCORE = 1;
+	public static final double QUEEN_SCORE = 9;
+	public static final double ROOK_SCORE = 5;
+
 	private BoardFactory() {
 	}
 
@@ -35,34 +37,34 @@ public class BoardFactory {
 	}
 
 	public static Map<Position, Piece> initializeRook(Map<Position, Piece> pieces) {
-		pieces.put(Position.of("A1"), new Rook("r", Color.WHITE));
-		pieces.put(Position.of("H1"), new Rook("r", Color.WHITE));
-		pieces.put(Position.of("A8"), new Rook("R", Color.BLACK));
-		pieces.put(Position.of("H8"), new Rook("R", Color.BLACK));
+		pieces.put(Position.of("A1"), new Piece("r", WHITE, ROOK));
+		pieces.put(Position.of("H1"), new Piece("r", WHITE, ROOK));
+		pieces.put(Position.of("A8"), new Piece("R", BLACK, ROOK));
+		pieces.put(Position.of("H8"), new Piece("R", BLACK, ROOK));
 		return pieces;
 	}
 
 	public static Map<Position, Piece> initializeKnight(Map<Position, Piece> pieces) {
-		pieces.put(Position.of("B1"), new Knight("n", Color.WHITE));
-		pieces.put(Position.of("G1"), new Knight("n", Color.WHITE));
-		pieces.put(Position.of("B8"), new Knight("N", Color.BLACK));
-		pieces.put(Position.of("G8"), new Knight("N", Color.BLACK));
+		pieces.put(Position.of("B1"), new Piece("n", WHITE, KNIGHT));
+		pieces.put(Position.of("G1"), new Piece("n", WHITE, KNIGHT));
+		pieces.put(Position.of("B8"), new Piece("N", BLACK, KNIGHT));
+		pieces.put(Position.of("G8"), new Piece("N", BLACK, KNIGHT));
 		return pieces;
 	}
 
 	public static Map<Position, Piece> initializeBishop(Map<Position, Piece> pieces) {
-		pieces.put(Position.of("C1"), new Bishop("b", Color.WHITE));
-		pieces.put(Position.of("F1"), new Bishop("b", Color.WHITE));
-		pieces.put(Position.of("C8"), new Bishop("B", Color.BLACK));
-		pieces.put(Position.of("F8"), new Bishop("B", Color.BLACK));
+		pieces.put(Position.of("C1"), new Piece("b", WHITE, BISHOP));
+		pieces.put(Position.of("F1"), new Piece("b", WHITE, BISHOP));
+		pieces.put(Position.of("C8"), new Piece("B", BLACK, BISHOP));
+		pieces.put(Position.of("F8"), new Piece("B", BLACK, BISHOP));
 		return pieces;
 	}
 
 	public static Map<Position, Piece> initializeKingQueen(Map<Position, Piece> pieces) {
-		pieces.put(Position.of("D1"), new Queen("q", Color.WHITE));
-		pieces.put(Position.of("E1"), new King("k", Color.WHITE));
-		pieces.put(Position.of("D8"), new Queen("Q", Color.BLACK));
-		pieces.put(Position.of("E8"), new King("K", Color.BLACK));
+		pieces.put(Position.of("D1"), new Piece("q", WHITE, QUEEN));
+		pieces.put(Position.of("E1"), new Piece("k", WHITE, KING));
+		pieces.put(Position.of("D8"), new Piece("Q", BLACK, QUEEN));
+		pieces.put(Position.of("E8"), new Piece("K", BLACK, KING));
 		return pieces;
 	}
 
@@ -71,8 +73,10 @@ public class BoardFactory {
 			.stream()
 			.map(Column::getName)
 			.forEach(x -> {
-				pieces.put(Position.of(x + WHITE_PAWN_ROW), new Pawn("p", Color.WHITE));
-				pieces.put(Position.of(x + BLACK_PAWN_ROW), new Pawn("P", Color.BLACK));
+				pieces.put(Position.of(x + WHITE_PAWN_ROW),
+					new Piece("p", WHITE, WHITE_PAWN));
+				pieces.put(Position.of(x + BLACK_PAWN_ROW),
+					new Piece("P", BLACK, BLACK_PAWN));
 			});
 
 		return pieces;

@@ -1,9 +1,10 @@
 package chess.domain.board;
 
+import static chess.domain.board.BoardFactory.*;
+
 import java.util.Map;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -38,6 +39,6 @@ public class Board {
 	}
 
 	private boolean isKingOf(Color color, Piece piece) {
-		return piece.isSameColor(color) && piece instanceof King;
+		return piece.isSameColor(color) && piece.getScore() == KING_SCORE;
 	}
 }

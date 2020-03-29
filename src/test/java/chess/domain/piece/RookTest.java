@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -27,11 +26,6 @@ class RookTest {
 			Arguments.of(A1, A8, true), //먹는것
 			Arguments.of(A1, H1, false)
 		);
-	}
-
-	@Test
-	void initTest() {
-		assertThat(new Rook("R", Color.WHITE)).isInstanceOf(Rook.class);
 	}
 
 	@ParameterizedTest

@@ -5,18 +5,44 @@ import java.util.Set;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 
-public interface Piece {
-	Set<Position> findMovablePositions(Position currentPosition, Board board);
+public class Piece {
+	private String name;
+	private Color color;
+	private MovingStrategy movingStrategy;
+	private double score;
 
-	boolean isEnemy(Piece that);
+	public Piece(String name, Color color, PieceType pieceType) {
+		this.name = name;
+		this.color = color;
+		this.movingStrategy = pieceType.getMovingStrategy();
+		this.score = pieceType.getScore();
+	}
 
-	boolean isSameColor(Color color);
+	public Set<Position> findMovablePositions(Position currentPosition, Board board) {
+		return movingStrategy.findMovablePositions(currentPosition, board);
+	}
 
-	boolean isNotSameColor(Color color);
+	public boolean isEnemy(Piece that) {
+		return !this.color.equals(that.getColor());
+	}
 
-	Color getColor();
+	public boolean isSameColor(Color color) {
+		return getColor().equals(color);
+	}
 
-	double getScore();
+	public boolean isNotSameColor(Color color) {
+		return !getColor().equals(color);
+	}
 
-	String getName();
+	public Color getColor() {
+		return color;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public double getScore() {
+		return score;
+	}
 }

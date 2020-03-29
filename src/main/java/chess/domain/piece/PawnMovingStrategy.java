@@ -14,16 +14,15 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
-public class Pawn extends FixedPiece {
+public class PawnMovingStrategy extends StretchMovingStrategy {
 	public static final String WHITE_PAWN_ROW = "2";
 	public static final String BLACK_PAWN_ROW = "7";
-	private static final double PAWN_SCORE = 1;
 	private static final List<Row> INITIAL_ROW = Arrays.asList(Row.of(WHITE_PAWN_ROW), Row.of(BLACK_PAWN_ROW));
 
 	private List<Direction> eatableDirections;
 
-	public Pawn(String name, Color color) {
-		super(name, color, createMovableDirection(color), PAWN_SCORE);
+	public PawnMovingStrategy(Color color) {
+		super(createMovableDirection(color));
 		this.eatableDirections = createEatableDirection(color);
 	}
 
@@ -84,11 +83,12 @@ public class Pawn extends FixedPiece {
 
 	protected Set<Position> findEatableNext(Position currentPosition, Direction direction, Board board) {
 		Set<Position> eatablePosition = new HashSet<>();
+		Piece target = board.findPieceBy(currentPosition);
 		if (currentPosition.canNotMoveNext(direction)) {
 			return eatablePosition;
 		}
 		currentPosition = currentPosition.next(direction);
-		if (board.isNotEmptyPosition(currentPosition) && isEnemy(board.findPieceBy(currentPosition))) {
+		if (board.isNotEmptyPosition(currentPosition) && target.isEnemy(board.findPieceBy(currentPosition))) {
 			eatablePosition.add(currentPosition);
 		}
 		return eatablePosition;

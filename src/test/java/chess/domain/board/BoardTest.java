@@ -3,26 +3,12 @@ package chess.domain.board;
 import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
-import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
-import chess.domain.position.Position;
 
 class BoardTest {
 	@Test
 	void initBoardTest() {
 		assertThat(BoardFactory.create()).isInstanceOf(Board.class);
-	}
-
-	@Test
-	void initRookTest() {
-		Board board = BoardFactory.create();
-		Map<Position, Piece> pieces = board.getPieces();
-
-		assertThat(pieces.get(A1)).isInstanceOf(Rook.class);
 	}
 
 	@Test
