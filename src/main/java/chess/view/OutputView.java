@@ -3,6 +3,7 @@ package chess.view;
 import chess.domain.board.Board;
 import chess.domain.board.Row;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.game.GameStatus;
 import chess.domain.game.Team;
 
 import java.util.List;
@@ -46,9 +47,9 @@ public class OutputView {
     }
 
     public static void printScore(Board board) {
-        Team nowPlayingTeam = board.getNowPlayingTeam();
+        Team nowPlayingTeam = GameStatus.getNowPlayingTeam();
         String nowPlayingTeamName = nowPlayingTeam.getTeamName();
-        double nowPlayingTeamScore = board.getTotalScore();
+        double nowPlayingTeamScore = GameStatus.getTotalScore(board);
 
         System.out.println("Score: " + nowPlayingTeamScore + " (" + nowPlayingTeamName + ")");
     }

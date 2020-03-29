@@ -8,7 +8,8 @@ import chess.domain.game.Team;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.domain.game.Team.*;
+import static chess.domain.game.Team.BLACK;
+import static chess.domain.game.Team.WHITE;
 
 public class BoardFactory {
     private static final int BOARD_MAX_INDEX = 7;

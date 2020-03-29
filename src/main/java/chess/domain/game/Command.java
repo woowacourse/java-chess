@@ -16,7 +16,7 @@ public enum Command {
 
     public static boolean isExistCommand(String inputCommand) {
         return Arrays.stream(values())
-                .anyMatch((o) -> (o.command.equals(inputCommand)));
+                .anyMatch((o) -> (o.command.equals(inputCommand.split(" ")[0])));
     }
 
     public boolean equals(String command) {

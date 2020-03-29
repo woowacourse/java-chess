@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Pawn;
-import chess.domain.game.Score;
+import chess.domain.game.GameStatus;
 import chess.domain.game.Team;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
@@ -15,24 +15,18 @@ import java.util.Collections;
 import java.util.List;
 
 import static chess.domain.chesspiece.ChessPieceInfo.KING;
-import static chess.domain.game.Team.*;
+import static chess.domain.game.Team.BLACK;
 
 public class Board {
     private static final int BOARD_MAX_INDEX = 7;
     private static final int BOARD_MIN_INDEX = 0;
-    private static final Team INIT_TEAM = WHITE;
     private static final int DIAGONAL_GAP = 1;
-    private static final int COUNT_INIT = 0;
     private static final int REVERSE_BASE = 9;
 
     private List<Row> board;
-    private Team nowPlayingTeam;
-    private boolean isGameEnd;
 
     public Board(List<Row> board) {
         this.board = new ArrayList<>(board);
-        this.nowPlayingTeam = INIT_TEAM;
-        this.isGameEnd = false;
     }
 
     public List<Row> getBoard() {
@@ -43,7 +37,7 @@ public class Board {
         ChessPiece chessPiece = getChessPiece(movingInfo.getStartPosition());
 
         checkNowPlayingTeam(chessPiece);
-        if (nowPlayingTeam == BLACK) {
+        if (GameStatus.getNowPlayingTeam() == BLACK) {
             reverseMove(chessPiece, movingInfo);
             return;
         }
@@ -66,6 +60,7 @@ public class Board {
     }
 
     private void checkNowPlayingTeam(ChessPiece chessPiece) {
+        Team nowPlayingTeam = GameStatus.getNowPlayingTeam();
         if (chessPiece.getTeam() != nowPlayingTeam) {
             throw new IllegalArgumentException(nowPlayingTeam.getTeamName() + " 차례입니다.");
         }
@@ -144,7 +139,10 @@ public class Board {
     }
 
     private void checkTargetTeam(ChessPiece chessPiece, MovingInfo movingInfo) {
-        if (getChessPiece(movingInfo.getTargetPosition()).isSameTeam(chessPiece.getTeam())) {
+        Position targetPosition = movingInfo.getTargetPosition();
+        ChessPiece targetChessPiece = getChessPiece(targetPosition);
+
+        if (targetChessPiece.isSameTeam(chessPiece.getTeam())) {
             throw new IllegalArgumentException("말의 도착점에 아군의 말이 있습니다.");
         }
     }
@@ -175,7 +173,7 @@ public class Board {
     private void executeMove(ChessPiece chessPiece, MovingInfo movingInfo) {
         clearPosition(movingInfo.getStartPosition());
         setPosition(chessPiece, movingInfo.getTargetPosition());
-        changePlayingTeam();
+        GameStatus.changePlayingTeam();
         updateIfPawn(chessPiece);
     }
 
@@ -200,12 +198,8 @@ public class Board {
         String lowerCaseChessPieceName = chessPieceName.toLowerCase();
 
         if (lowerCaseChessPieceName.equals(KING.getName())) {
-            isGameEnd = true;
+            GameStatus.updateGameEnd();
         }
-    }
-
-    private void changePlayingTeam() {
-        this.nowPlayingTeam = Team.getOpponentTeam(this.nowPlayingTeam);
     }
 
     private void updateIfPawn(ChessPiece chessPiece) {
@@ -214,59 +208,7 @@ public class Board {
         }
     }
 
-    public boolean isGameEnd() {
-        return isGameEnd;
-    }
-
-    public double getTotalScore() {
-        Score score = Score.DEFAULT;
-
-        for (int j = BOARD_MIN_INDEX; j <= BOARD_MAX_INDEX; j++) {
-            score = getColumnScore(score, j);
-        }
-        return score.getScore();
-    }
-
-    private Score getColumnScore(Score score, int j) {
-        int pawnCount = COUNT_INIT;
-
-        for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
-            ChessPiece chessPiece = board.get(i).get(j);
-
-            pawnCount = getColumnPawnCount(chessPiece);
-            score = addIfSameTeam(score, chessPiece);
-        }
-        score = subtractSameColumnPawnScore(score, pawnCount);
-        return score;
-    }
-
-    private int getColumnPawnCount(ChessPiece chessPiece) {
-        int pawnCount = COUNT_INIT;
-        if (chessPiece.getTeam() == nowPlayingTeam && chessPiece instanceof Pawn) {
-            pawnCount++;
-        }
-        return pawnCount;
-    }
-
-    private Score addIfSameTeam(Score score, ChessPiece chessPiece) {
-        if (chessPiece.getTeam() == nowPlayingTeam) {
-            return score.add(chessPiece.getPoint());
-        }
-        return score;
-    }
-
-    private Score subtractSameColumnPawnScore(Score score, int pawnCount) {
-        if (pawnCount >= 2) {
-            return score.subtract(pawnCount * 0.5);
-        }
-        return score;
-    }
-
     private ChessPiece getChessPiece(Position position) {
         return board.get(position.getX() - 1).get(position.getY() - 1);
-    }
-
-    public Team getNowPlayingTeam() {
-        return nowPlayingTeam;
     }
 }

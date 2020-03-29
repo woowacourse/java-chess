@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.domain.game.Command;
+import chess.domain.game.GameStatus;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
 import chess.factory.BoardFactory;
@@ -20,7 +21,7 @@ public class Application {
         Board board = BoardFactory.createBoard();
         String command = "";
 
-        while (!END.equals(command) && !board.isGameEnd()) {
+        while (!END.equals(command) && !GameStatus.isGameEnd()) {
             command = getCommand();
             executeCommand(board, command);
         }
