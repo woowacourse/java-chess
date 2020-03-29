@@ -19,10 +19,15 @@ public class Board {
 
     private final Map<Position, Piece> board = BoardFactory.getBoard();
 
-    public Piece findPiece(Position sourcePosition) {
+    public Piece findPiece(Position sourcePosition, PieceColor team) {
         validateNull(sourcePosition);
-        if (board.get(sourcePosition).isNone()) {
+
+        Piece sourcePiece = board.get(sourcePosition);
+        if (sourcePiece.isNone()) {
             throw new IllegalArgumentException("움직일 수 있는 체스말이 없습니다.");
+        }
+        if (sourcePiece.isDifferentColor(team)) {
+            throw new IllegalArgumentException("다른 색의 말을 움직일 수 없습니다.");
         }
         return board.get(sourcePosition);
     }

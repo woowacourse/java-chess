@@ -40,6 +40,10 @@ public abstract class Piece {
         return this.pieceColor == piece.pieceColor;
     }
 
+    public boolean isDifferentColor(PieceColor team) {
+        return this.pieceColor != team;
+    }
+
     public String getName() {
         return pieceColor.getPieceName(name);
     }
