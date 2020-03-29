@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.bishop.Bishop;
 
 import chess.domain.piece.king.King;
+import chess.domain.piece.knight.Knight;
 import chess.domain.piece.move.*;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.pawn.MovedPawn;
@@ -19,7 +20,8 @@ public enum PieceType {
     ROOK("r", Rook.class, rookCanNotMoveStrategies()),
     BISHOP("b", Bishop.class, bishopCanNotMoveStrategies()),
     QUEEN("q", Queen.class, queenCanNotMoveStrategies()),
-    KING("k", King.class, kingCanNotMoveStrategies());
+    KING("k", King.class, kingCanNotMoveStrategies()),
+    KNIGHT("n", Knight.class, knightCanNotMoveStrategies());
 
     private final String name;
     private final Class<? extends Piece> type;
@@ -104,6 +106,14 @@ public enum PieceType {
                 new IsStayed(),
                 new CanNotReach(King.MAX_DISTANCE),
                 new IsAttackingSameTeam()
+        );
+    }
+
+    private static List<CanNotMoveStrategy> knightCanNotMoveStrategies() {
+        return Arrays.asList(
+                new IsStayed(),
+                new CanNotReach(Knight.MAX_DISTANCE),
+                new IsHeadingStraightDirection()
         );
     }
 }

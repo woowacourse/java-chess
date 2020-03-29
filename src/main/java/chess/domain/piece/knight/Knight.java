@@ -11,22 +11,22 @@ import java.util.List;
 
 public class Knight extends Initialized {
 
+    public static final double MAX_DISTANCE = Math.sqrt(Math.pow(2, 2) + 1);
+
     public Knight(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
         super(name, position, team, canNotMoveStrategies);
     }
 
     @Override
+    public Piece move(Position to, Board board) {
+        if (canNotMove(to, board)) {
+            throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
+        }
+        return new Knight(name, to, team, canNotMoveStrategies);
+    }
+
+    @Override
     public boolean hasHindrance(Position to, Board board) {
         return false;
-    }
-
-    @Override
-    protected boolean canNotMove(Position to, Board board) {
-        return false;
-    }
-
-    @Override
-    public Piece move(Position to, Board board) {
-        return new Knight(name, to, team, canNotMoveStrategies);
     }
 }

@@ -22,7 +22,8 @@ class DistanceTest {
     private static Stream<Arguments> getCasesForCalculate() {
         return Stream.of(
                 Arguments.of(Position.of(1,1), Position.of(1,2), Distance.of(1)),
-                Arguments.of(Position.of(1,1), Position.of(4,5), Distance.of(5))
+                Arguments.of(Position.of(1,1), Position.of(4,5), Distance.of(5)),
+                Arguments.of(Position.of(4,4), Position.of(5,7), Distance.of(Math.sqrt(10)))
         );
     }
 }

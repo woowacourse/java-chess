@@ -29,20 +29,14 @@ class PositionTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
+    @ParameterizedTest()
     @DisplayName("#calculateDistance() : should return Distance between Positions")
-    void calculateDistance() {
-        //given
-        int fromX = 1;
-        int fromY = 1;
-        Position from = Position.of(fromX, fromY);
-        int toX = 2;
-        int toY = 2;
-        Position to = Position.of(toX, toY);
+    @MethodSource({"getCasesForCalculateDistance"})
+    void calculateDistance(Position from, Position to, Distance expected) {
         //when
         Distance distance = from.calculateDistance(to);
         //then
-        assertThat(distance).isEqualTo(Distance.of(toX - fromX, toY - fromY));
+        assertThat(distance).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -52,6 +46,13 @@ class PositionTest {
         Position to = Position.of(1,2);
         assertThat(to.isNotForward(from, teamForwardDirection)).isEqualTo(expected);
 
+    }
+
+    private static Stream<Arguments> getCasesForCalculateDistance() {
+        return Stream.of(
+                Arguments.of(Position.of(1,1), Position.of(2,2), Distance.of(Math.sqrt(2))),
+                Arguments.of(Position.of(4,4), Position.of(5,7), Distance.of(Math.sqrt(10)))
+        );
     }
 
 

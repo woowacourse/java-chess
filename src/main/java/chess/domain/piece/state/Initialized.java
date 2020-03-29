@@ -104,4 +104,8 @@ public abstract class Initialized extends Started {
     public int hashCode() {
         return Objects.hash(canNotMoveStrategies);
     }
+
+    public boolean isHeadingStraight(Position to) {
+        return position.isStraightDirection(to);
+    }
 }
