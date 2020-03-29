@@ -31,10 +31,38 @@ class BoardTest {
 
     private static Stream<Arguments> createFromPositionAndToPosition() {
         return Stream.of(
-                Arguments.of(Position.of("b2"), Position.of("b3"))
+                Arguments.of(Position.of("B2"), Position.of("B3"))
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("createPositionAndPieceForAttackingPawn")
+    void move_폰이_공격에_성공하는_경우(Piece pieceToMove, Position fromPosition, Piece pieceToAttack, Position toPosition) {
+        //given
+        BoardSource boardSource = new BoardSource();
+        boardSource.addPiece(fromPosition, pieceToMove);
+        boardSource.addPiece(toPosition, pieceToAttack);
+
+        Board board = new Board(boardSource.getSource());
+
+        //when
+        board.move(fromPosition, toPosition);
+
+        //then
+        assertThat(board.findPieceBy(fromPosition)).isNull();
+        assertThat(board.findPieceBy(toPosition)).isEqualTo(pieceToMove);
+    }
+
+    private static Stream<Arguments> createPositionAndPieceForAttackingPawn() {
+        return Stream.of(
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("C3")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("E3"))
+        );
+    }
 
     @ParameterizedTest
     @MethodSource("createTeamAndPieces")
