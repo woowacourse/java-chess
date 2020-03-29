@@ -9,7 +9,7 @@ public class NullChecker {
 
     public static void validateNotNull(Object... objects) {
         if(Arrays.stream(objects).anyMatch(Objects::isNull)) {
-            throw new IllegalArgumentException("인자로 Null을 사용하실 수 없습니다.");
+            throw new NullPointerException("인자로 Null을 사용하실 수 없습니다.");
         }
     }
 }

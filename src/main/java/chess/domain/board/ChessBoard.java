@@ -109,12 +109,12 @@ public class ChessBoard {
     }
 
     private Map<Color, Integer> countPawnSameFileByColor() {
-        Map<Color, Integer> pawnSameFileByColor = new HashMap<>();
+        Map<Color, Integer> pawnSameFileCountByColor = new HashMap<>();
         for (Color color : Color.values()) {
             List<BoardSquare> pawnSquare = getSquareIfSameColorPawn(color);
-            pawnSameFileByColor.put(color, getCountSameFile(pawnSquare));
+            pawnSameFileCountByColor.put(color, getCountSameFile(pawnSquare));
         }
-        return pawnSameFileByColor;
+        return pawnSameFileCountByColor;
     }
 
     private int getCountSameFile(List<BoardSquare> pawnSquare) {

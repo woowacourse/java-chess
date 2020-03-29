@@ -1,19 +1,30 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.BoardSquare;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class RookTest {
 
+    @Test
+    @DisplayName("Null이 of에 들어갔을 때 예외 발생")
+    void validNotNull() {
+        assertThatThrownBy(() -> Rook.getPieceInstance(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("Null");
+    }
+
     @ParameterizedTest
-    @ValueSource(strings = {"d1", "d3", "d4", "d5", "d6", "d7", "d8", "a2", "b2", "c2", "e2", "f2", "g2", "h2"})
+    @ValueSource(strings = {"d1", "d3", "d4", "d5", "d6", "d7", "d8", "a2", "b2", "c2", "e2", "f2",
+        "g2", "h2"})
     @DisplayName("말의 위치(룩)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeRook(String input) {
         Piece piece = Rook.getPieceInstance(Color.WHITE);

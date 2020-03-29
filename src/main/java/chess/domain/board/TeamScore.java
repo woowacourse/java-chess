@@ -7,46 +7,48 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
+import util.NullChecker;
 
 public class TeamScore {
 
     private static final double PAWN_SAME_FILE_SCORE = -0.5;
     private final Map<Color, Double> teamScore;
 
-    public TeamScore(Collection<Piece> chessBoard,
-        Map<Color, Integer> pawnSameFileByColor) {
-        Objects.requireNonNull(chessBoard, "적합하지 않은 인자입니다.");
-        Objects.requireNonNull(pawnSameFileByColor, "적합하지 않은 인자입니다.");
-        this.teamScore = Collections.unmodifiableMap(getTeamScore(chessBoard, pawnSameFileByColor));
+    public TeamScore(Collection<Piece> pieces, Map<Color, Integer> pawnSameFileCountByColor) {
+        NullChecker.validateNotNull(pieces, pawnSameFileCountByColor);
+        this.teamScore = Collections
+            .unmodifiableMap(getTeamScore(pieces, pawnSameFileCountByColor));
     }
 
-    private Map<Color, Double> getTeamScore(Collection<Piece> chessBoard,
+    private Map<Color, Double> getTeamScore(Collection<Piece> pieces,
         Map<Color, Integer> pawnSameFileByColor) {
         Map<Color, Double> teamScore = new HashMap<>();
         for (Color color : Color.values()) {
-            double colorScore = getSumScore(chessBoard, color)
-                + (pawnSameFileByColor.get(color) * PAWN_SAME_FILE_SCORE);
-            teamScore.put(color, colorScore);
+            double piecesSumScore = getSumScore(pieces, color);
+            double pawnChargeScore = pawnSameFileByColor.get(color) * PAWN_SAME_FILE_SCORE;
+            teamScore.put(color, piecesSumScore + pawnChargeScore);
         }
         return teamScore;
     }
 
-    private double getSumScore(Collection<Piece> chessBoard, Color color) {
-        return chessBoard.stream()
+    private double getSumScore(Collection<Piece> pieces, Color color) {
+        return pieces.stream()
             .filter(piece -> piece.isSameColor(color))
             .mapToDouble(Piece::getScore)
             .sum();
     }
 
     public List<Color> getWinners() {
-        double winningScore = teamScore.values().stream()
+        return teamScore.keySet().stream()
+            .filter(color -> teamScore.get(color) == getWinningScore())
+            .collect(Collectors.toList());
+    }
+
+    private double getWinningScore() {
+        return teamScore.values().stream()
             .max(Double::compareTo)
             .orElseThrow(IllegalAccessError::new);
-        return teamScore.keySet().stream()
-            .filter(color -> teamScore.get(color) == winningScore)
-            .collect(Collectors.toList());
     }
 
     public Map<Color, Double> getTeamScore() {

@@ -14,6 +14,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class KnightTest {
 
+    @Test
+    @DisplayName("Null이 of에 들어갔을 때 예외 발생")
+    void validNotNull() {
+        assertThatThrownBy(() -> Knight.getPieceInstance(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("Null");
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"b1", "a2", "b5", "a4", "e4", "d1", "d5", "e2"})
     @DisplayName("말의 위치(knight)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
@@ -43,14 +51,6 @@ public class KnightTest {
     void checkSameInstance() {
         Piece piece = Knight.getPieceInstance(Color.BLACK);
         assertThat(piece).isEqualTo(Knight.getPieceInstance(Color.BLACK));
-    }
-
-    @Test
-    @DisplayName("null check")
-    void nullTest() {
-        assertThatThrownBy(() -> Knight.getPieceInstance(null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Null");
     }
 
     @Test

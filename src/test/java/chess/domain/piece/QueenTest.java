@@ -1,19 +1,30 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.BoardSquare;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class QueenTest {
 
+    @Test
+    @DisplayName("Null이 of에 들어갔을 때 예외 발생")
+    void validNotNull() {
+        assertThatThrownBy(() -> Queen.getPieceInstance(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("Null");
+    }
+
     @ParameterizedTest
-    @ValueSource(strings = {"a1", "b1", "d1", "e1", "f1", "g1", "h1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "d2", "e3", "f4", "g5", "h6", "b2", "a3"})
+    @ValueSource(strings = {"a1", "b1", "d1", "e1", "f1", "g1", "h1", "c2", "c3", "c4", "c5", "c6",
+        "c7", "c8", "d2", "e3", "f4", "g5", "h6", "b2", "a3"})
     @DisplayName("말의 위치(퀸)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopeQueen(String input) {
         Piece piece = Queen.getPieceInstance(Color.WHITE);

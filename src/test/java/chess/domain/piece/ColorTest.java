@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class ColorTest {
 
+
     @DisplayName("다음 차례 확인")
     @Test
     void nextTurnIfEmptyMySelf() {

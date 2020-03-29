@@ -1,16 +1,26 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.BoardSquare;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class KingTest {
+
+    @Test
+    @DisplayName("Null이 of에 들어갔을 때 예외 발생")
+    void validNotNull() {
+        assertThatThrownBy(() -> King.getPieceInstance(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("Null");
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {"e6", "e8", "f6", "f7", "f8", "d6", "d7", "d8"})

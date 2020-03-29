@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class BoardSquareTest {
@@ -17,13 +17,24 @@ public class BoardSquareTest {
         assertThat(BoardSquare.of("a1")).isEqualTo(BoardSquare.of("a1"));
     }
 
+    @DisplayName("Null이 of에 들어갔을 때 예외 발생")
+    @Test
+    void validNotNull() {
+        assertThatThrownBy(() -> BoardSquare.of(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("Null");
+        assertThatThrownBy(() -> BoardSquare.of(null, null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("Null");
+    }
+
     @ParameterizedTest
-    @NullAndEmptySource
+    @EmptySource
     @ValueSource(strings = {"a9", "f0", "jkl", "j3"})
     @DisplayName("잘못된 값이 of에 들어갔을 때 예외 발생")
     void validLocation(String location) {
         assertThatThrownBy(() -> BoardSquare.of(location))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("더한 값이 캐싱된 값이면 캐싱 값 리턴, 아니면 본인 리턴")

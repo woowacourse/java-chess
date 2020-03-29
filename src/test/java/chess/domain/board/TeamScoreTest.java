@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Color;
 import java.util.Arrays;
@@ -9,6 +10,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class TeamScoreTest {
+
+    @Test
+    @DisplayName("Null이 생성자에 들어갔을 때 예외 발생")
+    void validNotNull() {
+        assertThatThrownBy(() -> new TeamScore(null, null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("Null");
+    }
 
     @Test
     @DisplayName("게임 점수 계산")

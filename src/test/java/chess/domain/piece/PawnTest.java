@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.BoardSquare;
 import java.util.HashMap;
@@ -10,6 +11,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PawnTest {
+
+    @Test
+    @DisplayName("Null이 of에 들어갔을 때 예외 발생")
+    void validNotNull() {
+        assertThatThrownBy(() -> Pawn.getPieceInstance(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("Null");
+    }
 
     @Test
     @DisplayName("말의 위치(pawn)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
