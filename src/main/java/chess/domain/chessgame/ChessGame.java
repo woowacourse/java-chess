@@ -1,6 +1,5 @@
-package chess.domain.game;
+package chess.domain.chessgame;
 
-import chess.domain.Menu;
 import chess.domain.Result;
 import chess.domain.Status;
 import chess.domain.Team;
@@ -12,9 +11,11 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
+	private static final String END_COMMAND = "end";
+
 	private final ChessBoard chessBoard;
 	private final Turn turn;
-	private Menu menu;
+	private ChessMenu chessMenu;
 
 	public ChessGame() {
 		this.chessBoard = new ChessBoard(BoardFactory.createBoard());
@@ -23,39 +24,39 @@ public class ChessGame {
 
 	public void play() {
 		OutputView.printRule();
-		initMenu();
-		menu.validateStart();
-		while (menu.isNotEnd()) {
+		decideMenu();
+		chessMenu.validateStart();
+		while (chessMenu.isNotEnd()) {
 			proceed();
 			OutputView.printBoard(chessBoard);
-			initMenu();
+			decideMenu();
 		}
 	}
 
-	private void initMenu() {
+	private void decideMenu() {
 		if (isDieKing()) {
 			OutputView.printEndGame();
-			menu = new Menu(Menu.END);
+			chessMenu = new ChessMenu(END_COMMAND);
 			return;
 		}
 		try {
-			menu = new Menu(InputView.inputMenu());
+			chessMenu = new ChessMenu(InputView.inputMenu());
 		} catch (RuntimeException e) {
 			OutputView.printErrorMessage(e);
-			initMenu();
+			decideMenu();
 		}
 	}
 
 	private void proceed() {
-		if (menu.isMove()) {
-			Position startPosition = menu.getStartPosition();
-			Position targetPosition = menu.getTargetPosition();
+		if (chessMenu.isMove()) {
+			Position startPosition = chessMenu.createStartPosition();
+			Position targetPosition = chessMenu.createTargetPosition();
 			turn.validateTurn(chessBoard.findByPosition(startPosition));
 			chessBoard.move(startPosition, targetPosition);
 			turn.changeTurn();
 		}
 
-		if (menu.isStatus()) {
+		if (chessMenu.isStatus()) {
 			Status status = new Status(chessBoard.getBoard());
 			Result result = status.getResult();
 			OutputView.printResult(result);
