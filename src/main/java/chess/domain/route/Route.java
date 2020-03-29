@@ -71,6 +71,10 @@ public class Route {
         return this;
     }
 
+    public boolean isToAttack() {
+        return true;
+    }
+
     public List<Position> getRoute() {
         return Collections.unmodifiableList(route);
     }
@@ -96,5 +100,9 @@ public class Route {
             stringBuilder.append(" ");
         }
         return stringBuilder.toString();
+    }
+
+    public boolean isToProceed() {
+        return true;
     }
 }
