@@ -2,10 +2,9 @@ package chess.view;
 
 import java.util.Map;
 
-import chess.domain.Team;
-import chess.domain.position.Row;
-import chess.domain.position.Position;
 import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import chess.dto.ResponseDto;
 
 public class OutputView {
@@ -22,8 +21,8 @@ public class OutputView {
 		Map<Position, String> boardDto = response.getBoardDto();
 
 		System.out.println();
-		for (Column column : Column.values()) {
-			for (Row row : Row.values()) {
+		for (Row row : Row.values()) {
+			for (Column column : Column.values()) {
 				String piece = boardDto.entrySet()
 					.stream()
 					.filter(entry -> {

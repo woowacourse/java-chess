@@ -10,4 +10,12 @@ public enum Team {
 		}
 		return WHITE;
 	}
+
+	public boolean isSameTeam(Team team) {
+		return this == team;
+	}
+
+	public boolean isNotSameTeam(Team team) {
+		return !isSameTeam(team);
+	}
 }

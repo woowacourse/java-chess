@@ -10,10 +10,10 @@ public abstract class MovingStrategy {
 	public void validateMove(Position source, Position target, Map<Position, Team> boardDto) {
 		checkTarget(source, target, boardDto);
 		checkDirection(source, target);
-        checkObstacle(source, target, boardDto);
-    }
+		checkObstacle(source, target, boardDto);
+	}
 
-	private void checkTarget(Position source, Position target, Map<Position, Team> boardDto) {
+	protected void checkTarget(Position source, Position target, Map<Position, Team> boardDto) {
 		Team targetTeam = boardDto.get(target);
 		if (targetTeam == boardDto.get(source) && Objects.nonNull(targetTeam)) {
 			throw new IllegalArgumentException("목적지에 아군이 존재합니다.");
@@ -22,5 +22,5 @@ public abstract class MovingStrategy {
 
 	protected abstract void checkObstacle(Position source, Position target, Map<Position, Team> boardDto);
 
-    protected abstract void checkDirection(Position source, Position target);
+	protected abstract void checkDirection(Position source, Position target);
 }

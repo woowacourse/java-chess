@@ -5,6 +5,7 @@ import java.util.List;
 import chess.domain.Board;
 import chess.domain.Team;
 import chess.domain.Turn;
+import chess.domain.position.Position;
 import chess.dto.ResponseDto;
 
 public class Start extends Ready {
@@ -28,7 +29,9 @@ public class Start extends Ready {
 
 	@Override
 	public ChessGameState move(List<String> parameters) {
-		return super.move(parameters);
+		board.move(Position.of(parameters.get(0)), Position.of(parameters.get(1)), turn);
+		board.isKingDead();
+		return this;
 	}
 
 	@Override
