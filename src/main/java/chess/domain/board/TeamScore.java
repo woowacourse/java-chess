@@ -1,8 +1,8 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,43 +15,29 @@ public class TeamScore {
     private static final double PAWN_SAME_FILE_SCORE = -0.5;
     private final Map<Color, Double> teamScore;
 
-    public TeamScore(Map<BoardSquare, Piece> chessBoard) {
+    public TeamScore(Collection<Piece> chessBoard,
+        Map<Color, Integer> pawnSameFileByColor) {
         Objects.requireNonNull(chessBoard, "적합하지 않은 인자입니다.");
-        this.teamScore = Collections.unmodifiableMap(getTeamScore(chessBoard));
+        Objects.requireNonNull(pawnSameFileByColor, "적합하지 않은 인자입니다.");
+        this.teamScore = Collections.unmodifiableMap(getTeamScore(chessBoard, pawnSameFileByColor));
     }
 
-    private Map<Color, Double> getTeamScore(Map<BoardSquare, Piece> chessBoard) {
+    private Map<Color, Double> getTeamScore(Collection<Piece> chessBoard,
+        Map<Color, Integer> pawnSameFileByColor) {
         Map<Color, Double> teamScore = new HashMap<>();
         for (Color color : Color.values()) {
-            double colorScore = getSumScore(chessBoard, color);
+            double colorScore = getSumScore(chessBoard, color)
+                + (pawnSameFileByColor.get(color) * PAWN_SAME_FILE_SCORE);
             teamScore.put(color, colorScore);
         }
         return teamScore;
     }
 
-    private double getSumScore(Map<BoardSquare, Piece> chessBoard, Color color) {
-        return chessBoard.values().stream()
+    private double getSumScore(Collection<Piece> chessBoard, Color color) {
+        return chessBoard.stream()
             .filter(piece -> piece.isSameColor(color))
             .mapToDouble(Piece::getScore)
-            .sum()
-            + chargePawnSameFileScore(chessBoard, color);
-    }
-
-    private double chargePawnSameFileScore(Map<BoardSquare, Piece> chessBoard, Color color) {
-        List<BoardSquare> pawnSquare = chessBoard.keySet().stream()
-            .filter(square -> chessBoard.get(square) == Pawn.getPieceInstance(color))
-            .collect(Collectors.toList());
-        int count = 0;
-        for (BoardSquare boardSquare : pawnSquare) {
-            count += getSameFileCount(pawnSquare, boardSquare);
-        }
-        return count * PAWN_SAME_FILE_SCORE;
-    }
-
-    private long getSameFileCount(List<BoardSquare> pawnSquare, BoardSquare boardSquare) {
-        return pawnSquare.stream()
-            .filter(square -> boardSquare.isSameFile(square) && boardSquare != square)
-            .count();
+            .sum();
     }
 
     public List<Color> getWinners() {

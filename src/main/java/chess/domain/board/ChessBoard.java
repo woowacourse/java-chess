@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
     private static final int RANK_BLACK_PAWN_INIT = 7;
@@ -100,10 +101,35 @@ public class ChessBoard {
     }
 
     public TeamScore getTeamScore() {
-        return new TeamScore(chessBoard);
+        return new TeamScore(chessBoard.values(), countPawnSameFileByColor());
     }
 
     public Color getWinnerTurn() {
         return gameTurn.previousTurnIfEmptyMySelf();
+    }
+
+    private Map<Color, Integer> countPawnSameFileByColor() {
+        Map<Color, Integer> pawnSameFileByColor = new HashMap<>();
+        for (Color color : Color.values()) {
+            List<BoardSquare> pawnSquare = getSquareIfSameColorPawn(color);
+            pawnSameFileByColor.put(color, getCountSameFile(pawnSquare));
+        }
+        return pawnSameFileByColor;
+    }
+
+    private int getCountSameFile(List<BoardSquare> pawnSquare) {
+        int count = 0;
+        for (BoardSquare boardSquare : pawnSquare) {
+            count += pawnSquare.stream()
+                .filter(square -> boardSquare.isSameFile(square) && boardSquare != square)
+                .count();
+        }
+        return count;
+    }
+
+    private List<BoardSquare> getSquareIfSameColorPawn(Color color) {
+        return chessBoard.keySet().stream()
+            .filter(square -> chessBoard.get(square) == Pawn.getPieceInstance(color))
+            .collect(Collectors.toList());
     }
 }

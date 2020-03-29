@@ -73,5 +73,6 @@ public class BoardSquare {
     public boolean isSameFile(BoardSquare boardSquare) {
         return this.file == boardSquare.file;
     }
+
 }
 
