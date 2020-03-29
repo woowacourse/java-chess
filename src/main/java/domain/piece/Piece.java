@@ -3,7 +3,7 @@ package domain.piece;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.DoubleStream;
+import java.util.Optional;
 
 import domain.board.InvalidTurnException;
 import domain.board.Rank;
@@ -45,25 +45,28 @@ public abstract class Piece implements Movable {
 			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION));
 	}
 
+	protected Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
+		return ranks.stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.filter(piece -> piece.getPosition().equals(targetPosition))
+			.findFirst();
+	}
+
 	protected void capture(Piece targetPiece, List<Rank> ranks) {
 		int targetRankIndex = targetPiece.position.getRow() - 1;
-		if(targetPiece instanceof King){
+		if (targetPiece instanceof King) {
 			System.exit(0);
 		}
 		ranks.get(targetRankIndex).getPieces().remove(targetPiece);
-		System.out.println("잡았다!");
 	}
 
 	protected void changePosition(Position targetPosition, List<Rank> ranks) {
 		int sourceRankIndex = this.position.getRow() - 1;
 		ranks.get(sourceRankIndex).getPieces().remove(this);
-		System.out.println(this.showSymbol()+"난죽었다");
 
 		this.position = targetPosition;
 		int targetRankIndex = targetPosition.getRow() - 1;
 		ranks.get(targetRankIndex).getPieces().add(this);
-		System.out.println(this.showSymbol()+"난 추가요");
-
 	}
 
 	private boolean isInPlace(Position sourcePosition, Position targetPosition) {

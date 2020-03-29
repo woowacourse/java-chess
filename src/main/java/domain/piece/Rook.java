@@ -17,13 +17,6 @@ public class Rook extends Piece {
 		super(position, team);
 	}
 
-	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
-		int rankIndex = targetPosition.getRow() - 1;
-		return ranks.get(rankIndex).getPieces().stream()
-			.filter(piece -> piece.getPosition().isSamePosition(targetPosition))
-			.findFirst();
-	}
-
 	@Override
 	protected boolean validDirection(Direction direction) {
 		if (Direction.linearDirection().contains(direction)) {

@@ -12,27 +12,20 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Pawn extends Piece {
-	private static final String SYMBOL = "p";
 	private static final int MiN_STEP_SIZE_OF_DIAGONAL = 1;
-	private State state;
 	private static final double DEFAULT_SCORE = 1;
+	private static final String SYMBOL = "p";
+
+	private State state;
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
 		state = State.START;
 	}
 
-	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
-		return ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece.getPosition().getColumn().getNumber() == targetPosition.getColumn().getNumber()
-				&& piece.getPosition().getRow() == targetPosition.getRow())
-			.findFirst();
-	}
-
 	@Override
 	protected boolean validDirection(Direction direction) {
-		if (this.team == Team.WHITE) {
+		if (Team.WHITE.equals(this.team)) {
 			if (Direction.whitePawnDirection().contains(direction)) {
 				return true;
 			}

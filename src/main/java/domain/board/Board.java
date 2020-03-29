@@ -64,7 +64,7 @@ public class Board {
 			.sum();
 
 		if (isSameColumn(pawn)) {
-			sum = pawn.size() * PAWN_SCORE_WHEN_HAS_SAME_COLUMN;
+			sum += pawn.size() * PAWN_SCORE_WHEN_HAS_SAME_COLUMN;
 		}
 		return sum;
 	}
@@ -76,5 +76,4 @@ public class Board {
 			.count();
 		return pawns.size() == distinctCount;
 	}
-
 }
