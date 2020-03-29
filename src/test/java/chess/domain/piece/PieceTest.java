@@ -94,7 +94,7 @@ public class PieceTest {
         Board board = BoardFactory.createBoard();
         assertThatThrownBy(() -> {
             piece.isMovable(board, to);
-        }).isInstanceOf(UnsupportedOperationException.class)
+        }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 포지션으로 이동할 수 없습니다.");
     }
 

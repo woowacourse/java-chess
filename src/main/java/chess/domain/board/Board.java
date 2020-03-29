@@ -4,6 +4,7 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.exception.TakeTurnException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,20 +63,20 @@ public class Board {
                 .isOtherTeam(findPieceBy(getBoardIndex(nextPosition.getX(), nextPosition.getY())));
     }
 
-    public Board movePiece(final String from, final String to, final int turnFlag) throws IllegalAccessException {
+    public Board movePiece(final String from, final String to, final int turnFlag) {
         List<Piece> movedBoard = new ArrayList<>(board);
 
         int fromIndex = getBoardIndexByStringPosition(from);
         int toIndex = getBoardIndexByStringPosition(to);
         if (Team.isSameTeam(turnFlag, findPieceBy(fromIndex))) {
-            throw new IllegalArgumentException(TAKE_TURN_EXCEPTION_MESSAGE);
+            throw new TakeTurnException(TAKE_TURN_EXCEPTION_MESSAGE);
         }
 
         movePieceWithValidation(movedBoard, fromIndex, toIndex);
         return new Board(movedBoard);
     }
 
-    private void movePieceWithValidation(final List<Piece> movedBoard, final int fromIndex, final int toIndex) throws IllegalAccessException {
+    private void movePieceWithValidation(final List<Piece> movedBoard, final int fromIndex, final int toIndex) {
         Piece fromPiece = findPieceBy(fromIndex);
         Piece toPiece = findPieceBy(toIndex);
 

@@ -5,6 +5,10 @@ import chess.domain.board.BoardFactory;
 import chess.domain.piece.Team;
 import chess.domain.result.GameResult;
 import chess.domain.util.Run;
+import chess.exception.BlankMoveUnsupportedException;
+import chess.exception.MoveCommandWhenBoardNullException;
+import chess.exception.PieceImpossibleMoveException;
+import chess.exception.TakeTurnException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -28,7 +32,7 @@ public class ChessGame {
         int turnFlag = INITIAL_TURN_OF_WHITE;
 
         Run runner;
-        while((runner = inputCommandWithValidation()).isNotEnd()) {
+        while ((runner = inputCommandWithValidation()).isNotEnd()) {
             if (runner.isStart()) {
                 board = BoardFactory.createBoard();
                 OutputView.printBoard(board);
@@ -40,7 +44,8 @@ public class ChessGame {
                     OutputView.printBoard(board);
                     gameTerminateWhenFinished();
                 }
-            } catch (NullPointerException | IllegalArgumentException | IllegalAccessException | UnsupportedOperationException e) {
+            } catch (BlankMoveUnsupportedException | MoveCommandWhenBoardNullException |
+                    PieceImpossibleMoveException | TakeTurnException e) {
                 OutputView.printExceptionMessage(e.getMessage());
             }
 

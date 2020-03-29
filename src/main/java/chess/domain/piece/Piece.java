@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.exception.PieceImpossibleMoveException;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,11 +32,11 @@ public abstract class Piece {
         return position;
     }
 
-    public boolean isMovable(final Board board, final Position to) throws IllegalAccessException {
+    public boolean isMovable(final Board board, final Position to) {
         if (getPossiblePositions(board).contains(to)) {
             return true;
         }
-        throw new IllegalAccessException(PIECE_IMPOSSIBLE_MOVE_EXCEPTION_MESSAGE);
+        throw new PieceImpossibleMoveException(PIECE_IMPOSSIBLE_MOVE_EXCEPTION_MESSAGE);
     }
 
     protected boolean isInBoardRange(Position nextPosition) {
