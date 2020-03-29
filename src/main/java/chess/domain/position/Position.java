@@ -15,7 +15,7 @@ public class Position {
 	public Position(String position) {
 		validate(position);
 		this.row = Row.of(position.substring(0, 1));
-		this.column = Column.of(position.substring(1, 2));
+		this.column = Column.of(position.substring(1, 2));// TODO: 2020/03/28 상수화 가능한 부분?
 	}
 
 	public Position(Row row, Column column) {
