@@ -1,16 +1,19 @@
 package chess.domains.board;
 
 import chess.domains.piece.PieceColor;
+import chess.domains.position.Column;
 import chess.domains.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
     public static final String INVALID_LOCATION_ERR_MSG = "위치를 잘못 입력하였습니다.";
     private final Set<PlayingPiece> board = BoardFactory.getBoard();
+    private PieceColor teamColor = PieceColor.WHITE;
 
     public List<PlayingPiece> showBoard() {
         List<PlayingPiece> showingBoard = new ArrayList<>(board);
@@ -33,11 +36,11 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_LOCATION_ERR_MSG));
     }
 
-    public void move(Position source, Position target, PieceColor teamColor) {
+    public void move(Position source, Position target) {
         PlayingPiece sourcePiece = findPiece(source);
         PlayingPiece targetPiece = findPiece(target);
 
-        sourcePiece.checkMyTurn(teamColor);
+        sourcePiece.checkSameColorWith(teamColor);
         sourcePiece.validMove(targetPiece);
 
         if (!sourcePiece.isKnight()) {
@@ -46,6 +49,7 @@ public class Board {
         }
 
         exchange(sourcePiece, targetPiece);
+        teamColor = teamColor.changeTeam();
     }
 
     private void validRoute(List<Position> route) {
@@ -96,13 +100,17 @@ public class Board {
 
         int pawnCount = 0;
 
-        for (char c = 'a'; c <= 'h'; c++) {
-            char column = c;
-            int count = (int) myPawns.filter(myPiece -> myPiece.isColumn(column)).count();
-            if (count > 1) {
-                pawnCount += count;
+        for (Column column : Column.values()) {
+            List<PlayingPiece> sameColumnPieces = myPawns.filter(myPiece -> myPiece.isColumn(column))
+                    .collect(Collectors.toList());
+            if (!sameColumnPieces.isEmpty()) {
+                pawnCount += sameColumnPieces.size();
             }
         }
         return pawnCount;
+    }
+
+    public PieceColor getTeamColor() {
+        return teamColor;
     }
 }
