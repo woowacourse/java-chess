@@ -30,15 +30,23 @@ public class Pawn extends Piece {
 	@Override
 	public void validateMoveDirection(Direction direction) {
 		if (isTeam(Team.BLACK)) {
-			if (direction != Direction.S) {
-				throw new CanNotMoveException("흑색 팀 Pawn은 아래로만 움직일 수 있습니다.");
-			}
+			validateIsSouth(direction);
 			return;
 		}
 		if (isTeam(Team.WHITE)) {
-			if (direction != Direction.N) {
-				throw new CanNotMoveException("백색 팀 Pawn은 위로만 움직일 수 있습니다.");
-			}
+			validateIsNorth(direction);
+		}
+	}
+
+	private void validateIsSouth(Direction direction) {
+		if (direction != Direction.S) {
+			throw new CanNotMoveException("흑색 팀 Pawn은 아래로만 움직일 수 있습니다.");
+		}
+	}
+
+	private void validateIsNorth(Direction direction) {
+		if (direction != Direction.N) {
+			throw new CanNotMoveException("백색 팀 Pawn은 위로만 움직일 수 있습니다.");
 		}
 	}
 
@@ -49,21 +57,21 @@ public class Pawn extends Piece {
 		}
 
 		if (isTeam(Team.BLACK)) {
-			validateIsDiagonalDown(direction);
+			validateIsDiagonalSouth(direction);
 			return;
 		}
 		if (isTeam(Team.WHITE)) {
-			validateIsDiagonalUp(direction);
+			validateIsDiagonalNorth(direction);
 		}
 	}
 
-	private void validateIsDiagonalDown(Direction direction) {
+	private void validateIsDiagonalSouth(Direction direction) {
 		if (direction.isNotDiagonalDown()) {
 			throw new CanNotAttackException("흑색 팀 폰은 대각선 아래로만 공격할 수 있습니다.");
 		}
 	}
 
-	private void validateIsDiagonalUp(Direction direction) {
+	private void validateIsDiagonalNorth(Direction direction) {
 		if (direction.isNotDiagonalUp()) {
 			throw new CanNotAttackException("백색 팀 폰은 대각선 위로만 공격할 수 있습니다.");
 		}
