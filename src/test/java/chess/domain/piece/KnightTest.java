@@ -43,7 +43,7 @@ class KnightTest {
 
 	@DisplayName("나이트가 source에서 target으로 정상적으로 갈 수 있는지 확인")
 	@Test
-	void movingTrraceTest3() {
+	void movingTraceTest3() {
 		Piece knight = new Knight(new Initial(), "n");
 
 		Position source = Position.of("a1");
