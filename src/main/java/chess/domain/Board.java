@@ -1,9 +1,9 @@
 package chess.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
@@ -24,23 +24,21 @@ public class Board {
 	}
 
 	public void movePiece(Position source, Position destination) {
-		validateDestination(source, destination);
+		validateSameDestination(source, destination);
 		Piece sourcePiece = pieces.findByPosition(source);
 		validateSource(sourcePiece);
 		Piece destinationPiece = pieces.findByPosition(destination);
-		if (sourcePiece instanceof Pawn) {
-			validatePawnDestination(source, destination);
-		}
-		if (!(sourcePiece instanceof Knight)) {
-			validateNoObstacle(source, destination);
-		}
+		List<Piece> piecesInBetween = source.getPositionsInBetween(destination).stream()
+				.map(pieces::findByPosition)
+				.collect(Collectors.toList());
+		sourcePiece.validateDestination(destination, destinationPiece, piecesInBetween);
 		if (destinationPiece != null) {
 			killPiece(sourcePiece, destinationPiece);
 		}
 		sourcePiece.move(destination);
 	}
 
-	private void validateDestination(Position source, Position destination) {
+	private void validateSameDestination(Position source, Position destination) {
 		if (source.equals(destination)) {
 			throw new IllegalMoveException(SOURCE_SAME_WITH_DESTINATION);
 		}
@@ -49,25 +47,6 @@ public class Board {
 	private void validateSource(Piece piece) {
 		if (piece == null) {
 			throw new NullPieceException(NO_PIECE_IN_SOURCE);
-		}
-	}
-
-	private void validatePawnDestination(Position source, Position destination) {
-		Direction direction = source.calculateDirection(destination);
-		if (direction.isForwardForPawn() && pieces.findByPosition(destination) != null) {
-			throw new IllegalMoveException(UNMOVABLE_DESTINATION_FOR_PAWN);
-		}
-		if (direction.isDiagonal() && pieces.findByPosition(destination) == null) {
-			throw new IllegalMoveException(UNMOVABLE_DESTINATION_FOR_PAWN);
-		}
-	}
-
-	private void validateNoObstacle(Position source, Position destination) {
-		List<Position> positionsInBetween = source.getPositionsInBetween(destination);
-		for (Position position : positionsInBetween) {
-			if (pieces.findByPosition(position) != null) {
-				throw new IllegalMoveException(PIECE_IN_PATH);
-			}
 		}
 	}
 

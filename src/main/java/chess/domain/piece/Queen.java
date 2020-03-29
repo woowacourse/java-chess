@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.exception.IllegalMoveException;
 
+import java.util.List;
+
 public class Queen extends Piece {
 
 	public Queen(Position position, Team team) {
@@ -17,5 +19,10 @@ public class Queen extends Piece {
 			destination)) {
 			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
+	}
+
+	@Override
+	public void validateDestination(Position destination, Piece destinationPiece, List<Piece> piecesInBetween) {
+		validateNoObstacle(piecesInBetween);
 	}
 }

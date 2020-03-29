@@ -25,4 +25,7 @@ public class Knight extends Piece {
 			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
 	}
+
+	@Override
+	public void validateDestination(Position destination, Piece destinationPiece, List<Piece> piecesInBetween) {}
 }

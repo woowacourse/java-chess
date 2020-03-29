@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.exception.IllegalMoveException;
 
+import java.util.List;
+
 public class Rook extends Piece {
 
 	public Rook(Position position, Team team) {
@@ -16,5 +18,10 @@ public class Rook extends Piece {
 		if (this.position.isNonLinearDirection(destination)) {
 			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
+	}
+
+	@Override
+	public void validateDestination(Position destination, Piece destinationPiece, List<Piece> piecesInBetween) {
+		validateNoObstacle(piecesInBetween);
 	}
 }

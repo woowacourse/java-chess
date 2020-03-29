@@ -8,10 +8,11 @@ import chess.domain.Position;
 import chess.exception.IllegalMoveException;
 
 public class Pawn extends Piece {
+	private static final String UNMOVABLE_DESTINATION_FOR_PAWN = "폰이 이동할 수 없는 위치입니다.";
 
-	public static final List<Direction> LOWER_TEAM_POSSIBLE_DIRECTIONS = Arrays.asList(Direction.NORTH,
+	private static final List<Direction> LOWER_TEAM_POSSIBLE_DIRECTIONS = Arrays.asList(Direction.NORTH,
 		Direction.NORTHNORTH, Direction.NORTHEAST, Direction.NORTHWEST);
-	public static final List<Direction> UPPER_TEAM_POSSIBLE_DIRECTIONS = Arrays.asList(Direction.SOUTH,
+	private static final List<Direction> UPPER_TEAM_POSSIBLE_DIRECTIONS = Arrays.asList(Direction.SOUTH,
 		Direction.SOUTHSOUTH, Direction.SOUTHEAST, Direction.SOUTHWEST);
 
 	public Pawn(Position position, Team team) {
@@ -36,6 +37,15 @@ public class Pawn extends Piece {
 		if (!possibleDirections.contains(direction)) {
 			throw new IllegalMoveException(ILLEGAL_MOVE);
 		}
+	}
+
+	@Override
+	public void validateDestination(Position destination, Piece destinationPiece, List<Piece> piecesInBetween) {
+		Direction direction = this.position.calculateDirection(position);
+		if ((direction.isForwardForPawn() && destinationPiece != null) || (direction.isDiagonal() && destinationPiece == null)) {
+			throw new IllegalMoveException(UNMOVABLE_DESTINATION_FOR_PAWN);
+		}
+		validateNoObstacle(piecesInBetween);
 	}
 
 	public boolean isInSameColumn(Pawn pawn) {
