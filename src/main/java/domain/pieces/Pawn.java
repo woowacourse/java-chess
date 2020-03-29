@@ -55,15 +55,23 @@ public class Pawn extends Piece {
 		}
 
 		if (isTeam(Team.BLACK)) {
-			if (direction != Direction.SW && direction != Direction.SE) {
-				throw new CanNotAttackException("흑색 팀 폰은 대각선 아래로만 공격할 수 있습니다.");
-			}
+			validateIsDiagonalDown(direction);
 			return;
 		}
 		if (isTeam(Team.WHITE)) {
-			if (direction != Direction.NW && direction != Direction.NE) {
-				throw new CanNotAttackException("백색 팀 폰은 대각선 위로만 공격할 수 있습니다.");
-			}
+			validateIsDiagonalUp(direction);
+		}
+	}
+
+	private void validateIsDiagonalDown(Direction direction) {
+		if (direction.isNotDiagonalDown()) {
+			throw new CanNotAttackException("흑색 팀 폰은 대각선 아래로만 공격할 수 있습니다.");
+		}
+	}
+
+	private void validateIsDiagonalUp(Direction direction) {
+		if (direction.isNotDiagonalUp()) {
+			throw new CanNotAttackException("백색 팀 폰은 대각선 위로만 공격할 수 있습니다.");
 		}
 	}
 

@@ -47,8 +47,24 @@ public enum  Direction {
 		return !Arrays.asList(E, W, S, N).contains(this);
 	}
 
+	public boolean isNotDiagonalUp() {
+		return !isDiagonalUp();
+	}
+
+	private boolean isDiagonalUp() {
+		return this == NW || this == NE;
+	}
+
+	public boolean isNotDiagonalDown() {
+		return !isDiagonalDown();
+	}
+
+	private boolean isDiagonalDown() {
+		return this == SW || this == SE;
+	}
+
 	public boolean isNotDiagonal() {
-		return !Arrays.asList(NE, NW, SE, SW).contains(this);
+		return isNotDiagonalUp() && isNotDiagonalDown();
 	}
 
 	public boolean isLinearDirection() {
