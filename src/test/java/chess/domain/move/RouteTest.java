@@ -13,9 +13,9 @@ public class RouteTest {
     @DisplayName("Route 생성")
     void create() {
         List<Position> positions = new ArrayList<>();
-        positions.add(Position.of(1, 2));
-        positions.add(Position.of(2, 3));
-        positions.add(Position.of(3, 4));
+        positions.add(Position.of(Coordinate.of(1), Coordinate.of(2)));
+        positions.add(Position.of(Coordinate.of(2), Coordinate.of(3)));
+        positions.add(Position.of(Coordinate.of(3), Coordinate.of(4)));
 
         assertThat(new Route(positions)).isInstanceOf(Route.class);
     }
@@ -24,9 +24,9 @@ public class RouteTest {
     @DisplayName("getRoute 테스트")
     void getRoute() {
         List<Position> positions = new ArrayList<>();
-        positions.add(Position.of(1, 2));
-        positions.add(Position.of(2, 3));
-        positions.add(Position.of(3, 4));
+        positions.add(Position.of(Coordinate.of(1), Coordinate.of(2)));
+        positions.add(Position.of(Coordinate.of(2), Coordinate.of(3)));
+        positions.add(Position.of(Coordinate.of(3), Coordinate.of(4)));
         Route route = new Route(positions);
 
         assertThat(route.getRoute()).isInstanceOf(List.class);
@@ -36,11 +36,11 @@ public class RouteTest {
     @DisplayName("hasPosition 테스트")
     void hasPosition() {
         List<Position> positions = new ArrayList<>();
-        positions.add(Position.of(1, 2));
-        positions.add(Position.of(2, 3));
-        positions.add(Position.of(3, 4));
+        positions.add(Position.of(Coordinate.of(1), Coordinate.of(2)));
+        positions.add(Position.of(Coordinate.of(2), Coordinate.of(3)));
+        positions.add(Position.of(Coordinate.of(3), Coordinate.of(4)));
         Route route = new Route(positions);
 
-        assertThat(route.hasPosition(Position.of(1, 2))).isTrue();
+        assertThat(route.hasPosition(Position.of(Coordinate.of(1), Coordinate.of(2)))).isTrue();
     }
 }

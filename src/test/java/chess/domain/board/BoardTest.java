@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Pawn;
+import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
 import chess.factory.BoardFactory;
@@ -34,8 +35,8 @@ public class BoardTest {
     @DisplayName("move 테스트")
     void move() {
         Board board = BoardFactory.createBoard();
-        Position startPosition = Position.of(2, 1);
-        Position targetPosition = Position.of(4, 1);
+        Position startPosition = Position.of(Coordinate.of(2), Coordinate.of(1));
+        Position targetPosition = Position.of(Coordinate.of(4), Coordinate.of(1));
         MovingInfo movingInfo = new MovingInfo(startPosition, targetPosition);
 
         board.move(movingInfo);

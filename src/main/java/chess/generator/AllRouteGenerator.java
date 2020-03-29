@@ -1,6 +1,7 @@
 package chess.generator;
 
 import chess.domain.chesspiece.*;
+import chess.domain.move.Coordinate;
 import chess.domain.move.Direction;
 import chess.domain.move.Position;
 import chess.domain.move.Route;
@@ -34,8 +35,12 @@ public class AllRouteGenerator {
         boolean isPawn = chessPiece instanceof Pawn;
 
         if (isPawn && ((Pawn) chessPiece).isFirstMove()) {
-            positions.add(Position.of(initialPosition.getX() + Direction.UP.getX(), initialPosition.getY()));
-            positions.add(Position.of(initialPosition.getX() + Direction.UP.getX() * 2, initialPosition.getY()));
+            Coordinate pawnInitialX = Coordinate.of(initialPosition.getX() + Direction.UP.getX());
+            Coordinate pawnDoubleInitialX = Coordinate.of(initialPosition.getX() + Direction.UP.getX() * 2);
+            Coordinate pawnInitialY = Coordinate.of(initialPosition.getY());
+
+            positions.add(Position.of(pawnInitialX, pawnInitialY));
+            positions.add(Position.of(pawnDoubleInitialX, pawnInitialY));
             routes.add(new Route(positions));
         }
     }
@@ -69,7 +74,7 @@ public class AllRouteGenerator {
         int y = initialPosition.getY() + KNIGHT_DIRECTION[index][1];
 
         if (validateCoordinate(x, y)) {
-            positions.add(Position.of(x, y));
+            positions.add(Position.of(Coordinate.of(x), Coordinate.of(y)));
         }
     }
 
@@ -96,7 +101,7 @@ public class AllRouteGenerator {
         if (!validateCoordinate(x, y)) {
             return;
         }
-        Position nowPosition = Position.of(x, y);
+        Position nowPosition = Position.of(Coordinate.of(x), Coordinate.of(y));
         positions.add(nowPosition);
         addRouteRecursive(nowPosition, positions, direction);
     }
@@ -108,7 +113,7 @@ public class AllRouteGenerator {
         if (!validateCoordinate(x, y)) {
             return;
         }
-        Position nowPosition = Position.of(x, y);
+        Position nowPosition = Position.of(Coordinate.of(x), Coordinate.of(y));
         positions.add(nowPosition);
     }
 

@@ -9,6 +9,6 @@ public class PositionTest {
     @Test
     @DisplayName("Position 생성")
     void create() {
-        assertThat(Position.of(1, 1)).isInstanceOf(Position.class);
+        assertThat(Position.of(Coordinate.of(1), Coordinate.of(1))).isInstanceOf(Position.class);
     }
 }
