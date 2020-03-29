@@ -21,10 +21,11 @@ public class Pieces {
 
 	public void move(Point from, Point to) {
 		Piece subject = find(from);
-		Direction direction = Direction.of(from, to);
+
 		Distance distance = Distance.of(from, to);
 		subject.canReach(distance);
 
+		Direction direction = Direction.of(from, to);
 		if (direction.isLinearDirection()) {
 			subject = moveProgressivelyBeforeTo(from, to, subject, direction);
 		}

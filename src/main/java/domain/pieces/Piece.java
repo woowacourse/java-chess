@@ -38,10 +38,6 @@ public abstract class Piece {
         return this.team.equals(team);
     }
 
-    public boolean isNotTeam(Team team) {
-        return !isTeam(team);
-    }
-
     public boolean isWhite() {
         return team == Team.WHITE;
     }
@@ -94,10 +90,6 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return this instanceof Pawn;
-    }
-
-    public boolean isNotPawn() {
-        return !(this instanceof Pawn);
     }
 
     @Override
