@@ -1,5 +1,7 @@
 package testAssistant;
 
+import domain.board.Board;
+import domain.board.RowOfBoard;
 import domain.command.MoveCommandTokens;
 import domain.pieces.*;
 import domain.point.Direction;
@@ -84,5 +86,16 @@ public class creationAssistant {
 
 	public static MoveCommandTokens createMoveCommandTokens(String string) {
 		return MoveCommandTokens.of(string);
+	}
+
+	public static RowOfBoard createEmptyRowOfBoard() {
+		return RowOfBoard.createEmpty();
+	}
+
+	public static Board createBoard(Piece... pieces) {
+		Set<Piece> pieceSet = Arrays.stream(pieces)
+				.collect(Collectors.toSet());
+
+		return Board.of(pieceSet);
 	}
 }

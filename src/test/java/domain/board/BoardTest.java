@@ -1,12 +1,17 @@
 package domain.board;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static testAssistant.creationAssistant.createBoard;
+import static testAssistant.creationAssistant.createPawn;
 
 public class BoardTest {
 
     @Test
-    @DisplayName("게임판을 만드는 테스트")
-    void create_Board() {
+    void of() {
+        Board board = createBoard(createPawn("white", "a1"));
+
+        assertThat(board).isNotNull();
     }
 }
