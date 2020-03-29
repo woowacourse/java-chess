@@ -85,4 +85,8 @@ public class Board {
     public boolean isFinished() {
         return isFinished;
     }
+
+    public List<Piece> getBoard() {
+        return board;
+    }
 }

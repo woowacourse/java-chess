@@ -32,10 +32,6 @@ public abstract class Piece {
         throw new UnsupportedOperationException("해당 포지션으로 이동할 수 없습니다.");
     }
 
-    public boolean isOtherTeam(Piece nextPiece) {
-        return this.team.isNotSame(nextPiece.team);
-    }
-
     protected boolean isInBoardRange(Position nextPosition) {
         return nextPosition.getX() <= 8 && nextPosition.getX() >= 1 &&
                 nextPosition.getY() <= 8 && nextPosition.getY() >= 1;
@@ -43,6 +39,14 @@ public abstract class Piece {
 
     public boolean isKing() {
         return representation == 'k' | representation == 'K';
+    }
+
+    public boolean isOtherTeam(Piece nextPiece) {
+        return this.team.isNotSame(nextPiece.team);
+    }
+
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
     }
 
     @Override
