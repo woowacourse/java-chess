@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
-import chess.domain.result.PieceType;
 import chess.exception.PieceImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -133,7 +132,7 @@ public class PieceTest {
     @ParameterizedTest
     @MethodSource("getCasesForPieceScore")
     void pieceScore(Piece piece, double expectedScore) {
-        assertThat(PieceType.getScoreOf(piece)).isEqualTo(expectedScore);
+        assertThat(piece.getScore()).isEqualTo(expectedScore);
     }
 
     private static Stream<Arguments> getCasesForPieceScore() {

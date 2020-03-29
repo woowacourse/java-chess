@@ -22,7 +22,7 @@ public class Knight extends SingleStep {
     );
 
     public Knight(char representation, Team team, Position position) {
-        super(representation, team, position);
+        super(representation, team, position, PieceType.KNIGHT);
     }
 
     @Override

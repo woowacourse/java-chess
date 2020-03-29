@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MultipleStep extends Piece {
-    public MultipleStep(char representation, Team team, Position position) {
-        super(representation, team, position);
+    public MultipleStep(char representation, Team team, Position position, PieceType pieceType) {
+        super(representation, team, position, pieceType);
     }
 
     @Override

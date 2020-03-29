@@ -22,7 +22,7 @@ public class King extends SingleStep {
     );
 
     public King(char representation, Team team, Position position) {
-        super(representation, team, position);
+        super(representation, team, position, PieceType.KING);
     }
 
     @Override

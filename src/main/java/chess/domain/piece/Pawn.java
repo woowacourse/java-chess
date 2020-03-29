@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Pawn extends Piece {
-    public Pawn(char representation, Team team, Position position) {
-        super(representation, team, position);
+    public Pawn(char representation, Team team, Position position, PieceType pieceType) {
+        super(representation, team, position, pieceType);
     }
 
     protected boolean isFirstMove(int initialPawnRow) {

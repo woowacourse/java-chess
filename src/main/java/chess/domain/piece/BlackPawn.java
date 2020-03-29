@@ -17,7 +17,7 @@ public class BlackPawn extends Pawn {
     );
 
     public BlackPawn(char representation, Team team, Position position) {
-        super(representation, team, position);
+        super(representation, team, position, PieceType.BLACK_PAWN);
     }
 
     @Override

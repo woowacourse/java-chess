@@ -17,7 +17,7 @@ public class WhitePawn extends Pawn {
     );
 
     public WhitePawn(char representation, Team team, Position position) {
-        super(representation, team, position);
+        super(representation, team, position, PieceType.WHITE_PAWN);
     }
 
     @Override

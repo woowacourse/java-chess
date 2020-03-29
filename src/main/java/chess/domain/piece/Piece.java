@@ -17,11 +17,13 @@ public abstract class Piece {
     protected final char representation;
     protected final Team team;
     protected final Position position;
+    protected final PieceType pieceType;
 
-    public Piece(char representation, Team team, Position position) {
+    public Piece(char representation, Team team, Position position, PieceType pieceType) {
         this.representation = representation;
         this.team = team;
         this.position = position;
+        this.pieceType = pieceType;
     }
 
     public char getRepresentation() {
@@ -58,6 +60,10 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return this.getClass().equals(WhitePawn.class) | this.getClass().equals(BlackPawn.class);
+    }
+
+    public double getScore() {
+        return pieceType.getScore();
     }
 
     @Override

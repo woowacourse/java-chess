@@ -18,7 +18,7 @@ public class Bishop extends MultipleStep {
     );
 
     public Bishop(char representation, Team team, Position position) {
-        super(representation, team, position);
+        super(representation, team, position, PieceType.BISHOP);
     }
 
     @Override

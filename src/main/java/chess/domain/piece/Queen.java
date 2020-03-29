@@ -22,7 +22,7 @@ public class Queen extends MultipleStep {
     );
 
     public Queen(char representation, Team team, Position position) {
-        super(representation, team, position);
+        super(representation, team, position, PieceType.QUEEN);
     }
 
     @Override

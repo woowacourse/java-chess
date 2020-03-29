@@ -18,7 +18,7 @@ public class Rook extends MultipleStep {
     );
 
     public Rook(char representation, Team team, Position position) {
-        super(representation, team, position);
+        super(representation, team, position, PieceType.ROOK);
     }
 
     @Override
