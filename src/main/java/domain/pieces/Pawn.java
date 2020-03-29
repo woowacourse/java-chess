@@ -14,34 +14,21 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Map<Point, Piece> pieces, Point from, Point to) {
-        if (team.equals(Team.BLACK)) {
-            return isBlackPawnMovable(pieces, from, to);
-        }
-        return isWhitePawnMovable(pieces, from, to);
+    public boolean isMovable(Direction direction, Map<Point, Piece> pieces, Point from, Point to) {
+        return isMovableDirection(direction, pieces, from, to);
     }
 
-    private boolean isBlackPawnMovable(Map<Point, Piece> pieces, Point from, Point to) {
-        for (Direction direction : Direction.getBlackPawnDirection()) {
-            if (direction.isMovableLimited(from.getRowDistance(to), from.getColumnDistance(to)) && !isSameTeamToTarget(pieces, to)) {
-                if (direction != Direction.DOWN && pieces.get(to).team == Team.WHITE) {
-                    return true;
-                }
-                return direction == Direction.DOWN && pieces.get(to).team == Team.NONE;
-            }
+    private boolean isMovableDirection(Direction direction, Map<Point, Piece> pieces, Point from, Point to) {
+        if (Roles.isMovableLimitedCase(direction, pieces, from, to)) {
+            return isLinearOrDiagonal(direction, pieces, to);
         }
         return false;
     }
 
-    private boolean isWhitePawnMovable(Map<Point, Piece> pieces, Point from, Point to) {
-        for (Direction direction : Direction.getWhitePawnDirection()) {
-            if (direction.isMovableLimited(from.getRowDistance(to), from.getColumnDistance(to)) && !isSameTeamToTarget(pieces, to)) {
-                if (direction != Direction.TOP && pieces.get(to).team == Team.BLACK) {
-                    return true;
-                }
-                return direction == Direction.TOP && pieces.get(to).team == Team.NONE;
-            }
+    private boolean isLinearOrDiagonal(Direction direction, Map<Point, Piece> pieces, Point to) {
+        if (team == Team.BLACK) {
+            return Roles.isLinearOrDiagonalBlackTeam(direction, pieces, to);
         }
-        return false;
+        return Roles.isLinearOrDiagonalWhiteTeam(direction, pieces, to);
     }
 }

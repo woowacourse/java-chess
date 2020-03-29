@@ -13,12 +13,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(Map<Point, Piece> pieces, Point from, Point to) {
-        for (Direction direction : Direction.getAllDirection()) {
-            if (direction.isMovableLimited(from.getRowDistance(to), from.getColumnDistance(to)) && !isSameTeamToTarget(pieces, to)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean isMovable(Direction direction, Map<Point, Piece> pieces, Point from, Point to) {
+        return Roles.isMovableLimitedCase(direction, pieces, from, to);
     }
 }

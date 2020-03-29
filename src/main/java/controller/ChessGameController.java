@@ -25,9 +25,9 @@ public class ChessGameController {
         play();
     }
 
-    public void play() {
+    private void play() {
         while (!state.isFinished()) {
-            OutputView.printBoard(state.getPieces());
+            OutputView.printBoard(state .getPieces());
             commend(InputView.inputCommend());
         }
     }

@@ -1,5 +1,6 @@
 package domain.pieces;
 
+import domain.move.Direction;
 import domain.point.Point;
 import domain.team.Team;
 import java.util.Map;
@@ -21,7 +22,7 @@ public abstract class Piece {
         return this.team.equals(team);
     }
 
-    public abstract boolean isMovable(Map<Point, Piece> pieces, Point from, Point to);
+    public abstract boolean isMovable(Direction direction, Map<Point, Piece> pieces, Point from, Point to);
 
     protected boolean isSameTeamToTarget(Map<Point, Piece> pieces, Point to) {
         return pieces.get(to).team.equals(team);

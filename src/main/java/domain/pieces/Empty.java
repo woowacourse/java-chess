@@ -1,5 +1,6 @@
 package domain.pieces;
 
+import domain.move.Direction;
 import domain.point.Point;
 import domain.team.Team;
 import java.util.Map;
@@ -12,7 +13,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean isMovable(Map<Point, Piece> pieces, Point from, Point to) {
+    public boolean isMovable(Direction direction, Map<Point, Piece> pieces, Point from, Point to) {
         return false;
     }
 }

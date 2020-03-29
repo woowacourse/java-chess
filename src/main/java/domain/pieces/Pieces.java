@@ -4,6 +4,7 @@ import static domain.team.Team.BLACK;
 import static domain.team.Team.NONE;
 import static domain.team.Team.WHITE;
 
+import domain.move.PieceDirectionType;
 import domain.pieces.exceptions.IsNotMovableException;
 import domain.point.Point;
 import domain.team.Team;
@@ -36,11 +37,16 @@ public class Pieces {
     }
 
     public void move(Team turn, Point from, Point to) {
-        validateExistPiece(from);
-        validateCorrectTurn(turn, from);
-        validatePieceMovable(from, to);
+        validateMovable(turn, from, to);
         pieces.put(to, pieces.get(from));
         pieces.put(from, new Empty(NONE));
+    }
+
+    private void validateMovable(Team turn, Point from, Point to) {
+        validateExistPiece(from);
+        validateCorrectTurn(turn, from);
+        validateSameTeamToTarget(from, to);
+        validatePieceMovable(from, to);
     }
 
     private void validateExistPiece(Point from) {
@@ -55,8 +61,20 @@ public class Pieces {
         }
     }
 
+    private void validateSameTeamToTarget(Point from, Point to) {
+        if (isSameTeamToTarget(from, to)) {
+            throw new IsNotMovableException("움직이려는 곳에 같은 색 말이 있습니다.");
+        }
+    }
+
+    private boolean isSameTeamToTarget(Point from, Point to) {
+        return pieces.get(from).team == pieces.get(to).team;
+    }
+
     private void validatePieceMovable(Point from, Point to) {
-        if (!pieces.get(from).isMovable(pieces, from, to)) {
+        boolean isMovable = PieceDirectionType.find(pieces, from).stream()
+            .anyMatch(direction -> pieces.get(from).isMovable(direction, pieces, from, to));
+        if (!isMovable) {
             throw new IsNotMovableException(pieces.get(from).toString() + "은 그 장소로 못 움직입니다.");
         }
     }
