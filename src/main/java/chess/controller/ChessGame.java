@@ -35,13 +35,13 @@ public class ChessGame {
         while ((runner = inputCommandWithValidation()).isNotEnd()) {
             if (runner.isStart()) {
                 board = BoardFactory.createBoard();
-                OutputView.printBoard(board);
+                OutputView.printBoard(board.getBoard());
             }
             try {
                 if (runner.isMove()) {
                     board = board.movePiece(inputCommand[FROM_POSITION_INDEX], inputCommand[TO_POSITION_INDEX], turnFlag);
                     turnFlag = INITIAL_TURN_OF_BLACK - turnFlag;
-                    OutputView.printBoard(board);
+                    OutputView.printBoard(board.getBoard());
                     gameTerminateWhenFinished();
                 }
             } catch (BlankMoveUnsupportedException | MoveCommandWhenBoardNullException |

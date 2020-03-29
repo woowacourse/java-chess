@@ -1,6 +1,8 @@
 package chess.view;
 
-import chess.domain.board.Board;
+import chess.domain.piece.Piece;
+
+import java.util.List;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
@@ -21,10 +23,10 @@ public class OutputView {
         System.out.println(GAME_MOVE_COMMAND_OPTION);
     }
 
-    public static void printBoard(Board board) {
+    public static void printBoard(List<Piece> board) {
         for (int row = END_INDEX; row >= START_INDEX; row--) {
             for (int col = START_INDEX; col <= END_INDEX; col++) {
-                System.out.print(board.findPieceBy((row - 1) * ROW_SIZE + col - 1));
+                System.out.print(board.get((row - 1) * ROW_SIZE + col - 1));
             }
             System.out.print(NEW_LINE);
         }
