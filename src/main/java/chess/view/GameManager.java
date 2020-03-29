@@ -24,20 +24,21 @@ public class GameManager {
     }
 
     public void action() {
-        String command = InputView.inputCommand();
-        if(Command.findBy(command) == Command.START) {
+        String input = InputView.inputCommand();
+        Command command = Command.findBy(input);
+        if(command == Command.START) {
             start();
         }
-        if (Command.findBy(command) == Command.END) {
+        if (command == Command.END) {
             end();
         }
         if (Objects.isNull(chessManager)) {
             return;
         }
-        if (Command.findBy(command) == Command.MOVE) {
-            move(command);
+        if (command == Command.MOVE) {
+            move(input);
         }
-        if (Command.findBy(command) == Command.STATUS) {
+        if (command == Command.STATUS) {
             status();
         }
         OutputView.showChessBoard(this.chessManager.getChessBoard());
