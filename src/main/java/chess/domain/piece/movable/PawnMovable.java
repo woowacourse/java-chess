@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 public class PawnMovable implements Movable {
-	private static final int WHITE_PAWN_INITIAL_COLUMN = 2;
-	private static final int BLACK_PAWN_INITIAL_COLUMN = 7;
-
 	@Override
 	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
 		Directions moveDirections = Directions.getPawnDirectionsBy(color);
@@ -25,7 +22,7 @@ public class PawnMovable implements Movable {
 					continue;
 				}
 				movablePositions.add(movablePosition);
-				if (isInitial(position, color)) {
+				if (position.isPawnInitial(color)) {
 					movablePosition = movablePosition.getMovedPositionBy(direction);
 					if (!isPossessed(movablePosition, pieces)) { // 아무도 없을 때
 						movablePositions.add(movablePosition);
@@ -38,16 +35,6 @@ public class PawnMovable implements Movable {
 			}
 		}
 		return movablePositions;
-	}
-
-	private boolean isInitial(Position position, Color color) {
-		if (position.getColumn().getValue() == WHITE_PAWN_INITIAL_COLUMN && color.isWhite()) {
-			return true;
-		}
-		if (position.getColumn().getValue() == BLACK_PAWN_INITIAL_COLUMN && color.isBlack()) {
-			return true;
-		}
-		return false;
 	}
 
 	private boolean isPossessed(Position movablePosition, List<Piece> pieces) {

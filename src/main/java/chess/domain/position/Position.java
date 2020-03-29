@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.movable.Direction;
 
 import java.util.Objects;
@@ -8,6 +9,8 @@ public class Position {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 좌표 입력입니다.";
 	private static final int MIN_BOUND = 1;
 	private static final int MAX_BOUND = 8;
+	private static final int BLACK_PAWN_INITIAL_COLUMN = 7;
+	private static final int WHITE_PAWN_INITIAL_COLUMN = 2;
 
 	private final Row row;
 	private final Column column;
@@ -45,6 +48,13 @@ public class Position {
 		return isValidBound(checkingRow) && isValidBound(checkingColumn);
 	}
 
+	public boolean isPawnInitial(Color color) {
+		if (column.getValue() == WHITE_PAWN_INITIAL_COLUMN && color.isWhite()) {
+			return true;
+		}
+		return column.getValue() == BLACK_PAWN_INITIAL_COLUMN && color.isBlack();
+	}
+
 	public boolean isSameRow(Position position) {
 		return this.row.equals(position.row);
 	}
@@ -57,7 +67,7 @@ public class Position {
 		return row;
 	}
 
-	public Column getColumn() {
+	public Column getColumn() { // TODO: 2020/03/29 사용 안함
 		return column;
 	}
 }
