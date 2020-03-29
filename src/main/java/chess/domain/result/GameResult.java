@@ -13,10 +13,9 @@ public class GameResult {
     private static final int INITIAL_PAWN_ROW_SCORE = 0;
     private static final int PAWN_COUNT_INCREASE = 1;
     private static final int PAWN_CRITICAL_COUNT = 2;
-    private static final int DIVIDEND_WHEN_MULITPLE_PAWN_IN_COLUMN = 2;
+    private static final int DIVIDEND_WHEN_MULTIPLE_PAWN_IN_COLUMN = 2;
 
     public double calculateScore(Board board, Team team) {
-
         double totalScore = INITIAL_SCORE;
 
         for (int col = START_INDEX; col <= END_INDEX; col++) {
@@ -36,7 +35,7 @@ public class GameResult {
                 }
             }
             if (pawnCount >= PAWN_CRITICAL_COUNT) {
-                totalScore += pawnScore / DIVIDEND_WHEN_MULITPLE_PAWN_IN_COLUMN;
+                totalScore += pawnScore / DIVIDEND_WHEN_MULTIPLE_PAWN_IN_COLUMN;
                 continue;
             }
             totalScore += pawnScore;
