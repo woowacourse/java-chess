@@ -63,7 +63,7 @@ class PawnTest {
         board.put(new Location(6, 'b'), new Bishop(Team.WHITE));
 
         boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(6, 'b'));
-        assertThat(actual).isFalse();
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("폰의 대각선 위치에 적이 없는 경우")

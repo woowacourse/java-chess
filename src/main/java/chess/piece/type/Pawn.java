@@ -36,7 +36,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean hasNotObstacle(Map<Location, Piece> board, Location now, Location destination) {
-        return !isMovable(board, now, destination);
+        return isMovable(board, now, destination);
     }
 
     private boolean isMovable(Map<Location, Piece> board, Location now, Location destination) {
