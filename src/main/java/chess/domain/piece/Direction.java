@@ -32,8 +32,8 @@ public enum Direction {
     NWW(column -> column.jump(-2), Row::next),
     NNW(Column::previous, row -> row.jump(2));
 
-    private Function<Column, Optional<Column>> columnDestination;
-    private Function<Row, Optional<Row>> rowDestination;
+    private final Function<Column, Optional<Column>> columnDestination;
+    private final Function<Row, Optional<Row>> rowDestination;
 
     Direction(Function<Column, Optional<Column>> columnDestination, Function<Row, Optional<Row>> rowDestination) {
         this.columnDestination = columnDestination;

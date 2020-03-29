@@ -9,9 +9,9 @@ public enum Player {
     BLACK("BLACK", String::toUpperCase, Position::horizontalFlip),
     WHITE("WHITE", String::toLowerCase, Function.identity());
 
-    private String name;
-    private Function<String, String> nameDecider;
-    private Function<Position, Position> positionReviser;
+    private final String name;
+    private final Function<String, String> nameDecider;
+    private final Function<Position, Position> positionReviser;
 
     Player(String name, Function<String, String> nameDecider, Function<Position, Position> positionReviser) {
         this.name = name;

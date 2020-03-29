@@ -2,10 +2,7 @@ package chess.service;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.player.Player;
-import chess.domain.score.Score;
-
-import java.util.Map;
+import chess.domain.result.ChessResult;
 
 public class ChessService {
 
@@ -15,8 +12,8 @@ public class ChessService {
         board = Board.createEmpty();
     }
 
-    public Board initialize() {
-        board = board.initialize();
+    public Board placeInitialPieces() {
+        board = board.placeInitialPieces();
         return board;
     }
 
@@ -25,8 +22,8 @@ public class ChessService {
         return board;
     }
 
-    public Map<Player, Score> calculateScore() {
-        return board.calculateScore();
+    public ChessResult calculateResult() {
+        return board.calculateResult();
     }
 
     public boolean checkGameNotFinished() {

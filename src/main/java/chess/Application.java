@@ -17,13 +17,13 @@ public class Application {
         do {
             command = Command.from(InputView.receiveCommand());
             if (command.isStart()) {
-                OutputView.printBoard(service.initialize());
+                OutputView.printBoard(service.placeInitialPieces());
             }
             if (command.isMove()) {
                 executeMovement(service, command);
             }
             if (command.isStatus()) {
-                OutputView.printScore(service.calculateScore());
+                OutputView.printScore(service.calculateResult());
             }
         } while (command.isNotEnd() && service.checkGameNotFinished());
     }

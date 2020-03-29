@@ -17,7 +17,7 @@ public enum Row {
 
     private static final int NEXT_INDEX = 1;
     private static final int PREVIOUS_INDEX = -1;
-    private static Map<Row, Row> opposite;
+    private static final Map<Row, Row> opposite;
 
     static {
         opposite = new HashMap<>();

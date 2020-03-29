@@ -4,7 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.board.Line;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.Player;
-import chess.domain.score.Score;
+import chess.domain.result.ChessResult;
+import chess.domain.result.Score;
 
 import java.util.Map;
 
@@ -30,7 +31,8 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printScore(Map<Player, Score> scores) {
+    public static void printScore(ChessResult chessResult) {
+        Map<Player, Score> scores = chessResult.getResult();
         for (Player player : scores.keySet()) {
             System.out.printf("%s: %.1f점", player.getName(), scores.get(player).getScore());
             System.out.println();

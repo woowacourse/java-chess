@@ -1,13 +1,18 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.Player;
-import chess.domain.score.Score;
-
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import chess.domain.result.ChessResult;
 
 public class Board {
 
@@ -17,7 +22,7 @@ public class Board {
     private final Status status;
 
     private Board(Map<Position, GamePiece> board, Status status) {
-        this.board = Collections.unmodifiableMap(board);
+        this.board = Collections.unmodifiableMap(new TreeMap<>(board));
         this.status = status;
     }
 
@@ -31,7 +36,7 @@ public class Board {
                 .collect(Collectors.toMap(Function.identity(), position -> GamePiece.EMPTY));
     }
 
-    public Board initialize() {
+    public Board placeInitialPieces() {
         Map<Position, GamePiece> initialBoard = createEmptyMap();
         for (GamePiece piece : GamePiece.list()) {
             placePiecesOnInitialPositions(initialBoard, piece);
@@ -123,53 +128,12 @@ public class Board {
         }
     }
 
-    public Map<Player, Score> calculateScore() {
-        Map<Player, Score> scores = new HashMap<>();
-        List<GamePiece> gamePieces = new ArrayList<>(board.values());
-
-        Map<GamePiece, Integer> gameWhitePiecesCount = getGamePieceCount(gamePieces, Player.WHITE);
-        Map<GamePiece, Integer> gameBlackPiecesCount = getGamePieceCount(gamePieces, Player.BLACK);
-
-        int sameFileWhitePawnCount = getSameColumnPawnCount(Player.WHITE);
-        int sameFileBlackPawnCount = getSameColumnPawnCount(Player.BLACK);
-
-        scores.put(Player.WHITE, Score.of(gameWhitePiecesCount, sameFileWhitePawnCount));
-        scores.put(Player.BLACK, Score.of(gameBlackPiecesCount, sameFileBlackPawnCount));
-
-        return scores;
-    }
-
-    private Map<GamePiece, Integer> getGamePieceCount(List<GamePiece> gamePieces, Player player) {
-        return gamePieces.stream()
-                .distinct()
-                .filter(gamePiece -> gamePiece != GamePiece.EMPTY)
-                .filter(gamePiece -> gamePiece.is(player))
-                .collect(Collectors.toMap(gamePiece -> gamePiece, gamePiece -> Collections.frequency(gamePieces, gamePiece)));
-    }
-
-    private int getSameColumnPawnCount(Player player) {
-        Map<Integer, Integer> sameColumnPawnCount = new HashMap<>();
-        for (int i = 0; i < Column.values().length; i++) {
-            sameColumnPawnCount.put(i, 0);
-        }
-        List<GamePiece> gamePieces = new ArrayList<>(getBoard().values());
-
-        int rowLength = Row.values().length;
-        for (int i = 0; i < gamePieces.size(); i++) {
-            GamePiece gamePiece = gamePieces.get(i);
-            if (gamePiece.isPawn() && gamePiece.is(player)) {
-                sameColumnPawnCount.computeIfPresent(i % rowLength, (key, value) -> value + 1);
-            }
-        }
-
-        return sameColumnPawnCount.values()
-                .stream()
-                .filter(count -> count >= 2)
-                .reduce(0, Integer::sum);
-    }
-
     public boolean isNotFinished() {
         return status.isNotFinished();
+    }
+
+    public ChessResult calculateResult() {
+        return ChessResult.from(board);
     }
 
     public List<Line> getRows() {
@@ -186,6 +150,6 @@ public class Board {
     }
 
     public Map<Position, GamePiece> getBoard() {
-        return Collections.unmodifiableMap(new TreeMap<>(board));
+        return Collections.unmodifiableMap(board);
     }
 }

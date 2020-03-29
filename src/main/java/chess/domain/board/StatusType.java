@@ -4,5 +4,5 @@ public enum StatusType {
 
     READY,
     PROCESSING,
-    FINISHED;
+    FINISHED
 }

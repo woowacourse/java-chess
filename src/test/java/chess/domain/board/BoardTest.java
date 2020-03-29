@@ -2,8 +2,7 @@ package chess.domain.board;
 
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.GamePiece;
-import chess.domain.player.Player;
-import chess.domain.score.Score;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,7 +25,7 @@ class BoardTest {
     @Test
     @DisplayName("보드 생성")
     void create() {
-        Board board = Board.createEmpty().initialize();
+        Board board = Board.createEmpty().placeInitialPieces();
         String map = board.getBoard()
                 .values()
                 .stream()
@@ -74,7 +73,7 @@ class BoardTest {
     @DisplayName("source 기물이 없는 경우")
     void moveWithEmptySource() {
         assertThatThrownBy(() -> {
-            Board.createEmpty().initialize().move(Position.from("d3"), Position.from("d5"));
+            Board.createEmpty().placeInitialPieces().move(Position.from("d3"), Position.from("d5"));
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n기물이 존재하지 않습니다.");
     }
@@ -122,33 +121,6 @@ class BoardTest {
                 Arguments.of(GamePiece.of(ROOK, WHITE), Position.from("e2"), Position.from("e5")),
                 Arguments.of(GamePiece.of(QUEEN, WHITE), Position.from("e2"), Position.from("e4"))
         );
-    }
-
-    @Test
-    @DisplayName("초기 board score 계산")
-    void calculateScore() {
-        Board board = Board.createEmpty().initialize();
-        Map<Player, Score> scores = board.calculateScore();
-        Map<Player, Score> expected = new HashMap<>();
-        expected.put(BLACK, Score.from(38));
-        expected.put(WHITE, Score.from(38));
-
-        assertThat(scores).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("같은 player, 같은 column의 pawn이 여러개 있는 경우 score 계산")
-    void calculateScoreWhiteSameColumnPawn() {
-        Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
-        map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("d6"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("f3"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("f4"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("f6"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("h3"), GamePiece.of(PAWN, WHITE));
-        Board board = Board.from(map, new Status(0, StatusType.PROCESSING));
-
-        assertThat(board.calculateScore().get(WHITE)).isEqualTo(Score.from(3.5));
     }
 
     @ParameterizedTest

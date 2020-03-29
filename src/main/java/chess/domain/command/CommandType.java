@@ -9,7 +9,7 @@ public enum CommandType {
     MOVE("move"),
     STATUS("status");
 
-    private String command;
+    private final String command;
 
     CommandType(String command) {
         this.command = command;

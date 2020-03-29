@@ -1,4 +1,4 @@
-package chess.domain.score;
+package chess.domain.result;
 
 import chess.domain.piece.GamePiece;
 import org.junit.jupiter.api.BeforeEach;
