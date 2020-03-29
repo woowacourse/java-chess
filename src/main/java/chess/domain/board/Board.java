@@ -19,19 +19,28 @@ public class Board {
         this.board = board;
     }
 
-    public void move(String keyFromPosition, String keyToPosition) {
-        move(Position.of(keyFromPosition), Position.of(keyToPosition));
+    public void move(String keyFromPosition, String keyToPosition, Team teamInTurn) {
+        move(Position.of(keyFromPosition), Position.of(keyToPosition), teamInTurn);
     }
 
-    public void move(Position fromPosition, Position toPosition) {
+    public void move(Position fromPosition, Position toPosition, Team teamInTurn) {
         Placeable pieceToMove = board.get(fromPosition);
 
+        checkIfFromPositionMovable(fromPosition, teamInTurn);
         checkIfToPositionIsAvailable(toPosition, pieceToMove);
 
         Route route = pieceToMove.findRoute(fromPosition, toPosition);
 
         MovingExecutor movingExecutor = MovingExecutorFactory.from(pieceToMove);
         movingExecutor.move(route, board, fromPosition, toPosition);
+    }
+
+    private void checkIfFromPositionMovable(Position fromPosition, Team teamInTurn) {
+        Placeable pieceToMove = board.get(fromPosition);
+
+        if (pieceToMove.isOppositeTeam(teamInTurn)) {
+            throw new IllegalArgumentException("상대편의 말은 움직일 수 없습니다.");
+        }
     }
 
     private void checkIfToPositionIsAvailable(Position toPosition, Placeable pieceToMove) {
@@ -76,10 +85,11 @@ public class Board {
     }
 
     private String acronym(Column column, Row row) {
-        try {
-            return board.get(Position.of(column, row)).getAcronym();
-        } catch (NullPointerException e) {
+        Placeable piece = board.get(Position.of(column, row));
+        if (piece.isEmpty()) {
             return EMPTY_POSITION_ACRONYM;
         }
+
+        return piece.getAcronym();
     }
 }

@@ -1,14 +1,22 @@
 package chess.domain.gamestate;
 
+import chess.domain.Team;
+
 import java.util.List;
 
 public class Running extends Started {
-
     private static final String IMPOSSIBLE_TO_CALCULATE_SCORE_MESSAGE = "게임 진행 중에는 점수를 계산할 수 없습니다.";
+
+    private Team teamInTurn;
+
+    public Running() {
+        this.teamInTurn = Team.WHITE;
+    }
 
     @Override
     public GameState move(String keyFromPosition, String keyToPosition) {
-        board.move(keyFromPosition, keyToPosition);
+        board.move(keyFromPosition, keyToPosition, teamInTurn);
+        teamInTurn = teamInTurn.opposite();
         return this; // Todo: 체크메이트일 경우 Finished를 리턴하도록
     }
 

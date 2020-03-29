@@ -26,7 +26,7 @@ class BoardTest {
     void move(Position fromPosition, Position toPosition) {
         Board board = BoardFactory.createInitially();
         Placeable pieceToMove = board.findPieceBy(fromPosition);
-        board.move(fromPosition, toPosition);
+        board.move(fromPosition, toPosition, teamInTurn);
 
         assertThat(board.findPieceBy(fromPosition)).isEqualTo(new Empty());
         assertThat(board.findPieceBy(toPosition)).isEqualTo(pieceToMove);
@@ -49,7 +49,7 @@ class BoardTest {
         Board board = new Board(boardSource.getSource());
 
         //when
-        board.move(fromPosition, toPosition);
+        board.move(fromPosition, toPosition, teamInTurn);
 
         //then
         assertThat(board.findPieceBy(fromPosition)).isEqualTo(new Empty());
@@ -79,7 +79,7 @@ class BoardTest {
         Board board = new Board(boardSource.getSource());
 
         assertThatThrownBy(() -> {
-            board.move(fromPosition, toPosition);
+            board.move(fromPosition, toPosition, teamInTurn);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -105,7 +105,7 @@ class BoardTest {
         Board board = new Board(boardSource.getSource());
 
         //when
-        board.move(fromPosition, toPosition);
+        board.move(fromPosition, toPosition, teamInTurn);
 
         //then
         assertThat(board.findPieceBy(fromPosition)).isEqualTo(new Empty());
@@ -137,7 +137,7 @@ class BoardTest {
         Board board = new Board(boardSource.getSource());
 
         assertThatThrownBy(() -> {
-            board.move(fromPosition, toPosition);
+            board.move(fromPosition, toPosition, teamInTurn);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -173,7 +173,7 @@ class BoardTest {
         Board board = new Board(boardSource.getSource());
 
         //when
-        board.move(fromPosition, toPosition);
+        board.move(fromPosition, toPosition, teamInTurn);
 
         //then
         assertThat(board.findPieceBy(fromPosition)).isEqualTo(new Empty());
@@ -217,7 +217,7 @@ class BoardTest {
         Board board = new Board(boardSource.getSource());
 
         assertThatThrownBy(() -> {
-            board.move(fromPosition, toPosition);
+            board.move(fromPosition, toPosition, teamInTurn);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -263,7 +263,7 @@ class BoardTest {
         Board board = new Board(boardSource.getSource());
 
         //when
-        board.move(fromPosition, toPosition);
+        board.move(fromPosition, toPosition, teamInTurn);
 
         //then
         assertThat(board.findPieceBy(fromPosition)).isEqualTo(new Empty());
@@ -303,7 +303,7 @@ class BoardTest {
         Board board = new Board(boardSource.getSource());
 
         assertThatThrownBy(() -> {
-            board.move(fromPosition, toPosition);
+            board.move(fromPosition, toPosition, teamInTurn);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -339,7 +339,7 @@ class BoardTest {
         Board board = new Board(boardSource.getSource());
 
         assertThatThrownBy(() -> {
-            board.move(fromPosition, toPosition);
+            board.move(fromPosition, toPosition, teamInTurn);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
