@@ -4,19 +4,21 @@ import chess.domain.board.Path;
 import chess.domain.board.Position;
 
 public enum Type {
-    KING("k", MovingStrategy::king, InitialPosition::king),
-    QUEEN("q", MovingStrategy::queen, InitialPosition::queen),
-    ROOK("r", MovingStrategy::rook, InitialPosition::rook),
-    KNIGHT("n", MovingStrategy::knight, InitialPosition::knight),
-    BISHOP("b", MovingStrategy::bishop, InitialPosition::bishop),
-    PAWN("p", MovingStrategy::pawn, InitialPosition::pawn);
+    KING("k", 0.0, MovingStrategy::king, InitialPosition::king),
+    QUEEN("q", 9.0, MovingStrategy::queen, InitialPosition::queen),
+    ROOK("r", 5.0, MovingStrategy::rook, InitialPosition::rook),
+    KNIGHT("n", 3.0, MovingStrategy::knight, InitialPosition::knight),
+    BISHOP("b", 2.5, MovingStrategy::bishop, InitialPosition::bishop),
+    PAWN("p", 1.0, MovingStrategy::pawn, InitialPosition::pawn);
 
     private final String name;
+    private final double score;
     private final MovingStrategy movingStrategy;
     private final InitialPosition initialPosition;
 
-    Type(final String name, final MovingStrategy movingStrategy, final InitialPosition initialPosition) {
+    Type(final String name, final double score, final MovingStrategy movingStrategy, final InitialPosition initialPosition) {
         this.name = name;
+        this.score = score;
         this.movingStrategy = movingStrategy;
         this.initialPosition = initialPosition;
     }
@@ -34,5 +36,9 @@ public enum Type {
 
     public String getName() {
         return name;
+    }
+
+    public double getScore() {
+        return score;
     }
 }
