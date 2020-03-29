@@ -4,9 +4,14 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import domain.board.fixture.KnightBoard;
+import domain.board.fixture.PawnBoard;
+import domain.board.fixture.RookBoard;
+import domain.piece.Knight;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.team.Team;
 
@@ -34,5 +39,33 @@ public class BoardTest {
 		assertThatThrownBy(() -> board.move(sourcePosition, "b1", Team.BLACK))
 			.isInstanceOf(InvalidTurnException.class)
 			.hasMessage(InvalidTurnException.INVALID_TURN);
+	}
+
+	@DisplayName("처음 상태의 보드판 점수 확인")
+	@Test
+	void getScore_InitialBoard_IsBlack25AndWhit25() {
+		assertThat(board.getScore().get(Team.WHITE)).isEqualTo(25.0);
+		assertThat(board.getScore().get(Team.BLACK)).isEqualTo(25.0);
+	}
+
+	@DisplayName("White팀 Rook 2개, Black팀 Rook 1개가 생존했을 때 점수 확인")
+	@Test
+	void getScore_Black1RookAndWhite2Rook_Black5White10() {
+		Board board = new RookBoard().create();
+		assertThat(board.getScore().get(Team.WHITE)).isEqualTo(10);
+		assertThat(board.getScore().get(Team.BLACK)).isEqualTo(5);
+	}
+
+	@DisplayName("King이 죽었을 때 isKingAlive를 호출하면 false반환")
+	@Test
+	void isKingAlive_KingIsDead_ReturnFalse() {
+		Board board = new PawnBoard().create();
+		assertThat(board.isKingAlive()).isFalse();
+	}
+
+	@DisplayName("King이 살았을 때 isKingAlive를 호출하면 true반환")
+	@Test
+	void isKingAlive_KingIsAlive_ReturnTrue() {
+		assertThat(board.isKingAlive()).isTrue();
 	}
 }

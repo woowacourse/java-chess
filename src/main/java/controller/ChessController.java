@@ -21,22 +21,21 @@ public class ChessController {
 
 	private void run(Board board, Team turn) {
 		OutputView.printChessBoard(board);
-		String inputChessCommand = InputView.inputCommand();
-		String[] inputCommand = inputChessCommand.split(DELIMITER);
-		Command command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
-		while (Command.END != command && board.isKingAlive()) {
+		Command command;
+		do {
+			String inputChessCommand = InputView.inputCommand();
+			String[] inputCommand = inputChessCommand.split(DELIMITER);
+			command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
+
 			if (Command.MOVE.equals(command)) {
 				board.move(inputCommand[SOURCE_POSITION], inputCommand[TARGET_POSITION], turn);
 				OutputView.printChessBoard(board);
 				turn = Team.changeTurn(turn);
-
 			}
+
 			if (Command.STATUS.equals(command)) {
 				OutputView.printScore(board.getScore());
 			}
-			inputChessCommand = InputView.inputCommand();
-			inputCommand = inputChessCommand.split(DELIMITER);
-			command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
-		}
+		} while (Command.END != command && board.isKingAlive());
 	}
 }
