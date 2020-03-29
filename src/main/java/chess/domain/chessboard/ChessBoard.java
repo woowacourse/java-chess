@@ -25,8 +25,7 @@ public class ChessBoard {
 
 	public boolean isDieKing(Team team) {
 		return findByTeam(team).stream()
-			.anyMatch(chessPiece -> chessPiece.getClass() == King.class)
-			== false;
+			.noneMatch(chessPiece -> chessPiece.getClass() == King.class);
 	}
 
 	private List<ChessPiece> findByTeam(Team team) {
@@ -60,7 +59,7 @@ public class ChessBoard {
 	}
 
 	private void validateNotBlank(ChessPiece startPiece) {
-		if (startPiece.isMatchTeam(Team.BLANK)) {
+		if (startPiece.isBlankPiece()) {
 			throw new IllegalArgumentException(NOT_CHESS_PIECE_MESSAGE);
 		}
 	}

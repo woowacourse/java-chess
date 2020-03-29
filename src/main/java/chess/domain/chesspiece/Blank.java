@@ -8,7 +8,7 @@ public class Blank extends ChessPiece {
 	private static final String NAME = ".";
 
 	public Blank(Position position) {
-		super(position, Team.BLANK);
+		super(position, null);
 	}
 
 	@Override

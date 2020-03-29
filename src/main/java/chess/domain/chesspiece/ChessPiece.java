@@ -27,6 +27,14 @@ public abstract class ChessPiece {
 		return (this.team == team) == false;
 	}
 
+	public boolean isBlankPiece() {
+		return this.team == null;
+	}
+
+	public boolean isNotBlankPiece() {
+		return this.team != null;
+	}
+
 	public boolean equalsPosition(Position position) {
 		return this.position.equals(position);
 	}

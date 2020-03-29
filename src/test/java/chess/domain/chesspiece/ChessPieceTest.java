@@ -17,6 +17,18 @@ public class ChessPieceTest {
 	}
 
 	@Test
+	void isBlankPieceTest() {
+		ChessPiece blank = new Blank(Position.of(1, 1));
+
+		assertThat(blank.isBlankPiece()).isTrue();
+	}
+
+	@Test
+	void isNotBlankPieceTest() {
+		assertThat(pawn.isNotBlankPiece()).isTrue();
+	}
+
+	@Test
 	void isMatchTeamTest() {
 		assertThat(pawn.isMatchTeam(Team.BLACK)).isTrue();
 		assertThat(pawn.isMatchTeam(Team.WHITE)).isFalse();
@@ -25,7 +37,6 @@ public class ChessPieceTest {
 	@Test
 	void isNotMatchTeam() {
 		assertThat(pawn.isNotMatchTeam(Team.WHITE)).isTrue();
-		assertThat(pawn.isNotMatchTeam(Team.BLANK)).isTrue();
 		assertThat(pawn.isNotMatchTeam(Team.BLACK)).isFalse();
 	}
 

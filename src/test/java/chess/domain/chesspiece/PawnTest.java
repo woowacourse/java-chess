@@ -47,12 +47,12 @@ public class PawnTest {
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
-	@DisplayName("블랙팀일 때 대각선으로 잡는 경우, BLANK일 때")
+	@DisplayName("블랙팀일 때 대각선으로 잡는 경우, BLANK인 경우")
 	@Test
 	void validateMoveTest4() {
 		blackTeamPawn.validateCanGo(new King(Position.of(6, 1), Team.WHITE));
 
-		assertThatThrownBy(() -> blackTeamPawn.validateCanGo(new King(Position.of(6, 1), Team.BLANK)))
+		assertThatThrownBy(() -> blackTeamPawn.validateCanGo(new Blank(Position.of(6, 1))))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 }

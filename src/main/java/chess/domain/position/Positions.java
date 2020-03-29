@@ -26,7 +26,7 @@ public class Positions {
 	private boolean containsNotBlank(Function<Position, ChessPiece> function) {
 		return positions.stream()
 			.map(function)
-			.anyMatch(chessPiece -> chessPiece.isNotMatchTeam(Team.BLANK));
+			.anyMatch(chessPiece -> chessPiece.isNotBlankPiece());
 	}
 
 	@Override

@@ -67,7 +67,7 @@ public class Pawn extends ChessPiece {
 	}
 
 	private boolean canMoveForward(Direction direction, ChessPiece chessPiece) {
-		return isCanMoveDirection(direction) && chessPiece.isMatchTeam(Team.BLANK);
+		return isCanMoveDirection(direction) && chessPiece.isBlankPiece();
 	}
 
 	private boolean isCanMoveDirection(Direction direction) {
@@ -76,7 +76,7 @@ public class Pawn extends ChessPiece {
 	}
 
 	private boolean canToCatch(Direction direction, ChessPiece targetPiece) {
-		return isCanCatchDirection(direction) && targetPiece.isNotMatchTeam(Team.BLANK);
+		return isCanCatchDirection(direction) && targetPiece.isNotBlankPiece();
 	}
 
 	private boolean isCanCatchDirection(Direction direction) {
