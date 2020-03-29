@@ -89,7 +89,7 @@ public class Boards {
                 .stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> entry.getValue().getName(),
+                        entry -> entry.getValue().getLowerName(),
                         (e1, e2) -> e1, LinkedHashMap::new));
     }
 }

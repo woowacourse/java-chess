@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Queen extends Piece {
     public Queen(Position position) {
-        super(position, "q");
+        super(position, Name.QUEEN);
     }
 
     @Override

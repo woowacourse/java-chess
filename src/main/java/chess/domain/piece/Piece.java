@@ -4,9 +4,14 @@ import chess.domain.position.Position;
 
 public abstract class Piece {
     protected Position position;
-    protected final String name;
+    protected final Name name;
 
     public Piece(Position position, String name) {
+        this.position = position;
+        this.name = Name.valueOf(name.toUpperCase());
+    }
+
+    public Piece(Position position, Name name) {
         this.position = position;
         this.name = name;
     }
@@ -25,10 +30,10 @@ public abstract class Piece {
     }
 
     public String getUpperName() {
-        return name.toUpperCase();
+        return name.upperName();
     }
 
-    public String getName() {
-        return name;
+    public String getLowerName() {
+        return name.lowerName();
     }
 }

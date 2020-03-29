@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Pawn extends Piece {
     public Pawn(Position position) {
-        super(position, "p");
+        super(position, Name.PAWN);
     }
 
     @Override

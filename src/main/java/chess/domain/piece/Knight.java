@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 public class Knight extends Piece {
     public Knight(Position position) {
-        super(position, "n");
+        super(position, Name.KNIGHT);
     }
 
     @Override
