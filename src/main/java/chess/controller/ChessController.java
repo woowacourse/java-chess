@@ -4,7 +4,9 @@ import chess.domain.Board;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static chess.controller.InGameDecision.END;
 
@@ -35,8 +37,9 @@ public class ChessController {
 	private InGameDecision processSingleTurn(Board board) {
 		try {
 			String decision = InputView.inputInstruction();
-			InGameDecision inGameDecision = InGameDecision.of(board, decision);
-			inGameDecision.getAction().accept(board, Arrays.asList(decision.split(" ")));
+			List<String> multiArguments = new ArrayList<>(Arrays.asList(decision.split(" ")));
+			InGameDecision inGameDecision = InGameDecision.of(multiArguments.get(0));
+			inGameDecision.getAction().accept(board, multiArguments);
 			return inGameDecision;
 		} catch (Exception e) {
 			OutputView.printErrorMessage(e.getMessage());

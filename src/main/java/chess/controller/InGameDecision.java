@@ -39,10 +39,9 @@ public enum InGameDecision {
         }
     }
 
-    public static InGameDecision of(Board board, String decision) {
-        List<String> multiArguments = Arrays.asList(decision.split(" "));
+    public static InGameDecision of(String decision) {
         return Arrays.stream(values())
-                .filter(c -> c.command.equals(multiArguments.get(0)))
+                .filter(c -> c.command.equals(decision))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_DIALOGUE));
     }
