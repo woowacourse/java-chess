@@ -16,14 +16,14 @@ public class ScoreResultTest {
 	@Test
 	void getScoreBy_normal_test() {
 		Pieces pieces = TestPiecesFactory.createBy(Arrays.asList(
-				new Queen(PositionFactory.of("a1"), "q", Color.WHITE),
-				new Rook(PositionFactory.of("b1"), "q", Color.WHITE),
-				new Knight(PositionFactory.of("c1"), "q", Color.WHITE),
-				new Bishop(PositionFactory.of("d1"), "q", Color.WHITE),
-				new Queen(PositionFactory.of("a8"), "q", Color.BLACK),
-				new Rook(PositionFactory.of("b8"), "q", Color.BLACK),
-				new Knight(PositionFactory.of("c8"), "q", Color.BLACK),
-				new King(PositionFactory.of("d8"), "k", Color.BLACK)
+				TestPieceFactory.createQueen(PositionFactory.of("a1"), Color.WHITE),
+				TestPieceFactory.createRook(PositionFactory.of("b1"),Color.WHITE),
+				TestPieceFactory.createKnight(PositionFactory.of("c1"), Color.WHITE),
+				TestPieceFactory.createBishop(PositionFactory.of("d1"), Color.WHITE),
+				TestPieceFactory.createQueen(PositionFactory.of("a8"), Color.BLACK),
+				TestPieceFactory.createRook(PositionFactory.of("b8"), Color.BLACK),
+				TestPieceFactory.createKnight(PositionFactory.of("c8"), Color.BLACK),
+				TestPieceFactory.createKing(PositionFactory.of("d8"), Color.BLACK)
 		));
 		ScoreResult scoreResult = new ScoreResult(pieces.getPieces());
 

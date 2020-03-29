@@ -1,9 +1,9 @@
 package chess.domain.piece.pieces;
 
+import chess.domain.piece.TestPieceFactory;
 import chess.domain.position.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class TestPiecesFactory {
 		List<Piece> pieces = new ArrayList<>();
 
 		for (Position position : positions) {
-			pieces.add(new Rook(position, "r", Color.WHITE));
+			pieces.add(TestPieceFactory.createRook(position, Color.WHITE));
 		}
 		return new Pieces(pieces);
 	}
@@ -22,7 +22,7 @@ public class TestPiecesFactory {
 		List<Piece> pieces = new ArrayList<>();
 
 		for (Position position : positions) {
-			pieces.add(new Rook(position, "r", color));
+			pieces.add(TestPieceFactory.createRook(position, color));
 		}
 		return new Pieces(pieces);
 	}

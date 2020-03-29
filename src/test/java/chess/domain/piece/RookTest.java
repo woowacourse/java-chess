@@ -21,7 +21,7 @@ public class RookTest {
 	@ValueSource(strings = {"c1", "c2", "c4", "c5", "c6", "c7", "c8", "a3", "b3", "d3", "e3", "f3", "g3", "h3"})
 	void move_normal_test(String input) {
 		Position position = PositionFactory.of("c3");
-		Rook rook = new Rook(position, "r", Color.WHITE);
+		Piece rook = TestPieceFactory.createRook(position, Color.WHITE);
 
 		assertThat(rook.createMovablePositions(Collections.emptyList())).contains(PositionFactory.of(input));
 	}
@@ -31,7 +31,7 @@ public class RookTest {
 	@ValueSource(strings = {"a2", "a3", "a4", "a5", "a6", "a7", "a8", "b1", "c1", "d1", "e1", "f1", "g1", "h1"})
 	void move_normal_corner_test(String input) {
 		Position position = PositionFactory.of("a1");
-		Rook rook = new Rook(position, "r", Color.WHITE);
+		Piece rook = TestPieceFactory.createRook(position, Color.WHITE);
 
 		assertThat(rook.createMovablePositions(Collections.emptyList())).contains(PositionFactory.of(input));
 	}
@@ -40,7 +40,7 @@ public class RookTest {
 	@Test
 	void createMovablePositions_blocking_count_test() {
 		Position position = PositionFactory.of("c3");
-		Rook rook = new Rook(position, "r", Color.WHITE);
+		Piece rook = TestPieceFactory.createRook(position, Color.WHITE);
 
 		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
 				PositionFactory.of("c1"),
@@ -55,7 +55,7 @@ public class RookTest {
 	@ValueSource(strings = {"c2", "c4", "c5", "c6", "c7", "c8", "d3", "e3", "f3", "g3", "h3"})
 	void createMovablePositions_blocking_test(String input) {
 		Position position = PositionFactory.of("c3");
-		Rook rook = new Rook(position, "r", Color.WHITE);
+		Piece rook = TestPieceFactory.createRook(position, Color.WHITE);
 
 		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
 				PositionFactory.of("c1"),
