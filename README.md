@@ -40,14 +40,13 @@
   - 체스판(board)
     - 좌표들을 8*8 행렬로 만든 형태
       - 좌표 64개로 구성됨
-
 - **이동 명령어를 입력받는다.**
   - move sourcePosition targetPosition 의 형태만 허용
     - 명령어와 형태를 지켰는지 검증 필요
     - 체스판에 실제로 존재하는 sourcePosition, targetPosition인지 검증 필요
-    - sourcePosition에 체스말이 있는지 확인하기
-      - emptyPiece가 있으면 이동할 수 있는 체스말이 없다고 알려주기
 - **체스말을 움직인다.**
+  - sourcePosition에 체스말이 있는지 확인하기
+    - emptyPiece가 있으면 이동할 수 있는 체스말이 없다고 알려주기
   - sourcePosition에 있는 체스말에게 targetPosition으로 갈 수 있는지 확인한다.
     - 체스말의 종류에 따라 갈 수 있는 위치는 한정적이다.
   - 갈 수 있으면 체스말이 targetPosition까지 가는 경로를 반환한다.
@@ -56,3 +55,52 @@
     - targetPosition에 적군의 체스말만 존재해야 한다.
   - 위의 조건이 모두 맞으면 체스말을 targetPosition으로 움직인다.
     - sourcePosition은 emptyPiece를 가진다.
+
+
+
+## 체스 3단계 - 승패 및 점수
+
+- **시작 명령어를 입력받는다.**
+  - start와 end만 입력 가능
+    - start 입력 시 체스판 초기화
+    - end 입력 시 게임 종료
+- **체스판을 초기화한다.**
+  - 체스말(Piece)
+    - 자신의 이름을 알려주기
+      - 검은색이면 대문자
+      - 흰색이면 소문자
+    - 검은색인지 흰색인지 구분할 수 있는 상태 정보가 필요
+    - 현재 자신의 위치값 = 좌표를 알려주기
+  - 좌표(Position)
+    - 체스판에서의 위치값 = 좌표
+    - 체스말을 갖고 있으면 체스말의 이름을 알려주기
+    - 체스말이 없으면 emptyPiece로 알려주기
+  - 체스판(board)
+    - 좌표들을 8*8 행렬로 만든 형태
+      - 좌표 64개로 구성됨
+- **이동 명령어를 입력받는다.**
+  - move sourcePosition targetPosition 의 형태만 허용
+    - 명령어와 형태를 지켰는지 검증 필요
+    - 체스판에 실제로 존재하는 sourcePosition, targetPosition인지 검증 필요
+- **체스말을 움직인다.**
+  - sourcePosition에 체스말이 있는지 확인하기
+    - emptyPiece가 있으면 이동할 수 있는 체스말이 없다고 알려주기
+  - sourcePosition에 있는 체스말에게 targetPosition으로 갈 수 있는지 확인한다.
+    - 체스말의 종류에 따라 갈 수 있는 위치는 한정적이다.
+  - 갈 수 있으면 체스말이 targetPosition까지 가는 경로를 반환한다.
+  - 체스판(board)에게 targetPosition까지 도달이 가능한 경로가 맞는지 확인한다.
+    - targetPosition이 아닌 경로칸에 체스말이 존재해서는 안된다.
+    - targetPosition에 적군의 체스말만 존재해야 한다.
+  - 위의 조건이 모두 맞으면 체스말을 targetPosition으로 움직인다.
+    - sourcePosition은 emptyPiece를 가진다.
+
+- **체스말 '킹'이 잡히면 게임을 종료한다.**
+  - 잡힌 체스말 '킹'의 색깔이 진다.
+
+- **점수 조회 명령어를 입력받는다.**
+  - status만 입력 가능
+    - 각 진영의 점수를 출력하고 어느 진영이 이겼는지 결과 출력
+      - 현재까지 남아있는 말의 점수를 색깔별로 합산한다.
+      - queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점
+      - pawn은 1점. 다만 같은 세로줄에 같은 색의 폰이 있으면 0.5점
+      - king은 점수가 없다. (=0점)
