@@ -57,6 +57,12 @@ public class ChessBoard {
 				.ifPresent(piece -> validatePath(sourcePosition, movePattern));
 	}
 
+	public Optional<Piece> findPieceByPosition(Position position) {
+		return pieces.stream()
+				.filter(x -> x.isEqualPosition(position))
+				.findAny();
+	}
+
 	private void validatePath(Position sourcePosition, MovePattern movePattern) {
 		Position testPosition = Position.of(sourcePosition);
 		Direction direction = movePattern.getDirection();
@@ -80,12 +86,6 @@ public class ChessBoard {
 				.ifPresent(piece -> {
 					throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM);
 				});
-	}
-
-	public Optional<Piece> findPieceByPosition(Position position) {
-		return pieces.stream()
-				.filter(x -> x.isEqualPosition(position))
-				.findAny();
 	}
 
 	public void removeAttackedPiece(Position position) {

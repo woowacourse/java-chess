@@ -22,11 +22,7 @@ public class OutputView {
 	}
 
 	private static void printPiece(Optional<Piece> piece) {
-		if (piece.isPresent()) {
-			System.out.print(piece.get().getPieceName());
-			return;
-		}
-		System.out.print(EMPTY_MARK);
+		System.out.print(piece.map(Piece::getPieceName).orElseGet(() -> EMPTY_MARK));
 	}
 
 	private static void separateLine(Position position) {
