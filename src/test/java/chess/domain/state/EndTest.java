@@ -13,7 +13,7 @@ class EndTest {
 	@DisplayName("지원되지 않는 기능 예외처리 - Status")
 	void calculateStatus() {
 		State end = new End(ChessBoardFactory.create());
-		assertThatThrownBy(end::calculateStatus)
+		assertThatThrownBy(end::createStatus)
 				.isInstanceOf(UnsupportedOperationException.class);
 	}
 

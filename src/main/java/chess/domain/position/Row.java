@@ -25,6 +25,10 @@ public enum Row {
 				.orElseThrow(() -> new IllegalArgumentException("잘못된 값이 입력되었습니다."));
 	}
 
+	public static int size() {
+		return values().length;
+	}
+
 	public int calculateDistance(Row row) {
 		return Math.abs(calculateDifference(row));
 	}

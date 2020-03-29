@@ -20,7 +20,7 @@ public class End extends Started {
 	}
 
 	@Override
-	public ChessStatus calculateStatus() {
+	public ChessStatus createStatus() {
 		throw new UnsupportedOperationException();
 	}
 

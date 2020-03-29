@@ -82,12 +82,8 @@ public abstract class Piece implements Movable {
 		return this.position.equals(position);
 	}
 
-	public boolean isPawn() {
-		return false;
-	}
-
 	public boolean isKing() {
-		return false;
+		return this instanceof King;
 	}
 
 	public boolean isSameSide(Side side) {

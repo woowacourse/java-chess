@@ -16,10 +16,10 @@ public class ChessBoardFactory {
 
 	public static ChessBoard create() {
 		List<Piece> chessBoard = new LinkedList<>();
-		chessBoard.addAll(createNoble(Side.BLACK));
-		chessBoard.addAll(createPawn(Side.BLACK));
-		chessBoard.addAll(createNoble(Side.WHITE));
-		chessBoard.addAll(createPawn(Side.WHITE));
+		for (Side side : Side.values()) {
+			chessBoard.addAll(createNoble(side));
+			chessBoard.addAll(createPawn(side));
+		}
 		return new ChessBoard(chessBoard);
 	}
 
@@ -32,14 +32,14 @@ public class ChessBoardFactory {
 	private static List<Piece> createNoble(Side side) {
 		Row row = side.getInitNobleRow();
 		return Arrays.asList(
-				new Rook(side, new Position("a", row)),
-				new Knight(side, new Position("b", row)),
-				new Bishop(side, new Position("c", row)),
-				new Queen(side, new Position("d", row)),
-				new King(side, new Position("e", row)),
-				new Bishop(side, new Position("f", row)),
-				new Knight(side, new Position("g", row)),
-				new Rook(side, new Position("h", row))
+				new Rook(side, new Position(Column.ONE, row)),
+				new Knight(side, new Position(Column.TWO, row)),
+				new Bishop(side, new Position(Column.THREE, row)),
+				new Queen(side, new Position(Column.FOUR, row)),
+				new King(side, new Position(Column.FIVE, row)),
+				new Bishop(side, new Position(Column.SIX, row)),
+				new Knight(side, new Position(Column.SEVEN, row)),
+				new Rook(side, new Position(Column.EIGHT, row))
 		);
 	}
 }

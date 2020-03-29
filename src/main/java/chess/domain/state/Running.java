@@ -18,7 +18,7 @@ public class Running extends Started {
 		validateTurn(source, turn);
 		chessBoard.move(source, target);
 
-		if (chessBoard.isEnd()) {
+		if (chessBoard.isKingDead(turn.reverse())) {
 			return new End(chessBoard, turn.reverse());
 		}
 		return new Running(chessBoard, turn.reverse());

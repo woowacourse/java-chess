@@ -13,11 +13,6 @@ public class King extends Piece {
 	}
 
 	@Override
-	public boolean isKing() {
-		return true;
-	}
-
-	@Override
 	public boolean isInPath(Position targetPosition) {
 		return this.position.isInDistance(KING_DISTANCE, targetPosition);
 	}

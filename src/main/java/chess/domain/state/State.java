@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 public interface State {
 	State move(Position source, Position target);
 
-	ChessStatus calculateStatus();
+	ChessStatus createStatus();
 
 	boolean isEnd();
 

@@ -22,7 +22,7 @@ public abstract class Started implements State {
 	public abstract State move(Position source, Position target);
 
 	@Override
-	public ChessStatus calculateStatus() {
+	public ChessStatus createStatus() {
 		return chessBoard.createStatus();
 	}
 

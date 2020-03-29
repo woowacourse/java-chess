@@ -37,7 +37,7 @@ public enum Command {
 		}
 	},
 	STATUS(state -> {
-		ChessStatus chessStatus = state.calculateStatus();
+		ChessStatus chessStatus = state.createStatus();
 		OutputView.printScore(chessStatus.calculateScore(Side.BLACK), chessStatus.calculateScore(Side.WHITE));
 	}) {
 		@Override
@@ -56,9 +56,13 @@ public enum Command {
 
 	public static Command of(String string) {
 		return Arrays.stream(values())
-				.filter(command -> command.toString().equalsIgnoreCase(string))
+				.filter(command -> command.isMatch(string))
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException("일치하는 실행문이 없습니다."));
+	}
+
+	private boolean isMatch(String string) {
+		return toString().equalsIgnoreCase(string);
 	}
 
 	public void printResult(State state) {

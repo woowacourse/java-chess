@@ -85,9 +85,9 @@ class ChessBoardTest {
 	}
 
 	@Test
-	@DisplayName("판이 끝났는 지 확인")
+	@DisplayName("King이 죽었는 지 확인")
 	void isEnd() {
 		List<Piece> pieces = Arrays.asList(new King(Side.WHITE, new Position("d4")), new Pawn(Side.BLACK, new Position("a2")));
-		assertThat(new ChessBoard(pieces).isEnd()).isTrue();
+		assertThat(new ChessBoard(pieces).isKingDead(Side.BLACK)).isTrue();
 	}
 }

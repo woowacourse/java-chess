@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -30,25 +31,25 @@ public class ChessBoard {
 		sourcePiece.move(target);
 	}
 
-	private void validateAction(Piece sourcePiece, Position target) {
-		if (isPresentPiece(target)) {
-			validateMove(sourcePiece, findByPosition(target));
-			return;
-		}
-		validateAttack(sourcePiece, target);
-	}
-
 	public boolean isRightTurn(Position source, Side turn) {
 		return findByPosition(source).isSameSide(turn);
 	}
 
-	private void validateMove(Piece source, Piece target) {
+	private void validateAction(Piece sourcePiece, Position target) {
+		if (isPresentPiece(target)) {
+			validateAttack(sourcePiece, findByPosition(target));
+			return;
+		}
+		validateMove(sourcePiece, target);
+	}
+
+	private void validateAttack(Piece source, Piece target) {
 		if (source.canNotAttack(target)) {
 			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
 		}
 	}
 
-	private void validateAttack(Piece source, Position target) {
+	private void validateMove(Piece source, Position target) {
 		if (source.canNotMove(target)) {
 			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
 		}
@@ -81,14 +82,9 @@ public class ChessBoard {
 		return new ChessStatus(pieces);
 	}
 
-	public boolean isEnd() {
-		return calculateKingPiece() != Side.size();
-	}
-
-	private int calculateKingPiece() {
-		return (int) pieces.stream()
-				.filter(Piece::isKing)
-				.count();
+	public boolean isKingDead(Side side) {
+		return pieces.stream()
+				.noneMatch(piece -> piece instanceof King && piece.isSameSide(side));
 	}
 
 	public List<Piece> getPieces() {

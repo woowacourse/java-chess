@@ -34,6 +34,10 @@ public enum Column {
 				.orElseThrow(() -> new IllegalArgumentException("잘못된 값이 입력되었습니다."));
 	}
 
+	public static int size() {
+		return values().length;
+	}
+
 	public int calculateDistance(Column column) {
 		return Math.abs(calculateDifference(column));
 	}

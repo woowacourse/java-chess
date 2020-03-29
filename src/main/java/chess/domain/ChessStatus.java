@@ -43,7 +43,7 @@ public class ChessStatus {
 
 	private long countPawnInColumn(Column column, Side side) {
 		return pieces.stream()
-				.filter(piece -> piece.isPawn() && piece.isSameSide(side) && piece.isSameCol(column))
+				.filter(piece -> piece instanceof Pawn && piece.isSameSide(side) && piece.isSameCol(column))
 				.count();
 	}
 }
