@@ -38,7 +38,7 @@ public class Board {
         PlayingPiece sourcePiece = findPiece(source);
         PlayingPiece targetPiece = findPiece(target);
 
-        sourcePiece.checkMyTurn(teamColor);
+        sourcePiece.checkSameColorWith(teamColor);
         sourcePiece.validMove(targetPiece);
 
         if (!sourcePiece.isKnight()) {

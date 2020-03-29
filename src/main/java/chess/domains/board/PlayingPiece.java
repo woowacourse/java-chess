@@ -68,7 +68,7 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
         return this.piece.isMine(pieceColor);
     }
 
-    public void checkMyTurn(PieceColor pieceColor) {
+    public void checkSameColorWith(PieceColor pieceColor) {
         if (!this.piece.isMine(pieceColor)) {
             throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다.");
         }
