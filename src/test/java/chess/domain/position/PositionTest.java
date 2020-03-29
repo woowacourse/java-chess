@@ -17,11 +17,11 @@ public class PositionTest {
 
     @Test
     void Position_생성() {
-        assertThat(Position.of("b3")).isEqualTo(Position.of(Column.B, Row.THREE));
+        assertThat(Position.of("B3")).isEqualTo(Position.of(Column.B, Row.THREE));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"i1, a0, a9"})
+    @ValueSource(strings = {"I1, A0, A9"})
     void 존재하지않는_Position_생성시_예외발생(String key) {
         assertThatThrownBy(() -> {
             Position.of(key);
@@ -37,14 +37,14 @@ public class PositionTest {
 
     private static Stream<Arguments> createPositionAndRank() {
         return Stream.of(
-                Arguments.of(Position.of("a1"), Row.ONE, true),
-                Arguments.of(Position.of("a1"), Row.THREE, false),
+                Arguments.of(Position.of("A1"), Row.ONE, true),
+                Arguments.of(Position.of("A1"), Row.THREE, false),
 
-                Arguments.of(Position.of("b3"), Row.THREE, true),
-                Arguments.of(Position.of("b3"), Row.ONE, false),
+                Arguments.of(Position.of("B3"), Row.THREE, true),
+                Arguments.of(Position.of("B3"), Row.ONE, false),
 
-                Arguments.of(Position.of("h8"), Row.EIGHT, true),
-                Arguments.of(Position.of("h8"), Row.THREE, false)
+                Arguments.of(Position.of("H8"), Row.EIGHT, true),
+                Arguments.of(Position.of("H8"), Row.THREE, false)
         );
     }
 
@@ -57,14 +57,14 @@ public class PositionTest {
 
     private static Stream<Arguments> createPositionAndFile() {
         return Stream.of(
-                Arguments.of(Position.of("a1"), Column.A, true),
-                Arguments.of(Position.of("a1"), Column.C, false),
+                Arguments.of(Position.of("A1"), Column.A, true),
+                Arguments.of(Position.of("A1"), Column.C, false),
 
-                Arguments.of(Position.of("b3"), Column.B, true),
-                Arguments.of(Position.of("b3"), Column.A, false),
+                Arguments.of(Position.of("B3"), Column.B, true),
+                Arguments.of(Position.of("B3"), Column.A, false),
 
-                Arguments.of(Position.of("h8"), Column.H, true),
-                Arguments.of(Position.of("h8"), Column.A, false)
+                Arguments.of(Position.of("H8"), Column.H, true),
+                Arguments.of(Position.of("H8"), Column.A, false)
         );
     }
 
@@ -75,20 +75,20 @@ public class PositionTest {
     @ParameterizedTest
     @MethodSource("createDirectionAndExpected")
     void 움직일_경우_새로운_Position을_반환(Direction direction, Position expected) {
-        Position position = Position.of("d4");
+        Position position = Position.of("D4");
 
         assertThat(position.moveTo(direction)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createDirectionAndExpected() {
         return Stream.of(
-                Arguments.of(Direction.NORTH, Position.of("d5")),
-                Arguments.of(Direction.NORTH_EAST, Position.of("e5")),
-                Arguments.of(Direction.NORTH_NORTH_EAST, Position.of("e6")),
+                Arguments.of(Direction.NORTH, Position.of("D5")),
+                Arguments.of(Direction.NORTH_EAST, Position.of("E5")),
+                Arguments.of(Direction.NORTH_NORTH_EAST, Position.of("E6")),
 
-                Arguments.of(Direction.SOUTH, Position.of("d3")),
-                Arguments.of(Direction.SOUTH_WEST, Position.of("c3")),
-                Arguments.of(Direction.SOUTH_SOUTH_WEST, Position.of("c2"))
+                Arguments.of(Direction.SOUTH, Position.of("D3")),
+                Arguments.of(Direction.SOUTH_WEST, Position.of("C3")),
+                Arguments.of(Direction.SOUTH_SOUTH_WEST, Position.of("C2"))
         );
     }
 
@@ -104,10 +104,10 @@ public class PositionTest {
 
     private static Stream<Arguments> createPositionAndDirection() {
         return Stream.of(
-                Arguments.of(Position.of("d8"), Direction.NORTH),
-                Arguments.of(Position.of("d1"), Direction.SOUTH),
-                Arguments.of(Position.of("a4"), Direction.WEST),
-                Arguments.of(Position.of("h4"), Direction.EAST)
+                Arguments.of(Position.of("D8"), Direction.NORTH),
+                Arguments.of(Position.of("D1"), Direction.SOUTH),
+                Arguments.of(Position.of("A4"), Direction.WEST),
+                Arguments.of(Position.of("H4"), Direction.EAST)
         );
     }
 
@@ -129,6 +129,6 @@ public class PositionTest {
 
     @Test
     void moveTo() {
-        assertThat(Position.of("b3").moveTo(Direction.NORTH)).isEqualTo(Position.of("b4"));
+        assertThat(Position.of("B3").moveTo(Direction.NORTH)).isEqualTo(Position.of("B4"));
     }
 }

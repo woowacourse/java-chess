@@ -14,18 +14,19 @@ public class Position {
 
     static {
         for (Column column : Column.values()) {
-            createCacheByRank(cache, column);
+            createCacheByRow(cache, column);
         }
     }
 
-    private static void createCacheByRank(Map<String, Position> cache, Column column) {
+    private static void createCacheByRow(Map<String, Position> cache, Column column) {
         for (Row row : Row.values()) {
             cache.put(key(column, row), new Position(column, row));
         }
     }
 
-    private static String key(Column column, Row row) {
-        return column.toString() + row.toString();
+    private Position(Column column, Row row) {
+        this.column = column;
+        this.row = row;
     }
 
     public static Position of(String key) {
@@ -38,13 +39,12 @@ public class Position {
         return position;
     }
 
-    private Position(Column column, Row row) {
-        this.column = column;
-        this.row = row;
-    }
-
     public static Position of(Column column, Row row) {
         return of(column.toString() + row.toString());
+    }
+
+    private static String key(Column column, Row row) {
+        return column.toString() + row.toString();
     }
 
     public boolean isAt(Row row) {

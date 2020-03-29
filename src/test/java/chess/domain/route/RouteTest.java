@@ -29,31 +29,31 @@ class RouteTest {
 
     private static Stream<Arguments> createPositionAndRoute() {
         return Stream.of(
-                Arguments.of(Position.of("b1"), Direction.NORTH, PieceType.ROOK,
+                Arguments.of(Position.of("B1"), Direction.NORTH, PieceType.ROOK,
                         new Route(Arrays.asList(
-                                Position.of("b2"),
-                                Position.of("b3"),
-                                Position.of("b4"),
-                                Position.of("b5"),
-                                Position.of("b6"),
-                                Position.of("b7"),
-                                Position.of("b8")))),
-                Arguments.of(Position.of("b1"), Direction.EAST, PieceType.ROOK,
+                                Position.of("B2"),
+                                Position.of("B3"),
+                                Position.of("B4"),
+                                Position.of("B5"),
+                                Position.of("B6"),
+                                Position.of("B7"),
+                                Position.of("B8")))),
+                Arguments.of(Position.of("B1"), Direction.EAST, PieceType.ROOK,
                         new Route(Arrays.asList(
-                                Position.of("c1"),
-                                Position.of("d1"),
-                                Position.of("e1"),
-                                Position.of("f1"),
-                                Position.of("g1"),
-                                Position.of("h1")))),
-                Arguments.of(Position.of("b1"), Direction.NORTH_NORTH_EAST, PieceType.KNIGHT,
+                                Position.of("C1"),
+                                Position.of("D1"),
+                                Position.of("E1"),
+                                Position.of("F1"),
+                                Position.of("G1"),
+                                Position.of("H1")))),
+                Arguments.of(Position.of("B1"), Direction.NORTH_NORTH_EAST, PieceType.KNIGHT,
                         new Route(Arrays.asList(
-                                Position.of("c3"),
-                                Position.of("d5"),
-                                Position.of("e7")))),
-                Arguments.of(Position.of("b1"), Direction.NORTH, PieceType.PAWN,
+                                Position.of("C3"),
+                                Position.of("D5"),
+                                Position.of("E7")))),
+                Arguments.of(Position.of("B1"), Direction.NORTH, PieceType.PAWN,
                         new RouteToProceed(Arrays.asList(
-                                Position.of("b2"))))
+                                Position.of("B2"))))
         );
     }
 

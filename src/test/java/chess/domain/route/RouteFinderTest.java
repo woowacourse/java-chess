@@ -26,11 +26,11 @@ class RouteFinderTest {
 
     private static Stream<Arguments> createPositionAndPieceType() {
         return Stream.of(
-                Arguments.of(Position.of("a2"), Position.of("a3"), Team.WHITE, PieceType.PAWN,
+                Arguments.of(Position.of("A2"), Position.of("A3"), Team.WHITE, PieceType.PAWN,
                         new RouteToProceed(new ArrayList<>())),
-                Arguments.of(Position.of("a2"), Position.of("a4"), Team.WHITE, PieceType.PAWN,
-                        new RouteToProceed(Arrays.asList(Position.of("a3")))),
-                Arguments.of(Position.of("a2"), Position.of("b3"), Team.WHITE, PieceType.PAWN,
+                Arguments.of(Position.of("A2"), Position.of("A4"), Team.WHITE, PieceType.PAWN,
+                        new RouteToProceed(Arrays.asList(Position.of("A3")))),
+                Arguments.of(Position.of("A2"), Position.of("B3"), Team.WHITE, PieceType.PAWN,
                         new RouteToAttack(new ArrayList<>()))
         );
     }
