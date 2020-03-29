@@ -1,39 +1,38 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
 import chess.domain.piece.movable.Movable;
+import chess.domain.piece.pieces.PieceInit;
+import chess.domain.position.Position;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class Piece {
+public class Piece {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "말을 생성할 수 없습니다.";
 
 	private Position position;
-	private final String name;
 	private final Movable movable;
 	private final Color color;
-	private final double score;
+	private final PieceType pieceType;
 
 
-	public Piece(Position position, String name, Movable movable, Color color, double score) {
-		validate(position, name, movable);
+	public Piece(Position position, PieceType pieceType, Movable movable, Color color) {
+		validate(position, movable);
 		this.position = position;
-		this.name = name;
+		this.pieceType = pieceType;
 		this.movable = movable;
 		this.color = color;
-		this.score = score;
 	}
 
-	private void validate(Position position, String name, Movable movable) {
-		Objects.requireNonNull(position, INVALID_INPUT_EXCEPTION_MESSAGE);
-		Objects.requireNonNull(name, INVALID_INPUT_EXCEPTION_MESSAGE);
-		Objects.requireNonNull(movable, INVALID_INPUT_EXCEPTION_MESSAGE);
+	public Piece(PieceInit pieceInit) {
+		this(pieceInit.getPosition(), pieceInit.getPieceType(), pieceInit.getMovable(), pieceInit.getColor());
+		// TODO: 2020/03/29 그냥 여기서 대입해줄까?
+	}
 
-		if (name.isEmpty()) {
-			throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
-		}
+	private void validate(Position position, Movable movable) {
+		Objects.requireNonNull(position, INVALID_INPUT_EXCEPTION_MESSAGE);
+		Objects.requireNonNull(movable, INVALID_INPUT_EXCEPTION_MESSAGE);
 	}
 
 	public Set<Position> createMovablePositions(List<Piece> pieces) {
@@ -61,14 +60,6 @@ public abstract class Piece {
 		return !isSameColor(color);
 	}
 
-	public boolean isKing() {
-		return false;
-	}
-
-	public boolean isPawn() {
-		return false;
-	}
-
 	public boolean isWhite() {
 		return color.isWhite();
 	}
@@ -77,15 +68,23 @@ public abstract class Piece {
 		return position;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public Color getColor() {
 		return color;
 	}
 
+	public PieceType getPieceType() {
+		return pieceType;
+	}
+
+	public String getResource() {//add
+		//// TODO: 2020/03/28 웹기반으로 할때는 path를 바꾸는 식으로 변경하면 될듯~~
+		if(color.isWhite()) {
+			return pieceType.getResource().toLowerCase();
+		}
+		return pieceType.getResource();
+	}
+
 	public double getScore() {
-		return score;
+		return pieceType.getScore();
 	}
 }

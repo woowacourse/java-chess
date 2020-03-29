@@ -9,9 +9,13 @@ import java.util.List;
 import java.util.Set;
 
 public class PawnMovable implements Movable {
+	private final Directions moveDirections;
+	public PawnMovable(Directions moveDirections) {
+		this.moveDirections = moveDirections;
+	}
+
 	@Override
 	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
-		Directions moveDirections = Directions.getPawnDirectionsBy(color);
 		Set<Position> movablePositions = new HashSet<>();
 
 		for (Direction direction : moveDirections.getDirections()) {

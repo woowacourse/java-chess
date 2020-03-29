@@ -3,6 +3,7 @@ package chess.domain.piece.pieces;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class Pieces {
 		return pieces.stream()
 				.filter(piece -> piece.isSamePosition(start))
 				.findFirst()
-				.orElseGet(Blank::new);
+				.orElseGet(Blank::new);// TODO: 2020/03/29 개선가능할까? 블랭크도 팩토리에서?
 	}
 
 	private Piece findBy(Position start, Color color) {
@@ -56,14 +57,15 @@ public class Pieces {
 
 	public boolean isKingDead() {
 		int kingCount = (int) pieces.stream()
-				.filter(Piece::isKing)
+				.map(Piece::getPieceType)
+				.filter(PieceType::isKing)
 				.count();
 		return kingCount != 2;
 	}
 
 	public Color getAliveKingColor() {
 		return pieces.stream()
-				.filter(Piece::isKing)
+				.filter(piece -> piece.getPieceType().isKing())//// TODO: 2020/03/28 고치자!! 이부분
 				.map(Piece::getColor)
 				.findFirst()
 				.orElseThrow(() -> new UnsupportedOperationException("현재상황에서 사용할 수 없는 메서드입니다."));
