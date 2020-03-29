@@ -23,7 +23,7 @@ public class ConsoleUIApplication {
 
     private static GameState runGame(GameState gameState) {
         try {
-            Command command = CommandReader.of(InputView.read());
+            Command command = CommandReader.from(InputView.read());
             return command.execute(gameState);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e);
