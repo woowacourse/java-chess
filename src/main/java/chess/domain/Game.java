@@ -23,10 +23,12 @@ public class Game {
 	public void movePieceFromTo(Position source, Position target) {
 		List<Position> trace = pieces.movingTrace(source, target);
 
-		if (pieces.canMove(source, target) && board.canMoveBy(trace)) {
-			board.change(source, target);
-			pieces.move(source, target);
+		boolean canNotMove = !pieces.canMove(source, target) || !board.canMoveBy(trace);
+		if (canNotMove) {
+			throw new UnsupportedOperationException("해당 위치로 움직일 수 없습니다.");
 		}
+		board.change(source, target);
+		pieces.move(source, target);
 	}
 
 	public Board getBoard() {

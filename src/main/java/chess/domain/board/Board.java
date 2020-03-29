@@ -53,7 +53,7 @@ public class Board {
 			return true;
 		}
 		return trace.stream()
-			.noneMatch(position -> board.get(position) != null);
+			.allMatch(position -> board.get(position) == null);
 	}
 
 	private boolean canPawnAttack(Position source, Position target) {
