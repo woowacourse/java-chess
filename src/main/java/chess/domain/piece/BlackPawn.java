@@ -11,8 +11,8 @@ public class BlackPawn extends Pawn {
     private static final List<Direction> DIRECTIONS = new ArrayList<>(
             Arrays.asList(
                     Direction.SOUTH,
-                    Direction.SE,
-                    Direction.SW
+                    Direction.SOUTH_EAST,
+                    Direction.SOUTH_WEST
             )
     );
 

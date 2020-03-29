@@ -25,18 +25,18 @@ public class DirectionTest {
                 Arguments.of(new Position(5, 5), Direction.WEST, new Position(4, 5)),
                 Arguments.of(new Position(5, 5), Direction.NORTH, new Position(5, 6)),
                 Arguments.of(new Position(5, 5), Direction.SOUTH, new Position(5, 4)),
-                Arguments.of(new Position(5, 5), Direction.NE, new Position(6, 6)),
-                Arguments.of(new Position(5, 5), Direction.NW, new Position(4, 6)),
-                Arguments.of(new Position(5, 5), Direction.SE, new Position(6, 4)),
-                Arguments.of(new Position(5, 5), Direction.SW, new Position(4, 4)),
-                Arguments.of(new Position(5, 5), Direction.NNE, new Position(6, 7)),
-                Arguments.of(new Position(5, 5), Direction.NNW, new Position(4, 7)),
-                Arguments.of(new Position(5, 5), Direction.SSE, new Position(6, 3)),
-                Arguments.of(new Position(5, 5), Direction.SSW, new Position(4, 3)),
-                Arguments.of(new Position(5, 5), Direction.EEN, new Position(7, 6)),
-                Arguments.of(new Position(5, 5), Direction.EES, new Position(7, 4)),
-                Arguments.of(new Position(5, 5), Direction.WWN, new Position(3, 6)),
-                Arguments.of(new Position(5, 5), Direction.WWS, new Position(3, 4))
+                Arguments.of(new Position(5, 5), Direction.NORTH_EAST, new Position(6, 6)),
+                Arguments.of(new Position(5, 5), Direction.NORTH_WEST, new Position(4, 6)),
+                Arguments.of(new Position(5, 5), Direction.SOUTH_EAST, new Position(6, 4)),
+                Arguments.of(new Position(5, 5), Direction.SOUTH_WEST, new Position(4, 4)),
+                Arguments.of(new Position(5, 5), Direction.NORTH_NORTH_EAST, new Position(6, 7)),
+                Arguments.of(new Position(5, 5), Direction.NORTH_NORTH_WEST, new Position(4, 7)),
+                Arguments.of(new Position(5, 5), Direction.SOUTH_SOUTH_EAST, new Position(6, 3)),
+                Arguments.of(new Position(5, 5), Direction.SOUTH_SOUTH_WEST, new Position(4, 3)),
+                Arguments.of(new Position(5, 5), Direction.EAST_EAST_NORTH, new Position(7, 6)),
+                Arguments.of(new Position(5, 5), Direction.EAST_EAST_SOUTH, new Position(7, 4)),
+                Arguments.of(new Position(5, 5), Direction.WEST_WEST_NORTH, new Position(3, 6)),
+                Arguments.of(new Position(5, 5), Direction.WEST_WEST_SOUTH, new Position(3, 4))
         );
     }
 }

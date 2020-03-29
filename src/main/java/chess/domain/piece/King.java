@@ -11,13 +11,13 @@ public class King extends SingleStep {
     private static final List<Direction> DIRECTIONS = new ArrayList<>(
             Arrays.asList(
                     Direction.NORTH,
-                    Direction.NE,
+                    Direction.NORTH_EAST,
                     Direction.EAST,
-                    Direction.SE,
+                    Direction.SOUTH_EAST,
                     Direction.SOUTH,
-                    Direction.SW,
+                    Direction.SOUTH_WEST,
                     Direction.WEST,
-                    Direction.NW
+                    Direction.NORTH_WEST
             )
     );
 

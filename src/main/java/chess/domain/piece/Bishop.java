@@ -10,10 +10,10 @@ import java.util.List;
 public class Bishop extends MultipleStep {
     private static final List<Direction> DIRECTIONS = new ArrayList<>(
             Arrays.asList(
-                    Direction.NE,
-                    Direction.SE,
-                    Direction.SW,
-                    Direction.NW
+                    Direction.NORTH_EAST,
+                    Direction.SOUTH_EAST,
+                    Direction.SOUTH_WEST,
+                    Direction.NORTH_WEST
             )
     );
 

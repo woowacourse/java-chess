@@ -10,14 +10,14 @@ import java.util.List;
 public class Knight extends SingleStep {
     private static final List<Direction> DIRECTIONS = new ArrayList<>(
             Arrays.asList(
-                    Direction.NNE,
-                    Direction.EEN,
-                    Direction.EES,
-                    Direction.SSE,
-                    Direction.SSW,
-                    Direction.WWS,
-                    Direction.WWN,
-                    Direction.NNW
+                    Direction.NORTH_NORTH_EAST,
+                    Direction.EAST_EAST_NORTH,
+                    Direction.EAST_EAST_SOUTH,
+                    Direction.SOUTH_SOUTH_EAST,
+                    Direction.SOUTH_SOUTH_WEST,
+                    Direction.WEST_WEST_SOUTH,
+                    Direction.WEST_WEST_NORTH,
+                    Direction.NORTH_NORTH_WEST
             )
     );
 

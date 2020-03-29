@@ -11,8 +11,8 @@ public class WhitePawn extends Pawn {
     private static final List<Direction> DIRECTIONS = new ArrayList<>(
             Arrays.asList(
                     Direction.NORTH,
-                    Direction.NE,
-                    Direction.NW
+                    Direction.NORTH_EAST,
+                    Direction.NORTH_WEST
             )
     );
 
