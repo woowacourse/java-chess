@@ -11,10 +11,10 @@ public class Status {
 	private static final int MIN_DUPLICATED_COUNT = 2;
 	private static final long NOTHING_VALUE = 0L;
 
-	private final List<Row> board;
+	private final List<Row> rows;
 
-	public Status(List<Row> board) {
-		this.board = new ArrayList<>(board);
+	public Status(List<Row> rows) {
+		this.rows = new ArrayList<>(rows);
 	}
 
 	public Result getResult() {
@@ -28,7 +28,7 @@ public class Status {
 
 	private double sumScore(Team team) {
 		List<ChessPiece> chessPieces = new ArrayList<>();
-		for (Row row : board) {
+		for (Row row : rows) {
 			chessPieces.addAll(row.findByTeam(team));
 		}
 
@@ -41,7 +41,7 @@ public class Status {
 
 	private double calculateDuplicatedPawnScore(Team team) {
 		long totalCount = 0;
-		int boardSize = board.size();
+		int boardSize = rows.size();
 		for (int column = 0; column < boardSize; column++) {
 			long columnPerCount = countPawn(team, column);
 			totalCount += countSameColumnPawn(columnPerCount);
@@ -50,7 +50,7 @@ public class Status {
 	}
 
 	private long countPawn(Team team, int column) {
-		return board.stream()
+		return rows.stream()
 			.filter(row -> row.isPawn(column, team))
 			.count();
 	}

@@ -18,7 +18,7 @@ public class ChessBoardTest {
 
 	@BeforeEach
 	void setUp() {
-		chessBoard = new ChessBoard(BoardFactory.createBoard());
+		chessBoard = BoardFactory.createBoard();
 	}
 
 	@Test

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import chess.domain.Status;
 import chess.domain.Team;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
@@ -16,10 +17,10 @@ public class ChessBoard {
 	private static final String SAME_TEAM_MESSAGE = "같은 팀입니다.";
 	private static final String NOT_CHESS_PIECE_MESSAGE = "체스 말이 아닙니다.";
 
-	private List<Row> board;
+	private List<Row> rows;
 
-	public ChessBoard(List<Row> board) {
-		this.board = new ArrayList<>(board);
+	public ChessBoard(List<Row> rows) {
+		this.rows = new ArrayList<>(rows);
 	}
 
 	public boolean isDieKing(Team team) {
@@ -30,7 +31,7 @@ public class ChessBoard {
 
 	private List<ChessPiece> findByTeam(Team team) {
 		List<ChessPiece> chessPieces = new ArrayList<>();
-		board.forEach(row -> chessPieces.addAll(row.findByTeam(team)));
+		rows.forEach(row -> chessPieces.addAll(row.findByTeam(team)));
 		return chessPieces;
 	}
 
@@ -43,11 +44,10 @@ public class ChessBoard {
 
 		replace(startPosition, new Blank(startPosition));
 		replace(targetPosition, startPiece);
-		startPiece.changePosition(targetPosition);
 	}
 
 	public ChessPiece findByPosition(Position position) {
-		return board.stream()
+		return rows.stream()
 			.filter(row -> row.contains(position))
 			.map(row -> row.findByPosition(position))
 			.findFirst()
@@ -77,13 +77,17 @@ public class ChessBoard {
 	}
 
 	private Row findRow(Position targetPosition) {
-		return board.stream()
+		return rows.stream()
 			.filter(row -> row.contains(targetPosition))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException(CANNOT_MOVE_PATH));
 	}
 
-	public List<Row> getBoard() {
-		return Collections.unmodifiableList(board);
+	public Status createStatus() {
+		return new Status(rows);
+	}
+
+	public List<Row> getRows() {
+		return Collections.unmodifiableList(rows);
 	}
 }
