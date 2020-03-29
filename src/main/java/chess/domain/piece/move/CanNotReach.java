@@ -6,8 +6,8 @@ import chess.domain.position.Distance;
 import chess.domain.position.Position;
 
 public class CanNotReach implements CanNotMoveStrategy {
-    private final int maxDistance;
-    public CanNotReach(int maxDistance) {
+    private final double maxDistance;
+    public CanNotReach(double maxDistance) {
         this.maxDistance = maxDistance;
     }
 

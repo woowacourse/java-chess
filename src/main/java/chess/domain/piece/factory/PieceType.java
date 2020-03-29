@@ -2,6 +2,8 @@ package chess.domain.piece.factory;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.bishop.Bishop;
+
+import chess.domain.piece.king.King;
 import chess.domain.piece.move.*;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.pawn.MovedPawn;
@@ -16,7 +18,8 @@ public enum PieceType {
     RUNNING_PAWN("p", MovedPawn.class, movedPawnCanNotMoveStrategies()),
     ROOK("r", Rook.class, rookCanNotMoveStrategies()),
     BISHOP("b", Bishop.class, bishopCanNotMoveStrategies()),
-    QUEEN("q", Queen.class, queenCanNotMoveStrategies());
+    QUEEN("q", Queen.class, queenCanNotMoveStrategies()),
+    KING("k", King.class, kingCanNotMoveStrategies());
 
     private final String name;
     private final Class<? extends Piece> type;
@@ -93,6 +96,14 @@ public enum PieceType {
                 new IsAttackingSameTeam(),
                 new PawnIsDiagonalWithoutAttack()
 
+        );
+    }
+
+    private static List<CanNotMoveStrategy> kingCanNotMoveStrategies() {
+        return Arrays.asList(
+                new IsStayed(),
+                new CanNotReach(King.MAX_DISTANCE),
+                new IsAttackingSameTeam()
         );
     }
 }

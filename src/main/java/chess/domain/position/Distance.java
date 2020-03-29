@@ -53,7 +53,7 @@ public class Distance {
         return Objects.hash(value);
     }
 
-    public boolean isBiggerThan(int value) {
+    public boolean isBiggerThan(double value) {
         return value < this.value;
     }
 }

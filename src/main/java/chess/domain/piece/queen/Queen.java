@@ -5,7 +5,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.move.CanNotMoveStrategy;
 import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.List;
