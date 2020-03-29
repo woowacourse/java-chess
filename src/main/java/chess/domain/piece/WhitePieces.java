@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.board.Position;
+import chess.domain.piece.state.Moved;
 
 public class WhitePieces {
-	private final Map<Position, Piece> pieces;
+	private Map<Position, Piece> pieces;
 
-	public WhitePieces(final Map<Position, Piece> pieces) {
+	public WhitePieces(Map<Position, Piece> pieces) {
 		this.pieces = pieces;
 	}
 
@@ -26,12 +27,13 @@ public class WhitePieces {
 	}
 
 	public void moveFromTo(Position source, Position target) {
-		pieces.put(target, pieces.get(source));
-		pieces.put(source, null);
+		Piece piece = pieces.remove(source);
+		piece.state = new Moved();
+		pieces.put(target, piece);
 	}
 
 	public void kill(Position target) {
-		pieces.put(target, null);
+		pieces.remove(target);
 	}
 
 	public Piece getPiece(Position position) {

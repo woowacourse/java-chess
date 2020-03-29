@@ -52,7 +52,7 @@ public class Board {
 			return true;
 		}
 		return trace.stream()
-			.anyMatch(position -> board.get(position) != null);
+			.noneMatch(position -> board.get(position) != null);
 	}
 
 	public void change(Position source, Position target) {
