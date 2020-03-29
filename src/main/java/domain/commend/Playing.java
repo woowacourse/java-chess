@@ -14,6 +14,7 @@ public class Playing extends GameState {
     private static final int PIECE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
     private static final int POINT_SIZE = 2;
+    private static final int COUNT_KING = 2;
 
     public Playing(Pieces pieces) {
         super(pieces);
@@ -36,7 +37,17 @@ public class Playing extends GameState {
         Point from = Point.of(splitInput.get(1));
         Point to = Point.of(splitInput.get(2));
         pieces.move(turn, from, to);
+        if (isTargetKing()) {
+            return end();
+        }
         return this;
+    }
+
+    private boolean isTargetKing() {
+        int countKing = (int)pieces.getPieces().keySet().stream()
+            .filter(point -> pieces.getPiece(point).getInitial().equalsIgnoreCase("k"))
+            .count();
+        return countKing != COUNT_KING;
     }
 
     @Override
