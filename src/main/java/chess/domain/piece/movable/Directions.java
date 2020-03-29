@@ -1,7 +1,5 @@
 package chess.domain.piece.movable;
 
-import chess.domain.piece.Color;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -25,16 +23,5 @@ public enum Directions {
 
 	public List<Direction> getDirections() {
 		return directions;
-	}
-
-	public static Directions getPawnDirectionsBy(Color color) {
-		if (color.isWhite()) {
-			return WHITEPAWN;
-		}
-
-		if (color.isBlack()) {
-			return BLACKPAWN;
-		}
-		throw new IllegalArgumentException("해당 Direction을 찾을 수 없습니다.");
 	}
 }
