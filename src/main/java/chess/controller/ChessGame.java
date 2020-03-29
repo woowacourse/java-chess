@@ -13,8 +13,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
-    private static final int INITIAL_TURN_OF_WHITE = 0;
-    private static final int INITIAL_TURN_OF_BLACK = 1;
     private static final int FROM_POSITION_INDEX = 1;
     private static final int TO_POSITION_INDEX = 2;
     private static final int COMMAND_INDEX = 0;
@@ -29,7 +27,7 @@ public class ChessGame {
 
     public void run() {
         OutputView.printInputStartGuideMessage();
-        int turnFlag = INITIAL_TURN_OF_WHITE;
+        Team currentTurn = Team.WHITE;
 
         Run runner;
         while ((runner = inputCommandWithValidation()).isNotEnd()) {
@@ -39,8 +37,8 @@ public class ChessGame {
             }
             try {
                 if (runner.isMove()) {
-                    board = board.movePiece(inputCommand[FROM_POSITION_INDEX], inputCommand[TO_POSITION_INDEX], turnFlag);
-                    turnFlag = INITIAL_TURN_OF_BLACK - turnFlag;
+                    board = board.movePiece(inputCommand[FROM_POSITION_INDEX], inputCommand[TO_POSITION_INDEX], currentTurn);
+                    currentTurn = reverseTurn(currentTurn);
                     OutputView.printBoard(board.getBoard());
                 }
             } catch (BlankMoveUnsupportedException | MoveCommandWhenBoardNullException |
@@ -58,6 +56,13 @@ public class ChessGame {
                 break;
             }
         }
+    }
+
+    private Team reverseTurn(Team currentTurn) {
+        if (currentTurn == Team.WHITE) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
     }
 
     private Run inputCommandWithValidation() {

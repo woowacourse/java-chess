@@ -63,12 +63,12 @@ public class Board {
                 .isOtherTeam(findPieceBy(getBoardIndex(nextPosition.getX(), nextPosition.getY())));
     }
 
-    public Board movePiece(final String from, final String to, final int turnFlag) {
+    public Board movePiece(final String from, final String to, final Team currentTurn) {
         List<Piece> movedBoard = new ArrayList<>(board);
 
         int fromIndex = getBoardIndexByStringPosition(from);
         int toIndex = getBoardIndexByStringPosition(to);
-        if (Team.isSameTeam(turnFlag, findPieceBy(fromIndex))) {
+        if (Team.isNotSameTeam(currentTurn, findPieceBy(fromIndex))) {
             throw new TakeTurnException(TAKE_TURN_EXCEPTION_MESSAGE);
         }
 

@@ -33,8 +33,8 @@ public enum Team {
         return initialPawnRow;
     }
 
-    public static boolean isSameTeam(int turnFlag, Piece fromPiece) {
-        return Team.of(turnFlag) == fromPiece.team;
+    public static boolean isNotSameTeam(Team currentTurn, Piece fromPiece) {
+        return currentTurn != fromPiece.team;
     }
 
     private static Team of(int turnFlag) {
