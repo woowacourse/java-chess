@@ -13,6 +13,7 @@ import util.NullChecker;
 public class TeamScore {
 
     private static final double PAWN_SAME_FILE_SCORE = -0.5;
+
     private final Map<Color, Double> teamScore;
 
     public TeamScore(Collection<Piece> pieces, Map<Color, Integer> pawnSameFileCountByColor) {

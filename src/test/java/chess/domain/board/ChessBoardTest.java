@@ -12,16 +12,16 @@ import org.junit.jupiter.api.Test;
 
 public class ChessBoardTest {
 
-    @Test
     @DisplayName("체스보드 생성시 32개의 칸-말 셋트를 가지고 있는지 확인")
+    @Test
     void chessBoardSizeCheck() {
         ChessBoard chessBoard = new ChessBoard();
         Map<BoardSquare, Piece> board = chessBoard.getChessBoard();
         assertThat(board.size()).isEqualTo(32);
     }
 
+    @DisplayName("move 수행이 가능한지 판단하면서 수행, 턴 변경시 수행 불가능한지도 검증")
     @Test
-    @DisplayName("move 수행이 가능한지 판단")
     void canMove() {
         ChessBoard chessBoard = new ChessBoard();
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a6"))).isFalse();
@@ -58,5 +58,22 @@ public class ChessBoardTest {
         chessBoard.movePieceWhenCanMove(new MoveSquare("d6", "d3"));
 
         assertThat(chessBoard.isKingCaptured()).isTrue();
+    }
+
+    @DisplayName("이동하려는 before자리에 말이 없는건지 확인")
+    @Test
+    void isNoPiece() {
+        ChessBoard chessBoard = new ChessBoard();
+        assertThat(chessBoard.isNoPiece(new MoveSquare("a2", "a3"))).isFalse();
+        assertThat(chessBoard.isNoPiece(new MoveSquare("a3", "a4"))).isTrue();
+    }
+
+    @DisplayName("이동하려는 before자리의 말이 현재 차례의 말이 아닌지 확인, 말이 없는 경우도 True")
+    @Test
+    void isNotMyTurn() {
+        ChessBoard chessBoard = new ChessBoard();
+        assertThat(chessBoard.isNotMyTurn(new MoveSquare("a2", "a3"))).isFalse();
+        assertThat(chessBoard.isNotMyTurn(new MoveSquare("a3", "a4"))).isTrue();
+        assertThat(chessBoard.isNotMyTurn(new MoveSquare("a7", "a6"))).isTrue();
     }
 }

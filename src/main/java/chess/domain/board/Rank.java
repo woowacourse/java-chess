@@ -12,6 +12,8 @@ public enum Rank {
     SEVENTH("7", 7),
     EIGHTH("8", 8);
 
+    private static final String NO_RANK_EXCEPTION_MESSAGE = "Rank가 존재하지 않습니다.";
+
     private final String name;
     private final int number;
 
@@ -37,6 +39,6 @@ public enum Rank {
         return Arrays.stream(Rank.values())
             .filter(rank -> rank.number == this.number + increment)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("다음 Rank가 존재하지 않습니다."));
+            .orElseThrow(() -> new IllegalArgumentException(NO_RANK_EXCEPTION_MESSAGE));
     }
 }

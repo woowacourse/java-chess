@@ -21,6 +21,4 @@ public class MoveSquare {
     public BoardSquare get(MoveOrder moveOrder) {
         return squares.get(moveOrder);
     }
-
-
 }

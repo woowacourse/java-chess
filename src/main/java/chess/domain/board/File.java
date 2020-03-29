@@ -12,6 +12,8 @@ public enum File {
     SEVENTH("g", 7),
     EIGHTH("h", 8);
 
+    private static final String NO_FILE_EXCEPTION_MESSAGE = "다음 File이 존재하지 않습니다.";
+
     private final String name;
     private final int number;
 
@@ -33,7 +35,7 @@ public enum File {
         return Arrays.stream(File.values())
             .filter(file -> file.number == this.number + increment)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("다음 File이 존재하지 않습니다."));
+            .orElseThrow(() -> new IllegalArgumentException(NO_FILE_EXCEPTION_MESSAGE));
     }
 
     public static int count() {

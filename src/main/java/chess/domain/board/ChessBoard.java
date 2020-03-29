@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private static final int RANK_BLACK_PAWN_INIT = 7;
-    private static final int RANK_WHITE_PAWN_INIT = 2;
+    private static final Rank RANK_BLACK_PAWN_INIT = Rank.SEVENTH;
+    private static final Rank RANK_WHITE_PAWN_INIT = Rank.SECOND;
     private static final Map<BoardSquare, Piece> INITIAL_BOARD;
 
     static {
@@ -44,11 +44,10 @@ public class ChessBoard {
         initialBoard.put(BoardSquare.of("d8"), King.getPieceInstance(Color.BLACK));
         initialBoard.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
 
-        for (int i = 0; i < 8; i++) {
-            char file = (char) ('a' + i);
-            initialBoard.put(BoardSquare.of(String.valueOf(file) + RANK_BLACK_PAWN_INIT)
+        for (File file : File.values()) {
+            initialBoard.put(BoardSquare.of(file, RANK_BLACK_PAWN_INIT)
                 , Pawn.getPieceInstance(Color.BLACK));
-            initialBoard.put(BoardSquare.of(String.valueOf(file) + RANK_WHITE_PAWN_INIT)
+            initialBoard.put(BoardSquare.of(file, RANK_WHITE_PAWN_INIT)
                 , Pawn.getPieceInstance(Color.WHITE));
         }
 
@@ -136,17 +135,17 @@ public class ChessBoard {
             .collect(Collectors.toList());
     }
 
-    public Color getGameTurn() {
-        return gameTurn;
-    }
-
     public boolean isNoPiece(MoveSquare MoveSquares) {
         return !chessBoard.containsKey(MoveSquares.get(MoveOrder.before));
     }
 
+    public Color getGameTurn() {
+        return gameTurn;
+    }
+
     public boolean isNotMyTurn(MoveSquare MoveSquares) {
         if (isNoPiece(MoveSquares)) {
-            return false;
+            return true;
         }
         return !chessBoard.get(MoveSquares.get(MoveOrder.before)).isSameColor(gameTurn);
     }

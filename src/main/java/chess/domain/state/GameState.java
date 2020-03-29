@@ -9,6 +9,8 @@ public enum GameState {
     MOVE("move", true),
     STATUS("status", true);
 
+    private static final String WRONG_ARGUMENT_EXCEPTION_MESSAGE = "잘못된 인자입니다.";
+
     private final String name;
     private final boolean loop;
 
@@ -22,7 +24,7 @@ public enum GameState {
         return Arrays.stream(GameState.values())
             .filter(gameState -> gameState.getName().equals(input.toLowerCase()))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다"));
+            .orElseThrow(() -> new IllegalArgumentException(WRONG_ARGUMENT_EXCEPTION_MESSAGE));
     }
 
     public String getName() {

@@ -20,6 +20,8 @@ public enum Direction {
     RIGHT_DOWN_L(2, -1),
     RIGHT_UP_L(2, 1);
 
+    private static final int REVERSE_NUMBER = -1;
+
     private final int fileAddAmount;
     private final int rankAddAmount;
 
@@ -38,9 +40,9 @@ public enum Direction {
 
     public Direction reverse() {
         return Arrays.stream(Direction.values())
-                .filter(direction -> direction.fileAddAmount == this.fileAddAmount * -1)
-                .filter(direction -> direction.rankAddAmount == this.rankAddAmount * -1)
-                .findFirst()
-                .orElseThrow(IllegalAccessError::new);
+            .filter(direction -> direction.fileAddAmount == this.fileAddAmount * REVERSE_NUMBER)
+            .filter(direction -> direction.rankAddAmount == this.rankAddAmount * REVERSE_NUMBER)
+            .findFirst()
+            .orElseThrow(IllegalAccessError::new);
     }
 }
