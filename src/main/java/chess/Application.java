@@ -58,8 +58,7 @@ public class Application {
     }
 
     public static void move(final String command) {
-        List<Position> positions = getMovePositions(command);
-        tryToMove(positions.get(0), positions.get(1));
+        tryToMove(startPosition(command), endPosition(command));
         OutputView.showBoard(board);
     }
 
@@ -71,9 +70,11 @@ public class Application {
         }
     }
 
-    private static List<Position> getMovePositions(String command) {
-        String start = command.split(DELIMITER)[1];
-        String end = command.split(DELIMITER)[2];
-        return Arrays.asList(Position.of(start), Position.of(end));
+    private static Position startPosition(String command) {
+        return Position.of(command.split(DELIMITER)[1]);
+    }
+
+    private static Position endPosition(String command) {
+        return Position.of(command.split(DELIMITER)[2]);
     }
 }
