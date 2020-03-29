@@ -13,18 +13,18 @@ public enum Command {
     }
 
     public static boolean isStart(String command) {
-        return START.command.equals(command);
+        return command.startsWith(START.command);
     }
 
     public static boolean isMove(String command) {
-        return MOVE.command.equals(command);
+        return command.startsWith(MOVE.command);
     }
 
     public static boolean isStatus(String command) {
-        return STATUS.command.equals(command);
+        return command.startsWith(STATUS.command);
     }
 
     public static boolean isEnd(String command) {
-        return END.command.equals(command);
+        return command.startsWith(END.command);
     }
 }

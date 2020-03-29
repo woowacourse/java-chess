@@ -28,8 +28,6 @@ public class GameController {
                 board.move(source, target);
 
                 OutputView.printBoard(board.showBoard());
-
-
             }
         }
 
