@@ -68,10 +68,6 @@ public class PositionTest {
         );
     }
 
-    @Test
-    void reverse() {
-    }
-
     @ParameterizedTest
     @MethodSource("createDirectionAndExpected")
     void 움직일_경우_새로운_Position을_반환(Direction direction, Position expected) {
@@ -109,22 +105,6 @@ public class PositionTest {
                 Arguments.of(Position.of("A4"), Direction.WEST),
                 Arguments.of(Position.of("H4"), Direction.EAST)
         );
-    }
-
-    @Test
-    void of() {
-    }
-
-    @Test
-    void of1() {
-    }
-
-    @Test
-    void isAt() {
-    }
-
-    @Test
-    void isAt1() {
     }
 
     @Test

@@ -54,12 +54,4 @@ class RouteTest {
                                 Position.of("B2"))))
         );
     }
-
-    @Test
-    void contains() {
-    }
-
-    @Test
-    void remove() {
-    }
 }
