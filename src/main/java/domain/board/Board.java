@@ -39,10 +39,34 @@ public class Board {
     }
 
     private void putInitialOnBoard(int row, int column, String initialOfPiece) {
-        board.get(row).putOnColumn(column, initialOfPiece);
+        getRowOfBoard(row).putOnColumn(column, initialOfPiece);
+    }
+
+    private RowOfBoard getRowOfBoard(int row) {
+        return board.get(row);
     }
 
     public List<RowOfBoard> getBoard() {
         return Collections.unmodifiableList(board);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board1 = (Board) o;
+        return Objects.equals(board, board1.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board);
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "board=" + board +
+                '}';
     }
 }

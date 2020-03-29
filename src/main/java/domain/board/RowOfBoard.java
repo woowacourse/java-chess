@@ -21,7 +21,6 @@ public class RowOfBoard {
 		for (Column column : Column.values()) {
 			rowOfBoard.add(EMPTY);
 		}
-
 		return new RowOfBoard(rowOfBoard);
 	}
 
