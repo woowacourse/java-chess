@@ -1,16 +1,14 @@
 package chess.domain.board;
 
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.Type;
 import chess.domain.state.MoveOrder;
 import chess.domain.state.MoveSquare;
-import java.util.Collections;
+import chess.exceptions.ChangePawnException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,67 +16,72 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private static final Rank RANK_BLACK_PAWN_INIT = Rank.SEVENTH;
-    private static final Rank RANK_WHITE_PAWN_INIT = Rank.SECOND;
-    private static final Map<BoardSquare, Piece> INITIAL_BOARD;
-
-    static {
-        Map<BoardSquare, Piece> initialBoard = new HashMap<>();
-        initialBoard.put(BoardSquare.of("a1"), Rook.getPieceInstance(Color.WHITE));
-        initialBoard.put(BoardSquare.of("h1"), Rook.getPieceInstance(Color.WHITE));
-        initialBoard.put(BoardSquare.of("a8"), Rook.getPieceInstance(Color.BLACK));
-        initialBoard.put(BoardSquare.of("h8"), Rook.getPieceInstance(Color.BLACK));
-
-        initialBoard.put(BoardSquare.of("b1"), Knight.getPieceInstance(Color.WHITE));
-        initialBoard.put(BoardSquare.of("g1"), Knight.getPieceInstance(Color.WHITE));
-        initialBoard.put(BoardSquare.of("b8"), Knight.getPieceInstance(Color.BLACK));
-        initialBoard.put(BoardSquare.of("g8"), Knight.getPieceInstance(Color.BLACK));
-
-        initialBoard.put(BoardSquare.of("c1"), Bishop.getPieceInstance(Color.WHITE));
-        initialBoard.put(BoardSquare.of("f1"), Bishop.getPieceInstance(Color.WHITE));
-        initialBoard.put(BoardSquare.of("c8"), Bishop.getPieceInstance(Color.BLACK));
-        initialBoard.put(BoardSquare.of("f8"), Bishop.getPieceInstance(Color.BLACK));
-
-        initialBoard.put(BoardSquare.of("d1"), Queen.getPieceInstance(Color.WHITE));
-        initialBoard.put(BoardSquare.of("e8"), Queen.getPieceInstance(Color.BLACK));
-        initialBoard.put(BoardSquare.of("d8"), King.getPieceInstance(Color.BLACK));
-        initialBoard.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
-
-        for (File file : File.values()) {
-            initialBoard.put(BoardSquare.of(file, RANK_BLACK_PAWN_INIT)
-                , Pawn.getPieceInstance(Color.BLACK));
-            initialBoard.put(BoardSquare.of(file, RANK_WHITE_PAWN_INIT)
-                , Pawn.getPieceInstance(Color.WHITE));
-        }
-
-        INITIAL_BOARD = Collections.unmodifiableMap(initialBoard);
-    }
-
     private Map<BoardSquare, Piece> chessBoard = new HashMap<>();
     private Color gameTurn = Color.WHITE;
 
     public ChessBoard() {
-        for (BoardSquare boardSquare : INITIAL_BOARD.keySet()) {
-            chessBoard.put(boardSquare, INITIAL_BOARD.get(boardSquare));
+        for (ChessInitialSetting chessInitialSetting : ChessInitialSetting.values()) {
+            chessBoard.put(chessInitialSetting.getBoardSquare(), chessInitialSetting.getPiece());
         }
     }
 
     public static boolean isInitialPoint(BoardSquare boardSquare, Piece piece) {
-        return INITIAL_BOARD.containsKey(boardSquare) && INITIAL_BOARD.get(boardSquare) == piece;
+        return ChessInitialSetting.contains(boardSquare, piece);
     }
 
     public Map<BoardSquare, Piece> getChessBoard() {
         return chessBoard;
     }
 
-    public boolean movePieceWhenCanMove(MoveSquare moveSquare) {
+    public boolean movePieceWhenCanMove(MoveSquare moveSquare) throws ChangePawnException {
         BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.before);
         BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.after);
         if (canMove(moveSquareBefore, moveSquareAfter)) {
             movePiece(moveSquareBefore, moveSquareAfter);
+            checkChangePawnWhenReachFinish();
+            gameTurn = gameTurn.nextTurnIfEmptyMySelf();
             return true;
         }
         return false;
+    }
+
+    private void checkChangePawnWhenReachFinish() throws ChangePawnException {
+        if (isReachFinishPawn()) {
+            BoardSquare finishPawnBoard = getFinishPawnBoard();
+            throw new ChangePawnException(finishPawnBoard + "자리의 폰을 변경해야 합니다.");
+        }
+    }
+
+    private BoardSquare getFinishPawnBoard() {
+        return chessBoard.keySet().stream()
+            .filter(boardSquare -> chessBoard.get(boardSquare) instanceof Pawn)
+            .filter(BoardSquare::isStartRank)
+            .findFirst()
+            .orElseThrow(IllegalAccessError::new);
+    }
+
+    private boolean isReachFinishPawn() {
+        return chessBoard.keySet().stream()
+            .filter(boardSquare -> chessBoard.get(boardSquare) instanceof Pawn)
+            .anyMatch(BoardSquare::isStartRank);
+    }
+
+    public boolean changeFinishPawn(Type hopeType) {
+        if (isReachFinishPawn()) {
+            chessBoard.put(getFinishPawnBoard(), getHopePiece(hopeType));
+            gameTurn = gameTurn.nextTurnIfEmptyMySelf();
+            return true;
+        }
+        return false;
+    }
+
+    private Piece getHopePiece(Type hopeType) {
+        return Arrays.stream(ChessInitialSetting.values())
+            .map(ChessInitialSetting::getPiece)
+            .filter(piece -> piece.isSameType(hopeType))
+            .filter(piece -> piece.isSameColor(gameTurn))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     private boolean canMove(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
@@ -93,7 +96,6 @@ public class ChessBoard {
     private void movePiece(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
         Piece currentPiece = chessBoard.remove(moveSquareBefore);
         chessBoard.put(moveSquareAfter, currentPiece);
-        gameTurn = gameTurn.nextTurnIfEmptyMySelf();
     }
 
     public boolean isKingCaptured() {

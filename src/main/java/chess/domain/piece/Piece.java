@@ -69,4 +69,7 @@ public abstract class Piece implements Movable {
         return type.getLetter();
     }
 
+    public boolean isSameType(Type type) {
+        return this.type == type;
+    }
 }

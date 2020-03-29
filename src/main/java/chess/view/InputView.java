@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.piece.Type;
 import java.util.Scanner;
 
 public class InputView {
@@ -8,5 +9,20 @@ public class InputView {
 
     public static String inputGameState() {
         return SCANNER.nextLine();
+    }
+
+    public static Type inputChangeType() {
+        Type type;
+        while (true) {
+            try {
+                System.out.println("Q(QUEEN), B(BISHOP), N(KNIGHT), R(ROOK) 중 하나를 선택해주세요.");
+                type = Type.of(SCANNER.nextLine());
+                if (type.canChangeFromPawn()) {
+                    break;
+                }
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        return type;
     }
 }

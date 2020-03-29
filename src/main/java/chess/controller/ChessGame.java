@@ -5,6 +5,7 @@ import chess.domain.board.TeamScore;
 import chess.domain.state.GameState;
 import chess.domain.state.GameStateAndMoveSquare;
 import chess.domain.state.MoveSquare;
+import chess.exceptions.ChangePawnException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -60,9 +61,15 @@ public class ChessGame {
 
     private static void move(ChessBoard chessBoard, GameStateAndMoveSquare gameStateAndMoveSquare) {
         MoveSquare moveSquare = gameStateAndMoveSquare.getMoveSquare();
-        if (chessBoard.movePieceWhenCanMove(moveSquare)) {
+        try {
+            if (chessBoard.movePieceWhenCanMove(moveSquare)) {
+                OutputView.printChessBoard(chessBoard);
+                return;
+            }
+        } catch (ChangePawnException cpe) {
+            OutputView.printExceptionMessage(cpe.getMessage());
+            chessBoard.changeFinishPawn(InputView.inputChangeType());
             OutputView.printChessBoard(chessBoard);
-            return;
         }
         if (chessBoard.isNoPiece(moveSquare)) {
             OutputView.printNoPiece();

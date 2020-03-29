@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.BoardSquare;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -34,6 +35,25 @@ public class PawnTest {
 
         assertThat(availableSquaresBlack.size()).isEqualTo(1);
         assertThat(availableSquaresWhite.size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("앞에 말이 있다면 못가는지 테스트")
+    void canNotCaptureFrontPiece() {
+        Map<BoardSquare, Piece> board = new HashMap<>();
+        board.put(BoardSquare.of("a5"), Knight.getPieceInstance(Color.BLACK));
+        board.put(BoardSquare.of("c5"), Knight.getPieceInstance(Color.WHITE));
+
+        Piece pieceBlack = Pawn.getPieceInstance(Color.BLACK);
+        Piece pieceWhite = Pawn.getPieceInstance(Color.WHITE);
+
+        Set<BoardSquare> availableSquares = new HashSet<>();
+        availableSquares.addAll(pieceWhite.getCheatSheet(BoardSquare.of("a4"), board));
+        availableSquares.addAll(pieceWhite.getCheatSheet(BoardSquare.of("c4"), board));
+        availableSquares.addAll(pieceBlack.getCheatSheet(BoardSquare.of("a6"), board));
+        availableSquares.addAll(pieceBlack.getCheatSheet(BoardSquare.of("c6"), board));
+
+        assertThat(availableSquares.size()).isEqualTo(0);
     }
 
     @Test

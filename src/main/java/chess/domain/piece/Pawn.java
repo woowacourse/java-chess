@@ -46,39 +46,34 @@ public class Pawn extends OneTimeMovePiece {
         for (BoardSquare cheatSheet : containsCheatSheet) {
             BoardSquare oneMore = cheatSheet
                 .getAddIfInBoundaryOrMyself(0, cheatSheet.getRankCompare(boardSquare));
-            straightCheatSheet.addAll(getOneMoreCheatSheet(boardSquare, board, oneMore));
+            straightCheatSheet.addAll(getFrontCheatSheet(boardSquare, board, oneMore));
             straightCheatSheet.add(cheatSheet);
         }
         return straightCheatSheet;
     }
 
-    private Set<BoardSquare> getOneMoreCheatSheet(BoardSquare boardSquare,
+    private Set<BoardSquare> getFrontCheatSheet(BoardSquare boardSquare,
         Map<BoardSquare, Piece> board, BoardSquare oneMore) {
-        Set<BoardSquare> oneMoreCheatSheet = new HashSet<>();
+        Set<BoardSquare> frontCheatSheet = new HashSet<>();
         boolean initialPoint = ChessBoard.isInitialPoint(boardSquare, this);
         boolean containsOneMore = !board.containsKey(oneMore);
         if (initialPoint && containsOneMore) {
-            oneMoreCheatSheet.add(oneMore);
+            frontCheatSheet.add(oneMore);
         }
-        return oneMoreCheatSheet;
+        return frontCheatSheet;
     }
 
     private Set<BoardSquare> getDiagonalCheatSheet(Map<BoardSquare, Piece> board,
         Set<BoardSquare> allCheatSheet) {
         Set<BoardSquare> diagonalCheatSheet = new HashSet<>();
         for (BoardSquare cheatSheet : allCheatSheet) {
-            BoardSquare cheatSheetRight = cheatSheet.getAddIfInBoundaryOrMyself(-1, 0);
-            BoardSquare cheatSheetLeft = cheatSheet.getAddIfInBoundaryOrMyself(1, 0);
-            addDiagonalCheatSheet(board, diagonalCheatSheet, cheatSheetRight);
-            addDiagonalCheatSheet(board, diagonalCheatSheet, cheatSheetLeft);
+            diagonalCheatSheet.add(cheatSheet.getAddIfInBoundaryOrMyself(-1, 0));
+            diagonalCheatSheet.add(cheatSheet.getAddIfInBoundaryOrMyself(1, 0));
+            diagonalCheatSheet.remove(cheatSheet);
         }
-        return diagonalCheatSheet;
-    }
-
-    private void addDiagonalCheatSheet(Map<BoardSquare, Piece> board,
-        Set<BoardSquare> diagonalCheatSheet, BoardSquare cheatSheet) {
-        if (board.containsKey(cheatSheet) && !isSameColor(board.get(cheatSheet))) {
-            diagonalCheatSheet.add(cheatSheet);
-        }
+        return diagonalCheatSheet.stream()
+            .filter(board::containsKey)
+            .filter(cheatSheet -> !isSameColor(board.get(cheatSheet)))
+            .collect(Collectors.toSet());
     }
 }

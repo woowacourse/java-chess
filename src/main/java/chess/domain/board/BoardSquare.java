@@ -74,5 +74,13 @@ public class BoardSquare {
         return this.file == boardSquare.file;
     }
 
+    public boolean isStartRank() {
+        return this.rank == Rank.FIRST || this.rank == Rank.EIGHTH;
+    }
+
+    @Override
+    public String toString() {
+        return file.getName() + rank.getName();
+    }
 }
 

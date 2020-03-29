@@ -1,11 +1,13 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.state.MoveSquare;
+import chess.exceptions.ChangePawnException;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,5 +77,23 @@ public class ChessBoardTest {
         assertThat(chessBoard.isNotMyTurn(new MoveSquare("a2", "a3"))).isFalse();
         assertThat(chessBoard.isNotMyTurn(new MoveSquare("a3", "a4"))).isTrue();
         assertThat(chessBoard.isNotMyTurn(new MoveSquare("a7", "a6"))).isTrue();
+    }
+
+    @DisplayName("폰이 시작지점(즉 상대방의 시작지점)으로 이동했는지 확인")
+    @Test
+    void mustChangePawn() {
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.movePieceWhenCanMove(new MoveSquare("a2", "a4"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a5"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("b2", "b4"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("b7", "b5"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("a4", "b5"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("c7", "c6"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("b5", "c6"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("c8", "b7"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("c6", "b7"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("h7", "h6"));
+        assertThatThrownBy(() -> chessBoard.movePieceWhenCanMove(new MoveSquare("b7", "a8")))
+            .isInstanceOf(ChangePawnException.class);
     }
 }
