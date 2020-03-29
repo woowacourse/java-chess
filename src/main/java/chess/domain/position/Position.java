@@ -11,14 +11,17 @@ public class Position {
 	private static final int MAX_BOUND = 8;
 	private static final int BLACK_PAWN_INITIAL_COLUMN = 7;
 	private static final int WHITE_PAWN_INITIAL_COLUMN = 2;
+	private static final int ROW_START_INDEX = 0;
+	private static final int COLUMN_START_INDEX = 1;
+	private static final int SUBSTRING_LENGTH = 1;
 
 	private final Row row;
 	private final Column column;
 
 	public Position(String position) {
 		validate(position);
-		this.row = Row.of(position.substring(0, 1));
-		this.column = Column.of(position.substring(1, 2));
+		this.row = Row.of(position.substring(ROW_START_INDEX, ROW_START_INDEX + SUBSTRING_LENGTH));
+		this.column = Column.of(position.substring(COLUMN_START_INDEX, COLUMN_START_INDEX + SUBSTRING_LENGTH));
 	}
 
 	public Position(Row row, Column column) {
@@ -34,12 +37,12 @@ public class Position {
 	}
 
 	public Position getMovedPositionBy(Direction direction) {
-		if(!checkBound(direction)){
+		if (!checkBound(direction)) {
 			return this;
 		}
 		Row movedRow = row.calculate(direction.getXDegree());
 		Column movedColumn = column.calculate(direction.getYDegree());
-		return PositionFactory.of(movedRow,movedColumn);
+		return PositionFactory.of(movedRow, movedColumn);
 	}
 
 	public boolean checkBound(Direction direction) {
