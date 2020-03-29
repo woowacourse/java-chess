@@ -15,12 +15,20 @@ public class WebUIChessApplication {
         State state = new Ended(startPieces);
         while (true) {
             state = state.pushCommend(InputView.inputGameCommend());
-            if (state.isPlaying()) {
-                OutputView.printBoard(Board.of(state.getSet()));
-            }
-            if (state.isStatus()) {
-                OutputView.printStatus(state.getPieces());
-            }
+            printIfPlaying(state);
+            printIfStatus(state);
+        }
+    }
+
+    private static void printIfPlaying(State state) {
+        if (state.isPlaying()) {
+            OutputView.printBoard(Board.of(state.getSet()));
+        }
+    }
+
+    private static void printIfStatus(State state) {
+        if (state.isStatus()) {
+            OutputView.printStatus(state.getPieces());
         }
     }
 
