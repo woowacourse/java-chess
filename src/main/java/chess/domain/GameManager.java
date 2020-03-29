@@ -12,6 +12,9 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class GameManager {
+	private static final String TURN_MISS_MATCH_MESSAGE = "자신의 턴이 아닙니다.";
+	private static final String NOT_MOVABLE_MESSAGE = "이동할 수 없는 위치입니다.";
+
 	private Board board;
 	private Color currentTurn;
 
@@ -38,14 +41,14 @@ public class GameManager {
 
 	private void validateTurn(Piece target) {
 		if (target.isNotSameColor(currentTurn)) {
-			throw new IllegalArgumentException("자신의 턴이 아닙니다.");
+			throw new IllegalArgumentException(TURN_MISS_MATCH_MESSAGE);
 		}
 	}
 
 	private void validateMovablePosition(Piece target, Position targetPosition, Position destination) {
 		Set<Position> movablePositions = target.findMovablePositions(targetPosition, board);
 		if (!movablePositions.contains(destination)) {
-			throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+			throw new IllegalArgumentException(NOT_MOVABLE_MESSAGE);
 		}
 	}
 
@@ -54,8 +57,8 @@ public class GameManager {
 	}
 
 	public Map<Color, Double> calculateEachScore() {
-		ScoreRule scoreRule = new ScoreRule(board.getPieces());
-		return scoreRule.calculateScore();
+		ScoreRule scoreRule = new ScoreRule();
+		return scoreRule.calculateScore(board);
 	}
 
 	public Color getCurrentTurn() {
@@ -64,5 +67,9 @@ public class GameManager {
 
 	public boolean isKingAlive() {
 		return board.isKingAliveOf(currentTurn);
+	}
+
+	public Board getBoard() {
+		return board;
 	}
 }

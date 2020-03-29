@@ -9,7 +9,7 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public abstract class StretchPiece extends AbstractPiece {
-	public StretchPiece(String name, Color color, List<Direction> movableDirections, PieceScore score) {
+	public StretchPiece(String name, Color color, List<Direction> movableDirections, double score) {
 		super(name, color, movableDirections, score);
 	}
 

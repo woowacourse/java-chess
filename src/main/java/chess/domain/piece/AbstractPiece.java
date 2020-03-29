@@ -11,9 +11,9 @@ public abstract class AbstractPiece implements Piece {
 	protected String name;
 	protected Color color;
 	protected List<Direction> movableDirections;
-	protected PieceScore score;
+	protected double score;
 
-	protected AbstractPiece(String name, Color color, List<Direction> movableDirections, PieceScore score) {
+	protected AbstractPiece(String name, Color color, List<Direction> movableDirections, double score) {
 		this.name = name;
 		this.color = color;
 		this.movableDirections = movableDirections;
@@ -50,6 +50,6 @@ public abstract class AbstractPiece implements Piece {
 
 	@Override
 	public double getScore() {
-		return score.getScore();
+		return score;
 	}
 }

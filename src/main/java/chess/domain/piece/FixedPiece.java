@@ -9,7 +9,7 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public abstract class FixedPiece extends AbstractPiece {
-	public FixedPiece(String name, Color color, List<Direction> movableDirections, PieceScore score) {
+	public FixedPiece(String name, Color color, List<Direction> movableDirections, double score) {
 		super(name, color, movableDirections, score);
 	}
 

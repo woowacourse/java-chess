@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Color.*;
-import static chess.domain.piece.PieceScore.*;
 import static chess.domain.position.Direction.*;
 
 import java.util.Arrays;
@@ -16,7 +15,10 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 public class Pawn extends FixedPiece {
-	private static final List<Row> INITIAL_ROW = Arrays.asList(Row.of("2"), Row.of("7"));
+	public static final String WHITE_PAWN_ROW = "2";
+	public static final String BLACK_PAWN_ROW = "7";
+	private static final double PAWN_SCORE = 1;
+	private static final List<Row> INITIAL_ROW = Arrays.asList(Row.of(WHITE_PAWN_ROW), Row.of(BLACK_PAWN_ROW));
 
 	private List<Direction> eatableDirections;
 

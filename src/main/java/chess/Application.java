@@ -27,13 +27,13 @@ public class Application {
 		Board board = BoardFactory.create();
 		GameManager gameManager = new GameManager(board);
 
-		resumeGame(board, gameManager);
+		resumeGame(gameManager);
 	}
 
-	private static Command resumeGame(Board board, GameManager gameManager) {
+	private static Command resumeGame(GameManager gameManager) {
 		Command command;
 		do {
-			printBoard(board);
+			printBoard(gameManager.getBoard());
 			command = inputCommand();
 			if (!command.isMove()) {
 				break;

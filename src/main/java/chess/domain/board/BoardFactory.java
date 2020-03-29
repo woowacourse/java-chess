@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static chess.domain.piece.Pawn.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +15,6 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 
 public class BoardFactory {
 	private BoardFactory() {
@@ -34,55 +35,46 @@ public class BoardFactory {
 	}
 
 	public static Map<Position, Piece> initializeRook(Map<Position, Piece> pieces) {
-		pieces.put(Position.of(Column.of("A"), Row.of("1")), new Rook("r", Color.WHITE));
-		pieces.put(Position.of(Column.of("H"), Row.of("1")), new Rook("r", Color.WHITE));
-		pieces.put(Position.of(Column.of("A"), Row.of("8")), new Rook("R", Color.BLACK));
-		pieces.put(Position.of(Column.of("H"), Row.of("8")), new Rook("R", Color.BLACK));
+		pieces.put(Position.of("A1"), new Rook("r", Color.WHITE));
+		pieces.put(Position.of("H1"), new Rook("r", Color.WHITE));
+		pieces.put(Position.of("A8"), new Rook("R", Color.BLACK));
+		pieces.put(Position.of("H8"), new Rook("R", Color.BLACK));
 		return pieces;
 	}
 
 	public static Map<Position, Piece> initializeKnight(Map<Position, Piece> pieces) {
-		pieces.put(Position.of(Column.of("B"), Row.of("1")), new Knight("n", Color.WHITE));
-		pieces.put(Position.of(Column.of("G"), Row.of("1")), new Knight("n", Color.WHITE));
-		pieces.put(Position.of(Column.of("B"), Row.of("8")), new Knight("N", Color.BLACK));
-		pieces.put(Position.of(Column.of("G"), Row.of("8")), new Knight("N", Color.BLACK));
+		pieces.put(Position.of("B1"), new Knight("n", Color.WHITE));
+		pieces.put(Position.of("G1"), new Knight("n", Color.WHITE));
+		pieces.put(Position.of("B8"), new Knight("N", Color.BLACK));
+		pieces.put(Position.of("G8"), new Knight("N", Color.BLACK));
 		return pieces;
 	}
 
 	public static Map<Position, Piece> initializeBishop(Map<Position, Piece> pieces) {
-		pieces.put(Position.of(Column.of("C"), Row.of("1")), new Bishop("b", Color.WHITE));
-		pieces.put(Position.of(Column.of("F"), Row.of("1")), new Bishop("b", Color.WHITE));
-		pieces.put(Position.of(Column.of("C"), Row.of("8")), new Bishop("B", Color.BLACK));
-		pieces.put(Position.of(Column.of("F"), Row.of("8")), new Bishop("B", Color.BLACK));
+		pieces.put(Position.of("C1"), new Bishop("b", Color.WHITE));
+		pieces.put(Position.of("F1"), new Bishop("b", Color.WHITE));
+		pieces.put(Position.of("C8"), new Bishop("B", Color.BLACK));
+		pieces.put(Position.of("F8"), new Bishop("B", Color.BLACK));
 		return pieces;
 	}
 
 	public static Map<Position, Piece> initializeKingQueen(Map<Position, Piece> pieces) {
-		pieces.put(Position.of(Column.of("D"), Row.of("1")), new Queen("q", Color.WHITE));
-		pieces.put(Position.of(Column.of("E"), Row.of("1")), new King("k", Color.WHITE));
-		pieces.put(Position.of(Column.of("D"), Row.of("8")), new Queen("Q", Color.BLACK));
-		pieces.put(Position.of(Column.of("E"), Row.of("8")), new King("K", Color.BLACK));
+		pieces.put(Position.of("D1"), new Queen("q", Color.WHITE));
+		pieces.put(Position.of("E1"), new King("k", Color.WHITE));
+		pieces.put(Position.of("D8"), new Queen("Q", Color.BLACK));
+		pieces.put(Position.of("E8"), new King("K", Color.BLACK));
 		return pieces;
 	}
 
 	public static Map<Position, Piece> initializePawn(Map<Position, Piece> pieces) {
-		pieces.put(Position.of(Column.of("B"), Row.of("2")), new Pawn("p", Color.WHITE));
-		pieces.put(Position.of(Column.of("A"), Row.of("2")), new Pawn("p", Color.WHITE));
-		pieces.put(Position.of(Column.of("C"), Row.of("2")), new Pawn("p", Color.WHITE));
-		pieces.put(Position.of(Column.of("D"), Row.of("2")), new Pawn("p", Color.WHITE));
-		pieces.put(Position.of(Column.of("E"), Row.of("2")), new Pawn("p", Color.WHITE));
-		pieces.put(Position.of(Column.of("F"), Row.of("2")), new Pawn("p", Color.WHITE));
-		pieces.put(Position.of(Column.of("G"), Row.of("2")), new Pawn("p", Color.WHITE));
-		pieces.put(Position.of(Column.of("H"), Row.of("2")), new Pawn("p", Color.WHITE));
+		Column.columnNames()
+			.stream()
+			.map(Column::getName)
+			.forEach(x -> {
+				pieces.put(Position.of(x + WHITE_PAWN_ROW), new Pawn("p", Color.WHITE));
+				pieces.put(Position.of(x + BLACK_PAWN_ROW), new Pawn("P", Color.BLACK));
+			});
 
-		pieces.put(Position.of(Column.of("A"), Row.of("7")), new Pawn("P", Color.BLACK));
-		pieces.put(Position.of(Column.of("B"), Row.of("7")), new Pawn("P", Color.BLACK));
-		pieces.put(Position.of(Column.of("C"), Row.of("7")), new Pawn("P", Color.BLACK));
-		pieces.put(Position.of(Column.of("D"), Row.of("7")), new Pawn("P", Color.BLACK));
-		pieces.put(Position.of(Column.of("E"), Row.of("7")), new Pawn("P", Color.BLACK));
-		pieces.put(Position.of(Column.of("F"), Row.of("7")), new Pawn("P", Color.BLACK));
-		pieces.put(Position.of(Column.of("G"), Row.of("7")), new Pawn("P", Color.BLACK));
-		pieces.put(Position.of(Column.of("H"), Row.of("7")), new Pawn("P", Color.BLACK));
 		return pieces;
 	}
 }
