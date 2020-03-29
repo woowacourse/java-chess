@@ -11,11 +11,6 @@ import domain.team.Team;
 import java.util.Objects;
 
 public class Pawn extends Piece {
-	// TODO remove
-	public static final double SCORE = 1;
-	private static final int TWO = 2;
-	public static final double HALF_SCORE = SCORE / TWO;
-
 	private final boolean canMoveTwoDistance;
 
 	public Pawn(Team team, Point point) {

@@ -8,12 +8,18 @@ public enum PieceType {
 	QUEEN(9, "Q"),
 	ROOK(5, "R");
 
+	public static final int HALF_DIVIDER = 2;
+
 	private final double score;
 	private final String initial;
 
 	PieceType(double score, String initial) {
 		this.score = score;
 		this.initial = initial;
+	}
+
+	public static double getPawnHalfScore() {
+		return PAWN.score / HALF_DIVIDER;
 	}
 
 	public double getScore() {

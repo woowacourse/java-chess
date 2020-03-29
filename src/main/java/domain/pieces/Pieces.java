@@ -90,7 +90,7 @@ public class Pieces {
 	}
 
 	private double sumHalfPawnScoresOfTeam(Team team) {
-		return countHalfScorePawnOfTeam(team) * Pawn.HALF_SCORE;
+		return countHalfScorePawnOfTeam(team) * PieceType.getPawnHalfScore();
 	}
 
 	private int countHalfScorePawnOfTeam(Team team) {
