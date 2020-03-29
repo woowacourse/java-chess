@@ -1,4 +1,4 @@
-package chess;
+package chess.controller;
 
 import chess.domains.board.Board;
 import chess.domains.piece.PieceColor;
@@ -10,7 +10,6 @@ public class GameController {
     public static final String DELIMITER = " ";
     public static final int SOUCE_POSITION = 1;
     public static final int TARGET_POSITION = 2;
-    private static String MOVE = "move";
 
     public static void start() {
         Board board = new Board();
@@ -21,10 +20,10 @@ public class GameController {
         while (!board.isGameOver()) {
             OutputView.printTeamColor(teamColor);
             String command = InputView.inputCommand();
-            if (command.startsWith("status")) {
+            if (Command.isStatus(command)) {
                 OutputView.printScore(board.calculateScore(teamColor));
             }
-            if (command.startsWith(MOVE)) {
+            if (Command.isMove(command)) {
                 String[] moveCommand = command.split(DELIMITER);
                 Position source = Position.ofPositionName(moveCommand[SOUCE_POSITION]);
                 Position target = Position.ofPositionName(moveCommand[TARGET_POSITION]);
