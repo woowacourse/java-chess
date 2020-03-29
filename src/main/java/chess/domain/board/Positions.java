@@ -29,4 +29,9 @@ public class Positions {
         String positionName = Xpoint.of(xPoint).getName() + Ypoint.of(yPoint).getName();
         return of(positionName);
     }
+
+    public static Position of(int xPoint, int yPoint) {
+        String positionName = Xpoint.of(xPoint).getName() + Ypoint.of(yPoint).getName();
+        return of(positionName);
+    }
 }

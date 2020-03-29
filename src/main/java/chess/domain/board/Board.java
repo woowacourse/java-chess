@@ -124,4 +124,10 @@ public class Board {
     public Map<Position, Piece> get() {
         return Collections.unmodifiableMap(board);
     }
+
+    public void move(Piece piece, Position targetPosition) {
+        board.put(piece.getPosition(), new EmptyPiece(PieceColor.NONE, piece.getPosition()));
+        board.put(targetPosition, piece);
+        piece.changeTo(targetPosition);
+    }
 }

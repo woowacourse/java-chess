@@ -24,6 +24,10 @@ public abstract class Piece {
         return pieceColor.isNoneColor();
     }
 
+    public boolean isSameColor(Piece piece) {
+        return this.pieceColor == piece.pieceColor;
+    }
+
     public String getName() {
         return pieceColor.getPieceName(name);
     }
@@ -70,4 +74,12 @@ public abstract class Piece {
     }
 
     protected abstract void validateDistance(Position targetPosition);
+
+    public void changeTo(Position position) {
+        this.position = position;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
 }
