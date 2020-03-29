@@ -17,8 +17,8 @@ public class Knight extends WorthlessPiece {
 	}
 
 	@Override
-	public boolean isNeedCheckPath() {
-		return false;
+	public boolean isNotNeedCheckPath() {
+		return true;
 	}
 
 	@Override

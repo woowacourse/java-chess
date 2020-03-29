@@ -29,8 +29,8 @@ public class Rook extends ValuablePiece {
 	}
 
 	@Override
-	public boolean isNeedCheckPath() {
-		return true;
+	public boolean isNotNeedCheckPath() {
+		return false;
 	}
 
 	@Override

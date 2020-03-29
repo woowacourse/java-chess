@@ -30,8 +30,8 @@ public class King extends WorthlessPiece {
 	}
 
 	@Override
-	public boolean isNeedCheckPath() {
-		return false;
+	public boolean isNotNeedCheckPath() {
+		return true;
 	}
 
 	@Override

@@ -16,12 +16,12 @@ public class Pawn extends ChessPiece {
 	private static final String NAME = "p";
 
 	private final List<Direction> directions;
-	private boolean isNotMoved;
+	private boolean isMoved;
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
 		directions = Direction.getPawnDirections(team);
-		isNotMoved = true;
+		isMoved = false;
 	}
 
 	@Override
@@ -30,13 +30,13 @@ public class Pawn extends ChessPiece {
 	}
 
 	@Override
-	public boolean isNeedCheckPath() {
-		return isNotMoved;
+	public boolean isNotNeedCheckPath() {
+		return isMoved;
 	}
 
 	@Override
 	public Positions makePathAndValidate(ChessPiece targetPiece) {
-		isNotMoved = false;
+		isMoved = true;
 		validateCanGo(targetPiece);
 		return moveManager.makePathAndValidate(
 			targetPiece.position, getFirstMoveDirection(team));

@@ -41,24 +41,19 @@ public abstract class ChessPiece {
 	}
 
 	public void canMove(ChessPiece chessPiece, Function<Position, ChessPiece> findByPosition) {
-		validateMovablePosition(chessPiece);
-		if (isNeedCheckPath()) {
-			Positions positions = makePathAndValidate(chessPiece);
-			positions.validateCanMovePath(findByPosition);
-		}
-	}
-
-	private void validateMovablePosition(ChessPiece chessPiece) {
-		if (isNeedCheckPath() == false) {
+		if (isNotNeedCheckPath()) {
 			validateCanGo(chessPiece);
+			return;
 		}
+		Positions positions = makePathAndValidate(chessPiece);
+		positions.validateCanMovePath(findByPosition);
 	}
 
-	public abstract boolean isNeedCheckPath();
-
-	public abstract Positions makePathAndValidate(ChessPiece targetPiece);
+	public abstract boolean isNotNeedCheckPath();
 
 	public abstract void validateCanGo(ChessPiece targetPiece);
+
+	public abstract Positions makePathAndValidate(ChessPiece targetPiece);
 
 	public abstract String getName();
 

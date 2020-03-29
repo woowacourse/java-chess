@@ -17,7 +17,7 @@ public class Blank extends ChessPiece {
 	}
 
 	@Override
-	public boolean isNeedCheckPath() {
+	public boolean isNotNeedCheckPath() {
 		throw new UnsupportedOperationException();
 	}
 
