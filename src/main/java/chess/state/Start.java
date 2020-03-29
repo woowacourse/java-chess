@@ -39,8 +39,6 @@ public class Start extends Ready {
 
 	@Override
 	public ChessGameState end() {
-		// status();
-		// turn = board.getWinner();
 		return new Finish(board, turn);
 	}
 

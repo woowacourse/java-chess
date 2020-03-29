@@ -39,6 +39,12 @@ public class Board {
 			));
 	}
 
+	public boolean isKingDead() {
+		return kingDead.entrySet()
+			.stream()
+			.anyMatch(Map.Entry::getValue);
+	}
+
 	public void move(Position from, Position to, Turn turn) {
 		Piece source = hasPieceIn(from);
 		checkTurn(turn, source);
@@ -68,11 +74,5 @@ public class Board {
 			throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
 		}
 		return piece;
-	}
-
-	public boolean isKingDead() {
-		return kingDead.entrySet()
-			.stream()
-			.anyMatch(Map.Entry::getValue);
 	}
 }

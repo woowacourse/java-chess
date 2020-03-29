@@ -28,19 +28,23 @@ public class OutputView {
 	private static void printBoard(Map<Position, String> boardDto) {
 		for (Row row : Row.values()) {
 			for (Column column : Column.values()) {
-				String piece = boardDto.entrySet()
-					.stream()
-					.filter(entry -> {
-						Position position = entry.getKey();
-						return position.getColumn() == column && position.getRow() == row;
-					})
-					.map(Map.Entry::getValue)
-					.findAny()
-					.orElse(" ");
-				System.out.print("[" + piece + "]");
+				printEachCell(boardDto, row, column);
 			}
 			System.out.println();
 		}
+	}
+
+	private static void printEachCell(Map<Position, String> boardDto, Row row, Column column) {
+		String piece = boardDto.entrySet()
+			.stream()
+			.filter(entry -> {
+				Position position = entry.getKey();
+				return position.getColumn() == column && position.getRow() == row;
+			})
+			.map(Map.Entry::getValue)
+			.findAny()
+			.orElse(" ");
+		System.out.print("[" + piece + "]");
 	}
 
 	private static void printWinner(ResponseDto response) {
