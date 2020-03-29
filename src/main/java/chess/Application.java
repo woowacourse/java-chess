@@ -29,7 +29,7 @@ public class Application {
     private static String getCommand() {
         String command = InputView.inputCommand();
 
-        if (validateCommand(command)) {
+        if (Command.isExistCommand(command)) {
             return command;
         }
         OutputView.printWrongCommandMessage();
@@ -50,17 +50,13 @@ public class Application {
 
     private static void tryMove(String[] splitCommand, Board board) {
         try {
-            MovingInfo movingInfo = new MovingInfo(Position.of(splitCommand[1]), Position.of(splitCommand[2]));
+            Position startPosition = Position.of(splitCommand[1]);
+            Position targetPosition = Position.of(splitCommand[2]);
+            MovingInfo movingInfo = new MovingInfo(startPosition, targetPosition);
 
             board.move(movingInfo);
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException error) {
             OutputView.printWrongPositionMessage(error);
         }
-    }
-
-    private static boolean validateCommand(String nowCommand) {
-        String splitCommand = nowCommand.split(" ")[0];
-
-        return Command.isExistCommand(splitCommand);
     }
 }
