@@ -38,13 +38,13 @@ public class Position {
         return position;
     }
 
-    public static Position of(Column column, Row row) {
-        return of(column.toString() + row.toString());
-    }
-
     private Position(Column column, Row row) {
         this.column = column;
         this.row = row;
+    }
+
+    public static Position of(Column column, Row row) {
+        return of(column.toString() + row.toString());
     }
 
     public boolean isAt(Row row) {
