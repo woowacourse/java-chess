@@ -14,41 +14,41 @@ import chess.domain.piece.state.Initial;
  *
  *    @author AnHyungJu
  */
-class KingTest {
+class KnightTest {
 	@DisplayName("말이 죽어있을 때 movingTrace를 호출하면 예외처리")
 	@Test
 	void movingTraceTest() {
-		King king = new King(new Captured(), "k");
+		Piece knight = new Knight(new Captured(), "n");
 
 		Position source = Position.of("a1");
 		Position target = Position.of("a1");
 
-		assertThatThrownBy(() -> king.movingTrace(source, target))
+		assertThatThrownBy(() -> knight.movingTrace(source, target))
 			.isInstanceOf(UnsupportedOperationException.class)
 			.hasMessageContaining("죽은 말은");
 	}
 
-	@DisplayName("왕이 source에서 target으로 갈 수 없는 경우 예외처리")
+	@DisplayName("나이트가 source에서 target으로 갈 수 없는 경우 예외처리")
 	@Test
 	void movingTraceTest2() {
-		King king = new King(new Initial(), "k");
+		Piece knight = new Knight(new Initial(), "n");
 
 		Position source = Position.of("a1");
 		Position target = Position.of("c1");
 
-		assertThatThrownBy(() -> king.movingTrace(source, target))
+		assertThatThrownBy(() -> knight.movingTrace(source, target))
 			.isInstanceOf(UnsupportedOperationException.class)
 			.hasMessageContaining("갈 수 없는");
 	}
 
-	@DisplayName("왕이 source에서 target으로 정상적으로 갈 수 있는지 확인")
+	@DisplayName("나이트가 source에서 target으로 정상적으로 갈 수 있는지 확인")
 	@Test
 	void movingTrraceTest3() {
-		King king = new King(new Initial(), "k");
+		Piece knight = new Knight(new Initial(), "n");
 
 		Position source = Position.of("a1");
-		Position target = Position.of("b1");
+		Position target = Position.of("b3");
 
-		assertThat(king.movingTrace(source, target).size()).isEqualTo(2);
+		assertThat(knight.movingTrace(source, target).size()).isEqualTo(2);
 	}
 }

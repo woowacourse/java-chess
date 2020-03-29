@@ -20,7 +20,7 @@ public class King extends Piece {
 		return findRoute(source, target);
 	}
 
-	private List<Position> findRoute(Position source, Position target) {
+	protected List<Position> findRoute(Position source, Position target) {
 		List<Position> route = new LinkedList<>();
 		List<Position> possiblePosition = source.nextPosition(Direction.everyDirection());
 

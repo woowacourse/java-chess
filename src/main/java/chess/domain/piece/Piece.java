@@ -21,6 +21,8 @@ public abstract class Piece {
 
 	public abstract List<Position> movingTrace(Position source, Position target);
 
+	protected abstract List<Position> findRoute(Position source, Position target);
+
 	public String getSymbol() {
 		return symbol;
 	}
