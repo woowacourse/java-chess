@@ -11,10 +11,13 @@ import static chess.view.InputView.inputOperation;
 public class ChessController {
 	public void run() {
 		OutputView.printOperationsFormat();
+
 		if (!beforeStart()) {
 			return;
 		}
+
 		execute();
+
 		OutputView.printFinish();
 	}
 
@@ -22,10 +25,12 @@ public class ChessController {
 		OperationType operationType = inputOperation().getOperationType();
 
 		operationType.checkFirstOperations();
+
 		if (operationType.isEnd()) {
 			OutputView.printFinish();
 			return false;
 		}
+
 		return true;
 	}
 
@@ -37,7 +42,7 @@ public class ChessController {
 			OutputView.printBoard(new Board(chessGame.getPieces()));
 			OutputView.printScore(chessGame.calculateScore());
 		}
-		if(chessGame.isKingDead()) {
+		if (chessGame.isKingDead()) {
 			OutputView.printFinishByKingDead(chessGame.getAliveKingColor());
 		}
 	}
@@ -46,6 +51,6 @@ public class ChessController {
 		Operations operations = inputOperation();
 		OperationType operationType = operations.getOperationType();
 
-		return (operationType.runOperate(chessGame,operations) && !chessGame.isKingDead());
+		return (operationType.runOperate(chessGame, operations) && !chessGame.isKingDead());
 	}
 }

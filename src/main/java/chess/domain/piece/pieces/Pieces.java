@@ -10,6 +10,8 @@ import java.util.Set;
 
 public class Pieces {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "잘못된 위치를 입력하셨습니다.";
+	private static final int DEFAULT_KING_COUNT = 2;
+
 	private final List<Piece> pieces;
 
 	// package accessed
@@ -32,7 +34,7 @@ public class Pieces {
 				.orElseGet(Blank::new);
 		pieces.remove(removingPiece);
 
-		piece.changePosition(end);
+		piece.move(end);
 	}
 
 	public Piece findBy(Position start) {
@@ -58,7 +60,7 @@ public class Pieces {
 		int kingCount = (int) pieces.stream()
 				.filter(Piece::isKing)
 				.count();
-		return kingCount != 2;
+		return kingCount != DEFAULT_KING_COUNT;
 	}
 
 	public Color getAliveKingColor() {

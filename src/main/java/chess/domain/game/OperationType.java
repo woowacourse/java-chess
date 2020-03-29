@@ -51,16 +51,8 @@ public enum OperationType {
 		return START.equals(this);
 	}
 
-	public boolean isMove() {
-		return MOVE.equals(this);
-	}
-
 	public boolean isEnd() {
 		return END.equals(this);
-	}
-
-	public boolean isStatus() {
-		return STATUS.equals(this);
 	}
 
 	public boolean runOperate(ChessGame chessGame, Operations operations) {

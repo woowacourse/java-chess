@@ -6,7 +6,6 @@ import chess.domain.position.PositionFactory;
 
 
 public class Blank extends Piece {
-
 	public static final String BLANK_DEFAULT_POSITION = "a1";
 	public static final String BLANK_RESOURCE = ".";
 

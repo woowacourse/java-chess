@@ -1,9 +1,9 @@
 package chess.domain.game;
 
-import chess.domain.piece.pieces.Pieces;
-import chess.domain.position.Row;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.pieces.Pieces;
+import chess.domain.position.Row;
 
 import java.util.*;
 import java.util.stream.Collectors;

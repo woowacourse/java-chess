@@ -6,7 +6,7 @@ public class Operations {
 	private static final int OPERATION_TYPE_INDEX = 0;
 	private static final int START_POSITION_INDEX = 1;
 	private static final int DESTINATION_POSITION_INDEX = 2;
-	public static final String INVALID_OPERATION_EXCEPTION_MESSAGE = "해당 명령을 수행할 수 없습니다.";
+	private static final String INVALID_OPERATION_EXCEPTION_MESSAGE = "해당 메서드를 수행할 수 없습니다.";
 
 	private final List<String> operations;
 

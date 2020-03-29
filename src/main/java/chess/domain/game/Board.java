@@ -29,7 +29,6 @@ public class Board {
 		for (Row row : Row.values()) {
 			Position position = PositionFactory.of(row, column);
 			board.put(position, pieces.findBy(position));
-			// TODO: 2020/03/29 Blank를 매핑하는 대신, 아예 연산을 생략하는 것은? 웹에서 구현할떄 필요할듯하다.
 		}
 	}
 
