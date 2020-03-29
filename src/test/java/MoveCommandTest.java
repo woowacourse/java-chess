@@ -1,4 +1,4 @@
-import chess.domain.MoveCommand;
+import chess.domain.command.MoveCommand;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
