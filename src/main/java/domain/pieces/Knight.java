@@ -21,7 +21,7 @@ public class Knight extends Piece {
     @Override
     public void validateMoveDirection(Direction direction) {
         if (direction != Direction.KNIGHT) {
-            throw new CanNotMoveException();
+            throw new CanNotMoveException("나이트는 1 * 2 혹은 2 * 1 로만 움직일 수 있습니다.");
         }
     }
 }

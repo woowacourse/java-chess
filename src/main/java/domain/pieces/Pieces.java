@@ -13,6 +13,8 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Pieces {
+	private static final int NUM_OF_KING = 2;
+
 	private final Set<Piece> pieces;
 
 	public Pieces(Set<Piece> pieces) {
@@ -114,6 +116,12 @@ public class Pieces {
 			return count;
 		}
 		return 0;
+	}
+
+	public boolean isKingKilled() {
+		return pieces.stream()
+				.filter(Piece::isKing)
+				.count() < NUM_OF_KING;
 	}
 
 	public boolean isKingKilled(Team team) {

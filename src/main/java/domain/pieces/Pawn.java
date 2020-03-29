@@ -37,13 +37,13 @@ public class Pawn extends Piece {
 	public void validateMoveDirection(Direction direction) {
 		if (isTeam(Team.BLACK)) {
 			if (direction != Direction.S) {
-				throw new CanNotMoveException();
+				throw new CanNotMoveException("흑색 팀 Pawn은 아래로만 움직일 수 있습니다.");
 			}
 			return;
 		}
 		if (isTeam(Team.WHITE)) {
 			if (direction != Direction.N) {
-				throw new CanNotMoveException();
+				throw new CanNotMoveException("백색 팀 Pawn은 위로만 움직일 수 있습니다.");
 			}
 		}
 	}
@@ -51,18 +51,18 @@ public class Pawn extends Piece {
 	@Override
 	public void validateAttack(Direction direction, Piece other) {
 		if (isAlly(other)) {
-			throw new CanNotAttackException();
+			throw new CanNotAttackException("아군을 공격할 수 없습니다.");
 		}
 
 		if (isTeam(Team.BLACK)) {
 			if (direction != Direction.SW && direction != Direction.SE) {
-				throw new CanNotAttackException();
+				throw new CanNotAttackException("흑색 팀 폰은 대각선 아래로만 공격할 수 있습니다.");
 			}
 			return;
 		}
 		if (isTeam(Team.WHITE)) {
 			if (direction != Direction.NW && direction != Direction.NE) {
-				throw new CanNotAttackException();
+				throw new CanNotAttackException("백색 팀 폰은 대각선 위로만 공격할 수 있습니다.");
 			}
 		}
 	}
@@ -74,7 +74,9 @@ public class Pawn extends Piece {
 		}
 
 		if (distance != Distance.ONE) {
-			throw new CanNotReachException();
+			throw new CanNotReachException("한 번 이상 움직인 폰은 한칸만 움직일 수 있습니다."
+					+ System.lineSeparator()
+					+ "단, 처음엔 두 칸 앞으로 갈 수 있습니다.");
 		}
 	}
 

@@ -21,7 +21,7 @@ public class Rook extends Piece {
     @Override
     public void validateMoveDirection(Direction direction) {
         if (direction.isNotStraight()) {
-            throw new CanNotMoveException();
+            throw new CanNotMoveException("Rook은 일직선으로만 이동할 수 있습니다.");
         }
     }
 }

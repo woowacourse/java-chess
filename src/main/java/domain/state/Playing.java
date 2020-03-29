@@ -1,9 +1,8 @@
 package domain.state;
 
-import domain.state.exceptions.StateException;
 import domain.pieces.Pieces;
 import domain.point.Point;
-import domain.team.Team;
+import domain.state.exceptions.StateException;
 
 public abstract class Playing extends GameState {
 	protected Playing(Pieces pieces) {
@@ -23,9 +22,10 @@ public abstract class Playing extends GameState {
 	@Override
 	protected State move(String from, String to) {
 		pieces.move(Point.of(from), Point.of(to));
-		if (pieces.isKingKilled(Team.BLACK) || pieces.isKingKilled(Team.WHITE)) {
+		if (pieces.isKingKilled()) {
 			return new Ended(pieces);
 		}
+
 		return new Moved(pieces);
 	}
 
