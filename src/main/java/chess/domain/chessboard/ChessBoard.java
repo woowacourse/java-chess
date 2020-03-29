@@ -115,7 +115,7 @@ public class ChessBoard {
 					.collect(Collectors.toList());
 			result += piecesInOneFile.stream()
 					.mapToDouble(PieceAbility::getScore)
-					.reduce(ZERO, Double::sum);
+					.sum();
 			result += OnePawnBonus(piecesInOneFile);
 		}
 		return result;
