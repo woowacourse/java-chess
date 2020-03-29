@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
-import chess.exception.BlankMoveUnsupportedException;
+import chess.exception.PieceImpossibleMoveException;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ public class Blank extends Piece {
 
     @Override
     public List<Position> getPossiblePositions(Board board) {
-        throw new BlankMoveUnsupportedException(BLANK_MOVE_UNSUPPORT_EXCEPTION_MESSAGE);
+        throw new PieceImpossibleMoveException(BLANK_MOVE_UNSUPPORT_EXCEPTION_MESSAGE);
     }
 
     @Override
     public Piece movePiecePosition(Position toPosition) {
-        throw new BlankMoveUnsupportedException(BLANK_MOVE_UNSUPPORT_EXCEPTION_MESSAGE);
+        throw new PieceImpossibleMoveException(BLANK_MOVE_UNSUPPORT_EXCEPTION_MESSAGE);
     }
 }

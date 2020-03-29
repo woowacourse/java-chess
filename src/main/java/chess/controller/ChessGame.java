@@ -5,7 +5,6 @@ import chess.domain.board.BoardFactory;
 import chess.domain.piece.Team;
 import chess.domain.result.GameResult;
 import chess.domain.util.Run;
-import chess.exception.BlankMoveUnsupportedException;
 import chess.exception.MoveCommandWhenBoardNullException;
 import chess.exception.PieceImpossibleMoveException;
 import chess.exception.TakeTurnException;
@@ -41,8 +40,7 @@ public class ChessGame {
                     currentTurn = reverseTurn(currentTurn);
                     OutputView.printBoard(board.getBoard());
                 }
-            } catch (BlankMoveUnsupportedException | MoveCommandWhenBoardNullException |
-                    PieceImpossibleMoveException | TakeTurnException e) {
+            } catch (MoveCommandWhenBoardNullException | PieceImpossibleMoveException | TakeTurnException e) {
                 OutputView.printExceptionMessage(e.getMessage());
             }
 

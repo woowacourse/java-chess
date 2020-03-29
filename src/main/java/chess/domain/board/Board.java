@@ -15,7 +15,7 @@ public class Board {
     private static final int ROW_VALUE_OF_STRING_COMMAND = 1;
     private static final int FIRST_INDEX = 0;
     private static final int ASCII_GAP = 96;
-\
+
     private static boolean isFinished;
 
     private final List<Piece> board;
