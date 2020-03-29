@@ -9,6 +9,26 @@ import chess.team.Team;
 
 // 팀별 초기위치를 갖고있는다.
 public class Location {
+	private static final Location[] WHITE_TEAM_INITIAL_PAWN_LOCATIONS = {
+		new Location(2, 'a'),
+		new Location(2, 'b'),
+		new Location(2, 'c'),
+		new Location(2, 'd'),
+		new Location(2, 'e'),
+		new Location(2, 'f'),
+		new Location(2, 'g'),
+		new Location(2, 'h')
+	};
+	private static final Location[] BLACK_TEAM_INITIAL_PAWN_LOCATIONS = {
+		new Location(7, 'a'),
+		new Location(7, 'b'),
+		new Location(7, 'c'),
+		new Location(7, 'd'),
+		new Location(7, 'e'),
+		new Location(7, 'f'),
+		new Location(7, 'g'),
+		new Location(7, 'h')
+	};
 	private final int row;
 	private final char col;
 
@@ -83,32 +103,12 @@ public class Location {
 		return Objects.hash(row, col);
 	}
 
-	public boolean isInitialPawnLocation(boolean black) {
-		Location[] whiteTeamInitialPawnLocations = {
-			new Location(2, 'a'),
-			new Location(2, 'b'),
-			new Location(2, 'c'),
-			new Location(2, 'd'),
-			new Location(2, 'e'),
-			new Location(2, 'f'),
-			new Location(2, 'g'),
-			new Location(2, 'h')
-		};
-		Location[] blackTeamInitialPawnLocations = {
-			new Location(7, 'a'),
-			new Location(7, 'b'),
-			new Location(7, 'c'),
-			new Location(7, 'd'),
-			new Location(7, 'e'),
-			new Location(7, 'f'),
-			new Location(7, 'g'),
-			new Location(7, 'h')
-		};
-		if (black) {
-			return Arrays.asList(blackTeamInitialPawnLocations)
+	public boolean isInitialPawnLocation(Team team) {
+		if (team == Team.BLACK) {
+			return Arrays.asList(BLACK_TEAM_INITIAL_PAWN_LOCATIONS)
 				.contains(this);
 		}
-		return Arrays.asList(whiteTeamInitialPawnLocations)
+		return Arrays.asList(WHITE_TEAM_INITIAL_PAWN_LOCATIONS)
 			.contains(this);
 	}
 
@@ -134,8 +134,14 @@ public class Location {
 		return result && col == after.col;
 	}
 
-	public boolean isForwardDiagonal(Location after, int value) {
-		return this.row + value == after.row
+	public boolean isForwardDiagonal(Location after, Team team) {
+		int weight = 1;
+
+		if (Team.BLACK == team) {
+			weight = -1;
+		}
+
+		return this.row + weight == after.row
 			&& this.col - 1 == after.col || this.col + 1 == after.col;
 	}
 

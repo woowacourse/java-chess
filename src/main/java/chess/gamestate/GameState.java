@@ -36,7 +36,7 @@ public enum GameState {
 		return gameRunning;
 	}
 
-	public boolean isSameTeam(Piece startingPiece) {
-		return startingPiece.isSameTeam(team);
+	public boolean isTurn(Piece startingPiece) {
+		return startingPiece.isSameTeam(this.team);
 	}
 }

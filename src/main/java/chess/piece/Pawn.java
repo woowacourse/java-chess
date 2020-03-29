@@ -22,15 +22,14 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean canMove(Location now, Location after) {
-		int value = 1;
-		if (isBlack()) {
-			value = -1;
+		Team team = Team.of(isBlack());
+
+		if (now.isInitialPawnLocation(team)) {
+			return now.isInitialPawnForwardRange(after, team)
+				|| now.isForwardDiagonal(after, team);
 		}
-		// now가 초기위치인지 검사
-		if (now.isInitialPawnLocation(isBlack())) {
-			return now.isInitialPawnForwardRange(after, Team.of(isBlack())) || now.isForwardDiagonal(after, value);
-		}
-		return now.isForwardDiagonal(after, value) || now.isPawnForwardRange(after, Team.of(isBlack()));
+		return now.isPawnForwardRange(after, team) ||
+			now.isForwardDiagonal(after, team);
 	}
 
 	@Override

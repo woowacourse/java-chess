@@ -77,6 +77,6 @@ public class ChessBoard {
 
 	public boolean isTurn(Location now, GameState gameState) {
 		Piece startingPiece = board.get(now);
-		return gameState.isSameTeam(startingPiece);
+		return gameState.isTurn(startingPiece);
 	}
 }
