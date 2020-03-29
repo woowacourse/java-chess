@@ -1,5 +1,6 @@
 package testAssistant;
 
+import domain.command.MoveCommandTokens;
 import domain.pieces.*;
 import domain.point.Direction;
 import domain.point.Distance;
@@ -79,5 +80,9 @@ public class creationAssistant {
 
 	public static Moved createMoved(Piece... pieces) {
 		return new Moved(createPieces(pieces));
+	}
+
+	public static MoveCommandTokens createMoveCommandTokens(String string) {
+		return MoveCommandTokens.of(string);
 	}
 }
