@@ -56,12 +56,8 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public boolean isKing() {
-        return this instanceof King;
-    }
-
-    public boolean isPawn() {
-        return this instanceof Pawn;
+    public boolean isKindOf(PieceType pieceType) {
+        return this.pieceType == pieceType;
     }
 
     public String getInitial() {
