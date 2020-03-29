@@ -22,12 +22,12 @@ public class Waiting extends GameState {
 
     @Override
     public StateStrategy move(Team team, String input) {
-        throw new CommendTypeException("");
+        throw new CommendTypeException("게임을 시작해야 움직읠 수 있습니다.");
     }
 
     @Override
     public StateStrategy status() {
-        throw new CommendTypeException("");
+        throw new CommendTypeException("게임을 시작해야 점수을 볼 수 있습니다.");
     }
 
     @Override

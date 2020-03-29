@@ -10,6 +10,9 @@ public enum CommendType {
     MOVE("move"),
     STATUS("status");
 
+    private static final String BLANK = " ";
+    private static final int COMMEND_TYPE = 0;
+
     private String commend;
 
     CommendType(String commend) {
@@ -17,9 +20,9 @@ public enum CommendType {
     }
 
     public static CommendType find(String input) {
-        List<String> inputSplit = Arrays.asList(input.split(" "));
+        List<String> inputSplit = Arrays.asList(input.split(BLANK));
         return Arrays.stream(CommendType.values())
-            .filter(type -> type.isSameType(inputSplit.get(0)))
+            .filter(type -> type.isSameType(inputSplit.get(COMMEND_TYPE)))
             .findFirst()
             .orElseThrow(() -> new CommendTypeException("올바른 명령어가 아닙니다."));
     }

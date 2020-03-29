@@ -12,22 +12,22 @@ public class Finished extends GameState {
 
     @Override
     public StateStrategy start() {
-        throw new CommendTypeException("");
+        throw new CommendTypeException("Start를 할 수 없습니다.");
     }
 
     @Override
     public StateStrategy end() {
-        throw new CommendTypeException("");
+        throw new CommendTypeException("이미 끝났습니다.");
     }
 
     @Override
     public StateStrategy move(Team team, String input) {
-        throw new CommendTypeException("");
+        throw new CommendTypeException("끝난 상태에서 움직일 수 없습니다.");
     }
 
     @Override
     public StateStrategy status() {
-        throw new CommendTypeException("");
+        throw new CommendTypeException("끝난 상태에서 점수를 볼 수 없습니다.");
     }
 
     @Override
