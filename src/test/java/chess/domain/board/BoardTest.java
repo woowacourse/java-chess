@@ -21,7 +21,7 @@ public class BoardTest {
     void BoardInitTest(Row row, Column column, Piece expected) {
         Board board = Board.init();
 
-        assertThat(board.findPieceBy(Position.of(Row.FOUR, Column.D))).isEmpty();
+        assertThat(board.findPieceBy(Position.of(Row.FOUR, Column.D))).isEqualTo(Piece.empty());
         assertThat(getActual(board, row, column)).isEqualTo(expected);
     }
 
@@ -34,7 +34,7 @@ public class BoardTest {
     }
 
     private Piece getActual(final Board board, Row row, Column column) {
-        return board.findPieceBy(Position.of(row, column)).get();
+        return board.findPieceBy(Position.of(row, column));
     }
 
     @DisplayName("경로 생성 테스트")

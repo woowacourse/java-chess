@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import chess.domain.board.Path;
 import chess.domain.board.Position;
@@ -19,6 +21,18 @@ public class Piece {
 
     public static Piece of(final Type type, final Side side) {
         return PieceCache.pieces.get(PieceCache.key(type, side));
+    }
+
+    public static Piece empty() {
+        return Piece.of(Type.EMPTY, Side.NONE);
+    }
+
+    public boolean isEmpty() {
+        return this == Piece.empty();
+    }
+
+    public boolean isNotEmpty() {
+        return !isEmpty();
     }
 
     public boolean is(final Type type) {
@@ -37,10 +51,6 @@ public class Piece {
         return type.canMoveBetween(path);
     }
 
-    public boolean canBePlacedOn(final Position position) {
-        return type.initPosition(position, side);
-    }
-
     public boolean isEnemyOf(final Piece other) {
         return side != other.side;
     }
@@ -51,25 +61,34 @@ public class Piece {
 
     @Override
     public String toString() {
-        if (side == Side.WHITE) {
-            return type.getName();
-        }
-        return type.getName().toUpperCase();
+        return type.getNameBy(side);
     }
 
     public static List<Piece> getPieces() {
         return new ArrayList<>(PieceCache.pieces.values());
     }
 
-    static class PieceCache {
+    private static class PieceCache {
         public static final Map<String, Piece> pieces;
 
         static {
             pieces = new HashMap<>();
-            for (Type type : Type.values()) {
-                for (Side side : Side.values()) {
-                    pieces.put(key(type, side), new Piece(type, side));
-                }
+            loopTypes();
+        }
+
+        private static void loopTypes() {
+            List<Type> validTypes = Arrays.stream(Type.values())
+                .collect(Collectors.toList());
+            for (Type type : validTypes) {
+                loopSides(type);
+            }
+        }
+
+        private static void loopSides(final Type type) {
+            List<Side> validSides = Arrays.stream(Side.values())
+                .collect(Collectors.toList());
+            for (Side side : validSides) {
+                pieces.put(key(type, side), new Piece(type, side));
             }
         }
 

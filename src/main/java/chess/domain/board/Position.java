@@ -42,6 +42,12 @@ public class Position {
         return this.column == column;
     }
 
+    public boolean isOnSameLineWith(final Position other) {
+        return Position.columnGap(this, other) == 0
+            || Position.rowGap(this, other) == 0
+            || Position.columnGap(this, other) == Position.rowGap(this, other);
+    }
+
     public Row getRow() {
         return row;
     }
@@ -59,18 +65,25 @@ public class Position {
     }
 
     public boolean inBetween(final Position start, final Position end) {
-        if (isOn(start.getRow()) && isOn(end.getRow())
-            && isMiddle(this.column(), start.column(), end.column())) {
+        Row startRow = start.getRow();
+        Row endRow = end.getRow();
+        Column startColumn = start.getColumn();
+        Column endColumn = end.getColumn();
+        if (isOn(startRow) && isOn(endRow)
+            && isMiddle(column(), start.column(), end.column())) {
             return true;
         }
-        if (isOn(start.getColumn()) && isOn(end.getColumn())
-            && isMiddle(this.row(), start.row(), end.row())) {
+        if (isOn(startColumn) && isOn(endColumn)
+            && isMiddle(row(), start.row(), end.row())) {
             return true;
         }
-        return Position.rowGap(this, start) == Position.columnGap(this, start)
-            && Position.rowGap(this, end) == Position.columnGap(this, end)
-            && isMiddle(this.column(), start.column(), end.column())
-            && isMiddle(this.row(), start.row(), end.row());
+        return isDiagonalWith(start) && isDiagonalWith(end)
+            && isMiddle(column(), start.column(), end.column())
+            && isMiddle(row(), start.row(), end.row());
+    }
+
+    public boolean isDiagonalWith(final Position other) {
+        return Position.rowGap(this, other) == Position.columnGap(this, other);
     }
 
     private boolean isMiddle(final int middle, final int start, final int end) {
@@ -80,7 +93,12 @@ public class Position {
         return middle <= end && middle >= start;
     }
 
-    static class PositionCache {
+    @Override
+    public String toString() {
+        return PositionCache.key(row, column);
+    }
+
+    private static class PositionCache {
         private static final Map<String, Position> positions = new HashMap<>();
 
         static {
@@ -89,14 +107,14 @@ public class Position {
             }
         }
 
-        private static Position find(String key) {
-            return positions.get(key);
-        }
-
         private static void loopThroughColumns(final Row row) {
             for (Column column : Column.values()) {
                 positions.put(key(row, column), new Position(row, column));
             }
+        }
+
+        private static Position find(String key) {
+            return positions.get(key);
         }
 
         private static String key(final Row row, final Column column) {

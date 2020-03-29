@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.*;
 
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -27,16 +26,16 @@ public class PieceTest {
     }
 
     static Stream<Arguments> movableParams() {
-        Board board = new Board(new HashMap<Position, Optional<Piece>>() {{
-            Position.getAllPositions().forEach(position -> put(position, Optional.empty()));
+        Board board = new Board(new HashMap<Position, Piece>() {{
+            Position.getAllPositions().forEach(position -> put(position, Piece.empty()));
             final Side side = Side.WHITE;
             final Row row = Row.ONE;
-            put(Position.of(row, Column.A), Optional.of(Piece.of(Type.ROOK, side)));
-            put(Position.of(row, Column.B), Optional.of(Piece.of(Type.KNIGHT, side)));
-            put(Position.of(row, Column.C), Optional.of(Piece.of(Type.BISHOP, side)));
-            put(Position.of(row, Column.D), Optional.of(Piece.of(Type.QUEEN, side)));
-            put(Position.of(row, Column.E), Optional.of(Piece.of(Type.KING, side)));
-            put(Position.of(row, Column.F), Optional.of(Piece.of(Type.PAWN, side)));
+            put(Position.of(row, Column.A), Piece.of(Type.ROOK, side));
+            put(Position.of(row, Column.B), Piece.of(Type.KNIGHT, side));
+            put(Position.of(row, Column.C), Piece.of(Type.BISHOP, side));
+            put(Position.of(row, Column.D), Piece.of(Type.QUEEN, side));
+            put(Position.of(row, Column.E), Piece.of(Type.KING, side));
+            put(Position.of(row, Column.F), Piece.of(Type.PAWN, side));
         }});
         return Stream.of(
             of(

@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.*;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 
 import chess.domain.piece.Piece;
@@ -13,82 +12,83 @@ import chess.domain.piece.Type;
 import chess.exceptions.InvalidInputException;
 
 public class Board {
-    private final Map<Position, Optional<Piece>> board;
+    private final Map<Position, Piece> board;
 
-    public Board(final Map<Position, Optional<Piece>> board) {
+    public Board(final Map<Position, Piece> board) {
         this.board = board;
     }
 
     public static Board init() {
-        return new Board(initialPlacing());
+        return new Board(initialPlacement());
     }
 
-    private static Map<Position, Optional<Piece>> initialPlacing() {
+    private static Map<Position, Piece> initialPlacement() {
         return Position.getAllPositions()
             .stream()
             .collect(toMap(Function.identity(), Board::findInitialPieceOn));
     }
 
-    private static Optional<Piece> findInitialPieceOn(final Position position) {
+    private static Piece findInitialPieceOn(final Position position) {
         return Piece.getPieces()
             .stream()
-            .filter(piece -> piece.canBePlacedOn(position))
-            .findAny();
+            .filter(piece -> piece.isOnInitialPosition(position))
+            .findAny()
+            .orElse(Piece.empty());
     }
 
-    public Optional<Piece> findPieceBy(final Position position) {
+    public Piece findPieceBy(final Position position) {
         return board.get(position);
     }
 
     public Path generatePath(final Position start, final Position end) {
-        if (isOnLine(start, end)) {
+        if (start.isOnSameLineWith(end)) {
             return generateLinePath(start, end);
         }
         return generateNoLinePath(start, end);
     }
 
-    private boolean isOnLine(final Position start, final Position end) {
-        return Position.columnGap(start, end) == 0
-            || Position.rowGap(start, end) == 0
-            || Position.columnGap(start, end) == Position.rowGap(start, end);
-    }
-
     private Path generateLinePath(final Position start, final Position end) {
-        return new Path(board.keySet()
+        Map<Position, Piece> path = board.keySet()
             .stream()
             .filter(position -> position.inBetween(start, end))
-            .collect(toMap(Function.identity(), board::get)), start, end);
+            .collect(toMap(Function.identity(), board::get));
+        return new Path(path, start, end);
     }
 
     private Path generateNoLinePath(final Position start, final Position end) {
         Position middle = Position.of(start.getRow(), end.getColumn());
-        return new Path(board.keySet()
+        Map<Position, Piece> path = board.keySet()
             .stream()
             .filter(position -> position.inBetween(start, middle) || position.inBetween(end, middle))
-            .collect(toMap(Function.identity(), board::get)), start, end);
+            .collect(toMap(Function.identity(), board::get));
+        return new Path(path, start, end);
     }
 
     public void move(final Position start, final Position end) {
         validateNonEmptyStart(start);
         Path path = generatePath(start, end);
-        Piece mover = board.get(start).get();
+        Piece mover = board.get(start);
         if (!mover.isMovable(path)) {
             throw new InvalidInputException();
         }
-        board.put(end, Optional.of(mover));
-        board.put(start, Optional.empty());
+        board.put(end, mover);
+        board.put(start, Piece.empty());
     }
 
     private void validateNonEmptyStart(final Position start) {
-        if (!board.get(start).isPresent()) {
+        if (board.get(start).isEmpty()) {
             throw new InvalidInputException();
         }
+    }
+
+    public boolean isKingDead(Side side) {
+        return count(Type.KING, side) == 0;
     }
 
     public long count(final Type type, final Side side) {
         return board.values()
             .stream()
-            .filter(piece -> piece.isPresent() && piece.get().is(type, side))
+            .filter(piece -> piece.isNotEmpty() && piece.is(type, side))
             .count();
     }
 
@@ -102,12 +102,13 @@ public class Board {
     private int getPawnCount(final Side side, final Column column) {
         return board.keySet()
             .stream()
-            .filter(position -> board.get(position).isPresent() && position.isOn(column)
-                && board.get(position).get().is(Type.PAWN, side))
+            .filter(position -> board.get(position).isNotEmpty()
+                && position.isOn(column)
+                && board.get(position).is(Type.PAWN, side))
             .collect(summingInt(x -> 1));
     }
 
-    public Map<Position, Optional<Piece>> getBoard() {
+    public Map<Position, Piece> getBoard() {
         return board;
     }
 }

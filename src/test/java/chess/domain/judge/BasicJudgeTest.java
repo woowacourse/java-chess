@@ -2,8 +2,6 @@ package chess.domain.judge;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Optional;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +9,12 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Side;
 
-class WoowaJudgeTest {
+class BasicJudgeTest {
 
     @DisplayName("점수 계산 테스트")
     @Test
     void calculateScore() {
-        WoowaJudge judge = new WoowaJudge(Board.init());
+        BasicJudge judge = new BasicJudge(Board.init());
         assertThat(judge.calculateScore(Side.BLACK)).isEqualTo(38);
     }
 
@@ -24,7 +22,7 @@ class WoowaJudgeTest {
     @Test
     void isGameOver() {
         Board board = Board.init();
-        WoowaJudge judge = new WoowaJudge(board);
+        BasicJudge judge = new BasicJudge(board);
         board.move(Position.of("c2"), Position.of("c3"));
         board.move(Position.of("d7"), Position.of("d6"));
         board.move(Position.of("d1"), Position.of("a4"));
@@ -36,11 +34,11 @@ class WoowaJudgeTest {
     @Test
     void higherScorer() {
         Board board = Board.init();
-        WoowaJudge judge = new WoowaJudge(board);
-        assertThat(judge.winner()).isEmpty();
+        BasicJudge judge = new BasicJudge(board);
+        assertThat(judge.winner()).isEqualTo(Side.NONE);
         board.move(Position.of("b2"), Position.of("b3"));
         board.move(Position.of("c1"), Position.of("a3"));
         board.move(Position.of("a3"), Position.of("e7"));
-        assertThat(judge.winner()).isEqualTo(Optional.of(Side.WHITE));
+        assertThat(judge.winner()).isEqualTo(Side.WHITE);
     }
 }

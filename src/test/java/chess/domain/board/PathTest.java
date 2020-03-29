@@ -3,7 +3,6 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +17,7 @@ public class PathTest {
     @DisplayName("생성자 예외 발생 테스트")
     @ParameterizedTest(name = "{0}")
     @MethodSource("constructorExceptionArguments")
-    void constructorExceptionTest(String message, HashMap<Position, Optional<Piece>> path, Position start,
+    void constructorExceptionTest(String message, HashMap<Position, Piece> path, Position start,
         Position end) {
         assertThatThrownBy(() -> {
             new Path(path, start, end);
@@ -32,7 +31,7 @@ public class PathTest {
     @DisplayName("적이 끝에 있는지 테스트")
     @ParameterizedTest(name = "{0}")
     @MethodSource("isEnemyOnEndParams")
-    void isEnemyOnEnd(String message, HashMap<Position, Optional<Piece>> path, Position start,
+    void isEnemyOnEnd(String message, HashMap<Position, Piece> path, Position start,
         Position end, boolean expected) {
         assertThat(new Path(path, start, end).isEnemyOnEnd()).isEqualTo(expected);
     }
@@ -45,7 +44,7 @@ public class PathTest {
     @DisplayName("끝이 비었는지 테스트")
     @ParameterizedTest(name = "{0}")
     @MethodSource("isEndEmptyParams")
-    void isEndEmpty(String message, HashMap<Position, Optional<Piece>> path, Position start,
+    void isEndEmpty(String message, HashMap<Position, Piece> path, Position start,
         Position end, boolean expected) {
         assertThat(new Path(path, start, end).isEndEmpty()).isEqualTo(expected);
     }
@@ -57,7 +56,7 @@ public class PathTest {
     @DisplayName("중간에 막혀있는지 테스트")
     @ParameterizedTest(name = "{0}")
     @MethodSource("isBlockedParams")
-    void isBlocked(String message, HashMap<Position, Optional<Piece>> path, Position start,
+    void isBlocked(String message, HashMap<Position, Piece> path, Position start,
         Position end, boolean expected) {
         assertThat(new Path(path, start, end).isBlocked()).isEqualTo(expected);
     }

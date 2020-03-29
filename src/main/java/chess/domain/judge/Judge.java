@@ -1,7 +1,5 @@
 package chess.domain.judge;
 
-import java.util.Optional;
-
 import chess.domain.piece.Side;
 
 public interface Judge {
@@ -9,6 +7,7 @@ public interface Judge {
 
     boolean isGameOver();
 
-    Optional<Side> winner();
+    boolean isDraw();
 
+    Side winner();
 }
