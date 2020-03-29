@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static chess.domain.piece.ChessPiece.*;
-import static chess.domain.player.Player.BLACK;
-import static chess.domain.player.Player.WHITE;
+import static chess.domain.player.PlayerColor.BLACK;
+import static chess.domain.player.PlayerColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

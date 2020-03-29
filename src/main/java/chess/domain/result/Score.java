@@ -1,6 +1,7 @@
 package chess.domain.result;
 
 import chess.domain.piece.GamePiece;
+import chess.domain.piece.newGamePiece;
 
 import java.util.Map;
 import java.util.Objects;
@@ -16,9 +17,9 @@ public class Score {
         this.score = score;
     }
 
-    public static Score of(Map<GamePiece, Integer> piecesCount, int sameFilePawnCount) {
+    public static Score of(Map<newGamePiece, Integer> piecesCount, int sameFilePawnCount) {
         Score score = Score.ZERO;
-        for (Map.Entry<GamePiece, Integer> entry : piecesCount.entrySet()) {
+        for (Map.Entry<newGamePiece, Integer> entry : piecesCount.entrySet()) {
             score = score.plus(entry.getKey().calculateScore(entry.getValue()));
         }
         score = score.minus(sameFilePawnCount * SAME_COLUMN_PAWN_SCORE);

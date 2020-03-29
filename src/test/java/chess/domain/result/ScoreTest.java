@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static chess.domain.piece.ChessPiece.*;
-import static chess.domain.player.Player.BLACK;
+import static chess.domain.player.PlayerColor.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreTest {

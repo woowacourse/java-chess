@@ -1,7 +1,7 @@
 package chess.domain.result;
 
 import static chess.domain.piece.ChessPiece.*;
-import static chess.domain.player.Player.*;
+import static chess.domain.player.PlayerColor.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.GamePiece;
-import chess.domain.player.Player;
+import chess.domain.player.PlayerColor;
 
 class ChessResultTest {
 
@@ -23,8 +23,8 @@ class ChessResultTest {
     void calculateScore() {
         Board board = Board.createEmpty().placeInitialPieces();
         ChessResult chessResult = ChessResult.from(board.getBoard());
-        Map<Player, Score> scores = chessResult.getResult();
-        Map<Player, Score> expected = new HashMap<>();
+        Map<PlayerColor, Score> scores = chessResult.getResult();
+        Map<PlayerColor, Score> expected = new HashMap<>();
         expected.put(BLACK, Score.from(38));
         expected.put(WHITE, Score.from(38));
 

@@ -4,16 +4,18 @@ import chess.domain.board.Position;
 
 import java.util.function.Function;
 
-public enum Player {
+public enum PlayerColor {
 
     BLACK("BLACK", String::toUpperCase, Position::horizontalFlip),
-    WHITE("WHITE", String::toLowerCase, Function.identity());
+    WHITE("WHITE", String::toLowerCase, Function.identity()),
+    NONE("", Function.identity(), Function.identity());
+
 
     private final String name;
     private final Function<String, String> nameDecider;
     private final Function<Position, Position> positionReviser;
 
-    Player(String name, Function<String, String> nameDecider, Function<Position, Position> positionReviser) {
+    PlayerColor(String name, Function<String, String> nameDecider, Function<Position, Position> positionReviser) {
         this.name = name;
         this.nameDecider = nameDecider;
         this.positionReviser = positionReviser;

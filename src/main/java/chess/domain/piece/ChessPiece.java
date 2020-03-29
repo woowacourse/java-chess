@@ -7,6 +7,7 @@ import chess.domain.board.Row;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static chess.domain.piece.Direction.*;
@@ -38,8 +39,8 @@ public enum ChessPiece {
         this.score = score;
     }
 
-    public List<Position> searchMovePath(Position source, Position target) {
-        return moveStrategy.findMovePath(source, target);
+    public List<Position> validateMoveTo(Map<Position, GamePiece> board, Position source, Position target) {
+        return moveStrategy.findMovePath(board, source, target);
     }
 
     public List<Position> searchKillPath(Position source, Position target) {

@@ -3,7 +3,7 @@ package chess.view;
 import chess.domain.board.Board;
 import chess.domain.board.Line;
 import chess.domain.piece.GamePiece;
-import chess.domain.player.Player;
+import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
 import chess.domain.result.Score;
 
@@ -32,9 +32,9 @@ public class OutputView {
     }
 
     public static void printScore(ChessResult chessResult) {
-        Map<Player, Score> scores = chessResult.getResult();
-        for (Player player : scores.keySet()) {
-            System.out.printf("%s: %.1f점", player.getName(), scores.get(player).getScore());
+        Map<PlayerColor, Score> scores = chessResult.getResult();
+        for (PlayerColor playerColor : scores.keySet()) {
+            System.out.printf("%s: %.1f점", playerColor.getName(), scores.get(playerColor).getScore());
             System.out.println();
         }
     }
