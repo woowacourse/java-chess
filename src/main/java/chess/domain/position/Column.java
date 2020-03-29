@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 public enum Column {
 	ONE(1, "a"),
@@ -21,15 +22,16 @@ public enum Column {
 	}
 
 	public static Column of(int col) {
-		return Arrays.stream(values())
-				.filter(column -> column.value == col)
-				.findAny()
-				.orElseThrow(() -> new IllegalArgumentException("잘못된 값이 입력되었습니다."));
+		return filterBy(column -> column.value == col);
 	}
 
 	public static Column of(String col) {
+		return filterBy(column -> column.symbol.equals(col));
+	}
+
+	private static Column filterBy(Predicate<Column> predicate) {
 		return Arrays.stream(values())
-				.filter(column -> column.symbol.equals(col))
+				.filter(predicate)
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException("잘못된 값이 입력되었습니다."));
 	}
