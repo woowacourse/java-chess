@@ -6,6 +6,7 @@ import chess.domains.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
@@ -100,9 +101,10 @@ public class Board {
 
         for (char c = 'a'; c <= 'h'; c++) {
             char column = c;
-            int count = (int) myPawns.filter(myPiece -> myPiece.isColumn(column)).count();
-            if (count > 1) {
-                pawnCount += count;
+            List<PlayingPiece> sameColumnPieces = myPawns.filter(myPiece -> myPiece.isColumn(column))
+                    .collect(Collectors.toList());
+            if (!sameColumnPieces.isEmpty()) {
+                pawnCount += sameColumnPieces.size();
             }
         }
         return pawnCount;
