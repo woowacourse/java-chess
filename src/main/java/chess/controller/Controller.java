@@ -2,10 +2,10 @@ package chess.controller;
 
 import chess.domain.Command;
 import chess.domain.FirstCommand;
-import chess.domain.board.Position;
-import chess.domain.piece.BlackPieces;
+import chess.domain.Game;
+import chess.domain.board.Board;
 import chess.domain.piece.BlackPiecesFactory;
-import chess.domain.piece.WhitePieces;
+import chess.domain.piece.Pieces;
 import chess.domain.piece.WhitePiecesFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -16,8 +16,7 @@ import chess.view.OutputView;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Controller {
-	private static WhitePieces whitePieces;
-	private static BlackPieces blackPieces;
+	private static Game game;
 
 	public static void run() {
 		start();
@@ -45,10 +44,8 @@ public class Controller {
 	}
 
 	private static void init() {
-		whitePieces = WhitePiecesFactory.create();
-		blackPieces = BlackPiecesFactory.create();
-
-		OutputView.printChessBoard(whitePieces, blackPieces);
+		game = new Game(new Pieces(WhitePiecesFactory.create(), BlackPiecesFactory.create()), Board.getInstance());
+		OutputView.printChessBoard(game.getBoard());
 	}
 
 	private static void running() {
@@ -57,22 +54,21 @@ public class Controller {
 		do {
 			command = readCommand();
 			if (command.isMove()) {
-				//move
-				Position source = command.getSource();
-				Position target = command.getTarget();
-
-				if (whitePieces.hasPiece(source) && blackPieces.hasPiece(target)) {
-					whitePieces.moveFromTo(source, target);
-				}
-
-				if (blackPieces.hasPiece(source) && whitePieces.hasPiece(target)) {
-					blackPieces.moveFromTo(source, target);
-				}
+				movePiece(command);
 			}
 			if (command.isStatus()) {
-				//status
+				// Todo: status
 			}
 		} while (!command.isEnd() || kingDie());
+	}
+
+	private static void movePiece(Command command) {
+		try {
+			game.movePieceFromTo(command.getSource(), command.getTarget());
+			OutputView.printChessBoard(game.getBoard());
+		} catch (UnsupportedOperationException e) {
+			OutputView.printException(e);
+		}
 	}
 
 	private static Command readCommand() {

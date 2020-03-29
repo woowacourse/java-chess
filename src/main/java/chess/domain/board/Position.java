@@ -1,7 +1,12 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import chess.domain.piece.Direction;
 
 public class Position {
 	private final File file;
@@ -23,8 +28,39 @@ public class Position {
 		}
 	}
 
+	public List<Position> nextPosition(List<Direction> directions) {
+		List<Position> nextPositions = new ArrayList<>();
+
+		for (Direction direction : directions) {
+			try {
+				Rank nextRank = Rank.of(getRank() + direction.getX());
+				File nextFile = File.of(getColumn() + direction.getY());
+
+				nextPositions.add(Position.of(nextFile.getFile() + nextRank.getRow()));
+			} catch (IllegalArgumentException ignored) {
+			}
+		}
+		return nextPositions;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Position))
+			return false;
+		Position position = (Position)o;
+		return file == position.file &&
+			rank == position.rank;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(file, rank);
+	}
+
 	public int getRank() {
-		return rank.getRank();
+		return rank.getRow();
 	}
 
 	public int getColumn() {
@@ -54,7 +90,7 @@ public class Position {
 		}
 
 		private static String createKey(File file, Rank rank) {
-			return file.getFile() + rank.getRank();
+			return file.getFile() + rank.getRow();
 		}
 	}
 

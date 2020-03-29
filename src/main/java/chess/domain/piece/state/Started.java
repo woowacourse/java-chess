@@ -1,22 +1,10 @@
 package chess.domain.piece.state;
 
-import chess.domain.board.Position;
-
 /**
- *    class description
+ *    게임 시작 상태를 의미하는 추상 클래스입니다.
  *
- *    @author AnHyungJu, LeeHoBin
+ *    @author AnHyungJu
  */
-public class Started implements State {
-	protected Position source;
-	protected Position target;
+public abstract class Started implements State {
 
-	public Started(Position position) {
-		// this.position = position;
-	}
-
-	@Override
-	public State move() {
-		return null;
-	}
 }

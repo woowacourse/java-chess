@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import java.util.Arrays;
+
 /**
  *    체스판 열을 의미하는 enum입니다.
  *
@@ -21,6 +23,13 @@ public enum File {
 	File(String file, int column) {
 		this.file = file;
 		this.column = column;
+	}
+
+	public static File of(int column) {
+		return Arrays.stream(File.values())
+			.filter(file -> file.getColumn() == column)
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("유효하지 않은 file값 입니다."));
 	}
 
 	public String getFile() {
