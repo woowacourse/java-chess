@@ -7,14 +7,14 @@ import chess.domain.player.PlayerColor;
 import java.util.List;
 import java.util.Map;
 
-public class OrdinaryMovement extends newGamePiece {
+public class OrdinaryMovement extends GamePiece {
 
     public OrdinaryMovement(String name, List<Position> originalPositions, List<Direction> directions, int moveCount, double score, PlayerColor playerColor) {
         super(name, originalPositions, directions, moveCount, score, playerColor);
     }
 
     @Override
-    public void validatePath(Map<Position, newGamePiece> board, Position source, Position target) {
+    public void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
         // target을 포함하는 path를 구함, 없다면 에러 throw
         List<Position> path = directions.stream()
                 .map(direction -> source.pathTo(direction, moveCount))

@@ -1,8 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.piece.GamePiece;
-
 import java.util.List;
+
+import chess.domain.piece.GamePiece;
 
 public class Line {
 

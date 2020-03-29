@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import chess.domain.piece.ChessPiece;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.newGamePiece;
+import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 
 public class ChessResult {
@@ -22,16 +23,16 @@ public class ChessResult {
         this.result = result;
     }
 
-    public static ChessResult from(Map<Position, newGamePiece> board) {
+    public static ChessResult from(Map<Position, GamePiece> board) {
         return new ChessResult(calculateScore(board));
     }
 
-    private static Map<PlayerColor, Score> calculateScore(Map<Position, newGamePiece> board) {
+    private static Map<PlayerColor, Score> calculateScore(Map<Position, GamePiece> board) {
         Map<PlayerColor, Score> scores = new HashMap<>();
-        List<newGamePiece> gamePieces = new ArrayList<>(board.values());
+        List<GamePiece> gamePieces = new ArrayList<>(board.values());
 
-        Map<newGamePiece, Integer> gameWhitePiecesCount = getGamePieceCount(gamePieces, PlayerColor.WHITE);
-        Map<newGamePiece, Integer> gameBlackPiecesCount = getGamePieceCount(gamePieces, PlayerColor.BLACK);
+        Map<GamePiece, Integer> gameWhitePiecesCount = getGamePieceCount(gamePieces, PlayerColor.WHITE);
+        Map<GamePiece, Integer> gameBlackPiecesCount = getGamePieceCount(gamePieces, PlayerColor.BLACK);
 
         int sameFileWhitePawnCount = getSameColumnPawnCount(board, PlayerColor.WHITE);
         int sameFileBlackPawnCount = getSameColumnPawnCount(board, PlayerColor.BLACK);
@@ -42,7 +43,7 @@ public class ChessResult {
         return scores;
     }
 
-    private static Map<newGamePiece, Integer> getGamePieceCount(List<newGamePiece> gamePieces, PlayerColor playerColor) {
+    private static Map<GamePiece, Integer> getGamePieceCount(List<GamePiece> gamePieces, PlayerColor playerColor) {
         return gamePieces.stream()
                 .distinct()
                 .filter(gamePiece -> gamePiece != EmptyPiece.getInstance())
@@ -50,17 +51,17 @@ public class ChessResult {
                 .collect(Collectors.toMap(gamePiece -> gamePiece, gamePiece -> Collections.frequency(gamePieces, gamePiece)));
     }
 
-    private static int getSameColumnPawnCount(Map<Position, newGamePiece> board, PlayerColor playerColor) {
+    private static int getSameColumnPawnCount(Map<Position, GamePiece> board, PlayerColor playerColor) {
         Map<Integer, Integer> sameColumnPawnCount = new HashMap<>();
         for (int i = 0; i < Column.values().length; i++) {
             sameColumnPawnCount.put(i, 0);
         }
-        List<newGamePiece> gamePieces = new ArrayList<>(board.values());
+        List<GamePiece> gamePieces = new ArrayList<>(board.values());
 
         int rowLength = Row.values().length;
         for (int i = 0; i < gamePieces.size(); i++) {
-            newGamePiece gamePiece = gamePieces.get(i);
-            if (gamePiece.isPawn() && gamePiece.is(playerColor)) {
+            GamePiece gamePiece = gamePieces.get(i);
+            if (ChessPiece.isPawn(gamePiece) && gamePiece.is(playerColor)) {
                 sameColumnPawnCount.computeIfPresent(i % rowLength, (key, value) -> value + 1);
             }
         }

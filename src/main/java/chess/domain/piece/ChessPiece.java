@@ -1,65 +1,43 @@
 package chess.domain.piece;
 
-import chess.domain.board.Column;
-import chess.domain.board.Position;
-import chess.domain.board.Row;
-
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static chess.domain.piece.Direction.*;
+import chess.domain.player.PlayerColor;
 
 public enum ChessPiece {
 
-    KING("k", Collections.singletonList(Position.of(Column.E, Row.ONE)),
-            new OrdinaryMovement(Arrays.asList(N, NE, E, SE, S, SW, W, NW), 1), 0),
-    QUEEN("q", Collections.singletonList(Position.of(Column.D, Row.ONE)),
-            new OrdinaryMovement(Arrays.asList(N, NE, E, SE, S, SW, W, NW), 8), 9),
-    ROOK("r", Arrays.asList(Position.of(Column.A, Row.ONE), Position.of(Column.H, Row.ONE)),
-            new OrdinaryMovement(Arrays.asList(N, E, W, S), 8), 5),
-    BISHOP("b", Arrays.asList(Position.of(Column.C, Row.ONE), Position.of(Column.F, Row.ONE)),
-            new OrdinaryMovement(Arrays.asList(NE, SE, NW, SW), 8), 3),
-    KNIGHT("n", Arrays.asList(Position.of(Column.B, Row.ONE), Position.of(Column.G, Row.ONE)),
-            new OrdinaryMovement(Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW), 1), 2.5),
-    PAWN("p", Arrays.stream(Column.values()).map(file -> Position.of(file, Row.TWO)).collect(Collectors.toList()),
-            new PawnStrategy(), 1);
+    WHITE_KING(new King(PlayerColor.WHITE)),
+    BLACK_KING(new King(PlayerColor.BLACK)),
+    WHITE_QUEEN(new Queen(PlayerColor.WHITE)),
+    BLACK_QUEEN(new Queen(PlayerColor.BLACK)),
+    WHITE_ROOK(new Rook(PlayerColor.WHITE)),
+    BLACK_ROOK(new Rook(PlayerColor.BLACK)),
+    WHITE_BISHOP(new Bishop(PlayerColor.WHITE)),
+    BLACK_BISHOP(new Bishop(PlayerColor.BLACK)),
+    WHITE_KNIGHT(new Knight(PlayerColor.WHITE)),
+    BLACK_KNIGHT(new Knight(PlayerColor.BLACK)),
+    WHITE_PAWN(new Pawn(PlayerColor.WHITE)),
+    BLACK_PAWN(new Pawn(PlayerColor.BLACK));
 
-    private final String name;
-    private final List<Position> initialPositions;
-    private final MoveStrategy moveStrategy;
-    private final double score;
+    private final GamePiece gamePiece;
 
-    ChessPiece(String name, List<Position> initialPositions, MoveStrategy moveStrategy, double score) {
-        this.name = name;
-        this.initialPositions = Collections.unmodifiableList(initialPositions);
-        this.moveStrategy = moveStrategy;
-        this.score = score;
+    ChessPiece(GamePiece gamePiece) {
+        this.gamePiece = gamePiece;
     }
 
-    public List<Position> validateMoveTo(Map<Position, GamePiece> board, Position source, Position target) {
-        return moveStrategy.findMovePath(board, source, target);
+    public static List<GamePiece> list() {
+        return Arrays.stream(values())
+                .map(chessPiece -> chessPiece.gamePiece)
+                .collect(Collectors.toList());
     }
 
-    public List<Position> searchKillPath(Position source, Position target) {
-        return moveStrategy.findKillPath(source, target);
+    public static boolean isKing(GamePiece gamePiece) {
+        return WHITE_KING.gamePiece.equals(gamePiece) || BLACK_KING.gamePiece.equals(gamePiece);
     }
 
-    public double calculateScore(int count) {
-        return score * count;
-    }
-
-    public List<Position> getOriginalPositions() {
-        return initialPositions;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public MoveStrategy getMoveStrategy() {
-        return moveStrategy;
+    public static boolean isPawn(GamePiece gamePiece) {
+        return WHITE_PAWN.gamePiece.equals(gamePiece) || BLACK_PAWN.gamePiece.equals(gamePiece);
     }
 }
