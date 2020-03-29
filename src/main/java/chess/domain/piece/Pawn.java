@@ -1,5 +1,10 @@
 package chess.domain.piece;
 
+import java.util.List;
+import java.util.Map;
+
+import chess.domain.Color;
+import chess.domain.Moving;
 import chess.domain.board.Position;
 
 /**
@@ -8,12 +13,13 @@ import chess.domain.board.Position;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Pawn extends Piece {
-	public Pawn(String color, String symbol) {
+	public Pawn(Color color, String symbol) {
 		super(color, symbol);
 	}
 
 	@Override
-	public void move(Position source, Position target) {
-
+	public List<Position> movablePositions(Position source, Map<Position, Piece> pieces) {
+		return Moving.goOneTimePositions(Direction.whitePawnDirection(), source, pieces);
 	}
+
 }

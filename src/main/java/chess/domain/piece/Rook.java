@@ -1,16 +1,20 @@
 package chess.domain.piece;
 
+import java.util.List;
+import java.util.Map;
+
+import chess.domain.Color;
+import chess.domain.Moving;
 import chess.domain.board.Position;
 
 public class Rook extends Piece {
-	public Rook(String color, String symbol) {
+	public Rook(Color color, String symbol) {
 		super(color, symbol);
 	}
 
 	@Override
-	public void move(Position source, Position target) {
-		if (!Direction.canGoManyTimesTarget(Direction.linearDirection(), source, target)) {
-			throw new UnsupportedOperationException("target 위치로 갈 수 없습니다.");
-		}
+	public List<Position> movablePositions(Position source, Map<Position, Piece> pieces) {
+		return Moving.goManyTimesPositions(Direction.linearDirection(), source, pieces);
 	}
+
 }

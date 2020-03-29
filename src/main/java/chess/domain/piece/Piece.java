@@ -1,5 +1,9 @@
 package chess.domain.piece;
 
+import java.util.List;
+import java.util.Map;
+
+import chess.domain.Color;
 import chess.domain.board.Position;
 
 /**
@@ -8,17 +12,21 @@ import chess.domain.board.Position;
  *    @author AnHyungJu, LeeHoBin
  */
 public abstract class Piece {
-	protected String color;
+	protected Color color;
 	private String symbol;
 
-	public Piece(String color, String symbol) {
+	public Piece(Color color, String symbol) {
 		this.color = color;
 		this.symbol = symbol;
 	}
 
-	public abstract void move(Position source, Position target);
-
 	public String getSymbol() {
 		return symbol;
 	}
+
+	public boolean isSameColor(Color color) {
+		return this.color == color;
+	}
+
+	public abstract List<Position> movablePositions(Position source, Map<Position, Piece> pieces);
 }
