@@ -21,20 +21,25 @@ public class Board {
     }
 
     public static Board init() {
-        return new Board(initialPlacing());
+        return new Board(placeInitialPieces(generateEmptyBoard()));
     }
 
-    private static Map<Position, Optional<Piece>> initialPlacing() {
+    private static Map<Position, Optional<Piece>> generateEmptyBoard() {
         return Position.getAllPositions()
                 .stream()
-                .collect(toMap(Function.identity(), Board::findInitialPieceOn));
+                .collect(toMap(Function.identity(), position -> Optional.empty()));
     }
 
-    private static Optional<Piece> findInitialPieceOn(final Position position) {
-        return Piece.getPieces()
-                .stream()
-                .filter(piece -> piece.canBePlacedOn(position))
-                .findAny();
+    private static Map<Position, Optional<Piece>> placeInitialPieces(Map<Position, Optional<Piece>> board) {
+        for (Piece piece : Piece.getPieces()) {
+            placeInitialPiece(board, piece);
+        }
+        return board;
+    }
+
+    private static void placeInitialPiece(Map<Position, Optional<Piece>> board, Piece piece) {
+        piece.initialPositions()
+                .forEach(position -> board.put(position, Optional.of(piece)));
     }
 
     public Optional<Piece> findPieceBy(final Position position) {

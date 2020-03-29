@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.board.Path;
 import chess.domain.board.Position;
 
+import java.util.List;
+
 public enum Type {
     KING("k", 0.0, MovingStrategy::king, InitialPosition::king),
     QUEEN("q", 9.0, MovingStrategy::queen, InitialPosition::queen),
@@ -23,8 +25,8 @@ public enum Type {
         this.initialPosition = initialPosition;
     }
 
-    public boolean initPosition(Position position, Side side) {
-        return initialPosition.isRightOn(position, side);
+    public List<Position> initialPositions(Side side) {
+        return initialPosition.findBy(side);
     }
 
     public boolean canMoveBetween(Path path) {

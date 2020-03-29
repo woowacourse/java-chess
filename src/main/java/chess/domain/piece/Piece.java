@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.board.Path;
+import chess.domain.board.Position;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import chess.domain.board.Path;
-import chess.domain.board.Position;
 
 public class Piece {
     private final Type type;
@@ -37,8 +37,8 @@ public class Piece {
         return type.canMoveBetween(path);
     }
 
-    public boolean canBePlacedOn(final Position position) {
-        return type.initPosition(position, side);
+    public List<Position> initialPositions() {
+        return type.initialPositions(side);
     }
 
     public boolean isEnemyOf(final Piece other) {
@@ -46,7 +46,7 @@ public class Piece {
     }
 
     public boolean isOnInitialPosition(final Position position) {
-        return type.initPosition(position, side);
+        return initialPositions().contains(position);
     }
 
     @Override
