@@ -14,11 +14,7 @@ public enum Name {
         this.name = name;
     }
 
-    public String upperName() {
+    public String getName() {
         return name;
-    }
-
-    public String lowerName() {
-        return name.toLowerCase();
     }
 }

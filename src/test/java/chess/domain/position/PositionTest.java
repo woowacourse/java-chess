@@ -87,19 +87,4 @@ class PositionTest {
     void rowGap() {
         assertThat(A1.getRowGap(A2)).isEqualTo(-1);
     }
-
-    @Test
-    void reverse() {
-        Position actual = A1.reverse();
-
-        assertThat(actual).isEqualTo(H8);
-    }
-
-    @Test
-    void reversedNameOf() {
-        String expected = "h8";
-        String actual = Position.getReversedNameOf("a1");
-
-        assertThat(actual).isEqualTo(expected);
-    }
 }

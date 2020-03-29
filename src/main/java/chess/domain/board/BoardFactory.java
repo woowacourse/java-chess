@@ -7,39 +7,36 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BoardFactory {
-    private static final Map<String, Piece> lowerBoard;
-    private static final Map<String, Piece> upperBoard;
+    private static final Map<Position, Piece> board = new LinkedHashMap<>();
 
     static {
-        lowerBoard = new LinkedHashMap<>();
-        upperBoard = new LinkedHashMap<>();
+        board.put(Position.of("a8"), new Rook(Position.of("a8"), Team.BLACK));
+        board.put(Position.of("b8"), new Knight(Position.of("b8"), Team.BLACK));
+        board.put(Position.of("c8"), new Bishop(Position.of("c8"), Team.BLACK));
+        board.put(Position.of("d8"), new Queen(Position.of("d8"), Team.BLACK));
+        board.put(Position.of("e8"), new King(Position.of("e8"), Team.BLACK));
+        board.put(Position.of("f8"), new Bishop(Position.of("f8"), Team.BLACK));
+        board.put(Position.of("g8"), new Knight(Position.of("g8"), Team.BLACK));
+        board.put(Position.of("h8"), new Rook(Position.of("h8"), Team.BLACK));
 
-        lowerBoard.put("a1", new Rook(Position.of("a1")));
-        lowerBoard.put("b1", new Knight(Position.of("b1")));
-        lowerBoard.put("c1", new Bishop(Position.of("c1")));
-        lowerBoard.put("d1", new Queen(Position.of("d1")));
-        lowerBoard.put("e1", new King(Position.of("e1")));
-        lowerBoard.put("f1", new Bishop(Position.of("f1")));
-        lowerBoard.put("g1", new Knight(Position.of("g1")));
-        lowerBoard.put("h1", new Rook(Position.of("h1")));
-
-        upperBoard.put("a1", new Rook(Position.of("a1")));
-        upperBoard.put("b1", new Knight(Position.of("b1")));
-        upperBoard.put("c1", new Bishop(Position.of("c1")));
-        upperBoard.put("d1", new King(Position.of("d1")));
-        upperBoard.put("e1", new Queen(Position.of("e1")));
-        upperBoard.put("f1", new Bishop(Position.of("f1")));
-        upperBoard.put("g1", new Knight(Position.of("g1")));
-        upperBoard.put("h1", new Rook(Position.of("h1")));
+        board.put(Position.of("a1"), new Rook(Position.of("a1"), Team.WHITE));
+        board.put(Position.of("b1"), new Knight(Position.of("b1"), Team.WHITE));
+        board.put(Position.of("c1"), new Bishop(Position.of("c1"), Team.WHITE));
+        board.put(Position.of("d1"), new Queen(Position.of("d1"), Team.WHITE));
+        board.put(Position.of("e1"), new King(Position.of("e1"), Team.WHITE));
+        board.put(Position.of("f1"), new Bishop(Position.of("f1"), Team.WHITE));
+        board.put(Position.of("g1"), new Knight(Position.of("g1"), Team.WHITE));
+        board.put(Position.of("h1"), new Rook(Position.of("h1"), Team.WHITE));
 
         for (char c = 'a'; c <= 'h'; c++) {
-            String key = String.valueOf(c) + 2;
-            lowerBoard.put(key, new Pawn(Position.of(key)));
-            upperBoard.put(key, new Pawn(Position.of(key)));
+            String key = String.valueOf(c) + 7;
+            board.put(Position.of(key), new Pawn(Position.of(key), Team.BLACK));
+            key = String.valueOf(c) + 2;
+            board.put(Position.of(key), new Pawn(Position.of(key), Team.WHITE));
         }
     }
 
-    public static Boards create() {
-        return Boards.of(lowerBoard, upperBoard);
+    public static Board create() {
+        return Board.of(board);
     }
 }

@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.domain.MoveInfo;
 import chess.domain.Status;
-import chess.domain.Turn;
-import chess.domain.board.Boards;
+import chess.domain.board.Board;
+import chess.domain.piece.Team;
 import chess.service.ChessService;
+import chess.utils.MoveInfo;
 import chess.view.OutputView;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class ChessController {
 
     private static List<String> startOrEnd = List.of(START, END);
     private static List<String> moveOrStatus = List.of(MOVE, STATUS);
-    private static Turn turn = Turn.LOWER;
+    private static Team team = Team.BLACK;
 
     public static void start(String input) {
         if (!startOrEnd.contains(input)) {
@@ -33,30 +33,30 @@ public class ChessController {
         System.exit(0);
     }
 
-    public static void playTurn(String input, Boards boards) {
+    public static void playTurn(String input, Board board) {
         if (!moveOrStatus.contains(List.of(input.split(" ")).get(0))) {
             throw new IllegalArgumentException("잘못된 명령어 입력입니다.");
         }
 
         if (STATUS.equals(input)) {
-            status(boards);
+            status(board);
         }
-        move(input, boards);
+        move(input, board);
     }
 
-    private static void move(String input, Boards boards) {
-        ChessService.move(boards, turn, MoveInfo.of(input));
-        OutputView.printBoard(boards.getTotal());
-        turn = turn.next();
+    private static void move(String input, Board board) {
+        ChessService.move(board, team, MoveInfo.of(input));
+        OutputView.printBoard(board.getBoard());
+        team = team.next();
 
-        if (boards.isKingDead()) {
+        if (board.isKingDead()) {
             exit();
         }
     }
 
-    private static void status(Boards boards) {
-        OutputView.printScore(Status.result(boards));
-        OutputView.printWinner(Status.winner(boards));
+    private static void status(Board board) {
+        OutputView.printScore(Status.result(board));
+        OutputView.printWinner(Status.winner(board));
         exit();
     }
 }

@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Score {
-    QUEEN("q", 9),
-    ROOK("r", 5),
-    BISHOP("b", 3),
-    KNIGHT("n", 2.5),
-    PAWN("p", 1);
+    QUEEN("Q", 9),
+    ROOK("R", 5),
+    BISHOP("B", 3),
+    KNIGHT("N", 2.5),
+    PAWN("P", 1);
 
     private final String name;
     private final double score;
@@ -27,15 +27,15 @@ public enum Score {
     }
 
     private static double calculatePenalty(List<String> column) {
-        if (countPawn(column) >= 2) {
-            return countPawn(column) * 0.5;
+        if (countPawnIn(column) >= 2) {
+            return countPawnIn(column) * 0.5;
         }
         return 0;
     }
 
-    private static long countPawn(List<String> column) {
+    private static long countPawnIn(List<String> column) {
         return column.stream()
-                .filter(value -> value.equals("p"))
+                .filter(value -> value.equals("P"))
                 .count();
     }
 }

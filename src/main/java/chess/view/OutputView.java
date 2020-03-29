@@ -1,6 +1,8 @@
 package chess.view;
 
-import chess.domain.Turn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
+import chess.domain.position.Position;
 
 import java.util.Map;
 
@@ -14,12 +16,12 @@ public class OutputView {
         System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(Map<String, String> board) {
+    public static void printBoard(Map<Position, Piece> board) {
         for (int i = 8; i >= 1; i--) {
             for (char c = 'a'; c <= 'h'; c++) {
-                String key = String.valueOf(c) + i;
+                Position key = Position.of(String.valueOf(c) + i);
                 if (board.containsKey(key)) {
-                    System.out.print(board.get(key));
+                    System.out.print(Team.getPieceName(board.get(key)));
                     continue;
                 }
                 System.out.print(".");
@@ -29,7 +31,7 @@ public class OutputView {
         System.out.print(NEW_LINE);
     }
 
-    public static void printScore(Map<Turn, Double> result) {
+    public static void printScore(Map<Team, Double> result) {
         result.forEach((key, value) -> System.out.println(key.getName() + "팀 점수: " + value));
     }
 

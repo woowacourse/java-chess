@@ -34,13 +34,6 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("0 이하의 row 값은 가질수 없습니다."));
     }
 
-    public Row reverse() {
-        return Arrays.stream(Row.values())
-                .filter(value -> value.position == 9 - this.position)
-                .findFirst()
-                .orElseThrow(NullPointerException::new);
-    }
-
     public String getName() {
         return name;
     }

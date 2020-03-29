@@ -7,8 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
-    public Rook(Position position) {
-        super(position, Name.ROOK);
+    public Rook(Position position, Team team) {
+        super(position, Name.ROOK, team);
+    }
+
+    @Override
+    public void canPawnMove(Piece that) {
+        throw new IllegalAccessError();
     }
 
     @Override

@@ -1,8 +1,10 @@
 package chess.domain;
 
-import chess.domain.board.Boards;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -10,56 +12,55 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static chess.domain.position.Fixtures.A2;
+import static chess.domain.position.Fixtures.A3;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StatusTest {
 
-    private Boards boards;
+    private Board board;
 
     @Test
     void result() {
-        Map<String, Piece> lowerBoard = new LinkedHashMap<>();
-        lowerBoard.put("a2", new Rook(A2));
-        Map<String, Piece> upperBoard = new LinkedHashMap<>();
+        Map<Position, Piece> setter = new LinkedHashMap<>();
+        setter.put(A2, new Rook(A2, Team.BLACK));
 
-        boards = Boards.of(lowerBoard, upperBoard);
+        board = Board.of(setter);
 
-        Map<Turn, Double> expected = new HashMap<>();
-        expected.put(Turn.LOWER, 5.0);
-        expected.put(Turn.UPPER, 0.0);
+        Map<Team, Double> expected = new HashMap<>();
+        expected.put(Team.BLACK, 5.0);
+        expected.put(Team.WHITE, 0.0);
 
-        assertThat(Status.result(boards)).isEqualTo(expected);
+        assertThat(Status.result(board)).isEqualTo(expected);
     }
 
     @Test
     void winner_Return_White() {
-        Map<String, Piece> lowerBoard = new LinkedHashMap<>();
-        lowerBoard.put("a2", new Rook(A2));
-        Map<String, Piece> upperBoard = new LinkedHashMap<>();
+        Map<Position, Piece> setter = new LinkedHashMap<>();
+        setter.put(A2, new Rook(A2, Team.WHITE));
 
-        boards = Boards.of(lowerBoard, upperBoard);
+        board = Board.of(setter);
 
-        assertThat(Status.winner(boards)).isEqualTo("백");
+        assertThat(Status.winner(board)).isEqualTo("백");
     }
 
     @Test
     void winner_Return_Black() {
-        Map<String, Piece> lowerBoard = new LinkedHashMap<>();
-        Map<String, Piece> upperBoard = new LinkedHashMap<>();
-        upperBoard.put("a2", new Rook(A2));
+        Map<Position, Piece> setter = new LinkedHashMap<>();
+        setter.put(A2, new Rook(A2, Team.BLACK));
 
-        boards = Boards.of(lowerBoard, upperBoard);
+        board = Board.of(setter);
 
-        assertThat(Status.winner(boards)).isEqualTo("흑");
+        assertThat(Status.winner(board)).isEqualTo("흑");
     }
 
     @Test
     void winner_Return_Draw() {
-        Map<String, Piece> lowerBoard = new LinkedHashMap<>();
-        Map<String, Piece> upperBoard = new LinkedHashMap<>();
+        Map<Position, Piece> setter = new LinkedHashMap<>();
+        setter.put(A2, new Rook(A2, Team.BLACK));
+        setter.put(A3, new Rook(A3, Team.WHITE));
 
-        boards = Boards.of(lowerBoard, upperBoard);
+        board = Board.of(setter);
 
-        assertThat(Status.winner(boards)).isEqualTo("없음 (무승부)");
+        assertThat(Status.winner(board)).isEqualTo("없음 (무승부)");
     }
 }

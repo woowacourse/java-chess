@@ -10,7 +10,7 @@ class RookTest {
 
     @Test
     void moveTo_When_Success() {
-        Piece rook = new Rook(C3);
+        Piece rook = new Rook(C3, Team.BLACK);
         rook.moveTo(H3);
 
         assertThat(rook.getPosition()).isEqualTo(H3);
@@ -18,7 +18,7 @@ class RookTest {
 
     @Test
     void moveTo_When_Fail() {
-        Piece rook = new Rook(C3);
+        Piece rook = new Rook(C3, Team.BLACK);
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> rook.moveTo(D4))
                 .withMessage("기물의 이동 범위에 속하지 않습니다.");

@@ -55,10 +55,6 @@ public class Position {
         return Position.of(column.minus(), row);
     }
 
-    public Position reverse() {
-        return Position.of(column.reverse(), row.reverse());
-    }
-
     public boolean isColumnEquals(Position that) {
         return column.equals(that.column);
     }
@@ -85,10 +81,6 @@ public class Position {
 
     public String getName() {
         return column.getName() + row.getName();
-    }
-
-    public static String getReversedNameOf(String name) {
-        return of(name).reverse().getName();
     }
 
     public static List<Position> getPositions() {

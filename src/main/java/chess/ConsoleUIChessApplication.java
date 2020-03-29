@@ -1,8 +1,8 @@
 package chess;
 
 import chess.controller.ChessController;
+import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.board.Boards;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -11,11 +11,11 @@ public class ConsoleUIChessApplication {
         OutputView.printInitialMessage();
         ChessController.start(InputView.inputStartOrEnd());
 
-        Boards boards = BoardFactory.create();
-        OutputView.printBoard(boards.getTotal());
+        Board board = BoardFactory.create();
+        OutputView.printBoard(board.getBoard());
 
         while (true) {
-            ChessController.playTurn(InputView.inputMoveOrStatus(), boards);
+            ChessController.playTurn(InputView.inputMoveOrStatus(), board);
         }
     }
 }

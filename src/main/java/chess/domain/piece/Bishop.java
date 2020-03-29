@@ -4,8 +4,13 @@ import chess.domain.position.MovableAreaFactory;
 import chess.domain.position.Position;
 
 public class Bishop extends Piece {
-    public Bishop(Position position) {
-        super(position, Name.BISHOP);
+    public Bishop(Position position, Team team) {
+        super(position, Name.BISHOP, team);
+    }
+
+    @Override
+    public void canPawnMove(Piece that) {
+        throw new IllegalAccessError();
     }
 
     @Override

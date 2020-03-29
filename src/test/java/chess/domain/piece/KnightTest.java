@@ -10,7 +10,7 @@ public class KnightTest {
 
     @Test
     void moveTo_When_Success() {
-        Piece knight = new Knight(C3);
+        Piece knight = new Knight(C3, Team.BLACK);
         knight.moveTo(D1);
         knight.moveTo(B2);
 
@@ -19,7 +19,7 @@ public class KnightTest {
 
     @Test
     void moveTo_When_Fail() {
-        Piece knight = new Knight(C3);
+        Piece knight = new Knight(C3, Team.BLACK);
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> knight.moveTo(D3))
                 .withMessage("기물의 이동 범위에 속하지 않습니다.");

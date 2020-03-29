@@ -4,8 +4,13 @@ import chess.domain.position.MovableAreaFactory;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {
-    public Knight(Position position) {
-        super(position, Name.KNIGHT);
+    public Knight(Position position, Team team) {
+        super(position, Name.KNIGHT, team);
+    }
+
+    @Override
+    public void canPawnMove(Piece that) {
+        throw new IllegalAccessError();
     }
 
     @Override

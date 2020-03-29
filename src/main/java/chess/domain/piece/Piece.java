@@ -5,15 +5,12 @@ import chess.domain.position.Position;
 public abstract class Piece {
     protected Position position;
     protected final Name name;
+    protected final Team team;
 
-    public Piece(Position position, String name) {
-        this.position = position;
-        this.name = Name.valueOf(name.toUpperCase());
-    }
-
-    public Piece(Position position, Name name) {
+    public Piece(Position position, Name name, Team team) {
         this.position = position;
         this.name = name;
+        this.team = team;
     }
 
     public void moveTo(Position destination) {
@@ -23,17 +20,23 @@ public abstract class Piece {
         position = destination;
     }
 
+    public boolean isEnemy(Piece that) {
+        return this.team != that.team;
+    }
+
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
+
+    public abstract void canPawnMove(Piece that);
+
     protected abstract boolean isNotMovableTo(Position start, Position destination);
 
     public Position getPosition() {
         return position;
     }
 
-    public String getUpperName() {
-        return name.upperName();
-    }
-
-    public String getLowerName() {
-        return name.lowerName();
+    public String getName() {
+        return name.getName();
     }
 }

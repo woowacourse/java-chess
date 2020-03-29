@@ -2,10 +2,9 @@ package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Path {
-    public static List<String> of(Position start, Position end) {
+    public static List<Position> of(Position start, Position end) {
         List<Position> path = new ArrayList<>();
 
         Position current = start;
@@ -13,12 +12,11 @@ public class Path {
             current = Direction.of(current, end).move(current);
             path.add(current);
         }
-        return path.stream()
-                .map(Position::getName)
-                .collect(Collectors.toUnmodifiableList());
+
+        return path;
     }
 
-    public static List<String> of(String start, String end) {
+    public static List<Position> of(String start, String end) {
         return of(Position.of(start), Position.of(end));
     }
 }

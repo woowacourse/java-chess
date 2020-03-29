@@ -10,7 +10,7 @@ class PawnTest {
 
     @Test
     void moveTo_When_Success() {
-        Piece pawn = new Pawn(C2);
+        Piece pawn = new Pawn(C2, Team.BLACK);
         pawn.moveTo(C4);
         pawn.moveTo(C5);
         pawn.moveTo(B6);
@@ -20,7 +20,7 @@ class PawnTest {
 
     @Test
     void moveTo_When_Fail() {
-        Piece pawn = new Pawn(C3);
+        Piece pawn = new Pawn(C3, Team.BLACK);
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> pawn.moveTo(C5))
                 .withMessage("기물의 이동 범위에 속하지 않습니다.");

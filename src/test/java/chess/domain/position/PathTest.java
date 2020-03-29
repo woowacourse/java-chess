@@ -21,15 +21,15 @@ class PathTest {
 
     private static Stream<Arguments> createPath() {
         return Stream.of(
-                Arguments.of(Path.of(A1, A3), List.of("a2")),
-                Arguments.of(Path.of(A1, C3), List.of("b2")),
-                Arguments.of(Path.of(A1, D1), List.of("b1", "c1"))
+                Arguments.of(Path.of(A1, A3), List.of(A2)),
+                Arguments.of(Path.of(A1, C3), List.of(B2)),
+                Arguments.of(Path.of(A1, D1), List.of(B1, C1))
         );
     }
 
     @Test
     void create_With_String() {
-        assertThat(Path.of("a1", "a3")).containsAll(List.of("a2"));
+        assertThat(Path.of(A1, A3)).containsAll(List.of(A2));
     }
 
     @Test
