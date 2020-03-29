@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
+    private static final String PIECE_IMPOSSIBLE_MOVE_EXCEPTION_MESSAGE = "해당 포지션으로 이동할 수 없습니다.";
+    private static final int END_INDEX = 8;
+    private static final int START_INDEX = 1;
+    private static final char WHITE_KING_REPRESENTATION = 'k';
+    private static final char BLACK_KING_REPRESENTATION = 'K';
+
     protected final char representation;
     protected final Team team;
     protected final Position position;
@@ -25,20 +31,20 @@ public abstract class Piece {
         return position;
     }
 
-    public boolean isMovable(Board board, Position to) {
+    public boolean isMovable(final Board board, final Position to) throws IllegalAccessException {
         if (getPossiblePositions(board).contains(to)) {
             return true;
         }
-        throw new UnsupportedOperationException("해당 포지션으로 이동할 수 없습니다.");
+        throw new IllegalAccessException(PIECE_IMPOSSIBLE_MOVE_EXCEPTION_MESSAGE);
     }
 
     protected boolean isInBoardRange(Position nextPosition) {
-        return nextPosition.getX() <= 8 && nextPosition.getX() >= 1 &&
-                nextPosition.getY() <= 8 && nextPosition.getY() >= 1;
+        return nextPosition.getX() <= END_INDEX && nextPosition.getX() >= START_INDEX &&
+                nextPosition.getY() <= END_INDEX && nextPosition.getY() >= START_INDEX;
     }
 
     public boolean isKing() {
-        return representation == 'k' | representation == 'K';
+        return representation == WHITE_KING_REPRESENTATION | representation == BLACK_KING_REPRESENTATION;
     }
 
     public boolean isOtherTeam(Piece nextPiece) {

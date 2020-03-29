@@ -8,6 +8,8 @@ public enum Run {
     MOVE("move"),
     STATUS("status");
 
+    private static final String RUN_NOT_FOUND_EXCEPTION_MESSAGE = "선택할 수 없는 옵션입니다.";
+
     private final String name;
 
     Run(String name) {
@@ -18,7 +20,7 @@ public enum Run {
         return Arrays.stream(values())
                 .filter(run -> run.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("선택할 수 없는 옵션입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(RUN_NOT_FOUND_EXCEPTION_MESSAGE));
     }
 
     public boolean isNotEnd() {

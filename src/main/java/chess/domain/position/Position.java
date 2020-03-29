@@ -3,11 +3,14 @@ package chess.domain.position;
 import java.util.Objects;
 
 public class Position {
+    private static final int ASCII_GAP = 96;
+    private static final int FIRST_INDEX = 0;
+
     private final String x;
     private final String y;
 
     public Position(int x, int y) {
-        this(String.valueOf((char) (x + 96)), String.valueOf(y));
+        this(String.valueOf((char) (x + ASCII_GAP)), String.valueOf(y));
     }
 
     public Position(String x, String y) {
@@ -16,7 +19,7 @@ public class Position {
     }
 
     public int getX() {
-        return x.charAt(0) - 96;
+        return x.charAt(FIRST_INDEX) - ASCII_GAP;
     }
 
     public int getY() {

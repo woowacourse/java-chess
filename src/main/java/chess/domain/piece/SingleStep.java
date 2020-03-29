@@ -18,6 +18,7 @@ public abstract class SingleStep extends Piece {
 
         for (Direction direction : getDirections()) {
             Position nextPosition = direction.move(position);
+
             if (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
                 possiblePositions.add(nextPosition);
             }

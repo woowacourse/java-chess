@@ -5,19 +5,29 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 public class GameResult {
+    private static final int INITIAL_SCORE = 0;
+    private static final int START_INDEX = 1;
+    private static final int END_INDEX = 8;
+    private static final int ROW_SIZE = 8;
+    private static final int INITIAL_PAWN_COUNT = 0;
+    private static final int INITIAL_PAWN_ROW_SCORE = 0;
+    private static final int PAWN_COUNT_INCREASE = 1;
+    private static final int PAWN_CRITICAL_COUNT = 2;
+    private static final int DIVIDEND_WHEN_MULITPLE_PAWN_IN_COLUMN = 2;
+
     public double calculateScore(Board board, Team team) {
 
-        double totalScore = 0;
+        double totalScore = INITIAL_SCORE;
 
-        for (int col = 1; col <= 8; col++) {
+        for (int col = START_INDEX; col <= END_INDEX; col++) {
+            int pawnCount = INITIAL_PAWN_COUNT;
+            double pawnScore = INITIAL_PAWN_ROW_SCORE;
 
-            int pawnCount = 0;
-            double pawnScore = 0;
-            for (int row = 1; row <= 8; row++) {
-                Piece piece = board.findPieceBy(8 * (row - 1) + col - 1);
+            for (int row = START_INDEX; row <= END_INDEX; row++) {
+                Piece piece = board.findPieceBy( (row - 1) * ROW_SIZE + col - 1);
 
                 if (piece.isSameTeam(team) && piece.isPawn()) {
-                    pawnCount += 1;
+                    pawnCount += PAWN_COUNT_INCREASE;
                     pawnScore += PieceType.getScoreOf(piece);
                 }
 
@@ -25,8 +35,8 @@ public class GameResult {
                     totalScore += PieceType.getScoreOf(piece);
                 }
             }
-            if (pawnCount >= 2) {
-                totalScore += pawnScore / 2;
+            if (pawnCount >= PAWN_CRITICAL_COUNT) {
+                totalScore += pawnScore / DIVIDEND_WHEN_MULITPLE_PAWN_IN_COLUMN;
                 continue;
             }
             totalScore += pawnScore;

@@ -40,7 +40,7 @@ public class ChessGame {
                     OutputView.printBoard(board);
                     gameTerminateWhenFinished();
                 }
-            } catch (NullPointerException | IllegalAccessException | UnsupportedOperationException e) {
+            } catch (NullPointerException | IllegalArgumentException | IllegalAccessException | UnsupportedOperationException e) {
                 OutputView.printExceptionMessage(e.getMessage());
             }
 

@@ -68,14 +68,14 @@ public class Board {
         int fromIndex = getBoardIndexByStringPosition(from);
         int toIndex = getBoardIndexByStringPosition(to);
         if (Team.isSameTeam(turnFlag, findPieceBy(fromIndex))) {
-            throw new IllegalAccessException(TAKE_TURN_EXCEPTION_MESSAGE);
+            throw new IllegalArgumentException(TAKE_TURN_EXCEPTION_MESSAGE);
         }
 
         movePieceWithValidation(movedBoard, fromIndex, toIndex);
         return new Board(movedBoard);
     }
 
-    private void movePieceWithValidation(final List<Piece> movedBoard, final int fromIndex, final int toIndex) {
+    private void movePieceWithValidation(final List<Piece> movedBoard, final int fromIndex, final int toIndex) throws IllegalAccessException {
         Piece fromPiece = findPieceBy(fromIndex);
         Piece toPiece = findPieceBy(toIndex);
 

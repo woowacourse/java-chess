@@ -23,6 +23,7 @@ public abstract class Pawn extends Piece {
     @Override
     public List<Position> getPossiblePositions(Board board) {
         List<Position> possiblePositions = new ArrayList<>();
+
         for (Direction direction : getDirections()) {
             Position nextPosition = direction.move(position);
 
