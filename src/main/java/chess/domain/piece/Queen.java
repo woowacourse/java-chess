@@ -6,6 +6,11 @@ import java.util.List;
 import chess.domain.board.Position;
 import chess.domain.piece.state.State;
 
+/**
+ *    퀸을 의미하는 클래스입니다.
+ *
+ *    @author AnHyungJu, LeeHoBin
+ */
 public class Queen extends Piece {
 	public Queen(State state, String symbol) {
 		super(state, symbol);

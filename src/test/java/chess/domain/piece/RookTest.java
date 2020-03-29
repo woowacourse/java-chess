@@ -51,4 +51,10 @@ class RookTest {
 
 		assertThat(rook.movingTrace(source, target).size()).isEqualTo(8);
 	}
+
+	@DisplayName("폰인지 물어보면 false 반환하는지 확인")
+	@Test
+	void isPawnTest() {
+		assertThat(new Rook(new Initial(), "r").isPawn()).isFalse();
+	}
 }

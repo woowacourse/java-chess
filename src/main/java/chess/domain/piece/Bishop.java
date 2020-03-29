@@ -6,6 +6,11 @@ import java.util.List;
 import chess.domain.board.Position;
 import chess.domain.piece.state.State;
 
+/**
+ *    비숍을 의미하는 클래스입니다.
+ *
+ *    @author AnHyungJu, LeeHoBin
+ */
 public class Bishop extends Piece {
 	public Bishop(State state, String symbol) {
 		super(state, symbol);

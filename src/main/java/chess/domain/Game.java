@@ -20,9 +20,10 @@ public class Game {
 		this.board = board;
 	}
 
-	public void movePieceFromTo(Position source, Position target) throws UnsupportedOperationException {
+	public void movePieceFromTo(Position source, Position target) {
 		List<Position> trace = pieces.movingTrace(source, target);
-		if (board.canMoveBy(trace)) {
+
+		if (pieces.canMove(source, target) && board.canMoveBy(trace)) {
 			board.change(source, target);
 			pieces.move(source, target);
 		}

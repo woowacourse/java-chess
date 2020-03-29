@@ -23,6 +23,10 @@ public abstract class Piece {
 
 	protected abstract List<Position> findRoute(Position source, Position target);
 
+	public boolean isPawn() {
+		return false;
+	}
+
 	public String getSymbol() {
 		return symbol;
 	}

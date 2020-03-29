@@ -6,6 +6,11 @@ import java.util.List;
 import chess.domain.board.Position;
 import chess.domain.piece.state.State;
 
+/**
+ *    킹을 의미하는 클래스입니다.
+ *
+ *    @author AnHyungJu, LeeHoBin
+ */
 public class King extends Piece {
 	public King(State state, String symbol) {
 		super(state, symbol);

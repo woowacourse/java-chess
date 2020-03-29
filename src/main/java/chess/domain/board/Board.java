@@ -6,6 +6,7 @@ import java.util.Map;
 
 import chess.domain.piece.BlackPieces;
 import chess.domain.piece.BlackPiecesFactory;
+import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.WhitePieces;
 import chess.domain.piece.WhitePiecesFactory;
@@ -48,11 +49,17 @@ public class Board {
 		Position source = trace.remove(0);
 		Position target = trace.remove(trace.size() - 1);
 
-		if (trace.size() == 0) {
+		if (canPawnAttack(source, target) || trace.size() == 0) {
 			return true;
 		}
 		return trace.stream()
 			.noneMatch(position -> board.get(position) != null);
+	}
+
+	private boolean canPawnAttack(Position source, Position target) {
+		return board.get(source).isPawn() &&
+			source.nextPosition(Direction.diagonalDirection()).stream()
+				.anyMatch(position -> position.equals(target));
 	}
 
 	public void change(Position source, Position target) {

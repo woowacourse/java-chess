@@ -15,7 +15,7 @@ public class Pieces {
 		this.turnFlag = true;
 	}
 
-	public List<Position> movingTrace(Position source, Position target) throws UnsupportedOperationException {
+	public List<Position> movingTrace(Position source, Position target) {
 		List<Position> trace;
 
 		if (turnFlag) {
@@ -36,5 +36,12 @@ public class Pieces {
 			whitePieces.kill(target);
 			turnFlag = true;
 		}
+	}
+
+	public boolean canMove(Position source, Position target) {
+		return (whitePieces.hasPiece(source) && blackPieces.hasPiece(target))
+			|| (whitePieces.hasPiece(target) && blackPieces.hasPiece(source))
+			|| (whitePieces.hasPiece(source) && !blackPieces.hasPiece(target) && !whitePieces.hasPiece(target))
+			|| (!whitePieces.hasPiece(target) && !blackPieces.hasPiece(target) && blackPieces.hasPiece(source));
 	}
 }

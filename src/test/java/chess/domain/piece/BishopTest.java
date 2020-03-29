@@ -51,4 +51,10 @@ class BishopTest {
 
 		assertThat(bishop.movingTrace(source, target).size()).isEqualTo(8);
 	}
+
+	@DisplayName("폰인지 물어보면 false 반환하는지 확인")
+	@Test
+	void isPawnTest() {
+		assertThat(new Bishop(new Initial(), "b").isPawn()).isFalse();
+	}
 }

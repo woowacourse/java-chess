@@ -51,4 +51,10 @@ class KnightTest {
 
 		assertThat(knight.movingTrace(source, target).size()).isEqualTo(2);
 	}
+
+	@DisplayName("폰인지 물어보면 false 반환하는지 확인")
+	@Test
+	void isPawnTest() {
+		assertThat(new Knight(new Initial(), "n").isPawn()).isFalse();
+	}
 }

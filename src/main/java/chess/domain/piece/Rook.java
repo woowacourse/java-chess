@@ -6,6 +6,11 @@ import java.util.List;
 import chess.domain.board.Position;
 import chess.domain.piece.state.State;
 
+/**
+ *    룩을 의미하는 클래스입니다.
+ *
+ *    @author AnHyungJu, LeeHoBin
+ */
 public class Rook extends Piece {
 	public Rook(State state, String symbol) {
 		super(state, symbol);
