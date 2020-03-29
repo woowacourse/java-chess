@@ -1,5 +1,6 @@
 package domain.commend;
 
+import domain.commend.exceptions.CommendTypeException;
 import domain.pieces.Pieces;
 import domain.team.Team;
 
@@ -21,12 +22,12 @@ public class Waiting extends GameState {
 
     @Override
     public StateStrategy move(Team team, String input) {
-        throw new UnsupportedOperationException();
+        throw new CommendTypeException("");
     }
 
     @Override
     public StateStrategy status() {
-        throw new UnsupportedOperationException();
+        throw new CommendTypeException("");
     }
 
     @Override

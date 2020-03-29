@@ -15,7 +15,7 @@ public class Playing extends GameState {
 
     @Override
     public StateStrategy start() {
-        throw new UnsupportedOperationException();
+        throw new CommendTypeException("");
     }
 
     @Override

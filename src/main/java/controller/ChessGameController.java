@@ -1,10 +1,8 @@
 package controller;
 
 import domain.commend.CommendType;
-import domain.commend.ScoreType;
 import domain.commend.State;
 import domain.pieces.Pieces;
-import domain.team.Team;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
