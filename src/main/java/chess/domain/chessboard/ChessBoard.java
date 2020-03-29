@@ -80,7 +80,8 @@ public class ChessBoard {
 	}
 
 	private void validateTargetTeam(Piece sourcePiece, Position targetPosition) {
-		findPieceByPosition(targetPosition).filter(sourcePiece::isSameTeam)
+		findPieceByPosition(targetPosition)
+				.filter(sourcePiece::isSameTeam)
 				.ifPresent(piece -> {
 					throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM);
 				});

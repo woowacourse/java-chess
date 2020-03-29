@@ -18,8 +18,8 @@ public class Pawn extends Piece {
 
 	@Override
 	protected boolean isMovablePattern(MovePattern movePattern, Optional<Piece> targetPiece) {
-		return targetPiece.isPresent() && isAttackMovePattern(movePattern)
-				|| !targetPiece.isPresent() && isNotAttackMovePattern(movePattern);
+		return targetPiece.map(piece -> isAttackMovePattern(movePattern))
+				.orElseGet(() -> isNotAttackMovePattern(movePattern));
 	}
 
 	private boolean isAttackMovePattern(MovePattern movePattern) {
