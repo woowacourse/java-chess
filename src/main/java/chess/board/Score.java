@@ -10,6 +10,7 @@ import java.util.function.Function;
 public class Score {
     private static final int PAWN_REDUCIBLE_COUNT = 2;
     private static final double PAWN_REDUCE_SCORE = 0.5;
+
     private final double sum;
     private final int pawnCount;
 

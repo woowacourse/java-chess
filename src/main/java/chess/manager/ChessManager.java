@@ -4,7 +4,6 @@ import chess.board.ForwardChessBoard;
 import chess.board.Tile;
 import chess.coordinate.Coordinate;
 import chess.observer.Observable;
-import chess.piece.King;
 import chess.piece.Piece;
 import chess.piece.Team;
 
@@ -45,10 +44,10 @@ public class ChessManager implements Observable {
 
     @Override
     public void update(final Object object) {
-        if (!(object instanceof Piece)) {
-            throw new IllegalArgumentException();
-        }
-        if (object instanceof King) {
+        Piece.checkInstance(object);
+
+        Piece piece = (Piece) object;
+        if (piece.isKing()) {
             isKingAlive = false;
             return;
         }

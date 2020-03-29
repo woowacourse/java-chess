@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Blank extends Piece {
 
-    private static final int BLACK_SCORE = 0;
+    private static final int SCORE = 0;
 
     public Blank() {
-        super(Team.NOTHING, BLACK_SCORE);
+        super(Team.NOTHING, SCORE);
     }
 
     public static Piece getInstance() {

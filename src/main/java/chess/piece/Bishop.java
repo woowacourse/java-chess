@@ -4,10 +4,10 @@ import chess.coordinate.Vector;
 
 public class Bishop extends Piece {
 
-    private static final int BISHOP_SCORE = 3;
+    private static final int SCORE = 3;
 
     public Bishop(final Team team) {
-        super(team, BISHOP_SCORE);
+        super(team, SCORE);
     }
 
     @Override

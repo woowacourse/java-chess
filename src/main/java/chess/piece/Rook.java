@@ -4,10 +4,10 @@ import chess.coordinate.Vector;
 
 public class Rook extends Piece {
 
-    private static final int ROOK_SCORE = 5;
+    private static final int SCORE = 5;
 
     public Rook(final Team team) {
-        super(team, ROOK_SCORE);
+        super(team, SCORE);
     }
 
     @Override

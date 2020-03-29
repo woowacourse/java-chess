@@ -5,10 +5,10 @@ import chess.piece.movestrategy.PawnMoveStrategyGroup;
 
 public abstract class AbstractPawn extends Piece {
 
-    private static final int PAWN_SCORE = 1;
+    private static final int SCORE = 1;
 
     public AbstractPawn(final Team team) {
-        super(team, PAWN_SCORE);
+        super(team, SCORE);
     }
 
     @Override

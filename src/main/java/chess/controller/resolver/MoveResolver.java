@@ -12,8 +12,9 @@ public class MoveResolver implements RequestResolver {
     @Override
     public DefaultRequest<? extends MoveRequest> convert(String command) {
         Matcher matcher = MOVE_PATTERN.matcher(command);
+
         if (!matcher.find()) {
-            throw new IllegalArgumentException(command);
+            throw new IllegalArgumentException(String.format("%s : 올바르지 않은 입력입니다. move () ()로 입력해주세요. ", command));
         }
         MoveRequest moveRequest = new MoveRequest(matcher.group(1), matcher.group(2));
         return new DefaultRequest<>(moveRequest);
