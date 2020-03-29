@@ -9,6 +9,8 @@ import domain.pieces.PiecesFactory;
 import domain.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class StateTest {
 
@@ -35,7 +37,7 @@ public class StateTest {
     void playing_start() {
         State state = State.of(pieces);
         state.start();
-        assertThatThrownBy(() -> state.start())
+        assertThatThrownBy(state::start)
             .isInstanceOf(CommendTypeException.class);
     }
 
@@ -55,6 +57,35 @@ public class StateTest {
         State state = State.of(pieces);
         state.start();
         assertThat(state.status()).isEqualTo(38.0);
+        state.move("move a2 a3");
+        assertThat(state.status()).isEqualTo(38.0);
+    }
+
+    @Test
+    @DisplayName("end 일때 start하면 오류")
+    void finished_Start() {
+        State state = State.of(pieces);
+        state.end();
+        assertThatThrownBy(state::start)
+            .isInstanceOf(CommendTypeException.class);
+    }
+
+    @Test
+    @DisplayName("end 일때 end하면 오류")
+    void finished_End() {
+        State state = State.of(pieces);
+        state.end();
+        assertThatThrownBy(state::end)
+            .isInstanceOf(CommendTypeException.class);
+    }
+
+    @Test
+    @DisplayName("end 일때 move하면 오류")
+    void finished_Move() {
+        State state = State.of(pieces);
+        state.end();
+        assertThatThrownBy(() -> state.move("move b2 b3"))
+            .isInstanceOf(CommendTypeException.class);
     }
 
     @Test
@@ -65,5 +96,13 @@ public class StateTest {
         assertThat(state.isFinished()).isTrue();
     }
 
-
+    @ParameterizedTest
+    @DisplayName("move에 잘못된 좌표가 입력될 때")
+    @ValueSource(strings = {"move b3", "move b33 b34"})
+    void move_wrong(String input) {
+        State state = State.of(pieces);
+        state.start();
+        assertThatThrownBy(() -> state.move(input))
+            .isInstanceOf(CommendTypeException.class);
+    }
 }

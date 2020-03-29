@@ -22,7 +22,7 @@ public class Finished extends GameState {
 
     @Override
     public StateStrategy move(Team team, String input) {
-        throw new UnsupportedOperationException();
+        throw new CommendTypeException("");
     }
 
     @Override
