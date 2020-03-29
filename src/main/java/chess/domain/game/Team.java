@@ -2,8 +2,7 @@ package chess.domain.game;
 
 public enum Team {
     BLACK("Black Team"),
-    WHITE("White Team"),
-    BLANK("");
+    WHITE("White Team");
 
     private String teamName;
 

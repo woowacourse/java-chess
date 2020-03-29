@@ -3,8 +3,6 @@ package chess.domain.chesspiece;
 import chess.domain.game.Team;
 import chess.domain.move.Direction;
 
-import java.util.List;
-
 import static chess.domain.game.Team.BLACK;
 
 public abstract class ChessPiece {
@@ -30,7 +28,7 @@ public abstract class ChessPiece {
         return name;
     }
 
-    public List<Direction> getMoveDirections() {
+    public Direction[] getMoveDirections() {
         return chessPieceInfo.getMoveDirections();
     }
 

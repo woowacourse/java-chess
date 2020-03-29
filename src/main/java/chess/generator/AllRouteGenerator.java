@@ -41,7 +41,7 @@ public class AllRouteGenerator {
     }
 
     private static void makeRoutes(ChessPiece chessPiece, List<Route> routes, Position initialPosition) {
-        List<Direction> directions = chessPiece.getMoveDirections();
+        Direction[] directions = chessPiece.getMoveDirections();
         List<Position> positions;
         for (Direction direction : directions) {
             positions = new ArrayList<>();

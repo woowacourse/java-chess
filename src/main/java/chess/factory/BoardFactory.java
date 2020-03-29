@@ -72,7 +72,7 @@ public class BoardFactory {
         List<ChessPiece> chessPieces = new ArrayList<>();
 
         for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
-            chessPieces.add(new Blank(BLANK));
+            chessPieces.add(new Blank());
         }
         board.add(Row.of(chessPieces));
     }

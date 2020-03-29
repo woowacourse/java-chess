@@ -182,7 +182,7 @@ public class Board {
     private void clearPosition(Position startPosition) {
         Row row = board.get(startPosition.getX() - 1);
 
-        row.modifyRow(startPosition.getY() - 1, new Blank(BLANK));
+        row.modifyRow(startPosition.getY() - 1, new Blank());
         board.set(startPosition.getX() - 1, row);
     }
 
