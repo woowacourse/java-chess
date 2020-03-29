@@ -3,6 +3,7 @@ package domain.commend;
 import domain.commend.exceptions.CommendTypeException;
 import domain.pieces.Pieces;
 import domain.point.Point;
+import domain.point.MovePoint;
 import domain.team.Team;
 import java.util.Arrays;
 import java.util.List;
@@ -34,9 +35,8 @@ public class Playing extends GameState {
     public StateStrategy move(Team turn, String input) {
         validate(input);
         List<String> splitInput = Arrays.asList(input.split(BLANK));
-        Point from = Point.of(splitInput.get(1));
-        Point to = Point.of(splitInput.get(2));
-        pieces.move(turn, from, to);
+        MovePoint movePoint = new MovePoint(Point.of(splitInput.get(1)), Point.of(splitInput.get(2)));
+        pieces.move(turn, movePoint);
         if (isTargetKing()) {
             return end();
         }

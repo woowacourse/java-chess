@@ -1,6 +1,7 @@
 package domain.pieces;
 
 import domain.move.Direction;
+import domain.point.MovePoint;
 import domain.point.Point;
 import domain.team.Team;
 import java.util.Map;
@@ -14,13 +15,18 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Direction direction, Map<Point, Piece> pieces, Point from, Point to) {
-        return isMovableDirection(direction, pieces, from, to);
+    public boolean isMovable(Direction direction, Map<Point, Piece> pieces, MovePoint movePoint) {
+        return isMovableDirection(direction, pieces, movePoint);
     }
 
-    private boolean isMovableDirection(Direction direction, Map<Point, Piece> pieces, Point from, Point to) {
-        if (Roles.isMovableLimitedCase(direction, pieces, from, to)) {
-            return isLinearOrDiagonal(direction, pieces, to);
+    @Override
+    public boolean isNoneTeam() {
+        return false;
+    }
+
+    private boolean isMovableDirection(Direction direction, Map<Point, Piece> pieces, MovePoint movePoint) {
+        if (Roles.isMovableLimitedCase(direction, movePoint)) {
+            return isLinearOrDiagonal(direction, pieces, movePoint.getTo());
         }
         return false;
     }

@@ -1,12 +1,11 @@
 package domain.pieces;
 
-import static domain.team.Team.BLACK;
 import static domain.team.Team.NONE;
-import static domain.team.Team.WHITE;
 
 import domain.move.PieceDirectionType;
 import domain.pieces.exceptions.IsNotMovableException;
 import domain.point.Point;
+import domain.point.MovePoint;
 import domain.team.Team;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -33,49 +32,49 @@ public class Pieces {
     }
 
     public boolean isExistPiece(Point point) {
-        return getPiece(point).isSameTeam(BLACK) || getPiece(point).isSameTeam(WHITE);
+        return getPiece(point).team != NONE;
     }
 
-    public void move(Team turn, Point from, Point to) {
-        validateMovable(turn, from, to);
-        pieces.put(to, pieces.get(from));
-        pieces.put(from, new Empty(NONE));
+    public void move(Team turn, MovePoint movePoint) {
+        validateMovable(turn, movePoint);
+        pieces.put(movePoint.getTo(), pieces.get(movePoint.getFrom()));
+        pieces.put(movePoint.getFrom(), new Empty(NONE));
     }
 
-    private void validateMovable(Team turn, Point from, Point to) {
-        validateExistPiece(from);
-        validateCorrectTurn(turn, from);
-        validateSameTeamToTarget(from, to);
-        validatePieceMovable(from, to);
+    private void validateMovable(Team turn, MovePoint movePoint) {
+        validateExistPiece(movePoint);
+        validateCorrectTurn(turn, movePoint);
+        validateSameTeamToTarget(movePoint);
+        validatePieceMovable(movePoint);
     }
 
-    private void validateExistPiece(Point from) {
-        if (!isExistPiece(from)) {
-            throw new IsNotMovableException(from.toString() + "에 움직일 수 있는 말이 없습니다.");
+    private void validateExistPiece(MovePoint movePoint) {
+        if (!isExistPiece(movePoint.getFrom())) {
+            throw new IsNotMovableException(movePoint.getFrom() + "에 움직일 수 있는 말이 없습니다.");
         }
     }
 
-    private void validateCorrectTurn(Team turn, Point from) {
-        if(!getPiece(from).isSameTeam(turn)) {
+    private void validateCorrectTurn(Team turn, MovePoint movePoint) {
+        if(!getPiece(movePoint.getFrom()).isSameTeam(turn)) {
             throw new IsNotMovableException(turn.toString() + "차례입니다.");
         }
     }
 
-    private void validateSameTeamToTarget(Point from, Point to) {
-        if (isSameTeamToTarget(from, to)) {
+    private void validateSameTeamToTarget(MovePoint movePoint) {
+        if (isSameTeamToTarget(movePoint)) {
             throw new IsNotMovableException("움직이려는 곳에 같은 색 말이 있습니다.");
         }
     }
 
-    private boolean isSameTeamToTarget(Point from, Point to) {
-        return pieces.get(from).team == pieces.get(to).team;
+    private boolean isSameTeamToTarget(MovePoint movePoint) {
+        return movePoint.isSameTeam(pieces);
     }
 
-    private void validatePieceMovable(Point from, Point to) {
-        boolean isMovable = PieceDirectionType.find(pieces, from).stream()
-            .anyMatch(direction -> pieces.get(from).isMovable(direction, pieces, from, to));
+    private void validatePieceMovable(MovePoint movePoint) {
+        boolean isMovable = PieceDirectionType.find(pieces, movePoint.getFrom()).stream()
+            .anyMatch(direction -> pieces.get(movePoint.getFrom()).isMovable(direction, pieces, movePoint));
         if (!isMovable) {
-            throw new IsNotMovableException(pieces.get(from).toString() + "은 그 장소로 못 움직입니다.");
+            throw new IsNotMovableException(pieces.get(movePoint.getFrom()).toString() + "은 그 장소로 못 움직입니다.");
         }
     }
 }
