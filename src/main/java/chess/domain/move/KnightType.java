@@ -11,12 +11,12 @@ public class KnightType implements MoveType {
 
     @Override
     public Direction getDirection() {
-        return null;
+        throw new UnsupportedOperationException("Knight getDirection 에러");
     }
 
     @Override
     public int getCount() {
-        return 0;
+        throw new UnsupportedOperationException("Kinght getCount() 에러");
     }
 
     public Position getTargetPosition() {

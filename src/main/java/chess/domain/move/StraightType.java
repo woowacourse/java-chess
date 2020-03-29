@@ -12,17 +12,17 @@ public class StraightType implements MoveType {
     }
 
     private int findCount(Position source, Position target) {
-        return Math.abs(source.calculateFileDistance(target) + source.calculateRankDistance(target));
+        return Math.abs(source.calculateXPositionDistance(target) + source.calculateYPositionDistance(target));
     }
 
     private Direction findDirection(Position source, Position target) {
         if (source.isSameFile(target)) {
-            if (source.calculateRankDistance(target) > 0) {
+            if (source.isDownDirection(target)) {
                 return Direction.DOWN;
             }
             return Direction.UP;
         }
-        if (source.calculateFileDistance(target) > 0) {
+        if (source.isLeftDirection(target)) {
             return Direction.LEFT;
         }
         return Direction.RIGHT;

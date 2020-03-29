@@ -12,17 +12,17 @@ public class CrossType implements MoveType {
     }
 
     private int findCount(Position source, Position target) {
-        return Math.abs(source.calculateRankDistance(target));
+        return Math.abs(source.calculateYPositionDistance(target));
     }
 
     private Direction findDirection(Position source, Position target) {
-        if (source.calculateFileDistance(target) < 0 && source.calculateRankDistance(target) < 0) {
+        if (source.isRightDirection(target) && source.isUpDirection(target)) {
             return Direction.UP_RIGHT;
         }
-        if (source.calculateFileDistance(target) > 0 && source.calculateRankDistance(target) < 0) {
+        if (source.isUpDirection(target) && source.isLeftDirection(target)) {
             return Direction.UP_LEFT;
         }
-        if (source.calculateFileDistance(target) > 0 && source.calculateRankDistance(target) > 0) {
+        if (source.isDownDirection(target) && source.isLeftDirection(target)) {
             return Direction.DOWN_LEFT;
         }
         return Direction.DOWN_RIGHT;

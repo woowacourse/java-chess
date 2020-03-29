@@ -21,15 +21,15 @@ public class MoveTypeFactory {
     }
 
     private static boolean isKnightType(Position source, Position target) {
-        return (Math.abs(source.calculateFileDistance(target)) == ONE_ABSOLUTE_DISTANCE
-                && Math.abs(source.calculateRankDistance(target)) == TWO_ABSOLUTE_DISTANCE)
-                || (Math.abs(source.calculateRankDistance(target)) == ONE_ABSOLUTE_DISTANCE
-                && Math.abs(source.calculateFileDistance(target)) == TWO_ABSOLUTE_DISTANCE);
+        return (Math.abs(source.calculateXPositionDistance(target)) == ONE_ABSOLUTE_DISTANCE
+                && Math.abs(source.calculateYPositionDistance(target)) == TWO_ABSOLUTE_DISTANCE)
+                || (Math.abs(source.calculateYPositionDistance(target)) == ONE_ABSOLUTE_DISTANCE
+                && Math.abs(source.calculateXPositionDistance(target)) == TWO_ABSOLUTE_DISTANCE);
     }
 
     private static boolean isCrossType(Position source, Position target) {
-        return Math.abs(source.calculateRankDistance(target))
-                == Math.abs(source.calculateFileDistance(target));
+        return Math.abs(source.calculateYPositionDistance(target))
+                == Math.abs(source.calculateXPositionDistance(target));
     }
 
     private static boolean isStraightType(Position source, Position target) {

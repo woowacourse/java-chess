@@ -1,64 +1,87 @@
 package chess.domain;
 
-import chess.domain.chessPiece.piece.Pawn;
-import chess.domain.chessboard.ChessBoard;
+import chess.domain.board.ChessBoard;
 import chess.domain.move.Direction;
 import chess.domain.move.KnightType;
 import chess.domain.move.MoveType;
+import chess.domain.piece.Pawn;
 
 import java.util.Objects;
 
 public class Position {
     private static final String ERROR_MESSAGE_EXIST_PIECE_ON_PATH = "경로에 다른 말이 존재합니다.";
-    private static final int Y_AXIS_INDEX = 1;
-    private static final int X_AXIS_INDEX = 0;
+    private static final int Y_POSITION_VALUE = 1;
+    private static final int X_POSITION_INDEX = 0;
 
-    private XAxis xAxis;
-    private YAxis yAxis;
+    private XPosition xPosition;
+    private YPosition yPosition;
 
-    private Position(XAxis xAxis, YAxis yAxis) {
-        this.xAxis = xAxis;
-        this.yAxis = yAxis;
+    private Position(XPosition xPosition, YPosition yPosition) {
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
     }
 
     public static Position of(String coordinate) {
-        String[] xyAxisValue = coordinate.split("");
-        return new Position(XAxis.of(xyAxisValue[X_AXIS_INDEX]), YAxis.of(xyAxisValue[Y_AXIS_INDEX]));
+        String[] xyPositionValue = coordinate.split("");
+        return new Position(XPosition.of(xyPositionValue[X_POSITION_INDEX])
+                , YPosition.of(xyPositionValue[Y_POSITION_VALUE]));
     }
 
-    public static Position of(XAxis xAxis, YAxis yAxis) {
-        return new Position(xAxis, yAxis);
+    public static Position of(XPosition xPosition, YPosition yPosition) {
+        return new Position(xPosition, yPosition);
+    }
+
+    public boolean isNewLine() {
+        return xPosition == XPosition.A;
+    }
+
+    public boolean isSameRank(Position target) {
+        return this.yPosition == target.yPosition;
+    }
+
+    public boolean isSameFile(Position target) {
+        return isSameFile(target.xPosition);
+    }
+
+    public boolean isSameFile(XPosition xPosition) {
+        return this.xPosition == xPosition;
+    }
+
+    public boolean isUpDirection(Position target) {
+        return calculateYPositionDistance(target) < 0;
+    }
+
+    public boolean isDownDirection(Position target) {
+        return calculateYPositionDistance(target) > 0;
+    }
+
+    public boolean isLeftDirection(Position target) {
+        return calculateXPositionDistance(target) > 0;
+    }
+
+    public boolean isRightDirection(Position target) {
+        return calculateXPositionDistance(target) < 0;
+    }
+
+    public int calculateYPositionDistance(Position target) {
+        return yPosition.getNumber() - target.yPosition.getNumber();
+    }
+
+    public int calculateXPositionDistance(Position target) {
+        return xPosition.getNumber() - target.xPosition.getNumber();
+    }
+
+    private void isExistPieceOnPath(ChessBoard chessBoard, int xDegree, int yDegree) {
+        if (chessBoard.isExistPiece(Position.of(XPosition.of(xDegree), YPosition.of(yDegree)))) {
+            throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_PIECE_ON_PATH);
+        }
     }
 
     public boolean isPawnStartLine(Pawn pawn) {
         if (pawn.isBlackTeam()) {
-            return this.yAxis == YAxis.TWO;
+            return this.yPosition == YPosition.TWO;
         }
-        return this.yAxis == YAxis.SEVEN;
-    }
-
-    public boolean isNewLine() {
-        return xAxis == XAxis.A;
-    }
-
-    public boolean isSameRank(Position target) {
-        return this.yAxis == target.yAxis;
-    }
-
-    public boolean isSameFile(Position target) {
-        return isSameFile(target.xAxis);
-    }
-
-    public boolean isSameFile(XAxis xAxis) {
-        return this.xAxis == xAxis;
-    }
-
-    public int calculateRankDistance(Position target) {
-        return yAxis.getNumber() - target.yAxis.getNumber();
-    }
-
-    public int calculateFileDistance(Position target) {
-        return xAxis.getNumber() - target.xAxis.getNumber();
+        return this.yPosition == YPosition.SEVEN;
     }
 
     public void move(MoveType moveType, ChessBoard chessBoard) {
@@ -70,101 +93,122 @@ public class Position {
     private void moveWhenKnightType(MoveType moveType) {
         if (moveType instanceof KnightType) {
             Position target = ((KnightType) moveType).getTargetPosition();
-            this.xAxis = target.xAxis;
-            this.yAxis = target.yAxis;
+            this.xPosition = target.xPosition;
+            this.yPosition = target.yPosition;
         }
     }
 
     private void moveWhenStraight(MoveType moveType, ChessBoard chessBoard) {
         Direction direction = moveType.getDirection();
         int count = moveType.getCount();
-        int xAxisNumber = this.xAxis.getNumber();
-        int yAxisNumber = this.yAxis.getNumber();
 
-        if (direction == Direction.UP) {
-            for (int i = 0; i < count; i++) {
-                yAxisNumber++;
-                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
-            }
-            this.yAxis = YAxis.of(yAxisNumber);
-        }
-
-        if (direction == Direction.DOWN) {
-            for (int i = 0; i < count; i++) {
-                yAxisNumber--;
-                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
-            }
-            this.yAxis = YAxis.of(yAxisNumber);
-        }
-
-        if (direction == Direction.RIGHT) {
-            for (int i = 0; i < count; i++) {
-                xAxisNumber++;
-                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
-            }
-            this.xAxis = XAxis.of(xAxisNumber);
-        }
-
-        if (direction == Direction.LEFT) {
-            for (int i = 0; i < count; i++) {
-                xAxisNumber--;
-                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
-            }
-            this.xAxis = XAxis.of(xAxisNumber);
+        for (int i = 0; i < count; i++) {
+            moveUpDirection(chessBoard, direction);
+            moveDownDirection(chessBoard, direction);
+            moveLeftDirection(chessBoard, direction);
+            moveRightDirection(chessBoard, direction);
         }
     }
 
     private void moveWhenCross(MoveType moveType, ChessBoard chessBoard) {
         Direction direction = moveType.getDirection();
         int count = moveType.getCount();
-        int xAxisNumber = this.xAxis.getNumber();
-        int yAxisNumber = this.yAxis.getNumber();
 
-        if (direction == Direction.UP_RIGHT) {
-            for (int i = 0; i < count; i++) {
-                xAxisNumber++;
-                yAxisNumber++;
-                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
-            }
-            this.xAxis = XAxis.of(xAxisNumber);
-            this.yAxis = YAxis.of(yAxisNumber);
-        }
-
-        if (direction == Direction.UP_LEFT) {
-            for (int i = 0; i < count; i++) {
-                xAxisNumber--;
-                yAxisNumber++;
-                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
-            }
-            this.xAxis = XAxis.of(xAxisNumber);
-            this.yAxis = YAxis.of(yAxisNumber);
-        }
-
-        if (direction == Direction.DOWN_RIGHT) {
-            for (int i = 0; i < count; i++) {
-                xAxisNumber++;
-                yAxisNumber--;
-                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
-            }
-            this.xAxis = XAxis.of(xAxisNumber);
-            this.yAxis = YAxis.of(yAxisNumber);
-        }
-
-        if (direction == Direction.DOWN_LEFT) {
-            for (int i = 0; i < count; i++) {
-                xAxisNumber--;
-                yAxisNumber--;
-                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
-            }
-            this.xAxis = XAxis.of(xAxisNumber);
-            this.yAxis = YAxis.of(yAxisNumber);
+        for (int i = 0; i < count; i++) {
+            moveUpRightDirection(chessBoard, direction);
+            moveUpLeftDirection(chessBoard, direction);
+            moveDownRightDirection(chessBoard, direction);
+            moveDownLeftDirection(chessBoard, direction);
         }
     }
 
-    private void isExistPieceOnPath(ChessBoard chessBoard, int xDegree, int yDegree) {
-        if (chessBoard.isExistPiece(Position.of(XAxis.of(xDegree), YAxis.of(yDegree)))) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_PIECE_ON_PATH);
+    private void moveUpDirection(ChessBoard chessBoard, Direction direction) {
+        if (direction == Direction.UP) {
+            int xPositionNumber = this.xPosition.getNumber();
+            int yPositionNumber = this.yPosition.getNumber();
+            yPositionNumber++;
+            isExistPieceOnPath(chessBoard, xPositionNumber, yPositionNumber);
+            movePiece(xPositionNumber, yPositionNumber);
         }
+    }
+
+    private void moveDownDirection(ChessBoard chessBoard, Direction direction) {
+        if (direction == Direction.DOWN) {
+            int xPositionNumber = this.xPosition.getNumber();
+            int yPositionNumber = this.yPosition.getNumber();
+            yPositionNumber--;
+            isExistPieceOnPath(chessBoard, xPositionNumber, yPositionNumber);
+            movePiece(xPositionNumber, yPositionNumber);
+        }
+    }
+
+    private void moveLeftDirection(ChessBoard chessBoard, Direction direction) {
+        if (direction == Direction.LEFT) {
+            int xPositionNumber = this.xPosition.getNumber();
+            int yPositionNumber = this.yPosition.getNumber();
+            xPositionNumber--;
+            isExistPieceOnPath(chessBoard, xPositionNumber, yPositionNumber);
+            movePiece(xPositionNumber, yPositionNumber);
+        }
+    }
+
+    private void moveRightDirection(ChessBoard chessBoard, Direction direction) {
+        if (direction == Direction.RIGHT) {
+            int xPositionNumber = this.xPosition.getNumber();
+            int yPositionNumber = this.yPosition.getNumber();
+            xPositionNumber++;
+            isExistPieceOnPath(chessBoard, xPositionNumber, yPositionNumber);
+            movePiece(xPositionNumber, yPositionNumber);
+        }
+    }
+
+    private void moveUpRightDirection(ChessBoard chessBoard, Direction direction) {
+        if (direction == Direction.UP_RIGHT) {
+            int xPositionNumber = this.xPosition.getNumber();
+            int yPositionNumber = this.yPosition.getNumber();
+            xPositionNumber++;
+            yPositionNumber++;
+            isExistPieceOnPath(chessBoard, xPositionNumber, yPositionNumber);
+            movePiece(xPositionNumber, yPositionNumber);
+        }
+    }
+
+    private void moveUpLeftDirection(ChessBoard chessBoard, Direction direction) {
+        if (direction == Direction.UP_LEFT) {
+            int xPositionNumber = this.xPosition.getNumber();
+            int yPositionNumber = this.yPosition.getNumber();
+            xPositionNumber--;
+            yPositionNumber++;
+            isExistPieceOnPath(chessBoard, xPositionNumber, yPositionNumber);
+            movePiece(xPositionNumber, yPositionNumber);
+        }
+    }
+
+    private void moveDownRightDirection(ChessBoard chessBoard, Direction direction) {
+        if (direction == Direction.DOWN_RIGHT) {
+            int xPositionNumber = this.xPosition.getNumber();
+            int yPositionNumber = this.yPosition.getNumber();
+            xPositionNumber++;
+            yPositionNumber--;
+            isExistPieceOnPath(chessBoard, xPositionNumber, yPositionNumber);
+            movePiece(xPositionNumber, yPositionNumber);
+        }
+    }
+
+    private void moveDownLeftDirection(ChessBoard chessBoard, Direction direction) {
+        if (direction == Direction.DOWN_LEFT) {
+            int xPositionNumber = this.xPosition.getNumber();
+            int yPositionNumber = this.yPosition.getNumber();
+            xPositionNumber--;
+            yPositionNumber--;
+            isExistPieceOnPath(chessBoard, xPositionNumber, yPositionNumber);
+            movePiece(xPositionNumber, yPositionNumber);
+        }
+    }
+
+    private void movePiece(int xPositionNumber, int yPositionNumber) {
+        this.yPosition = YPosition.of(yPositionNumber);
+        this.xPosition = XPosition.of(xPositionNumber);
     }
 
     @Override
@@ -172,12 +216,12 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return xAxis == position.xAxis &&
-                yAxis == position.yAxis;
+        return xPosition == position.xPosition &&
+                yPosition == position.yPosition;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(xAxis, yAxis);
+        return Objects.hash(xPosition, yPosition);
     }
 }

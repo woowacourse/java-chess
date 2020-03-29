@@ -1,11 +1,8 @@
 package chess.view;
 
 import chess.domain.Position;
-import chess.domain.chessPiece.piece.Piece;
-import chess.domain.chessPiece.team.BlackTeam;
-import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.chessPiece.team.WhiteTeam;
-import chess.domain.chessboard.ChessBoard;
+import chess.domain.board.ChessBoard;
+import chess.domain.piece.Piece;
 
 public class OutputView {
     private static final String EMPTY_MARK = ".";
@@ -31,10 +28,8 @@ public class OutputView {
     }
 
     public static void calculateScore(ChessBoard chessBoard) {
-        TeamStrategy blackMark = new BlackTeam();
-        TeamStrategy whiteMark = new WhiteTeam();
-        double blackTeamScore = chessBoard.calculateTeamScore(blackMark);
-        double whiteTeamScore = chessBoard.calculateTeamScore(whiteMark);
+        double blackTeamScore = chessBoard.calculateBlackTeamScore();
+        double whiteTeamScore = chessBoard.calculateWhiteTeamScore();
 
         System.out.println(String.format(STRING_FORMAT_PRINT_SCORE, blackTeamScore, whiteTeamScore));
     }

@@ -9,7 +9,7 @@ class PositionTest {
     @Test
     @DisplayName("of 테스트")
     void of() {
-        Position result = Position.of(XAxis.F, YAxis.SIX);
+        Position result = Position.of(XPosition.F, YPosition.SIX);
 
         assertThat(Position.of("f6")).isEqualTo(result);
     }
@@ -45,7 +45,7 @@ class PositionTest {
         Position source = Position.of("b7");
         Position target = Position.of("b8");
 
-        assertThat(source.calculateRankDistance(target)).isEqualTo(-1);
+        assertThat(source.calculateYPositionDistance(target)).isEqualTo(-1);
     }
 
     @Test
@@ -54,6 +54,6 @@ class PositionTest {
         Position source = Position.of("a8");
         Position target = Position.of("b8");
 
-        assertThat(source.calculateFileDistance(target)).isEqualTo(-1);
+        assertThat(source.calculateXPositionDistance(target)).isEqualTo(-1);
     }
 }
