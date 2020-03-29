@@ -11,29 +11,34 @@ import chess.domain.piece.pawn.MovedPawn;
 import chess.domain.piece.queen.Queen;
 import chess.domain.piece.rook.Rook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum PieceType {
-    INITIALIZED_PAWN("p", InitializedPawn.class, initializedPawnCanNotMoveStrategies()),
-    RUNNING_PAWN("p", MovedPawn.class, movedPawnCanNotMoveStrategies()),
-    ROOK("r", Rook.class, rookCanNotMoveStrategies()),
-    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies()),
-    QUEEN("q", Queen.class, queenCanNotMoveStrategies()),
-    KING("k", King.class, kingCanNotMoveStrategies()),
-    KNIGHT("n", Knight.class, knightCanNotMoveStrategies());
+    INITIALIZED_PAWN("p", InitializedPawn.class, initializedPawnCanNotMoveStrategies(), new NullList()),
+    RUNNING_PAWN("p", MovedPawn.class, movedPawnCanNotMoveStrategies(), new NullList()),
+    ROOK("r", Rook.class, rookCanNotMoveStrategies(), Arrays.asList(1,8)),
+    KNIGHT("n", Knight.class, knightCanNotMoveStrategies(), Arrays.asList(2,7)),
+    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies(), Arrays.asList(3,6)),
+    QUEEN("q", Queen.class, queenCanNotMoveStrategies(), Collections.singletonList(4)),
+    KING("k", King.class, kingCanNotMoveStrategies(), Collections.singletonList(5));
+
 
     private final String name;
     private final Class<? extends Piece> type;
     private final List<CanNotMoveStrategy> canNotMoveStrategies;
+    private final List<Integer> initialColumns;
 
-    PieceType(String name, Class<? extends Piece> type, List<CanNotMoveStrategy> canNotMoveStrategies) {
+    PieceType(String name, Class<? extends Piece> type, List<CanNotMoveStrategy> canNotMoveStrategies, List<Integer> initialColumns) {
         this.name = name;
         this.type = type;
         this.canNotMoveStrategies = canNotMoveStrategies;
+        this.initialColumns = initialColumns;
     }
 
-    public static PieceType valueOf(Class<? extends Piece> type) {
+    static PieceType valueOf(Class<? extends Piece> type) {
         for (PieceType pieceType : values()) {
             if (pieceType.type == type) {
                 return pieceType;
@@ -42,11 +47,21 @@ public enum PieceType {
         throw new IllegalArgumentException("해당하는 PieceType을 찾을 수 없습니다.");
     }
 
-    public String getName() {
+    static Class findTypeByInitialColumn(int initialColumn) {
+        for (PieceType piece : values()) {
+            if (piece.initialColumns.contains(initialColumn)) {
+                return piece.type;
+            }
+        }
+
+        throw new IllegalArgumentException(String.format("%d에 해당하는 체스 말을 찾을 수 없습니다.", initialColumn));
+    }
+
+    String getName() {
         return name;
     }
 
-    public List<CanNotMoveStrategy> getCanNotMoveStrategies() {
+    List<CanNotMoveStrategy> getCanNotMoveStrategies() {
         return canNotMoveStrategies;
     }
 
@@ -115,5 +130,12 @@ public enum PieceType {
                 new CanNotReach(Knight.MAX_DISTANCE),
                 new IsHeadingStraightDirection()
         );
+    }
+
+    private static class NullList extends ArrayList {
+        @Override
+        public boolean contains(Object o) {
+            return false;
+        }
     }
 }
