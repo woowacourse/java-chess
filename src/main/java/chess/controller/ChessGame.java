@@ -42,7 +42,6 @@ public class ChessGame {
                     board = board.movePiece(inputCommand[FROM_POSITION_INDEX], inputCommand[TO_POSITION_INDEX], turnFlag);
                     turnFlag = INITIAL_TURN_OF_BLACK - turnFlag;
                     OutputView.printBoard(board.getBoard());
-                    gameTerminateWhenFinished();
                 }
             } catch (BlankMoveUnsupportedException | MoveCommandWhenBoardNullException |
                     PieceImpossibleMoveException | TakeTurnException e) {
@@ -52,6 +51,11 @@ public class ChessGame {
             if (runner.isStatus()) {
                 OutputView.printTeamScore(gameResult.calculateScore(board, Team.WHITE),
                         gameResult.calculateScore(board, Team.BLACK));
+            }
+
+            if (board.isFinished()) {
+                OutputView.printGameFinish();
+                break;
             }
         }
     }
@@ -63,13 +67,6 @@ public class ChessGame {
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
             return inputCommandWithValidation();
-        }
-    }
-
-    private void gameTerminateWhenFinished() {
-        if (board.isFinished()) {
-            OutputView.printGameFinish();
-            System.exit(0);
         }
     }
 }
