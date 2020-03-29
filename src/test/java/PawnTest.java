@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
-    @DisplayName("이동 가능한 방향 - 전진, 앞 대각선")
+    @DisplayName("이동 가능한 방향: 전진, 전진 방향 대각선")
     @ParameterizedTest
     @MethodSource("generateDirection")
     void pawnDirectionsTest(Player player, Direction[] directions) {
@@ -32,7 +32,7 @@ public class PawnTest {
     }
 
 
-    @DisplayName("이동 칸 수 확인: 초기 이동 성공 (1칸, 2칸)")
+    @DisplayName("이동 칸 수: 초기 이동 (가능) 1칸, 2칸")
     @ParameterizedTest
     @MethodSource("generatePositions")
     void tileSize_1(Player player, Position from, Position to) {
@@ -49,7 +49,7 @@ public class PawnTest {
         );
     }
 
-    @DisplayName("이동 칸 수 확인: 초기 이동 실패 (2칸 초과)")
+    @DisplayName("이동 칸 수: 초기 이동 (불가능) 2칸 초과)")
     @ParameterizedTest
     @MethodSource("generatePositions4")
     void tileSize_4(Player player, Position from, Position to) {
@@ -64,7 +64,7 @@ public class PawnTest {
         );
     }
 
-    @DisplayName("이동 칸 수 확인: 초기가 아닐 때 이동 (1칸)")
+    @DisplayName("이동 칸 수: 초기 이동이 아닐 때 (가능) 1칸")
     @ParameterizedTest
     @MethodSource("generatePositions2")
     void tileSize_1(Player player, Position initPosition, Position from, Position to) {
@@ -79,7 +79,7 @@ public class PawnTest {
                 );
     }
 
-    @DisplayName("이동 칸 수 확인: 초기가 아닐 때 이동 실패 (1칸 초과)")
+    @DisplayName("이동 칸 수: 초기 이동이 아닐 때 (불가능) 1칸 초과")
     @ParameterizedTest
     @MethodSource("generatePositions3")
     void tileSize_2(Player player, Position initPosition, Position from, Position to) {
@@ -95,6 +95,7 @@ public class PawnTest {
     }
 
     // (예외 상황) 대각선 공격 (1) 대각선이여야 하고, (2) 같은 편이 아니여야 한다.
+    @DisplayName("대각선 공격: (가능) 이동할 위치에 상대 팀 기물이 있을 때")
     @ParameterizedTest
     @MethodSource("generatePositions5")
     void 대각선_공격_성공_다른_팀(Player sourcePlayer, Position from, Player targetPlayer, Position to) {
@@ -113,6 +114,8 @@ public class PawnTest {
         );
     }
 
+
+    @DisplayName("대각선 공격: (불가능) 이동할 위치에 아무 것도 없을 때")
     @ParameterizedTest
     @MethodSource("generatePositions6")
     void 대각선_공격시_empty(Player sourcePlayer, Position from, Position to) {
@@ -130,6 +133,7 @@ public class PawnTest {
         );
     }
 
+    @DisplayName("대각선 공격: (비정상) 이동할 위치에 같은 팀이 있을 때")
     @ParameterizedTest
     @MethodSource("generatePositions7")
     void 대각선_공격_같은_팀(Player player, Position from, Position to) {
@@ -147,6 +151,8 @@ public class PawnTest {
         );
     }
 
+
+    @DisplayName("전진: (가능) 이동할 위치에 아무 기물도 없을 때")
     @ParameterizedTest
     @MethodSource("generatePositions8")
     void 전진_성공_empty(Player player, Position from, Position to) {
@@ -161,6 +167,8 @@ public class PawnTest {
         );
     }
 
+
+    @DisplayName("전진 확인: (불가능) 이동할 위치에 기물이 있을 때")
     @ParameterizedTest
     @MethodSource("generatePositions9")
     void 전진_실패_장애물(Player player, Position from, Position to) {

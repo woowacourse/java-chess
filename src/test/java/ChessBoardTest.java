@@ -34,6 +34,7 @@ public class ChessBoardTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @DisplayName("(예외) 같은 위치로 이동")
     @Test
     void 같은_위치로_이동했을때() {
         ChessBoard chessBoard = new ChessBoard();
@@ -42,7 +43,7 @@ public class ChessBoardTest {
                 .isInstanceOf(NotMoveException.class);
     }
 
-    @DisplayName("각각의_플레이어_점수_계산_테스트")
+    @DisplayName("점수 계산")
     @ParameterizedTest
     @EnumSource(value = Player.class)
     void createStatusTest(Player player) {
@@ -53,7 +54,7 @@ public class ChessBoardTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("ChessBoard의 한 column에 같은 Player 소유의 Pawn 개수 확인")
+    @DisplayName("ChessBoard 한 column에 같은 Player 소유의 Pawn 개수 확인")
     @ParameterizedTest
     @MethodSource("generatePositions3")
     void 폰의점수를확인하는테스트(List<Square> columnLine, Player player, int exptectd) {
@@ -94,6 +95,7 @@ public class ChessBoardTest {
         );
     }
 
+    @DisplayName("우승자 확인")
     @Test
     void 우승자_확인() {
         List<Status> statuses = new ArrayList<>();

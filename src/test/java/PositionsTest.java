@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class PositionsTest {
 
-    @DisplayName("Position 객체의 정적 팩토리 생성 방식 확인")
+    @DisplayName("Position 객체의 정적 팩토리 생성 및 비교")
     @Test
     void equalsTest() {
         Position position1 = Positions.of(Row.A, Column.FIVE);
@@ -18,7 +18,7 @@ public class PositionsTest {
         Assertions.assertThat(position1).isEqualTo(position2);
     }
 
-    @DisplayName("Position 생성: 정상적으로 생성")
+    @DisplayName("Position 생성: (가능)")
     @ParameterizedTest
     @ValueSource(strings = {"a1, a8, h1, h8"})
     void positionOfTest(String input) {
@@ -26,7 +26,7 @@ public class PositionsTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("Position 생성 예외: 체스판의 범위를 벗어났을 때")
+    @DisplayName("Position 생성: (예외) 체스판의 범위를 벗어났을 때")
     @ParameterizedTest
     @ValueSource(strings = {"a20, i1"})
     void positionOfTestByException(String input) {

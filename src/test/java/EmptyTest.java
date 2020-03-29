@@ -10,13 +10,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 public class EmptyTest {
     @DisplayName("(예외) empty는 player 동일 여부를 비교할 수 없다.")
     @Test
-    void test() {
+    void comparePlayer() {
         Empty empty = Empty.getInstance();
         assertThatThrownBy(() -> empty.isSamePlayer(new King(Player.WHITE)))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("(예외) empty는 이동 할 수 없습니다.")
+    @DisplayName("(예외) empty는 이동 할 수 없다.")
     @Test
     void test2() {
         Empty empty = Empty.getInstance();

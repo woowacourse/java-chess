@@ -17,17 +17,17 @@ import java.util.List;
 public class KnightTest {
     private final Knight knight = new Knight(Player.WHITE);
 
-    @DisplayName("이동 가능한 방향")
+    @DisplayName("이동 가능한 방향 확인: 모든 방향")
     @Test
     void knightDirectionsTest() {
         List<Direction> directions = knight.getDirections();
         Assertions.assertThat(directions).containsExactly(Direction.values());
     }
 
-    @DisplayName("이동 가능한 위치 확인 (정상)")
+    @DisplayName("이동 칸 수와 방향 확인: (가능)")
     @ParameterizedTest
     @MethodSource("generatePositions1")
-    void test1(Position from, Position to) {
+    void movePositionTestAvailable(Position from, Position to) {
         Knight knight = new Knight(Player.WHITE);
         Assertions.assertThat(knight.validateMovePosition(from, to)).isTrue();
     }
@@ -45,15 +45,15 @@ public class KnightTest {
                 );
     }
 
-    @DisplayName("이동 가능한 위치 확인 (비정상)")
+    @DisplayName("이동 칸 수와 방향 확인: (불가능)")
     @ParameterizedTest
-    @MethodSource("generatePositions2")
+    @MethodSource("movePositionTestUnavailable")
     void test2(Position from, Position to) {
         Knight knight = new Knight(Player.WHITE);
         Assertions.assertThat(knight.validateMovePosition(from, to)).isFalse();
     }
 
-    static Stream<Arguments> generatePositions2() {
+    static Stream<Arguments> movePositionTestUnavailable() {
         return Stream.of(
                 Arguments.of(Positions.of("g6"), Positions.of("h3")),
                 Arguments.of(Positions.of("g3"), Positions.of("h4")),

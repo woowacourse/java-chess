@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PieceTest {
-    @DisplayName("기물과 빈칸의 Player 비교")
+    @DisplayName("체스 기물과 빈칸의 Player 비교")
     @ParameterizedTest
     @CsvSource({"WHITE", "BLACK"})
     void test(String playerType) {
@@ -19,7 +19,7 @@ public class PieceTest {
         assertThat(king.isSamePlayer(empty)).isFalse();
     }
 
-    @DisplayName("서로 같은 Player인지 검사")
+    @DisplayName("서로 같은 Player인지 비교")
     @ParameterizedTest
     @CsvSource({"WHITE", "BLACK"})
     void test2(String playerType) {
@@ -29,7 +29,7 @@ public class PieceTest {
         assertThat(king.isSamePlayer(queen)).isTrue();
     }
 
-    @DisplayName("서로 다른 Player인지 검사")
+    @DisplayName("서로 다른 Player인지 비교")
     @ParameterizedTest
     @CsvSource({"WHITE, BLACK", "BLACK, WHITE"})
     void test3(String playerType1, String playerType2) {
