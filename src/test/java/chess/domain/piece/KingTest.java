@@ -1,12 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,9 +8,16 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-class KingStrategyTest {
+import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.exception.InvalidMovementException;
+
+class KingTest {
 
     @ParameterizedTest
     @DisplayName("이동 경로 찾기")

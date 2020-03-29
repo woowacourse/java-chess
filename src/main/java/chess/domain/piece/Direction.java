@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.board.Column;
-import chess.domain.board.Row;
-
 import java.util.Optional;
 import java.util.function.Function;
+
+import chess.domain.board.Column;
+import chess.domain.board.Row;
 
 /*
  *  N(North) - 북쪽으로 한 칸 이동(Row 1 증가)

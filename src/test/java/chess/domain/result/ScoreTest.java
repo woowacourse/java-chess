@@ -1,15 +1,15 @@
 package chess.domain.result;
 
-import chess.domain.piece.GamePiece;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static chess.domain.piece.ChessPiece.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.domain.piece.ChessPiece.*;
-import static chess.domain.player.PlayerColor.BLACK;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.piece.GamePiece;
 
 class ScoreTest {
 

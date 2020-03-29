@@ -1,22 +1,22 @@
 package chess.domain.board;
 
-import chess.domain.exception.InvalidMovementException;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.GamePiece;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import static chess.domain.piece.ChessPiece.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static chess.domain.piece.ChessPiece.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import chess.domain.exception.InvalidMovementException;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.GamePiece;
 
 class BoardTest {
 

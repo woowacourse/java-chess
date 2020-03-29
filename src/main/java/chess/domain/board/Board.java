@@ -1,5 +1,14 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.EmptyPiece;
@@ -7,13 +16,7 @@ import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 public class Board {
-
-    private static final int NEXT = 1;
 
     private final Map<Position, GamePiece> board;
     private final Status status;
@@ -98,11 +101,9 @@ public class Board {
     public List<Line> getRows() {
         List<Line> rows = new ArrayList<>();
         List<GamePiece> gamePieces = new ArrayList<>(getBoard().values());
-        // TODO: 2020/03/29 LINE
-        int columnLength = Column.values().length;
+
         for (int rowNumber = 0; rowNumber < Row.values().length; rowNumber++) {
-            Line row = new Line(gamePieces.subList(rowNumber * columnLength, (rowNumber + NEXT) * columnLength));
-            rows.add(row);
+            rows.add(Line.of(gamePieces, rowNumber));
         }
 
         return rows;

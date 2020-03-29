@@ -2,7 +2,6 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.domain.command.Command;
-import chess.domain.exception.InvalidMovementException;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -15,7 +14,7 @@ public class Application {
 
         OutputView.printStart();
         do {
-            command = Command.from(InputView.receiveCommand());
+            command = receiveCommand();
             if (command.isStart()) {
                 OutputView.printBoard(service.placeInitialPieces());
             }
@@ -28,11 +27,20 @@ public class Application {
         } while (command.isNotEnd() && service.checkGameNotFinished());
     }
 
+    private static Command receiveCommand() {
+        try {
+            return Command.from(InputView.receiveCommand());
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return receiveCommand();
+        }
+    }
+
     private static void executeMovement(ChessService service, Command command) {
         try {
             Board board = service.move(command.getSource(), command.getTarget());
             OutputView.printBoard(board);
-        } catch (IllegalArgumentException | InvalidMovementException e) {
+        } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }
     }
