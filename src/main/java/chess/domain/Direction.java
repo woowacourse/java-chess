@@ -1,9 +1,9 @@
 package chess.domain;
 
+import chess.domain.position.Position;
+
 import java.util.Arrays;
 import java.util.List;
-
-import chess.domain.position.Position;
 
 public enum Direction {
     NORTH(0, 1),
@@ -49,19 +49,11 @@ public enum Direction {
                 .filter(dir -> isSameTangent(dir, tangent))
                 .filter(dir -> dir.xDegree * columnDifference >= 0 && dir.yDegree * rowDifference >= 0)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("도달할 수 없는 위치입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 방향으로 이동할 수 없습니다."));
     }
 
     private static boolean isSameTangent(Direction dir, double tangent) {
         return (dir.yDegree / (double) dir.xDegree) == tangent;
-    }
-
-    public int getXDegree() {
-        return xDegree;
-    }
-
-    public int getYDegree() {
-        return yDegree;
     }
 
     public static List linearDirection() {
@@ -86,5 +78,13 @@ public enum Direction {
 
     public static List blackPawnDirection() {
         return BLACK_PAWN_DIRECTION;
+    }
+
+    public int getXDegree() {
+        return xDegree;
+    }
+
+    public int getYDegree() {
+        return yDegree;
     }
 }
