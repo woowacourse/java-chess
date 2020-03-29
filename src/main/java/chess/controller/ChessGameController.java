@@ -6,24 +6,30 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGameController {
+    private static final String START = "start";
+    private static final String END = "end";
+    private static final String MOVE = "move";
+    private static final String STATUS = "status";
+    private static final String COMMAND_DELIMITER = " ";
     private ChessGame chessGame;
 
     public ChessGameController(ChessGame chessGame) {
         this.chessGame = chessGame;
     }
 
-    public void command(String input) {
-        String[] tokens = input.split(" ");
-        if (tokens[0].equals("start")) {
+    private void command(String input) {
+        String[] tokens = input.split(COMMAND_DELIMITER);
+        String command = tokens[0];
+        if (START.equals(command)) {
             chessGame.start();
         }
-        if (tokens[0].equals("end")) {
+        if (END.equals(command)) {
             chessGame.end();
         }
-        if (tokens[0].equals("move")) {
+        if (MOVE.equals(command)) {
             chessGame.move(Position.from(tokens[1]), Position.from(tokens[2]));
         }
-        if (tokens[0].equals("status")){
+        if (STATUS.equals(command)) {
             OutputView.printStatus(chessGame.status());
         }
     }
