@@ -40,7 +40,7 @@ public abstract class Piece {
     }
 
     protected boolean isAlly(Piece other) {
-        return this.team == other.team;
+        return this.team.equals(other.team);
     }
 
     public void validateReach(Distance distance) {
@@ -51,7 +51,7 @@ public abstract class Piece {
     }
 
     public boolean matchColumnPoint(Column column) {
-        return this.point.getColumn().equals(column);
+        return point.matchColumn(column);
     }
 
     public boolean isTeam(Team team) {

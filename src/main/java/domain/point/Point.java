@@ -26,6 +26,10 @@ public class Point {
 		return new Point(row.add(rowIndex), column.add(columnIndex));
 	}
 
+	public boolean matchColumn(Column column) {
+		return this.column.equals(column);
+	}
+
 	public int getRowIndex() {
 		return row.getIndex();
 	}
