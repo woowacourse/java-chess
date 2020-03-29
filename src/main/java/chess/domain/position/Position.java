@@ -57,8 +57,8 @@ public class Position {
         return rank.getRankDifference(target.rank);
     }
 
-    public boolean isSameFile(File file) {
-        return this.file == file;
+    public boolean isSameFile(Position position) {
+        return this.file == position.file;
     }
 
     public boolean canMoveBy(MovingDirection movingDirection) {
@@ -69,5 +69,13 @@ public class Position {
             return false;
         }
         return true;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

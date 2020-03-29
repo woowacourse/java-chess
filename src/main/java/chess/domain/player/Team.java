@@ -12,7 +12,7 @@ public enum Team {
         return WHITE;
     }
 
-    public boolean isSamePlayer(Team team) {
+    public boolean isSameTeam(Team team) {
         return this == team;
     }
 

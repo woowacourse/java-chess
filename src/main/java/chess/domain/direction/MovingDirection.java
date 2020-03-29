@@ -1,7 +1,7 @@
 package chess.domain.direction;
 
 import chess.domain.position.Position;
-import chess.exception.MovingDirectionException;
+import chess.exception.MovingException;
 
 import java.util.Arrays;
 
@@ -35,7 +35,7 @@ public enum MovingDirection {
         return Arrays.stream(values())
                 .filter(direction -> direction.isSameDirection(source, target))
                 .findFirst()
-                .orElseThrow(MovingDirectionException::new);
+                .orElseThrow(MovingException::new);
     }
 
     private boolean isSameDirection(Position source, Position target) {

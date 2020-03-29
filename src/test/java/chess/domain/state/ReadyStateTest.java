@@ -1,8 +1,8 @@
 package chess.domain.state;
 
 import chess.domain.MoveParameter;
-import chess.domain.Turn;
 import chess.domain.board.EnumRepositoryBoardInitializer;
+import chess.domain.game.Turn;
 import chess.domain.player.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

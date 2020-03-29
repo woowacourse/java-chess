@@ -3,6 +3,7 @@ package chess.domain.piece.implementation;
 import chess.domain.board.BoardState;
 import chess.domain.piece.PieceDto;
 import chess.domain.piece.PieceState;
+import chess.domain.piece.PieceType;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,8 @@ class MovedPawnTest {
     private PieceState whiteMovedPawn;
     private BoardState boardState;
     private Map<Position, PieceDto> boardDto;
+    private PieceDto whitePiece = new PieceDto(PieceType.PAWN, Team.WHITE);
+    private PieceDto blackPiece = new PieceDto(PieceType.PAWN, Team.BLACK);
 
     @BeforeEach
     void setUp() {
@@ -33,7 +36,7 @@ class MovedPawnTest {
     @Test
     @DisplayName("Pawn은 바로 앞에 기물이 있는 경우 전진할 수 없음")
     void moveToAlly() {
-        boardDto.put(Position.of("B4"), new PieceDto(Team.WHITE));
+        boardDto.put(Position.of("B4"), whitePiece);
         boardState = BoardState.of(boardDto);
         assertThatThrownBy(() -> whiteMovedPawn.move(Position.of("B4"), boardState))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -42,7 +45,7 @@ class MovedPawnTest {
     @Test
     @DisplayName("직선으로 진행할 때 진행 타겟에 적군이 있는 경우 예외 발생")
     void frontMoveToEnemy() {
-        boardDto.put(Position.of("B4"), new PieceDto(Team.BLACK));
+        boardDto.put(Position.of("B4"), blackPiece);
         boardState = BoardState.of(boardDto);
         assertThatThrownBy(() -> whiteMovedPawn.move(Position.of("B4"), boardState))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -58,7 +61,7 @@ class MovedPawnTest {
     @Test
     @DisplayName("대각선으로 진행할 때 진행 타겟에 적군이 있는 경우 이동 가능")
     void diagonalMoveToEnemy() {
-        boardDto.put(Position.of("C4"), new PieceDto(Team.BLACK));
+        boardDto.put(Position.of("C4"), blackPiece);
         boardState = BoardState.of(boardDto);
         assertThat(whiteMovedPawn.move(Position.of("C4"), boardState))
                 .isInstanceOf(MovedPawn.class);
@@ -75,7 +78,7 @@ class MovedPawnTest {
     @Test
     @DisplayName("진행 타겟에 적군이 있지만 진행 규칙에 어긋나는 경우 예외 발생")
     void moveToEnemyException() {
-        boardDto.put(Position.of("D4"), new PieceDto(Team.BLACK));
+        boardDto.put(Position.of("D4"), blackPiece);
         boardState = BoardState.of(boardDto);
         assertThatThrownBy(() -> whiteMovedPawn.move(Position.of("D4"), boardState))
                 .isInstanceOf(IllegalArgumentException.class);

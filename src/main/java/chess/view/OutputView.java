@@ -19,21 +19,24 @@ public class OutputView {
 
     public void printResponse(ResponseDto responseDto) {
         StringBuilder stringBuilder = new StringBuilder();
-
         stringBuilder.append("\n");
 
         Map<Position, String> board = responseDto.getBoard();
-
         for (Rank rank : Rank.values()) {
-            stringBuilder.append(getRankString(board, rank));
-            stringBuilder.append(" ( rank " + rank.getRank() + " )");
-            stringBuilder.append("\n");
+            appendByRank(stringBuilder, board, rank);
         }
-
         stringBuilder.append(getFileNames());
-        stringBuilder.append("\n");
-
         System.out.println(stringBuilder.toString());
+
+        if (responseDto.getScores() != null) {
+            printStatus(responseDto.getScores());
+        }
+    }
+
+    private void appendByRank(StringBuilder stringBuilder, Map<Position, String> board, Rank rank) {
+        stringBuilder.append(getRankString(board, rank));
+        stringBuilder.append(" ( rank " + rank.getRank() + " )");
+        stringBuilder.append("\n");
     }
 
     private String getRankString(Map<Position, String> board, Rank rank) {
@@ -51,6 +54,7 @@ public class OutputView {
         for (File file : File.values()) {
             stringBuilder.append(" " + file.toString() + " ");
         }
+        stringBuilder.append("\n");
         return stringBuilder.toString();
     }
 
@@ -62,7 +66,7 @@ public class OutputView {
         return piece;
     }
 
-    public void printStatus(Map<Team, Double> status) {
+    private void printStatus(Map<Team, Double> status) {
         status.entrySet()
                 .stream()
                 .map(entry -> entry.getKey().toString() + " : " + entry.getValue())

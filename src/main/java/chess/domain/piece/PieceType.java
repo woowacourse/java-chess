@@ -28,4 +28,8 @@ public enum PieceType {
     public double getPoint() {
         return point;
     }
+
+    public boolean isSameType(PieceType pieceType) {
+        return this == pieceType;
+    }
 }

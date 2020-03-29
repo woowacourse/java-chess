@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.Turn;
+import chess.domain.game.Turn;
 import chess.domain.piece.PieceDto;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.implementation.King;
@@ -47,24 +47,22 @@ public class Board {
         }
     }
 
+    public double getScores(Team team) {
+        return board.values()
+                .stream()
+                .filter(value -> team.equals(value.getTeam()))
+                .mapToDouble(value -> value.getPoint(getBoardDto()))
+                .sum();
+    }
+
     private BoardState getBoardDto() {
         Map<Position, PieceDto> boardState = board.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
-                        entry -> new PieceDto(entry.getValue().getTeam())
+                        entry -> new PieceDto(entry.getValue().getPieceType(), entry.getValue().getTeam())
                 ));
         return BoardState.of(boardState);
-    }
-
-    public Map<Position, PieceState> getRemainPieces(Team team) {
-        return board.entrySet()
-                .stream()
-                .filter(entry -> team.equals(entry.getValue().getTeam()))
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
-                        entry -> entry.getValue()
-                ));
     }
 
     public boolean isEnd() {
