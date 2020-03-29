@@ -49,7 +49,7 @@ public class ScoreResult {
 	private List<Piece> getPawnsBy(Color color, List<Piece> pieces) {
 		return pieces.stream()
 				.filter(piece -> piece.isSameColor(color))
-				.filter(Piece::isPawn)
+				.filter(piece -> piece.getPieceType().isPawn())
 				.collect(Collectors.toList());
 	}
 
@@ -63,7 +63,7 @@ public class ScoreResult {
 	}
 
 	private void validate(Color color) {
-		if (Objects.isNull(color) || color.isBlank()) {
+		if (Objects.isNull(color) || color.isNone()) {
 			throw new IllegalArgumentException("잘못된 입력입니다.");
 		}
 	}
