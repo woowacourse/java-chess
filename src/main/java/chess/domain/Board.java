@@ -18,7 +18,7 @@ public class Board {
 	private final Pieces pieces;
 
 	public Board() {
-		this.pieces = PieceFactory.getPieces();
+		this.pieces = PieceFactory.getInstance().getPieces();
 	}
 
 	public void movePiece(Position source, Position destination) {

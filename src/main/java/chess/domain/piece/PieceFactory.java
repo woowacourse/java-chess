@@ -28,8 +28,8 @@ public class PieceFactory {
 		return instance;
 	}
 
-	public static Pieces getPieces() {
-		return new Pieces(getInstance().pieces);
+	public Pieces getPieces() {
+		return new Pieces(pieces);
 	}
 
 	private void initializeTeam(int backRank, int pawnRank, Team team) {
