@@ -1,7 +1,7 @@
 package board;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import chess.domain.piece.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,31 +25,28 @@ public class BoardTest {
             "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
             "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"})
     void inputEmptyPiecePositionThenThrowException(String input) {
-        Assertions.assertThatThrownBy(() -> board.findPiece(new Position(input))).hasMessage("움직일 수 있는 체스말이 없습니다.");
+        Assertions.assertThatThrownBy(() -> board.findPiece(Positions.of(input))).hasMessage("움직일 수 있는 체스말이 없습니다.");
     }
 
     @Test
     @DisplayName("EmptyPiece가 아닌 체스말이 있는 위치값이 입력되면 해당 체스말을 반환해야 함")
     void inputPiecePositionThenReturnPiece() {
-        Piece piece = board.findPiece(new Position("a1"));
+        Piece piece = board.findPiece(Positions.of("a1"));
         Assertions.assertThat(piece instanceof Rook).isTrue();
 
-        piece = board.findPiece(new Position("c2"));
-        Assertions.assertThat(piece instanceof Pawn).isTrue();
-
-        piece = board.findPiece(new Position("b8"));
+        piece = board.findPiece(Positions.of("b8"));
         Assertions.assertThat(piece instanceof Knight).isTrue();
 
-        piece = board.findPiece(new Position("d8"));
-        Assertions.assertThat(piece instanceof Queen).isTrue();
-
-        piece = board.findPiece(new Position("b8"));
-        Assertions.assertThat(piece instanceof Knight).isTrue();
-
-        piece = board.findPiece(new Position("c1"));
+        piece = board.findPiece(Positions.of("c1"));
         Assertions.assertThat(piece instanceof Bishop).isTrue();
 
-        piece = board.findPiece(new Position("e1"));
+        piece = board.findPiece(Positions.of("d8"));
+        Assertions.assertThat(piece instanceof Queen).isTrue();
+
+        piece = board.findPiece(Positions.of("e1"));
         Assertions.assertThat(piece instanceof King).isTrue();
+
+        piece = board.findPiece(Positions.of("c2"));
+        Assertions.assertThat(piece instanceof Pawn).isTrue();
     }
 }

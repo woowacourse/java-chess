@@ -22,6 +22,6 @@ public class MoveCommandTest {
     void wrongCharacterInputThenThrowException(String input) {
         Assertions.assertThatThrownBy(() -> new MoveCommand(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 형태의 위치가 입력되었습니다.");
+                .hasMessageEndingWith("존재하지 않는 위치입니다.");
     }
 }
