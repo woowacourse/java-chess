@@ -1,16 +1,17 @@
 package chess.domain.board;
 
-import static java.util.stream.Collectors.*;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
+import chess.domain.piece.Type;
+import chess.exceptions.InvalidInputException;
 
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.Side;
-import chess.domain.piece.Type;
-import chess.exceptions.InvalidInputException;
+import static java.util.stream.Collectors.summingInt;
+import static java.util.stream.Collectors.toMap;
 
 public class Board {
     private final Map<Position, Optional<Piece>> board;
@@ -25,15 +26,15 @@ public class Board {
 
     private static Map<Position, Optional<Piece>> initialPlacing() {
         return Position.getAllPositions()
-            .stream()
-            .collect(toMap(Function.identity(), Board::findInitialPieceOn));
+                .stream()
+                .collect(toMap(Function.identity(), Board::findInitialPieceOn));
     }
 
     private static Optional<Piece> findInitialPieceOn(final Position position) {
         return Piece.getPieces()
-            .stream()
-            .filter(piece -> piece.canBePlacedOn(position))
-            .findAny();
+                .stream()
+                .filter(piece -> piece.canBePlacedOn(position))
+                .findAny();
     }
 
     public Optional<Piece> findPieceBy(final Position position) {
@@ -49,23 +50,23 @@ public class Board {
 
     private boolean isOnLine(final Position start, final Position end) {
         return Position.columnGap(start, end) == 0
-            || Position.rowGap(start, end) == 0
-            || Position.columnGap(start, end) == Position.rowGap(start, end);
+                || Position.rowGap(start, end) == 0
+                || Position.columnGap(start, end) == Position.rowGap(start, end);
     }
 
     private Path generateLinePath(final Position start, final Position end) {
         return new Path(board.keySet()
-            .stream()
-            .filter(position -> position.inBetween(start, end))
-            .collect(toMap(Function.identity(), board::get)), start, end);
+                .stream()
+                .filter(position -> position.inBetween(start, end))
+                .collect(toMap(Function.identity(), board::get)), start, end);
     }
 
     private Path generateNoLinePath(final Position start, final Position end) {
         Position middle = Position.of(start.getRow(), end.getColumn());
         return new Path(board.keySet()
-            .stream()
-            .filter(position -> position.inBetween(start, middle) || position.inBetween(end, middle))
-            .collect(toMap(Function.identity(), board::get)), start, end);
+                .stream()
+                .filter(position -> position.inBetween(start, middle) || position.inBetween(end, middle))
+                .collect(toMap(Function.identity(), board::get)), start, end);
     }
 
     public void move(final Position start, final Position end) {
@@ -87,24 +88,24 @@ public class Board {
 
     public long count(final Type type, final Side side) {
         return board.values()
-            .stream()
-            .filter(piece -> piece.isPresent() && piece.get().is(type, side))
-            .count();
+                .stream()
+                .filter(piece -> piece.isPresent() && piece.get().is(type, side))
+                .count();
     }
 
     public int countPawnsOnSameColumn(final Side side) {
         return Arrays.stream(Column.values())
-            .mapToInt(column -> getPawnCount(side, column))
-            .filter(count -> count > 1)
-            .sum();
+                .mapToInt(column -> getPawnCount(side, column))
+                .filter(count -> count > 1)
+                .sum();
     }
 
     private int getPawnCount(final Side side, final Column column) {
         return board.keySet()
-            .stream()
-            .filter(position -> board.get(position).isPresent())
-            .filter(position -> position.isOn(column)
-                && board.get(position).get().is(Type.PAWN, side))
-            .collect(summingInt(x -> 1));
+                .stream()
+                .filter(position -> board.get(position).isPresent()
+                        && position.isOn(column)
+                        && board.get(position).get().is(Type.PAWN, side))
+                .collect(summingInt(x -> 1));
     }
 }

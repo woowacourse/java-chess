@@ -1,8 +1,8 @@
 package chess.domain;
 
-import java.util.Arrays;
-
 import chess.exceptions.InvalidInputException;
+
+import java.util.stream.Stream;
 
 public enum Command {
     START("start"),
@@ -21,9 +21,9 @@ public enum Command {
     }
 
     public static void validate(String value) {
-        if (Arrays.stream(Command.values())
-            .noneMatch(command -> command.is(value))) {
-            throw new InvalidInputException();
-        }
+        Stream.of(Command.values())
+                .filter(command -> command.is(value))
+                .findAny()
+                .orElseThrow(InvalidInputException::new);
     }
 }
