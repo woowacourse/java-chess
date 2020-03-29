@@ -42,6 +42,14 @@ public class StateTest {
     }
 
     @Test
+    @DisplayName("Playing 일때 isFinished 테스트")
+    void playing_isFinished() {
+        State state = State.of(pieces);
+        state.start();
+        assertThat(state.isFinished()).isFalse();
+    }
+
+    @Test
     @DisplayName("Turn를 바꾸는지 테스트")
     void change_Turn() {
         State state = State.of(pieces);
@@ -89,9 +97,19 @@ public class StateTest {
     }
 
     @Test
+    @DisplayName("end 일때 status하면 오류")
+    void finished_Status() {
+        State state = State.of(pieces);
+        state.end();
+        assertThatThrownBy(state::status)
+            .isInstanceOf(CommendTypeException.class);
+    }
+
+    @Test
     @DisplayName("end를 하면 끝나는지 테스트")
     void isFinished() {
         State state = State.of(pieces);
+        state.start();
         state.end();
         assertThat(state.isFinished()).isTrue();
     }
