@@ -14,7 +14,7 @@ import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-class KingTest {
+class KingStrategyTest {
 	private Piece whiteKing;
 	private Map<Position, Team> boardDto;
 

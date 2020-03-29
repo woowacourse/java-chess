@@ -1,4 +1,4 @@
-package chess.domain.piece.strategy;
+package chess.domain.piece.bishop;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -13,7 +13,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import chess.domain.Team;
 import chess.domain.piece.Piece;
-import chess.domain.piece.bishop.Bishop;
 import chess.domain.position.Position;
 
 class BishopStrategyTest {

@@ -15,13 +15,13 @@ import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-class NotMovedPawnTest {
+class MovedPawnStrategyTest {
 	private Piece whitePawn;
 	private Map<Position, Team> boardDto;
 
 	@BeforeEach
 	void setUp() {
-		whitePawn = NotMovedPawn.of(Team.WHITE, Position.of("c4"));
+		whitePawn = MovedPawn.of(Team.WHITE, Position.of("c4"));
 		boardDto = new HashMap<>();
 		boardDto.put(Position.of("c4"), Team.WHITE);
 	}
@@ -65,9 +65,10 @@ class NotMovedPawnTest {
 	@Test
 	@DisplayName("폰의 기본전략에서는, 앞으로 두칸 전진할 수 없습니다.")
 	void canNotMoveFrontDouble() {
-		boardDto.put(Position.of("e6"), Team.BLACK);
-		assertThat(whitePawn.move(Position.of("c4"), Position.of("e6"), boardDto))
-			.isInstanceOf(MovedPawn.class);
+		assertThatThrownBy(() -> {
+			whitePawn.move(Position.of("c4"), Position.of("c6"), boardDto);
+		}).isInstanceOf(IllegalArgumentException.class)
+			.hasMessageMatching("도달할 수 없는 거리입니다.");
 	}
 
 	@Test
