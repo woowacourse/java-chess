@@ -15,26 +15,10 @@ public abstract class Piece {
     private final Team team;
     private final Point point;
 
-    // TODO remove
-    private final String initial;
-    private final double score;
-
     protected Piece(PieceType pieceType, Team team, Point point) {
         this.pieceType = pieceType;
         this.team = team;
         this.point = point;
-
-        this.initial = null;
-        this.score = 0;
-    }
-
-    // TODO remove
-    protected Piece(String initial, Team team, Point point, double score) {
-        this.initial = initial;
-        this.team = team;
-        this.point = point;
-        this.score = score;
-        pieceType = null;
     }
 
     public abstract Piece move(Point afterPoint);
@@ -81,7 +65,7 @@ public abstract class Piece {
     }
 
     public String getInitial() {
-        return team.caseInitial(initial);
+        return team.caseInitial(pieceType.getInitial());
     }
 
     public int getRowIndex() {
@@ -101,7 +85,7 @@ public abstract class Piece {
     }
 
     public double getScore() {
-        return score;
+        return pieceType.getScore();
     }
 
     @Override
@@ -109,24 +93,22 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return Double.compare(piece.score, score) == 0 &&
-                Objects.equals(initial, piece.initial) &&
+        return pieceType == piece.pieceType &&
                 team == piece.team &&
                 Objects.equals(point, piece.point);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(initial, team, point, score);
+        return Objects.hash(pieceType, team, point);
     }
 
     @Override
     public String toString() {
         return "Piece{" +
-                "initial='" + initial + '\'' +
+                "pieceType=" + pieceType +
                 ", team=" + team +
                 ", point=" + point +
-                ", score=" + score +
                 '}';
     }
 }

@@ -15,4 +15,12 @@ public enum PieceType {
 		this.score = score;
 		this.initial = initial;
 	}
+
+	public double getScore() {
+		return score;
+	}
+
+	public String getInitial() {
+		return initial;
+	}
 }
