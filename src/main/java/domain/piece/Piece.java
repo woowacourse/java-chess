@@ -54,9 +54,6 @@ public abstract class Piece implements Movable {
 
 	protected void capture(Piece targetPiece, List<Rank> ranks) {
 		int targetRankIndex = targetPiece.position.getRow() - 1;
-		if (targetPiece instanceof King) {
-			System.exit(0);
-		}
 		ranks.get(targetRankIndex).getPieces().remove(targetPiece);
 	}
 
@@ -99,6 +96,18 @@ public abstract class Piece implements Movable {
 
 		return validDirection(direction) && validStepSize(rowGap, columnGap) &&
 			validateRoute(direction, targetPosition, ranks);
+	}
+
+	@Override
+	public void move(Position targetPosition, List<Rank> ranks) {
+		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
+		piece.ifPresent(targetPiece -> {
+			if (targetPiece.team.equals(this.team)) {
+				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
+			}
+			capture(targetPiece, ranks);
+		});
+		this.changePosition(targetPosition, ranks);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import domain.piece.King;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.position.InvalidPositionException;
@@ -13,8 +14,8 @@ import domain.piece.team.Team;
 
 public class Board {
 	private static final int ROW_INDEX = 1;
-	private static final int COLUMN_INDEX = 0;
 	private static final double PAWN_SCORE_WHEN_HAS_SAME_COLUMN = -0.5;
+	private static final int INITIAL_KING_COUNT = 2;
 
 	private List<Rank> ranks;
 
@@ -75,5 +76,11 @@ public class Board {
 			.distinct()
 			.count();
 		return pawns.size() == distinctCount;
+	}
+
+	public boolean isKingAlive() {
+		return INITIAL_KING_COUNT == ranks.stream().flatMap(piece -> piece.getPieces().stream())
+			.filter(piece -> piece instanceof King)
+			.count();
 	}
 }

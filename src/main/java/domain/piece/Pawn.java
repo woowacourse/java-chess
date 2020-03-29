@@ -55,7 +55,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void move(Position targetPosition, List<Rank> ranks){
+	public void move(Position targetPosition, List<Rank> ranks) {
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		Direction direction = this.findDirection(rowGap, this.position.calculateColumnGap(targetPosition));
 		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
@@ -83,6 +83,5 @@ public class Pawn extends Piece {
 	public double getScore() {
 		return DEFAULT_SCORE;
 	}
-
 
 }

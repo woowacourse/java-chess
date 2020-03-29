@@ -24,7 +24,7 @@ public class ChessController {
 		String inputChessCommand = InputView.inputCommand();
 		String[] inputCommand = inputChessCommand.split(DELIMITER);
 		Command command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
-		while (Command.END != command) {
+		while (Command.END != command && board.isKingAlive()) {
 			if (Command.MOVE.equals(command)) {
 				board.move(inputCommand[SOURCE_POSITION], inputCommand[TARGET_POSITION], turn);
 				OutputView.printChessBoard(board);

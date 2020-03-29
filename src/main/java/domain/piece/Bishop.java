@@ -1,7 +1,6 @@
 package domain.piece;
 
 import java.util.List;
-import java.util.Optional;
 
 import domain.board.Rank;
 import domain.piece.position.Direction;
@@ -39,25 +38,12 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public void move(Position targetPosition, List<Rank> ranks) {
-		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
-		piece.ifPresent(targetPiece -> {
-			if (targetPiece.team.equals(this.team)) {
-				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
-			}
-			capture(targetPiece, ranks);
-		});
-		this.changePosition(targetPosition, ranks);
-		
-	}
-
-	@Override
 	protected String getSymbol() {
 		return SYMBOL;
 	}
 
 	@Override
-	public double getScore(){
+	public double getScore() {
 		return score;
 	}
 }

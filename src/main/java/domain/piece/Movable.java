@@ -9,5 +9,5 @@ import domain.piece.team.Team;
 public interface Movable {
 	boolean canMove(Position targetPosition, Team turn, List<Rank> ranks);
 
-	void move(Position targetPosition, List<Rank> ranks);
+	void move(Position targetPosition, List<Rank> board);
 }
