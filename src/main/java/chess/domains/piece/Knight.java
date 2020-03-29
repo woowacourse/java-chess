@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Knight extends Piece {
     public Knight(PieceColor pieceColor) {
-        super(pieceColor, "n", 2.5);
+        super(pieceColor, PieceType.ROOK.name, PieceType.ROOK.score);
     }
 
     @Override
