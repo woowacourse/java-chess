@@ -5,14 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import chess.domain.state.MoveSquare;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ChessBoardTest {
+
     @Test
     @DisplayName("체스보드 생성시 32개의 칸-말 셋트를 가지고 있는지 확인")
     void chessBoardSizeCheck() {
@@ -25,56 +24,38 @@ public class ChessBoardTest {
     @DisplayName("move 수행이 가능한지 판단")
     void canMove() {
         ChessBoard chessBoard = new ChessBoard();
-        List<BoardSquare> boardSquares = new ArrayList<>();
-
-        boardSquares.add(BoardSquare.of("a7"));
-        boardSquares.add(BoardSquare.of("a6"));
-        assertThat(chessBoard.movePieceWhenCanMove(boardSquares)).isFalse();
-
-        boardSquares.clear();
-        boardSquares.add(BoardSquare.of("a2"));
-        boardSquares.add(BoardSquare.of("a3"));
-        assertThat(chessBoard.movePieceWhenCanMove(boardSquares)).isTrue();
-
-        boardSquares.clear();
-        boardSquares.add(BoardSquare.of("a7"));
-        boardSquares.add(BoardSquare.of("a6"));
-        assertThat(chessBoard.movePieceWhenCanMove(boardSquares)).isTrue();
-
-        boardSquares.clear();
-        boardSquares.add(BoardSquare.of("a7"));
-        boardSquares.add(BoardSquare.of("b1"));
-        assertThat(chessBoard.movePieceWhenCanMove(boardSquares)).isFalse();
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a6"))).isFalse();
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a2", "a3"))).isTrue();
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a6"))).isTrue();
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "b1"))).isFalse();
     }
 
     @Test
     @DisplayName("move 수행 테스트")
     void move() {
         ChessBoard chessBoard = new ChessBoard();
-        List<BoardSquare> boardSquares = new ArrayList<>();
-        boardSquares.add(BoardSquare.of("a2"));
-        boardSquares.add(BoardSquare.of("a3"));
-        chessBoard.movePieceWhenCanMove(boardSquares);
+        chessBoard.movePieceWhenCanMove(new MoveSquare("a2", "a3"));
         assertThat(chessBoard.getChessBoard().containsKey(BoardSquare.of("a2"))).isFalse();
         assertThat(chessBoard.getChessBoard().containsKey(BoardSquare.of("a3"))).isTrue();
-        assertThat(chessBoard.getChessBoard().get(BoardSquare.of("a3"))).isEqualTo(Pawn.getPieceInstance(Color.WHITE));
+        assertThat(chessBoard.getChessBoard().get(BoardSquare.of("a3")))
+            .isEqualTo(Pawn.getPieceInstance(Color.WHITE));
     }
 
     @Test
     @DisplayName("king 잡혔는지 확인")
     void isKingOnChessBoard() {
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("e2"), BoardSquare.of("e4")));
-        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("a7"), BoardSquare.of("a5")));
-        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("e1"), BoardSquare.of("e2")));
-        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("a8"), BoardSquare.of("a6")));
-        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("e2"), BoardSquare.of("e3")));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("e2", "e4"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a5"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("e1", "e2"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("a8", "a6"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("e2", "e3"));
 
         assertThat(chessBoard.isKingCaptured()).isFalse();
 
-        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("a6"), BoardSquare.of("d6")));
-        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("e3"), BoardSquare.of("d3")));
-        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("d6"), BoardSquare.of("d3")));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("a6", "d6"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("e3", "d3"));
+        chessBoard.movePieceWhenCanMove(new MoveSquare("d6", "d3"));
 
         assertThat(chessBoard.isKingCaptured()).isTrue();
     }

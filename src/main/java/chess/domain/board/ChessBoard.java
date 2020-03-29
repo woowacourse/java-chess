@@ -8,6 +8,8 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.state.MoveOrder;
+import chess.domain.state.MoveSquare;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
+
     private static final int RANK_BLACK_PAWN_INIT = 7;
     private static final int RANK_WHITE_PAWN_INIT = 2;
     private static final Map<BoardSquare, Piece> INITIAL_BOARD;
@@ -69,28 +72,28 @@ public class ChessBoard {
         return chessBoard;
     }
 
-    public boolean movePieceWhenCanMove(List<BoardSquare> boardSquares) {
-        if (canMove(boardSquares)) {
-            movePiece(boardSquares);
+    public boolean movePieceWhenCanMove(MoveSquare moveSquare) {
+        BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.before);
+        BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.after);
+        if (canMove(moveSquareBefore, moveSquareAfter)) {
+            movePiece(moveSquareBefore, moveSquareAfter);
             return true;
         }
         return false;
     }
 
-    private boolean canMove(List<BoardSquare> boardSquares) {
-        BoardSquare before = boardSquares.get(0);
-        BoardSquare after = boardSquares.get(1);
-        if (!chessBoard.containsKey(before) || !chessBoard.get(before).isSameColor(gameTurn)) {
+    private boolean canMove(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
+        Piece movePieceBefore = chessBoard.get(moveSquareBefore);
+        if (!chessBoard.containsKey(moveSquareBefore) || !movePieceBefore.isSameColor(gameTurn)) {
             return false;
         }
-        return chessBoard.get(before).getCheatSheet(before, chessBoard).contains(after);
+        return movePieceBefore.getCheatSheet(moveSquareBefore, chessBoard)
+            .contains(moveSquareAfter);
     }
 
-    private void movePiece(List<BoardSquare> boardSquares) {
-        BoardSquare before = boardSquares.get(0);
-        BoardSquare after = boardSquares.get(1);
-        Piece currentPiece = chessBoard.remove(before);
-        chessBoard.put(after, currentPiece);
+    private void movePiece(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
+        Piece currentPiece = chessBoard.remove(moveSquareBefore);
+        chessBoard.put(moveSquareAfter, currentPiece);
         gameTurn = gameTurn.nextTurnIfEmptyMySelf();
     }
 
@@ -131,5 +134,20 @@ public class ChessBoard {
         return chessBoard.keySet().stream()
             .filter(square -> chessBoard.get(square) == Pawn.getPieceInstance(color))
             .collect(Collectors.toList());
+    }
+
+    public Color getGameTurn() {
+        return gameTurn;
+    }
+
+    public boolean isNoPiece(MoveSquare MoveSquares) {
+        return !chessBoard.containsKey(MoveSquares.get(MoveOrder.before));
+    }
+
+    public boolean isNotMyTurn(MoveSquare MoveSquares) {
+        if (isNoPiece(MoveSquares)) {
+            return false;
+        }
+        return !chessBoard.get(MoveSquares.get(MoveOrder.before)).isSameColor(gameTurn);
     }
 }

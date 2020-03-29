@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.state;
 
 import java.util.Arrays;
 import util.NullChecker;

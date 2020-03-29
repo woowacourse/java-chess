@@ -81,5 +81,13 @@ public class OutputView {
     public static void printExceptionMessage(String message) {
         System.out.println(message);
     }
+
+    public static void printNotMyTurn(Color color) {
+        System.out.println("지금은 " + color.name() + "의 차례입니다.");
+    }
+
+    public static void printNoPiece() {
+        System.out.println("움직일 수 있는 피스가 없습니다.");
+    }
 }
 

@@ -1,14 +1,12 @@
 package chess.controller;
 
-import chess.domain.GameState;
-import chess.domain.board.BoardSquare;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.TeamScore;
+import chess.domain.state.GameState;
+import chess.domain.state.MoveSquare;
+import chess.domain.state.StateAndSquares;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ChessGame {
 
@@ -29,45 +27,46 @@ public class ChessGame {
     }
 
     private static boolean proceed(ChessBoard chessBoard) {
-        String input = InputView.inputGameState();
-        List<BoardSquare> boardSquares = new ArrayList<>();
-        if (input.length() == 10) {
-            List<String> inputs = Arrays.asList(input.split(" "));
-            input = inputs.get(0);
-            boardSquares.add(BoardSquare.of(inputs.get(1)));
-            boardSquares.add(BoardSquare.of(inputs.get(2)));
-        }
-        GameState gameState = GameState.of(input);
-        proceedByGameState(chessBoard, boardSquares, gameState);
-        gameState = getGameStateByKingCaptured(chessBoard, gameState);
+        StateAndSquares stateAndSquares = new StateAndSquares(InputView.inputGameState());
+        proceedByGameState(chessBoard, stateAndSquares);
+        GameState gameState = getGameStateByKingCaptured(chessBoard, stateAndSquares);
         return gameState.isContinue();
     }
 
-    private static void proceedByGameState(ChessBoard chessBoard, List<BoardSquare> boardSquares,
-        GameState gameState) {
-        if (gameState == GameState.START) {
+    private static void proceedByGameState(ChessBoard chessBoard, StateAndSquares stateAndSquares) {
+        if (stateAndSquares.isSameState(GameState.START)) {
             OutputView.printCanNotStart();
         }
-        if (gameState == GameState.MOVE) {
-            move(chessBoard, boardSquares);
+        if (stateAndSquares.isSameState(GameState.MOVE)) {
+            move(chessBoard, stateAndSquares);
         }
-        if (gameState == GameState.STATUS || gameState == GameState.END) {
+        if (stateAndSquares.isSameState(GameState.STATUS)
+            || stateAndSquares.isSameState(GameState.END)) {
             printScoreAndWinners(chessBoard);
         }
     }
 
     private static GameState getGameStateByKingCaptured(ChessBoard chessBoard,
-        GameState gameState) {
+        StateAndSquares stateAndSquares) {
         if (chessBoard.isKingCaptured()) {
             OutputView.printWinner(chessBoard.getWinnerTurn());
-            gameState = GameState.END;
+            return GameState.END;
         }
-        return gameState;
+        return stateAndSquares.getGameState();
     }
 
-    private static void move(ChessBoard chessBoard, List<BoardSquare> boardSquares) {
-        if (chessBoard.movePieceWhenCanMove(boardSquares)) {
+    private static void move(ChessBoard chessBoard, StateAndSquares stateAndSquares) {
+        MoveSquare moveSquare = stateAndSquares.getMoveSquare();
+        if (chessBoard.movePieceWhenCanMove(moveSquare)) {
             OutputView.printChessBoard(chessBoard);
+            return;
+        }
+        if (chessBoard.isNoPiece(moveSquare)) {
+            OutputView.printNoPiece();
+            return;
+        }
+        if (chessBoard.isNotMyTurn(moveSquare)) {
+            OutputView.printNotMyTurn(chessBoard.getGameTurn());
             return;
         }
         OutputView.printCanNotMove();
