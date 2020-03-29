@@ -3,10 +3,9 @@ package chess.domain.piece.movable;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class BlockedMovable implements Movable {
 	private final Directions moveDirections;
@@ -16,17 +15,17 @@ public class BlockedMovable implements Movable {
 	}
 
 	@Override
-	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
-		Set<Position> movablePositions = new HashSet<>();
+	public Positions createMovablePositions(Position position, List<Piece> pieces, Color color) {
+		Positions movablePositions = Positions.of();
 		for (Direction direction : moveDirections.getDirections()) {
-			Set<Position> positions = createMovablePositionsByDirection(position, direction, pieces, color);
+			Positions positions = createMovablePositionsByDirection(position, direction, pieces, color);
 			movablePositions.addAll(positions);
 		}
 		return movablePositions;
 	}
 
-	Set<Position> createMovablePositionsByDirection(Position movablePosition, Direction direction, List<Piece> pieces, Color color) {
-		Set<Position> movablePositions = new HashSet<>();
+	Positions createMovablePositionsByDirection(Position movablePosition, Direction direction, List<Piece> pieces, Color color) {
+		Positions movablePositions = Positions.of();
 		while (isOpen(movablePosition, direction, pieces, color)) {
 			movablePosition = movablePosition.getMovedPositionBy(direction);
 			movablePositions.add(movablePosition);

@@ -3,6 +3,7 @@ package chess.domain.piece.movable;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 
 import java.util.List;
 import java.util.Set;
@@ -16,11 +17,11 @@ public class UnblockedMovable implements Movable {
 	}
 
 	@Override
-	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
+	public Positions createMovablePositions(Position position, List<Piece> pieces, Color color) {
 		return moveDirections.getDirections().stream()
 				.map(position::getMovedPositionBy)
 				.filter(movablePosition -> checkMovable(movablePosition, pieces, color))
-				.collect(Collectors.toSet());
+				.collect(Collectors.collectingAndThen(Collectors.toSet(), Positions::new));
 	}
 
 	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {

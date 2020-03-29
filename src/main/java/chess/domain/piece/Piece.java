@@ -3,10 +3,10 @@ package chess.domain.piece;
 import chess.domain.piece.movable.Movable;
 import chess.domain.piece.pieces.PieceInitializer;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class Piece {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "말을 생성할 수 없습니다.";
@@ -34,7 +34,7 @@ public class Piece {
 		Objects.requireNonNull(movable, INVALID_INPUT_EXCEPTION_MESSAGE);
 	}
 
-	public Set<Position> createMovablePositions(List<Piece> pieces) {
+	public Positions createMovablePositions(List<Piece> pieces) {
 		return movable.createMovablePositions(position, pieces, color);
 	}
 

@@ -3,9 +3,9 @@ package chess.domain.piece.movable;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PawnMovable implements Movable {
@@ -16,14 +16,14 @@ public class PawnMovable implements Movable {
 	}
 
 	@Override
-	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
+	public Positions createMovablePositions(Position position, List<Piece> pieces, Color color) {
 		//대각선 체크
-		Set<Position> movablePositions =
+		Positions movablePositions =
 				moveDirections.getDirections()
 						.stream()
 						.map(position::getMovedPositionBy)
 						.filter(movablePosition -> !position.isSameRow(movablePosition) && isPossessedByDifferentColor(movablePosition, pieces, color))
-						.collect(Collectors.toSet());
+						.collect(Collectors.collectingAndThen(Collectors.toSet(), Positions::new));
 
 		//직선 경로 구하기
 		Direction direction = moveDirections.getDirections()
