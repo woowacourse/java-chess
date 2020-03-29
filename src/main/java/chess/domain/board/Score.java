@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Score {
+    KING("K", 0),
     QUEEN("Q", 9),
     ROOK("R", 5),
     BISHOP("B", 3),
@@ -19,9 +20,8 @@ public enum Score {
     }
 
     public static double calculateScoreOf(List<String> column) {
-        double score = Arrays.stream(Score.values())
-                .filter(value -> column.contains(value.name))
-                .mapToDouble(value -> value.score)
+        double score = column.stream()
+                .mapToDouble(Score::getScoreOf)
                 .sum();
         return score - calculatePenalty(column);
     }
@@ -37,5 +37,13 @@ public enum Score {
         return column.stream()
                 .filter(value -> value.equals("P"))
                 .count();
+    }
+
+    private static double getScoreOf(String piece) {
+        return Arrays.stream(values())
+                .filter(value -> value.name.equals(piece))
+                .findFirst()
+                .orElseThrow(NullPointerException::new)
+                .score;
     }
 }
