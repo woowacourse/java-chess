@@ -11,8 +11,8 @@ public enum Progress {
         this.isContinue = isContinue;
     }
 
-    public boolean isEnd() {
-        return this == END;
+    public boolean isNotEnd() {
+        return this != END;
     }
 
     public boolean isError() {

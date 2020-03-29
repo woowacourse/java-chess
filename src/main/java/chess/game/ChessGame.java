@@ -42,7 +42,7 @@ public class ChessGame {
 
     private void deletePieceIfExistIn(Location destination, Team turn) {
         Player counterplayer = white;
-        if (!black.isSame(turn)) {
+        if (black.isNotSame(turn)) {
             counterplayer = black;
         }
         counterplayer.deletePieceIfExistIn(destination);
@@ -82,10 +82,10 @@ public class ChessGame {
     private ChessResult compareScore() {
         Score whiteScore = calculateScore(white);
         Score blackScore = calculateScore(black);
-        if(Result.of(whiteScore, blackScore).isWin()) {
+        if (Result.of(whiteScore, blackScore).isWin()) {
             return new ChessResult(Result.WIN, white.getTeamName());
         }
-        if(Result.of(whiteScore, blackScore).isWin()) {
+        if (Result.of(whiteScore, blackScore).isWin()) {
             return new ChessResult(Result.WIN, black.getTeamName());
         }
         return new ChessResult(Result.DRAW, black.getTeamName());

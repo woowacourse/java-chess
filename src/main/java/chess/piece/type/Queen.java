@@ -5,7 +5,7 @@ import chess.score.Score;
 import chess.team.Team;
 
 public class Queen extends Piece {
-    public static final char NAME = 'q';
+    private static final char NAME = 'q';
     private static final int QUEEN_SCORE = 9;
 
     public Queen(Team team) {

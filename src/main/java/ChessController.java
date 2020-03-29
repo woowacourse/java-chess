@@ -11,7 +11,7 @@ public class ChessController {
         Progress progress = Progress.CONTINUE;
         ChessGame chessGame = new ChessGame();
         Team turn = Team.WHITE;
-        while (!progress.isEnd()) {
+        while (progress.isNotEnd()) {
             progress = getProgress(chessGame, turn);
             turn = turn.changeTurn();
             OutputView.printPresentPlayer(turn);
@@ -28,7 +28,7 @@ public class ChessController {
             command = InputView.inputCommand();
             progress = chessGame.doOneCommand(command, turn);
         }
-        if (!progress.isEnd()) {
+        if (progress.isNotEnd()) {
             OutputView.printBoard(chessGame.getChessBoard());
         }
         return progress;

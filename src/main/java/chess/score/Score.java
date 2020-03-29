@@ -26,10 +26,6 @@ public class Score {
         return new Score(this.value - score.value);
     }
 
-    public double getValue() {
-        return value;
-    }
-
     public boolean isHigherThan(Score score2) {
         return value > score2.value;
     }
@@ -40,6 +36,10 @@ public class Score {
 
     public boolean isLowerThan(Score score2) {
         return value == score2.value;
+    }
+
+    public double getValue() {
+        return value;
     }
 
     @Override
@@ -54,6 +54,4 @@ public class Score {
     public int hashCode() {
         return Objects.hash(value);
     }
-
-
 }

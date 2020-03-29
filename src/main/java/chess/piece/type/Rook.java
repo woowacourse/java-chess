@@ -5,7 +5,7 @@ import chess.score.Score;
 import chess.team.Team;
 
 public class Rook extends Piece {
-	public static final char NAME = 'r';
+	private static final char NAME = 'r';
 	private static final int ROOK_SCORE = 5;
 
 	public Rook(Team team) {

@@ -41,14 +41,6 @@ public abstract class Piece {
         return Character.isUpperCase(name);
     }
 
-    public char getName() {
-        return name;
-    }
-
-    public Score getScore() {
-        return score;
-    }
-
     public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
         Location nowLocation;
         for (int weight = 1;; weight++) {
@@ -61,6 +53,14 @@ public abstract class Piece {
             }
         }
         return false;
+    }
+
+    public char getName() {
+        return name;
+    }
+
+    public Score getScore() {
+        return score;
     }
 
     @Override

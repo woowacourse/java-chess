@@ -14,8 +14,8 @@ public class Player {
         this.team = team;
     }
 
-    public boolean isSame(Team team) {
-        return this.team.equals(team);
+    public boolean isNotSame(Team team) {
+        return this.team.equals(team) == false;
     }
 
     public void deletePieceIfExistIn(Location destination) {

@@ -5,6 +5,7 @@ import chess.piece.type.Piece;
 import chess.score.Score;
 
 import java.util.Map;
+import java.util.Set;
 
 public class ChessSet {
     private final Map<Location, Piece> chessSet;
@@ -26,14 +27,21 @@ public class ChessSet {
 
     public boolean hasNotKing() {
         return chessSet.values().stream()
-                .anyMatch(Piece::isKing) == false;
+                .noneMatch(Piece::isKing);
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        chessSet.keySet().stream()
-                .forEach(location -> sb.append(location.getCol() + ", " + location.getRow() + " : " + chessSet.get(location).getName() + "\n"));
-        return sb.toString();
+        StringBuilder stringBuilder = new StringBuilder();
+        Set<Location> locations = chessSet.keySet();
+        for (Location location : locations) {
+            String value = String.format(
+                    "%c, %d : %c \n",
+                    location.getCol(),
+                    location.getRow(),
+                    chessSet.get(location).getName());
+            stringBuilder.append(value);
+        }
+        return stringBuilder.toString();
     }
 }

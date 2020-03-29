@@ -5,7 +5,7 @@ import chess.score.Score;
 import chess.team.Team;
 
 public class Bishop extends Piece {
-    public static final char NAME = 'b';
+    private static final char NAME = 'b';
     private static final int BISHOP_SCORE = 3;
 
     public Bishop(Team team) {

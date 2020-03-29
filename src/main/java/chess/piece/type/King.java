@@ -7,7 +7,7 @@ import chess.score.Score;
 import chess.team.Team;
 
 public class King extends Piece {
-	public static final char NAME = 'k';
+	private static final char NAME = 'k';
 	private static final int KING_SCORE = 0;
 
 	public King(Team team) {
