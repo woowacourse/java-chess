@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 
 public class RouteFinder {
     public static Route findRoute(Position fromPosition, Position toPosition, Team team, PieceType pieceType) {
-        return Direction.directionsFor(pieceType, team).stream()
+        return Directions.of(pieceType, team).stream()
                 .map(direction -> Route.findRoute(fromPosition, direction, pieceType))
                 .filter(route -> route.contains(toPosition))
                 .map(route -> route.cutBefore(toPosition))
