@@ -23,7 +23,7 @@ public abstract class Piece extends Square {
 
     abstract boolean validateMovableTileSize(Position from, Position to);
 
-    private boolean hasDirection(Direction direction) {
+    protected final boolean hasDirection(Direction direction) {
         return directions.contains(direction);
     }
 

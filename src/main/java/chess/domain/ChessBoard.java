@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-    private final static Map<Position, Square> chessBoard = new LinkedHashMap<>();
+    private final Map<Position, Square> chessBoard = new LinkedHashMap<>();
     private boolean isKingTaken;
 
     public ChessBoard() {
@@ -66,19 +66,17 @@ public class ChessBoard {
         return isKingTaken;
     }
 
-    // Source가 예외일 때 1) 전진 예외 (전진의 target은 무조건 empty여야 한다.)
-    // 2) 대각선 공격일 때, 같은 팀이면 안되고, empty이면 안된다. 무조건 다른 팀이어야 한다.
     private boolean validatePawnException(Square source, Square target, Direction direction) {
-        if (source.getClass() != Pawn.class) {
+        if (!(source instanceof Pawn)) {
             return true;
         }
-        return ((Pawn) source).validateMoveForward(target, direction)
-                && ((Pawn) source).validateAttack(target, direction);
+        return ((Pawn) source).validate(direction, target);
     }
 
     private boolean validateObstacles(List<Position> routes) {
-        return routes.stream()
-                .anyMatch(position -> chessBoard.get(position).getClass() == Empty.class);
+        return routes.isEmpty()
+                || routes.stream()
+                .allMatch(position -> chessBoard.get(position) instanceof Empty);
     }
 
     public Map<Position, Square> getChessBoard() {

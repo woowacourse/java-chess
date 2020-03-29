@@ -1,6 +1,5 @@
 package chess.domain.chesspieces;
 
-import chess.Exceptions.NotMoveException;
 import chess.domain.Player;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
@@ -57,22 +56,23 @@ public class Pawn extends Piece {
         return Math.abs(rowDiff) <= AVAILABLE_ROW_MOVE_DIFF && Math.abs(columnDiff) <= availableColumnDiff;
     }
 
-    public boolean validateAttack(Square target, Direction direction) {
-        Objects.requireNonNull(target);
-        Objects.requireNonNull(direction);
-        if (target.getClass() == Empty.class) {
-            return false;
-        }
-
-        if (attackDirections.contains(direction)) {
-            return !isSamePlayer(target);
-        }
-        throw new NotMoveException("잘못된 이동입니다.");
+    public boolean validate(Direction direction, Square target) {
+        boolean isTargetEmpty = target instanceof Empty;
+        boolean isSamePlayer = super.isSamePlayer(target);
+        return validateAttack(direction, isTargetEmpty, isSamePlayer)
+                || validateMoveForward(direction, isTargetEmpty);
     }
 
-    public boolean validateMoveForward(Square target, Direction direction) {
-        Objects.requireNonNull(target);
+    public boolean validateAttack(Direction direction, boolean isTargetEmpty, boolean isSamePlayer) {
         Objects.requireNonNull(direction);
-        return direction == forwardDirection && target.getClass() == Empty.class;
+
+        return attackDirections.contains(direction)
+                && !isTargetEmpty
+                && !isSamePlayer;
+    }
+
+    public boolean validateMoveForward(Direction direction, boolean isTargetEmpty) {
+        Objects.requireNonNull(direction);
+        return direction == forwardDirection && isTargetEmpty;
     }
 }
