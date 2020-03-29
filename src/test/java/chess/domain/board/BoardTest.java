@@ -57,6 +57,7 @@ class BoardTest {
     }
 
     private static Stream<Arguments> createPositionAndPieceForAttackingPawnToSucceed() {
+
         return Stream.of(
                 Arguments.of(
                         new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
