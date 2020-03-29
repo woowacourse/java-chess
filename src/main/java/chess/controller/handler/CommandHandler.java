@@ -24,14 +24,18 @@ public enum CommandHandler {
     }
 
     public static void handle(ChessContext chessContext, String command) {
-        CommandHandler commandHandler = Arrays.stream(values())
-                .filter(handler -> handler.findByCommand(command))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+        CommandHandler commandHandler = findHandlerByCommand(command);
 
         DefaultRequest<?> convert = RequestResolverGroup.resolve(command);
 
         commandHandler.action.accept(chessContext, convert);
+    }
+
+    private static CommandHandler findHandlerByCommand(String command) {
+        return Arrays.stream(values())
+                .filter(handler -> handler.findByCommand(command))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     private boolean findByCommand(String command) {
