@@ -19,6 +19,9 @@ public class Positions {
     }
 
     public static Position of(String positionName) {
+        if (!allPositions.containsKey(positionName)) {
+            throw new IllegalArgumentException(positionName + "은(는) 존재하지 않는 위치입니다.");
+        }
         return allPositions.get(positionName);
     }
 
