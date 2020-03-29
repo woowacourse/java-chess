@@ -15,9 +15,9 @@ public enum  Direction {
 	KNIGHT(0, 0, DirectionFilters::isKnight),
 	ELSE(0, 0, DirectionFilters::isElse);
 
-	private int rowIndex;
-	private int columnIndex;
-	private BiFunction<Integer, Integer, Boolean> directionFilter;
+	private final int rowIndex;
+	private final int columnIndex;
+	private final BiFunction<Integer, Integer, Boolean> directionFilter;
 
 	Direction(int rowIndex, int columnIndex, BiFunction<Integer, Integer, Boolean> directionFilter) {
 		this.rowIndex = rowIndex;

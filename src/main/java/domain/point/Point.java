@@ -7,8 +7,8 @@ public class Point {
 	private static final int SECOND_INDEX = 1;
 	private static final int END_INDEX = 2;
 
-	private Row row;
-	private Column column;
+	private final Row row;
+	private final Column column;
 
 	public Point(Row row, Column column) {
 		this.row = row;
@@ -36,10 +36,6 @@ public class Point {
 
 	public int getColumnIndex() {
 		return column.getIndex();
-	}
-
-	public Column getColumn() {
-		return column;
 	}
 
 	@Override

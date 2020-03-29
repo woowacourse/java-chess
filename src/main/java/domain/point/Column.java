@@ -12,8 +12,8 @@ public enum Column {
 	G("g", 6),
 	H("h", 7);
 
-	private String column;
-	private int index;
+	private final String column;
+	private final int index;
 
 	Column(String column, int index) {
 		this.column = column;
