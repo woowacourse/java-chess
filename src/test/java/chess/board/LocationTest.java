@@ -18,25 +18,4 @@ class LocationTest {
 		assertThat(actual).isEqualTo(expect);
 	}
 
-	@DisplayName("로케이션의 로우를 value만큼 이동")
-	@Test
-	void moveRowBy() {
-		Location location = new Location(1, 'a');
-		Location actual = location.moveRowBy(1);
-
-		Location expect = new Location(2, 'a');
-
-		assertThat(actual).isEqualTo(expect);
-	}
-
-	@DisplayName("로케이션의 컬럼을 value만큼 이동")
-	@Test
-	void moveColBy() {
-		Location location = new Location(1, 'a');
-		Location actual = location.moveColBy(1);
-
-		Location expect = new Location(1, 'b');
-
-		assertThat(actual).isEqualTo(expect);
-	}
 }
