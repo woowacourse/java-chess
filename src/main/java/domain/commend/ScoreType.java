@@ -29,7 +29,7 @@ public enum ScoreType {
         this.score = score;
     }
 
-    public static double calculateBlackScore(Pieces pieces, Team team) {
+    public static double calculateScore(Pieces pieces, Team team) {
         double totalScore = pieces.getPieces().keySet().stream()
             .filter(point -> pieces.getPieces().get(point).isSameTeam(team))
             .mapToDouble(point -> getPieceScore(pieces, point))

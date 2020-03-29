@@ -7,6 +7,7 @@ import static domain.team.Team.*;
 import domain.point.Column;
 import domain.point.Point;
 import domain.point.Row;
+import domain.team.Team;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,48 +18,41 @@ public class PiecesFactory {
     private static Map<Point, Piece> pieces = new LinkedHashMap<>();
 
     static {
-        createBlackTeamPieces();
+        createTeamPieces(EIGHT, BLACK);
+        createPawn(SEVEN, BLACK);
         createEmpty();
-        createWhiteTeamPieces();
+        createPawn(TWO, WHITE);
+        createTeamPieces(ONE, WHITE);
     }
 
-    private static void createBlackTeamPieces() {
-        pieces.put(Point.of(EIGHT, A), new Rook(BLACK));
-        pieces.put(Point.of(EIGHT, B), new Knight(BLACK));
-        pieces.put(Point.of(EIGHT, C), new Bishop(BLACK));
-        pieces.put(Point.of(EIGHT, D), new Queen(BLACK));
-        pieces.put(Point.of(EIGHT, E), new King(BLACK));
-        pieces.put(Point.of(EIGHT, F), new Bishop(BLACK));
-        pieces.put(Point.of(EIGHT, G), new Knight(BLACK));
-        pieces.put(Point.of(EIGHT, H), new Rook(BLACK));
+    private static void createTeamPieces(Row row, Team team) {
+        pieces.put(Point.of(row, A), new Rook(team));
+        pieces.put(Point.of(row, B), new Knight(team));
+        pieces.put(Point.of(row, C), new Bishop(team));
+        pieces.put(Point.of(row, D), new Queen(team));
+        pieces.put(Point.of(row, E), new King(team));
+        pieces.put(Point.of(row, F), new Bishop(team));
+        pieces.put(Point.of(row, G), new Knight(team));
+        pieces.put(Point.of(row, H), new Rook(team));
+    }
 
+    private static void createPawn(Row row, Team team) {
         for (Column column : Column.values()) {
-            pieces.put(Point.of(SEVEN, column), new Pawn(BLACK));
+            pieces.put(Point.of(row, column), new Pawn(team));
         }
     }
 
     private static void createEmpty() {
         List<Row> emptyRows = Arrays.asList(SIX, FIVE, FOUR, THREE);
         for (Row row : emptyRows) {
-            for (Column column : Column.values()) {
-                pieces.put(Point.of(row, column), new Empty(NONE));
-            }
+            putEmpty(row);
         }
     }
 
-    private static void createWhiteTeamPieces() {
+    private static void putEmpty(Row row) {
         for (Column column : Column.values()) {
-            pieces.put(Point.of(TWO, column), new Pawn(WHITE));
+            pieces.put(Point.of(row, column), new Empty(NONE));
         }
-
-        pieces.put(Point.of(ONE, A), new Rook(WHITE));
-        pieces.put(Point.of(ONE, B), new Knight(WHITE));
-        pieces.put(Point.of(ONE, C), new Bishop(WHITE));
-        pieces.put(Point.of(ONE, D), new Queen(WHITE));
-        pieces.put(Point.of(ONE, E), new King(WHITE));
-        pieces.put(Point.of(ONE, F), new Bishop(WHITE));
-        pieces.put(Point.of(ONE, G), new Knight(WHITE));
-        pieces.put(Point.of(ONE, H), new Rook(WHITE));
     }
 
     public static Map<Point, Piece> create() {
