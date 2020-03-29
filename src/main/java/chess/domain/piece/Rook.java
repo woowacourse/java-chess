@@ -7,11 +7,10 @@ import util.NullChecker;
 public class Rook extends RepeatMovePiece {
 
     private final static Map<Color, Piece> CACHE = new HashMap<>();
-    private final static Type type = Type.ROOK;
 
     static {
         for (Color color : Color.values()) {
-            CACHE.put(color, new Rook(color, type));
+            CACHE.put(color, new Rook(color, Type.ROOK));
         }
     }
 

@@ -53,7 +53,7 @@ public class BoardSquare {
         return false;
     }
 
-    public BoardSquare getAddBoardSquareOrMyself(int fileIncrementBy, int rankIncrementBy) {
+    public BoardSquare getAddIfInBoundaryOrMyself(int fileIncrementBy, int rankIncrementBy) {
         if (hasCacheAdded(fileIncrementBy, rankIncrementBy)) {
             File incrementFile = file.findAddIncrement(fileIncrementBy);
             Rank incrementRank = rank.findAddIncrement(rankIncrementBy);

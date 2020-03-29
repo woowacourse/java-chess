@@ -30,8 +30,8 @@ public class BoardSquareTest {
     @Test
     void canAddTest() {
         BoardSquare boardSquare = BoardSquare.of("a2");
-        assertThat(boardSquare.getAddBoardSquareOrMyself(1, 1)).isEqualTo(BoardSquare.of("b3"));
-        assertThat(boardSquare.getAddBoardSquareOrMyself(-1, 1)).isEqualTo(boardSquare);
+        assertThat(boardSquare.getAddIfInBoundaryOrMyself(1, 1)).isEqualTo(BoardSquare.of("b3"));
+        assertThat(boardSquare.getAddIfInBoundaryOrMyself(-1, 1)).isEqualTo(boardSquare);
     }
 
     @DisplayName("같은 File의 Square인지 확인")

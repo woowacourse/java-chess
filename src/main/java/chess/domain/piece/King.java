@@ -7,11 +7,10 @@ import util.NullChecker;
 public class King extends OneTimeMovePiece {
 
     private final static Map<Color, Piece> CACHE = new HashMap<>();
-    private final static Type type = Type.KING;
 
     static {
         for (Color color : Color.values()) {
-            CACHE.put(color, new King(color, type));
+            CACHE.put(color, new King(color, Type.KING));
         }
     }
 

@@ -38,11 +38,10 @@ public class TeamScore {
     }
 
     private double chargePawnSameFileScore(Map<BoardSquare, Piece> chessBoard, Color color) {
-        int count;
         List<BoardSquare> pawnSquare = chessBoard.keySet().stream()
             .filter(square -> chessBoard.get(square) == Pawn.getPieceInstance(color))
             .collect(Collectors.toList());
-        count = 0;
+        int count = 0;
         for (BoardSquare boardSquare : pawnSquare) {
             count += getSameFileCount(pawnSquare, boardSquare);
         }
@@ -56,11 +55,11 @@ public class TeamScore {
     }
 
     public List<Color> getWinners() {
-        double WinningScore = teamScore.values().stream()
+        double winningScore = teamScore.values().stream()
             .max(Double::compareTo)
             .orElseThrow(IllegalAccessError::new);
         return teamScore.keySet().stream()
-            .filter(color -> teamScore.get(color) == WinningScore)
+            .filter(color -> teamScore.get(color) == winningScore)
             .collect(Collectors.toList());
     }
 

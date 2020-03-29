@@ -8,11 +8,9 @@ public class Queen extends RepeatMovePiece {
 
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
-    private final static Type type = Type.QUEEN;
-
     static {
         for (Color color : Color.values()) {
-            CACHE.put(color, new Queen(color, type));
+            CACHE.put(color, new Queen(color, Type.QUEEN));
         }
     }
 

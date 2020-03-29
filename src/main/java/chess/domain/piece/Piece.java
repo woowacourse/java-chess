@@ -28,12 +28,7 @@ public abstract class Piece implements Movable {
         return availableBoardSquares;
     }
 
-    private int getRepeatCount() {
-        if (this instanceof RepeatMovePiece) {
-            return BoardSquare.MAX_FILE_AND_RANK_COUNT - BoardSquare.MIN_FILE_AND_RANK_COUNT;
-        }
-        return BoardSquare.MIN_FILE_AND_RANK_COUNT;
-    }
+    protected abstract int getRepeatCount();
 
     private void addCheatSheet(BoardSquare boardSquare, Set<BoardSquare> availableBoardSquares,
         int count) {
@@ -41,7 +36,7 @@ public abstract class Piece implements Movable {
             int fileIncrementBy = direction.getMultiplyFileAddAmount(count);
             int rankIncrementBy = direction.getMultiplyRankAddAmount(count);
             availableBoardSquares
-                .add(boardSquare.getAddBoardSquareOrMyself(fileIncrementBy, rankIncrementBy));
+                .add(boardSquare.getAddIfInBoundaryOrMyself(fileIncrementBy, rankIncrementBy));
         }
         availableBoardSquares.remove(boardSquare);
     }
@@ -52,7 +47,7 @@ public abstract class Piece implements Movable {
     protected Set<BoardSquare> findSquaresToRemove(BoardSquare s, int fileAddAmount, int rankAddAmount) {
         Set<BoardSquare> squaresToRemove = new HashSet<>();
         for (int i = 0, file = 0, rank = 0; i < 8; i++, file += fileAddAmount, rank += rankAddAmount) {
-            squaresToRemove.add(s.getAddBoardSquareOrMyself(file, rank));
+            squaresToRemove.add(s.getAddIfInBoundaryOrMyself(file, rank));
         }
         squaresToRemove.remove(s);
         return squaresToRemove;

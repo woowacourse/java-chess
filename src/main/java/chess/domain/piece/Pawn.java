@@ -12,16 +12,20 @@ import util.NullChecker;
 public class Pawn extends Piece {
 
     private final static Map<Color, Piece> CACHE = new HashMap<>();
-    private final static Type type = Type.PAWN;
 
     static {
         for (Color color : Color.values()) {
-            CACHE.put(color, new Pawn(color, type));
+            CACHE.put(color, new Pawn(color, Type.PAWN));
         }
     }
 
     public Pawn(Color color, Type type) {
         super(color, type);
+    }
+
+    @Override
+    protected int getRepeatCount() {
+        return BoardSquare.MIN_FILE_AND_RANK_COUNT;
     }
 
     public static Piece getPieceInstance(Color color) {
@@ -46,7 +50,7 @@ public class Pawn extends Piece {
         Set<BoardSquare> straightCheatSheet = new HashSet<>();
         for (BoardSquare cheatSheet : containsCheatSheet) {
             BoardSquare oneMore = cheatSheet
-                .getAddBoardSquareOrMyself(0, cheatSheet.getRankCompare(boardSquare));
+                .getAddIfInBoundaryOrMyself(0, cheatSheet.getRankCompare(boardSquare));
             straightCheatSheet.addAll(getOneMoreCheatSheet(boardSquare, board, oneMore));
             straightCheatSheet.add(cheatSheet);
         }
@@ -68,8 +72,8 @@ public class Pawn extends Piece {
         Set<BoardSquare> allCheatSheet) {
         Set<BoardSquare> diagonalCheatSheet = new HashSet<>();
         for (BoardSquare cheatSheet : allCheatSheet) {
-            BoardSquare cheatSheetRight = cheatSheet.getAddBoardSquareOrMyself(-1, 0);
-            BoardSquare cheatSheetLeft = cheatSheet.getAddBoardSquareOrMyself(1, 0);
+            BoardSquare cheatSheetRight = cheatSheet.getAddIfInBoundaryOrMyself(-1, 0);
+            BoardSquare cheatSheetLeft = cheatSheet.getAddIfInBoundaryOrMyself(1, 0);
             addDiagonalCheatSheet(board, diagonalCheatSheet, cheatSheetRight);
             addDiagonalCheatSheet(board, diagonalCheatSheet, cheatSheetLeft);
         }
