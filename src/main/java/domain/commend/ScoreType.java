@@ -1,6 +1,8 @@
 package domain.commend;
 
+import domain.commend.exceptions.isNotExistPieceInitialException;
 import domain.pieces.Pieces;
+import domain.point.Column;
 import domain.point.Point;
 import domain.team.Team;
 import java.util.Arrays;
@@ -14,6 +16,8 @@ public enum ScoreType {
     PAWN("p", 1),
     NONE(".", 0);
 
+    private static final String INITIAL_PAWN = "p";
+
     private String initial;
     private double score;
 
@@ -22,35 +26,50 @@ public enum ScoreType {
         this.score = score;
     }
 
-    public static double calculateBlackScore(Pieces pieces) {
+    public static double calculateBlackScore(Pieces pieces, Team team) {
         double totalScore = pieces.getPieces().keySet().stream()
-            .filter(point -> pieces.getPieces().get(point).isSameTeam(Team.BLACK))
-            .mapToDouble(point -> ATMBlack(pieces, point))
+            .filter(point -> pieces.getPieces().get(point).isSameTeam(team))
+            .mapToDouble(point -> getPieceScore(pieces, point))
             .reduce(0, Double::sum);
-        return totalScore;
+
+        int pawnCount = getSameColumnPawnCount(pieces, team);
+        return totalScore - pawnCount * 0.5;
     }
 
-    private static double ATMBlack(Pieces pieces, Point point) {
+    private static int getSameColumnPawnCount(Pieces pieces, Team team) {
+        int pawnCount = 0;
+        int count;
+        for (Column column : Column.values()) {
+            count = (int) pieces.getPieces().keySet().stream()
+                .filter(point -> isSameTeam(pieces, team, point))
+                .filter(point -> isSameColumn(point, column))
+                .filter(point -> isSameInitial(pieces, point))
+                .count();
+
+            if (count > 1) {
+                pawnCount += count;
+            }
+        }
+        return pawnCount;
+    }
+
+    private static boolean isSameTeam(Pieces pieces, Team team, Point point) {
+        return pieces.getPiece(point).isSameTeam(team);
+    }
+
+    private static boolean isSameColumn(Point point, Column column) {
+        return point.isSameColumn(column);
+    }
+
+    private static boolean isSameInitial(Pieces pieces, Point point) {
+        return pieces.getPiece(point).getInitial().equalsIgnoreCase(INITIAL_PAWN);
+    }
+
+    private static double getPieceScore(Pieces pieces, Point point) {
         return Arrays.stream(ScoreType.values())
-            .filter(x -> pieces.getPieces().get(point).getInitial().equals(x.initial.toUpperCase()))
+            .filter(x -> pieces.getPieces().get(point).getInitial().equalsIgnoreCase(x.initial))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(""))
-            .score;
-    }
-
-    public static double calculateWhiteScore(Pieces pieces) {
-        double totalScore = pieces.getPieces().keySet().stream()
-            .filter(point -> pieces.getPieces().get(point).isSameTeam(Team.WHITE))
-            .mapToDouble(point -> ATMWhite(pieces, point))
-            .reduce(0, Double::sum);
-        return totalScore;
-    }
-
-    private static double ATMWhite(Pieces pieces, Point point) {
-        return Arrays.stream(ScoreType.values())
-            .filter(x -> pieces.getPieces().get(point).getInitial().equals(x.initial.toLowerCase()))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(""))
+            .orElseThrow(() -> new isNotExistPieceInitialException("존재하지 않는 말입니다."))
             .score;
     }
 }

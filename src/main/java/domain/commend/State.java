@@ -31,10 +31,7 @@ public class State {
 
     public double status() {
         stateStrategy = stateStrategy.status();
-        if (team.equals(Team.BLACK)) {
-            return ScoreType.calculateBlackScore(getPieces());
-        }
-        return ScoreType.calculateWhiteScore(getPieces());
+        return ScoreType.calculateBlackScore(getPieces(), team);
     }
 
     private void changeTurn() {

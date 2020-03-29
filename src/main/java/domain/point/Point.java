@@ -52,4 +52,8 @@ public class Point {
 	public String toString() {
 		return column.toString() + row.toString();
 	}
+
+    public boolean isSameColumn(Column column) {
+		return this.column.equals(column);
+    }
 }
