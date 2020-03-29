@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.game.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.game.OperationType;
 import chess.domain.game.Operations;
@@ -30,13 +31,13 @@ public class ChessController {
 
 	private void execute() {
 		ChessGame chessGame = new ChessGame();
-		OutputView.printBoard(chessGame);
+		OutputView.printBoard(new Board(chessGame.getPieces()));
 
 		while (executeOperation(chessGame)) {
-			OutputView.printBoard(chessGame);
+			OutputView.printBoard(new Board(chessGame.getPieces()));
 			OutputView.printScore(chessGame.calculateScore());
 		}
-		if (chessGame.isKingDead()) {
+		if(chessGame.isKingDead()) {
 			OutputView.printFinishByKingDead(chessGame.getAliveKingColor());
 		}
 	}
@@ -45,6 +46,6 @@ public class ChessController {
 		Operations operations = inputOperation();
 		OperationType operationType = operations.getOperationType();
 
-		return (operationType.runOperate(chessGame, operations) && !chessGame.isKingDead());
+		return (operationType.runOperate(chessGame,operations) && !chessGame.isKingDead());
 	}
 }

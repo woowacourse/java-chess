@@ -1,13 +1,12 @@
 package chess.view;
 
+import chess.domain.game.Board;
 import chess.domain.position.PositionFactory;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import chess.domain.game.ChessGame;
 import chess.domain.game.ScoreResult;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 
 public class OutputView {
 	private static final String OPERATIONS_MESSAGE = String.join("\n",
@@ -21,21 +20,20 @@ public class OutputView {
 		System.out.println(OPERATIONS_MESSAGE);
 	}
 
-	public static void printBoard(ChessGame chessGame) {
+	public static void printBoard(Board board) {
 		printEmptyLine();
 		for (Column column : Column.values()) {
-			System.out.println(createRowLine(chessGame, column));
+			System.out.println(printRowLine(board, column));
 		}
 		printEmptyLine();
 	}
 
-	private static String createRowLine(ChessGame chessGame, Column column) {
+	private static String printRowLine(Board board, Column column) {
 		StringBuilder rowLineStringBuilder = new StringBuilder();
 
 		for (Row row : Row.values()) {
 			Position position = PositionFactory.of(row, column);
-			Piece piece = chessGame.getPieces().findBy(position); // TODO: 2020/03/27 체스게임한테 시켜라 혹은 보드에게 이양
-			rowLineStringBuilder.append(piece.getName());
+			rowLineStringBuilder.append(board.getPieceBy(position).getResource());
 		}
 		return rowLineStringBuilder.toString();
 	}

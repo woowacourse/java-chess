@@ -16,6 +16,7 @@ public class Piece {
 	private final Color color;
 	private final PieceType pieceType;
 
+
 	public Piece(Position position, PieceType pieceType, Movable movable, Color color) {
 		validate(position, movable);
 		this.position = position;
@@ -78,7 +79,10 @@ public class Piece {
 		return color;
 	}
 
-	public String getName() {
+	public String getResource() {
+		if(color.isWhite()) {
+			return pieceType.getResource().toLowerCase();
+		}
 		return pieceType.getResource();
 	}
 
