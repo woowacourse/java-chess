@@ -15,7 +15,7 @@ public abstract class Playing extends GameState {
 	}
 
 	@Override
-	protected State status() {
+	protected State report() {
 		throw new StateException("Playing 상태에서 status 명령어는 유효하지 않습니다.");
 	}
 

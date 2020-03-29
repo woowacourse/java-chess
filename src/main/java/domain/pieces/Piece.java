@@ -38,7 +38,7 @@ public abstract class Piece {
     }
 
     protected boolean isAlly(Piece other) {
-        return this.team.equals(other.team);
+        return this.team == other.team;
     }
 
     public void validateReach(Distance distance) {
@@ -56,7 +56,7 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public boolean isKindOf(PieceType pieceType) {
+    public boolean isType(PieceType pieceType) {
         return this.pieceType == pieceType;
     }
 

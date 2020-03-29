@@ -26,7 +26,7 @@ public abstract class NotPlaying extends GameState {
 	}
 
 	@Override
-	protected State status() {
+	protected State report() {
 		return new Reported(pieces);
 	}
 }

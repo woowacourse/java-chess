@@ -27,7 +27,7 @@ public class WebUIChessApplication {
     }
 
     private static void printIfStatus(State state) {
-        if (state.isStatus()) {
+        if (state.isReported()) {
             OutputView.printStatus(state.getPieces());
         }
     }

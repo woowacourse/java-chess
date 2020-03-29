@@ -25,22 +25,33 @@ public class OutputView {
     }
 
     public static void printStatus(Pieces pieces) {
+        if (pieces.isKingKilled()) {
+            printWhoWinWhenKingKilled(pieces);
+        }
+
+        double blackScore = pieces.sumTeamScore(Team.BLACK);
+        double whiteScore = pieces.sumTeamScore(Team.WHITE);
+
+        printScores(blackScore, whiteScore);
+        printWhoWinWhenKingNotKilled(blackScore, whiteScore);
+    }
+
+    private static void printWhoWinWhenKingKilled(Pieces pieces) {
         if (pieces.isKingKilled(Team.BLACK)) {
             System.out.println("흰 팀의 승리입니다.");
             return;
         }
         if (pieces.isKingKilled(Team.WHITE)) {
             System.out.println("검은 팀의 승리입니다.");
-            return;
         }
+    }
 
-        // TODO
-        double blackScore = pieces.sumTeamScore(Team.BLACK);
-        double whiteScore = pieces.sumTeamScore(Team.WHITE);
-
+    private static void printScores(double blackScore, double whiteScore) {
         System.out.printf("검은색 팀의 점수는 %f 입니다." + NEW_LINE, blackScore);
         System.out.printf("흰색 팀의 점수는 %f 입니다." + NEW_LINE, whiteScore);
+    }
 
+    private static void printWhoWinWhenKingNotKilled(double blackScore, double whiteScore) {
         if (blackScore > whiteScore) {
             System.out.println("검은색 팀의 승리입니다.");
             return;

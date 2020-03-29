@@ -1,18 +1,15 @@
 package domain.state;
 
+import domain.command.CommandType;
+import domain.command.MoveCommandTokens;
 import domain.state.exceptions.StateException;
 import domain.pieces.Piece;
 import domain.pieces.Pieces;
-import java.util.Arrays;
-import java.util.List;
+
 import java.util.Objects;
 import java.util.Set;
 
 public abstract class GameState implements State {
-    private static final int FIRST_TOKEN_INDEX = 0;
-    private static final int SECOND_TOKEN_INDEX = 1;
-    private static final int THIRD_TOKEN_INDEX = 2;
-    private static final int MOVE_COMMEND_SIZE = 3;
 
     protected Pieces pieces;
 
@@ -22,7 +19,7 @@ public abstract class GameState implements State {
 
     protected abstract State start();
 
-    protected abstract State status();
+    protected abstract State report();
 
     protected abstract State end();
 
@@ -30,36 +27,27 @@ public abstract class GameState implements State {
 
     @Override
     public final State pushCommend(String input) {
-        if (input.equals("end")) {
+        CommandType commandType = CommandType.getInstance(input);
+
+        if (commandType == CommandType.END) {
             return end();
         }
-        if (input.equals("start")) {
+        if (commandType == CommandType.START) {
             return start();
         }
-        if (input.equals("status")) {
-            return status();
+        if (commandType == CommandType.STATUS) {
+            return report();
         }
-        return parseAndPushCommend(input);
-    }
-
-    private State parseAndPushCommend(String input) {
-        List<String> tokens = Arrays.asList(input.split(" "));
-        if (tokens.get(FIRST_TOKEN_INDEX).equals("move")) {
-            validateTokenSizeIsMoveCommendSize(tokens);
-            return move(tokens.get(SECOND_TOKEN_INDEX), tokens.get(THIRD_TOKEN_INDEX));
+        if (commandType == CommandType.MOVE) {
+            MoveCommandTokens moveCommandTokens = MoveCommandTokens.of(input);
+            return move(moveCommandTokens.getSource(), moveCommandTokens.getDestination());
         }
 
         throw new StateException("올바른 명령어가 아닙니다.");
     }
 
-    private void validateTokenSizeIsMoveCommendSize(List<String> tokens) {
-        if (tokens.size() != MOVE_COMMEND_SIZE) {
-            throw new StateException("잘못된 명령어입니다.");
-        }
-    }
-
     @Override
-    public boolean isStatus() {
+    public boolean isReported() {
         return this instanceof Reported;
     }
 

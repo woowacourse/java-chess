@@ -103,7 +103,7 @@ public class Pieces {
 
 	private int countPawnOfTeamInColumnIfMoreThanTwo(Team team, Column column) {
 		int count = (int) pieces.stream()
-				.filter(piece -> piece.isKindOf(PieceType.PAWN))
+				.filter(piece -> piece.isType(PieceType.PAWN))
 				.filter(piece -> piece.isTeam(team))
 				.filter(piece -> piece.matchColumnPoint(column))
 				.count();
@@ -121,14 +121,14 @@ public class Pieces {
 
 	public boolean isKingKilled() {
 		return pieces.stream()
-				.filter(piece -> piece.isKindOf(PieceType.KING))
+				.filter(piece -> piece.isType(PieceType.KING))
 				.count() < START_KING_NUM;
 	}
 
 	public boolean isKingKilled(Team team) {
 		return pieces.stream()
 				.filter(piece -> piece.isTeam(team))
-				.noneMatch(piece -> piece.isKindOf(PieceType.KING));
+				.noneMatch(piece -> piece.isType(PieceType.KING));
 	}
 
 	public Set<Piece> getSet() {
