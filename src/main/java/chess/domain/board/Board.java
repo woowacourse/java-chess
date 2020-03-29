@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Pieces;
 import chess.domain.Team;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Placeable;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -13,9 +13,9 @@ import java.util.*;
 public class Board {
     private static final String EMPTY_POSITION_ACRONYM = ".";
 
-    private Map<Position, Piece> board;
+    private Map<Position, Placeable> board;
 
-    Board(Map<Position, Piece> board) {
+    Board(Map<Position, Placeable> board) {
         this.board = board;
     }
 
@@ -24,19 +24,29 @@ public class Board {
     }
 
     public void move(Position fromPosition, Position toPosition) {
-        Piece piece = board.get(fromPosition);
-        Route route = piece.findRoute(fromPosition, toPosition);
+        Placeable pieceToMove = board.get(fromPosition);
 
-        MovingExecutor movingExecutor = MovingExecutorFactory.from(piece);
+        checkIfToPositionIsAvailable(toPosition, pieceToMove);
+
+        Route route = pieceToMove.findRoute(fromPosition, toPosition);
+
+        MovingExecutor movingExecutor = MovingExecutorFactory.from(pieceToMove);
         movingExecutor.move(route, board, fromPosition, toPosition);
     }
 
+    private void checkIfToPositionIsAvailable(Position toPosition, Placeable pieceToMove) {
+        Placeable pieceToRemove = board.get(toPosition);
+        if (pieceToRemove.isNotEmpty() && pieceToRemove.isTeam(pieceToMove.getTeam())) {
+            throw new IllegalArgumentException("이동하려는 위치에 우리팀의 기물이 있습니다.");
+        }
+    }
+
     public Pieces findPiecesOf(Team team) {
-        Set<Piece> piecesSource = new HashSet<>();
+        Set<Placeable> piecesSource = new HashSet<>();
 
         for (Position position : board.keySet()) {
-            Piece piece = board.get(position);
-            if (piece != null && piece.isTeam(team)) {
+            Placeable piece = board.get(position);
+            if (piece.isNotEmpty() && piece.isTeam(team)) {
                 piecesSource.add(piece);
             }
         }
@@ -55,7 +65,7 @@ public class Board {
         return Collections.unmodifiableList(resultBoard);
     }
 
-    public Piece findPieceBy(Position position) {
+    public Placeable findPieceBy(Position position) {
         return board.get(position);
     }
 

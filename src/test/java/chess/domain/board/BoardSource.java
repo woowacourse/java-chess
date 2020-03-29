@@ -1,35 +1,37 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Placeable;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BoardSource {
-    private Map<Position, Piece> boardSource;
+    private Map<Position, Placeable> boardSource;
 
     public BoardSource() {
         this.boardSource = new HashMap<>();
+
+        fillWithEmpty(boardSource);
     }
 
-    public void addPiece(Position position, Piece piece) {
-        boardSource.put(position, piece);
-    }
-
-    public void addRow(List<Piece> pieces, Row row) {
-        for (Piece piece : pieces) {
-            for (Column column : Column.values()) {
+    private static void fillWithEmpty(Map<Position, Placeable> board) {
+        for (Column column : Column.values()) {
+            for (Row row : Row.values()) {
                 Position position = Position.of(column, row);
-                addPiece(position, piece);
+                board.put(position, new Empty());
             }
         }
     }
 
-    public Map<Position, Piece> getSource() {
+    public void addPiece(Position position, Placeable placeable) {
+        boardSource.put(position, placeable);
+    }
+
+    public Map<Position, Placeable> getSource() {
         return boardSource;
     }
 }

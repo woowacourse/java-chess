@@ -1,11 +1,11 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.Placeable;
 
 public abstract class AbstractMovingExecutor implements MovingExecutor {
-    protected final Piece piece;
+    protected final Placeable placeable;
 
-    public AbstractMovingExecutor(Piece piece) {
-        this.piece = piece;
+    public AbstractMovingExecutor(Placeable placeable) {
+        this.placeable = placeable;
     }
 }

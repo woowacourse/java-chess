@@ -39,7 +39,7 @@ public class Route {
             return movablePositions.subList(0, 2);
         }
 
-        if (pieceType == PieceType.KING || pieceType == PieceType.PAWN) {
+        if (pieceType == PieceType.PAWN || pieceType == PieceType.KING || pieceType == PieceType.KNIGHT) {
             return movablePositions.subList(0, 1);
         }
 

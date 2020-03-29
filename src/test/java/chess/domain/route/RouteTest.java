@@ -48,9 +48,7 @@ class RouteTest {
                                 Position.of("H1")))),
                 Arguments.of(Position.of("B1"), Direction.NORTH_NORTH_EAST, PieceType.KNIGHT,
                         new Route(Arrays.asList(
-                                Position.of("C3"),
-                                Position.of("D5"),
-                                Position.of("E7")))),
+                                Position.of("C3")))),
                 Arguments.of(Position.of("B1"), Direction.NORTH, PieceType.PAWN,
                         new RouteToProceed(Arrays.asList(
                                 Position.of("B2"))))

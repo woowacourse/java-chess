@@ -7,7 +7,7 @@ import chess.domain.route.RouteFinder;
 
 import java.util.Objects;
 
-public class Piece {
+public class Piece implements Placeable {
     private Team team;
     private PieceType pieceType;
 
@@ -42,6 +42,16 @@ public class Piece {
 
     public boolean isOppositeTeam(Team team) {
         return this.team != team;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean isNotEmpty() {
+        return !isEmpty();
     }
 
     @Override

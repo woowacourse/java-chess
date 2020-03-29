@@ -1,9 +1,13 @@
 package chess.domain.board;
 
 import chess.domain.Team;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.Placeable;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
+import chess.domain.position.Row;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,12 +17,14 @@ public class BoardFactory {
         return new Board(createBoardSource());
     }
 
-    public static Board of(Map<Position, Piece> board) {
+    public static Board of(Map<Position, Placeable> board) {
         return new Board(board);
     }
 
-    private static Map<Position, Piece> createBoardSource() {
-        Map<Position, Piece> board = new HashMap<>();
+    private static Map<Position, Placeable> createBoardSource() {
+        Map<Position, Placeable> board = new HashMap<>();
+
+        fillWithEmpty(board);
 
         fillFirstRank(board);
         fillSecondRank(board);
@@ -28,7 +34,16 @@ public class BoardFactory {
         return board;
     }
 
-    private static void fillSeventhRank(Map<Position, Piece> board) {
+    private static void fillWithEmpty(Map<Position, Placeable> board) {
+        for (Column column : Column.values()) {
+            for (Row row : Row.values()) {
+                Position position = Position.of(column, row);
+                board.put(position, new Empty());
+            }
+        }
+    }
+
+    private static void fillSeventhRank(Map<Position, Placeable> board) {
         addToBoard(board, "A7", Team.BLACK, PieceType.PAWN);
         addToBoard(board, "B7", Team.BLACK, PieceType.PAWN);
         addToBoard(board, "C7", Team.BLACK, PieceType.PAWN);
@@ -39,7 +54,7 @@ public class BoardFactory {
         addToBoard(board, "H7", Team.BLACK, PieceType.PAWN);
     }
 
-    private static void fillEighthRank(Map<Position, Piece> board) {
+    private static void fillEighthRank(Map<Position, Placeable> board) {
         addToBoard(board, "A8", Team.BLACK, PieceType.ROOK);
         addToBoard(board, "B8", Team.BLACK, PieceType.KNIGHT);
         addToBoard(board, "C8", Team.BLACK, PieceType.BISHOP);
@@ -50,7 +65,7 @@ public class BoardFactory {
         addToBoard(board, "H8", Team.BLACK, PieceType.ROOK);
     }
 
-    private static void fillSecondRank(Map<Position, Piece> board) {
+    private static void fillSecondRank(Map<Position, Placeable> board) {
         addToBoard(board, "A2", Team.WHITE, PieceType.PAWN);
         addToBoard(board, "B2", Team.WHITE, PieceType.PAWN);
         addToBoard(board, "C2", Team.WHITE, PieceType.PAWN);
@@ -61,7 +76,7 @@ public class BoardFactory {
         addToBoard(board, "H2", Team.WHITE, PieceType.PAWN);
     }
 
-    private static void fillFirstRank(Map<Position, Piece> board) {
+    private static void fillFirstRank(Map<Position, Placeable> board) {
         addToBoard(board, "A1", Team.WHITE, PieceType.ROOK);
         addToBoard(board, "B1", Team.WHITE, PieceType.KNIGHT);
         addToBoard(board, "C1", Team.WHITE, PieceType.BISHOP);
@@ -72,7 +87,7 @@ public class BoardFactory {
         addToBoard(board, "H1", Team.WHITE, PieceType.ROOK);
     }
 
-    private static void addToBoard(Map<Position, Piece> board, String position, Team team, PieceType pieceType) {
+    private static void addToBoard(Map<Position, Placeable> board, String position, Team team, PieceType pieceType) {
         board.put(Position.of(position), new Piece(team, pieceType));
     }
 }

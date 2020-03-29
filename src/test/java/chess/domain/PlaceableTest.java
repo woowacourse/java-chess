@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.Placeable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,12 +13,12 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
-public class PieceTest {
+public class PlaceableTest {
     @ParameterizedTest
     @MethodSource("pieceConstructorSourceAndExpected")
     void 팀에_해당하는_표현문자(Team team, PieceType pieceType, String expected) {
-        Piece piece = new Piece(team, pieceType);
-        assertThat(piece.getAcronym()).isEqualTo(expected);
+        Placeable placeable = new Piece(team, pieceType);
+        assertThat(placeable.getAcronym()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> pieceConstructorSourceAndExpected() {
@@ -30,7 +31,7 @@ public class PieceTest {
                 Arguments.of(Team.BLACK, PieceType.KNIGHT, "N"),
 
                 Arguments.of(Team.WHITE, PieceType.PAWN, "p"),
-                Arguments.of(Team.WHITE, PieceType.BISHOP, "B"),
+                Arguments.of(Team.WHITE, PieceType.BISHOP, "b"),
                 Arguments.of(Team.WHITE, PieceType.ROOK, "r"),
                 Arguments.of(Team.WHITE, PieceType.QUEEN, "q"),
                 Arguments.of(Team.WHITE, PieceType.KING, "k"),
@@ -44,8 +45,8 @@ public class PieceTest {
 
     @ParameterizedTest
     @MethodSource("createPieceAndTeam")
-    void isTeam(Piece piece, Team team, boolean expected) {
-        assertThat(piece.isTeam(team)).isEqualTo(expected);
+    void isTeam(Placeable placeable, Team team, boolean expected) {
+        assertThat(placeable.isTeam(team)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createPieceAndTeam() {
@@ -60,8 +61,8 @@ public class PieceTest {
 
     @ParameterizedTest
     @MethodSource("createPieceAndScore")
-    void getScore(Piece piece, double score) {
-        assertThat(piece.getScore()).isEqualTo(score);
+    void getScore(Placeable placeable, double score) {
+        assertThat(placeable.getScore()).isEqualTo(score);
     }
 
     private static Stream<Arguments> createPieceAndScore() {

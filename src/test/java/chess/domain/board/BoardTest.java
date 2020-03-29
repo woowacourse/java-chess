@@ -2,8 +2,10 @@ package chess.domain.board;
 
 import chess.domain.Pieces;
 import chess.domain.Team;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.Placeable;
 import chess.domain.position.Position;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,10 +25,10 @@ class BoardTest {
     @MethodSource("createFromPositionAndToPosition")
     void move(Position fromPosition, Position toPosition) {
         Board board = BoardFactory.createInitially();
-        Piece pieceToMove = board.findPieceBy(fromPosition);
+        Placeable pieceToMove = board.findPieceBy(fromPosition);
         board.move(fromPosition, toPosition);
 
-        assertThat(board.findPieceBy(fromPosition)).isNull();
+        assertThat(board.findPieceBy(fromPosition)).isEqualTo(new Empty());
         assertThat(board.findPieceBy(toPosition)).isEqualTo(pieceToMove);
     }
 
@@ -37,8 +39,8 @@ class BoardTest {
     }
 
     @ParameterizedTest
-    @MethodSource("createPositionAndPieceForAttackingPawn")
-    void move_폰이_공격에_성공하는_경우(Piece pieceToMove, Position fromPosition, Piece pieceToAttack, Position toPosition) {
+    @MethodSource("createPositionAndPieceForAttackingPawnToSucceed")
+    void move_폰이_공격에_성공하는_경우(Placeable pieceToMove, Position fromPosition, Placeable pieceToAttack, Position toPosition) {
         //given
         BoardSource boardSource = new BoardSource();
         boardSource.addPiece(fromPosition, pieceToMove);
@@ -50,11 +52,11 @@ class BoardTest {
         board.move(fromPosition, toPosition);
 
         //then
-        assertThat(board.findPieceBy(fromPosition)).isNull();
+        assertThat(board.findPieceBy(fromPosition)).isEqualTo(new Empty());
         assertThat(board.findPieceBy(toPosition)).isEqualTo(pieceToMove);
     }
 
-    private static Stream<Arguments> createPositionAndPieceForAttackingPawn() {
+    private static Stream<Arguments> createPositionAndPieceForAttackingPawnToSucceed() {
         return Stream.of(
                 Arguments.of(
                         new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
@@ -67,7 +69,7 @@ class BoardTest {
 
     @ParameterizedTest
     @MethodSource("createPositionAndPieceForAttackingPawnToFail")
-    void move_폰이_공격에_실패하는_경우(Piece pieceToMove, Position fromPosition, Piece pieceToAttack, Position toPosition) {
+    void move_폰이_공격에_실패하는_경우(Placeable pieceToMove, Position fromPosition, Placeable pieceToAttack, Position toPosition) {
         //given
         BoardSource boardSource = new BoardSource();
         boardSource.addPiece(fromPosition, pieceToMove);
@@ -87,16 +89,17 @@ class BoardTest {
                         new Piece(Team.WHITE, PieceType.ROOK), Position.of("C3")),
                 Arguments.of(
                         new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
-                        null, Position.of("C3"))
+                        new Empty(), Position.of("C3"))
         );
     }
 
     @ParameterizedTest
-    @MethodSource("createPositionAndPieceForProceedingPawn")
-    void move_폰이_전진에_성공하는_경우(Piece pieceToMove, Position fromPosition, Position toPosition) {
+    @MethodSource("createPositionAndPieceForProceedingPawnToSucceed")
+    void move_폰이_전진에_성공하는_경우(Placeable pieceToMove, Position fromPosition, Placeable pieceToAttack, Position toPosition) {
         //given
         BoardSource boardSource = new BoardSource();
         boardSource.addPiece(fromPosition, pieceToMove);
+        boardSource.addPiece(toPosition, pieceToAttack);
 
         Board board = new Board(boardSource.getSource());
 
@@ -104,13 +107,27 @@ class BoardTest {
         board.move(fromPosition, toPosition);
 
         //then
-        assertThat(board.findPieceBy(fromPosition)).isNull();
+        assertThat(board.findPieceBy(fromPosition)).isEqualTo(new Empty());
         assertThat(board.findPieceBy(toPosition)).isEqualTo(pieceToMove);
+    }
+
+    private static Stream<Arguments> createPositionAndPieceForProceedingPawnToSucceed() {
+        return Stream.of(
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
+                        new Empty(), Position.of("D3")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
+                        new Empty(), Position.of("D4")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("D3"),
+                        new Empty(), Position.of("D4"))
+        );
     }
 
     @ParameterizedTest
     @MethodSource("createPositionAndPieceForMovingPawnToFail")
-    void move_폰이_전진에_실패하는_경우(Piece pieceToMove, Position fromPosition, Piece pieceToAttack, Position toPosition) {
+    void move_폰이_전진에_실패하는_경우(Placeable pieceToMove, Position fromPosition, Placeable pieceToAttack, Position toPosition) {
         //given
         BoardSource boardSource = new BoardSource();
         boardSource.addPiece(fromPosition, pieceToMove);
@@ -130,14 +147,108 @@ class BoardTest {
                         new Piece(Team.WHITE, PieceType.ROOK), Position.of("D3")),
                 Arguments.of(
                         new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
-                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("D3"))
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("D3")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
+                        new Piece(Team.WHITE, PieceType.ROOK), Position.of("D4")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("D4")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("D3"),
+                        new Empty(), Position.of("D5"))
         );
     }
 
-    private static Stream<Arguments> createPositionAndPieceForProceedingPawn() {
+
+    @ParameterizedTest
+    @MethodSource("createPositionAndPieceForKnightToSucceed")
+    void move_나이트가_이동에_성공하는_경우(Placeable pieceToMove, Position fromPosition, Placeable pieceToDisturb, Position middlePosition, Placeable pieceToAttack, Position toPosition) {
+        //given
+        BoardSource boardSource = new BoardSource();
+        boardSource.addPiece(fromPosition, pieceToMove);
+        boardSource.addPiece(middlePosition, pieceToDisturb);
+        boardSource.addPiece(toPosition, pieceToAttack);
+
+        Board board = new Board(boardSource.getSource());
+
+        //when
+        board.move(fromPosition, toPosition);
+
+        //then
+        assertThat(board.findPieceBy(fromPosition)).isEqualTo(new Empty());
+        assertThat(board.findPieceBy(toPosition)).isEqualTo(pieceToMove);
+    }
+
+    private static Stream<Arguments> createPositionAndPieceForKnightToSucceed() {
         return Stream.of(
                 Arguments.of(
-                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("D2"), Position.of("D3"))
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("E6"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("F7")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("E7"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("F7")),
+
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("F6"),
+                        new Empty(), Position.of("G6")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("E6"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("G6")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.PAWN), Position.of("E7"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("G6"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("createPositionAndPieceForKnightToFail")
+    void move_나이트가_이동에_실패하는_경우(Placeable pieceToMove, Position fromPosition, Placeable pieceToAttack, Position toPosition) {
+        //given
+        BoardSource boardSource = new BoardSource();
+        boardSource.addPiece(fromPosition, pieceToMove);
+        boardSource.addPiece(toPosition, pieceToAttack);
+
+        Board board = new Board(boardSource.getSource());
+
+        assertThatThrownBy(() -> {
+            board.move(fromPosition, toPosition);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Arguments> createPositionAndPieceForKnightToFail() {
+        return Stream.of(
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.ROOK), Position.of("F7")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.ROOK), Position.of("G6")),
+
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("E6")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("F6")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.BLACK, PieceType.ROOK), Position.of("F5")),
+
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.ROOK), Position.of("E6")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.ROOK), Position.of("F6")),
+                Arguments.of(
+                        new Piece(Team.WHITE, PieceType.KNIGHT), Position.of("E5"),
+                        new Piece(Team.WHITE, PieceType.ROOK), Position.of("F5"))
         );
     }
 
