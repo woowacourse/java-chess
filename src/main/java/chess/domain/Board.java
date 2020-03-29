@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class Board {
 	private final Pieces pieces;
 
 	public Board() {
-		this.pieces = PieceFactory.getInstance().getPieces();
+		this.pieces = new Pieces(new ArrayList<>(PieceFactory.getInstance().getPieces()));
 	}
 
 	public void movePiece(Position source, Position destination) {

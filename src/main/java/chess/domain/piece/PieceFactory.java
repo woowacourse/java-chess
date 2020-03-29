@@ -28,8 +28,8 @@ public class PieceFactory {
 		return instance;
 	}
 
-	public Pieces getPieces() {
-		return new Pieces(pieces);
+	public List<Piece> getPieces() {
+		return Collections.unmodifiableList(pieces);
 	}
 
 	private void initializeTeam(int backRank, int pawnRank, Team team) {

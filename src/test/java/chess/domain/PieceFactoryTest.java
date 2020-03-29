@@ -12,7 +12,7 @@ public class PieceFactoryTest {
 	@Test
 	@DisplayName("PieceFactory가 제대로 32개의 말들을 생성하는지")
 	void size() {
-		Pieces pieces = PieceFactory.getPieces();
+		Pieces pieces = new Pieces(PieceFactory.getInstance().getPieces());
 		assertThat(pieces.getAlivePieces().size()).isEqualTo(32);
 	}
 }
