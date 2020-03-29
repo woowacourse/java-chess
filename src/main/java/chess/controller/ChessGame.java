@@ -2,13 +2,19 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.Team;
+import chess.domain.result.GameResult;
 import chess.domain.util.Run;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
-    public boolean isFinished;
     private Board board;
+    private GameResult gameResult;
+
+    public ChessGame() {
+        this.gameResult = new GameResult();
+    }
 
     public void run() {
         OutputView.printInputStartGuideMessage();
@@ -31,6 +37,10 @@ public class ChessGame {
             OutputView.printBoard(board);
             gameTerminateWhenFinished();
 
+            if (runner.isStatus()) {
+                OutputView.printTeamScore(gameResult.calculateScore(board, Team.WHITE),
+                        gameResult.calculateScore(board, Team.BLACK));
+            }
             inputCommand = InputView.inputCommand();
             runner = Run.of(inputCommand[0]);
         }

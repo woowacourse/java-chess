@@ -25,6 +25,10 @@ public class OutputView {
         System.out.println("왕이 잡혀서 게임이 종료되었습니다.");
     }
 
+    public static void printTeamScore(double whiteScore, double blackScore) {
+        System.out.println(String.format("흰색 팀의 점수는 %.1f, 검은 색 팀의 점수는 %.1f 입니다.", whiteScore, blackScore));
+    }
+
     public static void printExceptionMessage(String message) {
         System.out.println(message);
     }

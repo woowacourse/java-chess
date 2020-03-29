@@ -39,7 +39,7 @@
         - [x] from piece 는 to position 으로 변경
         - [x] from position 을 갖는 Blank piece 추가
     - [x] king 이 잡혔을 경우, 게임 종료
-    - [ ] 한 열에 pawn 이 2개 있을 경우 0.5점씩 계산
+    - [x] 한 열에 pawn 이 2개 있을 경우 0.5점씩 계산
     - [x] 화이트/블랙 번갈아 가면서 게임
 - [x] TypeScore
     - [x] 각 피스 타입 별 점수계산을 위한 enum
@@ -52,8 +52,8 @@
         - [x] end : 게임종료
     - [x] 체스 말 이동
         - [x] move : 이동
-    - [ ] 점수 현황
-        - [ ] status : 현황
+    - [x] 점수 현황
+        - [x] status : 현황
 
 ## 5. 체스 말의 이동 규칙
 * 폰(PAWN)

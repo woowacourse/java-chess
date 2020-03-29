@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum Run {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String name;
 
@@ -30,5 +31,9 @@ public enum Run {
 
     public boolean isMove() {
         return this == MOVE;
+    }
+
+    public boolean isStatus() {
+        return this == STATUS;
     }
 }
