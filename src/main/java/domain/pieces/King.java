@@ -21,14 +21,14 @@ public class King extends Piece {
     }
 
     @Override
-    public void canMove(Direction direction) {
+    public void validateMoveDirection(Direction direction) {
         if (direction.isNotLinearDirection()) {
             throw new CanNotMoveException();
         }
     }
 
     @Override
-    public void canReach(Distance distance) {
+    public void validateReach(Distance distance) {
         if (distance != Distance.ONE) {
             throw new CanNotReachException();
         }

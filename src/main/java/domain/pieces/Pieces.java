@@ -23,7 +23,7 @@ public class Pieces {
 		Piece subject = find(from);
 
 		Distance distance = Distance.of(from, to);
-		subject.canReach(distance);
+		subject.validateReach(distance);
 
 		Direction direction = Direction.of(from, to);
 		if (direction.isLinearDirection()) {
@@ -59,7 +59,7 @@ public class Pieces {
 			throw new CanNotMoveException("움직이려는 곳에 대상이 있습니다.");
 		}
 
-		subject.canMove(direction);
+		subject.validateMoveDirection(direction);
 		Piece moved = subject.move(to);
 		pieces.remove(subject);
 		pieces.add(moved);
@@ -72,7 +72,7 @@ public class Pieces {
 	}
 
 	private void attack(Piece subject, Piece target, Direction direction) {
-		subject.canAttack(direction, target);
+		subject.validateAttack(direction, target);
 		pieces.remove(subject);
 		pieces.remove(target);
 		pieces.add(subject.move(target.getPoint()));

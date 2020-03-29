@@ -32,7 +32,7 @@ public class BishopTest {
 	void canMove_ThrowException() {
 		Direction direction = createDirection("n");
 
-		assertThatThrownBy(() -> bishop.canMove(direction))
+		assertThatThrownBy(() -> bishop.validateMoveDirection(direction))
 				.isInstanceOf(CanNotMoveException.class);
 	}
 
@@ -41,6 +41,6 @@ public class BishopTest {
 	void canMove() {
 		Direction direction = createDirection("ne");
 
-		bishop.canMove(direction);
+		bishop.validateMoveDirection(direction);
 	}
 }

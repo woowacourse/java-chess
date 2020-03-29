@@ -34,14 +34,14 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void canMove(Direction direction) {
-		if (isBlack()) {
+	public void validateMoveDirection(Direction direction) {
+		if (isTeam(Team.BLACK)) {
 			if (direction != Direction.S) {
 				throw new CanNotMoveException();
 			}
 			return;
 		}
-		if (isWhite()) {
+		if (isTeam(Team.WHITE)) {
 			if (direction != Direction.N) {
 				throw new CanNotMoveException();
 			}
@@ -49,18 +49,18 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void canAttack(Direction direction, Piece other) {
+	public void validateAttack(Direction direction, Piece other) {
         if (isAlly(other)) {
 			throw new CanNotAttackException();
 		}
 
-		if (isBlack()) {
+		if (isTeam(Team.BLACK)) {
 			if (direction != Direction.SW && direction != Direction.SE) {
 				throw new CanNotAttackException();
 			}
             return;
 		}
-		if (isWhite()) {
+		if (isTeam(Team.WHITE)) {
 			if (direction != Direction.NW && direction != Direction.NE) {
 				throw new CanNotAttackException();
 			}
@@ -68,7 +68,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void canReach(Distance distance) {
+	public void validateReach(Distance distance) {
 	    if (canMoveTwoDistance) {
 	        if (distance == Distance.VERTICAL_TWO) {
 	            return;

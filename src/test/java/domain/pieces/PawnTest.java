@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static testAssistant.creationAssistant.*;
 
 class PawnTest {
@@ -36,7 +35,7 @@ class PawnTest {
 	void canMove() {
 		Direction direction = createDirection("n");
 
-		assertThatThrownBy(() -> pawn.canMove(direction))
+		assertThatThrownBy(() -> pawn.validateMoveDirection(direction))
 				.isInstanceOf(CanNotMoveException.class);
 	}
 
@@ -45,7 +44,7 @@ class PawnTest {
 		Direction direction = createDirection("ne");
 		Piece other = createPawn("white", "a2");
 
-		assertThatThrownBy(() -> pawn.canAttack(direction, other))
+		assertThatThrownBy(() -> pawn.validateAttack(direction, other))
 				.isInstanceOf(CanNotAttackException.class);
 	}
 
@@ -53,7 +52,7 @@ class PawnTest {
 	void canReach() {
 		Distance distance = createDistance("vertical_two");
 
-		assertThatThrownBy(() -> pawnOnceMoved.canReach(distance))
+		assertThatThrownBy(() -> pawnOnceMoved.validateReach(distance))
 				.isInstanceOf(CanNotReachException.class);
 	}
 }

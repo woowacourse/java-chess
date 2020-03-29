@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static testAssistant.creationAssistant.*;
 
 class RookTest {
@@ -31,7 +30,7 @@ class RookTest {
 	void canMove() {
 		Direction direction = createDirection("ne");
 
-		assertThatThrownBy(() -> rook.canMove(direction))
+		assertThatThrownBy(() -> rook.validateMoveDirection(direction))
 				.isInstanceOf(CanNotMoveException.class);
 	}
 }

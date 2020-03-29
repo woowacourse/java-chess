@@ -19,7 +19,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void canMove(Direction direction) {
+    public void validateMoveDirection(Direction direction) {
         if (direction.isNotDiagonal()) {
             throw new CanNotMoveException("비숍은 대각선으로만 움직일 수 있습니다.");
         }

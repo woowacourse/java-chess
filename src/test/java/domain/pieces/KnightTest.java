@@ -30,7 +30,7 @@ class KnightTest {
 	void canMove() {
 		Direction direction = createDirection("n");
 
-		assertThatThrownBy(() -> knight.canMove(direction))
+		assertThatThrownBy(() -> knight.validateMoveDirection(direction))
 				.isInstanceOf(CanNotMoveException.class);
 	}
 }

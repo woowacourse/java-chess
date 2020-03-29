@@ -1,6 +1,7 @@
 package domain.pieces;
 
 import domain.pieces.exceptions.CanNotAttackException;
+import domain.pieces.exceptions.CanNotMoveException;
 import domain.point.Column;
 import domain.point.Direction;
 import domain.point.Distance;
@@ -22,6 +23,49 @@ public abstract class Piece {
         this.score = score;
     }
 
+    public abstract Piece move(Point afterPoint);
+
+    public abstract void validateMoveDirection(Direction direction);
+
+    public void validateAttack(Direction direction, Piece piece) {
+        try {
+            validateMoveDirection(direction);
+        } catch (CanNotMoveException e) {
+            throw new CanNotAttackException("공격할 수 없는 방향입니다.");
+        }
+
+        if (isAlly(piece)) {
+            throw new CanNotAttackException("같은 팀을 공격할 수 없습니다.");
+        }
+    }
+
+    protected boolean isAlly(Piece other) {
+        return this.team == other.team;
+    }
+
+    public void validateReach(Distance distance) {
+    }
+
+    public boolean matchPoint(Point point) {
+        return this.point.equals(point);
+    }
+
+    public boolean matchColumnPoint(Column column) {
+        return this.point.getColumn().equals(column);
+    }
+
+    public boolean isTeam(Team team) {
+        return this.team.equals(team);
+    }
+
+    public boolean isKing() {
+        return this instanceof King;
+    }
+
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
+
     public String getInitial() {
         return team.caseInitial(initial);
     }
@@ -34,33 +78,6 @@ public abstract class Piece {
         return point.getColumnIndex();
     }
 
-    public boolean isTeam(Team team) {
-        return this.team.equals(team);
-    }
-
-    public boolean isWhite() {
-        return team == Team.WHITE;
-    }
-
-    public boolean isBlack() {
-        return team == Team.BLACK;
-    }
-
-    public abstract Piece move(Point afterPoint);
-
-    public abstract void canMove(Direction direction);
-
-    public void canAttack(Direction direction, Piece piece) {
-        canMove(direction);
-        if (isAlly(piece)) {
-            throw new CanNotAttackException();
-        }
-    }
-
-    protected boolean isAlly(Piece other) {
-        return this.team == other.team;
-    }
-
     public Team getTeam() {
         return team;
     }
@@ -71,25 +88,6 @@ public abstract class Piece {
 
     public double getScore() {
         return score;
-    }
-
-    public void canReach(Distance distance) {
-    }
-
-    public boolean isKing() {
-        return this instanceof King;
-    }
-
-    public boolean matchPoint(Point point) {
-        return this.point.equals(point);
-    }
-
-    public boolean matchColumnPoint(Column column) {
-        return this.point.getColumn().equals(column);
-    }
-
-    public boolean isPawn() {
-        return this instanceof Pawn;
     }
 
     @Override

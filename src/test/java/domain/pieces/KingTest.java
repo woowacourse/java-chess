@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static testAssistant.creationAssistant.*;
 
 class KingTest {
@@ -33,7 +32,7 @@ class KingTest {
 	void canMove_ThrowException() {
 		Direction direction = createDirection("knight");
 
-		assertThatThrownBy(() -> king.canMove(direction))
+		assertThatThrownBy(() -> king.validateMoveDirection(direction))
 				.isInstanceOf(CanNotMoveException.class);
 	}
 
@@ -41,7 +40,7 @@ class KingTest {
 	void canReach() {
 		Distance distance = createDistance("vertical_two");
 
-		assertThatThrownBy(() -> king.canReach(distance))
+		assertThatThrownBy(() -> king.validateReach(distance))
 				.isInstanceOf(CanNotReachException.class);
 
 	}

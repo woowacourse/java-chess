@@ -19,7 +19,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void canMove(Direction direction) {
+    public void validateMoveDirection(Direction direction) {
         if (!direction.isKnight()) {
             throw new CanNotMoveException();
         }

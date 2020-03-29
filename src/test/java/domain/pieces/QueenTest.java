@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static testAssistant.creationAssistant.*;
 
 class QueenTest {
@@ -25,7 +24,7 @@ class QueenTest {
 	void canMove() {
 		Direction direction = createDirection("knight");
 
-		assertThatThrownBy(() -> queen.canMove(direction))
+		assertThatThrownBy(() -> queen.validateMoveDirection(direction))
 				.isInstanceOf(CanNotMoveException.class);
 	}
 }
