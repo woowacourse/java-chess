@@ -49,4 +49,11 @@ public class BoardTest {
         piece = board.findPiece(Positions.of("c2"));
         Assertions.assertThat(piece instanceof Pawn).isTrue();
     }
+
+    @Test
+    @DisplayName("초기화 상태에서는 Black King, White king이 모두 살아 있으므로 false를 반환해야 함")
+    void isKingKilledReturnFalse() {
+        Assertions.assertThat(board.isBlackKingKilled()).isFalse();
+        Assertions.assertThat(board.isWhiteKingKilled()).isFalse();
+    }
 }
