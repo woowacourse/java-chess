@@ -10,7 +10,6 @@ import java.util.Set;
 
 public class Pieces {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "잘못된 위치를 입력하셨습니다.";
-
 	private final List<Piece> pieces;
 
 	// package accessed
@@ -53,7 +52,7 @@ public class Pieces {
 
 	public List<Piece> getPieces() {
 		return pieces;
-	} // TODO: 2020/03/27 최후 : 겟을 없에자
+	}
 
 	public boolean isKingDead() {
 		int kingCount = (int) pieces.stream()

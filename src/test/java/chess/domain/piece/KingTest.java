@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.position.PositionFactory;
-import chess.domain.position.Position;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.TestPiecesFactory;
+import chess.domain.position.Position;
+import chess.domain.position.PositionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +22,7 @@ public class KingTest {
 	@ValueSource(strings = {"a1", "a2", "a3", "b1", "b3", "c1", "c2", "c3"})
 	void createMovablePositions_normal_test(String input) {
 		Position position = PositionFactory.of("b2");
-		King king = new King(position, "k", Color.WHITE);
+		Piece king = TestPieceFactory.createKing(position, Color.WHITE);
 
 		Set<Position> positions = king.createMovablePositions(Collections.emptyList());
 		assertThat(positions).contains(PositionFactory.of(input));
@@ -33,7 +33,7 @@ public class KingTest {
 	@ValueSource(strings = {"a2", "b1", "b2"})
 	void createMovablePositions_normal_corner_test(String input) {
 		Position position = PositionFactory.of("a1");
-		King king = new King(position, "k", Color.WHITE);
+		Piece king = TestPieceFactory.createKing(position, Color.WHITE);
 
 		assertThat(king.createMovablePositions(Collections.emptyList())).contains(PositionFactory.of(input));
 	}
@@ -42,7 +42,7 @@ public class KingTest {
 	@Test
 	void createMovablePositions_blocking_count_test() {
 		Position position = PositionFactory.of("b2");
-		King king = new King(position, "k", Color.WHITE);
+		Piece king = TestPieceFactory.createKing(position, Color.WHITE);
 
 		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
 				PositionFactory.of("a3"),
@@ -57,7 +57,7 @@ public class KingTest {
 	@ValueSource(strings = {"a1", "a2", "b1", "b3", "c2", "c3"})
 	void createMovablePositions_blocking_test(String input) {
 		Position position = PositionFactory.of("b2");
-		King king = new King(position, "k", Color.WHITE);
+		Piece king = TestPieceFactory.createKing(position, Color.WHITE);
 
 		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
 				PositionFactory.of("a3"),

@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.position.PositionFactory;
-import chess.domain.position.Position;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.TestPiecesFactory;
+import chess.domain.position.Position;
+import chess.domain.position.PositionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +21,7 @@ public class PawnTest {
 	@ValueSource(strings = {"a3", "b3", "c3"})
 	void createMovablePositions_normal_test(String input) {
 		Position position = PositionFactory.of("b2");
-		Pawn pawn = new Pawn(position, "p", Color.WHITE);
+		Piece pawn = TestPieceFactory.createPawn(position, Color.WHITE);
 
 		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
 				PositionFactory.of("a3"),
@@ -36,7 +36,7 @@ public class PawnTest {
 	@ValueSource(strings = {"a2", "b2"})
 	void createMovablePositions_normal_corner_test(String input) {
 		Position position = PositionFactory.of("a1");
-		Pawn pawn = new Pawn(position, "p", Color.WHITE);
+		Piece pawn = TestPieceFactory.createPawn(position, Color.WHITE);
 
 		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
 				PositionFactory.of("b2"),
@@ -50,7 +50,7 @@ public class PawnTest {
 	@Test
 	void createMovablePositions_initial_all_empty_test() {
 		Position position = PositionFactory.of("b2");
-		Pawn pawn = new Pawn(position, "p", Color.WHITE);
+		Piece pawn = TestPieceFactory.createPawn(position, Color.WHITE);
 
 		assertThat(pawn.createMovablePositions(Collections.emptyList()).size()).isEqualTo(2);
 	}
@@ -59,7 +59,7 @@ public class PawnTest {
 	@Test
 	void createMovablePositions_not_initial_all_empty_test() {
 		Position position = PositionFactory.of("b4");
-		Pawn pawn = new Pawn(position, "p", Color.WHITE);
+		Piece pawn = TestPieceFactory.createPawn(position, Color.WHITE);
 
 		assertThat(pawn.createMovablePositions(Collections.emptyList()).size()).isEqualTo(1);
 	}
@@ -68,7 +68,7 @@ public class PawnTest {
 	@Test
 	void createMovablePositions_initial_blocked_test() {
 		Position position = PositionFactory.of("b2");
-		Pawn pawn = new Pawn(position, "p", Color.WHITE);
+		Piece pawn = TestPieceFactory.createPawn(position, Color.WHITE);
 		Pieces pieces = TestPiecesFactory.of(Collections.singletonList(
 				PositionFactory.of("b3")
 		), Color.BLACK);

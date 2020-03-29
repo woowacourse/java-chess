@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.position.PositionFactory;
-import chess.domain.position.Position;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.TestPiecesFactory;
+import chess.domain.position.Position;
+import chess.domain.position.PositionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,7 +23,7 @@ public class QueenTest {
 			"h4", "d1", "d2", "d3", "d5", "d6", "d7", "d8"})
 	void move_normal_test(String input) {
 		Position position = PositionFactory.of("d4");
-		Queen queen = new Queen(position, "q", Color.WHITE);
+		Piece queen = TestPieceFactory.createQueen(position, Color.WHITE);
 
 		assertThat(queen.createMovablePositions(Collections.emptyList())).contains(PositionFactory.of(input));
 	}
@@ -33,7 +33,7 @@ public class QueenTest {
 	@ValueSource(strings = {"a2", "a3", "a4", "a5", "a6", "a7", "a8", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "c3", "d4", "e5", "f6", "g7", "h8"})
 	void move_normal_corner_test(String input) {
 		Position position = PositionFactory.of("a1");
-		Queen queen = new Queen(position, "q", Color.WHITE);
+		Piece queen = TestPieceFactory.createQueen(position, Color.WHITE);
 
 		assertThat(queen.createMovablePositions(Collections.emptyList())).contains(PositionFactory.of(input));
 	}
@@ -42,7 +42,7 @@ public class QueenTest {
 	@Test
 	void createMovablePositions_blocking_count_test() {
 		Position position = PositionFactory.of("d4");
-		Queen queen = new Queen(position, "q", Color.WHITE);
+		Piece queen = TestPieceFactory.createQueen(position, Color.WHITE);
 
 		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
 				PositionFactory.of("b2"),
@@ -61,7 +61,7 @@ public class QueenTest {
 			"f4", "g4", "h4", "d1", "d2", "d3"})
 	void createMovablePositions_blocking_test(String input) {
 		Position position = PositionFactory.of("d4");
-		Queen queen = new Queen(position, "q", Color.WHITE);
+		Piece queen = TestPieceFactory.createQueen(position, Color.WHITE);
 
 		Pieces pieces = TestPiecesFactory.of(Arrays.asList(
 				PositionFactory.of("b2"),
