@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class PositionTest {
 
     @Test
@@ -30,7 +31,7 @@ public class PositionTest {
 
     @ParameterizedTest
     @MethodSource("createPositionAndRank")
-    void Position이_주어진_rank에_있는지_확인(Position position, Row row, boolean expected) {
+    void Position이_주어진_Row에_있는지_확인(Position position, Row row, boolean expected) {
         assertThat(position.isAt(row)).isEqualTo(expected);
     }
 
@@ -49,7 +50,7 @@ public class PositionTest {
 
     @ParameterizedTest
     @MethodSource("createPositionAndFile")
-    void Position이_주어진_file에_있는지_확인(Position position, Column column, boolean expected) {
+    void Position이_주어진_Column에_있는지_확인(Position position, Column column, boolean expected) {
         assertThat(position.isAt(column)).isEqualTo(expected);
     }
 

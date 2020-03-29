@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class PieceTest {
     @ParameterizedTest
     @MethodSource("pieceConstructorSourceAndExpected")
