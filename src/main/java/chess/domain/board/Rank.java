@@ -12,6 +12,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
+import chess.domain.piece.Symbol;
 
 public class Rank {
     private static final int SIZE = 8;
@@ -46,7 +47,8 @@ public class Rank {
     }
 
     public static Rank createPieces(int y, Color color) {
-        List<String> pieceSequence = Arrays.asList("r", "n", "b", "q", "k", "b", "n", "r");
+        List<Symbol> pieceSequence = Arrays.asList(Symbol.ROOK, Symbol.KNIGHT, Symbol.BISHOP, Symbol.QUEEN, Symbol.KING,
+            Symbol.BISHOP, Symbol.KNIGHT, Symbol.ROOK);
         List<Piece> pieces = new ArrayList<>();
         for (int x = 0; x < SIZE; x++) {
             pieces.add(PieceFactory.create(pieceSequence.get(x), Position.of(x, y), color));
