@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.Result;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessboard.ChessBoard;
 import chess.view.InputView;
@@ -34,9 +35,8 @@ public class ChessController {
 
 		String inputStatus = InputView.inputStatus();
 		if (STATUS.equalsIgnoreCase(inputStatus)) {
-			double blackTeamScore = chessBoard.calculateBlackTeamScore();
-			double whiteTeamScore = chessBoard.calculateWhiteTeamScore();
-			OutputView.printGameResult(blackTeamScore, whiteTeamScore);
+			Result result = chessBoard.calculateTeamScore();
+			OutputView.printGameResult(result.getBlackTeamScore(), result.getWhiteTeamScore());
 		}
 	}
 

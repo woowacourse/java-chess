@@ -1,11 +1,9 @@
 package chess.domain.chessboard;
 
+import chess.domain.Result;
 import chess.domain.chessPiece.factory.PieceBundleFactory;
 import chess.domain.chessPiece.piece.King;
-import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessPiece.piece.Piece;
-import chess.domain.chessPiece.piece.PieceAbility;
-import chess.domain.chessPiece.position.File;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.WhiteTeam;
@@ -20,9 +18,6 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 	private static final int INIT_KING_COUNT = 2;
-	private static final int ONE_PAWN_COUNT = 1;
-	private static final double ONE_PAWN_BONUS = 0.5;
-	private static final int ZERO = 0;
 	private static final String ERROR_MESSAGE_EXIST_PIECE_ON_PATH = "경로에 다른 말이 존재합니다";
 	private static final String ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다";
 	private static final String ERROR_MESSAGE_SOURCE_EMPTY = "해당 칸은 비어있습니다";
@@ -93,40 +88,18 @@ public class ChessBoard {
 				.findAny();
 	}
 
+	public void removeAttackedPiece(Position position) {
+		findPieceByPosition(position).ifPresent(pieces::remove);
+	}
+
 	public boolean isSurviveKings() {
 		return pieces.stream().filter(x -> x instanceof King).count() == INIT_KING_COUNT;
 	}
 
-	public double calculateBlackTeamScore() {
+	public Result calculateTeamScore() {
 		List<Piece> blackTeam = findBlackTeam();
-		return calculateTeamScore(blackTeam);
-	}
-
-	public double calculateWhiteTeamScore() {
 		List<Piece> whiteTeam = findWhiteTeam();
-		return calculateTeamScore(whiteTeam);
-	}
-
-	public double calculateTeamScore(List<Piece> team) {
-		double result = ZERO;
-		for (File file : File.values()) {
-			List<Piece> piecesInOneFile = team.stream()
-					.filter(x -> x.isSameFile(file))
-					.collect(Collectors.toList());
-			result += piecesInOneFile.stream()
-					.mapToDouble(PieceAbility::getScore)
-					.sum();
-			result += OnePawnBonus(piecesInOneFile);
-		}
-		return result;
-	}
-
-	private double OnePawnBonus(List<Piece> piecesInOneFile) {
-		long pawnCount = piecesInOneFile.stream().filter(x -> x instanceof Pawn).count();
-		if (pawnCount == ONE_PAWN_COUNT) {
-			return ONE_PAWN_BONUS;
-		}
-		return ZERO;
+		return new Result(blackTeam, whiteTeam);
 	}
 
 	public List<Piece> findBlackTeam() {
@@ -143,9 +116,5 @@ public class ChessBoard {
 
 	public List<Position> getChessBoard() {
 		return Collections.unmodifiableList(chessBoard);
-	}
-
-	public void removeAttackedPiece(Position position) {
-		findPieceByPosition(position).ifPresent(pieces::remove);
 	}
 }
