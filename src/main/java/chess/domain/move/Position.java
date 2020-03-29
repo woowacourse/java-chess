@@ -18,8 +18,8 @@ public class Position {
         this.y = y;
     }
 
-    public static Position of(int x, int y) {
-        return new Position(Coordinate.of(x), Coordinate.of(y));
+    public static Position of(Coordinate x, Coordinate y) {
+        return new Position(x, y);
     }
 
     public static Position of(String position) {
@@ -27,8 +27,10 @@ public class Position {
         char[] chars = position.toCharArray();
         char y = chars[0];
         char x = chars[1];
+        Coordinate coordinateX = Coordinate.of(x - X_ASCII_BASE);
+        Coordinate coordinateY = Coordinate.of(y - Y_ASCII_BASE);
 
-        return of(x - X_ASCII_BASE, y - Y_ASCII_BASE);
+        return of(coordinateX, coordinateY);
     }
 
     private static void validate(String position) {

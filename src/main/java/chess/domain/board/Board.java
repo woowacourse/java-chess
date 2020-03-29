@@ -5,6 +5,7 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Team;
+import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
 import chess.domain.move.Route;
@@ -22,6 +23,7 @@ public class Board {
     private static final int BOARD_MIN_INDEX = 0;
     private static final int DIAGONAL_GAP = 1;
     private static final int REVERSE_BASE = 9;
+    private static final int INDEX_CORRECTION_NUMBER = 1;
 
     private List<Row> board;
 
@@ -67,18 +69,20 @@ public class Board {
     }
 
     private MovingInfo reverseMovingInfo(MovingInfo movingInfo) {
-        MovingInfo reverseMovingInfo;
         Position startPosition = movingInfo.getStartPosition();
         Position targetPosition = movingInfo.getTargetPosition();
-        Position ReverseStartPosition = Position.of(reverseCoordinate(startPosition.getX()), reverseCoordinate(startPosition.getY()));
-        Position ReverseTargetPosition = Position.of(reverseCoordinate(targetPosition.getX()), reverseCoordinate(targetPosition.getY()));
+        Coordinate reverseStartX = reverseCoordinate(startPosition.getX());
+        Coordinate reverseStartY = reverseCoordinate(startPosition.getY());
+        Coordinate reverseTargetX = reverseCoordinate(targetPosition.getX());
+        Coordinate reverseTargetY = reverseCoordinate(targetPosition.getY());
+        Position ReverseStartPosition = Position.of(reverseStartX, reverseStartY);
+        Position ReverseTargetPosition = Position.of(reverseTargetX, reverseTargetY);
 
-        reverseMovingInfo = new MovingInfo(ReverseStartPosition, ReverseTargetPosition);
-        return reverseMovingInfo;
+        return new MovingInfo(ReverseStartPosition, ReverseTargetPosition);
     }
 
-    private int reverseCoordinate(int coordinate) {
-        return (REVERSE_BASE - coordinate);
+    private Coordinate reverseCoordinate(int coordinate) {
+        return Coordinate.of(REVERSE_BASE - coordinate);
     }
 
     private void reverseBoard() {
@@ -178,22 +182,27 @@ public class Board {
     }
 
     private void clearPosition(Position startPosition) {
-        Row row = board.get(startPosition.getX() - 1);
+        int indexOfX = startPosition.getX() - INDEX_CORRECTION_NUMBER;
+        int indexOfY = startPosition.getY() - INDEX_CORRECTION_NUMBER;
+        Row row = board.get(indexOfX);
 
-        row.modifyRow(startPosition.getY() - 1, new Blank());
-        board.set(startPosition.getX() - 1, row);
+        row.modifyRow(indexOfY, new Blank());
+        board.set(indexOfX, row);
     }
 
     private void setPosition(ChessPiece chessPiece, Position targetPosition) {
-        Row row = board.get(targetPosition.getX() - 1);
+        int indexOfX = targetPosition.getX() - INDEX_CORRECTION_NUMBER;
+        int indexOfY = targetPosition.getY() - INDEX_CORRECTION_NUMBER;
+        Row row = board.get(indexOfX);
 
         checkGameEnd(row, targetPosition);
-        row.modifyRow(targetPosition.getY() - 1, chessPiece);
-        board.set(targetPosition.getX() - 1, row);
+        row.modifyRow(indexOfY, chessPiece);
+        board.set(indexOfX, row);
     }
 
     private void checkGameEnd(Row row, Position targetPosition) {
-        ChessPiece targetChessPiece = row.get(targetPosition.getY() - 1);
+        int indexOfY = targetPosition.getY() - INDEX_CORRECTION_NUMBER;
+        ChessPiece targetChessPiece = row.get(indexOfY);
         String chessPieceName = targetChessPiece.getName();
         String lowerCaseChessPieceName = chessPieceName.toLowerCase();
 
@@ -209,6 +218,9 @@ public class Board {
     }
 
     private ChessPiece getChessPiece(Position position) {
-        return board.get(position.getX() - 1).get(position.getY() - 1);
+        int indexOfX = position.getX() - INDEX_CORRECTION_NUMBER;
+        int indexOfY = position.getY() - INDEX_CORRECTION_NUMBER;
+
+        return board.get(indexOfX).get(indexOfY);
     }
 }
