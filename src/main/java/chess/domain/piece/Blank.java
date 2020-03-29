@@ -11,6 +11,6 @@ public class Blank extends Piece {
 	private static final String BLANK_NAME = ".";
 
 	public Blank() {
-		super(PositionFactory.of(BLANK_DEFAULT_POSITION), BLANK_NAME, new UnblockedMovable(Directions.NONE), Color.BLANK, BLANK_SCORE);
+		super(PositionFactory.of(BLANK_DEFAULT_POSITION), BLANK_NAME, new UnblockedMovable(Directions.NONE), Color.NONE, BLANK_SCORE);
 	}
 }

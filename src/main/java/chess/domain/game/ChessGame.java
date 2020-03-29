@@ -7,16 +7,16 @@ import chess.domain.piece.pieces.PiecesFactory;
 
 public class ChessGame {
 	private final Pieces pieces;
-	private Color color;
+	private Turn turn;
 
 	public ChessGame() {
 		pieces = PiecesFactory.of();
-		color = Color.WHITE;
+		turn = new Turn(Color.WHITE);
 	}
 
 	public void move(Position start, Position end) {
-		pieces.move(start, end, color);
-		color = color.changeColor();
+		pieces.move(start, end, turn.getColor());
+		turn.change();
 	}
 
 	public ScoreResult calculateScore() {

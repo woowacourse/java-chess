@@ -3,17 +3,7 @@ package chess.domain.piece;
 public enum Color {
 	WHITE,
 	BLACK,
-	BLANK;
-
-	public Color changeColor() {
-		if (isWhite()) {
-			return BLACK;
-		}
-		if (isBlack()) {
-			return WHITE;
-		}
-		return BLANK;
-	}
+	NONE;
 
 	public boolean isWhite() {
 		return WHITE.equals(this);
@@ -23,8 +13,8 @@ public enum Color {
 		return BLACK.equals(this);
 	}
 
-	public boolean isBlank() {
-		return BLANK.equals(this);
+	public boolean isNone() {
+		return NONE.equals(this);
 	}
 
 	public boolean isSame(Color color) {
