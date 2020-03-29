@@ -17,6 +17,8 @@ public enum ScoreType {
     NONE(".", 0);
 
     private static final String INITIAL_PAWN = "p";
+    private static final int ZERO = 0;
+    private static final int PIECES_PAWN_MINIMUM_COUNT = 1;
 
     private String initial;
     private double score;
@@ -46,11 +48,16 @@ public enum ScoreType {
                 .filter(point -> isSameInitial(pieces, point))
                 .count();
 
-            if (count > 1) {
-                pawnCount += count;
-            }
+            pawnCount += addCountMoreThanTWo(count);
         }
         return pawnCount;
+    }
+
+    private static int addCountMoreThanTWo(int count) {
+        if (count > PIECES_PAWN_MINIMUM_COUNT) {
+            return count;
+        }
+        return ZERO;
     }
 
     private static boolean isSameTeam(Pieces pieces, Team team, Point point) {

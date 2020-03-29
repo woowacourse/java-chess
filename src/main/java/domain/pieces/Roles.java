@@ -23,7 +23,7 @@ public class Roles {
         int row = from.getRowIndex() + direction.getRow();
         int column = from.getColumnIndex() + direction.getColumn();
         while (row < to.getRowIndex() && column < to.getColumnIndex()) {
-            if (pieces.get(new Point(Row.findRowType(row), Column.findColumnType(column))).team != Team.NONE) {
+            if (pieces.get(Point.of(Row.findRowType(row), Column.findColumnType(column))).team != Team.NONE) {
                 return false;
             }
             row += direction.getRow();

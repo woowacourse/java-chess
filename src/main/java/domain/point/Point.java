@@ -6,9 +6,13 @@ public class Point {
 	private Row row;
 	private Column column;
 
-	public Point(Row row, Column column) {
+	private Point(Row row, Column column) {
 		this.row = row;
 		this.column = column;
+	}
+
+	public static Point of(Row row, Column column) {
+		return new Point(row, column);
 	}
 
 	public static Point of(String location) {
@@ -34,6 +38,10 @@ public class Point {
 		return column.getIndex();
 	}
 
+	public boolean isSameColumn(Column column) {
+		return this.column.equals(column);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -52,8 +60,4 @@ public class Point {
 	public String toString() {
 		return column.toString() + row.toString();
 	}
-
-    public boolean isSameColumn(Column column) {
-		return this.column.equals(column);
-    }
 }
