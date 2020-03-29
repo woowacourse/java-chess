@@ -28,8 +28,9 @@ public class OutputView {
 
 	private static Location reverseLocation(int row, int col) {
 		int reversedRow = MAXIMUM_BOARD_SIZE - row;
-		int reversedCol = FIRST_COLUMN_VALUE + col;
-		return Location.of(reversedRow, (char)reversedCol);
+		char reversedCol = (char)(FIRST_COLUMN_VALUE + col);
+		String location = String.format("%c%d", reversedCol, reversedRow);
+		return Location.of(location);
 	}
 
 	private static String findPieceOrDefault(Map<Location, Piece> board, Location target) {

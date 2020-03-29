@@ -8,7 +8,7 @@ public class ChessController {
 	public static void main(String[] args) {
 		String command = "";
 		OutputView.printInformation();
-		GameManager gameManager = new GameManager(PieceFactory.createPieces());
+		GameManager gameManager = new GameManager(new PieceFactory().createPieces());
 
 		while (gameManager.isRunning()) {
 			command = InputView.inputStartCommand();
@@ -39,13 +39,10 @@ public class ChessController {
 	}
 
 	private static void movePiece(String command, GameManager gameManager) {
-		char nowCol = command.split(" ")[1].charAt(0);
-		int nowRow = command.split(" ")[1].charAt(1) - '0';
-		char destCol = command.split(" ")[2].charAt(0);
-		int destRow = command.split(" ")[2].charAt(1) - '0';
-
-		Location now = Location.of(nowRow, nowCol);
-		Location destination = Location.of(destRow, destCol);
+		String commandNow = command.split(" ")[1];
+		String commandDestination = command.split(" ")[2];
+		Location now = Location.of(commandNow);
+		Location destination = Location.of(commandDestination);
 
 		gameManager.movePiece(now, destination);
 		OutputView.printBoard(gameManager);

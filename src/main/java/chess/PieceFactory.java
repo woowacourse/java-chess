@@ -14,7 +14,7 @@ import chess.piece.Rook;
 import chess.team.Team;
 
 public class PieceFactory {
-	public static Map<Location, Piece> createPieces() {
+	public Map<Location, Piece> createPieces() {
 		Map<Location, Piece> pieces = new HashMap<>();
 
 		putNoble(pieces, 1, Team.WHITE);
@@ -26,7 +26,13 @@ public class PieceFactory {
 		return pieces;
 	}
 
-	private static void putNoble(Map<Location, Piece> pieces, int row, Team team) {
+	private void putPawns(Map<Location, Piece> pieces, int row, Team team) {
+		for (int i = 0; i < 8; i++) {
+			pieces.put(Location.of(row, (char)(i + 'a')), new Pawn(team));
+		}
+	}
+
+	private void putNoble(Map<Location, Piece> pieces, int row, Team team) {
 		pieces.put(Location.of(row, 'a'), new Rook(team));
 		pieces.put(Location.of(row, 'b'), new Knight(team));
 		pieces.put(Location.of(row, 'c'), new Bishop(team));
@@ -35,11 +41,5 @@ public class PieceFactory {
 		pieces.put(Location.of(row, 'f'), new Bishop(team));
 		pieces.put(Location.of(row, 'g'), new Knight(team));
 		pieces.put(Location.of(row, 'h'), new Rook(team));
-	}
-
-	private static void putPawns(Map<Location, Piece> pieces, int row, Team team) {
-		for (int i = 0; i < 8; i++) {
-			pieces.put(Location.of(row, (char)(i + 'a')), new Pawn(team));
-		}
 	}
 }

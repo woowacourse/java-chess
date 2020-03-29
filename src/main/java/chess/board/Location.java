@@ -3,6 +3,7 @@ package chess.board;
 import static java.lang.Math.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 import chess.team.Team;
@@ -10,24 +11,24 @@ import chess.team.Team;
 // 팀별 초기위치를 갖고있는다.
 public class Location {
 	private static final Location[] WHITE_TEAM_INITIAL_PAWN_LOCATIONS = {
-		new Location(2, 'a'),
-		new Location(2, 'b'),
-		new Location(2, 'c'),
-		new Location(2, 'd'),
-		new Location(2, 'e'),
-		new Location(2, 'f'),
-		new Location(2, 'g'),
-		new Location(2, 'h')
+		Location.of(2, 'a'),
+		Location.of(2, 'b'),
+		Location.of(2, 'c'),
+		Location.of(2, 'd'),
+		Location.of(2, 'e'),
+		Location.of(2, 'f'),
+		Location.of(2, 'g'),
+		Location.of(2, 'h')
 	};
 	private static final Location[] BLACK_TEAM_INITIAL_PAWN_LOCATIONS = {
-		new Location(7, 'a'),
-		new Location(7, 'b'),
-		new Location(7, 'c'),
-		new Location(7, 'd'),
-		new Location(7, 'e'),
-		new Location(7, 'f'),
-		new Location(7, 'g'),
-		new Location(7, 'h')
+		Location.of(7, 'a'),
+		Location.of(7, 'b'),
+		Location.of(7, 'c'),
+		Location.of(7, 'd'),
+		Location.of(7, 'e'),
+		Location.of(7, 'f'),
+		Location.of(7, 'g'),
+		Location.of(7, 'h')
 	};
 	private final int row;
 	private final char col;
@@ -37,18 +38,14 @@ public class Location {
 		this.col = col;
 	}
 
-	public static Location of(int row, char col) {
-		checkRowAndCol(row, col);
-		return new Location(row, col);
+	public static Location of(String input) {
+		Location location = LocationCache.cache.get(input);
+		Objects.requireNonNull(location, "잘못된 좌표를 입력했습니다.");
+		return location;
 	}
 
-	private static void checkRowAndCol(int row, char col) {
-		if (row < 1 || row > 8) {
-			throw new IllegalArgumentException("체스판의 범위에 벗어난 row 입력을 했습니다.");
-		}
-		if (col < 'a' || col > 'h') {
-			throw new IllegalArgumentException("체스판의 범위에 벗어난 column 입력을 했습니다.");
-		}
+	public static Location of(int row, char col) {
+		return of(String.format("%c%d", col, row));
 	}
 
 	public boolean isSameCol(Location other) {
@@ -147,27 +144,27 @@ public class Location {
 			colWeight = -1 * colWeight;
 		}
 
-		return new Location(row + rowWeight, (char)(col + colWeight));
+		return Location.of(row + rowWeight, (char)(col + colWeight));
 	}
 
 	public boolean isVertical(Location destination) {
 		return col == destination.col;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Location location = (Location)o;
-		return row == location.row &&
-			col == location.col;
-	}
+	private static class LocationCache {
+		private static final HashMap<String, Location> cache;
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(row, col);
+		static {
+			cache = new HashMap<>();
+
+			for (int row = 1; row <= 8; row++) {
+				for (int column = 0; column < 8; column++) {
+					char nowColumn = (char)(column + 'a');
+					String key = String.format("%c%d", nowColumn, row);
+					cache.put(key, new Location(row, nowColumn));
+				}
+			}
+		}
 	}
 }
 
