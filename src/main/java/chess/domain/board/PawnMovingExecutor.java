@@ -38,9 +38,11 @@ public class PawnMovingExecutor extends AbstractMovingExecutor {
     }
 
     private void moveToProceed(Map<Position, Piece> board, Position fromPosition, Position toPosition) {
-        if (board.get(toPosition) == null) {
-            board.remove(fromPosition);
-            board.put(toPosition, piece);
+        if (board.get(toPosition) != null) {
+            throw new IllegalArgumentException("전진할 수 없습니다.");
         }
+
+        board.remove(fromPosition);
+        board.put(toPosition, piece);
     }
 }
