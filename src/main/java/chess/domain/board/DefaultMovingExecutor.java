@@ -13,13 +13,17 @@ public class DefaultMovingExecutor extends AbstractMovingExecutor {
 
     @Override
     public void move(Route route, Map<Position, Piece> board, Position fromPosition, Position toPosition) {
+        checkIfDisturbed(route, board);
+
+        board.remove(fromPosition);
+        board.put(toPosition, piece);
+    }
+
+    private void checkIfDisturbed(Route route, Map<Position, Piece> board) {
         for (Position position : route.getRoute()) {
             if (board.get(position) != null) {
                 throw new IllegalArgumentException("선택한 기물이 움직일 수 없는 위치입니다.");
             }
         }
-
-        board.remove(fromPosition);
-        board.put(toPosition, piece);
     }
 }
