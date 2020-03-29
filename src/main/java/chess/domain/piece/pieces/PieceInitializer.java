@@ -8,12 +8,12 @@ import chess.domain.position.PositionFactory;
 
 public enum PieceInitializer {
     A1(PieceType.ROOK, PositionFactory.of("a1"), Color.WHITE, new BlockedMovable(Directions.LINEAR)),
-    B1(PieceType.BISHOP, PositionFactory.of("b1"), Color.WHITE, new BlockedMovable(Directions.DIAGONAL)),
-    C1(PieceType.KNIGHT, PositionFactory.of("c1"), Color.WHITE, new UnblockedMovable(Directions.KNIGHT)),
+    C1(PieceType.KNIGHT, PositionFactory.of("b1"), Color.WHITE, new UnblockedMovable(Directions.KNIGHT)),
+    B1(PieceType.BISHOP, PositionFactory.of("c1"), Color.WHITE, new BlockedMovable(Directions.DIAGONAL)),
     E1(PieceType.KING, PositionFactory.of("d1"), Color.WHITE, new UnblockedMovable(Directions.EVERY)),
     D1(PieceType.QUEEN, PositionFactory.of("e1"), Color.WHITE, new BlockedMovable(Directions.EVERY)),
-    F1(PieceType.KNIGHT, PositionFactory.of("f1"), Color.WHITE, new UnblockedMovable(Directions.KNIGHT)),
-    G1(PieceType.BISHOP, PositionFactory.of("g1"), Color.WHITE, new BlockedMovable(Directions.DIAGONAL)),
+    G1(PieceType.BISHOP, PositionFactory.of("f1"), Color.WHITE, new BlockedMovable(Directions.DIAGONAL)),
+    F1(PieceType.KNIGHT, PositionFactory.of("g1"), Color.WHITE, new UnblockedMovable(Directions.KNIGHT)),
     H1(PieceType.ROOK, PositionFactory.of("h1"), Color.WHITE, new BlockedMovable(Directions.LINEAR)),
     A2(PieceType.PAWN, PositionFactory.of("a2"), Color.WHITE, new PawnMovable(Directions.WHITEPAWN)),
     B2(PieceType.PAWN, PositionFactory.of("b2"), Color.WHITE, new PawnMovable(Directions.WHITEPAWN)),
@@ -32,12 +32,12 @@ public enum PieceInitializer {
     G7(PieceType.PAWN, PositionFactory.of("g7"), Color.BLACK, new PawnMovable(Directions.BLACKPAWN)),
     H7(PieceType.PAWN, PositionFactory.of("h7"), Color.BLACK, new PawnMovable(Directions.BLACKPAWN)),
     A8(PieceType.ROOK, PositionFactory.of("a8"), Color.BLACK, new BlockedMovable(Directions.LINEAR)),
-    B8(PieceType.BISHOP, PositionFactory.of("b8"), Color.BLACK, new BlockedMovable(Directions.DIAGONAL)),
-    C8(PieceType.KNIGHT, PositionFactory.of("c8"), Color.BLACK, new UnblockedMovable(Directions.KNIGHT)),
+    C8(PieceType.KNIGHT, PositionFactory.of("b8"), Color.BLACK, new UnblockedMovable(Directions.KNIGHT)),
+    B8(PieceType.BISHOP, PositionFactory.of("c8"), Color.BLACK, new BlockedMovable(Directions.DIAGONAL)),
     E8(PieceType.KING, PositionFactory.of("d8"), Color.BLACK, new UnblockedMovable(Directions.EVERY)),
     D8(PieceType.QUEEN, PositionFactory.of("e8"), Color.BLACK, new BlockedMovable(Directions.EVERY)),
-    F8(PieceType.KNIGHT, PositionFactory.of("f8"), Color.BLACK, new UnblockedMovable(Directions.KNIGHT)),
-    G8(PieceType.BISHOP, PositionFactory.of("g8"), Color.BLACK, new BlockedMovable(Directions.DIAGONAL)),
+    G8(PieceType.BISHOP, PositionFactory.of("f8"), Color.BLACK, new BlockedMovable(Directions.DIAGONAL)),
+    F8(PieceType.KNIGHT, PositionFactory.of("g8"), Color.BLACK, new UnblockedMovable(Directions.KNIGHT)),
     H8(PieceType.ROOK, PositionFactory.of("h8"), Color.BLACK, new BlockedMovable(Directions.LINEAR));
 
     private final PieceType pieceType;
