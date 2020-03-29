@@ -16,17 +16,16 @@ public class Queen extends Initialized {
     }
 
     @Override
-    public boolean hasHindrance(Position to, Board board) {
-        return false;
-    }
-
-    @Override
-    protected boolean canNotMove(Position to, Board board) {
-        return false;
-    }
-
-    @Override
     public Piece move(Position to, Board board) {
+        if (canNotMove(to, board)) {
+            throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
+        }
+
         return new Queen(name, to, team, canNotMoveStrategies);
+    }
+
+    @Override
+    public boolean hasHindrance(Position to, Board board) {
+        return hasHindranceDiagonallyInBetween(to, board) || hasHindrancePerpendicularlyInBetween(to, board);
     }
 }

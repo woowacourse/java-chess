@@ -2,6 +2,7 @@ package chess.domain.piece.state;
 
 import chess.domain.board.Board;
 import chess.domain.piece.move.CanNotMoveStrategy;
+import chess.domain.position.Direction;
 import chess.domain.position.Distance;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Team;
@@ -59,9 +60,36 @@ public abstract class Initialized extends Started {
         return position.isPerpendicularDirection(to);
     }
 
+    public boolean isNotHeadingStraight(Position to) {
+        return position.isNotStraightDirection(to);
+    }
+
     protected boolean canNotMove(Position to, Board board) {
         return canNotMoveStrategies.stream()
                 .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(this, to, board));
+    }
+
+    protected boolean hasHindranceDiagonallyInBetween(Position to, Board board) {
+        Distance amount = position.calculateHorizontalDistance(to);
+        Direction direction = position.calculateDirection(to);
+        return hasHindranceInBetween(board, amount, direction, position);
+    }
+
+    protected boolean hasHindrancePerpendicularlyInBetween(Position to, Board board) {
+        Distance amount = position.calculateDistance(to);
+        Direction direction = position.calculateDirection(to);
+        return hasHindranceInBetween(board, amount, direction, position);
+    }
+
+    private boolean hasHindranceInBetween(Board board, Distance amount, Direction direction, Position targetPosition) {
+        for (int i = Position.FORWARD_AMOUNT; i < amount.getValue(); i++) {
+            targetPosition = targetPosition.go(direction);
+            Piece piece = board.getPiece(targetPosition);
+            if (piece.isNotBlank()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

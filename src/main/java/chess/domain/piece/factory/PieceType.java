@@ -5,6 +5,7 @@ import chess.domain.piece.bishop.Bishop;
 import chess.domain.piece.move.*;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.pawn.MovedPawn;
+import chess.domain.piece.queen.Queen;
 import chess.domain.piece.rook.Rook;
 
 import java.util.Arrays;
@@ -14,7 +15,18 @@ public enum PieceType {
     INITIALIZED_PAWN("p", InitializedPawn.class, initializedPawnCanNotMoveStrategies()),
     RUNNING_PAWN("p", MovedPawn.class, movedPawnCanNotMoveStrategies()),
     ROOK("r", Rook.class, rookCanNotMoveStrategies()),
-    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies());
+    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies()),
+    QUEEN("q", Queen.class, queenCanNotMoveStrategies());
+
+    private static List<CanNotMoveStrategy> queenCanNotMoveStrategies() {
+        return Arrays.asList(
+                new IsStayed(),
+                new HasHindrance(),
+                new IsAttackingSameTeam(),
+                new IsNotHeadingStraightDirection()
+
+        );
+    }
 
     private static List<CanNotMoveStrategy> bishopCanNotMoveStrategies() {
         return Arrays.asList(

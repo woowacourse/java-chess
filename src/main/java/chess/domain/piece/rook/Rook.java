@@ -24,52 +24,6 @@ public class Rook extends Initialized {
 
     @Override
     public boolean hasHindrance(Position to, Board board) {
-        if (hasHindranceVertically(getStart(position.getY(), to.getY()), getEnd(position.getY(), to.getY()), position, board)) {
-            return true;
-        }
-
-        return hasHindranceHorizontally(getStart(position.getX(), to.getX()), getEnd(position.getX(), to.getX()), position, board);
-
-
-    }
-
-    private boolean hasHindranceVertically(int start, int end, Position from, Board board) {
-        for (int i = start; i <= end; i++) {
-            if (hasHindranceVertically(i, from, board)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean hasHindranceHorizontally(int start, int end, Position from, Board board) {
-        for (int i = start; i <= end; i++) {
-            if (hasHindranceHorizontally(i, from, board)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private int getEnd(int from, int to) {
-        return Math.max(from, to) - 1;
-    }
-
-    private int getStart(int from, int to) {
-        return Math.min(from, to) + 1;
-    }
-
-    private boolean hasHindranceVertically(int y, Position from, Board board) {
-        Position position = Position.of(from.getX(), y);
-        Piece piece = board.getPiece(position);
-        return piece.isNotBlank();
-    }
-
-    private boolean hasHindranceHorizontally(int x, Position from, Board board) {
-        Position position = Position.of(x, from.getY());
-        Piece piece = board.getPiece(position);
-        return piece.isNotBlank();
+        return hasHindrancePerpendicularlyInBetween(to, board);
     }
 }

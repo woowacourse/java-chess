@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Position {
     private static final int MIN = 1;
     private static final int MAX = 8;
-    private static final int FORWARD_AMOUNT = 1;
+    public static final int FORWARD_AMOUNT = 1;
 
     private final int x;
     private final int y;
@@ -43,6 +43,15 @@ public class Position {
         return Distance.calculateHorizontal(this, to);
     }
 
+    public boolean isNotStraightDirection(Position to) {
+        return isNotPerpendicularDirection(to) || isNotStraightDiagonalDirection(to);
+    }
+
+    public boolean isNotPerpendicularDirection(Position to) {
+        Direction direction = Direction.calculate(this, to);
+        return direction.isNotPerpendicular();
+    }
+
     public boolean isPerpendicularDirection(Position to) {
         Direction direction = Direction.calculate(this, to);
         return direction.isPerpendicular();
@@ -58,6 +67,7 @@ public class Position {
         Distance horizontalDistance = Distance.calculateHorizontal(this, to);
         return (isDiagonalDirection(to) && !verticalDistance.equals(horizontalDistance)) || isPerpendicularDirection(to);
     }
+
 
     public Direction calculateDirection(Position to) {
         return Direction.calculate(this, to);

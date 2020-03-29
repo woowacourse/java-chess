@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.bishop.Bishop;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.pawn.MovedPawn;
+import chess.domain.piece.queen.Queen;
 import chess.domain.piece.rook.Rook;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
@@ -32,7 +33,8 @@ class PieceFactoryTest {
                 Arguments.of(InitializedPawn.class),
                 Arguments.of(MovedPawn.class),
                 Arguments.of(Rook.class),
-                Arguments.of(Bishop.class)
+                Arguments.of(Bishop.class),
+                Arguments.of(Queen.class)
         );
     }
 }
