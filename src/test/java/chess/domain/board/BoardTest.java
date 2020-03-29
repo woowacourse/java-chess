@@ -5,12 +5,14 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.domain.score.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class BoardTest {
     @DisplayName("빈 칸으로 말 이동")
@@ -60,9 +62,9 @@ public class BoardTest {
         bothKing.put(Positions.of("b7"), new Piece(PieceType.KING, Team.WHITE));
         Board drawBoard = new Board(bothKing);
 
-        Assertions.assertThat(whiteWinBoard.checkWinner()).isEqualTo(Team.WHITE);
-        Assertions.assertThat(blackWinBoard.checkWinner()).isEqualTo(Team.BLACK);
-        Assertions.assertThat(drawBoard.checkWinner()).isNull();
+        Assertions.assertThat(whiteWinBoard.checkWinner()).isEqualTo(Optional.of(Team.WHITE));
+        Assertions.assertThat(blackWinBoard.checkWinner()).isEqualTo(Optional.of(Team.BLACK));
+        Assertions.assertThat(drawBoard.checkWinner()).isEmpty();
     }
 
     @DisplayName("지정한 칸이 비어있는지 판단")
@@ -90,8 +92,8 @@ public class BoardTest {
     void calculateScoreWithoutSameFilePawnTest() {
         Board board = new Board();
 
-        Assertions.assertThat(board.calculateScore(Team.WHITE)).isEqualTo(38d);
-        Assertions.assertThat(board.calculateScore(Team.BLACK)).isEqualTo(38d);
+        Assertions.assertThat(Score.calculateScore(board, Team.WHITE)).isEqualTo(38d);
+        Assertions.assertThat(Score.calculateScore(board, Team.BLACK)).isEqualTo(38d);
     }
 
     @DisplayName("같은 세로줄에 폰이 있을 때 점수 계산")
@@ -103,6 +105,6 @@ public class BoardTest {
         sameFilePawn.put(Positions.of("a5"), new Piece(PieceType.PAWN, Team.WHITE));
         Board board = new Board(sameFilePawn);
 
-        Assertions.assertThat(board.calculateScore(Team.WHITE)).isEqualTo(1.5d);
+        Assertions.assertThat(Score.calculateScore(board, Team.WHITE)).isEqualTo(1.5d);
     }
 }

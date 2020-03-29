@@ -12,8 +12,8 @@ public enum Team {
         this.expression = expression;
     }
 
-    public static Team changeTeam(Team team) {
-        if (team == BLACK) {
+    public Team changeTeam() {
+        if (this == BLACK) {
             return WHITE;
         }
         return BLACK;

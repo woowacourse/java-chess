@@ -11,7 +11,7 @@ class TeamTest {
     @Test
     void changeTeam() {
         ChessRunner chessRunner = new ChessRunner();
-        Team nextTeam = Team.changeTeam(chessRunner.getCurrentTeam());
+        Team nextTeam = chessRunner.getCurrentTeam().changeTeam();
         assertThat(nextTeam.isSameTeamWith(Team.BLACK)).isTrue();
     }
 }

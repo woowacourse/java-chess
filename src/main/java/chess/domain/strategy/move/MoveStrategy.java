@@ -9,7 +9,15 @@ import java.util.List;
 
 public abstract class MoveStrategy {
 
-    protected boolean isSamePosition(Position source, Position target) {
+    public boolean movable(Position source, Position target, Board board) {
+        if (isSamePosition(source, target)) {
+            return false;
+        }
+
+        return checkMovement(source, target, board);
+    }
+
+    private boolean isSamePosition(Position source, Position target) {
         return source.equals(target);
     }
 
@@ -30,5 +38,5 @@ public abstract class MoveStrategy {
         return sourcePiece.isEnemy(targetPiece);
     }
 
-    public abstract boolean movable(Position source, Position target, Board board);
+    public abstract boolean checkMovement(Position source, Position target, Board board);
 }

@@ -1,10 +1,11 @@
 package chess.view;
 
-import chess.controller.dto.MoveCommandDto;
+import chess.controller.dto.ContinueCommandDto;
+import chess.controller.dto.StartCommandDto;
 
 public interface InputView {
 
-    boolean askStartCommand();
+    StartCommandDto askStartCommand();
 
-    MoveCommandDto askRunCommand();
+    ContinueCommandDto askContinueCommand();
 }

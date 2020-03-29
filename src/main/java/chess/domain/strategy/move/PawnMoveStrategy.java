@@ -10,10 +10,7 @@ public class PawnMoveStrategy extends MoveStrategy {
     private static final int BLACK_POSITION = 7;
 
     @Override
-    public boolean movable(Position source, Position target, Board board) {
-        if (isSamePosition(source, target)) {
-            return false;
-        }
+    public boolean checkMovement(Position source, Position target, Board board) {
 
         int fileGap = source.calculateFileGap(target);
         int rankGap = source.calculateRankGap(target);

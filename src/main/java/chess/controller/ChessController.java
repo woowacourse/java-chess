@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.command.Command;
 import chess.controller.dto.BoardDto;
 import chess.controller.dto.PositionDto;
 import chess.domain.ChessRunner;
@@ -12,57 +13,59 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ChessController {
     private static InputView inputView = new ConsoleInputView();
     private static OutputView outputView = new ConsoleOutputView();
+    private ChessRunner chessRunner;
 
-    public static void start() {
-        if (inputView.askStartCommand()) {
-            run();
+    public void run() {
+        boolean runFlag = false;
+        if (inputView.askStartCommand().isStart()) {
+            startGame();
+            runFlag = true;
         }
-    }
+        while (runFlag) {
+            List<String> inputCommand = inputView.askContinueCommand().get();
+            Command command = Command.of(inputCommand.get(0));
 
-    public static void run() {
-        ChessRunner chessRunner = new ChessRunner();
-        printBoard(chessRunner.getBoard());
-        boolean moveFlag = true;
-
-        while (moveFlag) {
-            try {
-                List<String> runCommand = inputView.askRunCommand().get();
-                if (runCommand.get(0).toUpperCase().equals("END")) {
+            switch (command) {
+                case MOVE:
+                    update(inputCommand.get(1), inputCommand.get(2));
+                    runFlag = stopGameIfWinnerExists(chessRunner);
                     break;
-                }
-                if (runCommand.get(0).toUpperCase().equals("STATUS")) {
+                case STATUS:
                     outputView.printStatus(chessRunner.calculateScore(), chessRunner.getCurrentTeam());
-                    continue;
-                }
-                String sourcePosition = runCommand.get(1);
-                String targetPosition = runCommand.get(2);
-                chessRunner.update(sourcePosition, targetPosition);
-                printBoard(chessRunner.getBoard());
-                if (findWinner(chessRunner)) {
                     break;
-                }
-
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                case END:
+                    runFlag = false;
             }
         }
     }
 
-    private static boolean findWinner(ChessRunner chessRunner) {
-        Team winner = chessRunner.findWinner();
-        if (winner != null) {
-            outputView.printWinner(winner);
-            return true;
-        }
-        return false;
+    private void startGame() {
+        chessRunner = new ChessRunner();
+        printBoard(chessRunner.getBoard());
     }
 
-    private static void printBoard(Board board) {
-        BoardDto boardDto = new BoardDto(board.parse());
+    private void update(String sourcePosition, String targetPosition) {
+        chessRunner.update(sourcePosition, targetPosition);
+        printBoard(chessRunner.getBoard());
+    }
+
+    private boolean stopGameIfWinnerExists(ChessRunner chessRunner) {
+        Optional<Team> winner = chessRunner.findWinner();
+
+        if (winner.isPresent()) {
+            outputView.printWinner(winner.get());
+            return false;
+        }
+        return true;
+    }
+
+    private void printBoard(Board board) {
+        BoardDto boardDto = new BoardDto(board.get());
         PositionDto positionDto = new PositionDto(Positions.get());
         outputView.printBoard(positionDto.get(), boardDto.get());
     }

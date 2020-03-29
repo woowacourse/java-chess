@@ -21,7 +21,7 @@ public class Piece {
     }
 
     public boolean isEnemy(Piece targetPiece) {
-        return !this.team.isSameTeamWith(targetPiece.getTeam());
+        return isEnemy(targetPiece.getTeam());
     }
 
     public boolean isEnemy(Team team) {

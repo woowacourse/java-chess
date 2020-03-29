@@ -5,6 +5,9 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.domain.score.Score;
+
+import java.util.Optional;
 
 public class ChessRunner {
     private Board board;
@@ -20,6 +23,12 @@ public class ChessRunner {
         Position targetPosition = Positions.of(target);
         Piece selectedPiece = this.board.getPiece(sourcePosition);
 
+        validateMovement(sourcePosition, targetPosition, selectedPiece);
+        updateBoard(sourcePosition, targetPosition);
+        changeTeam();
+    }
+
+    private void validateMovement(Position sourcePosition, Position targetPosition, Piece selectedPiece) {
         if (!(currentTeam.isSameTeamWith(selectedPiece.getTeam()))) {
             throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
@@ -27,8 +36,6 @@ public class ChessRunner {
         if (!(selectedPiece.movable(sourcePosition, targetPosition, board))) {
             throw new IllegalArgumentException("이동할 수 없는 곳입니다.");
         }
-        updateBoard(sourcePosition, targetPosition);
-        changeTeam();
     }
 
     private void updateBoard(Position sourcePosition, Position targetPosition) {
@@ -36,22 +43,23 @@ public class ChessRunner {
     }
 
     private void changeTeam() {
-        this.currentTeam = Team.changeTeam(this.currentTeam);
+        this.currentTeam = currentTeam.changeTeam();
     }
 
-    public Team findWinner() {
+    public Optional<Team> findWinner() {
         return this.board.checkWinner();
     }
 
     public double calculateScore() {
-        return board.calculateScore(currentTeam);
-    }
-
-    public Team getCurrentTeam() {
-        return currentTeam;
+        return Score.calculateScore(board, currentTeam);
+//        return board.calculateScore(currentTeam);
     }
 
     public Board getBoard() {
         return this.board;
+    }
+
+    public Team getCurrentTeam() {
+        return currentTeam;
     }
 }

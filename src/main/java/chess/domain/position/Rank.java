@@ -19,10 +19,7 @@ public enum Rank {
     }
 
     public static Rank of(String rank) {
-        return Arrays.stream(values())
-                .filter(pv -> pv.symbol == Integer.parseInt(rank))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 y 좌표값을 입력하였습니다."));
+        return of(Integer.parseInt(rank));
     }
 
     public static Rank of(int rank) {
