@@ -7,6 +7,7 @@ import domain.team.Team;
 import java.util.Map;
 
 public class Bishop extends Piece {
+
     private static final String INITIAL = "B";
 
     public Bishop(Team team) {

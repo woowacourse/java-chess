@@ -10,6 +10,7 @@ import view.InputView;
 import view.OutputView;
 
 public class ChessGameController {
+
     private State state;
     private Map<CommendType, Consumer<String>> commends = new HashMap<>();
 
@@ -28,7 +29,7 @@ public class ChessGameController {
 
     private void play() {
         while (!state.isFinished()) {
-            OutputView.printBoard(state .getPieces());
+            OutputView.printBoard(state.getPieces());
             commend(InputView.inputCommend());
         }
     }

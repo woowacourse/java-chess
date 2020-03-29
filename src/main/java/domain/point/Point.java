@@ -3,61 +3,66 @@ package domain.point;
 import java.util.Objects;
 
 public class Point {
-	private Row row;
-	private Column column;
 
-	private Point(Row row, Column column) {
-		this.row = row;
-		this.column = column;
-	}
+    private Row row;
+    private Column column;
 
-	public static Point of(Row row, Column column) {
-		return new Point(row, column);
-	}
+    private Point(Row row, Column column) {
+        this.row = row;
+        this.column = column;
+    }
 
-	public static Point of(String location) {
-		String column = location.substring(0, 1);
-		String row = location.substring(1, 2);
+    public static Point of(Row row, Column column) {
+        return new Point(row, column);
+    }
 
-		return new Point(Row.findRowType(row), Column.findColumnType(column));
-	}
+    public static Point of(String location) {
+        String column = location.substring(0, 1);
+        String row = location.substring(1, 2);
 
-	public int getRowDistance(Point point) {
-		return row.distance(point.row);
-	}
+        return new Point(Row.findRowType(row), Column.findColumnType(column));
+    }
 
-	public int getColumnDistance(Point point) {
-		return column.distance(point.column);
-	}
+    public int getRowDistance(Point point) {
+        return row.distance(point.row);
+    }
 
-	public int getRowIndex() {
-		return row.getIndex();
-	}
+    public int getColumnDistance(Point point) {
+        return column.distance(point.column);
+    }
 
-	public int getColumnIndex() {
-		return column.getIndex();
-	}
+    public int getRowIndex() {
+        return row.getIndex();
+    }
 
-	public boolean isSameColumn(Column column) {
-		return this.column.equals(column);
-	}
+    public int getColumnIndex() {
+        return column.getIndex();
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Point point = (Point) o;
-		return row == point.row &&
-				column == point.column;
-	}
+    public boolean isSameColumn(Column column) {
+        return this.column.equals(column);
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(row, column);
-	}
+    @Override
+    public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+        Point point = (Point) o;
+        return row == point.row &&
+            column == point.column;
+    }
 
-	@Override
-	public String toString() {
-		return column.toString() + row.toString();
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, column);
+    }
+
+    @Override
+    public String toString() {
+        return column.toString() + row.toString();
+    }
 }

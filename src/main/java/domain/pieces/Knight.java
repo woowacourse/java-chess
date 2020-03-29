@@ -7,6 +7,7 @@ import domain.team.Team;
 import java.util.Map;
 
 public class Knight extends Piece {
+
     private static final String INITIAL = "N";
 
     public Knight(Team team) {

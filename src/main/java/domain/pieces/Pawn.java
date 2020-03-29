@@ -24,7 +24,8 @@ public class Pawn extends Piece {
         return false;
     }
 
-    private boolean isMovableDirection(Direction direction, Map<Point, Piece> pieces, MovePoint movePoint) {
+    private boolean isMovableDirection(Direction direction, Map<Point, Piece> pieces,
+        MovePoint movePoint) {
         if (Roles.isMovableLimitedCase(direction, movePoint)) {
             return isLinearOrDiagonal(direction, pieces, movePoint.getTo());
         }

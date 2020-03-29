@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PiecesFactory {
+
     private static Map<Point, Piece> pieces = new LinkedHashMap<>();
 
     static {
@@ -31,7 +32,7 @@ public class PiecesFactory {
         pieces.put(Point.of(EIGHT, G), new Knight(BLACK));
         pieces.put(Point.of(EIGHT, H), new Rook(BLACK));
 
-        for (Column column: Column.values()) {
+        for (Column column : Column.values()) {
             pieces.put(Point.of(SEVEN, column), new Pawn(BLACK));
         }
     }
@@ -46,7 +47,7 @@ public class PiecesFactory {
     }
 
     private static void createWhiteTeamPieces() {
-        for (Column column: Column.values()) {
+        for (Column column : Column.values()) {
             pieces.put(Point.of(TWO, column), new Pawn(WHITE));
         }
 

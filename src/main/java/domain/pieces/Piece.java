@@ -7,6 +7,7 @@ import domain.team.Team;
 import java.util.Map;
 
 public abstract class Piece {
+
     protected final String initial;
     protected final Team team;
 
@@ -27,7 +28,8 @@ public abstract class Piece {
         return team;
     }
 
-    public abstract boolean isMovable(Direction direction, Map<Point, Piece> pieces, MovePoint movePoint);
+    public abstract boolean isMovable(Direction direction, Map<Point, Piece> pieces,
+        MovePoint movePoint);
 
     public abstract boolean isNoneTeam();
 

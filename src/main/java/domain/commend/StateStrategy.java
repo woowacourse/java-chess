@@ -4,6 +4,7 @@ import domain.pieces.Pieces;
 import domain.team.Team;
 
 public interface StateStrategy {
+
     StateStrategy start();
 
     StateStrategy end();

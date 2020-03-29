@@ -7,6 +7,7 @@ import domain.team.Team;
 import java.util.Map;
 
 public class Empty extends Piece {
+
     private static final String INITIAL = ".";
 
     public Empty(Team team) {

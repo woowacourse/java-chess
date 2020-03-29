@@ -7,6 +7,7 @@ import domain.team.Team;
 import java.util.Map;
 
 public class Queen extends Piece {
+
     private static final String INITIAL = "Q";
 
     public Queen(Team team) {

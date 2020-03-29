@@ -4,6 +4,7 @@ import domain.pieces.Piece;
 import java.util.Map;
 
 public class MovePoint {
+
     private final Point from;
     private final Point to;
 

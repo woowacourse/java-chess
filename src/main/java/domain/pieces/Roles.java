@@ -9,18 +9,23 @@ import domain.team.Team;
 import java.util.Map;
 
 public class Roles {
+
     public static boolean isMovableLimitedCase(Direction direction, MovePoint movePoint) {
-        return direction.isMovableLimited(movePoint.getRowDistance(), movePoint.getColumnDistance());
+        return direction
+            .isMovableLimited(movePoint.getRowDistance(), movePoint.getColumnDistance());
     }
 
-    public static boolean isMovableUnlimitedCase(Direction direction, Map<Point, Piece> pieces, MovePoint movePoint) {
-        if (direction.isMovableUnlimited(movePoint.getRowDistance(), movePoint.getColumnDistance())) {
+    public static boolean isMovableUnlimitedCase(Direction direction, Map<Point, Piece> pieces,
+        MovePoint movePoint) {
+        if (direction
+            .isMovableUnlimited(movePoint.getRowDistance(), movePoint.getColumnDistance())) {
             return isNotObstacle(direction, pieces, movePoint);
         }
         return false;
     }
 
-    private static boolean isNotObstacle(Direction direction, Map<Point, Piece> pieces, MovePoint movePoint) {
+    private static boolean isNotObstacle(Direction direction, Map<Point, Piece> pieces,
+        MovePoint movePoint) {
         int row = movePoint.getFromRowIndex() + direction.getRow();
         int column = movePoint.getFromColumnIndex() + direction.getColumn();
         boolean isNotObstacle = true;
@@ -37,14 +42,16 @@ public class Roles {
         return pieces.get(point).isNoneTeam();
     }
 
-    public static boolean isLinearOrDiagonalWhiteTeam(Direction direction, Map<Point, Piece> pieces, Point to) {
+    public static boolean isLinearOrDiagonalWhiteTeam(Direction direction, Map<Point, Piece> pieces,
+        Point to) {
         if (direction != Direction.TOP && pieces.get(to).team == Team.BLACK) {
             return true;
         }
         return direction == Direction.TOP && pieces.get(to).team == Team.NONE;
     }
 
-    public static boolean isLinearOrDiagonalBlackTeam(Direction direction, Map<Point, Piece> pieces, Point to) {
+    public static boolean isLinearOrDiagonalBlackTeam(Direction direction, Map<Point, Piece> pieces,
+        Point to) {
         if (direction != Direction.DOWN && pieces.get(to).team == Team.WHITE) {
             return true;
         }

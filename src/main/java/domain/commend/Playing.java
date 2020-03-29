@@ -35,7 +35,8 @@ public class Playing extends GameState {
     public StateStrategy move(Team turn, String input) {
         validate(input);
         List<String> splitInput = Arrays.asList(input.split(BLANK));
-        MovePoint movePoint = new MovePoint(Point.of(splitInput.get(1)), Point.of(splitInput.get(2)));
+        MovePoint movePoint = new MovePoint(Point.of(splitInput.get(1)),
+            Point.of(splitInput.get(2)));
         pieces.move(turn, movePoint);
         if (isTargetKing()) {
             return end();
@@ -44,7 +45,7 @@ public class Playing extends GameState {
     }
 
     private boolean isTargetKing() {
-        int countKing = (int)pieces.getPieces().keySet().stream()
+        int countKing = (int) pieces.getPieces().keySet().stream()
             .filter(point -> pieces.getPiece(point).getInitial().equalsIgnoreCase("k"))
             .count();
         return countKing != COUNT_KING;
@@ -73,7 +74,8 @@ public class Playing extends GameState {
 
     private void validateEachSizeTwo(String input) {
         List<String> splitInput = Arrays.asList(input.split(BLANK));
-        if (!(splitInput.get(PIECE_INDEX).length() == POINT_SIZE && splitInput.get(TARGET_INDEX).length() == POINT_SIZE)) {
+        if (!(splitInput.get(PIECE_INDEX).length() == POINT_SIZE
+            && splitInput.get(TARGET_INDEX).length() == POINT_SIZE)) {
             throw new CommendTypeException("잘못된 입력입니다.");
         }
     }

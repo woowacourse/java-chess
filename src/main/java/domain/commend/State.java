@@ -4,6 +4,7 @@ import domain.pieces.Pieces;
 import domain.team.Team;
 
 public class State {
+
     private StateStrategy stateStrategy;
     private Team team;
 

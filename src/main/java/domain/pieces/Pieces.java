@@ -55,7 +55,7 @@ public class Pieces {
     }
 
     private void validateCorrectTurn(Team turn, MovePoint movePoint) {
-        if(!getPiece(movePoint.getFrom()).isSameTeam(turn)) {
+        if (!getPiece(movePoint.getFrom()).isSameTeam(turn)) {
             throw new IsNotMovableException(turn.toString() + "차례입니다.");
         }
     }
@@ -72,9 +72,11 @@ public class Pieces {
 
     private void validatePieceMovable(MovePoint movePoint) {
         boolean isMovable = PieceDirectionType.find(pieces, movePoint.getFrom()).stream()
-            .anyMatch(direction -> pieces.get(movePoint.getFrom()).isMovable(direction, pieces, movePoint));
+            .anyMatch(direction -> pieces.get(movePoint.getFrom())
+                .isMovable(direction, pieces, movePoint));
         if (!isMovable) {
-            throw new IsNotMovableException(pieces.get(movePoint.getFrom()).toString() + "은 그 장소로 못 움직입니다.");
+            throw new IsNotMovableException(
+                pieces.get(movePoint.getFrom()).toString() + "은 그 장소로 못 움직입니다.");
         }
     }
 }

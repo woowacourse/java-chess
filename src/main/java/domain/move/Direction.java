@@ -38,14 +38,34 @@ public enum Direction {
     public boolean isMovableUnlimited(int row, int column) {
         int changeRow = 0;
         int changeColumn = 0;
-        for (int i = 1; i < 8; i++) {
+        boolean isMovableUnlimited = false;
+        while (isRowRange(changeRow) && isColumnRange(changeColumn) && !isMovableUnlimited) {
             changeRow += this.row;
             changeColumn += this.column;
-            if (row == changeRow && column == changeColumn) {
-                return true;
-            }
+            isMovableUnlimited = canMovable(isSameRow(row, changeRow),
+                isSameColumn(column, changeColumn));
         }
-        return false;
+        return isMovableUnlimited;
+    }
+
+    private boolean isRowRange(int changeRow) {
+        return changeRow > -8 && changeRow < 8;
+    }
+
+    private boolean isColumnRange(int changeColumn) {
+        return changeColumn > -8 && changeColumn < 8;
+    }
+
+    private boolean isSameRow(int row, int changeRow) {
+        return row == changeRow;
+    }
+
+    private boolean isSameColumn(int column, int changeColumn) {
+        return column == changeColumn;
+    }
+
+    private boolean canMovable(boolean isSameRow, boolean isSameColumn) {
+        return isSameRow && isSameColumn;
     }
 
     public int getRow() {

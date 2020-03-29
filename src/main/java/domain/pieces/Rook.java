@@ -7,6 +7,7 @@ import domain.team.Team;
 import java.util.Map;
 
 public class Rook extends Piece {
+
     private static final String INITIAL = "R";
 
     public Rook(Team team) {
