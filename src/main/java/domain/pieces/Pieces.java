@@ -5,6 +5,7 @@ import domain.point.Column;
 import domain.point.Direction;
 import domain.point.Distance;
 import domain.point.Point;
+import domain.team.Team;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -37,35 +38,36 @@ public class Pieces {
 	}
 
 	private Piece moveProgressivelyBeforeTo(Point from, Point to, Piece subject, Direction direction) {
-		Point point = from.add(direction.getRowIndex(), direction.getColumnIndex());
-		while (!point.equals(to)) {
-			subject = moveOnly(subject, point, direction);
-			point = point.add(direction.getRowIndex(), direction.getColumnIndex());
+		Point next = from.add(direction.getRowIndex(), direction.getColumnIndex());
+		while (!next.equals(to)) {
+			subject = moveOnly(subject, next, direction);
+			next = next.add(direction.getRowIndex(), direction.getColumnIndex());
 		}
 		return subject;
 	}
 
 	private Piece find(Point point) {
 		return pieces.stream()
-					.filter(piece -> piece.matchPoint(point))
-					.findFirst()
-					.orElseThrow(() -> new CanNotMoveException("대상이 없습니다."));
+				.filter(piece -> piece.matchPoint(point))
+				.findFirst()
+				.orElseThrow(() -> new CanNotMoveException("대상이 없습니다."));
 	}
 
 	private Piece moveOnly(Piece subject, Point to, Direction direction) {
-		if (isEmptyPoint(to)) {
-			subject.canMove(direction);
-			Piece moved = subject.move(to);
-			pieces.remove(subject);
-			pieces.add(moved);
-			return moved;
+		if (isNotEmptyPoint(to)) {
+			throw new CanNotMoveException("움직이려는 곳에 대상이 있습니다.");
 		}
-		throw new CanNotMoveException("움직이려는 곳에 대상이 있습니다.");
+
+		subject.canMove(direction);
+		Piece moved = subject.move(to);
+		pieces.remove(subject);
+		pieces.add(moved);
+		return moved;
 	}
 
-	private boolean isEmptyPoint(Point point) {
+	private boolean isNotEmptyPoint(Point point) {
 		return pieces.stream()
-				.noneMatch(piece -> piece.matchPoint(point));
+				.anyMatch(piece -> piece.matchPoint(point));
 	}
 
 	private void attack(Piece subject, Piece target, Direction direction) {
@@ -75,28 +77,46 @@ public class Pieces {
 		pieces.add(subject.move(target.getPoint()));
 	}
 
-	public double computeBlackTeamScore() {
+	public double sumTeamScore(Team team) {
 		double simpleSum = pieces.stream()
-				.filter(Piece::isBlack)
+				.filter(piece -> piece.isTeam(team))
 				.mapToDouble(Piece::getScore)
 				.sum();
-		return simpleSum - sumHalfScoreOfBlackPawn();
+		return simpleSum - sumHalfPawnScoresOfTeam(team);
 	}
 
-	private double sumHalfScoreOfBlackPawn() {
-		return countHalfScoreBlackPawnNumber() * Pawn.HALF_SCORE;
+	private double sumHalfPawnScoresOfTeam(Team team) {
+		return countHalfScorePawnOfTeam(team) * Pawn.HALF_SCORE;
 	}
 
-	public double computeWhiteTeamScore() {
-		double simpleSum = pieces.stream()
-				.filter(Piece::isWhite)
-				.mapToDouble(Piece::getScore)
-				.sum();
-		return simpleSum - sumHalfScoreOfWhitePawn();
+	private int countHalfScorePawnOfTeam(Team team) {
+		int halfScorePawnNumber = 0;
+		for (Column column : Column.values()) {
+			halfScorePawnNumber += countPawnOfTeamInColumnIfMoreThanTwo(team, column);
+		}
+		return halfScorePawnNumber;
 	}
 
-	private double sumHalfScoreOfWhitePawn() {
-		return countHalfScoreWhitePawnNumber() * Pawn.HALF_SCORE;
+	private int countPawnOfTeamInColumnIfMoreThanTwo(Team team, Column column) {
+		int count = 0;
+		for (Piece piece : pieces) {
+			count += addPawnCountOfTeam(team, column, piece);
+		}
+
+		return decideZeroOrCount(count);
+	}
+
+	private int addPawnCountOfTeam(Team team, Column column, Piece piece) {
+		if (piece.isTeam(team)) {
+			return 0;
+		}
+		if (piece.isNotPawn()) {
+			return 0;
+		}
+		if (piece.matchColumnPoint(column)) {
+			return 1;
+		}
+		return 0;
 	}
 
 	public boolean isBlackKingKilled() {
@@ -111,69 +131,9 @@ public class Pieces {
 				.noneMatch(Piece::isKing);
 	}
 
-	private int countHalfScoreBlackPawnNumber() {
-		int halfScorePawnNumber = 0;
-		for (Column column : Column.values()) {
-			halfScorePawnNumber += countBlackPawnInColumnIfMoreThanTwo(column);
-		}
-		return halfScorePawnNumber;
-	}
-
-	private int countBlackPawnInColumnIfMoreThanTwo(Column column) {
-		int count = 0;
-		for (Piece piece : pieces) {
-			count += addBlackPawnCount(column, piece);
-		}
-
-		return decideZeroOrCount(count);
-	}
-
-	private int addBlackPawnCount(Column column, Piece piece) {
-		if (piece.isWhite()) {
-			return 0;
-		}
-		if (piece.isNotPawn()) {
-			return 0;
-		}
-		if (piece.matchColumnPoint(column)) {
-			return 1;
-		}
-		return 0;
-	}
-
 	private int decideZeroOrCount(int count) {
 		if (count > 1) {
 			return count;
-		}
-		return 0;
-	}
-
-	private int countHalfScoreWhitePawnNumber() {
-		int halfScorePawnNumber = 0;
-		for (Column column : Column.values()) {
-			halfScorePawnNumber += countWhitePawnInColumnIfMoreThanTwo(column);
-		}
-		return halfScorePawnNumber;
-	}
-
-	private int countWhitePawnInColumnIfMoreThanTwo(Column column) {
-		int count = 0;
-		for (Piece piece : pieces) {
-			count += addWhitePawnCount(column, piece);
-		}
-
-		return decideZeroOrCount(count);
-	}
-
-	private int addWhitePawnCount(Column column, Piece piece) {
-		if (piece.isBlack()) {
-			return 0;
-		}
-		if (piece.isNotPawn()) {
-			return 0;
-		}
-		if (piece.matchColumnPoint(column)) {
-			return 1;
 		}
 		return 0;
 	}

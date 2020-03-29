@@ -34,6 +34,10 @@ public abstract class Piece {
         return point.getColumnIndex();
     }
 
+    public boolean isTeam(Team team) {
+        return this.team.equals(team);
+    }
+
     public boolean isWhite() {
         return team == Team.WHITE;
     }

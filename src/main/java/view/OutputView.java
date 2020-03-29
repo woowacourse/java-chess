@@ -3,6 +3,7 @@ package view;
 import domain.board.Board;
 import domain.board.RowOfBoard;
 import domain.pieces.Pieces;
+import domain.team.Team;
 
 public class OutputView {
 
@@ -33,8 +34,9 @@ public class OutputView {
             return;
         }
 
-        double blackScore = pieces.computeBlackTeamScore();
-        double whiteScore = pieces.computeWhiteTeamScore();
+        // TODO
+        double blackScore = pieces.sumTeamScore(Team.BLACK);
+        double whiteScore = pieces.sumTeamScore(Team.WHITE);
 
         System.out.printf("검은색 팀의 점수는 %f 입니다." + NEW_LINE, blackScore);
         System.out.printf("흰색 팀의 점수는 %f 입니다." + NEW_LINE, whiteScore);
