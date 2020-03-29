@@ -11,16 +11,30 @@ import domain.team.Team;
 import java.util.Objects;
 
 public abstract class Piece {
-    private final String initial;
+    private final PieceType pieceType;
     private final Team team;
     private final Point point;
+
+    // TODO remove
+    private final String initial;
     private final double score;
 
+    protected Piece(PieceType pieceType, Team team, Point point) {
+        this.pieceType = pieceType;
+        this.team = team;
+        this.point = point;
+
+        this.initial = null;
+        this.score = 0;
+    }
+
+    // TODO remove
     protected Piece(String initial, Team team, Point point, double score) {
         this.initial = initial;
         this.team = team;
         this.point = point;
         this.score = score;
+        pieceType = null;
     }
 
     public abstract Piece move(Point afterPoint);

@@ -13,7 +13,8 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Pieces {
-	private static final int NUM_OF_KING = 2;
+	private static final int MIN_COLUMN_DUPLICATION_NUM = 2;
+	private static final int START_KING_NUM = 2;
 
 	private final Set<Piece> pieces;
 
@@ -112,7 +113,7 @@ public class Pieces {
 
 
 	private int decideZeroOrCount(int count) {
-		if (count > 1) {
+		if (count >= MIN_COLUMN_DUPLICATION_NUM) {
 			return count;
 		}
 		return 0;
@@ -121,7 +122,7 @@ public class Pieces {
 	public boolean isKingKilled() {
 		return pieces.stream()
 				.filter(Piece::isKing)
-				.count() < NUM_OF_KING;
+				.count() < START_KING_NUM;
 	}
 
 	public boolean isKingKilled(Team team) {
