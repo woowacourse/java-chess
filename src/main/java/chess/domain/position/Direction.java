@@ -75,13 +75,19 @@ public enum Direction {
         return vertical;
     }
 
-    public boolean isVertical() {
+    public boolean isPerpendicular() {
+        return isVertical() || isHorizontal();
+    }
+
+    private boolean isVertical() {
         return this == NORTH || this == SOUTH;
     }
 
-    public boolean isHorizontal() {
+    private boolean isHorizontal() {
         return this == EAST || this == WEST;
     }
+
+
 
     public static boolean isDiagonal(Position from, Position to) {
         return (from.getX() != to.getX()) && (from.getY() != to.getY());

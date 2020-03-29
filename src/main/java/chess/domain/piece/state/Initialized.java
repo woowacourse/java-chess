@@ -47,8 +47,16 @@ public abstract class Initialized extends Started {
         return position.calculateDistance(to);
     }
 
-    public boolean isHeadingDiagonal(Position to) {
+    public boolean isHeadingHeadingDiagonal(Position to) {
         return position.isDiagonalDirection(to);
+    }
+
+    public boolean isNotHeadingStraightDiagonal(Position to) {
+        return position.isNotStraightDiagonalDirection(to);
+    };
+
+    public boolean isHeadingPerpendicular(Position to) {
+        return position.isPerpendicularDirection(to);
     }
 
     protected boolean canNotMove(Position to, Board board) {

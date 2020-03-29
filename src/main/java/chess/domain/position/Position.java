@@ -43,6 +43,11 @@ public class Position {
         return Distance.calculateHorizontal(this, to);
     }
 
+    public boolean isPerpendicularDirection(Position to) {
+        Direction direction = Direction.calculate(this, to);
+        return direction.isPerpendicular();
+    }
+
 
     public boolean isDiagonalDirection(Position to) {
         return Direction.isDiagonal(this, to);
@@ -51,7 +56,7 @@ public class Position {
     public boolean isNotStraightDiagonalDirection(Position to) {
         Distance verticalDistance = Distance.calculateVertical(this, to);
         Distance horizontalDistance = Distance.calculateHorizontal(this, to);
-        return !verticalDistance.equals(horizontalDistance);
+        return (isDiagonalDirection(to) && !verticalDistance.equals(horizontalDistance)) || isPerpendicularDirection(to);
     }
 
     public Direction calculateDirection(Position to) {

@@ -21,7 +21,7 @@ public enum PieceType {
                 new IsStayed(),
                 new HasHindrance(),
                 new IsAttackingSameTeam(),
-                new IsPerpendicular()
+                new IsNotHeadingStraightDiagonalDirection()
         );
     }
 
@@ -30,14 +30,14 @@ public enum PieceType {
                 new IsStayed(),
                 new HasHindrance(),
                 new IsAttackingSameTeam(),
-                new IsHeadingDiagonal()
+                new IsHeadingDiagonalDirection()
         );
     }
 
     private static List<CanNotMoveStrategy> movedPawnCanNotMoveStrategies() {
         return Arrays.asList(
                 new IsStayed(),
-                new IsNotForward(),
+                new IsNotHeadingForward(),
                 new CanNotReach(MovedPawn.MAX_DISTANCE),
                 new HasHindrance(),
                 new IsAttackingSameTeam(),
@@ -68,7 +68,7 @@ public enum PieceType {
     private static List<CanNotMoveStrategy> initializedPawnCanNotMoveStrategies() {
         return Arrays.asList(
                 new IsStayed(),
-                new IsNotForward(),
+                new IsNotHeadingForward(),
                 new CanNotReach(InitializedPawn.MAX_DISTANCE),
                 new HasHindrance(),
                 new IsAttackingSameTeam(),

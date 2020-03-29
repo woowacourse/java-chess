@@ -11,6 +11,6 @@ public class PawnIsDiagonalWithoutAttack implements CanNotMoveStrategy {
     public boolean canNotMove(Initialized initializedPiece, Position to, Board board) {
         Pawn initializedPawn = (Pawn) initializedPiece;
         Piece piece = board.getPiece(to);
-        return initializedPawn.isHeadingDiagonal(to) && (initializedPawn.isSameTeam(piece) || piece.isBlank()) ;
+        return initializedPawn.isHeadingHeadingDiagonal(to) && (initializedPawn.isSameTeam(piece) || piece.isBlank()) ;
     }
 }

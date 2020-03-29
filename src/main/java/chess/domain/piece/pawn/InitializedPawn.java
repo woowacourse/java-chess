@@ -28,7 +28,7 @@ public class InitializedPawn extends Pawn {
 
     @Override
     public boolean hasHindrance(Position to, Board board) {
-        if (isHeadingDiagonal(to)) {
+        if (isHeadingHeadingDiagonal(to)) {
             return false;
         }
 

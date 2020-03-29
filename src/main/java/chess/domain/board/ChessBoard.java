@@ -80,7 +80,7 @@ public class ChessBoard implements Board {
                 //todo: refac
                 List<CanNotMoveStrategy> canNotMoveStrategies = Arrays.asList(
                         new IsStayed(),
-                        new IsNotForward(),
+                        new IsNotHeadingForward(),
                         new CanNotReach(2),
                         new HasHindrance(),
                         new IsAttackingSameTeam()
