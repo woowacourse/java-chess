@@ -7,6 +7,9 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.X;
 import chess.domain.position.Y;
+import chess.domain.score.Score;
+import chess.domain.score.ScoreCalculator;
+import java.util.Collections;
 import java.util.Map;
 
 public class Board {
@@ -17,12 +20,13 @@ public class Board {
         this.board = board;
     }
 
-    public void move(String keyFromPosition, String keyToPosition) {
-        move(Position.of(keyFromPosition), Position.of(keyToPosition));
+    public void move(Team current, String keyFromPosition, String keyToPosition) {
+        move(current, Position.of(keyFromPosition), Position.of(keyToPosition));
     }
 
-    public void move(Position from, Position to) {
+    public void move(Team current, Position from, Position to) {
         Piece piece = board.get(from);
+        validateBelongsCurrentTeam(current, piece);
 
         if (!piece.canMove(new MoveInformation(board, from, to))) {
             throw new IllegalArgumentException(from + "에서 " + to + "로 이동할 수 없습니다.");
@@ -31,9 +35,16 @@ public class Board {
         board.put(to, piece);
     }
 
+    private void validateBelongsCurrentTeam(Team current, Piece piece) {
+        if (!piece.belongs(current)) {
+            throw new IllegalArgumentException("현재 팀의 기물만 움직일 수 있습니다.");
+        }
+    }
+
     public boolean isPieceOnBoard(Team team, PieceType pieceType) {
         return this.board.entrySet().stream()
-            .anyMatch(entry -> entry.getValue().is(pieceType));
+            .anyMatch(entry -> entry.getValue().belongs(team)
+                && entry.getValue().is(pieceType));
     }
 
     @Override
@@ -62,5 +73,9 @@ public class Board {
                 .getAcronym();
         }
         return ".";
+    }
+
+    public Score calculateScore() {
+        return ScoreCalculator.calculate(Collections.unmodifiableMap(board));
     }
 }

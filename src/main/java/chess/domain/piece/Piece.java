@@ -34,4 +34,18 @@ public class Piece {
         }
         return pieceType.getAcronymToUpperCase();
     }
+
+    public double getScore() {
+        if (this.pieceType == PieceType.PAWN) {
+            throw new UnsupportedOperationException("폰에게는 매개변수있는 getScore 를 사용하세요.");
+        }
+        return this.pieceType.score();
+    }
+
+    public double getScore(boolean mustChange) {
+        if (this.pieceType != PieceType.PAWN) {
+            throw new UnsupportedOperationException("폰만 사용할 수 있는 메서드입니다.");
+        }
+        return this.pieceType.score(mustChange);
+    }
 }

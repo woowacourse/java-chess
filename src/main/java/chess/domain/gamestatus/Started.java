@@ -2,6 +2,7 @@ package chess.domain.gamestatus;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.score.Score;
 
 public abstract class Started implements GameStatus {
 
@@ -18,5 +19,10 @@ public abstract class Started implements GameStatus {
     @Override
     public String getBoardString() {
         return board.toString();
+    }
+
+    @Override
+    public Score scoring() {
+        return board.calculateScore();
     }
 }

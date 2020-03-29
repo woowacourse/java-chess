@@ -176,6 +176,12 @@ public class Position {
         return this.y == y;
     }
 
+    public List<Position> getSameColumnPositions() {
+        return CACHE.values().stream()
+            .filter(position -> position.isY(this.y))
+            .collect(Collectors.toList());
+    }
+
     @Override
     public String toString() {
         return x.toString() + y.toString();

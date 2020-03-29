@@ -1,6 +1,16 @@
 package chess.domain.gamestatus;
 
-public class Finished implements GameStatus {
+import chess.domain.board.Board;
+
+public class Finished extends Started {
+
+    Finished() {
+        super();
+    }
+
+    public Finished(Board board) {
+        super(board);
+    }
 
     @Override
     public GameStatus start() {
@@ -13,7 +23,7 @@ public class Finished implements GameStatus {
     }
 
     @Override
-    public String getBoardString() {
-        return null;
+    public GameStatus finish() {
+        throw new UnsupportedOperationException("게임이 이미 끝났습니다.");
     }
 }
