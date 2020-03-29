@@ -11,6 +11,7 @@ public class InputView {
 	}
 
 	public static String inputInstruction() {
+		System.out.println("\n이동: move (현위치) (대상위치)\n현재 점수: status\n끝내기: end");
 		return scanner.nextLine();
 	}
 
