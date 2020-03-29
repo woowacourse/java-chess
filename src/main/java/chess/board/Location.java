@@ -7,161 +7,165 @@ import java.util.Objects;
 
 // 팀별 초기위치를 갖고있는다.
 public class Location {
-	private final int row;
-	private final char col;
+    private static final int KING_RANGE = 1;
+    private static final int WHITE_PAWN_LOW = 2;
+    private static final int BLACK_PAWN_LOW = 7;
+    private final int row;
+    private final char col;
 
-	public Location(final int row, final char col) {
-		this.row = row;
-		this.col = col;
-	}
+    public Location(final int row, final char col) {
+        this.row = row;
+        this.col = col;
+    }
 
-	public Location moveTo(final int row, final char col) {
-		return new Location(row, col);
-	}
+    public Location moveTo(final int row, final char col) {
+        return new Location(row, col);
+    }
 
-	public Location moveRowBy(final int rowValue) {
-		return moveTo(this.row + rowValue, col);
-	}
+    public Location moveRowBy(final int rowValue) {
+        return moveTo(this.row + rowValue, col);
+    }
 
-	public Location moveColBy(final int colValue) {
-		return moveTo(row, (char)(this.col + colValue));
-	}
+    public Location moveColBy(final int colValue) {
+        return moveTo(row, (char) (this.col + colValue));
+    }
 
-	public boolean isDiagonal(Location destination) {
-		return abs(row - destination.row) == abs(col - destination.col);
-	}
+    public boolean isDiagonal(Location destination) {
+        return abs(row - destination.row) == abs(col - destination.col);
+    }
 
-	public boolean isKingRange(Location destination) {
-		boolean rowFlag = abs(row - destination.row) <= 1;
-		boolean colFlag = abs(col - destination.col) <= 1;
+    public boolean isKingRange(Location destination) {
+        boolean rowFlag = abs(row - destination.row) <= KING_RANGE;
+        boolean colFlag = abs(col - destination.col) <= KING_RANGE;
 
-		return rowFlag && colFlag;
-	}
+        return rowFlag && colFlag;
+    }
 
-	public boolean isKnightRange(Location destination) {
-		int[] dx = {2, 2, 1, 1, -1, -1, -2, -2};
-		int[] dy = {1, -1, -2, 2, -2, 2, -1, 1};
+    public boolean isKnightRange(Location destination) {
+        int[] dx = {2, 2, 1, 1, -1, -1, -2, -2};
+        int[] dy = {1, -1, -2, 2, -2, 2, -1, 1};
 
-		for (int i = 0; i < dx.length; i++) {
-			int nx = this.row + dx[i];
-			int ny = this.col + dy[i];
-			if (destination.row == nx && destination.col == ny) {
-				return true;
-			}
-		}
-		return false;
-	}
+        for (int i = 0; i < dx.length; i++) {
+            int nx = this.row + dx[i];
+            int ny = this.col + dy[i];
+            if (destination.row == nx && destination.col == ny) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public boolean isQueenRang(Location destination) {
-		return isDiagonal(destination) || isStraight(destination);
-	}
+    public boolean isQueenRang(Location destination) {
+        return isDiagonal(destination) || isStraight(destination);
+    }
 
-	public boolean isStraight(Location destination) {
-		return this.row == destination.row || isVertical(destination);
-	}
+    public boolean isStraight(Location destination) {
+        return this.row == destination.row || isVertical(destination);
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Location location = (Location)o;
-		return row == location.row &&
-			col == location.col;
-	}
+    public boolean isInitialPawnLocation(boolean black) {
+        Location[] whiteTeamInitialPawnLocations = {
+                new Location(WHITE_PAWN_LOW, 'a'),
+                new Location(WHITE_PAWN_LOW, 'b'),
+                new Location(WHITE_PAWN_LOW, 'c'),
+                new Location(WHITE_PAWN_LOW, 'd'),
+                new Location(WHITE_PAWN_LOW, 'e'),
+                new Location(WHITE_PAWN_LOW, 'f'),
+                new Location(WHITE_PAWN_LOW, 'g'),
+                new Location(WHITE_PAWN_LOW, 'h')
+        };
+        Location[] blackTeamInitialPawnLocations = {
+                new Location(BLACK_PAWN_LOW, 'a'),
+                new Location(BLACK_PAWN_LOW, 'b'),
+                new Location(BLACK_PAWN_LOW, 'c'),
+                new Location(BLACK_PAWN_LOW, 'd'),
+                new Location(BLACK_PAWN_LOW, 'e'),
+                new Location(BLACK_PAWN_LOW, 'f'),
+                new Location(BLACK_PAWN_LOW, 'g'),
+                new Location(BLACK_PAWN_LOW, 'h')
+        };
+        if (black) {
+            return Arrays.asList(blackTeamInitialPawnLocations)
+                    .contains(this);
+        }
+        return Arrays.asList(whiteTeamInitialPawnLocations)
+                .contains(this);
+    }
 
-	@Override
-	public String toString() {
-		return "[" + col + ", " + row + "]";
-	}
+    // 2칸 혹은 한 칸이동할 수 있다.
+    public boolean isInitialPawnForwardRange(Location after, int value) {
+        boolean result = row + value == after.row || row + (value * 2) == after.row;
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(row, col);
-	}
+        return result && col == after.col;
+    }
 
-	public boolean isInitialPawnLocation(boolean black) {
-		Location[] whiteTeamInitialPawnLocations = {
-			new Location(2, 'a'),
-			new Location(2, 'b'),
-			new Location(2, 'c'),
-			new Location(2, 'd'),
-			new Location(2, 'e'),
-			new Location(2, 'f'),
-			new Location(2, 'g'),
-			new Location(2, 'h')
-		};
-		Location[] blackTeamInitialPawnLocations = {
-			new Location(7, 'a'),
-			new Location(7, 'b'),
-			new Location(7, 'c'),
-			new Location(7, 'd'),
-			new Location(7, 'e'),
-			new Location(7, 'f'),
-			new Location(7, 'g'),
-			new Location(7, 'h')
-		};
-		if (black) {
-			return Arrays.asList(blackTeamInitialPawnLocations)
-				.contains(this);
-		}
-		return Arrays.asList(whiteTeamInitialPawnLocations)
-			.contains(this);
-	}
+    public boolean isPawnForwardRange(Location after, int value) {
+        boolean result = row + value == after.row;
 
-	public boolean isInitialPawnForwardRange(Location after, int value) {
-		boolean result = row + value == after.row || row + (value * 2) == after.row;
+        return result && col == after.col;
+    }
 
-		return result && col == after.col;
-	}
+    // 폰의 대각선위치인지 확인하는 메서드
+    public boolean isForwardDiagonal(Location after, int value) {
+        return this.row + value == after.row
+                && this.col - 1 == after.col || this.col + 1 == after.col;
+    }
 
-	public boolean isPawnForwardRange(Location after, int value) {
-		boolean result = row + value == after.row;
+    public Location calculateNextLocation(Location destination, int weight) {
+        int rowWeight = weight;
+        int colWeight = weight;
 
-		return result && col == after.col;
-	}
+        if (row == destination.row) {
+            rowWeight = 0;
+        }
+        if (col == destination.col) {
+            colWeight = 0;
+        }
+        if (row > destination.row) {
+            rowWeight = -1 * rowWeight;
+        }
+        if (col > destination.col) {
+            colWeight = -1 * colWeight;
+        }
 
-	public boolean isForwardDiagonal(Location after, int value) {
-		return this.row + value == after.row
-			&& this.col - 1 == after.col || this.col + 1 == after.col;
-	}
+        return new Location(row + rowWeight, (char) (col + colWeight));
+    }
 
-	public Location calculateNextLocation(Location destination, int weight) {
+    public boolean isVertical(Location destination) {
+        return col == destination.col;
+    }
 
-		int rowWeight = weight;
-		int colWeight = weight;
+    boolean is(int row) {
+        return this.row == row;
+    }
 
-		if (row == destination.row) {
-			rowWeight = 0;
-		}
-		if (col == destination.col) {
-			colWeight = 0;
-		}
-		if (row > destination.row) {
-			rowWeight = -1 * rowWeight;
-		}
-		if (col > destination.col) {
-			colWeight = -1 * colWeight;
-		}
+    public int getRow() {
+        return row;
+    }
 
-		return new Location(row + rowWeight, (char)(col + colWeight));
-	}
+    public char getCol() {
+        return col;
+    }
 
-	public boolean isVertical(Location destination) {
-		return col == destination.col;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Location location = (Location) o;
+        return row == location.row &&
+                col == location.col;
+    }
 
-	public boolean is(int row) {
-		return this.row == row;
-	}
+    @Override
+    public String toString() {
+        return "[" + col + ", " + row + "]";
+    }
 
-	public int getRow() {
-		return row;
-	}
-
-	public char getCol() {
-		return col;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, col);
+    }
 }
 

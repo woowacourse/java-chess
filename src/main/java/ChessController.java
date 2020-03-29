@@ -16,13 +16,13 @@ public class ChessController {
             turn = turn.changeTurn();
             OutputView.printPresentPlayer(turn);
         }
+        // TODO : 바로 종료 했을 때 java.util.NoSuchElementException: No value present 에러 발생
         printResult(chessGame);
     }
 
     private static Progress getProgress(ChessGame chessGame, Team turn) {
-        Progress progress;
         String command = InputView.inputCommand();
-        progress = chessGame.doOneCommand(command, turn);
+        Progress progress = chessGame.doOneCommand(command, turn);
         while (progress.isError()) {
             OutputView.printMoveErrorMessage();
             command = InputView.inputCommand();

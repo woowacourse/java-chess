@@ -5,30 +5,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.piece.type.Bishop;
-import chess.piece.type.King;
-import chess.piece.type.Knight;
 import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
-import chess.piece.type.Queen;
-import chess.piece.type.Rook;
 import chess.score.Score;
 import chess.team.Team;
 
+import static chess.board.ChessBoardMaker.*;
+
 public class ChessBoard {
-    private static final int MINIMUM_LINE = 0;
-    private static final int LIMIT_LINE = 8;
     private static final double PAWN_REDUCE_VALUE = 0.5;
-    private static final char COL_START = 'a';
+    private static final int WHITE_NOBLE_LINE = 1;
+    private static final int WHITE_PAWN_LINE = 2;
+    private static final int BLACK_PAWN_LINE = 7;
+    private static final int BLACK_NOBLE_LINE = 8;
 
     private final Map<Location, Piece> board;
 
     public ChessBoard() {
         this.board = new HashMap<>();
-        putNoble(1, Team.WHITE);
-        putPawns(2, Team.WHITE);
-        putPawns(7, Team.BLACK);
-        putNoble(8, Team.BLACK);
+        putNoble(board, WHITE_NOBLE_LINE, Team.WHITE);
+        putPawns(board, WHITE_PAWN_LINE, Team.WHITE);
+        putPawns(board, BLACK_PAWN_LINE, Team.BLACK);
+        putNoble(board, BLACK_NOBLE_LINE, Team.BLACK);
     }
 
     public boolean canMove(Location now, Location destination) {
@@ -50,23 +48,6 @@ public class ChessBoard {
         return isNotSameTeam;
     }
 
-    private void putNoble(int row, Team team) {
-        board.put(new Location(row, 'a'), new Rook(team));
-        board.put(new Location(row, 'b'), new Knight(team));
-        board.put(new Location(row, 'c'), new Bishop(team));
-        board.put(new Location(row, 'd'), new Queen(team));
-        board.put(new Location(row, 'e'), new King(team));
-        board.put(new Location(row, 'f'), new Bishop(team));
-        board.put(new Location(row, 'g'), new Knight(team));
-        board.put(new Location(row, 'h'), new Rook(team));
-    }
-
-    private void putPawns(int row, Team team) {
-        for (int i = MINIMUM_LINE; i < LIMIT_LINE; i++) {
-            board.put(new Location(row, (char) (i + COL_START)), new Pawn(team));
-        }
-    }
-
     // 팀별 위치, 체스 정보를 가져온다.
     public Map<Location, Piece> giveMyPiece(Team team) {
         return board.keySet().stream()
@@ -86,6 +67,10 @@ public class ChessBoard {
         board.put(destination, piece);
     }
 
+    /*
+    TODO : 여기에서 PAWN을 가지고 있는 것이 옳은가 ? 매개변수로 어떤 Piece인지 입력 받고
+    같은 라인의 Piece의 수만을 반환받는 것이 더 투명한 ChessBoard를 만드는 것이 아닌가 ?
+    */
     public Score calculateReducePawnScore(Team team) {
         int reducePawnScroe = 0;
         for (int row = MINIMUM_LINE; row < LIMIT_LINE; row++) {
