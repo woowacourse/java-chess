@@ -98,23 +98,19 @@ public class Pieces {
 	}
 
 	private int countPawnOfTeamInColumnIfMoreThanTwo(Team team, Column column) {
-		int count = 0;
-		for (Piece piece : pieces) {
-			count += addPawnCountOfTeam(team, column, piece);
-		}
+		int count = (int) pieces.stream()
+				.filter(Piece::isPawn)
+				.filter(piece -> piece.isTeam(team))
+				.filter(piece -> piece.matchColumnPoint(column))
+				.count();
 
 		return decideZeroOrCount(count);
 	}
 
-	private int addPawnCountOfTeam(Team team, Column column, Piece piece) {
-		if (piece.isTeam(team)) {
-			return 0;
-		}
-		if (piece.isNotPawn()) {
-			return 0;
-		}
-		if (piece.matchColumnPoint(column)) {
-			return 1;
+
+	private int decideZeroOrCount(int count) {
+		if (count > 1) {
+			return count;
 		}
 		return 0;
 	}
@@ -123,13 +119,6 @@ public class Pieces {
 		return pieces.stream()
 				.filter(piece -> piece.isTeam(team))
 				.noneMatch(Piece::isKing);
-	}
-
-	private int decideZeroOrCount(int count) {
-		if (count > 1) {
-			return count;
-		}
-		return 0;
 	}
 
 	public Set<Piece> getSet() {

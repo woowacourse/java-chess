@@ -38,6 +38,10 @@ public abstract class Piece {
         return this.team.equals(team);
     }
 
+    public boolean isNotTeam(Team team) {
+        return !isTeam(team);
+    }
+
     public boolean isWhite() {
         return team == Team.WHITE;
     }
@@ -86,6 +90,10 @@ public abstract class Piece {
 
     public boolean matchColumnPoint(Column column) {
         return this.point.getColumn().equals(column);
+    }
+
+    public boolean isPawn() {
+        return this instanceof Pawn;
     }
 
     public boolean isNotPawn() {
