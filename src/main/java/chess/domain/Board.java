@@ -13,8 +13,6 @@ import chess.exception.NullPieceException;
 public class Board {
 	private static final String SOURCE_SAME_WITH_DESTINATION = "말이 원래 있던 자리입니다.";
 	private static final String NO_PIECE_IN_SOURCE = "해당 위치에 말이 없습니다.";
-	private static final String UNMOVABLE_DESTINATION_FOR_PAWN = "폰이 이동할 수 없는 위치입니다.";
-	private static final String PIECE_IN_PATH = "경로에 다른 말이 있어 움직일 수 없습니다.";
 	private static final String SAME_TEAM_PIECE_IN_DESTINATION = "해당 자리에 같은 팀 말이 있기 때문에 말을 움직일 수 없습니다!";
 
 	private final Pieces pieces;
