@@ -11,6 +11,8 @@ import static chess.util.NullValidator.validateNull;
 
 public class Pawn extends Piece {
     private static final String NAME = "p";
+    public static final double PAWN_SCORE = 1;
+    public static final double PAWN_HALF_SCORE = 0.5;
     private static final int NO_DISTANCE = 0;
     private static final int RIGHT_MAX_DISTANCE = 1;
     private static final int LEFT_MAX_DISTANCE = -1;
@@ -20,7 +22,7 @@ public class Pawn extends Piece {
     private static final int WHITE_PAWN_FORWARD_MAX_DISTANCE = 2;
 
     public Pawn(PieceColor pieceColor, Position position) {
-        super(NAME, pieceColor, position);
+        super(NAME, PAWN_SCORE, pieceColor, position);
     }
 
     @Override

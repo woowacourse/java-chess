@@ -6,9 +6,10 @@ import java.util.List;
 
 public class EmptyPiece extends Piece {
     private static final String NAME = ".";
+    private static final double SCORE = 0;
 
     public EmptyPiece(PieceColor pieceColor, Position position) {
-        super(NAME, pieceColor, position);
+        super(NAME, SCORE, pieceColor, position);
     }
 
     @Override

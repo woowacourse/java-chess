@@ -10,20 +10,30 @@ import java.util.List;
 import static chess.util.NullValidator.validateNull;
 
 public abstract class Piece {
-    protected final PieceColor pieceColor;
     private final String name;
+    protected final PieceColor pieceColor;
+    private final double score;
     protected Position position;
 
-    public Piece(String name, PieceColor pieceColor, Position position) {
-        validateNull(name, pieceColor, position);
+    public Piece(String name, double score, PieceColor pieceColor, Position position) {
+        validateNull(name, score, pieceColor, position);
 
         this.name = name;
+        this.score = score;
         this.pieceColor = pieceColor;
         this.position = position;
     }
 
-    public boolean isNoneColor() {
+    public boolean isNone() {
         return pieceColor.isNoneColor();
+    }
+
+    public boolean isWhite() {
+        return pieceColor.isWhite();
+    }
+
+    public boolean isBlack() {
+        return pieceColor.isBlack();
     }
 
     public boolean isSameColor(Piece piece) {
@@ -83,5 +93,9 @@ public abstract class Piece {
 
     public Position getPosition() {
         return position;
+    }
+
+    public double getScore() {
+        return score;
     }
 }

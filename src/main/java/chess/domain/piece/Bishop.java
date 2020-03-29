@@ -9,9 +9,10 @@ import static chess.util.NullValidator.validateNull;
 
 public class Bishop extends Piece {
     private static final String NAME = "b";
+    private static final double SCORE = 3;
 
     public Bishop(PieceColor pieceColor, Position position) {
-        super(NAME, pieceColor, position);
+        super(NAME, SCORE, pieceColor, position);
     }
 
     @Override

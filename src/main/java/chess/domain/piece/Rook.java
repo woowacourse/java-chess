@@ -9,9 +9,10 @@ import static chess.util.NullValidator.validateNull;
 
 public class Rook extends Piece {
     private static final String NAME = "r";
+    private static final double SCORE = 5;
 
     public Rook(PieceColor pieceColor, Position position) {
-        super(NAME, pieceColor, position);
+        super(NAME, SCORE, pieceColor, position);
     }
 
     @Override

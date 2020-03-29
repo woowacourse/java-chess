@@ -9,10 +9,11 @@ import static chess.util.NullValidator.validateNull;
 
 public class King extends Piece {
     private static final String NAME = "k";
+    private static final double SCORE = 0;
     private static final int MAX_DISTANCE = 1;
 
     public King(PieceColor pieceColor, Position position) {
-        super(NAME, pieceColor, position);
+        super(NAME, SCORE, pieceColor, position);
     }
 
     @Override
