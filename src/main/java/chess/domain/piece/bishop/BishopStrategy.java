@@ -1,7 +1,8 @@
-package chess.domain.piece.strategy;
+package chess.domain.piece.bishop;
 
 import chess.domain.Direction;
 import chess.domain.Team;
+import chess.domain.piece.MovingStrategy;
 import chess.domain.position.Position;
 
 import java.util.List;

@@ -1,15 +1,16 @@
-package chess.domain.piece.strategy;
-
-import chess.domain.Direction;
-import chess.domain.Team;
-import chess.domain.position.Position;
+package chess.domain.piece.rook;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class QueenStrategy extends MovingStrategy {
-    private static final List directions = Direction.everyDirection();
+import chess.domain.Direction;
+import chess.domain.Team;
+import chess.domain.piece.MovingStrategy;
+import chess.domain.position.Position;
+
+public class RookStrategy extends MovingStrategy {
+    private static final List directions = Direction.linearDirection();
 
     @Override
     protected void checkDirection(Position source, Position target) {

@@ -2,7 +2,7 @@ package chess.domain.piece.strategy;
 
 import chess.domain.Team;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
+import chess.domain.piece.rook.Rook;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

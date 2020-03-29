@@ -1,4 +1,4 @@
-package chess.domain.piece.strategy;
+package chess.domain.piece;
 
 import java.util.Map;
 import java.util.Objects;

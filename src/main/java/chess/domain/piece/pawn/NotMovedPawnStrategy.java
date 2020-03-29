@@ -1,12 +1,12 @@
-package chess.domain.piece;
+package chess.domain.piece.pawn;
 
 import chess.domain.Team;
-import chess.domain.piece.strategy.MovingStrategy;
+import chess.domain.piece.MovingStrategy;
 import chess.domain.position.Position;
 
 import java.util.Map;
 
-public class KnightStrategy extends MovingStrategy {
+public class NotMovedPawnStrategy extends MovingStrategy {
     @Override
     protected void checkObstacle(Position source, Position target, Map<Position, Team> boardDto) {
 

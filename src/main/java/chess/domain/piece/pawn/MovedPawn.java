@@ -1,8 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.pawn;
 
 import chess.domain.Team;
-import chess.domain.piece.strategy.MovedPawnStrategy;
-import chess.domain.piece.strategy.MovingStrategy;
+import chess.domain.piece.MovingStrategy;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.Map;

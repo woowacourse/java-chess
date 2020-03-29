@@ -1,14 +1,14 @@
-package chess.domain.piece.strategy;
+package chess.domain.piece.king;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import chess.domain.Direction;
 import chess.domain.Team;
+import chess.domain.piece.MovingStrategy;
 import chess.domain.position.Position;
 
-public class KingStrategy extends MovingStrategy{
+public class KingStrategy extends MovingStrategy {
     private static final List directions = Direction.everyDirection();
 
     @Override
