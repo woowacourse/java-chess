@@ -7,6 +7,7 @@ import chess.domain.position.Position;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UnblockedMovable implements Movable {
 	private final Directions moveDirections;
@@ -17,14 +18,11 @@ public class UnblockedMovable implements Movable {
 
 	@Override
 	public Set<Position> createMovablePositions(Position position, List<Piece> pieces, Color color) {
-		Set<Position> movablePositions = new HashSet<>();
-		for (Direction direction : moveDirections.getDirections()) {
-			Position movablePosition = position.getMovedPositionBy(direction);
-			if (checkMovable(movablePosition, pieces, color)) {
-				movablePositions.add(movablePosition);
-			}
-		}
-		return movablePositions;
+		return moveDirections.getDirections()
+				.stream()
+				.map(position::getMovedPositionBy)
+				.filter(movablePosition -> checkMovable(movablePosition, pieces, color))
+				.collect(Collectors.toSet());
 	}
 
 	private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
