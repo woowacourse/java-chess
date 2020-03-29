@@ -25,11 +25,11 @@ public class OutputView {
     }
 
     public static void printStatus(Pieces pieces) {
-        if (pieces.isBlackKingKilled()) {
+        if (pieces.isKingKilled(Team.BLACK)) {
             System.out.println("흰 팀의 승리입니다.");
             return;
         }
-        if (pieces.isWhiteKingKilled()) {
+        if (pieces.isKingKilled(Team.WHITE)) {
             System.out.println("검은 팀의 승리입니다.");
             return;
         }

@@ -119,15 +119,9 @@ public class Pieces {
 		return 0;
 	}
 
-	public boolean isBlackKingKilled() {
+	public boolean isKingKilled(Team team) {
 		return pieces.stream()
-				.filter(Piece::isBlack)
-				.noneMatch(Piece::isKing);
-	}
-
-	public boolean isWhiteKingKilled() {
-		return pieces.stream()
-				.filter(Piece::isWhite)
+				.filter(piece -> piece.isTeam(team))
 				.noneMatch(Piece::isKing);
 	}
 
