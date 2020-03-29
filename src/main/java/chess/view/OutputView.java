@@ -5,6 +5,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 
 import java.util.Map;
 
@@ -30,6 +31,10 @@ public class OutputView {
         System.out.println("abcdefgh");
     }
 
+    public static void printTurn(PieceColor team) {
+        System.out.println(team.getName() + " 플레이어가 움직일 차례입니다.");
+    }
+
     public static void printErrorMessage(String message) {
         System.out.println(message);
     }
@@ -41,7 +46,8 @@ public class OutputView {
         if (gameResult.isWhiteWin()) {
             System.out.println("<승자> White <패자> Black");
         }
-        System.out.println(String.format("점수 : Black - %.1f점 / White - %.1f점", gameResult.getAliveBlackPieceScoreSum(),
-                                         gameResult.getAliveWhitePieceScoreSum()));
+        System.out.println(String.format("점수 : White - %.1f점 / Black - %.1f점",
+                                         gameResult.getAliveWhitePieceScoreSum(),
+                                         gameResult.getAliveBlackPieceScoreSum()));
     }
 }
