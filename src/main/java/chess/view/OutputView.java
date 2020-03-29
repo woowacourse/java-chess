@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 import java.util.List;
 
@@ -8,7 +9,6 @@ public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
     private static final int END_INDEX = 8;
     private static final int START_INDEX = 1;
-    private static final int ROW_SIZE = 8;
 
     public static void printInputStartGuideMessage() {
         System.out.println("체스 게임을 시작합니다.");
@@ -20,7 +20,7 @@ public class OutputView {
     public static void printBoard(List<Piece> board) {
         for (int row = END_INDEX; row >= START_INDEX; row--) {
             for (int col = START_INDEX; col <= END_INDEX; col++) {
-                System.out.print(board.get((row - 1) * ROW_SIZE + col - 1));
+                System.out.print(board.get((row - 1) * Position.ROW_SIZE + col - 1));
             }
             System.out.print(NEW_LINE);
         }

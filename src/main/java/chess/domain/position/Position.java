@@ -1,21 +1,34 @@
 package chess.domain.position;
 
+import chess.exception.OutOfBoardRangeException;
+
 import java.util.Objects;
 
 public class Position {
     private static final int ASCII_GAP = 96;
     private static final int FIRST_INDEX = 0;
+    private static final int END_INDEX = 8;
+    private static final int START_INDEX = 1;
+    public static final int ROW_SIZE = 8;
 
     private final String x;
     private final String y;
 
     public Position(int x, int y) {
         this(String.valueOf((char) (x + ASCII_GAP)), String.valueOf(y));
+        if (!isInBoardRange(x, y)) {
+            throw new OutOfBoardRangeException("체스 보드 판의 범위를 넘어섰습니다.");
+        }
     }
 
     public Position(String x, String y) {
         this.x = x;
         this.y = y;
+    }
+
+    public boolean isInBoardRange(int x, int y) {
+        return x <= END_INDEX && x >= START_INDEX &&
+                y <= END_INDEX && y >= START_INDEX;
     }
 
     public int getX() {

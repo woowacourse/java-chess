@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.util.Direction;
+import chess.exception.OutOfBoardRangeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +18,17 @@ public abstract class SingleStep extends Piece {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {
-            Position nextPosition = direction.move(position);
+            try {
+                Position nextPosition = direction.move(position);
 
-            if (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
-                possiblePositions.add(nextPosition);
-            }
+                if (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
+                    possiblePositions.add(nextPosition);
+                }
 
-            if (isInBoardRange(nextPosition) && board.isOtherTeam(position, nextPosition)) {
-                possiblePositions.add(nextPosition);
+                if (isInBoardRange(nextPosition) && board.isOtherTeam(position, nextPosition)) {
+                    possiblePositions.add(nextPosition);
+                }
+            } catch (OutOfBoardRangeException ignored){
             }
         }
         return possiblePositions;

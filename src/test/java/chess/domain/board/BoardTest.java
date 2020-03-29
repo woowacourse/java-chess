@@ -119,9 +119,9 @@ public class BoardTest {
     @DisplayName("피스 위치 변경")
     @ParameterizedTest
     @MethodSource("getCasesForPieceMove")
-    void movePiece(String from, String to, Object fromPieceType, Object toPieceType) throws IllegalAccessException {
+    void movePiece(String from, String to, Object fromPieceType, Object toPieceType) {
         Board board = BoardFactory.createBoard();
-        Board movedBoard = board.movePiece(from, to, 0);
+        Board movedBoard = board.movePiece(from, to, Team.WHITE);
 
         int fromIndex = movedBoard.getBoardIndexByStringPosition(from);
         Piece afterFromPiece = movedBoard.findPieceBy(fromIndex);

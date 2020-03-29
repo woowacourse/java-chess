@@ -10,23 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private static final String BOARD_CREATION_FAIL_MESSAGE = "보드가 제대로 생성되지 못했습니다.";
     private static final int BOARD_SIZE = 64;
     private static final int COLUMN_VALUE_OF_STRING_COMMAND = 0;
     private static final int ROW_VALUE_OF_STRING_COMMAND = 1;
     private static final int FIRST_INDEX = 0;
     private static final int ASCII_GAP = 96;
-    private static final String TAKE_TURN_EXCEPTION_MESSAGE = "체스 게임 순서를 지켜주세요.";
-    private static final char BLANK_REPRESENTATION = '.';
-    private static final int BOARD_ROW_SIZE = 8;
-
+\
     private static boolean isFinished;
 
     private final List<Piece> board;
 
     public Board(final List<Piece> board) {
         if (isNotProperBoardSize(board)) {
-            throw new IllegalArgumentException(BOARD_CREATION_FAIL_MESSAGE);
+            throw new IllegalArgumentException("보드가 제대로 생성되지 못했습니다.");
         }
         this.board = board;
     }
@@ -50,7 +46,7 @@ public class Board {
     }
 
     private int getBoardIndex(final int col, final int row) {
-        return (row - 1) * BOARD_ROW_SIZE + col - 1;
+        return (row - 1) * Position.ROW_SIZE + col - 1;
     }
 
     public boolean isBlank(final Position nextPosition) {
@@ -69,7 +65,7 @@ public class Board {
         int fromIndex = getBoardIndexByStringPosition(from);
         int toIndex = getBoardIndexByStringPosition(to);
         if (Team.isNotSameTeam(currentTurn, findPieceBy(fromIndex))) {
-            throw new TakeTurnException(TAKE_TURN_EXCEPTION_MESSAGE);
+            throw new TakeTurnException("체스 게임 순서를 지켜주세요.");
         }
 
         movePieceWithValidation(movedBoard, fromIndex, toIndex);
@@ -82,7 +78,7 @@ public class Board {
 
         if (fromPiece.isMovable(this, toPiece.getPosition())) {
             movedBoard.set(toIndex, fromPiece.movePiecePosition(toPiece.getPosition()));
-            movedBoard.set(fromIndex, new Blank(BLANK_REPRESENTATION, Team.BLANK, fromPiece.getPosition()));
+            movedBoard.set(fromIndex, new Blank('.', Team.BLANK, fromPiece.getPosition()));
             changeFlagWhenKingCaptured(toPiece);
         }
     }

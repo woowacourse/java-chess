@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.util.Direction;
+import chess.exception.OutOfBoardRangeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,20 +26,23 @@ public abstract class Pawn extends Piece {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {
-            Position nextPosition = direction.move(position);
+            try {
+                Position nextPosition = direction.move(position);
 
-            if (isForwardDirection(direction, team.getForwardDirection())) {
-                if (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
+                if (isForwardDirection(direction, team.getForwardDirection())) {
+                    if (isInBoardRange(nextPosition) && board.isBlank(nextPosition)) {
+                        possiblePositions.add(nextPosition);
+                    }
+                    if (isFirstMove(team.getInitialPawnRow())) {
+                        possiblePositions.add(direction.move(nextPosition));
+                    }
+                    continue;
+                }
+
+                if (isInBoardRange(nextPosition) && board.isOtherTeam(position, nextPosition)) {
                     possiblePositions.add(nextPosition);
                 }
-                if (isFirstMove(team.getInitialPawnRow())) {
-                    possiblePositions.add(direction.move(nextPosition));
-                }
-                continue;
-            }
-
-            if (isInBoardRange(nextPosition) && board.isOtherTeam(position, nextPosition)) {
-                possiblePositions.add(nextPosition);
+            } catch (OutOfBoardRangeException ignored){
             }
         }
         return possiblePositions;

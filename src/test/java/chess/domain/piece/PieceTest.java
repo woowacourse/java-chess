@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import chess.domain.result.PieceType;
+import chess.exception.PieceImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -94,7 +95,7 @@ public class PieceTest {
         Board board = BoardFactory.createBoard();
         assertThatThrownBy(() -> {
             piece.isMovable(board, to);
-        }).isInstanceOf(IllegalArgumentException.class)
+        }).isInstanceOf(PieceImpossibleMoveException.class)
                 .hasMessage("해당 포지션으로 이동할 수 없습니다.");
     }
 
