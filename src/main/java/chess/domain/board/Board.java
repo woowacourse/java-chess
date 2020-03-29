@@ -1,20 +1,15 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -26,6 +21,10 @@ public class Board {
     private Board(Map<Position, GamePiece> board, Status status) {
         this.board = Collections.unmodifiableMap(new TreeMap<>(board));
         this.status = status;
+    }
+
+    protected static Board from(Map<Position, GamePiece> board, Status status) {
+        return new Board(board, status);
     }
 
     public static Board createEmpty() {
@@ -53,14 +52,11 @@ public class Board {
         }
     }
 
-    protected static Board from(Map<Position, GamePiece> board, Status status) {
-        return new Board(board, status);
-    }
-
     public Board move(Position source, Position target) {
         if (status.isNotProcessing()) {
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("먼저 게임을 실행해야합니다.");
         }
+
         Map<Position, GamePiece> board = new HashMap<>(this.board);
         GamePiece sourcePiece = board.get(source);
         GamePiece targetPiece = board.get(target);
@@ -71,12 +67,12 @@ public class Board {
         board.put(target, sourcePiece);
         board.put(source, EmptyPiece.getInstance());
 
+        Status nextStatus = status.nextTurn();
+
         if (ChessPiece.isKing(targetPiece)) {
-            Status nextStatus = status.nextTurn();
             return new Board(board, nextStatus.finish());
         }
-
-        return new Board(board, status.nextTurn());
+        return new Board(board, nextStatus);
     }
 
     private void validateSourcePiece(GamePiece sourcePiece) {
@@ -102,7 +98,7 @@ public class Board {
     public List<Line> getRows() {
         List<Line> rows = new ArrayList<>();
         List<GamePiece> gamePieces = new ArrayList<>(getBoard().values());
-
+        // TODO: 2020/03/29 LINE
         int columnLength = Column.values().length;
         for (int rowNumber = 0; rowNumber < Row.values().length; rowNumber++) {
             Line row = new Line(gamePieces.subList(rowNumber * columnLength, (rowNumber + NEXT) * columnLength));

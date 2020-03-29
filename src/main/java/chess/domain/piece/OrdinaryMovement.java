@@ -27,7 +27,7 @@ public class OrdinaryMovement extends GamePiece {
                 .filter(position -> board.get(position) != EmptyPiece.getInstance())
                 .findFirst()
                 .ifPresent(position -> {
-                    throw new InvalidMovementException("장애물이 있습니다.");
+                    throw new InvalidMovementException("경로에 기물이 존재합니다.");
                 });
     }
 

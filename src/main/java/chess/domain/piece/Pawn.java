@@ -18,12 +18,19 @@ public class Pawn extends GamePiece {
                Arrays.asList(Direction.NE, Direction.NW), 1, 1, playerColor);
     }
 
-    // TODO: 2020/03/29 블랙일 때 이동
     @Override
     public void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
+        // direction 수정
+        List<Direction> killDirections = directions;
+        Direction moveDirection = Direction.N;
+        if (playerColor.equals(PlayerColor.BLACK)) {
+            killDirections = Arrays.asList(Direction.SE, Direction.SW);
+            moveDirection = Direction.S;
+        }
+
         // target 위치에 기물이 있는 경우
         if (board.get(target) != EmptyPiece.getInstance()) {
-            directions.stream()
+            killDirections.stream()
                     .map(direction -> source.pathTo(direction, moveCount))
                     .filter(eachPath -> eachPath.contains(target))
                     .findFirst()
@@ -32,7 +39,7 @@ public class Pawn extends GamePiece {
         }
 
         //target 위치에 기물이 없는 경우
-        List<Position> path = source.pathTo(Direction.N, moveCount);
+        List<Position> path = source.pathTo(moveDirection, moveCount);
         if (originalPositions.contains(source)) {
             path = source.pathTo(Direction.N, 2);
         }
@@ -43,7 +50,7 @@ public class Pawn extends GamePiece {
 
         for (Position position : path) {
             if (board.get(position) != EmptyPiece.getInstance()) {
-                throw new InvalidMovementException("장애물이 있습니다.");
+                throw new InvalidMovementException("경로에 기물이 존재합니다.");
             }
         }
     }

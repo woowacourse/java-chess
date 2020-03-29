@@ -34,13 +34,13 @@ class ChessResultTest {
     @Test
     @DisplayName("같은 player, 같은 column의 pawn이 여러개 있는 경우 score 계산")
     void calculateScoreWhiteSameColumnPawn() {
-        Map<Position, GamePiece> map = new TreeMap<>(Board.createEmpty().getBoard());
-        map.put(Position.from("d5"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("d6"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("f3"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("f4"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("f6"), GamePiece.of(PAWN, WHITE));
-        map.put(Position.from("h3"), GamePiece.of(PAWN, WHITE));
+        Map<Position, GamePiece> map = new TreeMap<>(new TreeMap<>(Board.createEmpty().getBoard()));
+        map.put(Position.from("d5"), WHITE_PAWN.getGamePiece());
+        map.put(Position.from("d6"), WHITE_PAWN.getGamePiece());
+        map.put(Position.from("f3"), WHITE_PAWN.getGamePiece());
+        map.put(Position.from("f4"), WHITE_PAWN.getGamePiece());
+        map.put(Position.from("f6"), WHITE_PAWN.getGamePiece());
+        map.put(Position.from("h3"), WHITE_PAWN.getGamePiece());
         ChessResult chessResult = ChessResult.from(map);
 
         assertThat(chessResult.getResult().get(WHITE)).isEqualTo(Score.from(3.5));

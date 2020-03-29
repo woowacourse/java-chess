@@ -4,7 +4,6 @@ import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.player.PlayerColor;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,13 +13,13 @@ public abstract class GamePiece {
     protected final List<Position> originalPositions;
     protected final List<Direction> directions;
     protected final int moveCount;
+    protected final PlayerColor playerColor;
     private final String name;
-    private final PlayerColor playerColor;
     private final double score;
 
     public GamePiece(String name, List<Position> originalPositions, List<Direction> directions, int moveCount, double score, PlayerColor playerColor) {
-        this.name = name;
-        this.originalPositions = Collections.unmodifiableList(originalPositions);
+        this.name = playerColor.decideName(name);
+        this.originalPositions = playerColor.reviseInitialPositions(originalPositions);
         this.directions = directions;
         this.moveCount = moveCount;
         this.score = score;

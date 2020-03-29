@@ -33,6 +33,23 @@ class CommandTest {
         );
     }
 
+    @ParameterizedTest
+    @DisplayName("move의 인자 수가 2개가 아닐 경우 검증")
+    @MethodSource("createInvalidMoveSize")
+    void validateMoveSize(List<String> input) {
+        assertThatThrownBy(() -> {
+            Command.from(input);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("move 커맨드의 인자는 2개여야 합니다.");
+    }
+
+    static List<List<String>> createInvalidMoveSize() {
+        return Arrays.asList(
+                Arrays.asList("move", "b1"),
+                Arrays.asList("move"),
+                Arrays.asList("move", "b1", "b2", "b3")
+        );
+    }
 
     @ParameterizedTest
     @DisplayName("Command가 START인지 확인")

@@ -11,6 +11,7 @@ public class Command {
     private static final int FLAG_START_INDEX = 1;
     private static final int SOURCE_INDEX = 0;
     private static final int TARGET_INDEX = 1;
+    private static final int MOVE_COMMAND_SIZE = 3;
 
     private final CommandType command;
     private final List<String> flags;
@@ -22,9 +23,17 @@ public class Command {
 
     public static Command from(List<String> input) {
         CommandType commandType = CommandType.from(input.get(COMMAND_TYPE_INDEX));
+
+        validateMoveCommandSize(input, commandType);
         List<String> flags = input.subList(FLAG_START_INDEX, input.size());
 
         return new Command(commandType, flags);
+    }
+
+    private static void validateMoveCommandSize(List<String> input, CommandType commandType) {
+        if (CommandType.MOVE.equals(commandType) && input.size() != MOVE_COMMAND_SIZE) {
+            throw new IllegalArgumentException("move 커맨드의 인자는 2개여야 합니다.");
+        }
     }
 
     public boolean isStart() {

@@ -1,18 +1,22 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
+import chess.domain.player.PlayerColor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class KnightStrategyTest {
 
@@ -21,8 +25,14 @@ class KnightStrategyTest {
     @MethodSource("createSourceToTarget")
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d5");
-        MoveStrategy knightStrategy = ChessPiece.KNIGHT.getMoveStrategy();
-        assertThat(knightStrategy.findMovePath(source, target)).isEqualTo(expected);
+        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        GamePiece gamePiece = ChessPiece.WHITE_KNIGHT.getGamePiece();
+        board.put(source, gamePiece);
+
+        assertThatCode(() -> {
+            gamePiece.validatePath(board, source, target);
+        }).doesNotThrowAnyException();
+
     }
 
     static Stream<Arguments> createSourceToTarget() {
@@ -42,14 +52,16 @@ class KnightStrategyTest {
     @DisplayName("이동할 수 없는 source, target")
     @MethodSource("createInvalidTarget")
     void invalidMovementException(Position target) {
-        MoveStrategy knightStrategy = ChessPiece.KNIGHT.getMoveStrategy();
-
+        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
         Position source = Position.from("d5");
+        GamePiece piece = ChessPiece.WHITE_KNIGHT.getGamePiece();
+
+        board.put(source, piece);
 
         assertThatThrownBy(() -> {
-            knightStrategy.findMovePath(source, target);
+            piece.validatePath(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.");
+                .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
     }
 
     static Stream<Arguments> createInvalidTarget() {

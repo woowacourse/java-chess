@@ -2,7 +2,9 @@ package chess.domain.player;
 
 import chess.domain.board.Position;
 
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum PlayerColor {
 
@@ -25,8 +27,10 @@ public enum PlayerColor {
         return nameDecider.apply(name);
     }
 
-    public Position reviseInitialPosition(Position position) {
-        return positionReviser.apply(position);
+    public List<Position> reviseInitialPositions(List<Position> positions) {
+        return positions.stream()
+                .map(positionReviser)
+                .collect(Collectors.toList());
     }
 
     public String getName() {

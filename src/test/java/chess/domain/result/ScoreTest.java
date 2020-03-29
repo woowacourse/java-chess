@@ -18,9 +18,9 @@ class ScoreTest {
     @BeforeEach
     void setUp() {
         piecesCount = new HashMap<>();
-        piecesCount.put(GamePiece.of(KNIGHT, BLACK), 2);
-        piecesCount.put(GamePiece.of(BISHOP, BLACK), 1);
-        piecesCount.put(GamePiece.of(PAWN, BLACK), 2);
+        piecesCount.put(BLACK_KNIGHT.getGamePiece(), 2);
+        piecesCount.put(BLACK_BISHOP.getGamePiece(), 1);
+        piecesCount.put(BLACK_PAWN.getGamePiece(), 2);
     }
 
     @Test

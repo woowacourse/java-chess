@@ -40,4 +40,8 @@ public enum ChessPiece {
     public static boolean isPawn(GamePiece gamePiece) {
         return WHITE_PAWN.gamePiece.equals(gamePiece) || BLACK_PAWN.gamePiece.equals(gamePiece);
     }
+
+    public GamePiece getGamePiece() {
+        return gamePiece;
+    }
 }

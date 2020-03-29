@@ -6,25 +6,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerColorTest {
-
-    static Stream<Arguments> createPlayer() {
-        return Stream.of(
-                Arguments.of(PlayerColor.BLACK, "K"),
-                Arguments.of(PlayerColor.WHITE, "k")
-        );
-    }
-
-    static Stream<Arguments> createPosition() {
-        return Stream.of(
-                Arguments.of(PlayerColor.BLACK, Position.from("b1"), Position.from("b8")),
-                Arguments.of(PlayerColor.WHITE, Position.from("b1"), Position.from("b1"))
-        );
-    }
 
     @ParameterizedTest
     @DisplayName("플레이어별 기물 이름")
@@ -33,10 +21,24 @@ class PlayerColorTest {
         assertThat(playerColor.decideName("k")).isEqualTo(expected);
     }
 
+    static Stream<Arguments> createPlayer() {
+        return Stream.of(
+                Arguments.of(PlayerColor.BLACK, "K"),
+                Arguments.of(PlayerColor.WHITE, "k")
+        );
+    }
+
     @ParameterizedTest
     @DisplayName("플레이어별 기물 초기 위치")
     @MethodSource("createPosition")
-    void reviseInitialPosition(PlayerColor playerColor, Position initial, Position expected) {
-        assertThat(playerColor.reviseInitialPosition(initial)).isEqualTo(expected);
+    void reviseInitialPosition(PlayerColor playerColor, List<Position> initial, List<Position> expected) {
+        assertThat(playerColor.reviseInitialPositions(initial)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createPosition() {
+        return Stream.of(
+                Arguments.of(PlayerColor.BLACK, Collections.singletonList(Position.from("b1")), Collections.singletonList(Position.from("b8"))),
+                Arguments.of(PlayerColor.WHITE, Collections.singletonList(Position.from("b1")), Collections.singletonList(Position.from("b1")))
+        );
     }
 }
