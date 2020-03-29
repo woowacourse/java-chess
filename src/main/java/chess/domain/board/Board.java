@@ -25,7 +25,7 @@ public class Board {
             for (Ypoint yPoint : Ypoint.values()) {
                 EmptyPiece emptyPiece = new EmptyPiece(PieceColor.NONE,
                                                        Positions.of(xPoint.getName() + yPoint.getName()));
-                board.put(new Position(xPoint, yPoint), emptyPiece);
+                board.put(Positions.of(xPoint.getValue(), yPoint.getValue()), emptyPiece);
             }
         }
         return board;
@@ -50,14 +50,14 @@ public class Board {
         for (char xPoint = 'a'; xPoint <= 'h'; xPoint++) {
             cells.put(Positions.of(xPoint, '2'), new Pawn(PieceColor.WHITE, Positions.of(xPoint, '2')));
         }
-        cells.put(Positions.of("a1"), new Rook(PieceColor.WHITE, Positions.of("a2")));
-        cells.put(Positions.of("b1"), new Knight(PieceColor.WHITE, Positions.of("b2")));
-        cells.put(Positions.of("c1"), new Bishop(PieceColor.WHITE, Positions.of("c2")));
-        cells.put(Positions.of("d1"), new Queen(PieceColor.WHITE, Positions.of("d2")));
-        cells.put(Positions.of("e1"), new King(PieceColor.WHITE, Positions.of("e2")));
-        cells.put(Positions.of("f1"), new Bishop(PieceColor.WHITE, Positions.of("f2")));
-        cells.put(Positions.of("g1"), new Knight(PieceColor.WHITE, Positions.of("g2")));
-        cells.put(Positions.of("h1"), new Rook(PieceColor.WHITE, Positions.of("h2")));
+        cells.put(Positions.of("a1"), new Rook(PieceColor.WHITE, Positions.of("a1")));
+        cells.put(Positions.of("b1"), new Knight(PieceColor.WHITE, Positions.of("b1")));
+        cells.put(Positions.of("c1"), new Bishop(PieceColor.WHITE, Positions.of("c1")));
+        cells.put(Positions.of("d1"), new Queen(PieceColor.WHITE, Positions.of("d1")));
+        cells.put(Positions.of("e1"), new King(PieceColor.WHITE, Positions.of("e1")));
+        cells.put(Positions.of("f1"), new Bishop(PieceColor.WHITE, Positions.of("f1")));
+        cells.put(Positions.of("g1"), new Knight(PieceColor.WHITE, Positions.of("g1")));
+        cells.put(Positions.of("h1"), new Rook(PieceColor.WHITE, Positions.of("h1")));
     }
 
     public Piece findPiece(Position sourcePosition) {
@@ -100,9 +100,9 @@ public class Board {
     private void checkPawnPath(Piece piece, Position targetPosition) {
         Pawn pawn = (Pawn) piece;
         List<Position> path = pawn.getPathTo(targetPosition);
-        if (pawn.getDirection(targetPosition).isSouth() || pawn.getDirection(targetPosition).isNorth() && havePieceIn(path)) {
+        if ((pawn.getDirection(targetPosition).isSouth() || pawn.getDirection(targetPosition).isNorth()) && havePieceIn(path)) {
             throw new IllegalArgumentException("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치로 이동할 수 없습니다.");
-        } else if (cannotMoveToTargetPosition(pawn, targetPosition)) {
+        } else if (!pawn.getDirection(targetPosition).isSouth() && !pawn.getDirection(targetPosition).isNorth() && cannotMovePawnToTargetPosition(pawn, targetPosition)) {
             throw new IllegalArgumentException("지정한 위치에 다른 색의 체스말이 없기 때문에 이동할 수 없습니다.");
         }
     }
@@ -113,7 +113,7 @@ public class Board {
                 .allMatch(Piece::isNoneColor);
     }
 
-    private boolean cannotMoveToTargetPosition(Pawn pawn, Position targetPosition) {
+    private boolean cannotMovePawnToTargetPosition(Pawn pawn, Position targetPosition) {
         Piece targetPiece = board.get(targetPosition);
         if (!targetPiece.isNoneColor()) {
             return pawn.isSameColor(targetPiece);
