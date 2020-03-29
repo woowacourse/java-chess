@@ -21,8 +21,11 @@ public class OutputView {
         }
     }
 
+    public static void printGameFinish() {
+        System.out.println("왕이 잡혀서 게임이 종료되었습니다.");
+    }
+
     public static void printExceptionMessage(String message) {
         System.out.println(message);
     }
-
 }

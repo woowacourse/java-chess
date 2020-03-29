@@ -4,12 +4,13 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
+    private static boolean isFinished;
+
     private final List<Piece> board;
 
     public Board(final List<Piece> board) {
@@ -54,24 +55,34 @@ public class Board {
     public Board movePiece(String from, String to, int turnFlag) throws IllegalAccessException {
         List<Piece> movedBoard = new ArrayList<>(board);
 
-        Piece fromPiece = findPieceBy(getBoardIndexByStringPosition(from));
-        Position fromPosition = fromPiece.getPosition();
-        if (Team.isSameTeam(turnFlag, fromPiece)) {
+        int fromIndex = getBoardIndexByStringPosition(from);
+        int toIndex = getBoardIndexByStringPosition(to);
+        if (Team.isSameTeam(turnFlag, findPieceBy(fromIndex))) {
             throw new IllegalAccessException("체스 게임 순서를 지켜주세요.");
         }
-        Piece toPiece = findPieceBy(getBoardIndexByStringPosition(to));
-        Position toPosition = toPiece.getPosition();
-        try {
-            if (fromPiece.isMovable(this, toPosition)) {
-                Piece movedPiece = fromPiece.movePiecePosition(toPosition);
-                movedBoard.set(getBoardIndexByStringPosition(to), movedPiece);
-                movedBoard.set(getBoardIndexByStringPosition(from), new Blank('.', Team.BLANK, fromPosition));
-            } else {
-                throw new UnsupportedOperationException("해당 포지션으로 이동할 수 없습니다.");
-            }
-        } catch (UnsupportedOperationException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-        }
+
+        movePieceWithValidation(movedBoard, fromIndex, toIndex);
         return new Board(movedBoard);
+    }
+
+    private void movePieceWithValidation(List<Piece> movedBoard, int fromIndex, int toIndex) {
+        Piece fromPiece = findPieceBy(fromIndex);
+        Piece toPiece = findPieceBy(toIndex);
+
+        if (fromPiece.isMovable(this, toPiece.getPosition())) {
+            movedBoard.set(toIndex, fromPiece.movePiecePosition(toPiece.getPosition()));
+            movedBoard.set(fromIndex, new Blank('.', Team.BLANK, fromPiece.getPosition()));
+            changeFlagWhenKingCaptured(toPiece);
+        }
+    }
+
+    private void changeFlagWhenKingCaptured(Piece toPiece) {
+        if (toPiece.isKing()) {
+            isFinished = true;
+        }
+    }
+
+    public boolean isFinished() {
+        return isFinished;
     }
 }

@@ -26,11 +26,10 @@ public abstract class Piece {
     }
 
     public boolean isMovable(Board board, Position to) {
-        try {
-            return getPossiblePositions(board).contains(to);
-        } catch(UnsupportedOperationException e) {
-            throw new UnsupportedOperationException(e.getMessage());
+        if (getPossiblePositions(board).contains(to)) {
+            return true;
         }
+        throw new UnsupportedOperationException("해당 포지션으로 이동할 수 없습니다.");
     }
 
     public boolean isOtherTeam(Piece nextPiece) {
@@ -40,6 +39,10 @@ public abstract class Piece {
     protected boolean isInBoardRange(Position nextPosition) {
         return nextPosition.getX() <= 8 && nextPosition.getX() >= 1 &&
                 nextPosition.getY() <= 8 && nextPosition.getY() >= 1;
+    }
+
+    public boolean isKing() {
+        return representation == 'k' | representation == 'K';
     }
 
     @Override

@@ -7,6 +7,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
+    public boolean isFinished;
     private Board board;
 
     public void run() {
@@ -21,16 +22,24 @@ public class ChessGame {
             }
             try {
                 if (runner.isMove()) {
-                    board = board.movePiece(inputCommand[1], inputCommand[2], 1 - turnFlag);
+                    board = board.movePiece(inputCommand[1], inputCommand[2], turnFlag);
                     turnFlag = 1 - turnFlag;
                 }
-            } catch (IllegalAccessException e) {
+            } catch (IllegalAccessException | UnsupportedOperationException e) {
                 System.out.println(e.getMessage());
             }
-
             OutputView.printBoard(board);
+            gameTerminateWhenFinished();
+
             inputCommand = InputView.inputCommand();
             runner = Run.of(inputCommand[0]);
+        }
+    }
+
+    private void gameTerminateWhenFinished() {
+        if (board.isFinished()) {
+            OutputView.printGameFinish();
+            System.exit(0);
         }
     }
 }
