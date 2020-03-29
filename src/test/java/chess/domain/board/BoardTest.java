@@ -7,6 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Placeable;
 import chess.domain.position.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -20,6 +21,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("NonAsciiCharacters")
 class BoardTest {
+    private static Team teamInTurn;
+
+    @BeforeEach
+    void setUp() {
+        teamInTurn = Team.WHITE;
+    }
 
     @ParameterizedTest
     @MethodSource("createFromPositionAndToPosition")

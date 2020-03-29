@@ -63,6 +63,19 @@ public class Board {
         return new Pieces(piecesSource);
     }
 
+    public boolean checkIfOppositeKingIsDead(Team teamInTurn) {
+        Team oppositeTeam = teamInTurn.opposite();
+
+        for (Position position : board.keySet()) {
+            Placeable piece = board.get(position);
+            if (piece.isKingOf(oppositeTeam)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public List<List<String>> getBoard() {
         List<List<String>> resultBoard = new ArrayList<>();
 

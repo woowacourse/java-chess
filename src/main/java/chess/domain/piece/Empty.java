@@ -55,6 +55,11 @@ public class Empty implements Placeable {
         return !isEmpty();
     }
 
+    @Override
+    public boolean isKingOf(Team oppositeTeam) {
+        return false;
+    }
+
 
     @Override
     public boolean equals(Object o) {

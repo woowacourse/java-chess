@@ -55,6 +55,11 @@ public class Piece implements Placeable {
     }
 
     @Override
+    public boolean isKingOf(Team oppositeTeam) {
+        return pieceType == PieceType.KING && team == oppositeTeam;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

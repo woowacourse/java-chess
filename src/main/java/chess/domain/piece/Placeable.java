@@ -22,4 +22,6 @@ public interface Placeable {
     boolean isEmpty();
 
     boolean isNotEmpty();
+
+    boolean isKingOf(Team oppositeTeam);
 }

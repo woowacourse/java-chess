@@ -16,8 +16,14 @@ public class Running extends Started {
     @Override
     public GameState move(String keyFromPosition, String keyToPosition) {
         board.move(keyFromPosition, keyToPosition, teamInTurn);
+
+        if (board.checkIfOppositeKingIsDead(teamInTurn)) {
+            return finish();
+        }
+
         teamInTurn = teamInTurn.opposite();
-        return this; // Todo: 체크메이트일 경우 Finished를 리턴하도록
+
+        return this;
     }
 
     @Override
