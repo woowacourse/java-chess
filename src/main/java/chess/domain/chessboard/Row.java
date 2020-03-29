@@ -12,6 +12,7 @@ import chess.domain.position.Position;
 
 public class Row {
 	private static final String NOT_MATCH_POSITION_MESSAGE = "해당 행에 존재하지 않는 좌표 입니다.";
+	private static final String NOT_MATCH_CHESS_PIECE_MESSAGE = "목표 위치와 일치하는 ChessPiece가 없습니다.";
 
 	private List<ChessPiece> chessPieces;
 
@@ -35,7 +36,7 @@ public class Row {
 		int targetIndex = IntStream.range(0, chessPieces.size())
 			.filter(index -> chessPieces.get(index).equalsPosition(targetPosition))
 			.findFirst()
-			.orElseThrow(IllegalArgumentException::new);
+			.orElseThrow(() -> new IllegalArgumentException(NOT_MATCH_CHESS_PIECE_MESSAGE));
 
 		chessPieces.set(targetIndex, startPiece);
 	}
