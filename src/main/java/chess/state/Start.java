@@ -30,13 +30,18 @@ public class Start extends Ready {
 	@Override
 	public ChessGameState move(List<String> parameters) {
 		board.move(Position.of(parameters.get(0)), Position.of(parameters.get(1)), turn);
-		board.isKingDead();
+		if (board.isKingDead()) {
+			return new Finish(board, turn);
+		}
+		turn.switchTurn();
 		return this;
 	}
 
 	@Override
 	public ChessGameState end() {
-		return new Finish(board);
+		// status();
+		// turn = board.getWinner();
+		return new Finish(board, turn);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package chess.view;
 
 import java.util.Map;
+import java.util.Objects;
 
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -19,8 +20,12 @@ public class OutputView {
 
 	public static void printResponse(ResponseDto response) {
 		Map<Position, String> boardDto = response.getBoardDto();
-
 		System.out.println();
+		printBoard(boardDto);
+		printWinner(response);
+	}
+
+	private static void printBoard(Map<Position, String> boardDto) {
 		for (Row row : Row.values()) {
 			for (Column column : Column.values()) {
 				String piece = boardDto.entrySet()
@@ -35,6 +40,12 @@ public class OutputView {
 				System.out.print("[" + piece + "]");
 			}
 			System.out.println();
+		}
+	}
+
+	private static void printWinner(ResponseDto response) {
+		if (Objects.nonNull(response.getTurn())) {
+			System.out.println(response.getTurn().getTeam().name() + "  is win!!!!!!");
 		}
 	}
 

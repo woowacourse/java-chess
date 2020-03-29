@@ -3,11 +3,15 @@ package chess.state;
 import java.util.List;
 
 import chess.domain.Board;
+import chess.domain.Turn;
 import chess.dto.ResponseDto;
 
 public class Finish extends Start {
-	public Finish(Board board) {
+	private final Turn turn;
+
+	public Finish(Board board, Turn turn) {
 		super(board);
+		this.turn = turn;
 	}
 
 	@Override
@@ -33,6 +37,6 @@ public class Finish extends Start {
 
 	@Override
 	public ResponseDto getResponse() {
-		return new ResponseDto(board.getDto());
+		return new ResponseDto(board.getDto(), turn);
 	}
 }

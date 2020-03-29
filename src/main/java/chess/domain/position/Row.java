@@ -26,9 +26,9 @@ public enum Row {
 
 	public Row plus(int other) {
 		return Arrays.stream(values())
-				.filter(value -> value.row == this.row + other)
-				.findFirst()
-				.orElseThrow(AssertionError::new);
+			.filter(value -> value.row == this.row + other)
+			.findFirst()
+			.orElseThrow(AssertionError::new);
 	}
 
 	public String getName() {

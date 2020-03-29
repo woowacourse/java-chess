@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -9,7 +10,14 @@ import chess.domain.position.Position;
 import chess.exception.InvalidTurnException;
 
 public class Board {
+	private static Map<Team, Boolean> kingDead = new HashMap<>();
+
 	private final Map<Position, Piece> board;
+
+	static {
+		kingDead.put(Team.BLACK, false);
+		kingDead.put(Team.WHITE, false);
+	}
 
 	public Board(Map<Position, Piece> board) {
 		this.board = board;
@@ -33,12 +41,25 @@ public class Board {
 
 	public void move(Position from, Position to, Turn turn) {
 		Piece source = hasPieceIn(from);
+		checkTurn(turn, source);
+		source = source.move(from, to, getTeamBoard());
+		board.remove(from);
+		checkKingDead(to);
+		board.put(to, source);
+
+	}
+
+	private void checkTurn(Turn turn, Piece source) {
 		if (!source.isTurn(turn)) {
 			throw new InvalidTurnException("해당 플레이어의 턴이 아닙니다.");
 		}
-		source = source.move(from, to, getTeamBoard());
-		board.remove(from);
-		board.put(to, source);
+	}
+
+	private void checkKingDead(Position to) {
+		Piece target = board.get(to);
+		if (Objects.nonNull(target) && target.isKing()) {
+			kingDead.put(board.get(to).getTeam(), true);
+		}
 	}
 
 	private Piece hasPieceIn(Position from) {
@@ -50,6 +71,8 @@ public class Board {
 	}
 
 	public boolean isKingDead() {
-		return false;
+		return kingDead.entrySet()
+			.stream()
+			.anyMatch(Map.Entry::getValue);
 	}
 }

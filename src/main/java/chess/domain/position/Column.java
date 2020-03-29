@@ -26,9 +26,9 @@ public enum Column {
 
 	public Column plus(int other) {
 		return Arrays.stream(values())
-				.filter(value -> value.column == this.column + other)
-				.findFirst()
-				.orElseThrow(AssertionError::new);
+			.filter(value -> value.column == this.column + other)
+			.findFirst()
+			.orElseThrow(AssertionError::new);
 	}
 
 	public String getName() {

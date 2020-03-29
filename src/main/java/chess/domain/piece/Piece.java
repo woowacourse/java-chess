@@ -4,6 +4,7 @@ import java.util.Map;
 
 import chess.domain.Team;
 import chess.domain.Turn;
+import chess.domain.piece.king.King;
 import chess.domain.position.Position;
 
 public abstract class Piece {
@@ -29,5 +30,9 @@ public abstract class Piece {
 
 	public Position getPosition() {
 		return position;
+	}
+
+	public boolean isKing() {
+		return this instanceof King;
 	}
 }
