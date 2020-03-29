@@ -4,6 +4,7 @@ import chess.domain.piece.*;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static chess.util.NullValidator.validateNull;
@@ -66,7 +67,60 @@ public class Board {
         return board.get(sourcePosition);
     }
 
-    public Map<Position, Piece> getBoard() {
+    public void checkPath(Piece piece, Position targetPosition) {
+        if (piece instanceof Pawn) {
+            checkPawnPath(piece, targetPosition);
+            return;
+        }
+        List<Position> path = piece.getPathTo(targetPosition);
+        if (havePieceBeforeTargetPosition(path)) {
+            throw new IllegalArgumentException("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치로 이동할 수 없습니다.");
+        }
+        if (cannotMoveToTargetPosition(piece, targetPosition)) {
+            throw new IllegalArgumentException("지정한 위치에 같은 색의 체스말이 있기 때문에 이동할 수 없습니다.");
+        }
+    }
+
+    private boolean havePieceBeforeTargetPosition(List<Position> path) {
+        path.remove(path.size() - 1);
+        return !path.stream()
+                .map(board::get)
+                .allMatch(Piece::isNoneColor);
+    }
+
+    private boolean cannotMoveToTargetPosition(Piece piece, Position targetPosition) {
+        Piece targetPiece = board.get(targetPosition);
+        if (!targetPiece.isNoneColor()) {
+            return piece.isSameColor(targetPiece);
+        }
+        return false;
+    }
+
+    private void checkPawnPath(Piece piece, Position targetPosition) {
+        Pawn pawn = (Pawn) piece;
+        List<Position> path = pawn.getPathTo(targetPosition);
+        if (pawn.getDirection(targetPosition).isSouth() || pawn.getDirection(targetPosition).isNorth() && havePieceIn(path)) {
+            throw new IllegalArgumentException("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치로 이동할 수 없습니다.");
+        } else if (cannotMoveToTargetPosition(pawn, targetPosition)) {
+            throw new IllegalArgumentException("지정한 위치에 다른 색의 체스말이 없기 때문에 이동할 수 없습니다.");
+        }
+    }
+
+    private boolean havePieceIn(List<Position> path) {
+        return !path.stream()
+                .map(board::get)
+                .allMatch(Piece::isNoneColor);
+    }
+
+    private boolean cannotMoveToTargetPosition(Pawn pawn, Position targetPosition) {
+        Piece targetPiece = board.get(targetPosition);
+        if (!targetPiece.isNoneColor()) {
+            return pawn.isSameColor(targetPiece);
+        }
+        return true;
+    }
+
+    public Map<Position, Piece> get() {
         return Collections.unmodifiableMap(board);
     }
 }
