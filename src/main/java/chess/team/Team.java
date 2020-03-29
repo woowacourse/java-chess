@@ -1,21 +1,15 @@
 package chess.team;
 
 public enum Team {
-    BLACK(true),
-    WHITE(false);
-
-    private final boolean isBlack;
-
-    Team(boolean isBlack) {
-        this.isBlack = isBlack;
-    }
+    BLACK,
+    WHITE;
 
     public boolean isBlack() {
-        return isBlack;
+        return this == BLACK;
     }
 
     public Team changeTurn() {
-        if(this == BLACK) {
+        if (this == BLACK) {
             return WHITE;
         }
         return BLACK;
