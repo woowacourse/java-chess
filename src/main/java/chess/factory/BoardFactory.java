@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.Team;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Row;
 import chess.domain.chesspiece.Bishop;
 import chess.domain.chesspiece.Blank;
@@ -34,12 +35,12 @@ public class BoardFactory {
 	private static final int KNIGHT_SECOND_INDEX = 7;
 	private static final int ROOK_SECOND_INDEX = 8;
 
-	public static List<Row> createBoard() {
+	public static ChessBoard createBoard() {
 		List<Row> board = new ArrayList<>();
 		board.addAll(createWhiteTeam());
 		board.addAll(createBlankTeam());
 		board.addAll(createBlackTeam());
-		return board;
+		return new ChessBoard(board);
 	}
 
 	private static List<Row> createBlackTeam() {

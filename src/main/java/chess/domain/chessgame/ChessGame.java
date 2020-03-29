@@ -18,7 +18,7 @@ public class ChessGame {
 	private ChessMenu chessMenu;
 
 	public ChessGame() {
-		this.chessBoard = new ChessBoard(BoardFactory.createBoard());
+		this.chessBoard = BoardFactory.createBoard();
 		this.turn = new Turn();
 	}
 
@@ -57,7 +57,7 @@ public class ChessGame {
 		}
 
 		if (chessMenu.isStatus()) {
-			Status status = new Status(chessBoard.getBoard());
+			Status status = new Status(chessBoard.getRows());
 			Result result = status.getResult();
 			OutputView.printResult(result);
 		}
