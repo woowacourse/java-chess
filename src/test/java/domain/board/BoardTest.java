@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -35,9 +34,5 @@ public class BoardTest {
 		assertThatThrownBy(() -> board.move(sourcePosition, "b1", Team.BLACK))
 			.isInstanceOf(InvalidTurnException.class)
 			.hasMessage(InvalidTurnException.INVALID_TURN);
-	}
-
-	@Test
-	void name() {
 	}
 }

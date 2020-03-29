@@ -1,9 +1,11 @@
 package domain.piece;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import domain.board.InvalidTurnException;
+import domain.board.Rank;
 import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -36,31 +38,47 @@ public abstract class Piece implements Movable {
 		}
 	}
 
-	private Direction findDirection(int rowGap, int columnGap) {
+	protected Direction findDirection(int rowGap, int columnGap) {
+		System.out.println(rowGap + ":" + columnGap);
 		return Arrays.stream(Direction.values())
 			.filter(d -> d.getFind().apply(rowGap, columnGap))
 			.findFirst()
-			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_TARGET_POSITION));
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION));
 	}
 
-	abstract boolean validDirection(Direction direction);
+	protected void capture(Piece targetPiece, List<Rank> ranks) {
+		int targetPieceRowIndex = targetPiece.position.getRow() - 1;
+		ranks.get(targetPieceRowIndex).getPieces().remove(targetPiece);
+	}
 
-	abstract boolean validStepSize(int rowGap, int columnGap);
+	protected void changePosition(Position targetPosition, List<Rank> ranks) {
+		this.position = targetPosition;
+		int rankIndex = targetPosition.getRow() - 1;
+		ranks.get(rankIndex).getPieces().add(this);
+	}
 
-	@Override
-	public void move() {
+	protected abstract boolean validDirection(Direction direction);
+
+	protected abstract boolean validStepSize(int rowGap, int columnGap);
+
+	protected abstract boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
+
+	private boolean isInPlace(Position sourcePosition, Position targetPosition) {
+		return sourcePosition.equals(targetPosition);
 	}
 
 	@Override
-	public boolean canMove(Position targetPosition, Team turn) {
+	public boolean canMove(Position targetPosition, Team turn, List<Rank> ranks) {
 		validateTurn(turn);
+		if (isInPlace(this.position, targetPosition)) {
+			throw new InvalidPositionException(InvalidPositionException.IS_IN_PLACE);
+		}
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		int columnGap = this.position.calculateColumnGap(targetPosition);
 		Direction direction = findDirection(rowGap, columnGap);
-		if (validDirection(direction) && validStepSize(rowGap, columnGap)) {
-			return true;
-		}
-		throw new InvalidPositionException(InvalidPositionException.INVALID_TARGET_POSITION);
+
+		return validDirection(direction) && validStepSize(rowGap, columnGap) &&
+			validateRoute(direction, targetPosition, ranks);
 	}
 
 	@Override
