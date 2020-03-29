@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public enum OperationType {
 	START("start"),
@@ -24,7 +23,7 @@ public enum OperationType {
 				.orElseThrow(() -> new IllegalArgumentException(INVALID_OPERATION_EXCEPTION_MESSAGE));
 	}
 
-	public void validateFirstOperations() {// TODO: 2020/03/28 validate?check? 이름 이슈
+	public void checkFirstOperations() {
 		if (!isStart() && !isEnd()) {
 			throw new UnsupportedOperationException(INVALID_OPERATION_EXCEPTION_MESSAGE);
 		}

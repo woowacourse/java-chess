@@ -22,7 +22,7 @@ public class ChessController {
 		List<String> operations = inputOperation();
 		OperationType operationType = OperationType.of(operations.get(OPERATION_TYPE_INDEX));
 
-		operationType.validateFirstOperations();
+		operationType.checkFirstOperations();
 		if (operationType.isEnd()) {
 			OutputView.printFinish();
 			return;
