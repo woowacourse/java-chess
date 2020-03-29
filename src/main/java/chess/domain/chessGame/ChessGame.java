@@ -7,50 +7,83 @@ import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessGame.gameState.ChessEndState;
 import chess.domain.chessGame.gameState.GameState;
 import chess.domain.chessGame.gameState.KingCaughtState;
+import chess.domain.chessGame.gameState.WhiteTurnState;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 import chess.util.ChessBoardRenderer;
 
 public class ChessGame {
 
-	private static final int SOURCE_INDEX = 0;
-	private static final int TARGET_INDEX = 1;
 	private static final boolean KING_CAUGHT_STATE = true;
-	private static final boolean END_STATE = false;
+	private static final boolean NOT_KING_CAUGHT_STATE = false;
 
 	private final ChessBoard chessBoard;
 	private GameState gameState;
 
-	public ChessGame(ChessBoard chessBoard, GameState gameState) {
+	private ChessGame(ChessBoard chessBoard, GameState gameState) {
 		this.chessBoard = chessBoard;
 		this.gameState = gameState;
 	}
 
-	public void move(List<String> arguments) {
-		validate(arguments);
-		boolean isCaughtTargetKing = chessBoard.isKingCaughtAt(Position.of(arguments.get(TARGET_INDEX)));
-		chessBoard.move(Position.of(arguments.get(SOURCE_INDEX)), Position.of(arguments.get(TARGET_INDEX)));
+	public static ChessGame from(ChessBoard chessBoard) {
+		Objects.requireNonNull(chessBoard, "체스 보드가 null입니다.");
+		return new ChessGame(chessBoard, new WhiteTurnState());
+	}
 
-		if (isCaughtTargetKing) {
+	public void move(ChessCommand chessCommand) {
+		Objects.requireNonNull(chessCommand, "체스 명령이 null입니다.");
+		Position sourcePosition = chessCommand.getSourcePosition();
+		Position targetPosition = chessCommand.getTargetPosition();
+
+		boolean isKingOnTargetPosition = chessBoard.isKingOn(targetPosition);
+
+		moveChessPieceFrom(sourcePosition, targetPosition);
+		shiftGameStatusBy(isKingOnTargetPosition);
+	}
+
+	private void moveChessPieceFrom(Position sourcePosition, Position targetPosition) {
+		checkChessPieceExistOn(sourcePosition);
+		checkLeapable(sourcePosition, targetPosition);
+		checkMovableOrCatchable(sourcePosition, targetPosition);
+		chessBoard.moveChessPiece(sourcePosition, targetPosition);
+	}
+
+	private void checkChessPieceExistOn(Position sourcePosition) {
+		if (!chessBoard.isChessPieceOn(sourcePosition)) {
+			throw new IllegalArgumentException("이동할 체스 피스가 존재하지 않습니다.");
+		}
+	}
+
+	private void checkLeapable(Position sourcePosition, Position targetPosition) {
+		if (chessBoard.isLeapableChessPieceOn(sourcePosition)) {
+			chessBoard.checkChessPieceExistInRoute(sourcePosition, targetPosition);
+		}
+	}
+
+	private void checkMovableOrCatchable(Position sourcePosition, Position targetPosition) {
+		if (!chessBoard.isChessPieceOn(targetPosition)) {
+			chessBoard.checkCanMove(sourcePosition, targetPosition);
+			return;
+		}
+		chessBoard.checkCanCatch(sourcePosition, targetPosition);
+	}
+
+	private void shiftGameStatusBy(boolean isKingOnTargetPosition) {
+		if (isKingOnTargetPosition) {
 			gameState = gameState.shiftEndState(KING_CAUGHT_STATE);
 			return;
 		}
 		gameState = gameState.shiftNextTurnState();
 	}
 
-	public double status(List<String> arguments) {
-		validate(arguments);
-		return chessBoard.calculateScoreOf(PieceColor.of(arguments.get(0)));
-	}
-
-	private void validate(List<String> arguments) {
-		if (Objects.isNull(arguments) || arguments.isEmpty()) {
-			throw new IllegalArgumentException("유효하지 않은 명령어 인자입니다.");
-		}
+	public double status(ChessCommand chessCommand) {
+		Objects.requireNonNull(chessCommand, "체스 명령이 null입니다.");
+		ChessStatus chessStatus = chessBoard.calculateScoreOf();
+		return chessStatus.getStatusOf(chessCommand.getStatusPieceColor());
 	}
 
 	public void end() {
-		gameState = gameState.shiftEndState(END_STATE);
+		gameState = gameState.shiftEndState(NOT_KING_CAUGHT_STATE);
 	}
 
 	public boolean isEndState() {
@@ -62,7 +95,7 @@ public class ChessGame {
 	}
 
 	public PieceColor getCurrentTurnColor() {
-		return this.gameState.getTurnPieceColor();
+		return this.gameState.getPieceColor();
 	}
 
 	public List<String> getRenderedChessBoard() {

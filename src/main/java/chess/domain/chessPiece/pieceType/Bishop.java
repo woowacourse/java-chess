@@ -14,7 +14,7 @@ public class Bishop extends ChessPiece {
 
 	@Override
 	public String getName() {
-		return pieceColor.convertName(NAME);
+		return pieceColor.convertFrom(NAME);
 	}
 
 	@Override

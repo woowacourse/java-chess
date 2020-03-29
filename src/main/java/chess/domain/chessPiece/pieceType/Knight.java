@@ -14,7 +14,7 @@ public class Knight extends ChessPiece {
 
 	@Override
 	public String getName() {
-		return pieceColor.convertName(NAME);
+		return pieceColor.convertFrom(NAME);
 	}
 
 	@Override

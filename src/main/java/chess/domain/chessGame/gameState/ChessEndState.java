@@ -21,7 +21,7 @@ public abstract class ChessEndState implements GameState {
 	}
 
 	@Override
-	public PieceColor getTurnPieceColor() {
+	public PieceColor getPieceColor() {
 		return pieceColor;
 	}
 

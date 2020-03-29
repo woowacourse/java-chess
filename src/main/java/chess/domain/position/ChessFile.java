@@ -3,7 +3,6 @@ package chess.domain.position;
 import java.util.Arrays;
 import java.util.Objects;
 
-// TODO: 2020/03/28 Enum으로 변경하기
 public enum ChessFile {
 
 	A("a", 1),

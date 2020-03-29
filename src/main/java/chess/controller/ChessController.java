@@ -4,16 +4,12 @@ import static chess.util.StringUtil.*;
 import static chess.view.ConsoleInputView.*;
 import static chess.view.ConsoleOutputView.*;
 
-import java.util.List;
 import java.util.Objects;
 
 import chess.domain.chessGame.ChessCommand;
 import chess.domain.chessGame.ChessGame;
-import chess.view.ConsoleOutputView;
 
 public class ChessController {
-
-	private static final int CHESS_COMMAND_INDEX = 0;
 
 	private final ChessGame chessGame;
 
@@ -23,22 +19,35 @@ public class ChessController {
 	}
 
 	public void run() {
-		ChessCommand chessCommand;
-
 		do {
-			ConsoleOutputView.printChessBoard(chessGame.getRenderedChessBoard());
-			List<String> chessCommandArguments = splitChessCommand(inputChessCommand());
+			printChessBoard(chessGame.getRenderedChessBoard());
 
-			chessCommand = ChessCommand.of(chessCommandArguments.remove(CHESS_COMMAND_INDEX));
-			playChessGameBy(chessCommand, chessCommandArguments);
+			ChessCommand chessCommand = receiveChessCommand();
+			playChessGameBy(chessCommand);
 		} while (!isEndState());
 	}
 
-	private void playChessGameBy(ChessCommand chessCommand, List<String> chessCommandArguments) {
+	private ChessCommand receiveChessCommand() {
+		ChessCommand chessCommand = ChessCommand.of(splitChessCommand(inputChessCommand()));
+
 		if (chessCommand.isStartChessCommand()) {
 			throw new IllegalArgumentException("start 명령어은 최초 시작 때만 사용 가능합니다.");
 		}
-		chessCommand.playChessGame(chessGame, chessCommandArguments, ConsoleOutputView::printStatus);
+		return chessCommand;
+	}
+
+	// NOTE: 2020/03/30 해당 분기문을 줄일 수 있는 방법 생각해보기
+	private void playChessGameBy(ChessCommand chessCommand) {
+		if (chessCommand.isMoveChessCommand()) {
+			chessGame.move(chessCommand);
+		}
+		if (chessCommand.isStatusChessCommand()) {
+			double score = chessGame.status(chessCommand);
+			printStatus(chessCommand.getStatusPieceColor(), score);
+		}
+		if (chessCommand.isEndChessCommand()) {
+			chessGame.end();
+		}
 	}
 
 	private boolean isEndState() {

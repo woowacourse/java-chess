@@ -8,6 +8,6 @@ public interface GameState {
 
 	GameState shiftEndState(boolean isKingCaught);
 
-	PieceColor getTurnPieceColor();
+	PieceColor getPieceColor();
 
 }

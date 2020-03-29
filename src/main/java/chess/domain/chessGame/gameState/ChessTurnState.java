@@ -19,7 +19,7 @@ public abstract class ChessTurnState implements GameState {
 	}
 
 	@Override
-	public PieceColor getTurnPieceColor() {
+	public PieceColor getPieceColor() {
 		return pieceColor;
 	}
 

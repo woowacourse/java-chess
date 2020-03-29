@@ -13,12 +13,12 @@ public enum PieceColor {
 	BLACK("black", String::toUpperCase, BlackPawnRuleStrategy::new);
 
 	private final String color;
-	private final Function<String, String> convertName;
+	private final Function<String, String> convertFrom;
 	private final Function<Integer, RuleStrategy> pawnRuleStrategy;
 
-	PieceColor(String color, Function<String, String> convertName, Function<Integer, RuleStrategy> pawnRuleStrategy) {
+	PieceColor(String color, Function<String, String> convertFrom, Function<Integer, RuleStrategy> pawnRuleStrategy) {
 		this.color = color;
-		this.convertName = convertName;
+		this.convertFrom = convertFrom;
 		this.pawnRuleStrategy = pawnRuleStrategy;
 	}
 
@@ -26,14 +26,14 @@ public enum PieceColor {
 		return Arrays.stream(values())
 			.filter(pieceColor -> pieceColor.color.equals(color))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 색상의 피스입니다."));
+			.orElseThrow(() -> new IllegalArgumentException("체스 색상이 존재하지 않습니다."));
 	}
 
-	public String convertName(String pieceName) {
+	public String convertFrom(String pieceName) {
 		if (pieceName == null || pieceName.isEmpty()) {
-			throw new IllegalArgumentException("체스 이름이 유효하지 않습니다.");
+			throw new IllegalArgumentException("체스 이름이 존재하지 않습니다.");
 		}
-		return convertName.apply(pieceName);
+		return convertFrom.apply(pieceName);
 	}
 
 	public RuleStrategy getPawnRuleStrategyBy(int movableRange) {
@@ -43,4 +43,5 @@ public enum PieceColor {
 	public String getColor() {
 		return color;
 	}
+
 }
