@@ -25,13 +25,13 @@ class ChessBoardTest {
 		return Stream.of(
 			Arguments.of(
 				new HashMap<Location, Piece>() {{
-					put(new Location(1, 'a'), new King(Team.WHITE));
-					put(new Location(2, 'a'), new King(Team.BLACK));
+					put(Location.of(1, 'a'), new King(Team.WHITE));
+					put(Location.of(2, 'a'), new King(Team.BLACK));
 				}}, true
 			), Arguments.of(
 				new HashMap<Location, Piece>() {{
-					put(new Location(1, 'a'), new Pawn(Team.WHITE));
-					put(new Location(2, 'a'), new King(Team.BLACK));
+					put(Location.of(1, 'a'), new Pawn(Team.WHITE));
+					put(Location.of(2, 'a'), new King(Team.BLACK));
 				}}, false
 			)
 		);
@@ -41,8 +41,8 @@ class ChessBoardTest {
 	@Test
 	void canMove() {
 		Map<Location, Piece> board = new HashMap<>();
-		Location starting = new Location(1, 'a');
-		Location destination = new Location(2, 'a');
+		Location starting = Location.of(1, 'a');
+		Location destination = Location.of(2, 'a');
 		board.put(starting, new Queen(Team.BLACK));
 		board.put(destination, new Queen(Team.BLACK));
 
@@ -55,14 +55,14 @@ class ChessBoardTest {
 	@Test
 	void testGiveMyPiece() {
 		Map<Location, Piece> board = new HashMap<>();
-		Location bottomLocation = new Location(1, 'a');
-		Location topLocation = new Location(2, 'a');
+		Location bottomLocation = Location.of(1, 'a');
+		Location topLocation = Location.of(2, 'a');
 		board.put(bottomLocation, new Queen(Team.BLACK));
 		board.put(topLocation, new Queen(Team.BLACK));
 
 		Map<Location, Piece> actual = new HashMap<>();
-		Location actualBottomLocation = new Location(1, 'a');
-		Location actualTopLocation = new Location(2, 'a');
+		Location actualBottomLocation = Location.of(1, 'a');
+		Location actualTopLocation = Location.of(2, 'a');
 		actual.put(actualBottomLocation, new Queen(Team.BLACK));
 		actual.put(actualTopLocation, new Queen(Team.BLACK));
 
@@ -85,8 +85,8 @@ class ChessBoardTest {
 	@Test
 	void isTurn() {
 		Map<Location, Piece> board = new HashMap<>();
-		Location movingLocation = new Location(1, 'a');
-		Location topLocation = new Location(2, 'a');
+		Location movingLocation = Location.of(1, 'a');
+		Location topLocation = Location.of(2, 'a');
 		board.put(movingLocation, new Queen(Team.BLACK));
 		board.put(topLocation, new Queen(Team.BLACK));
 

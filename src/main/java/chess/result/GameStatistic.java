@@ -1,5 +1,7 @@
 package chess.result;
 
+import java.util.Objects;
+
 import chess.team.Team;
 
 public class GameStatistic {
@@ -8,6 +10,7 @@ public class GameStatistic {
 	private final GameResult gameResult;
 
 	public GameStatistic(Team team, Score score, GameResult gameResult) {
+		Objects.requireNonNull(score, "스코어의 정보가 없습니다.");
 		this.team = team;
 		this.score = score;
 		this.gameResult = gameResult;

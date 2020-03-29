@@ -16,13 +16,13 @@ class RookTest {
 	@Test
 	void canMove() {
 		Rook rook = new Rook(Team.BLACK);
-		Location now = new Location(8, 'a');
-		Location after = new Location(8, 'h');
+		Location now = Location.of(8, 'a');
+		Location after = Location.of(8, 'h');
 		boolean actual = rook.canMove(now, after);
 
 		assertThat(actual).isTrue();
 
-		Location cantAfter = new Location(7, 'b');
+		Location cantAfter = Location.of(7, 'b');
 		boolean cantActual = rook.canMove(now, cantAfter);
 
 		assertThat(cantActual).isFalse();
@@ -33,11 +33,11 @@ class RookTest {
 	void name() {
 		Map<Location, Piece> board = new HashMap<>();
 		Bishop givenPiece = new Bishop(Team.BLACK);
-		board.put(new Location(1, 'c'), givenPiece);
-		board.put(new Location(2, 'c'), new Bishop(Team.WHITE));
-		board.put(new Location(3, 'c'), new Bishop(Team.WHITE));
+		board.put(Location.of(1, 'c'), givenPiece);
+		board.put(Location.of(2, 'c'), new Bishop(Team.WHITE));
+		board.put(Location.of(3, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, new Location(1, 'c'), new Location(3, 'c'));
+		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'c'), Location.of(3, 'c'));
 		assertThat(actual).isTrue();
 	}
 
@@ -46,11 +46,11 @@ class RookTest {
 	void name2() {
 		Map<Location, Piece> board = new HashMap<>();
 		Bishop givenPiece = new Bishop(Team.BLACK);
-		board.put(new Location(1, 'a'), givenPiece);
-		board.put(new Location(1, 'b'), new Bishop(Team.WHITE));
-		board.put(new Location(1, 'c'), new Bishop(Team.WHITE));
+		board.put(Location.of(1, 'a'), givenPiece);
+		board.put(Location.of(1, 'b'), new Bishop(Team.WHITE));
+		board.put(Location.of(1, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, new Location(1, 'a'), new Location(1, 'c'));
+		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'a'), Location.of(1, 'c'));
 		assertThat(actual).isTrue();
 	}
 }

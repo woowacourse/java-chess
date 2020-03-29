@@ -15,13 +15,13 @@ class QueenTest {
 	@Test
 	void canMove() {
 		Queen queen = new Queen(Team.BLACK);
-		Location now = new Location(8, 'd');
-		Location after = new Location(8, 'h');
+		Location now = Location.of(8, 'd');
+		Location after = Location.of(8, 'h');
 		boolean actual = queen.canMove(now, after);
 
 		assertThat(actual).isTrue();
 
-		Location cantAfter = new Location(7, 'f');
+		Location cantAfter = Location.of(7, 'f');
 		boolean cantActual = queen.canMove(now, cantAfter);
 
 		assertThat(cantActual).isFalse();
@@ -32,11 +32,11 @@ class QueenTest {
 	void name1() {
 		Map<Location, Piece> board = new HashMap<>();
 		Piece givenPiece = new Queen(Team.BLACK);
-		board.put(new Location(1, 'c'), givenPiece);
-		board.put(new Location(2, 'd'), new Bishop(Team.WHITE));
-		board.put(new Location(3, 'e'), new Bishop(Team.WHITE));
+		board.put(Location.of(1, 'c'), givenPiece);
+		board.put(Location.of(2, 'd'), new Bishop(Team.WHITE));
+		board.put(Location.of(3, 'e'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, new Location(1, 'c'), new Location(3, 'e'));
+		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'c'), Location.of(3, 'e'));
 		assertThat(actual).isTrue();
 	}
 
@@ -45,11 +45,11 @@ class QueenTest {
 	void name2() {
 		Map<Location, Piece> board = new HashMap<>();
 		Piece givenPiece = new Queen(Team.BLACK);
-		board.put(new Location(1, 'c'), givenPiece);
-		board.put(new Location(2, 'c'), new Bishop(Team.WHITE));
-		board.put(new Location(3, 'c'), new Bishop(Team.WHITE));
+		board.put(Location.of(1, 'c'), givenPiece);
+		board.put(Location.of(2, 'c'), new Bishop(Team.WHITE));
+		board.put(Location.of(3, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, new Location(1, 'c'), new Location(3, 'c'));
+		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'c'), Location.of(3, 'c'));
 		assertThat(actual).isTrue();
 	}
 
@@ -58,11 +58,11 @@ class QueenTest {
 	void name3() {
 		Map<Location, Piece> board = new HashMap<>();
 		Piece givenPiece = new Queen(Team.BLACK);
-		board.put(new Location(1, 'c'), givenPiece);
-		board.put(new Location(1, 'd'), new Bishop(Team.WHITE));
-		board.put(new Location(1, 'e'), new Bishop(Team.WHITE));
+		board.put(Location.of(1, 'c'), givenPiece);
+		board.put(Location.of(1, 'd'), new Bishop(Team.WHITE));
+		board.put(Location.of(1, 'e'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, new Location(1, 'c'), new Location(1, 'e'));
+		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'c'), Location.of(1, 'e'));
 		assertThat(actual).isTrue();
 
 	}

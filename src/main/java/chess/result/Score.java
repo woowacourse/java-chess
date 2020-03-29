@@ -1,27 +1,22 @@
 package chess.result;
 
 import java.util.Map;
+import java.util.Objects;
 
 import chess.piece.Piece;
-import chess.team.Team;
 
 public class Score {
-	private final Team team;
 	private final double amount;
 
-	public Score(Team team, Map<Piece, Boolean> pieces) {
+	public Score(Map<Piece, Boolean> pieces) {
+		Objects.requireNonNull(pieces, "pieces의 정보가 없습니다.");
 		this.amount = calculateScore(pieces);
-		this.team = team;
 	}
 
-	public double calculateScore(Map<Piece, Boolean> pieces) {
+	private double calculateScore(Map<Piece, Boolean> pieces) {
 		return pieces.keySet().stream()
 			.mapToDouble(piece -> piece.getScore(pieces.get(piece)))
 			.sum();
-	}
-
-	public Team getTeam() {
-		return team;
 	}
 
 	public double getAmount() {

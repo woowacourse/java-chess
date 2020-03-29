@@ -32,14 +32,23 @@ public class Location {
 	private final int row;
 	private final char col;
 
-	public Location(final int row, final char col) {
+	private Location(final int row, final char col) {
 		this.row = row;
 		this.col = col;
 	}
 
-	public Location(Location now) {
-		this.row = now.row;
-		this.col = now.col;
+	public static Location of(int row, char col) {
+		checkRowAndCol(row, col);
+		return new Location(row, col);
+	}
+
+	private static void checkRowAndCol(int row, char col) {
+		if (row < 1 || row > 8) {
+			throw new IllegalArgumentException("체스판의 범위에 벗어난 row 입력을 했습니다.");
+		}
+		if (col < 'a' || col > 'h') {
+			throw new IllegalArgumentException("체스판의 범위에 벗어난 column 입력을 했습니다.");
+		}
 	}
 
 	public boolean isSameCol(Location other) {
@@ -77,30 +86,6 @@ public class Location {
 
 	public boolean isStraight(Location destination) {
 		return this.row == destination.row || isVertical(destination);
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Location location = (Location)o;
-		return row == location.row &&
-			col == location.col;
-	}
-
-	@Override
-	public String toString() {
-		return "Location{" +
-			"row=" + row +
-			", col=" + col +
-			'}';
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(row, col);
 	}
 
 	public boolean isInitialPawnLocation(Team team) {
@@ -146,7 +131,6 @@ public class Location {
 	}
 
 	public Location calculateNextLocation(Location destination, int weight) {
-
 		int rowWeight = weight;
 		int colWeight = weight;
 
@@ -168,6 +152,22 @@ public class Location {
 
 	public boolean isVertical(Location destination) {
 		return col == destination.col;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Location location = (Location)o;
+		return row == location.row &&
+			col == location.col;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(row, col);
 	}
 }
 

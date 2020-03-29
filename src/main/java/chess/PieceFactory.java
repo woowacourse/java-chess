@@ -27,19 +27,19 @@ public class PieceFactory {
 	}
 
 	private static void putNoble(Map<Location, Piece> pieces, int row, Team team) {
-		pieces.put(new Location(row, 'a'), new Rook(team));
-		pieces.put(new Location(row, 'b'), new Knight(team));
-		pieces.put(new Location(row, 'c'), new Bishop(team));
-		pieces.put(new Location(row, 'd'), new Queen(team));
-		pieces.put(new Location(row, 'e'), new King(team));
-		pieces.put(new Location(row, 'f'), new Bishop(team));
-		pieces.put(new Location(row, 'g'), new Knight(team));
-		pieces.put(new Location(row, 'h'), new Rook(team));
+		pieces.put(Location.of(row, 'a'), new Rook(team));
+		pieces.put(Location.of(row, 'b'), new Knight(team));
+		pieces.put(Location.of(row, 'c'), new Bishop(team));
+		pieces.put(Location.of(row, 'd'), new Queen(team));
+		pieces.put(Location.of(row, 'e'), new King(team));
+		pieces.put(Location.of(row, 'f'), new Bishop(team));
+		pieces.put(Location.of(row, 'g'), new Knight(team));
+		pieces.put(Location.of(row, 'h'), new Rook(team));
 	}
 
 	private static void putPawns(Map<Location, Piece> pieces, int row, Team team) {
 		for (int i = 0; i < 8; i++) {
-			pieces.put(new Location(row, (char)(i + 'a')), new Pawn(team));
+			pieces.put(Location.of(row, (char)(i + 'a')), new Pawn(team));
 		}
 	}
 }

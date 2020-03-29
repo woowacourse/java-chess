@@ -12,14 +12,24 @@ public class ChessController {
 
 		while (gameManager.isRunning()) {
 			command = InputView.inputStartCommand();
-			start(command, gameManager);
-			movePiece(command, gameManager);
-			status(command, gameManager);
+			if (command.equals("start")) {
+				start(gameManager);
+			}
+			if (command.matches("move [a-h][1-8] [a-h][1-8]")) {
+				movePiece(command, gameManager);
+			}
+			if (command.equals("status")) {
+				status(command, gameManager);
+			}
 			if (command.equals("end")) {
 				break;
 			}
 		}
 		OutputView.printStatus(gameManager.createStatistics());
+	}
+
+	private static void start(GameManager gameManager) {
+		OutputView.printBoard(gameManager);
 	}
 
 	private static void status(String command, GameManager gameManager) {
@@ -28,24 +38,16 @@ public class ChessController {
 		}
 	}
 
-	private static void start(String command, GameManager gameManager) {
-		if (command.equals("start")) {
-			OutputView.printBoard(gameManager);
-		}
-	}
-
 	private static void movePiece(String command, GameManager gameManager) {
-		if (command.matches("move [a-h][1-8] [a-h][1-8]")) {
-			char nowCol = command.split(" ")[1].charAt(0);
-			int nowRow = command.split(" ")[1].charAt(1) - '0';
-			char destCol = command.split(" ")[2].charAt(0);
-			int destRow = command.split(" ")[2].charAt(1) - '0';
+		char nowCol = command.split(" ")[1].charAt(0);
+		int nowRow = command.split(" ")[1].charAt(1) - '0';
+		char destCol = command.split(" ")[2].charAt(0);
+		int destRow = command.split(" ")[2].charAt(1) - '0';
 
-			Location now = new Location(nowRow, nowCol);
-			Location destination = new Location(destRow, destCol);
+		Location now = Location.of(nowRow, nowCol);
+		Location destination = Location.of(destRow, destCol);
 
-			gameManager.movePiece(now, destination);
-			OutputView.printBoard(gameManager);
-		}
+		gameManager.movePiece(now, destination);
+		OutputView.printBoard(gameManager);
 	}
 }

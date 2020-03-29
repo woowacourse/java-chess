@@ -3,6 +3,7 @@ package chess;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.board.ChessBoard;
@@ -21,6 +22,7 @@ public class GameManager {
 	private GameState gameState;
 
 	public GameManager(Map<Location, Piece> pieces) {
+		Objects.requireNonNull(pieces, "pieces의 정보가 없습니다.");
 		this.chessBoard = new ChessBoard(pieces);
 		this.gameState = GameState.RUNNING_BLACK_TURN;
 	}
@@ -65,7 +67,7 @@ public class GameManager {
 				location -> findSameColumnPawnCount(map, location) >= COLUMN_PAWN_COUNT)
 			);
 
-		return new Score(team, pieceAndVerticalPawnCheck);
+		return new Score(pieceAndVerticalPawnCheck);
 	}
 
 	private long findSameColumnPawnCount(Map<Location, Piece> map, Location location) {

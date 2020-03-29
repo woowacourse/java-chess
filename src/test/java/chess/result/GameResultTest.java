@@ -19,20 +19,20 @@ class GameResultTest {
 	private static Stream<Arguments> providerScore() {
 		return Stream.of(
 			Arguments.of(
-				new Score(Team.WHITE, new HashMap<Piece, Boolean>() {{
+				new Score(new HashMap<Piece, Boolean>() {{
 					put(new Pawn(Team.WHITE), false);
-				}}), new Score(Team.BLACK, new HashMap<>())
+				}}), new Score(new HashMap<>())
 				, GameResult.WIN
 			), Arguments.of(
-				new Score(Team.WHITE, new HashMap<Piece, Boolean>() {{
+				new Score(new HashMap<Piece, Boolean>() {{
 					put(new Pawn(Team.WHITE), false);
-				}}), new Score(Team.BLACK, new HashMap<Piece, Boolean>() {{
+				}}), new Score(new HashMap<Piece, Boolean>() {{
 					put(new Pawn(Team.BLACK), false);
 				}})
 				, GameResult.DRAW
 			), Arguments.of(
-				new Score(Team.WHITE, new HashMap<>()),
-				new Score(Team.WHITE, new HashMap<Piece, Boolean>() {{
+				new Score(new HashMap<>()),
+				new Score(new HashMap<Piece, Boolean>() {{
 					put(new Pawn(Team.WHITE), false);
 				}})
 				, GameResult.LOSE

@@ -1,6 +1,7 @@
 package chess.board;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.gamestate.GameState;
@@ -12,24 +13,9 @@ public class ChessBoard {
 	private final Map<Location, Piece> board;
 
 	public ChessBoard(Map<Location, Piece> pieces) {
+		Objects.requireNonNull(pieces, "피스 정보가 없습니다.");
 		this.board = pieces;
 	}
-
-	//. ....nq.  4
-	// .....p.p  3
-	// .....pp.  2
-	// ....rk..  1
-	// abcdefgh
-	// private void putTest(Team team) {
-	// 	board.put(new Location(1, 'e'), new Rook(team));
-	// 	board.put(new Location(1, 'f'), new King(team));
-	// 	board.put(new Location(2, 'f'), new Pawn(team));
-	// 	board.put(new Location(2, 'g'), new Pawn(team));
-	// 	board.put(new Location(3, 'f'), new Pawn(team));
-	// 	board.put(new Location(3, 'h'), new Pawn(team));
-	// 	board.put(new Location(4, 'f'), new Knight(team));
-	// 	board.put(new Location(4, 'g'), new Queen(team));
-	// }
 
 	public boolean canMove(Location now, Location destination) {
 		Piece piece = board.get(now);
@@ -71,12 +57,12 @@ public class ChessBoard {
 		return kingCount == 2;
 	}
 
-	public Map<Location, Piece> getBoard() {
-		return board;
-	}
-
 	public boolean isTurn(Location now, GameState gameState) {
 		Piece startingPiece = board.get(now);
 		return gameState.isTurn(startingPiece);
+	}
+
+	public Map<Location, Piece> getBoard() {
+		return board;
 	}
 }
