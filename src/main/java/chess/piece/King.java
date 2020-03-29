@@ -14,9 +14,4 @@ public class King extends Piece {
     protected boolean canReach(Vector vector, Piece targetPiece) {
         return vector.isRangeUnderAbsolute(1);
     }
-
-    @Override
-    public boolean isKing() {
-        return true;
-    }
 }
