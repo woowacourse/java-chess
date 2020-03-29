@@ -66,8 +66,4 @@ public class Position {
 	public Row getRow() {
 		return row;
 	}
-
-	public Column getColumn() { // TODO: 2020/03/29 사용 안함
-		return column;
-	}
 }
