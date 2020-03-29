@@ -3,25 +3,36 @@ package chess.domain.movepattern;
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.position.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MovePatternFactory {
-	private static final List<MovePattern> movePatterns = new ArrayList<>();
-
-	static {
-		movePatterns.add(new StraightPattern(Position.of("a1"), Position.of("a1")));
-		movePatterns.add(new CrossPattern(Position.of("a1"), Position.of("a1")));
-		movePatterns.add(new KnightPattern());
-	}
+	private static final int ONE_POINT = 1;
+	private static final int TWO_POINT = 2;
 
 	public static MovePattern findMovePattern(Position source, Position target) {
-		return movePatterns.stream()
-				.filter(x -> x.isMatchedPoints(source, target))
-				.map(x -> x.valueOf(source, target))
-				.findFirst()
-				.orElseThrow(() -> {
-					throw new IllegalArgumentException(Piece.ERROR_MESSAGE_NOT_MOVABLE);
-				});
+		if (isCrossPattern(source, target)) {
+			return new CrossPattern(source, target);
+		}
+		if (isStraightPattern(source, target)) {
+			return new StraightPattern(source, target);
+		}
+		if (isKnightPattern(source, target)) {
+			return new KnightPattern();
+		}
+		throw new IllegalArgumentException(Piece.ERROR_MESSAGE_NOT_MOVABLE);
+	}
+
+	public static boolean isCrossPattern(Position source, Position target) {
+		return Math.abs(source.calculateRankDistance(target))
+				== Math.abs(source.calculateFileDistance(target));
+	}
+
+	public static boolean isKnightPattern(Position source, Position target) {
+		return (Math.abs(source.calculateFileDistance(target)) == ONE_POINT
+				&& Math.abs(source.calculateRankDistance(target)) == TWO_POINT)
+				|| (Math.abs(source.calculateRankDistance(target)) == ONE_POINT
+				&& Math.abs(source.calculateFileDistance(target)) == TWO_POINT);
+	}
+
+	public static boolean isStraightPattern(Position source, Position target) {
+		return source.isSameRank(target) || source.isSameFile(target);
 	}
 }

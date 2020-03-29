@@ -13,10 +13,6 @@ public class StraightPattern implements MovePattern {
 		this.count = findCount(source, target);
 	}
 
-	public MovePattern valueOf(Position source, Position target) {
-		return new StraightPattern(source, target);
-	}
-
 	private int findCount(Position source, Position target) {
 		return Math.abs(source.calculateFileDistance(target) + source.calculateRankDistance(target));
 	}
@@ -32,11 +28,6 @@ public class StraightPattern implements MovePattern {
 			return Direction.LEFT;
 		}
 		return Direction.RIGHT;
-	}
-
-	@Override
-	public boolean isMatchedPoints(Position source, Position target) {
-		return source.isSameRank(target) || source.isSameFile(target);
 	}
 
 	@Override

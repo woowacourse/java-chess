@@ -13,10 +13,6 @@ public class CrossPattern implements MovePattern {
 		this.count = findCount(source, target);
 	}
 
-	public MovePattern valueOf(Position source, Position target) {
-		return new CrossPattern(source, target);
-	}
-
 	private int findCount(Position source, Position target) {
 		return Math.abs(source.calculateRankDistance(target));
 	}
@@ -32,12 +28,6 @@ public class CrossPattern implements MovePattern {
 			return Direction.DOWN_LEFT;
 		}
 		return Direction.DOWN_RIGHT;
-	}
-
-	@Override
-	public boolean isMatchedPoints(Position source, Position target) {
-		return Math.abs(source.calculateRankDistance(target))
-				== Math.abs(source.calculateFileDistance(target));
 	}
 
 	@Override
