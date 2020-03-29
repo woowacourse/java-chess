@@ -41,7 +41,7 @@ public class ChessGame {
 		}
 		try {
 			chessMenu = new ChessMenu(InputView.inputMenu());
-		} catch (RuntimeException e) {
+		} catch (IllegalArgumentException | UnsupportedOperationException e) {
 			OutputView.printErrorMessage(e);
 			decideMenu();
 		}
