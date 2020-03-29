@@ -1,8 +1,8 @@
 package chess.domain.chessPiece.factory;
 
-import chess.domain.File;
 import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.XAxis;
+import chess.domain.YAxis;
 import chess.domain.chessPiece.piece.*;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.TeamStrategy;
@@ -13,24 +13,24 @@ import java.util.List;
 public class PieceBundleFactory {
     public static List<Piece> createPieceSet(TeamStrategy teamStrategy) {
         List<Piece> pieceBundle = new ArrayList<>();
-        Rank pawnRank = Rank.SEVEN;
-        Rank otherRank = Rank.EIGHT;
+        YAxis pawnYAxis = YAxis.SEVEN;
+        YAxis otherYAxis = YAxis.EIGHT;
         if (teamStrategy instanceof BlackTeam) {
-            pawnRank = Rank.TWO;
-            otherRank = Rank.ONE;
+            pawnYAxis = YAxis.TWO;
+            otherYAxis = YAxis.ONE;
         }
 
-        for (File value : File.values()) {
-            pieceBundle.add(new Pawn(Position.of(value, pawnRank), teamStrategy));
+        for (XAxis value : XAxis.values()) {
+            pieceBundle.add(new Pawn(Position.of(value, pawnYAxis), teamStrategy));
         }
-        pieceBundle.add(new Rook(Position.of(File.H, otherRank), teamStrategy));
-        pieceBundle.add(new Rook(Position.of(File.A, otherRank), teamStrategy));
-        pieceBundle.add(new Knight(Position.of(File.B, otherRank), teamStrategy));
-        pieceBundle.add(new Knight(Position.of(File.G, otherRank), teamStrategy));
-        pieceBundle.add(new Bishop(Position.of(File.C, otherRank), teamStrategy));
-        pieceBundle.add(new Bishop(Position.of(File.F, otherRank), teamStrategy));
-        pieceBundle.add(new King(Position.of(File.E, otherRank), teamStrategy));
-        pieceBundle.add(new Queen(Position.of(File.D, otherRank), teamStrategy));
+        pieceBundle.add(new Rook(Position.of(XAxis.H, otherYAxis), teamStrategy));
+        pieceBundle.add(new Rook(Position.of(XAxis.A, otherYAxis), teamStrategy));
+        pieceBundle.add(new Knight(Position.of(XAxis.B, otherYAxis), teamStrategy));
+        pieceBundle.add(new Knight(Position.of(XAxis.G, otherYAxis), teamStrategy));
+        pieceBundle.add(new Bishop(Position.of(XAxis.C, otherYAxis), teamStrategy));
+        pieceBundle.add(new Bishop(Position.of(XAxis.F, otherYAxis), teamStrategy));
+        pieceBundle.add(new King(Position.of(XAxis.E, otherYAxis), teamStrategy));
+        pieceBundle.add(new Queen(Position.of(XAxis.D, otherYAxis), teamStrategy));
         return pieceBundle;
     }
 }

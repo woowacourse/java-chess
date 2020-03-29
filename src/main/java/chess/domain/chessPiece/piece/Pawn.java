@@ -3,13 +3,14 @@ package chess.domain.chessPiece.piece;
 import chess.domain.Position;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movefactory.Direction;
-import chess.domain.movefactory.MoveType;
+import chess.domain.move.Direction;
+import chess.domain.move.MoveType;
 
 public class Pawn extends Piece {
     private static final int PAWN_NORMAL_MOVE_RANGE = 1;
     private static final int PAWN_FIRST_MOVE_RANGE = 2;
     private static final String ERROR_MESSAGE_UNSUPPORT_METHOD = "지원하지 않는 메소드 입니다";
+
     private final double score = 0.5;
 
     public Pawn(Position position, TeamStrategy teamStrategy) {

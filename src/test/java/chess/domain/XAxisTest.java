@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FileTest {
+class XAxisTest {
     @Test
     void ofTest() {
         String input = "b";
-        assertThat(File.of(input)).isEqualTo(File.B);
+        assertThat(XAxis.of(input)).isEqualTo(XAxis.B);
     }
 
 }

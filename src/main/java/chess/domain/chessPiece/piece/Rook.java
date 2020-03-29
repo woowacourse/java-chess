@@ -2,13 +2,11 @@ package chess.domain.chessPiece.piece;
 
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movefactory.MoveType;
-import chess.domain.movefactory.StraightType;
+import chess.domain.move.MoveType;
+import chess.domain.move.StraightType;
 
 public class Rook extends Piece {
-    private static final int ROOK_SCORE = 5;
-
-    private final double score = ROOK_SCORE;
+    private final double ROOK_SCORE = 5.0;
 
     public Rook(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
@@ -26,6 +24,6 @@ public class Rook extends Piece {
 
     @Override
     public double getScore() {
-        return score;
+        return ROOK_SCORE;
     }
 }

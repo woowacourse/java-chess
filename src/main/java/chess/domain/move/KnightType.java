@@ -1,11 +1,11 @@
-package chess.domain.movefactory;
+package chess.domain.move;
 
 import chess.domain.Position;
 
 public class KnightType implements MoveType {
     private final Position targetPosition;
 
-    public KnightType(Position targetPosition) {
+    KnightType(Position targetPosition) {
         this.targetPosition = targetPosition;
     }
 

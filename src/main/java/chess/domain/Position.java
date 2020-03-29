@@ -2,61 +2,63 @@ package chess.domain;
 
 import chess.domain.chessPiece.piece.Pawn;
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.movefactory.Direction;
-import chess.domain.movefactory.KnightType;
-import chess.domain.movefactory.MoveType;
+import chess.domain.move.Direction;
+import chess.domain.move.KnightType;
+import chess.domain.move.MoveType;
 
 import java.util.Objects;
 
 public class Position {
     private static final String ERROR_MESSAGE_EXIST_PIECE_ON_PATH = "경로에 다른 말이 존재합니다.";
+    private static final int Y_AXIS_INDEX = 1;
+    private static final int X_AXIS_INDEX = 0;
 
-    private File file;
-    private Rank rank;
+    private XAxis xAxis;
+    private YAxis yAxis;
 
-    private Position(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
+    private Position(XAxis xAxis, YAxis yAxis) {
+        this.xAxis = xAxis;
+        this.yAxis = yAxis;
+    }
+
+    public static Position of(String coordinate) {
+        String[] xyAxisValue = coordinate.split("");
+        return new Position(XAxis.of(xyAxisValue[X_AXIS_INDEX]), YAxis.of(xyAxisValue[Y_AXIS_INDEX]));
+    }
+
+    public static Position of(XAxis xAxis, YAxis yAxis) {
+        return new Position(xAxis, yAxis);
     }
 
     public boolean isPawnStartLine(Pawn pawn) {
         if (pawn.isBlackTeam()) {
-            return this.rank == Rank.TWO;
+            return this.yAxis == YAxis.TWO;
         }
-        return this.rank == Rank.SEVEN;
-    }
-
-    public static Position of(String coordinate) {
-        String[] fileAndRank = coordinate.split("");
-        return new Position(File.of(fileAndRank[0]), Rank.of(fileAndRank[1]));
-    }
-
-    public static Position of(File file, Rank rank) {
-        return new Position(file, rank);
+        return this.yAxis == YAxis.SEVEN;
     }
 
     public boolean isNewLine() {
-        return file == File.A;
+        return xAxis == XAxis.A;
     }
 
     public boolean isSameRank(Position target) {
-        return this.rank == target.rank;
+        return this.yAxis == target.yAxis;
     }
 
     public boolean isSameFile(Position target) {
-        return this.file == target.file;
+        return isSameFile(target.xAxis);
     }
 
-    public boolean isSameFile(File file) {
-        return this.file == file;
+    public boolean isSameFile(XAxis xAxis) {
+        return this.xAxis == xAxis;
     }
 
     public int calculateRankDistance(Position target) {
-        return rank.getNumber() - target.rank.getNumber();
+        return yAxis.getNumber() - target.yAxis.getNumber();
     }
 
     public int calculateFileDistance(Position target) {
-        return file.getNumber() - target.file.getNumber();
+        return xAxis.getNumber() - target.xAxis.getNumber();
     }
 
     public void move(MoveType moveType, ChessBoard chessBoard) {
@@ -68,100 +70,99 @@ public class Position {
     private void moveWhenKnightType(MoveType moveType) {
         if (moveType instanceof KnightType) {
             Position target = ((KnightType) moveType).getTargetPosition();
-            this.file = target.file;
-            this.rank = target.rank;
+            this.xAxis = target.xAxis;
+            this.yAxis = target.yAxis;
         }
     }
 
     private void moveWhenStraight(MoveType moveType, ChessBoard chessBoard) {
         Direction direction = moveType.getDirection();
         int count = moveType.getCount();
-        int xDegree = this.file.getNumber();
-        int yDegree = this.rank.getNumber();
+        int xAxisNumber = this.xAxis.getNumber();
+        int yAxisNumber = this.yAxis.getNumber();
 
         if (direction == Direction.UP) {
             for (int i = 0; i < count; i++) {
-                yDegree++;
-                isExistPieceOnPath(chessBoard, xDegree, yDegree);
+                yAxisNumber++;
+                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
             }
-            this.rank = Rank.of(yDegree);
+            this.yAxis = YAxis.of(yAxisNumber);
         }
 
         if (direction == Direction.DOWN) {
             for (int i = 0; i < count; i++) {
-                yDegree--;
-                isExistPieceOnPath(chessBoard, xDegree, yDegree);
+                yAxisNumber--;
+                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
             }
-            this.rank = Rank.of(yDegree);
+            this.yAxis = YAxis.of(yAxisNumber);
         }
 
         if (direction == Direction.RIGHT) {
             for (int i = 0; i < count; i++) {
-                xDegree++;
-                isExistPieceOnPath(chessBoard, xDegree, yDegree);
+                xAxisNumber++;
+                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
             }
-            this.file = File.of(xDegree);
+            this.xAxis = XAxis.of(xAxisNumber);
         }
 
         if (direction == Direction.LEFT) {
             for (int i = 0; i < count; i++) {
-                xDegree--;
-                isExistPieceOnPath(chessBoard, xDegree, yDegree);
+                xAxisNumber--;
+                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
             }
-            this.file = File.of(xDegree);
+            this.xAxis = XAxis.of(xAxisNumber);
         }
-        return;
     }
 
     private void moveWhenCross(MoveType moveType, ChessBoard chessBoard) {
         Direction direction = moveType.getDirection();
         int count = moveType.getCount();
-        int xDegree = this.file.getNumber();
-        int yDegree = this.rank.getNumber();
+        int xAxisNumber = this.xAxis.getNumber();
+        int yAxisNumber = this.yAxis.getNumber();
 
         if (direction == Direction.UP_RIGHT) {
             for (int i = 0; i < count; i++) {
-                xDegree++;
-                yDegree++;
-                isExistPieceOnPath(chessBoard, xDegree, yDegree);
+                xAxisNumber++;
+                yAxisNumber++;
+                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
             }
-            this.file = File.of(xDegree);
-            this.rank = Rank.of(yDegree);
+            this.xAxis = XAxis.of(xAxisNumber);
+            this.yAxis = YAxis.of(yAxisNumber);
         }
 
         if (direction == Direction.UP_LEFT) {
             for (int i = 0; i < count; i++) {
-                xDegree--;
-                yDegree++;
-                isExistPieceOnPath(chessBoard, xDegree, yDegree);
+                xAxisNumber--;
+                yAxisNumber++;
+                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
             }
-            this.file = File.of(xDegree);
-            this.rank = Rank.of(yDegree);
+            this.xAxis = XAxis.of(xAxisNumber);
+            this.yAxis = YAxis.of(yAxisNumber);
         }
 
         if (direction == Direction.DOWN_RIGHT) {
             for (int i = 0; i < count; i++) {
-                xDegree++;
-                yDegree--;
-                isExistPieceOnPath(chessBoard, xDegree, yDegree);
+                xAxisNumber++;
+                yAxisNumber--;
+                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
             }
-            this.file = File.of(xDegree);
-            this.rank = Rank.of(yDegree);
+            this.xAxis = XAxis.of(xAxisNumber);
+            this.yAxis = YAxis.of(yAxisNumber);
         }
 
         if (direction == Direction.DOWN_LEFT) {
             for (int i = 0; i < count; i++) {
-                xDegree--;
-                yDegree--;
-                isExistPieceOnPath(chessBoard, xDegree, yDegree);
+                xAxisNumber--;
+                yAxisNumber--;
+                isExistPieceOnPath(chessBoard, xAxisNumber, yAxisNumber);
             }
-            this.file = File.of(xDegree);
-            this.rank = Rank.of(yDegree);
+            this.xAxis = XAxis.of(xAxisNumber);
+            this.yAxis = YAxis.of(yAxisNumber);
         }
     }
 
     private void isExistPieceOnPath(ChessBoard chessBoard, int xDegree, int yDegree) {
-        if (chessBoard.isExistPiece(Position.of(File.of(xDegree), Rank.of(yDegree)))) {
+        if (chessBoard.isExistPiece(Position.of(XAxis.of(xDegree), YAxis.of(yDegree)))) {
             throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_PIECE_ON_PATH);
         }
     }
@@ -171,12 +172,12 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return file == position.file &&
-                rank == position.rank;
+        return xAxis == position.xAxis &&
+                yAxis == position.yAxis;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(xAxis, yAxis);
     }
 }

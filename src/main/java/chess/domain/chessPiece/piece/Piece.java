@@ -1,14 +1,14 @@
 package chess.domain.chessPiece.piece;
 
-import chess.domain.File;
 import chess.domain.Position;
+import chess.domain.XAxis;
 import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.movefactory.MoveType;
+import chess.domain.move.MoveType;
 
 public abstract class Piece implements PieceAbility {
     protected Position position;
-    protected final TeamStrategy teamStrategy;
+    final TeamStrategy teamStrategy;
 
     public Piece(Position position, TeamStrategy teamStrategy) {
         this.position = position;
@@ -27,10 +27,8 @@ public abstract class Piece implements PieceAbility {
         return teamStrategy.equals(targetPiece.teamStrategy);
     }
 
-    public boolean isSameFile(File file) {
-        return this.position.isSameFile(file);
+    public boolean isSameFile(XAxis XAxis) {
+        return this.position.isSameFile(XAxis);
     }
-
-    ;
 }
 

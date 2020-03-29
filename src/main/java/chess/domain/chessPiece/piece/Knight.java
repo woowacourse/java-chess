@@ -2,8 +2,8 @@ package chess.domain.chessPiece.piece;
 
 import chess.domain.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
-import chess.domain.movefactory.KnightType;
-import chess.domain.movefactory.MoveType;
+import chess.domain.move.KnightType;
+import chess.domain.move.MoveType;
 
 public class Knight extends Piece {
     private static final double KNIGHT_SCORE = 2.5;

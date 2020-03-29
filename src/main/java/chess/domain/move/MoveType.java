@@ -1,4 +1,4 @@
-package chess.domain.movefactory;
+package chess.domain.move;
 
 public interface MoveType {
     Direction getDirection();

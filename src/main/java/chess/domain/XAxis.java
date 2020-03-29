@@ -2,7 +2,7 @@ package chess.domain;
 
 import java.util.Arrays;
 
-public enum File {
+public enum XAxis {
     A("a", 1),
     B("b", 2),
     C("c", 3),
@@ -15,7 +15,7 @@ public enum File {
     private final String name;
     private final int number;
 
-    File(String name, int number) {
+    XAxis(String name, int number) {
         this.name = name;
         this.number = number;
     }
@@ -24,15 +24,15 @@ public enum File {
         return number;
     }
 
-    public static File of(String fileValue) {
-        return Arrays.stream(File.values())
+    public static XAxis of(String fileValue) {
+        return Arrays.stream(XAxis.values())
                 .filter(x -> x.name.equals(fileValue))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static File of(int number) {
-        return Arrays.stream(File.values())
+    public static XAxis of(int number) {
+        return Arrays.stream(XAxis.values())
                 .filter(x -> x.number == number)
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);

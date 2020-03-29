@@ -13,7 +13,7 @@ public class OutputView {
     private static final String MESSAGE_END_GAME = "게임을 종료 합니다";
 
     public static void printChessBoard(ChessBoard chessBoard) {
-        for (Position position : chessBoard.getChessBoard()) {
+        for (Position position : chessBoard.getPositions()) {
             seperateLine(position);
             Piece piece = chessBoard.findPieceByPosition(position);
             if (piece == null) {

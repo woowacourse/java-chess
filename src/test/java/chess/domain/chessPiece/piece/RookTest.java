@@ -3,8 +3,8 @@ package chess.domain.chessPiece.piece;
 import chess.domain.Position;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.WhiteTeam;
-import chess.domain.movefactory.MoveType;
-import chess.domain.movefactory.MoveTypeFactory;
+import chess.domain.move.MoveType;
+import chess.domain.move.MoveTypeFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

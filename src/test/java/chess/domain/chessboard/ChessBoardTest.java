@@ -1,15 +1,15 @@
 package chess.domain.chessboard;
 
-import chess.domain.File;
 import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.XAxis;
+import chess.domain.YAxis;
 import chess.domain.chessPiece.piece.Bishop;
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.piece.Queen;
 import chess.domain.chessPiece.piece.Rook;
 import chess.domain.chessPiece.team.BlackTeam;
 import chess.domain.chessPiece.team.WhiteTeam;
-import chess.domain.movefactory.MoveTypeFactory;
+import chess.domain.move.MoveTypeFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,14 +29,14 @@ class ChessBoardTest {
     @DisplayName("포지션에 맞는 피스를 찾는 기능 테스트 : QueenBlack")
     void findPieceByPositionTestQueenBlack() {
         ChessBoard chessBoard = new ChessBoard();
-        assertThat(chessBoard.findPieceByPosition(Position.of(File.D, Rank.ONE))).isInstanceOf(Queen.class);
+        assertThat(chessBoard.findPieceByPosition(Position.of(XAxis.D, YAxis.ONE))).isInstanceOf(Queen.class);
     }
 
     @Test
     @DisplayName("포지션에 맞는 피스를 찾는 기능 테스트 : null")
     void findPieceByPositionTestNull() {
         ChessBoard chessBoard = new ChessBoard();
-        assertThat(chessBoard.findPieceByPosition(Position.of(File.D, Rank.THREE))).isEqualTo(null);
+        assertThat(chessBoard.findPieceByPosition(Position.of(XAxis.D, YAxis.THREE))).isEqualTo(null);
     }
 
 
@@ -44,7 +44,7 @@ class ChessBoardTest {
     @DisplayName("포지션에 맞는 피스를 찾는 기능 테스트 : QueenWhite")
     void findPieceByPositionTestQueenWhite() {
         ChessBoard chessBoard = new ChessBoard();
-        assertThat(chessBoard.findPieceByPosition(Position.of(File.D, Rank.EIGHT))).isInstanceOf(Queen.class);
+        assertThat(chessBoard.findPieceByPosition(Position.of(XAxis.D, YAxis.EIGHT))).isInstanceOf(Queen.class);
     }
 
     @Test

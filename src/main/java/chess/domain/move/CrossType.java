@@ -1,4 +1,4 @@
-package chess.domain.movefactory;
+package chess.domain.move;
 
 import chess.domain.Position;
 
@@ -6,7 +6,7 @@ public class CrossType implements MoveType {
     private final Direction direction;
     private final int count;
 
-    public CrossType(Position source, Position target) {
+    CrossType(Position source, Position target) {
         this.direction = findDirection(source, target);
         this.count = findCount(source, target);
     }
