@@ -18,6 +18,17 @@ public class ChessController {
 		OutputView.printFinish();
 	}
 
+	private boolean beforeStart() {
+		OperationType operationType = inputOperation().getOperationType();
+
+		operationType.checkFirstOperations();
+		if (operationType.isEnd()) {
+			OutputView.printFinish();
+			return false;
+		}
+		return true;
+	}
+
 	private void execute() {
 		ChessGame chessGame = new ChessGame();
 		OutputView.printBoard(new Board(chessGame.getPieces()));
@@ -31,19 +42,8 @@ public class ChessController {
 		}
 	}
 
-	private boolean beforeStart() {
-		OperationType operationType = new Operations(inputOperation()).getOperationType();
-
-		operationType.validateFirstOperations();
-		if (operationType.isEnd()) {
-			OutputView.printFinish();
-			return false;
-		}
-		return true;
-	}
-
 	private boolean executeOperation(ChessGame chessGame) {
-		Operations operations = new Operations(inputOperation());
+		Operations operations = inputOperation();
 		OperationType operationType = operations.getOperationType();
 
 		return (operationType.runOperate(chessGame,operations) && !chessGame.isKingDead());

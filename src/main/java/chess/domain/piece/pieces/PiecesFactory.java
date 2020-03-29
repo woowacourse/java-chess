@@ -9,8 +9,8 @@ public class PiecesFactory {
 	public static Pieces of() {
 		List<Piece> pieces = new ArrayList<>();
 
-		for(PieceInit pieceInit : PieceInit.values()) {
-			pieces.add(new Piece(pieceInit));
+		for(PieceInitializer pieceInitializer : PieceInitializer.values()) {
+			pieces.add(new Piece(pieceInitializer));
 		}
 
 		return new Pieces(pieces);

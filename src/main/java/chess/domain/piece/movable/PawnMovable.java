@@ -26,7 +26,7 @@ public class PawnMovable implements Movable {
 					continue;
 				}
 				movablePositions.add(movablePosition);
-				if (isInitial(position, color)) {
+				if (position.isPawnInitial(color)) {
 					movablePosition = movablePosition.getMovedPositionBy(direction);
 					if (!isPossessed(movablePosition, pieces)) { // 아무도 없을 때
 						movablePositions.add(movablePosition);
@@ -39,16 +39,6 @@ public class PawnMovable implements Movable {
 			}
 		}
 		return movablePositions;
-	}
-
-	private boolean isInitial(Position position, Color color) {
-		if (position.getColumn().getValue() == 2 && color.isWhite()) {
-			return true;
-		}
-		if (position.getColumn().getValue() == 7 && color.isBlack()) {
-			return true;
-		}
-		return false;
 	}
 
 	private boolean isPossessed(Position movablePosition, List<Piece> pieces) {

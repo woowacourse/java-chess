@@ -1,7 +1,6 @@
 package chess.domain.piece.movable;
 
 public enum Direction {
-	// TODO: 2020/03/27 이름을 축약하지 말라. 주석이라도 달라
 	NORTH(0, 1),
 	NORTHEAST(1, 1),
 	EAST(1, 0),
@@ -11,14 +10,15 @@ public enum Direction {
 	WEST(-1, 0),
 	NORTHWEST(-1, 1),
 
-	NNE(1, 2),
-	NNW(-1, 2),
-	SSE(1, -2),
-	SSW(-1, -2),
-	EEN(2, 1),
-	EES(2, -1),
-	WWN(-2, 1),
-	WWS(-2, -1);
+	// Knight가 이동 가능한 방향
+	NNE(1, 2), //북북동
+	NNW(-1, 2), //북북서
+	SSE(1, -2), //남남동
+	SSW(-1, -2), //남남서
+	EEN(2, 1), //동동북
+	EES(2, -1), //동동남
+	WWN(-2, 1), //서서북
+	WWS(-2, -1); //서서남
 
 	private int xDegree;
 	private int yDegree;
