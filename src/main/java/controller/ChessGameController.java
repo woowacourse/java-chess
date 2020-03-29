@@ -1,8 +1,10 @@
 package controller;
 
 import domain.commend.CommendType;
+import domain.commend.ScoreType;
 import domain.commend.State;
 import domain.pieces.Pieces;
+import domain.team.Team;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -18,6 +20,7 @@ public class ChessGameController {
         commends.put(CommendType.START, (input -> state.start()));
         commends.put(CommendType.END, (input -> state.end()));
         commends.put(CommendType.MOVE, (input -> state.move(input)));
+        commends.put(CommendType.STATUS, (input -> OutputView.printScore(state.status())));
     }
 
     public void gameChess() {

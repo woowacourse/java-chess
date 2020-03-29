@@ -3,24 +3,29 @@ package domain.commend;
 import domain.pieces.Pieces;
 import domain.team.Team;
 
-public class Waiting extends Commend {
+public class Waiting extends GameState {
 
     public Waiting(Pieces pieces) {
         super(pieces);
     }
 
     @Override
-    public GameState start() {
+    public StateStrategy start() {
         return new Playing(pieces);
     }
 
     @Override
-    public GameState end() {
+    public StateStrategy end() {
         return new Finished(pieces);
     }
 
     @Override
-    public GameState move(Team team, String input) {
+    public StateStrategy move(Team team, String input) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public StateStrategy status() {
         throw new UnsupportedOperationException();
     }
 

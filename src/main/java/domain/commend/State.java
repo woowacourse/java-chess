@@ -4,11 +4,11 @@ import domain.pieces.Pieces;
 import domain.team.Team;
 
 public class State {
-    private GameState gameState;
+    private StateStrategy stateStrategy;
     private Team team;
 
     private State(Pieces pieces) {
-        gameState = new Waiting(pieces);
+        stateStrategy = new Waiting(pieces);
         team = Team.WHITE;
     }
 
@@ -17,16 +17,24 @@ public class State {
     }
 
     public void start() {
-        gameState = gameState.start();
+        stateStrategy = stateStrategy.start();
     }
 
     public void end() {
-        gameState = gameState.end();
+        stateStrategy = stateStrategy.end();
     }
 
     public void move(String input) {
-        gameState = gameState.move(team, input);
+        stateStrategy = stateStrategy.move(team, input);
         changeTurn();
+    }
+
+    public double status() {
+        stateStrategy = stateStrategy.status();
+        if (team.equals(Team.BLACK)) {
+            return ScoreType.calculateBlackScore(getPieces());
+        }
+        return ScoreType.calculateWhiteScore(getPieces());
     }
 
     private void changeTurn() {
@@ -34,10 +42,14 @@ public class State {
     }
 
     public boolean isFinished() {
-        return gameState.isFinished();
+        return stateStrategy.isFinished();
     }
 
     public Pieces getPieces() {
-        return gameState.pieces();
+        return stateStrategy.pieces();
+    }
+
+    public Team getPresentTurn() {
+        return team;
     }
 }

@@ -23,12 +23,10 @@ public enum ScoreType {
     }
 
     public static double calculateBlackScore(Pieces pieces) {
-        int totalScore = 0;
-        for (Point point : pieces.getPieces().keySet()) {
-            if (pieces.getPieces().get(point).isSameTeam(Team.BLACK)) {
-                totalScore += ATMBlack(pieces, point);
-            }
-        }
+        double totalScore = pieces.getPieces().keySet().stream()
+            .filter(point -> pieces.getPieces().get(point).isSameTeam(Team.BLACK))
+            .mapToDouble(point -> ATMBlack(pieces, point))
+            .reduce(0, Double::sum);
         return totalScore;
     }
 
@@ -41,12 +39,10 @@ public enum ScoreType {
     }
 
     public static double calculateWhiteScore(Pieces pieces) {
-        int totalScore = 0;
-        for (Point point : pieces.getPieces().keySet()) {
-            if (pieces.getPieces().get(point).isSameTeam(Team.WHITE)) {
-                totalScore += ATMWhite(pieces, point);
-            }
-        }
+        double totalScore = pieces.getPieces().keySet().stream()
+            .filter(point -> pieces.getPieces().get(point).isSameTeam(Team.WHITE))
+            .mapToDouble(point -> ATMWhite(pieces, point))
+            .reduce(0, Double::sum);
         return totalScore;
     }
 

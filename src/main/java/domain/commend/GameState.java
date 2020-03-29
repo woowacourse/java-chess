@@ -1,16 +1,16 @@
 package domain.commend;
 
 import domain.pieces.Pieces;
-import domain.team.Team;
 
-public interface GameState {
-    GameState start();
+public abstract class GameState implements StateStrategy {
+    protected Pieces pieces;
 
-    GameState end();
+    public GameState(Pieces pieces) {
+        this.pieces = pieces;
+    }
 
-    GameState move(Team team, String input);
-
-    Pieces pieces();
-
-    boolean isFinished();
+    @Override
+    public Pieces pieces() {
+        return pieces;
+    }
 }

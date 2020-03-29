@@ -7,29 +7,34 @@ import domain.team.Team;
 import java.util.Arrays;
 import java.util.List;
 
-public class Playing extends Commend {
+public class Playing extends GameState {
 
     public Playing(Pieces pieces) {
         super(pieces);
     }
 
     @Override
-    public GameState start() {
+    public StateStrategy start() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public GameState end() {
+    public StateStrategy end() {
         return new Finished(pieces);
     }
 
     @Override
-    public GameState move(Team turn, String input) {
+    public StateStrategy move(Team turn, String input) {
         validate(input);
         List<String> splitInput = Arrays.asList(input.split(" "));
         Point from = Point.of(splitInput.get(1));
         Point to = Point.of(splitInput.get(2));
         pieces.move(turn, from, to);
+        return this;
+    }
+
+    @Override
+    public StateStrategy status() {
         return this;
     }
 

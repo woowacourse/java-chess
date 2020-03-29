@@ -7,7 +7,8 @@ import java.util.List;
 public enum CommendType {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private String commend;
 
