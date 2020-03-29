@@ -23,4 +23,8 @@ public class Status {
     public double getScore() {
         return score;
     }
+
+    public boolean isSameScore(double score) {
+        return this.score == score;
+    }
 }

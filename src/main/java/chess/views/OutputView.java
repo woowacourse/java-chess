@@ -47,8 +47,15 @@ public class OutputView {
             stringBuilder.append(status.getScore());
             stringBuilder.append(NEW_LINE);
         }
-        stringBuilder.append("승자 : ");
-        stringBuilder.append(result.getWinner());
+
+        if (result.isDraw()) {
+            stringBuilder.append("무승부");
+        }
+
+        if (!result.isDraw()) {
+            stringBuilder.append("승자 : ");
+            stringBuilder.append(result.getWinners());
+        }
 
         System.out.println(stringBuilder.toString());
     }

@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -100,6 +101,6 @@ public class ChessBoardTest {
         statuses.add(new Status(Player.BLACK, 20));
 
         Result result = new Result(statuses);
-        assertThat(result.getWinner()).isEqualTo(Player.BLACK);
+        assertThat(result.getWinners()).isEqualTo(Arrays.asList(Player.BLACK));
     }
 }
