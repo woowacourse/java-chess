@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Position {
 	private final File file;
@@ -17,6 +18,11 @@ public class Position {
 		return PositionCache.BOARD.get(position);
 	}
 
+	public static Position of(int afterMoveOfX, int afterMoveOfY) {
+		String afterMovePosition = PositionCache.createKey(File.of(afterMoveOfX), Rank.of(afterMoveOfY));
+		return Position.of(afterMovePosition);
+	}
+
 	private static void validateInvalidPosition(String position) {
 		if (!PositionCache.BOARD.containsKey(position)) {
 			throw new IllegalArgumentException("유효하지 않은 Position을 입력했습니다.");
@@ -29,6 +35,22 @@ public class Position {
 
 	public int getColumn() {
 		return file.getColumn();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Position position = (Position)o;
+		return file == position.file &&
+			rank == position.rank;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(file, rank);
 	}
 
 	private static class PositionCache {

@@ -3,10 +3,6 @@ package chess.controller;
 import chess.domain.Command;
 import chess.domain.FirstCommand;
 import chess.domain.board.Position;
-import chess.domain.piece.BlackPieces;
-import chess.domain.piece.BlackPiecesFactory;
-import chess.domain.piece.WhitePieces;
-import chess.domain.piece.WhitePiecesFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -16,9 +12,6 @@ import chess.view.OutputView;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Controller {
-	private static WhitePieces whitePieces;
-	private static BlackPieces blackPieces;
-
 	public static void run() {
 		start();
 		running();
@@ -29,14 +22,6 @@ public class Controller {
 		Command command;
 		Position source = Position.of("b2");
 		Position target = Position.of("b2");
-
-		if (whitePieces.hasPiece(source) && blackPieces.hasPiece(target)) {
-			whitePieces.moveFromTo(source, target);
-		}
-
-		if (blackPieces.hasPiece(source) && whitePieces.hasPiece(target)) {
-			blackPieces.moveFromTo(source, target);
-		}
 
 		do {
 			command = readCommand();
