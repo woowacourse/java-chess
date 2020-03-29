@@ -49,6 +49,10 @@ public abstract class Piece {
         return this.team == team;
     }
 
+    public boolean isPawn() {
+        return this.getClass().equals(WhitePawn.class) | this.getClass().equals(BlackPawn.class);
+    }
+
     @Override
     public String toString() {
         return String.valueOf(representation);

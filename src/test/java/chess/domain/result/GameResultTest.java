@@ -13,11 +13,12 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameResultTest {
-    private static final List<Piece> INITIALIZED_POSITIONS = new ArrayList<>();
+    private static List<Piece> INITIALIZED_POSITIONS;
     private GameResult gameResult = new GameResult();
 
     @BeforeEach
     void setUp() {
+        INITIALIZED_POSITIONS = new ArrayList<>();
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
                 INITIALIZED_POSITIONS.add(new Blank('.', Team.BLANK, new Position(col, row)));
