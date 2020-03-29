@@ -3,8 +3,6 @@ package chess.score;
 import java.util.Objects;
 
 public class Score {
-    private static final String NegativeScoreCreateErrorMessage = "음수로 Score를 생성할 수 없습니다.";
-
     private final double value;
 
     public Score(double value) {
@@ -14,7 +12,7 @@ public class Score {
 
     private void validNegative(double value) {
         if (value < 0) {
-            throw new NegativeScoreCreateException(NegativeScoreCreateErrorMessage);
+            throw new NegativeScoreCreateException();
         }
     }
 

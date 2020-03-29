@@ -133,7 +133,7 @@ public class Location {
         return col.is(destination.col);
     }
 
-    boolean is(int row) {
+    public boolean is(int row) {
         return this.row.is(row);
     }
 
