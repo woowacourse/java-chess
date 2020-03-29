@@ -1,17 +1,17 @@
 package domain.point;
 
 import java.util.Arrays;
-import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 
 public enum Distance {
-	ONE(DistanceFilters::isOne),
-	VERTICAL_TWO(DistanceFilters::isVerticalTwo),
-	ELSE(DistanceFilters::isElse);
+	ONE(DistancePredicates::isOne),
+	VERTICAL_TWO(DistancePredicates::isVerticalTwo),
+	ELSE(DistancePredicates::isElse);
 
-	private final BiFunction<Integer, Integer, Boolean> distanceFilter;
+	private final BiPredicate<Integer, Integer> biPredicate;
 
-	Distance(BiFunction<Integer, Integer, Boolean> distanceFilter) {
-		this.distanceFilter = distanceFilter;
+	Distance(BiPredicate<Integer, Integer> biPredicate) {
+		this.biPredicate = biPredicate;
 	}
 
 	public static Distance of(Point from, Point to) {
@@ -19,7 +19,7 @@ public enum Distance {
 		int columnDifference = Math.abs(to.getColumnIndex() - from.getColumnIndex());
 
 		return Arrays.stream(values())
-				.filter(distance -> distance.distanceFilter.apply(rowDifference, columnDifference))
+				.filter(distance -> distance.biPredicate.test(rowDifference, columnDifference))
 				.findFirst()
 				.orElseThrow(RuntimeException::new);
 	}

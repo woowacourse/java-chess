@@ -1,28 +1,28 @@
 package domain.point;
 
 import java.util.Arrays;
-import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 
-public enum  Direction {
-	N(-1, 0, DirectionFilters::isN),
-	NE(-1, 1, DirectionFilters::isNe),
-	E(0, 1,DirectionFilters::isE),
-	SE(1, 1, DirectionFilters::isSe),
-	S(1, 0, DirectionFilters::isS),
-	SW(1, -1, DirectionFilters::isSw),
-	W(0, -1, DirectionFilters::isW),
-	NW(-1, -1, DirectionFilters::isNw),
-	KNIGHT(0, 0, DirectionFilters::isKnight),
-	ELSE(0, 0, DirectionFilters::isElse);
+public enum Direction {
+	N(-1, 0, DirectionPredicates::isN),
+	NE(-1, 1, DirectionPredicates::isNe),
+	E(0, 1, DirectionPredicates::isE),
+	SE(1, 1, DirectionPredicates::isSe),
+	S(1, 0, DirectionPredicates::isS),
+	SW(1, -1, DirectionPredicates::isSw),
+	W(0, -1, DirectionPredicates::isW),
+	NW(-1, -1, DirectionPredicates::isNw),
+	KNIGHT(0, 0, DirectionPredicates::isKnight),
+	ELSE(0, 0, DirectionPredicates::isElse);
 
 	private final int rowIndex;
 	private final int columnIndex;
-	private final BiFunction<Integer, Integer, Boolean> directionFilter;
+	private final BiPredicate<Integer, Integer> biPredicate;
 
-	Direction(int rowIndex, int columnIndex, BiFunction<Integer, Integer, Boolean> directionFilter) {
+	Direction(int rowIndex, int columnIndex, BiPredicate<Integer, Integer> biPredicate) {
 		this.rowIndex = rowIndex;
 		this.columnIndex = columnIndex;
-		this.directionFilter = directionFilter;
+		this.biPredicate = biPredicate;
 	}
 
 	public static Direction of(Point from, Point to) {
@@ -30,7 +30,7 @@ public enum  Direction {
 		int columnDifference = getColumnDifference(from, to);
 
 		return Arrays.stream(values())
-				.filter(direction -> direction.directionFilter.apply(rowDifference, columnDifference))
+				.filter(direction -> direction.biPredicate.test(rowDifference, columnDifference))
 				.findFirst()
 				.orElseThrow(RuntimeException::new);
 	}

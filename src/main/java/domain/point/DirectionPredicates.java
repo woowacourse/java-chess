@@ -1,6 +1,6 @@
 package domain.point;
 
-public class DirectionFilters {
+public class DirectionPredicates {
 
 	public static boolean isKnight(int rowDifference, int columnDifference) {
 		int absRow = Math.abs(rowDifference);
