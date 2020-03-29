@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 public class Board {
     public static final String INVALID_LOCATION_ERR_MSG = "위치를 잘못 입력하였습니다.";
     private final Set<PlayingPiece> board = BoardFactory.getBoard();
+    private PieceColor teamColor = PieceColor.WHITE;
 
     public List<PlayingPiece> showBoard() {
         List<PlayingPiece> showingBoard = new ArrayList<>(board);
@@ -33,7 +34,7 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_LOCATION_ERR_MSG));
     }
 
-    public void move(Position source, Position target, PieceColor teamColor) {
+    public void move(Position source, Position target) {
         PlayingPiece sourcePiece = findPiece(source);
         PlayingPiece targetPiece = findPiece(target);
 
@@ -46,6 +47,7 @@ public class Board {
         }
 
         exchange(sourcePiece, targetPiece);
+        teamColor = teamColor.changeTeam();
     }
 
     private void validRoute(List<Position> route) {
@@ -104,5 +106,9 @@ public class Board {
             }
         }
         return pawnCount;
+    }
+
+    public PieceColor getTeamColor() {
+        return teamColor;
     }
 }
