@@ -1,48 +1,46 @@
 package chess.view;
 
-import chess.board.BoardGenerator;
 import chess.manager.ChessManager;
 
-import java.util.Objects;
-import java.util.function.Supplier;
+import java.util.Arrays;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Command {
-    private final static Pattern MOVE = Pattern.compile("move ([a-h][1-8]) ([a-h][1-8])");
-    private final Supplier<String> commandSupplier;
-    private ChessManager chessManager;
-    private boolean isNotEnd = true;
+public enum Command {
+        START(Command::isStart),
+        END(Command::isEnd),
+        MOVE(Command::isMove),
+        STATUS(Command::isStatus);
 
-    public Command(final Supplier<String> commandSupplier) {
-        this.commandSupplier = commandSupplier;
+        private final static String MOVE_PATTERN = "move ([a-h][1-8]) ([a-h][1-8])";
+
+        private final Predicate<String> compare;
+
+        Command(Predicate<String> compare) {
+            this.compare = compare;
+        }
+
+        public static boolean isStart(String command) {
+            return "start".equalsIgnoreCase(command);
+        }
+
+        public static boolean isEnd(String command) {
+            return "end".equalsIgnoreCase(command);
+        }
+
+        public static boolean isMove(String command) {
+            return Pattern.matches(MOVE_PATTERN, command.toLowerCase());
+        }
+
+        public static boolean isStatus(String command) {
+            return "status".equalsIgnoreCase(command);
+        }
+        
+        public static Command findBy(String value) {
+            return Arrays.stream(Command.values())
+                    .filter(command -> command.compare.test(value))
+                    .findFirst()
+                    .orElseThrow(IllegalArgumentException::new);
+        }
     }
-
-    public void action() {
-        String command = commandSupplier.get();
-        if ("start".equals(command)) {
-            this.chessManager = new ChessManager(BoardGenerator.create());
-        }
-        if (Objects.isNull(chessManager)) {
-            return;
-        }
-        Matcher matcher = MOVE.matcher(command);
-        if (matcher.find()) {
-            String source = matcher.group(1);
-            String target = matcher.group(2);
-            chessManager.move(source, target);
-        }
-        if ("status".equals(command)) {
-            OutputView.showScore(this.chessManager.getCurrentTeam(),
-                    this.chessManager.calculateCurrentTeamScore());
-        }
-
-        OutputView.showChessBoard(this.chessManager.getChessBoard());
-
-        isNotEnd = !"end".equals(command) && chessManager.isKingAlive();
-    }
-
-    public boolean isNotEnd() {
-        return isNotEnd;
-    }
-}
