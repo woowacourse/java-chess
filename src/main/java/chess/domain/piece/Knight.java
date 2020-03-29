@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import util.NullChecker;
 
-public class Knight extends OneTimeMovePiece {
+public class Knight extends OneTimeMultipleMovePiece {
 
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 

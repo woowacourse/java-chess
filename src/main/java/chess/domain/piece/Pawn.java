@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import util.NullChecker;
 
-public class Pawn extends Piece {
+public class Pawn extends OneTimeMovePiece {
 
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
@@ -21,11 +21,6 @@ public class Pawn extends Piece {
 
     public Pawn(Color color, Type type) {
         super(color, type);
-    }
-
-    @Override
-    protected int getRepeatCount() {
-        return BoardSquare.MIN_FILE_AND_RANK_COUNT;
     }
 
     public static Piece getPieceInstance(Color color) {
