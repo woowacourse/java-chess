@@ -5,16 +5,6 @@ public enum Color {
 	BLACK,
 	NONE;
 
-	public Color changeColor() {
-		if (isWhite()) {
-			return BLACK;
-		}
-		if (isBlack()) {
-			return WHITE;
-		}
-		return NONE;
-	}
-
 	public boolean isWhite() {
 		return WHITE.equals(this);
 	}

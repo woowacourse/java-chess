@@ -7,7 +7,6 @@ import chess.domain.piece.movable.UnblockedMovable;
 import chess.domain.position.Position;
 
 public class TestPieceFactory {
-    // TODO: 2020/03/29 createBy(Type) 으로 하면 메서드 1개로 줄일 수 있음.
     public static Piece createKing(Position position, Color color){
         return new Piece(position, PieceType.KING, new UnblockedMovable(Directions.EVERY), color);
     }
