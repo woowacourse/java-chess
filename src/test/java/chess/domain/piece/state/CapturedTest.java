@@ -22,4 +22,10 @@ class CapturedTest {
 	void isAliveTest() {
 		assertThat(new Captured().isAlive()).isFalse();
 	}
+
+	@DisplayName("isInitial을 물어보면 false를 반환하는지 확인")
+	@Test
+	void isInitialTest() {
+		assertThat(new Captured().isInitial()).isFalse();
+	}
 }
