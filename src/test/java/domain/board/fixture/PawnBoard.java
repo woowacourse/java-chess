@@ -5,8 +5,8 @@ import java.util.List;
 
 import domain.board.Board;
 import domain.board.Rank;
-import domain.piece.Piece;
 import domain.piece.Pawn;
+import domain.piece.Piece;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 

@@ -38,7 +38,6 @@ public class PawnTest {
 			.hasMessage(InvalidPositionException.INVALID_DIRECTION);
 	}
 
-	// 우선 말이 움직일 수 있는 칸이 1,2칸 모두라고 가정한다.
 	@DisplayName("말이 움직일 수 없는 칸 수가 입력되면 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"b1, WHITE, b4", "b5, BLACK, b2"})

@@ -2,8 +2,6 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,10 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import domain.board.Board;
-import domain.board.BoardFactory;
-import domain.board.Rank;
 import domain.board.fixture.KingBoard;
-import domain.board.fixture.KnightBoard;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
@@ -37,7 +32,7 @@ public class KingTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"b1, WHITE, b1", "b2, BLACK, b2"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(String  sourcePosition, Team team, String targetPosition) {
+	void canMove_SourceSameAsTarget_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);

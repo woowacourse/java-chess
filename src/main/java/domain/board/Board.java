@@ -23,8 +23,8 @@ public class Board {
 
 	public void move(String sourcePosition, String inputTargetPosition, Team turn) {
 		int rankLine = Integer.parseInt(String.valueOf(sourcePosition.charAt(ROW_INDEX)));
-		Rank rank = ranks.get(rankLine-1);
- 		Piece piece = findPiece(sourcePosition, rank);
+		Rank rank = ranks.get(rankLine - 1);
+		Piece piece = findPiece(sourcePosition, rank);
 		Position targetPosition = Position.of(inputTargetPosition);
 		if (piece.canMove(targetPosition, turn, ranks)) {
 			piece.move(targetPosition, ranks);

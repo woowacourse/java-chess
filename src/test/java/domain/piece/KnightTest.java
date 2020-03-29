@@ -31,7 +31,7 @@ public class KnightTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"b1, WHITE, b1", "c3, BLACK, c3"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(String  sourcePosition, Team team, String targetPosition) {
+	void canMove_SourceSameAsTarget_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);

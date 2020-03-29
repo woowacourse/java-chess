@@ -48,6 +48,9 @@ public abstract class Piece implements Movable {
 
 	protected void capture(Piece targetPiece, List<Rank> ranks) {
 		int targetPieceRowIndex = targetPiece.position.getRow() - 1;
+		if(targetPiece instanceof King){
+			System.exit(0);
+		}
 		ranks.get(targetPieceRowIndex).getPieces().remove(targetPiece);
 	}
 

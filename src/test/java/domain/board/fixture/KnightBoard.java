@@ -9,7 +9,6 @@ import domain.piece.Knight;
 import domain.piece.Piece;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
-import view.OutputView;
 
 /*
  * E는 적, N는 아군 Knight을 나타냄
