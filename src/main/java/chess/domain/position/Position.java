@@ -69,4 +69,8 @@ public class Position {
     public Row getRow() {
         return row;
     }
+
+    public Column getColumn() {
+        return column;
+    }
 }

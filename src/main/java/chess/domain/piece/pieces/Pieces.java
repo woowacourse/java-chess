@@ -3,7 +3,6 @@ package chess.domain.piece.pieces;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public class Pieces {
 				.orElseGet(Blank::new);
 		pieces.remove(removingPiece);
 
-		piece.changePosition(end);
+		piece.move(end);
 	}
 
 	public Piece findBy(Position start) {

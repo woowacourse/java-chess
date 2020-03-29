@@ -38,7 +38,7 @@ public class Piece {
 		return movable.createMovablePositions(position, pieces, color);
 	}
 
-	public void changePosition(Position position) {
+	public void move(Position position) {
 		if (isSamePosition(position)) {
 			throw new UnsupportedOperationException("같은 위치로 이동할 수 없습니다.");
 		}
