@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.movable.BlockedMovable;
 import chess.domain.piece.movable.Directions;
 import chess.domain.piece.movable.PawnMovable;
