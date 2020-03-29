@@ -19,6 +19,7 @@ public class Turn {
     public void change() {
         if (color.isWhite()) {
             color = Color.BLACK;
+            return;
         }
         color = Color.WHITE;
     }

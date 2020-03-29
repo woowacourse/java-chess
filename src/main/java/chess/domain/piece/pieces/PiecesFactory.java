@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PiecesFactory {
-	public static Pieces of() {
+	public static Pieces create() {
 		List<Piece> pieces = new ArrayList<>();
 
 		for(PieceInitializer pieceInitializer : PieceInitializer.values()) {

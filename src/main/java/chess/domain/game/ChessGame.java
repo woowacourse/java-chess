@@ -10,7 +10,7 @@ public class ChessGame {
     private final Turn turn;
 
     public ChessGame() {
-        pieces = PiecesFactory.of();
+        pieces = PiecesFactory.create();
         turn = new Turn(Color.WHITE);
     }
 
