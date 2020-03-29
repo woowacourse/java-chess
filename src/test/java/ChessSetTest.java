@@ -1,6 +1,6 @@
 import chess.game.ChessSet;
 import chess.board.ChessBoard;
-import chess.board.Location;
+import chess.location.Location;
 import chess.score.Score;
 import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;

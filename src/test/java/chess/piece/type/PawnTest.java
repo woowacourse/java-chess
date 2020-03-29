@@ -1,6 +1,6 @@
 package chess.piece.type;
 
-import chess.board.Location;
+import chess.location.Location;
 import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,7 +62,7 @@ class PawnTest {
         board.put(new Location(7, 'a'), givenPiece);
         board.put(new Location(6, 'b'), new Bishop(Team.WHITE));
 
-        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(6, 'b'));
+        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(6, 'b'));
         assertThat(actual).isFalse();
     }
 
@@ -73,7 +73,7 @@ class PawnTest {
         Pawn givenPiece = new Pawn(Team.BLACK);
         board.put(new Location(7, 'a'), givenPiece);
 
-        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(6, 'b'));
+        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(6, 'b'));
         assertThat(actual).isTrue();
     }
 
@@ -89,7 +89,7 @@ class PawnTest {
         board.put(new Location(6, 'a'), counterPiece);
         board.put(new Location(5, 'a'), destinaionPiece);
 
-        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(5, 'a'));
+        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(5, 'a'));
         assertThat(actual).isTrue();
     }
 
@@ -102,7 +102,7 @@ class PawnTest {
         board.put(new Location(7, 'a'), givenPiece);
         board.put(new Location(6, 'a'), counterPiece);
 
-        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(6, 'a'));
+        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(6, 'a'));
         assertThat(actual).isTrue();
     }
 
@@ -115,7 +115,7 @@ class PawnTest {
         board.put(new Location(7, 'a'), givenPiece);
         board.put(new Location(5, 'a'), destinaionPiece);
 
-        boolean actual = givenPiece.hasObstacle(board, new Location(7, 'a'), new Location(5, 'a'));
+        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(5, 'a'));
         assertThat(actual).isTrue();
     }
 }

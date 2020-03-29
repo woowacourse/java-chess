@@ -2,7 +2,7 @@ package chess.piece.type;
 
 import java.util.Map;
 
-import chess.board.Location;
+import chess.location.Location;
 import chess.score.Score;
 import chess.team.Team;
 
@@ -27,7 +27,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
+	public boolean hasNotObstacle(Map<Location, Piece> board, Location now, Location destination) {
 		return false;
 	}
 }

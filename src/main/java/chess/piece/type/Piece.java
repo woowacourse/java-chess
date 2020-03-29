@@ -3,7 +3,7 @@ package chess.piece.type;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.board.Location;
+import chess.location.Location;
 import chess.score.Score;
 import chess.team.Team;
 
@@ -29,8 +29,8 @@ public abstract class Piece {
         return isBlack() == black;
     }
 
-    public boolean isSameTeam(Piece piece) {
-        return isBlack() == piece.isBlack();
+    public boolean isNotSameTeam(Piece piece) {
+        return isBlack() != piece.isBlack();
     }
 
     public boolean isKing() {
@@ -41,18 +41,18 @@ public abstract class Piece {
         return Character.isUpperCase(name);
     }
 
-    public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
+    public boolean hasNotObstacle(Map<Location, Piece> board, Location now, Location destination) {
         Location nowLocation;
-        for (int weight = 1;; weight++) {
+        for (int weight = 1; ; weight++) {
             nowLocation = now.calculateNextLocation(destination, weight);
             if (nowLocation.equals(destination)) {
                 break;
             }
             if (board.containsKey(nowLocation)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public char getName() {

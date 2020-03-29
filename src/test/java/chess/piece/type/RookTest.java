@@ -8,7 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.board.Location;
+import chess.location.Location;
 import chess.team.Team;
 
 class RookTest {
@@ -36,8 +36,8 @@ class RookTest {
 		board.put(new Location(2, 'c'), new Bishop(Team.WHITE));
 		board.put(new Location(3, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, new Location(1, 'c'), new Location(3, 'c'));
-		assertThat(actual).isTrue();
+		boolean actual = givenPiece.hasNotObstacle(board, new Location(1, 'c'), new Location(3, 'c'));
+		assertThat(actual).isFalse();
 	}
 
 	@DisplayName("룩 가로 목적지 중간에 장애물이 있는지 확인")
@@ -49,7 +49,7 @@ class RookTest {
 		board.put(new Location(1, 'b'), new Bishop(Team.WHITE));
 		board.put(new Location(1, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, new Location(1, 'a'), new Location(1, 'c'));
-		assertThat(actual).isTrue();
+		boolean actual = givenPiece.hasNotObstacle(board, new Location(1, 'a'), new Location(1, 'c'));
+		assertThat(actual).isFalse();
 	}
 }

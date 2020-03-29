@@ -2,6 +2,7 @@ package chess.board;
 
 import static org.assertj.core.api.Assertions.*;
 
+import chess.location.Location;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

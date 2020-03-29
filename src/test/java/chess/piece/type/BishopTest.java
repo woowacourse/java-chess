@@ -8,7 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.board.Location;
+import chess.location.Location;
 import chess.team.Team;
 
 class BishopTest {
@@ -37,7 +37,7 @@ class BishopTest {
 		board.put(new Location(2, 'd'), new Bishop(Team.WHITE));
 		board.put(new Location(3, 'e'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, new Location(1, 'c'), new Location(3, 'e'));
-		assertThat(actual).isTrue();
+		boolean actual = givenPiece.hasNotObstacle(board, new Location(1, 'c'), new Location(3, 'e'));
+		assertThat(actual).isFalse();
 	}
 }

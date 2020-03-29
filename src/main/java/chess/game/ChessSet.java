@@ -1,6 +1,6 @@
 package chess.game;
 
-import chess.board.Location;
+import chess.location.Location;
 import chess.piece.type.Piece;
 import chess.score.Score;
 

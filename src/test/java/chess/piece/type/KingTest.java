@@ -1,11 +1,10 @@
 package chess.piece.type;
 
-import chess.board.Location;
+import chess.location.Location;
 import chess.team.Team;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class KingTest {
 

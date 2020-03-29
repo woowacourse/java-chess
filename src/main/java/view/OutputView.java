@@ -4,7 +4,7 @@ import java.util.Map;
 
 import chess.result.ChessResult;
 import chess.board.ChessBoard;
-import chess.board.Location;
+import chess.location.Location;
 import chess.piece.type.Piece;
 import chess.team.Team;
 

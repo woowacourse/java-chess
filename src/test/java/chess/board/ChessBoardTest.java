@@ -3,9 +3,9 @@ package chess.board;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import chess.location.Location;
 import chess.piece.type.*;
 import chess.score.Score;
 import chess.team.Team;

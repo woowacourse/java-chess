@@ -1,7 +1,7 @@
 package chess.game;
 
 import chess.board.ChessBoard;
-import chess.board.Location;
+import chess.location.Location;
 import chess.progress.Progress;
 import chess.player.Player;
 import chess.result.ChessResult;

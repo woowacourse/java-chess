@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.location.Location;
 import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
 import chess.score.Score;
@@ -35,7 +36,7 @@ public class ChessBoard {
         if (board.containsKey(now)) {
             return isNotSameTeam
                     && piece.canMove(now, destination)
-                    && !piece.hasObstacle(board, now, destination);
+                    && piece.hasNotObstacle(board, now, destination);
         }
         return false;
     }
@@ -43,7 +44,7 @@ public class ChessBoard {
     private boolean isNotSameTeam(Location destination, Piece piece) {
         boolean isNotSameTeam = true;
         if (board.containsKey(destination)) {
-            isNotSameTeam = !piece.isSameTeam(board.get(destination));
+            isNotSameTeam = piece.isNotSameTeam(board.get(destination));
         }
         return isNotSameTeam;
     }

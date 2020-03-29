@@ -1,4 +1,4 @@
-package chess.board;
+package chess.location;
 
 import static java.lang.Math.*;
 

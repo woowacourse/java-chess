@@ -1,4 +1,4 @@
-package chess.board;
+package chess.location;
 
 import java.util.Arrays;
 
