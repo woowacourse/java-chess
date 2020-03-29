@@ -16,7 +16,7 @@ import domain.piece.position.InvalidPositionException;
 import domain.piece.team.Team;
 
 public class BoardTest {
-	private static Board board;
+	private Board board;
 
 	@BeforeEach
 	void setUp() {
@@ -43,9 +43,9 @@ public class BoardTest {
 
 	@DisplayName("처음 상태의 보드판 점수 확인")
 	@Test
-	void getScore_InitialBoard_IsBlack25AndWhit25() {
-		assertThat(board.getScore().get(Team.WHITE)).isEqualTo(25.0);
-		assertThat(board.getScore().get(Team.BLACK)).isEqualTo(25.0);
+	void getScore_InitialBoard_IsBlack38AndWhit38() {
+		assertThat(board.getScore().get(Team.WHITE)).isEqualTo(38.0);
+		assertThat(board.getScore().get(Team.BLACK)).isEqualTo(38.0);
 	}
 
 	@DisplayName("White팀 Rook 2개, Black팀 Rook 1개가 생존했을 때 점수 확인")

@@ -11,7 +11,7 @@ import domain.piece.team.Team;
 public class King extends Piece {
 	private static final String SYMBOL = "k";
 	private static final int MAX_STEP_SIZE = 2;
-	private static final double score = 0;
+	private static final double SCORE = 0;
 
 	public King(Position position, Team team) {
 		super(position, team);
@@ -45,6 +45,6 @@ public class King extends Piece {
 
 	@Override
 	public double getScore() {
-		return score;
+		return SCORE;
 	}
 }

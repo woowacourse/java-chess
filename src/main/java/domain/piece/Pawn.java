@@ -13,7 +13,7 @@ import domain.piece.team.Team;
 
 public class Pawn extends Piece {
 	private static final int MiN_STEP_SIZE_OF_DIAGONAL = 1;
-	private static final double DEFAULT_SCORE = 1;
+	private static final double SCORE = 1;
 	private static final String SYMBOL = "p";
 
 	private State state;
@@ -81,7 +81,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public double getScore() {
-		return DEFAULT_SCORE;
+		return SCORE;
 	}
 
 }

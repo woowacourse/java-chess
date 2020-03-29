@@ -10,7 +10,7 @@ import domain.piece.team.Team;
 
 public class Bishop extends Piece {
 	private static final String SYMBOL = "b";
-	private static final double score = 3;
+	private static final double SCORE = 3;
 
 	public Bishop(Position position, Team team) {
 		super(position, team);
@@ -44,6 +44,6 @@ public class Bishop extends Piece {
 
 	@Override
 	public double getScore() {
-		return score;
+		return SCORE;
 	}
 }

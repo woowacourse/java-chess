@@ -1,7 +1,6 @@
 package domain.piece;
 
 import java.util.List;
-import java.util.Optional;
 
 import domain.board.Rank;
 import domain.piece.position.Direction;
@@ -11,7 +10,7 @@ import domain.piece.team.Team;
 
 public class Rook extends Piece {
 	private static final String SYMBOL = "r";
-	private static final double score = 5;
+	private static final double SCORE = 5;
 
 	public Rook(Position position, Team team) {
 		super(position, team);
@@ -44,7 +43,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public double getScore(){
-		return score;
+	public double getScore() {
+		return SCORE;
 	}
 }

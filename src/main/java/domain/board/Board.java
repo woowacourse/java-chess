@@ -75,7 +75,7 @@ public class Board {
 			.mapToInt(pawn -> pawn.getPosition().getColumn().getNumber())
 			.distinct()
 			.count();
-		return pawns.size() == distinctCount;
+		return pawns.size() != distinctCount;
 	}
 
 	public boolean isKingAlive() {
