@@ -18,7 +18,9 @@ public enum Direction {
 	EEN(2, 1), //동동북
 	EES(2, -1), //동동남
 	WWN(-2, 1), //서서북
-	WWS(-2, -1); //서서남
+	WWS(-2, -1), //서서남
+
+	NONE(0, 0); //방향이 없음
 
 	private int xDegree;
 	private int yDegree;
