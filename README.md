@@ -38,11 +38,11 @@
     - [x] piece 가 이동 가능하면 board 리스트 에서, 
         - [x] from piece 는 to position 으로 변경
         - [x] from position 을 갖는 Blank piece 추가
-    - [ ] king 이 잡혔을 경우, 게임 종료
+    - [x] king 이 잡혔을 경우, 게임 종료
     - [ ] 한 열에 pawn 이 2개 있을 경우 0.5점씩 계산
     - [x] 화이트/블랙 번갈아 가면서 게임
-- [ ] TypeScore
-    - [ ] 각 피스 타입 별 점수계산을 위한 enum
+- [x] TypeScore
+    - [x] 각 피스 타입 별 점수계산을 위한 enum
 - [x] Direction
     - [x] 이동 가능한 방향별 enum 요소
     - [x] 현재 위치에서 해당 방향으로 이동한 후의 포지션 반환
