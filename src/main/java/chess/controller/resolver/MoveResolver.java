@@ -10,6 +10,11 @@ public class MoveResolver implements RequestResolver {
     private static final Pattern MOVE_PATTERN = Pattern.compile("move ([a-h][1-8]) ([a-h][1-8])");
 
     @Override
+    public boolean support(String command) {
+        return MOVE_PATTERN.matcher(command).find();
+    }
+
+    @Override
     public DefaultRequest<? extends MoveRequest> convert(String command) {
         Matcher matcher = MOVE_PATTERN.matcher(command);
 
