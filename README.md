@@ -82,6 +82,8 @@
   - move sourcePosition targetPosition 의 형태만 허용
     - 명령어와 형태를 지켰는지 검증 필요
     - 체스판에 실제로 존재하는 sourcePosition, targetPosition인지 검증 필요
+  - 현재 차례인 색만 움직일 수 있다.
+    - 체스 규칙 상 하얀색 말부터 움직인다.
 - **체스말을 움직인다.**
   - sourcePosition에 체스말이 있는지 확인하기
     - emptyPiece가 있으면 이동할 수 있는 체스말이 없다고 알려주기
