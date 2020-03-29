@@ -5,7 +5,6 @@ import chess.domain.position.Position;
 
 public class Pawn extends Piece {
 	public static final double SCORE = 0.5;
-	private static final String NAME = "p";
 	private static final int INIT_PAWN_DISTANCE = 2;
 	private static final int PAWN_DISTANCE = 1;
 
@@ -41,11 +40,6 @@ public class Pawn extends Piece {
 	private boolean isPawnPath(Position target, int distance) {
 		return position.isSameCol(target) && position.isInDistance(distance,
 				target) && isAttackForward(target);
-	}
-
-	@Override
-	public String getName() {
-		return NAME;
 	}
 
 	@Override

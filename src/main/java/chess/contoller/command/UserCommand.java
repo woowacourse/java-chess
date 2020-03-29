@@ -1,7 +1,5 @@
 package chess.contoller.command;
 
-import chess.domain.state.State;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -30,9 +28,11 @@ public class UserCommand {
 		}
 	}
 
-	public State execute(State state) {
-		State nextState = command.execute(state, options);
-		command.printResult(state);
-		return nextState;
+	public Command getCommand() {
+		return command;
+	}
+
+	public String pollOption() {
+		return options.poll();
 	}
 }

@@ -1,60 +1,47 @@
 package chess.domain.dto;
 
 import chess.domain.ChessBoard;
-import chess.domain.Side;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
-import chess.domain.position.Position;
 import chess.domain.position.Row;
-import chess.domain.state.State;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChessBoardAssembler {
 	private static final int INDEX_ADJUST = 1;
+	private static final int ROW_COUNT = Row.size();
+	private static final int COL_COUNT = Column.size();
 	private static final String BLANK_CHAR = ".";
 
 	private ChessBoardAssembler() {
 	}
 
-	public static ChessBoardDto create(State state) {
-		int colCount = Column.size();
-		int rowCount = Row.size();
-		List<List<String>> board = createEmptyBoard(colCount, rowCount);
+	public static ChessBoardDto create(ChessBoard chessBoard) {
+		List<List<String>> board = createEmptyBoard();
 
-		ChessBoard chessBoard = state.getChessBoard();
 		for (Piece piece : chessBoard.getPieces()) {
-			Position position = piece.getPosition();
-			Row row = position.getRow();
-			Column col = position.getCol();
+			PieceDto pieceDto = PieceAssembler.create(piece);
 
-			List<String> boardRow = board.get(rowCount - row.getSymbol());
-			boardRow.set(col.getValue() - INDEX_ADJUST, convertName(piece));
+			List<String> boardRow = board.get(ROW_COUNT - pieceDto.getRow());
+			boardRow.set(pieceDto.getCol() - INDEX_ADJUST, pieceDto.getName());
 		}
 		return new ChessBoardDto(board);
 	}
 
-	private static List<List<String>> createEmptyBoard(int col, int row) {
+	private static List<List<String>> createEmptyBoard() {
 		List<List<String>> board = new ArrayList<>();
-		for (int i = 0; i < row; i++) {
-			createColumn(board, col);
+		for (int i = 0; i < ROW_COUNT; i++) {
+			createColumn(board);
 		}
 		return board;
 	}
 
-	private static void createColumn(List<List<String>> board, int col) {
+	private static void createColumn(List<List<String>> board) {
 		List<String> emptyRow = new ArrayList<>();
-		for (int j = 0; j < col; j++) {
+		for (int j = 0; j < COL_COUNT; j++) {
 			emptyRow.add(BLANK_CHAR);
 		}
 		board.add(emptyRow);
-	}
-
-	private static String convertName(Piece piece) {
-		if (piece.getSide() == Side.BLACK) {
-			return piece.getName().toUpperCase();
-		}
-		return piece.getName();
 	}
 }

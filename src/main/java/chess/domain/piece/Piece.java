@@ -82,10 +82,6 @@ public abstract class Piece implements Movable {
 		return this.position.equals(position);
 	}
 
-	public boolean isKing() {
-		return this instanceof King;
-	}
-
 	public boolean isSameSide(Side side) {
 		return this.side.equals(side);
 	}
@@ -105,8 +101,6 @@ public abstract class Piece implements Movable {
 	public Side getSide() {
 		return side;
 	}
-
-	public abstract String getName();
 
 	public abstract double getScore();
 
