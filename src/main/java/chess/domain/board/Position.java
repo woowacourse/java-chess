@@ -1,7 +1,7 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -29,15 +29,39 @@ public class Position {
 	}
 
 	public List<Position> nextPosition(List<Direction> directions) {
-		List<Position> nextPositions = new ArrayList<>();
+		List<Position> nextPosition = new LinkedList<>();
 
 		for (Direction direction : directions) {
 			try {
 				Rank nextRank = Rank.of(getRank() + direction.getX());
 				File nextFile = File.of(getColumn() + direction.getY());
 
-				nextPositions.add(Position.of(nextFile.getFile() + nextRank.getRow()));
+				nextPosition.add(Position.of(nextFile.getFile() + nextRank.getRow()));
 			} catch (IllegalArgumentException ignored) {
+			}
+		}
+		return nextPosition;
+	}
+
+	public List<Position>[] nextPositions(List<Direction> directions) {
+		List<Position>[] nextPositions = new List[directions.size()];
+
+		for (int i = 0; i < directions.size(); i++) {
+			nextPositions[i] = new LinkedList<>();
+			Rank currentRank = Rank.of(this.rank.getRow());
+			File currentFile = File.of(this.file.getColumn());
+
+			while (true) {
+				try {
+					Rank nextRank = Rank.of(currentRank.getRow() + directions.get(i).getX());
+					File nextFile = File.of(currentFile.getColumn() + directions.get(i).getY());
+
+					nextPositions[i].add(Position.of(nextFile.getFile() + nextRank.getRow()));
+					currentRank = nextRank;
+					currentFile = nextFile;
+				} catch (IllegalArgumentException e) {
+					break;
+				}
 			}
 		}
 		return nextPositions;

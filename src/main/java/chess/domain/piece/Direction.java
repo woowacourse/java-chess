@@ -59,10 +59,6 @@ public enum Direction {
 		return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
 	}
 
-	private static boolean isOutOfBoundary(int location) {
-		return location < 1 || location > 8;
-	}
-
 	public int getX() {
 		return x;
 	}
