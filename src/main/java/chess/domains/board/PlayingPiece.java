@@ -1,6 +1,7 @@
 package chess.domains.board;
 
 import chess.domains.piece.*;
+import chess.domains.position.Column;
 import chess.domains.position.Direction;
 import chess.domains.position.Position;
 
@@ -103,7 +104,7 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
         return piece.getScore();
     }
 
-    public boolean isColumn(char column) {
+    public boolean isColumn(Column column) {
         return this.position.isColumn(column);
     }
 

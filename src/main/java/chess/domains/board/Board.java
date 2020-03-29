@@ -1,6 +1,7 @@
 package chess.domains.board;
 
 import chess.domains.piece.PieceColor;
+import chess.domains.position.Column;
 import chess.domains.position.Position;
 
 import java.util.ArrayList;
@@ -99,8 +100,7 @@ public class Board {
 
         int pawnCount = 0;
 
-        for (char c = 'a'; c <= 'h'; c++) {
-            char column = c;
+        for (Column column : Column.values()) {
             List<PlayingPiece> sameColumnPieces = myPawns.filter(myPiece -> myPiece.isColumn(column))
                     .collect(Collectors.toList());
             if (!sameColumnPieces.isEmpty()) {
