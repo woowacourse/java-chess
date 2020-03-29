@@ -28,6 +28,8 @@ public class Positions {
     }
 
     public static String key(Row row, Column column) {
+        Objects.requireNonNull(row);
+        Objects.requireNonNull(column);
         StringBuilder PositionKey = new StringBuilder();
         PositionKey.append(row.getValue());
         PositionKey.append(column.getValue());

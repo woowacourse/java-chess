@@ -7,6 +7,7 @@ import chess.domain.position.component.Row;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
@@ -49,16 +50,23 @@ public enum Direction {
     }
 
     public boolean getJudge(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
+
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
         return judge.test(rowDiff, columnDiff);
     }
 
     public List<Position> getPositionsBetween(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
         return positionsBetween.apply(from, to);
     }
 
     public static Direction getDirection(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
         return Arrays.stream(Direction.values())
                 .filter(x -> x.getJudge(from, to))
                 .findFirst()

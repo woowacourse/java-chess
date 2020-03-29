@@ -6,12 +6,15 @@ import chess.domain.position.component.Row;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 public class LeftRightPositionBetween implements BiFunction<Position, Position, List<Position>> {
     @Override
     public List<Position> apply(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
         Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
         Row biggerRow = Row.getBigger(from.getRow(), to.getRow());
         List<Row> rows = Arrays.asList(Row.values())

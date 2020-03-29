@@ -6,6 +6,7 @@ import chess.domain.direction.KnightDirection;
 import chess.domain.position.Position;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Knight extends Piece {
     private static final String KNIGHT_NAME = "KNIGHT";
@@ -19,10 +20,14 @@ public class Knight extends Piece {
 
     @Override
     public boolean movable(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
         return super.movable(from, to) && validateMovePosition(from, to);
     }
 
     public boolean validateMovePosition(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
         return Arrays.stream(KnightDirection.values())
                 .anyMatch(KnightDirection -> KnightDirection.contains(from, to));
     }

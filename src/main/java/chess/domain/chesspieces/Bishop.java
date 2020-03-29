@@ -5,8 +5,10 @@ import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
+import org.omg.CORBA.Object;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Bishop extends Piece {
     private static final int MOVABLE_ROW_SIZE = Row.values().length;
@@ -23,6 +25,8 @@ public class Bishop extends Piece {
 
     @Override
     public boolean validateMovableTileSize(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(from);
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
         return Math.abs(rowDiff) <= MOVABLE_ROW_SIZE && Math.abs(columnDiff) <= MOVABLE_COLUMN_SIZE;

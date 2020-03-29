@@ -10,6 +10,7 @@ import chess.domain.position.component.Row;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Pawn extends Piece {
     private static final int AVAILABLE_ROW_MOVE_DIFF = 1;
@@ -45,6 +46,8 @@ public class Pawn extends Piece {
 
     @Override
     public boolean validateMovableTileSize(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
         int availableColumnDiff = INIT_AVAILABLE_COLUMN_DIFF;
@@ -55,6 +58,8 @@ public class Pawn extends Piece {
     }
 
     public boolean validateAttack(Square target, Direction direction) {
+        Objects.requireNonNull(target);
+        Objects.requireNonNull(direction);
         if (target.getClass() == Empty.class) {
             return false;
         }
@@ -66,6 +71,8 @@ public class Pawn extends Piece {
     }
 
     public boolean validateMoveForward(Square target, Direction direction) {
+        Objects.requireNonNull(target);
+        Objects.requireNonNull(direction);
         return direction == forwardDirection && target.getClass() == Empty.class;
     }
 }
