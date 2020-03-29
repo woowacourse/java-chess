@@ -39,6 +39,7 @@ public class Row {
 			.orElseThrow(() -> new IllegalArgumentException(NOT_MATCH_CHESS_PIECE_MESSAGE));
 
 		chessPieces.set(targetIndex, startPiece);
+		startPiece.changePosition(targetPosition);
 	}
 
 	public List<ChessPiece> findByTeam(Team team) {
