@@ -21,16 +21,19 @@ public class Board {
 		return ranks;
 	}
 
-	public void move(String sourcePosition, String targetPosition, Team turn) {
+	public void move(String sourcePosition, String inputTargetPosition, Team turn) {
 		int rankLine = Integer.parseInt(String.valueOf(sourcePosition.charAt(ROW_INDEX)));
-		Rank rank = ranks.get(rankLine - 1);
-		Piece piece = findPiece(sourcePosition, rank);
-		piece.canMove(Position.of(targetPosition), turn, ranks);
+		Rank rank = ranks.get(rankLine-1);
+ 		Piece piece = findPiece(sourcePosition, rank);
+		Position targetPosition = Position.of(inputTargetPosition);
+		if (piece.canMove(targetPosition, turn, ranks)) {
+			piece.move(targetPosition, ranks);
+		}
 	}
 
-	private Piece findPiece(String sourcePosition, Rank rank) {
+	public Piece findPiece(String sourcePosition, Rank rank) {
 		return rank.getPieces().stream()
-			.filter(piece -> piece.getPosition().getColumn().getColumnName() == sourcePosition.charAt(COLUMN_INDEX))
+			.filter(piece -> piece.getPosition().isSamePosition(Position.of(sourcePosition)))
 			.findFirst()
 			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
 	}

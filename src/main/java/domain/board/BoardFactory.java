@@ -9,7 +9,7 @@ import domain.piece.Knight;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
-import domain.piece.pawn.Pawn;
+import domain.piece.Pawn;
 import domain.piece.position.Column;
 import domain.piece.position.Position;
 import domain.piece.team.Team;

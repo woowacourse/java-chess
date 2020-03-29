@@ -11,19 +11,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import domain.board.Board;
 import domain.board.BoardFactory;
 import domain.board.Rank;
+import domain.board.fixture.KingBoard;
+import domain.board.fixture.KnightBoard;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class KingTest {
-	private static List<Rank> ranks;
+	private Board board;
 
 	@BeforeEach
 	void setUp() {
-		ranks = BoardFactory.create().getRanks();
-
+		board = new Board(new KingBoard().create().getRanks());
 	}
 
 	@DisplayName("킹 생성")
@@ -34,28 +36,59 @@ public class KingTest {
 
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
-	@CsvSource({"d1, WHITE, d1", "d8, BLACK, d8"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
-		assertThatThrownBy(() -> new King(sourcePosition, team).canMove(targetPosition, team, ranks))
+	@CsvSource({"b1, WHITE, b1", "b2, BLACK, b2"})
+	void canMove_SourceSameAsTarget_ExceptionThrown(String  sourcePosition, Team team, String targetPosition) {
+		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
 
 	@DisplayName("유효하지 않은 방향이 입력되면 예외 발생")
 	@ParameterizedTest
-	@CsvSource({"d1, WHITE, f2", "d1, WHITE, c3", "d8, BLACK, f7", "d8, BLACK, c6"})
-	void canMove_InvalidDirection_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
-		assertThatThrownBy(() -> new King(sourcePosition, team).canMove(targetPosition, team, ranks))
+	@CsvSource({"b1, WHITE, c3", "b1, WHITE, d2", "b2, BLACK, c4", "b2, BLACK, d1"})
+	void canMove_InvalidDirection_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
+		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_DIRECTION);
 	}
 
 	@DisplayName("말이 움직일 수 없는 칸 수가 입력되면 예외 발생")
 	@ParameterizedTest
-	@CsvSource({"d3, WHITE, b3", "e5, WHITE, e3", "h6, BLACK, f4"})
-	void canMove_InvalidStepSize_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
-		assertThatThrownBy(() -> new King(sourcePosition, team).canMove(targetPosition, team, ranks))
+	@CsvSource({"b1, WHITE, b3", "c2, WHITE, e4", "b2, BLACK, b4"})
+	void canMove_InvalidStepSize_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
+		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_STEP_SIZE);
+	}
+
+	@DisplayName("기물이 없는 목적지가 입력되면 말 이동")
+	@Test
+	void move_EmptyTargetPosition_Success() {
+		String sourcePosition = "b1";
+		String targetPosition = "c1";
+
+		board.move(sourcePosition, targetPosition, Team.WHITE);
+		Piece pieceAfterMove = board.findPiece(targetPosition, board.getRanks().get(0));
+		assertThat(pieceAfterMove.getPosition()).isEqualTo(Position.of(targetPosition));
+	}
+
+	@DisplayName("아군이 있는 목적지가 입력되면 예외 발생 ")
+	@Test
+	void move_OurTeamAtTargetPosition_ExceptionThrown() {
+		assertThatThrownBy(() -> board.move("b1", "c2", Team.WHITE))
+			.isInstanceOf(InvalidPositionException.class)
+			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
+	}
+
+	@DisplayName("적군이 있는 목적지가 입력되면 적군을 잡고 말 이동 ")
+	@Test
+	void move_EnemyAtTargetPosition_Capture() {
+		String sourcePosition = "b1";
+		String targetPosition = "b2";
+		Piece targetPiece = board.findPiece(targetPosition, board.getRanks().get(1));
+
+		board.move(sourcePosition, targetPosition, Team.WHITE);
+
+		assertThat(board.getRanks().get(2).getPieces().contains(targetPiece)).isFalse();
 	}
 }

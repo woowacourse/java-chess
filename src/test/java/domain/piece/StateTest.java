@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import domain.piece.pawn.State;
-
 public class StateTest {
 	@ParameterizedTest
 	@CsvSource({"START, 1, true", "START, 2, true", "RUN, 1, true", "RUN, 2, false", "START, 3, false"})

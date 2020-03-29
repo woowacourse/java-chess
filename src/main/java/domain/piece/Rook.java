@@ -1,6 +1,7 @@
 package domain.piece;
 
 import java.util.List;
+import java.util.Optional;
 
 import domain.board.Rank;
 import domain.piece.position.Direction;
@@ -34,5 +35,24 @@ public class Rook extends Piece {
 			throw new InvalidPositionException(InvalidPositionException.HAS_PIECE_IN_ROUTE);
 		}
 		return true;
+	}
+
+	@Override
+	public void move(Position targetPosition, List<Rank> ranks) {
+		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
+		piece.ifPresent(targetPiece -> {
+			if (targetPiece.team.equals(this.team)) {
+				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
+			}
+			capture(targetPiece, ranks);
+		});
+		this.changePosition(targetPosition, ranks);
+	}
+
+	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
+		int rankIndex = targetPosition.getRow() - 1;
+		return ranks.get(rankIndex).getPieces().stream()
+			.filter(piece -> piece.getPosition().isSamePosition(targetPosition))
+			.findFirst();
 	}
 }

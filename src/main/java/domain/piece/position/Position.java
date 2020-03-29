@@ -21,6 +21,11 @@ public class Position {
 		return targetPosition.getRow() - this.row;
 	}
 
+	public boolean isSamePosition(Position position) {
+		return this.getColumn().getNumber() == position.getColumn().getNumber() &&
+			this.getRow() == position.getRow();
+	}
+
 	public Column getColumn() {
 		return column;
 	}

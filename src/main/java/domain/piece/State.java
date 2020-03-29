@@ -1,4 +1,4 @@
-package domain.piece.pawn;
+package domain.piece;
 
 import java.util.function.Function;
 

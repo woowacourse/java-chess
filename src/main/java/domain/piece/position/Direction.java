@@ -78,12 +78,12 @@ public enum Direction {
 	}
 
 	public boolean hasPieceInRoute(Position position, Position targetPosition, List<Rank> ranks) {
-		int loopCount = calculateLoopCount(position, targetPosition);
-		int routeRow = 0;
-		int routeColumn = 0;
+		int loopCount = calculateLoopCount(position, targetPosition) - 1;
+		int routeRow = position.getRow();
+		int routeColumn = position.getColumn().getNumber();
 		for (int i = 0; i < loopCount; i++) {
-			routeRow = position.getRow() + this.getRowGap();
-			routeColumn = position.getColumn().getNumber() + this.getColumnGap();
+			routeRow += this.getRowGap();
+			routeColumn += this.getColumnGap();
 			if (hasPieceInBoard(ranks, routeRow, routeColumn)) {
 				return true;
 			}

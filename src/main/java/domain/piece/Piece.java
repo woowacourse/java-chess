@@ -38,11 +38,23 @@ public abstract class Piece implements Movable {
 		}
 	}
 
-	private Direction findDirection(int rowGap, int columnGap) {
+	protected Direction findDirection(int rowGap, int columnGap) {
+		System.out.println(rowGap + ":" + columnGap);
 		return Arrays.stream(Direction.values())
 			.filter(d -> d.getFind().apply(rowGap, columnGap))
 			.findFirst()
 			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION));
+	}
+
+	protected void capture(Piece targetPiece, List<Rank> ranks) {
+		int targetPieceRowIndex = targetPiece.position.getRow() - 1;
+		ranks.get(targetPieceRowIndex).getPieces().remove(targetPiece);
+	}
+
+	protected void changePosition(Position targetPosition, List<Rank> ranks) {
+		this.position = targetPosition;
+		int rankIndex = targetPosition.getRow() - 1;
+		ranks.get(rankIndex).getPieces().add(this);
 	}
 
 	protected abstract boolean validDirection(Direction direction);
@@ -65,15 +77,8 @@ public abstract class Piece implements Movable {
 		int columnGap = this.position.calculateColumnGap(targetPosition);
 		Direction direction = findDirection(rowGap, columnGap);
 
-		if (validDirection(direction) && validStepSize(rowGap, columnGap) && validateRoute(direction, targetPosition,
-			ranks)) {
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public void move() {
+		return validDirection(direction) && validStepSize(rowGap, columnGap) &&
+			validateRoute(direction, targetPosition, ranks);
 	}
 
 	@Override
