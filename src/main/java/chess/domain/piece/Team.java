@@ -9,8 +9,6 @@ public enum Team {
     BLACK(Direction.SOUTH, 7, 0),
     BLANK(Direction.NONE, 0, -1);
 
-    private static final String TEAM_NOT_FOUND_EXCEPTION_MESSAGE = "해당하는 팀을 찾을 수 없습니다.";
-
     private final Direction pawnForwardDirection;
     private final int initialPawnRow;
     private final int turnFlag;
@@ -41,6 +39,6 @@ public enum Team {
         return Arrays.stream(values())
                 .filter(team -> team.turnFlag == turnFlag)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(TEAM_NOT_FOUND_EXCEPTION_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 팀을 찾을 수 없습니다."));
     }
 }
