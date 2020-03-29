@@ -14,22 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class DirectionTest {
 
     @ParameterizedTest
-    @DisplayName("#isDiagonal() : should return boolean as to Position from, to")
-    @MethodSource({"getCasesForIsDiagonal"})
-    void isDiagonal(Position from, Position to, boolean expected) {
-        boolean isDiagonal = Direction.isDiagonal(from, to);
-        assertThat(isDiagonal).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getCasesForIsDiagonal() {
-        return Stream.of(
-                Arguments.of(Position.of(1,1), Position.of(1,2), false),
-                Arguments.of(Position.of(1,1), Position.of(2,1), false),
-                Arguments.of(Position.of(1,1), Position.of(2,2), true)
-        );
-    }
-
-    @ParameterizedTest
     @DisplayName("#calculate() : should return Direction as to Position 'from' and 'to")
     @MethodSource({"getCasesForCalculate"})
     void calculate(Position from, Position to, Direction expected) {

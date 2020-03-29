@@ -92,6 +92,12 @@ public enum Direction {
     }
 
 
+    public boolean isDiagonal() {
+        return this == NORTH_WEST
+                || this == NORTH_EAST
+                || this == SOUTH_WEST
+                || this == SOUTH_EAST;
+    }
 
     public static boolean isDiagonal(Position from, Position to) {
         return (from.getX() != to.getX()) && (from.getY() != to.getY());

@@ -44,7 +44,7 @@ public class Position {
     }
 
     public boolean isNotStraightDirection(Position to) {
-        return isNotPerpendicularDirection(to) || isNotStraightDiagonalDirection(to);
+        return isNotPerpendicularDirection(to) && isNotStraightDiagonalDirection(to);
     }
 
     public boolean isNotPerpendicularDirection(Position to) {
@@ -59,7 +59,8 @@ public class Position {
 
 
     public boolean isDiagonalDirection(Position to) {
-        return Direction.isDiagonal(this, to);
+        Direction direction = Direction.calculate(this, to);
+        return direction.isDiagonal();
     }
 
     public boolean isNotStraightDiagonalDirection(Position to) {

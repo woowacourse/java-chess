@@ -18,6 +18,44 @@ public enum PieceType {
     BISHOP("b", Bishop.class, bishopCanNotMoveStrategies()),
     QUEEN("q", Queen.class, queenCanNotMoveStrategies());
 
+    private final String name;
+    private final Class<? extends Piece> type;
+    private final List<CanNotMoveStrategy> canNotMoveStrategies;
+
+    PieceType(String name, Class<? extends Piece> type, List<CanNotMoveStrategy> canNotMoveStrategies) {
+        this.name = name;
+        this.type = type;
+        this.canNotMoveStrategies = canNotMoveStrategies;
+    }
+
+    public static PieceType valueOf(Class<? extends Piece> type) {
+        for (PieceType pieceType : values()) {
+            if (pieceType.type == type) {
+                return pieceType;
+            }
+        }
+        throw new IllegalArgumentException("해당하는 PieceType을 찾을 수 없습니다.");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<CanNotMoveStrategy> getCanNotMoveStrategies() {
+        return canNotMoveStrategies;
+    }
+
+    private static List<CanNotMoveStrategy> initializedPawnCanNotMoveStrategies() {
+        return Arrays.asList(
+                new IsStayed(),
+                new IsNotHeadingForward(),
+                new CanNotReach(InitializedPawn.MAX_DISTANCE),
+                new HasHindrance(),
+                new IsAttackingSameTeam(),
+                new PawnIsDiagonalWithoutAttack()
+        );
+    }
+
     private static List<CanNotMoveStrategy> queenCanNotMoveStrategies() {
         return Arrays.asList(
                 new IsStayed(),
@@ -56,43 +94,5 @@ public enum PieceType {
                 new PawnIsDiagonalWithoutAttack()
 
         );
-    }
-
-    private final String name;
-    private final Class<? extends Piece> type;
-    private final List<CanNotMoveStrategy> canNotMoveStrategies;
-
-    PieceType(String name, Class<? extends Piece> type, List<CanNotMoveStrategy> canNotMoveStrategies) {
-        this.name = name;
-        this.type = type;
-        this.canNotMoveStrategies = canNotMoveStrategies;
-    }
-
-    public static PieceType valueOf(Class<? extends Piece> type) {
-        for (PieceType pieceType : values()) {
-            if (pieceType.type == type) {
-                return pieceType;
-            }
-        }
-        throw new IllegalArgumentException("해당하는 PieceType을 찾을 수 없습니다.");
-    }
-
-    private static List<CanNotMoveStrategy> initializedPawnCanNotMoveStrategies() {
-        return Arrays.asList(
-                new IsStayed(),
-                new IsNotHeadingForward(),
-                new CanNotReach(InitializedPawn.MAX_DISTANCE),
-                new HasHindrance(),
-                new IsAttackingSameTeam(),
-                new PawnIsDiagonalWithoutAttack()
-        );
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<CanNotMoveStrategy> getCanNotMoveStrategies() {
-        return canNotMoveStrategies;
     }
 }
