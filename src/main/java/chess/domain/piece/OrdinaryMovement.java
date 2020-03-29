@@ -23,11 +23,12 @@ public class OrdinaryMovement extends GamePiece {
                 .orElseThrow(() -> new InvalidMovementException("이동할 수 없는 경로입니다."));
 
         // Path에 장애물이 있나 확인
-        for (Position position : pathFromSourceToTarget(target, path)) {
-            if (board.get(position) != EmptyPiece.getInstance()) {
-                throw new InvalidMovementException("장애물이 있습니다.");
-            }
-        }
+        pathFromSourceToTarget(target, path).stream()
+                .filter(position -> board.get(position) != EmptyPiece.getInstance())
+                .findFirst()
+                .ifPresent(position -> {
+                    throw new InvalidMovementException("장애물이 있습니다.");
+                });
     }
 
     private List<Position> pathFromSourceToTarget(Position target, List<Position> path) {
