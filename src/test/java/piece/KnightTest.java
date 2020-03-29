@@ -19,6 +19,7 @@ public class KnightTest {
         Knight knight = new Knight(PieceColor.BLACK, new Position(input));
 
         Assertions.assertThatThrownBy(() -> knight.getPathTo(new Position(input)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("현재 자리한 위치로는 이동할 수 없습니다.");
     }
 
@@ -40,6 +41,7 @@ public class KnightTest {
         Knight knight = new Knight(PieceColor.BLACK, new Position("d4"));
 
         Assertions.assertThatThrownBy(() -> knight.getPathTo(new Position(target)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("나이트가 이동할 수 없는 위치입니다.");
     }
 }

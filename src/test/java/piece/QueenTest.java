@@ -21,6 +21,7 @@ public class QueenTest {
         Queen queen = new Queen(PieceColor.BLACK, new Position(input));
 
         Assertions.assertThatThrownBy(() -> queen.getPathTo(new Position(input)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("현재 자리한 위치로는 이동할 수 없습니다.");
     }
 
@@ -42,6 +43,7 @@ public class QueenTest {
         Queen queen = new Queen(PieceColor.BLACK, new Position(source));
 
         Assertions.assertThatThrownBy(() -> queen.getPathTo(new Position(target)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("퀸이 이동할 수 없는 위치입니다.");
     }
 }

@@ -13,28 +13,32 @@ public class YpointTest {
     @DisplayName("필드 변수로 갖고 있는 문자를 입력받으면 enum 클래스를 정상 반환해야 함")
     @ValueSource(strings = {"8", "7", "6", "5", "4", "3", "2", "1"})
     void inputVarCharThenReturnYpointClassTest(char input) {
-        Assertions.assertThat(Ypoint.of(input) != null).isTrue();
+        Assertions.assertThat(Ypoint.of(input)).isInstanceOf(Ypoint.class);
     }
 
     @ParameterizedTest
     @DisplayName("필드 변수로 갖고 있는 숫자를 입력받으면 enum 클래스를 정상 반환해야 함")
     @ValueSource(strings = {"8", "7", "6", "5", "4", "3", "2", "1"})
     void inputVarNumThenReturnYpointClassTest(int input) {
-        Assertions.assertThat(Ypoint.of(input) != null).isTrue();
+        Assertions.assertThat(Ypoint.of(input)).isInstanceOf(Ypoint.class);
     }
 
     @ParameterizedTest
     @DisplayName("필드 변수에 없는 문자를 입력받으면 예외가 발생해야 함")
     @ValueSource(strings = {"9", "0", "a", "ㄱ", "-"})
     void inputNotVarCharThenThrowException(char input) {
-        Assertions.assertThatThrownBy(() -> Ypoint.of(input)).hasMessage("존재하지 않는 세로행입니다.");
+        Assertions.assertThatThrownBy(() -> Ypoint.of(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("존재하지 않는 세로행입니다.");
     }
 
     @ParameterizedTest
     @DisplayName("필드 변수에 없는 숫자를 입력받으면 예외가 발생해야 함")
     @ValueSource(strings = {"10", "9", "0", "-1"})
     void inputNotVarNumThenThrowException(int input) {
-        Assertions.assertThatThrownBy(() -> Ypoint.of(input)).hasMessage("존재하지 않는 세로행입니다.");
+        Assertions.assertThatThrownBy(() -> Ypoint.of(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("존재하지 않는 세로행입니다.");
     }
 
     @ParameterizedTest

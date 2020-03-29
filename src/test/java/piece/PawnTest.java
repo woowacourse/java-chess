@@ -21,6 +21,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(PieceColor.BLACK, new Position(input));
 
         Assertions.assertThatThrownBy(() -> pawn.getPathTo(new Position(input)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("현재 자리한 위치로는 이동할 수 없습니다.");
     }
 
@@ -59,6 +60,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(PieceColor.BLACK, new Position(source));
 
         Assertions.assertThatThrownBy(() -> pawn.getPathTo(new Position(target)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 이동할 수 없는 방향입니다.");
     }
 
@@ -69,6 +71,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(PieceColor.BLACK, new Position(source));
 
         Assertions.assertThatThrownBy(() -> pawn.getPathTo(new Position(target)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 이동할 수 없는 위치입니다.");
     }
 
@@ -107,6 +110,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(PieceColor.WHITE, new Position(source));
 
         Assertions.assertThatThrownBy(() -> pawn.getPathTo(new Position(target)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 이동할 수 없는 방향입니다.");
     }
 
@@ -117,6 +121,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(PieceColor.WHITE, new Position(source));
 
         Assertions.assertThatThrownBy(() -> pawn.getPathTo(new Position(target)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 이동할 수 없는 위치입니다.");
     }
 }
