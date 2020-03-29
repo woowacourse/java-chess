@@ -20,7 +20,7 @@ public class Knight extends Piece {
 
     @Override
     public void validateMoveDirection(Direction direction) {
-        if (!direction.isKnight()) {
+        if (direction != Direction.KNIGHT) {
             throw new CanNotMoveException();
         }
     }

@@ -59,10 +59,6 @@ public enum  Direction {
 		return isNotStraight() && isNotDiagonal();
 	}
 
-	public boolean isKnight() {
-		return this == KNIGHT;
-	}
-
 	public int getRowIndex() {
 		return this.rowIndex;
 	}

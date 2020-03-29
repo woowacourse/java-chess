@@ -23,14 +23,14 @@ public class Pawn extends Piece {
 		canMoveTwoDistance = true;
 	}
 
-    public Pawn(Team team, Point point, boolean canMoveTwoDistance) {
-        super(INITIAL, team, point, SCORE);
-        this.canMoveTwoDistance = canMoveTwoDistance;
-    }
+	public Pawn(Team team, Point point, boolean canMoveTwoDistance) {
+		super(INITIAL, team, point, SCORE);
+		this.canMoveTwoDistance = canMoveTwoDistance;
+	}
 
 	@Override
 	public Piece move(Point afterPoint) {
-	    return new Pawn(getTeam(), afterPoint, false);
+		return new Pawn(getTeam(), afterPoint, false);
 	}
 
 	@Override
@@ -45,12 +45,12 @@ public class Pawn extends Piece {
 			if (direction != Direction.N) {
 				throw new CanNotMoveException();
 			}
-        }
+		}
 	}
 
 	@Override
 	public void validateAttack(Direction direction, Piece other) {
-        if (isAlly(other)) {
+		if (isAlly(other)) {
 			throw new CanNotAttackException();
 		}
 
@@ -58,22 +58,20 @@ public class Pawn extends Piece {
 			if (direction != Direction.SW && direction != Direction.SE) {
 				throw new CanNotAttackException();
 			}
-            return;
+			return;
 		}
 		if (isTeam(Team.WHITE)) {
 			if (direction != Direction.NW && direction != Direction.NE) {
 				throw new CanNotAttackException();
 			}
-        }
+		}
 	}
 
 	@Override
 	public void validateReach(Distance distance) {
-	    if (canMoveTwoDistance) {
-	        if (distance == Distance.VERTICAL_TWO) {
-	            return;
-            }
-        }
+		if (distance == Distance.VERTICAL_TWO && canMoveTwoDistance) {
+			return;
+		}
 
 		if (distance != Distance.ONE) {
 			throw new CanNotReachException();
