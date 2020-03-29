@@ -41,7 +41,7 @@ public abstract class Piece implements Movable {
             int fileIncrementBy = direction.getMultiplyFileAddAmount(count);
             int rankIncrementBy = direction.getMultiplyRankAddAmount(count);
             availableBoardSquares
-                .add(boardSquare.addIfInBoundary(fileIncrementBy, rankIncrementBy));
+                .add(boardSquare.getAddBoardSquareOrMyself(fileIncrementBy, rankIncrementBy));
         }
         availableBoardSquares.remove(boardSquare);
     }
@@ -52,7 +52,7 @@ public abstract class Piece implements Movable {
     protected Set<BoardSquare> findSquaresToRemove(BoardSquare s, int fileAddAmount, int rankAddAmount) {
         Set<BoardSquare> squaresToRemove = new HashSet<>();
         for (int i = 0, file = 0, rank = 0; i < 8; i++, file += fileAddAmount, rank += rankAddAmount) {
-            squaresToRemove.add(s.addIfInBoundary(file, rank));
+            squaresToRemove.add(s.getAddBoardSquareOrMyself(file, rank));
         }
         squaresToRemove.remove(s);
         return squaresToRemove;

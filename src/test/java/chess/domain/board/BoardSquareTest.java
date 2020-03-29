@@ -1,13 +1,13 @@
 package chess.domain.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BoardSquareTest {
 
@@ -30,8 +30,8 @@ public class BoardSquareTest {
     @Test
     void canAddTest() {
         BoardSquare boardSquare = BoardSquare.of("a2");
-        assertThat(boardSquare.addIfInBoundary(1, 1)).isEqualTo(BoardSquare.of("b3"));
-        assertThat(boardSquare.addIfInBoundary(-1, 1)).isEqualTo(boardSquare);
+        assertThat(boardSquare.getAddBoardSquareOrMyself(1, 1)).isEqualTo(BoardSquare.of("b3"));
+        assertThat(boardSquare.getAddBoardSquareOrMyself(-1, 1)).isEqualTo(boardSquare);
     }
 
     @DisplayName("같은 File의 Square인지 확인")

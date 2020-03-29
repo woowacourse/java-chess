@@ -85,7 +85,7 @@ public class ChessBoard {
         return chessBoard.get(before).getCheatSheet(before, chessBoard).contains(after);
     }
 
-    public void movePiece(List<BoardSquare> boardSquares) {
+    private void movePiece(List<BoardSquare> boardSquares) {
         BoardSquare before = boardSquares.get(0);
         BoardSquare after = boardSquares.get(1);
         Piece currentPiece = chessBoard.remove(before);

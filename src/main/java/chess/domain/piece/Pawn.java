@@ -46,7 +46,7 @@ public class Pawn extends Piece {
         Set<BoardSquare> straightCheatSheet = new HashSet<>();
         for (BoardSquare cheatSheet : containsCheatSheet) {
             BoardSquare oneMore = cheatSheet
-                .addIfInBoundary(0, cheatSheet.getRankCompare(boardSquare));
+                .getAddBoardSquareOrMyself(0, cheatSheet.getRankCompare(boardSquare));
             straightCheatSheet.addAll(getOneMoreCheatSheet(boardSquare, board, oneMore));
             straightCheatSheet.add(cheatSheet);
         }
@@ -68,8 +68,8 @@ public class Pawn extends Piece {
         Set<BoardSquare> allCheatSheet) {
         Set<BoardSquare> diagonalCheatSheet = new HashSet<>();
         for (BoardSquare cheatSheet : allCheatSheet) {
-            BoardSquare cheatSheetRight = cheatSheet.addIfInBoundary(-1, 0);
-            BoardSquare cheatSheetLeft = cheatSheet.addIfInBoundary(1, 0);
+            BoardSquare cheatSheetRight = cheatSheet.getAddBoardSquareOrMyself(-1, 0);
+            BoardSquare cheatSheetLeft = cheatSheet.getAddBoardSquareOrMyself(1, 0);
             addDiagonalCheatSheet(board, diagonalCheatSheet, cheatSheetRight);
             addDiagonalCheatSheet(board, diagonalCheatSheet, cheatSheetLeft);
         }

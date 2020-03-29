@@ -19,9 +19,9 @@ public class TeamScoreTest {
         assertThat(teamScores.get(Color.BLACK)).isEqualTo(38);
         assertThat(teamScores.get(Color.WHITE)).isEqualTo(38);
 
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("c2"), BoardSquare.of("c4")));
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("d7"), BoardSquare.of("d5")));
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("c4"), BoardSquare.of("d5")));
+        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("c2"), BoardSquare.of("c4")));
+        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("d7"), BoardSquare.of("d5")));
+        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("c4"), BoardSquare.of("d5")));
 
         teamScore = chessBoard.getTeamScore();
         teamScores = teamScore.getTeamScore();
@@ -36,9 +36,9 @@ public class TeamScoreTest {
         TeamScore teamScore = chessBoard.getTeamScore();
         assertThat(teamScore.getWinners().size()).isEqualTo(2);
 
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("b1"), BoardSquare.of("c3")));
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("d7"), BoardSquare.of("d5")));
-        chessBoard.movePiece(Arrays.asList(BoardSquare.of("c3"), BoardSquare.of("d5")));
+        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("b1"), BoardSquare.of("c3")));
+        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("d7"), BoardSquare.of("d5")));
+        chessBoard.movePieceWhenCanMove(Arrays.asList(BoardSquare.of("c3"), BoardSquare.of("d5")));
         teamScore = chessBoard.getTeamScore();
         assertThat(teamScore.getWinners().size()).isEqualTo(1);
         assertThat(teamScore.getWinners().get(0)).isEqualTo(Color.WHITE);

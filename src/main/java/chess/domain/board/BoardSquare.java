@@ -9,27 +9,23 @@ import java.util.Map;
 public class BoardSquare {
 
     private final static Map<String, BoardSquare> CACHE;
-    private final static char FILE_START = 'a';
-    private final static int FILE_COUNT = 8;
-    private final static int RANK_START = 1;
-    private final static int RANK_COUNT = 8;
-    public final static int MAX_FILE_AND_RANK_COUNT = Integer.max(RANK_COUNT, FILE_COUNT);
+    public final static int MAX_FILE_AND_RANK_COUNT = Integer.max(Rank.count(), File.count());
     public final static int MIN_FILE_AND_RANK_COUNT = 1;
 
     static {
         Map<String, BoardSquare> cache = new HashMap<>();
-        for (char file = FILE_START; file < FILE_COUNT + FILE_START; file++) {
-            for (int rank = RANK_START; rank < RANK_START + RANK_COUNT; rank++) {
-                cache.put(String.valueOf(file) + rank, new BoardSquare(file, rank));
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                cache.put(file.getName() + rank.getName(), new BoardSquare(file, rank));
             }
         }
         CACHE = Collections.unmodifiableMap(cache);
     }
 
-    private final char file;
-    private final int rank;
+    private final File file;
+    private final Rank rank;
 
-    private BoardSquare(char file, int rank) {
+    private BoardSquare(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -42,30 +38,36 @@ public class BoardSquare {
         throw new IllegalArgumentException("잘못된 square의 입력입니다");
     }
 
-    public static BoardSquare of(BoardSquare boardSquare, int fileIncrementBy, int rankIncrementBy) {
-        NullChecker.validateNotNull(boardSquare);
-        return BoardSquare.of(String.valueOf((char) (boardSquare.file + fileIncrementBy)) + (boardSquare.rank + rankIncrementBy));
+    public static BoardSquare of(File file, Rank rank) {
+        NullChecker.validateNotNull(file, rank);
+        String key = file.getName() + rank.getName();
+        return BoardSquare.of(key);
     }
 
     private boolean hasCacheAdded(int fileIncrementBy, int rankIncrementBy) {
-        char fileAdd = (char) (file + fileIncrementBy);
-        int rankAdd = rank + rankIncrementBy;
-        return CACHE.containsKey(String.valueOf(fileAdd) + rankAdd);
+        if (file.hasNextIncrement(fileIncrementBy) && rank.hasNextIncrement(rankIncrementBy)) {
+            File incrementFile = file.findAddIncrement(fileIncrementBy);
+            Rank incrementRank = rank.findAddIncrement(rankIncrementBy);
+            return CACHE.containsKey(incrementFile.getName() + incrementRank.getName());
+        }
+        return false;
     }
 
-    public BoardSquare addIfInBoundary(int fileIncrementBy, int rankIncrementBy) {
+    public BoardSquare getAddBoardSquareOrMyself(int fileIncrementBy, int rankIncrementBy) {
         if (hasCacheAdded(fileIncrementBy, rankIncrementBy)) {
-            return BoardSquare.of(this, fileIncrementBy, rankIncrementBy);
+            File incrementFile = file.findAddIncrement(fileIncrementBy);
+            Rank incrementRank = rank.findAddIncrement(rankIncrementBy);
+            return BoardSquare.of(incrementFile, incrementRank);
         }
         return this;
     }
 
     public int getFileCompare(BoardSquare boardSquare) {
-        return Integer.compare(this.file, boardSquare.file);
+        return Integer.compare(file.compareTo(boardSquare.file), 0);
     }
 
     public int getRankCompare(BoardSquare boardSquare) {
-        return Integer.compare(this.rank, boardSquare.rank);
+        return Integer.compare(rank.compareTo(boardSquare.rank), 0);
     }
 
     public boolean isSameFile(BoardSquare boardSquare) {
