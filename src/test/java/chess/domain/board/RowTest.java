@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.domain.game.Team.*;
+import static chess.domain.game.Team.BLACK;
+import static chess.domain.game.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RowTest {
@@ -19,7 +20,7 @@ public class RowTest {
     void create() {
         List<ChessPiece> chessPieces = new ArrayList<>();
 
-        chessPieces.add(new Blank(BLANK));
+        chessPieces.add(new Blank());
         assertThat(Row.of(chessPieces)).isInstanceOf(Row.class);
     }
 
@@ -27,7 +28,7 @@ public class RowTest {
     @DisplayName("get 테스트")
     void get() {
         List<ChessPiece> chessPieces = new ArrayList<>();
-        chessPieces.add(new Blank(BLANK));
+        chessPieces.add(new Blank());
         Row row = Row.of(chessPieces);
 
         assertThat(row.get(0)).isInstanceOf(ChessPiece.class);

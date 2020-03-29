@@ -1,9 +1,8 @@
 package chess.domain.chesspiece;
 
+import chess.domain.move.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static chess.domain.game.Team.BLACK;
 import static chess.domain.game.Team.WHITE;
@@ -36,7 +35,7 @@ public class ChessPieceTest {
     @DisplayName("getMoveDirections 테스트")
     public void getMoveDirections() {
         Pawn pawn = new Pawn(WHITE);
-        assertThat(pawn.getMoveDirections()).isEqualTo(Arrays.asList(UP, LEFT_UP, RIGHT_UP));
+        assertThat(pawn.getMoveDirections()).isEqualTo(new Direction[]{UP, LEFT_UP, RIGHT_UP});
     }
 
     @Test

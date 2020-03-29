@@ -18,6 +18,14 @@ public class GameStatus {
     private static Team nowPlayingTeam = INIT_TEAM;
     private static boolean isGameEnd = false;
 
+    private GameStatus() {
+    }
+
+    public static void initialize() {
+        nowPlayingTeam = INIT_TEAM;
+        isGameEnd = false;
+    }
+
     public static double getTotalScore(Board board) {
         Score score = Score.DEFAULT;
 

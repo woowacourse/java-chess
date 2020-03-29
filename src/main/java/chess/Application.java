@@ -14,6 +14,7 @@ import static chess.domain.game.Command.*;
 public class Application {
     public static void main(String[] args) {
         OutputView.printInitialMessage();
+        GameStatus.initialize();
         run();
     }
 
