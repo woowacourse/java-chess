@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
+import chess.domain.board.ChessInitialSetting;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +19,8 @@ public abstract class RepeatMovePiece extends Piece {
     }
 
     @Override
-    public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board) {
+    public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board,
+        Set<ChessInitialSetting> castlingElements) {
         Set<BoardSquare> allCheatSheet = getAllCheatSheet(boardSquare);
         Set<BoardSquare> containSquares = getContainsSquares(board, allCheatSheet);
         for (BoardSquare cheatSheet : containSquares) {

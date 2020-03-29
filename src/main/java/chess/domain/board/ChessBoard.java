@@ -12,12 +12,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
 
     private Map<BoardSquare, Piece> chessBoard = new HashMap<>();
     private Color gameTurn = Color.WHITE;
+    private Set<ChessInitialSetting> castlingElements = ChessInitialSetting.getCastlingElements();
 
     public ChessBoard() {
         for (ChessInitialSetting chessInitialSetting : ChessInitialSetting.values()) {
@@ -26,7 +28,7 @@ public class ChessBoard {
     }
 
     public static boolean isInitialPoint(BoardSquare boardSquare, Piece piece) {
-        return ChessInitialSetting.contains(boardSquare, piece);
+        return ChessInitialSetting.isSameSquare(boardSquare, piece);
     }
 
     public Map<BoardSquare, Piece> getChessBoard() {
@@ -89,12 +91,19 @@ public class ChessBoard {
         if (!chessBoard.containsKey(moveSquareBefore) || !movePieceBefore.isSameColor(gameTurn)) {
             return false;
         }
-        return movePieceBefore.getCheatSheet(moveSquareBefore, chessBoard)
+        return movePieceBefore.getCheatSheet(moveSquareBefore, chessBoard, castlingElements)
             .contains(moveSquareAfter);
     }
 
     private void movePiece(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
         Piece currentPiece = chessBoard.remove(moveSquareBefore);
+        boolean castlingElement = castlingElements.stream()
+            .anyMatch(chessInitialSetting -> chessInitialSetting.isSameSquare(moveSquareBefore));
+        if (castlingElement) {
+            castlingElements.remove(castlingElements.stream()
+                .filter(chessInitialSetting -> chessInitialSetting.isSameSquare(moveSquareBefore))
+                .findFirst().orElseThrow(IllegalAccessError::new));
+        }
         chessBoard.put(moveSquareAfter, currentPiece);
     }
 

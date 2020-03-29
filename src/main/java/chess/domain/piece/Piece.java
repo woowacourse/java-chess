@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
+import chess.domain.board.ChessInitialSetting;
 import chess.domain.movement.Direction;
 import chess.domain.movement.Movable;
 import java.util.HashSet;
@@ -42,11 +43,20 @@ public abstract class Piece implements Movable {
     }
 
     @Override
-    public abstract Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board);
+    public abstract Set<BoardSquare> getCheatSheet(BoardSquare boardSquare,
+        Map<BoardSquare, Piece> board,
+        Set<ChessInitialSetting> castlingElements);
 
-    protected Set<BoardSquare> findSquaresToRemove(BoardSquare s, int fileAddAmount, int rankAddAmount) {
+    public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare,
+        Map<BoardSquare, Piece> board) {
+        return getCheatSheet(boardSquare, board, new HashSet<>());
+    }
+
+    protected Set<BoardSquare> findSquaresToRemove(BoardSquare s, int fileAddAmount,
+        int rankAddAmount) {
         Set<BoardSquare> squaresToRemove = new HashSet<>();
-        for (int i = 0, file = 0, rank = 0; i < 8; i++, file += fileAddAmount, rank += rankAddAmount) {
+        for (int i = 0, file = 0, rank = 0; i < 8;
+            i++, file += fileAddAmount, rank += rankAddAmount) {
             squaresToRemove.add(s.getAddIfInBoundaryOrMyself(file, rank));
         }
         squaresToRemove.remove(s);

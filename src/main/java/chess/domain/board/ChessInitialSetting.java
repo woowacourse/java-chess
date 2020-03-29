@@ -54,7 +54,7 @@ public enum ChessInitialSetting {
         this.piece = piece;
     }
 
-    public static boolean contains(BoardSquare boardSquare, Piece piece) {
+    public static boolean isSameSquare(BoardSquare boardSquare, Piece piece) {
         return Arrays.stream(ChessInitialSetting.values())
             .filter(chessInitialSetting -> chessInitialSetting.boardSquare == boardSquare)
             .anyMatch(chessInitialSetting -> chessInitialSetting.piece == piece);
@@ -77,5 +77,9 @@ public enum ChessInitialSetting {
         castlingElements.add(WHITE_ROOK_LEFT);
         castlingElements.add(WHITE_ROOK_RIGHT);
         return castlingElements;
+    }
+
+    public boolean isSameSquare(BoardSquare boardSquare) {
+        return this.boardSquare == boardSquare;
     }
 }
