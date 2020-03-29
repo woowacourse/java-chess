@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public enum OperationType {
     START("start", (chessGame, operations) -> {
-        throw new UnsupportedOperationException("error");
+        throw new UnsupportedOperationException(OperationType.INVALID_OPERATION_EXCEPTION_MESSAGE);
     }),
-    MOVE("move", (chessGame, operations) -> {// TODO: 2020/03/28 상수값 enum 내 메서드 적용 이슈
+    MOVE("move", (chessGame, operations) -> {
         chessGame.move(PositionFactory.of(operations.getFirstArgument()), PositionFactory.of(operations.getSecondArgument()));
         return true;
     }),
@@ -41,7 +41,7 @@ public enum OperationType {
         }
     }
 
-    public void validateFirstOperations() {// TODO: 2020/03/28 validate?check? 이름 이슈
+    public void checkFirstOperations() {
         if (!isStart() && !isEnd()) {
             throw new UnsupportedOperationException(INVALID_OPERATION_EXCEPTION_MESSAGE);
         }

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.movable.Movable;
-import chess.domain.piece.pieces.PieceInit;
+import chess.domain.piece.pieces.PieceInitializer;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -25,9 +25,8 @@ public class Piece {
 		this.color = color;
 	}
 
-	public Piece(PieceInit pieceInit) {
-		this(pieceInit.getPosition(), pieceInit.getPieceType(), pieceInit.getMovable(), pieceInit.getColor());
-		// TODO: 2020/03/29 그냥 여기서 대입해줄까?
+	public Piece(PieceInitializer pieceInitializer) {
+		this(pieceInitializer.getPosition(), pieceInitializer.getPieceType(), pieceInitializer.getMovable(), pieceInitializer.getColor());
 	}
 
 	private void validate(Position position, Movable movable) {

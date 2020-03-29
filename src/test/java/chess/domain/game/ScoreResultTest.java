@@ -25,7 +25,7 @@ public class ScoreResultTest {
 				TestPieceFactory.createKnight(PositionFactory.of("c8"), Color.BLACK),
 				TestPieceFactory.createKing(PositionFactory.of("d8"), Color.BLACK)
 		));
-		ScoreResult scoreResult = new ScoreResult(pieces.getPieces());
+		ScoreResult scoreResult = new ScoreResult(pieces);
 
 		assertThat(scoreResult.getScoreBy(Color.WHITE)).isEqualTo(19.5);
 		assertThat(scoreResult.getScoreBy(Color.BLACK)).isEqualTo(16.5);

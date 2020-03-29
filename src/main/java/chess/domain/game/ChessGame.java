@@ -20,7 +20,7 @@ public class ChessGame {
     }
 
     public ScoreResult calculateScore() {
-        return new ScoreResult(pieces.getPieces());
+        return new ScoreResult(pieces);
     }
 
     public boolean isKingDead() {

@@ -1,79 +1,83 @@
 package chess.domain.game;
 
-import chess.domain.position.Row;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.pieces.Pieces;
+import chess.domain.position.Row;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ScoreResult {
-	private static final double PAWN_SPECIAL_SCORE = 0.5;
-	private final Map<Color, Double> scores;
+    private static final double PAWN_SPECIAL_SCORE = 0.5;
+    private static final int DEFAULT_COUNT = 0;
+    private static final int PAWN_SPECIAL_SCORE_COUNT_BOUNDARY = 1;
 
-	public ScoreResult(List<Piece> pieces) {
-		scores = new HashMap<>();
-		calculateScore(pieces);
-	}
+    private final Map<Color, Double> scores;
 
-	private void calculateScore(List<Piece> pieces) {
-		scores.put(Color.WHITE, calculateScoreBy(Color.WHITE, pieces));
-		scores.put(Color.BLACK, calculateScoreBy(Color.BLACK, pieces));
-	}
+    public ScoreResult(Pieces pieces) {
+        scores = new EnumMap<>(Color.class);
+        calculateScore(pieces.getPieces());
+    }
 
-	private double calculateScoreBy(Color color, List<Piece> pieces) {
-		double scoreByColor = calculateTotalScoreBy(color, pieces);
-		List<Piece> pawns = getPawnsBy(color, pieces);
-		Map<Row, Integer> pawnCountByRows = new HashMap<>();
+    private void calculateScore(List<Piece> pieces) {
+        scores.put(Color.WHITE, calculateScoreBy(Color.WHITE, pieces));
+        scores.put(Color.BLACK, calculateScoreBy(Color.BLACK, pieces));
+    }
 
-		for (Row row : Row.values()) {
-			pawnCountByRows.put(row, getPawnCountBy(row, pawns));
-		}
+    private double calculateScoreBy(Color color, List<Piece> pieces) {
+        double scoreByColor = calculateTotalScoreBy(color, pieces);
+        List<Piece> pawns = getPawnsBy(color, pieces);
+        Map<Row, Integer> pawnCountByRows = new EnumMap<>(Row.class);
 
-		return scoreByColor - (PAWN_SPECIAL_SCORE * getTotalDuplicatedPawns(pawnCountByRows));
-	}
+        for (Row row : Row.values()) {
+            pawnCountByRows.put(row, getPawnCountBy(row, pawns));
+        }
 
-	private Integer getTotalDuplicatedPawns(Map<Row, Integer> pawnCountByRows) {
-		return pawnCountByRows.values()
-				.stream()
-				.filter(x -> x > 1)
-				.reduce(0, Integer::sum);
-	}
+        return scoreByColor - (PAWN_SPECIAL_SCORE * getTotalDuplicatedPawns(pawnCountByRows));
+    }
 
-	private int getPawnCountBy(Row row, List<Piece> pawns) {
-		return (int) pawns.stream()
-				.filter(pawn -> row.isSame(pawn.getPosition().getRow()))
-				.count();
-	}
+    private Integer getTotalDuplicatedPawns(Map<Row, Integer> pawnCountByRows) {
+        return pawnCountByRows.values()
+                .stream()
+                .filter(x -> x > PAWN_SPECIAL_SCORE_COUNT_BOUNDARY)
+                .reduce(DEFAULT_COUNT, Integer::sum);
+    }
 
-	private List<Piece> getPawnsBy(Color color, List<Piece> pieces) {
-		return pieces.stream()
-				.filter(piece -> piece.isSameColor(color))
-				.filter(piece -> piece.getPieceType().isPawn())
-				.collect(Collectors.toList());
-	}
+    private int getPawnCountBy(Row row, List<Piece> pawns) {
+        return (int) pawns.stream()
+                .filter(pawn -> row.isSame(pawn.getPosition().getRow()))
+                .count();
+    }
 
-	private double calculateTotalScoreBy(Color color, List<Piece> pieces) {
-		return pieces.stream()
-				.filter(piece -> piece.isSameColor(color))
-				.collect(Collectors.toList())
-				.stream()
-				.mapToDouble(Piece::getScore)
-				.sum();
-	}
+    private List<Piece> getPawnsBy(Color color, List<Piece> pieces) {
+        return pieces.stream()
+                .filter(piece -> piece.isSameColor(color))
+                .filter(piece -> piece.getPieceType().isPawn())
+                .collect(Collectors.toList());
+    }
 
-	private void validate(Color color) {
-		if (Objects.isNull(color) || color.isNone()) {
-			throw new IllegalArgumentException("잘못된 입력입니다.");
-		}
-	}
+    private double calculateTotalScoreBy(Color color, List<Piece> pieces) {
+        return pieces.stream()
+                .filter(piece -> piece.isSameColor(color))
+                .collect(Collectors.toList())
+                .stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
 
-	public Set<Color> keySet() {
-		return Collections.unmodifiableSet(scores.keySet());
-	}
+    private void validate(Color color) {
+        if (Objects.isNull(color) || color.isNone()) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
+    }
 
-	public double getScoreBy(Color color) {
-		validate(color);
-		return scores.get(color);
-	}
+    public Set<Color> keySet() {
+        return Collections.unmodifiableSet(scores.keySet());
+    }
+
+    public double getScoreBy(Color color) {
+        validate(color);
+        return scores.get(color);
+    }
 }
