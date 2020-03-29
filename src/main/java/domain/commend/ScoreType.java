@@ -19,6 +19,7 @@ public enum ScoreType {
     private static final String INITIAL_PAWN = "p";
     private static final int ZERO = 0;
     private static final int PIECES_PAWN_MINIMUM_COUNT = 1;
+    private static final double SCORE_HALF_PAWN = 0.5;
 
     private String initial;
     private double score;
@@ -35,7 +36,7 @@ public enum ScoreType {
             .reduce(0, Double::sum);
 
         int pawnCount = getSameColumnPawnCount(pieces, team);
-        return totalScore - pawnCount * 0.5;
+        return totalScore - pawnCount * SCORE_HALF_PAWN;
     }
 
     private static int getSameColumnPawnCount(Pieces pieces, Team team) {

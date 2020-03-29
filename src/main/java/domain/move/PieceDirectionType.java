@@ -1,5 +1,6 @@
 package domain.move;
 
+import domain.move.exceptions.isNotExistPieceDirectionTypeException;
 import domain.pieces.Piece;
 import domain.point.Point;
 import java.util.Arrays;
@@ -27,13 +28,13 @@ public enum PieceDirectionType {
         return Arrays.stream(PieceDirectionType.values())
             .filter(type -> isSameInitial(type, pieces.get(from).getInitial()))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(""))
+            .orElseThrow(() -> new isNotExistPieceDirectionTypeException("PieceDirectionType 이 존재하지 않습니다."))
             .directions;
 
     }
 
     private static boolean isSameInitial(PieceDirectionType type, String initial) {
-        if (initial.equals("P") || initial.equals("p")) {
+        if (initial.equals(BLACK_PAWN.initial) || initial.equals(WHITE_PAWN.initial)) {
             return type.initial.equals(initial);
         }
         return type.initial.equalsIgnoreCase(initial);

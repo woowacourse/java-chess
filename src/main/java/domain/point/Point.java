@@ -4,6 +4,10 @@ import java.util.Objects;
 
 public class Point {
 
+    private static final int INDEX_ZERO = 0;
+    private static final int INDEX_ONE = 1;
+    private static final int INDEX_TWO = 2;
+
     private Row row;
     private Column column;
 
@@ -17,8 +21,8 @@ public class Point {
     }
 
     public static Point of(String location) {
-        String column = location.substring(0, 1);
-        String row = location.substring(1, 2);
+        String column = location.substring(INDEX_ZERO, INDEX_ONE);
+        String row = location.substring(INDEX_ONE, INDEX_TWO);
 
         return new Point(Row.findRowType(row), Column.findColumnType(column));
     }

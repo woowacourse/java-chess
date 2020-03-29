@@ -6,18 +6,21 @@ import domain.point.Point;
 
 public class OutputView {
 
+    private static final int INITIAL_ZERO = 0;
+    private static final int NEXT_LINE_COUNT = 8;
+
     public static void printStart() {
         System.out.println("체스 게임을 시작합니다.");
     }
 
     public static void printBoard(Pieces pieces) {
-        int newLineCount = 0;
+        int newLineCount = INITIAL_ZERO;
         for (Point point : pieces.getPieces().keySet()) {
             printRowBoard(pieces, point);
             newLineCount++;
-            if (newLineCount == 8) {
+            if (newLineCount == NEXT_LINE_COUNT) {
                 System.out.println();
-                newLineCount = 0;
+                newLineCount = INITIAL_ZERO;
             }
         }
         System.out.println();

@@ -23,6 +23,10 @@ public enum Direction {
     TOP_TOP_LEFT(2, -1);
 
 
+    private static final int MINIMUM_RANGE = -8;
+    private static final int MAXIMUM_RANGE = 8;
+    private static final int INITIAL_VALUE = 8;
+
     private int row;
     private int column;
 
@@ -36,8 +40,8 @@ public enum Direction {
     }
 
     public boolean isMovableUnlimited(int row, int column) {
-        int changeRow = 0;
-        int changeColumn = 0;
+        int changeRow = INITIAL_VALUE;
+        int changeColumn = INITIAL_VALUE;
         boolean isMovableUnlimited = false;
         while (isRowRange(changeRow) && isColumnRange(changeColumn) && !isMovableUnlimited) {
             changeRow += this.row;
@@ -49,11 +53,11 @@ public enum Direction {
     }
 
     private boolean isRowRange(int changeRow) {
-        return changeRow > -8 && changeRow < 8;
+        return changeRow > MINIMUM_RANGE && changeRow < MAXIMUM_RANGE;
     }
 
     private boolean isColumnRange(int changeColumn) {
-        return changeColumn > -8 && changeColumn < 8;
+        return changeColumn > MINIMUM_RANGE && changeColumn < MAXIMUM_RANGE;
     }
 
     private boolean isSameRow(int row, int changeRow) {
