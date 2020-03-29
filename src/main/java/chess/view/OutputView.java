@@ -1,10 +1,12 @@
 package chess.view;
 
+import java.util.Map;
+
+import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.domain.piece.BlackPieces;
-import chess.domain.piece.WhitePieces;
+import chess.domain.piece.Piece;
 
 /**
  *
@@ -26,19 +28,17 @@ public class OutputView {
 		System.out.println("게임을 종료합니다.");
 	}
 
-	public static void printChessBoard(WhitePieces whitePieces, BlackPieces blackPieces) {
+	public static void printChessBoard(Board board) {
+		Map<Position, Piece> chessBoard = board.getBoard();
+
 		for (Rank rank : Rank.values()) {
 			for (File file : File.values()) {
-				Position position = Position.of(file.getFile() + rank.getRow());
-				if (whitePieces.hasPiece(position)) {
-					System.out.print(whitePieces.getPiece(position).getSymbol());
-				}
-				if (blackPieces.hasPiece(position)) {
-					System.out.print(blackPieces.getPiece(position).getSymbol());
-				}
-				if (!whitePieces.hasPiece(position) && !blackPieces.hasPiece(position)) {
+				Piece piece = chessBoard.get(Position.of(file.getFile() + rank.getRow()));
+				if (piece == null) {
 					System.out.print(".");
+					continue;
 				}
+				System.out.print(piece.getSymbol());
 			}
 			System.out.println();
 		}
