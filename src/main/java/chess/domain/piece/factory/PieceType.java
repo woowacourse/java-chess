@@ -1,6 +1,7 @@
 package chess.domain.piece.factory;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.bishop.Bishop;
 import chess.domain.piece.move.*;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.pawn.MovedPawn;
@@ -10,11 +11,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum PieceType {
-    INITIALIZED_PAWN("p", InitializedPawn.class, getCanNotMoveStrategiesForInitializedPawn()),
-    RUNNING_PAWN("p", MovedPawn.class, getCanNotMoveStrategiesForMovedPawn()),
-    ROOK("r", Rook.class, getCanNotMoveStrategiesForRook());
+    INITIALIZED_PAWN("p", InitializedPawn.class, initializedPawnCanNotMoveStrategies()),
+    RUNNING_PAWN("p", MovedPawn.class, movedPawnCanNotMoveStrategies()),
+    ROOK("r", Rook.class, rookCanNotMoveStrategies()),
+    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies()),
+    ;
 
-    private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForRook() {
+    private static List<CanNotMoveStrategy> bishopCanNotMoveStrategies() {
+        return Arrays.asList(
+                new IsStayed(),
+                new HasHindrance(),
+                new IsAttackingSameTeam(),
+                new IsPerpendicular()
+        );
+    }
+
+    private static List<CanNotMoveStrategy> rookCanNotMoveStrategies() {
         return Arrays.asList(
                 new IsStayed(),
                 new HasHindrance(),
@@ -23,7 +35,7 @@ public enum PieceType {
         );
     }
 
-    private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForMovedPawn() {
+    private static List<CanNotMoveStrategy> movedPawnCanNotMoveStrategies() {
         return Arrays.asList(
                 new IsStayed(),
                 new IsNotForward(),
@@ -54,7 +66,7 @@ public enum PieceType {
         throw new IllegalArgumentException("해당하는 PieceType을 찾을 수 없습니다.");
     }
 
-    private static List<CanNotMoveStrategy> getCanNotMoveStrategiesForInitializedPawn() {
+    private static List<CanNotMoveStrategy> initializedPawnCanNotMoveStrategies() {
         return Arrays.asList(
                 new IsStayed(),
                 new IsNotForward(),

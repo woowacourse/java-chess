@@ -1,6 +1,7 @@
 package chess.domain.piece.factory;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.bishop.Bishop;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.pawn.MovedPawn;
 import chess.domain.piece.rook.Rook;
@@ -30,7 +31,8 @@ class PieceFactoryTest {
         return Stream.of(
                 Arguments.of(InitializedPawn.class),
                 Arguments.of(MovedPawn.class),
-                Arguments.of(Rook.class)
+                Arguments.of(Rook.class),
+                Arguments.of(Bishop.class)
         );
     }
 }
