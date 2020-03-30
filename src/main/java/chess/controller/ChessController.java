@@ -16,10 +16,9 @@ public class ChessController {
 
     public static void run() {
         List<Square> squares = new ArrayList<>();
-        OutputView.printStartGame();
-        OutputView.printStartEndOption();
+        OutputView.printGameInformation();
         ChessBoard chessBoard = new ChessBoard();
-        String state = InputView.inputStart();
+        String state = InputView.inputState();
         GameState gameState = GameState.of(state);
         start(chessBoard, gameState);
         if (checkGameState(squares, chessBoard, gameState)) {
@@ -32,7 +31,7 @@ public class ChessController {
         boolean blackTurn = false;
         while (!isEnd(gameState)) {
             squares.clear();
-            state = splitInputWhenMove(InputView.inputStart(), squares);
+            state = splitInputWhenMove(InputView.inputState(), squares);
             gameState = GameState.of(state);
             if (gameState == GameState.MOVE) {
                 blackTurn = changeTurn(chessBoard, blackTurn, squares);

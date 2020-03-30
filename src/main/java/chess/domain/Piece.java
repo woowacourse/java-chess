@@ -46,7 +46,7 @@ public abstract class Piece {
     //각 말 별 타입에 맞게
     public abstract String getLetter();
 
-    //
+    //이동 가능한 리스트 반환 후 최종 이동 가능한 리스트를 판별 할 때, 장애물(다른 말)의 색에 따라 제거할지 판별
     public abstract void removeSquareIfSameColor(Map<Square, Piece> board, Set<Square> squares, Square pawnScopeSquare);
 
     void removeSquareWhenSameColor(Map<Square, Piece> board, Set<Square> squares, Square square) {
@@ -55,33 +55,33 @@ public abstract class Piece {
         }
     }
 
-    void findCanNotMovableSquaresInDiagonal(Set<Square> squares, Square s, Map<String, Integer> fileRankDifference) {
+    void findCanNotMovableSquaresInDiagonal(Set<Square> squares, Square square, Map<String, Integer> fileRankDifference) {
         if (fileRankDifference.get("file") > 0 && fileRankDifference.get("rank") > 0) {
-            squares.removeAll(findSquaresToRemove(s, 1, 1));
+            squares.removeAll(findSquaresToRemove(square, 1, 1));
         }
         if (fileRankDifference.get("file") > 0 && fileRankDifference.get("rank") < 0) {
-            squares.removeAll(findSquaresToRemove(s, 1, -1));
+            squares.removeAll(findSquaresToRemove(square, 1, -1));
         }
         if (fileRankDifference.get("file") < 0 && fileRankDifference.get("rank") > 0) {
-            squares.removeAll(findSquaresToRemove(s, -1, 1));
+            squares.removeAll(findSquaresToRemove(square, -1, 1));
         }
         if (fileRankDifference.get("file") < 0 && fileRankDifference.get("rank") < 0) {
-            squares.removeAll(findSquaresToRemove(s, -1, -1));
+            squares.removeAll(findSquaresToRemove(square, -1, -1));
         }
     }
 
-    void findCanNotMovableSquaresInNorthAndSouth(Set<Square> squares, Square s, Map<String, Integer> fileRankDifference) {
+    void findCanNotMovableSquaresInNorthAndSouth(Set<Square> squares, Square square, Map<String, Integer> fileRankDifference) {
         if (fileRankDifference.get("file") == 0 && fileRankDifference.get("rank") > 0) {
-            squares.removeAll(findSquaresToRemove(s, 0, 1));
+            squares.removeAll(findSquaresToRemove(square, 0, 1));
         }
         if (fileRankDifference.get("file") > 0 && fileRankDifference.get("rank") == 0) {
-            squares.removeAll(findSquaresToRemove(s, 1, 0));
+            squares.removeAll(findSquaresToRemove(square, 1, 0));
         }
         if (fileRankDifference.get("file") < 0 && fileRankDifference.get("rank") == 0) {
-            squares.removeAll(findSquaresToRemove(s, -1, 0));
+            squares.removeAll(findSquaresToRemove(square, -1, 0));
         }
         if (fileRankDifference.get("file") == 0 && fileRankDifference.get("rank") < 0) {
-            squares.removeAll(findSquaresToRemove(s, 0, -1));
+            squares.removeAll(findSquaresToRemove(square, 0, -1));
         }
     }
 
