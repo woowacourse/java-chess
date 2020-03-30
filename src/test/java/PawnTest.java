@@ -1,5 +1,4 @@
 import chess.domain.Player;
-import chess.domain.chesspieces.Empty;
 import chess.domain.chesspieces.Knight;
 import chess.domain.chesspieces.Pawn;
 import chess.domain.chesspieces.Rook;
@@ -11,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -102,7 +102,7 @@ public class PawnTest {
         Pawn source = new Pawn(sourcePlayer, from);
         Pawn target = new Pawn(targetPlayer, to);
 
-        assertThat(source.validateDirection(Direction.getDirection(from, to), target)).isTrue();
+        assertThat(source.validateDirection(Direction.getDirection(from, to), Optional.of(target))).isTrue();
     }
 
     static Stream<Arguments> generatePositions5() {
@@ -120,7 +120,7 @@ public class PawnTest {
     @MethodSource("generatePositions6")
     void 대각선_공격시_empty(Player sourcePlayer, Position from, Position to) {
         Pawn source = new Pawn(sourcePlayer, from);
-        assertThat(source.validateDirection(Direction.getDirection(from, to), Empty.getInstance())).isFalse();
+        assertThat(source.validateDirection(Direction.getDirection(from, to), Optional.empty())).isFalse();
     }
 
 
@@ -139,7 +139,7 @@ public class PawnTest {
     void 대각선_공격_같은_팀(Player player, Position from, Position to) {
         Pawn source = new Pawn(player, from);
         Knight target = new Knight(player);
-        assertThat(source.validateDirection(Direction.getDirection(from, to), target)).isFalse();
+        assertThat(source.validateDirection(Direction.getDirection(from, to), Optional.of(target))).isFalse();
     }
 
     static Stream<Arguments> generatePositions7() {
@@ -157,7 +157,7 @@ public class PawnTest {
     @MethodSource("generatePositions8")
     void 전진_성공_empty(Player player, Position from, Position to) {
         Pawn source = new Pawn(player, from);
-        assertThat(source.validateDirection(Direction.getDirection(from, to), Empty.getInstance()));
+        assertThat(source.validateDirection(Direction.getDirection(from, to), Optional.empty()));
     }
 
     static Stream<Arguments> generatePositions8() {
@@ -174,7 +174,7 @@ public class PawnTest {
     void 전진_실패_장애물(Player player, Position from, Position to) {
         Pawn source = new Pawn(player, from);
         Rook target = new Rook(player);
-        assertThat(source.validateDirection(Direction.getDirection(from, to), target)).isFalse();
+        assertThat(source.validateDirection(Direction.getDirection(from, to), Optional.of(target))).isFalse();
     }
 
     static Stream<Arguments> generatePositions9() {

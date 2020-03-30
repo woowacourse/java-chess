@@ -13,13 +13,13 @@ import java.util.function.BiPredicate;
 
 public enum Direction {
     WEST((rowDiff, columnDiff) -> isPositive(rowDiff) && isZero(columnDiff),
-            new LeftRightPositionBetween()),
+            new EastWestPositionBetween()),
     EAST((rowDiff, columnDiff) -> isNegative(rowDiff) && isZero(columnDiff),
-            new LeftRightPositionBetween()),
+            new EastWestPositionBetween()),
     NORTH((rowDiff, columnDiff) -> isZero(rowDiff) && isNegative(columnDiff),
-            new TopDownPositionBetween()),
+            new NorthSouthPositionBetween()),
     SOUTH((rowDiff, columnDiff) -> isZero(rowDiff) && isPositive(columnDiff),
-            new TopDownPositionBetween()),
+            new NorthSouthPositionBetween()),
     NORTH_WEST((rowDiff, columnDiff) -> isPositive(rowDiff) && isNegative(columnDiff),
             new DiagonalPositionBetween()),
     NORTH_EAST((rowDiff, columnDiff) -> isNegative(rowDiff) && isNegative(columnDiff),

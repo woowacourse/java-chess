@@ -2,16 +2,23 @@ package chess.views;
 
 import chess.domain.chesspieces.Piece;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
+import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 import chess.domain.status.Result;
 import chess.domain.status.Status;
+import javafx.geometry.Pos;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class OutputView {
     private final static String NEW_LINE = System.lineSeparator();
     private final static int OFFSET = Row.values().length;
+    private final static String EMPTY = ".";
 
     public static void printInitialGuide() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -23,19 +30,18 @@ public class OutputView {
 
     public static void printChessBoard(Map<Position, Piece> chessBoard) {
         StringBuilder stringBuilder = new StringBuilder();
-        int size = chessBoard.size();
-        for (int i = 0; i < size; i += OFFSET) {
-            String row = chessBoard.values()
-                    .stream()
-                    .skip(i)
-                    .limit(OFFSET)
-                    .map(Piece::getDisplay)
-                    .collect(Collectors.joining());
-            stringBuilder.insert(0, row);
-            stringBuilder.insert(0, NEW_LINE);
-        }
         stringBuilder.append(NEW_LINE);
 
+        for (Column column : Column.values()) {
+            for (Row row : Row.values()) {
+                Optional<Piece> piece = Optional.ofNullable(chessBoard.get(Positions.of(row, column)));
+                piece.ifPresent(value -> stringBuilder.append(value.getDisplay()));
+                if (!piece.isPresent()) {
+                    stringBuilder.append(EMPTY);
+                }
+            }
+            stringBuilder.append(NEW_LINE);
+        }
         System.out.println(stringBuilder.toString());
     }
 

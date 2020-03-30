@@ -13,8 +13,7 @@ public enum PieceInfo {
     BISHOP("B",  3, Row.values().length, Column.values().length),
     ROOK("R", 5, Row.values().length, Column.values().length),
     KNIGHT("N",  2.5,2, 2),
-    PAWN("P",  1, 1, 1),
-    EMPTY(".", 0, 0, 0);
+    PAWN("P",  1, 1, 1);
 
     public static final double PAWN_SCORE_DIFF = 0.5;
     public static final int PAWN_INIT_MOVABLE_COLUMN_DIFF = 2;
@@ -38,9 +37,6 @@ public enum PieceInfo {
         }
         if (player == Player.BLACK) {
             return name.toUpperCase();
-        }
-        if (player == Player.NONE) {
-            return EMPTY.name;
         }
         throw new IllegalPlayerException();
     }

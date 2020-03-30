@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
-public class LeftRightPositionBetween implements BiFunction<Position, Position, List<Position>> {
+public class EastWestPositionBetween implements BiFunction<Position, Position, List<Position>> {
     @Override
     public List<Position> apply(Position from, Position to) {
         Objects.requireNonNull(from);

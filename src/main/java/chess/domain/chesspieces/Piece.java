@@ -6,10 +6,7 @@ import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class Piece {
     private final Player player;
@@ -35,7 +32,7 @@ public abstract class Piece {
                 && Math.abs(columnDiff) <= pieceInfo.getMovableColumnDiff();
     }
 
-    public boolean validateDirection(Direction direction, Piece target) {
+    public boolean validateDirection(Direction direction, Optional<Piece> target) {
         return hasDirection(direction);
     };
 
@@ -64,12 +61,13 @@ public abstract class Piece {
                 && validateTileSize(from, to);
     }
 
-    public boolean isSamePlayer(Piece target) {
+    public boolean isSamePlayer(Optional<Piece> target) {
         Objects.requireNonNull(target);
-        if (player == Player.NONE || target.getPlayer() == Player.NONE) {
-            return false;
+
+        if (target.isPresent()){
+            return player == target.get().getPlayer();
         }
-        return player == target.getPlayer();
+        return false;
     }
 
     public String getDisplay() {

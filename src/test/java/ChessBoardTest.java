@@ -12,7 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -31,7 +30,7 @@ public class ChessBoardTest {
     void initChessBoard() {
         ChessBoard chessBoard = new ChessBoard();
         int actual = chessBoard.getChessBoard().size();
-        int expected = Column.values().length * Row.values().length;
+        int expected = 32;
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -46,10 +45,10 @@ public class ChessBoardTest {
 
     @DisplayName("점수 계산")
     @ParameterizedTest
-    @CsvSource({"WHITE", "BLACK"})
-    void createStatusTest(String player) {
+    @EnumSource(value = Player.class)
+    void createStatusTest(Player player) {
         ChessBoard chessBoard = new ChessBoard();
-        Status result = chessBoard.createStatus(Player.valueOf(player));
+        Status result = chessBoard.createStatus(player);
         double actual = result.getScore();
         double expected = 38;
         assertThat(actual).isEqualTo(expected);
@@ -64,36 +63,21 @@ public class ChessBoardTest {
     }
 
     static Stream<Arguments> generatePositions3() {
-        Stream<Piece> whitePawnWhiteKing = Stream.of(new Pawn(Player.WHITE, Positions.of("a1")),
+        List<Piece> whitePawnWhiteKing = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
                 new King(Player.WHITE));
-        Stream<Piece> whitePawn3 = Stream.of(new Pawn(Player.WHITE, Positions.of("a1")),
+        List<Piece> whitePawn3 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
                 new Pawn(Player.WHITE, Positions.of("a2")),
                 new Pawn(Player.WHITE, Positions.of("a3"))
         );
-        Stream<Piece> whitePawn1BlackPawn2 = Stream.of(new Pawn(Player.WHITE, Positions.of("a1")),
+        List<Piece> whitePawn1BlackPawn2 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
                 new Pawn(Player.BLACK, Positions.of("a2")),
                 new Pawn(Player.BLACK, Positions.of("a3")));
-        Stream<Piece> whiteKingBlackQueen = Stream.of(new King(Player.WHITE), new Queen(Player.BLACK));
+        List<Piece> whiteKingBlackQueen = Arrays.asList(new King(Player.WHITE), new Queen(Player.BLACK));
 
-        List<Empty> emptyStream_Size5 = Stream.generate(Empty::getInstance)
-                .limit(5).collect(Collectors.toList());
-        List<Empty> emptyStream_Size6 = Stream.generate(Empty::getInstance)
-                .limit(6).collect(Collectors.toList());
-        return Stream.of(
-                Arguments.of(
-                        Stream.concat(whitePawnWhiteKing, emptyStream_Size6.stream())
-                                .collect(Collectors.toList()), Player.WHITE, 1
-                ), Arguments.of(
-                        Stream.concat(whitePawn3, emptyStream_Size5.stream())
-                                .collect(Collectors.toList()), Player.WHITE, 3
-                ), Arguments.of(
-                        Stream.concat(whitePawn1BlackPawn2, emptyStream_Size5.stream())
-                                .collect(Collectors.toList()), Player.WHITE, 1
-                ), Arguments.of(
-                        Stream.concat(whiteKingBlackQueen, emptyStream_Size6.stream())
-                                .collect(Collectors.toList()), Player.WHITE, 0
-                )
-        );
+        return Stream.of(Arguments.of(whitePawnWhiteKing, Player.WHITE, 1),
+                Arguments.of(whitePawn3, Player.WHITE, 3),
+                Arguments.of(whitePawn1BlackPawn2, Player.WHITE, 1),
+                Arguments.of(whiteKingBlackQueen, Player.WHITE, 0));
     }
 
     @DisplayName("우승자 확인")
