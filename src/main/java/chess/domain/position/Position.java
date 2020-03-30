@@ -32,7 +32,14 @@ public class Position {
     }
 
     public static Position of(String position) {
+        validate(position);
         return POSITIONS.get(position);
+    }
+
+    private static void validate(String position) {
+        if (POSITIONS.get(position) == null) {
+            throw new IllegalArgumentException("잘못된 위치값입니다.");
+        }
     }
 
     private static String key(Column column, Row row) {

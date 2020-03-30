@@ -17,6 +17,6 @@ class MoveInfoTest {
     void create_When_Fail_With_WrongPositionInput() {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> MoveInfo.of("move a99 a10"))
-                .withMessage("위치값을 잘못 입력하셨습니다.");
+                .withMessage("잘못된 위치값입니다.");
     }
 }

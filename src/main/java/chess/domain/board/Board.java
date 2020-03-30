@@ -47,10 +47,6 @@ public class Board {
         board.remove(from);
     }
 
-    public void move(String from, String to, Team team) {
-        move(Position.of(from), Position.of(to), team);
-    }
-
     private void pawnMove(Position from, Position to) {
         int columnGap = Math.abs(from.getColumnGap(to));
         if (columnGap == 0 && board.containsKey(to)) {

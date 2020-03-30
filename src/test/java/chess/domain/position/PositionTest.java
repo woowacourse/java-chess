@@ -18,7 +18,7 @@ class PositionTest {
 
     @Test
     void of_DoesNotThrowException_When_CreatedByString() {
-        assertThatCode(() -> Position.of("A1"))
+        assertThatCode(() -> Position.of("a1"))
                 .doesNotThrowAnyException();
     }
 

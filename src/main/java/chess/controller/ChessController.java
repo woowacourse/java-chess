@@ -45,7 +45,7 @@ public class ChessController {
     }
 
     private static void move(String input, Board board) {
-        ChessService.move(board, team, MoveInfo.of(input));
+        ChessService.of(board).move(MoveInfo.of(input));
         OutputView.printBoard(board.getBoard());
         team = team.next();
 
