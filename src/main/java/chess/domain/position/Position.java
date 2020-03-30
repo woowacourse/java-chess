@@ -13,11 +13,11 @@ public class Position {
     }
 
     public int calculateFileGap(Position target) {
-        return this.file.compareTo(target.file);
+        return this.file.calculateGap(target.file);
     }
 
     public int calculateRankGap(Position target) {
-        return this.rank.getDifference(target.rank);
+        return this.rank.calculateGap(target.rank);
     }
 
     public int getFile() {

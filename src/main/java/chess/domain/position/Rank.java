@@ -33,7 +33,7 @@ public enum Rank {
         return this.symbol;
     }
 
-    public int getDifference(Rank rank) {
+    public int calculateGap(Rank rank) {
         return this.symbol - rank.symbol;
     }
 }
