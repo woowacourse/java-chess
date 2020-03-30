@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 import chess.exception.PieceNotFoundException;
 
+import java.util.Collections;
 import java.util.List;
 
 public class EmptyPiece extends Piece {
@@ -15,7 +16,7 @@ public class EmptyPiece extends Piece {
 
     @Override
     public List<Position> getPathTo(Position target) {
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     @Override
