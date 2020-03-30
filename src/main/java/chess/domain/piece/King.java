@@ -12,6 +12,8 @@ import chess.domain.piece.state.State;
  *    @author AnHyungJu, LeeHoBin
  */
 public class King extends Piece {
+	private static final List<Direction> KING_DIRECTION = Direction.everyDirection();
+
 	public King(State state, String symbol) {
 		super(state, symbol);
 	}
@@ -27,7 +29,7 @@ public class King extends Piece {
 
 	protected List<Position> findRoute(Position source, Position target) {
 		List<Position> route = new LinkedList<>();
-		List<Position> possiblePosition = source.nextPosition(Direction.everyDirection());
+		List<Position> possiblePosition = source.nextPosition(KING_DIRECTION);
 
 		possiblePosition.stream()
 			.filter(position -> position.equals(target))
