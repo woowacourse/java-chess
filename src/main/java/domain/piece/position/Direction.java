@@ -98,8 +98,4 @@ public enum Direction {
 	public static List<Direction> blackPawnDirection() {
 		return Arrays.asList(S, SE, SW);
 	}
-
-	public BiFunction<Integer, Integer, Boolean> getFind() {
-		return find;
-	}
 }
