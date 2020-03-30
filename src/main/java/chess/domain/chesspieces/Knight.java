@@ -4,16 +4,13 @@ import chess.domain.Player;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Knight extends Piece {
     private static final String KNIGHT_NAME = "KNIGHT";
 
-    private static PieceInfo pieceInfo = PieceInfo.valueOf(KNIGHT_NAME);
-
     public Knight(Player player) {
-        super(player, pieceInfo);
+        super(player, PieceInfo.valueOf(KNIGHT_NAME));
         directions.addAll(Direction.knightDirection());
     }
 
@@ -29,10 +26,5 @@ public class Knight extends Piece {
         Objects.requireNonNull(to);
         return directions.stream()
                 .anyMatch(direction -> direction.getJudge(from, to));
-    }
-
-    @Override
-    public boolean validateTileSize(Position from, Position to) {
-        return false;
     }
 }

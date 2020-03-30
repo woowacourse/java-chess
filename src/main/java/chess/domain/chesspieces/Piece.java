@@ -3,6 +3,8 @@ package chess.domain.chesspieces;
 import chess.domain.Player;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
+import chess.domain.position.component.Column;
+import chess.domain.position.component.Row;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +13,7 @@ import java.util.Objects;
 
 public abstract class Piece {
     private final Player player;
-    private final PieceInfo pieceInfo;
+    protected final PieceInfo pieceInfo;
 
     protected List<Direction> directions = new ArrayList<>();
 
@@ -23,7 +25,15 @@ public abstract class Piece {
         this.pieceInfo = pieceInfo;
     }
 
-    public abstract boolean validateTileSize(Position from, Position to);
+    public boolean validateTileSize(Position from, Position to){
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
+
+        int rowDiff = Row.getDiff(from.getRow(), to.getRow());
+        int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
+        return Math.abs(rowDiff) <= pieceInfo.getMovableRowDiff()
+                && Math.abs(columnDiff) <= pieceInfo.getMovableColumnDiff();
+    }
 
     public boolean validateDirection(Direction direction, Piece target) {
         return hasDirection(direction);
@@ -44,6 +54,7 @@ public abstract class Piece {
     public double getScore() {
         return pieceInfo.getScore();
     }
+
 
     public boolean movable(Position from, Position to) {
         Objects.requireNonNull(from);

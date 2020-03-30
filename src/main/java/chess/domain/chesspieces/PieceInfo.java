@@ -2,28 +2,33 @@ package chess.domain.chesspieces;
 
 import chess.Exceptions.IllegalPlayerException;
 import chess.domain.Player;
+import chess.domain.position.component.Column;
+import chess.domain.position.component.Row;
 
 import java.util.Objects;
 
 public enum PieceInfo {
-    KING("K", 0),
-    QUEEN("Q", 9),
-    BISHOP("B",  3),
-    ROOK("R", 5),
-    KNIGHT("N",  2.5),
-    PAWN("P",  1),
-    EMPTY(".", 0);
+    KING("K", 0, 1, 1),
+    QUEEN("Q", 9, Row.values().length, Column.values().length),
+    BISHOP("B",  3, Row.values().length, Column.values().length),
+    ROOK("R", 5, Row.values().length, Column.values().length),
+    KNIGHT("N",  2.5,2, 2),
+    PAWN("P",  1, 1, 1),
+    EMPTY(".", 0, 0, 0);
 
     public static final double PAWN_SCORE_DIFF = 0.5;
+    public static final int PAWN_INIT_MOVABLE_COLUMN_DIFF = 2;
 
-    private static final String EMPTY_NAME = ".";
     private final String name;
     private final double score;
+    private final int movableRowDiff;
+    private final int movableColumnDiff;
 
-
-    PieceInfo(String name, double score) {
+    PieceInfo(String name, double score, int movableRowDiff, int movableColumnDiff) {
         this.name = name;
         this.score = score;
+        this.movableRowDiff = movableRowDiff;
+        this.movableColumnDiff = movableColumnDiff;
     }
 
     public final String getName(Player player) {
@@ -35,12 +40,20 @@ public enum PieceInfo {
             return name.toUpperCase();
         }
         if (player == Player.NONE) {
-            return EMPTY_NAME;
+            return EMPTY.name;
         }
         throw new IllegalPlayerException();
     }
 
     public double getScore() {
         return score;
+    }
+
+    public int getMovableRowDiff() {
+        return movableRowDiff;
+    }
+
+    public int getMovableColumnDiff() {
+        return movableColumnDiff;
     }
 }

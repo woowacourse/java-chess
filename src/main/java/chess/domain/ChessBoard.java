@@ -88,12 +88,10 @@ public class ChessBoard {
     }
 
     public Status createStatus(Player player) {
-        System.out.println(getPlayerPieces(player).size());
         double score = getPlayerPieces(player)
                 .stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
-        System.out.println("초기 score: "+score);
         score -= PieceInfo.PAWN_SCORE_DIFF * getPawnCount(player);
         return new Status(player, score);
     }

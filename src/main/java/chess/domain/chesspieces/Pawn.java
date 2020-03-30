@@ -12,20 +12,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pawn extends Piece {
-    private static final int MOVABLE_ROW_MOVE_DIFF = 1;
-    private static final int INIT_MOVABLE_COLUMN_DIFF = 1;
-    private static final int MOVABLE_COLUMN_DIFF = 2;
     private static final String PAWN_NAME = "PAWN";
-    private static final PieceInfo PIECE_INFO = PieceInfo.valueOf(PAWN_NAME);
 
     private final List<Direction> attackDirections = new ArrayList<>();
-
     private final Position initPosition;
 
     private Direction forwardDirection;
 
     public Pawn(Player player, Position position) {
-        super(player, PIECE_INFO);
+        super(player, PieceInfo.valueOf(PAWN_NAME));
         this.initPosition = position;
 
         if (player.equals(Player.BLACK)) {
@@ -50,25 +45,21 @@ public class Pawn extends Piece {
 
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
-        int movableColumnDiff = INIT_MOVABLE_COLUMN_DIFF;
+
+        int movableColumnDiff = pieceInfo.getMovableColumnDiff();
         if (initPosition == from) {
-            movableColumnDiff = MOVABLE_COLUMN_DIFF;
+            movableColumnDiff = PieceInfo.PAWN_INIT_MOVABLE_COLUMN_DIFF;
         }
-        return Math.abs(rowDiff) <= MOVABLE_ROW_MOVE_DIFF && Math.abs(columnDiff) <= movableColumnDiff;
+        return Math.abs(rowDiff) <= pieceInfo.getMovableRowDiff()  && Math.abs(columnDiff) <= movableColumnDiff;
     }
 
     @Override
     public boolean validateDirection(Direction direction, Piece target) {
         return hasDirection(direction)
-                && (validateMovdAttack(direction, target) || validateMoveForward(direction, target));
-    };
+                && (validateMoveAttack(direction, target) || validateMoveForward(direction, target));
+    }
 
-//    public boolean validate(Direction direction, boolean isSamePlayer, boolean isTargetEmpty) {
-//////        return validateMovdAttack(direction, isTargetEmpty, isSamePlayer)
-//////                || validateMoveForward(direction, isTargetEmpty);
-//////    }
-
-    public boolean validateMovdAttack(Direction direction, Piece target) {
+    public boolean validateMoveAttack(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
         Objects.requireNonNull(target);
 
