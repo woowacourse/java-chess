@@ -4,6 +4,7 @@ import java.util.List;
 
 import domain.board.Board;
 import domain.board.Rank;
+import domain.command.InvalidCommandException;
 import domain.piece.Piece;
 
 public class OutputView {
@@ -33,10 +34,10 @@ public class OutputView {
 
 	private static void printRank(List<Piece> pieces) {
 		for (int i = 1; i <= 8; i++) {
-			final int temp = i;
-			if (pieces.stream().anyMatch(p -> temp == p.getPosition().getColumn().getNumber())) {
+			final int columnIndex = i;
+			if (pieces.stream().anyMatch(p -> columnIndex == p.getPosition().getColumn().getNumber())) {
 				pieces.stream()
-					.filter(piece -> temp == piece.getPosition().getColumn().getNumber())
+					.filter(piece -> columnIndex == piece.getPosition().getColumn().getNumber())
 					.map(Piece::showSymbol)
 					.forEach(System.out::print);
 				continue;
@@ -44,5 +45,9 @@ public class OutputView {
 			System.out.print(".");
 		}
 		System.out.println();
+	}
+
+	public static void printErrorMessage(IllegalArgumentException e) {
+		System.out.println(e.getMessage());
 	}
 }

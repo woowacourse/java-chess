@@ -44,9 +44,10 @@ public class Bishop extends Piece {
 			if (targetPiece.team.equals(this.team)) {
 				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 			}
+			System.out.println("target :: "+targetPiece.position.getColumn().getColumnName() + targetPiece.getPosition().getRow() + " " + targetPiece.team);
 			capture(targetPiece, ranks);
 		});
-		this.changePosition(targetPosition, ranks);
+		this.changePosition(this, targetPosition, ranks);
 	}
 
 	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {

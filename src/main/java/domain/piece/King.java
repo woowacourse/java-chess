@@ -47,7 +47,7 @@ public class King extends Piece {
 			}
 			capture(targetPiece, ranks);
 		});
-		this.changePosition(targetPosition, ranks);
+		this.changePosition(this, targetPosition, ranks);
 	}
 
 	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {

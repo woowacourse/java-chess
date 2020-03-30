@@ -2,8 +2,6 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,10 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import domain.board.Board;
-import domain.board.BoardFactory;
-import domain.board.Rank;
 import domain.board.fixture.KingBoard;
-import domain.board.fixture.KnightBoard;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
@@ -90,5 +85,46 @@ public class KingTest {
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 
 		assertThat(board.getRanks().get(2).getPieces().contains(targetPiece)).isFalse();
+	}
+
+	@DisplayName("적군을 잡은 뒤에 적군이 서있던 위치로 이동")
+	@ParameterizedTest
+	@CsvSource({"b1, b2, 1, WHITE", "c2, b2, 1, WHITE", "b2, b1, 0, BLACK", "b2, c2, 1, BLACK"})
+	void move_CaptureEnemy_MoveToEnemyPosition(String sourcePosition, String targetPosition, int rank, Team team) {
+		board.move(sourcePosition, targetPosition, team);
+		Piece movedPiece = board.findPiece(targetPosition, board.getRanks().get(rank));
+
+		assertThat(movedPiece.team).isEqualTo(team);
+	}
+
+	@DisplayName("적군을 잡은 뒤에 아군이 sourcePosition에서 삭제됐는지 확인")
+	@ParameterizedTest
+	@CsvSource({"b1, b2, 0, WHITE", "c2, b2, 1, WHITE", "b2, b1, 1, BLACK", "b2, c2, 1, BLACK"})
+	void move_CaptureEnemy_DeleteSourcePiece(String sourcePosition, String targetPosition, int rank, Team team) {
+		Piece sourcePiece = board.findPiece(sourcePosition, board.getRanks().get(rank));
+		assertThat(sourcePiece.team).isEqualTo(team);
+
+		board.move(sourcePosition, targetPosition, team);
+
+		assertThatThrownBy(() -> board.findPiece(sourcePosition, board.getRanks().get(rank)))
+			.isInstanceOf(InvalidPositionException.class)
+			.hasMessageContaining(InvalidPositionException.INVALID_SOURCE_POSITION);
+	}
+
+	@DisplayName("적군을 잡은 뒤에 적군이 board 위에서 삭제됐는지 확인")
+	@ParameterizedTest
+	@CsvSource({"b1, b2, WHITE", "c2, b2, WHITE", "b2, b1, BLACK", "b2, c2, BLACK"})
+	void move_CaptureEnemy_DeleteCapturedPiece(String sourcePosition, String targetPosition, Team team) {
+		long beforeBoardSize = board.getRanks().stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.count();
+
+		board.move(sourcePosition, targetPosition, team);
+
+		long afterBoardSize = board.getRanks().stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.count();
+
+		assertThat(afterBoardSize).isEqualTo(beforeBoardSize - 1);
 	}
 }

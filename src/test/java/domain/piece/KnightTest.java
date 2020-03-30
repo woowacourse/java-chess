@@ -71,10 +71,52 @@ public class KnightTest {
 	void move_EnemyAtTargetPosition_Capture() {
 		String sourcePosition = "b1";
 		String targetPosition = "c3";
+
 		Piece targetPiece = board.findPiece(targetPosition, board.getRanks().get(2));
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 
 		assertThat(board.getRanks().get(2).getPieces().contains(targetPiece)).isFalse();
+	}
+
+	@DisplayName("적군을 잡은 뒤에 적군이 서있던 위치로 이동")
+	@ParameterizedTest
+	@CsvSource({"b1, c3, 2, WHITE", "c3, b1, 0, BLACK"})
+	void move_CaptureEnemy_MoveToEnemyPosition(String sourcePosition, String targetPosition, int rank, Team team) {
+		board.move(sourcePosition, targetPosition, team);
+		Piece movedPiece = board.findPiece(targetPosition, board.getRanks().get(rank));
+
+		assertThat(movedPiece.team).isEqualTo(team);
+	}
+
+	@DisplayName("적군을 잡은 뒤에 아군이 sourcePosition에서 삭제됐는지 확인")
+	@ParameterizedTest
+	@CsvSource({"b1, c3, 0, WHITE", "c3, b1, 2, BLACK"})
+	void move_CaptureEnemy_DeleteSourcePiece(String sourcePosition, String targetPosition, int rank, Team team) {
+		Piece sourcePiece = board.findPiece(sourcePosition, board.getRanks().get(rank));
+		assertThat(sourcePiece.team).isEqualTo(team);
+
+		board.move(sourcePosition, targetPosition, team);
+
+		assertThatThrownBy(() -> board.findPiece(sourcePosition, board.getRanks().get(rank)))
+			.isInstanceOf(InvalidPositionException.class)
+			.hasMessageContaining(InvalidPositionException.INVALID_SOURCE_POSITION);
+	}
+
+	@DisplayName("적군을 잡은 뒤에 적군이 board 위에서 삭제됐는지 확인")
+	@ParameterizedTest
+	@CsvSource({"b1, c3, WHITE", "c3, b1, BLACK"})
+	void move_CaptureEnemy_DeleteCapturedPiece(String sourcePosition, String targetPosition, Team team) {
+		long beforeBoardSize = board.getRanks().stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.count();
+
+		board.move(sourcePosition, targetPosition, team);
+
+		long afterBoardSize = board.getRanks().stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.count();
+
+		assertThat(afterBoardSize).isEqualTo(beforeBoardSize - 1);
 	}
 }

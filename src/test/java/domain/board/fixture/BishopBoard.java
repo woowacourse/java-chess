@@ -11,7 +11,7 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 /*
- * E는 적, R는 아군 Rook을 나타냄
+ * E는 적, b는 아군 Bishop을 나타냄
  *
  * 8  . . . . . . . .
  * 7  . . . . . . . .
@@ -40,7 +40,7 @@ public class BishopBoard {
 		ranks.add(new Rank(rank1));
 		ranks.add(new Rank(rank2));
 		ranks.add(new Rank(rank3));
-		createEmptyRank(4);
+		createEmptyRank(5);
 
 		return new Board(ranks);
 	}

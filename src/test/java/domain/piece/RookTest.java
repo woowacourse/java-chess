@@ -87,4 +87,51 @@ public class RookTest {
 
 		assertThat(board.getRanks().get(2).getPieces().contains(targetPiece)).isFalse();
 	}
+
+	@DisplayName("적군을 잡은 뒤에 적군이 서있던 위치로 이동")
+	@Test
+	void move_CaptureEnemy_MoveToEnemyPosition() {
+		String sourcePosition = "a3";
+		String targetPosition = "a8";
+
+		board.move(sourcePosition, targetPosition, Team.WHITE);
+		Piece movedPiece = board.findPiece(targetPosition, board.getRanks().get(7));
+
+		assertThat(movedPiece.team).isEqualTo(Team.WHITE);
+	}
+
+	@DisplayName("적군을 잡은 뒤에 아군이 sourcePosition에서 삭제됐는지 확인")
+	@Test
+	void move_CaptureEnemy_DeleteSourcePiece() {
+		String sourcePosition = "a3";
+		String targetPosition = "a8";
+
+		Piece sourcePiece = board.findPiece(sourcePosition, board.getRanks().get(2));
+		assertThat(sourcePiece.team).isEqualTo(Team.WHITE);
+
+		board.move(sourcePosition, targetPosition, Team.WHITE);
+
+		assertThatThrownBy(() -> board.findPiece(sourcePosition, board.getRanks().get(2)))
+			.isInstanceOf(InvalidPositionException.class)
+			.hasMessageContaining(InvalidPositionException.INVALID_SOURCE_POSITION);
+	}
+
+	@DisplayName("적군을 잡은 뒤에 적군이 board 위에서 삭제됐는지 확인")
+	@Test
+	void move_CaptureEnemy_DeleteCapturedPiece() {
+		String sourcePosition = "a3";
+		String targetPosition = "a8";
+
+		long beforeBoardSize = board.getRanks().stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.count();
+
+		board.move(sourcePosition, targetPosition, Team.WHITE);
+
+		long afterBoardSize = board.getRanks().stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.count();
+
+		assertThat(afterBoardSize).isEqualTo(beforeBoardSize - 1);
+	}
 }

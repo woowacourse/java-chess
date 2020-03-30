@@ -68,7 +68,7 @@ public class Pawn extends Piece {
 		if (Direction.linearDirection().contains(direction) && piece.isPresent()) {
 			throw new InvalidPositionException(HAS_PIECE_AT_TARGET_POSITION);
 		}
-		this.changePosition(targetPosition, ranks);
+		this.changePosition(this, targetPosition, ranks);
 		this.state = State.RUN;
 	}
 
