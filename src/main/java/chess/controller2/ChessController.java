@@ -20,27 +20,40 @@ public class ChessController {
         }
         GameState gameState;
         boolean isEnd = false;
-        do {
+        while (!isEnd) {
             isEnd = proceed(chessBoard);
-        } while (isEnd);
+        }
     }
 
     private static boolean proceed(ChessBoard chessBoard) {
-        GameState gameState;
+        List<Square> moveSquares = new ArrayList<>();
         List<String> stateInput = Arrays.asList(InputView.inputState().split(" "));
-        List<Square> moveSquares = getMoveSquare(stateInput);
-        gameState = GameState.of(stateInput.get(0));
+        if (isInputStateMove(stateInput)) {
+            moveSquares = getMoveSquare(stateInput);
+        }
+        if (moveSquares == null) {
+            return true;
+        }
+        GameState gameState = GameState.of(stateInput.get(0));
         checkInput(gameState);
         if (gameState.equals(GameState.END)) {
-            return false;
+            return true;
         }
+        move(chessBoard, moveSquares, gameState);
+        OutputView.printChessBoard(chessBoard.getChessBoard());
+        return false;
+    }
+
+    private static void move(ChessBoard chessBoard, List<Square> moveSquares, GameState gameState) {
         if (gameState.equals(GameState.MOVE)) {
             if (!chessBoard.movePiece(moveSquares)) {
                 OutputView.printCanNotMoveMessage();
             }
         }
-        OutputView.printChessBoard(chessBoard.getChessBoard());
-        return true;
+    }
+
+    private static boolean isInputStateMove(List<String> stateInput) {
+        return stateInput.size() != 1;
     }
 
     private static ChessBoard initGame() {
@@ -59,7 +72,11 @@ public class ChessController {
             moveSquares.add(Square.of(input.get(2)));
         } catch (Exception e) {
             OutputView.printInputError();
-            moveSquares = getMoveSquare(Arrays.asList(InputView.inputState().split(" ")));
+            String inputState = InputView.inputState();
+            if (GameState.of(inputState).equals(GameState.END)) {
+                return null;
+            }
+            moveSquares = getMoveSquare(Arrays.asList(inputState.split(" ")));
         }
         return moveSquares;
     }
