@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.Score;
 import chess.domain.piece.Team;
 
 import java.util.Collections;

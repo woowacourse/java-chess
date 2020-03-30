@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.util;
 
 import chess.utils.MoveInfo;
 import org.junit.jupiter.api.Test;

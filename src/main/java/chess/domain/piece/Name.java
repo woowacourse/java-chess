@@ -9,7 +9,7 @@ public enum Name {
     PAWN("P"),
     EMPTY(".");
 
-	private final String name;
+    private final String name;
 
     Name(String name) {
         this.name = name;

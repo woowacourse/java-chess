@@ -5,7 +5,7 @@ public enum Team {
     WHITE("백"),
     NONE("X");
 
-	private final String name;
+    private final String name;
 
     Team(String name) {
         this.name = name;
