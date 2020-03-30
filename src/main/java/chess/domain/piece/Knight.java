@@ -1,10 +1,14 @@
 package chess.domain.piece;
 
+import chess.domain.board.BoardSquare;
+import chess.domain.board.ChessInitialSetting;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import util.NullChecker;
 
-public class Knight extends OneTimeMultipleMovePiece {
+public class Knight extends OneTimeMovePiece {
 
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
@@ -23,4 +27,11 @@ public class Knight extends OneTimeMultipleMovePiece {
         return CACHE.get(color);
     }
 
+    @Override
+    public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board,
+        Set<ChessInitialSetting> castlingElements) {
+        return getAllCheatSheet(boardSquare).stream()
+            .filter(s -> !(board.containsKey(s) && isSameColor(board.get(s))))
+            .collect(Collectors.toSet());
+    }
 }

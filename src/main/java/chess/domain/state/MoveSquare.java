@@ -13,8 +13,16 @@ public class MoveSquare {
     public MoveSquare(String before, String after) {
         NullChecker.validateNotNull(before, after);
         Map<MoveOrder, BoardSquare> squares = new HashMap<>();
-        squares.put(MoveOrder.before, BoardSquare.of(before));
-        squares.put(MoveOrder.after, BoardSquare.of(after));
+        squares.put(MoveOrder.BEFORE, BoardSquare.of(before));
+        squares.put(MoveOrder.AFTER, BoardSquare.of(after));
+        this.squares = Collections.unmodifiableMap(squares);
+    }
+
+    public MoveSquare(BoardSquare boardSquareBefore, BoardSquare boardSquareAfter) {
+        NullChecker.validateNotNull(boardSquareBefore, boardSquareAfter);
+        Map<MoveOrder, BoardSquare> squares = new HashMap<>();
+        squares.put(MoveOrder.BEFORE, boardSquareBefore);
+        squares.put(MoveOrder.AFTER, boardSquareAfter);
         this.squares = Collections.unmodifiableMap(squares);
     }
 

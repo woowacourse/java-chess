@@ -3,13 +3,12 @@ package chess.domain.piece;
 import chess.domain.board.BoardSquare;
 import chess.domain.board.ChessInitialSetting;
 import chess.domain.movement.Direction;
-import chess.domain.movement.Movable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import util.NullChecker;
 
-public abstract class Piece implements Movable {
+public abstract class Piece {
 
     private final Color color;
     private final Type type;
@@ -42,7 +41,6 @@ public abstract class Piece implements Movable {
         availableBoardSquares.remove(boardSquare);
     }
 
-    @Override
     public abstract Set<BoardSquare> getCheatSheet(BoardSquare boardSquare,
         Map<BoardSquare, Piece> board,
         Set<ChessInitialSetting> castlingElements);

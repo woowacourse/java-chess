@@ -5,7 +5,7 @@ import chess.domain.board.TeamScore;
 import chess.domain.state.GameState;
 import chess.domain.state.GameStateAndMoveSquare;
 import chess.domain.state.MoveSquare;
-import chess.exceptions.ChangePawnException;
+import chess.domain.state.MoveState;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -61,25 +61,34 @@ public class ChessGame {
 
     private static void move(ChessBoard chessBoard, GameStateAndMoveSquare gameStateAndMoveSquare) {
         MoveSquare moveSquare = gameStateAndMoveSquare.getMoveSquare();
-        try {
-            if (chessBoard.movePieceWhenCanMove(moveSquare)) {
-                OutputView.printChessBoard(chessBoard);
-                return;
-            }
-        } catch (ChangePawnException cpe) {
-            OutputView.printExceptionMessage(cpe.getMessage());
-            chessBoard.changeFinishPawn(InputView.inputChangeType());
+        MoveState moveState = chessBoard.movePieceWhenCanMove(moveSquare);
+        if (moveState == MoveState.SUCCESS) {
             OutputView.printChessBoard(chessBoard);
+            return;
         }
-        if (chessBoard.isNoPiece(moveSquare)) {
+        if (moveState == MoveState.SUCCESS_BUT_PAWN_CHANGE
+            || moveState == MoveState.FAIL_MUST_PAWN_CHANGE) {
+            changePawn(chessBoard);
+            return;
+        }
+        if (moveState == MoveState.FAIL_NO_PIECE) {
             OutputView.printNoPiece();
             return;
         }
-        if (chessBoard.isNotMyTurn(moveSquare)) {
+        if (moveState == MoveState.FAIL_NOT_ORDER) {
             OutputView.printNotMyTurn(chessBoard.getGameTurn());
             return;
         }
         OutputView.printCanNotMove();
+    }
+
+    private static void changePawn(ChessBoard chessBoard) {
+        MoveState moveState;
+        do {
+            OutputView.print("폰 재입력 요망");
+            moveState = chessBoard.changeFinishPawn(InputView.inputChangeType());
+            OutputView.printChessBoard(chessBoard);
+        } while (moveState != MoveState.SUCCESS);
     }
 
     private static void printScoreAndWinners(ChessBoard chessBoard) {

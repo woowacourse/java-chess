@@ -78,7 +78,7 @@ public class OutputView {
         System.out.println("현재 게임 진행중이므로 START 할 수 없습니다.");
     }
 
-    public static void printExceptionMessage(String message) {
+    public static void print(String message) {
         System.out.println(message);
     }
 

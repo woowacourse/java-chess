@@ -12,11 +12,11 @@ public enum GameState {
     private static final String WRONG_ARGUMENT_EXCEPTION_MESSAGE = "잘못된 인자입니다.";
 
     private final String name;
-    private final boolean loop;
+    private final boolean repeat;
 
-    GameState(String name, boolean loop) {
+    GameState(String name, boolean repeat) {
         this.name = name;
-        this.loop = loop;
+        this.repeat = repeat;
     }
 
     public static GameState of(String input) {
@@ -32,6 +32,6 @@ public enum GameState {
     }
 
     public boolean isContinue() {
-        return loop;
+        return repeat;
     }
 }

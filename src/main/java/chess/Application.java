@@ -9,7 +9,7 @@ public class Application {
         try {
             ChessGame.run();
         } catch (Exception e) {
-            OutputView.printExceptionMessage(e.getMessage());
+            OutputView.print(e.getMessage());
         }
     }
 }

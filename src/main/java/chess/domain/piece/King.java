@@ -1,10 +1,15 @@
 package chess.domain.piece;
 
+import chess.domain.board.BoardSquare;
+import chess.domain.board.ChessInitialSetting;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import util.NullChecker;
 
-public class King extends OneTimeMultipleMovePiece {
+public class King extends OneTimeMovePiece {
 
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
@@ -23,4 +28,42 @@ public class King extends OneTimeMultipleMovePiece {
         return CACHE.get(color);
     }
 
+    @Override
+    public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board,
+        Set<ChessInitialSetting> castlingElements) {
+        Set<BoardSquare> cheatSheet = getAllCheatSheet(boardSquare).stream()
+            .filter(s -> !(board.containsKey(s) && isSameColor(board.get(s))))
+            .collect(Collectors.toSet());
+        cheatSheet.addAll(getCastlingCheatSheet(boardSquare, board, castlingElements));
+        return cheatSheet;
+    }
+
+    private Set<BoardSquare> getCastlingCheatSheet(BoardSquare boardSquare,
+        Map<BoardSquare, Piece> board, Set<ChessInitialSetting> castlingElements) {
+        Set<ChessInitialSetting> sameColorCastlingElements = castlingElements.stream()
+            .filter(castlingElement -> castlingElement.isSameColor(this))
+            .collect(Collectors.toSet());
+
+        Set<BoardSquare> castlingCheatSheets = ChessInitialSetting
+            .getCastlingCheatSheets(sameColorCastlingElements);
+        Set<BoardSquare> totalCheatSheet = new HashSet<>();
+
+        for (BoardSquare castlingCheatSheet : castlingCheatSheets) {
+            Set<BoardSquare> boardSquaresForCastling = new HashSet<>();
+            boardSquaresForCastling.add(boardSquare);
+            int fileCompare = boardSquare.getFileCompare(castlingCheatSheet);
+            for (int i = 0; i < BoardSquare.MAX_FILE_AND_RANK_COUNT; i++) {
+                boardSquaresForCastling
+                    .add(boardSquare.getAddIfInBoundaryOrMyself(fileCompare * -i, 0));
+            }
+            boardSquaresForCastling.remove(boardSquare);
+            int nonContains = (int) boardSquaresForCastling.stream()
+                .filter(square -> !board.containsKey(square))
+                .count() + 1;
+            if (boardSquaresForCastling.size() == nonContains) {
+                totalCheatSheet.add(castlingCheatSheet);
+            }
+        }
+        return totalCheatSheet;
+    }
 }

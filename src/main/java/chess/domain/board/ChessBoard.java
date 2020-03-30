@@ -7,7 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Type;
 import chess.domain.state.MoveOrder;
 import chess.domain.state.MoveSquare;
-import chess.exceptions.ChangePawnException;
+import chess.domain.state.MoveState;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -28,30 +28,44 @@ public class ChessBoard {
     }
 
     public static boolean isInitialPoint(BoardSquare boardSquare, Piece piece) {
-        return ChessInitialSetting.isSameSquare(boardSquare, piece);
+        return ChessInitialSetting.isContainsSquare(boardSquare, piece);
     }
 
     public Map<BoardSquare, Piece> getChessBoard() {
         return chessBoard;
     }
 
-    public boolean movePieceWhenCanMove(MoveSquare moveSquare) throws ChangePawnException {
-        BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.before);
-        BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.after);
-        if (canMove(moveSquareBefore, moveSquareAfter)) {
-            movePiece(moveSquareBefore, moveSquareAfter);
-            checkChangePawnWhenReachFinish();
-            gameTurn = gameTurn.nextTurnIfEmptyMySelf();
-            return true;
+    public MoveState movePieceWhenCanMove(MoveSquare moveSquare) {
+        if (!canMove(moveSquare)) {
+            return getWhyCanNotMove(moveSquare);
         }
-        return false;
+        if (!checkChangePawnWhenReachFinish().isEmpty()) {
+            return MoveState.FAIL_MUST_PAWN_CHANGE;
+        }
+        movePiece(moveSquare);
+        if (!checkChangePawnWhenReachFinish().isEmpty()) {
+            return MoveState.SUCCESS_BUT_PAWN_CHANGE;
+        }
+        gameTurn = gameTurn.nextTurnIfEmptyMySelf();
+        return MoveState.SUCCESS;
     }
 
-    private void checkChangePawnWhenReachFinish() throws ChangePawnException {
-        if (isReachFinishPawn()) {
-            BoardSquare finishPawnBoard = getFinishPawnBoard();
-            throw new ChangePawnException(finishPawnBoard + "자리의 폰을 변경해야 합니다.");
+    private MoveState getWhyCanNotMove(MoveSquare moveSquare) {
+        if (isNoPiece(moveSquare)) {
+            return MoveState.FAIL_NO_PIECE;
         }
+        if (isNotMyTurn(moveSquare)) {
+            return MoveState.FAIL_NOT_ORDER;
+        }
+        return MoveState.FAIL_CAN_NOT_MOVE;
+    }
+
+    private Map<BoardSquare, Piece> checkChangePawnWhenReachFinish() {
+        Map<BoardSquare, Piece> needChangeBoard = new HashMap<>();
+        if (isReachFinishPawn()) {
+            needChangeBoard.put(getFinishPawnBoard(), chessBoard.get(getFinishPawnBoard()));
+        }
+        return needChangeBoard;
     }
 
     private BoardSquare getFinishPawnBoard() {
@@ -68,13 +82,13 @@ public class ChessBoard {
             .anyMatch(BoardSquare::isStartRank);
     }
 
-    public boolean changeFinishPawn(Type hopeType) {
+    public MoveState changeFinishPawn(Type hopeType) {
         if (isReachFinishPawn()) {
             chessBoard.put(getFinishPawnBoard(), getHopePiece(hopeType));
             gameTurn = gameTurn.nextTurnIfEmptyMySelf();
-            return true;
+            return MoveState.SUCCESS;
         }
-        return false;
+        return MoveState.SUCCESS_BUT_PAWN_CHANGE;
     }
 
     private Piece getHopePiece(Type hopeType) {
@@ -86,7 +100,9 @@ public class ChessBoard {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    private boolean canMove(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
+    private boolean canMove(MoveSquare moveSquare) {
+        BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.BEFORE);
+        BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.AFTER);
         Piece movePieceBefore = chessBoard.get(moveSquareBefore);
         if (!chessBoard.containsKey(moveSquareBefore) || !movePieceBefore.isSameColor(gameTurn)) {
             return false;
@@ -95,16 +111,33 @@ public class ChessBoard {
             .contains(moveSquareAfter);
     }
 
-    private void movePiece(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
+    private void movePiece(MoveSquare moveSquare) {
+        BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.BEFORE);
+        BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.AFTER);
         Piece currentPiece = chessBoard.remove(moveSquareBefore);
         boolean castlingElement = castlingElements.stream()
-            .anyMatch(chessInitialSetting -> chessInitialSetting.isSameSquare(moveSquareBefore));
+            .anyMatch(
+                chessInitialSetting -> chessInitialSetting.isContainsSquare(moveSquareBefore));
         if (castlingElement) {
             castlingElements.remove(castlingElements.stream()
-                .filter(chessInitialSetting -> chessInitialSetting.isSameSquare(moveSquareBefore))
+                .filter(
+                    chessInitialSetting -> chessInitialSetting.isContainsSquare(moveSquareBefore))
                 .findFirst().orElseThrow(IllegalAccessError::new));
         }
         chessBoard.put(moveSquareAfter, currentPiece);
+        MoveIfCastlingRook(moveSquareBefore, moveSquareAfter);
+    }
+
+    private void MoveIfCastlingRook(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
+        Set<ChessInitialSetting> removeCastlingElements = castlingElements.stream()
+            .filter(castlingElement -> castlingElement.isSameSquare(moveSquareBefore))
+            .collect(Collectors.toSet());
+        if (!castlingElements.isEmpty() && castlingElements.removeAll(removeCastlingElements)
+            && moveSquareBefore.isJumpFile(moveSquareAfter)) {
+            MoveSquare moveSquare = ChessInitialSetting.getMoveCastlingRook(moveSquareAfter);
+            Piece currentPiece = chessBoard.remove(moveSquare.get(MoveOrder.BEFORE));
+            chessBoard.put(moveSquare.get(MoveOrder.AFTER), currentPiece);
+        }
     }
 
     public boolean isKingCaptured() {
@@ -147,7 +180,7 @@ public class ChessBoard {
     }
 
     public boolean isNoPiece(MoveSquare MoveSquares) {
-        return !chessBoard.containsKey(MoveSquares.get(MoveOrder.before));
+        return !chessBoard.containsKey(MoveSquares.get(MoveOrder.BEFORE));
     }
 
     public Color getGameTurn() {
@@ -158,6 +191,6 @@ public class ChessBoard {
         if (isNoPiece(MoveSquares)) {
             return true;
         }
-        return !chessBoard.get(MoveSquares.get(MoveOrder.before)).isSameColor(gameTurn);
+        return !chessBoard.get(MoveSquares.get(MoveOrder.BEFORE)).isSameColor(gameTurn);
     }
 }

@@ -82,5 +82,9 @@ public class BoardSquare {
     public String toString() {
         return file.getName() + rank.getName();
     }
+
+    public boolean isJumpFile(BoardSquare boardSquare) {
+        return Math.abs(this.file.compareTo(boardSquare.file)) > 1;
+    }
 }
 
