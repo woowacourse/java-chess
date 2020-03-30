@@ -1,61 +1,83 @@
 package chess.piece;
 
+import chess.position.Position;
+import chess.position.Rank;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import chess.position.Position;
-import chess.position.Rank;
-
 public class Pawn extends Piece {
-	private static final int MAXIMUM_MOVE_DISTANCE = 2;
+    private static final int MINIMUM_MOVEMENT_RANK = 1;
+    private static final int MAXIMUM_MOVEMENT_RANK = 2;
 
-	private boolean hasMoved;
+    private boolean hasMoved;
 
-	public Pawn(Team team) {
-		super(team, "P");
-		hasMoved = false;
-	}
+    public Pawn(Team team) {
+        super(team, "P");
+        hasMoved = false;
+    }
 
-	@Override
-	public List<Position> findTraceBetween(Position start, Position end) {
-		//한칸또는두칸앞으로 가지않는경우 || 처음이 아닌데 앞으로 두칸 가려고 하는경우
-		if (isNotMovable(start, end) || isNotAbleToMoveDoubleSquare(start, end)) {
-			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
-		}
-		if ((Math.abs(end.getRankNumber() - start.getRankNumber()) == MAXIMUM_MOVE_DISTANCE)) {
-			List<Rank> ranks = Rank.valuesBetween(start.getRank(), end.getRank());
-			return ranks.stream()
-				.map(rank -> Position.of(start.getFile(), rank))
-				.collect(Collectors.toList());
-		}
-		return Collections.emptyList();
-	}
+//    private boolean isNotMoveOneOrTwoSquaresForward(Position start, Position end) {
+//        return !isMoveOneOrTwoSquaresForward(start, end);
+//    }
 
-	private boolean isNotMovable(Position start, Position end) {
-		return !isMovable(start, end);
-	}
+//    private boolean isMoveOneOrTwoSquaresForward(Position start, Position end) {
+//        int increaseAmountOfRank = start.increaseAmountOfRank(end);
+//        return start.isSameFile(end) && validateTeamAndIncreaseAmount(increaseAmountOfRank);
+//    }
 
-	private boolean isMovable(Position start, Position end) {
-		int rankMoveDistance = end.getRankNumber() - start.getRankNumber();
-		return start.isSameFile(end) && rankMoveDistance > 0 && rankMoveDistance <= 2;
-	}
+//    private boolean validateTeamAndIncreaseAmount(int increaseAmountOfRank) {
+//        int differenceBetweenTwoRanks = team.isWhite() ? increaseAmountOfRank : -1 * increaseAmountOfRank;
+//        return differenceBetweenTwoRanks >= MINIMUM_MOVEMENT_RANK && differenceBetweenTwoRanks <= MAXIMUM_MOVEMENT_RANK;
+//    }
 
-	private boolean isNotAbleToMoveDoubleSquare(Position start, Position end) {
-		return !isAbleToMoveDoubleSquare(start, end);
-	}
+//    private boolean isNotAbleToMoveDoubleSquare(Position start, Position end) {
+//        return !isAbleToMoveDoubleSquare(start, end);
+//    }
 
-	private boolean isAbleToMoveDoubleSquare(Position start, Position end) {
-		return !hasMoved || (Math.abs(end.getFileNumber() - start.getFileNumber()) != 2);
-	}
+//    private boolean isAbleToMoveDoubleSquare(Position start, Position end) {
+//        return !hasMoved && start.differenceOfFile(end) != MAXIMUM_MOVEMENT_RANK;
+//    }
 
-	@Override
-	public void updateHasMoved() {
-		this.hasMoved = true;
-	}
+    private boolean isValidMovementWithoutConsideringOtherPieces(Position source, Position target) {
+        List<Position> movablePositionsWithoutConsideringOtherPieces = new ArrayList<>();
+        if (team.isWhite()) {
+            if (!hasMoved) {
+                movablePositionsWithoutConsideringOtherPieces.add(source.getUpUp());
+            }
+            //위에3칸
+        }
+        if (team.isBlack()) {
+            if (!hasMoved) {
+                movablePositionsWithoutConsideringOtherPieces.add(source.getDownDown());
+            }
+            //아래3칸
+        }
+        return movablePositionsWithoutConsideringOtherPieces.contains(target);
+    }
 
-	@Override
-	public List<Position> getMovablePositionsRegardlessOtherPieces(Position position) {
-		return null;
-	}
+    @Override
+    public void updateHasMoved() {
+        this.hasMoved = true;
+    }
+
+    @Override
+    public boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target) {
+        //TODO: 폰의 움직임을 정하려면 board가 필요하다... 이를 해결하자
+//        return isNotMoveOneOrTwoSquaresForward(source, target) || isNotAbleToMoveDoubleSquare(source, target);
+        return !isValidMovementWithoutConsideringOtherPieces(source, target);
+    }
+
+    @Override
+    public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
+        if (start.differenceOfRank(end) == MAXIMUM_MOVEMENT_RANK) {
+            List<Rank> ranks = Rank.valuesBetween(start.getRank(), end.getRank());
+            return ranks.stream()
+                    .map(rank -> Position.of(start.getFile(), rank))
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+    }
 }

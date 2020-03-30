@@ -14,22 +14,12 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Position> getMovablePositionsRegardlessOtherPieces(Position position) {
-        List<Position> positions = new ArrayList<>();
-        for (File file : position.fileValuesWithDifferenceBelow(1)) {
-            for (Rank rank : position.rankValuesWithDifferenceBelow(1)) {
-                positions.add(Position.of(file, rank));
-            }
-        }
-        positions.remove(position);
-        return positions;
+    public boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target) {
+        return source.isNotDistanceOneSquare(target);
     }
 
     @Override
-    public List<Position> findTraceBetween(Position start, Position end) {
-        if (start.isNotDistanceOneSquare(end)) {
-            throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
-        }
+    public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
         return Collections.emptyList();
     }
 }

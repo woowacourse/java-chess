@@ -29,7 +29,11 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public abstract List<Position> getMovablePositionsRegardlessOtherPieces(Position position);
+    public boolean isNotSameTeam(Team turn) {
+        return !isSameTeam(turn);
+    }
 
-    public abstract List<Position> findTraceBetween(Position start, Position end);
+    public abstract boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target);
+
+    public abstract List<Position> movePathExceptSourceAndTarget(Position source, Position target);
 }

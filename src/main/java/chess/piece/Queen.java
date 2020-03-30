@@ -13,12 +13,12 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public List<Position> getMovablePositionsRegardlessOtherPieces(Position position) {
-		return null;
+	public boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target) {
+		return false;
 	}
 
 	@Override
-	public List<Position> findTraceBetween(Position start, Position end) {
+	public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
 		if (start.isNotStraight(end) && start.isNotDiagonal(end)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}

@@ -10,15 +10,12 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public List<Position> getMovablePositionsRegardlessOtherPieces(Position position) {
-		return null;
+	public boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target) {
+		return source.isNotDiagonal(target);
 	}
 
 	@Override
-	public List<Position> findTraceBetween(Position start, Position end) {
-		if (start.isNotDiagonal(end)) {
-			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
-		}
+	public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
 		return Position.findDiagonalTrace(start, end);
 	}
 }

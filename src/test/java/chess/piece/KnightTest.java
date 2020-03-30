@@ -22,7 +22,7 @@ public class KnightTest {
 	@MethodSource("startDestinationTraceProvider")
 	void knightPathTest(Position start, Position destination, List<Position> trace) {
 		Knight knight = new Knight(BLACK);
-		List<Position> actual = knight.findTraceBetween(start, destination);
+		List<Position> actual = knight.movePathExceptSourceAndTarget(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
@@ -43,7 +43,7 @@ public class KnightTest {
 	@Test
 	void invalidMovementTest() {
 		Knight knight = new Knight(BLACK);
-		assertThatThrownBy(() -> knight.findTraceBetween(Position.of("a1"), Position.of("b1")))
+		assertThatThrownBy(() -> knight.movePathExceptSourceAndTarget(Position.of("a1"), Position.of("b1")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

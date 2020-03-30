@@ -12,9 +12,6 @@ public enum Team {
     }
 
     public Team getOppositeTeam() {
-        if (this.isBlack()) {
-            return WHITE;
-        }
-        return BLACK;
+        return isWhite() ? BLACK : WHITE;
     }
 }

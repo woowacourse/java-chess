@@ -12,15 +12,12 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public List<Position> getMovablePositionsRegardlessOtherPieces(Position position) {
-		return null;
+	public boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target) {
+		return source.isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(target);
 	}
 
 	@Override
-	public List<Position> findTraceBetween(Position start, Position end) {
-		if (start.isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(end)) {
-			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
-		}
+	public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
 		return new ArrayList<>(Collections.emptyList());
 	}
 }

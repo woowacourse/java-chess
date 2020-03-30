@@ -33,7 +33,7 @@ public class Position {
         return CACHE.get(lowerCaseKey);
     }
 
-    private static void validate(String key){
+    private static void validate(String key) {
         if (CACHE.get(key) == null) {
             throw new IllegalArgumentException("위치 입력값이 올바르지 않습니다.");
         }
@@ -61,6 +61,14 @@ public class Position {
             positions.add(Position.of(files.get(i), ranks.get(i)));
         }
         return Collections.unmodifiableList(positions);
+    }
+
+    public int differenceOfFile(Position other) {
+        return Math.abs(getFileNumber() - other.getFileNumber());
+    }
+
+    public int differenceOfRank(Position other) {
+        return Math.abs(getRankNumber() - other.getRankNumber());
     }
 
     public boolean isStraight(Position other) {
@@ -119,12 +127,16 @@ public class Position {
                 == KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE;
     }
 
-    public File[] fileValuesWithDifferenceBelow(int distance){
+    public File[] fileValuesWithDifferenceBelow(int distance) {
         return this.file.valuesWithDifferenceBelow(distance);
     }
 
-    public Rank[] rankValuesWithDifferenceBelow(int distance){
+    public Rank[] rankValuesWithDifferenceBelow(int distance) {
         return this.rank.valuesWithDifferenceBelow(distance);
+    }
+
+    public int increaseAmountOfRank(Position other) {
+        return other.getRankNumber() - getRankNumber();
     }
 
     public File getFile() {

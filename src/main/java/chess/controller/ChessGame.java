@@ -43,7 +43,7 @@ public class ChessGame {
         try {
             Command command = Command.inGameCommandOf(InputView.requestCommand());
             proceedIfCommandIsMove(command);
-            printScoresIfCommandIsState(command);
+            printScoresIfCommandIsStatus(command);
         } catch (CommandException | IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
             play();
@@ -59,7 +59,7 @@ public class ChessGame {
         }
     }
 
-    private void printScoresIfCommandIsState(Command command) {
+    private void printScoresIfCommandIsStatus(Command command) {
         if (command.isStatus()) {
             OutputView.printScores(board.calculateScores());
         }

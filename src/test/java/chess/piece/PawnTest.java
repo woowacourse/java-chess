@@ -30,7 +30,7 @@ public class PawnTest {
 	@MethodSource("startDestinationTraceProvider")
 	void pawnPathTest(Position start, Position destination, List<Position> trace) {
 		Pawn pawn = new Pawn(BLACK);
-		List<Position> actual = pawn.findTraceBetween(start, destination);
+		List<Position> actual = pawn.movePathExceptSourceAndTarget(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
@@ -39,15 +39,6 @@ public class PawnTest {
 			Arguments.of(Position.of("e5"), Position.of("e6"), Collections.emptyList()),
 			Arguments.of(Position.of("e5"), Position.of("e7"), singletonList(Position.of("e6")))
 		);
-	}
-
-	@DisplayName("허용되지 않은 출발위치와 도착위치인 경우 예외가 발생하는지 테스트")
-	@Test
-	void invalidMovementTest() {
-		Pawn king = new Pawn(BLACK);
-		assertThatThrownBy(() -> king.findTraceBetween(Position.of("a1"), Position.of("b3")))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}
 
 	@DisplayName("체스말의 팀과 종류에 따라 심볼이 반환된다.")
@@ -63,7 +54,7 @@ public class PawnTest {
 	@CsvSource(value = {"a1,a2", "a1,a3"})
 	void initialMoveTest(String start, String end) {
 		Pawn pawn = new Pawn(BLACK);
-		assertThatCode(() -> pawn.findTraceBetween(Position.of(start), Position.of(end)))
+		assertThatCode(() -> pawn.movePathExceptSourceAndTarget(Position.of(start), Position.of(end)))
 			.doesNotThrowAnyException();
 	}
 

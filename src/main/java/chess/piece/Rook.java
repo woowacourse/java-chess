@@ -13,15 +13,12 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public List<Position> getMovablePositionsRegardlessOtherPieces(Position position) {
-		return null;
+	public boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target) {
+		return source.isNotStraight(target);
 	}
 
 	@Override
-	public List<Position> findTraceBetween(Position start, Position end) {
-		if (start.isNotStraight(end)) {
-			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
-		}
+	public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
 		if (start.isSameRank(end)) {
 			List<File> files = File.valuesBetween(start.getFile(), end.getFile());
 			return files.stream()
