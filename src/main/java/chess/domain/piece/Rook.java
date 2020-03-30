@@ -1,33 +1,20 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.util.Direction;
+import chess.domain.strategy.MoveStrategy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class Rook extends MultipleStep {
-    private static final List<Direction> DIRECTIONS = new ArrayList<>(
-            Arrays.asList(
-                    Direction.NORTH,
-                    Direction.EAST,
-                    Direction.SOUTH,
-                    Direction.WEST
-            )
-    );
-
-    public Rook(char representation, Team team, Position position) {
-        super(representation, team, position, PieceType.ROOK);
+public class Rook extends Piece {
+    public Rook(MoveStrategy moveStrategy,  char representation, Team team, Position position) {
+        super(moveStrategy, representation, team, position);
     }
 
     @Override
-    public Piece movePiecePosition(Position toPosition) {
-        return new Rook(representation, team, toPosition);
+    public Piece movedPiece(Position toPosition) {
+        return new Rook(moveStrategy, representation, team, toPosition);
     }
 
     @Override
-    protected List<Direction> getDirections() {
-        return DIRECTIONS;
+    public double score() {
+        return 5;
     }
 }

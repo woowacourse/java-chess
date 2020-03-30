@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.domain.strategy.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +22,7 @@ public class KingTest {
     void setUp() {
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
-                INITIALIZED_POSITIONS.add(new Blank('.', Team.BLANK, new Position(col, row)));
+                INITIALIZED_POSITIONS.add(new Blank(new BlankMoveStrategy(),  '.', Team.BLANK, new Position(col, row)));
             }
         }
     }
@@ -30,17 +30,16 @@ public class KingTest {
     @DisplayName("킹의 이동 가능 위치")
     @ParameterizedTest
     @MethodSource("getCasesForKingMoveByDirection")
-    void kingMove(Piece piece, List<Position> expectedToPositions) {
-        INITIALIZED_POSITIONS.set(36, new King('k', Team.WHITE, new Position(5, 5)));
-        INITIALIZED_POSITIONS.set(27, new Rook('r', Team.WHITE, new Position(4, 4)));
-        INITIALIZED_POSITIONS.set(37, new Bishop('B', Team.BLACK, new Position(6, 5)));
-        Board board = new Board(INITIALIZED_POSITIONS);
-        assertThat(piece.getPossiblePositions(board)).isEqualTo(expectedToPositions);
+    void kingMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
+        INITIALIZED_POSITIONS.set(36, new King(new KingMoveStrategy(), 'k', Team.WHITE, new Position(5, 5)));
+        INITIALIZED_POSITIONS.set(27, new Rook(new RookMoveStrategy(), 'r', Team.WHITE, new Position(4, 4)));
+        INITIALIZED_POSITIONS.set(37, new Bishop(new BishopMoveStrategy(), 'B', Team.BLACK, new Position(6, 5)));
+        assertThat(moveStrategy.getPossiblePositions(INITIALIZED_POSITIONS, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForKingMoveByDirection() {
         return Stream.of(
-                Arguments.of(new King('k', Team.WHITE, new Position(5, 5)),
+                Arguments.of(new KingMoveStrategy(), new King(new KingMoveStrategy(), 'k', Team.WHITE, new Position(5, 5)),
                         Arrays.asList(
                                 new Position(5, 6),
                                 new Position(6, 6),

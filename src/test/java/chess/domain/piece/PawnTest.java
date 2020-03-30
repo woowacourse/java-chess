@@ -3,6 +3,9 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
+import chess.domain.strategy.BlackPawnMoveStrategy;
+import chess.domain.strategy.MoveStrategy;
+import chess.domain.strategy.WhitePawnMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,23 +21,23 @@ public class PawnTest {
     @DisplayName("폰의 이동 가능 위치")
     @ParameterizedTest
     @MethodSource("getCasesForPawnMoveByDirection")
-    void pawnMove(Piece piece, List<Position> expectedToPositions) {
+    void pawnMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
         Board board = BoardFactory.createBoard();
-        assertThat(piece.getPossiblePositions(board)).isEqualTo(expectedToPositions);
+        assertThat(moveStrategy.getPossiblePositions(board.getBoard(), piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForPawnMoveByDirection() {
         return Stream.of(
-                Arguments.of(new WhitePawn('p', Team.WHITE, new Position(2, 2)),
+                Arguments.of(new WhitePawnMoveStrategy(), new WhitePawn(new WhitePawnMoveStrategy(), 'p', Team.WHITE, new Position(2, 2)),
                         Arrays.asList(new Position(2, 3), new Position(2, 4))),
 
-                Arguments.of(new WhitePawn('p', Team.WHITE, new Position(3, 4)),
+                Arguments.of(new WhitePawnMoveStrategy(), new WhitePawn(new WhitePawnMoveStrategy(), 'p', Team.WHITE, new Position(3, 4)),
                         Arrays.asList(new Position(3, 5))),
 
-                Arguments.of(new BlackPawn('P', Team.BLACK, new Position(2, 7)),
+                Arguments.of(new BlackPawnMoveStrategy(), new BlackPawn(new BlackPawnMoveStrategy(),  'P', Team.BLACK, new Position(2, 7)),
                         Arrays.asList(new Position(2, 6), new Position(2, 5))),
 
-                Arguments.of(new BlackPawn('P', Team.BLACK, new Position(4, 6)),
+                Arguments.of(new BlackPawnMoveStrategy(), new BlackPawn(new BlackPawnMoveStrategy(), 'P', Team.BLACK, new Position(4, 6)),
                         Arrays.asList(new Position(4, 5)))
         );
     }

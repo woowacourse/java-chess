@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.exception.InvalidPositionException;
 import chess.exception.OutOfBoardRangeException;
 
 import java.util.Objects;
@@ -7,12 +8,20 @@ import java.util.Objects;
 public class Position {
     private static final int ASCII_GAP = 96;
     private static final int FIRST_INDEX = 0;
-    private static final int END_INDEX = 8;
-    private static final int START_INDEX = 1;
+    public static final int END_INDEX = 8;
+    public static final int START_INDEX = 1;
     public static final int ROW_SIZE = 8;
 
     private final String x;
     private final String y;
+
+    public Position(String position) {
+        if (position.length() != 2) {
+            throw new InvalidPositionException("좌표를 올바른 방식으로 입력해 주세요");
+        }
+        this.x = String.valueOf(position.charAt(0));
+        this.y = String.valueOf(position.charAt(1));
+    }
 
     public Position(int x, int y) {
         this(String.valueOf((char) (x + ASCII_GAP)), String.valueOf(y));
@@ -55,5 +64,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x='" + x + '\'' +
+                ", y='" + y + '\'' +
+                '}';
     }
 }

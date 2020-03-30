@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.domain.strategy.BlankMoveStrategy;
+import chess.domain.strategy.KnightMoveStrategy;
+import chess.domain.strategy.MoveStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +24,7 @@ public class KnightTest {
     void setUp() {
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
-                INITIALIZED_POSITIONS.add(new Blank('.', Team.BLANK, new Position(col, row)));
+                INITIALIZED_POSITIONS.add(new Blank(new BlankMoveStrategy(),  '.', Team.BLANK, new Position(col, row)));
             }
         }
     }
@@ -30,15 +32,14 @@ public class KnightTest {
     @DisplayName("나이트의 이동 가능 위치")
     @ParameterizedTest
     @MethodSource("getCasesForKnightMoveByDirection")
-    void knightMove(Piece piece, List<Position> expectedToPositions) {
-        INITIALIZED_POSITIONS.set(36, new Knight('n', Team.WHITE, new Position(5, 5)));
-        Board board = new Board(INITIALIZED_POSITIONS);
-        assertThat(piece.getPossiblePositions(board)).isEqualTo(expectedToPositions);
+    void knightMove(MoveStrategy moveStrategy,  Piece piece, List<Position> expectedToPositions) {
+        INITIALIZED_POSITIONS.set(36, new Knight(new KnightMoveStrategy(),  'n', Team.WHITE, new Position(5, 5)));
+        assertThat(moveStrategy.getPossiblePositions(INITIALIZED_POSITIONS, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForKnightMoveByDirection() {
         return Stream.of(
-                Arguments.of(new Knight('n', Team.WHITE, new Position(5, 5)),
+                Arguments.of(new KnightMoveStrategy(), new Knight(new KnightMoveStrategy(), 'n', Team.WHITE, new Position(5, 5)),
                         Arrays.asList(
                                 new Position(6, 7), new Position(7, 6),
                                 new Position(7, 4), new Position(6, 3),

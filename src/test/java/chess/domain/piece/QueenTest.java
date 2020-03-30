@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.domain.strategy.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +22,7 @@ public class QueenTest {
     void setUp() {
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
-                INITIALIZED_POSITIONS.add(new Blank('.', Team.BLANK, new Position(col, row)));
+                INITIALIZED_POSITIONS.add(new Blank(new BlankMoveStrategy(), '.', Team.BLANK, new Position(col, row)));
             }
         }
     }
@@ -30,19 +30,18 @@ public class QueenTest {
     @DisplayName("퀸의 이동 가능 위치")
     @ParameterizedTest
     @MethodSource("getCasesForQueenMoveByDirection")
-    void bishopMove(Piece piece, List<Position> expectedToPositions) {
-        INITIALIZED_POSITIONS.set(36, new Bishop('q', Team.WHITE, new Position(5, 5)));
-        INITIALIZED_POSITIONS.set(20, new WhitePawn('p', Team.WHITE, new Position(5, 3)));
-        INITIALIZED_POSITIONS.set(33, new Knight('N', Team.BLACK, new Position(2, 5)));
-        INITIALIZED_POSITIONS.set(54, new Rook('R', Team.BLACK, new Position(7, 7)));
-        INITIALIZED_POSITIONS.set(0, new Queen('q', Team.WHITE, new Position(1, 1)));
-        Board board = new Board(INITIALIZED_POSITIONS);
-        assertThat(piece.getPossiblePositions(board)).isEqualTo(expectedToPositions);
+    void bishopMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
+        INITIALIZED_POSITIONS.set(36, new Bishop(new BishopMoveStrategy(), 'q', Team.WHITE, new Position(5, 5)));
+        INITIALIZED_POSITIONS.set(20, new WhitePawn(new WhitePawnMoveStrategy(), 'p', Team.WHITE, new Position(5, 3)));
+        INITIALIZED_POSITIONS.set(33, new Knight(new KnightMoveStrategy(), 'N', Team.BLACK, new Position(2, 5)));
+        INITIALIZED_POSITIONS.set(54, new Rook(new RookMoveStrategy(), 'R', Team.BLACK, new Position(7, 7)));
+        INITIALIZED_POSITIONS.set(0, new Queen(new QueenMoveStrategy(), 'q', Team.WHITE, new Position(1, 1)));
+        assertThat(moveStrategy.getPossiblePositions(INITIALIZED_POSITIONS, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForQueenMoveByDirection() {
         return Stream.of(
-                Arguments.of(new Queen('q', Team.WHITE, new Position(5, 5)),
+                Arguments.of(new QueenMoveStrategy(), new Queen(new QueenMoveStrategy(), 'q', Team.WHITE, new Position(5, 5)),
                         Arrays.asList(
                                 new Position(5, 6), new Position(5, 7),
                                 new Position(5, 8), new Position(6, 6),

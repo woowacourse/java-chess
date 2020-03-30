@@ -18,8 +18,7 @@ public enum Direction {
     EAST_EAST_SOUTH(2, -1),
     EAST_EAST_NORTH(2, 1),
     WEST_WEST_SOUTH(-2, -1),
-    WEST_WEST_NORTH(-2, 1),
-    NONE(0, 0);
+    WEST_WEST_NORTH(-2, 1);
 
     private final int col;
     private final int row;
