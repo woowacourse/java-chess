@@ -36,13 +36,23 @@ public class Score {
     public static double calculateScore(Team team, Function<Coordinate, Tile> tileFinder) {
         Score sum = zero();
         for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Coordinate coordinate = Coordinate.of(file, rank);
-                sum = sum.add(tileFinder.apply(coordinate), team);
-            }
+            sum = sum.add(getSumFileScore(team, tileFinder, file));
             sum = sum.subtractPawnScore();
         }
         return sum.getSum();
+    }
+
+    private static Score getSumFileScore(Team team, Function<Coordinate, Tile> tileFinder, File file) {
+        Score sum = zero();
+        for (Rank rank : Rank.values()) {
+            Coordinate coordinate = Coordinate.of(file, rank);
+            sum = sum.add(tileFinder.apply(coordinate), team);
+        }
+        return sum;
+    }
+
+    private Score add(Score score) {
+        return new Score(this.sum + score.getSum(), this.pawnCount + score.pawnCount);
     }
 
     private Score subtractPawnScore() {

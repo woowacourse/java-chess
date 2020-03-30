@@ -39,9 +39,13 @@ public class BoardGenerator {
 
     private static void addBlank(ChessBoard chessBoard) {
         for (File file : File.values()) {
-            for (int rank = Rank.THREE.getValue(); rank <= Rank.SIX.getValue(); rank++) {
-                chessBoard.put(new Tile(Coordinate.of(file, Rank.findByValue(rank)), Pieces.findBy(Blank.class, Team.NOTHING)));
-            }
+            putEmptyTileInFile(chessBoard, file);
+        }
+    }
+
+    private static void putEmptyTileInFile(ChessBoard chessBoard, File file) {
+        for (int rank = Rank.THREE.getValue(); rank <= Rank.SIX.getValue(); rank++) {
+            chessBoard.put(new Tile(Coordinate.of(file, Rank.findByValue(rank)), Pieces.findBy(Blank.class, Team.NOTHING)));
         }
     }
 }

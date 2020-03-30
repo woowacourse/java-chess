@@ -21,12 +21,16 @@ public class ChessBoard {
     public static ChessBoard empty() {
         Map<Coordinate, Tile> emptyBoard = new HashMap<>();
         for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Coordinate coordinate = Coordinate.of(file, rank);
-                emptyBoard.put(coordinate, new Tile(coordinate, new Blank()));
-            }
+            putEmptyTileInFile(emptyBoard, file);
         }
         return new ChessBoard(emptyBoard);
+    }
+
+    private static void putEmptyTileInFile(Map<Coordinate, Tile> emptyBoard, File file) {
+        for (Rank rank : Rank.values()) {
+            Coordinate coordinate = Coordinate.of(file, rank);
+            emptyBoard.put(coordinate, new Tile(coordinate, new Blank()));
+        }
     }
 
     public Map<Coordinate, Tile> getChessBoard() {
