@@ -29,8 +29,8 @@ public class ForwardChessBoard implements Publishable {
         return chessBoard.isNotSameTeam(source, currentTeam);
     }
 
-    public boolean move(final String source, final String target) {
-        return chessBoard.move(source, target, this::push);
+    public void move(final String source, final String target) {
+        push(chessBoard.move(source, target));
     }
 
     public double calculateScore(final Team currentTeam) {

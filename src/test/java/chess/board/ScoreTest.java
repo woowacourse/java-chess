@@ -18,13 +18,8 @@ class ScoreTest {
     @DisplayName("zero는 0을 가지고 있다.")
     @Test
     void zero() {
-        //given
-        Score zero = Score.zero();
+        double sum = Score.zero().getSum();
 
-        //when
-        double sum = zero.getSum();
-
-        //then
         assertThat(sum).isEqualTo(0);
     }
 

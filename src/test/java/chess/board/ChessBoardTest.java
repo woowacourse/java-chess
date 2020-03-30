@@ -11,22 +11,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
 
     @DisplayName("체스말이 움직였는지 확인")
     @ParameterizedTest
-    @CsvSource(value = {"b1,c3,true", "b1,c4,false", "a1,a3,false", "a7,a6,true"})
-    void moveTest(String sourceKey, String targetKey, boolean expect) {
+    @CsvSource(value = {"b1,c4", "b1,c9", "a1,a3", "a7,a2"})
+    void moveTest(String sourceKey, String targetKey) {
         //given
         ForwardChessBoard chessBoard = BoardGenerator.create();
         ChessManager chessManager = new ChessManager(chessBoard);
 
-        //when
-        boolean actual = chessBoard.move(sourceKey, targetKey);
-
-        //then
-        assertThat(actual).isEqualTo(expect);
+        assertThatThrownBy(() -> chessBoard.move(sourceKey, targetKey))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("체스판 하나의 열에 대한 점수 합산 확인")

@@ -20,11 +20,15 @@ public class ChessManager implements Observable {
         chessBoard.subscribe(this);
     }
 
-    public boolean move(String source, String target) {
+    public void move(String source, String target) {
         if (chessBoard.isNotSameTeam(source, currentTeam)) {
-            return false;
+            return;
         }
-        return chessBoard.move(source, target);
+        try {
+            chessBoard.move(source, target);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public Map<Coordinate, Tile> getChessBoard() {

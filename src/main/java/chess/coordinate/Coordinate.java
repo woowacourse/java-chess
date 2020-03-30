@@ -2,6 +2,7 @@ package chess.coordinate;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,11 +16,16 @@ public final class Coordinate {
     }
 
     public static Coordinate of(final File file, final Rank rank) {
-        return CoordinateCache.cache.get(file.getSymbol() + rank.getValue());
+        String key = file.getSymbol() + rank.getValue();
+        return Coordinate.of(key);
     }
 
     public static Coordinate of(String key) {
-        return CoordinateCache.cache.get(key);
+        Coordinate coordinate = CoordinateCache.cache.get(key);
+        if (Objects.isNull(coordinate)) {
+            throw new IllegalArgumentException("Coordinate out of range.");
+        }
+        return coordinate;
     }
 
     public Coordinate move(Direction direction) {

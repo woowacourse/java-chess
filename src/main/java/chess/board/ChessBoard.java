@@ -4,12 +4,12 @@ import chess.coordinate.Coordinate;
 import chess.coordinate.File;
 import chess.coordinate.Rank;
 import chess.piece.Blank;
+import chess.piece.Piece;
 import chess.piece.Team;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ChessBoard {
     private final Map<Coordinate, Tile> chessBoard;
@@ -33,22 +33,21 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public boolean move(String sourceKey, String targetKey, Consumer<Object> pushEvent) {
+    public Piece move(String sourceKey, String targetKey) {
         Tile sourceTile = chessBoard.get(Coordinate.of(sourceKey));
         Tile targetTile = chessBoard.get(Coordinate.of(targetKey));
 
         if (sourceTile.canNotReach(targetTile)) {
-            return false;
+            throw new IllegalArgumentException("That piece can not move to target.");
         }
 
         Directions directions = sourceTile.findPath(targetTile);
 
-        if (directions.isExist(sourceKey, chessBoard::get)) {
-            return false;
+        if (directions.hasObstacle(sourceKey, chessBoard::get)) {
+            throw new IllegalArgumentException("There is a obstacle between source and target.");
         }
 
-        pushEvent.accept(targetTile.replacePiece(sourceTile));
-        return true;
+        return targetTile.replacePiece(sourceTile);
     }
 
     public double calculateScore(Team team) {
