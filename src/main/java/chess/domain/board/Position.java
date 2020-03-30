@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.piece.direction.Direction;
+
 import java.util.Objects;
 
 import static chess.util.NullValidator.validateNull;
@@ -64,12 +66,13 @@ public class Position {
         return this.yPoint.isSeven();
     }
 
-    public Xpoint getXPoint() {
-        return xPoint;
-    }
+    public Position changeTo(Direction direction) {
+        validateNull(direction);
 
-    public Ypoint getYPoint() {
-        return yPoint;
+        int changedXPoint = this.xPoint.getValue() + direction.getXPointValue();
+        int changedYPoint = this.yPoint.getValue() + direction.getYPointValue();
+
+        return PositionFactory.of(changedXPoint, changedYPoint);
     }
 
     @Override

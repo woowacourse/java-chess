@@ -48,11 +48,11 @@ public enum Direction {
         return this == NORTH;
     }
 
-    public int getXPoint() {
+    public int getXPointValue() {
         return xPoint;
     }
 
-    public int getYPoint() {
+    public int getYPointValue() {
         return yPoint;
     }
 }

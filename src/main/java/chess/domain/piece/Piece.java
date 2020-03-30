@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.domain.board.Positions;
 import chess.domain.piece.direction.Direction;
 
 import java.util.ArrayList;
@@ -73,20 +72,12 @@ public abstract class Piece {
 
         Position currentPosition = this.position;
         while (!currentPosition.equals(targetPosition)) {
-            Position changePosition = getChangePosition(currentPosition, direction);
+            Position changePosition = currentPosition.changeTo(direction);
             currentPosition = changePosition;
             path.add(changePosition);
         }
 
         return path;
-    }
-
-    private Position getChangePosition(Position currentPosition, Direction direction) {
-        validateNull(currentPosition, direction);
-
-        int changedXPoint = currentPosition.getXPoint().getValue() + direction.getXPoint();
-        int changedYPoint = currentPosition.getYPoint().getValue() + direction.getYPoint();
-        return Positions.of(changedXPoint, changedYPoint);
     }
 
     protected abstract void validateDistance(Position targetPosition);
