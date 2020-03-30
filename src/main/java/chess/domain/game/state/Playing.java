@@ -1,4 +1,4 @@
-package chess.domain.state;
+package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.exception.InvalidTurnException;
