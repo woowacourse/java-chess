@@ -7,7 +7,8 @@ import static chess.util.NullValidator.validateNull;
 public enum Command {
     START("start"),
     STATUS("status"),
-    END("end");
+    END("end"),
+    ERROR("error");
 
     private final String commandString;
 
@@ -32,7 +33,11 @@ public enum Command {
         return this == START;
     }
 
-    public boolean isEnd() {
-        return this == END;
+    public boolean isStatus() {
+        return this == STATUS;
+    }
+
+    public boolean isError() {
+        return this == ERROR;
     }
 }
