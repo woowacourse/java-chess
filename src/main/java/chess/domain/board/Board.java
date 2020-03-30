@@ -23,21 +23,25 @@ public class Board {
 	private Board() {
 		board = new HashMap<>();
 
+		for (Rank rank : Rank.values()) {
+			makeBoardBy(rank);
+		}
+	}
+
+	private void makeBoardBy(Rank rank) {
 		WhitePieces whitePieces = WhitePiecesFactory.create();
 		BlackPieces blackPieces = BlackPiecesFactory.create();
 
-		for (Rank rank : Rank.values()) {
-			for (File file : File.values()) {
-				Position position = Position.of(file.getFile() + rank.getRow());
-				if (whitePieces.hasPiece(position)) {
-					board.put(position, whitePieces.getPiece(position));
-				}
-				if (blackPieces.hasPiece(position)) {
-					board.put(position, blackPieces.getPiece(position));
-				}
-				if (!whitePieces.hasPiece(position) && !blackPieces.hasPiece(position)) {
-					board.put(position, null);
-				}
+		for (File file : File.values()) {
+			Position position = Position.of(file.getFile() + rank.getRow());
+			if (whitePieces.hasPiece(position)) {
+				board.put(position, whitePieces.getPiece(position));
+			}
+			if (blackPieces.hasPiece(position)) {
+				board.put(position, blackPieces.getPiece(position));
+			}
+			if (!whitePieces.hasPiece(position) && !blackPieces.hasPiece(position)) {
+				board.put(position, null);
 			}
 		}
 	}
