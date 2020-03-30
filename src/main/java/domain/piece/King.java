@@ -18,7 +18,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	protected boolean validDirection(Direction direction) {
+	protected boolean validateDirection(Direction direction) {
 		if (Direction.everyDirection().contains(direction)) {
 			return true;
 		}
@@ -26,7 +26,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	protected boolean validStepSize(int rowGap, int columnGap) {
+	protected boolean validateStepSize(int rowGap, int columnGap) {
 		if ((Math.abs(rowGap) < MAX_STEP_SIZE) && (Math.abs(columnGap) < MAX_STEP_SIZE)) {
 			return true;
 		}

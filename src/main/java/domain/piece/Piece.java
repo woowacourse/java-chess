@@ -84,7 +84,7 @@ public abstract class Piece implements Movable {
 		int columnGap = this.position.calculateColumnGap(targetPosition);
 		Direction direction = findDirection(rowGap, columnGap);
 
-		return validDirection(direction) && validStepSize(rowGap, columnGap) &&
+		return validateDirection(direction) && validateStepSize(rowGap, columnGap) &&
 			validateRoute(direction, targetPosition, ranks);
 	}
 
@@ -116,9 +116,9 @@ public abstract class Piece implements Movable {
 		return Objects.hash(position, team);
 	}
 
-	protected abstract boolean validDirection(Direction direction);
+	protected abstract boolean validateDirection(Direction direction);
 
-	protected abstract boolean validStepSize(int rowGap, int columnGap);
+	protected abstract boolean validateStepSize(int rowGap, int columnGap);
 
 	protected abstract boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
 

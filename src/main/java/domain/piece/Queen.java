@@ -17,7 +17,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	protected boolean validDirection(Direction direction) {
+	protected boolean validateDirection(Direction direction) {
 		if (Direction.diagonalDirection().contains(direction) ||
 			Direction.linearDirection().contains(direction)) {
 			return true;
@@ -26,7 +26,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	protected boolean validStepSize(int rowGap, int columnGap) {
+	protected boolean validateStepSize(int rowGap, int columnGap) {
 		return true;
 	}
 
