@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.Color;
+import chess.domain.PieceScore;
 import chess.domain.board.Position;
 
 /**
@@ -28,5 +29,11 @@ public abstract class Piece {
 		return this.color == color;
 	}
 
+	public abstract boolean isSameName(PieceScore pieceScore);
+
 	public abstract List<Position> movablePositions(Position source, Map<Position, Piece> pieces);
+
+	public boolean isPawn() {
+		return false;
+	}
 }
