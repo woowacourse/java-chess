@@ -12,6 +12,7 @@ public class Pawn extends Piece {
 
 	private boolean hasMoved;
 
+
 	public Pawn(Team team) {
 		super(team);
 		hasMoved = false;

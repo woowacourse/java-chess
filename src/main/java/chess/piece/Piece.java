@@ -33,13 +33,21 @@ public abstract class Piece {
 		return team == turn;
 	}
 
-	protected abstract String getInitialCharacter();
-
-	public abstract double getScore();
-
-	public abstract List<Position> findMoveModeTrace(Position from, Position to);
-
 	public List<Position> findCatchModeTrace(Position from, Position to) {
 		return findMoveModeTrace(from, to);
 	}
+
+	public boolean isKing() {
+		return this instanceof King;
+	}
+
+	public boolean isPawn() {
+		return this instanceof Pawn;
+	}
+
+	public abstract List<Position> findMoveModeTrace(Position from, Position to);
+
+	protected abstract String getInitialCharacter();
+
+	public abstract double getScore();
 }

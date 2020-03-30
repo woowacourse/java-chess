@@ -7,15 +7,15 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
-	private final Board board = Board.createInitialBoard();
-
 	public void run() {
+		Board board = new Board();
 		OutputView.printGameIntro();
 
 		while (board.checkGameEnd()) {
 			Command command = Command.of(InputView.requestCommand());
 			System.out.println(command);
 			if (command.isStart()) {
+				board.start();
 				OutputView.printBoard(board);
 			} else if (command.isMove()) {
 				Position startPosition = Position.of(InputView.requestPosition());

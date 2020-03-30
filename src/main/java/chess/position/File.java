@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum File implements Coordinate {
+public enum File {
 	A("a", 1),
 	B("b", 2),
 	C("c", 3),

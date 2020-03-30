@@ -4,8 +4,12 @@ import static chess.position.File.*;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

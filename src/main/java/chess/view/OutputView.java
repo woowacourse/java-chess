@@ -15,6 +15,9 @@ public class OutputView {
 	private static final String END_COMMAND_INFORMATION_MESSAGE = "> 게임 종료 : end";
 	private static final String MOVE_COMMAND_INFORMATION_MESSAGE = "> 말 이동 : move source위치 target위치 - 예. move b2 b3";
 
+	private OutputView() {
+	}
+
 	public static void printGameIntro() {
 		System.out.println(GAME_INTRO_MESSAGE);
 		System.out.println(START_COMMAND_INFORMATION_MESSAGE);

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Position {
-
 	private static final Map<String, Position> CACHE = new HashMap<>();
 	private static final int KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE = 2;
 
@@ -47,16 +46,6 @@ public class Position {
 			positions.add(Position.of(files.get(i), ranks.get(i)));
 		}
 		return positions;
-	}
-
-	public static List<Position> collectPositionsBetween(Position start, Position end) {
-		List<Position> positions = new ArrayList<>();
-		List<File> files = File.valuesBetween(start.getFile(), end.getFile());
-		List<Rank> ranks = Rank.valuesBetween(start.getRank(), end.getRank());
-		for (int i = 0; i < files.size(); i++) {
-			positions.add(Position.of(files.get(i), ranks.get(i)));
-		}
-		return Collections.unmodifiableList(positions);
 	}
 
 	public boolean isStraight(Position other) {
