@@ -22,4 +22,9 @@ public class Empty extends Piece {
     protected List<Position> createMovableArea() {
         throw new IllegalAccessError();
     }
+
+    @Override
+    public boolean isNotEmpty() {
+        return false;
+    }
 }

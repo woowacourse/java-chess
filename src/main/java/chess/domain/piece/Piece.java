@@ -19,6 +19,12 @@ public abstract class Piece {
         position = destination;
     }
 
+    public abstract boolean canNotMoveTo(Piece that);
+
+    protected abstract List<Position> createMovableArea();
+
+    public abstract boolean isNotEmpty();
+
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }
@@ -26,10 +32,6 @@ public abstract class Piece {
     public boolean isNotSameTeam(Team team) {
         return this.team != team;
     }
-
-    public abstract boolean canNotMoveTo(Piece that);
-
-    protected abstract List<Position> createMovableArea();
 
     public Position getPosition() {
         return position;

@@ -27,4 +27,9 @@ public class Rook extends Piece {
     private boolean isCross(Position position) {
         return this.position.isColumnEquals(position) || this.position.isRowEquals(position);
     }
+
+    @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
 }

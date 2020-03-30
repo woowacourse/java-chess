@@ -17,7 +17,7 @@ public class ChessController {
 
     private static List<String> startOrEnd = List.of(START, END);
     private static List<String> moveOrStatus = List.of(MOVE, STATUS);
-    private static Team team = Team.BLACK;
+    private static Team team = Team.WHITE;
 
     public static void start(String input) {
         if (!startOrEnd.contains(input)) {
@@ -45,7 +45,7 @@ public class ChessController {
     }
 
     private static void move(String input, Board board) {
-        ChessService.of(board, Team.WHITE).move(MoveInfo.of(input));
+        ChessService.of(board, team).move(MoveInfo.of(input));
         OutputView.printBoard(board.getBoard());
         team = team.next();
 

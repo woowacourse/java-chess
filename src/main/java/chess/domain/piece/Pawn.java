@@ -42,4 +42,9 @@ public class Pawn extends Piece {
         return this.position.getColumnGap(position) <= 1 &&
                 PawnMoveInfo.of(team).isValidRowGap(this.position.getRowGap(position));
     }
+
+    @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
 }

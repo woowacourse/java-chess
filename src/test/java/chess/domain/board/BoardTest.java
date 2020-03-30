@@ -43,6 +43,7 @@ class BoardTest {
     void hasPieceIn_Return_False() {
         Map<Position, Piece> setter = new LinkedHashMap<>();
         setter.put(B5, new Rook(B5, Team.BLACK));
+        setter.put(B2, new Empty(B2));
 
         Board board = Board.of(setter);
 

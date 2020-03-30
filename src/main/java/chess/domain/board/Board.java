@@ -26,7 +26,7 @@ public class Board {
 
     public boolean hasPieceIn(List<Position> path) {
         return path.stream()
-                .anyMatch(key -> getBoard().containsKey(key));
+                .anyMatch(key -> get(key).isNotEmpty());
     }
 
     public void update(Position from, Position to) {

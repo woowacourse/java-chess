@@ -27,4 +27,9 @@ public class King extends Piece {
     private boolean isAround(Position position) {
         return Math.abs(position.getColumnGap(this.position)) <= 1 && Math.abs(position.getRowGap(this.position)) <= 1;
     }
+
+    @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
 }

@@ -24,6 +24,11 @@ public class Bishop extends Piece {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
+
     private boolean isDiagonal(Position position) {
         return Math.abs(position.getColumnGap(this.position)) == Math.abs(position.getRowGap(this.position));
     }

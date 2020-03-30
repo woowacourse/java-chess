@@ -28,4 +28,9 @@ public class Knight extends Piece {
         return (Math.abs(position.getColumnGap(this.position)) == 2 && Math.abs(position.getRowGap(this.position)) == 1) ||
                 (Math.abs(position.getColumnGap(this.position)) == 1 && Math.abs(position.getRowGap(this.position)) == 2);
     }
+
+    @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
 }

@@ -31,4 +31,9 @@ public class Queen extends Piece {
     private boolean isDiagonal(Position position) {
         return Math.abs(position.getColumnGap(this.position)) == Math.abs(position.getRowGap(this.position));
     }
+
+    @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
 }
