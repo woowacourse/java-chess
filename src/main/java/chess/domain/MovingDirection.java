@@ -23,6 +23,7 @@ public enum MovingDirection {
     NORTH_WEST_WEST(-2, 1),
     NORTH_NORTH_WEST(-1, 2);
 
+    public static final int ZERO = 0;
     private final int fileDirection;
     private final int rankDirection;
 
@@ -51,11 +52,11 @@ public enum MovingDirection {
     }
 
     private boolean isSameFileDirection(double fileDifference) {
-        return fileDirection * fileDifference >= 0;
+        return fileDirection * fileDifference >= ZERO;
     }
 
     private boolean isSameRankDirection(double rankDifference) {
-        return rankDirection * rankDifference >= 0;
+        return rankDirection * rankDifference >= ZERO;
     }
 
     public int getFileDirection() {

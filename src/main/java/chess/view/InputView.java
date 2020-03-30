@@ -13,9 +13,9 @@ public class InputView {
     private static final int PARAMETER_START_INDEX = 1;
     private static final String COMMAND_DELIMITER = " ";
 
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public RequestDto inputRequest() {
+    public static RequestDto inputRequest() {
         System.out.println("명령어를 입력하세요>");
         String input = scanner.nextLine();
         List<String> commands = Arrays.asList(input.split(COMMAND_DELIMITER));
@@ -26,7 +26,7 @@ public class InputView {
         return new RequestDto(command);
     }
 
-    private boolean hasParams(List<String> commands) {
+    private static boolean hasParams(List<String> commands) {
         return commands.size() > PARAMETER_START_INDEX;
     }
 

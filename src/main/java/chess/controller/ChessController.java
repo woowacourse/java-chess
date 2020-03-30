@@ -15,20 +15,13 @@ import java.util.stream.Collectors;
 
 public class ChessController {
 
-    private InputView inputView;
-    private OutputView outputView;
     private ChessGame chessGame = new ChessGame();
 
-    public ChessController(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
-    }
-
     public void run() {
-        outputView.printInitialMessage();
+        OutputView.printInitialMessage();
         while (!chessGame.isEnd()) {
             try {
-                RequestDto requestDto = inputView.inputRequest();
+                RequestDto requestDto = InputView.inputRequest();
 
                 switch (requestDto.getCommand()) {
                     case START:
@@ -42,14 +35,14 @@ public class ChessController {
                         break;
                     case STATUS:
                         Map<Player, Double> status = chessGame.getStatus();
-                        outputView.printStatus(status);
+                        OutputView.printStatus(status);
                         break;
                     case UNKNOWN:
                         throw new IllegalArgumentException();
                 }
                 Board board = chessGame.getBoard();
                 ResponseDto responseDto = ResponseDto.of(createBoardDto(board));
-                outputView.printResponse(responseDto);
+                OutputView.printResponse(responseDto);
             } catch (IllegalArgumentException ie) {
                 System.out.println(ie.getMessage());
             }

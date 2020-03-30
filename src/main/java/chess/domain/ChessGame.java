@@ -15,6 +15,10 @@ import java.util.Map;
 
 public class ChessGame {
 
+    public static final double DEFAULT_PAWN_POINT = 1d;
+    public static final double DUPLICATED_PAWN_POINT = 0.5d;
+    private static final double HALF = 2d;
+    private static final int PAWN_DUPLICATION_COUNT = 1;
     private State state;
     private Turn turn = Turn.from(Player.WHITE);
 
@@ -48,8 +52,8 @@ public class ChessGame {
         double whiteSum = 0;
 
         for (File file : File.values()) {
-            blackSum += getPawnPoints(file, Player.BLACK);
-            whiteSum += getPawnPoints(file, Player.WHITE);
+            blackSum += getPawnPointsByFile(file, Player.BLACK);
+            whiteSum += getPawnPointsByFile(file, Player.WHITE);
         }
 
         blackSum += state.getRemainPiece(Player.BLACK)
@@ -70,21 +74,26 @@ public class ChessGame {
         return Collections.unmodifiableMap(status);
     }
 
-    private double getPawnPoints(File file, Player player) {
-        double pawnSum = state.getRemainPiece(player)
+
+    private double getPawnPointsByFile(File file, Player player) {
+
+        /* 해당 file의 PAWN 점수합을 계산한다 */
+        double duplicatedPawnCount = getDuplicatedPawnCount(file, player);
+        if (duplicatedPawnCount > PAWN_DUPLICATION_COUNT) {
+            return duplicatedPawnCount * DUPLICATED_PAWN_POINT;
+        }
+        return duplicatedPawnCount * DEFAULT_PAWN_POINT;
+    }
+
+    private double getDuplicatedPawnCount(File file, Player player) {
+        /* 해당 file의 PAWN 개수합을 계산한다 */
+        return state.getRemainPiece(player)
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() instanceof Pawn)
                 .filter(entry -> entry.getKey().isSameFile(file))
                 .mapToDouble(entry -> entry.getValue().getPoint())
                 .sum();
-        if (pawnSum > 1) {
-            return pawnSum / 2d;
-        }
-        return pawnSum;
     }
 
-    // 각 리스트를 돌면서 pawn이 아닌 애들은 그냥 합해
-    // pawn인 애들은 file의 위치가 같은애들이 있는지를 확인하고, 있으면 0.5점이 돼
-    // 아니면 1점으로 계산하면 된다
 }

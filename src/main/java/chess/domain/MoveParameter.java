@@ -5,8 +5,8 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class MoveParameter {
-    Position source;
-    Position target;
+    private final Position source;
+    private final Position target;
 
     private MoveParameter(Position source, Position target) {
         this.source = source;

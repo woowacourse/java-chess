@@ -10,14 +10,14 @@ import java.util.Map;
 
 public class OutputView {
 
-    public void printInitialMessage() {
+    public static void printInitialMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printResponse(ResponseDto responseDto) {
+    public static void printResponse(ResponseDto responseDto) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("\n");
@@ -36,7 +36,7 @@ public class OutputView {
         System.out.println(stringBuilder.toString());
     }
 
-    private String getRankString(Map<Position, String> board, Rank rank) {
+    private static String getRankString(Map<Position, String> board, Rank rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
@@ -46,7 +46,7 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    private String getFileNames() {
+    private static String getFileNames() {
         StringBuilder stringBuilder = new StringBuilder();
         for (File file : File.values()) {
             stringBuilder.append(" " + file.toString() + " ");
@@ -54,7 +54,7 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    private String getPiece(Map<Position, String> board, Position position) {
+    private static String getPiece(Map<Position, String> board, Position position) {
         String piece = board.get(position);
         if (board.get(position) == null) {
             return " ";
@@ -62,7 +62,7 @@ public class OutputView {
         return piece;
     }
 
-    public void printStatus(Map<Player, Double> status) {
+    public static void printStatus(Map<Player, Double> status) {
         status.entrySet()
                 .stream()
                 .map(entry -> entry.getKey().toString() + " : " + entry.getValue())
