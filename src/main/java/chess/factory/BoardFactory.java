@@ -3,6 +3,7 @@ package chess.factory;
 import chess.domain.board.Board;
 import chess.domain.board.Row;
 import chess.domain.chesspiece.*;
+import chess.domain.game.GameStatus;
 import chess.domain.game.Team;
 
 import java.util.ArrayList;
@@ -22,11 +23,12 @@ public class BoardFactory {
 
     public static Board createBoard() {
         List<Row> board = new ArrayList<>();
+        GameStatus gameStatus = new GameStatus();
 
         addWhiteTeamRow(board);
         addBlankRows(board);
         addBlackTeamRow(board);
-        return new Board(board);
+        return new Board(board, gameStatus);
     }
 
     private static void addWhiteTeamRow(List<Row> board) {

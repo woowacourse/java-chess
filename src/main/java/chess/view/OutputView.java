@@ -47,9 +47,10 @@ public class OutputView {
     }
 
     public static void printScore(Board board) {
-        Team nowPlayingTeam = GameStatus.getNowPlayingTeam();
+        GameStatus gameStatus = board.getGameStatus();
+        Team nowPlayingTeam = gameStatus.getNowPlayingTeam();
         String nowPlayingTeamName = nowPlayingTeam.getTeamName();
-        double nowPlayingTeamScore = GameStatus.getTotalScore(board);
+        double nowPlayingTeamScore = gameStatus.getTotalScore(board);
 
         System.out.println("Score: " + nowPlayingTeamScore + " (" + nowPlayingTeamName + ")");
     }

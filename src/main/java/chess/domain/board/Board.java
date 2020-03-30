@@ -26,9 +26,11 @@ public class Board {
     private static final int INDEX_CORRECTION_NUMBER = 1;
 
     private List<Row> board;
+    private GameStatus gameStatus;
 
-    public Board(List<Row> board) {
+    public Board(List<Row> board, GameStatus gameStatus) {
         this.board = new ArrayList<>(board);
+        this.gameStatus = gameStatus;
     }
 
     public List<Row> getBoard() {
@@ -39,7 +41,7 @@ public class Board {
         ChessPiece chessPiece = getChessPiece(movingInfo.getStartPosition());
 
         checkNowPlayingTeam(chessPiece);
-        if (GameStatus.getNowPlayingTeam() == BLACK) {
+        if (gameStatus.getNowPlayingTeam() == BLACK) {
             reverseMove(chessPiece, movingInfo);
             return;
         }
@@ -50,8 +52,11 @@ public class Board {
         movingInfo = reverseMovingInfo(movingInfo);
 
         reverseBoard();
-        moveOperation(chessPiece, movingInfo);
-        reverseBoard();
+        try {
+            moveOperation(chessPiece, movingInfo);
+        } finally {
+            reverseBoard();
+        }
     }
 
     private void moveOperation(ChessPiece chessPiece, MovingInfo movingInfo) {
@@ -62,7 +67,7 @@ public class Board {
     }
 
     private void checkNowPlayingTeam(ChessPiece chessPiece) {
-        Team nowPlayingTeam = GameStatus.getNowPlayingTeam();
+        Team nowPlayingTeam = gameStatus.getNowPlayingTeam();
         if (chessPiece.getTeam() != nowPlayingTeam) {
             throw new IllegalArgumentException(nowPlayingTeam.getTeamName() + " 차례입니다.");
         }
@@ -170,7 +175,7 @@ public class Board {
     private void executeMove(ChessPiece chessPiece, MovingInfo movingInfo) {
         clearPosition(movingInfo.getStartPosition());
         setPosition(chessPiece, movingInfo.getTargetPosition());
-        GameStatus.changePlayingTeam();
+        gameStatus.changePlayingTeam();
         updateIfPawn(chessPiece);
     }
 
@@ -200,7 +205,7 @@ public class Board {
         String lowerCaseChessPieceName = chessPieceName.toLowerCase();
 
         if (lowerCaseChessPieceName.equals(KING.getName())) {
-            GameStatus.updateGameEnd();
+            gameStatus.updateGameEnd();
         }
     }
 
@@ -215,5 +220,9 @@ public class Board {
         int indexOfY = position.getY() - INDEX_CORRECTION_NUMBER;
 
         return board.get(indexOfX).get(indexOfY);
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
 }

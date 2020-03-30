@@ -12,15 +12,15 @@ import chess.view.OutputView;
 public class Application {
     public static void main(String[] args) {
         OutputView.printInitialMessage();
-        GameStatus.initialize();
         run();
     }
 
     private static void run() {
         Board board = BoardFactory.createBoard();
         String command = "";
+        GameStatus gameStatus = board.getGameStatus();
 
-        while (!Command.isEnd(command) && !GameStatus.isGameEnd()) {
+        while (!Command.isEnd(command) && !gameStatus.isGameEnd()) {
             command = getCommand();
             executeCommand(board, command);
         }

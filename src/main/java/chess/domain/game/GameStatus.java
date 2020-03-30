@@ -15,18 +15,15 @@ public class GameStatus {
     private static final int COUNT_INIT = 0;
     private static final Team INIT_TEAM = WHITE;
 
-    private static Team nowPlayingTeam = INIT_TEAM;
-    private static boolean isGameEnd = false;
+    private static Team nowPlayingTeam;
+    private static boolean isGameEnd;
 
-    private GameStatus() {
-    }
-
-    public static void initialize() {
+    public GameStatus() {
         nowPlayingTeam = INIT_TEAM;
         isGameEnd = false;
     }
 
-    public static double getTotalScore(Board board) {
+    public double getTotalScore(Board board) {
         Score score = Score.DEFAULT;
 
         for (int j = BOARD_MIN_INDEX; j <= BOARD_MAX_INDEX; j++) {
@@ -35,7 +32,7 @@ public class GameStatus {
         return score.getScore();
     }
 
-    private static Score getColumnScore(Board board, Score score, int j) {
+    private Score getColumnScore(Board board, Score score, int j) {
         int pawnCount = COUNT_INIT;
         List<Row> rows = board.getBoard();
 
@@ -49,7 +46,7 @@ public class GameStatus {
         return score;
     }
 
-    private static int getColumnPawnCount(ChessPiece chessPiece) {
+    private int getColumnPawnCount(ChessPiece chessPiece) {
         int pawnCount = COUNT_INIT;
         if (chessPiece.getTeam() == nowPlayingTeam && chessPiece instanceof Pawn) {
             pawnCount++;
@@ -57,33 +54,33 @@ public class GameStatus {
         return pawnCount;
     }
 
-    private static Score addIfSameTeam(Score score, ChessPiece chessPiece) {
+    private Score addIfSameTeam(Score score, ChessPiece chessPiece) {
         if (chessPiece.getTeam() == nowPlayingTeam) {
             return score.add(chessPiece.getPoint());
         }
         return score;
     }
 
-    private static Score subtractSameColumnPawnScore(Score score, int pawnCount) {
+    private Score subtractSameColumnPawnScore(Score score, int pawnCount) {
         if (pawnCount >= 2) {
             return score.subtract(pawnCount * 0.5);
         }
         return score;
     }
 
-    public static Team getNowPlayingTeam() {
+    public Team getNowPlayingTeam() {
         return nowPlayingTeam;
     }
 
-    public static void changePlayingTeam() {
+    public void changePlayingTeam() {
         nowPlayingTeam = Team.getOpponentTeam(nowPlayingTeam);
     }
 
-    public static void updateGameEnd() {
+    public void updateGameEnd() {
         isGameEnd = true;
     }
 
-    public static boolean isGameEnd() {
+    public boolean isGameEnd() {
         return isGameEnd;
     }
 }
