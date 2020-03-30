@@ -12,14 +12,14 @@ public enum Direction {
     SOUTHWEST(-1, -1),
     NORTHWEST(-1, 1),
 
-    NNE(1, 2),
-    NNW(-1, 2),
-    SSE(1, -2),
-    SSW(-1, -2),
-    EEN(2, 1),
-    EES(2, -1),
-    WWN(-2, 1),
-    WWS(-2, -1);
+    NORTH_NORTH_EAST(1, 2),
+    NORTH_NORTH_WEST(-1, 2),
+    SOUTH_SOUTH_EAST(1, -2),
+    SOUTH_SOUTH_WEST(-1, -2),
+    EAST_EAST_NORTH(2, 1),
+    EAST_EAST_SOUTH(2, -1),
+    WEST_WEST_NORTH(-2, 1),
+    WEST_WEST_SOUTH(-2, -1);
 
     int xGap;
     int yGap;

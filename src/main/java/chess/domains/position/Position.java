@@ -8,19 +8,19 @@ public class Position implements Comparable<Position> {
 
     static {
         Map<String, Position> positions = new HashMap<>();
-        for (char x = 'a'; x <= 'h'; x++) {
-            for (int y = 1; y <= 8; y++) {
+        for (Column x : Column.values()) {
+            for (Row y : Row.values()) {
                 Position position = new Position(x, y);
-                positions.put(x + String.valueOf(y), position);
+                positions.put(x.name() + y.toString(), position);
             }
         }
         cachedPositions = positions;
     }
 
-    private char x;
-    private int y;
+    private Column x;
+    private Row y;
 
-    public Position(char x, int y) {
+    public Position(Column x, Row y) {
         this.x = x;
         this.y = y;
     }
@@ -35,11 +35,11 @@ public class Position implements Comparable<Position> {
     }
 
     public int xGapBetween(Position target) {
-        return target.x - this.x;
+        return this.x.columnGap(target.x);
     }
 
     public int yGapBetween(Position target) {
-        return target.y - this.y;
+        return this.y.rowGap(target.y);
     }
 
     public boolean isSameX(Position target) {
@@ -51,31 +51,20 @@ public class Position implements Comparable<Position> {
     }
 
     public boolean isRow(int row) {
-        return this.y == row;
-    }
-
-    @Override
-    public int compareTo(Position o) {
-        if (y > o.y) {
-            return -1;
-        }
-        if (y == o.y && x < o.x) {
-            return -1;
-        }
-        return 1;
+        return this.y.getRow() == row;
     }
 
     public List<Position> findRoute(Position target) {
         ArrayList<Position> route = new ArrayList<>();
         Direction direction = findDirection(target);
 
-        char x = (char) (this.x + direction.xGap);
-        int y = this.y + direction.yGap;
+        Column x = this.x.moveBy(direction.xGap);
+        Row y = this.y.moveBy(direction.yGap);
 
         while (x != target.x || y != target.y) {
             route.add(new Position(x, y));
-            x += direction.xGap;
-            y += direction.yGap;
+            x = x.moveBy(direction.xGap);
+            y = y.moveBy(direction.yGap);
         }
 
         return route;
@@ -86,6 +75,21 @@ public class Position implements Comparable<Position> {
         int xGap = this.xGapBetween(target);
 
         return Direction.findDirection(xGap, yGap);
+    }
+
+    public boolean isColumn(Column column) {
+        return this.x == column;
+    }
+
+    @Override
+    public int compareTo(Position o) {
+        if (y.isBiggerThan(o.y)) {
+            return -1;
+        }
+        if (y == o.y && x.isSmallerThan(o.x)) {
+            return -1;
+        }
+        return 1;
     }
 
     @Override
@@ -100,9 +104,5 @@ public class Position implements Comparable<Position> {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
-    }
-
-    public boolean isColumn(char column) {
-        return this.x == column;
     }
 }

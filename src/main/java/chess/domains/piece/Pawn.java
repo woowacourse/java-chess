@@ -4,7 +4,7 @@ import chess.domains.position.Position;
 
 public class Pawn extends Piece {
     public Pawn(PieceColor pieceColor) {
-        super(pieceColor, "p", 1);
+        super(pieceColor, PieceType.PAWN.name, PieceType.PAWN.score);
     }
 
     @Override
