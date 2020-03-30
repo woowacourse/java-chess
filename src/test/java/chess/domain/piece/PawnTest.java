@@ -63,4 +63,10 @@ class PawnTest {
 	void isKingTest() {
 		assertThat((new Pawn(new Initial(), "p").isKing())).isFalse();
 	}
+
+	@DisplayName("점수를 물어보면 0D를 반환하는지 확인")
+	@Test
+	void scoreTest() {
+		assertThat(new Pawn(new Initial(), "p").score()).isEqualTo(0D);
+	}
 }

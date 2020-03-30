@@ -63,4 +63,10 @@ class KingTest {
 	void isKingTest() {
 		assertThat((new King(new Initial(), "k").isKing())).isTrue();
 	}
+
+	@DisplayName("점수를 물어보면 0D를 반환하는지 확인")
+	@Test
+	void scoreTest() {
+		assertThat(new King(new Initial(), "k").score()).isEqualTo(0D);
+	}
 }

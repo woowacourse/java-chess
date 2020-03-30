@@ -63,4 +63,10 @@ class BishopTest {
 	void isKingTest() {
 		assertThat((new Bishop(new Initial(), "b").isKing())).isFalse();
 	}
+
+	@DisplayName("점수를 물어보면 3D를 반환하는지 확인")
+	@Test
+	void scoreTest() {
+		assertThat(new Bishop(new Initial(), "b").score()).isEqualTo(3D);
+	}
 }

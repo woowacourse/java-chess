@@ -63,4 +63,10 @@ class QueenTest {
 	void isKingTest() {
 		assertThat((new Queen(new Initial(), "q").isKing())).isFalse();
 	}
+
+	@DisplayName("점수를 물어보면 9D를 반환하는지 확인")
+	@Test
+	void scoreTest() {
+		assertThat(new Queen(new Initial(), "q").score()).isEqualTo(9D);
+	}
 }

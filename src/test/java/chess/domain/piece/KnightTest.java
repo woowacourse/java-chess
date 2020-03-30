@@ -63,4 +63,10 @@ class KnightTest {
 	void isKingTest() {
 		assertThat((new Knight(new Initial(), "n").isKing())).isFalse();
 	}
+
+	@DisplayName("점수를 물어보면 2.5D를 반환하는지 확인")
+	@Test
+	void scoreTest() {
+		assertThat(new Knight(new Initial(), "n").score()).isEqualTo(2.5D);
+	}
 }

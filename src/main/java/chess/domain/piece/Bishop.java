@@ -62,4 +62,9 @@ public class Bishop extends Piece {
 		route.add(target);
 		return route;
 	}
+
+	@Override
+	public double score() {
+		return 3D;
+	}
 }

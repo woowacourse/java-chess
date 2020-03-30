@@ -37,4 +37,9 @@ public class Knight extends Piece {
 		route.add(target);
 		return route;
 	}
+
+	@Override
+	public double score() {
+		return 2.5D;
+	}
 }

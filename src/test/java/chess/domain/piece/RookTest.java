@@ -63,4 +63,10 @@ class RookTest {
 	void isKingTest() {
 		assertThat((new Rook(new Initial(), "r").isKing())).isFalse();
 	}
+
+	@DisplayName("점수를 물어보면 5D를 반환하는지 확인")
+	@Test
+	void scoreTest() {
+		assertThat(new Rook(new Initial(), "r").score()).isEqualTo(5D);
+	}
 }

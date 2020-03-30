@@ -31,6 +31,10 @@ public abstract class Piece {
 		return false;
 	}
 
+	public double score() {
+		return 0.0D;
+	}
+
 	public String getSymbol() {
 		return symbol;
 	}

@@ -62,4 +62,9 @@ public class Rook extends Piece {
 		route.add(target);
 		return route;
 	}
+
+	@Override
+	public double score() {
+		return 5D;
+	}
 }
