@@ -9,14 +9,14 @@ public enum State {
 	private static final int START_OR_RUN_STEP_SIZE = 1;
 	private static final int START_STEP_SIZE = 2;
 
-	private Function<Integer, Boolean> isValidStepSize;
+	private Function<Integer, Boolean> validateStepSize;
 
 	State(Function<Integer, Boolean> stepSize) {
-		this.isValidStepSize = stepSize;
+		this.validateStepSize = stepSize;
 	}
 
-	public Function<Integer, Boolean> getIsValidStepSize() {
-		return isValidStepSize;
+	public Function<Integer, Boolean> getValidateStepSize() {
+		return validateStepSize;
 	}
 
 	private static boolean isStartStepSize(int stepSize) {

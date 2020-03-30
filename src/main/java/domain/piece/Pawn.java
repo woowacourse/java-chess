@@ -40,7 +40,7 @@ public class Pawn extends Piece {
 	@Override
 	protected boolean validateStepSize(int rowGap, int columnGap) {
 		int absStepSize = Math.abs(rowGap);
-		if (state.getIsValidStepSize().apply(absStepSize)) {
+		if (state.getValidateStepSize().apply(absStepSize)) {
 			return true;
 		}
 		throw new InvalidPositionException(INVALID_STEP_SIZE);
