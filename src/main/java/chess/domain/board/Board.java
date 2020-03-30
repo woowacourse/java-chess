@@ -3,6 +3,7 @@ package chess.domain.board;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import chess.domain.piece.BlackPieces;
 import chess.domain.piece.BlackPiecesFactory;
@@ -57,9 +58,10 @@ public class Board {
 	}
 
 	private boolean canPawnAttack(Position source, Position target) {
-		return board.get(source).isPawn() &&
-			source.nextPosition(Direction.diagonalDirection()).stream()
-				.anyMatch(position -> position.equals(target));
+		return Objects.nonNull(board.get(source))
+			&& board.get(source).isPawn()
+			&& source.nextPosition(Direction.diagonalDirection()).stream()
+			.anyMatch(position -> position.equals(target));
 	}
 
 	public void change(Position source, Position target) {
