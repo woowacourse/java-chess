@@ -5,6 +5,7 @@ import domain.board.BoardFactory;
 import domain.command.Command;
 import domain.piece.team.Team;
 import view.InputView;
+import view.OutputView;
 
 public class ChessController {
 	private static final int COMMAND_INDEX = 0;
@@ -19,11 +20,13 @@ public class ChessController {
 	}
 
 	private void run(Board board, Team turn) {
+		OutputView.printChessBoard(board);
 		String inputChessCommand = InputView.inputCommand();
 		String[] inputCommand = inputChessCommand.split(DELIMITER);
 
 		Command command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
 		while (command != Command.END) {
+			OutputView.printChessBoard(board);
 			if (command == Command.MOVE) {
 				board.move(inputCommand[SOURCE_POSITION], inputCommand[TARGET_POSITION], turn);
 				turn = Team.changeTurn(turn);

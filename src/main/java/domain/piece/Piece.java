@@ -14,7 +14,6 @@ import domain.piece.team.Team;
 public abstract class Piece implements Movable {
 	protected Position position;
 	protected Team team;
-	protected String SYMBOL;
 
 	public Piece(Position position, Team team) {
 		this.position = position;
@@ -25,13 +24,6 @@ public abstract class Piece implements Movable {
 		return position;
 	}
 
-	public String showSymbol() {
-		if (this.team == Team.WHITE) {
-			return this.SYMBOL;
-		}
-		return this.SYMBOL.toUpperCase();
-	}
-
 	private void validateTurn(Team nowTurn) {
 		if (this.team != nowTurn) {
 			throw new InvalidTurnException(InvalidTurnException.INVALID_TURN);
@@ -39,7 +31,6 @@ public abstract class Piece implements Movable {
 	}
 
 	protected Direction findDirection(int rowGap, int columnGap) {
-		System.out.println(rowGap + ":" + columnGap);
 		return Arrays.stream(Direction.values())
 			.filter(d -> d.getFind().apply(rowGap, columnGap))
 			.findFirst()
@@ -62,6 +53,8 @@ public abstract class Piece implements Movable {
 	protected abstract boolean validStepSize(int rowGap, int columnGap);
 
 	protected abstract boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
+
+	public abstract String showSymbol();
 
 	private boolean isInPlace(Position sourcePosition, Position targetPosition) {
 		return sourcePosition.equals(targetPosition);

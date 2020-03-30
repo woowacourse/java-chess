@@ -55,4 +55,11 @@ public class Rook extends Piece {
 			.filter(piece -> piece.getPosition().isSamePosition(targetPosition))
 			.findFirst();
 	}
+
+	public String showSymbol() {
+		if (this.team == Team.WHITE) {
+			return SYMBOL;
+		}
+		return SYMBOL.toUpperCase();
+	}
 }

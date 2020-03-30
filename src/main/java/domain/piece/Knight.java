@@ -53,4 +53,11 @@ public class Knight extends Piece {
 				&& piece.getPosition().getRow() == targetPosition.getRow())
 			.findFirst();
 	}
+
+	public String showSymbol() {
+		if (this.team == Team.WHITE) {
+			return SYMBOL;
+		}
+		return SYMBOL.toUpperCase();
+	}
 }

@@ -15,9 +15,20 @@ public class OutputView {
 	public static void printChessBoard(Board board) {
 		List<Rank> ranks = board.getRanks();
 		for (int i = ranks.size() - 1; i >= 0; i--) {
+			if (ranks.isEmpty()) {
+				printEmptyRank();
+				continue;
+			}
 			List<Piece> pieces = ranks.get(i).getPieces();
 			printRank(pieces);
 		}
+	}
+
+	private static void printEmptyRank() {
+		for (int i = 0; i < 8; i++) {
+			System.out.println(".");
+		}
+		System.out.println();
 	}
 
 	private static void printRank(List<Piece> pieces) {
