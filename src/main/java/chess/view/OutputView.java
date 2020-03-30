@@ -1,27 +1,23 @@
 package chess.view;
 
-import chess.domain.piece.Piece;
-import chess.domain.board.Board;
-import chess.domain.position.Position;
-
-
+import java.util.Map;
 
 public class OutputView {
+    private static final int LINE_START = 1;
+    private static final int LINE_END = 8;
 
-    private static final int EDGE_START = 1;
-    private static final int EDGE_END = 8;
-
-    public static void printBoard(Board board) {
-        for (int y = EDGE_END; EDGE_START <= y; y--) {
-            for (int x = EDGE_START; x <= EDGE_END; x++) {
-                Position position = Position.of(x,y);
-                Piece piece = board.getPiece(position);
+    public static void printBoard(Map<String, String> board) {
+        for (int y = LINE_END; LINE_START <= y; y--) {
+            for (int x = LINE_START; x <= LINE_END; x++) {
+                String position = String.valueOf(x) + String.valueOf(y);
+                String piece = board.get(position);
                 System.out.print(piece);
             }
             System.out.println();
         }
-
-
     }
 
+    public static void printEnd() {
+        System.out.println("end");
+    }
 }

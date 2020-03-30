@@ -1,11 +1,13 @@
 package chess.domain.piece.pawn;
 
+import chess.domain.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
+import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,12 +20,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InitializedPawnTest {
 
+    private UserInterface userInterface = new Console();
+
     @ParameterizedTest
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, team);
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
         boolean hasHindrance = initializedPawn.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
     }
@@ -36,7 +40,7 @@ class InitializedPawnTest {
         //todo: check convention
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, Position.of(1,2), team);
 
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
 
         Piece moved = initializedPawn.move(to, board);
         assertThat(moved).isInstanceOf(MovedPawn.class);
@@ -49,7 +53,7 @@ class InitializedPawnTest {
         //todo: check convention, 타입캐스팅 해도 될 지
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, team);
 
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
 
 
         assertThatThrownBy(() -> initializedPawn.move(to, board))

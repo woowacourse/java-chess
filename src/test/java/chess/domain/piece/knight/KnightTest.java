@@ -1,11 +1,13 @@
 package chess.domain.piece.knight;
 
+import chess.domain.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
+import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
+    private UserInterface userInterface = new Console();
 
     @ParameterizedTest
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
@@ -25,7 +28,7 @@ class KnightTest {
         //todo: check convention
         Knight knight = (Knight) PieceFactory.createPiece(Knight.class, from, team);
 
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
         Piece moved = knight.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -37,7 +40,7 @@ class KnightTest {
         //todo: check convention, 타입캐스팅 해도 될 지
         Knight knight = (Knight) PieceFactory.createPiece(Knight.class, from, team);
 
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
 
         assertThatThrownBy(() -> knight.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);

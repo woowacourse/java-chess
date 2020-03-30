@@ -76,4 +76,9 @@ class PositionTest {
                 Arguments.of(Position.of(1,3), Direction.NORTH, true)
         );
     }
+
+    @Test
+    void toStringTest() {
+        assertThat(Position.of(1,1).toString()).isEqualTo("11");
+    }
 }

@@ -12,11 +12,12 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Initialized extends Started {
-    //todo: change to private
     protected final List<CanNotMoveStrategy> canNotMoveStrategies;
+    protected final Position position;
 
     protected Initialized(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
-        super(name, position, team);
+        super(name, team);
+        this.position = position;
         this.canNotMoveStrategies = canNotMoveStrategies;
     }
 

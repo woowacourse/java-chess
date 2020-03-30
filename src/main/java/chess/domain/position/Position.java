@@ -136,6 +136,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return "x=" + x + ", y=" + y;
+        return String.valueOf(x) + String.valueOf(y);
     }
 }

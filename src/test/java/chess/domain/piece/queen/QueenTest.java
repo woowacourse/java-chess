@@ -1,5 +1,6 @@
 package chess.domain.piece.queen;
 
+import chess.domain.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
@@ -7,6 +8,7 @@ import chess.domain.piece.bishop.Bishop;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
+import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QueenTest {
 
+    private UserInterface userInterface = new Console();
+
     @ParameterizedTest
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
@@ -28,7 +32,7 @@ class QueenTest {
         //todo: check convention
         Queen queen = (Queen) PieceFactory.createPiece(Queen.class, from, team);
 
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
         Piece moved = queen.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -40,7 +44,7 @@ class QueenTest {
         //todo: check convention, 타입캐스팅 해도 될 지
         Queen queen = (Queen) PieceFactory.createPiece(Queen.class, from, team);
 
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
 
         assertThatThrownBy(() -> queen.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);

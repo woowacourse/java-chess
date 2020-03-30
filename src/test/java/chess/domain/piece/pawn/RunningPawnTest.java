@@ -1,11 +1,13 @@
 package chess.domain.piece.pawn;
 
+import chess.domain.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
+import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RunningPawnTest {
+    private UserInterface userInterface = new Console();
 
     @ParameterizedTest
     @DisplayName("#move() : should return Piece as to team and Position 'to'")
@@ -25,7 +28,7 @@ class RunningPawnTest {
         //todo: check convention
         MovedPawn runningPawn = (MovedPawn) PieceFactory.createPiece(MovedPawn.class, from, team);
 
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
 
         Piece moved = runningPawn.move(to, board);
         assertThat(moved).isEqualTo(expected);
@@ -38,7 +41,7 @@ class RunningPawnTest {
         //todo: check convention
         MovedPawn initializedPawn = (MovedPawn) PieceFactory.createPiece(MovedPawn.class, from, team);
 
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
 
 
         assertThatThrownBy(() -> initializedPawn.move(to, board))
@@ -50,7 +53,7 @@ class RunningPawnTest {
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         MovedPawn runningPawn = (MovedPawn) PieceFactory.createPiece(MovedPawn.class, from, team);
-        Board board = ChessBoard.initiaize();
+        Board board = ChessBoard.initiaize(userInterface);
         boolean hasHindrance = runningPawn.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
     }
