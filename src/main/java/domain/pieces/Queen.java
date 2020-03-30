@@ -10,6 +10,8 @@ public class Queen extends Piece {
 
     private static final String INITIAL = "Q";
 
+    private static final double score = 9;
+
     public Queen(Team team) {
         super(INITIAL, team);
     }
@@ -22,5 +24,10 @@ public class Queen extends Piece {
     @Override
     public boolean isNoneTeam() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }

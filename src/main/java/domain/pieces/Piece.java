@@ -33,6 +33,8 @@ public abstract class Piece {
 
     public abstract boolean isNoneTeam();
 
+    public abstract double getScore();
+
     @Override
     public String toString() {
         return getInitial();

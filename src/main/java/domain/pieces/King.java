@@ -10,6 +10,8 @@ public class King extends Piece {
 
     private static final String INITIAL = "K";
 
+    private static final double score = 0;
+
     public King(Team team) {
         super(INITIAL, team);
     }
@@ -22,5 +24,10 @@ public class King extends Piece {
     @Override
     public boolean isNoneTeam() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }

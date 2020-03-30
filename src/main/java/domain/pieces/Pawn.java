@@ -10,6 +10,8 @@ public class Pawn extends Piece {
 
     private static final String INITIAL = "P";
 
+    private static final double score = 1;
+
     public Pawn(Team team) {
         super(INITIAL, team);
     }
@@ -37,5 +39,10 @@ public class Pawn extends Piece {
             return Roles.isLinearOrDiagonalBlackTeam(direction, pieces, to);
         }
         return Roles.isLinearOrDiagonalWhiteTeam(direction, pieces, to);
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }

@@ -10,6 +10,8 @@ public class Rook extends Piece {
 
     private static final String INITIAL = "R";
 
+    private static final double score = 5;
+
     public Rook(Team team) {
         super(INITIAL, team);
     }
@@ -22,5 +24,10 @@ public class Rook extends Piece {
     @Override
     public boolean isNoneTeam() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }

@@ -25,7 +25,7 @@ public enum Direction {
 
     private static final int MINIMUM_RANGE = -8;
     private static final int MAXIMUM_RANGE = 8;
-    private static final int INITIAL_VALUE = 8;
+    private static final int INITIAL_VALUE = 0;
 
     private int row;
     private int column;
@@ -60,16 +60,16 @@ public enum Direction {
         return changeColumn > MINIMUM_RANGE && changeColumn < MAXIMUM_RANGE;
     }
 
+    private boolean canMovable(boolean isSameRow, boolean isSameColumn) {
+        return isSameRow && isSameColumn;
+    }
+
     private boolean isSameRow(int row, int changeRow) {
         return row == changeRow;
     }
 
     private boolean isSameColumn(int column, int changeColumn) {
         return column == changeColumn;
-    }
-
-    private boolean canMovable(boolean isSameRow, boolean isSameColumn) {
-        return isSameRow && isSameColumn;
     }
 
     public int getRow() {

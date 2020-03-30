@@ -10,6 +10,8 @@ public class Empty extends Piece {
 
     private static final String INITIAL = ".";
 
+    private static final double score = 0;
+
     public Empty(Team team) {
         super(INITIAL, team);
     }
@@ -22,5 +24,10 @@ public class Empty extends Piece {
     @Override
     public boolean isNoneTeam() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }

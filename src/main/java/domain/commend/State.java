@@ -32,7 +32,7 @@ public class State {
 
     public double status() {
         stateStrategy = stateStrategy.status();
-        return ScoreType.calculateScore(getPieces(), team);
+        return getPieces().score(team);
     }
 
     private void changeTurn() {

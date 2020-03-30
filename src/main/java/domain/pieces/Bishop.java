@@ -10,6 +10,8 @@ public class Bishop extends Piece {
 
     private static final String INITIAL = "B";
 
+    private static final double score = 3;
+
     public Bishop(Team team) {
         super(INITIAL, team);
     }
@@ -22,5 +24,10 @@ public class Bishop extends Piece {
     @Override
     public boolean isNoneTeam() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }
