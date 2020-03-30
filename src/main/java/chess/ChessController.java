@@ -4,48 +4,63 @@ import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.command.MoveCommand;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-    public static void run() {
-        Board board = new Board();
+    private static Board board;
+
+    private static Command resolveCommand() {
+        try {
+            return Command.of(InputView.requestCommand());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return Command.ERROR;
+        }
+    }
+
+    private static void spreadBoard() {
+        board = new Board();
         OutputView.printBoard(board);
+    }
 
-        PieceColor team = PieceColor.WHITE;
-
-        while (!(board.isWhiteKingKilled() || board.isBlackKingKilled())) {
-            OutputView.printTurn(team);
+    public static void runGame() {
+        while (!board.isGameOver()) {
+            OutputView.printTurn(board.getTeam());
 
             try {
-                MoveCommand moveCommand = new MoveCommand(InputView.requestMoveCommand());
-                Piece piece = board.findPiece(moveCommand.getSourcePosition(), team);
-                board.checkPath(piece, moveCommand.getTargetPosition());
-                board.move(piece, moveCommand.getTargetPosition());
+                MoveCommand moveCommand = new MoveCommand(InputView.requestCommand());
+                board.move(moveCommand);
                 OutputView.printBoard(board);
-                team = team.change();
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
         }
-
-        Command statusCommand;
-        do {
-            statusCommand = resolveCommand();
-        } while (statusCommand == null);
-
-        GameResult gameResult = board.createGameResult();
-        OutputView.printResult(gameResult);
     }
 
-    private static Command resolveCommand() {
-        try {
-            return Command.of(InputView.requestStatusCommand());
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return null;
+    public void run() {
+        OutputView.printGameCommand();
+
+        Command runCommand;
+        do {
+            runCommand = resolveCommand();
+        } while (runCommand.isError());
+
+        if (runCommand.isStart()) {
+            spreadBoard();
+            runGame();
+
+            OutputView.printStatusMessage();
+            Command statusCommand;
+            do {
+                statusCommand = resolveCommand();
+            } while (statusCommand.isError());
+
+            if (statusCommand.isStatus()) {
+                GameResult gameResult = board.createGameResult();
+                OutputView.printResult(gameResult);
+            }
         }
     }
+
 }
