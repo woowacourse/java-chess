@@ -15,12 +15,19 @@ public abstract class Piece {
     protected final Team team;
 
     protected Piece(String initial, Team team) {
-        this.initial = initial;
+        this.initial = initial(team, initial);
         this.team = team;
     }
 
+    private String initial(Team team, String initial) {
+        if (team.equals(Team.BLACK)) {
+            return initial.toUpperCase();
+        }
+        return initial.toLowerCase();
+    }
+
     public String getInitial() {
-        return team.caseInitial(initial);
+        return initial;
     }
 
     public boolean isSameTeam(Team team) {
