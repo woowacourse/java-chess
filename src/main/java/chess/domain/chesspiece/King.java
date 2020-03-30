@@ -36,6 +36,7 @@ public class King extends WorthlessPiece {
 
 	@Override
 	public void validateCanGo(ChessPiece targetPiece) {
-		moveManager.calculateDirection(targetPiece.position, DIRECTIONS);
+		Direction direction = moveManager.getMatchDirection(targetPiece.position);
+		moveManager.validateMove(direction, DIRECTIONS);
 	}
 }

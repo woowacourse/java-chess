@@ -35,7 +35,7 @@ public class Rook extends ValuablePiece {
 
 	@Override
 	public Positions makePathAndValidate(ChessPiece targetPiece) {
-		return moveManager.makePathAndValidate(targetPiece.position, DIRECTIONS);
+		return moveManager.makePath(targetPiece.position, DIRECTIONS);
 	}
 
 }

@@ -1,11 +1,11 @@
 package chess.domain.chesspiece;
 
-import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 
 public class Blank extends ChessPiece {
 	private static final String NAME = ".";
+	private static final String NOT_SUPPORT_MESSAGE = "BLANK에서는 지원하지 않는 기능입니다.";
 
 	public Blank(Position position) {
 		super(position, null);
@@ -18,17 +18,17 @@ public class Blank extends ChessPiece {
 
 	@Override
 	public boolean isNotNeedCheckPath() {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException(NOT_SUPPORT_MESSAGE);
 	}
 
 	@Override
 	public Positions makePathAndValidate(ChessPiece targetPiece) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException(NOT_SUPPORT_MESSAGE);
 	}
 
 	@Override
 	public void validateCanGo(ChessPiece targetPiece) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException(NOT_SUPPORT_MESSAGE);
 	}
 
 }

@@ -15,14 +15,21 @@ public class MoveManager {
 		this.nowPosition = nowPosition;
 	}
 
-	public Positions makePathAndValidate(Position targetPosition, List<Direction> directions) {
-		Direction direction = calculateDirection(targetPosition, directions);
+	public Positions makePath(Position targetPosition, List<Direction> directions) {
+		PositionGap positionGap = nowPosition.calculateDiff(targetPosition);
+		Direction direction = positionGap.calculateDirection(directions);
 		return nowPosition.calculatePath(targetPosition, direction);
 	}
 
-	public Direction calculateDirection(Position targetPosition, List<Direction> directions) {
+	public Direction getMatchDirection(Position targetPosition) {
 		PositionGap positionGap = nowPosition.calculateDiff(targetPosition);
-		return positionGap.getMatchDirection(directions);
+		return positionGap.getMatchDirection();
+	}
+
+	public void validateMove(Direction direction, List<Direction> directions) {
+		if (directions.contains(direction) == false) {
+			throw new IllegalArgumentException(CANNOT_MOVE_POSITION);
+		}
 	}
 
 	public void validateKnightMove(Position targetPosition) {

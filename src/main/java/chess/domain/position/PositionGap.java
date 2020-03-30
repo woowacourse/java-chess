@@ -19,11 +19,15 @@ public class PositionGap {
 		this.y = y;
 	}
 
-	public Direction getMatchDirection(List<Direction> directions) {
+	public Direction calculateDirection(List<Direction> directions) {
 		return directions.stream()
 			.filter(direction -> direction.isMatch(x, y, START_COUNT))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException(WRONG_POSITION_MESSAGE));
+	}
+
+	public Direction getMatchDirection() {
+		return Direction.of(x, y);
 	}
 
 	public boolean cannotMoveKnight() {

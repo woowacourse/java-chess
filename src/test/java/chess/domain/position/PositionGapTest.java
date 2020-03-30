@@ -16,7 +16,7 @@ public class PositionGapTest {
 	void calculateDirectionTest() {
 		PositionGap positionGap = new PositionGap(3, 3);
 
-		assertThat(positionGap.getMatchDirection(Arrays.asList(Direction.values())))
+		assertThat(positionGap.calculateDirection(Arrays.asList(Direction.values())))
 			.isEqualTo(Direction.RIGHT_UP);
 	}
 
@@ -25,7 +25,7 @@ public class PositionGapTest {
 	void calculateDirectionTest2() {
 		PositionGap positionGap = new PositionGap(-2, -2);
 
-		assertThat(positionGap.getMatchDirection(Arrays.asList(Direction.values())))
+		assertThat(positionGap.calculateDirection(Arrays.asList(Direction.values())))
 			.isEqualTo(Direction.LEFT_DOWN);
 	}
 
@@ -34,7 +34,7 @@ public class PositionGapTest {
 	void calculateDirectionTest3() {
 		PositionGap positionGap = new PositionGap(3, 0);
 
-		assertThat(positionGap.getMatchDirection(Arrays.asList(Direction.values())))
+		assertThat(positionGap.calculateDirection(Arrays.asList(Direction.values())))
 			.isEqualTo(Direction.UP);
 	}
 
@@ -43,7 +43,7 @@ public class PositionGapTest {
 	void calculateDirectionTest4() {
 		PositionGap positionGap = new PositionGap(0, 7);
 
-		assertThat(positionGap.getMatchDirection(Arrays.asList(Direction.values())))
+		assertThat(positionGap.calculateDirection(Arrays.asList(Direction.values())))
 			.isEqualTo(Direction.RIGHT);
 	}
 
@@ -52,7 +52,7 @@ public class PositionGapTest {
 	void calculateDirectionTest5() {
 		PositionGap positionGap = new PositionGap(-5, 5);
 
-		assertThat(positionGap.getMatchDirection(Arrays.asList(Direction.values())))
+		assertThat(positionGap.calculateDirection(Arrays.asList(Direction.values())))
 			.isEqualTo(Direction.RIGHT_DOWN);
 	}
 
@@ -61,7 +61,7 @@ public class PositionGapTest {
 	void calculateDirectionTest6() {
 		PositionGap positionGap = new PositionGap(-7, 0);
 
-		assertThat(positionGap.getMatchDirection(Arrays.asList(Direction.values())))
+		assertThat(positionGap.calculateDirection(Arrays.asList(Direction.values())))
 			.isEqualTo(Direction.DOWN);
 	}
 
@@ -69,7 +69,7 @@ public class PositionGapTest {
 	@Test
 	void calculateDirectionTest7() {
 		PositionGap positionGap = new PositionGap(0, -4);
-		assertThat(positionGap.getMatchDirection(Arrays.asList(Direction.values())))
+		assertThat(positionGap.calculateDirection(Arrays.asList(Direction.values())))
 			.isEqualTo(Direction.LEFT);
 	}
 
@@ -77,7 +77,7 @@ public class PositionGapTest {
 	@Test
 	void calculateDirectionTest8() {
 		PositionGap positionGap = new PositionGap(7, -7);
-		assertThat(positionGap.getMatchDirection(Arrays.asList(Direction.values())))
+		assertThat(positionGap.calculateDirection(Arrays.asList(Direction.values())))
 			.isEqualTo(Direction.LEFT_UP);
 	}
 

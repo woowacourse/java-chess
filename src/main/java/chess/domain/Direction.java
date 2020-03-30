@@ -16,6 +16,7 @@ public enum Direction {
 	DOUBLE_DOWN(-2, 0);
 
 	private static final int MAX_COUNT = 7;
+	private static final String NOT_MATCH_DIRECTION_MESSAGE = "일치하는 방향이 없습니다.";
 
 	private final int x;
 	private final int y;
@@ -23,6 +24,13 @@ public enum Direction {
 	Direction(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public static Direction of(int gapX, int gapY) {
+		return Arrays.stream(values())
+			.filter(dir -> dir.x == gapX && dir.y == gapY)
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(NOT_MATCH_DIRECTION_MESSAGE));
 	}
 
 	public boolean isMatch(int gapX, int gapY, int count) {
@@ -50,4 +58,11 @@ public enum Direction {
 		return this.y + y;
 	}
 
+	@Override
+	public String toString() {
+		return "Direction{" +
+			"x=" + x +
+			", y=" + y +
+			'}';
+	}
 }

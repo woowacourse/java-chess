@@ -15,12 +15,10 @@ import chess.domain.utils.NameUtils;
 public class Pawn extends ChessPiece {
 	private static final String NAME = "p";
 
-	private final List<Direction> directions;
 	private boolean isMoved;
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
-		directions = Direction.getPawnDirections(team);
 		isMoved = false;
 	}
 
@@ -36,29 +34,33 @@ public class Pawn extends ChessPiece {
 
 	@Override
 	public Positions makePathAndValidate(ChessPiece targetPiece) {
-		isMoved = true;
 		validateCanGo(targetPiece);
-		return moveManager.makePathAndValidate(
-			targetPiece.position, getFirstMoveDirection(team));
-	}
-
-	private List<Direction> getFirstMoveDirection(Team team) {
-		List<Direction> firstMoveDirections = new ArrayList<>(this.directions);
-		if (team == Team.WHITE) {
-			firstMoveDirections.add(DOUBLE_UP);
-		}
-		if (team == Team.BLACK) {
-			firstMoveDirections.add(DOUBLE_DOWN);
-		}
-		return firstMoveDirections;
+		isMoved = true;
+		return moveManager.makePath(
+			targetPiece.position, getCanGoDirections());
 	}
 
 	@Override
 	public void validateCanGo(ChessPiece targetPiece) {
-		Direction direction = moveManager.calculateDirection(targetPiece.position, directions);
+		Direction direction = moveManager.getMatchDirection(targetPiece.position);
+		moveManager.validateMove(direction, getCanGoDirections());
 		if (cannotMove(direction, targetPiece)) {
 			throw new IllegalArgumentException(MoveManager.CANNOT_MOVE_POSITION);
 		}
+	}
+
+	private List<Direction> getCanGoDirections() {
+		List<Direction> directions = new ArrayList<>();
+		directions.addAll(Direction.getPawnDirections(team));
+		if (isMoved) {
+			return directions;
+		}
+		if (team == Team.WHITE) {
+			directions.add(DOUBLE_UP);
+			return directions;
+		}
+		directions.add(DOUBLE_DOWN);
+		return directions;
 	}
 
 	private boolean cannotMove(Direction direction, ChessPiece targetPiece) {
