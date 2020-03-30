@@ -73,7 +73,7 @@ public class PawnTest {
 
         Assertions.assertThatThrownBy(() -> pawn.getPathTo(PositionFactory.of(target)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰이 이동할 수 없는 위치입니다.");
+                .hasMessage("검은색 폰이 이동할 수 없는 위치입니다.");
     }
 
     @Test
@@ -123,6 +123,6 @@ public class PawnTest {
 
         Assertions.assertThatThrownBy(() -> pawn.getPathTo(PositionFactory.of(target)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰이 이동할 수 없는 위치입니다.");
+                .hasMessage("하얀색 폰이 이동할 수 없는 위치입니다.");
     }
 }
