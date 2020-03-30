@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.Team;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,14 +58,17 @@ public class MovableAreaFactory {
                 (Math.abs(position.getColumnGap(pivot)) == 1 && Math.abs(position.getRowGap(pivot)) == 2);
     }
 
-    public static List<Position> pawnOf(Position pivot) {
+    public static List<Position> pawnOf(Position pivot, Team team) {
         return Position.getPositions()
                 .stream()
-                .filter(position -> isPawn(pivot, position))
+                .filter(position -> isPawn(pivot, position, team))
                 .collect(Collectors.toList());
     }
 
-    private static boolean isPawn(Position pivot, Position position) {
+    private static boolean isPawn(Position pivot, Position position, Team team) {
+        if (team.equals(Team.BLACK)) {
+            return position.getRowGap(pivot) == -1 && Math.abs(position.getColumnGap(pivot)) <= 1;
+        }
         return position.getRowGap(pivot) == 1 && Math.abs(position.getColumnGap(pivot)) <= 1;
     }
 }
