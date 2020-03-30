@@ -1,7 +1,5 @@
-package chess.controller;
+package chess.domain;
 
-import chess.domain.Board;
-import chess.domain.Position;
 import chess.view.OutputView;
 
 import java.util.Arrays;
@@ -16,8 +14,6 @@ public enum InGameDecision {
         board.movePiece(source, destination);
     }),
     STATUS("status", (board, multiArguments) -> {
-        OutputView.printScore(board);
-        OutputView.printTeamWithHigherScore(board);
     }),
     END("end", (board, multiArguments) -> {
     });

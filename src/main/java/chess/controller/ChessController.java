@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.domain.InGameDecision;
+import chess.domain.StartDecision;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -8,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static chess.controller.InGameDecision.END;
+import static chess.domain.InGameDecision.END;
+import static chess.domain.InGameDecision.STATUS;
 
 public class ChessController {
 
@@ -28,6 +31,9 @@ public class ChessController {
 		do {
 			OutputView.printChessBoard(board);
 			inGameDecision = processSingleTurn(board);
+			if(inGameDecision == STATUS) {
+				printStatus(board);
+			}
 		} while (inGameDecision != END && board.isBothKingAlive());
 		if (!board.isBothKingAlive()) {
 			OutputView.printWinner(board.getWinner());
@@ -45,5 +51,10 @@ public class ChessController {
 			OutputView.printErrorMessage(e.getMessage());
 			return processSingleTurn(board);
 		}
+	}
+
+	private void printStatus(Board board) {
+		OutputView.printScore(board);
+		OutputView.printTeamWithHigherScore(board);
 	}
 }
