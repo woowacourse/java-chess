@@ -1,7 +1,6 @@
 package chess.controller.dto;
 
 public enum Command {
-
     START,
     END,
     MOVE,

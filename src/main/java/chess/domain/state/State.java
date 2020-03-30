@@ -18,13 +18,13 @@ public interface State {
 
     State end();
 
-    Board getBoard();
+    State status();
 
     boolean isEnd();
 
-    Map<Position, PieceState> getRemainPiece(Player player);
+    Board getBoard();
 
-    State status();
+    Map<Position, PieceState> getRemainPiece(Player player);
 
     Status getStatus();
 }

@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessController {
-
     private ChessGame chessGame = new ChessGame();
 
     public void run() {

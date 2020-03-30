@@ -13,7 +13,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Board {
-
     private Map<Position, PieceState> board;
 
     private Board(Map<Position, PieceState> board) {
@@ -50,7 +49,7 @@ public class Board {
         return board.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
+                        Map.Entry::getKey,
                         entry -> new PieceDto(entry.getValue().getPlayer())
                 ));
     }
@@ -60,16 +59,14 @@ public class Board {
                 .stream()
                 .filter(entry -> player.equals(entry.getValue().getPlayer()))
                 .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
-                        entry -> entry.getValue()
+                        Map.Entry::getKey,
+                        Map.Entry::getValue
                 ));
     }
 
     public boolean isLost(Player player) {
         return board.values()
                 .stream()
-                .filter(piece -> player.equals(piece.getPlayer()))
-                .filter(piece -> piece instanceof King)
-                .count() == 0;
+                .noneMatch(piece -> player.equals(piece.getPlayer()) && piece instanceof King);
     }
 }

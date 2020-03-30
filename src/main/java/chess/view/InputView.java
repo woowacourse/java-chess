@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-
     private static final int COMMAND_INDEX = 0;
     private static final int PARAMETER_START_INDEX = 1;
     private static final String COMMAND_DELIMITER = " ";

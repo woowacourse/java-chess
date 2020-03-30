@@ -43,7 +43,7 @@ public enum MovingDirection {
                 .filter(direction -> direction.isSameFileDirection(fileDifference))
                 .filter(direction -> direction.isSameRankDirection(rankDifference))
                 .findFirst()
-                .orElseThrow(() -> new MovingDirectionException());
+                .orElseThrow(MovingDirectionException::new);
     }
 
     private boolean isSameDirection(Double tangent) {

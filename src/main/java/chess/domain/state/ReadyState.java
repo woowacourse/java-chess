@@ -50,12 +50,12 @@ public class ReadyState implements State {
     }
 
     @Override
-    public State status() {
+    public Status getStatus() {
         throw new UnsupportedOperationException("아직 게임이 시작되지 않았습니다.");
     }
 
     @Override
-    public Status getStatus() {
+    public State status() {
         throw new UnsupportedOperationException("아직 게임이 시작되지 않았습니다.");
     }
 }

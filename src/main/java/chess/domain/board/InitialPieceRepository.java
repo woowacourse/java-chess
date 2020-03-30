@@ -7,7 +7,6 @@ import chess.domain.position.Position;
 import java.util.function.BiFunction;
 
 public enum InitialPieceRepository {
-
     BLACK_PAWN_1(NotMovedPawn::of, Player.BLACK, Position.of("A7")),
     BLACK_PAWN_2(NotMovedPawn::of, Player.BLACK, Position.of("B7")),
     BLACK_PAWN_3(NotMovedPawn::of, Player.BLACK, Position.of("C7")),

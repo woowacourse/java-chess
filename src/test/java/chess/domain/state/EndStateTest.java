@@ -2,14 +2,15 @@ package chess.domain.state;
 
 import chess.domain.MoveParameter;
 import chess.domain.Turn;
-import chess.domain.board.Board;
-import chess.domain.board.EnumRepositoryBoardInitializer;
 import chess.domain.player.Player;
+import chess.domain.result.Status;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -18,16 +19,20 @@ class EndStateTest {
 
     EndState endState;
 
+
     @BeforeEach
     void setUp() {
-        endState = new EndState(Board.of(new EnumRepositoryBoardInitializer()));
+        Map<Player, Double> status = new HashMap<>();
+        status.put(Player.WHITE, 0d);
+        status.put(Player.BLACK, 0d);
+        endState = new EndState(new Status(status));
     }
 
     @Test
-    @DisplayName("EndState는 기존의 board를 가지고 게임을 다시 시작")
+    @DisplayName("EndState는 Start 불가능")
     void start() {
-        assertThat(endState.start())
-                .isInstanceOf(RunningState.class);
+        assertThatThrownBy(() -> endState.start())
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
@@ -47,7 +52,14 @@ class EndStateTest {
     @Test
     @DisplayName("EndState는 getBoard 메서드를 지원하지 않음")
     void getBoard() {
-        assertThat(endState.getBoard())
-                .isInstanceOf(Board.class);
+        assertThatThrownBy(() -> endState.getBoard())
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("EndState는 getStatus 시 결과를 반환함")
+    void getStatus() {
+        assertThat(endState.getStatus())
+                .isInstanceOf(Status.class);
     }
 }

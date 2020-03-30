@@ -8,7 +8,6 @@ import chess.domain.state.ReadyState;
 import chess.domain.state.State;
 
 public class ChessGame {
-
     private State state;
     private Turn turn = Turn.from(Player.WHITE);
 

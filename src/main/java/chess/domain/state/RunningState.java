@@ -49,17 +49,12 @@ public class RunningState implements State {
 
     @Override
     public State end() {
-        return new EndState(getStatus());
+        return new EndState(createStatus());
     }
 
     @Override
     public State status() {
         return new EndState(createStatus());
-    }
-
-    @Override
-    public Status getStatus() {
-        throw new UnsupportedOperationException("아직 게임이 종료되지 않았습니다.");
     }
 
     public Status createStatus() {
@@ -93,6 +88,11 @@ public class RunningState implements State {
     @Override
     public Map<Position, PieceState> getRemainPiece(Player player) {
         return board.getRemainPieces(player);
+    }
+
+    @Override
+    public Status getStatus() {
+        throw new UnsupportedOperationException("게임이 아직 종료되지 않았습니다.");
     }
 
     private double getPawnPointsByFile(File file, Player player) {
