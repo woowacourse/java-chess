@@ -12,7 +12,7 @@ public class Moving {
 	public static final int MAX_BOUNDARY = 8;
 
 	public static List<Position> goOneTimePawnPositions(List<Direction> directions, Position source,
-		Map<Position, Piece> chessBoard) {
+		Map<Position, Piece> pieces) {
 		List<Position> positions = new ArrayList<>();
 
 		int locationOfX = source.getColumn();
@@ -26,7 +26,7 @@ public class Moving {
 				continue;
 			}
 
-			if (Objects.nonNull(chessBoard.get(Position.of(afterMoveOfX, afterMoveOfY)))) {
+			if (Objects.nonNull(pieces.get(Position.of(afterMoveOfX, afterMoveOfY)))) {
 				continue;
 			}
 
@@ -36,7 +36,7 @@ public class Moving {
 	}
 
 	public static List<Position> catchOneTimePawnPositions(List<Direction> directions, Position source,
-		Map<Position, Piece> chessBoard) {
+		Map<Position, Piece> pieces) {
 		List<Position> positions = new ArrayList<>();
 
 		int locationOfX = source.getColumn();
@@ -50,7 +50,7 @@ public class Moving {
 				continue;
 			}
 
-			if (Objects.isNull(chessBoard.get(Position.of(afterMoveOfX, afterMoveOfY)))) {
+			if (Objects.isNull(pieces.get(Position.of(afterMoveOfX, afterMoveOfY)))) {
 				continue;
 			}
 

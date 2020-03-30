@@ -35,20 +35,20 @@ public enum PieceScore {
 			.orElseThrow(() -> new IllegalArgumentException("해당하는 Piece가 Null입니다!"));
 	}
 
-	public static double calculateByColor(Map<Position, Piece> chessBoard, Color color) {
+	public static double calculateByColor(Map<Position, Piece> pieces, Color color) {
 		double teamScore = 0;
 
 		for (File file : File.values()) {
-			teamScore += sumPieceScoreExceptPawn(color, file, chessBoard);
-			teamScore += sumPawnScore(pawnsOfColumn(color, file, chessBoard));
+			teamScore += sumPieceScoreExceptPawn(color, file, pieces);
+			teamScore += sumPawnScore(pawnsOfColumn(color, file, pieces));
 		}
 
 		return teamScore;
 	}
 
-	private static List<Piece> pawnsOfColumn(Color color, File file, Map<Position, Piece> chessBoard) {
+	private static List<Piece> pawnsOfColumn(Color color, File file, Map<Position, Piece> pieces) {
 		return Arrays.stream(Rank.values())
-			.map(rank -> chessBoard.get(Position.of(file, rank)))
+			.map(rank -> pieces.get(Position.of(file, rank)))
 			.filter(Objects::nonNull)
 			.filter(piece -> piece.isSameColor(color))
 			.filter(Piece::isPawn)
@@ -56,9 +56,9 @@ public enum PieceScore {
 
 	}
 
-	private static double sumPieceScoreExceptPawn(Color color, File file, Map<Position, Piece> chessBoard) {
+	private static double sumPieceScoreExceptPawn(Color color, File file, Map<Position, Piece> pieces) {
 		return Arrays.stream(Rank.values())
-			.map(rank -> chessBoard.get(Position.of(file, rank)))
+			.map(rank -> pieces.get(Position.of(file, rank)))
 			.filter(Objects::nonNull)
 			.filter(piece -> piece.isSameColor(color))
 			.filter(piece -> !piece.isPawn())
