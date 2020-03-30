@@ -46,14 +46,14 @@ public class BoardFactory {
 	private static void createRank(String row, Team team) {
 		List<Piece> rank = new ArrayList<>();
 
-		rank.add(new Rook(Position.of("a" + row), team));
-		rank.add(new Knight(Position.of("b" + row), team));
-		rank.add(new Bishop(Position.of("c" + row), team));
-		rank.add(new King(Position.of("d" + row), team));
-		rank.add(new Queen(Position.of("e" + row), team));
-		rank.add(new Bishop(Position.of("f" + row), team));
-		rank.add(new Knight(Position.of("g" + row), team));
-		rank.add(new Rook(Position.of("h" + row), team));
+		rank.add(new Rook(Position.of(Column.A.getColumnName() + row), team));
+		rank.add(new Knight(Position.of(Column.B.getColumnName() + row), team));
+		rank.add(new Bishop(Position.of(Column.C.getColumnName() + row), team));
+		rank.add(new King(Position.of(Column.D.getColumnName() + row), team));
+		rank.add(new Queen(Position.of(Column.E.getColumnName() + row), team));
+		rank.add(new Bishop(Position.of(Column.F.getColumnName() + row), team));
+		rank.add(new Knight(Position.of(Column.G.getColumnName() + row), team));
+		rank.add(new Rook(Position.of(Column.H.getColumnName() + row), team));
 
 		ranks.add(new Rank(rank));
 	}

@@ -1,5 +1,7 @@
 package view;
 
+import static domain.board.Board.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,11 +11,15 @@ import domain.piece.Piece;
 import domain.piece.team.Team;
 
 public class OutputView {
+	private static final String CHESS_GAME_START_MESSAGE = "체스 게임을 시작합니다.";
+	private static final String INPUT_COMMAND_MESSAGE = "게임 시작은 start, 종료는 end 명령을 입력하세요.";
 	private static final String EMPTY_CELL_SYMBOL = ".";
+	private static final String COLON = ":";
+	private static final String SCORE_MESSAGE = "점";
 
 	public static void printChessGameStart() {
-		System.out.println("체스 게임을 시작합니다.");
-		System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+		System.out.println(CHESS_GAME_START_MESSAGE);
+		System.out.println(INPUT_COMMAND_MESSAGE);
 	}
 
 	public static void printChessBoard(Board board) {
@@ -25,7 +31,7 @@ public class OutputView {
 	}
 
 	private static void printRank(List<Piece> pieces) {
-		for (int columnIndex = 1; columnIndex <= 8; columnIndex++) {
+		for (int columnIndex = MIN_COLUMN_COUNT; columnIndex <= MAX_COLUMN_COUNT; columnIndex++) {
 			final int columnNumber = columnIndex;
 			if (pieces.stream().anyMatch(piece -> equalsColumn(columnNumber, piece))) {
 				pieces.stream()
@@ -41,7 +47,7 @@ public class OutputView {
 
 	public static void printScore(Map<Team, Double> score) {
 		for (Team team : score.keySet()) {
-			System.out.print(team + ":" + score.get(team) + "점\n");
+			System.out.println(team + COLON + score.get(team) + SCORE_MESSAGE);
 		}
 	}
 

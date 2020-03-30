@@ -13,7 +13,9 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Board {
-	private static final int ROW_INDEX = 1;
+	public static final int MAX_COLUMN_COUNT = 8;
+	public static final int MIN_COLUMN_COUNT = 1;
+	private static final int ROW_INDEX_IN_POSITION = 1;
 	private static final double PAWN_SCORE_WHEN_HAS_SAME_COLUMN = -0.5;
 	private static final int INITIAL_KING_COUNT = 2;
 
@@ -24,7 +26,7 @@ public class Board {
 	}
 
 	public void move(String sourcePosition, String inputTargetPosition, Team turn) {
-		int rankLine = Integer.parseInt(String.valueOf(sourcePosition.charAt(ROW_INDEX)));
+		int rankLine = Integer.parseInt(String.valueOf(sourcePosition.charAt(ROW_INDEX_IN_POSITION)));
 		Rank rank = ranks.get(rankLine - 1);
 		Piece piece = findPiece(sourcePosition, rank);
 		Position targetPosition = Position.of(inputTargetPosition);
