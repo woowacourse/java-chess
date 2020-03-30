@@ -9,12 +9,13 @@ import chess.domain.move.Route;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chess.domain.board.BoardInfo.BOARD_MAX_INDEX;
+import static chess.domain.board.BoardInfo.BOARD_MIN_INDEX;
+
 public class AllRouteGenerator {
     private static final int[][] KNIGHT_DIRECTION = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
     private static final int KNIGHT_DIRECTION_MIN = 0;
     private static final int KNIGHT_DIRECTION_MAX = 8;
-    private static final int FIELD_MAX_SIZE = 8;
-    private static final int FIELD_MIN_SIZE = 1;
 
     private AllRouteGenerator() {
     }
@@ -118,8 +119,8 @@ public class AllRouteGenerator {
     }
 
     private static boolean validateCoordinate(int x, int y) {
-        boolean xInField = (x >= FIELD_MIN_SIZE && x <= FIELD_MAX_SIZE);
-        boolean yInField = (y >= FIELD_MIN_SIZE && y <= FIELD_MAX_SIZE);
+        boolean xInField = (x >= BOARD_MIN_INDEX && x <= BOARD_MAX_INDEX);
+        boolean yInField = (y >= BOARD_MIN_INDEX && y <= BOARD_MAX_INDEX);
 
         return xInField && yInField;
     }

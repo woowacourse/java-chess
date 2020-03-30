@@ -7,11 +7,11 @@ import chess.domain.chesspiece.Pawn;
 
 import java.util.List;
 
+import static chess.domain.board.BoardInfo.BOARD_MAX_INDEX;
+import static chess.domain.board.BoardInfo.BOARD_MIN_INDEX;
 import static chess.domain.game.Team.WHITE;
 
 public class GameStatus {
-    private static final int BOARD_MAX_INDEX = 7;
-    private static final int BOARD_MIN_INDEX = 0;
     private static final int COUNT_INIT = 0;
     private static final Team INIT_TEAM = WHITE;
 

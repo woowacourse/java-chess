@@ -8,10 +8,10 @@ import chess.domain.game.Team;
 
 import java.util.List;
 
-public class OutputView {
-    private static final int BOARD_MAX_INDEX = 7;
-    private static final int BOARD_MIN_INDEX = 0;
+import static chess.domain.board.BoardInfo.BOARD_MAX_INDEX;
+import static chess.domain.board.BoardInfo.BOARD_MIN_INDEX;
 
+public class OutputView {
     public static void printBoard(Board chessBoard) {
         List<Row> board = chessBoard.getBoard();
 
