@@ -27,7 +27,6 @@ public enum Direction {
 	SWW(-1, -2, (rowGap, columnGap) -> rowGap == -1 && columnGap == -2);
 
 	private int rowGap;
-
 	private int columnGap;
 	private BiFunction<Integer, Integer, Boolean> find;
 
@@ -39,6 +38,33 @@ public enum Direction {
 
 	private static boolean isSameAbs(int rowGap, int columnGap) {
 		return Math.abs(rowGap) == Math.abs(columnGap);
+	}
+
+	public boolean hasPieceInRoute(Position position, Position targetPosition, List<Rank> ranks) {
+		int loopCount = calculateLoopCount(position, targetPosition) - 1;
+		int routeRow = position.getRow();
+		int routeColumn = position.getColumn().getNumber();
+		for (int i = 0; i < loopCount; i++) {
+			routeRow += this.getRowGap();
+			routeColumn += this.getColumnGap();
+			if (hasPieceInBoard(ranks, routeRow, routeColumn)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private int calculateLoopCount(Position position, Position targetPosition) {
+		int columnGap = Math.abs(position.calculateColumnGap(targetPosition));
+		int rowGap = Math.abs(position.calculateRowGap(targetPosition));
+		return Math.max(columnGap, rowGap);
+	}
+
+	private boolean hasPieceInBoard(List<Rank> ranks, int routeRow, int routeColumn) {
+		return ranks.stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.anyMatch(piece -> piece.getPosition().getColumn().getNumber() == routeColumn
+				&& piece.getPosition().getRow() == routeRow);
 	}
 
 	public static List<Direction> everyDirection() {
@@ -75,32 +101,5 @@ public enum Direction {
 
 	public BiFunction<Integer, Integer, Boolean> getFind() {
 		return find;
-	}
-
-	public boolean hasPieceInRoute(Position position, Position targetPosition, List<Rank> ranks) {
-		int loopCount = calculateLoopCount(position, targetPosition) - 1;
-		int routeRow = position.getRow();
-		int routeColumn = position.getColumn().getNumber();
-		for (int i = 0; i < loopCount; i++) {
-			routeRow += this.getRowGap();
-			routeColumn += this.getColumnGap();
-			if (hasPieceInBoard(ranks, routeRow, routeColumn)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private int calculateLoopCount(Position position, Position targetPosition) {
-		int columnGap = Math.abs(position.calculateColumnGap(targetPosition));
-		int rowGap = Math.abs(position.calculateRowGap(targetPosition));
-		return Math.max(columnGap, rowGap);
-	}
-
-	private boolean hasPieceInBoard(List<Rank> ranks, int routeRow, int routeColumn) {
-		return ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.anyMatch(piece -> piece.getPosition().getColumn().getNumber() == routeColumn
-				&& piece.getPosition().getRow() == routeRow);
 	}
 }

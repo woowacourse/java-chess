@@ -21,21 +21,18 @@ public abstract class Piece implements Movable {
 		this.team = team;
 	}
 
-	public Position getPosition() {
-		return position;
-	}
-
-	public String showSymbol() {
-		if (this.team == Team.WHITE) {
-			return getSymbol();
-		}
-		return getSymbol().toUpperCase();
-	}
-
 	private void validateTurn(Team nowTurn) {
 		if (this.team != nowTurn) {
 			throw new InvalidTurnException(InvalidTurnException.INVALID_TURN);
 		}
+	}
+
+	public boolean isTeam(Team team) {
+		return this.team.equals(team);
+	}
+
+	private boolean isInPlace(Position sourcePosition, Position targetPosition) {
+		return sourcePosition.equals(targetPosition);
 	}
 
 	protected Direction findDirection(int rowGap, int columnGap) {
@@ -66,23 +63,16 @@ public abstract class Piece implements Movable {
 		ranks.get(targetRankIndex).getPieces().add(this);
 	}
 
-	private boolean isInPlace(Position sourcePosition, Position targetPosition) {
-		return sourcePosition.equals(targetPosition);
+	public String showSymbol() {
+		if (this.team == Team.WHITE) {
+			return getSymbol();
+		}
+		return getSymbol().toUpperCase();
 	}
 
-	public boolean isTeam(Team team) {
-		return this.team.equals(team);
+	public Position getPosition() {
+		return position;
 	}
-
-	protected abstract boolean validDirection(Direction direction);
-
-	protected abstract boolean validStepSize(int rowGap, int columnGap);
-
-	protected abstract boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
-
-	public abstract double getScore();
-
-	protected abstract String getSymbol();
 
 	@Override
 	public boolean canMove(Position targetPosition, Team turn, List<Rank> ranks) {
@@ -125,4 +115,14 @@ public abstract class Piece implements Movable {
 	public int hashCode() {
 		return Objects.hash(position, team);
 	}
+
+	protected abstract boolean validDirection(Direction direction);
+
+	protected abstract boolean validStepSize(int rowGap, int columnGap);
+
+	protected abstract boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
+
+	public abstract double getScore();
+
+	protected abstract String getSymbol();
 }
