@@ -33,8 +33,8 @@ public class ChessGame {
     }
 
     public Status status() {
-        double whiteScore = board().calculateScore(Color.WHITE);
-        double blackScore = board().calculateScore(Color.BLACK);
+        Score whiteScore = state.score(Color.WHITE);
+        Score blackScore = state.score(Color.BLACK);
         return new Status(whiteScore, blackScore);
     }
 }

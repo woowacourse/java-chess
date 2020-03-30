@@ -16,15 +16,15 @@ class StatusTest {
     @ParameterizedTest
     @MethodSource("provideScore")
     @DisplayName("점수에 따른 결과 확인")
-    void winner(double whiteScore, double blackScore, Color expected) {
+    void winner(Score whiteScore, Score blackScore, Color expected) {
         assertThat(new Status(whiteScore, blackScore).winner()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideScore() {
         return Stream.of(
-            Arguments.of(38, 37, Color.WHITE),
-            Arguments.of(38, 38, Color.NONE),
-            Arguments.of(37, 38, Color.BLACK)
+            Arguments.of(new Score(38), new Score(37), Color.WHITE),
+            Arguments.of(new Score(38), new Score(38), Color.NONE),
+            Arguments.of(new Score(37), new Score(38), Color.BLACK)
         );
     }
 

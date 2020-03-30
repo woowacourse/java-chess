@@ -1,9 +1,17 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.game.Score;
+import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public class Finished implements State {
+    private Board board;
+
+    public Finished(Board board) {
+        this.board = board;
+    }
+
     @Override
     public State start() {
         throw new UnsupportedOperationException();
@@ -21,7 +29,12 @@ public class Finished implements State {
 
     @Override
     public Board board() {
-        return new Board();
+        return board;
+    }
+
+    @Override
+    public Score score(Color color) {
+        return Score.calculate(board.findPiecesByColor(color));
     }
 
     @Override

@@ -26,4 +26,8 @@ public enum PieceFactory {
             .orElseThrow(IllegalArgumentException::new)
             .creator.apply(position, color);
     }
+
+    public static Piece createBlank(Position position) {
+        return new Blank(position);
+    }
 }

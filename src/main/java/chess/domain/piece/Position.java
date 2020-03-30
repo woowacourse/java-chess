@@ -1,20 +1,24 @@
 package chess.domain.piece;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Position {
-    private static final int ROW = 8;
-    private static final int COL = 8;
+public class Position implements Comparable<Position> {
+    public static final int START_POSITION_Y = 0;
+    public static final int START_POSITION_X = 0;
+    public static final int END_POSITION_Y = 8;
+    public static final int END_POSITION_X = 8;
     private static final Map<String, Position> POSITIONS = new HashMap<>();
 
     private final int x;
     private final int y;
 
     static {
-        for (int y = 0; y < ROW; y++) {
-            for (int x = 0; x < COL; x++) {
+        for (int y = START_POSITION_Y; y < END_POSITION_Y; y++) {
+            for (int x = START_POSITION_X; x < END_POSITION_X; x++) {
                 POSITIONS.put(key(x, y), new Position(x, y));
             }
         }
@@ -41,6 +45,10 @@ public class Position {
         return (char)('a' + x) + String.valueOf(1 + y);
     }
 
+    public static Collection<Position> values() {
+        return Collections.unmodifiableCollection(POSITIONS.values());
+    }
+
     public Position add(int x, int y) {
         return of(this.x + x, this.y + y);
     }
@@ -51,6 +59,14 @@ public class Position {
 
     public int getY() {
         return y;
+    }
+
+    public boolean equalsX(int x) {
+        return this.x == x;
+    }
+
+    public boolean equalsY(int y) {
+        return this.y == y;
     }
 
     @Override
@@ -70,4 +86,16 @@ public class Position {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    @Override
+    public int compareTo(Position position) {
+        if (y > position.y) {
+            return -1;
+        }
+        if (y < position.y) {
+            return 1;
+        }
+        return x - position.x;
+    }
+
 }

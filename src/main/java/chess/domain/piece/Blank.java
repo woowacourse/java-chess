@@ -18,7 +18,12 @@ public class Blank extends Piece {
     }
 
     @Override
-    public void move(Position position) {
+    public void move(Piece piece) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isBlank() {
+        return true;
     }
 }

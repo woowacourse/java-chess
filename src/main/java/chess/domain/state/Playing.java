@@ -1,6 +1,10 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.board.exception.InvalidTurnException;
+import chess.domain.game.Score;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
 public class Playing implements State {
@@ -10,7 +14,6 @@ public class Playing implements State {
     public Playing(Board board, Turn turn) {
         this.board = board;
         this.turn = turn;
-        board.initialize();
     }
 
     @Override
@@ -20,22 +23,44 @@ public class Playing implements State {
 
     @Override
     public State end() {
-        return new Finished();
+        return new Finished(Board.EMPTY);
     }
 
     @Override
     public State move(Position source, Position target) {
-        board.move(source, target, turn.getColor());
+        Piece sourcePiece = board.findPiece(source);
+        Piece targetPiece = board.findPiece(target);
+        validateTurn(sourcePiece);
+        sourcePiece.move(targetPiece);
         if (board.isGameOver()) {
-            return new Finished();
+            return new Finished(Board.EMPTY);
         }
-        turn = turn.next();
+        nextTurn();
         return this;
+    }
+
+    private void validateTurn(Piece piece) {
+        if (!piece.isSameColor(turn.getColor())) {
+            throw new InvalidTurnException();
+        }
+    }
+
+    private void nextTurn() {
+        turn = turn.next();
+    }
+
+    private void validateTurn() {
+
     }
 
     @Override
     public Board board() {
         return board;
+    }
+
+    @Override
+    public Score score(Color color) {
+        return Score.calculate(board.findPiecesByColor(color));
     }
 
     @Override

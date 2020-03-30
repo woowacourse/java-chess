@@ -16,4 +16,9 @@ public class King extends Piece {
     protected Direction findDirection(int x, int y) {
         return Direction.of(x, y);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

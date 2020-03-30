@@ -1,17 +1,21 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.game.Score;
+import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public interface State {
-	State start();
+    State start();
 
-	State end();
+    State end();
 
-	State move(Position source, Position target);
+    State move(Position source, Position target);
 
-	Board board();
+    Board board();
 
-	boolean isFinished();
+    Score score(Color color);
+
+    boolean isFinished();
 
 }

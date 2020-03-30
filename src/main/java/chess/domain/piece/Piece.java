@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.piece.exception.NotMovableException;
@@ -8,11 +9,13 @@ public abstract class Piece {
     private Position position;
     private Color color;
     private Symbol symbol;
+    private final List<MoveEventListener> moveEventListeners;
 
     public Piece(Position position, Color color, Symbol symbol) {
         this.position = position;
         this.color = color;
         this.symbol = symbol;
+        this.moveEventListeners = new ArrayList<>();
     }
 
     public double score() {
@@ -23,8 +26,20 @@ public abstract class Piece {
         return symbol.getName();
     }
 
-    public void move(Position position) {
-        this.position = position;
+    public void move(Piece targetPiece) {
+        Path pathToTarget = pathTo(targetPiece);
+        notifyMoveEventListeners(new MoveEvent(this.position, targetPiece.position, pathToTarget));
+        position = targetPiece.position;
+    }
+
+    public final void onMoveEvent(MoveEventListener moveEventListener) {
+        moveEventListeners.add(moveEventListener);
+    }
+
+    private void notifyMoveEventListeners(MoveEvent moveEvent) {
+        for (MoveEventListener moveEventListener : moveEventListeners) {
+            moveEventListener.call(moveEvent);
+        }
     }
 
     public final boolean isBlack() {
@@ -62,4 +77,20 @@ public abstract class Piece {
     protected abstract List<Direction> movableDirections(Piece piece, Direction direction);
 
     protected abstract Direction findDirection(int x, int y);
+
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public boolean isBlank() {
+        return false;
+    }
 }

@@ -1,9 +1,9 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.game.Status;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Position;
 
 public class OutputView {
     private static final String STATUS_FORMAT = "WHITE: %.1f BLACK: %.1f - %s진영 승\n";
@@ -14,10 +14,12 @@ public class OutputView {
     }
 
     public static void printBoard(Board board) {
-        for (Rank rank : board.getReverseRanks()) {
-            for (Piece piece : rank.getPieces()) {
-                System.out.print(drawPiece(piece));
-            }
+        board.getBoard().forEach(OutputView::printPiece);
+    }
+
+    private static void printPiece(Position position, Piece piece) {
+        System.out.print(drawPiece(piece));
+        if (position.equalsX(Position.END_POSITION_X - 1)) {
             System.out.println();
         }
     }
