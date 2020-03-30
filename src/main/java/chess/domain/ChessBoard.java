@@ -28,12 +28,12 @@ public class ChessBoard {
 
         if (validateMovement(from, to)) {
             Piece source = chessBoard.get(from);
-            Optional<Piece> target = Optional.ofNullable(chessBoard.get(to));
+            Piece target = chessBoard.get(to);
             chessBoard.put(to, source);
             chessBoard.remove(from);
 
 
-            if (target.isPresent() && target.get() instanceof King) {
+            if (target instanceof King) {
                 this.isKingTaken = true;
             }
 
@@ -47,11 +47,13 @@ public class ChessBoard {
             throw new NotMoveException("같은 위치로 이동할 수 없습니다.");
         }
 
-        Piece source = Optional.ofNullable(chessBoard.get(from))
-                .orElseThrow(() ->new NotMoveException("같은 Player의 위치로는 이동할 수 없습니다."));
-        Optional<Piece> target = Optional.ofNullable(chessBoard.get(to));
+        Piece source =chessBoard.get(from);
+        if (source == null) {
+            throw new NotMoveException("empty에서는 이동할 수 없습니다.");
+        }
+        Piece target = chessBoard.get(to);
 
-        if (source.isSamePlayer(target)) {
+        if (Objects.nonNull(target) && source.isSamePlayer(target)) {
             throw  new NotMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
         };
     }

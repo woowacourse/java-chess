@@ -61,13 +61,10 @@ public abstract class Piece {
                 && validateTileSize(from, to);
     }
 
-    public boolean isSamePlayer(Optional<Piece> target) {
+    public boolean isSamePlayer(Piece target) {
         Objects.requireNonNull(target);
 
-        if (target.isPresent()){
-            return player == target.get().getPlayer();
-        }
-        return false;
+        return  player == target.getPlayer();
     }
 
     public String getDisplay() {

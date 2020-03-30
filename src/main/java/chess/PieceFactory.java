@@ -7,14 +7,11 @@ import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PieceFactory {
-    private static Map<Piece, List<Position>> pieces = new LinkedHashMap<>();
+    private static final Map<Piece, List<Position>> pieces = new LinkedHashMap<>();
 
     static {
         createPieces(Player.WHITE, Column.ONE, Column.TWO);
@@ -37,6 +34,6 @@ public class PieceFactory {
     }
 
     public static Map<Piece, List<Position>> create() {
-        return pieces;
+        return Collections.unmodifiableMap(pieces);
     }
 }

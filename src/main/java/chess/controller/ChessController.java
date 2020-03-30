@@ -18,24 +18,21 @@ public class ChessController {
             throw new IllegalArgumentException("start를 해야 합니다.");
         }
 
-        // 정상적으로 들어왔을 때
         ChessBoard chessBoard = new ChessBoard();
         OutputView.printChessBoard(chessBoard.getChessBoard());
 
         do{
             inputs = InputView.inputCommand();
-            // (to do) 입력 ~ 배열에 대한 처리
-            // (to do) move a2 a4 3칸만 입력했는지 검증
             command = Command.of(inputs.get("command"));
 
-            // (to do) state 상태 관리 필요하다.
-            if (command.equals(Command.MOVE)) {
+            if (command == Command.MOVE) {
                 chessBoard.move(Positions.of(inputs.get("from")), Positions.of(inputs.get("to")));
                 OutputView.printChessBoard(chessBoard.getChessBoard());
             }
-            if (command.equals(Command.STATUS)) {
+            else if (command == Command.STATUS) {
                 OutputView.printStatus(chessBoard.createResult());
             }
+
             if (chessBoard.isGameOver()) {
                 OutputView.printGameOver();
                 return;
