@@ -26,9 +26,11 @@ class PositionCache {
 	}
 
 	public static Position of(String inputPosition) {
-		if (Objects.isNull(POSITION_CACHE.get(inputPosition))) {
+		Position position = POSITION_CACHE.get(inputPosition);
+
+		if (Objects.isNull(position)) {
 			throw new InvalidPositionException(InvalidPositionException.INVALID_BOUNDARY_POSITION);
 		}
-		return POSITION_CACHE.get(inputPosition);
+		return position;
 	}
 }
