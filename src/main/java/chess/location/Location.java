@@ -133,7 +133,7 @@ public class Location {
         return col.is(destination.col);
     }
 
-    public boolean is(int row) {
+    public boolean isSame(int row) {
         return this.row.is(row);
     }
 

@@ -77,7 +77,7 @@ public class ChessBoard {
         for (int row = MINIMUM_LINE; row < LIMIT_LINE; row++) {
             int fixRow = row;
             int sameRowPawnSize = (int) board.keySet().stream()
-                    .filter(location -> location.is(fixRow))
+                    .filter(location -> location.isSame(fixRow))
                     .filter(location -> board.get(location).isSameTeam(team))
                     .filter(location -> board.get(location) instanceof Pawn)
                     .count();

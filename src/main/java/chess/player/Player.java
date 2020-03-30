@@ -37,11 +37,6 @@ public class Player {
     public String getTeamName() {
         return team.name();
     }
-
-    @Override
-    public String toString() {
-        return team.name() + chessSet.toString();
-    }
 }
 
 

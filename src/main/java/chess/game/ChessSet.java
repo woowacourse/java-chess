@@ -29,19 +29,4 @@ public class ChessSet {
         return chessSet.values().stream()
                 .noneMatch(Piece::isKing);
     }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        Set<Location> locations = chessSet.keySet();
-        for (Location location : locations) {
-            String value = String.format(
-                    "%c, %d : %c \n",
-                    location.getCol(),
-                    location.getRow(),
-                    chessSet.get(location).getName());
-            stringBuilder.append(value);
-        }
-        return stringBuilder.toString();
-    }
 }
