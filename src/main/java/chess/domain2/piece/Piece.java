@@ -22,6 +22,8 @@ public abstract class Piece {
 
     public abstract String getLetter();
 
+    public abstract double getScore();
+
     abstract void addMovableSquares(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction);
 
     void validate(Square pieceSquare, Map<Square, Piece> chessBoard) {

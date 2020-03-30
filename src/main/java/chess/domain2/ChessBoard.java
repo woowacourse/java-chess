@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class ChessBoard {
 
+    private static final int FIRST_KINGS_NUMBER = 2;
     private Map<Square, Piece> chessBoard = new HashMap<>();
     private Color turn;
 
@@ -57,5 +58,11 @@ public class ChessBoard {
         Piece currentPiece = chessBoard.remove(beforeSquare);
         chessBoard.put(afterSquare, currentPiece);
         return true;
+    }
+
+    public boolean isKingCaptured() {
+        return chessBoard.values().stream()
+                .filter(piece -> piece.getLetter().equals("k") || piece.getLetter().equals("K"))
+                .toArray().length != FIRST_KINGS_NUMBER;
     }
 }

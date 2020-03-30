@@ -13,6 +13,7 @@ public class Pawn extends Piece {
     private static final char BLACK_PAWN_FIRST_RANK = '7';
     private static final char WHITE_PAWN_FIRST_RANK = '2';
     private static final int FIRST_PAWN_MOVE_SCOPE = 2;
+    public static final double REDUCED_PAWN_SCORE = 0.5;
 
     static {
         for (Color color : Color.values()) {
@@ -115,5 +116,9 @@ public class Pawn extends Piece {
         return type.getName().toLowerCase();
     }
 
+    @Override
+    public double getScore() {
+        return type.getScore();
+    }
 
 }

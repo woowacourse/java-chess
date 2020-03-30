@@ -66,4 +66,9 @@ public class Queen extends Piece {
         }
         return type.getName().toLowerCase();
     }
+
+    @Override
+    public double getScore() {
+        return type.getScore();
+    }
 }
