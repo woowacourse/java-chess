@@ -9,8 +9,6 @@ import chess.factory.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import static chess.domain.game.Command.*;
-
 public class Application {
     public static void main(String[] args) {
         OutputView.printInitialMessage();
@@ -22,7 +20,7 @@ public class Application {
         Board board = BoardFactory.createBoard();
         String command = "";
 
-        while (!END.equals(command) && !GameStatus.isGameEnd()) {
+        while (!Command.isEnd(command) && !GameStatus.isGameEnd()) {
             command = getCommand();
             executeCommand(board, command);
         }
@@ -39,21 +37,19 @@ public class Application {
     }
 
     private static void executeCommand(Board board, String command) {
-        String[] splitCommand = command.split(" ");
-
-        if (MOVE.equals(splitCommand[0])) {
-            tryMove(splitCommand, board);
+        if (Command.isMove(command)) {
+            tryMove(command, board);
         }
-        if (STATUS.equals(splitCommand[0])) {
+        if (Command.isStatus(command)) {
             OutputView.printScore(board);
         }
         OutputView.printBoard(board);
     }
 
-    private static void tryMove(String[] splitCommand, Board board) {
+    private static void tryMove(String command, Board board) {
         try {
-            Position startPosition = Position.of(splitCommand[1]);
-            Position targetPosition = Position.of(splitCommand[2]);
+            Position startPosition = Command.makeStartPosition(command);
+            Position targetPosition = Command.makeTargetPosition(command);
             MovingInfo movingInfo = new MovingInfo(startPosition, targetPosition);
 
             board.move(movingInfo);
