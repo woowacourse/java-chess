@@ -3,6 +3,8 @@ package chess.domain;
 import java.util.Arrays;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
+
 import chess.domain.board.Position;
 
 /**
@@ -14,7 +16,7 @@ public class Command {
 	private static final String MOVE = "move";
 	private static final String STATUS = "status";
 	private static final String END = "end";
-	private static final String EMPTY = "";
+	private static final int MINIMUM = 1;
 
 	private String command;
 
@@ -37,27 +39,20 @@ public class Command {
 	}
 
 	private static void validate(String[] input) {
-		validateNull(input);
-		validateEmpty(input);
+		validateNullAndEmpty(input);
 		validateInvalid(input);
+	}
+
+	private static void validateNullAndEmpty(String[] input) {
+		if (Objects.isNull(input) || input.length < MINIMUM || Arrays.stream(input).anyMatch(StringUtils::isEmpty)) {
+			throw new IllegalArgumentException("null이나 빈 값은 들어올 수 없습니다.");
+		}
 	}
 
 	private static void validateInvalid(String[] input) {
 		String command = input[0];
 		if (!MOVE.equalsIgnoreCase(command) && !STATUS.equalsIgnoreCase(command) && !END.equalsIgnoreCase(command)) {
 			throw new IllegalArgumentException("유효하지 않은 명령어 입니다.");
-		}
-	}
-
-	private static void validateEmpty(String[] input) {
-		if (Arrays.asList(input).contains(EMPTY)) {
-			throw new IllegalArgumentException("공백은 들어올 수 없습니다.");
-		}
-	}
-
-	private static void validateNull(String[] command) {
-		if (Objects.isNull(command)) {
-			throw new IllegalArgumentException("null값은 들어올 수 없습니다.");
 		}
 	}
 

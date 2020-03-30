@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 /**
  *    class description
@@ -13,21 +13,21 @@ import org.junit.jupiter.params.provider.NullSource;
  *    @author AnHyungJu, LeeHoBin
  */
 public class CommandTest {
-	@DisplayName("null값이 들어왔을 때 예외처리")
+	@DisplayName("String[]input이 null이나 빈 값이 들어왔을 때 예외처리")
 	@ParameterizedTest
-	@NullSource
-	void ofTest(String[] command) {
-		assertThatThrownBy(() -> Command.of(command))
+	@NullAndEmptySource
+	void ofTest(String[] input) {
+		assertThatThrownBy(() -> Command.of(input))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("null");
+			.hasMessageContaining("null이나 빈 값");
 	}
 
-	@DisplayName("공백 값이 들어왔을 때 예외처리")
+	@DisplayName("String[]의 각 인덱스 값이 null이나 빈 값이 들어왔을 때 예외처리")
 	@Test
 	void ofTest2() {
 		assertThatThrownBy(() -> Command.of(new String[] {"a", "", " "}))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("공백");
+			.hasMessageContaining("null이나 빈 값");
 	}
 
 	@DisplayName("유효하지 않은 값이 들어왔을 때 예외처리")
