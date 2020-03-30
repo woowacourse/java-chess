@@ -21,18 +21,18 @@ public class PieceFactory {
 
 	private void putPawns(Map<Location, Piece> pieces, int row, Team team) {
 		for (int i = 0; i < 8; i++) {
-			pieces.put(Location.of(row, (char)(i + 'a')), new Pawn(team));
+			pieces.put(Location.of(row, (char)(i + 'a')), Pawn.of(team));
 		}
 	}
 
 	private void putNoble(Map<Location, Piece> pieces, int row, Team team) {
-		pieces.put(Location.of(row, 'a'), new Rook(team));
-		pieces.put(Location.of(row, 'b'), new Knight(team));
-		pieces.put(Location.of(row, 'c'), new Bishop(team));
-		pieces.put(Location.of(row, 'd'), new Queen(team));
-		pieces.put(Location.of(row, 'e'), new King(team));
-		pieces.put(Location.of(row, 'f'), new Bishop(team));
-		pieces.put(Location.of(row, 'g'), new Knight(team));
-		pieces.put(Location.of(row, 'h'), new Rook(team));
+		pieces.put(Location.of(row, 'a'), Rook.of(team));
+		pieces.put(Location.of(row, 'b'), Knight.of(team));
+		pieces.put(Location.of(row, 'c'), Bishop.of(team));
+		pieces.put(Location.of(row, 'd'), Queen.of(team));
+		pieces.put(Location.of(row, 'e'), King.of(team));
+		pieces.put(Location.of(row, 'f'), Bishop.of(team));
+		pieces.put(Location.of(row, 'g'), Knight.of(team));
+		pieces.put(Location.of(row, 'h'), Rook.of(team));
 	}
 }

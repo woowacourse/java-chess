@@ -1,7 +1,6 @@
 package chess.piece;
 
 import java.util.Map;
-import java.util.Objects;
 
 import chess.board.Location;
 import chess.team.Team;
@@ -50,20 +49,5 @@ public abstract class Piece {
 			return String.valueOf(Character.toUpperCase(getName()));
 		}
 		return String.valueOf(getName());
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Piece piece = (Piece)o;
-		return team == piece.team;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(team);
 	}
 }

@@ -23,33 +23,33 @@ class ScoreTest {
 		return Stream.of(
 			Arguments.of(
 				new ArrayList<Piece>() {{
-					add(new Pawn(Team.WHITE));
-					add(new Pawn(Team.WHITE));
-					add(new Pawn(Team.WHITE));
+					add(Pawn.of(Team.WHITE));
+					add(Pawn.of(Team.WHITE));
+					add(Pawn.of(Team.WHITE));
 				}}, new ArrayList<Piece>() {{
-					add(new Pawn(Team.BLACK));
-					add(new Pawn(Team.BLACK));
+					add(Pawn.of(Team.BLACK));
+					add(Pawn.of(Team.BLACK));
 				}}
 				, 1
 			),
 			Arguments.of(
 				new ArrayList<Piece>() {{
-					add(new Pawn(Team.WHITE));
-					add(new Pawn(Team.WHITE));
+					add(Pawn.of(Team.WHITE));
+					add(Pawn.of(Team.WHITE));
 				}}, new ArrayList<Piece>() {{
-					add(new Pawn(Team.BLACK));
-					add(new Pawn(Team.BLACK));
+					add(Pawn.of(Team.BLACK));
+					add(Pawn.of(Team.BLACK));
 				}}
 				, 0
 			),
 			Arguments.of(
 				new ArrayList<Piece>() {{
-					add(new Pawn(Team.WHITE));
-					add(new Pawn(Team.WHITE));
+					add(Pawn.of(Team.WHITE));
+					add(Pawn.of(Team.WHITE));
 				}}, new ArrayList<Piece>() {{
-					add(new Pawn(Team.BLACK));
-					add(new Pawn(Team.BLACK));
-					add(new Pawn(Team.BLACK));
+					add(Pawn.of(Team.BLACK));
+					add(Pawn.of(Team.BLACK));
+					add(Pawn.of(Team.BLACK));
 				}}
 				, -1
 			)
@@ -59,8 +59,8 @@ class ScoreTest {
 	@DisplayName("피스, 세로줄의 폰의 정보들을 받아 점수를 계산")
 	@Test
 	void calculateScore() {
-		Score score = new Score(Arrays.asList(new Pawn(Team.WHITE)
-			, new Pawn(Team.WHITE), new Pawn(Team.WHITE)),
+		Score score = new Score(Arrays.asList(Pawn.of(Team.WHITE)
+			, Pawn.of(Team.WHITE), Pawn.of(Team.WHITE)),
 			1);
 		assertThat(score.getAmount()).isEqualTo(2.5);
 	}

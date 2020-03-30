@@ -11,7 +11,7 @@ class KingTest {
 
 	@Test
 	void canMove() {
-		King king = new King(Team.BLACK);
+		King king = King.of(Team.BLACK);
 		Location now = Location.of(8, 'e');
 
 		Location after = Location.of(7, 'e');

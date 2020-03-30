@@ -21,22 +21,22 @@ class GameResultTest {
 		return Stream.of(
 			Arguments.of(
 				new ArrayList<Piece>() {{
-					add(new Pawn(Team.WHITE));
+					add(Pawn.of(Team.WHITE));
 				}},
 				new ArrayList<Piece>(),
 				GameResult.WIN
 			), Arguments.of(
 				new ArrayList<Piece>() {{
-					add(new Pawn(Team.WHITE));
+					add(Pawn.of(Team.WHITE));
 				}},
 				new ArrayList<Piece>() {{
-					add(new Pawn(Team.BLACK));
+					add(Pawn.of(Team.BLACK));
 				}},
 				GameResult.DRAW
 			), Arguments.of(
 				new ArrayList<Piece>(),
 				new ArrayList<Piece>() {{
-					add(new Pawn(Team.BLACK));
+					add(Pawn.of(Team.BLACK));
 				}},
 				GameResult.LOSE
 			)

@@ -25,13 +25,13 @@ class ChessBoardTest {
 		return Stream.of(
 			Arguments.of(
 				new HashMap<Location, Piece>() {{
-					put(Location.of(1, 'a'), new King(Team.WHITE));
-					put(Location.of(2, 'a'), new King(Team.BLACK));
+					put(Location.of(1, 'a'), King.of(Team.WHITE));
+					put(Location.of(2, 'a'), King.of(Team.BLACK));
 				}}, true
 			), Arguments.of(
 				new HashMap<Location, Piece>() {{
-					put(Location.of(1, 'a'), new Pawn(Team.WHITE));
-					put(Location.of(2, 'a'), new King(Team.BLACK));
+					put(Location.of(1, 'a'), Pawn.of(Team.WHITE));
+					put(Location.of(2, 'a'), King.of(Team.BLACK));
 				}}, false
 			)
 		);
@@ -43,8 +43,8 @@ class ChessBoardTest {
 		Map<Location, Piece> board = new HashMap<>();
 		Location starting = Location.of(1, 'a');
 		Location destination = Location.of(2, 'a');
-		board.put(starting, new Queen(Team.BLACK));
-		board.put(destination, new Queen(Team.BLACK));
+		board.put(starting, Queen.of(Team.BLACK));
+		board.put(destination, Queen.of(Team.BLACK));
 
 		ChessBoard chessBoard = new ChessBoard(board);
 		assertThatThrownBy(() -> chessBoard.move(starting, destination))
@@ -57,14 +57,14 @@ class ChessBoardTest {
 		Map<Location, Piece> board = new HashMap<>();
 		Location bottomLocation = Location.of(1, 'a');
 		Location topLocation = Location.of(2, 'a');
-		board.put(bottomLocation, new Queen(Team.BLACK));
-		board.put(topLocation, new Queen(Team.BLACK));
+		board.put(bottomLocation, Queen.of(Team.BLACK));
+		board.put(topLocation, Queen.of(Team.BLACK));
 
 		Map<Location, Piece> actual = new HashMap<>();
 		Location actualBottomLocation = Location.of(1, 'a');
 		Location actualTopLocation = Location.of(2, 'a');
-		actual.put(actualBottomLocation, new Queen(Team.BLACK));
-		actual.put(actualTopLocation, new Queen(Team.BLACK));
+		actual.put(actualBottomLocation, Queen.of(Team.BLACK));
+		actual.put(actualTopLocation, Queen.of(Team.BLACK));
 
 		ChessBoard chessBoard = new ChessBoard(board);
 		Map<Location, Piece> giveMyPiece = chessBoard.giveMyPiece(Team.BLACK);
@@ -87,8 +87,8 @@ class ChessBoardTest {
 		Map<Location, Piece> board = new HashMap<>();
 		Location movingLocation = Location.of(1, 'a');
 		Location topLocation = Location.of(2, 'a');
-		board.put(movingLocation, new Queen(Team.BLACK));
-		board.put(topLocation, new Queen(Team.BLACK));
+		board.put(movingLocation, Queen.of(Team.BLACK));
+		board.put(topLocation, Queen.of(Team.BLACK));
 
 		ChessBoard chessBoard = new ChessBoard(board);
 		boolean actual = chessBoard.isTurn(movingLocation, GameState.RUNNING_BLACK_TURN);

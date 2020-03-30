@@ -14,7 +14,7 @@ import chess.team.Team;
 class BishopTest {
 	@Test
 	void canMove() {
-		Bishop bishop = new Bishop(Team.BLACK);
+		Bishop bishop = Bishop.of(Team.BLACK);
 		Location now = Location.of(8, 'c');
 		Location after = Location.of(7, 'd');
 		boolean actual = bishop.checkRange(now, after);
@@ -31,10 +31,10 @@ class BishopTest {
 	@Test
 	void name() {
 		Map<Location, Piece> board = new HashMap<>();
-		Bishop givenPiece = new Bishop(Team.BLACK);
+		Bishop givenPiece = Bishop.of(Team.BLACK);
 		board.put(Location.of(1, 'c'), givenPiece);
-		board.put(Location.of(2, 'd'), new Bishop(Team.WHITE));
-		board.put(Location.of(3, 'e'), new Bishop(Team.WHITE));
+		board.put(Location.of(2, 'd'), Bishop.of(Team.WHITE));
+		board.put(Location.of(3, 'e'), Bishop.of(Team.WHITE));
 
 		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(3, 'e'));
 		assertThat(actual).isTrue();

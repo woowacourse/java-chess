@@ -34,7 +34,7 @@ class GameStateTest {
 		, "RUNNING_BLACK_TURN,WHITE,false"
 		, "RUNNING_WHITE_TURN,BLACK,false"})
 	void isTurn(GameState gameState, Team pieceTeam, boolean expect) {
-		boolean actual = gameState.isTurn(new Pawn(pieceTeam));
+		boolean actual = gameState.isTurn(Pawn.of(pieceTeam));
 		assertThat(actual).isEqualTo(expect);
 	}
 }

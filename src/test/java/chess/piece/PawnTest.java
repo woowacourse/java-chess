@@ -15,7 +15,7 @@ class PawnTest {
 	@Test
 	@DisplayName("초기 위치의 폰의 이동 반경 테스트")
 	void canMove() {
-		Pawn pawn = new Pawn(Team.BLACK);
+		Pawn pawn = Pawn.of(Team.BLACK);
 		Location now = Location.of(7, 'a');
 
 		Location moveTwiceForward = Location.of(5, 'a');
@@ -39,7 +39,7 @@ class PawnTest {
 	@Test
 	@DisplayName("초기 위치가 아닌 일반적인 폰의 이동")
 	void canMove2() {
-		Pawn pawn = new Pawn(Team.BLACK);
+		Pawn pawn = Pawn.of(Team.BLACK);
 		Location now = Location.of(6, 'a');
 
 		Location moveOnceForward = Location.of(5, 'a');
@@ -59,9 +59,9 @@ class PawnTest {
 	@Test
 	void name() {
 		Map<Location, Piece> board = new HashMap<>();
-		Pawn givenPiece = new Pawn(Team.BLACK);
+		Pawn givenPiece = Pawn.of(Team.BLACK);
 		board.put(Location.of(7, 'a'), givenPiece);
-		board.put(Location.of(6, 'b'), new Bishop(Team.WHITE));
+		board.put(Location.of(6, 'b'), Bishop.of(Team.WHITE));
 
 		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(6, 'b'));
 		assertThat(actual).isFalse();
@@ -71,7 +71,7 @@ class PawnTest {
 	@Test
 	void name2() {
 		Map<Location, Piece> board = new HashMap<>();
-		Pawn givenPiece = new Pawn(Team.BLACK);
+		Pawn givenPiece = Pawn.of(Team.BLACK);
 		board.put(Location.of(7, 'a'), givenPiece);
 
 		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(6, 'b'));
@@ -82,9 +82,9 @@ class PawnTest {
 	@Test
 	void name3() {
 		Map<Location, Piece> board = new HashMap<>();
-		Pawn givenPiece = new Pawn(Team.BLACK);
-		Pawn counterPiece = new Pawn(Team.WHITE);
-		Pawn destinaionPiece = new Pawn(Team.WHITE);
+		Pawn givenPiece = Pawn.of(Team.BLACK);
+		Pawn counterPiece = Pawn.of(Team.WHITE);
+		Pawn destinaionPiece = Pawn.of(Team.WHITE);
 
 		board.put(Location.of(7, 'a'), givenPiece);
 		board.put(Location.of(6, 'a'), counterPiece);
@@ -98,8 +98,8 @@ class PawnTest {
 	@Test
 	void name4() {
 		Map<Location, Piece> board = new HashMap<>();
-		Pawn givenPiece = new Pawn(Team.BLACK);
-		Pawn counterPiece = new Pawn(Team.WHITE);
+		Pawn givenPiece = Pawn.of(Team.BLACK);
+		Pawn counterPiece = Pawn.of(Team.WHITE);
 		board.put(Location.of(7, 'a'), givenPiece);
 		board.put(Location.of(6, 'a'), counterPiece);
 
@@ -111,8 +111,8 @@ class PawnTest {
 	@Test
 	void name5() {
 		Map<Location, Piece> board = new HashMap<>();
-		Pawn givenPiece = new Pawn(Team.BLACK);
-		Pawn destinaionPiece = new Pawn(Team.WHITE);
+		Pawn givenPiece = Pawn.of(Team.BLACK);
+		Pawn destinaionPiece = Pawn.of(Team.WHITE);
 		board.put(Location.of(7, 'a'), givenPiece);
 		board.put(Location.of(5, 'a'), destinaionPiece);
 

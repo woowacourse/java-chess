@@ -14,7 +14,7 @@ import chess.team.Team;
 class QueenTest {
 	@Test
 	void canMove() {
-		Queen queen = new Queen(Team.BLACK);
+		Queen queen = Queen.of(Team.BLACK);
 		Location now = Location.of(8, 'd');
 		Location after = Location.of(8, 'h');
 		boolean actual = queen.checkRange(now, after);
@@ -31,10 +31,10 @@ class QueenTest {
 	@Test
 	void name1() {
 		Map<Location, Piece> board = new HashMap<>();
-		Piece givenPiece = new Queen(Team.BLACK);
+		Piece givenPiece = Queen.of(Team.BLACK);
 		board.put(Location.of(1, 'c'), givenPiece);
-		board.put(Location.of(2, 'd'), new Bishop(Team.WHITE));
-		board.put(Location.of(3, 'e'), new Bishop(Team.WHITE));
+		board.put(Location.of(2, 'd'), Bishop.of(Team.WHITE));
+		board.put(Location.of(3, 'e'), Bishop.of(Team.WHITE));
 
 		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(3, 'e'));
 		assertThat(actual).isTrue();
@@ -44,10 +44,10 @@ class QueenTest {
 	@Test
 	void name2() {
 		Map<Location, Piece> board = new HashMap<>();
-		Piece givenPiece = new Queen(Team.BLACK);
+		Piece givenPiece = Queen.of(Team.BLACK);
 		board.put(Location.of(1, 'c'), givenPiece);
-		board.put(Location.of(2, 'c'), new Bishop(Team.WHITE));
-		board.put(Location.of(3, 'c'), new Bishop(Team.WHITE));
+		board.put(Location.of(2, 'c'), Bishop.of(Team.WHITE));
+		board.put(Location.of(3, 'c'), Bishop.of(Team.WHITE));
 
 		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(3, 'c'));
 		assertThat(actual).isTrue();
@@ -57,10 +57,10 @@ class QueenTest {
 	@Test
 	void name3() {
 		Map<Location, Piece> board = new HashMap<>();
-		Piece givenPiece = new Queen(Team.BLACK);
+		Piece givenPiece = Queen.of(Team.BLACK);
 		board.put(Location.of(1, 'c'), givenPiece);
-		board.put(Location.of(1, 'd'), new Bishop(Team.WHITE));
-		board.put(Location.of(1, 'e'), new Bishop(Team.WHITE));
+		board.put(Location.of(1, 'd'), Bishop.of(Team.WHITE));
+		board.put(Location.of(1, 'e'), Bishop.of(Team.WHITE));
 
 		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(1, 'e'));
 		assertThat(actual).isTrue();

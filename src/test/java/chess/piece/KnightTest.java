@@ -10,7 +10,7 @@ import chess.team.Team;
 class KnightTest {
 	@Test
 	void canMove() {
-		Knight knight = new Knight(Team.BLACK);
+		Knight knight = Knight.of(Team.BLACK);
 		Location now = Location.of(8, 'g');
 
 		Location leftAfter = Location.of(7, 'e');
