@@ -1,6 +1,6 @@
 package chess;
 
-import chess.controller2.ChessController;
+import chess.controller.ChessController;
 
 public class Application {
 

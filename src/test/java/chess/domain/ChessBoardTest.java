@@ -1,43 +1,38 @@
 package chess.domain;
 
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Square;
+import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChessBoardTest {
     @Test
     @DisplayName("체스보드 생성시 32개의 칸-말 셋트를 가지고 있는지 확인")
-    void chessBoardSizeCheck2() {
+    void chessBoardSizeCheck() {
         ChessBoard chessBoard = new ChessBoard();
-        Map<Square, Piece> board = chessBoard.getChessBoard();
-        assertThat(board.size()).isEqualTo(32);
+        assertThat(chessBoard.getChessBoard().size()).isEqualTo(32);
     }
 
     @Test
     @DisplayName("move 수행이 가능한지 판단")
     void canMove() {
         ChessBoard chessBoard = new ChessBoard();
-        boolean blackTurn = true;
-        List<Square> squares = new ArrayList<>();
-        squares.add(Square.of("a2"));
-        squares.add(Square.of("a3"));
-        assertThat(chessBoard.canMove(squares, blackTurn)).isFalse();
-
-        squares.clear();
-        squares.add(Square.of("a7"));
-        squares.add(Square.of("a6"));
-        assertThat(chessBoard.canMove(squares, blackTurn)).isTrue();
-
-        squares.clear();
-        squares.add(Square.of("a7"));
-        squares.add(Square.of("b1"));
-        assertThat(chessBoard.canMove(squares, blackTurn)).isFalse();
+        assertThat(chessBoard.canMove(Square.of("c5"), Square.of("c6"))).isFalse();
+        //WhiteTurn
+        chessBoard.changeTurn();
+        //Black
+        assertThat(chessBoard.canMove(Square.of("a2"), Square.of("a3"))).isFalse();
+        //Black
+        assertThat(chessBoard.canMove(Square.of("a7"), Square.of("a6"))).isTrue();
+        //WhiteTurn
+        assertThat(chessBoard.canMove(Square.of("a7"), Square.of("b1"))).isFalse();
     }
 
     @Test
@@ -46,11 +41,11 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
         List<Square> squares = new ArrayList<>();
         squares.add(Square.of("a2"));
-        squares.add(Square.of("a3"));
+        squares.add(Square.of("a4"));
         chessBoard.movePiece(squares);
         assertThat(chessBoard.getChessBoard().containsKey(Square.of("a2"))).isFalse();
-        assertThat(chessBoard.getChessBoard().containsKey(Square.of("a3"))).isTrue();
-        assertThat(chessBoard.getChessBoard().get(Square.of("a3"))).isEqualTo(Pawn.of(Color.WHITE));
+        assertThat(chessBoard.getChessBoard().containsKey(Square.of("a4"))).isTrue();
+        assertThat(chessBoard.getChessBoard().get(Square.of("a4"))).isEqualTo(Pawn.of(Color.WHITE));
     }
 
     @Test
@@ -70,35 +65,5 @@ public class ChessBoardTest {
         chessBoard.movePiece(Arrays.asList(Square.of("d6"), Square.of("d3")));
 
         assertThat(chessBoard.isKingCaptured()).isTrue();
-    }
-
-    @Test
-    @DisplayName("게임 점수 계산")
-    void calculateScore() {
-        ChessBoard chessBoard = new ChessBoard();
-        Map<Color, Double> teamScore = chessBoard.getTeamScore();
-        assertThat(teamScore.get(Color.BLACK)).isEqualTo(38);
-        assertThat(teamScore.get(Color.WHITE)).isEqualTo(38);
-
-        chessBoard.movePiece(Arrays.asList(Square.of("c2"), Square.of("c4")));
-        chessBoard.movePiece(Arrays.asList(Square.of("d7"), Square.of("d5")));
-        chessBoard.movePiece(Arrays.asList(Square.of("c4"), Square.of("d5")));
-
-        teamScore = chessBoard.getTeamScore();
-        assertThat(teamScore.get(Color.BLACK)).isEqualTo(37);
-        assertThat(teamScore.get(Color.WHITE)).isEqualTo(37);
-    }
-
-    @Test
-    @DisplayName("승자 구하기")
-    void calculateWinnerByScore() {
-        ChessBoard chessBoard = new ChessBoard();
-        assertThat(chessBoard.getWinners().size()).isEqualTo(2);
-
-        chessBoard.movePiece(Arrays.asList(Square.of("b1"), Square.of("c3")));
-        chessBoard.movePiece(Arrays.asList(Square.of("d7"), Square.of("d5")));
-        chessBoard.movePiece(Arrays.asList(Square.of("c3"), Square.of("d5")));
-        assertThat(chessBoard.getWinners().size()).isEqualTo(1);
-        assertThat(chessBoard.getWinners().get(0)).isEqualTo(Color.WHITE);
     }
 }

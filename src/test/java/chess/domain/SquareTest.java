@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.board.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,6 +16,7 @@ public class SquareTest {
     @DisplayName("칸 캐싱했는지 확인")
     void checkSquareCache() {
         assertThat(Square.of("a1")).isEqualTo(Square.of("a1"));
+        assertThat(Square.of("a1")).isNotEqualTo(Square.of("a2"));
     }
 
     @ParameterizedTest
@@ -27,22 +29,10 @@ public class SquareTest {
                 .hasMessageContaining("잘못");
     }
 
-    @DisplayName("칸에 더한 값이 캐싱된 칸에 포함되어 있는지")
     @Test
-    void canAddTest() {
-        Square square = Square.of("a2");
-        assertThat(Square.hasCacheAdded(square, 1, 1)).isTrue();
-        assertThat(Square.hasCacheAdded(square, -1, 1)).isFalse();
+    @DisplayName("주어진 Square 에서 file, rank 이동한 Square 구하기")
+    void moveTo() {
+        assertThat(Square.moveTo(-1, 1, Square.of("c3"))).isEqualTo(Square.of("b4"));
+        assertThat(Square.moveTo(-3, 1, Square.of("c3"))).isEqualTo(Square.of("c3"));
     }
-
-    @DisplayName("같은 File의 Square인지 확인")
-    @Test
-    void isSameFile() {
-        Square squareA2 = Square.of("a2");
-        Square squareA3 = Square.of("a3");
-        Square squareB2 = Square.of("b2");
-        assertThat(squareA2.isJustSameFile(squareA3)).isTrue();
-        assertThat(squareA2.isJustSameFile(squareB2)).isFalse();
-    }
-
 }

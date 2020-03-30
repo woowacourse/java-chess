@@ -1,7 +1,6 @@
 package chess.domain;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public enum GameState {
     START("start"),
@@ -25,13 +24,12 @@ public enum GameState {
     }
 
     private static void validateInput(String input) {
-        if (Objects.isNull(input)) {
-            throw new IllegalArgumentException("잘못된 입력입니다");
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("입력값이 존재하지 않습니다.");
         }
     }
 
     public String getName() {
         return name;
     }
-
 }

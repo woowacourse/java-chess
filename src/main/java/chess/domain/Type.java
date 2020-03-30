@@ -16,11 +16,11 @@ public enum Type {
         this.score = score;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public double getScore() {
         return score;
+    }
+
+    public String getName() {
+        return name;
     }
 }
