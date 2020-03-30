@@ -50,8 +50,7 @@ public class ChessRank {
         return targetRank.chessRank - this.chessRank;
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(chessRank);
+    public int getChessRank() {
+        return chessRank;
     }
 }

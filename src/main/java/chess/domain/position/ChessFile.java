@@ -46,8 +46,7 @@ public class ChessFile {
         return targetFile.chessFile - this.chessFile;
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(chessFile);
+    public char getChessFile() {
+        return chessFile;
     }
 }
