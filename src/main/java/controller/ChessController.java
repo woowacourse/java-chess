@@ -24,6 +24,15 @@ public class ChessController {
 		String inputChessCommand = InputView.inputCommand();
 		String[] inputCommand = inputChessCommand.split(DELIMITER);
 
+		try {
+			executeCommand(board, turn, inputCommand);
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e);
+			run(board, turn);
+		}
+	}
+
+	private void executeCommand(Board board, Team turn, String[] inputCommand) {
 		Command command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
 		while (command != Command.END) {
 			OutputView.printChessBoard(board);
