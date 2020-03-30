@@ -36,4 +36,8 @@ public abstract class Piece {
 	public boolean isPawn() {
 		return false;
 	}
+
+	public boolean isKing() {
+		return false;
+	}
 }

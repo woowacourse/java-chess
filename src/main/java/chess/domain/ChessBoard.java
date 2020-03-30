@@ -57,13 +57,19 @@ public class ChessBoard {
 		}
 	}
 
-	private void move() {
-
-	}
-
 	public boolean isMovable(List<Position> positions, Position target) {
 		return positions.stream()
 			.anyMatch(target::equals);
+	}
+
+	public boolean isKingNotDead(Color color) {
+		long kingLiveCount = pieces.keySet().stream()
+			.map(position -> pieces.get(position))
+			.filter(Piece::isKing)
+			.filter(piece -> piece.isSameColor(color))
+			.count();
+
+		return kingLiveCount == 1;
 	}
 
 	public Piece getPiece(String position) {
