@@ -18,12 +18,17 @@ public class OutputView {
         for (Point point : pieces.getPieces().keySet()) {
             printRowBoard(pieces, point);
             newLineCount++;
-            if (newLineCount == NEXT_LINE_COUNT) {
-                System.out.println();
-                newLineCount = INITIAL_ZERO;
-            }
+            newLineCount = getKeepOrInitialCount(newLineCount);
         }
         System.out.println();
+    }
+
+    private static int getKeepOrInitialCount(int newLineCount) {
+        if (newLineCount == NEXT_LINE_COUNT) {
+            newLineCount = INITIAL_ZERO;
+            System.out.println();
+        }
+        return newLineCount;
     }
 
     private static void printRowBoard(Pieces pieces, Point point) {

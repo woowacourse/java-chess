@@ -12,7 +12,7 @@ public class Finished extends GameState {
 
     @Override
     public StateStrategy start() {
-        throw new CommendTypeException("Start를 할 수 없습니다.");
+        throw new CommendTypeException("Start 를 할 수 없습니다.");
     }
 
     @Override

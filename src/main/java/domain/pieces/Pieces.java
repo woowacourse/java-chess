@@ -130,4 +130,12 @@ public class Pieces {
     private boolean isSameInitial(Point point) {
         return pieces.get(point).getInitial().equalsIgnoreCase(INITIAL_PAWN);
     }
+
+    public boolean isTargetKing() {
+        int countKing = (int)pieces.keySet().stream()
+            .filter(point -> pieces.get(point).isKing())
+            .count();
+
+        return countKing < 2;
+    }
 }

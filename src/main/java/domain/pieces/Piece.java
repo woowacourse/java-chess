@@ -9,6 +9,8 @@ import java.util.Map;
 
 public abstract class Piece {
 
+    private static final String INITIAL_KING = "k";
+
     protected final String initial;
     protected final Team team;
 
@@ -27,6 +29,10 @@ public abstract class Piece {
 
     public Team getTeam() {
         return team;
+    }
+
+    public boolean isKing() {
+        return initial.equalsIgnoreCase(INITIAL_KING);
     }
 
     public abstract boolean isMovable(Direction direction, Map<Point, Piece> pieces,
