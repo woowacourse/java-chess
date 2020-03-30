@@ -17,8 +17,8 @@ public class Application {
 
     private static void run() {
         Board board = BoardFactory.createBoard();
-        String command = "";
         GameStatus gameStatus = board.getGameStatus();
+        String command = "";
 
         while (!Command.isEnd(command) && !gameStatus.isGameEnd()) {
             command = getCommand();

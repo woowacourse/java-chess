@@ -35,15 +35,15 @@ public enum Command {
 
     public static Position makeStartPosition(String command) {
         String startString = command.split(" ")[1];
-        validateInputPosition(startString);
 
+        validateInputPosition(startString);
         return Position.of(startString);
     }
 
     public static Position makeTargetPosition(String command) {
         String targetString = command.split(" ")[2];
-        validateInputPosition(targetString);
 
+        validateInputPosition(targetString);
         return Position.of(targetString);
     }
 

@@ -48,6 +48,7 @@ public class GameStatus {
 
     private int getColumnPawnCount(ChessPiece chessPiece) {
         int pawnCount = COUNT_INIT;
+
         if (chessPiece.getTeam() == nowPlayingTeam && chessPiece instanceof Pawn) {
             pawnCount++;
         }
