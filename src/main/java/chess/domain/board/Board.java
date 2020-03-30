@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -40,16 +41,14 @@ public class Board {
                 .count() < 2;
     }
 
-    public double getScoreOf(Team team) {
+    public Collection<List<Piece>> getColumnGroupOf(Team team) {
         return board.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().isSameTeam(team))
                 .collect(groupingBy(
                         entry -> entry.getKey().getColumn(),
-                        mapping(entry -> entry.getValue().getName(), toList())))
-                .values().stream()
-                .mapToDouble(Score::calculateScoreOf)
-                .sum();
+                        mapping(Map.Entry::getValue, toList())))
+                .values();
     }
 
     public Piece get(Position key) {
