@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import chess.team.Team;
 
-// 팀별 초기위치를 갖고있는다.
 public class Location {
 	private static final Location[] WHITE_TEAM_INITIAL_PAWN_LOCATIONS = {
 		Location.of(2, 'a'),

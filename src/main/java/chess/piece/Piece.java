@@ -19,20 +19,12 @@ public abstract class Piece {
 
 	protected abstract char getName();
 
-	protected boolean isBlack() {
-		return Team.BLACK == team;
-	}
-
-	public boolean isSameTeam(boolean black) {
-		return isBlack() == black;
-	}
-
-	public boolean isSameTeam(Team blackTeam) {
-		return blackTeam == Team.of(isBlack());
+	public boolean isSameTeam(Team team) {
+		return team == this.team;
 	}
 
 	public boolean isSameTeam(Piece piece) {
-		return isBlack() == piece.isBlack();
+		return piece.team == this.team;
 	}
 
 	public boolean checkObstacle(Map<Location, Piece> board, Location now, Location destination) {

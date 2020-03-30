@@ -15,7 +15,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean checkRange(Location now, Location after) {
-		Team team = Team.of(isBlack());
+		Team team = this.team;
 
 		if (now.isInitialPawnLocation(team)) {
 			return now.isInitialPawnForwardRange(after, team)
@@ -34,7 +34,7 @@ public class Pawn extends Piece {
 		// 대각선 방향 && 목적지에 피스가 있는경우
 		if (now.isDiagonal(destination) && board.containsKey(destination)) {
 			Piece maybeEnemyPiece = board.get(destination);
-			return maybeEnemyPiece.isSameTeam(!this.isBlack());
+			return maybeEnemyPiece.isSameTeam(team.ofOpposingTeam());
 		}
 
 		Location nextLocation = now.calculateNextLocation(destination, 1);

@@ -21,6 +21,13 @@ public enum Team {
 			.orElseThrow(() -> new IllegalArgumentException("팀을 찾을 수 없습니다."));
 	}
 
+	public Team ofOpposingTeam() {
+		return Arrays.stream(values())
+			.filter(team -> this != team)
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException("팀을 찾을 수 없습니다."));
+	}
+
 	public boolean isBlack() {
 		return isBlack;
 	}
