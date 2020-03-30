@@ -1,9 +1,9 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
-import chess.domain.Color;
 import chess.domain.GameState;
-import chess.domain.Square;
+import chess.domain.piece.Color;
+import chess.domain.square.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -33,7 +33,7 @@ public class ChessController {
             }
             gameState = GameState.of(input);
             if (gameState == GameState.START) {
-                throw new IllegalArgumentException("왜 시작하세요");
+                throw new IllegalArgumentException("이미 시작하였습니다");
             }
             if (gameState == GameState.MOVE) {
                 if (proceed(chessBoard, squares, blackTurn)) {

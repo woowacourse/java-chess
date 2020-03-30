@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Square;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -18,11 +19,16 @@ public class Pawn extends Piece {
     }
 
     private static void putIntoCache(Color color) {
+        String name = putNameByColor(color);
+        CACHE.putIfAbsent(color, new Pawn(color, name, SCORE));
+    }
+
+    private static String putNameByColor(Color color) {
         String name = NAME_BLACK;
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new Pawn(color, name, SCORE));
+        return name;
     }
 
     public static Pawn of(Color color) {
@@ -47,25 +53,27 @@ public class Pawn extends Piece {
         if (color.equals(Color.BLACK)) {
             index *= -1;
         }
-        if ((color.equals(Color.BLACK) && square.getRank() == 7) ||
-                (color.equals(Color.WHITE) && square.getRank() == 2)) {
-            availableSquares.add(addIfInBoundary(square, 0, index * 2));
+        if ((color.equals(Color.BLACK) && square.getRank() == Rank.of(7)) ||
+                (color.equals(Color.WHITE) && square.getRank() == Rank.of(2))) {
+            availableSquares.add(square.movedSquareInBoundary(0, index * 2));
         }
-        availableSquares.add(addIfInBoundary(square, 0, index));
+        availableSquares.add(square.movedSquareInBoundary(0, index));
         return availableSquares;
     }
 
     @Override
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         Set<Square> squares = calculateScope(square);
+        Rank currentRank = square.getRank();
         for (Square s : squares) {
-            if (Math.abs(square.getRank() - s.getRank()) == 1) {
+            Rank movedRank = s.getRank();
+            if (Math.abs(currentRank.getNumber() - movedRank.getNumber()) == 1) {
                 Square squareRight = s;
                 Square squareLeft = s;
-                if (s.getFile() != 'a') {
+                if (s.getFile() != File.of('a')) {
                     squareLeft = Square.of(s, -1, 0);
                 }
-                if (s.getFile() != 'h') {
+                if (s.getFile() != File.of('h')) {
                     squareRight = Square.of(s, 1, 0);
                 }
                 if (board.containsKey(s) && color == board.get(s).color) {

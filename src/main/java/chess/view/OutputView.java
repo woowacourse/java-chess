@@ -1,10 +1,13 @@
 package chess.view;
 
 import chess.domain.ChessBoard;
-import chess.domain.Color;
-import chess.domain.Square;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,17 +25,22 @@ public class OutputView {
 
     public static void printChessBoard(ChessBoard chessBoard) {
         Map<Square, Piece> gameBoard = chessBoard.getChessBoard();
-        IntStream.rangeClosed(8, 1).forEach(rank -> printOneRow(gameBoard, rank));
+        IntStream.rangeClosed(1, 8)
+                .boxed()
+                .sorted(Collections.reverseOrder())
+                .forEach(rank -> printOneRow(gameBoard, Rank.of(rank)));
     }
 
-    private static void printOneRow(Map<Square, Piece> gameBoard, int rank) {
-        for (char file = 'a'; file <= 'h'; file++) {
-            if (gameBoard.containsKey(Square.of(String.valueOf(file) + rank))) {
-                System.out.print(gameBoard.get(Square.of(String.valueOf(file) + rank)).getName());
-                continue;
+    private static void printOneRow(Map<Square, Piece> gameBoard, Rank rank) {
+        IntStream.rangeClosed(1, 8).forEach(file -> {
+            Square currentSquare = Square.of(File.of(file), rank);
+            if (gameBoard.containsKey(currentSquare)) {
+                System.out.print(gameBoard.get(currentSquare));
             }
-            System.out.print(".");
-        }
+            if (!gameBoard.containsKey(currentSquare)) {
+                System.out.print(".");
+            }
+        });
         System.out.println();
     }
 

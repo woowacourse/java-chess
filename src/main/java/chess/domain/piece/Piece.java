@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Square;
+import chess.domain.square.Square;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -22,18 +21,12 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public String getName() {
-        return this.name;
+    @Override
+    public String toString() {
+        return name;
     }
 
     public abstract Set<Square> calculateScope(Square square);
-
-    public Square addIfInBoundary(Square square, int fileIncrementBy, int rankIncrementBy) {
-        if (Square.hasCacheAdded(square, fileIncrementBy, rankIncrementBy)) {
-            return Square.of(square, fileIncrementBy, rankIncrementBy);
-        }
-        return square;
-    }
 
     public abstract Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board);
 
@@ -42,7 +35,7 @@ public abstract class Piece {
         int file = 0;
         int rank = 0;
         for (int i = 0; i < 8; i++, file += fileAddAmount, rank += rankAddAmount) {
-            squaresToRemove.add(addIfInBoundary(s, file, rank));
+            squaresToRemove.add(s.movedSquareInBoundary(file, rank));
         }
         squaresToRemove.remove(s);
         return squaresToRemove;

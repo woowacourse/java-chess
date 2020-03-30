@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Square;
+import chess.domain.square.Square;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,10 +47,10 @@ public class Knight extends Piece {
         int x = -1;
         int y = 2;
         for (int i = 0; i < 2; i++) {
-            availableSquares.add(addIfInBoundary(square, x, y));
-            availableSquares.add(addIfInBoundary(square, y, x));
-            availableSquares.add(addIfInBoundary(square, x, (-1) * y));
-            availableSquares.add(addIfInBoundary(square, y * -1, x));
+            availableSquares.add(square.movedSquareInBoundary(x, y));
+            availableSquares.add(square.movedSquareInBoundary(y, x));
+            availableSquares.add(square.movedSquareInBoundary(x, (-1) * y));
+            availableSquares.add(square.movedSquareInBoundary(y * -1, x));
             x *= -1;
             y *= -1;
         }

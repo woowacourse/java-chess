@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Square;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -18,11 +19,16 @@ public class Queen extends Piece {
     }
 
     private static void putIntoCache(Color color) {
+        String name = putNameByColor(color);
+        CACHE.putIfAbsent(color, new Queen(color, name, SCORE));
+    }
+
+    private static String putNameByColor(Color color) {
         String name = NAME_BLACK;
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new Queen(color, name, SCORE));
+        return name;
     }
 
     public static Queen of(Color color) {
@@ -45,10 +51,10 @@ public class Queen extends Piece {
         Set<Square> availableSquares = new HashSet<>();
 
         for (int index = -7; index < 8; index++) {
-            availableSquares.add(addIfInBoundary(square, index, 0));
-            availableSquares.add(addIfInBoundary(square, 0, index));
-            availableSquares.add(addIfInBoundary(square, index * -1, index));
-            availableSquares.add(addIfInBoundary(square, index, index));
+            availableSquares.add(square.movedSquareInBoundary(index, 0));
+            availableSquares.add(square.movedSquareInBoundary(0, index));
+            availableSquares.add(square.movedSquareInBoundary(index * -1, index));
+            availableSquares.add(square.movedSquareInBoundary(index, index));
         }
         availableSquares.remove(square);
         return availableSquares;
@@ -58,10 +64,14 @@ public class Queen extends Piece {
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         Set<Square> squares = calculateScope(square);
         Set<Square> squaresIter = calculateScope(square);
+        File currentFile = square.getFile();
+        Rank currentRank = square.getRank();
         for (Square s : squaresIter) {
             if (board.containsKey(s)) {
-                int fileDifference = s.getFile() - square.getFile();
-                int rankDifference = s.getRank() - square.getRank();
+                File movedFile = s.getFile();
+                Rank movedRank = s.getRank();
+                int fileDifference = movedFile.getNumber() - currentFile.getNumber();
+                int rankDifference = movedRank.getNumber() - currentRank.getNumber();
                 if (fileDifference == 0 && rankDifference > 0) {
                     Set<Square> squaresToRemove = findSquaresToRemove(s, 0, 1);
                     squares.removeAll(squaresToRemove);

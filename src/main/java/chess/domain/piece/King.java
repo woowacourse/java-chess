@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Square;
+import chess.domain.square.Square;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,11 +18,16 @@ public class King extends Piece {
     }
 
     private static void putIntoCache(Color color) {
+        String name = putNameByColor(color);
+        CACHE.putIfAbsent(color, new King(color, name, SCORE));
+    }
+
+    private static String putNameByColor(Color color) {
         String name = NAME_BLACK;
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new King(color, name, SCORE));
+        return name;
     }
 
     public static King of(Color color) {
@@ -46,10 +50,10 @@ public class King extends Piece {
         Set<Square> availableSquares = new HashSet<>();
         int index = -1;
         for (int i = 0; i < 2; i++) {
-            availableSquares.add(addIfInBoundary(square, index, 0));
-            availableSquares.add(addIfInBoundary(square, 0, index));
-            availableSquares.add(addIfInBoundary(square, index * -1, index));
-            availableSquares.add(addIfInBoundary(square, index, index));
+            availableSquares.add(square.movedSquareInBoundary(index, 0));
+            availableSquares.add(square.movedSquareInBoundary(0, index));
+            availableSquares.add(square.movedSquareInBoundary(index * -1, index));
+            availableSquares.add(square.movedSquareInBoundary(index, index));
             index *= -1;
         }
         return availableSquares;

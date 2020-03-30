@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,15 +25,15 @@ public class SquareTest {
     void validLocation(String location) {
         assertThatThrownBy(() -> Square.of(location))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("잘못");
+                .hasMessageContaining("유효");
     }
 
     @DisplayName("칸에 더한 값이 캐싱된 칸에 포함되어 있는지")
     @Test
     void canAddTest() {
         Square square = Square.of("a2");
-        assertThat(Square.hasCacheAdded(square, 1, 1)).isTrue();
-        assertThat(Square.hasCacheAdded(square, -1, 1)).isFalse();
+        assertThat(square.isIncrementedInBoundary(1, 1)).isTrue();
+        assertThat(square.isIncrementedInBoundary(-1, 1)).isFalse();
     }
 
     @DisplayName("같은 File의 Square인지 확인")

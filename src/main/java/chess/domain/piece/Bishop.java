@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Square;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -18,11 +19,16 @@ public class Bishop extends Piece {
     }
 
     private static void putIntoCache(Color color) {
+        String name = putNameByColor(color);
+        CACHE.putIfAbsent(color, new Bishop(color, name, SCORE));
+    }
+
+    private static String putNameByColor(Color color) {
         String name = NAME_BLACK;
         if (color == Color.WHITE) {
             name = NAME_WHITE;
         }
-        CACHE.putIfAbsent(color, new Bishop(color, name, SCORE));
+        return name;
     }
 
     public static Bishop of(Color color) {
@@ -44,8 +50,8 @@ public class Bishop extends Piece {
     public Set<Square> calculateScope(Square square) {
         Set<Square> availableSquares = new HashSet<>();
         for (int index = -7; index < 8; index++) {
-            availableSquares.add(addIfInBoundary(square, index * -1, index));
-            availableSquares.add(addIfInBoundary(square, index, index));
+            availableSquares.add(square.movedSquareInBoundary(index * -1, index));
+            availableSquares.add(square.movedSquareInBoundary(index, index));
         }
         availableSquares.remove(square);
         return availableSquares;
@@ -56,10 +62,14 @@ public class Bishop extends Piece {
         validateNotNull(square, board);
         Set<Square> squares = calculateScope(square);
         Set<Square> squaresIter = calculateScope(square);
+        File currentFile = square.getFile();
+        Rank currentRank = square.getRank();
         for (Square s : squaresIter) {
+            File movedFile = s.getFile();
+            Rank movedRank = s.getRank();
             if (board.containsKey(s)) {
-                int fileDifference = s.getFile() - square.getFile();
-                int rankDifference = s.getRank() - square.getRank();
+                int fileDifference = movedFile.getNumber() - currentFile.getNumber();
+                int rankDifference = movedRank.getNumber() - currentRank.getNumber();
 
                 if (fileDifference > 0 && rankDifference > 0) {
                     Set<Square> squaresToRemove = findSquaresToRemove(s, 1, 1);

@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.*;
+import chess.domain.square.Square;
 
 import java.util.*;
 import java.util.stream.Collectors;
