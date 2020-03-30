@@ -28,6 +28,10 @@ public abstract class Piece {
         return this.team == team;
     }
 
+    public boolean isNotSameTeam(Team team) {
+        return this.team != team;
+    }
+
     public abstract void canPawnMove(Piece that);
 
     protected abstract boolean isNotMovableTo(Position start, Position destination);

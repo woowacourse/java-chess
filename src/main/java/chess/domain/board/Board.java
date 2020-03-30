@@ -1,9 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 
 import java.util.Collections;
@@ -28,23 +25,16 @@ public class Board {
                 .anyMatch(key -> getBoard().containsKey(key));
     }
 
-    public void move(Position from, Position to, Team team) {
+    public void update(Position from, Position to) {
         Piece piece = get(from);
-        if (!piece.isSameTeam(team)) {
-            throw new IllegalArgumentException("아군이 아닙니다.");
-        }
 
-        if (board.containsKey(to) && get(to).isSameTeam(team)) {
-            throw new IllegalArgumentException("아군 기물이 위치하고 있습니다.");
-        }
-
+        //todo Pawn으로 이동
         if (piece instanceof Pawn) {
             pawnMove(from, to);
         }
 
-        piece.moveTo(to);
-        board.put(to, piece);
-        board.remove(from);
+        board.replace(to, get(from));
+        board.replace(from, new Empty(from, Team.NONE));
     }
 
     private void pawnMove(Position from, Position to) {
@@ -77,9 +67,6 @@ public class Board {
     }
 
     public Piece get(Position key) {
-        if (!board.containsKey(key)) {
-            throw new IllegalArgumentException("기물이 존재하지 않습니다.");
-        }
         return board.get(key);
     }
 
