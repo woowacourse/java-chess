@@ -49,10 +49,6 @@ public class Playing implements State {
         turn = turn.next();
     }
 
-    private void validateTurn() {
-
-    }
-
     @Override
     public Board board() {
         return board;
