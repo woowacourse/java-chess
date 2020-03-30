@@ -14,12 +14,8 @@ public class Positions {
 		this.positions = positions;
 	}
 
-	public static Positions of() {
+	public static Positions create() {
 		return new Positions(new HashSet<>());
-	}
-
-	public static Positions of(HashSet<Position> positions) {
-		return new Positions(positions);
 	}
 
 	public void add(Position position) {

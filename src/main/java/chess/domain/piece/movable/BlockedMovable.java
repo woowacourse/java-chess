@@ -16,7 +16,7 @@ public class BlockedMovable implements Movable {
 
 	@Override
 	public Positions createMovablePositions(Position position, List<Piece> pieces, Color color) {
-		Positions movablePositions = Positions.of();
+		Positions movablePositions = Positions.create();
 		for (Direction direction : moveDirections.getDirections()) {
 			Positions positions = createMovablePositionsByDirection(position, direction, pieces, color);
 			movablePositions.addAll(positions);
@@ -25,7 +25,7 @@ public class BlockedMovable implements Movable {
 	}
 
 	Positions createMovablePositionsByDirection(Position movablePosition, Direction direction, List<Piece> pieces, Color color) {
-		Positions movablePositions = Positions.of();
+		Positions movablePositions = Positions.create();
 		while (isOpen(movablePosition, direction, pieces, color)) {
 			movablePosition = movablePosition.getMovedPositionBy(direction);
 			movablePositions.add(movablePosition);
