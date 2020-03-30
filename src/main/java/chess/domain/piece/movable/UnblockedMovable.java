@@ -6,7 +6,6 @@ import chess.domain.position.Position;
 import chess.domain.position.Positions;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UnblockedMovable implements Movable {
