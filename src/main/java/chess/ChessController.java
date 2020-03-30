@@ -55,7 +55,7 @@ public class ChessController {
         Command command = Command.from(inputCommand);
         CommandType commandType = CommandType.findValueOf(command);
 
-        while (commandType.checkInitialCommand()) {
+        while (!commandType.checkInitialCommand()) {
             ChessOutputView.printError("start 해주세요.");
             command = Command.from(ChessInputView.inputCommand());
         }

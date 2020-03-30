@@ -29,7 +29,7 @@ public enum CommandType {
     }
 
     public boolean checkInitialCommand() {
-        return !(isStart() || isEnd());
+        return (isStart() || isEnd());
     }
 
     public boolean isEnd() {
@@ -38,10 +38,5 @@ public enum CommandType {
 
     public boolean isStart() {
         return equals(START);
-    }
-
-
-    public String getCommand() {
-        return command;
     }
 }
