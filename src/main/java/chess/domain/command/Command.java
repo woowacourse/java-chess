@@ -10,6 +10,10 @@ import chess.domain.board.Position;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Command {
+	public static final int COMMAND_INDEX = 0;
+	public static final int SOURCE_POSITION_INDEX = 1;
+	public static final int TARGET_POSITION_INDEX = 2;
+
 	private String[] command;
 
 	public Command(String[] input) {
@@ -18,7 +22,7 @@ public class Command {
 	}
 
 	private void validate(String[] input) {
-		String command = input[0];
+		String command = input[COMMAND_INDEX];
 		validateNullAndEmpty(command);
 		validateStartOrEndOrMove(command);
 	}
@@ -36,22 +40,22 @@ public class Command {
 	}
 
 	public Position getMoveSource() {
-		return Position.of(command[1]);
+		return Position.of(command[SOURCE_POSITION_INDEX]);
 	}
 
 	public Position getMoveTarget() {
-		return Position.of(command[2]);
+		return Position.of(command[TARGET_POSITION_INDEX]);
 	}
 
 	public boolean isEnd() {
-		return "end".equalsIgnoreCase(command[0]);
+		return "end".equalsIgnoreCase(command[COMMAND_INDEX]);
 	}
 
 	public boolean isStatus() {
-		return "status".equalsIgnoreCase(command[0]);
+		return "status".equalsIgnoreCase(command[COMMAND_INDEX]);
 	}
 
 	public boolean isMove() {
-		return "move".equalsIgnoreCase(command[0]);
+		return "move".equalsIgnoreCase(command[COMMAND_INDEX]);
 	}
 }

@@ -1,10 +1,14 @@
 package chess.domain.command;
 
+import static chess.domain.command.Command.*;
+
 import java.util.Objects;
 
 public enum FirstCommand {
 	START("start"),
 	END("end");
+
+	public static final int COMMAND_SIZE = 1;
 
 	private final String command;
 
@@ -26,7 +30,7 @@ public enum FirstCommand {
 
 	private static void validate(String[] input) {
 		validateLength(input);
-		String command = input[0];
+		String command = input[COMMAND_INDEX];
 		validateNullAndEmpty(command);
 		validateStartOrEnd(command);
 	}
@@ -38,7 +42,7 @@ public enum FirstCommand {
 	}
 
 	private static void validateLength(String[] command) {
-		if (command.length != 1) {
+		if (command.length != COMMAND_SIZE) {
 			throw new IllegalArgumentException("입력값이 Command 길이가 1이 아닙니다.");
 		}
 	}

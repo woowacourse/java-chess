@@ -15,6 +15,11 @@ import chess.domain.piece.Piece;
  *    @author AnHyungJu, LeeHoBin
  */
 public class OutputView {
+	public static final String BLANK_POSITION = ".";
+
+	private OutputView() {
+	}
+
 	public static void printGameInstruction() {
 		System.out.println("체스 게임을 시작합니다.");
 		System.out.println("게임 시작: start");
@@ -36,7 +41,7 @@ public class OutputView {
 				Position position = Position.of(file, rank);
 
 				if (Objects.isNull(pieces.get(position))) {
-					System.out.print(".");
+					System.out.print(BLANK_POSITION);
 					continue;
 				}
 

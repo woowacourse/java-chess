@@ -8,6 +8,9 @@ import java.util.Objects;
 import chess.domain.board.Position;
 
 public class Moving {
+	public static final int MIN_BOUNDARY = 1;
+	public static final int MAX_BOUNDARY = 8;
+
 	public static List<Position> goOneTimePawnPositions(List<Direction> directions, Position source,
 		Map<Position, Piece> chessBoard) {
 		List<Position> positions = new ArrayList<>();
@@ -56,8 +59,7 @@ public class Moving {
 		return positions;
 	}
 
-	public static List<Position> goAndCatchOneTimePositions(List<Direction> directions, Position source,
-		Map<Position, Piece> chessBoard) {
+	public static List<Position> goAndCatchOneTimePositions(List<Direction> directions, Position source) {
 		List<Position> positions = new ArrayList<>();
 
 		int locationOfX = source.getColumn();
@@ -77,7 +79,7 @@ public class Moving {
 	}
 
 	public static List<Position> goAndCatchManyTimesPositions(List<Direction> directions, Position source,
-		Map<Position, Piece> chessBoard) {
+		Map<Position, Piece> pieces) {
 		List<Position> positions = new ArrayList<>();
 
 		int locationOfX = source.getColumn();
@@ -88,6 +90,11 @@ public class Moving {
 			int afterMoveOfY = locationOfY + direction.getY();
 
 			while (!isOutOfBoundary(afterMoveOfX) && !isOutOfBoundary(afterMoveOfY)) {
+
+				if (Objects.nonNull(pieces.get(Position.of(afterMoveOfX, afterMoveOfY)))) {
+					continue;
+				}
+
 				positions.add(Position.of(afterMoveOfX, afterMoveOfY));
 
 				afterMoveOfX += direction.getX();
@@ -98,6 +105,6 @@ public class Moving {
 	}
 
 	private static boolean isOutOfBoundary(int location) {
-		return location < 1 || location > 8;
+		return location < MIN_BOUNDARY || location > MAX_BOUNDARY;
 	}
 }

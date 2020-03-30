@@ -19,6 +19,9 @@ public enum PieceScore {
 	KNIGHT(2.5),
 	PAWN(0.5);
 
+	public static final int PAWN_COUNT = 1;
+	public static final int PAWN_BASIC_SCORE = 1;
+
 	private final double score;
 
 	PieceScore(double score) {
@@ -68,8 +71,8 @@ public enum PieceScore {
 	}
 
 	private static double sumPawnScore(List<Piece> pawns) {
-		if (pawns.size() == 1) {
-			return 1;
+		if (pawns.size() == PAWN_COUNT) {
+			return PAWN_BASIC_SCORE;
 		}
 
 		return pawns.stream()

@@ -19,7 +19,7 @@ public class King extends Piece {
 
 	@Override
 	public List<Position> movablePositions(Position source, Map<Position, Piece> pieces) {
-		return Moving.goAndCatchOneTimePositions(Direction.everyDirection(), source, pieces);
+		return Moving.goAndCatchOneTimePositions(Direction.everyDirection(), source);
 	}
 
 	@Override

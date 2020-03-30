@@ -10,6 +10,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.WhitePiecesFactory;
 
 public class ChessBoard {
+	public static final int KING_LIVE_COUNT = 1;
+
 	private Map<Position, Piece> pieces;
 
 	public ChessBoard(Map<Position, Piece> pieces) {
@@ -28,7 +30,6 @@ public class ChessBoard {
 		List<Position> positions = sourcePiece.movablePositions(source, pieces);
 		validateNotMovablePosition(target, positions);
 
-		// 이동함.
 		pieces.remove(source);
 		pieces.put(target, sourcePiece);
 	}
@@ -69,7 +70,7 @@ public class ChessBoard {
 			.filter(piece -> piece.isSameColor(color))
 			.count();
 
-		return kingLiveCount == 1;
+		return kingLiveCount == KING_LIVE_COUNT;
 	}
 
 	public Piece getPiece(String position) {
