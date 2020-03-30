@@ -13,8 +13,4 @@ public class StartCommandDto {
     public Command get() {
         return Command.of(startCommand);
     }
-
-    public boolean isStart() {
-        return get() == Command.START;
-    }
 }
