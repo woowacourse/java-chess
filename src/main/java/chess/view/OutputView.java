@@ -27,10 +27,14 @@ public class OutputView {
 
 	private static void printBoard(Map<Position, String> boardDto) {
 		for (Row row : Row.values()) {
-			for (Column column : Column.values()) {
-				printEachCell(boardDto, row, column);
-			}
+			printBoardByColumn(boardDto, row);
 			System.out.println();
+		}
+	}
+
+	private static void printBoardByColumn(Map<Position, String> boardDto, Row row) {
+		for (Column column : Column.values()) {
+			printEachCell(boardDto, row, column);
 		}
 	}
 

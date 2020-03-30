@@ -10,7 +10,7 @@ import chess.domain.piece.MovingStrategy;
 import chess.domain.position.Position;
 
 public class QueenStrategy extends MovingStrategy {
-	private static final List directions = Direction.everyDirection();
+	private static final List<Direction> directions = Direction.everyDirection();
 
 	@Override
 	protected void checkDirection(Position source, Position target) {
@@ -21,17 +21,17 @@ public class QueenStrategy extends MovingStrategy {
 	}
 
 	@Override
-	protected void checkObstacle(Position source, Position target, Map<Position, Team> boardDto) {
+	protected void checkObstacle(Position source, Position target, Map<Position, Team> teamBoard) {
 		Direction direction = Direction.getDirection(source, target);
 		Position pathPosition = source.plusDirection(direction);
 		while (!pathPosition.equals(target)) {
-			checkObstacleOnPath(boardDto, pathPosition);
+			checkObstacleOnPath(teamBoard, pathPosition);
 			pathPosition = pathPosition.plusDirection(direction);
 		}
 	}
 
-	private void checkObstacleOnPath(Map<Position, Team> boardDto, Position pathPosition) {
-		if (!Objects.isNull(boardDto.get(pathPosition))) {
+	private void checkObstacleOnPath(Map<Position, Team> teamBoard, Position pathPosition) {
+		if (!Objects.isNull(teamBoard.get(pathPosition))) {
 			throw new IllegalArgumentException("해당 방향에 장애물이 존재합니다.");
 		}
 	}

@@ -3,17 +3,15 @@ package chess.domain.piece.rook;
 import java.util.Map;
 
 import chess.domain.Team;
-import chess.domain.piece.MovingStrategy;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Rook extends Piece {
-	private static final MovingStrategy STRATEGY = new RookStrategy();
 	private static final String WHITE_ROOK = "\u2656";
 	private static final String BLACK_ROOK = "\u265c";
 
-	private Rook(Team team, Position position) {
-		super(team, position);
+	public Rook(Team team, Position position) {
+		super(new RookStrategy(), team, position);
 	}
 
 	public static Rook of(Team team, Position position) {
@@ -30,7 +28,7 @@ public class Rook extends Piece {
 
 	@Override
 	public Piece move(Position from, Position to, Map<Position, Team> dto) {
-		STRATEGY.validateMove(from, to, dto);
+		strategy.validateMove(from, to, dto);
 		this.position = to;
 		return this;
 	}

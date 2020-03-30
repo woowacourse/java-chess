@@ -8,10 +8,12 @@ import chess.domain.piece.king.King;
 import chess.domain.position.Position;
 
 public abstract class Piece {
+	protected final MovingStrategy strategy;
 	protected final Team team;
 	protected Position position;
 
-	public Piece(Team team, Position position) {
+	public Piece(MovingStrategy movingStrategy, Team team, Position position) {
+		this.strategy = movingStrategy;
 		this.team = team;
 		this.position = position;
 	}
@@ -22,17 +24,17 @@ public abstract class Piece {
 		return turn.isSameTeam(team);
 	}
 
-	public abstract Piece move(Position from, Position to, Map<Position, Team> dto);
+	public abstract Piece move(Position from, Position to, Map<Position, Team> teamBoard);
 
-	public Team getTeam() {
-		return team;
+	public boolean isKing() {
+		return this instanceof King;
 	}
 
 	public Position getPosition() {
 		return position;
 	}
 
-	public boolean isKing() {
-		return this instanceof King;
+	public Team getTeam() {
+		return team;
 	}
 }
