@@ -104,19 +104,12 @@ public class Board {
         return allRoute.stream()
                 .filter(o -> o.hasPosition(targetPosition))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("말이 해당 위치로 이동할 수 없습니다."));
     }
 
     private void validateRoute(ChessPiece chessPiece, Route candidateRoute, MovingInfo movingInfo) {
-        validateRouteNull(candidateRoute);
         validateRouteLocation(candidateRoute, movingInfo);
         validateRouteTarget(chessPiece, movingInfo);
-    }
-
-    private void validateRouteNull(Route candidateRoute) {
-        if (candidateRoute == null) {
-            throw new IllegalArgumentException("말이 해당 위치로 이동할 수 없습니다.");
-        }
     }
 
     private void validateRouteLocation(Route candidateRoute, MovingInfo movingInfo) {
