@@ -41,7 +41,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public void validateDestination(Position destination, Piece destinationPiece, List<Piece> piecesInBetween) {
-		Direction direction = this.position.calculateDirection(position);
+		Direction direction = this.position.calculateDirection(destination);
 		if ((direction.isForwardForPawn() && destinationPiece != null) || (direction.isDiagonal() && destinationPiece == null)) {
 			throw new IllegalMoveException(UNMOVABLE_DESTINATION_FOR_PAWN);
 		}
