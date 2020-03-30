@@ -92,4 +92,15 @@ public class PlayingTest {
         state = state.move(Position.from("e6"), Position.from("e1"));
         assertThat(state.isFinished()).isTrue();
     }
+
+    @Test
+    @DisplayName("같은 세로 줄에 같은 색의 폰이 있는 경우 0.5점으로 계산")
+    void half_score_When_PawnIsOnSameFile() {
+        Board board = state.board();
+        board.findPiece(Position.from("a2")).move(board.findPiece(Position.from("a4")));
+        board.findPiece(Position.from("b7")).move(board.findPiece(Position.from("b5")));
+        state = state.move(Position.from("a4"), Position.from("b5"));
+        assertThat(state.score(Color.WHITE).getValue()).isEqualTo(37);
+        assertThat(state.score(Color.BLACK).getValue()).isEqualTo(37);
+    }
 }
