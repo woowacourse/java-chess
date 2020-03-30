@@ -31,7 +31,7 @@ public class Square {
 
     public static Square of(File file, Rank rank) {
         validateFileRank(file, rank);
-        return CACHE.get(file.getName() + rank.getName());
+        return Square.of(file.getName() + rank.getName());
     }
 
     public static Square of(Square square, int fileIncrementBy, int rankIncrementBy) {
