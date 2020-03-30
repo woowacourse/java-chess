@@ -5,7 +5,6 @@ import chess.domain.board.BoardDTO;
 import chess.domain.command.Command;
 import chess.service.ChessService;
 import spark.ModelAndView;
-import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.Arrays;
@@ -15,6 +14,7 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
+
     public static void main(String[] args) {
 
         String projectDir = System.getProperty("user.dir");
