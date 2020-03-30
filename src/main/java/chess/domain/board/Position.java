@@ -89,6 +89,14 @@ public class Position implements Comparable<Position> {
         return path;
     }
 
+    public Row getRow() {
+        return row;
+    }
+
+    public Column getColumn() {
+        return column;
+    }
+
     @Override
     public int compareTo(Position position) {
         if (row.compareTo(position.row) == 0) {

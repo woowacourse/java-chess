@@ -1,22 +1,17 @@
 package chess.domain.result;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import chess.domain.board.Column;
+import chess.domain.board.Line;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
-import chess.domain.piece.ChessPiece;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class ChessResult {
 
+    private static final int MINIMUM_PAWN_COUNT = 2;
     private Map<PlayerColor, Score> result;
 
     public ChessResult(Map<PlayerColor, Score> result) {
@@ -52,23 +47,9 @@ public class ChessResult {
     }
 
     private static int getSameColumnPawnCount(Map<Position, GamePiece> board, PlayerColor playerColor) {
-        Map<Integer, Integer> sameColumnPawnCount = new HashMap<>();
-        for (int i = 0; i < Column.values().length; i++) {
-            sameColumnPawnCount.put(i, 0);
-        }
-        List<GamePiece> gamePieces = new ArrayList<>(board.values());
-
-        int rowLength = Row.values().length;
-        for (int i = 0; i < gamePieces.size(); i++) {
-            GamePiece gamePiece = gamePieces.get(i);
-            if (ChessPiece.isPawn(gamePiece) && gamePiece.is(playerColor)) {
-                sameColumnPawnCount.computeIfPresent(i % rowLength, (key, value) -> value + 1);
-            }
-        }
-
-        return sameColumnPawnCount.values()
-                .stream()
-                .filter(count -> count >= 2)
+        return Line.listsByColumn(board).stream()
+                .map(column -> column.countPawnOf(playerColor))
+                .filter(count -> count >= MINIMUM_PAWN_COUNT)
                 .reduce(0, Integer::sum);
     }
 

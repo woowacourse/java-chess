@@ -1,20 +1,15 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -99,14 +94,7 @@ public class Board {
     }
 
     public List<Line> getRows() {
-        List<Line> rows = new ArrayList<>();
-        List<GamePiece> gamePieces = new ArrayList<>(getBoard().values());
-
-        for (int rowNumber = 0; rowNumber < Row.values().length; rowNumber++) {
-            rows.add(Line.of(gamePieces, rowNumber));
-        }
-
-        return rows;
+        return Line.listsByRow(board);
     }
 
     public Map<Position, GamePiece> getBoard() {
