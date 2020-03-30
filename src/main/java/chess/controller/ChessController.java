@@ -16,11 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class ChessController {
-    private static InputView inputView = new ConsoleInputView();
-    private static OutputView outputView = new ConsoleOutputView();
+    private InputView inputView = new ConsoleInputView();
+    private OutputView outputView = new ConsoleOutputView();
     private ChessRunner chessRunner;
 
     public void run() {
+
         boolean runFlag = false;
         if (inputView.askStartCommand().isStart()) {
             startGame();
@@ -65,8 +66,8 @@ public class ChessController {
     }
 
     private void printBoard(Board board) {
-        BoardDto boardDto = new BoardDto(board.get());
         PositionDto positionDto = new PositionDto(Positions.get());
+        BoardDto boardDto = new BoardDto(board);
         outputView.printBoard(positionDto.get(), boardDto.get());
     }
 }

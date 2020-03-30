@@ -29,7 +29,7 @@ public class ChessRunner {
     }
 
     private void validateMovement(Position sourcePosition, Position targetPosition, Piece selectedPiece) {
-        if (!(currentTeam.isSameTeamWith(selectedPiece.getTeam()))) {
+        if (selectedPiece.isEnemy(currentTeam)) {
             throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
 
@@ -52,7 +52,6 @@ public class ChessRunner {
 
     public double calculateScore() {
         return Score.calculateScore(board, currentTeam);
-//        return board.calculateScore(currentTeam);
     }
 
     public Board getBoard() {

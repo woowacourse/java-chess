@@ -13,6 +13,10 @@ public enum Command {
 
     private final String command;
 
+    private static final List<Command> startCommands = new ArrayList<>(Arrays.asList(START, END));
+    private static final List<Command> continueCommands = new ArrayList<>(Arrays.asList(MOVE, STATUS, END));
+
+
     Command(String command) {
         this.command = command;
     }
@@ -25,18 +29,14 @@ public enum Command {
     }
 
     public static void validateStartCommand(String inputCommand) {
-        List<Command> startCommands = new ArrayList<>(Arrays.asList(START, END));
-
         startCommands.stream()
                 .map(val -> val.command)
-                .filter(inputCommand::contains)
+                .filter(inputCommand::equals)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("%s는 잘못된 명령어입니다.", inputCommand)));
     }
 
     public static void validateContinueCommand(String inputCommand) {
-        List<Command> continueCommands = new ArrayList<>(Arrays.asList(MOVE, STATUS, END));
-
         continueCommands.stream()
                 .map(val -> val.command)
                 .filter(inputCommand::contains)
