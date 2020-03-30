@@ -6,6 +6,8 @@ import chess.domain.board.Position;
 import chess.domain.piece.Side;
 
 public class KingStrategy implements Strategy {
+    final int DIAGONAL_ONE_SQUARED = 2;
+
     @Override
     public boolean shouldBePlacedOn(final Position position, final Side side) {
         return isNotPawn(position, side)

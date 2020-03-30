@@ -41,25 +41,9 @@ public class Board {
     }
 
     public Path generatePath(final Position start, final Position end) {
-        if (start.isOnSameLineWith(end)) {
-            return generateLinePath(start, end);
-        }
-        return generateNoLinePath(start, end);
-    }
-
-    private Path generateLinePath(final Position start, final Position end) {
         Map<Position, Piece> path = board.keySet()
             .stream()
-            .filter(position -> position.inBetween(start, end))
-            .collect(toMap(Function.identity(), board::get));
-        return new Path(path, start, end);
-    }
-
-    private Path generateNoLinePath(final Position start, final Position end) {
-        Position middle = Position.of(start.getRow(), end.getColumn());
-        Map<Position, Piece> path = board.keySet()
-            .stream()
-            .filter(position -> position.inBetween(start, middle) || position.inBetween(end, middle))
+            .filter(position -> position.existsBetween(start, end))
             .collect(toMap(Function.identity(), board::get));
         return new Path(path, start, end);
     }

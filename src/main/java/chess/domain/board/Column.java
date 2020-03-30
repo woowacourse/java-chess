@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-public enum Column {
+public enum Column implements Location {
     A(1, "a"),
     B(2, "b"),
     C(3, "c"),
@@ -18,6 +18,7 @@ public enum Column {
         this.name = name;
     }
 
+    @Override
     public int getValue() {
         return value;
     }

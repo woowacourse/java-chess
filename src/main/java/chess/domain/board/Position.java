@@ -26,14 +26,6 @@ public class Position {
         return PositionCache.find(value);
     }
 
-    public static int rowGap(Position start, Position end) {
-        return Math.abs(start.row() - end.row());
-    }
-
-    public static int columnGap(Position start, Position end) {
-        return Math.abs(start.column() - end.column());
-    }
-
     public boolean isOn(final Row row) {
         return this.row == row;
     }
@@ -42,10 +34,48 @@ public class Position {
         return this.column == column;
     }
 
+    public boolean isOnSameRowOrColumnWith(final Position other) {
+        return isOn(other.row) || isOn(other.column);
+    }
+
     public boolean isOnSameLineWith(final Position other) {
-        return Position.columnGap(this, other) == 0
-            || Position.rowGap(this, other) == 0
-            || Position.columnGap(this, other) == Position.rowGap(this, other);
+        return columnGap(other) == 0
+            || rowGap(other) == 0
+            || this.isDiagonalWith(other);
+    }
+
+    public double distanceSquaredWith(final Position other) {
+        return Math.pow(rowGap(other), 2) + Math.pow(columnGap(other), 2);
+    }
+
+    public boolean existsBetween(final Position start, final Position end) {
+        if (start.isOnSameLineWith(end)) {
+            return inBetween(start, end);
+        }
+        Position middle = Position.of(start.row, end.column);
+        return inBetween(start, middle) || inBetween(end, middle);
+    }
+
+    public boolean inBetween(final Position start, final Position end) {
+        if (isOn(start.row) && isOn(end.row)
+            && column.inBetween(start.column, end.column)) {
+            return true;
+        }
+        if (isOn(start.column) && isOn(end.column)
+            && row.inBetween(start.row, end.row)) {
+            return true;
+        }
+        return isDiagonalWith(start) && isDiagonalWith(end)
+            && column.inBetween(start.column, end.column)
+            && row.inBetween(start.row, end.row);
+    }
+
+    public boolean isDiagonalWith(final Position other) {
+        return rowGap(other) == columnGap(other);
+    }
+
+    public boolean isGreaterThan(final Position other) {
+        return row() > other.row();
     }
 
     public Row getRow() {
@@ -60,37 +90,16 @@ public class Position {
         return row.getValue();
     }
 
-    public int column() {
+    private int column() {
         return column.getValue();
     }
 
-    public boolean inBetween(final Position start, final Position end) {
-        Row startRow = start.getRow();
-        Row endRow = end.getRow();
-        Column startColumn = start.getColumn();
-        Column endColumn = end.getColumn();
-        if (isOn(startRow) && isOn(endRow)
-            && isMiddle(column(), start.column(), end.column())) {
-            return true;
-        }
-        if (isOn(startColumn) && isOn(endColumn)
-            && isMiddle(row(), start.row(), end.row())) {
-            return true;
-        }
-        return isDiagonalWith(start) && isDiagonalWith(end)
-            && isMiddle(column(), start.column(), end.column())
-            && isMiddle(row(), start.row(), end.row());
+    private int rowGap(Position other) {
+        return Math.abs(row() - other.row());
     }
 
-    public boolean isDiagonalWith(final Position other) {
-        return Position.rowGap(this, other) == Position.columnGap(this, other);
-    }
-
-    private boolean isMiddle(final int middle, final int start, final int end) {
-        if (start >= end) {
-            return middle >= end && middle <= start;
-        }
-        return middle <= end && middle >= start;
+    private int columnGap(Position other) {
+        return Math.abs(column() - other.column());
     }
 
     @Override

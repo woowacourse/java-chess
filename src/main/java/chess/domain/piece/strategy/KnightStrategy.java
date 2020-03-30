@@ -6,6 +6,8 @@ import chess.domain.board.Position;
 import chess.domain.piece.Side;
 
 public class KnightStrategy implements Strategy {
+    final int KNIGHT_PATH_LENGTH_SQUARED = 5;
+
     @Override
     public boolean shouldBePlacedOn(final Position position, final Side side) {
         return isNotPawn(position, side)

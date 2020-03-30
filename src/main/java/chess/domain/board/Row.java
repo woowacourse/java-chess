@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-public enum Row implements Comparable<Row> {
+public enum Row implements Location {
     EIGHT(8),
     SEVEN(7),
     SIX(6),
@@ -16,6 +16,7 @@ public enum Row implements Comparable<Row> {
         this.value = value;
     }
 
+    @Override
     public int getValue() {
         return value;
     }
@@ -23,4 +24,5 @@ public enum Row implements Comparable<Row> {
     public String getName() {
         return String.valueOf(value);
     }
+
 }

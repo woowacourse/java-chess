@@ -51,15 +51,15 @@ public class Path {
     }
 
     public double distanceSquare() {
-        return Math.pow(Position.rowGap(start, end), 2) + Math.pow(Position.columnGap(start, end), 2);
+        return start.distanceSquaredWith(end);
     }
 
     public boolean isStraight() {
-        return start.isOn(end.getRow()) || start.isOn(end.getColumn());
+        return start.isOnSameRowOrColumnWith(end);
     }
 
     public boolean isDiagonal() {
-        return Position.rowGap(start, end) == Position.columnGap(start, end);
+        return start.isDiagonalWith(end);
     }
 
     public boolean isOnInitialPosition() {
@@ -67,11 +67,11 @@ public class Path {
         return piece.isOnInitialPosition(start);
     }
 
-    public boolean headingForward() {
+    public boolean isHeadingForward() {
         Piece piece = path.get(start);
         if (piece.is(Side.BLACK)) {
-            return start.row() > end.row();
+            return start.isGreaterThan(end);
         }
-        return start.row() < end.row();
+        return !start.isGreaterThan(end);
     }
 }
