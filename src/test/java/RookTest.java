@@ -30,7 +30,7 @@ public class RookTest {
     @ParameterizedTest
     @MethodSource("generatePositions")
     void tileSize_1(Position from, Position to) {
-        assertThat(rook.validateMovableTileSize(from, to)).isTrue();
+        assertThat(rook.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions() {

@@ -27,7 +27,7 @@ public class QueenTest {
     @ParameterizedTest
     @MethodSource("generatePositions")
     void tileSize_(Position from, Position to) {
-        assertThat(queen.validateMovableTileSize(from, to)).isTrue();
+        assertThat(queen.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions() {

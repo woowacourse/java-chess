@@ -9,19 +9,25 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece extends Square {
+public abstract class Piece {
     private final Player player;
     private final PieceInfo pieceInfo;
 
     protected List<Direction> directions = new ArrayList<>();
 
     public Piece(Player player, PieceInfo pieceInfo) {
-        super(pieceInfo.getName(player));
+        Objects.requireNonNull(player);
+        Objects.requireNonNull(pieceInfo);
+
         this.player = player;
         this.pieceInfo = pieceInfo;
     }
 
-    abstract boolean validateMovableTileSize(Position from, Position to);
+    public abstract boolean validateTileSize(Position from, Position to);
+
+    public boolean validateDirection(Direction direction, Piece target) {
+        return hasDirection(direction);
+    };
 
     protected final boolean hasDirection(Direction direction) {
         return directions.contains(direction);
@@ -39,20 +45,23 @@ public abstract class Piece extends Square {
         return pieceInfo.getScore();
     }
 
-    @Override
     public boolean movable(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
 
         return hasDirection(Direction.getDirection(from, to))
-                && validateMovableTileSize(from, to);
+                && validateTileSize(from, to);
     }
 
-    @Override
-    public boolean isSamePlayer(Square target) {
+    public boolean isSamePlayer(Piece target) {
         Objects.requireNonNull(target);
+        if (player == Player.NONE || target.getPlayer() == Player.NONE) {
+            return false;
+        }
+        return player == target.getPlayer();
+    }
 
-        return target.getClass() != Empty.class
-                && player == ((Piece) target).getPlayer();
+    public String getDisplay() {
+        return pieceInfo.getName(player);
     }
 }

@@ -33,7 +33,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean validateMovableTileSize(Position from, Position to) {
+    public boolean validateTileSize(Position from, Position to) {
         return false;
     }
 }

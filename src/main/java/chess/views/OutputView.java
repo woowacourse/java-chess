@@ -1,6 +1,6 @@
 package chess.views;
 
-import chess.domain.chesspieces.Square;
+import chess.domain.chesspieces.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.component.Row;
 import chess.domain.status.Result;
@@ -21,7 +21,7 @@ public class OutputView {
         System.out.println("> 게임 상황 : status");
     }
 
-    public static void printChessBoard(Map<Position, Square> chessBoard) {
+    public static void printChessBoard(Map<Position, Piece> chessBoard) {
         StringBuilder stringBuilder = new StringBuilder();
         int size = chessBoard.size();
         for (int i = 0; i < size; i += OFFSET) {
@@ -29,7 +29,7 @@ public class OutputView {
                     .stream()
                     .skip(i)
                     .limit(OFFSET)
-                    .map(Square::getDisplay)
+                    .map(Piece::getDisplay)
                     .collect(Collectors.joining());
             stringBuilder.insert(0, row);
             stringBuilder.insert(0, NEW_LINE);

@@ -57,7 +57,7 @@ public class ChessBoardTest {
     @DisplayName("ChessBoard 한 column에 같은 Player 소유의 Pawn 개수 확인")
     @ParameterizedTest
     @MethodSource("generatePositions3")
-    void 폰의점수를확인하는테스트(List<Square> columnLine, Player player, int exptectd) {
+    void 폰의점수를확인하는테스트(List<Piece> columnLine, Player player, int exptectd) {
         ChessBoard chessBoard = new ChessBoard();
         assertThat(chessBoard.getPawnCountPerStage(columnLine, player)).isEqualTo(exptectd);
     }

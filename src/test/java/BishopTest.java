@@ -29,7 +29,7 @@ public class BishopTest {
     @ParameterizedTest
     @MethodSource("generatePositions")
     void tileSize_1(Position from, Position to) {
-        assertThat(bishop.validateMovableTileSize(from, to)).isTrue();
+        assertThat(bishop.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions() {

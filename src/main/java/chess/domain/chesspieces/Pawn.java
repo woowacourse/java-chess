@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pawn extends Piece {
-    private static final int AVAILABLE_ROW_MOVE_DIFF = 1;
-    private static final int INIT_AVAILABLE_COLUMN_DIFF = 1;
-    private static final int AVAILABLE_COLUMN_DIFF = 2;
+    private static final int MOVABLE_ROW_MOVE_DIFF = 1;
+    private static final int INIT_MOVABLE_COLUMN_DIFF = 1;
+    private static final int MOVABLE_COLUMN_DIFF = 2;
     private static final String PAWN_NAME = "PAWN";
     private static final PieceInfo PIECE_INFO = PieceInfo.valueOf(PAWN_NAME);
 
@@ -44,35 +44,41 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean validateMovableTileSize(Position from, Position to) {
+    public boolean validateTileSize(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
+
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
-        int availableColumnDiff = INIT_AVAILABLE_COLUMN_DIFF;
+        int movableColumnDiff = INIT_MOVABLE_COLUMN_DIFF;
         if (initPosition == from) {
-            availableColumnDiff = AVAILABLE_COLUMN_DIFF;
+            movableColumnDiff = MOVABLE_COLUMN_DIFF;
         }
-        return Math.abs(rowDiff) <= AVAILABLE_ROW_MOVE_DIFF && Math.abs(columnDiff) <= availableColumnDiff;
+        return Math.abs(rowDiff) <= MOVABLE_ROW_MOVE_DIFF && Math.abs(columnDiff) <= movableColumnDiff;
     }
 
-    public boolean validate(Direction direction, Square target) {
-        boolean isTargetEmpty = target instanceof Empty;
-        boolean isSamePlayer = super.isSamePlayer(target);
-        return validateAttack(direction, isTargetEmpty, isSamePlayer)
-                || validateMoveForward(direction, isTargetEmpty);
-    }
+    @Override
+    public boolean validateDirection(Direction direction, Piece target) {
+        return hasDirection(direction)
+                && (validateMovdAttack(direction, target) || validateMoveForward(direction, target));
+    };
 
-    public boolean validateAttack(Direction direction, boolean isTargetEmpty, boolean isSamePlayer) {
+//    public boolean validate(Direction direction, boolean isSamePlayer, boolean isTargetEmpty) {
+//////        return validateMovdAttack(direction, isTargetEmpty, isSamePlayer)
+//////                || validateMoveForward(direction, isTargetEmpty);
+//////    }
+
+    public boolean validateMovdAttack(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
+        Objects.requireNonNull(target);
 
         return attackDirections.contains(direction)
-                && !isTargetEmpty
-                && !isSamePlayer;
+                && !(target instanceof Empty)
+                && !(this.isSamePlayer(target));
     }
 
-    public boolean validateMoveForward(Direction direction, boolean isTargetEmpty) {
+    public boolean validateMoveForward(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
-        return direction == forwardDirection && isTargetEmpty;
+        return direction == forwardDirection && target instanceof Empty;
     }
 }

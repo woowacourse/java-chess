@@ -34,7 +34,7 @@ public class ChessController {
                 OutputView.printChessBoard(chessBoard.getChessBoard());
             }
             if (command.equals(Command.STATUS)) {
-                OutputView.printStatus(chessBoard.getResult());
+                OutputView.printStatus(chessBoard.createResult());
             }
             if (chessBoard.isGameOver()) {
                 OutputView.printGameOver();

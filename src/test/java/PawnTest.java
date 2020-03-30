@@ -37,7 +37,7 @@ public class PawnTest {
     @MethodSource("generatePositions")
     void tileSize_1(Player player, Position from, Position to) {
         Pawn pawn = new Pawn(player, from);
-        assertThat(pawn.validateMovableTileSize(from, to)).isTrue();
+        assertThat(pawn.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions() {
@@ -54,7 +54,7 @@ public class PawnTest {
     @MethodSource("generatePositions4")
     void tileSize_4(Player player, Position from, Position to) {
         Pawn pawn = new Pawn(player, from);
-        assertThat(pawn.validateMovableTileSize(from, to)).isFalse();
+        assertThat(pawn.validateTileSize(from, to)).isFalse();
     }
 
     static Stream<Arguments> generatePositions4() {
@@ -69,7 +69,7 @@ public class PawnTest {
     @MethodSource("generatePositions2")
     void tileSize_1(Player player, Position initPosition, Position from, Position to) {
         Pawn pawn = new Pawn(player, initPosition);
-        assertThat(pawn.validateMovableTileSize(from, to)).isTrue();
+        assertThat(pawn.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions2() {
@@ -84,7 +84,7 @@ public class PawnTest {
     @MethodSource("generatePositions3")
     void tileSize_2(Player player, Position initPosition, Position from, Position to) {
         Pawn pawn = new Pawn(player, initPosition);
-        assertThat(pawn.validateMovableTileSize(from, to)).isFalse();
+        assertThat(pawn.validateTileSize(from, to)).isFalse();
     }
 
     static Stream<Arguments> generatePositions3() {
@@ -102,7 +102,7 @@ public class PawnTest {
         Pawn source = new Pawn(sourcePlayer, from);
         Pawn target = new Pawn(targetPlayer, to);
 
-        assertThat(source.validate(Direction.getDirection(from, to), target)).isTrue();
+        assertThat(source.validateDirection(Direction.getDirection(from, to), target)).isTrue();
     }
 
     static Stream<Arguments> generatePositions5() {
@@ -120,7 +120,7 @@ public class PawnTest {
     @MethodSource("generatePositions6")
     void 대각선_공격시_empty(Player sourcePlayer, Position from, Position to) {
         Pawn source = new Pawn(sourcePlayer, from);
-        assertThat(source.validate(Direction.getDirection(from, to), Empty.getInstance())).isFalse();
+        assertThat(source.validateDirection(Direction.getDirection(from, to), Empty.getInstance())).isFalse();
     }
 
 
@@ -139,7 +139,7 @@ public class PawnTest {
     void 대각선_공격_같은_팀(Player player, Position from, Position to) {
         Pawn source = new Pawn(player, from);
         Knight target = new Knight(player);
-        assertThat(source.validate(Direction.getDirection(from, to), target)).isFalse();
+        assertThat(source.validateDirection(Direction.getDirection(from, to), target)).isFalse();
     }
 
     static Stream<Arguments> generatePositions7() {
@@ -157,7 +157,7 @@ public class PawnTest {
     @MethodSource("generatePositions8")
     void 전진_성공_empty(Player player, Position from, Position to) {
         Pawn source = new Pawn(player, from);
-        assertThat(source.validate(Direction.getDirection(from, to), Empty.getInstance()));
+        assertThat(source.validateDirection(Direction.getDirection(from, to), Empty.getInstance()));
     }
 
     static Stream<Arguments> generatePositions8() {
@@ -174,7 +174,7 @@ public class PawnTest {
     void 전진_실패_장애물(Player player, Position from, Position to) {
         Pawn source = new Pawn(player, from);
         Rook target = new Rook(player);
-        assertThat(source.validate(Direction.getDirection(from, to), target)).isFalse();
+        assertThat(source.validateDirection(Direction.getDirection(from, to), target)).isFalse();
     }
 
     static Stream<Arguments> generatePositions9() {

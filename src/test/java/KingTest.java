@@ -29,7 +29,7 @@ public class KingTest {
     @ParameterizedTest
     @MethodSource("generatePositions")
     void tileSize_1(Position from, Position to) {
-        assertThat(king.validateMovableTileSize(from, to)).isTrue();
+        assertThat(king.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions() {
@@ -43,7 +43,7 @@ public class KingTest {
     @ParameterizedTest
     @MethodSource("generatePositions2")
     void test2(Position from, Position to) {
-        assertThat(king.validateMovableTileSize(from, to)).isFalse();
+        assertThat(king.validateTileSize(from, to)).isFalse();
     }
 
     static Stream<Arguments> generatePositions2() {

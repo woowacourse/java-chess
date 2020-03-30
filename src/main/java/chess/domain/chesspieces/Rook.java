@@ -23,7 +23,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean validateMovableTileSize(Position from, Position to) {
+    public boolean validateTileSize(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());

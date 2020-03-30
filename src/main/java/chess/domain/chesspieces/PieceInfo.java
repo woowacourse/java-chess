@@ -6,32 +6,36 @@ import chess.domain.Player;
 import java.util.Objects;
 
 public enum PieceInfo {
-    KING("K", "k", 0),
-    QUEEN("Q", "q", 9),
-    BISHOP("B", "b", 3),
-    ROOK("R", "r", 5),
-    KNIGHT("N", "n", 2.5),
-    PAWN("P", "p", 1);
+    KING("K", 0),
+    QUEEN("Q", 9),
+    BISHOP("B",  3),
+    ROOK("R", 5),
+    KNIGHT("N",  2.5),
+    PAWN("P",  1),
+    EMPTY(".", 0);
 
     public static final double PAWN_SCORE_DIFF = 0.5;
 
-    private final String blackName;
-    private final String whiteName;
+    private static final String EMPTY_NAME = ".";
+    private final String name;
     private final double score;
 
-    PieceInfo(String blackName, String whiteName, double score) {
-        this.blackName = blackName;
-        this.whiteName = whiteName;
+
+    PieceInfo(String name, double score) {
+        this.name = name;
         this.score = score;
     }
 
-    public String getName(Player player) {
+    public final String getName(Player player) {
         Objects.requireNonNull(player);
         if (player == Player.WHITE){
-            return this.whiteName;
+            return name.toLowerCase();
         }
         if (player == Player.BLACK) {
-            return this.blackName;
+            return name.toUpperCase();
+        }
+        if (player == Player.NONE) {
+            return EMPTY_NAME;
         }
         throw new IllegalPlayerException();
     }
