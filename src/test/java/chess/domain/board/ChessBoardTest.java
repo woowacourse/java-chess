@@ -3,7 +3,9 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,15 +17,18 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 
 public class ChessBoardTest {
-	ChessBoard chessBoard;
+	private ChessBoard chessBoard;
+	private Map<Position, Piece> pieces;
 
 	@BeforeEach
 	void setUp() {
-		chessBoard = new ChessBoard();
+		pieces = new HashMap<>();
+		chessBoard = new ChessBoard(pieces);
 	}
 
 	@DisplayName("체스판을 생성하면 초기화 상태로 들어가있는지 테스트")

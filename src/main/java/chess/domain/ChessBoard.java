@@ -1,6 +1,5 @@
 package chess.domain;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -11,9 +10,10 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.WhitePiecesFactory;
 
 public class ChessBoard {
-	private Map<Position, Piece> pieces = new HashMap<>();
+	private Map<Position, Piece> pieces;
 
-	public ChessBoard() {
+	public ChessBoard(Map<Position, Piece> pieces) {
+		this.pieces = pieces;
 		WhitePiecesFactory.create(pieces);
 		BlackPiecesFactory.create(pieces);
 	}
@@ -29,7 +29,7 @@ public class ChessBoard {
 		selectNotMovablePosition(target, positions);
 
 		// 이동함.
-		pieces.put(source, null);
+		pieces.remove(source);
 		pieces.put(target, sourcePiece);
 	}
 
@@ -64,5 +64,9 @@ public class ChessBoard {
 	public boolean isMovable(List<Position> positions, Position target) {
 		return positions.stream()
 			.anyMatch(target::equals);
+	}
+
+	public Map<Position, Piece> getPieces() {
+		return pieces;
 	}
 }
