@@ -9,9 +9,6 @@ import chess.score.Score;
 import chess.team.Team;
 
 public abstract class Piece {
-    private static final char BLACk_KING_VALUE = 'K';
-    private static final char WHITE_KING_VALUE = 'k';
-
     public final char name;
     protected final Score score;
     private final PieceMovable pieceMovable;
@@ -46,7 +43,7 @@ public abstract class Piece {
     }
 
     public boolean isKing() {
-        return this.name == BLACk_KING_VALUE || this.name == WHITE_KING_VALUE;
+        return this.getClass() == King.class;
     }
 
     private Team isBlack() {

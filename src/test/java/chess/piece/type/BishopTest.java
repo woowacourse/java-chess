@@ -42,4 +42,11 @@ class BishopTest {
         boolean actual = givenPiece.canMove(board, new Location(1, 'c'), new Location(3, 'e'));
         assertThat(actual).isFalse();
     }
+
+    @Test
+    void isKing() {
+        Bishop king = new Bishop(Team.BLACK);
+
+        assertThat(king.isKing()).isFalse();
+    }
 }

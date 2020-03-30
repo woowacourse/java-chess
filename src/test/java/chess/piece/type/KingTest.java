@@ -24,4 +24,11 @@ class KingTest {
         boolean cantActual = king.canMove(chessBoard.getBoard(), now, cantAfter);
         assertThat(cantActual).isFalse();
     }
+
+    @Test
+    void isKing() {
+        King king = new King(Team.BLACK);
+
+        assertThat(king.isKing()).isTrue();
+    }
 }
