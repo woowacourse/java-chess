@@ -42,6 +42,7 @@ public class Board {
             pawnMove(from, to);
         }
 
+        piece.moveTo(to);
         board.put(to, piece);
         board.remove(from);
     }

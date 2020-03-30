@@ -25,14 +25,20 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean isNotMovableTo(Position start, Position destination) {
-        List<Position> movable = MovableAreaFactory.pawnOf(start);
-        if (isInitialPawnRow(start.getRow())) {
+        List<Position> movable = MovableAreaFactory.pawnOf(start, team);
+        if (isInitialPawnRow(start.getRow(), team) && team.equals(Team.BLACK)) {
+            movable.add(Position.of(start.getColumn(), Row.FIVE));
+        }
+        if (isInitialPawnRow(start.getRow(), team) && team.equals(Team.WHITE)) {
             movable.add(Position.of(start.getColumn(), Row.FOUR));
         }
         return !movable.contains(destination);
     }
 
-    private boolean isInitialPawnRow(Row row) {
+    private boolean isInitialPawnRow(Row row, Team team) {
+        if (team.equals(Team.BLACK)) {
+            return row.equals(Row.SEVEN);
+        }
         return row.equals(Row.TWO);
     }
 }
