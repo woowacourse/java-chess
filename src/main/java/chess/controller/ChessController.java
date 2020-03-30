@@ -14,6 +14,7 @@ public class ChessController {
     private static final String END = "end";
     private static final String MOVE = "move";
     private static final String STATUS = "status";
+    public static final String DELIMITER = " ";
 
     private static List<String> startOrEnd = List.of(START, END);
     private static List<String> moveOrStatus = List.of(MOVE, STATUS);
@@ -34,7 +35,7 @@ public class ChessController {
     }
 
     public static void playTurn(String input, Board board) {
-        if (!moveOrStatus.contains(List.of(input.split(" ")).get(0))) {
+        if (!moveOrStatus.contains(List.of(input.split(DELIMITER)).get(0))) {
             throw new IllegalArgumentException("잘못된 명령어 입력입니다.");
         }
 
