@@ -25,7 +25,7 @@ public enum Direction {
     private int fileDegree;
     private int rankDegree;
 
-    private Direction(int fileDegree, int rankDegree) {
+    Direction(int fileDegree, int rankDegree) {
         this.fileDegree = fileDegree;
         this.rankDegree = rankDegree;
     }

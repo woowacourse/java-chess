@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Color;
 import chess.domain.File;
+import chess.domain.Type;
 import chess.domain.piece.Piece;
 
 import java.util.HashMap;
@@ -64,7 +65,8 @@ public class ChessBoard {
 
     public boolean isKingCaptured() {
         return chessBoard.values().stream()
-                .filter(piece -> piece.getLetter().equals("k") || piece.getLetter().equals("K"))
+                .filter(piece -> piece.getLetter().equals(Type.KING.getName())
+                        || piece.getLetter().equals(Type.KING.getName().toLowerCase()))
                 .toArray().length != FIRST_KINGS_NUMBER;
     }
 }

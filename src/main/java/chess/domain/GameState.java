@@ -9,6 +9,7 @@ public enum GameState {
     STATUS("status"),
     ERROR("입력이 잘못되었습니다.");
 
+    private static final String NULL_OR_EMPTY_INPUT_ERROR_MESSAGE = "입력값이 존재하지 않습니다.";
     private final String name;
 
     GameState(String name) {
@@ -25,7 +26,7 @@ public enum GameState {
 
     private static void validateInput(String input) {
         if (input == null || input.isEmpty()) {
-            throw new IllegalArgumentException("입력값이 존재하지 않습니다.");
+            throw new IllegalArgumentException(NULL_OR_EMPTY_INPUT_ERROR_MESSAGE);
         }
     }
 

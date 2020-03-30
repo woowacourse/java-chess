@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Square {
 
     private final static Map<String, Square> CACHE = new HashMap<>();
+    private static final String SQUARE_INPUT_ERROR_MESSAGE = "잘못된 square 의 입력입니다";
 
     static {
         for (File file : File.values()) {
@@ -29,7 +30,7 @@ public class Square {
 
     public static Square of(String location) {
         if (Objects.isNull(location) || !CACHE.containsKey(location)) {
-            throw new IllegalArgumentException("잘못된 square 의 입력입니다");
+            throw new IllegalArgumentException(SQUARE_INPUT_ERROR_MESSAGE);
         }
         return CACHE.get(location);
     }

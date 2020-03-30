@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Direction;
-import chess.domain.board.Square;
 import chess.domain.Type;
+import chess.domain.board.Square;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -26,9 +26,7 @@ public class Bishop extends Piece {
     }
 
     public static Bishop of(Color color) {
-        if (color == null) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
+        checkColorNull(color);
         return CACHE.get(color.getName());
     }
 
@@ -47,7 +45,7 @@ public class Bishop extends Piece {
     @Override
     void addMovableSquares(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction) {
         Square centerSquare = availableSquares.stream().findFirst().orElseThrow(IndexOutOfBoundsException::new);
-        for (int moveTime = 1; moveTime < 8; moveTime++) {
+        for (int moveTime = FIRST_SHIFT; moveTime < LAST_SHIFT; moveTime++) {
             Square squareToAdd = Square.moveTo(
                     direction.getFileDegree() * moveTime, direction.getRankDegree() * moveTime, centerSquare
             );

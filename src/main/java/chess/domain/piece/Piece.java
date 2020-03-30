@@ -11,6 +11,8 @@ public abstract class Piece {
 
     static final int FIRST_SHIFT = 1;
     static final int LAST_SHIFT = 8;
+    private static final String INPUT_ERROR_MESSAGE = "잘못된 입력입니다.";
+    private static final String NULL_INPUT_ERROR_MESSAGE = "입력이 존재하지 않습니다.";
 
     protected final Color color;
 
@@ -26,9 +28,9 @@ public abstract class Piece {
 
     abstract void addMovableSquares(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction);
 
-    void validate(Square pieceSquare, Map<Square, Piece> chessBoard) {
-        if (pieceSquare == null || chessBoard == null) {
-            throw new IllegalArgumentException("입력이 존재하지 않습니다.");
+    static void checkColorNull(Color color) {
+        if (color == null) {
+            throw new IllegalArgumentException(INPUT_ERROR_MESSAGE);
         }
     }
 
@@ -41,6 +43,12 @@ public abstract class Piece {
     public void removeSquareWhenSameColor(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Square squareToAdd) {
         if (!(chessBoard.get(squareToAdd) == null) && chessBoard.get(squareToAdd).color.equals(color)) {
             availableSquares.remove(squareToAdd);
+        }
+    }
+
+    void validate(Square pieceSquare, Map<Square, Piece> chessBoard) {
+        if (pieceSquare == null || chessBoard == null) {
+            throw new IllegalArgumentException(NULL_INPUT_ERROR_MESSAGE);
         }
     }
 

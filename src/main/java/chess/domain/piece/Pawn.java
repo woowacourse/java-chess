@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Direction;
-import chess.domain.board.Square;
 import chess.domain.Type;
+import chess.domain.board.Square;
 
 import java.util.*;
 
@@ -28,9 +28,7 @@ public class Pawn extends Piece {
     }
 
     public static Pawn of(Color color) {
-        if (color == null) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
+        checkColorNull(color);
         return CACHE.get(color.getName());
     }
 
