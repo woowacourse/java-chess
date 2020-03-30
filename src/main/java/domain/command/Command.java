@@ -33,7 +33,7 @@ public enum Command {
 			.filter(command -> command.isChessCommand)
 			.filter(chessCommand -> chessCommand.getCommand().equals(inputCommand))
 			.findFirst()
-			.orElseThrow(() -> new InvalidCommandException(INVALID_GAME_COMMAND));
+			.orElseThrow(() -> new InvalidCommandException(INVALID_CHESS_COMMAND));
 	}
 
 	public Boolean isMove(){
