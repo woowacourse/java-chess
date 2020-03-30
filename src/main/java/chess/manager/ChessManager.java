@@ -1,6 +1,6 @@
 package chess.manager;
 
-import chess.board.ForwardChessBoard;
+import chess.board.ChessBoardAdapter;
 import chess.board.Tile;
 import chess.coordinate.Coordinate;
 import chess.observer.Observable;
@@ -10,11 +10,11 @@ import chess.piece.Team;
 import java.util.Map;
 
 public class ChessManager implements Observable {
-    private final ForwardChessBoard chessBoard;
+    private final ChessBoardAdapter chessBoard;
     private Team currentTeam = Team.WHITE;
     private boolean isKingAlive = true;
 
-    public ChessManager(final ForwardChessBoard chessBoard) {
+    public ChessManager(final ChessBoardAdapter chessBoard) {
         this.chessBoard = chessBoard;
         chessBoard.subscribe(this);
     }

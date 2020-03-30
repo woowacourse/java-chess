@@ -7,11 +7,11 @@ import chess.piece.Team;
 
 import java.util.Map;
 
-public class ForwardChessBoard implements Publishable {
+public class ChessBoardAdapter implements Publishable {
     private final ChessBoard chessBoard;
     private Observable observable;
 
-    public ForwardChessBoard(final ChessBoard chessBoard) {
+    public ChessBoardAdapter(final ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
 

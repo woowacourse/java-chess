@@ -18,14 +18,14 @@ public class BoardGenerator {
     private BoardGenerator() {
     }
 
-    public static ForwardChessBoard create() {
+    public static ChessBoardAdapter create() {
         ChessBoard chessBoard = ChessBoard.empty();
         addTopAndBottom(chessBoard, Rank.EIGHT, Team.BLACK);
         addTopAndBottom(chessBoard, Rank.ONE, Team.WHITE);
         addPawn(chessBoard, Rank.SEVEN, Team.BLACK);
         addPawn(chessBoard, Rank.TWO, Team.WHITE);
         addBlank(chessBoard);
-        return new ForwardChessBoard(chessBoard);
+        return new ChessBoardAdapter(chessBoard);
     }
 
     private static void addTopAndBottom(ChessBoard chessBoard, Rank rank, Team team) {
