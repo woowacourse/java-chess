@@ -6,7 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.result.GameResult;
-import chess.domain.util.Run;
+import chess.domain.util.Command;
 import chess.exception.InvalidPositionException;
 import chess.exception.MoveCommandWhenBoardNullException;
 import chess.exception.PieceImpossibleMoveException;
@@ -30,15 +30,15 @@ public class ChessGame {
     public void run() {
         OutputView.printInputStartGuideMessage();
         Team currentTurn = Team.WHITE;
-        Run runner;
+        Command command;
 
-        while ((runner = inputCommandWithValidation()).isNotEnd()) {
-            if (runner.isStart()) {
+        while ((command = inputCommandWithValidation()).isNotEnd()) {
+            if (command.isStart()) {
                 board = BoardFactory.createBoard();
                 OutputView.printBoard(board.getBoard());
             }
             try {
-                if (runner.isMove()) {
+                if (command.isMove()) {
                     Piece fromPiece = board.findPieceBy(new Position(inputCommand[FROM_POSITION_INDEX]));
                     Piece toPiece = board.findPieceBy(new Position(inputCommand[TO_POSITION_INDEX]));
                     board = fromPiece.move(board, toPiece, currentTurn);
@@ -49,7 +49,7 @@ public class ChessGame {
                 OutputView.printExceptionMessage(e.getMessage());
             }
 
-            if (runner.isStatus()) {
+            if (command.isStatus()) {
                 OutputView.printTeamScore(gameResult.calculateScore(board, Team.WHITE),
                         gameResult.calculateScore(board, Team.BLACK));
             }
@@ -68,10 +68,10 @@ public class ChessGame {
         return Team.WHITE;
     }
 
-    private Run inputCommandWithValidation() {
+    private Command inputCommandWithValidation() {
         try {
             inputCommand = InputView.inputCommand();
-            return Run.of(inputCommand[COMMAND_INDEX]);
+            return Command.of(inputCommand[COMMAND_INDEX]);
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
             return inputCommandWithValidation();
