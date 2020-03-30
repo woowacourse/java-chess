@@ -57,4 +57,10 @@ class RookTest {
 	void isPawnTest() {
 		assertThat(new Rook(new Initial(), "r").isPawn()).isFalse();
 	}
+
+	@DisplayName("왕인지 물어보면 false 반환하는지 확인")
+	@Test
+	void isKingTest() {
+		assertThat((new Rook(new Initial(), "r").isKing())).isFalse();
+	}
 }

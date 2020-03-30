@@ -59,7 +59,7 @@ public class Controller {
 			if (command.isStatus()) {
 				// Todo: status
 			}
-		} while (!command.isEnd() || kingDie());
+		} while (!command.isEnd() && !isKingDie());
 	}
 
 	private static void movePiece(Command command) {
@@ -80,7 +80,11 @@ public class Controller {
 		}
 	}
 
-	private static boolean kingDie() {
+	private static boolean isKingDie() {
+		if (game.isKingDie()) {
+			OutputView.printKingDie();
+			return true;
+		}
 		return false;
 	}
 

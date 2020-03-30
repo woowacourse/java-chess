@@ -44,4 +44,8 @@ public class Pieces {
 			|| (whitePieces.hasPiece(source) && !blackPieces.hasPiece(target) && !whitePieces.hasPiece(target))
 			|| (!whitePieces.hasPiece(target) && !blackPieces.hasPiece(target) && blackPieces.hasPiece(source));
 	}
+
+	public boolean isKingDie() {
+		return whitePieces.isKingDie() || blackPieces.isKingDie();
+	}
 }

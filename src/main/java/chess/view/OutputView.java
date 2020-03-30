@@ -43,4 +43,8 @@ public class OutputView {
 			System.out.println();
 		}
 	}
+
+	public static void printKingDie() {
+		System.out.println("왕이 죽었습니다.");
+	}
 }

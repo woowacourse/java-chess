@@ -37,4 +37,9 @@ public class King extends Piece {
 		route.add(target);
 		return route;
 	}
+
+	@Override
+	public boolean isKing() {
+		return true;
+	}
 }

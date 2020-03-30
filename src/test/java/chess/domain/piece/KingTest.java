@@ -57,4 +57,10 @@ class KingTest {
 	void isPawnTest() {
 		assertThat(new King(new Initial(), "k").isPawn()).isFalse();
 	}
+
+	@DisplayName("왕인지 물어보면 true를 반환하는지 확인")
+	@Test
+	void isKingTest() {
+		assertThat((new King(new Initial(), "k").isKing())).isTrue();
+	}
 }

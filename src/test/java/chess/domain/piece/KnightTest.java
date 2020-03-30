@@ -57,4 +57,10 @@ class KnightTest {
 	void isPawnTest() {
 		assertThat(new Knight(new Initial(), "n").isPawn()).isFalse();
 	}
+
+	@DisplayName("왕인지 물어보면 false 반환하는지 확인")
+	@Test
+	void isKingTest() {
+		assertThat((new Knight(new Initial(), "n").isKing())).isFalse();
+	}
 }

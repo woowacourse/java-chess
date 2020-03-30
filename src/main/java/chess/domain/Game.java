@@ -31,6 +31,10 @@ public class Game {
 		pieces.move(source, target);
 	}
 
+	public boolean isKingDie() {
+		return pieces.isKingDie();
+	}
+
 	public Board getBoard() {
 		return board;
 	}

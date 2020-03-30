@@ -57,4 +57,10 @@ class BishopTest {
 	void isPawnTest() {
 		assertThat(new Bishop(new Initial(), "b").isPawn()).isFalse();
 	}
+
+	@DisplayName("왕인지 물어보면 false 반환하는지 확인")
+	@Test
+	void isKingTest() {
+		assertThat((new Bishop(new Initial(), "b").isKing())).isFalse();
+	}
 }

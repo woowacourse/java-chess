@@ -26,6 +26,11 @@ public class BlackPieces {
 		return pieces.containsKey(source);
 	}
 
+	public boolean isKingDie() {
+		return pieces.keySet().stream()
+			.noneMatch(position -> pieces.get(position).isKing());
+	}
+
 	public void moveFromTo(Position source, Position target) {
 		Piece piece = pieces.remove(source);
 		piece.state = new Moved();

@@ -27,6 +27,10 @@ public abstract class Piece {
 		return false;
 	}
 
+	public boolean isKing() {
+		return false;
+	}
+
 	public String getSymbol() {
 		return symbol;
 	}
