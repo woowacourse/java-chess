@@ -14,9 +14,16 @@ public abstract class Piece {
     public final char name;
     protected final Score score;
 
-    Piece(char name, Score score) {
-        this.name = name;
+    Piece(char name, Score score, Team team) {
+        this.name = changeName(team, name);
         this.score = score;
+    }
+
+    private static char changeName(Team team, char name) {
+        if (team.isBlack()) {
+            return Character.toUpperCase(name);
+        }
+        return name;
     }
 
     public abstract boolean canMove(Location now, Location after);

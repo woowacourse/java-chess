@@ -9,14 +9,7 @@ public class Queen extends Piece {
     private static final int QUEEN_SCORE = 9;
 
     public Queen(Team team) {
-        super(changeName(team), new Score(QUEEN_SCORE));
-    }
-
-    private static char changeName(Team team) {
-        if (team.isBlack()) {
-            return Character.toUpperCase(NAME);
-        }
-        return NAME;
+        super(NAME, new Score(QUEEN_SCORE), team);
     }
 
     @Override

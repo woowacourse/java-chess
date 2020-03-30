@@ -11,14 +11,7 @@ public class King extends Piece {
 	private static final int KING_SCORE = 0;
 
 	public King(Team team) {
-		super(changeName(team), new Score(KING_SCORE));
-	}
-
-	private static char changeName(Team team) {
-		if (team.isBlack()) {
-			return Character.toUpperCase(NAME);
-		}
-		return NAME;
+		super(NAME, new Score(KING_SCORE), team);
 	}
 
 	@Override

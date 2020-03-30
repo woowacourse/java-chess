@@ -11,14 +11,7 @@ public class Pawn extends Piece {
     private static final int PAWN_SCORE = 1;
 
     public Pawn(Team team) {
-        super(changeName(team), new Score(PAWN_SCORE));
-    }
-
-    private static char changeName(Team team) {
-        if (team.isBlack()) {
-            return Character.toUpperCase(NAME);
-        }
-        return NAME;
+        super(NAME, new Score(PAWN_SCORE), team);
     }
 
     @Override

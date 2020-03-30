@@ -11,14 +11,7 @@ public class Knight extends Piece {
 	private static final double KNIGHT_SCORE = 2.5;
 
 	public Knight(Team team) {
-		super(changeName(team), new Score(KNIGHT_SCORE));
-	}
-
-	private static char changeName(Team team) {
-		if (team.isBlack()) {
-			return Character.toUpperCase(NAME);
-		}
-		return NAME;
+		super(NAME, new Score(KNIGHT_SCORE), team);
 	}
 
 	@Override

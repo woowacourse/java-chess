@@ -9,14 +9,7 @@ public class Bishop extends Piece {
     private static final int BISHOP_SCORE = 3;
 
     public Bishop(Team team) {
-        super(changeName(team), new Score(BISHOP_SCORE));
-    }
-
-    private static char changeName(Team team) {
-        if (team.isBlack()) {
-            return Character.toUpperCase(NAME);
-        }
-        return NAME;
+        super(NAME, new Score(BISHOP_SCORE), team);
     }
 
     @Override

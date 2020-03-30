@@ -9,14 +9,7 @@ public class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
 
     public Rook(Team team) {
-        super(changeName(team), new Score(ROOK_SCORE));
-    }
-
-    private static char changeName(Team team) {
-        if (team.isBlack()) {
-            return Character.toUpperCase(NAME);
-        }
-        return NAME;
+        super(NAME, new Score(ROOK_SCORE), team);
     }
 
     @Override
