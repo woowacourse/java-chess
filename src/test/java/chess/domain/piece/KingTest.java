@@ -33,7 +33,7 @@ class KingTest {
 		Board board = new Board(BoardFactory.initializeKingQueen(pieces));
 		Piece king = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = king.findMovablePositions(currentPosition, board);
+		Set<Position> positions = king.findMovablePositions(currentPosition, board::findPieceBy);
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}
 }

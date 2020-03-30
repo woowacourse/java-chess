@@ -3,8 +3,8 @@ package chess.domain.piece;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
-import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -16,27 +16,27 @@ public class StretchMovingStrategy implements MovingStrategy {
 	}
 
 	@Override
-	public Set<Position> findMovablePositions(Position currentPosition, Board board) {
+	public Set<Position> findMovablePositions(Position currentPosition, Function<Position, Piece> pieceFinder) {
 		Set<Position> movablePositions = new HashSet<>();
 		for (Direction direction : movableDirections) {
-			movablePositions.addAll(findNext(currentPosition, direction, board));
+			movablePositions.addAll(findNext(currentPosition, direction, pieceFinder));
 		}
 		return movablePositions;
 	}
 
-	public Set<Position> findNext(Position startPosition, Direction direction, Board board) {
+	public Set<Position> findNext(Position startPosition, Direction direction, Function<Position, Piece> pieceFinder) {
 		Set<Position> movablePositions = new HashSet<>();
-		Piece target = board.findPieceBy(startPosition);
+		Piece target = pieceFinder.apply(startPosition);
 
 		Position currentPosition = startPosition;
 		while (currentPosition.canMoveNext(direction)) {
 			currentPosition = currentPosition.next(direction);
-			if (board.isNotEmptyPosition(currentPosition)) {
+			if (pieceFinder.apply(currentPosition) != null) {
 				break;
 			}
 			movablePositions.add(currentPosition);
 		}
-		if (board.isNotEmptyPosition(currentPosition) && target.isEnemy(board.findPieceBy(currentPosition))) {
+		if (pieceFinder.apply(currentPosition) != null && target.isEnemy(pieceFinder.apply(currentPosition))) {
 			movablePositions.add(currentPosition);
 		}
 		return movablePositions;

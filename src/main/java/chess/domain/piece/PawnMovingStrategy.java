@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
-import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -41,29 +41,30 @@ public class PawnMovingStrategy extends StretchMovingStrategy {
 	}
 
 	@Override
-	public Set<Position> findMovablePositions(Position currentPosition, Board board) {
-		Set<Position> movablePositions = new HashSet<>(findEatablePosition(currentPosition, board));
+	public Set<Position> findMovablePositions(Position currentPosition, Function<Position, Piece> pieceFinder) {
+		Set<Position> movablePositions = new HashSet<>(findEatablePosition(currentPosition, pieceFinder));
 
 		for (Direction direction : movableDirections) {
-			movablePositions.addAll(findStraightNext(currentPosition, direction, board));
+			movablePositions.addAll(findStraightNext(currentPosition, direction, pieceFinder));
 		}
 		return movablePositions;
 	}
 
-	public Set<Position> findStraightNext(Position position, Direction direction, Board board) {
+	public Set<Position> findStraightNext(Position position, Direction direction,
+		Function<Position, Piece> pieceFinder) {
 		Set<Position> movablePositions = new HashSet<>();
 		Position startPosition = position;
 		if (position.canNotMoveNext(direction)) {
 			return movablePositions;
 		}
 		position = position.next(direction);
-		if (board.isNotEmptyPosition(position)) {
+		if (pieceFinder.apply(position) != null) {
 			return movablePositions;
 		}
 		movablePositions.add(position);
 
 		if (isPawnAtDefaultPosition(startPosition)) {
-			movablePositions.addAll(findStraightNext(position, direction, board));
+			movablePositions.addAll(findStraightNext(position, direction, pieceFinder));
 		}
 
 		return movablePositions;
@@ -73,22 +74,23 @@ public class PawnMovingStrategy extends StretchMovingStrategy {
 		return INITIAL_ROW.contains(startPosition.getRow());
 	}
 
-	private Set<Position> findEatablePosition(Position currentPosition, Board board) {
+	private Set<Position> findEatablePosition(Position currentPosition, Function<Position, Piece> pieceFinder) {
 		Set<Position> eatablePositions = new HashSet<>();
 		for (Direction direction : eatableDirections) {
-			eatablePositions.addAll(findEatableNext(currentPosition, direction, board));
+			eatablePositions.addAll(findEatableNext(currentPosition, direction, pieceFinder));
 		}
 		return eatablePositions;
 	}
 
-	protected Set<Position> findEatableNext(Position currentPosition, Direction direction, Board board) {
+	protected Set<Position> findEatableNext(Position currentPosition, Direction direction,
+		Function<Position, Piece> pieceFinder) {
 		Set<Position> eatablePosition = new HashSet<>();
-		Piece target = board.findPieceBy(currentPosition);
+		Piece target = pieceFinder.apply(currentPosition);
 		if (currentPosition.canNotMoveNext(direction)) {
 			return eatablePosition;
 		}
 		currentPosition = currentPosition.next(direction);
-		if (board.isNotEmptyPosition(currentPosition) && target.isEnemy(board.findPieceBy(currentPosition))) {
+		if (pieceFinder.apply(currentPosition) != null && target.isEnemy(pieceFinder.apply(currentPosition))) {
 			eatablePosition.add(currentPosition);
 		}
 		return eatablePosition;

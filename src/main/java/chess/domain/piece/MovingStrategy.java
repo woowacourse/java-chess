@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
 import java.util.Set;
+import java.util.function.Function;
 
-import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 public interface MovingStrategy {
-	Set<Position> findMovablePositions(Position currentPosition, Board board);
+	Set<Position> findMovablePositions(Position currentPosition, Function<Position, Piece> pieceFinder);
 }

@@ -34,7 +34,7 @@ class RookTest {
 		Board board = new Board(BoardFactory.initializeRook(new HashMap<>()));
 		Piece rook = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = rook.findMovablePositions(currentPosition, board);
+		Set<Position> positions = rook.findMovablePositions(currentPosition, board::findPieceBy);
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}
 }

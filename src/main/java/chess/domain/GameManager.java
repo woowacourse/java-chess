@@ -46,7 +46,8 @@ public class GameManager {
 	}
 
 	private void validateMovablePosition(Piece target, Position targetPosition, Position destination) {
-		Set<Position> movablePositions = target.findMovablePositions(targetPosition, board);
+		Set<Position> movablePositions = target.findMovablePositions(targetPosition,
+			(position) -> board.findPieceBy(position));
 		if (!movablePositions.contains(destination)) {
 			throw new IllegalArgumentException(NOT_MOVABLE_MESSAGE);
 		}

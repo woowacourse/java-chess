@@ -36,7 +36,7 @@ class KnightTest {
 		Board board = new Board(pieces);
 		Piece knight = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = knight.findMovablePositions(currentPosition, board);
+		Set<Position> positions = knight.findMovablePositions(currentPosition, board::findPieceBy);
 		System.out.println(positions);
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}

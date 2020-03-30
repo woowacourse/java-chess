@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import java.util.Set;
+import java.util.function.Function;
 
-import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 public class Piece {
@@ -25,8 +25,8 @@ public class Piece {
 		this.score = pieceType.getScore();
 	}
 
-	public Set<Position> findMovablePositions(Position currentPosition, Board board) {
-		return movingStrategy.findMovablePositions(currentPosition, board);
+	public Set<Position> findMovablePositions(Position currentPosition, Function<Position, Piece> pieceFinder) {
+		return movingStrategy.findMovablePositions(currentPosition, pieceFinder);
 	}
 
 	public boolean isEnemy(Piece that) {

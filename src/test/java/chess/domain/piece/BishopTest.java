@@ -37,7 +37,7 @@ class BishopTest {
 		Board board = new Board(BoardFactory.initializeBishop(pieces));
 		Piece bishop = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = bishop.findMovablePositions(currentPosition, board);
+		Set<Position> positions = bishop.findMovablePositions(currentPosition, board::findPieceBy);
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}
 }
