@@ -1,6 +1,5 @@
 package domain.piece;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -33,13 +32,6 @@ public abstract class Piece implements Movable {
 
 	private boolean isInPlace(Position sourcePosition, Position targetPosition) {
 		return sourcePosition.equals(targetPosition);
-	}
-
-	protected Direction findDirection(int rowGap, int columnGap) {
-		return Arrays.stream(Direction.values())
-			.filter(d -> d.getFind().apply(rowGap, columnGap))
-			.findFirst()
-			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION));
 	}
 
 	protected Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
@@ -82,7 +74,7 @@ public abstract class Piece implements Movable {
 		}
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		int columnGap = this.position.calculateColumnGap(targetPosition);
-		Direction direction = findDirection(rowGap, columnGap);
+		Direction direction = Direction.findDirection(rowGap, columnGap);
 
 		return validateDirection(direction) && validateStepSize(rowGap, columnGap) &&
 			validateRoute(direction, targetPosition, ranks);

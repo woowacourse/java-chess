@@ -45,8 +45,8 @@ public enum Direction {
 		int routeRow = position.getRow();
 		int routeColumn = position.getColumn().getNumber();
 		for (int i = 0; i < loopCount; i++) {
-			routeRow += this.getRowGap();
-			routeColumn += this.getColumnGap();
+			routeRow += this.rowGap;
+			routeColumn += this.columnGap;
 			if (hasPieceInBoard(ranks, routeRow, routeColumn)) {
 				return true;
 			}
@@ -65,6 +65,14 @@ public enum Direction {
 			.flatMap(rank -> rank.getPieces().stream())
 			.anyMatch(piece -> piece.getPosition().getColumn().getNumber() == routeColumn
 				&& piece.getPosition().getRow() == routeRow);
+	}
+
+	public static Direction findDirection(int rowGap, int columnGap) {
+		return Arrays.stream(values())
+			.filter(direction -> direction.find.apply(rowGap, columnGap))
+			.findFirst()
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION));
+
 	}
 
 	public static List<Direction> everyDirection() {
@@ -89,14 +97,6 @@ public enum Direction {
 
 	public static List<Direction> blackPawnDirection() {
 		return Arrays.asList(S, SE, SW);
-	}
-
-	public int getRowGap() {
-		return rowGap;
-	}
-
-	public int getColumnGap() {
-		return columnGap;
 	}
 
 	public BiFunction<Integer, Integer, Boolean> getFind() {
