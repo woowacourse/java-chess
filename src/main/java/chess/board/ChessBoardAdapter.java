@@ -30,7 +30,12 @@ public class ChessBoardAdapter implements Publishable {
     }
 
     public boolean move(final String source, final String target) {
-        return chessBoard.move(source, target, this::push);
+        try {
+            push(chessBoard.replace(source, target));
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     public double calculateScore(final Team currentTeam) {

@@ -4,12 +4,12 @@ import chess.coordinate.Coordinate;
 import chess.coordinate.File;
 import chess.coordinate.Rank;
 import chess.piece.Blank;
+import chess.piece.Piece;
 import chess.piece.Team;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ChessBoard {
     private final Map<Coordinate, Tile> chessBoard;
@@ -37,21 +37,19 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public boolean move(String sourceKey, String targetKey, Consumer<Object> pushEvent) {
+    public Piece replace(String sourceKey, String targetKey) {
         Tile sourceTile = chessBoard.get(Coordinate.of(sourceKey));
         Tile targetTile = chessBoard.get(Coordinate.of(targetKey));
 
         if (sourceTile.canNotReach(targetTile)) {
-            return false;
+            throw new IllegalArgumentException(String.format("%s 에 도달할 수 없습니다.", targetKey));
         }
 
         Directions directions = sourceTile.findPath(targetTile);
         if (directions.isExist(sourceKey, chessBoard::get)) {
-            return false;
+            throw new IllegalArgumentException("이동 경로에 다른 체스말이 존재합니다.");
         }
-
-        pushEvent.accept(targetTile.replacePiece(sourceTile));
-        return true;
+        return targetTile.replacePiece(sourceTile);
     }
 
     public double calculateScore(Team team) {
