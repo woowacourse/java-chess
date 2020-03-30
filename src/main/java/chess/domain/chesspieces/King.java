@@ -17,7 +17,7 @@ public class King extends Piece {
 
     public King(Player player) {
         super(player, pieceInfo);
-        directions.addAll(Arrays.asList(Direction.values()));
+        directions.addAll(Direction.everyDirection());
     }
 
     @Override

@@ -29,15 +29,15 @@ public class Pawn extends Piece {
         this.initPosition = position;
 
         if (player.equals(Player.BLACK)) {
-            forwardDirection = Direction.DOWN;
-            attackDirections.addAll(Arrays.asList(Direction.DIAGONAL_DOWN_LEFT, Direction.DIAGONAL_DOWN_RIGHT));
+            forwardDirection = Direction.SOUTH;
+            attackDirections.addAll(Arrays.asList(Direction.SOUTH_WEST, Direction.SOUTH_EAST));
             directions.add(forwardDirection);
             directions.addAll(attackDirections);
         }
 
         if (player.equals(Player.WHITE)) {
-            forwardDirection = Direction.TOP;
-            attackDirections.addAll(Arrays.asList(Direction.DIAGONAL_TOP_LEFT, Direction.DIAGONAL_TOP_RIGHT));
+            forwardDirection = Direction.NORTH;
+            attackDirections.addAll(Arrays.asList(Direction.NORTH_WEST, Direction.NORTH_EAST));
             directions.add(forwardDirection);
             directions.addAll(attackDirections);
         }

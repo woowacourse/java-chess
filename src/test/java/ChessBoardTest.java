@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -45,10 +46,10 @@ public class ChessBoardTest {
 
     @DisplayName("점수 계산")
     @ParameterizedTest
-    @EnumSource(value = Player.class)
-    void createStatusTest(Player player) {
+    @CsvSource({"WHITE", "BLACK"})
+    void createStatusTest(String player) {
         ChessBoard chessBoard = new ChessBoard();
-        Status result = chessBoard.createStatus(player);
+        Status result = chessBoard.createStatus(Player.valueOf(player));
         double actual = result.getScore();
         double expected = 38;
         assertThat(actual).isEqualTo(expected);

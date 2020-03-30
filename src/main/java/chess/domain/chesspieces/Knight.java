@@ -2,7 +2,6 @@ package chess.domain.chesspieces;
 
 import chess.domain.Player;
 import chess.domain.direction.Direction;
-import chess.domain.direction.KnightDirection;
 import chess.domain.position.Position;
 
 import java.util.Arrays;
@@ -15,7 +14,7 @@ public class Knight extends Piece {
 
     public Knight(Player player) {
         super(player, pieceInfo);
-        directions.addAll(Arrays.asList(Direction.values()));
+        directions.addAll(Direction.knightDirection());
     }
 
     @Override
@@ -28,8 +27,8 @@ public class Knight extends Piece {
     public boolean validateMovePosition(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
-        return Arrays.stream(KnightDirection.values())
-                .anyMatch(KnightDirection -> KnightDirection.contains(from, to));
+        return directions.stream()
+                .anyMatch(direction -> direction.getJudge(from, to));
     }
 
     @Override

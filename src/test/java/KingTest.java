@@ -22,7 +22,15 @@ public class KingTest {
     @Test
     void kingDirectionsTest() {
         List<Direction> directions = king.getDirections();
-        Assertions.assertThat(directions).containsExactly(Direction.values());
+        Assertions.assertThat(directions).containsExactly(Direction.NORTH,
+                Direction.EAST,
+                Direction.SOUTH,
+                Direction.WEST,
+                Direction.NORTH_EAST,
+                Direction.SOUTH_EAST,
+                Direction.SOUTH_WEST,
+                Direction.NORTH_WEST
+        );
     }
 
     @DisplayName("이동 칸 수 확인: (가능) 1칸 이동")

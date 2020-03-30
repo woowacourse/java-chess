@@ -6,7 +6,6 @@ import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Rook extends Piece {
@@ -18,8 +17,7 @@ public class Rook extends Piece {
 
     public Rook(Player player) {
         super(player, pieceInfo);
-        directions.addAll(Arrays.asList(Direction.TOP, Direction.DOWN,
-                Direction.LEFT, Direction.RIGHT));
+        directions.addAll(Direction.diagonalDirection());
     }
 
     @Override

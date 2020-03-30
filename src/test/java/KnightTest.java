@@ -21,7 +21,14 @@ public class KnightTest {
     @Test
     void knightDirectionsTest() {
         List<Direction> directions = knight.getDirections();
-        Assertions.assertThat(directions).containsExactly(Direction.values());
+        Assertions.assertThat(directions).containsExactly(Direction.NORTH_NORTH_EAST,
+                Direction.NORTH_NORTH_WEST,
+                Direction.EAST_EAST_NORTH,
+                Direction.EAST_EAST_SOUTH,
+                Direction.SOUTH_SOUTH_EAST,
+                Direction.SOUTH_SOUTH_WEST,
+                Direction.WEST_WEST_SOUTH,
+                Direction.WEST_WEST_NORTH);
     }
 
     @DisplayName("이동 칸 수와 방향 확인: (가능)")

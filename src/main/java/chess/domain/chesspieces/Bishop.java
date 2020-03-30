@@ -18,8 +18,7 @@ public class Bishop extends Piece{
 
     public Bishop(Player player) {
         super(player, pieceInfo);
-        directions.addAll(Arrays.asList(Direction.DIAGONAL_DOWN_LEFT, Direction.DIAGONAL_DOWN_RIGHT,
-                Direction.DIAGONAL_TOP_LEFT, Direction.DIAGONAL_TOP_RIGHT));
+        directions.addAll(Direction.diagonalDirection());
     }
 
     @Override

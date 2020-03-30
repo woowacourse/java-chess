@@ -26,8 +26,8 @@ public class PawnTest {
 
     static Stream<Arguments> generateDirection() {
         return Stream.of(
-                Arguments.of(Player.WHITE, new Direction[]{Direction.TOP, Direction.DIAGONAL_TOP_LEFT, Direction.DIAGONAL_TOP_RIGHT}),
-                Arguments.of(Player.BLACK, new Direction[]{Direction.DOWN, Direction.DIAGONAL_DOWN_LEFT, Direction.DIAGONAL_DOWN_RIGHT})
+                Arguments.of(Player.WHITE, new Direction[]{Direction.NORTH, Direction.NORTH_WEST, Direction.NORTH_EAST}),
+                Arguments.of(Player.BLACK, new Direction[]{Direction.SOUTH, Direction.SOUTH_WEST, Direction.SOUTH_EAST})
         );
     }
 

@@ -20,10 +20,10 @@ public class RookTest {
     @Test
     void kingDirectionsTest() {
         assertThat(rook.getDirections()).containsExactly(
-                Direction.TOP,
-                Direction.DOWN,
-                Direction.LEFT,
-                Direction.RIGHT);
+                Direction.NORTH_EAST,
+                Direction.SOUTH_EAST,
+                Direction.SOUTH_WEST,
+                Direction.NORTH_WEST);
     }
 
     @DisplayName("이동 칸 수: (가능) 1칸 이상")

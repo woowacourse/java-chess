@@ -27,14 +27,14 @@ public class DirectionTest {
 
     static Stream<Arguments> generatePositionsAndMoveRule() {
         return Stream.of(
-                Arguments.of("a1", "a8", Direction.TOP),
-                Arguments.of("a8", "a1", Direction.DOWN),
-                Arguments.of("a1", "h1", Direction.RIGHT),
-                Arguments.of("h1", "a1", Direction.LEFT),
-                Arguments.of("a8", "h1", Direction.DIAGONAL_DOWN_RIGHT),
-                Arguments.of("h8", "a1", Direction.DIAGONAL_DOWN_LEFT),
-                Arguments.of("h1", "a8", Direction.DIAGONAL_TOP_LEFT),
-                Arguments.of("a1", "h8", Direction.DIAGONAL_TOP_RIGHT));
+                Arguments.of("a1", "a8", Direction.NORTH),
+                Arguments.of("a8", "a1", Direction.SOUTH),
+                Arguments.of("a1", "h1", Direction.EAST),
+                Arguments.of("h1", "a1", Direction.WEST),
+                Arguments.of("a8", "h1", Direction.SOUTH_EAST),
+                Arguments.of("h8", "a1", Direction.SOUTH_WEST),
+                Arguments.of("h1", "a8", Direction.NORTH_WEST),
+                Arguments.of("a1", "h8", Direction.NORTH_EAST));
     }
 
     @DisplayName( "Postition source와 target 사이의 route: top, down")
@@ -58,8 +58,8 @@ public class DirectionTest {
 
     static Stream<Arguments> generateTopDownPositions() {
         return Stream.of(
-                Arguments.of("a1", "a8", Direction.TOP),
-                Arguments.of("a8", "a1", Direction.DOWN));
+                Arguments.of("a1", "a8", Direction.NORTH),
+                Arguments.of("a8", "a1", Direction.SOUTH));
     }
 
     @DisplayName( "Postition source와 target 사이의 routes: left, right")
@@ -83,8 +83,8 @@ public class DirectionTest {
 
     static Stream<Arguments> generateLeftRightPositions() {
         return Stream.of(
-                Arguments.of("a1", "h1", Direction.LEFT),
-                Arguments.of("h1", "a1", Direction.RIGHT));
+                Arguments.of("a1", "h1", Direction.WEST),
+                Arguments.of("h1", "a1", Direction.EAST));
     }
 
     @DisplayName( "Postition source와 target 사이의 routes: '\' 대각선")
@@ -108,8 +108,8 @@ public class DirectionTest {
 
     static Stream<Arguments> generateTopLeftDownRightPositions() {
         return Stream.of(
-                Arguments.of("a1", "h8", Direction.DIAGONAL_TOP_RIGHT),
-                Arguments.of("h8", "a1", Direction.DIAGONAL_DOWN_LEFT));
+                Arguments.of("a1", "h8", Direction.NORTH_EAST),
+                Arguments.of("h8", "a1", Direction.SOUTH_WEST));
     }
 
     @DisplayName( "Postition source와 target 사이의 routes: / 대각선")
@@ -133,7 +133,7 @@ public class DirectionTest {
 
     static Stream<Arguments> generateTopRightDownLeftPositions() {
         return Stream.of(
-                Arguments.of("h1", "a8", Direction.DIAGONAL_TOP_LEFT),
-                Arguments.of("a8", "h1", Direction.DIAGONAL_DOWN_RIGHT));
+                Arguments.of("h1", "a8", Direction.NORTH_WEST),
+                Arguments.of("a8", "h1", Direction.SOUTH_EAST));
     }
 }

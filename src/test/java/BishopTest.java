@@ -19,10 +19,10 @@ public class BishopTest {
     @DisplayName("이동 가능한 방향 확인: 대각선")
     @Test
     void bishopDirectionsTest() {
-        assertThat(bishop.getDirections()).containsExactly(Direction.DIAGONAL_DOWN_LEFT,
-                Direction.DIAGONAL_DOWN_RIGHT,
-                Direction.DIAGONAL_TOP_LEFT,
-                Direction.DIAGONAL_TOP_RIGHT);
+        assertThat(bishop.getDirections()).containsExactly(Direction.NORTH_EAST,
+                Direction.SOUTH_EAST,
+                Direction.SOUTH_WEST,
+                Direction.NORTH_WEST);
     }
 
     @DisplayName("이동 칸 수 확인: (가능) 1칸 이상 이동")
