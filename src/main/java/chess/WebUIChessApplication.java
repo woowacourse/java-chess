@@ -1,22 +1,35 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import domain.board.Board;
+import domain.state.Ended;
+import domain.state.State;
+import domain.pieces.Pieces;
+import domain.pieces.StartPieces;
+import view.InputView;
+import view.OutputView;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        OutputView.printStart();
+        Pieces startPieces = new Pieces(new StartPieces().getInstance());
+        State state = new Ended(startPieces);
+        while (true) {
+            state = state.pushCommend(InputView.inputGameCommend());
+            printIfPlaying(state);
+            printIfStatus(state);
+        }
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static void printIfPlaying(State state) {
+        if (state.isPlaying()) {
+            OutputView.printBoard(Board.of(state.getSet()));
+        }
     }
+
+    private static void printIfStatus(State state) {
+        if (state.isReported()) {
+            OutputView.printStatus(state.getPieces());
+        }
+    }
+
 }
