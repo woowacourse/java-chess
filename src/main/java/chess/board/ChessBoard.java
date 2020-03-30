@@ -27,9 +27,6 @@ public class ChessBoard {
 	// todo : canMvoe, hasObstacle에서 에러나게 변경
 	public void move(Location now, Location destination) {
 		validateLocation(now, destination);
-		if (board.containsKey(destination)) {
-			board.remove(destination);
-		}
 		Piece piece = board.remove(now);
 		board.put(destination, piece);
 	}

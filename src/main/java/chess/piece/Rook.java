@@ -8,14 +8,7 @@ public class Rook extends Piece {
 	private static final double score = 5;
 
 	public Rook(Team team) {
-		super(changeName(team));
-	}
-
-	private static char changeName(Team team) {
-		if (team.isBlack()) {
-			return Character.toUpperCase(name);
-		}
-		return name;
+		super(team);
 	}
 
 	@Override
@@ -26,5 +19,10 @@ public class Rook extends Piece {
 	@Override
 	public double getScore() {
 		return score;
+	}
+
+	@Override
+	protected char getName() {
+		return name;
 	}
 }

@@ -8,14 +8,7 @@ public class Bishop extends Piece {
 	private static final double score = 3;
 
 	public Bishop(Team team) {
-		super(changeName(team));
-	}
-
-	private static char changeName(Team team) {
-		if (team.isBlack()) {
-			return Character.toUpperCase(name);
-		}
-		return name;
+		super(team);
 	}
 
 	@Override
@@ -26,6 +19,11 @@ public class Bishop extends Piece {
 	@Override
 	public double getScore() {
 		return score;
+	}
+
+	@Override
+	protected char getName() {
+		return name;
 	}
 }
 

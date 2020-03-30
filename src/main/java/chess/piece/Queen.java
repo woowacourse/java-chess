@@ -8,14 +8,7 @@ public class Queen extends Piece {
 	private static final double score = 9;
 
 	public Queen(Team team) {
-		super(changeName(team));
-	}
-
-	private static char changeName(Team team) {
-		if (team.isBlack()) {
-			return Character.toUpperCase(name);
-		}
-		return name;
+		super(team);
 	}
 
 	@Override
@@ -26,5 +19,10 @@ public class Queen extends Piece {
 	@Override
 	public double getScore() {
 		return score;
+	}
+
+	@Override
+	protected char getName() {
+		return name;
 	}
 }

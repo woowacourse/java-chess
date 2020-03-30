@@ -10,14 +10,7 @@ public class King extends Piece {
 	private static final double score = 0;
 
 	public King(Team team) {
-		super(changeName(team));
-	}
-
-	private static char changeName(Team team) {
-		if (team.isBlack()) {
-			return Character.toUpperCase(name);
-		}
-		return name;
+		super(team);
 	}
 
 	@Override
@@ -26,12 +19,17 @@ public class King extends Piece {
 	}
 
 	@Override
+	public boolean checkObstacle(Map<Location, Piece> board, Location now, Location destination) {
+		return false;
+	}
+
+	@Override
 	public double getScore() {
 		return score;
 	}
 
 	@Override
-	public boolean checkObstacle(Map<Location, Piece> board, Location now, Location destination) {
-		return false;
+	protected char getName() {
+		return name;
 	}
 }

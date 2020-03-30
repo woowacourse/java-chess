@@ -15,7 +15,7 @@ public class ChessController {
 			if ("start".equals(command)) {
 				start(gameManager);
 			}
-			if ("move [a-h][1-8] [a-h][1-8]".matches(command)) {
+			if (command.matches("move [a-h][1-8] [a-h][1-8]")) {
 				movePiece(command, gameManager);
 			}
 			if ("status".equals(command)) {

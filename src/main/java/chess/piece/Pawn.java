@@ -10,14 +10,7 @@ public class Pawn extends Piece {
 	private static final double score = 1;
 
 	public Pawn(Team team) {
-		super(changeName(team));
-	}
-
-	private static char changeName(Team team) {
-		if (team.isBlack()) {
-			return Character.toUpperCase(name);
-		}
-		return name;
+		super(team);
 	}
 
 	@Override
@@ -30,11 +23,6 @@ public class Pawn extends Piece {
 		}
 		return now.isPawnForwardRange(after, team) ||
 			now.isForwardDiagonal(after, team);
-	}
-
-	@Override
-	public double getScore() {
-		return score;
 	}
 
 	@Override
@@ -52,5 +40,15 @@ public class Pawn extends Piece {
 		Location nextLocation = now.calculateNextLocation(destination, 1);
 		return (!board.containsKey(destination) && !board.containsKey(nextLocation))
 			&& now.isSameCol(destination);
+	}
+
+	@Override
+	public double getScore() {
+		return score;
+	}
+
+	@Override
+	protected char getName() {
+		return name;
 	}
 }

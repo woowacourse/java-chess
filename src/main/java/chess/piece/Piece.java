@@ -7,22 +7,20 @@ import chess.board.Location;
 import chess.team.Team;
 
 public abstract class Piece {
-	protected final char name;
+	protected final Team team;
 
-	Piece(char name) {
-		this.name = name;
-	}
-
-	public static double sum(Piece piece, Piece other) {
-		return piece.getScore() + other.getScore();
+	public Piece(Team team) {
+		this.team = team;
 	}
 
 	public abstract boolean checkRange(Location now, Location after);
 
 	public abstract double getScore();
 
+	protected abstract char getName();
+
 	protected boolean isBlack() {
-		return Character.isUpperCase(name);
+		return Team.BLACK == team;
 	}
 
 	public boolean isSameTeam(boolean black) {
@@ -50,13 +48,16 @@ public abstract class Piece {
 		return false;
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(name);
-	}
-
 	public boolean isPawn() {
 		return this instanceof Pawn;
+	}
+
+	@Override
+	public String toString() {
+		if (team == Team.BLACK) {
+			return String.valueOf(Character.toUpperCase(getName()));
+		}
+		return String.valueOf(getName());
 	}
 
 	@Override
@@ -66,11 +67,11 @@ public abstract class Piece {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Piece piece = (Piece)o;
-		return name == piece.name;
+		return team == piece.team;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(team);
 	}
 }

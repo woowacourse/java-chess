@@ -6,6 +6,8 @@ import java.util.Objects;
 import chess.piece.Piece;
 
 public class Score {
+	private static final double HALF_VALUE = 0.5;
+
 	private final double amount;
 
 	public Score(List<Piece> pieces, int halfScorePawnCount) {
@@ -13,11 +15,10 @@ public class Score {
 		this.amount = calculateScore(pieces, halfScorePawnCount);
 	}
 
-	// 리스트 + 갯수
-	private double calculateScore(List<Piece> pieces, int halfScorePawnCount) { // 세로가 겹치는 폰의 갯수만 넣으면 된다?
+	private double calculateScore(List<Piece> pieces, int halfScorePawnCount) {
 		return pieces.stream()
 			.mapToDouble(Piece::getScore)
-			.reduce(0d, Double::sum) - (halfScorePawnCount * 0.5);
+			.reduce(0d, Double::sum) - (halfScorePawnCount * HALF_VALUE);
 	}
 
 	public double getAmount() {
