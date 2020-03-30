@@ -1,10 +1,10 @@
 package chess.view;
 
 import chess.controller.dto.ResponseDto;
-import chess.domain.player.Player;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.result.Status;
 
 import java.util.Map;
 
@@ -62,10 +62,12 @@ public class OutputView {
         return piece;
     }
 
-    public static void printStatus(Map<Player, Double> status) {
-        status.entrySet()
+    public static void printStatus(Status status) {
+        status.getStatus()
+                .entrySet()
                 .stream()
                 .map(entry -> entry.getKey().toString() + " : " + entry.getValue())
                 .forEach(System.out::println);
+        System.out.println("우승자는 : " + status.getWinner() + " 입니다.");
     }
 }

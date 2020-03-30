@@ -6,6 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.PieceState;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
+import chess.domain.result.Status;
 
 import java.util.Map;
 
@@ -22,4 +23,8 @@ public interface State {
     boolean isEnd();
 
     Map<Position, PieceState> getRemainPiece(Player player);
+
+    State status();
+
+    Status getStatus();
 }

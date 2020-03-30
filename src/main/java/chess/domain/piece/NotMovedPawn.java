@@ -24,17 +24,29 @@ public class NotMovedPawn extends AttackablePawn {
         MovingDirection movingDirection = MovingDirection.getDirection(position, target);
 
         if (MOVING_DIRECTION_BY_PLAYER.get(player).equals(movingDirection)) {
-            if (position.getRankDifference(target) != movingDirection.getRankDirection() && position.getRankDifference(target) != movingDirection.getRankDirection() * 2) {
-                throw new MovingDistanceException();
-            }
-            Position frontPosition = position.moveByDirection(movingDirection);
-            if (!Objects.isNull(boardDto.get(frontPosition))) {
-                throw new ObstacleOnPathException();
-            }
-            PieceDto piece = boardDto.get(target);
-            if (!Objects.isNull(piece)) {
-                throw new ObstacleOnPathException();
-            }
+            validateDistance(target, movingDirection);
+            validateObstacle(boardDto, movingDirection);
+            validateObstacle(target, boardDto);
+        }
+    }
+
+    private void validateObstacle(Position target, Map<Position, PieceDto> boardDto) {
+        PieceDto piece = boardDto.get(target);
+        if (!Objects.isNull(piece)) {
+            throw new ObstacleOnPathException();
+        }
+    }
+
+    private void validateObstacle(Map<Position, PieceDto> boardDto, MovingDirection movingDirection) {
+        Position frontPosition = position.moveByDirection(movingDirection);
+        if (!Objects.isNull(boardDto.get(frontPosition))) {
+            throw new ObstacleOnPathException();
+        }
+    }
+
+    private void validateDistance(Position target, MovingDirection movingDirection) {
+        if (position.getRankDifference(target) != movingDirection.getRankDirection() && position.getRankDifference(target) != movingDirection.getRankDirection() * 2) {
+            throw new MovingDistanceException();
         }
     }
 

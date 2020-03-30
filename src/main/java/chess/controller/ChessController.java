@@ -5,7 +5,6 @@ import chess.controller.dto.ResponseDto;
 import chess.domain.ChessGame;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
-import chess.domain.player.Player;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -22,27 +21,32 @@ public class ChessController {
         while (!chessGame.isEnd()) {
             try {
                 RequestDto requestDto = InputView.inputRequest();
-
                 switch (requestDto.getCommand()) {
                     case START:
                         chessGame.start();
+                        Board board = chessGame.getBoard();
+                        ResponseDto responseDto = ResponseDto.of(createBoardDto(board));
+                        OutputView.printResponse(responseDto);
                         break;
                     case END:
                         chessGame.end();
+                        board = chessGame.getBoard();
+                        responseDto = ResponseDto.of(createBoardDto(board));
+                        OutputView.printResponse(responseDto);
                         break;
                     case MOVE:
                         chessGame.move(MoveParameter.of(requestDto.getParameter()));
+                        board = chessGame.getBoard();
+                        responseDto = ResponseDto.of(createBoardDto(board));
+                        OutputView.printResponse(responseDto);
                         break;
                     case STATUS:
-                        Map<Player, Double> status = chessGame.getStatus();
-                        OutputView.printStatus(status);
+                        chessGame.status();
+                        OutputView.printStatus(chessGame.getStatus());
                         break;
                     case UNKNOWN:
                         throw new IllegalArgumentException();
                 }
-                Board board = chessGame.getBoard();
-                ResponseDto responseDto = ResponseDto.of(createBoardDto(board));
-                OutputView.printResponse(responseDto);
             } catch (IllegalArgumentException ie) {
                 System.out.println(ie.getMessage());
             }
@@ -54,7 +58,7 @@ public class ChessController {
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
+                        Map.Entry::getKey,
                         entry -> entry.getValue().getFigure()
                 ));
     }
