@@ -19,16 +19,18 @@ public class Operations {
 	}
 
 	public String getFirstArgument() {
-		if (operations.size() <= START_POSITION_INDEX) {
-			throw new UnsupportedOperationException(INVALID_OPERATION_EXCEPTION_MESSAGE);
-		}
+		validate(START_POSITION_INDEX);
 		return operations.get(START_POSITION_INDEX);
 	}
 
 	public String getSecondArgument() {
-		if (operations.size() <= DESTINATION_POSITION_INDEX) {
+		validate(DESTINATION_POSITION_INDEX);
+		return operations.get(DESTINATION_POSITION_INDEX);
+	}
+
+	private void validate(int destinationPositionIndex) {
+		if (operations.size() <= destinationPositionIndex) {
 			throw new UnsupportedOperationException(INVALID_OPERATION_EXCEPTION_MESSAGE);
 		}
-		return operations.get(DESTINATION_POSITION_INDEX);
 	}
 }
