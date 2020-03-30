@@ -13,11 +13,9 @@ public abstract class ChessPiece implements Movable, Catchable {
     protected final PieceColor pieceColor;
     protected State state;
 
-    public ChessPiece(PieceColor pieceColor, State state) {
+    public ChessPiece(PieceColor pieceColor) {
         Objects.requireNonNull(pieceColor, "피스 색상이 null입니다.");
-        Objects.requireNonNull(state, "피스 상태가 null입니다.");
         this.pieceColor = pieceColor;
-        this.state = state;
     }
 
     @Override
