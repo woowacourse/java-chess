@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,20 @@ public class Pawn extends Piece {
 
 	@Override
 	public List<Position> movablePositions(Position source, Map<Position, Piece> pieces) {
-		return Moving.goOneTimePositions(Direction.whitePawnDirection(), source, pieces);
+
+		List<Position> positions = new ArrayList<>();
+
+		if (color == Color.WHITE) {
+			positions.addAll(Moving.goOneTimePawnPositions(Direction.whitePawnGoDirection(), source, pieces));
+			positions.addAll(Moving.catchOneTimePawnPositions(Direction.whitePawnCatchDirection(), source, pieces));
+		}
+
+		if (color == Color.BLACK) {
+			positions.addAll(Moving.goOneTimePawnPositions(Direction.blackPawnGoDirection(), source, pieces));
+			positions.addAll(Moving.catchOneTimePawnPositions(Direction.blackPawnCatchDirection(), source, pieces));
+		}
+
+		return positions;
 	}
 
 	@Override

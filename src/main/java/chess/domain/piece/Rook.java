@@ -20,7 +20,7 @@ public class Rook extends Piece {
 
 	@Override
 	public List<Position> movablePositions(Position source, Map<Position, Piece> pieces) {
-		return Moving.goManyTimesPositions(Direction.linearDirection(), source, pieces);
+		return Moving.goAndCatchManyTimesPositions(Direction.linearDirection(), source, pieces);
 	}
 
 }

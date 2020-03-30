@@ -20,6 +20,6 @@ public class Knight extends Piece {
 
 	@Override
 	public List<Position> movablePositions(Position source, Map<Position, Piece> pieces) {
-		return Moving.goOneTimePositions(Direction.knightDirection(), source, pieces);
+		return Moving.goAndCatchOneTimePositions(Direction.knightDirection(), source, pieces);
 	}
 }

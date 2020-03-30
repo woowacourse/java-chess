@@ -71,9 +71,29 @@ public class ChessBoardTest {
 		assertThat(chessBoard.isMovable(positions, target)).isTrue();
 	}
 
+	@DisplayName("폰이 대각선으로 상대방 말이 있을 경우, 먹으면서 이동하는 경우 테스트")
+	@Test
+	void pawnCatchDiagonalTest() {
+		ChessBoard chessBoard;
+		Map<Position, Piece> pieces;
+		pieces = new HashMap<>();
+
+		Pawn whitePawn = new Pawn(Color.WHITE, "p");
+		Pawn blackPawn = new Pawn(Color.BLACK, "P");
+
+		pieces.put(Position.of("d4"), whitePawn);
+		pieces.put(Position.of("e5"), blackPawn);
+
+		chessBoard = new ChessBoard(pieces);
+
+		chessBoard.moveFromTo(Color.WHITE, Position.of("d4"), Position.of("e5"));
+		assertThat(chessBoard.getPiece("e5")).isEqualTo(whitePawn);
+		assertThat(chessBoard.getPiece("d4")).isNull();
+	}
+
 	@DisplayName("해당 위치에 있는 piece가 원하는 target으로 갈 수 있는 List를 반환하는 것을 테스트")
 	@Test
-	void isMoveFromToTest() {
+	void moveFromToTest() {
 		chessBoard.moveFromTo(Color.WHITE, Position.of("b1"), Position.of("a3"));
 		assertThat(chessBoard.getPiece("a3")).isInstanceOf(Knight.class);
 		assertThat(chessBoard.getPiece("b1")).isNull();
@@ -81,7 +101,7 @@ public class ChessBoardTest {
 
 	@DisplayName("source position 을 빈 칸으로 선택했 경우")
 	@Test
-	void selectEmptySourcePositionTest() {
+	void validateEmptySourcePositionTest() {
 		assertThatThrownBy(() -> {
 			chessBoard.moveFromTo(Color.WHITE, Position.of("b3"), Position.of("a4"));
 		}).isInstanceOf(UnsupportedOperationException.class)
@@ -90,7 +110,7 @@ public class ChessBoardTest {
 
 	@DisplayName("source position 을 상대방 말로 선택했을 경우")
 	@Test
-	void selectOtherPieceSourcePositionTest() {
+	void validateOtherPieceSourcePositionTest() {
 		assertThatThrownBy(() -> {
 			chessBoard.moveFromTo(Color.BLACK, Position.of("b1"), Position.of("a4"));
 		}).isInstanceOf(UnsupportedOperationException.class)
@@ -99,20 +119,19 @@ public class ChessBoardTest {
 
 	@DisplayName("target position 을 자신의 말로 선택했을 경우")
 	@Test
-	void selectSameColorTargetPositionTest() {
+	void validateSameColorTargetPositionTest() {
 		assertThatThrownBy(() -> {
 			chessBoard.moveFromTo(Color.WHITE, Position.of("b1"), Position.of("d2"));
 		}).isInstanceOf(UnsupportedOperationException.class)
-			.hasMessageContaining("움직이려는 지점에 자신의 말이 있습니다");
+			.hasMessageContaining("target에 자신의 말이 있습니다");
 	}
 
 	@DisplayName("target position 을 해당 말로 갈 수 없는 곳으 선택했을 경우")
 	@Test
-	void selectNotMovablePositionTest() {
+	void validateNotMovablePositionTest() {
 		assertThatThrownBy(() -> {
 			chessBoard.moveFromTo(Color.WHITE, Position.of("b1"), Position.of("a4"));
 		}).isInstanceOf(UnsupportedOperationException.class)
 			.hasMessageContaining("갈 수 없는 곳을 선택하셨습니다");
 	}
-
 }

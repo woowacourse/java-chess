@@ -20,7 +20,7 @@ public class Bishop extends Piece {
 
 	@Override
 	public List<Position> movablePositions(Position source, Map<Position, Piece> pieces) {
-		return Moving.goManyTimesPositions(Direction.diagonalDirection(), source, pieces);
+		return Moving.goAndCatchManyTimesPositions(Direction.diagonalDirection(), source, pieces);
 	}
 
 }

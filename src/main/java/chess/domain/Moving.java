@@ -10,7 +10,7 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 
 public class Moving {
-	public static List<Position> goOneTimePositions(List<Direction> directions, Position source,
+	public static List<Position> goOneTimePawnPositions(List<Direction> directions, Position source,
 		Map<Position, Piece> chessBoard) {
 		List<Position> positions = new ArrayList<>();
 
@@ -34,7 +34,51 @@ public class Moving {
 		return positions;
 	}
 
-	public static List<Position> goManyTimesPositions(List<Direction> directions, Position source,
+	public static List<Position> catchOneTimePawnPositions(List<Direction> directions, Position source,
+		Map<Position, Piece> chessBoard) {
+		List<Position> positions = new ArrayList<>();
+
+		int locationOfX = source.getColumn();
+		int locationOfY = source.getRank();
+
+		for (Direction direction : directions) {
+			int afterMoveOfX = locationOfX + direction.getX();
+			int afterMoveOfY = locationOfY + direction.getY();
+
+			if (isOutOfBoundary(afterMoveOfX) || isOutOfBoundary(afterMoveOfY)) {
+				continue;
+			}
+
+			if (Objects.isNull(chessBoard.get(Position.of(afterMoveOfX, afterMoveOfY)))) {
+				continue;
+			}
+
+			positions.add(Position.of(afterMoveOfX, afterMoveOfY));
+		}
+		return positions;
+	}
+
+	public static List<Position> goAndCatchOneTimePositions(List<Direction> directions, Position source,
+		Map<Position, Piece> chessBoard) {
+		List<Position> positions = new ArrayList<>();
+
+		int locationOfX = source.getColumn();
+		int locationOfY = source.getRank();
+
+		for (Direction direction : directions) {
+			int afterMoveOfX = locationOfX + direction.getX();
+			int afterMoveOfY = locationOfY + direction.getY();
+
+			if (isOutOfBoundary(afterMoveOfX) || isOutOfBoundary(afterMoveOfY)) {
+				continue;
+			}
+
+			positions.add(Position.of(afterMoveOfX, afterMoveOfY));
+		}
+		return positions;
+	}
+
+	public static List<Position> goAndCatchManyTimesPositions(List<Direction> directions, Position source,
 		Map<Position, Piece> chessBoard) {
 		List<Position> positions = new ArrayList<>();
 
@@ -47,10 +91,6 @@ public class Moving {
 
 			while (true) {
 				if (isOutOfBoundary(afterMoveOfX) || isOutOfBoundary(afterMoveOfY)) {
-					break;
-				}
-
-				if (Objects.nonNull(chessBoard.get(Position.of(afterMoveOfX, afterMoveOfY)))) {
 					break;
 				}
 
