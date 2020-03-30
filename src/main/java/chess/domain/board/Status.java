@@ -3,8 +3,6 @@ package chess.domain.board;
 public class Status {
 
     private static final int INIT_TURN = 0;
-    public static final Status READY_STATUS = new Status(INIT_TURN, StatusType.READY);
-    public static final Status INITIAL_STATUS = new Status(INIT_TURN, StatusType.PROCESSING);
 
     private final int turn;
     private final StatusType statusType;
@@ -12,6 +10,14 @@ public class Status {
     public Status(int turn, StatusType statusType) {
         this.turn = turn;
         this.statusType = statusType;
+    }
+
+    public static Status readyStatus() {
+        return new Status(INIT_TURN, StatusType.READY);
+    }
+
+    public static Status initialStatus() {
+        return new Status(INIT_TURN, StatusType.PROCESSING);
     }
 
     public boolean isWhiteTurn() {

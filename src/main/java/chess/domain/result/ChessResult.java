@@ -29,11 +29,11 @@ public class ChessResult {
         Map<GamePiece, Integer> gameWhitePiecesCount = getGamePieceCount(gamePieces, PlayerColor.WHITE);
         Map<GamePiece, Integer> gameBlackPiecesCount = getGamePieceCount(gamePieces, PlayerColor.BLACK);
 
-        int sameFileWhitePawnCount = getSameColumnPawnCount(board, PlayerColor.WHITE);
-        int sameFileBlackPawnCount = getSameColumnPawnCount(board, PlayerColor.BLACK);
+        int sameColumnWhitePawnCount = getSameColumnPawnCount(board, PlayerColor.WHITE);
+        int sameColumnBlackPawnCount = getSameColumnPawnCount(board, PlayerColor.BLACK);
 
-        scores.put(PlayerColor.WHITE, Score.of(gameWhitePiecesCount, sameFileWhitePawnCount));
-        scores.put(PlayerColor.BLACK, Score.of(gameBlackPiecesCount, sameFileBlackPawnCount));
+        scores.put(PlayerColor.WHITE, Score.of(gameWhitePiecesCount, sameColumnWhitePawnCount));
+        scores.put(PlayerColor.BLACK, Score.of(gameBlackPiecesCount, sameColumnBlackPawnCount));
 
         return scores;
     }

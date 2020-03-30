@@ -26,7 +26,7 @@ public class Board {
     }
 
     public static Board createEmpty() {
-        return new Board(createEmptyMap(), Status.READY_STATUS);
+        return new Board(createEmptyMap(), Status.readyStatus());
     }
 
     private static Map<Position, GamePiece> createEmptyMap() {
@@ -41,7 +41,7 @@ public class Board {
             placePiecesOnInitialPositions(initialBoard, piece);
         }
 
-        return new Board(initialBoard, Status.INITIAL_STATUS);
+        return new Board(initialBoard, Status.initialStatus());
     }
 
     private void placePiecesOnInitialPositions(Map<Position, GamePiece> board, GamePiece piece) {

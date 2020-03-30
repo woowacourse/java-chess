@@ -64,7 +64,7 @@ public class Position implements Comparable<Position> {
         return of(column, row.opposite());
     }
 
-    public Optional<Position> destinationOf(Direction direction) {
+    public Optional<Position> nextPositionOf(Direction direction) {
         Column columnDestination = direction.findColumnDestination(column).orElse(null);
         Row rowDestination = direction.findRowDestination(row).orElse(null);
 
@@ -77,14 +77,14 @@ public class Position implements Comparable<Position> {
 
     public List<Position> pathTo(Direction direction, int count) {
         List<Position> path = new ArrayList<>();
-        Position next = this;
+        Position nextPosition = this;
 
         for (int i = 0; i < count; i++) {
-            next = next.destinationOf(direction).orElse(null);
-            if (next == null) {
+            nextPosition = nextPosition.nextPositionOf(direction).orElse(null);
+            if (nextPosition == null) {
                 return path;
             }
-            path.add(next);
+            path.add(nextPosition);
         }
         return path;
     }
