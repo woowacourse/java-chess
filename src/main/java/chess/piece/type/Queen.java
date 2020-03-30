@@ -6,10 +6,10 @@ import chess.team.Team;
 
 public class Queen extends Piece {
     private static final char NAME = 'q';
-    private static final int QUEEN_SCORE = 9;
+    private static final int SCORE = 9;
 
     public Queen(Team team) {
-        super(NAME, new Score(QUEEN_SCORE), team);
+        super(NAME, new Score(SCORE), team);
     }
 
     @Override

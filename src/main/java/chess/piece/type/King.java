@@ -8,10 +8,10 @@ import chess.team.Team;
 
 public class King extends Piece {
 	private static final char NAME = 'k';
-	private static final int KING_SCORE = 0;
+	private static final int SCORE = 0;
 
 	public King(Team team) {
-		super(NAME, new Score(KING_SCORE), team);
+		super(NAME, new Score(SCORE), team);
 	}
 
 	@Override

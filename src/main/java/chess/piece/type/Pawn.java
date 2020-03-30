@@ -8,10 +8,10 @@ import chess.team.Team;
 
 public class Pawn extends Piece {
     private static final char NAME = 'p';
-    private static final int PAWN_SCORE = 1;
+    private static final int SCORE = 1;
 
     public Pawn(Team team) {
-        super(NAME, new Score(PAWN_SCORE), team);
+        super(NAME, new Score(SCORE), team);
     }
 
     @Override
