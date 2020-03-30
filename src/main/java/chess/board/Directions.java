@@ -20,7 +20,7 @@ public class Directions {
         return !this.directions.isEmpty();
     }
 
-    public boolean isExist(String sourceKey, Function<Coordinate, Tile> tileFinder) {
+    public boolean hasObstacle(String sourceKey, Function<Coordinate, Tile> tileFinder) {
         Coordinate next = Coordinate.of(sourceKey);
         boolean exist = false;
         while (isNotEmpty() && !exist) {
