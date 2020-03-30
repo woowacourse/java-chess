@@ -78,9 +78,4 @@ public abstract class ChessPiece implements Movable, Catchable {
     public abstract String getName();
 
     public abstract double getScore();
-
-    @Override
-    public String toString() {
-        return getName();
-    }
 }

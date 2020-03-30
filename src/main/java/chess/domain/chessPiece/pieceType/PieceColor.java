@@ -3,6 +3,7 @@ package chess.domain.chessPiece.pieceType;
 import chess.domain.RuleStrategy.RuleStrategy;
 import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.BlackPawnRuleStrategy;
 import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnRuleStrategy;
+import chess.domain.chessPiece.ChessPiece;
 
 import java.util.function.Function;
 
@@ -19,6 +20,12 @@ public enum PieceColor {
         this.pawnRuleStrategy = pawnRuleStrategy;
     }
 
+    public void validatePlayerTurn(ChessPiece chessPiece) {
+        if (!chessPiece.isSamePieceColorWith(this)) {
+            throw new IllegalArgumentException("해당 플레이어 턴이 아닙니다.");
+        }
+    }
+
     public String convertName(String pieceName) {
         if (pieceName == null || pieceName.isEmpty()) {
             throw new IllegalArgumentException("체스 이름이 유효하지 않습니다.");
@@ -30,4 +37,10 @@ public enum PieceColor {
         return pawnRuleStrategy.apply(movableRange);
     }
 
+    public PieceColor getOppositeColor() {
+        if (this.equals(WHITE)) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }

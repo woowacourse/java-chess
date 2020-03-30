@@ -20,7 +20,7 @@ public class RenderChessBoardView {
 
     private static List<List<String>> generateChessBoardView(ChessBoard chessBoard) {
         List<List<String>> chessBoardView = new ArrayList<>(Collections.singletonList(ChessFile.values().stream()
-                .map(ChessFile::toString)
+                .map(String::valueOf)
                 .collect(Collectors.toList())));
 
         chessBoardView.addAll(ChessRank.values().stream()
@@ -40,7 +40,7 @@ public class RenderChessBoardView {
     }
 
     private static String chessBoardContainPieceAt(ChessBoard chessBoard, ChessFile file, ChessRank rank) {
-        if (chessBoard.contains(file.toString() + rank.toString())) {
+        if (chessBoard.contains(file, rank)) {
             return String.valueOf(chessBoard.getChessPiece(file, rank).getName());
         }
         return EMPTY_CHESS_PIECE;

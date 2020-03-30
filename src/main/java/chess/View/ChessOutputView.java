@@ -1,8 +1,6 @@
 package chess.View;
 
-import chess.domain.ChessCalculator;
 import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessPiece.pieceType.PieceColor;
 
 import java.util.List;
 
@@ -30,9 +28,8 @@ public class ChessOutputView {
         System.out.println();
     }
 
-    public static void scoreOf(PieceColor pieceColor, ChessBoard chessBoard) {
-        System.out.println(String.format("%s점수: %.1f", pieceColor,
-                ChessCalculator.calculateScoreOf(pieceColor, chessBoard)));
+    public static void scoreOf(ChessBoard chessBoard, double score) {
+        System.out.println(String.format("%s점수: %.1f", chessBoard.getPlayerColor(), score));
     }
 
     public static void printCaughtKing(String gameOverMessage, ChessBoard chessBoard) {

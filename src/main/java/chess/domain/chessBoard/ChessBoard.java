@@ -1,7 +1,5 @@
 package chess.domain.chessBoard;
 
-import chess.domain.chessBoard.chessBoardState.BlackTurnState;
-import chess.domain.chessBoard.chessBoardState.PlayerTurnState;
 import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.ChessFile;
@@ -16,11 +14,11 @@ import java.util.Objects;
 public class ChessBoard {
 
     private final Map<Position, ChessPiece> chessBoard;
-    private PlayerTurnState playerTurnState;
+    private PieceColor playerTurnState;
 
     public ChessBoard(Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
-        playerTurnState = new BlackTurnState();
+        playerTurnState = PieceColor.BLACK;
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
@@ -32,7 +30,7 @@ public class ChessBoard {
         checkLeapablePiece(sourceChessPiece, sourcePosition, targetPosition);
         checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
         moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
-        playerTurnState = playerTurnState.changePlayerTurn();
+        playerTurnState = playerTurnState.getOppositeColor();
     }
 
     private ChessPiece findSourceChessPieceFrom(Position sourcePosition) {
@@ -90,8 +88,8 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public boolean contains(String key) {
-        return chessBoard.containsKey(Position.of(key));
+    public boolean contains(ChessFile chessFile, ChessRank chessRank) {
+        return chessBoard.containsKey(Position.of(chessFile, chessRank));
     }
 
     public ChessPiece getChessPiece(ChessFile file, ChessRank rank) {
@@ -99,6 +97,6 @@ public class ChessBoard {
     }
 
     public PieceColor getPlayerColor() {
-        return playerTurnState.getPlayerColor();
+        return playerTurnState;
     }
 }
