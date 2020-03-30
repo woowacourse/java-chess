@@ -27,8 +27,17 @@ public class ChessGame {
 		decideMenu();
 		chessMenu.validateStart();
 		while (chessMenu.isNotEnd()) {
+			playRound();
+		}
+	}
+
+	private void playRound() {
+		try {
 			proceed();
 			OutputView.printBoard(chessBoard);
+			decideMenu();
+		}catch (Exception e) {
+			OutputView.printErrorMessage(e);
 			decideMenu();
 		}
 	}
