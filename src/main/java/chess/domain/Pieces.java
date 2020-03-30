@@ -47,9 +47,13 @@ public class Pieces {
 			.getTeam();
 	}
 
+	public void killPiece(Piece piece) {
+		pieces.values().remove(piece);
+		piece.kill();
+	}
+
 	public void move(Position source, Position destination){
 		Piece sourcePiece = findByPosition(source);
-		System.out.println("asdf");
 		sourcePiece.move(destination);
 		pieces.remove(source);
 		pieces.putIfAbsent(destination, sourcePiece);

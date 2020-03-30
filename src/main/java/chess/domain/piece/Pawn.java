@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import chess.domain.Direction;
 import chess.domain.Position;
@@ -50,5 +51,18 @@ public class Pawn extends Piece {
 
 	public boolean isInSameColumn(Pawn pawn) {
 		return this.position.isInSameColumn(pawn.position);
+	}
+
+	@Override
+	public double getScore(List<Piece> pieces) {
+		List<Pawn> pawns = pieces.stream()
+				.filter(p -> p instanceof Pawn)
+				.map(p -> (Pawn)p)
+				.collect(Collectors.toList());
+			if (pawns.stream()
+					.anyMatch(p -> !p.equals(this) && this.isInSameColumn(p))) {
+				return this.score / 2;
+			}
+		return this.score;
 	}
 }

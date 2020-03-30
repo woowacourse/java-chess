@@ -1,10 +1,8 @@
 package chess.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
@@ -31,6 +29,7 @@ public class Board {
 				.map(pieces::findByPosition)
 				.collect(Collectors.toList());
 		sourcePiece.validateDestination(destination, destinationPiece, piecesInBetween);
+		System.out.println(destinationPiece);
 		if (destinationPiece != null) {
 			killPiece(sourcePiece, destinationPiece);
 		}
@@ -53,7 +52,7 @@ public class Board {
 		if (piece.isSameTeam(destinationPiece)) {
 			throw new IllegalMoveException(SAME_TEAM_PIECE_IN_DESTINATION);
 		}
-		destinationPiece.kill();
+		pieces.killPiece(destinationPiece);
 	}
 
 	public double calculateScoreByTeam(Team team) {

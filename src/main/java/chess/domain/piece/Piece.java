@@ -58,7 +58,7 @@ public abstract class Piece {
 		return isAlive;
 	}
 
-	public double getScore() {
+	public double getScore(List<Piece> pieces) {
 		return this.score;
 	}
 
