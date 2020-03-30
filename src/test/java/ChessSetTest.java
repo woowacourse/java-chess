@@ -17,7 +17,6 @@ class ChessSetTest {
 
         Score result = chessSet.calculateScoreExceptPawnReduce();
         assertThat(result).isEqualTo(new Score(38));
-        System.out.println(chessSet.remove(new Location(7, 'a')));
 
         Score result2 = chessSet.calculateScoreExceptPawnReduce();
         assertThat(result2.getValue()).isEqualTo(new Score(37).getValue());

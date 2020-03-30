@@ -1,6 +1,7 @@
 package chess.progress;
 
 public enum Progress {
+    STATUS(true),
     CONTINUE(true),
     ERROR(true),
     END(false);

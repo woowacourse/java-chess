@@ -3,6 +3,7 @@ package chess.board;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.location.Location;
@@ -41,10 +42,14 @@ public class ChessBoard {
         return false;
     }
 
+    public boolean canNotMove(Location now, Location destination) {
+        return canMove(now, destination) == false;
+    }
+
     private boolean isNotSameTeam(Location destination, Piece piece) {
         boolean isNotSameTeam = true;
         if (board.containsKey(destination)) {
-            isNotSameTeam = piece.isNotSameTeam(board.get(destination));
+            return piece.isNotSameTeam(board.get(destination));
         }
         return isNotSameTeam;
     }
@@ -86,7 +91,11 @@ public class ChessBoard {
         return new Score(reducePawnScroe);
     }
 
-    public boolean isCorrectTeam(Location location, Team team) {
-        return board.get(location).isSameTeam(team);
+    public boolean isNotCorrectTeam(Location location, Team team) {
+        return board.get(location).isNotSame(team);
+    }
+
+    public boolean isNotExist(Location now) {
+        return Objects.isNull(board.get(now));
     }
 }

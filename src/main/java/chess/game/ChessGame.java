@@ -1,5 +1,6 @@
 package chess.game;
 
+import chess.command.Command;
 import chess.board.ChessBoard;
 import chess.location.Location;
 import chess.progress.Progress;
@@ -9,6 +10,7 @@ import chess.result.Result;
 import chess.score.Score;
 import chess.team.Team;
 
+import static chess.location.LocationSubStringUtil.substring;
 import static chess.progress.Progress.*;
 import static chess.team.Team.BLACK;
 import static chess.team.Team.WHITE;
@@ -17,26 +19,37 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private final Player white;
     private final Player black;
+    private Team turn;
 
     public ChessGame() {
         chessBoard = new ChessBoard();
         white = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
         black = new Player(new ChessSet(chessBoard.giveMyPiece(BLACK)), BLACK);
+        turn = Team.WHITE;
     }
 
-    public Progress doOneCommand(String command, Team turn) {
-        if (command.equals("end")) {
-            return END;
+    public Team changeTurn() {
+        return turn = turn.changeTurn();
+    }
+
+    // State 패턴
+    public Progress doOneCommand(Command command) {
+        return command.conduct();
+    }
+
+    public Progress doMoveCommand(String command) {
+        Location now = substring(command, 1);
+        Location destination = substring(command, 2);
+
+        if (chessBoard.isNotExist(now)
+                || !chessBoard.canNotMove(now, destination)
+                || chessBoard.isNotCorrectTeam(now, turn)) {
+            return Progress.ERROR;
         }
-        if (command.substring(0, 4).equals("move")) {
-            Location now = substring(command, 1);
-            Location destination = substring(command, 2);
-            if (!chessBoard.canMove(now, destination) || !chessBoard.isCorrectTeam(now, turn)) {
-                return ERROR;
-            }
-            deletePieceIfExistIn(destination, turn);
-            chessBoard.move(now, destination);
-        }
+
+        deletePieceIfExistIn(destination, turn);
+        chessBoard.move(now, destination);
+
         return finishIfKingDie();
     }
 
@@ -57,12 +70,6 @@ public class ChessGame {
 
     private boolean isExistKingDiePlayer() {
         return white.hasNotKing() || black.hasNotKing();
-    }
-
-    private Location substring(String str, int index) {
-        int row = str.split(" ")[index].charAt(1) - '0';
-        char col = str.split(" ")[index].charAt(0);
-        return new Location(row, col);
     }
 
     public ChessBoard getChessBoard() {
@@ -95,5 +102,9 @@ public class ChessGame {
         Score scoreExceptPawnReduce = player.calculateScoreExceptPawnReduce();
         Score pawnReduceScore = chessBoard.calculateReducePawnScore(player.getTeam());
         return scoreExceptPawnReduce.minus(pawnReduceScore);
+    }
+
+    public Team getTurn() {
+        return turn;
     }
 }
