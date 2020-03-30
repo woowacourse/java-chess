@@ -14,15 +14,15 @@ class KnightTest {
 		Location now = Location.of(8, 'g');
 
 		Location leftAfter = Location.of(7, 'e');
-		boolean leftAfterActual = knight.canMove(now, leftAfter);
+		boolean leftAfterActual = knight.checkRange(now, leftAfter);
 		assertThat(leftAfterActual).isTrue();
 
 		Location rightAfter = Location.of(6, 'h');
-		boolean rightAfterActual = knight.canMove(now, rightAfter);
+		boolean rightAfterActual = knight.checkRange(now, rightAfter);
 		assertThat(rightAfterActual).isTrue();
 
 		Location cantAfter = Location.of(2, 'c');
-		boolean cantActual = knight.canMove(now, cantAfter);
+		boolean cantActual = knight.checkRange(now, cantAfter);
 		assertThat(cantActual).isFalse();
 	}
 

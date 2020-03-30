@@ -1,6 +1,7 @@
 package chess.piece;
 
 import java.util.Map;
+import java.util.Objects;
 
 import chess.board.Location;
 import chess.team.Team;
@@ -12,9 +13,13 @@ public abstract class Piece {
 		this.name = name;
 	}
 
-	public abstract boolean canMove(Location now, Location after);
+	public static double sum(Piece piece, Piece other) {
+		return piece.getScore() + other.getScore();
+	}
 
-	public abstract double getScore(boolean hasVerticalEnemy);
+	public abstract boolean checkRange(Location now, Location after);
+
+	public abstract double getScore();
 
 	protected boolean isBlack() {
 		return Character.isUpperCase(name);
@@ -32,13 +37,12 @@ public abstract class Piece {
 		return isBlack() == piece.isBlack();
 	}
 
-	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
+	public boolean checkObstacle(Map<Location, Piece> board, Location now, Location destination) {
 		for (int weight = 1; ; weight++) {
 			Location nowLocation = now.calculateNextLocation(destination, weight);
 			if (nowLocation.equals(destination)) {
 				break;
 			}
-			System.out.println(nowLocation);
 			if (board.containsKey(nowLocation)) {
 				return true;
 			}
@@ -49,6 +53,24 @@ public abstract class Piece {
 	@Override
 	public String toString() {
 		return String.valueOf(name);
+	}
 
+	public boolean isPawn() {
+		return this instanceof Pawn;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Piece piece = (Piece)o;
+		return name == piece.name;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
 	}
 }

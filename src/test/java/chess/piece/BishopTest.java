@@ -17,12 +17,12 @@ class BishopTest {
 		Bishop bishop = new Bishop(Team.BLACK);
 		Location now = Location.of(8, 'c');
 		Location after = Location.of(7, 'd');
-		boolean actual = bishop.canMove(now, after);
+		boolean actual = bishop.checkRange(now, after);
 
 		assertThat(actual).isTrue();
 
 		Location cantAfter = Location.of(2, 'c');
-		boolean cantActual = bishop.canMove(now, cantAfter);
+		boolean cantActual = bishop.checkRange(now, cantAfter);
 
 		assertThat(cantActual).isFalse();
 	}
@@ -36,7 +36,7 @@ class BishopTest {
 		board.put(Location.of(2, 'd'), new Bishop(Team.WHITE));
 		board.put(Location.of(3, 'e'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'c'), Location.of(3, 'e'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(3, 'e'));
 		assertThat(actual).isTrue();
 	}
 }

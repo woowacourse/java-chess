@@ -2,7 +2,8 @@ package chess.result;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -19,23 +20,25 @@ class GameResultTest {
 	private static Stream<Arguments> providerScore() {
 		return Stream.of(
 			Arguments.of(
-				new Score(new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.WHITE), false);
-				}}), new Score(new HashMap<>())
-				, GameResult.WIN
+				new ArrayList<Piece>() {{
+					add(new Pawn(Team.WHITE));
+				}},
+				new ArrayList<Piece>(),
+				GameResult.WIN
 			), Arguments.of(
-				new Score(new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.WHITE), false);
-				}}), new Score(new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.BLACK), false);
-				}})
-				, GameResult.DRAW
+				new ArrayList<Piece>() {{
+					add(new Pawn(Team.WHITE));
+				}},
+				new ArrayList<Piece>() {{
+					add(new Pawn(Team.BLACK));
+				}},
+				GameResult.DRAW
 			), Arguments.of(
-				new Score(new HashMap<>()),
-				new Score(new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.WHITE), false);
-				}})
-				, GameResult.LOSE
+				new ArrayList<Piece>(),
+				new ArrayList<Piece>() {{
+					add(new Pawn(Team.BLACK));
+				}},
+				GameResult.LOSE
 			)
 		);
 	}
@@ -43,8 +46,11 @@ class GameResultTest {
 	@DisplayName("compare값을 통하여 승패정보를 제대로 가져오는지 확인")
 	@ParameterizedTest
 	@MethodSource("providerScore")
-	void findResult(Score whiteTeam, Score blackTeam, GameResult gameResult) {
-		GameResult actual = GameResult.findResult(whiteTeam, blackTeam);
-		assertThat(actual).isEqualTo(gameResult);
+	void findResult(List<Piece> whiteTeam, List<Piece> blackTeam, GameResult expect) {
+		Score whiteTeamScore = new Score(whiteTeam, 0);
+		Score blackTeamScore = new Score(blackTeam, 0);
+
+		GameResult actual = GameResult.findResult(whiteTeamScore, blackTeamScore);
+		assertThat(actual).isEqualTo(expect);
 	}
 }

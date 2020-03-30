@@ -19,19 +19,19 @@ class PawnTest {
 		Location now = Location.of(7, 'a');
 
 		Location moveTwiceForward = Location.of(5, 'a');
-		boolean moveTwiceForwardActual = pawn.canMove(now, moveTwiceForward);
+		boolean moveTwiceForwardActual = pawn.checkRange(now, moveTwiceForward);
 		assertThat(moveTwiceForwardActual).isTrue();
 
 		Location moveOnceForward = Location.of(6, 'a');
-		boolean moveOnceForwardActual = pawn.canMove(now, moveOnceForward);
+		boolean moveOnceForwardActual = pawn.checkRange(now, moveOnceForward);
 		assertThat(moveOnceForwardActual).isTrue();
 
 		Location moveDiagonal = Location.of(6, 'b');
-		boolean moveDiagonalAcutal = pawn.canMove(now, moveDiagonal);
+		boolean moveDiagonalAcutal = pawn.checkRange(now, moveDiagonal);
 		assertThat(moveDiagonalAcutal).isTrue();
 
 		Location cantAfter = Location.of(4, 'a');
-		boolean cantActual = pawn.canMove(now, cantAfter);
+		boolean cantActual = pawn.checkRange(now, cantAfter);
 
 		assertThat(cantActual).isFalse();
 	}
@@ -43,15 +43,15 @@ class PawnTest {
 		Location now = Location.of(6, 'a');
 
 		Location moveOnceForward = Location.of(5, 'a');
-		boolean moveOnceForwardActual = pawn.canMove(now, moveOnceForward);
+		boolean moveOnceForwardActual = pawn.checkRange(now, moveOnceForward);
 		assertThat(moveOnceForwardActual).isTrue();
 
 		Location moveDiagonal = Location.of(5, 'b');
-		boolean moveDiagonalAcutal = pawn.canMove(now, moveDiagonal);
+		boolean moveDiagonalAcutal = pawn.checkRange(now, moveDiagonal);
 		assertThat(moveDiagonalAcutal).isTrue();
 
 		Location moveTwiceForward = Location.of(4, 'a');
-		boolean moveTwiceForwardActual = pawn.canMove(now, moveTwiceForward);
+		boolean moveTwiceForwardActual = pawn.checkRange(now, moveTwiceForward);
 		assertThat(moveTwiceForwardActual).isFalse();
 	}
 
@@ -63,7 +63,7 @@ class PawnTest {
 		board.put(Location.of(7, 'a'), givenPiece);
 		board.put(Location.of(6, 'b'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(7, 'a'), Location.of(6, 'b'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(6, 'b'));
 		assertThat(actual).isFalse();
 	}
 
@@ -74,7 +74,7 @@ class PawnTest {
 		Pawn givenPiece = new Pawn(Team.BLACK);
 		board.put(Location.of(7, 'a'), givenPiece);
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(7, 'a'), Location.of(6, 'b'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(6, 'b'));
 		assertThat(actual).isTrue();
 	}
 
@@ -90,7 +90,7 @@ class PawnTest {
 		board.put(Location.of(6, 'a'), counterPiece);
 		board.put(Location.of(5, 'a'), destinaionPiece);
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(7, 'a'), Location.of(5, 'a'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(5, 'a'));
 		assertThat(actual).isTrue();
 	}
 
@@ -103,7 +103,7 @@ class PawnTest {
 		board.put(Location.of(7, 'a'), givenPiece);
 		board.put(Location.of(6, 'a'), counterPiece);
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(7, 'a'), Location.of(6, 'a'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(6, 'a'));
 		assertThat(actual).isTrue();
 	}
 
@@ -116,7 +116,7 @@ class PawnTest {
 		board.put(Location.of(7, 'a'), givenPiece);
 		board.put(Location.of(5, 'a'), destinaionPiece);
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(7, 'a'), Location.of(5, 'a'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(5, 'a'));
 		assertThat(actual).isTrue();
 	}
 }

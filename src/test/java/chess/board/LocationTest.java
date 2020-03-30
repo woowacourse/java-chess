@@ -126,6 +126,6 @@ class LocationTest {
 	void isVertical(int row, char column) {
 		Location starting = Location.of(3, 'c');
 		Location destination = Location.of(row, column);
-		starting.isVertical(destination);
+		starting.isSameCol(destination);
 	}
 }

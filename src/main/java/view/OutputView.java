@@ -54,9 +54,9 @@ public class OutputView {
 		for (GameStatistic gameStatistic : teamScore) {
 			System.out.println(
 				String.format("%s : %1.1f - %s",
-					gameStatistic.getTeam().getName(),
-					gameStatistic.getScore().getAmount(),
-					gameStatistic.getGameResult().getMessage()
+					gameStatistic.getTeam(),
+					gameStatistic.getScore(),
+					gameStatistic.getGameResult()
 				)
 			);
 		}

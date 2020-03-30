@@ -2,7 +2,9 @@ package chess.result;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -20,34 +22,34 @@ class ScoreTest {
 	private static Stream<Arguments> providerScoreInfo() {
 		return Stream.of(
 			Arguments.of(
-				new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.WHITE), false);
-					put(new Pawn(Team.WHITE), false);
-					put(new Pawn(Team.WHITE), true);
-				}}, new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.BLACK), false);
-					put(new Pawn(Team.BLACK), false);
+				new ArrayList<Piece>() {{
+					add(new Pawn(Team.WHITE));
+					add(new Pawn(Team.WHITE));
+					add(new Pawn(Team.WHITE));
+				}}, new ArrayList<Piece>() {{
+					add(new Pawn(Team.BLACK));
+					add(new Pawn(Team.BLACK));
 				}}
 				, 1
 			),
 			Arguments.of(
-				new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.WHITE), false);
-					put(new Pawn(Team.WHITE), false);
-				}}, new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.BLACK), false);
-					put(new Pawn(Team.BLACK), false);
+				new ArrayList<Piece>() {{
+					add(new Pawn(Team.WHITE));
+					add(new Pawn(Team.WHITE));
+				}}, new ArrayList<Piece>() {{
+					add(new Pawn(Team.BLACK));
+					add(new Pawn(Team.BLACK));
 				}}
 				, 0
 			),
 			Arguments.of(
-				new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.WHITE), false);
-					put(new Pawn(Team.WHITE), false);
-				}}, new HashMap<Piece, Boolean>() {{
-					put(new Pawn(Team.BLACK), false);
-					put(new Pawn(Team.BLACK), false);
-					put(new Pawn(Team.WHITE), true);
+				new ArrayList<Piece>() {{
+					add(new Pawn(Team.WHITE));
+					add(new Pawn(Team.WHITE));
+				}}, new ArrayList<Piece>() {{
+					add(new Pawn(Team.BLACK));
+					add(new Pawn(Team.BLACK));
+					add(new Pawn(Team.BLACK));
 				}}
 				, -1
 			)
@@ -57,20 +59,20 @@ class ScoreTest {
 	@DisplayName("피스, 세로줄의 폰의 정보들을 받아 점수를 계산")
 	@Test
 	void calculateScore() {
-		Score score = new Score(new HashMap<Piece, Boolean>() {{
-			put(new Pawn(Team.WHITE), false);
-			put(new Pawn(Team.WHITE), false);
-			put(new Pawn(Team.WHITE), true);
-		}});
+		Score score = new Score(Arrays.asList(new Pawn(Team.WHITE)
+			, new Pawn(Team.WHITE), new Pawn(Team.WHITE)),
+			1);
 		assertThat(score.getAmount()).isEqualTo(2.5);
 	}
 
 	@DisplayName("두 스코어를 비교하여 compare value를 생성")
 	@ParameterizedTest
 	@MethodSource("providerScoreInfo")
-	void compare(HashMap<Piece, Boolean> scoreInfo, HashMap<Piece, Boolean> otherInfo, int expect) {
-		Score score = new Score(scoreInfo);
-		Score other = new Score(otherInfo);
+	void compare(List<Piece> pieces, List<Piece> otherPieces, int expect) {
+		Score score = new Score(pieces, 0);
+		Score other = new Score(otherPieces, 0);
+		System.out.println(score.getAmount());
+		System.out.println(other.getAmount());
 		assertThat(score.compare(other)).isEqualTo(expect);
 	}
 }

@@ -1,6 +1,6 @@
 import chess.GameManager;
-import chess.PieceFactory;
 import chess.board.Location;
+import chess.piece.PieceFactory;
 import view.InputView;
 import view.OutputView;
 
@@ -12,16 +12,16 @@ public class ChessController {
 
 		while (gameManager.isRunning()) {
 			command = InputView.inputStartCommand();
-			if (command.equals("start")) {
+			if ("start".equals(command)) {
 				start(gameManager);
 			}
-			if (command.matches("move [a-h][1-8] [a-h][1-8]")) {
+			if ("move [a-h][1-8] [a-h][1-8]".matches(command)) {
 				movePiece(command, gameManager);
 			}
-			if (command.equals("status")) {
-				status(command, gameManager);
+			if ("status".equals(command)) {
+				status(gameManager);
 			}
-			if (command.equals("end")) {
+			if ("end".equals(command)) {
 				break;
 			}
 		}
@@ -32,10 +32,8 @@ public class ChessController {
 		OutputView.printBoard(gameManager);
 	}
 
-	private static void status(String command, GameManager gameManager) {
-		if (command.equals("status")) {
-			OutputView.printStatus(gameManager.createStatistics());
-		}
+	private static void status(GameManager gameManager) {
+		OutputView.printStatus(gameManager.createStatistics());
 	}
 
 	private static void movePiece(String command, GameManager gameManager) {

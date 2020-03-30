@@ -15,11 +15,11 @@ class KingTest {
 		Location now = Location.of(8, 'e');
 
 		Location after = Location.of(7, 'e');
-		boolean actual = king.canMove(now, after);
+		boolean actual = king.checkRange(now, after);
 		assertThat(actual).isTrue();
 
 		Location cantAfter = Location.of(6, 'c');
-		boolean cantActual = king.canMove(now, cantAfter);
+		boolean cantActual = king.checkRange(now, cantAfter);
 		assertThat(cantActual).isFalse();
 	}
 }

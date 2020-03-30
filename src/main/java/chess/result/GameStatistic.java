@@ -16,15 +16,15 @@ public class GameStatistic {
 		this.gameResult = gameResult;
 	}
 
-	public Team getTeam() {
-		return team;
+	public String getTeam() {
+		return team.getName();
 	}
 
-	public Score getScore() {
-		return score;
+	public double getScore() {
+		return score.getAmount();
 	}
 
-	public GameResult getGameResult() {
-		return gameResult;
+	public String getGameResult() {
+		return gameResult.getMessage();
 	}
 }

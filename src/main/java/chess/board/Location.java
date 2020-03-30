@@ -60,7 +60,7 @@ public class Location {
 		boolean rowFlag = abs(row - destination.row) <= 1;
 		boolean colFlag = abs(col - destination.col) <= 1;
 
-		return rowFlag && colFlag;
+		return rowFlag && colFlag && this != destination;
 	}
 
 	public boolean isKnightRange(Location destination) {
@@ -82,7 +82,7 @@ public class Location {
 	}
 
 	public boolean isStraight(Location destination) {
-		return this.row == destination.row || isVertical(destination);
+		return this.row == destination.row || isSameCol(destination);
 	}
 
 	public boolean isInitialPawnLocation(Team team) {
@@ -147,18 +147,14 @@ public class Location {
 		return Location.of(row + rowWeight, (char)(col + colWeight));
 	}
 
-	public boolean isVertical(Location destination) {
-		return col == destination.col;
-	}
-
 	private static class LocationCache {
 		private static final HashMap<String, Location> cache;
 
 		static {
 			cache = new HashMap<>();
 
-			for (int row = 1; row <= 8; row++) {
-				for (int column = 0; column < 8; column++) {
+			for (int row = 1; row <= ChessBoard.ROW_LENGTH; row++) {
+				for (int column = 0; column < ChessBoard.COLUMN_LENGTH; column++) {
 					char nowColumn = (char)(column + 'a');
 					String key = String.format("%c%d", nowColumn, row);
 					cache.put(key, new Location(row, nowColumn));

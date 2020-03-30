@@ -17,12 +17,12 @@ class QueenTest {
 		Queen queen = new Queen(Team.BLACK);
 		Location now = Location.of(8, 'd');
 		Location after = Location.of(8, 'h');
-		boolean actual = queen.canMove(now, after);
+		boolean actual = queen.checkRange(now, after);
 
 		assertThat(actual).isTrue();
 
 		Location cantAfter = Location.of(7, 'f');
-		boolean cantActual = queen.canMove(now, cantAfter);
+		boolean cantActual = queen.checkRange(now, cantAfter);
 
 		assertThat(cantActual).isFalse();
 	}
@@ -36,7 +36,7 @@ class QueenTest {
 		board.put(Location.of(2, 'd'), new Bishop(Team.WHITE));
 		board.put(Location.of(3, 'e'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'c'), Location.of(3, 'e'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(3, 'e'));
 		assertThat(actual).isTrue();
 	}
 
@@ -49,7 +49,7 @@ class QueenTest {
 		board.put(Location.of(2, 'c'), new Bishop(Team.WHITE));
 		board.put(Location.of(3, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'c'), Location.of(3, 'c'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(3, 'c'));
 		assertThat(actual).isTrue();
 	}
 
@@ -62,7 +62,7 @@ class QueenTest {
 		board.put(Location.of(1, 'd'), new Bishop(Team.WHITE));
 		board.put(Location.of(1, 'e'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'c'), Location.of(1, 'e'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(1, 'e'));
 		assertThat(actual).isTrue();
 
 	}

@@ -18,12 +18,12 @@ class RookTest {
 		Rook rook = new Rook(Team.BLACK);
 		Location now = Location.of(8, 'a');
 		Location after = Location.of(8, 'h');
-		boolean actual = rook.canMove(now, after);
+		boolean actual = rook.checkRange(now, after);
 
 		assertThat(actual).isTrue();
 
 		Location cantAfter = Location.of(7, 'b');
-		boolean cantActual = rook.canMove(now, cantAfter);
+		boolean cantActual = rook.checkRange(now, cantAfter);
 
 		assertThat(cantActual).isFalse();
 	}
@@ -37,7 +37,7 @@ class RookTest {
 		board.put(Location.of(2, 'c'), new Bishop(Team.WHITE));
 		board.put(Location.of(3, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'c'), Location.of(3, 'c'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(3, 'c'));
 		assertThat(actual).isTrue();
 	}
 
@@ -50,7 +50,7 @@ class RookTest {
 		board.put(Location.of(1, 'b'), new Bishop(Team.WHITE));
 		board.put(Location.of(1, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasObstacle(board, Location.of(1, 'a'), Location.of(1, 'c'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'a'), Location.of(1, 'c'));
 		assertThat(actual).isTrue();
 	}
 }

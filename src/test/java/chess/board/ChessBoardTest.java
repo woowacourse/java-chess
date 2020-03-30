@@ -47,7 +47,7 @@ class ChessBoardTest {
 		board.put(destination, new Queen(Team.BLACK));
 
 		ChessBoard chessBoard = new ChessBoard(board);
-		assertThatThrownBy(() -> chessBoard.canMove(starting, destination))
+		assertThatThrownBy(() -> chessBoard.move(starting, destination))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 

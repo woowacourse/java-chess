@@ -21,17 +21,17 @@ public class King extends Piece {
 	}
 
 	@Override
-	public boolean canMove(Location now, Location after) {
+	public boolean checkRange(Location now, Location after) {
 		return now.isKingRange(after);
 	}
 
 	@Override
-	public double getScore(boolean hasVerticalEnemy) {
+	public double getScore() {
 		return score;
 	}
 
 	@Override
-	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
+	public boolean checkObstacle(Map<Location, Piece> board, Location now, Location destination) {
 		return false;
 	}
 }

@@ -19,12 +19,12 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public boolean canMove(Location now, Location after) {
+	public boolean checkRange(Location now, Location after) {
 		return now.isStraight(after);
 	}
 
 	@Override
-	public double getScore(boolean hasVerticalEnemy) {
+	public double getScore() {
 		return score;
 	}
 }

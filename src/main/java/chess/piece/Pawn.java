@@ -21,7 +21,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public boolean canMove(Location now, Location after) {
+	public boolean checkRange(Location now, Location after) {
 		Team team = Team.of(isBlack());
 
 		if (now.isInitialPawnLocation(team)) {
@@ -33,15 +33,12 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public double getScore(boolean hasVerticalEnemy) {
-		if (hasVerticalEnemy) {
-			return score * 0.5;
-		}
+	public double getScore() {
 		return score;
 	}
 
 	@Override
-	public boolean hasObstacle(Map<Location, Piece> board, Location now, Location destination) {
+	public boolean checkObstacle(Map<Location, Piece> board, Location now, Location destination) {
 		return !isMovable(board, now, destination);
 	}
 
@@ -54,6 +51,6 @@ public class Pawn extends Piece {
 
 		Location nextLocation = now.calculateNextLocation(destination, 1);
 		return (!board.containsKey(destination) && !board.containsKey(nextLocation))
-			&& now.isVertical(destination);
+			&& now.isSameCol(destination);
 	}
 }

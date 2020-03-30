@@ -1,5 +1,7 @@
 package chess.board;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -7,9 +9,14 @@ import java.util.stream.Collectors;
 import chess.gamestate.GameState;
 import chess.piece.King;
 import chess.piece.Piece;
+import chess.result.Score;
 import chess.team.Team;
 
 public class ChessBoard {
+	public static final int ROW_LENGTH = 8;
+	public static final int COLUMN_LENGTH = 8;
+	private static final long COLUMN_PAWN_COUNT = 2;
+
 	private final Map<Location, Piece> board;
 
 	public ChessBoard(Map<Location, Piece> pieces) {
@@ -17,12 +24,24 @@ public class ChessBoard {
 		this.board = pieces;
 	}
 
-	public boolean canMove(Location now, Location destination) {
+	// todo : canMvoe, hasObstacle에서 에러나게 변경
+	public void move(Location now, Location destination) {
+		validateLocation(now, destination);
+		if (board.containsKey(destination)) {
+			board.remove(destination);
+		}
+		Piece piece = board.remove(now);
+		board.put(destination, piece);
+	}
+
+	private void validateLocation(Location now, Location destination) {
+		if (!board.containsKey(now)) {
+			throw new IllegalArgumentException("빈칸을 이동했습니다.");
+		}
 		Piece piece = board.get(now);
 		checkSameTeam(piece, destination);
-
-		return piece.canMove(now, destination)
-			&& !piece.hasObstacle(board, now, destination);
+		piece.checkRange(now, destination);
+		piece.checkObstacle(board, now, destination);
 	}
 
 	private void checkSameTeam(Piece piece, Location destination) {
@@ -42,12 +61,32 @@ public class ChessBoard {
 			.collect(Collectors.toMap(location -> location, board::get));
 	}
 
-	public void move(Location now, Location destination) {
-		if (board.containsKey(destination)) {
-			board.remove(destination);
+	public Score calculateScore(Team team) {
+		Map<Location, Piece> teamPieces = giveMyPiece(team);
+
+		List<Location> sameTeamPawns = teamPieces.keySet().stream()
+			.filter(location -> board.get(location).isPawn())
+			.collect(Collectors.toList());
+
+		return new Score(new ArrayList<>(teamPieces.values()), getHalfScorePawnCount(sameTeamPawns));
+	}
+
+	private int getHalfScorePawnCount(List<Location> sameTeamPawns) {
+		int halfScorePawnCount = 0;
+
+		for (Location location : sameTeamPawns) {
+			int count = 0;
+			for (Location targetLocation : sameTeamPawns) {
+				if (targetLocation.isSameCol(location)) {
+					count++;
+				}
+			}
+			if (count > 2) {
+				halfScorePawnCount++;
+			}
 		}
-		Piece piece = board.remove(now);
-		board.put(destination, piece);
+
+		return halfScorePawnCount;
 	}
 
 	public boolean hasTwoKings() {

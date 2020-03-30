@@ -1,16 +1,9 @@
-package chess;
+package chess.piece;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import chess.board.Location;
-import chess.piece.Bishop;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
-import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
 import chess.team.Team;
 
 public class PieceFactory {
