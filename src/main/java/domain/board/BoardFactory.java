@@ -6,10 +6,10 @@ import java.util.List;
 import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;
+import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
-import domain.piece.Pawn;
 import domain.piece.position.Column;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
@@ -20,15 +20,18 @@ public class BoardFactory {
 	private static final String BLACK_PAWN_RANK = "7";
 	private static final String BLACK_OTHER_PIECE_RANK = "8";
 	private static final int EMPTY_RANK_SIZE = 4;
-	private static List<Rank> ranks = new ArrayList<>();
+	private static final List<Rank> ranks = new ArrayList<>();
 
-	public static Board create() {
+	static {
 		createRank(WHITE_OTHER_PIECE_RANK, Team.WHITE);
 		createPawnRank(WHITE_PAWN_RANK, Team.WHITE);
 		createEmptyRank();
 		createPawnRank(BLACK_PAWN_RANK, Team.BLACK);
 		createRank(BLACK_OTHER_PIECE_RANK, Team.BLACK);
-		return new Board(ranks);
+	}
+
+	public static Board create() {
+		return new Board(new ArrayList<>(ranks));
 	}
 
 	private static void createEmptyRank() {
