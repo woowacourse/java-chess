@@ -2,7 +2,6 @@ package chess;
 
 import chess.View.ChessInputView;
 import chess.View.ChessOutputView;
-import chess.domain.ChessCalculator;
 import chess.domain.chessBoard.CatchKingException;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessBoardFactory;
@@ -42,7 +41,7 @@ public class ChessController {
                 break;
             }
             case STATUS: {
-                ChessOutputView.scoreOf(chessBoard, ChessCalculator.calculateScoreOf(chessBoard));
+                ChessOutputView.scoreOf(chessBoard, command.commandStatusRun(chessBoard));
                 break;
             }
             default: {

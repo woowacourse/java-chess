@@ -92,8 +92,8 @@ public class ChessBoard {
         return chessBoard.containsKey(Position.of(chessFile, chessRank));
     }
 
-    public ChessPiece getChessPiece(ChessFile file, ChessRank rank) {
-        return chessBoard.get(Position.of(file.toString() + rank.toString()));
+    public ChessPiece getChessPiece(ChessFile chessFile, ChessRank chessRank) {
+        return chessBoard.get(Position.of(chessFile, chessRank));
     }
 
     public PieceColor getPlayerColor() {

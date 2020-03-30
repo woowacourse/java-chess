@@ -6,6 +6,7 @@ import chess.domain.chessPiece.pieceType.Pawn;
 import chess.domain.position.ChessFile;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class ChessCalculator {
@@ -14,6 +15,8 @@ public class ChessCalculator {
     private static final int REDUCING_RATE = 2;
 
     public static double calculateScoreOf(ChessBoard chessBoard) {
+        Objects.requireNonNull(chessBoard, "체스 보드가 null입니다.");
+
         double totalScore = calculateUnConsiderateTotalScore(chessBoard);
         double pawnScore = calculatePawnScore(chessBoard);
         long pawnCount = calculatePawnCountOnChessFile(chessBoard);
