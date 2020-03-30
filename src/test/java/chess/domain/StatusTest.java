@@ -14,7 +14,7 @@ public class StatusTest {
 		ChessBoard chessBoard = BoardFactory.createBoard();
 		Status status = chessBoard.createStatus();
 
-		assertThat(status.getResult().getScore()).isEqualTo(38);
-		assertThat(status.getResult().getWinTeam()).isEqualTo("WHITE");
+		assertThat(status.getResult().getBlackTeamScore()).isEqualTo(38);
+		assertThat(status.getResult().getWhiteTeamScore()).isEqualTo(38);
 	}
 }

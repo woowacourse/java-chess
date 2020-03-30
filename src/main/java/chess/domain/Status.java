@@ -18,12 +18,7 @@ public class Status {
 	}
 
 	public Result getResult() {
-		double blackTeamScore = sumScore(Team.BLACK);
-		double whiteTeamScore = sumScore(Team.WHITE);
-		if (blackTeamScore > whiteTeamScore) {
-			return new Result(Team.BLACK.getName(), blackTeamScore);
-		}
-		return new Result(Team.WHITE.getName(), whiteTeamScore);
+		return new Result(sumScore(Team.BLACK),sumScore(Team.WHITE));
 	}
 
 	private double sumScore(Team team) {

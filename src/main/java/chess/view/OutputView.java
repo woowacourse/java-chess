@@ -10,6 +10,7 @@ import chess.domain.chesspiece.ChessPiece;
 public class OutputView {
 	private static final int BOARD_FIRST_INDEX = 0;
 	private static final int BOARD_LAST_INDEX = 7;
+	private static final String RESULT_FORMAT = "BLACK : %s점, WHITE : %s점";
 
 	public static void printBoard(ChessBoard chessBoard) {
 		List<Row> board = chessBoard.getRows();
@@ -31,14 +32,17 @@ public class OutputView {
 		System.out.println("게임 시작 : start");
 		System.out.println("게임 종료 : end");
 		System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
+		System.out.println("현재 상태 보기 : status");
 	}
 
 	public static void printResult(Result result) {
-		System.out.println(result.getWinTeam() + "팀 승리! 점수 : " + result.getScore());
+		System.out.println(String.format(RESULT_FORMAT,
+			result.getBlackTeamScore(), result.getWhiteTeamScore()));
+		System.out.println(result.getWinTeam());
 	}
 
-	public static void printErrorMessage(RuntimeException e) {
-		System.out.println(e.getMessage());
+	public static void printErrorMessage(Exception e) {
+		System.out.println("예외 발생 : " + e.getMessage());
 	}
 
 	public static void printEndGame() {

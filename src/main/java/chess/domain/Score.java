@@ -21,6 +21,7 @@ public enum Score {
 	ETC_SCORE(0, chessPiece -> true);
 
 	private static final String NOT_MATCH_MESSAGE = "해당 점수를 찾을 수 없습니다.";
+	private static final String NOT_HAVE_SCORE_MESSAGE = "더할 숫자가 없습니다.";
 
 	private final double score;
 	private final Predicate<ChessPiece> predicate;
@@ -41,7 +42,7 @@ public enum Score {
 		return scores.stream()
 			.map(Score::getScore)
 			.reduce(Double::sum)
-			.orElseThrow(IllegalArgumentException::new);
+			.orElseThrow(() -> new IllegalArgumentException(NOT_HAVE_SCORE_MESSAGE));
 	}
 
 	public static double calculateDuplicatePawnScore(long count) {
