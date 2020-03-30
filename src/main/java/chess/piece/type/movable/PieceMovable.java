@@ -11,7 +11,6 @@ public interface PieceMovable {
     default boolean hasNotObstacle(Map<Location, Piece> board, Location now, Location after) {
         int weight = 1;
         Location nowLocation = now.calculateNextLocation(after, weight);
-        System.out.println(!nowLocation.equals(after));
         while (!nowLocation.equals(after)) {
             if (board.containsKey(nowLocation)) {
                 return false;

@@ -13,8 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
     @Test
-    @DisplayName("초기 위치의 폰의 이동 반경 테스트")
-    void canMove() {
+    @DisplayName("초기 위치의 폰의 2단 이동 테스트")
+    void canMove1() {
         ChessBoard chessBoard = new ChessBoard();
 
         Pawn pawn = new Pawn(Team.BLACK);
@@ -23,24 +23,50 @@ class PawnTest {
         Location moveTwiceForward = new Location(5, 'a');
         boolean moveTwiceForwardActual = pawn.canMove(chessBoard.getBoard(), now, moveTwiceForward);
         assertThat(moveTwiceForwardActual).isTrue();
+    }
+
+    @Test
+    @DisplayName("초기 위치의 폰의 1단 이동 테스트")
+    void canMove2() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        Pawn pawn = new Pawn(Team.BLACK);
+        Location now = new Location(7, 'a');
 
         Location moveOnceForward = new Location(6, 'a');
         boolean moveOnceForwardActual = pawn.canMove(chessBoard.getBoard(), now, moveOnceForward);
         assertThat(moveOnceForwardActual).isTrue();
+    }
+
+    @Test
+    @DisplayName("초기 위치의 폰의 대각선 이동 테스트")
+    void canMove3() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        Pawn pawn = new Pawn(Team.BLACK);
+        Location now = new Location(7, 'a');
 
         Location moveDiagonal = new Location(6, 'b');
         boolean moveDiagonalActual = pawn.canMove(chessBoard.getBoard(), now, moveDiagonal);
         assertThat(moveDiagonalActual).isTrue();
+    }
+
+    @Test
+    @DisplayName("초기 위치의 폰의 이동 테스트")
+    void cantMove() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        Pawn pawn = new Pawn(Team.BLACK);
+        Location now = new Location(7, 'a');
 
         Location cantAfter = new Location(4, 'a');
         boolean cantActual = pawn.canMove(chessBoard.getBoard(), now, cantAfter);
-
         assertThat(cantActual).isFalse();
     }
 
     @Test
-    @DisplayName("초기 위치가 아닌 일반적인 폰의 이동")
-    void canMove2() {
+    @DisplayName("초기 위치가 아닌 일반적인 폰의 1단 이동")
+    void canMove4() {
         ChessBoard chessBoard = new ChessBoard();
 
         Pawn pawn = new Pawn(Team.BLACK);
@@ -49,10 +75,28 @@ class PawnTest {
         Location moveOnceForward = new Location(5, 'a');
         boolean moveOnceForwardActual = pawn.canMove(chessBoard.getBoard(), now, moveOnceForward);
         assertThat(moveOnceForwardActual).isTrue();
+    }
+
+    @Test
+    @DisplayName("초기 위치가 아닌 일반적인 폰의 대각선 이동")
+    void canMove5() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        Pawn pawn = new Pawn(Team.BLACK);
+        Location now = new Location(6, 'a');
 
         Location moveDiagonal = new Location(5, 'b');
         boolean moveDiagonalAcutal = pawn.canMove(chessBoard.getBoard(), now, moveDiagonal);
         assertThat(moveDiagonalAcutal).isTrue();
+    }
+
+    @Test
+    @DisplayName("초기 위치가 아닌 일반적인 폰의 2단 이동")
+    void cantMove2() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        Pawn pawn = new Pawn(Team.BLACK);
+        Location now = new Location(6, 'a');
 
         Location moveTwiceForward = new Location(4, 'a');
         boolean moveTwiceForwardActual = pawn.canMove(chessBoard.getBoard(), now, moveTwiceForward);

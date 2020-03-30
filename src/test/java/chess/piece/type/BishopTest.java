@@ -15,6 +15,7 @@ import chess.team.Team;
 class BishopTest {
 
     @Test
+    @DisplayName("갈 수 있는 곳 테스트")
     void canMove() {
         ChessBoard chessBoard = new ChessBoard();
         Bishop bishop = new Bishop(Team.BLACK);
@@ -23,7 +24,14 @@ class BishopTest {
         boolean actual = bishop.canMove(chessBoard.getBoard(), now, after);
 
         assertThat(actual).isTrue();
+    }
 
+    @Test
+    @DisplayName("갈 수 없는 곳 확인")
+    void canMove2() {
+        ChessBoard chessBoard = new ChessBoard();
+        Bishop bishop = new Bishop(Team.BLACK);
+        Location now = new Location(8, 'c');
         Location cantAfter = new Location(2, 'c');
         boolean cantActual = bishop.canMove(chessBoard.getBoard(), now, cantAfter);
 

@@ -20,7 +20,6 @@ public class ChessController {
 
     private static Progress getProgress(ChessGame chessGame) {
         Command command = inputCommand(chessGame);
-        System.out.println(command.getClass());
         Progress progress = chessGame.doOneCommand(command);
         while (progress.isError()) {
             OutputView.printMoveErrorMessage();

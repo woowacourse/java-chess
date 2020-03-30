@@ -14,17 +14,28 @@ import chess.team.Team;
 
 class QueenTest {
 	@Test
+	@DisplayName("갈 수 있는 곳 테스트")
 	void canMove() {
 		Map<Location, Piece> board = new HashMap<>();
 
 		Queen queen = new Queen(Team.BLACK);
 		Location now = new Location(8, 'd');
 		Location after = new Location(8, 'h');
+
 		boolean actual = queen.canMove(board, now, after);
 
 		assertThat(actual).isTrue();
+	}
 
+	@Test
+	@DisplayName("갈 수 없는 곳 테스트")
+	void cantMove() {
+		Map<Location, Piece> board = new HashMap<>();
+
+		Queen queen = new Queen(Team.BLACK);
+		Location now = new Location(8, 'd');
 		Location cantAfter = new Location(7, 'f');
+
 		boolean cantActual = queen.canMove(board, now, cantAfter);
 
 		assertThat(cantActual).isFalse();
@@ -67,6 +78,5 @@ class QueenTest {
 
 		boolean actual = givenPiece.canMove(board, new Location(1, 'c'), new Location(1, 'e'));
 		assertThat(actual).isFalse();
-
 	}
 }

@@ -55,6 +55,6 @@ class ChessBoardTest {
     void calculateReducePawnScore() {
         ChessBoard chessBoard = new ChessBoard();
         Score reduceScore = chessBoard.calculateReducePawnScore(Team.WHITE);
-        assertThat(reduceScore.getValue()).isEqualTo(new Score(4).getValue());
+        assertThat(reduceScore).isEqualTo(new Score(4));
     }
 }

@@ -20,11 +20,21 @@ class RookTest {
 		Rook rook = new Rook(Team.BLACK);
 		Location now = new Location(8, 'a');
 		Location after = new Location(8, 'h');
+
 		boolean actual = rook.canMove(board,now, after);
 
 		assertThat(actual).isTrue();
+	}
 
+	@Test
+	@DisplayName("갈 수 없는 곳 테스트")
+	void cantMove() {
+		Map<Location, Piece> board = new HashMap<>();
+
+		Rook rook = new Rook(Team.BLACK);
+		Location now = new Location(8, 'a');
 		Location cantAfter = new Location(7, 'b');
+
 		boolean cantActual = rook.canMove(board, now, cantAfter);
 
 		assertThat(cantActual).isFalse();
