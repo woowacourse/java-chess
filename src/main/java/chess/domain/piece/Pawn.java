@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 import chess.domain.piece.direction.Direction;
-import chess.domain.piece.direction.DirectionsType;
+import chess.exception.NotMovableException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,17 +47,14 @@ public class Pawn extends Piece {
 
     protected void validateDirection(Direction direction) {
         if (pieceColor.isBlack()) {
-            validateDirectionAsPieceColor("BLACK_PAWN", direction);
+            if (!BLACK_PAWN_DIRECTIONS.contains(direction)) {
+                throw new NotMovableException("검은색 폰이 이동할 수 없는 방향입니다.");
+            }
         }
         if (pieceColor.isWhite()) {
-            validateDirectionAsPieceColor("WHITE_PAWN", direction);
-        }
-    }
-
-    private void validateDirectionAsPieceColor(String pieceName, Direction direction) {
-        DirectionsType directionsType = DirectionsType.valueOf(pieceName);
-        if (!directionsType.contains(direction)) {
-            throw new IllegalArgumentException("폰이 이동할 수 없는 방향입니다.");
+            if (!WHITE_PAWN_DIRECTIONS.contains(direction)) {
+                throw new NotMovableException("하얀색 폰이 이동할 수 없는 방향입니다.");
+            }
         }
     }
 

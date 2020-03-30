@@ -5,6 +5,7 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.exception.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,10 +25,10 @@ public class Board {
 
         Piece sourcePiece = board.get(sourcePosition);
         if (sourcePiece.isNone()) {
-            throw new IllegalArgumentException("움직일 수 있는 체스말이 없습니다.");
+            throw new PieceNotFoundException("움직일 수 있는 체스말이 없습니다.");
         }
         if (sourcePiece.isDifferentColor(team)) {
-            throw new IllegalArgumentException("다른 색의 말을 움직일 수 없습니다.");
+            throw new AnotherTeamPieceException("다른 색의 말을 움직일 수 없습니다.");
         }
         return board.get(sourcePosition);
     }
@@ -39,10 +40,10 @@ public class Board {
         }
         List<Position> path = piece.getPathTo(targetPosition);
         if (havePieceBeforeTargetPosition(path)) {
-            throw new IllegalArgumentException("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치로 이동할 수 없습니다.");
+            throw new OtherPieceInPathException("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치로 이동할 수 없습니다.");
         }
         if (cannotMoveToTargetPosition(piece, targetPosition)) {
-            throw new IllegalArgumentException("지정한 위치에 같은 색의 체스말이 있기 때문에 이동할 수 없습니다.");
+            throw new SameTeamPieceException("지정한 위치에 같은 색의 체스말이 있기 때문에 이동할 수 없습니다.");
         }
     }
 
