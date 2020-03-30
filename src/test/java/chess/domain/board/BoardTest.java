@@ -1,16 +1,21 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
-import chess.domain.position.Path;
-import chess.domain.position.Position;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static chess.domain.position.Fixtures.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static chess.domain.position.Fixtures.*;
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
+import chess.domain.position.Path;
+import chess.domain.position.Position;
 
 class BoardTest {
     private Board board;
@@ -89,13 +94,24 @@ class BoardTest {
     }
 
     @Test
-    void pawnMove_Success() {
+    void pawnMove_Success_When_Black() {
         Map<Position, Piece> setter = new LinkedHashMap<>();
-        setter.put(A2, new Pawn(A2, Team.BLACK));
+        setter.put(C7, new Pawn(C7, Team.BLACK));
 
         Board board = Board.of(setter);
 
-        assertThatCode(() -> board.move(A2, A3, Team.BLACK))
+        assertThatCode(() -> board.move(C7, C5, Team.BLACK))
+            .doesNotThrowAnyException();
+    }
+
+    @Test
+    void pawnMove_Success_When_White() {
+        Map<Position, Piece> setter = new LinkedHashMap<>();
+        setter.put(A2, new Pawn(A2, Team.WHITE));
+
+        Board board = Board.of(setter);
+
+        assertThatCode(() -> board.move(A2, A3, Team.WHITE))
                 .doesNotThrowAnyException();
     }
 

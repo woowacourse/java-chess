@@ -4,9 +4,10 @@ import java.util.Arrays;
 
 public enum Team {
     BLACK("흑"),
-    WHITE("백");
+    WHITE("백"),
+    NONE(".");
 
-    private final String name;
+	private final String name;
 
     Team(String name) {
         this.name = name;
