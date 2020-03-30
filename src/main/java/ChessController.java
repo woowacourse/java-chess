@@ -1,7 +1,4 @@
-import chess.command.Command;
-import chess.command.End;
-import chess.command.Move;
-import chess.command.Start;
+import chess.command.*;
 import chess.game.ChessGame;
 import chess.result.ChessResult;
 import chess.progress.Progress;
@@ -40,11 +37,15 @@ public class ChessController {
 
     private static Command inputCommand(ChessGame chessGame) {
         String commandInput = InputView.inputCommand();
-        if (commandInput.equals("end")) {
+        // 다중 if문 없애려면 enum 뿐일까 ?
+        if (commandInput.equals(End.COMMAND)) {
             return new End(commandInput);
         }
-        if (commandInput.substring(0, 4).equals("move")) {
+        if (commandInput.substring(0, 4).equals(Move.COMMAND)) {
             return new Move(commandInput, chessGame);
+        }
+        if (commandInput.equals(Status.COMMAND)) {
+            return new Status(commandInput);
         }
         return new Start(commandInput);
     }

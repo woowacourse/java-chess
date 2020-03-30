@@ -53,17 +53,27 @@ public abstract class Piece {
     }
 
     public boolean hasNotObstacle(Map<Location, Piece> board, Location now, Location destination) {
-        Location nowLocation;
-        for (int weight = 1; ; weight++) {
-            nowLocation = now.calculateNextLocation(destination, weight);
-            if (nowLocation.equals(destination)) {
-                break;
-            }
+        int weight = 1;
+        Location nowLocation = now.calculateNextLocation(destination, weight);
+        System.out.println(!nowLocation.equals(destination));
+        while (!nowLocation.equals(destination)) {
             if (board.containsKey(nowLocation)) {
                 return false;
             }
+            weight++;
+            nowLocation = now.calculateNextLocation(destination, weight);
         }
         return true;
+//        for (int weight = 1; ; weight++) {
+//            Location nowLocation = now.calculateNextLocation(destination, weight);
+//            if (nowLocation.equals(destination)) {
+//                break;
+//            }
+//            if (board.containsKey(nowLocation)) {
+//                return false;
+//            }
+//        }
+//        return true;
     }
 
     public char getName() {
