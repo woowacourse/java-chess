@@ -74,7 +74,7 @@ public class Board {
 
     private void validateBlank(Position position) {
         Piece piece = findPiece(position);
-        if (piece.isBlank()) {
+        if (!piece.isBlank()) {
             throw new NotMovableException("해당 경로에 장애물이 존재하여 이동할 수 없습니다.");
         }
     }
