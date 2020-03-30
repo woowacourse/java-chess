@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.position.MovableAreaFactory;
 import chess.domain.position.Position;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Rook extends Piece {
     public Rook(Position position, Team team) {
@@ -12,16 +11,20 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void canPawnMove(Piece that) {
-        throw new IllegalAccessError();
+    public boolean canNotMoveTo(Piece that) {
+        return !createMovableArea().contains(that.position);
     }
 
     @Override
-    protected boolean isNotMovableTo(Position start, Position destination) {
-        List<Position> movableArea = new ArrayList<>();
-        movableArea.addAll(MovableAreaFactory.columnOf(start));
-        movableArea.addAll(MovableAreaFactory.rowOf(start));
+    protected List<Position> createMovableArea() {
+        return Position.getPositions()
+                .stream()
+                .filter(position -> !position.equals(this.position))
+                .filter(this::isCross)
+                .collect(Collectors.toList());
+    }
 
-        return !movableArea.contains(destination);
+    private boolean isCross(Position position) {
+        return this.position.isColumnEquals(position) || this.position.isRowEquals(position);
     }
 }

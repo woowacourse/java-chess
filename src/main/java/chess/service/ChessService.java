@@ -32,10 +32,13 @@ public class ChessService {
     }
 
     private void validateMove(Position from, Position to) {
-        if (board.get(from).isNotSameTeam(team)) {
+        Piece piece = board.get(from);
+        Piece target = board.get(to);
+
+        if (piece.isNotSameTeam(team)) {
             throw new IllegalArgumentException("아군 기물의 위치가 아닙니다.");
         }
-        if (board.hasPieceIn(Path.of(from, to)) || board.get(to).isSameTeam(team)) {
+        if (board.hasPieceIn(Path.of(from, to)) || target.isSameTeam(team) || piece.canNotMoveTo(target)) {
             throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
         }
     }

@@ -1,27 +1,34 @@
 package chess.domain.piece;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.position.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class KnightTest {
+    Knight knight;
 
-    @Test
-    void moveTo_When_Success() {
-        Piece knight = new Knight(C3, Team.BLACK);
-        knight.moveTo(D1);
-        knight.moveTo(B2);
-
-        assertThat(knight.getPosition()).isEqualTo(B2);
+    @BeforeEach
+    void setUp() {
+        knight = new Knight(C3, Team.BLACK);
     }
 
     @Test
-    void moveTo_When_Fail() {
-        Piece knight = new Knight(C3, Team.BLACK);
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> knight.moveTo(D3))
-                .withMessage("기물의 이동 범위에 속하지 않습니다.");
+    void moveTo() {
+        knight.moveTo(A2);
+        assertThat(knight.getPosition()).isEqualTo(A2);
+    }
+
+    @Test
+    void canNotMoveTo_Return_True() {
+        Piece target = new Empty(B3);
+        assertThat(knight.canNotMoveTo(target)).isTrue();
+    }
+
+    @Test
+    void canNotMoveTo_Return_False() {
+        Piece target = new Empty(A2);
+        assertThat(knight.canNotMoveTo(target)).isFalse();
     }
 }

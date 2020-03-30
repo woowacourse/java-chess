@@ -1,18 +1,10 @@
 package chess.domain.board;
 
+import chess.domain.piece.*;
+import chess.domain.position.Position;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.piece.Team;
-import chess.domain.position.Position;
 
 public class BoardFactory {
     private static final Map<Position, Piece> board = new LinkedHashMap<>();
@@ -44,7 +36,7 @@ public class BoardFactory {
 
             for (int i = 3; i <= 6; i++) {
                 key = String.valueOf(c) + i;
-                board.put(Position.of(key), new Empty(Position.of(key), Team.NONE));
+                board.put(Position.of(key), new Empty(Position.of(key)));
             }
         }
     }

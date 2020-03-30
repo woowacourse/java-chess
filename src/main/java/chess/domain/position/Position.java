@@ -70,6 +70,10 @@ public class Position {
         return row.equals(that.row);
     }
 
+    public boolean isRowEquals(Row row) {
+        return this.row.equals(row);
+    }
+
     public int getColumnGap(Position that) {
         return column.compareTo(that.column);
     }

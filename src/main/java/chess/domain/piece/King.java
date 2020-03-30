@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.position.MovableAreaFactory;
 import chess.domain.position.Position;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class King extends Piece {
     public King(Position position, Team team) {
@@ -9,12 +11,20 @@ public class King extends Piece {
     }
 
     @Override
-    public void canPawnMove(Piece that) {
-        throw new IllegalAccessError();
+    public boolean canNotMoveTo(Piece that) {
+        return !createMovableArea().contains(that.position);
     }
 
     @Override
-    protected boolean isNotMovableTo(Position start, Position destination) {
-        return !MovableAreaFactory.kingOf(start).contains(destination);
+    protected List<Position> createMovableArea() {
+        return Position.getPositions()
+                .stream()
+                .filter(position -> !position.equals(this.position))
+                .filter(this::isAround)
+                .collect(Collectors.toList());
+    }
+
+    private boolean isAround(Position position) {
+        return Math.abs(position.getColumnGap(this.position)) <= 1 && Math.abs(position.getRowGap(this.position)) <= 1;
     }
 }

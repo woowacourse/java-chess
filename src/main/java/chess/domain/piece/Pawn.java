@@ -1,44 +1,45 @@
 package chess.domain.piece;
 
-import chess.domain.position.MovableAreaFactory;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
     public Pawn(Position position, Team team) {
         super(position, Name.PAWN, team);
     }
 
-    //todo
     @Override
-    public void canPawnMove(Piece that) {
+    public boolean canNotMoveTo(Piece that) {
         int columnGap = Math.abs(this.position.getColumnGap(that.position));
-        if (columnGap == 0 && isEnemy(that)) {
+        if (columnGap == 0 && team.isEnemy(that.team)) {
             throw new IllegalArgumentException("폰은 전방의 적을 공격할 수 없습니다.");
         }
-        if (columnGap == 1 && !isEnemy(that)) {
+        if (columnGap == 1 && team.isNotEnemy(that.team)) {
             throw new IllegalArgumentException("폰은 공격이 아니면 대각선 이동이 불가합니다.");
         }
+        return !createMovableArea().contains(that.position);
     }
 
     @Override
-    protected boolean isNotMovableTo(Position start, Position destination) {
-        List<Position> movable = MovableAreaFactory.pawnOf(start, team);
-        if (isInitialPawnRow(start.getRow(), team) && team.equals(Team.BLACK)) {
-            movable.add(Position.of(start.getColumn(), Row.FIVE));
+    protected List<Position> createMovableArea() {
+        List<Position> movableArea = Position.getPositions()
+                .stream()
+                .filter(position -> !position.equals(this.position))
+                .filter(this::isPawnArea)
+                .collect(Collectors.toList());
+
+        PawnMoveInfo moveInfo = PawnMoveInfo.of(team);
+        if (moveInfo.isInitialRow(position)) {
+            movableArea.add(moveInfo.getJumpedPositionOf(position));
         }
-        if (isInitialPawnRow(start.getRow(), team) && team.equals(Team.WHITE)) {
-            movable.add(Position.of(start.getColumn(), Row.FOUR));
-        }
-        return !movable.contains(destination);
+
+        return movableArea;
     }
 
-    private boolean isInitialPawnRow(Row row, Team team) {
-        if (team.equals(Team.BLACK)) {
-            return row.equals(Row.SEVEN);
-        }
-        return row.equals(Row.TWO);
+    private boolean isPawnArea(Position position) {
+        return this.position.getColumnGap(position) <= 1 &&
+                PawnMoveInfo.of(team).isValidRowGap(this.position.getRowGap(position));
     }
 }

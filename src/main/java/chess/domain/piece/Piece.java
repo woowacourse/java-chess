@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
+import java.util.List;
+
 public abstract class Piece {
     protected Position position;
     protected final Name name;
@@ -14,14 +16,7 @@ public abstract class Piece {
     }
 
     public void moveTo(Position destination) {
-        if (isNotMovableTo(position, destination)) {
-            throw new IllegalArgumentException("기물의 이동 범위에 속하지 않습니다.");
-        }
         position = destination;
-    }
-
-    public boolean isEnemy(Piece that) {
-        return this.team != that.team;
     }
 
     public boolean isSameTeam(Team team) {
@@ -32,9 +27,9 @@ public abstract class Piece {
         return this.team != team;
     }
 
-    public abstract void canPawnMove(Piece that);
+    public abstract boolean canNotMoveTo(Piece that);
 
-    protected abstract boolean isNotMovableTo(Position start, Position destination);
+    protected abstract List<Position> createMovableArea();
 
     public Position getPosition() {
         return position;

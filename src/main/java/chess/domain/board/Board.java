@@ -1,6 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.Collections;
@@ -26,25 +29,8 @@ public class Board {
     }
 
     public void update(Position from, Position to) {
-        Piece piece = get(from);
-
-        //todo Pawn으로 이동
-        if (piece instanceof Pawn) {
-            pawnMove(from, to);
-        }
-
         board.replace(to, get(from));
-        board.replace(from, new Empty(from, Team.NONE));
-    }
-
-    private void pawnMove(Position from, Position to) {
-        int columnGap = Math.abs(from.getColumnGap(to));
-        if (columnGap == 0 && board.containsKey(to)) {
-            throw new IllegalArgumentException("폰은 전방의 적을 공격할 수 없습니다.");
-        }
-        if (columnGap == 1 && !board.containsKey(to)) {
-            throw new IllegalArgumentException("폰은 공격이 아니면 대각선 이동이 불가합니다.");
-        }
+        board.replace(from, new Empty(from));
     }
 
     public boolean isKingDead() {

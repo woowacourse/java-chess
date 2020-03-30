@@ -24,7 +24,7 @@ class ChessServiceTest {
     @BeforeEach
     void setUp() {
         Map<Position, Piece> map = new LinkedHashMap<>();
-        map.put(A3, new Empty(A3, Team.NONE));
+        map.put(A3, new Empty(A3));
         map.put(A4, new Rook(A4, Team.BLACK));
         board = Board.of(map);
     }
