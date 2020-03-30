@@ -77,8 +77,7 @@ public class Pieces {
 
     private void validatePieceMovable(Team team, MovePoint movePoint) {
         if (!isMovable(team, movePoint)) {
-            throw new IsNotMovableException(
-                pieces.get(movePoint.getFrom()).toString() + "은 그 장소로 못 움직입니다.");
+            throw new IsNotMovableException("그 장소로 못 움직입니다.");
         }
     }
 
