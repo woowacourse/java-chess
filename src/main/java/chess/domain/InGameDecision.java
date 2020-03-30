@@ -13,10 +13,8 @@ public enum InGameDecision {
         Position destination = new Position(multiArguments.get(2));
         board.movePiece(source, destination);
     }),
-    STATUS("status", (board, multiArguments) -> {
-    }),
-    END("end", (board, multiArguments) -> {
-    });
+    STATUS("status", (board, multiArguments) -> {}),
+    END("end", (board, multiArguments) -> {});
 
     private static final int COMMAND_ARGUMENTS_SIZE = 3;
     private static final String NOT_ENOUGH_ARGUMENTS = "명령에 인자가 부족합니다.";
