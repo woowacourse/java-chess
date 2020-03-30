@@ -62,6 +62,10 @@ public class Position {
 		return this.row.equals(position.row);
 	}
 
+	public boolean isDifferentRow(Position position) {
+		return !this.row.equals(position.row);
+	}
+
 	private static boolean isValidBound(int value) {
 		return value >= MIN_BOUND && value <= MAX_BOUND;
 	}
