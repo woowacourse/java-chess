@@ -21,25 +21,18 @@ public class Pieces {
 
 	public void move(Position start, Position end, Color color) {
 		Piece piece = findBy(start, color);
-
 		Positions movablePositions = piece.createMovablePositions(pieces);
+		validateEndPositionIsMovable(end, movablePositions);
 
-		if (!movablePositions.contains(end)) {
-			throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
-		}
-
-		Piece removingPiece = pieces.stream()
-				.filter(findPiece -> findPiece.isSamePosition(end))
-				.findFirst()
-				.orElseGet(Blank::new);
+		Piece removingPiece = findBy(end);
 		pieces.remove(removingPiece);
 
 		piece.move(end);
 	}
 
-	public Piece findBy(Position start) {
+	public Piece findBy(Position position) {
 		return pieces.stream()
-				.filter(piece -> piece.isSamePosition(start))
+				.filter(piece -> piece.isSamePosition(position))
 				.findFirst()
 				.orElseGet(Blank::new);
 	}
@@ -52,8 +45,10 @@ public class Pieces {
 		throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
 	}
 
-	public List<Piece> getPieces() {
-		return pieces;
+	private void validateEndPositionIsMovable(Position end, Positions movablePositions) {
+		if (!movablePositions.contains(end)) {
+			throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
+		}
 	}
 
 	public boolean isKingDead() {
@@ -69,5 +64,9 @@ public class Pieces {
 				.map(Piece::getColor)
 				.findFirst()
 				.orElseThrow(() -> new UnsupportedOperationException("현재상황에서 사용할 수 없는 메서드입니다."));
+	}
+
+	public List<Piece> getPieces() {
+		return pieces;
 	}
 }
