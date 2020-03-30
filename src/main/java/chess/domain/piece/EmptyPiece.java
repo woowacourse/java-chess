@@ -12,7 +12,7 @@ public class EmptyPiece extends GamePiece {
     private static final GamePiece instance = new EmptyPiece();
 
     private EmptyPiece() {
-        super(".", Collections.emptyList(), 0, PlayerColor.NONE);
+        super("EMPTY", Collections.emptyList(), 0, PlayerColor.NONE);
     }
 
     public static GamePiece getInstance() {

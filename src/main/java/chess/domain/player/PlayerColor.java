@@ -8,8 +8,8 @@ import chess.domain.board.Position;
 
 public enum PlayerColor {
 
-    BLACK("BLACK", String::toUpperCase, Position::horizontalFlip),
-    WHITE("WHITE", String::toLowerCase, Function.identity()),
+    BLACK("BLACK", name -> String.join("-", "BLACK", name), Position::horizontalFlip),
+    WHITE("WHITE", name -> String.join("-", "WHITE", name), Function.identity()),
     NONE("", Function.identity(), Function.identity());
 
     private final String name;
