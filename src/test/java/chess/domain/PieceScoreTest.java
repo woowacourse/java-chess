@@ -24,10 +24,10 @@ public class PieceScoreTest {
 		pieces.put(Position.of("f6"), new Pawn(Color.BLACK, "P"));
 		pieces.put(Position.of("f5"), new Pawn(Color.BLACK, "P"));
 
-		ChessBoard chessBoard = new ChessBoard(pieces);
+		new ChessBoard(pieces);
 
-		double whiteScore = PieceScore.calculateTeam(chessBoard.getPieces(), Color.WHITE);
-		double blackScore = PieceScore.calculateTeam(chessBoard.getPieces(), Color.BLACK);
+		double whiteScore = PieceScore.calculateByColor(pieces, Color.WHITE);
+		double blackScore = PieceScore.calculateByColor(pieces, Color.BLACK);
 
 		assertThat(whiteScore).isEqualTo(38.5);
 		assertThat(blackScore).isEqualTo(38.5);

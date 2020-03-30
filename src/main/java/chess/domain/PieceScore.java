@@ -32,12 +32,12 @@ public enum PieceScore {
 			.orElseThrow(() -> new IllegalArgumentException("해당하는 Piece가 Null입니다!"));
 	}
 
-	public static double calculateTeam(Map<Position, Piece> chessBoard, Color color) {
+	public static double calculateByColor(Map<Position, Piece> chessBoard, Color color) {
 		double teamScore = 0;
 
 		for (File file : File.values()) {
-			teamScore += sumPieceExceptPawn(color, file, chessBoard);
-			teamScore += calculatePawnScore(pawnsOfColumn(color, file, chessBoard));
+			teamScore += sumPieceScoreExceptPawn(color, file, chessBoard);
+			teamScore += sumPawnScore(pawnsOfColumn(color, file, chessBoard));
 		}
 
 		return teamScore;
@@ -53,7 +53,7 @@ public enum PieceScore {
 
 	}
 
-	private static double sumPieceExceptPawn(Color color, File file, Map<Position, Piece> chessBoard) {
+	private static double sumPieceScoreExceptPawn(Color color, File file, Map<Position, Piece> chessBoard) {
 		return Arrays.stream(Rank.values())
 			.map(rank -> chessBoard.get(Position.of(file, rank)))
 			.filter(Objects::nonNull)
@@ -67,7 +67,7 @@ public enum PieceScore {
 		return of(piece).score;
 	}
 
-	private static double calculatePawnScore(List<Piece> pawns) {
+	private static double sumPawnScore(List<Piece> pawns) {
 		if (pawns.size() == 1) {
 			return 1;
 		}
