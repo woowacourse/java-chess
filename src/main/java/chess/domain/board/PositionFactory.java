@@ -3,7 +3,7 @@ package chess.domain.board;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Positions {
+public class PositionFactory {
     private static final Map<String, Position> allPositions = createAllPositions();
 
     private static Map<String, Position> createAllPositions() {

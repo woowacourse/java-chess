@@ -1,7 +1,7 @@
 package chess.domain.command;
 
 import chess.domain.board.Position;
-import chess.domain.board.Positions;
+import chess.domain.board.PositionFactory;
 
 import static chess.util.NullValidator.validateNull;
 
@@ -14,8 +14,8 @@ public class MoveCommand {
     public MoveCommand(String moveCommand) {
         validate(moveCommand);
         String[] separatedCommand = moveCommand.split(" ");
-        sourcePosition = Positions.of(separatedCommand[1]);
-        targetPosition = Positions.of(separatedCommand[2]);
+        sourcePosition = PositionFactory.of(separatedCommand[1]);
+        targetPosition = PositionFactory.of(separatedCommand[2]);
     }
 
     private void validate(String moveCommand) {
@@ -33,7 +33,7 @@ public class MoveCommand {
     }
 
     private void validatePositionWord(String position) {
-        Positions.of(position);
+        PositionFactory.of(position);
     }
 
     public Position getSourcePosition() {

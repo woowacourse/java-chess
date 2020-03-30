@@ -1,7 +1,7 @@
 package board;
 
 import chess.domain.board.Board;
-import chess.domain.board.Positions;
+import chess.domain.board.PositionFactory;
 import chess.domain.piece.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,28 +25,29 @@ public class BoardTest {
             "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
             "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"})
     void inputEmptyPiecePositionThenThrowException(String input) {
-        Assertions.assertThatThrownBy(() -> board.findPiece(Positions.of(input), PieceColor.NONE)).hasMessage("움직일 수 있는 체스말이 없습니다.");
+        Assertions.assertThatThrownBy(() -> board.findPiece(PositionFactory.of(input), PieceColor.NONE)).hasMessage(
+                "움직일 수 있는 체스말이 없습니다.");
     }
 
     @Test
     @DisplayName("EmptyPiece가 아닌 체스말이 있는 위치값이 입력되면 해당 체스말을 반환해야 함")
     void inputPiecePositionThenReturnPiece() {
-        Piece piece = board.findPiece(Positions.of("a1"), PieceColor.WHITE);
+        Piece piece = board.findPiece(PositionFactory.of("a1"), PieceColor.WHITE);
         Assertions.assertThat(piece instanceof Rook).isTrue();
 
-        piece = board.findPiece(Positions.of("b8"), PieceColor.BLACK);
+        piece = board.findPiece(PositionFactory.of("b8"), PieceColor.BLACK);
         Assertions.assertThat(piece instanceof Knight).isTrue();
 
-        piece = board.findPiece(Positions.of("c1"), PieceColor.WHITE);
+        piece = board.findPiece(PositionFactory.of("c1"), PieceColor.WHITE);
         Assertions.assertThat(piece instanceof Bishop).isTrue();
 
-        piece = board.findPiece(Positions.of("d8"), PieceColor.BLACK);
+        piece = board.findPiece(PositionFactory.of("d8"), PieceColor.BLACK);
         Assertions.assertThat(piece instanceof Queen).isTrue();
 
-        piece = board.findPiece(Positions.of("e1"), PieceColor.WHITE);
+        piece = board.findPiece(PositionFactory.of("e1"), PieceColor.WHITE);
         Assertions.assertThat(piece instanceof King).isTrue();
 
-        piece = board.findPiece(Positions.of("c2"), PieceColor.WHITE);
+        piece = board.findPiece(PositionFactory.of("c2"), PieceColor.WHITE);
         Assertions.assertThat(piece instanceof Pawn).isTrue();
     }
 
@@ -57,7 +58,7 @@ public class BoardTest {
             "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
             "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"})
     void inputNoPiecePositionThenThrowException(String input) {
-        Assertions.assertThatThrownBy(() -> board.findPiece(Positions.of(input), PieceColor.NONE))
+        Assertions.assertThatThrownBy(() -> board.findPiece(PositionFactory.of(input), PieceColor.NONE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("움직일 수 있는 체스말이 없습니다.");
     }
@@ -67,7 +68,7 @@ public class BoardTest {
     @ValueSource(strings = {"a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "a7", "b7", "c7", "d7", "e7", "f7", "g7",
             "h7"})
     void findDifferentPieceColorPositionThenThrowException(String input) {
-        Assertions.assertThatThrownBy(() -> board.findPiece(Positions.of(input), PieceColor.WHITE))
+        Assertions.assertThatThrownBy(() -> board.findPiece(PositionFactory.of(input), PieceColor.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 색의 말을 움직일 수 없습니다.");
     }
