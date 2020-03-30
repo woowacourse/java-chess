@@ -1,5 +1,6 @@
-package chess.domain.board;
+package chess.domain.board.initializer;
 
+import chess.domain.board.BoardInitializer;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.implementation.Bishop;
 import chess.domain.piece.implementation.King;

@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.BoardState;
+import chess.domain.board.BoardSituation;
 import chess.domain.direction.MovingDirection;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
@@ -15,23 +15,23 @@ public abstract class MoveByDirectionPiece extends Piece {
     }
 
     @Override
-    public List<Position> getMovablePositions(BoardState boardState) {
+    public List<Position> getMovablePositions(BoardSituation boardSituation) {
         List<Position> positions = new ArrayList<>();
         for (MovingDirection movingDirection : getMovingDirections()) {
-            positions.addAll(getMovableBy(movingDirection, boardState));
+            positions.addAll(getMovableBy(movingDirection, boardSituation));
         }
         return positions;
     }
 
-    private List<Position> getMovableBy(MovingDirection movingDirection, BoardState boardState) {
+    private List<Position> getMovableBy(MovingDirection movingDirection, BoardSituation boardSituation) {
         List<Position> positions = new ArrayList<>();
         Position startPosition = position;
         while (startPosition.canMoveBy(movingDirection)) {
             startPosition = startPosition.moveByDirection(movingDirection);
-            if (boardState.canMove(startPosition) || boardState.canAttack(startPosition, team)) {
+            if (boardSituation.canMove(startPosition) || boardSituation.canAttack(startPosition, team)) {
                 positions.add(startPosition);
             }
-            if (!boardState.canMove(startPosition)) {
+            if (!boardSituation.canMove(startPosition)) {
                 break;
             }
         }

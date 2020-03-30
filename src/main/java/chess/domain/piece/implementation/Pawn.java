@@ -1,6 +1,6 @@
 package chess.domain.piece.implementation;
 
-import chess.domain.board.BoardState;
+import chess.domain.board.BoardSituation;
 import chess.domain.direction.MovingDirection;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceState;
@@ -42,57 +42,57 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> getMovablePositions(BoardState boardState) {
-        List<Position> totalPositions = movePositions(boardState);
-        totalPositions.addAll(attackPositions(boardState));
+    public List<Position> getMovablePositions(BoardSituation boardSituation) {
+        List<Position> totalPositions = movePositions(boardSituation);
+        totalPositions.addAll(attackPositions(boardSituation));
         return totalPositions;
     }
 
-    private List<Position> movePositions(BoardState boardState) {
+    private List<Position> movePositions(BoardSituation boardSituation) {
         MovingDirection moveDirection = MOVING_DIRECTION_BY_TEAM.get(team);
         List<Position> positions = new ArrayList<>();
         Position startPosition = position.moveByDirection(moveDirection);
-        if (boardState.canMove(startPosition)) {
+        if (boardSituation.canMove(startPosition)) {
             positions.add(startPosition);
-            checkOneStepMore(boardState, positions);
+            checkOneStepMore(boardSituation, positions);
         }
         return positions;
     }
 
-    private List<Position> attackPositions(BoardState boardState) {
+    private List<Position> attackPositions(BoardSituation boardSituation) {
         List<Position> attackPositions = new ArrayList<>();
         List<MovingDirection> attackDirections = ATTACK_DIRECTION_BY_TEAM.get(team);
         for (MovingDirection attackDirection : attackDirections) {
-            canAttackBy(attackDirection, boardState, attackPositions);
+            canAttackBy(attackDirection, boardSituation, attackPositions);
         }
         return attackPositions;
     }
 
-    private void checkOneStepMore(BoardState boardState, List<Position> positions) {
+    private void checkOneStepMore(BoardSituation boardSituation, List<Position> positions) {
         if (isFistMove()) {
-            moveOneStepMore(boardState, positions);
+            moveOneStepMore(boardSituation, positions);
         }
     }
 
-    private void moveOneStepMore(BoardState boardState, List<Position> positions) {
+    private void moveOneStepMore(BoardSituation boardSituation, List<Position> positions) {
         MovingDirection movingDirection = MOVING_DIRECTION_BY_TEAM.get(team);
         Position twoStepMovedPosition = position.moveByDirection(movingDirection)
                 .moveByDirection(movingDirection);
-        if (boardState.canMove(twoStepMovedPosition)) {
+        if (boardSituation.canMove(twoStepMovedPosition)) {
             positions.add(twoStepMovedPosition);
         }
     }
 
-    private void canAttackBy(MovingDirection attackDirection, BoardState boardState, List<Position> attackPositions) {
+    private void canAttackBy(MovingDirection attackDirection, BoardSituation boardSituation, List<Position> attackPositions) {
         Position startPosition = position;
         if (startPosition.canMoveBy(attackDirection)) {
             startPosition = startPosition.moveByDirection(attackDirection);
-            addIfAttack(boardState, attackPositions, startPosition);
+            addIfAttack(boardSituation, attackPositions, startPosition);
         }
     }
 
-    private void addIfAttack(BoardState boardState, List<Position> attackPositions, Position startPosition) {
-        if (boardState.canAttack(startPosition, team)) {
+    private void addIfAttack(BoardSituation boardSituation, List<Position> attackPositions, Position startPosition) {
+        if (boardSituation.canAttack(startPosition, team)) {
             attackPositions.add(startPosition);
         }
     }
@@ -100,6 +100,14 @@ public class Pawn extends Piece {
     private boolean isFistMove() {
         Rank startRank = START_POINT_BY_TEAM.get(team);
         return position.isSameRank(startRank);
+    }
+
+    @Override
+    public double getPoint(BoardSituation boardSituation) {
+        if (boardSituation.existSamePieceInSameFile(position, team)) {
+            return pieceType.getPoint() / 2;
+        }
+        return pieceType.getPoint();
     }
 
     @Override

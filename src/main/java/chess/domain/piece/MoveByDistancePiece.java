@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.BoardState;
+import chess.domain.board.BoardSituation;
 import chess.domain.direction.MovingDirection;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
@@ -15,19 +15,19 @@ public abstract class MoveByDistancePiece extends Piece {
     }
 
     @Override
-    public List<Position> getMovablePositions(BoardState boardState) {
+    public List<Position> getMovablePositions(BoardSituation boardSituation) {
         List<Position> positions = new ArrayList<>();
         for (MovingDirection movingDirection : getMovingDirections()) {
-            addPositionBy(movingDirection, boardState, positions);
+            addPositionBy(movingDirection, boardSituation, positions);
         }
         return positions;
     }
 
-    private void addPositionBy(MovingDirection movingDirection, BoardState boardState, List<Position> positions) {
+    private void addPositionBy(MovingDirection movingDirection, BoardSituation boardSituation, List<Position> positions) {
         Position targetPosition = position;
         if (targetPosition.canMoveBy(movingDirection)) {
             targetPosition = targetPosition.moveByDirection(movingDirection);
-            if (boardState.canMove(targetPosition) || boardState.canAttack(targetPosition, team)) {
+            if (boardSituation.canMove(targetPosition) || boardSituation.canAttack(targetPosition, team)) {
                 positions.add(targetPosition);
             }
         }

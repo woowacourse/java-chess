@@ -7,23 +7,23 @@ import java.util.Map;
 
 public class ResponseDto {
 
-    private Map<Position, String> board;
+    private Map<Position, PieceDto> board;
     private Map<Team, Double> scores;
 
-    public ResponseDto(Map<Position, String> board, Map<Team, Double> scores) {
+    public ResponseDto(Map<Position, PieceDto> board, Map<Team, Double> scores) {
         this.board = board;
         this.scores = scores;
     }
 
-    public ResponseDto(Map<Position, String> board) {
+    public ResponseDto(Map<Position, PieceDto> board) {
         this.board = board;
     }
 
-    public static ResponseDto of(Map<Position, String> board) {
+    public static ResponseDto of(Map<Position, PieceDto> board) {
         return new ResponseDto(board);
     }
 
-    public Map<Position, String> getBoard() {
+    public Map<Position, PieceDto> getBoard() {
         return board;
     }
 

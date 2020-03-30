@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.BoardState;
+import chess.domain.board.BoardSituation;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 import chess.exception.MovingException;
@@ -20,8 +20,8 @@ public abstract class Piece implements PieceState {
     }
 
     @Override
-    public PieceState move(Position target, BoardState boardState) {
-        List<Position> positions = getMovablePositions(boardState);
+    public PieceState move(Position target, BoardSituation boardSituation) {
+        List<Position> positions = getMovablePositions(boardSituation);
         if (!positions.contains(target)) {
             throw new MovingException();
         }
@@ -41,12 +41,7 @@ public abstract class Piece implements PieceState {
     }
 
     @Override
-    public String getFigure() {
-        return pieceType.getFigure(team);
-    }
-
-    @Override
-    public double getPoint(BoardState boardState) {
+    public double getPoint(BoardSituation boardSituation) {
         return pieceType.getPoint();
     }
 }

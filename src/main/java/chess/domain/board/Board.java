@@ -1,8 +1,8 @@
 package chess.domain.board;
 
 import chess.domain.game.Turn;
-import chess.domain.piece.PieceDto;
 import chess.domain.piece.PieceState;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.implementation.King;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
@@ -28,7 +28,7 @@ public class Board {
     public void move(Position source, Position target, Turn turn) {
         PieceState sourcePiece = board.get(source);
         validateSource(sourcePiece, turn);
-        PieceState piece = sourcePiece.move(target, getBoardDto());
+        PieceState piece = sourcePiece.move(target, getBoardState());
         board.remove(source);
         board.put(target, piece);
         turn.switchTurn();
@@ -45,7 +45,7 @@ public class Board {
         return board.values()
                 .stream()
                 .filter(value -> team.equals(value.getTeam()))
-                .mapToDouble(value -> value.getPoint(getBoardDto()))
+                .mapToDouble(value -> value.getPoint(getSamePieceTypeStatus(value.getPieceType())))
                 .sum();
     }
 
@@ -70,13 +70,24 @@ public class Board {
         }
     }
 
-    private BoardState getBoardDto() {
-        Map<Position, PieceDto> boardState = board.entrySet()
+    private BoardSituation getSamePieceTypeStatus(PieceType pieceType) {
+        Map<Position, Team> boardState = board.entrySet()
+                .stream()
+                .filter(entry -> pieceType.isSameType(entry.getValue().getPieceType()))
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(),
+                        entry -> entry.getValue().getTeam()
+                ));
+        return BoardSituation.of(boardState);
+    }
+
+    private BoardSituation getBoardState() {
+        Map<Position, Team> boardState = board.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
-                        entry -> new PieceDto(entry.getValue().getPieceType(), entry.getValue().getTeam())
-                ));
-        return BoardState.of(boardState);
+                        entry -> entry.getValue().getTeam())
+                );
+        return BoardSituation.of(boardState);
     }
 }
