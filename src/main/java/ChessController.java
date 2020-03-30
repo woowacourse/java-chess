@@ -14,7 +14,6 @@ public class ChessController {
             progress = getProgress(chessGame);
             OutputView.printPresentPlayer(chessGame.getTurn());
         }
-        // TODO : 바로 종료 했을 때 java.util.NoSuchElementException: No value present 에러 발생
         printResult(chessGame);
     }
 

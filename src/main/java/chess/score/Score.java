@@ -28,14 +28,6 @@ public class Score {
         return value > score2.value;
     }
 
-    public boolean isEqualThan(Score score2) {
-        return value == score2.value;
-    }
-
-    public boolean isLowerThan(Score score2) {
-        return value == score2.value;
-    }
-
     public double getValue() {
         return value;
     }

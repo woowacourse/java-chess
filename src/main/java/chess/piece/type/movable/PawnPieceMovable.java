@@ -60,10 +60,10 @@ public class PawnPieceMovable implements PieceMovable {
         return true;
     }
 
-    public boolean canMoveDiagonal(Map<Location, Piece> board, Location now, Location after) {
+    private boolean canMoveDiagonal(Map<Location, Piece> board, Location now, Location after) {
         // 대각선 방향 && 목적지에 피스가 있는경우
-        if(now.isDiagonal(after)) {
-            if(board.containsKey(after)) {
+        if (now.isDiagonal(after)) {
+            if (board.containsKey(after)) {
                 Piece maybeEnemyPiece = board.get(after);
                 return maybeEnemyPiece.isReverseTeam(team);
             }

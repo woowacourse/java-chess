@@ -11,9 +11,6 @@ public class Move extends Command {
 
     public static boolean isMove(String command) {
         String lowerCaseCommand = command.toLowerCase();
-        if(lowerCaseCommand.substring(0, 4).equals(COMMAND)) {
-            return true;
-        }
-        return false;
+        return lowerCaseCommand.substring(0, 4).equals(COMMAND);
     }
 }

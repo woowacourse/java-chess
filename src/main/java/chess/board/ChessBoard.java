@@ -16,19 +16,12 @@ import static chess.board.ChessBoardMaker.*;
 
 public class ChessBoard {
     private static final double PAWN_REDUCE_VALUE = 0.5;
-    private static final int WHITE_NOBLE_LINE = 1;
-    private static final int WHITE_PAWN_LINE = 2;
-    private static final int BLACK_PAWN_LINE = 7;
-    private static final int BLACK_NOBLE_LINE = 8;
 
     private final Map<Location, Piece> board;
 
     public ChessBoard() {
         this.board = new HashMap<>();
-        putNoble(board, WHITE_NOBLE_LINE, Team.WHITE);
-        putPawns(board, WHITE_PAWN_LINE, Team.WHITE);
-        putPawns(board, BLACK_PAWN_LINE, Team.BLACK);
-        putNoble(board, BLACK_NOBLE_LINE, Team.BLACK);
+        makeChessBoard(board);
     }
 
     public boolean canMove(Location now, Location destination) {
@@ -46,11 +39,10 @@ public class ChessBoard {
     }
 
     private boolean isNotSameTeam(Location destination, Piece piece) {
-        boolean isNotSameTeam = true;
         if (board.containsKey(destination)) {
             return piece.isNotSameTeam(board.get(destination));
         }
-        return isNotSameTeam;
+        return true;
     }
 
     // 팀별 위치, 체스 정보를 가져온다.
@@ -65,9 +57,7 @@ public class ChessBoard {
     }
 
     public void move(Location now, Location destination) {
-        if (board.containsKey(destination)) {
-            board.remove(destination);
-        }
+        board.remove(destination);
         Piece piece = board.remove(now);
         board.put(destination, piece);
     }

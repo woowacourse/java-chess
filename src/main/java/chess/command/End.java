@@ -18,9 +18,6 @@ public class End extends Command {
 
     public static boolean isEnd(String command) {
         String lowerCaseCommand = command.toLowerCase();
-        if (COMMAND.equals(lowerCaseCommand)) {
-            return true;
-        }
-        return false;
+        return COMMAND.equals(lowerCaseCommand);
     }
 }

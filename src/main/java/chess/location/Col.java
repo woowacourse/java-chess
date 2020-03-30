@@ -30,14 +30,7 @@ public enum Col {
     }
 
     private static boolean isInValidRange(int value) {
-        if (A.value > value || H.value < value) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean is(int value) {
-        return this.value == value;
+        return A.value > value || H.value < value;
     }
 
     public boolean is(Col col) {

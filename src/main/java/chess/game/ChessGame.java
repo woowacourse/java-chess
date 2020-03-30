@@ -28,8 +28,8 @@ public class ChessGame {
         turn = Team.WHITE;
     }
 
-    public Team changeTurn() {
-        return turn = turn.changeTurn();
+    public void changeTurn() {
+        turn = turn.changeTurn();
     }
 
     // State 패턴

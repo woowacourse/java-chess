@@ -5,7 +5,6 @@ import chess.piece.type.Piece;
 import chess.score.Score;
 
 import java.util.Map;
-import java.util.Set;
 
 public class ChessSet {
     private final Map<Location, Piece> chessSet;
@@ -21,8 +20,8 @@ public class ChessSet {
                 .get();
     }
 
-    public Piece remove(Location location) {
-        return chessSet.remove(location);
+    public void remove(Location location) {
+        chessSet.remove(location);
     }
 
     public boolean hasNotKing() {

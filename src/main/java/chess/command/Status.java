@@ -18,9 +18,6 @@ public class Status extends Command {
 
     public static boolean isStatus(String command) {
         String lowerCaseCommand = command.toLowerCase();
-        if (COMMAND.equals(lowerCaseCommand)) {
-            return true;
-        }
-        return false;
+        return COMMAND.equals(lowerCaseCommand);
     }
 }

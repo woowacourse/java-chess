@@ -2,14 +2,10 @@ package chess.location;
 
 import static java.lang.Math.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 // 팀별 초기위치를 갖고있는다.
 public class Location {
-    private static final int KING_RANGE = 1;
-
     private final Row row;
     private final Col col;
 
@@ -30,33 +26,6 @@ public class Location {
     public boolean isDiagonal(Location destination) {
         return abs(row.getValue() - destination.row.getValue())
                 == abs(col.getValue() - destination.col.getValue());
-    }
-
-    public boolean isKingRange(Location destination) {
-        boolean canRowMove =
-                abs(row.getValue() - destination.row.getValue()) <= KING_RANGE;
-        boolean canColMove =
-                abs(col.getValue() - destination.col.getValue()) <= KING_RANGE;
-
-        return canRowMove && canColMove;
-    }
-
-    public boolean isKnightRange(Location destination) {
-        int[] dRow = {2, 2, 1, 1, -1, -1, -2, -2};
-        int[] dCol = {1, -1, -2, 2, -2, 2, -1, 1};
-
-        for (int i = 0; i < dRow.length; i++) {
-            Row nx = row.plus(dRow[i]);
-            Col ny = col.plus(dCol[i]);
-            if (destination.row.is(nx) && destination.col.is(ny)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isQueenRange(Location destination) {
-        return isDiagonal(destination) || isStraight(destination);
     }
 
     public boolean isStraight(Location destination) {
@@ -92,7 +61,7 @@ public class Location {
         return new Location(row.plus(rowWeight), col.plus(colWeight));
     }
 
-    public boolean isVertical(Location destination) {
+    private boolean isVertical(Location destination) {
         return col.is(destination.col);
     }
 
@@ -112,16 +81,16 @@ public class Location {
         return new Location(row.plus(value), col);
     }
 
-    public Row getRow() {
-        return row;
+    public Location plusBy(int rowValue ,int colValue) {
+        return new Location(row.plus(rowValue), col.plus(colValue));
     }
 
     public int getRowValue() {
         return row.getValue();
     }
 
-    public Col getCol() {
-        return col;
+    public char getColValue() {
+        return col.getValue();
     }
 
     @Override

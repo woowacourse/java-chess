@@ -30,10 +30,7 @@ public enum Row {
     }
 
     private static boolean isInValidRange(int value) {
-        if (ONE.value > value || EIGHT.value < value) {
-            return true;
-        }
-        return false;
+        return ONE.value > value || EIGHT.value < value;
     }
 
     public boolean is(int value) {
