@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum Team {
     BLACK("흑"),
     WHITE("백"),
-    NONE(".");
+    NONE(null);
 
 	private final String name;
 
@@ -21,10 +21,10 @@ public enum Team {
     }
 
     public static String getPieceName(Piece piece) {
-        if (piece.isSameTeam(BLACK)) {
-            return piece.getName();
+        if (piece.isSameTeam(WHITE)) {
+            return piece.getName().toLowerCase();
         }
-        return piece.getName().toLowerCase();
+        return piece.getName();
     }
 
     public String getName() {
