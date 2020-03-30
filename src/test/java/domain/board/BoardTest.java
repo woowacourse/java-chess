@@ -2,26 +2,18 @@ package domain.board;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import domain.board.fixture.KnightBoard;
 import domain.board.fixture.PawnBoard;
 import domain.board.fixture.RookBoard;
-import domain.piece.Knight;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.team.Team;
 
 public class BoardTest {
-	private Board board;
-
-	@BeforeEach
-	void setUp() {
-		board = BoardFactory.create();
-	}
+	private Board board = BoardFactory.create();
 
 	@DisplayName("입력한 source 위치에 말이 없으면 예외 발생")
 	@ParameterizedTest
@@ -44,28 +36,28 @@ public class BoardTest {
 	@DisplayName("처음 상태의 보드판 점수 확인")
 	@Test
 	void getScore_InitialBoard_IsBlack38AndWhit38() {
-		assertThat(board.getScore().get(Team.WHITE)).isEqualTo(38.0);
-		assertThat(board.getScore().get(Team.BLACK)).isEqualTo(38.0);
+		assertThat(board.calculateScore().get(Team.WHITE)).isEqualTo(38.0);
+		assertThat(board.calculateScore().get(Team.BLACK)).isEqualTo(38.0);
 	}
 
 	@DisplayName("White팀 Rook 2개, Black팀 Rook 1개가 생존했을 때 점수 확인")
 	@Test
 	void getScore_Black1RookAndWhite2Rook_Black5White10() {
 		Board board = new RookBoard().create();
-		assertThat(board.getScore().get(Team.WHITE)).isEqualTo(10);
-		assertThat(board.getScore().get(Team.BLACK)).isEqualTo(5);
-	}
-
-	@DisplayName("King이 죽었을 때 isKingAlive를 호출하면 false반환")
-	@Test
-	void isKingAlive_KingIsDead_ReturnFalse() {
-		Board board = new PawnBoard().create();
-		assertThat(board.isKingAlive()).isFalse();
+		assertThat(board.calculateScore().get(Team.WHITE)).isEqualTo(10);
+		assertThat(board.calculateScore().get(Team.BLACK)).isEqualTo(5);
 	}
 
 	@DisplayName("King이 살았을 때 isKingAlive를 호출하면 true반환")
 	@Test
 	void isKingAlive_KingIsAlive_ReturnTrue() {
 		assertThat(board.isKingAlive()).isTrue();
+	}
+
+	@DisplayName("King이 죽었을 때 isKingAlive를 호출하면 false반환")
+	@Test
+	void isKingAlive_KingIsDead_ReturnFalse() {
+		Board boardWithoutKing = new PawnBoard().create();
+		assertThat(boardWithoutKing.isKingAlive()).isFalse();
 	}
 }

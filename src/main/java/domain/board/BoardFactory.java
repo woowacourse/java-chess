@@ -20,15 +20,21 @@ public class BoardFactory {
 	private static final String BLACK_PAWN_RANK = "7";
 	private static final String BLACK_OTHER_PIECE_RANK = "8";
 	private static final int EMPTY_RANK_SIZE = 4;
-	private static List<Rank> ranks = new ArrayList<>();
+	private static final List<Rank> ranks = new ArrayList<>();
 
-	public static Board create() {
+	static {
 		createRank(WHITE_OTHER_PIECE_RANK, Team.WHITE);
 		createPawnRank(WHITE_PAWN_RANK, Team.WHITE);
 		createEmptyRank();
 		createPawnRank(BLACK_PAWN_RANK, Team.BLACK);
 		createRank(BLACK_OTHER_PIECE_RANK, Team.BLACK);
-		return new Board(ranks);
+	}
+
+	private BoardFactory() {
+	}
+
+	public static Board create() {
+		return new Board(new ArrayList<>(ranks));
 	}
 
 	private static void createEmptyRank() {

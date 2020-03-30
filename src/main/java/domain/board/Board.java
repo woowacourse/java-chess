@@ -23,10 +23,6 @@ public class Board {
 		this.ranks = ranks;
 	}
 
-	public List<Rank> getRanks() {
-		return ranks;
-	}
-
 	public void move(String sourcePosition, String inputTargetPosition, Team turn) {
 		int rankLine = Integer.parseInt(String.valueOf(sourcePosition.charAt(ROW_INDEX)));
 		Rank rank = ranks.get(rankLine - 1);
@@ -44,7 +40,7 @@ public class Board {
 			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
 	}
 
-	public Map<Team, Double> getScore() {
+	public Map<Team, Double> calculateScore() {
 		Map<Team, Double> scoreBoard = new HashMap<>();
 		scoreBoard.put(Team.WHITE, calculateScoreByTeam(Team.WHITE));
 		scoreBoard.put(Team.BLACK, calculateScoreByTeam(Team.BLACK));
@@ -79,8 +75,13 @@ public class Board {
 	}
 
 	public boolean isKingAlive() {
-		return INITIAL_KING_COUNT == ranks.stream().flatMap(piece -> piece.getPieces().stream())
+		return INITIAL_KING_COUNT == (int)ranks.stream()
+			.flatMap(rank -> rank.getPieces().stream())
 			.filter(piece -> piece instanceof King)
 			.count();
+	}
+
+	public List<Rank> getRanks() {
+		return ranks;
 	}
 }

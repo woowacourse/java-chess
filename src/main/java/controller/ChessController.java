@@ -34,7 +34,7 @@ public class ChessController {
 			}
 
 			if (Command.STATUS.equals(command)) {
-				OutputView.printScore(board.getScore());
+				OutputView.printScore(board.calculateScore());
 			}
 		} while (Command.END != command && board.isKingAlive());
 	}
