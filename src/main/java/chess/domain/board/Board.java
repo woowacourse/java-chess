@@ -30,7 +30,7 @@ public class Board {
         if (sourcePiece.isNone()) {
             throw new PieceNotFoundException("움직일 수 있는 체스말이 없습니다.");
         }
-        if (sourcePiece.isDifferentColor(team)) {
+        if (!sourcePiece.isSameColor(team)) {
             throw new AnotherTeamPieceException("다른 색의 말을 움직일 수 없습니다.");
         }
         return board.get(sourcePosition);

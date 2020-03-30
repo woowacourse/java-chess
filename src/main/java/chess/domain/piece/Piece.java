@@ -27,10 +27,6 @@ public abstract class Piece {
         return pieceColor.isNoneColor();
     }
 
-    public boolean isWhite() {
-        return pieceColor.isWhite();
-    }
-
     public boolean isBlack() {
         return pieceColor.isBlack();
     }
@@ -39,8 +35,8 @@ public abstract class Piece {
         return this.pieceColor == piece.pieceColor;
     }
 
-    public boolean isDifferentColor(PieceColor team) {
-        return this.pieceColor != team;
+    public boolean isSameColor(PieceColor color) {
+        return this.pieceColor == color;
     }
 
     public String getName() {
