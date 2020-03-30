@@ -29,4 +29,20 @@ public abstract class Piece {
             throw new IllegalArgumentException("입력이 존재하지 않습니다.");
         }
     }
+
+    public void removeSameColorSquare(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Square squareToAdd) {
+        if (chessBoard.containsKey(squareToAdd)) {
+            removeSquareWhenSameColor(chessBoard, availableSquares, squareToAdd);
+        }
+    }
+
+    public void removeSquareWhenSameColor(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Square squareToAdd) {
+        if (!(chessBoard.get(squareToAdd) == null) && chessBoard.get(squareToAdd).color.equals(color)) {
+            availableSquares.remove(squareToAdd);
+        }
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }

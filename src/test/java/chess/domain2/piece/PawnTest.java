@@ -1,10 +1,7 @@
-package domain2.piece;
+package chess.domain2.piece;
 
 import chess.domain2.Color;
 import chess.domain2.Square;
-import chess.domain2.piece.Knight;
-import chess.domain2.piece.Pawn;
-import chess.domain2.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

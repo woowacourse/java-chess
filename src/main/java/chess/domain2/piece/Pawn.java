@@ -1,12 +1,18 @@
 package chess.domain2.piece;
 
-import chess.domain2.*;
+import chess.domain2.Color;
+import chess.domain2.Direction;
+import chess.domain2.Square;
+import chess.domain2.Type;
 
 import java.util.*;
 
 public class Pawn extends Piece {
 
     private final static Map<String, Pawn> CACHE = new HashMap<>();
+    private static final char BLACK_PAWN_FIRST_RANK = '7';
+    private static final char WHITE_PAWN_FIRST_RANK = '2';
+    private static final int FIRST_PAWN_MOVE_SCOPE = 2;
 
     static {
         for (Color color : Color.values()) {
@@ -70,34 +76,28 @@ public class Pawn extends Piece {
                 direction.getFileDegree(), direction.getRankDegree(), centerSquare
         );
         availableSquares.add(squareToAdd);
-        if (chessBoard.containsKey(squareToAdd)) {
-            removeSquareWhenSameColor(chessBoard, availableSquares, squareToAdd);
+        if (!centerSquare.equals(squareToAdd)) {
+            removeSameColorSquare(chessBoard, availableSquares, squareToAdd);
         }
         if (isFirstMove(centerSquare)) {
             squareToAdd = addSquareWhenFirstPawnMove(availableSquares, direction, centerSquare);
-            if (chessBoard.containsKey(squareToAdd)) {
-                removeSquareWhenSameColor(chessBoard, availableSquares, squareToAdd);
+            if (!centerSquare.equals(squareToAdd)) {
+                removeSameColorSquare(chessBoard, availableSquares, squareToAdd);
             }
         }
     }
 
     private boolean isFirstMove(Square centerSquare) {
-        return (color.equals(Color.BLACK) && centerSquare.getRank() == '7') ||
-                (color.equals(Color.WHITE) && centerSquare.getRank() == '2');
+        return (color.equals(Color.BLACK) && centerSquare.getRank() == BLACK_PAWN_FIRST_RANK) ||
+                (color.equals(Color.WHITE) && centerSquare.getRank() == WHITE_PAWN_FIRST_RANK);
     }
 
     private Square addSquareWhenFirstPawnMove(Set<Square> availableSquares, Direction direction, Square centerSquare) {
         Square squareToAdd;
         squareToAdd = Square.moveTo(
-                direction.getFileDegree(), direction.getRankDegree() * (int) Rank.TWO.getName(), centerSquare);
+                direction.getFileDegree(), direction.getRankDegree() * FIRST_PAWN_MOVE_SCOPE, centerSquare);
         availableSquares.add(squareToAdd);
         return squareToAdd;
-    }
-
-    private void removeSquareWhenSameColor(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Square squareToAdd) {
-        if (!(chessBoard.get(squareToAdd) == null) && chessBoard.get(squareToAdd).color.equals(color)) {
-            availableSquares.remove(squareToAdd);
-        }
     }
 
     private Direction getRankLevelByColor() {

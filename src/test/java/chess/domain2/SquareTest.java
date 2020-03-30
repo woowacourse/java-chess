@@ -1,6 +1,5 @@
-package domain2;
+package chess.domain2;
 
-import chess.domain2.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -49,14 +49,8 @@ public class King extends Piece {
         Square squareToAdd = Square.moveTo(
                 direction.getFileDegree(), direction.getRankDegree(), centerSquare);
         availableSquares.add(squareToAdd);
-        if (chessBoard.containsKey(squareToAdd)) {
+        if (chessBoard.containsKey(squareToAdd) && !squareToAdd.equals(centerSquare)) {
             removeSquareWhenSameColor(chessBoard, availableSquares, squareToAdd);
-        }
-    }
-
-    private void removeSquareWhenSameColor(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Square add) {
-        if (chessBoard.get(add).color.equals(color)) {
-            availableSquares.remove(add);
         }
     }
 

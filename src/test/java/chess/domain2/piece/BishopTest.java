@@ -1,9 +1,8 @@
-package domain2.piece;
+package chess.domain2.piece;
 
 
 import chess.domain2.Color;
 import chess.domain2.Square;
-import chess.domain2.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

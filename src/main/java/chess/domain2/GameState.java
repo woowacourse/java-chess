@@ -6,7 +6,8 @@ public enum GameState {
     START("start"),
     END("end"),
     MOVE("move"),
-    STATUS("status");
+    STATUS("status"),
+    ERROR("입력이 잘못되었습니다.");
 
     private final String name;
 
@@ -19,7 +20,7 @@ public enum GameState {
         return Arrays.stream(GameState.values())
                 .filter(gameState -> gameState.getName().equals(input.toLowerCase()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다"));
+                .orElse(ERROR);
     }
 
     private static void validateInput(String input) {

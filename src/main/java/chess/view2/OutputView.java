@@ -32,4 +32,20 @@ public class OutputView {
         }
         System.out.println();
     }
+
+    public static void printInputError() {
+        System.out.println("입력이 잘못되었습니다. 바르게 입력해주세요.");
+    }
+
+    public static void printStartGameFirstMessage() {
+        System.out.println("게임이 시작되지 않았습니다. 먼저 시작해주세요.");
+    }
+
+    public static void printAlreadyGameStartedMessage() {
+        System.out.println("이미 게임이 시작되었습니다.");
+    }
+
+    public static void printCanNotMoveMessage() {
+        System.out.println("이동할 수 없는 위치입니다.");
+    }
 }

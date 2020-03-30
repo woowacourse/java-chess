@@ -52,16 +52,10 @@ public class Bishop extends Piece {
                     direction.getFileDegree() * moveTime, direction.getRankDegree() * moveTime, centerSquare
             );
             availableSquares.add(squareToAdd);
-            if (chessBoard.containsKey(squareToAdd)) {
+            if (chessBoard.containsKey(squareToAdd) && !squareToAdd.equals(centerSquare)) {
                 removeSquareWhenSameColor(chessBoard, availableSquares, squareToAdd);
                 break;
             }
-        }
-    }
-
-    private void removeSquareWhenSameColor(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Square add) {
-        if (chessBoard.get(add).color.equals(color)) {
-            availableSquares.remove(add);
         }
     }
 

@@ -50,14 +50,8 @@ public class Knight extends Piece {
         Square squareToAdd = Square.moveTo(
                 direction.getFileDegree(), direction.getRankDegree(), centerSquare);
         availableSquares.add(squareToAdd);
-        if (chessBoard.containsKey(squareToAdd)) {
-            removeSquareWhenSameColor(chessBoard, availableSquares, squareToAdd);
-        }
-    }
-
-    private void removeSquareWhenSameColor(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Square add) {
-        if (chessBoard.get(add).color.equals(color)) {
-            availableSquares.remove(add);
+        if (!squareToAdd.equals(centerSquare)) {
+            removeSameColorSquare(chessBoard, availableSquares, squareToAdd);
         }
     }
 
