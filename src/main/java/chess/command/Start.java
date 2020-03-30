@@ -6,11 +6,11 @@ public class Start extends Command {
     private static final String COMMAND = "start";
 
     public Start(String value) {
-        super(value, Start::getProgress);
+        super(value, Start::doStartCommand);
     }
 
-    private static Progress getProgress(String command) {
-        if (command.equals("start")) {
+    private static Progress doStartCommand(String command) {
+        if (COMMAND.equals(command)) {
             return Progress.CONTINUE;
         }
         return Progress.ERROR;

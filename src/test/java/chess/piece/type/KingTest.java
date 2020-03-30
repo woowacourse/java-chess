@@ -1,5 +1,6 @@
 package chess.piece.type;
 
+import chess.board.ChessBoard;
 import chess.location.Location;
 import chess.team.Team;
 import org.junit.jupiter.api.Test;
@@ -10,15 +11,17 @@ class KingTest {
 
     @Test
     void canMove() {
+        ChessBoard chessBoard = new ChessBoard();
+
         King king = new King(Team.BLACK);
         Location now = new Location(8, 'e');
 
         Location after = new Location(7, 'e');
-        boolean actual = king.canMove(now, after);
+        boolean actual = king.canMove(chessBoard.getBoard(), now, after);
         assertThat(actual).isTrue();
 
         Location cantAfter = new Location(6, 'c');
-        boolean cantActual = king.canMove(now, cantAfter);
+        boolean cantActual = king.canMove(chessBoard.getBoard(), now, cantAfter);
         assertThat(cantActual).isFalse();
     }
 }

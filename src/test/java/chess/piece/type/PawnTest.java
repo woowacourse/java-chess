@@ -1,5 +1,6 @@
 package chess.piece.type;
 
+import chess.board.ChessBoard;
 import chess.location.Location;
 import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -14,23 +15,25 @@ class PawnTest {
     @Test
     @DisplayName("초기 위치의 폰의 이동 반경 테스트")
     void canMove() {
+        ChessBoard chessBoard = new ChessBoard();
+
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(7, 'a');
 
         Location moveTwiceForward = new Location(5, 'a');
-        boolean moveTwiceForwardActual = pawn.canMove(now, moveTwiceForward);
+        boolean moveTwiceForwardActual = pawn.canMove(chessBoard.getBoard(), now, moveTwiceForward);
         assertThat(moveTwiceForwardActual).isTrue();
 
         Location moveOnceForward = new Location(6, 'a');
-        boolean moveOnceForwardActual = pawn.canMove(now, moveOnceForward);
+        boolean moveOnceForwardActual = pawn.canMove(chessBoard.getBoard(), now, moveOnceForward);
         assertThat(moveOnceForwardActual).isTrue();
 
         Location moveDiagonal = new Location(6, 'b');
-        boolean moveDiagonalAcutal = pawn.canMove(now, moveDiagonal);
-        assertThat(moveDiagonalAcutal).isTrue();
+        boolean moveDiagonalActual = pawn.canMove(chessBoard.getBoard(), now, moveDiagonal);
+        assertThat(moveDiagonalActual).isTrue();
 
         Location cantAfter = new Location(4, 'a');
-        boolean cantActual = pawn.canMove(now, cantAfter);
+        boolean cantActual = pawn.canMove(chessBoard.getBoard(), now, cantAfter);
 
         assertThat(cantActual).isFalse();
     }
@@ -38,19 +41,21 @@ class PawnTest {
     @Test
     @DisplayName("초기 위치가 아닌 일반적인 폰의 이동")
     void canMove2() {
+        ChessBoard chessBoard = new ChessBoard();
+
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(6, 'a');
 
         Location moveOnceForward = new Location(5, 'a');
-        boolean moveOnceForwardActual = pawn.canMove(now, moveOnceForward);
+        boolean moveOnceForwardActual = pawn.canMove(chessBoard.getBoard(), now, moveOnceForward);
         assertThat(moveOnceForwardActual).isTrue();
 
         Location moveDiagonal = new Location(5, 'b');
-        boolean moveDiagonalAcutal = pawn.canMove(now, moveDiagonal);
+        boolean moveDiagonalAcutal = pawn.canMove(chessBoard.getBoard(), now, moveDiagonal);
         assertThat(moveDiagonalAcutal).isTrue();
 
         Location moveTwiceForward = new Location(4, 'a');
-        boolean moveTwiceForwardActual = pawn.canMove(now, moveTwiceForward);
+        boolean moveTwiceForwardActual = pawn.canMove(chessBoard.getBoard(), now, moveTwiceForward);
         assertThat(moveTwiceForwardActual).isFalse();
     }
 
@@ -62,7 +67,7 @@ class PawnTest {
         board.put(new Location(7, 'a'), givenPiece);
         board.put(new Location(6, 'b'), new Bishop(Team.WHITE));
 
-        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(6, 'b'));
+        boolean actual = givenPiece.canMove(board, new Location(7, 'a'), new Location(6, 'b'));
         assertThat(actual).isTrue();
     }
 
@@ -73,7 +78,7 @@ class PawnTest {
         Pawn givenPiece = new Pawn(Team.BLACK);
         board.put(new Location(7, 'a'), givenPiece);
 
-        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(6, 'b'));
+        boolean actual = givenPiece.canMove(board, new Location(7, 'a'), new Location(6, 'b'));
         assertThat(actual).isTrue();
     }
 
@@ -89,8 +94,8 @@ class PawnTest {
         board.put(new Location(6, 'a'), counterPiece);
         board.put(new Location(5, 'a'), destinaionPiece);
 
-        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(5, 'a'));
-        assertThat(actual).isTrue();
+        boolean actual = givenPiece.canMove(board, new Location(7, 'a'), new Location(5, 'a'));
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("폰의 직선 위치에 적이 있는 경우")
@@ -102,8 +107,8 @@ class PawnTest {
         board.put(new Location(7, 'a'), givenPiece);
         board.put(new Location(6, 'a'), counterPiece);
 
-        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(6, 'a'));
-        assertThat(actual).isTrue();
+        boolean actual = givenPiece.canMove(board, new Location(7, 'a'), new Location(6, 'a'));
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("폰의 직선 위치에 적이 있는 경우")
@@ -115,7 +120,7 @@ class PawnTest {
         board.put(new Location(7, 'a'), givenPiece);
         board.put(new Location(5, 'a'), destinaionPiece);
 
-        boolean actual = givenPiece.hasNotObstacle(board, new Location(7, 'a'), new Location(5, 'a'));
-        assertThat(actual).isTrue();
+        boolean actual = givenPiece.canMove(board, new Location(7, 'a'), new Location(5, 'a'));
+        assertThat(actual).isFalse();
     }
 }

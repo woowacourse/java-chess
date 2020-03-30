@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import chess.location.Location;
+import chess.piece.type.movable.PieceMovable;
 import chess.score.Score;
 import chess.team.Team;
 
@@ -13,10 +14,12 @@ public abstract class Piece {
 
     public final char name;
     protected final Score score;
+    private final PieceMovable pieceMovable;
 
-    Piece(char name, Score score, Team team) {
+    Piece(char name, Score score, Team team, PieceMovable pieceMovable) {
         this.name = changeName(team, name);
         this.score = score;
+        this.pieceMovable = pieceMovable;
     }
 
     private static char changeName(Team team, char name) {
@@ -26,18 +29,16 @@ public abstract class Piece {
         return name;
     }
 
-    public abstract boolean canMove(Location now, Location after);
+    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
+        return pieceMovable.canMove(board, now, after);
+    }
 
     public boolean isSameTeam(Team team) {
-        return isBlack() == team.isBlack();
+        return isBlack() == team;
     }
 
     public boolean isNotSame(Team team) {
-        return isBlack() != team.isBlack();
-    }
-
-    public boolean isSameTeam(boolean black) {
-        return isBlack() == black;
+        return isBlack() != team;
     }
 
     public boolean isNotSameTeam(Piece piece) {
@@ -48,32 +49,15 @@ public abstract class Piece {
         return this.name == BLACk_KING_VALUE || this.name == WHITE_KING_VALUE;
     }
 
-    protected boolean isBlack() {
-        return Character.isUpperCase(name);
+    private Team isBlack() {
+        if (Character.isUpperCase(name)) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
     }
 
-    public boolean hasNotObstacle(Map<Location, Piece> board, Location now, Location destination) {
-        int weight = 1;
-        Location nowLocation = now.calculateNextLocation(destination, weight);
-        System.out.println(!nowLocation.equals(destination));
-        while (!nowLocation.equals(destination)) {
-            if (board.containsKey(nowLocation)) {
-                return false;
-            }
-            weight++;
-            nowLocation = now.calculateNextLocation(destination, weight);
-        }
-        return true;
-//        for (int weight = 1; ; weight++) {
-//            Location nowLocation = now.calculateNextLocation(destination, weight);
-//            if (nowLocation.equals(destination)) {
-//                break;
-//            }
-//            if (board.containsKey(nowLocation)) {
-//                return false;
-//            }
-//        }
-//        return true;
+    public boolean isReverseTeam(Team team) {
+        return team.isReverseTeam(isBlack());
     }
 
     public char getName() {

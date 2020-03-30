@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.board.ChessBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,15 +15,17 @@ import chess.team.Team;
 class RookTest {
 	@Test
 	void canMove() {
+		Map<Location, Piece> board = new HashMap<>();
+
 		Rook rook = new Rook(Team.BLACK);
 		Location now = new Location(8, 'a');
 		Location after = new Location(8, 'h');
-		boolean actual = rook.canMove(now, after);
+		boolean actual = rook.canMove(board,now, after);
 
 		assertThat(actual).isTrue();
 
 		Location cantAfter = new Location(7, 'b');
-		boolean cantActual = rook.canMove(now, cantAfter);
+		boolean cantActual = rook.canMove(board, now, cantAfter);
 
 		assertThat(cantActual).isFalse();
 	}
@@ -36,7 +39,7 @@ class RookTest {
 		board.put(new Location(2, 'c'), new Bishop(Team.WHITE));
 		board.put(new Location(3, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasNotObstacle(board, new Location(1, 'c'), new Location(3, 'c'));
+		boolean actual = givenPiece.canMove(board, new Location(1, 'c'), new Location(3, 'c'));
 		assertThat(actual).isFalse();
 	}
 
@@ -49,7 +52,7 @@ class RookTest {
 		board.put(new Location(1, 'b'), new Bishop(Team.WHITE));
 		board.put(new Location(1, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasNotObstacle(board, new Location(1, 'a'), new Location(1, 'c'));
+		boolean actual = givenPiece.canMove(board, new Location(1, 'a'), new Location(1, 'c'));
 		assertThat(actual).isFalse();
 	}
 }

@@ -9,8 +9,6 @@ import java.util.Objects;
 // 팀별 초기위치를 갖고있는다.
 public class Location {
     private static final int KING_RANGE = 1;
-    private static final int WHITE_PAWN_ROW = 2;
-    private static final int BLACK_PAWN_ROW = 7;
 
     private final Row row;
     private final Col col;
@@ -57,46 +55,12 @@ public class Location {
         return false;
     }
 
-    public boolean isQueenRang(Location destination) {
+    public boolean isQueenRange(Location destination) {
         return isDiagonal(destination) || isStraight(destination);
     }
 
     public boolean isStraight(Location destination) {
         return row.is(destination.row) || isVertical(destination);
-    }
-
-    public boolean isInitialPawnLocation(boolean black) {
-        if (black) {
-            return isContainsInitialLocation(Row.of(BLACK_PAWN_ROW));
-        }
-        return isContainsInitialLocation(Row.of(WHITE_PAWN_ROW));
-    }
-
-    private boolean isContainsInitialLocation(Row row) {
-        List<Location> pawnLocations = new ArrayList();
-        for (Col col : Col.values()) {
-            pawnLocations.add(
-                    new Location(row, col)
-            );
-        }
-        return pawnLocations.contains(this);
-    }
-
-    // 2칸 혹은 한 칸이동할 수 있다.
-    public boolean isInitialPawnForwardRange(Location after, int value) {
-        Row onceMovedRowByValue = row.plus(value);
-        Row TwiceMovedRowByValue = row.plus(value * 2);
-        boolean result = onceMovedRowByValue.is(after.row)
-                || TwiceMovedRowByValue.is(after.row);
-
-        return result && col == after.col;
-    }
-
-    public boolean isPawnForwardRange(Location after, int value) {
-        Row movedRowByValue = row.plus(value);
-
-        return movedRowByValue.is(after.row)
-                && col.is(after.col);
     }
 
     // 폰의 대각선위치인지 확인하는 메서드
@@ -105,8 +69,7 @@ public class Location {
         Col rightCol = col.plus(1);
 
         return row.plus(value).is(after.row)
-                && leftCol.is(after.col)
-                || rightCol.is(after.col);
+                && (leftCol.is(after.col) || rightCol.is(after.col));
     }
 
     public Location calculateNextLocation(Location destination, int weight) {
@@ -133,16 +96,32 @@ public class Location {
         return col.is(destination.col);
     }
 
-    public boolean isSame(int row) {
+    public boolean isSameRow(int row) {
         return this.row.is(row);
     }
 
-    public int getRow() {
+    public boolean isSameRow(Location location) {
+        return row.is(location.row);
+    }
+
+    public boolean isSameCol(Location after) {
+        return col.is(after.col);
+    }
+
+    public Location plusRowBy(int value) {
+        return new Location(row.plus(value), col);
+    }
+
+    public Row getRow() {
+        return row;
+    }
+
+    public int getRowValue() {
         return row.getValue();
     }
 
-    public char getCol() {
-        return col.getValue();
+    public Col getCol() {
+        return col;
     }
 
     @Override

@@ -3,7 +3,7 @@ package chess.command;
 import chess.progress.Progress;
 
 public class End extends Command {
-    public static final String COMMAND = "end";
+    private static final String COMMAND = "end";
 
     public End(String value) {
         super(value, End::doEndCommand);
@@ -14,5 +14,13 @@ public class End extends Command {
             return Progress.END;
         }
         return Progress.ERROR;
+    }
+
+    public static boolean isEnd(String command) {
+        String lowerCaseCommand = command.toLowerCase();
+        if (COMMAND.equals(lowerCaseCommand)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -1,8 +1,6 @@
 package chess.piece.type;
 
-import java.util.Map;
-
-import chess.location.Location;
+import chess.piece.type.movable.KingPieceMovable;
 import chess.score.Score;
 import chess.team.Team;
 
@@ -11,16 +9,6 @@ public class King extends Piece {
 	private static final int SCORE = 0;
 
 	public King(Team team) {
-		super(NAME, new Score(SCORE), team);
-	}
-
-	@Override
-	public boolean canMove(Location now, Location after) {
-		return now.isKingRange(after);
-	}
-
-	@Override
-	public boolean hasNotObstacle(Map<Location, Piece> board, Location now, Location destination) {
-		return true;
+		super(NAME, new Score(SCORE), team, new KingPieceMovable());
 	}
 }

@@ -20,6 +20,7 @@ public class ChessController {
 
     private static Progress getProgress(ChessGame chessGame) {
         Command command = inputCommand(chessGame);
+        System.out.println(command.getClass());
         Progress progress = chessGame.doOneCommand(command);
         while (progress.isError()) {
             OutputView.printMoveErrorMessage();
@@ -38,13 +39,13 @@ public class ChessController {
     private static Command inputCommand(ChessGame chessGame) {
         String commandInput = InputView.inputCommand();
         // 다중 if문 없애려면 enum 뿐일까 ?
-        if (commandInput.equals(End.COMMAND)) {
+        if (End.isEnd(commandInput)) {
             return new End(commandInput);
         }
-        if (commandInput.substring(0, 4).equals(Move.COMMAND)) {
+        if (Move.isMove(commandInput)) {
             return new Move(commandInput, chessGame);
         }
-        if (commandInput.equals(Status.COMMAND)) {
+        if (Status.isStatus(commandInput)) {
             return new Status(commandInput);
         }
         return new Start(commandInput);

@@ -36,8 +36,7 @@ public class ChessBoard {
         boolean isNotSameTeam = isNotSameTeam(destination, piece);
         if (board.containsKey(now)) {
             return isNotSameTeam
-                    && piece.canMove(now, destination)
-                    && piece.hasNotObstacle(board, now, destination);
+                    && piece.canMove(board, now, destination);
         }
         return false;
     }
@@ -76,13 +75,14 @@ public class ChessBoard {
     /*
     TODO : 여기에서 PAWN을 가지고 있는 것이 옳은가 ? 매개변수로 어떤 Piece인지 입력 받고
     같은 라인의 Piece의 수만을 반환받는 것이 더 투명한 ChessBoard를 만드는 것이 아닌가 ?
+    여기도 응집도를 높이고 결합도를 낮출 수 있을지 고민해보자.
     */
     public Score calculateReducePawnScore(Team team) {
         int reducePawnScroe = 0;
         for (int row = MINIMUM_LINE; row < LIMIT_LINE; row++) {
             int fixRow = row;
             int sameRowPawnSize = (int) board.keySet().stream()
-                    .filter(location -> location.isSame(fixRow))
+                    .filter(location -> location.isSameRow(fixRow))
                     .filter(location -> board.get(location).isSameTeam(team))
                     .filter(location -> board.get(location) instanceof Pawn)
                     .count();

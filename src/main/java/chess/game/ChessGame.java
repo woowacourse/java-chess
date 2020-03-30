@@ -41,9 +41,6 @@ public class ChessGame {
         Location now = substring(command, 1);
         Location destination = substring(command, 2);
 
-        System.out.println("1 " + chessBoard.isNotExist(now));
-        System.out.println("2 " + chessBoard.canNotMove(now, destination));
-        System.out.println("3 " + chessBoard.isNotCorrectTeam(now, turn));
         if (chessBoard.isNotExist(now)
                 || chessBoard.canNotMove(now, destination)
                 || chessBoard.isNotCorrectTeam(now, turn)) {

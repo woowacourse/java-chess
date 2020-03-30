@@ -3,9 +3,17 @@ package chess.command;
 import chess.game.ChessGame;
 
 public class Move extends Command {
-    public static final String COMMAND = "MOVE";
+    private static final String COMMAND = "move";
 
     public Move(String value, ChessGame chessGame) {
         super(value, chessGame::doMoveCommand);
+    }
+
+    public static boolean isMove(String command) {
+        String lowerCaseCommand = command.toLowerCase();
+        if(lowerCaseCommand.substring(0, 4).equals(COMMAND)) {
+            return true;
+        }
+        return false;
     }
 }

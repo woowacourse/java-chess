@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.board.ChessBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,15 +15,17 @@ import chess.team.Team;
 class QueenTest {
 	@Test
 	void canMove() {
+		Map<Location, Piece> board = new HashMap<>();
+
 		Queen queen = new Queen(Team.BLACK);
 		Location now = new Location(8, 'd');
 		Location after = new Location(8, 'h');
-		boolean actual = queen.canMove(now, after);
+		boolean actual = queen.canMove(board, now, after);
 
 		assertThat(actual).isTrue();
 
 		Location cantAfter = new Location(7, 'f');
-		boolean cantActual = queen.canMove(now, cantAfter);
+		boolean cantActual = queen.canMove(board, now, cantAfter);
 
 		assertThat(cantActual).isFalse();
 	}
@@ -36,7 +39,7 @@ class QueenTest {
 		board.put(new Location(2, 'd'), new Bishop(Team.WHITE));
 		board.put(new Location(3, 'e'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasNotObstacle(board, new Location(1, 'c'), new Location(3, 'e'));
+		boolean actual = givenPiece.canMove(board, new Location(1, 'c'), new Location(3, 'e'));
 		assertThat(actual).isFalse();
 	}
 
@@ -49,7 +52,7 @@ class QueenTest {
 		board.put(new Location(2, 'c'), new Bishop(Team.WHITE));
 		board.put(new Location(3, 'c'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasNotObstacle(board, new Location(1, 'c'), new Location(3, 'c'));
+		boolean actual = givenPiece.canMove(board, new Location(1, 'c'), new Location(3, 'c'));
 		assertThat(actual).isFalse();
 	}
 
@@ -62,7 +65,7 @@ class QueenTest {
 		board.put(new Location(1, 'd'), new Bishop(Team.WHITE));
 		board.put(new Location(1, 'e'), new Bishop(Team.WHITE));
 
-		boolean actual = givenPiece.hasNotObstacle(board, new Location(1, 'c'), new Location(1, 'e'));
+		boolean actual = givenPiece.canMove(board, new Location(1, 'c'), new Location(1, 'e'));
 		assertThat(actual).isFalse();
 
 	}
