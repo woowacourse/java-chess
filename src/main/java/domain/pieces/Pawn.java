@@ -4,6 +4,8 @@ import domain.move.Direction;
 import domain.point.MovePoint;
 import domain.point.Point;
 import domain.team.Team;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Pawn extends Piece {
@@ -11,6 +13,12 @@ public class Pawn extends Piece {
     private static final String INITIAL = "P";
 
     private static final double score = 1;
+    private static final Map<Team, List<Direction>> cache = new HashMap<>();
+
+    static {
+        cache.put(Team.BLACK, Direction.getBlackPawnDirection());
+        cache.put(Team.WHITE, Direction.getWhitePawnDirection());
+    }
 
     public Pawn(Team team) {
         super(INITIAL, team);
@@ -39,6 +47,11 @@ public class Pawn extends Piece {
             return Roles.isLinearOrDiagonalBlackTeam(direction, pieces, to);
         }
         return Roles.isLinearOrDiagonalWhiteTeam(direction, pieces, to);
+    }
+
+    @Override
+    public List<Direction> getDirection(Team team) {
+        return cache.get(team);
     }
 
     @Override

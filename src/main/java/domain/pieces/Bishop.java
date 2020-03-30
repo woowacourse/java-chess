@@ -4,6 +4,7 @@ import domain.move.Direction;
 import domain.point.MovePoint;
 import domain.point.Point;
 import domain.team.Team;
+import java.util.List;
 import java.util.Map;
 
 public class Bishop extends Piece {
@@ -11,6 +12,7 @@ public class Bishop extends Piece {
     private static final String INITIAL = "B";
 
     private static final double score = 3;
+    private static final List<Direction> direction = Direction.getBishopDirection();
 
     public Bishop(Team team) {
         super(INITIAL, team);
@@ -24,6 +26,11 @@ public class Bishop extends Piece {
     @Override
     public boolean isNoneTeam() {
         return false;
+    }
+
+    @Override
+    public List<Direction> getDirection(Team team) {
+        return direction;
     }
 
     @Override

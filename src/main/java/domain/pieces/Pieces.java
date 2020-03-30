@@ -2,7 +2,6 @@ package domain.pieces;
 
 import static domain.team.Team.NONE;
 
-import domain.move.PieceDirectionType;
 import domain.pieces.exceptions.IsNotMovableException;
 import domain.point.Column;
 import domain.point.Point;
@@ -51,7 +50,7 @@ public class Pieces {
         validateExistPiece(movePoint);
         validateCorrectTurn(turn, movePoint);
         validateSameTeamToTarget(movePoint);
-        validatePieceMovable(movePoint);
+        validatePieceMovable(turn, movePoint);
     }
 
     private void validateExistPiece(MovePoint movePoint) {
@@ -76,14 +75,16 @@ public class Pieces {
         return movePoint.isSameTeam(pieces);
     }
 
-    private void validatePieceMovable(MovePoint movePoint) {
-        boolean isMovable = PieceDirectionType.find(pieces, movePoint.getFrom()).stream()
-            .anyMatch(direction -> pieces.get(movePoint.getFrom())
-                .isMovable(direction, pieces, movePoint));
-        if (!isMovable) {
+    private void validatePieceMovable(Team team, MovePoint movePoint) {
+        if (!isMovable(team, movePoint)) {
             throw new IsNotMovableException(
                 pieces.get(movePoint.getFrom()).toString() + "은 그 장소로 못 움직입니다.");
         }
+    }
+
+    private boolean isMovable(Team team, MovePoint movePoint) {
+        return pieces.get(movePoint.getFrom()).getDirection(team).stream()
+            .anyMatch(direction -> pieces.get(movePoint.getFrom()).isMovable(direction, pieces, movePoint));
     }
 
     public double score(Team team) {

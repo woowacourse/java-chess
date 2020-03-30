@@ -4,6 +4,7 @@ import domain.move.Direction;
 import domain.point.MovePoint;
 import domain.point.Point;
 import domain.team.Team;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Piece {
@@ -34,6 +35,8 @@ public abstract class Piece {
     public abstract boolean isNoneTeam();
 
     public abstract double getScore();
+
+    public abstract List<Direction> getDirection(Team team);
 
     @Override
     public String toString() {

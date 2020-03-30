@@ -4,6 +4,7 @@ import domain.move.Direction;
 import domain.point.MovePoint;
 import domain.point.Point;
 import domain.team.Team;
+import java.util.List;
 import java.util.Map;
 
 public class Rook extends Piece {
@@ -11,6 +12,7 @@ public class Rook extends Piece {
     private static final String INITIAL = "R";
 
     private static final double score = 5;
+    private static final List<Direction> direction = Direction.getRookDirection();
 
     public Rook(Team team) {
         super(INITIAL, team);
@@ -24,6 +26,11 @@ public class Rook extends Piece {
     @Override
     public boolean isNoneTeam() {
         return false;
+    }
+
+    @Override
+    public List<Direction> getDirection(Team team) {
+        return direction;
     }
 
     @Override
