@@ -48,4 +48,12 @@ public class Pieces {
 	public boolean isKingDie() {
 		return whitePieces.isKingDie() || blackPieces.isKingDie();
 	}
+
+	public double whitePiecesStatus() {
+		return whitePieces.calculateStatus();
+	}
+
+	public double blackPiecesStatus() {
+		return blackPieces.calculateStatus();
+	}
 }

@@ -47,4 +47,9 @@ public class OutputView {
 	public static void printKingDie() {
 		System.out.println("왕이 죽었습니다.");
 	}
+
+	public static void printStatus(double[] status) {
+		System.out.println(String.format("화이트팀 점수: %f", status[0]));
+		System.out.println(String.format("블랙팀 점수: %f", status[1]));
+	}
 }

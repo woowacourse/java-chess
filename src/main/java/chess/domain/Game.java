@@ -35,6 +35,10 @@ public class Game {
 		return pieces.isKingDie();
 	}
 
+	public double[] status() {
+		return new double[] {pieces.whitePiecesStatus(), pieces.blackPiecesStatus()};
+	}
+
 	public Board getBoard() {
 		return board;
 	}

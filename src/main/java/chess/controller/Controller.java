@@ -57,7 +57,7 @@ public class Controller {
 				movePiece(command);
 			}
 			if (command.isStatus()) {
-				// Todo: status
+				OutputView.printStatus(game.status());
 			}
 		} while (!command.isEnd() && !isKingDie());
 	}
