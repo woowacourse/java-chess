@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class PositionCache {
+class PositionCache {
 	private static final int ROW_START_INDEX = 1;
 	private static final int ROW_END_INDEX = 8;
 	private static final Map<String, Position> POSITION_CACHE = new HashMap<>();
