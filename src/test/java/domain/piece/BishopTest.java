@@ -32,7 +32,7 @@ public class BishopTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"b1, WHITE, b1", "c2, BLACK, c2"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(String  sourcePosition, Team team, String targetPosition) {
+	void canMove_SourceSameAsTarget_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
@@ -63,7 +63,8 @@ public class BishopTest {
 		String targetPosition = "f4";
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
-		Piece pieceAfterMove = board.findPiece(targetPosition, board.getRanks().get(3));
+
+		Piece pieceAfterMove = board.getRanks().get(3).findPiece(targetPosition);
 		assertThat(pieceAfterMove.getPosition()).isEqualTo(Position.of(targetPosition));
 	}
 
@@ -80,10 +81,10 @@ public class BishopTest {
 	void move_EnemyAtTargetPosition_Capture() {
 		String sourcePosition = "b1";
 		String targetPosition = "c2";
-		Piece targetPiece = board.findPiece(targetPosition, board.getRanks().get(1));
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 
+		Piece targetPiece = board.getRanks().get(1).findPiece(targetPosition);
 		assertThat(board.getRanks().get(2).getPieces().contains(targetPiece)).isFalse();
 	}
 }

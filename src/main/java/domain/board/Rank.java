@@ -4,12 +4,21 @@ import java.util.List;
 import java.util.Objects;
 
 import domain.piece.Piece;
+import domain.piece.position.InvalidPositionException;
+import domain.piece.position.Position;
 
 public class Rank {
 	private List<Piece> pieces;
 
 	public Rank(List<Piece> pieces) {
 		this.pieces = pieces;
+	}
+
+	public Piece findPiece(String position) {
+		return pieces.stream()
+			.filter(piece -> piece.getPosition().isSamePosition(Position.of(position)))
+			.findFirst()
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
 	}
 
 	public List<Piece> getPieces() {

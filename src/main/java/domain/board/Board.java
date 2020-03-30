@@ -28,18 +28,11 @@ public class Board {
 	public void move(String sourcePosition, String inputTargetPosition, Team turn) {
 		int rankLine = Integer.parseInt(String.valueOf(sourcePosition.charAt(ROW_INDEX_IN_POSITION)));
 		Rank rank = ranks.get(rankLine - 1);
-		Piece piece = findPiece(sourcePosition, rank);
+		Piece piece = rank.findPiece(sourcePosition);
 		Position targetPosition = Position.of(inputTargetPosition);
 		if (piece.canMove(targetPosition, turn, ranks)) {
 			piece.move(targetPosition, ranks);
 		}
-	}
-
-	public Piece findPiece(String sourcePosition, Rank rank) {
-		return rank.getPieces().stream()
-			.filter(piece -> piece.getPosition().isSamePosition(Position.of(sourcePosition)))
-			.findFirst()
-			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
 	}
 
 	public Map<Team, Double> calculateScore() {

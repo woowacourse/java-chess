@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import domain.board.Board;
+import domain.board.Rank;
 import domain.board.fixture.QueenBoard;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -54,7 +55,8 @@ public class QueenTest {
 		String targetPosition = "e4";
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
-		Piece pieceAfterMove = board.findPiece(targetPosition, board.getRanks().get(3));
+
+		Piece pieceAfterMove = board.getRanks().get(3).findPiece(targetPosition);
 		assertThat(pieceAfterMove.getPosition()).isEqualTo(Position.of(targetPosition));
 	}
 
@@ -71,7 +73,8 @@ public class QueenTest {
 	void move_EnemyAtTargetPosition_Capture() {
 		String sourcePosition = "e1";
 		String targetPosition = "e5";
-		Piece targetPiece = board.findPiece(targetPosition, board.getRanks().get(4));
+		Rank rank = board.getRanks().get(4);
+		Piece targetPiece = rank.findPiece(targetPosition);
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 

@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import domain.board.Board;
+import domain.board.Rank;
 import domain.board.fixture.PawnBoard;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -63,7 +64,8 @@ public class PawnTest {
 		String targetPosition = "b3";
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
-		Piece pieceAfterMove = board.findPiece(targetPosition, board.getRanks().get(2));
+
+		Piece pieceAfterMove = board.getRanks().get(2).findPiece(targetPosition);
 		assertThat(pieceAfterMove.getPosition()).isEqualTo(Position.of(targetPosition));
 	}
 
@@ -75,6 +77,7 @@ public class PawnTest {
 		String secondTargetPosition = "b5";
 
 		board.move(sourcePosition, firstTargetPosition, Team.WHITE);
+
 		assertThatThrownBy(() -> board.move(firstTargetPosition, secondTargetPosition, Team.WHITE))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_STEP_SIZE);
@@ -87,7 +90,8 @@ public class PawnTest {
 		String targetPosition = "a2";
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
-		Piece pieceAfterMove = board.findPiece(targetPosition, board.getRanks().get(1));
+
+		Piece pieceAfterMove = board.getRanks().get(1).findPiece(targetPosition);
 		assertThat(pieceAfterMove.getPosition()).isEqualTo(Position.of(targetPosition));
 	}
 
@@ -104,11 +108,11 @@ public class PawnTest {
 	void move_EnemyAtDiagonalTargetPosition_Capture() {
 		String sourcePosition = "d1";
 		String targetPosition = "e2";
-		Piece targetPiece = board.findPiece(targetPosition, board.getRanks().get(1));
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 
-		assertThat(board.getRanks().get(1).getPieces().contains(targetPiece)).isFalse();
+		Piece targetPiece = board.getRanks().get(1).findPiece(targetPosition);
+		assertThat(board.getRanks().get(0).getPieces().contains(targetPiece)).isFalse();
 	}
 
 	@DisplayName("대각선 - 아군이 있는 목적지가 입력되면 예외 발생")
@@ -116,6 +120,7 @@ public class PawnTest {
 	void move_OurTeamAtDiagonalTargetPosition_ExceptionThrown() {
 		String sourcePosition = "e1";
 		String targetPosition = "f2";
+
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Team.WHITE))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);

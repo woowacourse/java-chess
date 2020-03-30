@@ -64,7 +64,7 @@ public class RookTest {
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 
-		Piece pieceAfterMove = board.findPiece(targetPosition, board.getRanks().get(1));
+		Piece pieceAfterMove = board.getRanks().get(1).findPiece(targetPosition);
 		assertThat(pieceAfterMove.getPosition()).isEqualTo(Position.of(targetPosition));
 	}
 
@@ -81,10 +81,10 @@ public class RookTest {
 	void move_EnemyAtTargetPosition_Capture() {
 		String sourcePosition = "a3";
 		String targetPosition = "a8";
-		Piece targetPiece = board.findPiece(targetPosition, board.getRanks().get(7));
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 
+		Piece targetPiece = board.getRanks().get(7).findPiece(targetPosition);
 		assertThat(board.getRanks().get(2).getPieces().contains(targetPiece)).isFalse();
 	}
 }
