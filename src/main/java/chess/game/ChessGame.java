@@ -85,10 +85,10 @@ public class ChessGame {
     private ChessResult compareScore() {
         Score whiteScore = calculateScore(white);
         Score blackScore = calculateScore(black);
-        if (Result.of(whiteScore, blackScore).isWin()) {
+        if (whiteScore.isHigherThan(blackScore)) {
             return new ChessResult(Result.WIN, white.getTeamName());
         }
-        if (Result.of(whiteScore, blackScore).isWin()) {
+        if (blackScore.isHigherThan(whiteScore)) {
             return new ChessResult(Result.WIN, black.getTeamName());
         }
         return new ChessResult(Result.DRAW, black.getTeamName());
