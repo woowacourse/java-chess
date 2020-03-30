@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.exception.ColorNotFoundException;
+
 import java.util.function.UnaryOperator;
 
 import static chess.util.NullValidator.validateNull;
@@ -35,6 +37,9 @@ public enum PieceColor {
     }
 
     public PieceColor change() {
+        if (this == NONE) {
+            throw new ColorNotFoundException("존재하지 않는 색입니다.");
+        }
         if (this == WHITE) {
             return BLACK;
         }
