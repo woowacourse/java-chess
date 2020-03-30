@@ -23,6 +23,11 @@ public class Position {
 		return Position.of(afterMovePosition);
 	}
 
+	public static Position of(File file, Rank rank) {
+		String position = PositionCache.createKey(file, rank);
+		return Position.of(position);
+	}
+
 	private static void validateInvalidPosition(String position) {
 		if (!PositionCache.BOARD.containsKey(position)) {
 			throw new IllegalArgumentException("유효하지 않은 Position을 입력했습니다.");
