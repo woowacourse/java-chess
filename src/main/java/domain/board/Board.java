@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import domain.piece.King;
 import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
@@ -26,13 +25,17 @@ public class Board {
 	}
 
 	public void move(String sourcePosition, String inputTargetPosition, Team turn) {
-		int rankLine = Integer.parseInt(String.valueOf(sourcePosition.charAt(ROW_INDEX_IN_POSITION)));
-		Rank rank = ranks.get(rankLine - 1);
+		Rank rank = calculateRank(sourcePosition);
 		Piece piece = rank.findPiece(sourcePosition);
 		Position targetPosition = Position.of(inputTargetPosition);
 		if (piece.canMove(targetPosition, turn, ranks)) {
 			piece.move(targetPosition, ranks);
 		}
+	}
+
+	private Rank calculateRank(String position) {
+		int rankLine = Integer.parseInt(String.valueOf(position.charAt(ROW_INDEX_IN_POSITION)));
+		return ranks.get(rankLine - 1);
 	}
 
 	public Map<Team, Double> calculateScore() {
