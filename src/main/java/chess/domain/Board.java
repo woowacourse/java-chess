@@ -19,7 +19,7 @@ public class Board {
 	private final Pieces pieces;
 
 	public Board() {
-		this.pieces = new Pieces(new ArrayList<>(PieceFactory.getInstance().getPieces()));
+		this.pieces = new Pieces(PieceFactory.getInstance().getPieces());
 	}
 
 	public void movePiece(Position source, Position destination) {
@@ -34,7 +34,7 @@ public class Board {
 		if (destinationPiece != null) {
 			killPiece(sourcePiece, destinationPiece);
 		}
-		sourcePiece.move(destination);
+		pieces.move(source, destination);
 	}
 
 	private void validateSameDestination(Position source, Position destination) {

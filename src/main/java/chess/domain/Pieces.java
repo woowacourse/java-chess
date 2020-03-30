@@ -1,6 +1,8 @@
 package chess.domain;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import chess.domain.piece.King;
@@ -9,29 +11,26 @@ import chess.domain.piece.Team;
 
 public class Pieces {
 	private static final int KING_DEFAULT_AMOUNT = 2;
-	private final List<Piece> pieces;
+	private final Map<Position, Piece> pieces;
 
-	public Pieces(List<Piece> pieces) {
-		this.pieces = pieces;
+	public Pieces(Map<Position, Piece> pieces) {
+		this.pieces = new HashMap<>(pieces);
 	}
 
 	public List<Piece> getAlivePieces() {
-		return pieces.stream()
+		return pieces.values().stream()
 				.filter(Piece::isAlive)
 				.collect(Collectors.toList());
 	}
 
-	public Pieces getAlivePiecesByTeam(Team team) {
-		return new Pieces(this.getAlivePieces().stream()
+	public List<Piece> getAlivePiecesByTeam(Team team) {
+		return this.getAlivePieces().stream()
 				.filter(p -> p.isInTeam(team))
-				.collect(Collectors.toList()));
+				.collect(Collectors.toList());
 	}
 
 	public Piece findByPosition(Position position) {
-		return getAlivePieces().stream()
-			.filter(p -> p.isSamePosition(position))
-			.findFirst()
-			.orElse(null);
+		return pieces.get(position);
 	}
 
 	public boolean isBothKingAlive() {
@@ -46,5 +45,13 @@ public class Pieces {
 			.findFirst()
 			.orElseThrow(() -> new NullPointerException("킹이 한 명도 없습니다."))
 			.getTeam();
+	}
+
+	public void move(Position source, Position destination){
+		Piece sourcePiece = findByPosition(source);
+		System.out.println("asdf");
+		sourcePiece.move(destination);
+		pieces.remove(source);
+		pieces.putIfAbsent(destination, sourcePiece);
 	}
 }

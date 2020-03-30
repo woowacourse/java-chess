@@ -29,28 +29,34 @@ public class ChessController {
 	private void playGame(Board board) {
 		InGameDecision inGameDecision;
 		do {
-			OutputView.printChessBoard(board);
-			inGameDecision = processSingleTurn(board);
-			if(inGameDecision == STATUS) {
-				printStatus(board);
-			}
+			inGameDecision = playSingleTurn(board);
 		} while (inGameDecision != END && board.isBothKingAlive());
 		if (!board.isBothKingAlive()) {
 			OutputView.printWinner(board.getWinner());
 		}
 	}
 
+	private InGameDecision playSingleTurn(Board board) {
+		InGameDecision inGameDecision;
+		OutputView.printChessBoard(board);
+		inGameDecision = processSingleTurn(board);
+		if(inGameDecision == STATUS) {
+			printStatus(board);
+		}
+		return inGameDecision;
+	}
+
 	private InGameDecision processSingleTurn(Board board) {
-		try {
+//		try {
 			String decision = InputView.inputInstruction();
 			List<String> multiArguments = new ArrayList<>(Arrays.asList(decision.split(" ")));
 			InGameDecision inGameDecision = InGameDecision.of(multiArguments.get(0));
 			inGameDecision.getAction().accept(board, multiArguments);
 			return inGameDecision;
-		} catch (Exception e) {
-			OutputView.printErrorMessage(e.getMessage());
-			return processSingleTurn(board);
-		}
+//		} catch (Exception e) {
+//			OutputView.printErrorMessage(e.getMessage());
+//			return processSingleTurn(board);
+//		}
 	}
 
 	private void printStatus(Board board) {

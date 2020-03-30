@@ -9,18 +9,18 @@ import chess.domain.piece.Piece;
 public class TotalScore {
 	private final double totalScore;
 
-	public TotalScore(Pieces pieces) {
+	public TotalScore(List<Piece> pieces) {
 		this.totalScore = calculateTotalScore(pieces);
 	}
 
-	private double calculateTotalScore(Pieces pieces) {
-		double plainSum = pieces.getAlivePieces().stream()
+	private double calculateTotalScore(List<Piece> pieces) {
+		double plainSum = pieces.stream()
 				.mapToDouble(Piece::getScore).sum();
 		return sameColumnPawnHandler(pieces, plainSum);
 	}
 
-	private double sameColumnPawnHandler(Pieces pieces, double plainSum) {
-		List<Pawn> pawns = pieces.getAlivePieces().stream()
+	private double sameColumnPawnHandler(List<Piece> pieces, double plainSum) {
+		List<Pawn> pawns = pieces.stream()
 			.filter(p -> p instanceof Pawn)
 			.map(p -> (Pawn)p)
 			.collect(Collectors.toList());

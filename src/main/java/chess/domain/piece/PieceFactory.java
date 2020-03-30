@@ -14,7 +14,7 @@ public class PieceFactory {
 
 	private static PieceFactory instance;
 
-	private List<Piece> pieces = new ArrayList<>();
+	private Map<Position, Piece> pieces = new HashMap<>();
 
 	private PieceFactory() {
 		initializeTeam(team1BackRank, team1PawnsRank, Team.WHITE);
@@ -28,21 +28,21 @@ public class PieceFactory {
 		return instance;
 	}
 
-	public List<Piece> getPieces() {
-		return Collections.unmodifiableList(pieces);
+	public Map<Position, Piece> getPieces() {
+		return Collections.unmodifiableMap(pieces);
 	}
 
 	private void initializeTeam(int backRank, int pawnRank, Team team) {
-		pieces.add(new King(new Position("e"+backRank), team));
-		pieces.add(new Queen(new Position("d"+backRank), team));
-		pieces.add(new Bishop(new Position("c"+backRank), team));
-		pieces.add(new Bishop(new Position("f"+backRank), team));
-		pieces.add(new Knight(new Position("b"+backRank), team));
-		pieces.add(new Knight(new Position("g"+backRank), team));
-		pieces.add(new Rook(new Position("a"+backRank), team));
-		pieces.add(new Rook(new Position("h"+backRank), team));
+		pieces.put(new Position("e"+backRank), new King(new Position("e"+backRank), team));
+		pieces.put(new Position("d"+backRank), new Queen(new Position("d"+backRank), team));
+		pieces.put(new Position("c"+backRank), new Bishop(new Position("c"+backRank), team));
+		pieces.put(new Position("f"+backRank), new Bishop(new Position("f"+backRank), team));
+		pieces.put(new Position("b"+backRank), new Knight(new Position("b"+backRank), team));
+		pieces.put(new Position("g"+backRank), new Knight(new Position("g"+backRank), team));
+		pieces.put(new Position("a"+backRank), new Rook(new Position("a"+backRank), team));
+		pieces.put(new Position("h"+backRank), new Rook(new Position("h"+backRank), team));
 		for (String pawnPosition : PawnPositions) {
-			pieces.add(new Pawn(new Position(pawnPosition+pawnRank), team));
+			pieces.put(new Position(pawnPosition+pawnRank), new Pawn(new Position(pawnPosition+pawnRank), team));
 		}
 	}
 }
