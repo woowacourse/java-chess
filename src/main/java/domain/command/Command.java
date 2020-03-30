@@ -36,6 +36,18 @@ public enum Command {
 			.orElseThrow(() -> new InvalidCommandException(INVALID_GAME_COMMAND));
 	}
 
+	public Boolean isMove(){
+		return MOVE.equals(this);
+	}
+
+	public Boolean isStatus(){
+		return STATUS.equals(this);
+	}
+
+	public Boolean isNotEnd(){
+		return END != this;
+	}
+
 	public String getCommand() {
 		return command;
 	}

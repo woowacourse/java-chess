@@ -24,15 +24,15 @@ public class ChessController {
 			String[] inputCommand = inputChessCommand.split(DELIMITER);
 			command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
 
-			if (Command.MOVE.equals(command)) {
+			if (command.isMove()) {
 				board.move(inputCommand[SOURCE_POSITION], inputCommand[TARGET_POSITION], turn);
 				OutputView.printChessBoard(board);
 				turn = Team.changeTurn(turn);
 			}
 
-			if (Command.STATUS.equals(command)) {
+			if (command.isStatus()) {
 				OutputView.printScore(board.calculateScore());
 			}
-		} while (Command.END != command && board.isKingAlive());
+		} while (command.isNotEnd() && board.isKingAlive());
 	}
 }
