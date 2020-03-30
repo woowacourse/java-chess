@@ -29,6 +29,17 @@ public class ChessController {
         }
     }
 
+    public static void run2(ChessRunner chessRunner) {
+        Command command;
+
+        do {
+            String commands = inputView.askGameCommand();
+            command = Command.of(commands);
+            GameController gameController = command.getGameController();
+            gameController.execute(chessRunner, commands);
+        } while (!command.isEnd() && findWinner(chessRunner));
+    }
+
     private static void run(Command command) {
         if (command.isStart()) {
             ChessRunner chessRunner = new ChessRunner();

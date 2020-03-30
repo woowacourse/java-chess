@@ -3,15 +3,17 @@ package chess.controller;
 import java.util.Arrays;
 
 public enum Command {
-    START("start"),
-    MOVE("move"),
-    STATUS("status"),
-    END("end");
+    START("start", new StartController()),
+    MOVE("move", new MoveController()),
+    STATUS("status", new StatusController()),
+    END("end", new EndController());
 
-    private String command;
+    private final String command;
+    private final GameController gameController;
 
-    Command(String command) {
+    Command(String command, GameController gameController) {
         this.command = command;
+        this.gameController = gameController;
     }
 
     public static Command of(final String command) {
@@ -23,5 +25,13 @@ public enum Command {
 
     public boolean isStart() {
         return this == START;
+    }
+
+    public GameController getGameController() {
+        return this.gameController;
+    }
+
+    public boolean isEnd() {
+        return this == END;
     }
 }
