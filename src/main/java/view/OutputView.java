@@ -23,20 +23,20 @@ public class OutputView {
         System.out.println();
     }
 
-    private static int getKeepOrInitialCount(int newLineCount) {
-        if (newLineCount == NEXT_LINE_COUNT) {
-            newLineCount = INITIAL_ZERO;
-            System.out.println();
-        }
-        return newLineCount;
-    }
-
     private static void printRowBoard(Pieces pieces, Point point) {
         if (pieces.isExistPiece(point)) {
             System.out.print(pieces.getPiece(point).toString());
             return;
         }
         System.out.print(".");
+    }
+
+    private static int getKeepOrInitialCount(int newLineCount) {
+        if (newLineCount == NEXT_LINE_COUNT) {
+            newLineCount = INITIAL_ZERO;
+            System.out.println();
+        }
+        return newLineCount;
     }
 
     public static void printScore(double score) {
