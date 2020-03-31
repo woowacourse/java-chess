@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.domain.game.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.game.OperationType;
 import chess.domain.game.Operations;
+import chess.domain.position.PositionFactory;
 import chess.view.OutputView;
 
 import static chess.view.InputView.inputOperation;
@@ -36,10 +36,10 @@ public class ChessController {
 
 	private void execute() {
 		ChessGame chessGame = new ChessGame();
-		OutputView.printBoard(new Board(chessGame.getPieces()));
+		OutputView.printBoard(chessGame.createBoard());
 
 		while (executeOperation(chessGame)) {
-			OutputView.printBoard(new Board(chessGame.getPieces()));
+			OutputView.printBoard(chessGame.createBoard());
 			OutputView.printScore(chessGame.calculateScore());
 		}
 		if (chessGame.isKingDead()) {
@@ -50,7 +50,9 @@ public class ChessController {
 	private boolean executeOperation(ChessGame chessGame) {
 		Operations operations = inputOperation();
 		OperationType operationType = operations.getOperationType();
-
-		return (operationType.runOperate(chessGame, operations) && !chessGame.isKingDead());
+		if (operationType.isMove()) {
+			chessGame.move(PositionFactory.of(operations.getFirstArgument()), PositionFactory.of(operations.getSecondArgument()));
+		}
+		return (operationType.canExecuteMore() && !chessGame.isKingDead());
 	}
 }

@@ -1,29 +1,25 @@
 package chess.domain.game;
 
-import chess.domain.position.PositionFactory;
-
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.BooleanSupplier;
 
 public enum OperationType {
-	START("start", (chessGame, operations) -> {
+	START("start", () -> {
 		throw new UnsupportedOperationException(OperationType.INVALID_OPERATION_EXCEPTION_MESSAGE);
 	}),
-	MOVE("move", (chessGame, operations) -> {
-		chessGame.move(PositionFactory.of(operations.getFirstArgument()), PositionFactory.of(operations.getSecondArgument()));
-		return true;
-	}),
-	END("end", (chessGame, operations) -> false),
-	STATUS("status", (chessGame, operations) -> true);
+	MOVE("move", () -> true),
+	END("end", () -> false),
+	STATUS("status", () -> true);
 
 	private static final String INVALID_OPERATION_EXCEPTION_MESSAGE = "잘못된 명령입니다.";
 
 	private final String name;
-	private final Operate operate;
+	private final BooleanSupplier operationHandler;
 
-	OperationType(String name, Operate operate) {
+	OperationType(String name,  BooleanSupplier operationHandler) {
 		this.name = name;
-		this.operate = operate;
+		this.operationHandler = operationHandler;
 	}
 
 	public static OperationType of(String name) {
@@ -47,8 +43,8 @@ public enum OperationType {
 		}
 	}
 
-	public boolean runOperate(ChessGame chessGame, Operations operations) {
-		return operate.apply(chessGame, operations);
+	public boolean canExecuteMore() {
+		return operationHandler.getAsBoolean();
 	}
 
 	public boolean isStart() {
@@ -57,5 +53,9 @@ public enum OperationType {
 
 	public boolean isEnd() {
 		return END.equals(this);
+	}
+
+	public boolean isMove() {
+		return MOVE.equals(this);
 	}
 }
