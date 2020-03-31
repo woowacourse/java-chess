@@ -1,37 +1,46 @@
 package chess.domain;
 
-import chess.domain.board.Board;
-import chess.domain.piece.Team;
-
 import java.util.Collections;
 import java.util.Map;
 
+import chess.domain.board.Board;
+import chess.domain.piece.Team;
+
 public class Status {
+	private final Map<Team, Double> status;
 
-    public static Map<Team, Double> result(Board board) {
-        return Map.of(Team.BLACK, calculateOf(board, Team.BLACK),
-                Team.WHITE, calculateOf(board, Team.WHITE));
-    }
+	private Status(Map<Team, Double> status) {
+		this.status = status;
+	}
 
-    private static double calculateOf(Board board, Team team) {
-        return board.getColumnGroupOf(team)
-                .stream()
-                .mapToDouble(Score::calculateScoreOf)
-                .sum();
-    }
+	public static Status of(Board board) {
+		return new Status(Map.of(
+			Team.BLACK, calculateOf(board, Team.BLACK),
+			Team.WHITE, calculateOf(board, Team.WHITE))
+		);
+	}
 
-    public static String winner(Board board) {
-        Map<Team, Double> status = result(board);
-        if (status.get(Team.BLACK).equals(status.get(Team.WHITE))) {
-            return "없음 (무승부)";
-        }
+	private static double calculateOf(Board board, Team team) {
+		return board.getColumnGroupOf(team)
+			.stream()
+			.mapToDouble(Score::calculateScoreOf)
+			.sum();
+	}
 
-        double winnerScore = Collections.max(status.values());
-        return status.keySet()
-                .stream()
-                .filter(key -> status.get(key).equals(winnerScore))
-                .map(Team::getName)
-                .findFirst()
-                .orElseThrow(NullPointerException::new);
+	public Team getWinner() {
+		if (status.get(Team.BLACK).equals(status.get(Team.WHITE))) {
+			return Team.NONE;
+		}
+
+		double winnerScore = Collections.max(status.values());
+		return status.keySet()
+			.stream()
+			.filter(key -> status.get(key).equals(winnerScore))
+			.findFirst()
+			.orElseThrow(NullPointerException::new);
+	}
+
+    public Map<Team, Double> toMap() {
+	    return Collections.unmodifiableMap(status);
     }
 }

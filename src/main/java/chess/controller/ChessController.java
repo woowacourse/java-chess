@@ -56,8 +56,9 @@ public class ChessController {
     }
 
     private static void status(Board board) {
-        OutputView.printScore(Status.result(board));
-        OutputView.printWinner(Status.winner(board));
+        Status status = Status.of(board);
+        OutputView.printScore(status.toMap());
+        OutputView.printWinner(status.getWinner());
         exit();
     }
 }

@@ -1,10 +1,10 @@
 package chess.view;
 
+import java.util.Map;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-
-import java.util.Map;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
@@ -31,7 +31,7 @@ public class OutputView {
         result.forEach((key, value) -> System.out.println(key.getName() + "팀 점수: " + value));
     }
 
-    public static void printWinner(String winner) {
-        System.out.println("승자 : " + winner);
+    public static void printWinner(Team team) {
+        System.out.println("승자 : " + team.getName());
     }
 }

@@ -1,19 +1,19 @@
 package chess.domain;
 
-import chess.domain.board.Board;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
-import chess.domain.piece.Team;
-import chess.domain.position.Position;
-import org.junit.jupiter.api.Test;
+import static chess.domain.position.Fixtures.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static chess.domain.position.Fixtures.A2;
-import static chess.domain.position.Fixtures.A3;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
+import chess.domain.position.Position;
 
 class StatusTest {
 
@@ -30,7 +30,7 @@ class StatusTest {
         expected.put(Team.BLACK, 5.0);
         expected.put(Team.WHITE, 0.0);
 
-        assertThat(Status.result(board)).isEqualTo(expected);
+        assertThat(Status.of(board).toMap()).isEqualTo(expected);
     }
 
     @Test
@@ -40,7 +40,7 @@ class StatusTest {
 
         board = Board.of(setter);
 
-        assertThat(Status.winner(board)).isEqualTo("백");
+        assertThat(Status.of(board).getWinner()).isEqualTo(Team.WHITE);
     }
 
     @Test
@@ -50,7 +50,7 @@ class StatusTest {
 
         board = Board.of(setter);
 
-        assertThat(Status.winner(board)).isEqualTo("흑");
+        assertThat(Status.of(board).getWinner()).isEqualTo(Team.BLACK);
     }
 
     @Test
@@ -61,6 +61,6 @@ class StatusTest {
 
         board = Board.of(setter);
 
-        assertThat(Status.winner(board)).isEqualTo("없음 (무승부)");
+        assertThat(Status.of(board).getWinner()).isEqualTo(Team.NONE);
     }
 }
