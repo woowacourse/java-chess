@@ -8,21 +8,21 @@ import chess.domain.piece.Piece;
 
 public class TotalScore {
 	public static final double PAWN_DISADVANTAGE = 0.5;
-	private final Pieces pieces;
+	private final List<Piece> pieces;
 	private final double totalScore;
 
-	public TotalScore(Pieces pieces) {
+	public TotalScore(List<Piece> pieces) {
 		this.pieces = pieces;
 		this.totalScore = calculateTotalScore();
 	}
 
 	private double calculateTotalScore() {
-		double plainSum = pieces.getAlivePieces().stream().mapToDouble(Piece::getScore).sum();
+		double plainSum = pieces.stream().mapToDouble(Piece::getScore).sum();
 		return sameColumnPawnHandler(plainSum);
 	}
 
 	private double sameColumnPawnHandler(double plainSum) {
-		List<Pawn> pawns = pieces.getAlivePieces().stream()
+		List<Pawn> pawns = pieces.stream()
 			.filter(p -> p instanceof Pawn)
 			.map(p -> (Pawn)p)
 			.collect(Collectors.toList());
