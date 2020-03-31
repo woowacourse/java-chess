@@ -2,8 +2,6 @@ package chess.domain;
 
 import java.util.List;
 
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
@@ -28,10 +26,10 @@ public class Board {
 		Piece sourcePiece = pieces.findByPosition(source);
 		validateSource(sourcePiece);
 		Piece destinationPiece = pieces.findByPosition(destination);
-		if (sourcePiece instanceof Pawn) {
+		if (sourcePiece.getRepresentation() == 'P') {
 			validatePawnDestination(source, destination);
 		}
-		if (!(sourcePiece instanceof Knight)) {
+		if (!(sourcePiece.getRepresentation() == 'N')) {
 			validateNoObstacle(source, destination);
 		}
 		if (destinationPiece != null) {

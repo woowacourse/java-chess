@@ -52,6 +52,10 @@ public abstract class Piece {
 		return team;
 	}
 
+	public char getRepresentation() {
+		return representation;
+	}
+
 	@Override
 	public String toString() {
 		return String.valueOf(team.getTeamRepresentation().apply(representation));
