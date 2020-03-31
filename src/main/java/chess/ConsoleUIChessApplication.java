@@ -14,6 +14,7 @@ import chess.util.StringUtil;
 
 public class ConsoleUIChessApplication {
 
+	// TODO: 2020/03/30 chessGame 패키지부터 테스트 작성
 	public static void main(String[] args) {
 		ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.create());
 		ChessGame chessGame = ChessGame.from(chessBoard);
