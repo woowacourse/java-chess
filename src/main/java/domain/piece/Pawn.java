@@ -12,7 +12,7 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Pawn extends Piece {
-	private static final int MiN_STEP_SIZE_OF_DIAGONAL = 1;
+	private static final int MIN_STEP_SIZE_OF_DIAGONAL = 1;
 
 	private final double score;
 	private State state;
@@ -54,7 +54,7 @@ public class Pawn extends Piece {
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		Direction direction = this.findDirection(rowGap, this.position.calculateColumnGap(targetPosition));
 		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
-		if (Direction.diagonalDirection().contains(direction) && rowGap == MiN_STEP_SIZE_OF_DIAGONAL) {
+		if (Direction.diagonalDirection().contains(direction) && Math.abs(rowGap) == MIN_STEP_SIZE_OF_DIAGONAL) {
 			piece.ifPresent(targetPiece -> {
 				if (targetPiece.team.equals(this.team)) {
 					throw new InvalidPositionException(HAS_OUR_TEAM_AT_TARGET_POSITION);
