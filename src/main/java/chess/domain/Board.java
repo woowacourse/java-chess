@@ -16,7 +16,9 @@ public class Board {
 		validateTargetPosition(target);
 
 		Piece sourcePiece = findPieceBy(source);
-		sourcePiece.move(target);
+		if (sourcePiece.canMove(target)) {
+			sourcePiece.move(target);
+		}
 	}
 
 	private void validateTargetPosition(Position target) {
