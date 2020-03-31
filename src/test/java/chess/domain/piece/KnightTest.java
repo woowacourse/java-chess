@@ -16,28 +16,28 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.position.Position;
+import chess.domain.position.Position3;
 
 public class KnightTest {
 	@DisplayName("나이트는 가로칸*세로칸 = 2를 성립하는 칸만큼 이동할수 있으며 이동 경로를 반환할 수 있다.")
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
-	void knightPathTest(Position start, Position destination, List<Position> trace) {
+	void knightPathTest(Position3 start, Position3 destination, List<Position3> trace) {
 		Knight knight = new Knight(BLACK);
-		List<Position> actual = knight.findMoveModeTrace(start, destination);
+		List<Position3> actual = knight.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position.of(E, FIVE), Position.of(D, SEVEN), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, SEVEN), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(G, SIX), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(G, FOUR), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(F, THREE), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(D, THREE), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(C, FOUR), Collections.emptyList()),
-			Arguments.of(Position.of(E, FIVE), Position.of(C, SIX), Collections.emptyList())
+			Arguments.of(Position3.of(E, FIVE), Position3.of(D, SEVEN), Collections.emptyList()),
+			Arguments.of(Position3.of(E, FIVE), Position3.of(F, SEVEN), Collections.emptyList()),
+			Arguments.of(Position3.of(E, FIVE), Position3.of(G, SIX), Collections.emptyList()),
+			Arguments.of(Position3.of(E, FIVE), Position3.of(G, FOUR), Collections.emptyList()),
+			Arguments.of(Position3.of(E, FIVE), Position3.of(F, THREE), Collections.emptyList()),
+			Arguments.of(Position3.of(E, FIVE), Position3.of(D, THREE), Collections.emptyList()),
+			Arguments.of(Position3.of(E, FIVE), Position3.of(C, FOUR), Collections.emptyList()),
+			Arguments.of(Position3.of(E, FIVE), Position3.of(C, SIX), Collections.emptyList())
 		);
 	}
 
@@ -45,7 +45,7 @@ public class KnightTest {
 	@Test
 	void invalidMovementTest() {
 		Knight knight = new Knight(BLACK);
-		assertThatThrownBy(() -> knight.findMoveModeTrace(Position.of(A, ONE), Position.of(B, ONE)))
+		assertThatThrownBy(() -> knight.findMoveModeTrace(Position3.of(A, ONE), Position3.of(B, ONE)))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

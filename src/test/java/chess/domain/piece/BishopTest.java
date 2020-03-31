@@ -16,27 +16,27 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.position.Position;
+import chess.domain.position.Position3;
 
 public class BishopTest {
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
-	void bishopPathTest(Position start, Position destination, List<Position> trace) {
+	void bishopPathTest(Position3 start, Position3 destination, List<Position3> trace) {
 		Bishop bishop = new Bishop(BLACK);
-		List<Position> actual = bishop.findMoveModeTrace(start, destination);
+		List<Position3> actual = bishop.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position.of(C, SIX), Position.of(F, THREE),
-				Arrays.asList(Position.of(D, FIVE), Position.of(E, FOUR))),
-			Arguments.of(Position.of(F, THREE), Position.of(C, SIX),
-				Arrays.asList(Position.of(E, FOUR), Position.of(D, FIVE))),
-			Arguments.of(Position.of(C, THREE), Position.of(F, SIX),
-				Arrays.asList(Position.of(D, FOUR), Position.of(E, FIVE))),
-			Arguments.of(Position.of(F, SIX), Position.of(C, THREE),
-				Arrays.asList(Position.of(E, FIVE), Position.of(D, FOUR)))
+			Arguments.of(Position3.of(C, SIX), Position3.of(F, THREE),
+				Arrays.asList(Position3.of(D, FIVE), Position3.of(E, FOUR))),
+			Arguments.of(Position3.of(F, THREE), Position3.of(C, SIX),
+				Arrays.asList(Position3.of(E, FOUR), Position3.of(D, FIVE))),
+			Arguments.of(Position3.of(C, THREE), Position3.of(F, SIX),
+				Arrays.asList(Position3.of(D, FOUR), Position3.of(E, FIVE))),
+			Arguments.of(Position3.of(F, SIX), Position3.of(C, THREE),
+				Arrays.asList(Position3.of(E, FIVE), Position3.of(D, FOUR)))
 		);
 	}
 
@@ -44,7 +44,7 @@ public class BishopTest {
 	@Test
 	void invalidMovementTest() {
 		Bishop bishop = new Bishop(BLACK);
-		assertThatThrownBy(() -> bishop.findMoveModeTrace(Position.of(A, ONE), Position.of(B, ONE)))
+		assertThatThrownBy(() -> bishop.findMoveModeTrace(Position3.of(A, ONE), Position3.of(B, ONE)))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

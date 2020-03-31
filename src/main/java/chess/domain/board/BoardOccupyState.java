@@ -7,7 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public enum BoardOccupyState {
-	EMPTY((source, target) -> target == null),
+	EMPTY((source, target) -> target.isBlank()),
 	ENEMY_TEAM((source, target) -> !source.isSameTeam(target));
 
 	private static final String NOT_ACCEPTABLE_MOVING_POSITION_EXCEPTION = "해당 위치로 이동할 수 없습니다.";

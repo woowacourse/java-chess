@@ -6,9 +6,15 @@ import chess.domain.position.Position;
 
 public abstract class Piece {
 	protected final Team team;
+	protected boolean hasMoved;
 
 	public Piece(Team team) {
+		this(team, false);
+	}
+
+	public Piece(Team team, boolean hasMoved) {
 		this.team = team;
+		this.hasMoved = hasMoved;
 	}
 
 	public String getSymbol() {
@@ -19,6 +25,7 @@ public abstract class Piece {
 	}
 
 	public void updateHasMoved() {
+		hasMoved = true;
 	}
 
 	public boolean isSameTeam(Piece piece) {
@@ -33,8 +40,8 @@ public abstract class Piece {
 		return team == turn;
 	}
 
-	public List<Position> findCatchModeTrace(Position from, Position to) {
-		return findMoveModeTrace(from, to);
+	public boolean isNotBlank() {
+		return team.isNotBlank();
 	}
 
 	public boolean isKing() {
@@ -43,6 +50,14 @@ public abstract class Piece {
 
 	public boolean isPawn() {
 		return false;
+	}
+
+	public boolean isBlank() {
+		return !team.isNotBlank();
+	}
+
+	public List<Position> findCatchModeTrace(Position from, Position to) {
+		return findMoveModeTrace(from, to);
 	}
 
 	public abstract List<Position> findMoveModeTrace(Position from, Position to);

@@ -1,16 +1,16 @@
 package chess.domain.board;
 
+import static chess.domain.piece.Empty.*;
 import static chess.domain.piece.Team.*;
-import static chess.domain.position.File.*;
-import static chess.domain.position.Rank.*;
+import static chess.domain.position.Position.*;
 import static java.util.stream.Collectors.*;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -20,9 +20,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 public class Board {
 	private final Map<Position, Piece> pieces;
@@ -41,34 +39,37 @@ public class Board {
 		this.finished = false;
 	}
 
+	//추가하기
 	public void start() {
 		pieces.clear();
-		initChessBoard(EIGHT, BLACK, SEVEN);
-		initChessBoard(ONE, WHITE, TWO);
+		initChessBoard(8, BLACK, 7);
+		initChessBoard(1, WHITE, 2);
 	}
 
-	private void initChessBoard(Rank othersRank, Team teamColor, Rank pawnRank) {
-		pieces.put(Position.of(A, othersRank), new Rook(teamColor));
-		pieces.put(Position.of(B, othersRank), new Knight(teamColor));
-		pieces.put(Position.of(C, othersRank), new Bishop(teamColor));
-		pieces.put(Position.of(D, othersRank), new Queen(teamColor));
-		pieces.put(Position.of(E, othersRank), new King(teamColor));
-		pieces.put(Position.of(F, othersRank), new Bishop(teamColor));
-		pieces.put(Position.of(G, othersRank), new Knight(teamColor));
-		pieces.put(Position.of(H, othersRank), new Rook(teamColor));
-		for (File value : File.values()) {
-			pieces.put(Position.of(value, pawnRank), new Pawn(teamColor));
+	private void initChessBoard(int othersRank, Team teamColor, int pawnRank) {
+		pieces.put(Position.of("a" + othersRank), new Rook(teamColor));
+		pieces.put(Position.of("b" + othersRank), new Knight(teamColor));
+		pieces.put(Position.of("c" + othersRank), new Bishop(teamColor));
+		pieces.put(Position.of("d" + othersRank), new Queen(teamColor));
+		pieces.put(Position.of("e" + othersRank), new King(teamColor));
+		pieces.put(Position.of("f" + othersRank), new Bishop(teamColor));
+		pieces.put(Position.of("g" + othersRank), new Knight(teamColor));
+		pieces.put(Position.of("h" + othersRank), new Rook(teamColor));
+		for (int i = 0; i < MAXIMUM_POSITION_NUMBER; i++) {
+			pieces.put(Position.of((char)('a' + i) + String.valueOf(pawnRank)), new Pawn(teamColor));
 		}
 	}
 
+	//read 역할
 	public Map<Team, Double> status() {
 		HashMap<Team, Double> collect = pieces.values().stream()
 			.collect(groupingBy(Piece::getTeam, HashMap::new, summingDouble(Piece::getScore)));
 
-		for (File file : File.values()) {
-			Map<Team, Long> cnt = Arrays.stream(Rank.values())
-				.map(rank -> pieces.get(Position.of(file, rank)))
-				.filter(piece -> piece != null && piece.isPawn())
+		for (int file = 1; file <= 8; file++) {
+			int finalFile = file;
+			Map<Team, Long> cnt = IntStream.rangeClosed(1, 8)
+				.mapToObj(rank -> pieces.get(Position.of(finalFile, rank)))
+				.filter(piece -> piece.isNotBlank() && piece.isPawn())
 				.collect(groupingBy(Piece::getTeam, counting()));
 
 			cnt.keySet().stream()
@@ -79,16 +80,31 @@ public class Board {
 	}
 
 	public void move(Position from, Position to) {
-		checkPositions(from, to);
-		Piece source = requireNonNullAndTurn(pieces.get(from));
-		Piece target = pieces.get(to);
+		Piece source = requireNonEmpty(findPiece(from));
+		Piece target = findPiece(to);
+		validatePlayTurn(source);
 		validateSourceMovingRoute(from, to, source, target);
-
-		pieces.remove(from);
-		pieces.put(to, source);
+		updatePiecePosition(from, to, source);
 		finishGameIfKingCaught(target);
 		switchPlayerTurn();
 		source.updateHasMoved();
+	}
+
+	private Piece findPiece(Position position) {
+		return pieces.getOrDefault(Objects.requireNonNull(position), EMPTY);
+	}
+
+	private Piece requireNonEmpty(Piece piece) {
+		if (piece.isBlank()) {
+			throw new IllegalArgumentException("빈칸은 선택할 수 없습니다.");
+		}
+		return piece;
+	}
+
+	private void validatePlayTurn(Piece piece) {
+		if (!piece.isRightTeam(turn)) {
+			throw new IllegalArgumentException("현재 차례가 아닙니다.");
+		}
 	}
 
 	private void validateSourceMovingRoute(Position from, Position to, Piece source, Piece target) {
@@ -96,24 +112,13 @@ public class Board {
 		occupyState.checkMovable(this, source, from, to);
 	}
 
-	private void checkPositions(Position from, Position to) {
-		if (Objects.isNull(from) || Objects.isNull(to)) {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	private Piece requireNonNullAndTurn(Piece source) {
-		if (Objects.isNull(source)) {
-			throw new IllegalArgumentException("출발 값을 잘못 입력했습니다.");
-		}
-		if (!source.isRightTeam(turn)) {
-			throw new IllegalArgumentException("현재 차례가 아닙니다.");
-		}
-		return source;
+	private void updatePiecePosition(Position from, Position to, Piece source) {
+		pieces.put(from, EMPTY);
+		pieces.put(to, source);
 	}
 
 	private void finishGameIfKingCaught(Piece target) {
-		if (target != null && target.isKing()) {
+		if (target.isKing()) {
 			setGameEnd();
 		}
 	}

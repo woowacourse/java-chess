@@ -16,7 +16,7 @@ public class Bishop extends Piece {
 		if (from.isNotDiagonal(to)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
-		return Position.findDiagonalTrace(from, to);
+		return Position.findMultipleStepTrace(from, to);
 	}
 
 	@Override

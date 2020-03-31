@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
-import chess.domain.position.Position;
+import chess.domain.position.Position3;
 
 public class BoardTest {
 	private Board board;
@@ -22,9 +22,9 @@ public class BoardTest {
 
 	@BeforeEach
 	void setup() {
-		Map<Position, Piece> pieces = new HashMap<>();
+		Map<Position3, Piece> pieces = new HashMap<>();
 		rook = new Rook(Team.WHITE);
-		pieces.put(Position.of(A, ONE), rook);
+		pieces.put(Position3.of(A, ONE), rook);
 		board = new Board(pieces);
 	}
 
@@ -37,8 +37,8 @@ public class BoardTest {
 	@DisplayName("move메서드를 실행하면 Map이 수정되는지 테스트")
 	@Test
 	void moveTest() {
-		Position from = Position.of(A, ONE);
-		Position to = Position.of(A, TWO);
+		Position3 from = Position3.of(A, ONE);
+		Position3 to = Position3.of(A, TWO);
 		board.move(from, to);
 		assertThat(board.getPiece(to)).isEqualTo(rook);
 	}

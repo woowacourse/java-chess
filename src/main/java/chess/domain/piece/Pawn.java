@@ -2,19 +2,14 @@ package chess.domain.piece;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 public class Pawn extends Piece {
 	private static final String INITIAL_CHARACTER = "P";
 
-	private boolean hasMoved;
-
 	public Pawn(Team team) {
 		super(team);
-		hasMoved = false;
 	}
 
 	@Override
@@ -24,10 +19,7 @@ public class Pawn extends Piece {
 		}
 
 		if ((Math.abs(to.getRankNumber() - from.getRankNumber()) == 2)) {
-			List<Rank> ranks = Rank.valuesBetween(from.getRank(), to.getRank());
-			return ranks.stream()
-				.map(rank -> Position.of(from.getFile(), rank))
-				.collect(Collectors.toList());
+			return Position.findMultipleStepTrace(from, to);
 		}
 		return Collections.emptyList();
 	}
@@ -61,11 +53,6 @@ public class Pawn extends Piece {
 	@Override
 	protected String getInitialCharacter() {
 		return INITIAL_CHARACTER;
-	}
-
-	@Override
-	public void updateHasMoved() {
-		this.hasMoved = true;
 	}
 
 	@Override

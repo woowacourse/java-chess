@@ -4,9 +4,7 @@ import java.util.Map;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 public class OutputView {
 
@@ -30,8 +28,8 @@ public class OutputView {
 
 		StringBuilder builder = new StringBuilder();
 
-		for (Rank rank : Rank.valuesReverseOrder()) {
-			for (File file : File.values()) {
+		for (int rank = 8; rank >= 1; rank--) {
+			for (int file = 1; file <= 8; file++) {
 				if (pieces.containsKey(Position.of(file, rank))) {
 					Piece piece = pieces.get(Position.of(file, rank));
 					builder.append(findSymbol(piece));
