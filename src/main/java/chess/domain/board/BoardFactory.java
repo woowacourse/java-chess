@@ -13,12 +13,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
-    public static Board createInitially() {
-        return new Board(createBoardSource());
+    public static Board createEmpty() {
+        return new Board(createEmptySource());
     }
 
-    public static Board of(Map<Position, Placeable> board) {
-        return new Board(board);
+    private static Map<Position, Placeable> createEmptySource() {
+        Map<Position, Placeable> board = new HashMap<>();
+
+        fillWithEmpty(board);
+
+        return board;
+    }
+
+    public static Board createInitially() {
+        return new Board(createBoardSource());
     }
 
     private static Map<Position, Placeable> createBoardSource() {

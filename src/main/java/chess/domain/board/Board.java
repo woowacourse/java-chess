@@ -76,17 +76,6 @@ public class Board {
         return true;
     }
 
-    public List<List<String>> getBoard() {
-        List<List<String>> resultBoard = new ArrayList<>();
-
-        for (Row row : Row.values()) {
-            resultBoard.add(new ArrayList<>());
-            addAcronymToRow(resultBoard, row);
-        }
-
-        return Collections.unmodifiableList(resultBoard);
-    }
-
     public Placeable findPieceBy(Position position) {
         return board.get(position);
     }
@@ -104,5 +93,20 @@ public class Board {
         }
 
         return piece.getAcronym();
+    }
+
+    public List<List<String>> getBoardForPrinting() {
+        List<List<String>> resultBoard = new ArrayList<>();
+
+        for (Row row : Row.values()) {
+            resultBoard.add(new ArrayList<>());
+            addAcronymToRow(resultBoard, row);
+        }
+
+        return Collections.unmodifiableList(resultBoard);
+    }
+
+    public Map<Position, Placeable> getBoard() {
+        return board;
     }
 }
