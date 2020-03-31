@@ -24,7 +24,7 @@ public class Board {
         move(current, Position.of(keyFromPosition), Position.of(keyToPosition));
     }
 
-    public void move(Team current, Position from, Position to) {
+    private void move(Team current, Position from, Position to) {
         Piece piece = board.get(from);
         validateBelongsCurrentTeam(current, piece);
 
