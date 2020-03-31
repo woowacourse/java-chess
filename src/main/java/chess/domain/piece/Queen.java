@@ -65,6 +65,6 @@ public class Queen extends Piece {
 
 	@Override
 	public double score() {
-		return 9D;
+		return Score.QUEEN.getScore();
 	}
 }

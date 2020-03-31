@@ -65,6 +65,6 @@ public class Bishop extends Piece {
 
 	@Override
 	public double score() {
-		return 3D;
+		return Score.BISHOP.getScore();
 	}
 }

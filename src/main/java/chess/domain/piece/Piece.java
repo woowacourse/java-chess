@@ -32,7 +32,7 @@ public abstract class Piece {
 	}
 
 	public double score() {
-		return 0.0D;
+		return Score.DEFAULT.getScore();
 	}
 
 	public String getSymbol() {

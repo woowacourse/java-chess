@@ -65,6 +65,6 @@ public class Rook extends Piece {
 
 	@Override
 	public double score() {
-		return 5D;
+		return Score.ROOK.getScore();
 	}
 }

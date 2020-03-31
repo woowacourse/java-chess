@@ -53,10 +53,10 @@ public class PiecesManager {
 	}
 
 	public double whitePiecesStatus() {
-		return whitePieces.calculateStatus();
+		return whitePieces.score();
 	}
 
 	public double blackPiecesStatus() {
-		return blackPieces.calculateStatus();
+		return blackPieces.score();
 	}
 }

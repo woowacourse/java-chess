@@ -40,6 +40,6 @@ public class Knight extends Piece {
 
 	@Override
 	public double score() {
-		return 2.5D;
+		return Score.KNIGHT.getScore();
 	}
 }
