@@ -24,11 +24,14 @@ public class ChessBoard {
     }
 
     public boolean move(Position from, Position to) {
-        validateException(from, to);
+        Piece source = chessBoard.get(from);
+        Piece target = chessBoard.get(to);
+        validateSamePosition(from, to);
+        validateSource(source);
+        validateIsPlayer(source, target);
 
-        if (validateMovement(from, to)) {
-            Piece source = chessBoard.get(from);
-            Piece target = chessBoard.get(to);
+
+        if (movable(from, to)) {
             chessBoard.put(to, source);
             chessBoard.remove(from);
 
@@ -42,24 +45,28 @@ public class ChessBoard {
         return false;
     }
 
-    private void validateException(Position from, Position to) {
+    private void validateSamePosition(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
+
         if (from == to) {
             throw new NotMoveException("같은 위치로 이동할 수 없습니다.");
         }
+    }
 
-        Piece source =chessBoard.get(from);
-        Piece target = chessBoard.get(to);
-
+    private void validateSource(Piece source) {
         if (Objects.isNull(source)) {
             throw new NotMoveException("empty에서는 이동할 수 없습니다.");
         }
+    }
 
+    private void validateIsPlayer(Piece source, Piece target) {
         if (Objects.nonNull(target) && source.isSamePlayer(target)) {
             throw  new NotMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
         };
     }
 
-    private boolean validateMovement(Position from, Position to) {
+    private boolean movable(Position from, Position to) {
         Piece source = chessBoard.get(from);
         Piece target = chessBoard.get(to);
         Direction direction = Direction.getDirection(from, to);
