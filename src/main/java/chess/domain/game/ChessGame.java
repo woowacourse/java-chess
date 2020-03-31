@@ -16,7 +16,7 @@ public class ChessGame {
 
 	public void move(Position start, Position end) {
 		pieces.move(start, end, turn.getColor());
-		turn.change();
+		turn = turn.change();
 	}
 
 	public ScoreResult calculateScore() {
