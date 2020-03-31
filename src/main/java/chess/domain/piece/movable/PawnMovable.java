@@ -16,13 +16,12 @@ public class PawnMovable implements Movable {
 	}
 
 	@Override
-	public Positions createMovablePositions(Position position, List<Piece> pieces, Color color) {
+	public Positions findMovablePositions(Position position, List<Piece> pieces, Color color) {
 		Positions movablePositions = getMovableDiagonalDirectionPositions(position, pieces, color);
 
 		Direction direction = getForwardDirection(position);
 		Position movableForwardPosition = position.getMovedPositionBy(direction);
 
-		//이동 가능한 직선 방향 포지션들 구하여 이동가능한 대각선 방향 포지션들과 합치기
 		if (isNotPossessed(movableForwardPosition, pieces)) {
 			movablePositions.add(movableForwardPosition);
 			movableForwardPosition = movableForwardPosition.getMovedPositionBy(direction);

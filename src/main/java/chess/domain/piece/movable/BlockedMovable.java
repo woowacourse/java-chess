@@ -15,7 +15,7 @@ public class BlockedMovable implements Movable {
 	}
 
 	@Override
-	public Positions createMovablePositions(Position position, List<Piece> pieces, Color color) {
+	public Positions findMovablePositions(Position position, List<Piece> pieces, Color color) {
 		Positions movablePositions = Positions.create();
 		for (Direction direction : moveDirections.getDirections()) {
 			Positions positions = createMovablePositionsByDirection(position, direction, pieces, color);

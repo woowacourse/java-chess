@@ -16,7 +16,7 @@ public class UnblockedMovable implements Movable {
 	}
 
 	@Override
-	public Positions createMovablePositions(Position position, List<Piece> pieces, Color color) {
+	public Positions findMovablePositions(Position position, List<Piece> pieces, Color color) {
 		return moveDirections.getDirections().stream()
 				.map(position::getMovedPositionBy)
 				.filter(movablePosition -> checkMovable(movablePosition, pieces, color))

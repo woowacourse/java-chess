@@ -8,5 +8,5 @@ import chess.domain.position.Positions;
 import java.util.List;
 
 public interface Movable {
-	Positions createMovablePositions(Position position, List<Piece> pieces, Color color);
+	Positions findMovablePositions(Position position, List<Piece> pieces, Color color);
 }
