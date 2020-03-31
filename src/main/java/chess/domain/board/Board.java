@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.domain.piece.BlackPieces;
 import chess.domain.piece.BlackPiecesFactory;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.piece.WhitePieces;
+import chess.domain.piece.Pieces;
 import chess.domain.piece.WhitePiecesFactory;
 
 /**
@@ -29,8 +28,8 @@ public class Board {
 	}
 
 	private void makeBoardBy(Rank rank) {
-		WhitePieces whitePieces = WhitePiecesFactory.create();
-		BlackPieces blackPieces = BlackPiecesFactory.create();
+		Pieces whitePieces = WhitePiecesFactory.create();
+		Pieces blackPieces = BlackPiecesFactory.create();
 
 		for (File file : File.values()) {
 			Position position = Position.of(file.getFile() + rank.getRow());

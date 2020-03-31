@@ -14,6 +14,6 @@ class WhitePiecesFactoryTest {
 	@Test
 	void createTest() {
 		assertThat(WhitePiecesFactory.create())
-			.isInstanceOf(WhitePieces.class);
+			.isInstanceOf(Pieces.class);
 	}
 }

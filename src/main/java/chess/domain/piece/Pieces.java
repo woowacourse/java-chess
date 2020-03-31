@@ -1,62 +1,76 @@
 package chess.domain.piece;
 
 import java.util.List;
+import java.util.Map;
 
+import chess.domain.board.File;
 import chess.domain.board.Position;
+import chess.domain.piece.state.Moved;
 
 public class Pieces {
-	private final WhitePieces whitePieces;
-	private final BlackPieces blackPieces;
-	private boolean turnFlag;
+	private static final double INITIAL_PAWNS_STATUS = 0.0D;
+	private static final int DEFAULT_PAWN_COUNT = 1;
+	private static final double DEFAULT_PAWNS_STATUS = 1.0D;
+	private static final double SAME_FILE_PAWNS_STATUS = 0.5D;
 
-	public Pieces(final WhitePieces whitePieces, final BlackPieces blackPieces) {
-		this.whitePieces = whitePieces;
-		this.blackPieces = blackPieces;
-		this.turnFlag = true;
+	private Map<Position, Piece> pieces;
+
+	public Pieces(Map<Position, Piece> pieces) {
+		this.pieces = pieces;
 	}
 
-	public List<Position> movingTrace(Position source, Position target) {
-		List<Position> trace;
-
-		if (turnFlag) {
-			trace = whitePieces.findTrace(source, target);
-			return trace;
+	public List<Position> findTrace(Position source, Position target) {
+		if (!pieces.containsKey(source)) {
+			throw new UnsupportedOperationException("움직일 수 있는 말이 아닙니다.");
 		}
-		trace = blackPieces.findTrace(source, target);
-		return trace;
+
+		Piece piece = pieces.get(source);
+		return piece.movingTrace(source, target);
 	}
 
-	public void move(Position source, Position target) {
-		if (turnFlag) {
-			whitePieces.moveFromTo(source, target);
-			blackPieces.kill(target);
-			turnFlag = false;
-		} else {
-			blackPieces.moveFromTo(source, target);
-			whitePieces.kill(target);
-			turnFlag = true;
-		}
-	}
-
-	public boolean canMove(Position source, Position target) {
-		boolean hasSourceAndTargetSeparately = (whitePieces.hasPiece(source) && blackPieces.hasPiece(target))
-			|| (whitePieces.hasPiece(target) && blackPieces.hasPiece(source));
-		boolean hasOnlySourceOrTarget =
-			(whitePieces.hasPiece(source) && !blackPieces.hasPiece(target) && !whitePieces.hasPiece(target))
-				|| (!whitePieces.hasPiece(target) && !blackPieces.hasPiece(target) && blackPieces.hasPiece(source));
-
-		return hasSourceAndTargetSeparately || hasOnlySourceOrTarget;
+	public boolean hasPiece(Position source) {
+		return pieces.containsKey(source);
 	}
 
 	public boolean isKingDie() {
-		return whitePieces.isKingDie() || blackPieces.isKingDie();
+		return pieces.keySet().stream()
+			.noneMatch(position -> pieces.get(position).isKing());
 	}
 
-	public double whitePiecesStatus() {
-		return whitePieces.calculateStatus();
+	public void moveFromTo(Position source, Position target) {
+		Piece piece = pieces.remove(source);
+		piece.state = new Moved();
+		pieces.put(target, piece);
 	}
 
-	public double blackPiecesStatus() {
-		return blackPieces.calculateStatus();
+	public void kill(Position target) {
+		pieces.remove(target);
+	}
+
+	public double calculateStatus() {
+		return calculatePawnStatus() + pieces.keySet().stream()
+			.filter(position -> !pieces.get(position).isPawn())
+			.mapToDouble(position -> pieces.get(position).score())
+			.sum();
+	}
+
+	private double calculatePawnStatus() {
+		double pawnsStatus = INITIAL_PAWNS_STATUS;
+
+		for (File file : File.values()) {
+			int pawnCount = (int)pieces.keySet().stream()
+				.filter(position -> (position.getColumn() == file.getColumn()) && (pieces.get(position).isPawn()))
+				.count();
+			if (pawnCount == DEFAULT_PAWN_COUNT) {
+				pawnsStatus += DEFAULT_PAWNS_STATUS;
+			} else {
+				pawnsStatus += (SAME_FILE_PAWNS_STATUS * pawnCount);
+			}
+		}
+		return pawnsStatus;
+	}
+
+	public Piece getPiece(Position position) {
+		return pieces.get(position);
 	}
 }

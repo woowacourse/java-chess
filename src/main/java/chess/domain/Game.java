@@ -4,7 +4,7 @@ import java.util.List;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Pieces;
+import chess.domain.piece.PiecesManager;
 
 /**
  *    체스 게임을 의미하는 클래스입니다.
@@ -12,31 +12,31 @@ import chess.domain.piece.Pieces;
  *    @author AnHyungJu
  */
 public class Game {
-	private final Pieces pieces;
+	private final PiecesManager piecesManager;
 	private final Board board;
 
-	public Game(Pieces pieces, Board board) {
-		this.pieces = pieces;
+	public Game(PiecesManager piecesManager, Board board) {
+		this.piecesManager = piecesManager;
 		this.board = board;
 	}
 
 	public void movePieceFromTo(Position source, Position target) {
-		List<Position> trace = pieces.movingTrace(source, target);
+		List<Position> trace = piecesManager.movingTrace(source, target);
 
-		boolean canNotMove = !pieces.canMove(source, target) || !board.canMoveBy(trace);
+		boolean canNotMove = !piecesManager.canMove(source, target) || !board.canMoveBy(trace);
 		if (canNotMove) {
 			throw new UnsupportedOperationException("해당 위치로 움직일 수 없습니다.");
 		}
 		board.change(source, target);
-		pieces.move(source, target);
+		piecesManager.move(source, target);
 	}
 
 	public boolean isKingDie() {
-		return pieces.isKingDie();
+		return piecesManager.isKingDie();
 	}
 
 	public double[] status() {
-		return new double[] {pieces.whitePiecesStatus(), pieces.blackPiecesStatus()};
+		return new double[] {piecesManager.whitePiecesStatus(), piecesManager.blackPiecesStatus()};
 	}
 
 	public Board getBoard() {

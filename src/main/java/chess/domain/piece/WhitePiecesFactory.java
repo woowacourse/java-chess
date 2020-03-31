@@ -8,7 +8,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.state.Initial;
 
 public class WhitePiecesFactory {
-	public static WhitePieces create() {
+	public static Pieces create() {
 		Map<Position, Piece> pieces = new HashMap<>();
 
 		initWhitePawn(pieces);
@@ -18,7 +18,7 @@ public class WhitePiecesFactory {
 		initWhiteQueen(pieces);
 		initWhiteKing(pieces);
 
-		return new WhitePieces(pieces);
+		return new Pieces(pieces);
 	}
 
 	private static void initWhiteKing(Map<Position, Piece> pieces) {

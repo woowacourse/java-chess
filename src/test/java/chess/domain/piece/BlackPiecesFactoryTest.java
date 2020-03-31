@@ -15,6 +15,6 @@ class BlackPiecesFactoryTest {
 	@Test
 	void createTest() {
 		assertThat(BlackPiecesFactory.create())
-			.isInstanceOf(BlackPieces.class);
+			.isInstanceOf(Pieces.class);
 	}
 }

@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,57 +13,59 @@ import chess.domain.board.Position;
  *
  *    @author AnHyungJu
  */
-class PiecesTest {
-	@DisplayName("정상적으로 생성되는지 확인")
-	@Test
-	void constructorTest() {
-		assertThat(new Pieces(WhitePiecesFactory.create(), BlackPiecesFactory.create()))
-			.isInstanceOf(Pieces.class)
-			.isNotNull();
+public class PiecesTest {
+	private Pieces whitePieces;
+
+	@BeforeEach
+	void setUp() {
+		whitePieces = WhitePiecesFactory.create();
 	}
 
-	@DisplayName("화이트 폰의 source와 target포지션이 주어졌을 때 정상적으로 이동 경로를 반환하는지 확인")
+	@DisplayName("없는 말을 움직이려고 할 때 예외처리")
 	@Test
-	void movingTraceTest() {
-		Pieces pieces = new Pieces(WhitePiecesFactory.create(), BlackPiecesFactory.create());
-		Position source = Position.of("a2");
-		Position target = Position.of("a4");
+	void findTraceTest() {
+		whitePieces.kill(Position.of("e1"));
 
-		List<Position> trace = pieces.movingTrace(source, target);
-
-		assertThat(trace.size()).isEqualTo(2);
-		assertThat(trace.get(0)).isEqualTo(source);
-		assertThat(trace.get(1)).isEqualTo(target);
+		assertThatThrownBy(() -> whitePieces.findTrace(Position.of("e1"), Position.of("a1")))
+			.isInstanceOf(UnsupportedOperationException.class)
+			.hasMessageContaining("움직일 수");
 	}
 
-	@DisplayName("화이트 폰이 a2에서 a4로 이동할 수 있는지 확인")
-	@Test
-	void canMoveTest() {
-		Pieces pieces = new Pieces(WhitePiecesFactory.create(), BlackPiecesFactory.create());
-		Position source = Position.of("a2");
-		Position target = Position.of("a4");
-
-		assertThat(pieces.canMove(source, target)).isTrue();
-	}
-
-	@DisplayName("화이트 폰(a4)이 블랙폰(b5)의 위치로 이동할 수 있는지 확인")
-	@Test
-	void canMoveTest2() {
-		Pieces pieces = new Pieces(WhitePiecesFactory.create(), BlackPiecesFactory.create());
-		pieces.move(Position.of("a2"), Position.of("a4"));
-		pieces.move(Position.of("b7"), Position.of("b5"));
-
-		Position source = Position.of("a4");
-		Position target = Position.of("b5");
-
-		assertThat(pieces.canMove(source, target)).isTrue();
-	}
-
-	@DisplayName("생성하고 바로 왕이 죽었는지 물어봤을 때 false를 반환하는지 확인")
+	@DisplayName("왕이 죽어 있을 때 true를 반환하는지 테스트")
 	@Test
 	void isKingDieTest() {
-		Pieces pieces = new Pieces(WhitePiecesFactory.create(), BlackPiecesFactory.create());
+		whitePieces.kill(Position.of("e1"));
 
-		assertThat(pieces.isKingDie()).isFalse();
+		assertThat(whitePieces.isKingDie()).isTrue();
+	}
+
+	@DisplayName("말을 움직였을 떄 source의 말이 없어지고 target으로 이동했는지 확인")
+	@Test
+	void moveFromToTest() {
+		Position source = Position.of("a2");
+		Position target = Position.of("a3");
+		Piece sourcePiece = whitePieces.getPiece(source);
+
+		whitePieces.moveFromTo(source, target);
+
+		assertThat(whitePieces.getPiece(source)).isNull();
+		assertThat(whitePieces.getPiece(target)).isEqualTo(sourcePiece);
+	}
+
+	@DisplayName("죽였을 때 죽는지 확인")
+	@Test
+	void killTest() {
+		Position target = Position.of("e1");
+
+		whitePieces.kill(target);
+
+		assertThat(whitePieces.getPiece(target)).isNull();
+	}
+
+	@DisplayName("e1위치의 피스를 가져올 때 왕인지 확인")
+	@Test
+	void getPieceTest() {
+		assertThat(whitePieces.getPiece(Position.of("e1")))
+			.isInstanceOf(King.class);
 	}
 }

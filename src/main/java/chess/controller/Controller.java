@@ -5,7 +5,7 @@ import chess.domain.FirstCommand;
 import chess.domain.Game;
 import chess.domain.board.Board;
 import chess.domain.piece.BlackPiecesFactory;
-import chess.domain.piece.Pieces;
+import chess.domain.piece.PiecesManager;
 import chess.domain.piece.WhitePiecesFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -44,7 +44,8 @@ public class Controller {
 	}
 
 	private static void init() {
-		game = new Game(new Pieces(WhitePiecesFactory.create(), BlackPiecesFactory.create()), Board.getInstance());
+		game = new Game(new PiecesManager(WhitePiecesFactory.create(), BlackPiecesFactory.create()),
+			Board.getInstance());
 		OutputView.printChessBoard(game.getBoard());
 	}
 
