@@ -13,33 +13,34 @@ public class ChessController {
 	private static final int TARGET_POSITION = 2;
 	private static final String DELIMITER = " ";
 
+	private Board board = BoardFactory.create();
+	private Team team = Team.WHITE;
+
 	public ChessController() {
-		Board board = BoardFactory.create();
-		Team turn = Team.WHITE;
-		run(board, turn);
+		run(board);
 	}
 
-	private void run(Board board, Team turn) {
-		OutputView.printChessBoard(board);
+	private void run(Board board) {
 		try {
-			executeCommand(board, turn);
+			OutputView.printChessBoard(board);
+			executeCommand(board);
 			OutputView.printChessBoard(board);
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e);
-			run(board, turn);
+			run(board);
 		}
 	}
 
-	private void executeCommand(Board board, Team turn) {
+	private void executeCommand(Board board) {
 		Command command;
 		String[] inputCommand;
 		do {
-			OutputView.printTurn(turn);
+			OutputView.printTurn(team);
 			inputCommand = InputView.inputCommand().split(DELIMITER);
 			command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
 			if (command == Command.MOVE) {
-				board.move(inputCommand[SOURCE_POSITION], inputCommand[TARGET_POSITION], turn);
-				turn = Team.changeTurn(turn);
+				board.move(inputCommand[SOURCE_POSITION], inputCommand[TARGET_POSITION], team);
+				team = Team.changeTurn(team);
 			}
 			if (command == Command.STATUS) {
 				OutputView.printTeamScore(board.calculateTeamScore(Team.WHITE), board.calculateTeamScore(Team.BLACK));
