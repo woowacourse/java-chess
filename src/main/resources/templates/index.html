@@ -268,7 +268,7 @@
                     <td class="rankindicator">
                         1
                     </td>
-                    <td class="dark">
+                    <td class="dark" onclick="chooseSource('a1')">
                         {{a1}}
                     </td>
                     <td class="light">
@@ -332,6 +332,12 @@
 
                 안내<br>
                 {{notification}}
+
+                <form action="move" method="post">
+                    <input name="source" id="source">
+                    <input name="destination" id="destination">
+                    <button type="submit">입력</button>
+                </form>
             </div>
         </div>
 
@@ -339,6 +345,15 @@
 
 </body>
 </html>
+
+<script type="text/javascript">
+    function chooseDestination(destinationValue) {
+        document.getElementById('destination').value = destinationValue;
+    }
+    function chooseSource(sourceValue) {
+        document.getElementById('source').value = sourceValue;
+    }
+</script>
 
 <style>
     .chessBoardWrapper{

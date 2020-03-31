@@ -7,22 +7,38 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
 import spark.ModelAndView;
+import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class WebChessController implements ChessController{
     @Override
     public void run() {
         Board board = new Board();
         get("/", (req, res) -> render(printChessBoard(board), "index.html"));
-        post("/move", (req, res) -> null);
+
+        post("/move", (req, res) -> {
+            try {
+                Map<String, String> bodyMap = new HashMap<>();
+                for (String body : req.body().split("&")) {
+                    String[] instruction = body.split("=");
+                    bodyMap.put(instruction[0], instruction[1]);
+                }
+                board.movePiece(new Position(bodyMap.get("source")), new Position(bodyMap.get("destination")));
+                res.redirect("/");
+            }catch(Exception e) {
+                res.body(e.getMessage());
+                res.redirect("/");
+            }
+            return null;
+        });
     }
 
     private Map<String, Object> printChessBoard(Board board) {
