@@ -5,7 +5,7 @@ import chess.domains.position.Position;
 public class Bishop extends Piece {
 
     public Bishop(PieceColor pieceColor) {
-        super(pieceColor, PieceType.BISHOP.name, PieceType.BISHOP.score);
+        super(pieceColor, PieceType.BISHOP);
     }
 
     @Override

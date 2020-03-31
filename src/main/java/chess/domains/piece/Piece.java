@@ -2,75 +2,71 @@ package chess.domains.piece;
 
 import chess.domains.position.Position;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-    private static final List<Piece> whitePieces;
-    private static final List<Piece> blackPieces;
-
-    static {
-        whitePieces = createBundleByColor(PieceColor.WHITE);
-        blackPieces = createBundleByColor(PieceColor.BLACK);
-    }
+    static final int NO_MOVE = 0;
+    static final int ONE_BLOCK = 1;
+    static final int TWO_BLOCKS = 2;
+    static final int ONE_BLOCK_UP = 1;
+    static final int ONE_BLOCK_DOWN = -1;
+    static final int TWO_BLOCKS_UP = 2;
+    static final int TWO_BLOCKS_DOWN = -2;
+    private static final String INVALID_MOVE_TO_SAME_POSITION_ERR_MSG = "자신의 말 위치로 이동할 수 없습니다.";
+    private static final String INVALID_MOVE_TO_ILLEGAL_POSITION_ERR_MSG = "말의 규칙에 어긋나는 위치로 이동할 수 없습니다.";
+    private static final String INVALID_MOVE_OPPONENT_PIECE_ERR_MSG = "상대방의 말을 움직일 수 없습니다.";
 
     protected final PieceColor pieceColor;
-    private final String name;
-    private final double score;
+    private final PieceType type;
+
+    public Piece(PieceColor pieceColor, PieceType type) {
+        this.pieceColor = pieceColor;
+        this.type = type;
+    }
 
     public abstract boolean isValidMove(Position currentPosition, Position targetPosition);
-
-    public Piece(PieceColor pieceColor, String name, double score) {
-        this.pieceColor = pieceColor;
-        this.name = selectName(pieceColor, name);
-        this.score = score;
-    }
-
-    private static List<Piece> createBundleByColor(PieceColor color) {
-        List<Piece> bundle = new ArrayList<>(Arrays.asList(
-                new Rook(color), new Knight(color), new Bishop(color), new King(color),
-                new Queen(color), new Bishop(color), new Knight(color), new Rook(color)));
-        for (int i = 0; i < 8; i++) {
-            bundle.add(new Pawn(color));
-        }
-        return bundle;
-    }
-
-    private String selectName(PieceColor pieceColor, String name) {
-        if (pieceColor == PieceColor.BLACK) {
-            return name.toUpperCase();
-        }
-        return name;
-    }
-
-    public List<Position> findRoute(Position source, Position target) {
-        return source.findRoute(target);
-    }
-
-    public boolean isMine(Piece piece) {
-        return this.pieceColor == piece.pieceColor;
-    }
 
     public boolean isMine(PieceColor pieceColor) {
         return this.pieceColor == pieceColor;
     }
 
-    public static List<Piece> getBlackPieces() {
-        return blackPieces;
+    public boolean isMine(Piece piece) {
+        return isMine(piece.pieceColor);
     }
 
-    public static List<Piece> getWhitePieces() {
-        return whitePieces;
+    public boolean is(PieceType pieceType) {
+        return this.type == pieceType;
     }
 
-    public String getName() {
-        return name;
+    public String name() {
+        if (pieceColor == PieceColor.BLACK) {
+            return type.getName().toUpperCase();
+        }
+        return type.getName();
     }
 
-    public double getScore() {
-        return score;
+    public double score() {
+        return type.getScore();
+    }
+
+    public void checkSameColorWith(PieceColor teamColor) {
+        if (this.pieceColor != teamColor) {
+            throw new IllegalArgumentException(INVALID_MOVE_OPPONENT_PIECE_ERR_MSG);
+        }
+    }
+
+    public void validMove(Piece targetPiece, Position source, Position target) {
+        if (this.isMine(targetPiece)) {
+            throw new IllegalStateException(INVALID_MOVE_TO_SAME_POSITION_ERR_MSG);
+        }
+
+        if (!this.isValidMove(source, target)) {
+            throw new IllegalArgumentException(INVALID_MOVE_TO_ILLEGAL_POSITION_ERR_MSG);
+        }
+
+        if (is(PieceType.PAWN)) {
+            ((Pawn) this).validPawnMove(targetPiece, source, target);
+        }
     }
 
     @Override
@@ -79,11 +75,11 @@ public abstract class Piece {
         if (!(o instanceof Piece)) return false;
         Piece piece = (Piece) o;
         return pieceColor == piece.pieceColor &&
-                Objects.equals(name, piece.name);
+                type == piece.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceColor, name);
+        return Objects.hash(pieceColor, type);
     }
 }

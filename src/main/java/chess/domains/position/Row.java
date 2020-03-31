@@ -27,10 +27,6 @@ public enum Row {
         return this.row > target.row;
     }
 
-    public boolean isSmallerThan(Row target) {
-        return this.row < target.row;
-    }
-
     public Row moveBy(int block) {
         return Arrays.stream(values())
                 .filter(row -> row.row == this.row + block)
@@ -40,10 +36,5 @@ public enum Row {
 
     public int getRow() {
         return row;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(row);
     }
 }
