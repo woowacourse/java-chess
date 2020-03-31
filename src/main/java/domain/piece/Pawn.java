@@ -26,13 +26,7 @@ public class Pawn extends Piece {
 
 	@Override
 	protected boolean validDirection(Direction direction) {
-		if (this.team == Team.WHITE) {
-			if (Direction.whitePawnDirection().contains(direction)) {
-				return true;
-			}
-			throw new InvalidPositionException(INVALID_DIRECTION);
-		}
-		if (Direction.blackPawnDirection().contains(direction)) {
+		if (team.getDirectionValidation().apply(direction)) {
 			return true;
 		}
 		throw new InvalidPositionException(INVALID_DIRECTION);
