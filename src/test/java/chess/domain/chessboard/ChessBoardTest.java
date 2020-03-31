@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.Team;
+import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Rook;
@@ -33,5 +34,17 @@ public class ChessBoardTest {
 
 		assertThat(rook).isEqualTo(new Rook(Position.of(1, 1), Team.WHITE));
 		assertThat(pawn).isEqualTo(new Pawn(Position.of(2, 2), Team.WHITE));
+	}
+
+	@Test
+	void moveTest() {
+		Position sourcePosition = Position.of(2, 2);
+		Position targetPosition = Position.of(3, 2);
+
+		chessBoard.move(sourcePosition, targetPosition);
+
+		assertThat(chessBoard.findByPosition(sourcePosition)).isEqualTo(new Blank(sourcePosition));
+		assertThat(chessBoard.findByPosition(targetPosition)).isEqualTo(new Pawn(targetPosition, Team.WHITE));
+
 	}
 }
