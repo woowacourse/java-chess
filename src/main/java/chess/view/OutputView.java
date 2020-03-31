@@ -13,7 +13,7 @@ public class OutputView {
     }
 
     public static void printChessBoard(GameState gameState) {
-        for (List<String> raw : gameState.getBoard()) {
+        for (List<String> raw : gameState.getBoardForPrint()) {
             for (String acronym : raw) {
                 System.out.print(acronym);
             }

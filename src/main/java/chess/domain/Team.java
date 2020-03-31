@@ -1,8 +1,15 @@
 package chess.domain;
 
 public enum Team {
-    WHITE,
-    BLACK;
+    WHITE("white"),
+    BLACK("black"),
+    NONE("");
+
+    private String name;
+
+    Team(String name) {
+        this.name = name;
+    }
 
     public boolean isWhite() {
         return this == WHITE;
@@ -22,5 +29,9 @@ public enum Team {
         }
 
         throw new AssertionError("해당하는 팀이 없습니다.");
+    }
+
+    public String getName() {
+        return name;
     }
 }

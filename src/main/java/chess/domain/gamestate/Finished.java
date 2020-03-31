@@ -30,6 +30,11 @@ public class Finished extends Started {
     }
 
     @Override
+    public Board getBoard() {
+        return board;
+    }
+
+    @Override
     public double getWhiteTeamScore() {
         return whiteTeamScore;
     }
