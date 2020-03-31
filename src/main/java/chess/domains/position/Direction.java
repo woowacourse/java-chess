@@ -21,6 +21,7 @@ public enum Direction {
     WEST_WEST_NORTH(-2, 1),
     WEST_WEST_SOUTH(-2, -1);
 
+    public static final String INVALID_DIRECTION_ERR_MSG = "방향을 찾을 수 없습니다.";
     int xGap;
     int yGap;
 
@@ -37,7 +38,7 @@ public enum Direction {
 
     public static Direction findDirection(int xGap, int yGap) {
         if (xGap == 0 && yGap == 0) {
-            throw new NullPointerException("방향을 잡지 못했어요.");
+            throw new NullPointerException(INVALID_DIRECTION_ERR_MSG);
         }
 
         if (xGap == 0) {
@@ -60,7 +61,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.has(xStep, yStep))
                 .findFirst()
-                .orElseThrow(() -> new NullPointerException("방향을 찾을 수 없습니다."));
+                .orElseThrow(() -> new NullPointerException(INVALID_DIRECTION_ERR_MSG));
     }
 
     public boolean isDiagonal() {

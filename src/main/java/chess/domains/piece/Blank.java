@@ -2,6 +2,7 @@ package chess.domains.piece;
 
 import chess.domains.position.Position;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Blank extends Piece {
@@ -16,6 +17,6 @@ public class Blank extends Piece {
 
     @Override
     public List<Position> findRoute(Position source, Position target) {
-        return null;
+        return Collections.emptyList();
     }
 }

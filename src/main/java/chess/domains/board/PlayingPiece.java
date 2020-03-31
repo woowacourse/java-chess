@@ -11,6 +11,11 @@ import java.util.Objects;
 import java.util.Set;
 
 public class PlayingPiece implements Comparable<PlayingPiece> {
+    public static final String INVALID_MOVE_TO_SAME_POSITION_ERR_MSG = "자신의 말 위치로 이동할 수 없습니다.";
+    public static final String INVALID_MOVE_TO_ILLEGAL_POSITION_ERR_MSG = "말의 규칙에 어긋나는 위치로 이동할 수 없습니다.";
+    public static final String INVALID_DIAGONAL_MOVE_OF_PAWN_ERR_MSG = "폰은 상대말을 잡는 경우 이 외에 대각선으로 이동할 수 없습니다.";
+    public static final String INVALID_VERTICAL_MOVE_OF_PAWN_ERR_MSG = "폰은 앞에 있는 상대를 잡을 수 없습니다.";
+    public static final String INVALID_MOVE_OPPONENT_PIECE_ERR_MSG = "상대방의 말을 움직일 수 없습니다.";
     private final Position position;
     private final Piece piece;
 
@@ -29,11 +34,11 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
 
     public void validMove(PlayingPiece targetPiece) {
         if (this.isMine(targetPiece)) {
-            throw new IllegalStateException("자신의 말 위치로 이동할 수 없습니다.");
+            throw new IllegalStateException(INVALID_MOVE_TO_SAME_POSITION_ERR_MSG);
         }
 
         if (!piece.isValidMove(this.position, targetPiece.position)) {
-            throw new IllegalArgumentException("말의 규칙에 어긋나는 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_MOVE_TO_ILLEGAL_POSITION_ERR_MSG);
         }
 
         if (isPawn()) {
@@ -45,11 +50,11 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
         Direction direction = Direction.findDirection(this.position, targetPiece.position);
 
         if (direction.isDiagonal() && targetPiece.isBlank()) {
-            throw new IllegalArgumentException("폰은 상대말을 잡는 경우 이 외에 대각선으로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_DIAGONAL_MOVE_OF_PAWN_ERR_MSG);
         }
 
         if (direction.isVertical() && !targetPiece.isBlank()) {
-            throw new IllegalArgumentException("폰은 앞에 있는 상대를 잡을 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_VERTICAL_MOVE_OF_PAWN_ERR_MSG);
         }
     }
 
@@ -71,7 +76,7 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
 
     public void checkSameColorWith(PieceColor pieceColor) {
         if (!this.piece.isMine(pieceColor)) {
-            throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_MOVE_OPPONENT_PIECE_ERR_MSG);
         }
     }
 

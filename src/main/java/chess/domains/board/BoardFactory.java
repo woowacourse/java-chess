@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BoardFactory {
+    public static final int FIRST_INDEX = 0;
     private static Set<PlayingPiece> board;
 
     static {
@@ -17,10 +18,10 @@ public class BoardFactory {
         List<Piece> blackPieces = Piece.getBlackPieces();
         Set<PlayingPiece> playingPieces = new HashSet<>();
 
-        playingPieces.addAll(createPlayingPieceRow("1", whitePieces));
-        playingPieces.addAll(createPlayingPieceRow("2", whitePieces));
-        playingPieces.addAll(createPlayingPieceRow("8", blackPieces));
-        playingPieces.addAll(createPlayingPieceRow("7", blackPieces));
+        playingPieces.addAll(createPlayingPiecesByRow("1", whitePieces));
+        playingPieces.addAll(createPlayingPiecesByRow("2", whitePieces));
+        playingPieces.addAll(createPlayingPiecesByRow("8", blackPieces));
+        playingPieces.addAll(createPlayingPiecesByRow("7", blackPieces));
         playingPieces.addAll(createBlankPieceRow("3"));
         playingPieces.addAll(createBlankPieceRow("4"));
         playingPieces.addAll(createBlankPieceRow("5"));
@@ -33,11 +34,12 @@ public class BoardFactory {
         return board;
     }
 
-    private static Set<PlayingPiece> createPlayingPieceRow(String row, List<Piece> pieces) {
+    private static Set<PlayingPiece> createPlayingPiecesByRow(String row, List<Piece> pieces) {
         List<String> aRow = Position.fromRow(row);
 
+        // TODO : parameter는 불변이어야 한다.
         return aRow.stream()
-                .map(location -> new PlayingPiece(Position.ofPositionName(location), pieces.remove(0)))
+                .map(location -> new PlayingPiece(Position.ofPositionName(location), pieces.remove(FIRST_INDEX)))
                 .collect(Collectors.toSet());
     }
 

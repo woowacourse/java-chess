@@ -13,6 +13,7 @@ public enum Column {
     H(8);
 
     public static final String COLUMN_OUT_OF_RANGE_EXCEPTION_MESSAGE = "Column 범위를 벗어났습니다.";
+
     private int column;
 
     Column(int column) {
@@ -32,9 +33,5 @@ public enum Column {
                 .filter(column -> column.column == this.column + block)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(COLUMN_OUT_OF_RANGE_EXCEPTION_MESSAGE));
-    }
-
-    public int getColumn() {
-        return column;
     }
 }

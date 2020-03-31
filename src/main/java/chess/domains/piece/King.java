@@ -2,6 +2,7 @@ package chess.domains.piece;
 
 import chess.domains.position.Position;
 
+import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
@@ -11,12 +12,12 @@ public class King extends Piece {
 
     @Override
     public boolean isValidMove(Position current, Position target) {
-        return Math.abs(current.xGapBetween(target)) <= 1
-                && Math.abs(current.yGapBetween(target)) <= 1;
+        return Math.abs(current.xGapBetween(target)) <= ONE_BLOCK
+                && Math.abs(current.yGapBetween(target)) <= ONE_BLOCK;
     }
 
     @Override
     public List<Position> findRoute(Position source, Position target) {
-        return null;
+        return Collections.emptyList();
     }
 }

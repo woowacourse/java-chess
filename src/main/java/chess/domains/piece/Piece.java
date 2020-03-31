@@ -8,6 +8,16 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
+    public static final int NO_MOVE = 0;
+    public static final int ONE_BLOCK = 1;
+    public static final int TWO_BLOCKS = 2;
+    public static final int ONE_BLOCK_UP = 1;
+    public static final int ONE_BLOCK_DOWN = -1;
+    public static final int TWO_BLOCKS_UP = 2;
+    public static final int TWO_BLOCKS_DOWN = -2;
+    public static final int INITIAL_ROW_OF_WHITE_PAWN = 2;
+    public static final int INITIAL_ROW_OF_BLACK_PAWN = 7;
+    public static final int COLUMN_SIZE = 8;
     private static final List<Piece> whitePieces;
     private static final List<Piece> blackPieces;
 
@@ -32,7 +42,7 @@ public abstract class Piece {
         List<Piece> bundle = new ArrayList<>(Arrays.asList(
                 new Rook(color), new Knight(color), new Bishop(color), new King(color),
                 new Queen(color), new Bishop(color), new Knight(color), new Rook(color)));
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < COLUMN_SIZE; i++) {
             bundle.add(new Pawn(color));
         }
         return bundle;
