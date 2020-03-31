@@ -30,6 +30,15 @@ public enum Direction {
 	WEST_WEST_NORTH(1, -2),
 	WEST_WEST_SOUTH(-1, -2);
 
+	public static final List<Direction> LINEAR_DIRECTION = linearDirection();
+	public static final List<Direction> DIAGONAL_DIRECTION = diagonalDirection();
+	public static final List<Direction> EVERY_DIRECTION = everyDirection();
+	public static final List<Direction> KNIGHT_DIRECTION = knightDirection();
+	public static final List<Direction> WHITE_PAWN_DIRECTION = whitePawnDirection();
+	public static final List<Direction> BLACK_PAWN_DIRECTION = blackPawnDirection();
+	public static final List<Direction> WHITE_PAWN_INITIAL_DIRECTION = whitePawnInitialDirection();
+	public static final List<Direction> BLACK_PAWN_INITIAL_DIRECTION = blackPawnInitialDirection();
+
 	private int x;
 	private int y;
 
@@ -38,36 +47,36 @@ public enum Direction {
 		this.y = y;
 	}
 
-	public static List<Direction> linearDirection() {
+	private static List<Direction> linearDirection() {
 		return Arrays.asList(NORTH, EAST, SOUTH, WEST);
 	}
 
-	public static List<Direction> diagonalDirection() {
+	private static List<Direction> diagonalDirection() {
 		return Arrays.asList(NORTH_EAST, SOUTH_EAST, NORTH_WEST, SOUTH_WEST);
 	}
 
-	public static List<Direction> everyDirection() {
+	private static List<Direction> everyDirection() {
 		return Arrays.asList(NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST, EAST, WEST, SOUTH, NORTH);
 	}
 
-	public static List<Direction> knightDirection() {
+	private static List<Direction> knightDirection() {
 		return Arrays.asList(NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST, EAST_EAST_NORTH,
 			EAST_EAST_SOUTH, WEST_WEST_NORTH, WEST_WEST_SOUTH);
 	}
 
-	public static List<Direction> whitePawnDirection() {
+	private static List<Direction> whitePawnDirection() {
 		return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
 	}
 
-	public static List<Direction> whitePawnInitialDirection() {
+	private static List<Direction> whitePawnInitialDirection() {
 		return Arrays.asList(NORTH_NORTH, NORTH, NORTH_EAST, NORTH_WEST);
 	}
 
-	public static List<Direction> blackPawnInitialDirection() {
+	private static List<Direction> blackPawnInitialDirection() {
 		return Arrays.asList(SOUTH_SOUTH, SOUTH, SOUTH_EAST, SOUTH_WEST);
 	}
 
-	public static List<Direction> blackPawnDirection() {
+	private static List<Direction> blackPawnDirection() {
 		return Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
 	}
 

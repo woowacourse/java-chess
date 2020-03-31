@@ -12,8 +12,6 @@ import chess.domain.piece.state.State;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Bishop extends Piece {
-	private static final List<Direction> BISHOP_DIRECTION = Direction.diagonalDirection();
-
 	public Bishop(State state, String symbol) {
 		super(state, symbol);
 	}
@@ -28,7 +26,7 @@ public class Bishop extends Piece {
 	}
 
 	protected List<Position> findRoute(Position source, Position target) {
-		List<Position>[] possiblePositions = source.nextPositions(BISHOP_DIRECTION);
+		List<Position>[] possiblePositions = source.nextPositions(Direction.DIAGONAL_DIRECTION);
 
 		return makeRoute(source, target, findTargetRoute(target, possiblePositions));
 	}

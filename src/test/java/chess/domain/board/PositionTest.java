@@ -29,7 +29,7 @@ public class PositionTest {
 	void nextPosition() {
 		Position position = Position.of("a1");
 
-		List<Direction> direction = Direction.everyDirection();
+		List<Direction> direction = Direction.EVERY_DIRECTION;
 
 		assertThat(position.nextPosition(direction).size()).isEqualTo(3);
 		assertThat(position.nextPosition(direction).contains(Position.of("a2"))).isTrue();

@@ -64,7 +64,7 @@ public class Board {
 	private boolean canPawnAttack(Position source, Position target) {
 		return Objects.nonNull(board.get(source))
 			&& board.get(source).isPawn()
-			&& source.nextPosition(Direction.diagonalDirection()).stream()
+			&& source.nextPosition(Direction.DIAGONAL_DIRECTION).stream()
 			.anyMatch(position -> position.equals(target));
 	}
 

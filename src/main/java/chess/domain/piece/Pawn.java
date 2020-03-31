@@ -12,11 +12,6 @@ import chess.domain.piece.state.State;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Pawn extends Piece {
-	private static final List<Direction> BLACK_PAWN_INITIAL_DIRECTION = Direction.blackPawnInitialDirection();
-	private static final List<Direction> WHITE_PAWN_INITIAL_DIRECTION = Direction.whitePawnInitialDirection();
-	private static final List<Direction> BLACK_PAWN_DIRECTION = Direction.blackPawnDirection();
-	private static final List<Direction> WHITE_PAWN_DIRECTION = Direction.whitePawnDirection();
-
 	public Pawn(State state, String symbol) {
 		super(state, symbol);
 	}
@@ -46,14 +41,14 @@ public class Pawn extends Piece {
 	private List<Position> findTargetRoute(Position source) {
 		if (symbol.equals("p")) {
 			if (state.isInitial()) {
-				return source.nextPosition(WHITE_PAWN_INITIAL_DIRECTION);
+				return source.nextPosition(Direction.WHITE_PAWN_INITIAL_DIRECTION);
 			}
-			return source.nextPosition(WHITE_PAWN_DIRECTION);
+			return source.nextPosition(Direction.WHITE_PAWN_DIRECTION);
 		}
 		if (state.isInitial()) {
-			return source.nextPosition(BLACK_PAWN_INITIAL_DIRECTION);
+			return source.nextPosition(Direction.BLACK_PAWN_INITIAL_DIRECTION);
 		}
-		return source.nextPosition(BLACK_PAWN_DIRECTION);
+		return source.nextPosition(Direction.BLACK_PAWN_DIRECTION);
 	}
 
 	@Override

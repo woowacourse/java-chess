@@ -12,8 +12,6 @@ import chess.domain.piece.state.State;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Queen extends Piece {
-	private static final List<Direction> QUEEN_DIRECTION = Direction.everyDirection();
-
 	public Queen(State state, String symbol) {
 		super(state, symbol);
 	}
@@ -28,7 +26,7 @@ public class Queen extends Piece {
 	}
 
 	protected List<Position> findRoute(Position source, Position target) {
-		List<Position>[] possiblePositions = source.nextPositions(QUEEN_DIRECTION);
+		List<Position>[] possiblePositions = source.nextPositions(Direction.EVERY_DIRECTION);
 
 		return makeRoute(source, target, findTargetRoute(target, possiblePositions));
 	}

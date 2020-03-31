@@ -12,8 +12,6 @@ import chess.domain.piece.state.State;
  *    @author AnHyungJu, LeeHoBin
  */
 public class Rook extends Piece {
-	private static final List<Direction> ROOK_DIRECTION = Direction.linearDirection();
-
 	public Rook(State state, String symbol) {
 		super(state, symbol);
 	}
@@ -28,7 +26,7 @@ public class Rook extends Piece {
 	}
 
 	protected List<Position> findRoute(Position source, Position target) {
-		List<Position>[] possiblePositions = source.nextPositions(ROOK_DIRECTION);
+		List<Position>[] possiblePositions = source.nextPositions(Direction.LINEAR_DIRECTION);
 
 		return makeRoute(source, target, findTargetRoute(target, possiblePositions));
 	}
