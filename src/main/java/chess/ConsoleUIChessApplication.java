@@ -3,19 +3,20 @@ package chess;
 import chess.controller.ChessController;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.domain.piece.Team;
+import chess.service.ChessService;
 
 public class ConsoleUIChessApplication {
     public static void main(String[] args) {
-        OutputView.printInitialMessage();
-        ChessController.start(InputView.inputStartOrEnd());
+        Board initial = BoardFactory.create();
+        Team first = Team.WHITE;
+        ChessService chessService = ChessService.of(initial, first);
 
-        Board board = BoardFactory.create();
-        OutputView.printBoard(board.getBoard());
+        ChessController controller = new ChessController(chessService, initial, first);
 
+        controller.start();
         while (true) {
-            ChessController.playTurn(InputView.inputMoveOrStatus(), board);
+            controller.playTurn();
         }
     }
 }
