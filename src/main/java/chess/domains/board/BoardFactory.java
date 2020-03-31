@@ -1,6 +1,7 @@
 package chess.domains.board;
 
 import chess.domains.piece.Piece;
+import chess.domains.piece.PieceFactory;
 import chess.domains.position.Position;
 import chess.domains.position.Row;
 
@@ -15,11 +16,11 @@ public class BoardFactory {
     private static Map<Position, Piece> board;
 
     static {
-        List<Piece> whitePieces = Piece.getWhitePieces();
-        List<Piece> whitePawnsPieces = Piece.getWhitePawnsPieces();
-        List<Piece> blackPieces = Piece.getBlackPieces();
-        List<Piece> blackPawnsPieces = Piece.getBlackPawnsPieces();
-        List<Piece> blankPieces = Piece.getBlankPieces();
+        List<Piece> whitePieces = PieceFactory.getWhitePieces();
+        List<Piece> whitePawnsPieces = PieceFactory.getWhitePawnsPieces();
+        List<Piece> blackPieces = PieceFactory.getBlackPieces();
+        List<Piece> blackPawnsPieces = PieceFactory.getBlackPawnsPieces();
+        List<Piece> blankPieces = PieceFactory.getBlankPieces();
 
         Map<Position, Piece> boardPieces = new HashMap<>();
 
