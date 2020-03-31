@@ -23,12 +23,10 @@ public enum Row {
     }
 
     public static Row of(String name) {
-        for (Row row : Row.values()) {
-            if (row.name.equals(name)) {
-                return row;
-            }
-        }
-        throw new WrongPositionException();
+        return Arrays.stream(Row.values())
+                .filter(row->row.name.equals(name))
+                .findFirst()
+                .orElseThrow(WrongPositionException::new);
     }
 
     public Row calculate(int value) {

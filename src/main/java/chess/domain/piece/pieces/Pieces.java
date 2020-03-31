@@ -4,11 +4,10 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
+import chess.domain.position.positions.Positions;
 import chess.domain.util.WrongPositionException;
 
 import java.util.List;
-import java.util.Set;
 
 public class Pieces {
 	private final List<Piece> pieces;

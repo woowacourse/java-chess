@@ -1,4 +1,6 @@
-package chess.domain.position;
+package chess.domain.position.positions;
+
+import chess.domain.position.Position;
 
 import java.util.HashSet;
 import java.util.Set;

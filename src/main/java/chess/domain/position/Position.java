@@ -17,15 +17,11 @@ public class Position {
     private final Row row;
     private final Column column;
 
-    public Position(String position) {
+    //package-access
+    Position(String position) {
         validate(position);
         this.row = Row.of(position.substring(ROW_START_INDEX, ROW_START_INDEX + 1));
         this.column = Column.of(position.substring(COLUMN_START_INDEX, COLUMN_START_INDEX + 1));
-    }
-
-    public Position(Row row, Column column) {
-        this.row = row;
-        this.column = column;
     }
 
     private void validate(String position) {
