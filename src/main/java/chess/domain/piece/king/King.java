@@ -9,6 +9,7 @@ import chess.domain.position.Position;
 public class King extends Piece {
 	public static final String WHITE_KING = "\u2654";
 	public static final String BLACK_KING = "\u265a";
+	public static final double KING_SCORE = 0;
 
 	public King(Team team, Position position) {
 		super(new KingStrategy(), team, position);
@@ -31,5 +32,10 @@ public class King extends Piece {
 		strategy.validateMove(from, to, dto);
 		this.position = to;
 		return this;
+	}
+
+	@Override
+	public double getScore() {
+		return KING_SCORE;
 	}
 }

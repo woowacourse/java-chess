@@ -9,6 +9,7 @@ import chess.domain.position.Position;
 public class Rook extends Piece {
 	private static final String WHITE_ROOK = "\u2656";
 	private static final String BLACK_ROOK = "\u265c";
+	public static final int ROOK_SCORE = 5;
 
 	public Rook(Team team, Position position) {
 		super(new RookStrategy(), team, position);
@@ -31,6 +32,11 @@ public class Rook extends Piece {
 		strategy.validateMove(from, to, dto);
 		this.position = to;
 		return this;
+	}
+
+	@Override
+	public double getScore() {
+		return ROOK_SCORE;
 	}
 }
 

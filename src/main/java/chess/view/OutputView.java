@@ -3,6 +3,7 @@ package chess.view;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.domain.Team;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -22,7 +23,14 @@ public class OutputView {
 		Map<Position, String> boardDto = response.getBoardDto();
 		System.out.println();
 		printBoard(boardDto);
+		printScores(response.getScoreDto());
 		printWinner(response);
+	}
+
+	private static void printScores(Map<Team, Double> scoreDto) {
+		for (Map.Entry<Team, Double> scores : scoreDto.entrySet()) {
+			System.out.println(scores.getKey() + " : " + scores.getValue());
+		}
 	}
 
 	private static void printBoard(Map<Position, String> boardDto) {

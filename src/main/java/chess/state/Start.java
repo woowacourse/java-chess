@@ -44,6 +44,6 @@ public class Start extends Ready {
 
 	@Override
 	public ResponseDto getResponse() {
-		return new ResponseDto(board.getDto());
+		return new ResponseDto(board.getDto(), Score.of(board));
 	}
 }

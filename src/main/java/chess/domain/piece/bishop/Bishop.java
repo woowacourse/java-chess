@@ -9,6 +9,7 @@ import chess.domain.position.Position;
 public class Bishop extends Piece {
 	public static final String WHITE_BISHOP = "\u2657";
 	public static final String BLACK_BISHOP = "\u265d";
+	public static final double BISHOP_SCORE = 3;
 
 	public Bishop(Team team, Position position) {
 		super(new BishopStrategy(), team, position);
@@ -31,5 +32,10 @@ public class Bishop extends Piece {
 		strategy.validateMove(from, to, dto);
 		this.position = to;
 		return this;
+	}
+
+	@Override
+	public double getScore() {
+		return BISHOP_SCORE;
 	}
 }
