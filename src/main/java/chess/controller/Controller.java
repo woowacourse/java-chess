@@ -12,11 +12,11 @@ import chess.view.OutputView;
 public class Controller {
 
     public static void run() {
-        //try {
-        runWithoutExceptionCatch();
-        //} catch (Exception e) {
-        //    System.out.println(e.getMessage());
-        //}
+        try {
+            runWithoutExceptionCatch();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void runWithoutExceptionCatch() {
