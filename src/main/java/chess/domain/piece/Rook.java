@@ -1,10 +1,13 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Rook extends Piece {
@@ -48,13 +51,19 @@ public class Rook extends Piece {
 
     @Override
     public Set<Square> calculateScope(Square square) {
-        Set<Square> availableSquares = new HashSet<>();
-        for (int index = -7; index < 8; index++) {
-            availableSquares.add(square.movedSquareInBoundary(index, 0));
-            availableSquares.add(square.movedSquareInBoundary(0, index));
-        }
-        availableSquares.remove(square);
-        return availableSquares;
+        Objects.requireNonNull(square, "square은 필수입니다");
+        Set<Square> scope = new HashSet<>();
+        IntStream.rangeClosed(1, 8)
+                .forEach(count -> scope.addAll(Direction.linearDirection()
+                        .stream()
+                        .map(direction -> square.movedSquareInBoundary(direction, count))
+                        .filter(movedSquare -> isNotSameSquareItself(square, movedSquare))
+                        .collect(Collectors.toSet())));
+        return scope;
+    }
+
+    private boolean isNotSameSquareItself(Square square, Square movedSquare) {
+        return movedSquare != square;
     }
 
     @Override

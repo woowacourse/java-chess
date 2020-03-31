@@ -71,12 +71,12 @@ public class Square {
         return this;
     }
 
-    public Square movedSquareInBoundary(Direction direction) {
+    public Square movedSquareInBoundary(Direction direction, int count) {
         File currentFile = this.getFile();
         Rank currentRank = this.getRank();
-        if (isIncrementedInBoundary(direction.getFileIncrement(), direction.getRankIncrement())) {
-            File fileIncremented = File.of(currentFile.getNumber() + direction.getFileIncrement());
-            Rank rankIncremented = Rank.of(currentRank.getNumber() + direction.getRankIncrement());
+        if (isIncrementedInBoundary(direction.getFileIncrement() * count, direction.getRankIncrement() * count)) {
+            File fileIncremented = File.of(currentFile.getNumber() + direction.getFileIncrement() * count);
+            Rank rankIncremented = Rank.of(currentRank.getNumber() + direction.getRankIncrement() * count);
             return Square.of(fileIncremented, rankIncremented);
         }
         return this;

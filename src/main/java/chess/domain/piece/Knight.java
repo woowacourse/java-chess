@@ -49,7 +49,7 @@ public class Knight extends Piece {
         Objects.requireNonNull(square, "square은 필수입니다");
         return Direction.knightDirection()
                 .stream()
-                .map(square::movedSquareInBoundary)
+                .map(direction -> square.movedSquareInBoundary(direction, 1))
                 .filter(movedSquare -> isNotSameSquareItself(square, movedSquare))
                 .collect(Collectors.toSet());
     }
@@ -57,7 +57,6 @@ public class Knight extends Piece {
     private boolean isNotSameSquareItself(Square square, Square movedSquare) {
         return movedSquare != square;
     }
-
 
     @Override
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {

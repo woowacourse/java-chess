@@ -53,4 +53,25 @@ public class RookTest {
         assertThat(availableSquares.size()).isEqualTo(5);
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"f6", "h6", "f3", "c3", "c8"})
+    @DisplayName("rook이 갈 수 없는 칸이 갈수있는 칸 리스트에 포함 안돼있는지 확인")
+    void wrongMovableRookSquareTest(String input) {
+        Map<Square, Piece> board = new HashMap<>();
+        board.put(Square.of("b7"), Pawn.of(Color.WHITE));
+        board.put(Square.of("c7"), Pawn.of(Color.WHITE));
+        board.put(Square.of("a6"), King.of(Color.WHITE));
+        board.put(Square.of("c5"), Pawn.of(Color.BLACK));
+        board.put(Square.of("e8"), Knight.of(Color.WHITE));
+        board.put(Square.of("f6"), Queen.of(Color.BLACK));
+        board.put(Square.of("f3"), Pawn.of(Color.BLACK));
+        board.put(Square.of("g6"), King.of(Color.BLACK));
+        board.put(Square.of("g2"), Pawn.of(Color.WHITE));
+
+        Piece piece = Rook.of(Color.BLACK);
+        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
+
+        assertThat(availableSquares.contains(Square.of(input))).isFalse();
+    }
+
 }

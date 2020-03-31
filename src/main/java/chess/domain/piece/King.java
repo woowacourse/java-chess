@@ -54,7 +54,7 @@ public class King extends Piece {
         Objects.requireNonNull(square, "square은 필수입니다");
         return Direction.everyDirection()
                 .stream()
-                .map(square::movedSquareInBoundary)
+                .map(direction -> square.movedSquareInBoundary(direction, 1))
                 .filter(movedSquare -> isNotSameSquareItself(square, movedSquare))
                 .collect(Collectors.toSet());
     }
