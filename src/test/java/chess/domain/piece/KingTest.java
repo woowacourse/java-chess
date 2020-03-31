@@ -1,9 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.position.PositionFactory;
-import chess.domain.position.Position;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.TestPiecesFactory;
+import chess.domain.position.Position;
+import chess.domain.position.PositionFactory;
+import chess.domain.position.Positions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,8 +25,8 @@ public class KingTest {
 		Position position = PositionFactory.of("b2");
 		Piece king = TestPieceFactory.createKing(position, Color.WHITE);
 
-		Set<Position> positions = king.createMovablePositions(Collections.emptyList());
-		assertThat(positions).contains(PositionFactory.of(input));
+		Positions positions = king.createMovablePositions(Collections.emptyList());
+		assertThat(positions.getPositions()).contains(PositionFactory.of(input));
 	}
 
 	@DisplayName("createMovablePositions 코너 유효한 position입력시 정상 동작")
@@ -35,7 +36,7 @@ public class KingTest {
 		Position position = PositionFactory.of("a1");
 		Piece king = TestPieceFactory.createKing(position, Color.WHITE);
 
-		assertThat(king.createMovablePositions(Collections.emptyList())).contains(PositionFactory.of(input));
+		assertThat(king.createMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position의 개수 반환 테스트")
@@ -49,7 +50,7 @@ public class KingTest {
 				PositionFactory.of("c1")
 		));
 
-		assertThat(king.createMovablePositions(pieces.getPieces())).size().isEqualTo(6);
+		assertThat(king.createMovablePositions(pieces.getPieces()).getPositions().size()).isEqualTo(6);
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position 반환 테스트")
@@ -64,6 +65,6 @@ public class KingTest {
 				PositionFactory.of("c1")
 		));
 
-		assertThat(king.createMovablePositions(pieces.getPieces())).contains(PositionFactory.of(input));
+		assertThat(king.createMovablePositions(pieces.getPieces()).getPositions()).contains(PositionFactory.of(input));
 	}
 }
