@@ -43,7 +43,7 @@ public class ChessGame {
 	}
 
 	private void decideMenu() {
-		if (isDieKing()) {
+		if (chessBoard.isDieKingEitherWay()) {
 			OutputView.printEndGame();
 			chessMenu = new ChessMenu(END_COMMAND);
 			return;
@@ -71,9 +71,4 @@ public class ChessGame {
 			OutputView.printResult(result);
 		}
 	}
-
-	private boolean isDieKing() {
-		return chessBoard.isDieKing(Team.BLACK) || chessBoard.isDieKing(Team.WHITE);
-	}
-
 }

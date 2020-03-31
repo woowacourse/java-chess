@@ -24,7 +24,11 @@ public class ChessBoard {
 		this.rows = new ArrayList<>(rows);
 	}
 
-	public boolean isDieKing(Team team) {
+	public boolean isDieKingEitherWay() {
+		return isDieKing(Team.BLACK) || isDieKing(Team.WHITE);
+	}
+
+	private boolean isDieKing(Team team) {
 		return findByTeam(team).stream()
 			.noneMatch(chessPiece -> chessPiece.getClass() == King.class);
 	}
