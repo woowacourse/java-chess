@@ -29,27 +29,35 @@ public enum Direction {
         this.rankIncrement = rankIncrement;
     }
 
-    public static List linearDirection() {
+    public static List<Direction> linearDirection() {
         return Arrays.asList(N, E, S, W);
     }
 
-    public static List diagonalDirection() {
+    public static List<Direction> diagonalDirection() {
         return Arrays.asList(NE, SE, SW, NW);
     }
 
-    public static List queenDirection() {
+    public static List<Direction> queenDirection() {
         return Arrays.asList(N, E, S, W, NE, SE, SW, NW);
     }
 
-    public static List knightDirection() {
+    public static List<Direction> knightDirection() {
         return Arrays.asList(NNE, NNW, SSE, SSW, NEE, SEE, NWW, SWW);
     }
 
-    public static List whitePawnDirection() {
+    public static List<Direction> whitePawnDirection() {
         return Arrays.asList(N, NE, NW);
     }
 
-    public static List blackPawnDirection() {
+    public static List<Direction> blackPawnDirection() {
         return Arrays.asList(S, SE, SW);
+    }
+
+    public int getFileIncrement() {
+        return fileIncrement;
+    }
+
+    public int getRankIncrement() {
+        return rankIncrement;
     }
 }

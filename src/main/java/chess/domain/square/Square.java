@@ -1,5 +1,7 @@
 package chess.domain.square;
 
+import chess.domain.Direction;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -65,6 +67,17 @@ public class Square {
     public Square movedSquareInBoundary(int fileIncrementBy, int rankIncrementBy) {
         if (isIncrementedInBoundary(fileIncrementBy, rankIncrementBy)) {
             return Square.of(this, fileIncrementBy, rankIncrementBy);
+        }
+        return this;
+    }
+
+    public Square movedSquareInBoundary(Direction direction) {
+        File currentFile = this.getFile();
+        Rank currentRank = this.getRank();
+        if (isIncrementedInBoundary(direction.getFileIncrement(), direction.getRankIncrement())) {
+            File fileIncremented = File.of(currentFile.getNumber() + direction.getFileIncrement());
+            Rank rankIncremented = Rank.of(currentRank.getNumber() + direction.getRankIncrement());
+            return Square.of(fileIncremented, rankIncremented);
         }
         return this;
     }

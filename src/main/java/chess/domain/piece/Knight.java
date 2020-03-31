@@ -1,8 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.square.Square;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,19 +46,11 @@ public class Knight extends Piece {
 
     @Override
     public Set<Square> calculateScope(Square square) {
-        Set<Square> availableSquares = new HashSet<>();
-
-        int x = -1;
-        int y = 2;
-        for (int i = 0; i < 2; i++) {
-            availableSquares.add(square.movedSquareInBoundary(x, y));
-            availableSquares.add(square.movedSquareInBoundary(y, x));
-            availableSquares.add(square.movedSquareInBoundary(x, (-1) * y));
-            availableSquares.add(square.movedSquareInBoundary(y * -1, x));
-            x *= -1;
-            y *= -1;
-        }
-        return availableSquares;
+        Objects.requireNonNull(square, "square은 필수입니다");
+        return Direction.knightDirection()
+                .stream()
+                .map(square::movedSquareInBoundary)
+                .collect(Collectors.toSet());
     }
 
     @Override
