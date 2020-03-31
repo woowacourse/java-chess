@@ -371,7 +371,7 @@ a:hover, a:focus, a:active {
   box-shadow: 0px 2px 10px 10px rgba(255, 255, 255, 0.05);
 }
 
-.chess-col.col {
+.chess-board .col {
   background-color : rgba( 0, 0, 0, 0.5);
   min-width : 40px;
   min-height : 40px;
@@ -380,6 +380,6 @@ a:hover, a:focus, a:active {
   padding :5px;
 }
 
-.chess-col.col.changed {
+.chess-board .col.changed {
   background-color : rgba( 0, 0, 0, 0.1);
 }

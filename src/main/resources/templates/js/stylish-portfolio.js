@@ -1,5 +1,20 @@
+var formObj = $("form[role='form']");
+
 (function($) {
   "use strict"; // Start of use strict
+
+  // 마우스 클릭시 toPosition 값을 전송
+  $(".chess-col").on("click", function(){
+    alert($(this).attr("id"))
+    formObj.attr("toPosition", this.val());
+    formObj.submit();
+  });
+
+  // 명령어 버튼 클릭 시 해당 명령어 전송
+  $("#start-button").on("click", function(){
+    formObj.attr("command", "start");
+    formObj.submit();
+  });
 
   // Closes the sidebar menu
   $(".menu-toggle").click(function(e) {
