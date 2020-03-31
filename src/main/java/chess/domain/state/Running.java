@@ -11,17 +11,19 @@ public class Running extends Starting {
 
 	@Override
 	public State move(Position source, Position target) {
-		try {
-			chessBoard.move(source, target);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return new Running(chessBoard, turn);
-		}
+		validateTurn(source);
+		chessBoard.move(source, target);
 
 		if (chessBoard.isEnd()) {
 			return new End(chessBoard);
 		}
 		return new Running(chessBoard, turn.reverse());
+	}
+
+	private void validateTurn(Position source) {
+		if (chessBoard.isRightTurn(source, turn)) {
+			throw new IllegalArgumentException("본인의 말만 움직일 수 있습니다.");
+		}
 	}
 
 	@Override

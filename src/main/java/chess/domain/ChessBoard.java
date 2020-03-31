@@ -94,6 +94,10 @@ public class ChessBoard {
 				.count();
 	}
 
+	public boolean isRightTurn(Position source, Side turn) {
+		return findPieceBy(source).isSameSide(turn);
+	}
+
 	public List<Piece> getPieces() {
 		return Collections.unmodifiableList(pieces);
 	}
