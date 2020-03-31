@@ -1,5 +1,6 @@
 package chess.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -13,9 +14,9 @@ public enum File {
     E("e", 5),
     F("f", 6),
     G("g", 7),
-    H("h", 8);
+    H("h", 8),
+    NONE("", 0);
 
-    private static final String ILLEGAL_FILE_NAME_EXCEPTION_MESSAGE = "올바른 열값이 아닙니다.";
     private static final int MINIMUM_DISTANCE = 1;
 
     private final String name;
@@ -36,6 +37,12 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.getNumber() > start.getNumber() && file.getNumber() < end.getNumber())
                 .collect(Collectors.toList());
+    }
+
+    public static File[] valuesExceptNone(){
+        List<File> valuesExceptNone = new ArrayList(Arrays.asList(values()));
+        valuesExceptNone.remove(NONE);
+        return valuesExceptNone.toArray(new File[0]);
     }
 
     private static boolean between(File target, File smaller, File bigger) {
@@ -62,13 +69,20 @@ public enum File {
         return Arrays.stream(values())
                 .filter(value -> value.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ILLEGAL_FILE_NAME_EXCEPTION_MESSAGE));
+                .orElse(NONE);
+    }
+
+    public static File of(int number) {
+        return Arrays.stream(values())
+                .filter(value -> value.number == number)
+                .findFirst()
+                .orElse(NONE);
     }
 
     public File[] valuesWithDifferenceBelow(int distance) {
-		return Arrays.stream(values())
-				.filter(file -> findDifference(file) <= distance)
-				.toArray(File[]::new);
+        return Arrays.stream(values())
+                .filter(file -> findDifference(file) <= distance)
+                .toArray(File[]::new);
     }
 
     public String getName() {
@@ -85,5 +99,13 @@ public enum File {
 
     public int findDifference(File other) {
         return Math.abs(this.getNumber() - other.getNumber());
+    }
+
+    public File getFileUsingIncreaseAmount(int increaseAmountOfFile) {
+        return of(number + increaseAmountOfFile);
+    }
+
+    public boolean isNone() {
+        return this == NONE;
     }
 }

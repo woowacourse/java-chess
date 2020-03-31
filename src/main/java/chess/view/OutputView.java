@@ -7,7 +7,11 @@ import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -22,9 +26,9 @@ public class OutputView {
     public static void printGameIntro() {
         System.out.println(GAME_INTRO_MESSAGE);
         System.out.println(START_COMMAND_INFORMATION_MESSAGE);
-		System.out.println(END_COMMAND_INFORMATION_MESSAGE);
-		System.out.println(MOVE_COMMAND_INFORMATION_MESSAGE);
-	}
+        System.out.println(END_COMMAND_INFORMATION_MESSAGE);
+        System.out.println(MOVE_COMMAND_INFORMATION_MESSAGE);
+    }
 
     public static void printExceptionMessage(String message) {
         System.out.println(message);
@@ -32,12 +36,11 @@ public class OutputView {
 
     public static void printBoard(Board board) {
         Map<Position, Piece> pieces = board.getPieces();
-
         StringBuilder builder = new StringBuilder();
 
-        for (Rank rank : Rank.valuesReverseOrder()) {
-            for (File file : File.values()) {
-                if (pieces.containsKey(Position.of(file, rank))) {
+        for (Rank rank : ReverseOrderOfRankValuesExceptNone()) {
+            for (File file : File.valuesExceptNone()) {
+                if (pieces.get(Position.of(file, rank)) != null) {
                     Piece piece = pieces.get(Position.of(file, rank));
                     builder.append(findSymbol(piece));
                 } else {
@@ -49,9 +52,15 @@ public class OutputView {
         System.out.println(builder);
     }
 
-	public static void invalidCommandInputMessage() {
-		System.out.println(INVALID_COMMAND_INPUT_MESSAGE);
-	}
+    public static List<Rank> ReverseOrderOfRankValuesExceptNone() {
+        return Arrays.stream(Rank.valuesExceptNone())
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+    }
+
+    public static void invalidCommandInputMessage() {
+        System.out.println(INVALID_COMMAND_INPUT_MESSAGE);
+    }
 
     private static String findSymbol(Piece piece) {
         return piece.getSymbol();

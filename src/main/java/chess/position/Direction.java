@@ -28,4 +28,12 @@ public enum Direction {
                 .findFirst()
                 .orElse(NONE);
     }
+
+    public int getIncreaseAmountOfFile() {
+        return increaseAmountOfFile;
+    }
+
+    public int getIncreaseAmountOfRank() {
+        return increaseAmountOfRank;
+    }
 }

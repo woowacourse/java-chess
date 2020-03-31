@@ -1,7 +1,5 @@
 package chess.position;
 
-import chess.piece.Team;
-
 import java.util.*;
 
 public class Position {
@@ -26,6 +24,9 @@ public class Position {
     }
 
     public static Position of(File file, Rank rank) {
+        if (file.isNone() && rank.isNone()) {
+            return null;
+        }
         return CACHE.get(getKey(file, rank));
     }
 
@@ -64,6 +65,7 @@ public class Position {
         }
         return Collections.unmodifiableList(positions);
     }
+
 
     public int differenceOfFile(Position other) {
         return Math.abs(getFileNumber() - other.getFileNumber());
@@ -163,5 +165,12 @@ public class Position {
 
     public int getRankNumber() {
         return this.rank.getNumber();
+    }
+
+    public Position at(Direction direction) {
+        File file = this.file.getFileUsingIncreaseAmount(direction.getIncreaseAmountOfFile());
+        Rank rank = this.rank.getRankUsingIncreaseAmount(direction.getIncreaseAmountOfRank());
+
+        return Position.of(file, rank);
     }
 }

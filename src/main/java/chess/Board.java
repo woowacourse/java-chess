@@ -4,6 +4,7 @@ import chess.piece.*;
 import chess.position.Direction;
 import chess.position.File;
 import chess.position.Position;
+import chess.position.Rank;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,6 +31,15 @@ public class Board {
 
     private static Map<Position, Piece> getInitialPieces() {
         Map<Position, Piece> pieces = new HashMap<>();
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                if (file.isNone() || rank.isNone()) {
+                    continue;
+                }
+                pieces.put(Position.of(file, rank), null);
+            }
+        }
+
         pieces.put(Position.of(A, EIGHT), new Rook(BLACK));
         pieces.put(Position.of(B, EIGHT), new Knight(BLACK));
         pieces.put(Position.of(C, EIGHT), new Bishop(BLACK));
@@ -39,8 +49,12 @@ public class Board {
         pieces.put(Position.of(G, EIGHT), new Knight(BLACK));
         pieces.put(Position.of(H, EIGHT), new Rook(BLACK));
         for (File value : File.values()) {
+            if (value.isNone()) {
+                continue;
+            }
             pieces.put(Position.of(value, SEVEN), new Pawn(BLACK));
         }
+
 
         pieces.put(Position.of(A, ONE), new Rook(WHITE));
         pieces.put(Position.of(B, ONE), new Knight(WHITE));
@@ -51,13 +65,25 @@ public class Board {
         pieces.put(Position.of(G, ONE), new Knight(WHITE));
         pieces.put(Position.of(H, ONE), new Rook(WHITE));
         for (File value : File.values()) {
+            if (value.isNone()) {
+                continue;
+            }
             pieces.put(Position.of(value, TWO), new Pawn(WHITE));
         }
         return pieces;
     }
 
-    public boolean isNotCheckmate() {
-        return !isCheckmate();
+    private boolean isMovable(Position source, Position target) {
+        try {
+            pieces.get(source).throwExceptionIfNotMovable(this, source, target);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        return true;
+    }
+
+//    public boolean isNotCheckmate() {
+//        return !isCheckmate();
 //        Position positionOfKing = findPositionOfKing(turn);
 //        Piece king = pieces.get(positionOfKing);
 //        List<Position> movablePositionsRegardlessEnemyPieces
@@ -69,49 +95,50 @@ public class Board {
 //            }
 //        }
 //        return false;
-    }
+//    }
 
-    private boolean isCheckmate() {
-        Position positionOfKing = findPositionOfKing(turn);
-        return allMovablePositionsOfOppositeTeamWhen(pieces).contains(positionOfKing)//상대팀이 킹에 도달조차 못하는 경우는 일단 걸러짐
-                && canNotKingAvoidHimselfWhenEnemiesCanReach(positionOfKing)//도달할수 있다면 킹이 직접 피할 수 없는기?
-                && canNotOurTeamProtectKingWhenKingCanNotAvoidWhereverKingMoves(positionOfKing);//킹이 어딜가든 못피하면 아군이 막을 수 없는가?
-    }
+//    private boolean isCheckmate() {
+//        Position positionOfKing = findPositionOfKing(turn);
+//        return allMovablePositionsOfOppositeTeamWhen(pieces).contains(positionOfKing)//상대팀이 킹에 도달조차 못하는 경우는 일단 걸러짐
+//                && canNotKingAvoidHimselfWhenEnemiesCanReach(positionOfKing)//도달할수 있다면 킹이 직접 피할 수 없는기?
+//                && canNotOurTeamProtectKingWhenKingCanNotAvoidWhereverKingMoves(positionOfKing);//킹이 어딜가든 못피하면 아군이 막을 수 없는가?
+//    }
+//
+//    private boolean canNotKingAvoidHimselfWhenEnemiesCanReach(Position positionOfKing) {
+//        List<Position> movablePositionsOfKing = getMovablePositions(pieces, pieces.get(positionOfKing));
+//        return movablePositionsOfKing.stream()
+//                .noneMatch(destination -> isMovable(pieces, positionOfKing, destination));
+//    }
+//
+//    private boolean canNotOurTeamProtectKingWhenKingCanNotAvoidWhereverKingMoves(Position positionOfKing) {
+//        return !canOurTeamProtectKingWhenKingCanNotAvoidWhereverKingMoves(positionOfKing);
+//    }
+//
+//    private boolean canOurTeamProtectKingWhenKingCanNotAvoidWhereverKingMoves(Position positionOfKing) {
+//        List<Position> positionsOfEnemies = positionsOf(turn.getOppositeTeam());
+//        List<Position> positionsOfThreateningEnemies = positionsOfEnemies.stream()
+//                .filter(positionOfEnemy -> isMovable(pieces, positionOfEnemy, positionOfKing))
+//                .collect(Collectors.toList());
+//        if (positionsOfThreateningEnemies.size() > 1) {
+//            return false;
+//        }
+//        //TODO: AND 인지 OR 인지 확인
+//        return canKillThreateningEnemy(positionsOfThreateningEnemies.get(0))
+//                || canBlockPathOfThreateningEnemy(positionOfKing, positionsOfThreateningEnemies.get(0));
+//    }
+//
+//    private boolean canKillThreateningEnemy(Position positionOfThreateningEnemy) {
+//        List<Position> positionsOfOurTeam = positionsOf(turn);
+//        return positionsOfOurTeam.stream()
+//                .anyMatch(position -> isMovable(pieces, position, positionOfThreateningEnemy));
+//    }
+//
+//    private boolean canBlockPathOfThreateningEnemy(Position positionOfKing, Position positionOfThreateningEnemy) {
+//        List<Position> trace = Position.collectPositionsBetween(positionOfKing, positionOfThreateningEnemy);
+//        return allMovablePositionsOfOurTeamWhen(pieces).stream()
+//                .anyMatch(trace::contains);
 
-    private boolean canNotKingAvoidHimselfWhenEnemiesCanReach(Position positionOfKing) {
-        List<Position> movablePositionsOfKing = getMovablePositions(pieces, pieces.get(positionOfKing));
-        return movablePositionsOfKing.stream()
-                .noneMatch(destination -> isMovable(pieces, positionOfKing, destination));
-    }
-
-    private boolean canNotOurTeamProtectKingWhenKingCanNotAvoidWhereverKingMoves(Position positionOfKing) {
-        return !canOurTeamProtectKingWhenKingCanNotAvoidWhereverKingMoves(positionOfKing);
-    }
-
-    private boolean canOurTeamProtectKingWhenKingCanNotAvoidWhereverKingMoves(Position positionOfKing) {
-        List<Position> positionsOfEnemies = positionsOf(turn.getOppositeTeam());
-        List<Position> positionsOfThreateningEnemies = positionsOfEnemies.stream()
-                .filter(positionOfEnemy -> isMovable(pieces, positionOfEnemy, positionOfKing))
-                .collect(Collectors.toList());
-        if (positionsOfThreateningEnemies.size() > 1) {
-            return false;
-        }
-        //TODO: AND 인지 OR 인지 확인
-        return canKillThreateningEnemy(positionsOfThreateningEnemies.get(0))
-                || canBlockPathOfThreateningEnemy(positionOfKing, positionsOfThreateningEnemies.get(0));
-    }
-
-    private boolean canKillThreateningEnemy(Position positionOfThreateningEnemy) {
-        List<Position> positionsOfOurTeam = positionsOf(turn);
-        return positionsOfOurTeam.stream()
-                .anyMatch(position -> isMovable(pieces, position, positionOfThreateningEnemy));
-    }
-
-    private boolean canBlockPathOfThreateningEnemy(Position positionOfKing, Position positionOfThreateningEnemy) {
-        List<Position> trace = Position.collectPositionsBetween(positionOfKing, positionOfThreateningEnemy);
-        return allMovablePositionsOfOurTeamWhen(pieces).stream()
-                .anyMatch(trace::contains);
-    }
+    //    }
 
     private Position findPositionOfKing(Team turn) {
         return pieces.keySet().stream()
@@ -120,104 +147,54 @@ public class Board {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    private List<Position> positionsOf(Team turn) {
+    private List<Position> positionsOf(Team team) {
+//        List<Position> positions = new ArrayList<>();
+//        for (Position position : pieces.keySet()) {
+//            if (pieces.get(position).isSameTeam(team)) {
+//                positions.add(position);
+//            }
+//        }
+//        return positions;
         return pieces.keySet().stream()
-                .filter(position -> pieces.get(position).isSameTeam(turn))
+                .filter(position -> isExistAt(position) && pieces.get(position).isSameTeam(turn))
                 .collect(Collectors.toList());
     }
 
     private boolean isSurviveIfMoves(Position source, Position target) {
-        Map<Position, Piece> copiedPieces = new HashMap<>(pieces);
-        move(copiedPieces, source, target);
-        if (allMovablePositionsOfOppositeTeamWhen(copiedPieces).contains(target)) {
-            return false;
-        }
-        return true;
+        return !isKilledIfMoves(source, target);
     }
 
-    public void move(Map<Position, Piece> pieces, Position source, Position target) {
-        Piece piece = pieces.remove(source);
+    public boolean isKilledIfMoves(Position source, Position target) {
+        Board copiedBoard = new Board(pieces);
+        copiedBoard.move(source, target);
+        return copiedBoard.allMovablePositionsOf(turn.getOppositeTeam()).contains(target);
+    }
+
+    public void move(Position source, Position target) {
+        Piece piece = pieces.get(source);
+        pieces.put(source, null);
         pieces.put(target, piece);
     }
 
-    private Set<Position> allMovablePositionsOfOppositeTeamWhen(Map<Position, Piece> copiedPieces) {
-        Set<Position> positions = new HashSet<>();
-        Team oppositeTeamColor = turn.getOppositeTeam();
-        //TODO:values()로 하는게 맞는지 keySet()으로 하는게 맞는지 확인하기
-        for (Piece piece : copiedPieces.values()) {
-            if (piece.isSameTeam(oppositeTeamColor)) {
-                positions.addAll(getMovablePositions(copiedPieces, piece));
-            }
-        }
-        return positions;
+    private Set<Position> allMovablePositionsOf(Team team) {
+        return positionsOf(team).stream()
+                .map(this::getMovablePositionsOf)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
     }
 
-    private Set<Position> allMovablePositionsOfOurTeamWhen(Map<Position, Piece> copiedPieces) {
-        Set<Position> positions = new HashSet<>();
-        for (Piece piece : copiedPieces.values()) {
-            if (piece.isSameTeam(turn)) {
-                positions.addAll(getMovablePositions(copiedPieces, piece));
-            }
-        }
-        return positions;
+    private List<Position> getMovablePositionsOf(Position position) {
+        return pieces.keySet().stream()
+                .filter(target -> isMovable(position, target))
+                .collect(Collectors.toList());
     }
 
-    private List<Position> getMovablePositions(Map<Position, Piece> pieces, Piece piece) {
-        List<Position> movablePositions = new ArrayList<>();
-        Position source = findPositionByPiece(pieces, piece);
-        for (Position target : pieces.keySet()) {
-            if (isMovable(pieces, source, target)) {
-                movablePositions.add(target);
-            }
-        }
-        return movablePositions;
-    }
-
-    private Position findPositionByPiece(Map<Position, Piece> pieces, Piece piece) {
+    private Position findPositionByPiece(Piece piece) {
         return pieces.keySet().stream()
                 .filter(position -> pieces.get(position) == piece)
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
     }
-
-    private boolean isMovable(Map<Position, Piece> pieces, Position source, Position target) {
-        try {
-            pieces.get(source).throwExceptionIfNotMovable(new Board(pieces), source, target);
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-        return true;
-    }
-
-//    private void throwExceptionIfNotMovable(Map<Position, Piece> pieces, Position source, Position target) {
-//        Piece pieceToBeMoved = pieces.get(source);
-//        if (pieceToBeMoved == null) {
-//            throw new IllegalArgumentException("이동시키고자 하는 말이 존재하지 않습니다.");
-//        }
-//        if (pieceToBeMoved.isNotSameTeam(turn)) {
-//            throw new IllegalArgumentException("해당 말의 차례가 아닙니다.");
-//        }
-//        if (pieceToBeMoved.isInvalidMovementWithoutConsideringOtherPieces(source, target)) {
-//            throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
-//        }
-//        List<Position> PositionsWherePiecesShouldNeverBeIncluded = pieceToBeMoved.movePathExceptSourceAndTarget(source, target);
-//        if (isExistAnyPieceAt(PositionsWherePiecesShouldNeverBeIncluded)) {
-//            throw new IllegalArgumentException("진로가 막혀있어 해당 위치로 이동할 수 없습니다.");
-//        }
-//        if (isExistAt(target) && pieceToBeMoved.isSameTeam(pieces.get(target))) {
-//            throw new IllegalArgumentException("본인의 말은 잡을 수 없습니다.");
-//        }
-//        if (pieceToBeMoved instanceof King) {
-//            if (isKilledIfMoves(source, target)) {
-//                throw new IllegalArgumentException("왕을 방어하세요.");
-//            }
-//        } else {
-//            if (allMovablePositionsOfOppositeTeamWhen(pieces).contains(findPositionOfKing(turn))) {
-//                throw new IllegalArgumentException("왕을 방어하세요.");
-//            }
-//        }
-//    }
-
 
 //    public void move(Position from, Position to) {
 //        Piece pieceToBeMoved = pieces.get(from);
@@ -237,6 +214,7 @@ public class Board {
 //        }
 //        pieces.put(to, target);
 //        this.turn = turn.getOppositeTeam();
+
 //    }
 
     public void moveIfPossible(Position source, Position target) {
@@ -246,7 +224,7 @@ public class Board {
         }
         pieceToBeMoved.throwExceptionIfNotMovable(this, source, target);
         finishIfKilledEnemyKing(target);
-        move(pieces, source, target);
+        move(source, target);
         pieceToBeMoved.updateHasMoved();
         this.turn = turn.getOppositeTeam();
     }
@@ -263,7 +241,7 @@ public class Board {
 
 
     public boolean isExistAt(Position position) {
-        return pieces.containsKey(position);
+        return pieces.get(position) != null;
     }
 
     public boolean isNotExistAt(Position position) {
@@ -272,25 +250,13 @@ public class Board {
 
     public boolean isExistAnyPieceAt(List<Position> traces) {
         return traces.stream()
-                .anyMatch(pieces::containsKey);
-    }
-
-    public boolean isKilledIfMoves(Position source, Position target) {
-        return !isSurviveIfMoves(source, target);
+                .anyMatch(this::isExistAt);
     }
 
     public boolean isKingKilledIfMoves(Position source, Position target) {
-        return !isKingSurviveIfMoves(source, target);
-    }
-
-    private boolean isKingSurviveIfMoves(Position source, Position target) {
-        Map<Position, Piece> copiedPieces = new HashMap<>(pieces);
-        move(copiedPieces, source, target);
-        if (allMovablePositionsOfOppositeTeamWhen(copiedPieces).contains(findPositionOfKing(turn))) {
-            return false;
-        }
-        return true;
-
+        Board copiedBoard = new Board(pieces);
+        copiedBoard.move(source, target);
+        return copiedBoard.allMovablePositionsOf(turn.getOppositeTeam()).contains(findPositionOfKing(turn));
     }
 
     public Scores calculateScores() {
@@ -346,25 +312,37 @@ public class Board {
     }
 
     public boolean isExistEnemyFrontLeft(Position source, Position target) {
-        if (isNotExistAt(target)) {
-            return false;
-        }
-        if (isSameTeamBetween(source, target)) {
-            return false;
-        }
-        Direction moveDirection = Direction.of(source, target);
-        return isWhite(source) ? moveDirection == Direction.NORTH_WEST : moveDirection == Direction.SOUTH_EAST;
+        return isExistAt(target)
+                && isFrontLeft(source, target)
+                && isNotSameTeamBetween(source, target);
     }
 
     public boolean isExistEnemyFrontRight(Position source, Position target) {
-        if (isNotExistAt(target)) {
-            return false;
+        return isExistAt(target)
+                && isFrontRight(source, target)
+                && isNotSameTeamBetween(source, target);
+    }
+
+    private boolean isFrontLeft(Position source, Position target) {
+        return target == frontLeftOf(source);
+    }
+
+    private boolean isFrontRight(Position source, Position target) {
+        return target == frontRightOf(source);
+    }
+
+    private Position frontLeftOf(Position position) {
+        if (turn.isWhite()) {
+            return position.at(Direction.NORTH_WEST);
         }
-        if (isSameTeamBetween(source, target)) {
-            return false;
+        return position.at(Direction.SOUTH_EAST);
+    }
+
+    private Position frontRightOf(Position position) {
+        if (turn.isWhite()) {
+            return position.at(Direction.NORTH_EAST);
         }
-        Direction moveDirection = Direction.of(source, target);
-        return isWhite(source) ? moveDirection == Direction.NORTH_EAST : moveDirection == Direction.SOUTH_WEST;
+        return position.at(Direction.SOUTH_WEST);
     }
 
     public boolean hasMoved(Position position) {
