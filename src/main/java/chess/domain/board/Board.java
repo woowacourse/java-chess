@@ -1,8 +1,8 @@
-package chess;
+package chess.domain.board;
 
-import static chess.piece.Team.*;
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.domain.piece.Team.*;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 import static java.util.stream.Collectors.*;
 
 import java.util.Arrays;
@@ -11,19 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-import chess.piece.Bishop;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
-import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
-import chess.piece.Team;
-import chess.position.File;
-import chess.position.Position;
-import chess.position.Rank;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class Board {
 	private final Map<Position, Piece> pieces;
@@ -136,7 +135,7 @@ public class Board {
 		return Collections.unmodifiableMap(this.pieces);
 	}
 
-	public boolean checkGameEnd() {
+	public boolean isFinished() {
 		return !this.finished;
 	}
 

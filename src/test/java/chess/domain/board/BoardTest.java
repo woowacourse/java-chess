@@ -1,7 +1,7 @@
-package chess;
+package chess.domain.board;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
@@ -11,10 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.piece.Piece;
-import chess.piece.Rook;
-import chess.piece.Team;
-import chess.position.Position;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
+import chess.domain.position.Position;
 
 public class BoardTest {
 	private Board board;
@@ -48,6 +48,6 @@ public class BoardTest {
 	void calculateScoreTest() {
 		board.start();
 		Map<Team, Double> status = board.status();
-		assertThat(status).containsExactly(entry(Team.BLACK, 38.0), entry(Team.WHITE, 38.0));
+		assertThat(status).containsOnly(entry(Team.BLACK, 38.0), entry(Team.WHITE, 38.0));
 	}
 }

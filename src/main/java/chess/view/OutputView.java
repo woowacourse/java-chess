@@ -2,11 +2,11 @@ package chess.view;
 
 import java.util.Map;
 
-import chess.Board;
-import chess.piece.Piece;
-import chess.position.File;
-import chess.position.Position;
-import chess.position.Rank;
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class OutputView {
 
@@ -47,5 +47,9 @@ public class OutputView {
 	private static String findSymbol(Piece piece) {
 		return piece.getSymbol();
 
+	}
+
+	public static void printErrorMessage(String message) {
+		System.out.println(message);
 	}
 }

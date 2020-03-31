@@ -1,10 +1,10 @@
-package chess;
+package chess.domain.board;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-import chess.piece.Piece;
-import chess.position.Position;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 public enum BoardOccupyState {
 	EMPTY((source, target) -> target == null),

@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
 import java.util.List;
 
-import chess.position.Position;
+import chess.domain.position.Position;
 
 public class Bishop extends Piece {
 	private static final String INITIAL_CHARACTER = "B";

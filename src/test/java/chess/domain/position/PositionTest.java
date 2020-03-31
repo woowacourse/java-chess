@@ -1,7 +1,7 @@
-package chess.position;
+package chess.domain.position;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;

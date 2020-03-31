@@ -1,18 +1,16 @@
-package chess.position;
+package chess.domain.position;
 
 import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Rank2 implements Comparable<Rank2> {
 	private static final Map<Integer, Rank2> RANK_CACHE = new LinkedHashMap<>();
+
 	static {
 		for (int i = 8; i >= 1; i--) {
 			RANK_CACHE.put(i, new Rank2(String.valueOf(i), i));

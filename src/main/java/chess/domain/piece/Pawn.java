@@ -1,17 +1,16 @@
-package chess.piece;
+package chess.domain.piece;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import chess.position.Position;
-import chess.position.Rank;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class Pawn extends Piece {
 	private static final String INITIAL_CHARACTER = "P";
 
 	private boolean hasMoved;
-
 
 	public Pawn(Team team) {
 		super(team);

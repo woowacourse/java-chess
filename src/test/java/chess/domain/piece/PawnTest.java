@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.piece.Team.*;
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.domain.piece.Team.*;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -18,8 +18,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.Board;
-import chess.position.Position;
+import chess.domain.board.Board;
+import chess.domain.position.Position;
 
 public class PawnTest {
 	@DisplayName("팀과 위치를 입력받아 Pawn객체 생성 테스트")

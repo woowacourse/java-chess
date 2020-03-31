@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
 import java.util.List;
 
-import chess.position.Position;
+import chess.domain.position.Position;
 
 public abstract class Piece {
 	protected final Team team;

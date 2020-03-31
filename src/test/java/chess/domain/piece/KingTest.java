@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import static chess.piece.Team.*;
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.domain.piece.Team.*;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Collections;
@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.position.Position;
+import chess.domain.position.Position;
 
 public class KingTest {
 	@DisplayName("킹은 직선, 대각선 1칸만큼 이동가능, 이동 경로를 반환할 수 있다.")
