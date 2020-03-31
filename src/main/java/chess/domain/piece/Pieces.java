@@ -39,10 +39,13 @@ public class Pieces {
 	}
 
 	public boolean canMove(Position source, Position target) {
-		return (whitePieces.hasPiece(source) && blackPieces.hasPiece(target))
-			|| (whitePieces.hasPiece(target) && blackPieces.hasPiece(source))
-			|| (whitePieces.hasPiece(source) && !blackPieces.hasPiece(target) && !whitePieces.hasPiece(target))
-			|| (!whitePieces.hasPiece(target) && !blackPieces.hasPiece(target) && blackPieces.hasPiece(source));
+		boolean hasSourceAndTargetSeparately = (whitePieces.hasPiece(source) && blackPieces.hasPiece(target))
+			|| (whitePieces.hasPiece(target) && blackPieces.hasPiece(source));
+		boolean hasOnlySourceOrTarget =
+			(whitePieces.hasPiece(source) && !blackPieces.hasPiece(target) && !whitePieces.hasPiece(target))
+				|| (!whitePieces.hasPiece(target) && !blackPieces.hasPiece(target) && blackPieces.hasPiece(source));
+
+		return hasSourceAndTargetSeparately || hasOnlySourceOrTarget;
 	}
 
 	public boolean isKingDie() {
