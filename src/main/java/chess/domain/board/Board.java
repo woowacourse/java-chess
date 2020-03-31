@@ -12,9 +12,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
-    private static final int PAWN_ON_SAME_FILE = 1;
-    private static final double PAWN_SCORE_STRATEGY = 0.5;
-
     private final Map<Position, Piece> board;
 
     public Board() {
@@ -25,20 +22,35 @@ public class Board {
         this.board = board;
     }
 
-    public Map<String, String> parse() {
-        Map<String, String> parseResult = board.entrySet()
-                .stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().toString(),
-                        entry -> entry.getValue().toSymbol(),
-                        (e1, e2) -> e1, LinkedHashMap::new));
-        
-        return Collections.unmodifiableMap(parseResult);
-    }
-
     public void updateBoard(final Position sourcePosition, final Position targetPosition) {
         Piece selectedPiece = this.board.get(sourcePosition);
         this.board.put(targetPosition, selectedPiece);
         this.board.remove(sourcePosition);
+    }
+
+    public BoardScore calculateScore(final Team team) {
+        BoardScore totalScore = calculateTotalScore(team);
+        return calculatePawnScore(team, totalScore);
+    }
+
+    private BoardScore calculateTotalScore(final Team team) {
+        double totalScore = board.values().stream()
+                .filter(piece -> team.isSameTeamWith(piece.getTeam()))
+                .mapToDouble(Piece::getScore)
+                .sum();
+        return new BoardScore(totalScore);
+    }
+
+    private BoardScore calculatePawnScore(final Team team, BoardScore totalScore) {
+        for (File file : File.values()) {
+            List<Map.Entry<Position, Piece>> sameFilePawns = this.board.entrySet().stream()
+                    .filter(entry -> File.of(entry.getKey().getFile()).equals(file))
+                    .filter(entry -> entry.getValue().isPawn() && !entry.getValue().isEnemy(team))
+                    .collect(Collectors.toList());
+
+            totalScore = totalScore.pawnStrategy(sameFilePawns);
+        }
+        return totalScore;
     }
 
     public Team checkWinner() {
@@ -66,32 +78,20 @@ public class Board {
     }
 
     public Piece getPiece(final Position position) {
+        if (!this.board.containsKey(position)) {
+            throw new IllegalArgumentException("비어있는 위치를 선택하였습니다.");
+        }
+
         return this.board.get(position);
     }
 
-    public double calculateScore(final Team team) {
-        double totalScore = calculateTotalScore(team);
-        return calculatePawnScore(team, totalScore);
-    }
+    public Map<String, String> parse() {
+        Map<String, String> parseResult = board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().toString(),
+                        entry -> entry.getValue().toSymbol(),
+                        (e1, e2) -> e1, LinkedHashMap::new));
 
-    private double calculateTotalScore(final Team team) {
-        return board.values().stream()
-                .filter(piece -> team.isSameTeamWith(piece.getTeam()))
-                .mapToDouble(Piece::getScore)
-                .sum();
-    }
-
-    private double calculatePawnScore(final Team team, double score) {
-        for (File file : File.values()) {
-            List<Map.Entry<Position, Piece>> sameFile = this.board.entrySet().stream()
-                    .filter(entry -> File.of(entry.getKey().getFile()).equals(file))
-                    .filter(entry -> entry.getValue().isPawn() && !entry.getValue().isEnemy(team))
-                    .collect(Collectors.toList());
-
-            if (sameFile.size() > PAWN_ON_SAME_FILE) {
-                score -= sameFile.size() * PAWN_SCORE_STRATEGY;
-            }
-        }
-        return score;
+        return Collections.unmodifiableMap(parseResult);
     }
 }

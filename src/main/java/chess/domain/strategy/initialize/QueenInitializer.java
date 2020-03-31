@@ -2,6 +2,7 @@ package chess.domain.strategy.initialize;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.Queen;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
@@ -13,8 +14,8 @@ public final class QueenInitializer implements InitializeStrategy {
     @Override
     public Map<Position, Piece> initialize() {
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.put(Position.of("d8"), new Piece(PieceType.QUEEN, Team.BLACK));
-        pieces.put(Position.of("d1"), new Piece(PieceType.QUEEN, Team.WHITE));
+        pieces.put(Position.of("d8"), new Queen(PieceType.QUEEN, Team.BLACK));
+        pieces.put(Position.of("d1"), new Queen(PieceType.QUEEN, Team.WHITE));
 
         return Collections.unmodifiableMap(pieces);
     }

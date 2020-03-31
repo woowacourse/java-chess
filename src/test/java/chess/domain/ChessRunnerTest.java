@@ -22,11 +22,35 @@ class ChessRunnerTest {
                 .hasMessage("현재 차례가 아닙니다.");
     }
 
-    @DisplayName("이동할 수 없는 곳일 때 에러 메시지 출력")
+    @DisplayName("같은 위치로 이동할 때 에러 메시지 출력")
+    @Test
+    void validateSamePosition() {
+        assertThatThrownBy(() -> chessRunner.update("a2", "a2"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 위치로 이동할 수 없습니다.");
+    }
+
+    @DisplayName("선택한 기물에 맞지 않는 목적지를 선택했을 때 에레 메시지 출력")
     @Test
     void validateMovable() {
-        assertThatThrownBy(() -> chessRunner.update("a1", "a2")) //화이트 팀 룩 이동
+        assertThatThrownBy(() -> chessRunner.update("a1", "b2"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 곳입니다.");
+                .hasMessage("선택한 기물이 이동할 수 없는 곳입니다.");
+    }
+
+    @DisplayName("경로 사이에 장애물이 있을 때 에러 메시지 출력")
+    @Test
+    void validateObstacle() {
+        assertThatThrownBy(() -> chessRunner.update("a1", "a3"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로 사이에 장애물이 있습니다.");
+    }
+
+    @DisplayName("잘못된 목적지를 선택했을 때 에러 메시지 출력")
+    @Test
+    void validateTarget() {
+        assertThatThrownBy(() -> chessRunner.update("a1", "a2"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("목적지가 잘못되었습니다.");
     }
 }
