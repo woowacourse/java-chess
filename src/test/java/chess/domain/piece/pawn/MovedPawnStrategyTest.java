@@ -21,7 +21,7 @@ class MovedPawnStrategyTest {
 
 	@BeforeEach
 	void setUp() {
-		whitePawn = MovedPawn.of(Team.WHITE, Position.of("c4"));
+		whitePawn = Pawn.of(Team.WHITE, Position.of("c4"));
 		boardDto = new HashMap<>();
 		boardDto.put(Position.of("c4"), Team.WHITE);
 	}
@@ -30,7 +30,7 @@ class MovedPawnStrategyTest {
 	@DisplayName("진행 방향에 장애물이 없는 경우")
 	void anyOnPath() {
 		assertThat(whitePawn.move(Position.of("c4"), Position.of("c5"), boardDto))
-			.isInstanceOf(MovedPawn.class);
+			.isInstanceOf(Pawn.class);
 	}
 
 	@ParameterizedTest
@@ -39,7 +39,7 @@ class MovedPawnStrategyTest {
 	void enemyOnTarget(String target) {
 		boardDto.put(Position.of(target), Team.BLACK);
 		assertThat(whitePawn.move(Position.of("c4"), Position.of(target), boardDto))
-			.isInstanceOf(MovedPawn.class);
+			.isInstanceOf(Pawn.class);
 	}
 
 	@ParameterizedTest
