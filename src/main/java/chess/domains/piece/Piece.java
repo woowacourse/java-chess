@@ -20,16 +20,18 @@ public abstract class Piece {
     public static final int COLUMN_SIZE = 8;
     private static final List<Piece> whitePieces;
     private static final List<Piece> blackPieces;
+    private static final List<Piece> blankPieces;
 
     static {
         whitePieces = createBundleByColor(PieceColor.WHITE);
         blackPieces = createBundleByColor(PieceColor.BLACK);
+        blankPieces = createBlankBundle();
     }
 
     protected final PieceColor pieceColor;
+
     private final String name;
     private final double score;
-
     public abstract boolean isValidMove(Position currentPosition, Position targetPosition);
 
     public Piece(PieceColor pieceColor, String name, double score) {
@@ -46,6 +48,12 @@ public abstract class Piece {
             bundle.add(new Pawn(color));
         }
         return bundle;
+    }
+
+    private static List<Piece> createBlankBundle() {
+        return new ArrayList<>(Arrays.asList(
+                new Blank(), new Blank(), new Blank(), new Blank(),
+                new Blank(), new Blank(), new Blank(), new Blank()));
     }
 
     private String selectName(PieceColor pieceColor, String name) {
@@ -73,6 +81,10 @@ public abstract class Piece {
 
     public static List<Piece> getWhitePieces() {
         return whitePieces;
+    }
+
+    public static List<Piece> getBlankPieces() {
+        return blankPieces;
     }
 
     public String getName() {

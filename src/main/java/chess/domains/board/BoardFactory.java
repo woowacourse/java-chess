@@ -1,31 +1,33 @@
 package chess.domains.board;
 
-import chess.domains.piece.Blank;
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
+import chess.domains.position.Row;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import static chess.domains.piece.Piece.COLUMN_SIZE;
 
 public class BoardFactory {
-    public static final int FIRST_INDEX = 0;
     private static Set<PlayingPiece> board;
 
     static {
         List<Piece> whitePieces = Piece.getWhitePieces();
         List<Piece> blackPieces = Piece.getBlackPieces();
+        List<Piece> blankPieces = Piece.getBlankPieces();
+
         Set<PlayingPiece> playingPieces = new HashSet<>();
 
-        playingPieces.addAll(createPlayingPiecesByRow("1", whitePieces));
-        playingPieces.addAll(createPlayingPiecesByRow("2", whitePieces));
-        playingPieces.addAll(createPlayingPiecesByRow("8", blackPieces));
-        playingPieces.addAll(createPlayingPiecesByRow("7", blackPieces));
-        playingPieces.addAll(createBlankPieceRow("3"));
-        playingPieces.addAll(createBlankPieceRow("4"));
-        playingPieces.addAll(createBlankPieceRow("5"));
-        playingPieces.addAll(createBlankPieceRow("6"));
+        playingPieces.addAll(createPlayingPiecesByRow(Row.ONE, whitePieces));
+        playingPieces.addAll(createPlayingPiecesByRow(Row.TWO, whitePieces));
+        playingPieces.addAll(createPlayingPiecesByRow(Row.EIGHT, blackPieces));
+        playingPieces.addAll(createPlayingPiecesByRow(Row.SEVEN, blackPieces));
+        playingPieces.addAll(createPlayingPiecesByRow(Row.THREE, blankPieces));
+        playingPieces.addAll(createPlayingPiecesByRow(Row.FOUR, blankPieces));
+        playingPieces.addAll(createPlayingPiecesByRow(Row.FIVE, blankPieces));
+        playingPieces.addAll(createPlayingPiecesByRow(Row.SIX, blankPieces));
 
         board = playingPieces;
     }
@@ -34,20 +36,15 @@ public class BoardFactory {
         return board;
     }
 
-    private static Set<PlayingPiece> createPlayingPiecesByRow(String row, List<Piece> pieces) {
-        List<String> aRow = Position.fromRow(row);
+    private static Set<PlayingPiece> createPlayingPiecesByRow(Row row, List<Piece> pieces) {
+        List<Position> aRow = Position.fromRow(row);
 
-        // TODO : parameter는 불변이어야 한다.
-        return aRow.stream()
-                .map(location -> new PlayingPiece(Position.ofPositionName(location), pieces.remove(FIRST_INDEX)))
-                .collect(Collectors.toSet());
-    }
+        Set<PlayingPiece> playingPieces = new HashSet<>();
+        for (int i = 0; i < COLUMN_SIZE; i++) {
+            PlayingPiece piece = new PlayingPiece(aRow.get(i), pieces.get(i));
+            playingPieces.add(piece);
+        }
 
-    private static Set<PlayingPiece> createBlankPieceRow(String row) {
-        List<String> aRow = Position.fromRow(row);
-
-        return aRow.stream()
-                .map(location -> new PlayingPiece(Position.ofPositionName(location), new Blank()))
-                .collect(Collectors.toSet());
+        return playingPieces;
     }
 }

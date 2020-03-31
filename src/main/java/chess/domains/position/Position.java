@@ -25,9 +25,11 @@ public class Position implements Comparable<Position> {
         this.y = y;
     }
 
-    public static List<String> fromRow(String row) {
-        return cachedPositions.keySet().stream()
-                .filter(key -> key.endsWith(row)).sorted().collect(Collectors.toList());
+    public static List<Position> fromRow(Row row) {
+        return cachedPositions.values().stream()
+                .filter(position -> position.isRow(row))
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public static Position ofPositionName(String positionName) {
@@ -50,8 +52,12 @@ public class Position implements Comparable<Position> {
         return this.y == target.y;
     }
 
-    public boolean isRow(int row) {
-        return this.y.getRow() == row;
+    public boolean isRow(Row row) {
+        return this.y == row;
+    }
+
+    public boolean isColumn(Column column) {
+        return this.x == column;
     }
 
     public List<Position> findRoute(Position target) {
@@ -75,10 +81,6 @@ public class Position implements Comparable<Position> {
         int xGap = this.xGapBetween(target);
 
         return Direction.findDirection(xGap, yGap);
-    }
-
-    public boolean isColumn(Column column) {
-        return this.x == column;
     }
 
     @Override
