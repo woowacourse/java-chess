@@ -9,13 +9,13 @@ import chess.view.OutputView;
 public class ConsoleUIChessApplication {
     public static void main(String[] args) {
         OutputView.printStartMSG();
-        String firstCommand = InputView.inputCommand();
+        Command command = Command.findCommand(InputView.inputCommand());
 
-        if (Command.isStart(firstCommand)) {
+        if (command == Command.START) {
             Board board = new Board();
             GameController.printInitialBoard(board);
             startGame(board);
-        } else if (Command.isEnd(firstCommand)) {
+        } else if (command == Command.END) {
             OutputView.printEnd();
         }
     }

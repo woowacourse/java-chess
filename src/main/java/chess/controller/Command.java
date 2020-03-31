@@ -1,30 +1,28 @@
 package chess.controller;
 
+import java.util.Arrays;
+
 public enum Command {
     START("start"),
     MOVE("move"),
     STATUS("status"),
     END("end");
 
+    public static final String INVALID_COMMAND_ERR_MSG = "잘못된 명령이 입력되었습니다.";
     private String command;
 
     Command(String command) {
         this.command = command;
     }
 
-    public static boolean isStart(String command) {
-        return command.startsWith(START.command);
+    public static Command findCommand(String commandMsg) {
+        return Arrays.stream(Command.values())
+                .filter(command -> command.has(commandMsg))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMAND_ERR_MSG));
     }
 
-    public static boolean isMove(String command) {
-        return command.startsWith(MOVE.command);
-    }
-
-    public static boolean isStatus(String command) {
-        return command.startsWith(STATUS.command);
-    }
-
-    public static boolean isEnd(String command) {
-        return command.startsWith(END.command);
+    private boolean has(String commandMsg) {
+        return this.command.equals(commandMsg);
     }
 }

@@ -6,6 +6,7 @@ import chess.view.OutputView;
 
 public class GameController {
     public static final String DELIMITER = " ";
+    public static final int SELECTED_COMMAND = 0;
     public static final int SOURCE_POSITION = 1;
     public static final int TARGET_POSITION = 2;
 
@@ -13,13 +14,16 @@ public class GameController {
         OutputView.printBoard(board.showBoard());
     }
 
-    public static void command(String command, Board board) {
+    public static void command(String commandMsg, Board board) {
         OutputView.printTeamColor(board.getTeamColor());
-        if (Command.isStatus(command)) {
+
+        String[] commands = commandMsg.split(DELIMITER);
+        Command command = Command.findCommand(commands[SELECTED_COMMAND]);
+
+        if (command == Command.STATUS) {
             printStatus(board);
-        } else if (Command.isMove(command)) {
-            String[] moveCommand = command.split(DELIMITER);
-            move(board, moveCommand[SOURCE_POSITION], moveCommand[TARGET_POSITION]);
+        } else if (command == Command.MOVE) {
+            move(board, commands[SOURCE_POSITION], commands[TARGET_POSITION]);
         }
     }
 
