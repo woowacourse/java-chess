@@ -40,4 +40,9 @@ public enum Column {
 	public Column add(int colWeight) {
 		return of((char)(this.symbol + colWeight));
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(symbol);
+	}
 }

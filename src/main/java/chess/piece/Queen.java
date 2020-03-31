@@ -12,7 +12,7 @@ public class Queen extends Piece {
 	private static final double score = 9;
 
 	private Queen(Team team) {
-		super(team, new QueenMoveStrategy());
+		super(team, new QueenMoveStrategy(team));
 	}
 
 	public static Queen of(Team team) {

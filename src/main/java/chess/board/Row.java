@@ -41,4 +41,9 @@ public enum Row {
 	public Row add(int rowWeight) {
 		return of(this.number + rowWeight);
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(number);
+	}
 }

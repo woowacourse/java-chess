@@ -12,7 +12,7 @@ public class Bishop extends Piece {
 	private static final double score = 3;
 
 	private Bishop(Team team) {
-		super(team, new BishopMoveStrategy());
+		super(team, new BishopMoveStrategy(team));
 	}
 
 	public static Bishop of(Team team) {

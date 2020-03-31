@@ -1,11 +1,11 @@
 package chess.board;
 
-import static java.lang.Math.*;
-
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
+import chess.piece.stategy.Direction;
 import chess.team.Team;
 
 public class Location {
@@ -56,18 +56,6 @@ public class Location {
 		return of(now.column, now.row);
 	}
 
-	public boolean isSameCol(Location other) {
-		return this.column == other.column;
-	}
-
-	public boolean isDiagonal(Location destination) {
-		return abs(row.minus(destination.row)) == abs(column.minus(destination.column));
-	}
-
-	public boolean isStraight(Location destination) {
-		return this.row == destination.row || isSameCol(destination);
-	}
-
 	public Location calculateNextLocation(Location destination, int weight) {
 		int rowWeight = weight;
 		int colWeight = weight;
@@ -95,6 +83,44 @@ public class Location {
 		}
 		return Arrays.asList(WHITE_TEAM_INITIAL_PAWN_LOCATIONS)
 			.contains(this);
+	}
+
+	public boolean validEverySpaceRange(Location destination, List<Direction> directions) {
+		for (int weight = 1; weight <= 8; weight++) {
+			if (validOneSpaceRange(destination, directions, weight)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean validOneSpaceRange(Location destination, List<Direction> directions, int weight) {
+		Location nextLocation = this;
+		for (Direction direction : directions) {
+			try {
+				Column nextColumn = column.add(direction.getXDegree() * weight);
+				Row nextRow = row.add(direction.getYDegree() * weight);
+				nextLocation = Location.of(nextColumn, nextRow);
+				System.out.println(nextLocation);
+			} catch (IllegalArgumentException ignore) {
+			}
+			if (nextLocation == destination) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Location{" +
+			"column=" + column +
+			", row=" + row +
+			'}';
+	}
+
+	public boolean isSameCol(Location other) {
+		return column == other.column;
 	}
 
 	private static class LocationCache {

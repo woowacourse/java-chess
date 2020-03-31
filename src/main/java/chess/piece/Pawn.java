@@ -12,7 +12,7 @@ public class Pawn extends Piece {
 	private static final double score = 1;
 
 	private Pawn(Team team) {
-		super(team, new PawnMoveStrategy());
+		super(team, new PawnMoveStrategy(team));
 	}
 
 	public static Pawn of(Team team) {

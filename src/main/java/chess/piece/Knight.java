@@ -12,7 +12,7 @@ public class Knight extends Piece {
 	private static final double score = 2.5;
 
 	private Knight(Team team) {
-		super(team, new KnightMoveStrategy());
+		super(team, new KnightMoveStrategy(team));
 	}
 
 	public static Knight of(Team team) {

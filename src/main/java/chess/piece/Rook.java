@@ -12,7 +12,7 @@ public class Rook extends Piece {
 	private static final double score = 5;
 
 	private Rook(Team team) {
-		super(team, new RookMoveStrategy());
+		super(team, new RookMoveStrategy(team));
 	}
 
 	public static Rook of(Team team) {

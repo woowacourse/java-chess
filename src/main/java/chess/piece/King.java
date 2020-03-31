@@ -12,7 +12,7 @@ public class King extends Piece {
 	private static final double score = 0;
 
 	private King(Team team) {
-		super(team, new KingMoveStrategy());
+		super(team, new KingMoveStrategy(team));
 	}
 
 	public static King of(Team team) {
