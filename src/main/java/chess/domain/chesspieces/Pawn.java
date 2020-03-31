@@ -6,7 +6,10 @@ import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class Pawn extends Piece {
     private static final String PAWN_NAME = "PAWN";
@@ -47,26 +50,26 @@ public class Pawn extends Piece {
         if (initPosition == from) {
             movableColumnDiff = PieceInfo.PAWN_INIT_MOVABLE_COLUMN_DIFF;
         }
-        return Math.abs(rowDiff) <= pieceInfo.getMovableRowDiff()  && Math.abs(columnDiff) <= movableColumnDiff;
+        return Math.abs(rowDiff) <= pieceInfo.getMovableRowDiff() && Math.abs(columnDiff) <= movableColumnDiff;
     }
 
     @Override
-    public boolean validateDirection(Direction direction, Optional<Piece> target) {
+    public boolean validateDirection(Direction direction, Piece target) {
         return hasDirection(direction)
                 && (validateMoveAttack(direction, target) || validateMoveForward(direction, target));
     }
 
-    public boolean validateMoveAttack(Direction direction, Optional<Piece> target) {
+    public boolean validateMoveAttack(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
-        Objects.requireNonNull(target);
-
+        boolean isNotEmpty = Objects.nonNull(target);
         return attackDirections.contains(direction)
-                && target.isPresent()
+                && isNotEmpty
                 && !(this.isSamePlayer(target));
     }
 
-    public boolean validateMoveForward(Direction direction, Optional<Piece> target) {
+    public boolean validateMoveForward(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
-        return direction == forwardDirection && !target.isPresent();
+        boolean isEmpty = target == null;
+        return direction == forwardDirection && isEmpty;
     }
 }

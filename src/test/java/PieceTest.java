@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,7 +15,7 @@ public class PieceTest {
     void test(String playerType) {
         King king = new King(Player.valueOf(playerType));
 
-        assertThat(king.isSamePlayer(Optional.empty())).isFalse();
+        assertThat(king.isSamePlayer(null)).isFalse();
     }
 
     @DisplayName("서로 같은 Player인지 비교")
@@ -26,7 +25,7 @@ public class PieceTest {
         King king = new King(Player.valueOf(playerType));
         Queen queen = new Queen(Player.valueOf(playerType));
 
-        assertThat(king.isSamePlayer(Optional.of(queen))).isTrue();
+        assertThat(king.isSamePlayer(queen)).isTrue();
     }
 
     @DisplayName("서로 다른 Player인지 비교")
@@ -35,6 +34,6 @@ public class PieceTest {
     void test3(String playerType1, String playerType2) {
         King king = new King(Player.valueOf(playerType1));
         Queen queen = new Queen(Player.valueOf(playerType2));
-        assertThat(king.isSamePlayer(Optional.of(queen))).isFalse();
+        assertThat(king.isSamePlayer(queen)).isFalse();
     }
 }

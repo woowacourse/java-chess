@@ -2,7 +2,10 @@ package chess.domain;
 
 import chess.Exceptions.NotMoveException;
 import chess.PieceFactory;
-import chess.domain.chesspieces.*;
+import chess.domain.chesspieces.King;
+import chess.domain.chesspieces.Pawn;
+import chess.domain.chesspieces.Piece;
+import chess.domain.chesspieces.PieceInfo;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.component.Row;
@@ -18,49 +21,53 @@ public class ChessBoard {
 
     public ChessBoard() {
         for (Map.Entry<Piece, List<Position>> entry : PieceFactory.create().entrySet()) {
-            entry.getValue().forEach(position -> chessBoard.put(position,entry.getKey()));
+            entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
         }
         isKingTaken = false;
     }
 
-    public boolean move(Position from, Position to) {
-        validateException(from, to);
+    public void move(Position from, Position to) {
+        Piece source = chessBoard.get(from);
+        Piece target = chessBoard.get(to);
+        validateSamePosition(from, to);
+        validateSource(source);
+        validateIsPlayer(source, target);
 
-        if (validateMovement(from, to)) {
-            Piece source = chessBoard.get(from);
-            Piece target = chessBoard.get(to);
+        if (movable(from, to)) {
             chessBoard.put(to, source);
             chessBoard.remove(from);
-
 
             if (target instanceof King) {
                 this.isKingTaken = true;
             }
-
-            return true;
         }
-        return false;
     }
 
-    private void validateException(Position from, Position to) {
+    private void validateSamePosition(Position from, Position to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
+
         if (from == to) {
             throw new NotMoveException("같은 위치로 이동할 수 없습니다.");
         }
-
-        Piece source =chessBoard.get(from);
-        if (source == null) {
-            throw new NotMoveException("empty에서는 이동할 수 없습니다.");
-        }
-        Piece target = chessBoard.get(to);
-
-        if (Objects.nonNull(target) && source.isSamePlayer(target)) {
-            throw  new NotMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
-        };
     }
 
-    private boolean validateMovement(Position from, Position to) {
+    private void validateSource(Piece source) {
+        if (Objects.isNull(source)) {
+            throw new NotMoveException("empty에서는 이동할 수 없습니다.");
+        }
+    }
+
+    private void validateIsPlayer(Piece source, Piece target) {
+        if (Objects.nonNull(target) && source.isSamePlayer(target)) {
+            throw new NotMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
+        }
+        ;
+    }
+
+    private boolean movable(Position from, Position to) {
         Piece source = chessBoard.get(from);
-        Optional<Piece> target = Optional.ofNullable(chessBoard.get(to));
+        Piece target = chessBoard.get(to);
         Direction direction = Direction.getDirection(from, to);
 
         return source.validateTileSize(from, to)

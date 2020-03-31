@@ -34,6 +34,6 @@ public class PieceFactory {
     }
 
     public static Map<Piece, List<Position>> create() {
-        return Collections.unmodifiableMap(pieces);
+        return new HashMap<>(pieces);
     }
 }
