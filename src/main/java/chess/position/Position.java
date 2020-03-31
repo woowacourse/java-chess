@@ -1,5 +1,7 @@
 package chess.position;
 
+import chess.piece.Team;
+
 import java.util.*;
 
 public class Position {
@@ -27,6 +29,10 @@ public class Position {
         return CACHE.get(getKey(file, rank));
     }
 
+    private static String getKey(File file, Rank rank) {
+        return file.getName() + rank.getName();
+    }
+
     public static Position of(String key) {
         String lowerCaseKey = key.toLowerCase();
         validate(lowerCaseKey);
@@ -37,10 +43,6 @@ public class Position {
         if (CACHE.get(key) == null) {
             throw new IllegalArgumentException("위치 입력값이 올바르지 않습니다.");
         }
-    }
-
-    private static String getKey(File file, Rank rank) {
-        return file.getName() + rank.getName();
     }
 
     public static List<Position> findDiagonalTrace(Position start, Position end) {
@@ -110,6 +112,10 @@ public class Position {
         return this.file == other.file;
     }
 
+    public boolean isNotSameFile(Position other) {
+        return !isSameFile(other);
+    }
+
     public boolean isNotDistanceOneSquare(Position other) {
         return !isDistanceOneSquare(other);
     }
@@ -137,6 +143,10 @@ public class Position {
 
     public int increaseAmountOfRank(Position other) {
         return other.getRankNumber() - getRankNumber();
+    }
+
+    public int increaseAmountOfFile(Position other) {
+        return other.getFileNumber() - getFileNumber();
     }
 
     public File getFile() {

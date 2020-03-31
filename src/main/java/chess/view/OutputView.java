@@ -26,9 +26,9 @@ public class OutputView {
 		System.out.println(MOVE_COMMAND_INFORMATION_MESSAGE);
 	}
 
-	public static void invalidCommandInputMessage() {
-		System.out.println(INVALID_COMMAND_INPUT_MESSAGE);
-	}
+    public static void printExceptionMessage(String message) {
+        System.out.println(message);
+    }
 
     public static void printBoard(Board board) {
         Map<Position, Piece> pieces = board.getPieces();
@@ -49,16 +49,12 @@ public class OutputView {
         System.out.println(builder);
     }
 
+	public static void invalidCommandInputMessage() {
+		System.out.println(INVALID_COMMAND_INPUT_MESSAGE);
+	}
+
     private static String findSymbol(Piece piece) {
         return piece.getSymbol();
-    }
-
-    public static void printExceptionMessage(String message) {
-        System.out.println(message);
-    }
-
-    public static void requestCorrectCommandMessage() {
-        System.out.println("잘못된 명령어를 입력하셨습니다. 다시 입력해주세요.");
     }
 
     public static void printScores(Scores scores) {

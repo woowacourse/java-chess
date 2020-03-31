@@ -5,19 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 import chess.position.Position;
+import chess.validator.KnightMoveValidator;
 
 public class Knight extends Piece {
 	public Knight(Team team) {
-		super(team, "N");
+		super(team, "N", new KnightMoveValidator());
 	}
 
-	@Override
-	public boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target) {
-		return source.isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(target);
-	}
-
-	@Override
-	public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
-		return new ArrayList<>(Collections.emptyList());
-	}
+//	@Override
+//	public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
+//		return Collections.emptyList();
+//	}
 }

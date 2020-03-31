@@ -16,16 +16,16 @@ public enum Command {
         this.isInGameCommand = isInGameCommand;
     }
 
-    public static Command inGameCommandOf(String command) {
+    public static Command beforeGameCommandOf(String command) {
         return Arrays.stream(values())
-                .filter(value -> value.command.equals(command.toLowerCase()) && value.isInGameCommand)
+                .filter(value -> value.command.equals(command.toLowerCase()) && !value.isInGameCommand)
                 .findFirst()
                 .orElseThrow(CommandException::new);
     }
 
-    public static Command beforeGameCommandOf(String command) {
+    public static Command inGameCommandOf(String command) {
         return Arrays.stream(values())
-                .filter(value -> value.command.equals(command.toLowerCase()) && !value.isInGameCommand)
+                .filter(value -> value.command.equals(command.toLowerCase()) && value.isInGameCommand)
                 .findFirst()
                 .orElseThrow(CommandException::new);
     }

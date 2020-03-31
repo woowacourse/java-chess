@@ -12,7 +12,7 @@ public class ChessGame {
 
     public void run() {
         start();
-        while (board.isNotCheckmate()) {
+        while (board.isNotFinished()) {
             play();
         }
     }

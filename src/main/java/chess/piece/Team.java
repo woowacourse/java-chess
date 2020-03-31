@@ -11,6 +11,10 @@ public enum Team {
         return this == WHITE;
     }
 
+    public boolean isNotSame(Team team) {
+        return this != team;
+    }
+
     public Team getOppositeTeam() {
         return isWhite() ? BLACK : WHITE;
     }

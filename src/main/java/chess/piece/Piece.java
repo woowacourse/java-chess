@@ -1,24 +1,32 @@
 package chess.piece;
 
+import chess.Board;
 import chess.position.Position;
-
-import java.util.List;
+import chess.validator.MoveValidator;
 
 public abstract class Piece {
     protected final Team team;
     protected final String symbol;
+    protected boolean hasMoved;
+    protected final MoveValidator moveValidator;
 
-    public Piece(Team team, String symbol) {
+    public Piece(Team team, String symbol, MoveValidator moveValidator) {
         this.team = team;
         this.symbol = team.isBlack() ? symbol.toUpperCase() : symbol.toLowerCase();
+        this.hasMoved = false;
+        this.moveValidator = moveValidator;
     }
 
-    public String getSymbol() {
-        return this.symbol;
+//    public boolean isMovable(Board board, Position source, Position target) {
+//        return this.moveValidator.isMovable(board, source, target);
+//    }
+
+    public void throwExceptionIfNotMovable(Board board, Position source, Position target) {
+        this.moveValidator.throwExceptionIfNotMovable(board, source, target);
     }
 
     public void updateHasMoved() {
-        //TODO:이동여부
+        this.hasMoved = true;
     }
 
     public boolean isSameTeam(Piece piece) {
@@ -33,7 +41,23 @@ public abstract class Piece {
         return !isSameTeam(turn);
     }
 
-    public abstract boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target);
+    public boolean isWhite() {
+        return this.team == Team.WHITE;
+    }
 
-    public abstract List<Position> movePathExceptSourceAndTarget(Position source, Position target);
+    public boolean isBlack() {
+        return this.team == Team.BLACK;
+    }
+
+    public Team getTeam() {
+        return this.team;
+    }
+
+    public String getSymbol() {
+        return this.symbol;
+    }
+
+    public boolean getHasMoved() {
+        return this.hasMoved;
+    }
 }

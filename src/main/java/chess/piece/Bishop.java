@@ -3,19 +3,15 @@ package chess.piece;
 import java.util.List;
 
 import chess.position.Position;
+import chess.validator.BishopMoveValidator;
 
 public class Bishop extends Piece {
 	public Bishop(Team team) {
-		super(team, "B");
+		super(team, "B", new BishopMoveValidator());
 	}
 
-	@Override
-	public boolean isInvalidMovementWithoutConsideringOtherPieces(Position source, Position target) {
-		return source.isNotDiagonal(target);
-	}
-
-	@Override
-	public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
-		return Position.findDiagonalTrace(start, end);
-	}
+//	@Override
+//	public List<Position> movePathExceptSourceAndTarget(Position start, Position end) {
+//		return Position.findDiagonalTrace(start, end);
+//	}
 }
