@@ -117,4 +117,8 @@ public class ChessBoard {
 	public List<Position> getChessBoard() {
 		return Collections.unmodifiableList(chessBoard);
 	}
+
+	public List<Piece> getPieces() {
+		return this.pieces;
+	}
 }

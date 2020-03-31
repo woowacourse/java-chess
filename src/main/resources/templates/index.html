@@ -46,7 +46,7 @@
         }
 
         .blackPawn {
-            background-image: url("image/BlackWhite.png");
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/BlackWhite.png?raw=true");
             background-repeat: no-repeat;
             background-size: 40%;
             background-position: center;
@@ -118,14 +118,14 @@
             <button class="gray cell" id="h3"></button>
         </div>
         <div>
-            <button class="gray cell blackPawn" id="a2">p</button>
-            <button class="cell" id="b2">p</button>
-            <button class="gray cell" id="c2">p</button>
-            <button class="cell" id="d2">p</button>
-            <button class="gray cell" id="e2">p</button>
-            <button class="cell" id="f2">p</button>
-            <button class="gray cell" id="g2">p</button>
-            <button class="cell" id="h2">p</button>
+            <button class="gray cell blackPawn" id="a2"></button>
+            <button class="cell" id="b2"></button>
+            <button class="gray cell" id="c2"></button>
+            <button class="cell" id="d2"></button>
+            <button class="gray cell" id="e2"></button>
+            <button class="cell" id="f2"></button>
+            <button class="gray cell" id="g2"></button>
+            <button class="cell" id="h2"></button>
         </div>
         <div>
             <button class="cell" id="a1">r</button>
@@ -133,7 +133,7 @@
             <button class="cell" id="c1">b</button>
             <button class="gray cell" id="d1">q</button>
             <button class="cell" id="e1">k</button>
-            <button b class="gray cell" id="f1">b</button>
+            <button class="gray cell" id="f1">b</button>
             <button class="cell" id="g1">n</button>
             <button class="gray cell" id="h1">r</button>
         </div>
@@ -142,6 +142,36 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'get',
+            url: 'init',
+            dataType: 'json',
+            error: initError,
+            success: initSuccess
+        });
+    });
+
+    function initError() {
+        alert("initError");
+    }
+
+    function findPieceType(pieceName) {
+        if (pieceName === "p") {
+            return "blackPawn"
+        }
+    }
+
+    function initSuccess(response) {
+        for (position in response) {
+            const pieceName = response[position].name;
+            console.log(position, pieceName);
+            const pieceType = findPieceType(pieceName);
+
+            document.getElementById(position).classList.add(pieceType);
+        }
+    }
+
     $(".cell").click(function () {
         var sourceValue = $("#sourceSave").val();
         if (sourceValue === "empty") {
@@ -159,10 +189,9 @@
     function onSuccess(response) {
         var sourcePosition = response.source;
         var targetPosition = response.target;
-        var piece = document.getElementById(sourcePosition).innerText;
+        document.getElementById(sourcePosition).classList.add('blackPawn');
+        //ToDo
 
-        document.getElementById(sourcePosition).innerHTML = "";
-        document.getElementById(targetPosition).innerHTML = piece;
     }
 
     function validateMovable(sourcePosition, targetPosition) {

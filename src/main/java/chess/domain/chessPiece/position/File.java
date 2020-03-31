@@ -38,6 +38,10 @@ public enum File {
 		return number;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public int calculateDistance(File file) {
 		return this.number - file.number;
 	}

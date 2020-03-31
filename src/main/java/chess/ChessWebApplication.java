@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessboard.ChessBoard;
 import com.google.gson.Gson;
@@ -8,6 +9,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -22,6 +24,15 @@ public class ChessWebApplication {
 			return render(model, "index.html");
 		});
 
+		get("/init", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			List<Piece> pieces = chessBoard.getPieces();
+			for (Piece piece : pieces) {
+				model.put(piece.getPosition().toString(), piece);
+			}
+			return gson.toJson(model);
+		});
+
 		post("/isMovable", (req, res) -> {
 			String source = req.queryParams("sourcePosition");
 			String target = req.queryParams("targetPosition");
@@ -34,8 +45,7 @@ public class ChessWebApplication {
 			model.put("source", source);
 			model.put("target", target);
 
-			String data = gson.toJson(model);
-			return data;
+			return gson.toJson(model);
 		});
 	}
 
