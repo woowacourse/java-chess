@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import chess.domain.position.Position;
 
 public class King extends Piece {
     public King(Position position, Team team) {
@@ -29,7 +29,12 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isNotEmpty() {
+    public boolean isObstacle() {
+        return true;
+    }
+
+    @Override
+    public boolean hasToAlive() {
         return true;
     }
 }

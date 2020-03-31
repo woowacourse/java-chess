@@ -1,15 +1,20 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
-import chess.domain.position.Path;
-import chess.domain.position.Position;
-import org.junit.jupiter.api.Test;
+import static chess.domain.position.Fixtures.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static chess.domain.position.Fixtures.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
+import chess.domain.position.Path;
+import chess.domain.position.Position;
 
 class BoardTest {
     @Test
@@ -57,7 +62,7 @@ class BoardTest {
 
         Board board = Board.of(setter);
 
-        assertThat(board.isKingDead()).isTrue();
+        assertThat(board.isEnd()).isTrue();
     }
 
     @Test
@@ -68,6 +73,6 @@ class BoardTest {
 
         Board board = Board.of(setter);
 
-        assertThat(board.isKingDead()).isFalse();
+        assertThat(board.isEnd()).isFalse();
     }
 }

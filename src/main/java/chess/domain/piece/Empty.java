@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
-
 import java.util.List;
+
+import chess.domain.position.Position;
 
 public class Empty extends Piece {
     public Empty(Position position, Team team) {
@@ -24,7 +24,12 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean isNotEmpty() {
+    public boolean isObstacle() {
+        return false;
+    }
+
+    @Override
+    public boolean hasToAlive() {
         return false;
     }
 }

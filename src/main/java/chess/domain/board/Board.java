@@ -1,19 +1,20 @@
 package chess.domain.board;
 
-import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
-import chess.domain.position.Position;
+import static java.util.stream.Collectors.*;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.*;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
+import chess.domain.position.Position;
 
 public class Board {
+    private static final int TEAM_COUNT = 2;
+
     private final Map<Position, Piece> board;
 
     private Board(Map<Position, Piece> board) {
@@ -26,7 +27,7 @@ public class Board {
 
     public boolean hasPieceIn(List<Position> path) {
         return path.stream()
-                .anyMatch(key -> get(key).isNotEmpty());
+                .anyMatch(key -> get(key).isObstacle());
     }
 
     public void update(Position from, Position to) {
@@ -34,11 +35,11 @@ public class Board {
         board.replace(from, new Empty(from));
     }
 
-    public boolean isKingDead() {
+    public boolean isEnd() {
         return board.values()
                 .stream()
-                .filter(piece -> piece instanceof King)
-                .count() < 2;
+                .filter(Piece::hasToAlive)
+                .count() != TEAM_COUNT;
     }
 
     public Collection<List<Piece>> getColumnGroupOf(Team team) {

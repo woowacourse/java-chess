@@ -1,5 +1,7 @@
 package chess.controller;
 
+import java.util.List;
+
 import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
@@ -7,15 +9,12 @@ import chess.service.ChessService;
 import chess.utils.MoveInfo;
 import chess.view.OutputView;
 
-import java.util.List;
-
 public class ChessController {
     private static final String START = "start";
     private static final String END = "end";
     private static final String MOVE = "move";
     private static final String STATUS = "status";
-    public static final String DELIMITER = " ";
-
+    private static final String DELIMITER = " ";
     private static List<String> startOrEnd = List.of(START, END);
     private static List<String> moveOrStatus = List.of(MOVE, STATUS);
     private static Team team = Team.WHITE;
@@ -47,10 +46,11 @@ public class ChessController {
 
     private static void move(String input, Board board) {
         ChessService.of(board, team).move(MoveInfo.of(input));
+
         OutputView.printBoard(board.getBoard());
         team = team.next();
 
-        if (board.isKingDead()) {
+        if (board.isEnd()) {
             exit();
         }
     }

@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
-
 import java.util.List;
+
+import chess.domain.position.Position;
 
 public abstract class Piece {
     protected Position position;
@@ -23,7 +23,9 @@ public abstract class Piece {
 
     protected abstract List<Position> createMovableArea();
 
-    public abstract boolean isNotEmpty();
+    public abstract boolean isObstacle();
+
+    public abstract boolean hasToAlive();
 
     public boolean isSameTeam(Team team) {
         return this.team == team;

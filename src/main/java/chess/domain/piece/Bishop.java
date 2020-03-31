@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import chess.domain.position.Position;
 
 public class Bishop extends Piece {
     public Bishop(Position position, Team team) {
@@ -25,8 +25,13 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isNotEmpty() {
+    public boolean isObstacle() {
         return true;
+    }
+
+    @Override
+    public boolean hasToAlive() {
+        return false;
     }
 
     private boolean isDiagonal(Position position) {
