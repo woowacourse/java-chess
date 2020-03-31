@@ -7,13 +7,22 @@ import chess.views.InputView;
 import chess.views.OutputView;
 
 public class ChessController {
-    private ChessBoard chessBoard;
+    private final ChessBoard chessBoard;
+
+    public ChessController(InputDto inputDto) {
+        OutputView.printInitialGuide();
+        Command command = inputDto.getCommand();
+        if (command != Command.START) {
+            throw new IllegalArgumentException("start를 해야 합니다.");
+        }
+        chessBoard = new ChessBoard();
+        OutputView.printChessBoard(chessBoard.getChessBoard());
+    }
 
     public void play() {
         OutputView.printInitialGuide();
-        InputDto inputDto = InputView.getCommand();
-        Command command = inputDto.getCommand();
-        start(command);
+        InputDto inputDto;
+        Command command;
 
         do {
             inputDto = InputView.getCommand();
@@ -25,14 +34,6 @@ public class ChessController {
                 status();
             }
         } while(!chessBoard.isGameOver() && command != Command.END);
-    }
-
-    private void start(Command command) {
-        if (command != Command.START) {
-            throw new IllegalArgumentException("start를 해야 합니다.");
-        }
-        chessBoard = new ChessBoard();
-        OutputView.printChessBoard(chessBoard.getChessBoard());
     }
 
     private void move(Position from, Position to) {
