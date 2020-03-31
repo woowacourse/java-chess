@@ -8,6 +8,7 @@ import chess.domain.Direction;
 import chess.domain.Team;
 import chess.domain.piece.MovingStrategy;
 import chess.domain.position.Position;
+import chess.domain.position.Row;
 
 public class PawnStrategy extends MovingStrategy {
 	protected final List<Direction> directions;
@@ -29,14 +30,32 @@ public class PawnStrategy extends MovingStrategy {
 	@Override
 	protected void checkObstacle(Position source, Position target, Map<Position, Team> teamBoard) {
 		Direction direction = Direction.getDirection(source, target);
-		Position pathPosition = source.plusDirection(direction);
-		checkRange(target, pathPosition);
+		checkPawnRange(source, target, direction);
 
 		if (target.minusColumn(source) != 0) {  //진행방향이 대각선인 경우
 			checkDiagonalEmpty(target, teamBoard);
 		}
 		if (target.minusColumn(source) == 0) {  //진행방향이 직선인 경우
 			checkEmpty(target, teamBoard);
+		}
+	}
+
+	private void checkPawnRange(Position source, Position target, Direction direction) {
+		if (source.getRow() == Row.SIX || source.getRow() == Row.TWO) {
+			checkNotMovedRange(source, direction, target);
+		} else {
+			Position pathPosition = source.plusDirection(direction);
+			checkRange(target, pathPosition);
+		}
+	}
+
+	private void checkNotMovedRange(Position source, Direction direction, Position target) {
+		Position position = source.plusDirection(direction);
+		if (position.equals(target))
+			return;
+		position = position.plusDirection(direction);
+		if (!position.equals(target)) {
+			throw new IllegalArgumentException("도달할 수 없는 거리입니다.");
 		}
 	}
 

@@ -9,7 +9,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.bishop.Bishop;
 import chess.domain.piece.king.King;
 import chess.domain.piece.knight.Knight;
-import chess.domain.piece.pawn.NotMovedPawn;
 import chess.domain.piece.queen.Queen;
 import chess.domain.piece.rook.Rook;
 import chess.domain.position.Position;

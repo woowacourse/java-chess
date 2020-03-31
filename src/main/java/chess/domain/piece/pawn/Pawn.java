@@ -6,13 +6,17 @@ import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-public abstract class Pawn extends Piece {
+public class Pawn extends Piece {
 	public static final String WHITE_PAWN = "\u2659";
 	public static final String BLACK_PAWN = "\u265f";
 	public static final int PAWN_SCORE = 1;
 
 	public Pawn(Team team, Position position) {
 		super(new PawnStrategy(team), team, position);
+	}
+
+	public static Pawn of(Team team, Position position) {
+		return new Pawn(team, position);
 	}
 
 	@Override
