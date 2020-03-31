@@ -3,6 +3,7 @@ package chess.domain.chessboard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import chess.domain.Status;
 import chess.domain.Team;
@@ -29,9 +30,10 @@ public class ChessBoard {
 	}
 
 	private List<ChessPiece> findByTeam(Team team) {
-		List<ChessPiece> chessPieces = new ArrayList<>();
-		rows.forEach(row -> chessPieces.addAll(row.findByTeam(team)));
-		return chessPieces;
+		return rows.stream()
+			.map(row -> row.findByTeam(team))
+			.flatMap(list -> list.stream())
+			.collect(Collectors.toList());
 	}
 
 	public void move(Position startPosition, Position targetPosition) {
