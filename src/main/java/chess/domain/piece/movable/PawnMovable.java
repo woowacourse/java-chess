@@ -3,7 +3,7 @@ package chess.domain.piece.movable;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
+import chess.domain.position.positions.Positions;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,9 +49,9 @@ public class PawnMovable implements Movable {
 	private Direction getForwardDirection(Position position) {
 		return moveDirections.getDirections()
 				.stream()
-				.filter(direction1 -> position.isSameRow(position.getMovedPositionBy(direction1)))
+				.filter(direction -> position.isSameRow(position.getMovedPositionBy(direction)))
 				.findFirst()
-				.orElseGet(() -> Direction.NONE);
+				.orElse(Direction.NONE);
 	}
 
 	private boolean isNotPossessed(Position movablePosition, List<Piece> pieces) {
