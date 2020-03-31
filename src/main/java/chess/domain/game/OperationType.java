@@ -1,13 +1,14 @@
 package chess.domain.game;
 
 import chess.domain.position.PositionFactory;
+import chess.domain.util.WrongOperationException;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public enum OperationType {
     START("start", (chessGame, operations) -> {
-        throw new UnsupportedOperationException(OperationType.INVALID_OPERATION_EXCEPTION_MESSAGE);
+        throw new WrongOperationException();
     }),
     MOVE("move", (chessGame, operations) -> {
         chessGame.move(PositionFactory.of(operations.getFirstArgument()), PositionFactory.of(operations.getSecondArgument()));
@@ -15,8 +16,6 @@ public enum OperationType {
     }),
     END("end", (chessGame, operations) -> false),
     STATUS("status", (chessGame, operations) -> true);
-
-    private static final String INVALID_OPERATION_EXCEPTION_MESSAGE = "잘못된 명령입니다.";
 
     private final String name;
     private final Operate operate;
@@ -31,19 +30,19 @@ public enum OperationType {
         return Arrays.stream(OperationType.values())
                 .filter(operationType -> operationType.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_OPERATION_EXCEPTION_MESSAGE));
+                .orElseThrow(WrongOperationException::new);
     }
 
     private static void validate(String name) {
-        Objects.requireNonNull(name, INVALID_OPERATION_EXCEPTION_MESSAGE);
+        Objects.requireNonNull(name, "NULL 값을 입력하셨습니다.");
         if (name.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_OPERATION_EXCEPTION_MESSAGE);
+            throw new WrongOperationException();
         }
     }
 
     public void checkFirstOperations() {
         if (!isStart() && !isEnd()) {
-            throw new UnsupportedOperationException(INVALID_OPERATION_EXCEPTION_MESSAGE);
+            throw new WrongOperationException();
         }
     }
 

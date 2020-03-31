@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.util.WrongPositionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +25,7 @@ class PositionFactoryTest {
 	@ValueSource(strings = {"aaa", "123", "a9", "z1"})
 	void of_when_invalid_input_throw_exception(String input) {
 		assertThatThrownBy(() -> PositionFactory.of(input))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(WrongPositionException.class)
 				.hasMessage("옳지 않은 좌표 입력입니다.");
 	}
 }

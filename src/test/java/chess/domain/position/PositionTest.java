@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.util.WrongPositionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +25,7 @@ class PositionTest {
 	void create_null_exception(String nullInput) {
 		assertThatThrownBy(() -> new Position(nullInput))
 				.isInstanceOf(NullPointerException.class)
-				.hasMessage("옳지 않은 좌표 입력입니다.");
+				.hasMessage("NULL 값을 입력하셨습니다.");
 	}
 
 	@DisplayName("Position 생성자 빈 문자열 입력 예외 테스트")
@@ -32,7 +33,7 @@ class PositionTest {
 	@EmptySource
 	void create_empty_exception(String emptyInput) {
 		assertThatThrownBy(() -> new Position(emptyInput))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(WrongPositionException.class)
 				.hasMessage("옳지 않은 좌표 입력입니다.");
 	}
 
@@ -41,7 +42,7 @@ class PositionTest {
 	@ValueSource(strings = {"aaa", "123", "a9", "z1"})
 	void create_invalid_exception(String invalidInput) {
 		assertThatThrownBy(() -> new Position(invalidInput))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(WrongPositionException.class)
 				.hasMessage("옳지 않은 좌표 입력입니다.");
 	}
 }

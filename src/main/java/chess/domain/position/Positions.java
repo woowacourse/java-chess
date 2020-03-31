@@ -33,8 +33,4 @@ public class Positions {
     public Set<Position> getPositions() {
         return positions;
     }
-
-    public int size() {
-        return positions.size();
-    }
 }

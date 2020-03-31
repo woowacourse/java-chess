@@ -2,11 +2,11 @@ package chess.domain.position;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.movable.Direction;
+import chess.domain.util.WrongPositionException;
 
 import java.util.Objects;
 
 public class Position {
-    private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 좌표 입력입니다.";
     private static final int MIN_BOUND = 1;
     private static final int MAX_BOUND = 8;
     private static final int BLACK_PAWN_INITIAL_COLUMN = 7;
@@ -29,9 +29,9 @@ public class Position {
     }
 
     private void validate(String position) {
-        Objects.requireNonNull(position, INVALID_INPUT_EXCEPTION_MESSAGE);
+        Objects.requireNonNull(position, "NULL 값을 입력하셨습니다.");
         if (position.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
+            throw new WrongPositionException();
         }
     }
 
@@ -71,9 +71,5 @@ public class Position {
 
     public Row getRow() {
         return row;
-    }
-
-    public Column getColumn() {
-        return column;
     }
 }

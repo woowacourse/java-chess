@@ -5,12 +5,12 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.domain.util.WrongPositionException;
 
 import java.util.List;
 import java.util.Set;
 
 public class Pieces {
-	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "잘못된 위치를 입력하셨습니다.";
 	private final List<Piece> pieces;
 
 	// package accessed
@@ -24,7 +24,7 @@ public class Pieces {
 		Positions movablePositions = piece.createMovablePositions(pieces);
 
 		if (!movablePositions.contains(end)) {
-			throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
+			throw new WrongPositionException();
 		}
 
 		Piece removingPiece = pieces.stream()
@@ -48,7 +48,7 @@ public class Pieces {
 		if (piece.isSameColor(color)) {
 			return piece;
 		}
-		throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
+		throw new WrongPositionException();
 	}
 
 	public List<Piece> getPieces() {
