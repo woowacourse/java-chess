@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class BoardTest {
     @DisplayName("빈 칸으로 말 이동")
@@ -60,9 +61,11 @@ public class BoardTest {
         bothKing.put(Position.of("b7"), new King(PieceType.KING, Team.WHITE));
         Board drawBoard = new Board(bothKing);
 
-        Assertions.assertThat(whiteWinBoard.checkWinner()).isEqualTo(Team.WHITE);
-        Assertions.assertThat(blackWinBoard.checkWinner()).isEqualTo(Team.BLACK);
-        Assertions.assertThat(drawBoard.checkWinner()).isNull();
+        Assertions.assertThat(whiteWinBoard.getWinner().get()).isEqualTo(Team.WHITE);
+        Assertions.assertThat(blackWinBoard.getWinner().get()).isEqualTo(Team.BLACK);
+        Assertions.assertThatThrownBy(() -> {
+            drawBoard.getWinner().get();
+        }).isInstanceOf(NoSuchElementException.class);
     }
 
     @DisplayName("지정한 칸이 비어있는지 판단")

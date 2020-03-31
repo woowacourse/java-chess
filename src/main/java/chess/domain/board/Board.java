@@ -5,10 +5,7 @@ import chess.domain.piece.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -53,14 +50,14 @@ public class Board {
         return totalScore;
     }
 
-    public Team checkWinner() {
+    public Optional<Team> getWinner() {
         if (checkWhiteKing() && !checkBlackKing()) {
-            return Team.WHITE;
+            return Optional.of(Team.WHITE);
         }
         if (!checkWhiteKing() && checkBlackKing()) {
-            return Team.BLACK;
+            return Optional.of(Team.BLACK);
         }
-        return null;
+        return Optional.empty();
     }
 
     private boolean checkWhiteKing() {

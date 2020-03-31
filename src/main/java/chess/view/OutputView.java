@@ -1,7 +1,5 @@
 package chess.view;
 
-import chess.domain.piece.Team;
-
 import java.util.List;
 import java.util.Map;
 
@@ -10,5 +8,5 @@ public interface OutputView {
 
     void printStatus(double calculateScore, String teamName);
 
-    void printWinner(Team team);
+    void printWinner(String teamName);
 }

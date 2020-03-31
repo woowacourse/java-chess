@@ -1,7 +1,7 @@
 package chess.controller;
 
+import chess.controller.dto.TeamDto;
 import chess.domain.ChessRunner;
-import chess.domain.piece.Team;
 import chess.view.ConsoleInputView;
 import chess.view.ConsoleOutputView;
 import chess.view.InputView;
@@ -26,7 +26,8 @@ public class ChessController {
     private static void runChessGame(Command command, ChessRunner chessRunner) {
         do {
             command = validateExecute(command, chessRunner);
-        } while (!command.isEnd() && findWinner(chessRunner));
+        } while (!command.isEnd() && !chessRunner.isEndChess());
+        printWinner(chessRunner);
     }
 
     private static Command validateExecute(Command command, ChessRunner chessRunner) {
@@ -41,12 +42,10 @@ public class ChessController {
         return command;
     }
 
-    private static boolean findWinner(final ChessRunner chessRunner) {
-        Team winner = chessRunner.findWinner();
-        if (winner != null) {
-            outputView.printWinner(winner);
-            return false;
+    private static void printWinner(ChessRunner chessRunner) {
+        if (chessRunner.isEndChess()) {
+            TeamDto teamDto = new TeamDto(chessRunner.getWinner());
+            outputView.printWinner(teamDto.getTeamName());
         }
-        return true;
     }
 }

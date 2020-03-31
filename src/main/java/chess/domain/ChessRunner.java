@@ -9,6 +9,7 @@ import chess.domain.strategy.direction.Direction;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ChessRunner {
     private Board board;
@@ -50,7 +51,7 @@ public class ChessRunner {
             throw new IllegalArgumentException("경로 사이에 장애물이 있습니다.");
         }
 
-        if (!movableTarget(sourcePiece, targetPosition)) {
+        if (!isMovableTarget(sourcePiece, targetPosition)) {
             throw new IllegalArgumentException("목적지가 잘못되었습니다.");
         }
     }
@@ -70,7 +71,7 @@ public class ChessRunner {
                 .allMatch(this.board::isEmpty);
     }
 
-    private boolean movableTarget(final Piece sourcePiece, final Position targetPosition) {
+    private boolean isMovableTarget(final Piece sourcePiece, final Position targetPosition) {
         Piece targetPiece = this.board.getPiece(targetPosition);
         return sourcePiece.isEnemy(targetPiece);
     }
@@ -83,13 +84,13 @@ public class ChessRunner {
         this.currentTeam = this.currentTeam.changeTeam();
     }
 
-    public Team findWinner() {
-        return this.board.checkWinner();
-    }
-
     public double calculateScore() {
         BoardScore boardScore = this.board.calculateScore(this.currentTeam);
         return boardScore.getBoardScore();
+    }
+
+    public boolean isEndChess() {
+        return this.board.getWinner().isPresent();
     }
 
     public Map<String, String> getBoardEntities() {
@@ -100,7 +101,8 @@ public class ChessRunner {
         return this.currentTeam.name();
     }
 
-    public Board getBoard() {
-        return this.board;
+    public String getWinner() {
+        Optional<Team> winner = this.board.getWinner();
+        return winner.map(Enum::name).orElseThrow(AssertionError::new);
     }
 }
