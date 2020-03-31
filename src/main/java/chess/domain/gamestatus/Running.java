@@ -6,7 +6,7 @@ import chess.domain.piece.PieceType;
 
 public class Running extends Started {
 
-    Team currentTeam;
+    private Team currentTeam;
 
     Running() {
         super();
