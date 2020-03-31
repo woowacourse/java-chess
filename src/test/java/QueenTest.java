@@ -17,17 +17,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class QueenTest {
     private final Queen queen = new Queen(Player.WHITE);
 
-    @DisplayName("이동 가능한 방향 - 모든 방향")
+    @DisplayName("이동 가능한 방향: 모든 방향")
     @Test
     void queenDirectionsTest() {
-        Assertions.assertThat(queen.getDirections()).containsExactly(Direction.values());
+        Assertions.assertThat(queen.getDirections()).containsExactly(Direction.NORTH,
+                Direction.EAST,
+                Direction.SOUTH,
+                Direction.WEST,
+                Direction.NORTH_EAST,
+                Direction.SOUTH_EAST,
+                Direction.SOUTH_WEST,
+                Direction.NORTH_WEST
+        );
     }
 
-    @DisplayName("이동 칸 수 확인")
+    @DisplayName("이동 칸 수 및 방향: (가능) 1칸 이상, 모든 방향")
     @ParameterizedTest
     @MethodSource("generatePositions")
     void tileSize_(Position from, Position to) {
-        assertThat(queen.validateMovableTileSize(from, to)).isTrue();
+        assertThat(queen.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions() {

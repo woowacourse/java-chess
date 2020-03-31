@@ -6,79 +6,67 @@ import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Pawn extends Piece {
-    private static final int AVAILABLE_ROW_MOVE_DIFF = 1;
-    private static final int INIT_AVAILABLE_COLUMN_DIFF = 1;
-    private static final int AVAILABLE_COLUMN_DIFF = 2;
-    private static final PieceInfo PIECE_INFO = PieceInfo.valueOf("PAWN");
+    private static final String PAWN_NAME = "PAWN";
 
     private final List<Direction> attackDirections = new ArrayList<>();
-
     private final Position initPosition;
 
     private Direction forwardDirection;
 
     public Pawn(Player player, Position position) {
-        super(player, PIECE_INFO);
+        super(player, PieceInfo.valueOf(PAWN_NAME));
         this.initPosition = position;
 
         if (player.equals(Player.BLACK)) {
-            forwardDirection = Direction.DOWN;
-            attackDirections.addAll(Arrays.asList(Direction.DIAGONAL_DOWN_LEFT, Direction.DIAGONAL_DOWN_RIGHT));
+            forwardDirection = Direction.SOUTH;
+            attackDirections.addAll(Arrays.asList(Direction.SOUTH_WEST, Direction.SOUTH_EAST));
             directions.add(forwardDirection);
             directions.addAll(attackDirections);
         }
 
         if (player.equals(Player.WHITE)) {
-            forwardDirection = Direction.TOP;
-            attackDirections.addAll(Arrays.asList(Direction.DIAGONAL_TOP_LEFT, Direction.DIAGONAL_TOP_RIGHT));
+            forwardDirection = Direction.NORTH;
+            attackDirections.addAll(Arrays.asList(Direction.NORTH_WEST, Direction.NORTH_EAST));
             directions.add(forwardDirection);
             directions.addAll(attackDirections);
         }
     }
 
     @Override
-    public boolean movable(Position from, Position to) {
+    public boolean validateTileSize(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
-        return hasDirection(Direction.getDirection(from, to))
-                && validateMovableTileSize(from, to);
-    }
 
-    // 상수에 대한 이름 수정 리팩토링
-    @Override
-    public boolean validateMovableTileSize(Position from, Position to) {
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
-        int availableColumnDiff = INIT_AVAILABLE_COLUMN_DIFF;
+
+        int movableColumnDiff = pieceInfo.getMovableColumnDiff();
         if (initPosition == from) {
-            availableColumnDiff = AVAILABLE_COLUMN_DIFF;
+            movableColumnDiff = PieceInfo.PAWN_INIT_MOVABLE_COLUMN_DIFF;
         }
-        return Math.abs(rowDiff) <= AVAILABLE_ROW_MOVE_DIFF && Math.abs(columnDiff) <= availableColumnDiff;
+        return Math.abs(rowDiff) <= pieceInfo.getMovableRowDiff()  && Math.abs(columnDiff) <= movableColumnDiff;
     }
 
-    // (예외 상황) 대각선 공격 (1) 대각선이여야 하고, (2) 같은 편이 아니여야 한다.
-    public boolean validateAttack(Square target, Direction direction) {
-        if(target.getClass() == Empty.class){
-            return false;
-        }
-
-        if (attackDirections.contains(direction)) {
-            return !isSamePlayer(target);
-        }
-        return true;
+    @Override
+    public boolean validateDirection(Direction direction, Optional<Piece> target) {
+        return hasDirection(direction)
+                && (validateMoveAttack(direction, target) || validateMoveForward(direction, target));
     }
 
-    // (예외 상황) 전진일 때 empty여야 한다.
-    public boolean validateMoveForward(Square target, Direction direction) {
-        if (direction == forwardDirection) {
-            return target.getClass() == Empty.class;
-        }
-        return true;
+    public boolean validateMoveAttack(Direction direction, Optional<Piece> target) {
+        Objects.requireNonNull(direction);
+        Objects.requireNonNull(target);
+
+        return attackDirections.contains(direction)
+                && target.isPresent()
+                && !(this.isSamePlayer(target));
+    }
+
+    public boolean validateMoveForward(Direction direction, Optional<Piece> target) {
+        Objects.requireNonNull(direction);
+        return direction == forwardDirection && !target.isPresent();
     }
 }

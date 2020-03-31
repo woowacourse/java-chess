@@ -1,3 +1,4 @@
+import chess.Exceptions.NotMoveException;
 import chess.domain.status.Result;
 import chess.domain.status.Status;
 import chess.domain.ChessBoard;
@@ -15,6 +16,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,19 +30,20 @@ public class ChessBoardTest {
     void initChessBoard() {
         ChessBoard chessBoard = new ChessBoard();
         int actual = chessBoard.getChessBoard().size();
-        int expected = Column.values().length * Row.values().length;
+        int expected = 32;
         assertThat(actual).isEqualTo(expected);
     }
 
+    @DisplayName("(예외) 같은 위치로 이동")
     @Test
     void 같은_위치로_이동했을때() {
         ChessBoard chessBoard = new ChessBoard();
         Position position = Positions.of("a1");
         assertThatThrownBy(() -> chessBoard.move(position, position))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(NotMoveException.class);
     }
 
-    @DisplayName("각각의_플레이어_점수_계산_테스트")
+    @DisplayName("점수 계산")
     @ParameterizedTest
     @EnumSource(value = Player.class)
     void createStatusTest(Player player) {
@@ -51,47 +54,33 @@ public class ChessBoardTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("ChessBoard의 한 column에 같은 Player 소유의 Pawn 개수 확인")
+    @DisplayName("ChessBoard 한 column에 같은 Player 소유의 Pawn 개수 확인")
     @ParameterizedTest
     @MethodSource("generatePositions3")
-    void 폰의점수를확인하는테스트(List<Square> columnLine, Player player, int exptectd) {
+    void 폰의점수를확인하는테스트(List<Piece> columnLine, Player player, int exptectd) {
         ChessBoard chessBoard = new ChessBoard();
         assertThat(chessBoard.getPawnCountPerStage(columnLine, player)).isEqualTo(exptectd);
     }
 
     static Stream<Arguments> generatePositions3() {
-        Stream<Piece> whitePawnWhiteKing = Stream.of(new Pawn(Player.WHITE, Positions.of("a1")),
+        List<Piece> whitePawnWhiteKing = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
                 new King(Player.WHITE));
-        Stream<Piece> whitePawn3 = Stream.of(new Pawn(Player.WHITE, Positions.of("a1")),
+        List<Piece> whitePawn3 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
                 new Pawn(Player.WHITE, Positions.of("a2")),
                 new Pawn(Player.WHITE, Positions.of("a3"))
         );
-        Stream<Piece> whitePawn1BlackPawn2 = Stream.of(new Pawn(Player.WHITE, Positions.of("a1")),
+        List<Piece> whitePawn1BlackPawn2 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
                 new Pawn(Player.BLACK, Positions.of("a2")),
                 new Pawn(Player.BLACK, Positions.of("a3")));
-        Stream<Piece> whiteKingBlackQueen = Stream.of(new King(Player.WHITE), new Queen(Player.BLACK));
+        List<Piece> whiteKingBlackQueen = Arrays.asList(new King(Player.WHITE), new Queen(Player.BLACK));
 
-        List<Empty> emptyStream_Size5 = Stream.generate(Empty::getInstance)
-                .limit(5).collect(Collectors.toList());
-        List<Empty> emptyStream_Size6 = Stream.generate(Empty::getInstance)
-                .limit(6).collect(Collectors.toList());
-        return Stream.of(
-                Arguments.of(
-                        Stream.concat(whitePawnWhiteKing, emptyStream_Size6.stream())
-                                .collect(Collectors.toList()), Player.WHITE, 1
-                ), Arguments.of(
-                        Stream.concat(whitePawn3, emptyStream_Size5.stream())
-                                .collect(Collectors.toList()), Player.WHITE, 3
-                ), Arguments.of(
-                        Stream.concat(whitePawn1BlackPawn2, emptyStream_Size5.stream())
-                                .collect(Collectors.toList()), Player.WHITE, 1
-                ), Arguments.of(
-                        Stream.concat(whiteKingBlackQueen, emptyStream_Size6.stream())
-                                .collect(Collectors.toList()), Player.WHITE, 0
-                )
-        );
+        return Stream.of(Arguments.of(whitePawnWhiteKing, Player.WHITE, 1),
+                Arguments.of(whitePawn3, Player.WHITE, 3),
+                Arguments.of(whitePawn1BlackPawn2, Player.WHITE, 1),
+                Arguments.of(whiteKingBlackQueen, Player.WHITE, 0));
     }
 
+    @DisplayName("우승자 확인")
     @Test
     void 우승자_확인() {
         List<Status> statuses = new ArrayList<>();
@@ -99,6 +88,6 @@ public class ChessBoardTest {
         statuses.add(new Status(Player.BLACK, 20));
 
         Result result = new Result(statuses);
-        assertThat(result.getWinner()).isEqualTo(Player.BLACK);
+        assertThat(result.getWinners()).isEqualTo(Arrays.asList(Player.BLACK));
     }
 }

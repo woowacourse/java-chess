@@ -16,20 +16,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BishopTest {
     private final Bishop bishop = new Bishop(Player.WHITE);
 
-    @DisplayName("이동 가능한 방향 - 대각선")
+    @DisplayName("이동 가능한 방향 확인: 대각선")
     @Test
     void bishopDirectionsTest() {
-        assertThat(bishop.getDirections()).containsExactly(Direction.DIAGONAL_DOWN_LEFT,
-                Direction.DIAGONAL_DOWN_RIGHT,
-                Direction.DIAGONAL_TOP_LEFT,
-                Direction.DIAGONAL_TOP_RIGHT);
+        assertThat(bishop.getDirections()).containsExactly(Direction.NORTH_EAST,
+                Direction.SOUTH_EAST,
+                Direction.SOUTH_WEST,
+                Direction.NORTH_WEST);
     }
 
-    @DisplayName("이동 칸 수 확인: 1칸 이상 움직였을 떄")
+    @DisplayName("이동 칸 수 확인: (가능) 1칸 이상 이동")
     @ParameterizedTest
     @MethodSource("generatePositions")
     void tileSize_1(Position from, Position to) {
-        assertThat(bishop.validateMovableTileSize(from, to)).isTrue();
+        assertThat(bishop.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions() {

@@ -3,11 +3,16 @@ package chess.domain.position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
-public class Position {
+import java.util.Objects;
+
+public class Position implements Comparable<Position> {
     private final Row row;
     private final Column column;
 
     protected Position(Row row, Column column) {
+        Objects.requireNonNull(row);
+        Objects.requireNonNull(column);
+
         this.row = row;
         this.column = column;
     }
@@ -20,14 +25,12 @@ public class Position {
         return column;
     }
 
-    public static String key(Position position) {
-        return key(position.getRow(), position.getColumn());
-    }
-
-    public static String key(Row row, Column column) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(row.getValue());
-        stringBuffer.append(column.getValue());
-        return stringBuffer.toString();
+    @Override
+    public int compareTo(Position o) {
+        int rowCompare = row.compareTo(o.getRow());
+        if (rowCompare != 0) {
+            return rowCompare;
+        }
+        return column.compareTo(o.getColumn());
     }
 }

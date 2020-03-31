@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DirectionTest {
 
-    @DisplayName("Position source, target으로 어떤 방향 이동인지 확인")
+    @DisplayName("Position source와 target으로 이동 방향 확인")
     @ParameterizedTest
     @MethodSource("generatePositionsAndMoveRule")
     void 방향찾기(String sourceInput, String targetInput, Direction direction) {
@@ -27,17 +27,17 @@ public class DirectionTest {
 
     static Stream<Arguments> generatePositionsAndMoveRule() {
         return Stream.of(
-                Arguments.of("a1", "a8", Direction.TOP),
-                Arguments.of("a8", "a1", Direction.DOWN),
-                Arguments.of("a1", "h1", Direction.RIGHT),
-                Arguments.of("h1", "a1", Direction.LEFT),
-                Arguments.of("a8", "h1", Direction.DIAGONAL_DOWN_RIGHT),
-                Arguments.of("h8", "a1", Direction.DIAGONAL_DOWN_LEFT),
-                Arguments.of("h1", "a8", Direction.DIAGONAL_TOP_LEFT),
-                Arguments.of("a1", "h8", Direction.DIAGONAL_TOP_RIGHT));
+                Arguments.of("a1", "a8", Direction.NORTH),
+                Arguments.of("a8", "a1", Direction.SOUTH),
+                Arguments.of("a1", "h1", Direction.EAST),
+                Arguments.of("h1", "a1", Direction.WEST),
+                Arguments.of("a8", "h1", Direction.SOUTH_EAST),
+                Arguments.of("h8", "a1", Direction.SOUTH_WEST),
+                Arguments.of("h1", "a8", Direction.NORTH_WEST),
+                Arguments.of("a1", "h8", Direction.NORTH_EAST));
     }
 
-    @DisplayName( "top/down 방향 이동 시, Postition source와 target 사이의 position 확인")
+    @DisplayName( "Postition source와 target 사이의 route: top, down")
     @ParameterizedTest
     @MethodSource("generateTopDownPositions")
     void topDownTest(String sourceInput, String targetValue, Direction direction) {
@@ -58,11 +58,11 @@ public class DirectionTest {
 
     static Stream<Arguments> generateTopDownPositions() {
         return Stream.of(
-                Arguments.of("a1", "a8", Direction.TOP),
-                Arguments.of("a8", "a1", Direction.DOWN));
+                Arguments.of("a1", "a8", Direction.NORTH),
+                Arguments.of("a8", "a1", Direction.SOUTH));
     }
 
-    @DisplayName( "left/right 방향 이동 시, Postition source와 target 사이의 position 확인")
+    @DisplayName( "Postition source와 target 사이의 routes: left, right")
     @ParameterizedTest
     @MethodSource("generateLeftRightPositions")
     void leftRightTest(String sourceInput, String targetValue, Direction direction) {
@@ -83,11 +83,11 @@ public class DirectionTest {
 
     static Stream<Arguments> generateLeftRightPositions() {
         return Stream.of(
-                Arguments.of("a1", "h1", Direction.LEFT),
-                Arguments.of("h1", "a1", Direction.RIGHT));
+                Arguments.of("a1", "h1", Direction.WEST),
+                Arguments.of("h1", "a1", Direction.EAST));
     }
 
-    @DisplayName( "'\' 대각선 방향 이동 시, Postition source와 target 사이의 position 확인")
+    @DisplayName( "Postition source와 target 사이의 routes: '\' 대각선")
     @ParameterizedTest
     @MethodSource("generateTopLeftDownRightPositions")
     void diagonalTopLeftDownRightTest(String sourceInput, String targetValue, Direction direction) {
@@ -108,11 +108,11 @@ public class DirectionTest {
 
     static Stream<Arguments> generateTopLeftDownRightPositions() {
         return Stream.of(
-                Arguments.of("a1", "h8", Direction.DIAGONAL_TOP_RIGHT),
-                Arguments.of("h8", "a1", Direction.DIAGONAL_DOWN_LEFT));
+                Arguments.of("a1", "h8", Direction.NORTH_EAST),
+                Arguments.of("h8", "a1", Direction.SOUTH_WEST));
     }
 
-    @DisplayName( "'/' 대각선 방향 이동 시, Postition source와 target 사이의 position 확인")
+    @DisplayName( "Postition source와 target 사이의 routes: / 대각선")
     @ParameterizedTest
     @MethodSource("generateTopRightDownLeftPositions")
     void diagonalTopRightDownLeftTest(String sourceInput, String targetValue, Direction direction) {
@@ -133,7 +133,7 @@ public class DirectionTest {
 
     static Stream<Arguments> generateTopRightDownLeftPositions() {
         return Stream.of(
-                Arguments.of("h1", "a8", Direction.DIAGONAL_TOP_LEFT),
-                Arguments.of("a8", "h1", Direction.DIAGONAL_DOWN_RIGHT));
+                Arguments.of("h1", "a8", Direction.NORTH_WEST),
+                Arguments.of("a8", "h1", Direction.SOUTH_EAST));
     }
 }

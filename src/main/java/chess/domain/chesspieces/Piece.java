@@ -3,33 +3,45 @@ package chess.domain.chesspieces;
 import chess.domain.Player;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
+import chess.domain.position.component.Column;
+import chess.domain.position.component.Row;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-public abstract class Piece extends Square {
+public abstract class Piece {
     private final Player player;
-    private final PieceInfo pieceInfo;
+    protected final PieceInfo pieceInfo;
 
     protected List<Direction> directions = new ArrayList<>();
 
     public Piece(Player player, PieceInfo pieceInfo) {
-        super(pieceInfo.getName(player));
-
         Objects.requireNonNull(player);
+        Objects.requireNonNull(pieceInfo);
+
         this.player = player;
         this.pieceInfo = pieceInfo;
     }
 
-    abstract boolean validateMovableTileSize(Position from, Position to);
+    public boolean validateTileSize(Position from, Position to){
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
 
-    public boolean hasDirection(Direction direction) {
+        int rowDiff = Row.getDiff(from.getRow(), to.getRow());
+        int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
+        return Math.abs(rowDiff) <= pieceInfo.getMovableRowDiff()
+                && Math.abs(columnDiff) <= pieceInfo.getMovableColumnDiff();
+    }
+
+    public boolean validateDirection(Direction direction, Optional<Piece> target) {
+        return hasDirection(direction);
+    };
+
+    protected final boolean hasDirection(Direction direction) {
         return directions.contains(direction);
     }
 
     public List<Direction> getDirections() {
-        return directions;
+        return Collections.unmodifiableList(directions);
     }
 
     public Player getPlayer() {
@@ -40,23 +52,22 @@ public abstract class Piece extends Square {
         return pieceInfo.getScore();
     }
 
-    @Override
+
     public boolean movable(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
+
         return hasDirection(Direction.getDirection(from, to))
-                && validateMovableTileSize(from, to);
+                && validateTileSize(from, to);
     }
 
-    @Override
-    public boolean isSamePlayer(Square target) {
-        if (target.getClass() == Empty.class) {
-            return false;
-        }
-        return player == ((Piece) target).getPlayer();
+    public boolean isSamePlayer(Piece target) {
+        Objects.requireNonNull(target);
+
+        return  player == target.getPlayer();
     }
 
-    public PieceInfo getPieceInfo() {
-        return pieceInfo;
+    public String getDisplay() {
+        return pieceInfo.getName(player);
     }
 }

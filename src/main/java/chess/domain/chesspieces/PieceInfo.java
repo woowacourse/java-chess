@@ -1,39 +1,55 @@
 package chess.domain.chesspieces;
 
-import chess.domain.ChessBoard;
+import chess.Exceptions.IllegalPlayerException;
 import chess.domain.Player;
+import chess.domain.position.component.Column;
+import chess.domain.position.component.Row;
+
+import java.util.Objects;
 
 public enum PieceInfo {
-    KING("K", "k", 0),
-    QUEEN("Q", "q", 9),
-    BISHOP("B", "b", 3),
-    ROOK("R", "r", 5),
-    KNIGHT("N", "n", 2.5),
-    PAWN("P", "p", 1);
+    KING("K", 0, 1, 1),
+    QUEEN("Q", 9, Row.values().length, Column.values().length),
+    BISHOP("B",  3, Row.values().length, Column.values().length),
+    ROOK("R", 5, Row.values().length, Column.values().length),
+    KNIGHT("N",  2.5,2, 2),
+    PAWN("P",  1, 1, 1);
 
-    public static final double PAWN_DIFF = 0.5;
+    public static final double PAWN_SCORE_DIFF = 0.5;
+    public static final int PAWN_INIT_MOVABLE_COLUMN_DIFF = 2;
 
-    private final String blackName;
-    private final String whiteName;
+    private final String name;
     private final double score;
+    private final int movableRowDiff;
+    private final int movableColumnDiff;
 
-    PieceInfo(String blackName, String whiteName, double score) {
-        this.blackName = blackName;
-        this.whiteName = whiteName;
+    PieceInfo(String name, double score, int movableRowDiff, int movableColumnDiff) {
+        this.name = name;
         this.score = score;
+        this.movableRowDiff = movableRowDiff;
+        this.movableColumnDiff = movableColumnDiff;
     }
 
-    public String getName(Player player) {
+    public final String getName(Player player) {
+        Objects.requireNonNull(player);
         if (player == Player.WHITE){
-            return this.whiteName;
+            return name.toLowerCase();
         }
         if (player == Player.BLACK) {
-            return this.blackName;
+            return name.toUpperCase();
         }
-        throw new IllegalArgumentException("처리할 수 없는 사용자입니다.");
+        throw new IllegalPlayerException();
     }
 
     public double getScore() {
         return score;
+    }
+
+    public int getMovableRowDiff() {
+        return movableRowDiff;
+    }
+
+    public int getMovableColumnDiff() {
+        return movableColumnDiff;
     }
 }

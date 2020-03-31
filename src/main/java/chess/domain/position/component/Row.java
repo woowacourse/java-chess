@@ -29,14 +29,14 @@ public enum Row {
     }
 
     public static Row getSmaller(Row row1, Row row2) {
-        if (row1.ordinal() < row2.ordinal()) {
+        if (row1.compareTo(row2) < 0) {
             return row1;
         }
         return row2;
     }
 
     public static Row getBigger(Row row1, Row row2) {
-        if (row1.ordinal() > row2.ordinal()) {
+        if (row1.compareTo(row2) > 0) {
             return row1;
         }
         return row2;

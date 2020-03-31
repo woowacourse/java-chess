@@ -16,21 +16,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RookTest {
     private final Rook rook = new Rook(Player.WHITE);
 
-    @DisplayName("이동 가능한 방향 - 상하좌우")
+    @DisplayName("이동 가능한 방향: 상하좌우")
     @Test
     void kingDirectionsTest() {
         assertThat(rook.getDirections()).containsExactly(
-                Direction.TOP,
-                Direction.DOWN,
-                Direction.LEFT,
-                Direction.RIGHT);
+                Direction.NORTH_EAST,
+                Direction.SOUTH_EAST,
+                Direction.SOUTH_WEST,
+                Direction.NORTH_WEST);
     }
 
-    @DisplayName("이동 칸 수 확인: 1칸 이상 움직였을 떄")
+    @DisplayName("이동 칸 수: (가능) 1칸 이상")
     @ParameterizedTest
     @MethodSource("generatePositions")
     void tileSize_1(Position from, Position to) {
-        assertThat(rook.validateMovableTileSize(from, to)).isTrue();
+        assertThat(rook.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions() {
