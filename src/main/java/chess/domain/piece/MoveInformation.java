@@ -108,4 +108,11 @@ public class MoveInformation {
         }
         return from.isY(Y.SEVEN);
     }
+
+    public boolean isEnemyOnEnd() {
+        if (!board.containsKey(to)) {
+            return false;
+        }
+        return !board.get(to).isSameTeam(board.get(from));
+    }
 }

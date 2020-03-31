@@ -37,7 +37,7 @@ public interface MoveStrategy {
         if (moveInformation.isEndOnDiagonalOfStart()) {
             return moveInformation.isMoveForward()
                 && moveInformation.isEndAdjacentToStart()
-                && !moveInformation.isSameTeamPlacedOnEnd();
+                && moveInformation.isEnemyOnEnd();
         }
         if (moveInformation.isStraightMoveBy(1) && moveInformation.isMoveForward()) {
             return !moveInformation.doAnyPieceExistOnEnd();
