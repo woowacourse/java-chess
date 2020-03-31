@@ -33,7 +33,7 @@ class ChessServiceTest {
 	@ValueSource(strings = {"a3 a5", "a4 a5"})
 	void move_Fail_When_SelectNotAlly(String input) {
 		assertThatIllegalArgumentException()
-			.isThrownBy(() -> ChessService.of(board, Team.WHITE).move(MoveInfo.of(input)))
+			.isThrownBy(() -> ChessService.of(board).move(MoveInfo.of(input), Team.WHITE))
 			.withMessage("아군 기물의 위치가 아닙니다.");
 	}
 }

@@ -10,7 +10,7 @@ public class ConsoleUIChessApplication {
 	public static void main(String[] args) {
 		Board initial = BoardFactory.create();
 		Team first = Team.WHITE;
-		ChessService chessService = ChessService.of(initial, first);
+		ChessService chessService = ChessService.of(initial);
 
 		ChessController controller = new ChessController(chessService, initial, first);
 

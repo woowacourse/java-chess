@@ -63,10 +63,10 @@ public class ChessController {
 	}
 
 	private void move(String input) {
-		service.move(MoveInfo.of(input));
+		service.move(MoveInfo.of(input), team);
+		team = team.next();
 
 		OutputView.printBoard(board.getBoard());
-		team = team.next();
 
 		if (board.isEnd()) {
 			exit();

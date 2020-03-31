@@ -9,29 +9,27 @@ import chess.domain.position.Position;
 
 public class ChessService {
 	private final Board board;
-	private Team team;
 
-	private ChessService(Board board, Team team) {
+	private ChessService(Board board) {
 		this.board = board;
-		this.team = team;
 	}
 
-	public static ChessService of(Board board, Team team) {
-		return new ChessService(board, team);
+	public static ChessService of(Board board) {
+		return new ChessService(board);
 	}
 
-	public void move(MoveInfo moveInfo) {
+	public void move(MoveInfo moveInfo, Team team) {
 		Position from = moveInfo.getFrom();
 		Position to = moveInfo.getTo();
 
 		Piece piece = board.get(from);
-		validateMove(from, to);
+		validateMove(from, to, team);
 
 		piece.moveTo(to);
 		board.update(from, to);
 	}
 
-	private void validateMove(Position from, Position to) {
+	private void validateMove(Position from, Position to, Team team) {
 		Piece piece = board.get(from);
 		Piece target = board.get(to);
 
