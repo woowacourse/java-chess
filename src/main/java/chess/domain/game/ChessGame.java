@@ -31,7 +31,7 @@ public class ChessGame {
 		return pieces.getAliveKingColor();
 	}
 
-	public Pieces getPieces() {
-		return pieces;
+	public Board createBoard() {
+		return new Board(pieces);
 	}
 }

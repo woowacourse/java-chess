@@ -28,7 +28,7 @@ class TurnTest {
 	@Test
 	void change_when_white_change_to_black() {
 		Turn turn = new Turn(Color.WHITE);
-		turn.change();
+		turn = turn.change();
 		assertEquals(turn.getColor(), Color.BLACK);
 	}
 

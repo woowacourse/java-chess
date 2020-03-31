@@ -4,7 +4,7 @@ import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.TestPiecesFactory;
 import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
-import chess.domain.position.Positions;
+import chess.domain.position.positions.Positions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
