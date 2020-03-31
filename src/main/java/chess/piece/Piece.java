@@ -38,11 +38,11 @@ public abstract class Piece {
 	}
 
 	public boolean isKing() {
-		return this instanceof King;
+		return false;
 	}
 
 	public boolean isPawn() {
-		return this instanceof Pawn;
+		return false;
 	}
 
 	public abstract List<Position> findMoveModeTrace(Position from, Position to);

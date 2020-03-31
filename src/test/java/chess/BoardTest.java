@@ -4,12 +4,8 @@ import static chess.position.File.*;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,5 +41,13 @@ public class BoardTest {
 		Position to = Position.of(A, TWO);
 		board.move(from, to);
 		assertThat(board.getPiece(to)).isEqualTo(rook);
+	}
+
+	@DisplayName("점수 계산 테스트")
+	@Test
+	void calculateScoreTest() {
+		board.start();
+		Map<Team, Double> status = board.status();
+		assertThat(status).containsExactly(entry(Team.BLACK, 38.0), entry(Team.WHITE, 38.0));
 	}
 }

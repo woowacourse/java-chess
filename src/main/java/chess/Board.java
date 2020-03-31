@@ -3,7 +3,9 @@ package chess;
 import static chess.piece.Team.*;
 import static chess.position.File.*;
 import static chess.position.Rank.*;
+import static java.util.stream.Collectors.*;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +43,7 @@ public class Board {
 	}
 
 	public void start() {
-		pieces.keySet().forEach(pieces::remove);
+		pieces.clear();
 		initChessBoard(EIGHT, BLACK, SEVEN);
 		initChessBoard(ONE, WHITE, TWO);
 	}
@@ -61,8 +63,20 @@ public class Board {
 	}
 
 	public Map<Team, Double> status() {
-		return pieces.values().stream()
-			.collect(Collectors.groupingBy(Piece::getTeam, HashMap::new, Collectors.summingDouble(Piece::getScore)));
+		HashMap<Team, Double> collect = pieces.values().stream()
+			.collect(groupingBy(Piece::getTeam, HashMap::new, summingDouble(Piece::getScore)));
+
+		for (File file : File.values()) {
+			Map<Team, Long> cnt = Arrays.stream(Rank.values())
+				.map(rank -> pieces.get(Position.of(file, rank)))
+				.filter(piece -> piece != null && piece.isPawn())
+				.collect(groupingBy(Piece::getTeam, counting()));
+
+			cnt.keySet().stream()
+				.filter(team -> cnt.get(team) == 1)
+				.forEach(team -> collect.put(team, collect.get(team) + 0.5));
+		}
+		return collect;
 	}
 
 	public void move(Position from, Position to) {

@@ -26,6 +26,11 @@ public class King extends Piece {
 	}
 
 	@Override
+	public boolean isKing() {
+		return true;
+	}
+
+	@Override
 	public double getScore() {
 		return 0;
 	}
