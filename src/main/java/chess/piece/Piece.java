@@ -42,6 +42,10 @@ public abstract class Piece {
 		return this instanceof Pawn;
 	}
 
+	public boolean isKing() {
+		return this instanceof King;
+	}
+
 	@Override
 	public String toString() {
 		if (team == Team.BLACK) {

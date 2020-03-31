@@ -17,26 +17,7 @@ class LocationTest {
 		Location starting = Location.of('c', 1);
 		Location destination = Location.of('c', 7);
 
-		assertThat(starting.isSameCol(destination)).isTrue();
-	}
-
-	@DisplayName("로케이션이 목적지와 대각선에 있는지 확인")
-	@Test
-	void isDiagonal() {
-		Location starting = Location.of('c', 1);
-		Location destination = Location.of('b', 2);
-
-		assertThat(starting.isDiagonal(destination)).isTrue();
-	}
-
-	@DisplayName("로케이션이 목적지와 가로, 세로 직선범위인지 확인")
-	@ParameterizedTest
-	@CsvSource(value = {"4,c", "3,d", "2,c", "3,b"})
-	void isStraight(int row, char column) {
-		Location starting = Location.of('c', 3);
-		Location destination = Location.of(column, row);
-
-		assertThat(starting.isStraight(destination)).isTrue();
+		assertThat(starting.isSameColumn(destination)).isTrue();
 	}
 
 	@DisplayName("해당 로케이션이 폰의 초기위치인지 확인")
@@ -67,6 +48,6 @@ class LocationTest {
 	void isVertical(int row, char column) {
 		Location starting = Location.of('c', 3);
 		Location destination = Location.of(column, row);
-		starting.isSameCol(destination);
+		starting.isSameColumn(destination);
 	}
 }

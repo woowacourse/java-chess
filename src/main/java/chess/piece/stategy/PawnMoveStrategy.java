@@ -20,28 +20,16 @@ public class PawnMoveStrategy extends MoveStrategy {
 		}
 	}
 
-	// todo: 폰의 움직임 + 처음 움직임
 	@Override
 	void checkStrategy(Location now, Location destination, boolean destinationHasEnemy) {
-		// 폰이 대각선일때 && 적이 true
-		if (isDiagonal() && destinationHasEnemy) {
-
+		if (now.isDiagonal(destination) && !destinationHasEnemy) {
+			throw new IllegalArgumentException("폰의 대각선 이동은 적이 있어야 가능합니다.");
 		}
-		// 폰이 직진일때 && 적이 false
-		if (isStraight() && !destinationHasEnemy) {
-
+		if (now.isStraight(destination) && destinationHasEnemy) {
+			throw new IllegalArgumentException("폰의 직선 이동은 적이 없어야 가능합니다.");
 		}
-		if(now.isInitialPawnLocation())
-	}
-
-	private boolean isStraight() {
-		return pawnDirection.contains(Direction.SOUTH)
-			|| pawnDirection.contains(Direction.SOUTH_SOUTH)
-			|| pawnDirection.contains(Direction.NORTH)
-			|| pawnDirection.contains(Direction.NORTH_NORTH);
-	}
-
-	private boolean isDiagonal() {
-		return !isStraight();
+		if (!now.isInitialPawnLocation(team) && now.isTwoSpaceMove(destination)) {
+			throw new IllegalArgumentException("폰은 초기위치가 아니면 2칸 전진할 수 없습니다.");
+		}
 	}
 }

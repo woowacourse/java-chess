@@ -1,5 +1,7 @@
 package chess.board;
 
+import static java.lang.Math.*;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -101,7 +103,6 @@ public class Location {
 				Column nextColumn = column.add(direction.getXDegree() * weight);
 				Row nextRow = row.add(direction.getYDegree() * weight);
 				nextLocation = Location.of(nextColumn, nextRow);
-				System.out.println(nextLocation);
 			} catch (IllegalArgumentException ignore) {
 			}
 			if (nextLocation == destination) {
@@ -111,16 +112,22 @@ public class Location {
 		return false;
 	}
 
-	@Override
-	public String toString() {
-		return "Location{" +
-			"column=" + column +
-			", row=" + row +
-			'}';
+	public boolean isSameColumn(Location other) {
+		return column == other.column;
 	}
 
-	public boolean isSameCol(Location other) {
-		return column == other.column;
+	public boolean isDiagonal(Location destination) {
+		return abs(column.minus(destination.column)) == abs(row.minus(destination.row));
+	}
+
+	public boolean isStraight(Location destination) {
+		return isSameColumn(destination) || (row == destination.row);
+	}
+
+	public boolean isTwoSpaceMove(Location destination) {
+		int columnAbs = abs(column.minus(destination.column));
+		int rowAbs = abs(row.minus(destination.row));
+		return columnAbs == 2 || rowAbs == 2;
 	}
 
 	private static class LocationCache {

@@ -9,6 +9,10 @@ public class ChessController {
 		OutputView.printInformation();
 		GameManager gameManager = new GameManager(new PieceFactory().createPieces());
 
+		// Command Interface
+		// 	무브의 생성자는 아규먼트 2개로
+		//
+
 		while (gameManager.isRunning()) {
 			String command = InputView.inputStartCommand();
 			if ("start".equals(command)) {
@@ -36,6 +40,7 @@ public class ChessController {
 	}
 
 	private static void movePiece(String command, GameManager gameManager) {
+
 		String commandNow = command.split(" ")[1];
 		String commandDestination = command.split(" ")[2];
 		Location now = Location.of(commandNow);
@@ -43,5 +48,6 @@ public class ChessController {
 
 		gameManager.movePiece(now, destination);
 		OutputView.printBoard(gameManager);
+
 	}
 }

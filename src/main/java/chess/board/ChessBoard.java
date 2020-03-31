@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.gamestate.GameState;
-import chess.piece.King;
 import chess.piece.Piece;
 import chess.result.Score;
 import chess.team.Team;
@@ -37,13 +36,13 @@ public class ChessBoard {
 
 		checkLocationSameTeam(piece, destination);
 		checkObstacleJumper(piece, now, destination);
-		piece.checkStrategy(now, destination, isDestinationLocationEnemy(destination, piece));
+		piece.checkStrategy(now, destination, existEnemyInLocation(destination, piece));
 	}
 
-	private boolean isDestinationLocationEnemy(Location destination, Piece piece) {
+	private boolean existEnemyInLocation(Location location, Piece piece) {
 		boolean destinationEnemy = false;
-		if (board.containsKey(destination)) {
-			destinationEnemy = board.get(destination).isNotSameTeam(piece);
+		if (board.containsKey(location)) {
+			destinationEnemy = board.get(location).isNotSameTeam(piece);
 		}
 		return destinationEnemy;
 	}
@@ -95,7 +94,7 @@ public class ChessBoard {
 		for (Location location : sameTeamPawns) {
 			int count = 0;
 			for (Location targetLocation : sameTeamPawns) {
-				if (targetLocation.isSameCol(location)) {
+				if (targetLocation.isSameColumn(location)) {
 					count++;
 				}
 			}
@@ -109,8 +108,9 @@ public class ChessBoard {
 
 	public boolean hasTwoKings() {
 		long kingCount = board.values().stream()
-			.filter(piece -> piece instanceof King)
+			.filter(Piece::isKing)
 			.count();
+
 		return kingCount == 2;
 	}
 
