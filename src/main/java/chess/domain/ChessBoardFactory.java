@@ -29,15 +29,6 @@ public class ChessBoardFactory {
 		return new ChessBoard(chessBoard);
 	}
 
-	public static Board createBoard() {
-		List<Piece> chessBoard = new ArrayList<>();
-		chessBoard.addAll(createNoble(Side.BLACK));
-		chessBoard.addAll(createPawn(Side.BLACK));
-		chessBoard.addAll(createNoble(Side.WHITE));
-		chessBoard.addAll(createPawn(Side.WHITE));
-		return new Board(chessBoard);
-	}
-
 	public static List<Piece> createPawn(Side side) {
 		return Arrays.stream(Column.values())
 				.map(col -> new Pawn(side, new Position(col, side.getInitPawnRow())))

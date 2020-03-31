@@ -12,7 +12,7 @@ public class Running extends Starting {
 	@Override
 	public State move(Position source, Position target) {
 		try {
-			chessBoard.move(source, target, turn);
+			chessBoard.move(source, target);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new Running(chessBoard, turn);

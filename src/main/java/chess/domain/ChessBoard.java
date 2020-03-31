@@ -3,7 +3,6 @@ package chess.domain;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -14,66 +13,42 @@ public class ChessBoard {
 	private List<Piece> pieces;
 
 	public ChessBoard(List<Piece> pieces) {
-		validateNullAndEmpty(pieces);
 		this.pieces = pieces;
 	}
 
-	private void validateNullAndEmpty(List<Piece> pieces) {
-		if (Objects.isNull(pieces) || pieces.isEmpty()) {
-			throw new IllegalArgumentException("체스판엔 null이나 빈 값이 올 수 없습니다.");
-		}
-	}
-
-	public void move(Position source, Position target, Side turn) {
+	public void move(Position source, Position target) {
 		Piece sourcePiece = findPieceBy(source);
+		validateBlock(source, target);
+		validateAction(sourcePiece, target);
 
-		validateTurn(sourcePiece, turn);
-		validateMove(source, target);
-		checkIfPawn(sourcePiece, target);
 		pieces.removeIf(piece -> piece.isSamePosition(target));
 		sourcePiece.move(target);
 	}
 
-	private void checkIfPawn(Piece sourcePiece, Position target) {
-		if (sourcePiece.isPawn() && sourcePiece.canMove(target) && isPresentPiece(target)) {
-			throw new IllegalArgumentException("폰은 앞에 있는 말을 공격할 수 없습니다.");
-		}
-	}
-
-	private void validateTurn(Piece sourcePiece, Side turn) {
-		if (!sourcePiece.isSameSide(turn)) {
-			throw new IllegalArgumentException("본인의 말만 움직일 수 있습니다.");
-		}
-	}
-
-	private void validateMove(Position source, Position target) {
-		if (canPawnAttack(source, target)) {
+	private void validateAction(Piece sourcePiece, Position target) {
+		if (isPresent(target)) {
+			validateAttack(sourcePiece, findPieceBy(target));
 			return;
 		}
-		if (findPieceBy(source).canNotMove(target) || isBlock(source, target) || canNotAttack(source, target)) {
+		validateMove(sourcePiece, target);
+	}
+
+	private void validateAttack(Piece sourcePiece, Piece targetPiece) {
+		if (sourcePiece.canNotAttack(targetPiece)) {
 			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
 		}
-
 	}
 
-	private boolean canPawnAttack(Position source, Position target) {
-		Piece sourcePiece = findPieceBy(source);
-		Piece targetPiece = findPieceBy(target);
-
-		return sourcePiece.isPawn() && source.isInDiagonal(target) && source.isInDistance(1,
-				target) && sourcePiece.isForwardAttack(
-				target) && isPresentPiece(target) && !sourcePiece.isSameSide(targetPiece);
+	private void validateMove(Piece sourcePiece, Position target) {
+		if (sourcePiece.canNotMove(target)) {
+			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+		}
 	}
 
-	private Piece findPieceBy(Position position) {
-		return pieces.stream()
-				.filter(piece -> piece.isSamePosition(position))
-				.findAny()
-				.orElseThrow(() -> new IllegalArgumentException("입력에 해당하는 말이 없습니다."));
-	}
-
-	private boolean canNotAttack(Position source, Position target) {
-		return isPresentPiece(target) && findPieceBy(source).isSameSide(findPieceBy(target));
+	private void validateBlock(Position source, Position target) {
+		if (isBlock(source, target)) {
+			throw new IllegalArgumentException("이동하려는 경로가 막혀있습니다.");
+		}
 	}
 
 	private boolean isBlock(Position source, Position target) {
@@ -81,7 +56,14 @@ public class ChessBoard {
 				.anyMatch(piece -> piece.isBlock(source, target));
 	}
 
-	private boolean isPresentPiece(Position position) {
+	public Piece findPieceBy(Position position) {
+		return pieces.stream()
+				.filter(piece -> piece.isSamePosition(position))
+				.findAny()
+				.orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
+	}
+
+	public boolean isPresent(Position position) {
 		return pieces.stream()
 				.anyMatch(piece -> piece.isSamePosition(position));
 	}

@@ -35,8 +35,8 @@ public class TestFixture {
 	public static Queen QUEEN_D4 = new Queen(WHITE, D4);
 	public static Rook ROOK_D4 = new Rook(WHITE, D4);
 
-	public static Board BishopTestingBoard() {
-		return new Board(Arrays.asList(
+	public static ChessBoard BISHOP_TEST_BOARD() {
+		return new ChessBoard(Arrays.asList(
 				BISHOP_D4,
 				new Pawn(WHITE, C5),
 				new Pawn(WHITE, E3),
@@ -44,10 +44,17 @@ public class TestFixture {
 		));
 	}
 
-	public static Board PawnTestingBoard() {
-		return new Board(Arrays.asList(
+	public static ChessBoard PAWN_TEST_BOARD() {
+		return new ChessBoard(Arrays.asList(
 				PAWN_D4,
 				new Pawn(WHITE, D5)
+		));
+	}
+
+	public static ChessBoard ATTACK_TEST_BOARD() {
+		return new ChessBoard(Arrays.asList(
+				ROOK_D4,
+				new Rook(BLACK, D5)
 		));
 	}
 }
