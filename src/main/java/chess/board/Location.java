@@ -52,6 +52,10 @@ public class Location {
 		return of(String.format("%c%d", column.getSymbol(), row.getNumber()));
 	}
 
+	public static Location of(Location now) {
+		return of(now.column, now.row);
+	}
+
 	public boolean isSameCol(Location other) {
 		return this.column == other.column;
 	}

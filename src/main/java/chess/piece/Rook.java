@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.board.Location;
+import chess.piece.stategy.RookMoveStrategy;
 import chess.team.Team;
 
 public class Rook extends Piece {
@@ -12,7 +12,7 @@ public class Rook extends Piece {
 	private static final double score = 5;
 
 	private Rook(Team team) {
-		super(team);
+		super(team, new RookMoveStrategy());
 	}
 
 	public static Rook of(Team team) {
@@ -22,13 +22,13 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public boolean checkRange(Location now, Location after) {
-		return now.isStraight(after);
+	public double getScore() {
+		return score;
 	}
 
 	@Override
-	public double getScore() {
-		return score;
+	public boolean isNotJumper() {
+		return true;
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.board.Location;
+import chess.piece.stategy.PawnMoveStrategy;
 import chess.team.Team;
 
 public class Pawn extends Piece {
@@ -12,7 +12,7 @@ public class Pawn extends Piece {
 	private static final double score = 1;
 
 	private Pawn(Team team) {
-		super(team);
+		super(team, new PawnMoveStrategy());
 	}
 
 	public static Pawn of(Team team) {
@@ -22,30 +22,13 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public boolean checkRange(Location now, Location after) {
-		return false;
-	}
-
-	@Override
-	public boolean checkObstacle(Map<Location, Piece> board, Location now, Location destination) {
-		return !isMovable(board, now, destination);
-	}
-
-	private boolean isMovable(Map<Location, Piece> board, Location now, Location destination) {
-		// 대각선 방향 && 목적지에 피스가 있는경우
-		if (now.isDiagonal(destination) && board.containsKey(destination)) {
-			Piece maybeEnemyPiece = board.get(destination);
-			return maybeEnemyPiece.isSameTeam(team.ofOpposingTeam());
-		}
-
-		Location nextLocation = now.calculateNextLocation(destination, 1);
-		return (!board.containsKey(destination) && !board.containsKey(nextLocation))
-			&& now.isSameCol(destination);
-	}
-
-	@Override
 	public double getScore() {
 		return score;
+	}
+
+	@Override
+	public boolean isNotJumper() {
+		return true;
 	}
 
 	@Override

@@ -23,7 +23,6 @@ public class ChessBoard {
 		this.board = pieces;
 	}
 
-	// todo : canMvoe, hasObstacle에서 에러나게 변경
 	public void move(Location now, Location destination) {
 		validateLocation(now, destination);
 		Piece piece = board.remove(now);
@@ -32,15 +31,38 @@ public class ChessBoard {
 
 	private void validateLocation(Location now, Location destination) {
 		if (!board.containsKey(now)) {
-			throw new IllegalArgumentException("빈칸을 이동했습니다.");
+			throw new IllegalArgumentException("출발지가 빈칸입니다.");
 		}
 		Piece piece = board.get(now);
-		checkSameTeam(piece, destination);
-		piece.checkRange(now, destination);
-		piece.checkObstacle(board, now, destination);
+
+		checkLocationSameTeam(piece, destination);
+		checkObstacleJumper(piece, now, destination);
+		piece.checkStrategy(now, destination, isDestinationLocationEnemy(destination, piece));
 	}
 
-	private void checkSameTeam(Piece piece, Location destination) {
+	private boolean isDestinationLocationEnemy(Location destination, Piece piece) {
+		boolean destinationEnemy = false;
+		if (board.containsKey(destination)) {
+			destinationEnemy = board.get(destination).isNotSameTeam(piece);
+		}
+		return destinationEnemy;
+	}
+
+	private void checkObstacleJumper(Piece piece, Location now, Location destination) {
+		boolean obstacle = false;
+		Location nextLocation = now.calculateNextLocation(destination, 1);
+		for (int weight = 2; weight <= 8 && nextLocation != destination; weight++) {
+			if (board.containsKey(nextLocation)) {
+				obstacle = true;
+			}
+			nextLocation = now.calculateNextLocation(destination, weight);
+		}
+		if (obstacle && piece.isNotJumper()) {
+			throw new IllegalArgumentException("경로 사이에 피스가 있습니다.");
+		}
+	}
+
+	private void checkLocationSameTeam(Piece piece, Location destination) {
 		boolean sameTeam = false;
 		if (board.containsKey(destination)) {
 			Piece other = board.get(destination);

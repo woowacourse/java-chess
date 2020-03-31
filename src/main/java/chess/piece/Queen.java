@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.board.Location;
+import chess.piece.stategy.QueenMoveStrategy;
 import chess.team.Team;
 
 public class Queen extends Piece {
@@ -12,7 +12,7 @@ public class Queen extends Piece {
 	private static final double score = 9;
 
 	private Queen(Team team) {
-		super(team);
+		super(team, new QueenMoveStrategy());
 	}
 
 	public static Queen of(Team team) {
@@ -22,13 +22,13 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public boolean checkRange(Location now, Location after) {
-		return false;
+	public double getScore() {
+		return score;
 	}
 
 	@Override
-	public double getScore() {
-		return score;
+	public boolean isNotJumper() {
+		return true;
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.board.Location;
+import chess.piece.stategy.KnightMoveStrategy;
 import chess.team.Team;
 
 public class Knight extends Piece {
@@ -12,7 +12,7 @@ public class Knight extends Piece {
 	private static final double score = 2.5;
 
 	private Knight(Team team) {
-		super(team);
+		super(team, new KnightMoveStrategy());
 	}
 
 	public static Knight of(Team team) {
@@ -22,23 +22,18 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public boolean checkRange(Location now, Location after) {
-		return false;
-	}
-
-	@Override
 	public double getScore() {
 		return score;
 	}
 
 	@Override
-	protected char getName() {
-		return name;
+	public boolean isNotJumper() {
+		return false;
 	}
 
 	@Override
-	public boolean checkObstacle(Map<Location, Piece> board, Location now, Location destination) {
-		return false;
+	protected char getName() {
+		return name;
 	}
 
 	private static class KnightCache {

@@ -1,20 +1,23 @@
 package chess.piece;
 
-import java.util.Map;
+import java.util.Objects;
 
 import chess.board.Location;
+import chess.piece.stategy.MoveStrategy;
 import chess.team.Team;
 
 public abstract class Piece {
 	protected final Team team;
+	protected final MoveStrategy moveStrategy;
 
-	public Piece(Team team) {
+	public Piece(Team team, MoveStrategy moveStrategy) {
 		this.team = team;
+		this.moveStrategy = moveStrategy;
 	}
 
-	public abstract boolean checkRange(Location now, Location after);
-
 	public abstract double getScore();
+
+	public abstract boolean isNotJumper();
 
 	protected abstract char getName();
 
@@ -23,20 +26,16 @@ public abstract class Piece {
 	}
 
 	public boolean isSameTeam(Piece piece) {
+		Objects.requireNonNull(piece, "piece가 존재하지않습니다.");
 		return piece.team == this.team;
 	}
 
-	public boolean checkObstacle(Map<Location, Piece> board, Location now, Location destination) {
-		for (int weight = 1; ; weight++) {
-			Location nowLocation = now.calculateNextLocation(destination, weight);
-			if (nowLocation.equals(destination)) {
-				break;
-			}
-			if (board.containsKey(nowLocation)) {
-				return true;
-			}
-		}
-		return false;
+	public void checkStrategy(Location now, Location destination, boolean destinationLocationEnemy) {
+		moveStrategy.checkMove(now, destination, destinationLocationEnemy);
+	}
+
+	public boolean isNotSameTeam(Piece piece) {
+		return !isSameTeam(piece);
 	}
 
 	public boolean isPawn() {
