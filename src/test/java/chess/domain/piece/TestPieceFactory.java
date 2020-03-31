@@ -29,8 +29,8 @@ public class TestPieceFactory {
 
     public static Piece createPawn(Position position, Color color){
         if(color.isWhite()) {
-            return new Piece(position, PieceType.KING, new PawnMovable(Directions.WHITEPAWN), color);
+            return new Piece(position, PieceType.KING, new PawnMovable(Directions.WHITE_PAWN), color);
         }
-        return new Piece(position, PieceType.KING, new PawnMovable(Directions.BLACKPAWN), color);
+        return new Piece(position, PieceType.KING, new PawnMovable(Directions.BLACK_PAWN), color);
     }
 }
