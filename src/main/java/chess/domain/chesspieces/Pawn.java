@@ -6,7 +6,10 @@ import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class Pawn extends Piece {
     private static final String PAWN_NAME = "PAWN";
@@ -47,7 +50,7 @@ public class Pawn extends Piece {
         if (initPosition == from) {
             movableColumnDiff = PieceInfo.PAWN_INIT_MOVABLE_COLUMN_DIFF;
         }
-        return Math.abs(rowDiff) <= pieceInfo.getMovableRowDiff()  && Math.abs(columnDiff) <= movableColumnDiff;
+        return Math.abs(rowDiff) <= pieceInfo.getMovableRowDiff() && Math.abs(columnDiff) <= movableColumnDiff;
     }
 
     @Override
@@ -58,13 +61,15 @@ public class Pawn extends Piece {
 
     public boolean validateMoveAttack(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
+        boolean isNotEmpty = Objects.nonNull(target);
         return attackDirections.contains(direction)
-                && Objects.nonNull(target)
+                && isNotEmpty
                 && !(this.isSamePlayer(target));
     }
 
     public boolean validateMoveForward(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
-        return direction == forwardDirection && target == null;
+        boolean isEmpty = target == null;
+        return direction == forwardDirection && isEmpty;
     }
 }

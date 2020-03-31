@@ -6,7 +6,10 @@ import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     private final Player player;

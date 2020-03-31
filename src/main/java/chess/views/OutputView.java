@@ -13,7 +13,6 @@ import java.util.Optional;
 
 public class OutputView {
     private final static String NEW_LINE = System.lineSeparator();
-    private final static int OFFSET = Row.values().length;
     private final static String EMPTY = ".";
 
     public static void printInitialGuide() {

@@ -1,12 +1,9 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
-import chess.domain.position.Positions;
 import chess.views.InputDto;
 import chess.views.InputView;
 import chess.views.OutputView;
-
-import java.util.Map;
 
 public class ChessController {
     public void play() {
