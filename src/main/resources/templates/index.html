@@ -44,6 +44,13 @@
         .selected {
             transform: translateX(10px) translateY(-10px);
         }
+
+        .blackPawn {
+            background-image: url("image/BlackWhite.png");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
     </style>
 </head>
 <body>
@@ -111,7 +118,7 @@
             <button class="gray cell" id="h3"></button>
         </div>
         <div>
-            <button class="gray cell" id="a2">p</button>
+            <button class="gray cell blackPawn" id="a2">p</button>
             <button class="cell" id="b2">p</button>
             <button class="gray cell" id="c2">p</button>
             <button class="cell" id="d2">p</button>
@@ -146,17 +153,16 @@
     })
 
     function onError() {
-        alert("룰아세요?");
+        alert("해당 말이 갈 수 없는 칸입니다");
     }
 
     function onSuccess(response) {
         var sourcePosition = response.source;
         var targetPosition = response.target;
         var piece = document.getElementById(sourcePosition).innerText;
-        console.log(piece);
 
-        document.getElementById(sourcePosition).innerText = "";
-        document.getElementById(targetPosition).innerText = piece;
+        document.getElementById(sourcePosition).innerHTML = "";
+        document.getElementById(targetPosition).innerHTML = piece;
     }
 
     function validateMovable(sourcePosition, targetPosition) {
