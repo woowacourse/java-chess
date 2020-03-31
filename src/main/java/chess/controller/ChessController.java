@@ -50,7 +50,7 @@ public class ChessController {
 	}
 
 	private void processCommand(Board board, String decision) {
-		if (decision.split(DELIMITER)[0].equals(MOVE)) {
+		if (MOVE.equals(decision.split(DELIMITER)[0])) {
 			List<String> multiArguments = Arrays.asList(decision.split(DELIMITER));
 			validateMultiArguments(multiArguments);
 			Position source = new Position(multiArguments.get(1));
@@ -58,12 +58,12 @@ public class ChessController {
 			board.movePiece(source, destination);
 			return;
 		}
-		if (decision.equals(STATUS)) {
+		if (STATUS.equals(decision)) {
 			OutputView.printScore(board);
 			OutputView.printTeamWithHigherScore(board);
 			return;
 		}
-		if (decision.equals(END)) {
+		if (END.equals(decision)) {
 			state = State.FINISHED;
 			return;
 		}
