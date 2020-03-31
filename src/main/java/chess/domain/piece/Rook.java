@@ -62,10 +62,6 @@ public class Rook extends Piece {
         return scope;
     }
 
-    private boolean isNotSameSquareItself(Square square, Square movedSquare) {
-        return movedSquare != square;
-    }
-
     @Override
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         validateNotNull(square, board);

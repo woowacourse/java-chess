@@ -59,10 +59,6 @@ public class King extends Piece {
                 .collect(Collectors.toSet());
     }
 
-    private boolean isNotSameSquareItself(Square square, Square movedSquare) {
-        return movedSquare != square;
-    }
-
     @Override
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         validateNotNull(square, board);
