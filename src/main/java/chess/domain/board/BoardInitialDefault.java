@@ -50,5 +50,4 @@ public class BoardInitialDefault implements BoardInitialization {
     public Map<BoardSquare, Piece> getInitialize() {
         return new HashMap<>(INITIAL_BOARD);
     }
-
 }

@@ -35,7 +35,8 @@ public class ChessBoard {
     }
 
     public static boolean isInitialPoint(BoardSquare boardSquare, Piece piece) {
-        return CastlingSetting.isContainsSquare(boardSquare, piece);
+        return (piece instanceof Pawn)
+            && (boardSquare.isSameRank(Rank.SEVENTH) || boardSquare.isSameRank(Rank.SECOND));
     }
 
     public Map<BoardSquare, Piece> getChessBoard() {
@@ -43,6 +44,9 @@ public class ChessBoard {
     }
 
     public MoveState movePieceWhenCanMove(MoveSquare moveSquare) {
+        if (isKingCaptured()) {
+            return MoveState.KING_CAPTURED;
+        }
         if (!canMove(moveSquare)) {
             return getWhyCanNotMove(moveSquare);
         }
@@ -50,6 +54,9 @@ public class ChessBoard {
             return MoveState.FAIL_MUST_PAWN_CHANGE;
         }
         movePiece(moveSquare);
+        if (isKingCaptured()) {
+            return MoveState.KING_CAPTURED;
+        }
         if (isNeedPromotion()) {
             return MoveState.SUCCESS_BUT_PAWN_CHANGE;
         }
@@ -116,11 +123,11 @@ public class ChessBoard {
         Piece currentPiece = chessBoard.remove(moveSquareBefore);
         boolean castlingElement = castlingElements.stream()
             .anyMatch(
-                chessInitialSetting -> chessInitialSetting.isContainsSquare(moveSquareBefore));
+                chessInitialSetting -> chessInitialSetting.isContains(moveSquareBefore));
         if (castlingElement) {
             castlingElements.remove(castlingElements.stream()
                 .filter(
-                    chessInitialSetting -> chessInitialSetting.isContainsSquare(moveSquareBefore))
+                    chessInitialSetting -> chessInitialSetting.isContains(moveSquareBefore))
                 .findFirst().orElseThrow(IllegalAccessError::new));
         }
         chessBoard.put(moveSquareAfter, currentPiece);

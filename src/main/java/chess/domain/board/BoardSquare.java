@@ -105,5 +105,9 @@ public class BoardSquare {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    public boolean isSameRank(Rank rank) {
+        return this.rank == rank;
+    }
 }
 

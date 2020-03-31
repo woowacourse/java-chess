@@ -70,6 +70,8 @@ public class ChessBoardTest {
         chessBoard.movePieceWhenCanMove(new MoveSquare("d6", "d3"));
 
         assertThat(chessBoard.isKingCaptured()).isTrue();
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("d1", "d2")))
+            .isEqualTo(MoveState.KING_CAPTURED);
     }
 
     @DisplayName("이동하려는 before자리에 말이 없는건지 확인")

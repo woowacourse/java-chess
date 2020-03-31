@@ -87,10 +87,10 @@ public class KingTest {
         assertThat(availableBoardSquares.contains(BoardSquare.of("g7"))).isFalse();
 
         piece = King.getPieceInstance(Color.WHITE);
-        Set<CastlingSetting> castlingSetting = CastlingSetting.getCastlingElements();
-        castlingSetting.remove(CastlingSetting.WHITE_KING);
+        Set<CastlingSetting> castlingSettings = CastlingSetting.getCastlingElements();
+        castlingSettings.remove(CastlingSetting.WHITE_KING);
         availableBoardSquares = piece.getCheatSheet(BoardSquare.of("e1"), board,
-            castlingSetting);
+            castlingSettings);
 
         assertThat(availableBoardSquares.contains(BoardSquare.of("c1"))).isFalse();
         assertThat(availableBoardSquares.contains(BoardSquare.of("g1"))).isFalse();

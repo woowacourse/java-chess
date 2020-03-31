@@ -53,7 +53,6 @@ public class ChessGame {
     private static GameState getGameStateByKingCaptured(ChessBoard chessBoard,
         GameStateAndMoveSquare gameStateAndMoveSquare) {
         if (chessBoard.isKingCaptured()) {
-            OutputView.printWinner(chessBoard.getWinnerTurn());
             return GameState.END;
         }
         return gameStateAndMoveSquare.getGameState();
@@ -77,6 +76,10 @@ public class ChessGame {
         }
         if (moveState == MoveState.FAIL_NOT_ORDER) {
             OutputView.printNotMyTurn(chessBoard.getGameTurn());
+            return;
+        }
+        if (moveState == MoveState.KING_CAPTURED) {
+            OutputView.printWinner(chessBoard.getWinnerTurn());
             return;
         }
         OutputView.printCanNotMove();
