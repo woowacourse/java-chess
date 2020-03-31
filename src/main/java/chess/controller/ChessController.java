@@ -10,7 +10,6 @@ import java.util.Map;
 public class ChessController {
     public void play() {
         OutputView.printInitialGuide();
-
         Map<String, String> inputs = InputView.inputCommand();
         Command command = Command.of(inputs.get("command"));
 

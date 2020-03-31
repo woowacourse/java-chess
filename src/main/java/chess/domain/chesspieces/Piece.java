@@ -32,7 +32,7 @@ public abstract class Piece {
                 && Math.abs(columnDiff) <= pieceInfo.getMovableColumnDiff();
     }
 
-    public boolean validateDirection(Direction direction, Optional<Piece> target) {
+    public boolean validateDirection(Direction direction, Piece target) {
         return hasDirection(direction);
     };
 
@@ -62,9 +62,10 @@ public abstract class Piece {
     }
 
     public boolean isSamePlayer(Piece target) {
-        Objects.requireNonNull(target);
-
-        return  player == target.getPlayer();
+        if (Objects.isNull(target)) {
+            return false;
+        }
+        return player == target.getPlayer();
     }
 
     public String getDisplay() {

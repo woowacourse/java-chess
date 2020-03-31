@@ -48,10 +48,11 @@ public class ChessBoard {
         }
 
         Piece source =chessBoard.get(from);
-        if (source == null) {
+        Piece target = chessBoard.get(to);
+
+        if (Objects.isNull(source)) {
             throw new NotMoveException("empty에서는 이동할 수 없습니다.");
         }
-        Piece target = chessBoard.get(to);
 
         if (Objects.nonNull(target) && source.isSamePlayer(target)) {
             throw  new NotMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
@@ -60,7 +61,7 @@ public class ChessBoard {
 
     private boolean validateMovement(Position from, Position to) {
         Piece source = chessBoard.get(from);
-        Optional<Piece> target = Optional.ofNullable(chessBoard.get(to));
+        Piece target = chessBoard.get(to);
         Direction direction = Direction.getDirection(from, to);
 
         return source.validateTileSize(from, to)

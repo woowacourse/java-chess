@@ -7,13 +7,9 @@ import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
 import chess.domain.status.Result;
 import chess.domain.status.Status;
-import javafx.geometry.Pos;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class OutputView {
     private final static String NEW_LINE = System.lineSeparator();

@@ -51,22 +51,20 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean validateDirection(Direction direction, Optional<Piece> target) {
+    public boolean validateDirection(Direction direction, Piece target) {
         return hasDirection(direction)
                 && (validateMoveAttack(direction, target) || validateMoveForward(direction, target));
     }
 
-    public boolean validateMoveAttack(Direction direction, Optional<Piece> target) {
+    public boolean validateMoveAttack(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
-        Objects.requireNonNull(target);
-
         return attackDirections.contains(direction)
-                && target.isPresent()
+                && Objects.nonNull(target)
                 && !(this.isSamePlayer(target));
     }
 
-    public boolean validateMoveForward(Direction direction, Optional<Piece> target) {
+    public boolean validateMoveForward(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
-        return direction == forwardDirection && !target.isPresent();
+        return direction == forwardDirection && target == null;
     }
 }
