@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+body:after {
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-size: cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../image/wood.jpg"), no-repeat;
+  z-index: -1;
+  content: "";
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  text-align: center;
+  padding: 35px 0;
+  font-size: 4rem;
+  color: white;
+  font-family: 'Do Hyeon', sans-serif;
+  font-weight: normal;
+}
+
+.wood {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0 40px;
+  position: relative;
+  background-color: cornsilk;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.board {
+  width: calc(100% - 60px);
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.row {
+  display: flex;
+  position: relative;
+}
+
+.row:nth-of-type(2n - 1) .position:nth-of-type(2n - 1),
+.row:nth-of-type(2n) .position:nth-of-type(2n) {
+  color: #ffffff;
+  background-color: #333333;
+  background-image: linear-gradient(30deg, #222222 12%, transparent 12.5%, transparent 87%, #222222 87.5%, #222222), linear-gradient(150deg, #222222 12%, transparent 12.5%, transparent 87%, #222222 87.5%, #222222), linear-gradient(30deg, #222222 12%, transparent 12.5%, transparent 87%, #222222 87.5%, #222222), linear-gradient(150deg, #222222 12%, transparent 12.5%, transparent 87%, #222222 87.5%, #222222), linear-gradient(60deg, #111111 25%, transparent 25.5%, transparent 75%, #111111 75%, #111111), linear-gradient(60deg, #111111 25%, transparent 25.5%, transparent 75%, #111111 75%, #111111);
+  background-position: 0 0, 0 0, 10px 20px, 10px 20px, 0 0, 10px 20px;
+  background-size: 20px 40px;
+}
+
+.row-location {
+  position: absolute;
+  left: -20px;
+  top: 25px;
+  font-family: serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1d110a;
+}
+
+.position {
+  width: calc(100% / 6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333333;
+  position: relative;
+  background-color: #ffffff;
+  background-image: linear-gradient(115deg, transparent 75%, #eeeeee 75%), linear-gradient(245deg, transparent 75%, #eeeeee 75%), linear-gradient(115deg, transparent 75%, #eeeeee 75%), linear-gradient(245deg, transparent 75%, #eeeeee 75%);
+  background-position: 0 0, 0 0, 10px -20px, 10px -20px;
+  background-size: 20px 40px;
+}
+
+.position:after {
+  content: "";
+  float: left;
+  padding-top: 100%;
+}
+
+.position > img {
+  position: absolute;
+  bottom: 10px;
+  height: 75px;
+}
+
+.position > img.pawn {
+  height: 40px;
+}
+
+.column-locations {
+  justify-content: space-around;
+  width: calc(100% - 60px);
+  position: absolute;
+  bottom: 10px;
+  font-family: serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1d110a;
+}
+
+.buttons {
+  display: flex;
+  max-width: 540px;
+  margin: 0 auto;
+  justify-content: space-around;
+}
+
+.button {
+  margin: 30px 0 0;
+  padding: 7px;
+  font-size: 0.9rem;
+  width: 80px;
+  text-align: center;
+  border-bottom: 1.5px solid white;
+  color: white;
+}
+
+.button:hover {
+  font-weight: 800;
+  cursor: pointer;
+}
