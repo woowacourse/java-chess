@@ -25,14 +25,6 @@ public class Board {
         return showingBoard;
     }
 
-    public PlayingPiece findPiece(String location) {
-        Position position = Position.ofPositionName(location);
-        return board.stream()
-                .filter(piece -> piece.has(position))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_LOCATION_ERR_MSG));
-    }
-
     public PlayingPiece findPiece(Position location) {
         return board.stream()
                 .filter(piece -> piece.has(location))

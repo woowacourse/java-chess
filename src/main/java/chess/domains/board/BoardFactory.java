@@ -21,14 +21,14 @@ public class BoardFactory {
 
         Set<PlayingPiece> playingPieces = new HashSet<>();
 
-        playingPieces.addAll(createPlayingPiecesByRow(Row.ONE, whitePieces));
-        playingPieces.addAll(createPlayingPiecesByRow(Row.TWO, whitePieces));
-        playingPieces.addAll(createPlayingPiecesByRow(Row.EIGHT, blackPieces));
-        playingPieces.addAll(createPlayingPiecesByRow(Row.SEVEN, blackPieces));
-        playingPieces.addAll(createPlayingPiecesByRow(Row.THREE, blankPieces));
-        playingPieces.addAll(createPlayingPiecesByRow(Row.FOUR, blankPieces));
-        playingPieces.addAll(createPlayingPiecesByRow(Row.FIVE, blankPieces));
-        playingPieces.addAll(createPlayingPiecesByRow(Row.SIX, blankPieces));
+        playingPieces.addAll(createOneRow(Row.ONE, whitePieces));
+        playingPieces.addAll(createOneRow(Row.TWO, whitePieces));
+        playingPieces.addAll(createOneRow(Row.EIGHT, blackPieces));
+        playingPieces.addAll(createOneRow(Row.SEVEN, blackPieces));
+        playingPieces.addAll(createOneRow(Row.THREE, blankPieces));
+        playingPieces.addAll(createOneRow(Row.FOUR, blankPieces));
+        playingPieces.addAll(createOneRow(Row.FIVE, blankPieces));
+        playingPieces.addAll(createOneRow(Row.SIX, blankPieces));
 
         board = playingPieces;
     }
@@ -37,7 +37,7 @@ public class BoardFactory {
         return board;
     }
 
-    private static Set<PlayingPiece> createPlayingPiecesByRow(Row row, List<Piece> pieces) {
+    private static Set<PlayingPiece> createOneRow(Row row, List<Piece> pieces) {
         List<Position> aRow = Position.fromRow(row);
 
         Set<PlayingPiece> playingPieces = new HashSet<>();
