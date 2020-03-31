@@ -4,6 +4,7 @@ import static chess.domain.piece.Direction.*;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import chess.domain.board.Column;
 import chess.domain.board.Position;
@@ -12,8 +13,14 @@ import chess.domain.player.PlayerColor;
 
 public class Queen extends OrdinaryMovement {
 
+    private static List<Position> originalPositions = Collections.singletonList(Position.of(Column.D, Row.ONE));
+
     public Queen(PlayerColor playerColor) {
-        super("q", Collections.singletonList(Position.of(Column.D, Row.ONE)),
-                Arrays.asList(N, NE, E, SE, S, SW, W, NW), 8, 9, playerColor);
+        super("q", Arrays.asList(N, NE, E, SE, S, SW, W, NW), 8, 9, playerColor);
+    }
+
+    @Override
+    public List<Position> getOriginalPositions() {
+        return playerColor.reviseInitialPositions(originalPositions);
     }
 }

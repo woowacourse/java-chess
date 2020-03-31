@@ -7,14 +7,14 @@ import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.player.PlayerColor;
 
-public class OrdinaryMovement extends GamePiece {
+public abstract class OrdinaryMovement extends GamePiece {
 
     protected final List<Direction> directions;
     protected final int moveCount;
 
-    public OrdinaryMovement(String name, List<Position> originalPositions, List<Direction> directions, int moveCount,
+    public OrdinaryMovement(String name, List<Direction> directions, int moveCount,
             double score, PlayerColor playerColor) {
-        super(name, originalPositions, score, playerColor);
+        super(name, score, playerColor);
         this.directions = directions;
         this.moveCount = moveCount;
     }

@@ -8,8 +8,9 @@ public class ChessService {
 
     private Board board;
 
-    public ChessService() {
+    public Board createEmpty() {
         board = Board.createEmpty();
+        return board;
     }
 
     public Board placeInitialPieces() {

@@ -1,12 +1,15 @@
 package chess.domain.board;
 
-import chess.domain.piece.ChessPiece;
+import static java.util.stream.Collectors.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
-
-import java.util.*;
-
-import static java.util.stream.Collectors.*;
 
 public class Line {
 
@@ -38,7 +41,7 @@ public class Line {
     public int countPawnOf(PlayerColor playerColor) {
         return (int) line.stream()
                 .filter(piece -> piece.is(playerColor))
-                .filter(ChessPiece::isPawn)
+                .filter(GamePiece::isPawn)
                 .count();
     }
 

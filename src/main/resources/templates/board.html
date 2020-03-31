@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chess</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/board.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<body background="./img/treeboard.png">
+    <div id="app">
+        <div class="board">
+            {{#rows}}
+            <div class="row">
+                {{#gamePieces}}
+                <div class="cell">
+                    <img src="./img/{{playerColor.name}}_{{name}}.png">
+                </div>
+                {{/gamePieces}}
+            </div>
+            {{/rows}}
+        </div>
+        <div class="side">
+            <div class="user">
+                <img src="./img/BLACK_P.png">
+                <p>{{firstUser}}</p>
+            </div>
+            <div class="button">
+                <form action="/status" method="post">
+                    <input type="submit" value="STATUS">
+                </form>
+            </div>
+            <div class="button">
+                <form action="/end" method="post">
+                    <input type="submit" value="END">
+                </form>
+            </div>
+            <div class="user">
+                <img src="./img/WHITE_p.png">
+                <p>{{secondUser}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    for (let i = 0; i < 64; i++) {
+        let backGroundColor = "white";
+        if (((Math.floor(i / 8) % 2 === 0) && (i % 2 === 0)) || (Math.floor(i / 8) % 2 === 1) && (i % 2 === 1)) {
+            // 홀수 줄의 홀수 번째 칸 또는 짝수줄의 짝수번째 칸이라면
+            backGroundColor = "black";
+        }
+        $(".cell:eq(" + i + ")").css("background-color", backGroundColor);
+    }
+</script>

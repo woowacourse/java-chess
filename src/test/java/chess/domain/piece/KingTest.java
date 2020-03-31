@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,8 +17,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
+import chess.domain.player.PlayerColor;
 
 class KingTest {
+
+    private GamePiece gamePiece;
+
+    @BeforeEach
+    void setUp() {
+        gamePiece = new King(PlayerColor.WHITE);
+    }
 
     @ParameterizedTest
     @DisplayName("이동 경로 찾기")
@@ -25,7 +34,6 @@ class KingTest {
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d5");
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = ChessPiece.WHITE_KING.getGamePiece();
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
@@ -52,7 +60,6 @@ class KingTest {
     void invalidMovementException(Position target) {
         Position source = Position.from("d5");
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = ChessPiece.WHITE_KING.getGamePiece();
         board.put(source, gamePiece);
 
         assertThatThrownBy(() -> {

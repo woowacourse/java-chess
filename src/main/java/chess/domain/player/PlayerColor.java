@@ -10,7 +10,7 @@ public enum PlayerColor {
 
     BLACK("BLACK", String::toUpperCase, Position::horizontalFlip),
     WHITE("WHITE", String::toLowerCase, Function.identity()),
-    NONE("", Function.identity(), Function.identity());
+    NONE("NONE", Function.identity(), Function.identity());
 
     private final String name;
     private final Function<String, String> nameDecider;

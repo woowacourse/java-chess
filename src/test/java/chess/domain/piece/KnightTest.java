@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,8 +17,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
+import chess.domain.player.PlayerColor;
 
 class KnightTest {
+
+    private GamePiece gamePiece;
+
+    @BeforeEach
+    void setUp() {
+        gamePiece = new Knight(PlayerColor.WHITE);
+    }
 
     @ParameterizedTest
     @DisplayName("이동 경로 찾기")
@@ -25,7 +34,6 @@ class KnightTest {
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d5");
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = ChessPiece.WHITE_KNIGHT.getGamePiece();
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
@@ -53,12 +61,11 @@ class KnightTest {
     void invalidMovementException(Position target) {
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
         Position source = Position.from("d5");
-        GamePiece piece = ChessPiece.WHITE_KNIGHT.getGamePiece();
 
-        board.put(source, piece);
+        board.put(source, gamePiece);
 
         assertThatThrownBy(() -> {
-            piece.validatePath(board, source, target);
+            gamePiece.validatePath(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
     }

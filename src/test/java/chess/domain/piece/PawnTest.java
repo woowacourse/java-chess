@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,8 +18,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
+import chess.domain.player.PlayerColor;
 
 class PawnTest {
+
+    private GamePiece gamePiece;
+
+    @BeforeEach
+    void setUp() {
+        gamePiece = new Pawn(PlayerColor.WHITE);
+    }
 
     @ParameterizedTest
     @DisplayName("이동 경로 찾기")
@@ -26,10 +35,9 @@ class PawnTest {
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d2");
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = ChessPiece.WHITE_PAWN.getGamePiece();
         board.put(source, gamePiece);
-        board.put(Position.from("c3"), ChessPiece.BLACK_KING.getGamePiece());
-        board.put(Position.from("e3"), ChessPiece.BLACK_KING.getGamePiece());
+        board.put(Position.from("c3"), new King(PlayerColor.BLACK));
+        board.put(Position.from("e3"), new King(PlayerColor.BLACK));
 
         assertThatCode(() -> {
             gamePiece.validatePath(board, source, target);
@@ -52,12 +60,11 @@ class PawnTest {
     void invalidMovementException(Position target) {
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
         Position source = Position.from("d5");
-        GamePiece piece = ChessPiece.WHITE_PAWN.getGamePiece();
 
-        board.put(source, piece);
+        board.put(source, gamePiece);
 
         assertThatThrownBy(() -> {
-            piece.validatePath(board, source, target);
+            gamePiece.validatePath(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
     }
@@ -77,21 +84,21 @@ class PawnTest {
     @ParameterizedTest
     @DisplayName("기물 플레이어 색에 따른 이동")
     @MethodSource("createPawnAndTarget")
-    void blackMove(GamePiece gamePiece, Position source, Position target) {
+    void blackMove(GamePiece piece, Position source, Position target) {
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        board.put(source, gamePiece);
+        board.put(source, piece);
 
-        assertThatCode(() -> gamePiece.validateMoveTo(board, source, target))
+        assertThatCode(() -> piece.validateMoveTo(board, source, target))
                 .doesNotThrowAnyException();
     }
 
     static Stream<Arguments> createPawnAndTarget() {
         return Stream.of(
-                Arguments.of(ChessPiece.WHITE_PAWN.getGamePiece(), Position.from("d5"), Position.from("d6")),
-                Arguments.of(ChessPiece.WHITE_PAWN.getGamePiece(), Position.from("e2"), Position.from("e3")),
-                Arguments.of(ChessPiece.BLACK_PAWN.getGamePiece(), Position.from("e7"), Position.from("e6")),
-                Arguments.of(ChessPiece.BLACK_PAWN.getGamePiece(), Position.from("d7"), Position.from("d6")),
-                Arguments.of(ChessPiece.BLACK_PAWN.getGamePiece(), Position.from("e4"), Position.from("e3"))
+                Arguments.of(new Pawn(PlayerColor.WHITE), Position.from("d5"), Position.from("d6")),
+                Arguments.of(new Pawn(PlayerColor.WHITE), Position.from("e2"), Position.from("e3")),
+                Arguments.of(new Pawn(PlayerColor.BLACK), Position.from("e7"), Position.from("e6")),
+                Arguments.of(new Pawn(PlayerColor.BLACK), Position.from("d7"), Position.from("d6")),
+                Arguments.of(new Pawn(PlayerColor.BLACK), Position.from("e4"), Position.from("e3"))
         );
     }
 
@@ -99,11 +106,11 @@ class PawnTest {
     @DisplayName("original 위치가 아닌 곳에서 2칸 이동할 경우 예외 처리")
     void moveThrowException() {
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = ChessPiece.BLACK_PAWN.getGamePiece();
+        GamePiece piece = new Pawn(PlayerColor.BLACK);
         Position source = Position.from("d5");
-        board.put(source, gamePiece);
+        board.put(source, piece);
 
-        assertThatThrownBy(() -> gamePiece.validateMoveTo(board, source, Position.from("d3")))
+        assertThatThrownBy(() -> piece.validateMoveTo(board, source, Position.from("d3")))
                 .isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
     }

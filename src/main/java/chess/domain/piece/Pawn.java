@@ -13,14 +13,17 @@ import chess.domain.player.PlayerColor;
 
 public class Pawn extends GamePiece {
 
+    private static List<Position> originalPositions = Arrays.stream(Column.values()).
+            map(file -> Position.of(file, Row.TWO))
+            .collect(Collectors.toList());
+
     private static final int FIRST_MOVE_COUNT = 2;
     private Direction moveDirection;
     private List<Direction> killDirections;
     private int moveCount;
 
     public Pawn(PlayerColor playerColor) {
-        super("p", Arrays.stream(Column.values()).map(file -> Position.of(file, Row.TWO)).collect(Collectors.toList()),
-                1, playerColor);
+        super("p", 1, playerColor);
         moveCount = 1;
         moveDirection = Direction.N;
         killDirections = Arrays.asList(Direction.NW, Direction.NE);
@@ -38,6 +41,11 @@ public class Pawn extends GamePiece {
         }
 
         validateMovePath(board, source, target);
+    }
+
+    @Override
+    public List<Position> getOriginalPositions() {
+        return playerColor.reviseInitialPositions(originalPositions);
     }
 
     private void validateKillPath(Position source, Position target) {

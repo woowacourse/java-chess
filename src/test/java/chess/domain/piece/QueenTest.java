@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,15 +19,22 @@ import org.junit.jupiter.params.provider.MethodSource;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
+import chess.domain.player.PlayerColor;
 
 class QueenTest {
+
+    private GamePiece gamePiece;
+
+    @BeforeEach
+    void setUp() {
+        gamePiece = new Queen(PlayerColor.WHITE);
+    }
 
     @ParameterizedTest
     @DisplayName("이동 경로 찾기")
     @MethodSource("createSourceToTarget")
     void findMovePath(Position source, Position target, List<Position> expected) {
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = ChessPiece.WHITE_QUEEN.getGamePiece();
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
@@ -63,7 +71,6 @@ class QueenTest {
     void invalidMovementException(Position target) {
         Position source = Position.from("d5");
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = ChessPiece.WHITE_QUEEN.getGamePiece();
         board.put(source, gamePiece);
 
         assertThatThrownBy(() -> {
@@ -92,15 +99,14 @@ class QueenTest {
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
         Position source = Position.from("d5");
         Position target = Position.from("f7");
-        GamePiece piece = ChessPiece.WHITE_QUEEN.getGamePiece();
 
         Position obstacle = Position.from("e6");
 
-        board.put(source, piece);
-        board.put(obstacle, ChessPiece.BLACK_PAWN.getGamePiece());
+        board.put(source, gamePiece);
+        board.put(obstacle, new Pawn(PlayerColor.BLACK));
 
         assertThatThrownBy(() -> {
-            piece.validatePath(board, source, target);
+            gamePiece.validatePath(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n경로에 기물이 존재합니다.");
     }

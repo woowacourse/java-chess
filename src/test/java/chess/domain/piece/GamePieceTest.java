@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.ChessPiece.*;
 import static chess.domain.player.PlayerColor.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -22,6 +21,40 @@ import chess.domain.exception.InvalidMovementException;
 
 class GamePieceTest {
 
+    @Test
+    @DisplayName("플레이어별 game piece 생성")
+    void getGamePieces() {
+        assertThat(GamePiece.createGamePieces()).hasSize(12);
+    }
+
+    @ParameterizedTest
+    @DisplayName("gamepiece가 pawn인지 확인")
+    @MethodSource("createPieces")
+    void isPawn(GamePiece gamePiece, boolean expected) {
+        assertThat(gamePiece.isPawn()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createPieces() {
+        return Stream.of(
+                Arguments.of(new Rook(BLACK), false),
+                Arguments.of(new Pawn(WHITE), true)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("gamepiece가 king인지 확인")
+    @MethodSource("createKingPieces")
+    void isKing(GamePiece gamePiece, boolean expected) {
+        assertThat(gamePiece.isKing()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createKingPieces() {
+        return Stream.of(
+                Arguments.of(new King(BLACK), true),
+                Arguments.of(new Pawn(WHITE), false)
+        );
+    }
+
     @ParameterizedTest
     @DisplayName("GamePiece별 초기 위치")
     @MethodSource("createPositions")
@@ -31,8 +64,8 @@ class GamePieceTest {
 
     static Stream<Arguments> createPositions() {
         return Stream.of(
-                Arguments.of(BLACK_ROOK.getGamePiece(), Arrays.asList(Position.from("a8"), Position.from("h8"))),
-                Arguments.of(WHITE_ROOK.getGamePiece(), Arrays.asList(Position.from("a1"), Position.from("h1")))
+                Arguments.of(new Rook(BLACK), Arrays.asList(Position.from("a8"), Position.from("h8"))),
+                Arguments.of(new Rook(WHITE), Arrays.asList(Position.from("a1"), Position.from("h1")))
         );
     }
 
@@ -45,8 +78,8 @@ class GamePieceTest {
 
     static Stream<Arguments> createWhitePieces() {
         return Stream.of(
-                Arguments.of(BLACK_ROOK.getGamePiece(), false),
-                Arguments.of(WHITE_ROOK.getGamePiece(), true)
+                Arguments.of(new Rook(BLACK), false),
+                Arguments.of(new Rook(WHITE), true)
         );
     }
 
@@ -55,9 +88,9 @@ class GamePieceTest {
         Position source = Position.from("d5");
         Position target = Position.from("d4");
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = BLACK_ROOK.getGamePiece();
+        GamePiece gamePiece = new Rook(BLACK);
         board.put(source, gamePiece);
-        board.put(target, BLACK_BISHOP.getGamePiece());
+        board.put(target, new Bishop(BLACK));
 
         assertThatThrownBy(() -> gamePiece.validateMoveTo(board, source, target))
                 .isInstanceOf(InvalidMovementException.class)

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,16 +10,32 @@ import chess.domain.player.PlayerColor;
 
 public abstract class GamePiece {
 
-    protected final List<Position> originalPositions;
     protected final PlayerColor playerColor;
     private final String name;
     private final double score;
 
-    public GamePiece(String name, List<Position> originalPositions, double score, PlayerColor playerColor) {
+    public GamePiece(String name, double score, PlayerColor playerColor) {
         this.name = playerColor.decideName(name);
-        this.originalPositions = playerColor.reviseInitialPositions(originalPositions);
         this.score = score;
         this.playerColor = playerColor;
+    }
+
+    public static List<GamePiece> createGamePieces() {
+        List<GamePiece> gamePieces = new ArrayList<>();
+        gamePieces.add(new King(PlayerColor.BLACK));
+        gamePieces.add(new Queen(PlayerColor.BLACK));
+        gamePieces.add(new Bishop(PlayerColor.BLACK));
+        gamePieces.add(new Knight(PlayerColor.BLACK));
+        gamePieces.add(new Rook(PlayerColor.BLACK));
+        gamePieces.add(new Pawn(PlayerColor.BLACK));
+        gamePieces.add(new King(PlayerColor.WHITE));
+        gamePieces.add(new Queen(PlayerColor.WHITE));
+        gamePieces.add(new Bishop(PlayerColor.WHITE));
+        gamePieces.add(new Knight(PlayerColor.WHITE));
+        gamePieces.add(new Rook(PlayerColor.WHITE));
+        gamePieces.add(new Pawn(PlayerColor.WHITE));
+
+        return gamePieces;
     }
 
     public void validateMoveTo(Map<Position, GamePiece> board, Position source, Position target) {
@@ -41,11 +58,21 @@ public abstract class GamePiece {
         return score * count;
     }
 
-    public List<Position> getOriginalPositions() {
-        return originalPositions;
+    public boolean isKing() {
+        return this instanceof King;
     }
+
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
+
+    public abstract List<Position> getOriginalPositions();
 
     public String getName() {
         return name;
+    }
+
+    public PlayerColor getPlayerColor() {
+        return playerColor;
     }
 }

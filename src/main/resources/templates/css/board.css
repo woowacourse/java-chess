@@ -1,0 +1,93 @@
+body {
+    background-position: center;
+    background-size: cover;
+}
+
+#app {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    height: 773px;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto 20px;
+    height: 100%;
+    width: 63%;
+}
+
+.side {
+    height: 100%;
+}
+
+.row {
+    display: flex;
+    text-align: center;
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.cell > img {
+    height: 85px;
+    margin: 0 auto;
+}
+
+.side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.button {
+    height: 90px;
+    width: 100%;
+    margin: 2px 0;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: seashell;
+    border-radius: 10px;
+}
+
+.user > img {
+    flex: 1;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.user > p {
+    font-size: 20px;
+    font-family: fantasy;
+    flex: 2;
+}
+
+input[type="submit"] {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: rosybrown;
+    font-family: Arial, Helvetica, Sans-serif;
+    font-size: 50px;
+}
+
+.start {
+    
+}

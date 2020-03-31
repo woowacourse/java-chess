@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import static chess.domain.piece.ChessPiece.*;
+import static chess.domain.player.PlayerColor.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
@@ -15,8 +15,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.exception.InvalidMovementException;
+import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 
 class BoardTest {
 
@@ -57,10 +62,10 @@ class BoardTest {
 
     static Stream<Arguments> createMovement() {
         return Stream.of(
-                Arguments.of(WHITE_ROOK.getGamePiece(), Position.from("d3"), Position.from("f3"), 0),
-                Arguments.of(WHITE_PAWN.getGamePiece(), Position.from("d3"), Position.from("d4"), 0),
-                Arguments.of(BLACK_PAWN.getGamePiece(), Position.from("d3"), Position.from("d2"), 1),
-                Arguments.of(BLACK_ROOK.getGamePiece(), Position.from("d3"), Position.from("f3"), 1)
+                Arguments.of(new Rook(WHITE), Position.from("d3"), Position.from("f3"), 0),
+                Arguments.of(new Rook(BLACK), Position.from("d3"), Position.from("f3"), 1),
+                Arguments.of(new Pawn(WHITE), Position.from("d3"), Position.from("d4"), 0),
+                Arguments.of(new Pawn(BLACK), Position.from("d3"), Position.from("d2"), 1)
         );
     }
 
@@ -68,7 +73,7 @@ class BoardTest {
     @DisplayName("Black Pawn이 위로 올라갈 경우")
     void moveWithImpossiblePawnMovement() {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
-        map.put(Position.from("d5"), BLACK_PAWN.getGamePiece());
+        map.put(Position.from("d5"), new Pawn(BLACK));
         Board board = Board.from(map, new Status(1, StatusType.PROCESSING));
 
         assertThatThrownBy(() -> {
@@ -102,8 +107,8 @@ class BoardTest {
 
     static Stream<Arguments> createBoardAndTurn() {
         return Stream.of(
-                Arguments.of(1, WHITE_ROOK.getGamePiece()),
-                Arguments.of(0, BLACK_ROOK.getGamePiece())
+                Arguments.of(1, new Rook(WHITE)),
+                Arguments.of(0, new Rook(BLACK))
         );
     }
 
@@ -113,7 +118,7 @@ class BoardTest {
     void moveWithObstacle(GamePiece gamePiece, Position source, Position target) {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
         map.put(source, gamePiece);
-        map.put(Position.from("e3"), BLACK_BISHOP.getGamePiece());
+        map.put(Position.from("e3"), new Bishop(BLACK));
         Board board = Board.from(map, new Status(0, StatusType.PROCESSING));
 
         assertThatThrownBy(() -> {
@@ -124,10 +129,10 @@ class BoardTest {
 
     static Stream<Arguments> createPathWithObstacle() {
         return Stream.of(
-                Arguments.of(WHITE_PAWN.getGamePiece(), Position.from("e2"), Position.from("e4")),
-                Arguments.of(WHITE_BISHOP.getGamePiece(), Position.from("d2"), Position.from("f4")),
-                Arguments.of(WHITE_ROOK.getGamePiece(), Position.from("e2"), Position.from("e5")),
-                Arguments.of(WHITE_QUEEN.getGamePiece(), Position.from("e2"), Position.from("e4"))
+                Arguments.of(new Pawn(WHITE), Position.from("e2"), Position.from("e4")),
+                Arguments.of(new Bishop(WHITE), Position.from("d2"), Position.from("f4")),
+                Arguments.of(new Rook(WHITE), Position.from("e2"), Position.from("e5")),
+                Arguments.of(new Queen(WHITE), Position.from("e2"), Position.from("e4"))
         );
     }
 
@@ -136,8 +141,8 @@ class BoardTest {
     @MethodSource("createFinish")
     void isBoardFinished(Position source, Position target, boolean expected) {
         Map<Position, GamePiece> map = new HashMap<>(Board.createEmpty().getBoard());
-        map.put(Position.from("c5"), WHITE_KING.getGamePiece());
-        map.put(Position.from("d6"), BLACK_PAWN.getGamePiece());
+        map.put(Position.from("c5"), new King(WHITE));
+        map.put(Position.from("d6"), new Pawn(BLACK));
         Board board = Board.from(map, new Status(1, StatusType.PROCESSING));
         board = board.move(source, target);
 
