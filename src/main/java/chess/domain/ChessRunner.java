@@ -8,6 +8,7 @@ import chess.domain.position.Position;
 import chess.domain.strategy.direction.Direction;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessRunner {
     private Board board;
@@ -86,12 +87,17 @@ public class ChessRunner {
         return this.board.checkWinner();
     }
 
-    public BoardScore calculateScore() {
-        return board.calculateScore(this.currentTeam);
+    public double calculateScore() {
+        BoardScore boardScore = this.board.calculateScore(this.currentTeam);
+        return boardScore.getBoardScore();
     }
 
-    public Team getCurrentTeam() {
-        return this.currentTeam;
+    public Map<String, String> getBoardEntities() {
+        return this.board.parse();
+    }
+
+    public String getCurrentTeam() {
+        return this.currentTeam.name();
     }
 
     public Board getBoard() {

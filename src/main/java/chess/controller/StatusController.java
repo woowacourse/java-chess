@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.controller.dto.BoardScoreDto;
+import chess.controller.dto.TeamDto;
 import chess.domain.ChessRunner;
 
 public class StatusController extends GameController {
@@ -9,8 +11,9 @@ public class StatusController extends GameController {
 
     @Override
     public void execute(ChessRunner chessRunner, String input) {
-//        double score = chessRunner.calculateScore();
-//        outputView.printStatus(score, chessRunner.getCurrentTeam());
-        printBoard(chessRunner.getBoard());
+        BoardScoreDto boardScoreDto = new BoardScoreDto(chessRunner.calculateScore());
+        TeamDto teamDto = new TeamDto(chessRunner.getCurrentTeam());
+        outputView.printStatus(boardScoreDto.getBoardScore(), teamDto.getTeamName());
+        printBoard(chessRunner.getBoardEntities());
     }
 }

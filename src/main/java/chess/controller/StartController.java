@@ -9,6 +9,6 @@ public class StartController extends GameController {
 
     @Override
     public void execute(ChessRunner chessRunner, String input) {
-        printBoard(chessRunner.getBoard());
+        printBoard(chessRunner.getBoardEntities());
     }
 }

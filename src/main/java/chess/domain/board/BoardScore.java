@@ -23,4 +23,8 @@ public class BoardScore {
         }
         return this;
     }
+
+    public double getBoardScore() {
+        return this.boardScore;
+    }
 }

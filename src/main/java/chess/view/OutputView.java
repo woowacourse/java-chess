@@ -8,7 +8,7 @@ import java.util.Map;
 public interface OutputView {
     void printBoard(List<String> positions, Map<String, String> board);
 
-    void printStatus(double calculateScore, Team team);
+    void printStatus(double calculateScore, String teamName);
 
     void printWinner(Team team);
 }

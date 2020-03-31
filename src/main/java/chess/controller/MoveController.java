@@ -22,6 +22,6 @@ public class MoveController extends GameController {
         String source = commands[SOURCE_INDEX];
         String target = commands[TARGET_INDEX];
         chessRunner.update(source, target);
-        printBoard(chessRunner.getBoard());
+        printBoard(chessRunner.getBoardEntities());
     }
 }
