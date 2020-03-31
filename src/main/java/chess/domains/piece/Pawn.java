@@ -1,6 +1,7 @@
 package chess.domains.piece;
 
 import chess.domains.position.Position;
+import chess.domains.position.Row;
 
 public class Pawn extends Piece {
 
@@ -24,8 +25,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isInitialPosition(Position current) {
-        return (pieceColor == PieceColor.WHITE && current.isRow(INITIAL_ROW_OF_WHITE_PAWN))
-                || (pieceColor == PieceColor.BLACK && current.isRow(INITIAL_ROW_OF_BLACK_PAWN));
+        return (pieceColor == PieceColor.WHITE && current.isRow(Row.TWO))
+                || (pieceColor == PieceColor.BLACK && current.isRow(Row.SEVEN));
     }
 
     private boolean canFirstMove(Position current, Position target) {
@@ -37,5 +38,4 @@ public class Pawn extends Piece {
         }
         return Math.abs(xGap) <= ONE_BLOCK && TWO_BLOCKS_DOWN <= yGap && yGap < NO_MOVE;
     }
-
 }

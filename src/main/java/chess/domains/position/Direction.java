@@ -22,6 +22,7 @@ public enum Direction {
     WEST_WEST_SOUTH(-2, -1);
 
     public static final String INVALID_DIRECTION_ERR_MSG = "방향을 찾을 수 없습니다.";
+
     int xGap;
     int yGap;
 

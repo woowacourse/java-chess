@@ -7,16 +7,15 @@ import chess.domains.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
     public static final String INVALID_LOCATION_ERR_MSG = "위치를 잘못 입력하였습니다.";
     public static final String INVALID_ROUTE_ERR_MSG = "말을 뛰어넘을 수 없습니다.";
-    public static final int NOT_BLOCKED = 0;
     public static final int TWO_KINGS = 2;
     public static final double SCORE_OF_PAWN_SAME_COLUMN = 0.5;
-    public static final double SCORE_OF_PAWN_IN_SAME_COLUMN1 = SCORE_OF_PAWN_SAME_COLUMN;
+    public static final int COLUMN_SIZE = 8;
+
     private final Set<PlayingPiece> board = BoardFactory.getBoard();
     private PieceColor teamColor = PieceColor.WHITE;
 
@@ -88,26 +87,30 @@ public class Board {
                 .mapToDouble(PlayingPiece::score)
                 .sum();
 
-        int pawnCount = countPawnInSameColumn(teamColor);
+        int pawnCount = countOfPawnsInSameColumn(teamColor);
 
-        return score - pawnCount * SCORE_OF_PAWN_IN_SAME_COLUMN1;
+        return score - pawnCount * SCORE_OF_PAWN_SAME_COLUMN;
     }
 
-    private int countPawnInSameColumn(PieceColor teamColor) {
+    private int countOfPawnsInSameColumn(PieceColor teamColor) {
         Stream<PlayingPiece> myPawns = board.stream()
                 .filter(playingPiece -> playingPiece.isMine(teamColor))
                 .filter(PlayingPiece::isPawn);
 
         int pawnCount = 0;
-
         for (Column column : Column.values()) {
-            List<PlayingPiece> sameColumnPieces = myPawns.filter(myPiece -> myPiece.isColumn(column))
-                    .collect(Collectors.toList());
-            if (!sameColumnPieces.isEmpty()) {
-                pawnCount += sameColumnPieces.size();
-            }
+            pawnCount += countValidPawns(myPawns, column);
         }
         return pawnCount;
+    }
+
+    private int countValidPawns(Stream<PlayingPiece> myPawns, Column column) {
+        int sameColumnPiecesCount = (int) myPawns.filter(myPiece -> myPiece.isColumn(column))
+                .count();
+        if (sameColumnPiecesCount > 1) {
+            return sameColumnPiecesCount;
+        }
+        return 0;
     }
 
     public PieceColor getTeamColor() {

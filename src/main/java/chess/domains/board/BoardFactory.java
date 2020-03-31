@@ -8,7 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static chess.domains.piece.Piece.COLUMN_SIZE;
+import static chess.domains.board.Board.COLUMN_SIZE;
+
 
 public class BoardFactory {
     private static Set<PlayingPiece> board;

@@ -7,32 +7,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static chess.domains.board.Board.COLUMN_SIZE;
+
 public abstract class Piece {
-    public static final int NO_MOVE = 0;
-    public static final int ONE_BLOCK = 1;
-    public static final int TWO_BLOCKS = 2;
-    public static final int ONE_BLOCK_UP = 1;
-    public static final int ONE_BLOCK_DOWN = -1;
-    public static final int TWO_BLOCKS_UP = 2;
-    public static final int TWO_BLOCKS_DOWN = -2;
-    public static final int INITIAL_ROW_OF_WHITE_PAWN = 2;
-    public static final int INITIAL_ROW_OF_BLACK_PAWN = 7;
-    public static final int COLUMN_SIZE = 8;
+    static final int NO_MOVE = 0;
+    static final int ONE_BLOCK = 1;
+    static final int TWO_BLOCKS = 2;
+    static final int ONE_BLOCK_UP = 1;
+    static final int ONE_BLOCK_DOWN = -1;
+    static final int TWO_BLOCKS_UP = 2;
+    static final int TWO_BLOCKS_DOWN = -2;
+
     private static final List<Piece> whitePieces;
     private static final List<Piece> blackPieces;
     private static final List<Piece> blankPieces;
+
+    protected final PieceColor pieceColor;
+    private final String name;
+    private final double score;
 
     static {
         whitePieces = createBundleByColor(PieceColor.WHITE);
         blackPieces = createBundleByColor(PieceColor.BLACK);
         blankPieces = createBlankBundle();
     }
-
-    protected final PieceColor pieceColor;
-
-    private final String name;
-    private final double score;
-    public abstract boolean isValidMove(Position currentPosition, Position targetPosition);
 
     public Piece(PieceColor pieceColor, String name, double score) {
         this.pieceColor = pieceColor;
@@ -56,6 +54,8 @@ public abstract class Piece {
                 new Blank(), new Blank(), new Blank(), new Blank()));
     }
 
+    public abstract boolean isValidMove(Position currentPosition, Position targetPosition);
+
     private String selectName(PieceColor pieceColor, String name) {
         if (pieceColor == PieceColor.BLACK) {
             return name.toUpperCase();
@@ -67,12 +67,12 @@ public abstract class Piece {
         return source.findRoute(target);
     }
 
-    public boolean isMine(Piece piece) {
-        return this.pieceColor == piece.pieceColor;
-    }
-
     public boolean isMine(PieceColor pieceColor) {
         return this.pieceColor == pieceColor;
+    }
+
+    public boolean isMine(Piece piece) {
+        return isMine(piece.pieceColor);
     }
 
     public static List<Piece> getBlackPieces() {
