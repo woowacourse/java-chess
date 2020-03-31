@@ -51,7 +51,7 @@ public class ChessResult {
     }
 
     private static int getSameColumnPawnCount(Map<Position, GamePiece> board, PlayerColor playerColor) {
-        return Line.listsByColumn(board).stream()
+        return Line.listByColumn(board).stream()
                 .map(column -> column.countPawnOf(playerColor))
                 .filter(count -> count >= MINIMUM_PAWN_COUNT)
                 .reduce(0, Integer::sum);

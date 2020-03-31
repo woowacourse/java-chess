@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.board.Board;
-import chess.domain.board.Line;
+import chess.dto.LineDto;
 import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Spark;
@@ -24,7 +24,7 @@ public class WebUIChessApplication {
         get("/main", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Board board = chessService.createEmpty();
-            List<Line> rows = board.getRows();
+            List<LineDto> rows = board.getRows();
             model.put("rows", rows);
             return render(model, "main.html");
         });
@@ -34,7 +34,7 @@ public class WebUIChessApplication {
             String firstUserName = req.queryParams("user1");
             String secondUserName = req.queryParams("user2");
             Board board = chessService.placeInitialPieces();
-            List<Line> rows = board.getRows();
+            List<LineDto> rows = board.getRows();
             model.put("firstUser", firstUserName);
             model.put("secondUser", secondUserName);
             model.put("rows", rows);
@@ -50,7 +50,7 @@ public class WebUIChessApplication {
         post("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Board board = chessService.createEmpty();
-            List<Line> rows = board.getRows();
+            List<LineDto> rows = board.getRows();
             model.put("rows", rows);
             return render(model, "main.html");
         });

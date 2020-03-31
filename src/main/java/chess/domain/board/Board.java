@@ -13,6 +13,7 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
+import chess.dto.LineDto;
 
 public class Board {
 
@@ -96,8 +97,8 @@ public class Board {
         return ChessResult.from(board);
     }
 
-    public List<Line> getRows() {
-        return Line.listsByRow(board);
+    public List<LineDto> getRows() {
+        return Line.listByRow(board);
     }
 
     public Map<Position, GamePiece> getBoard() {

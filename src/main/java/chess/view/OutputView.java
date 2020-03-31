@@ -3,11 +3,11 @@ package chess.view;
 import java.util.Map;
 
 import chess.domain.board.Board;
-import chess.domain.board.Line;
-import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
 import chess.domain.result.Score;
+import chess.dto.GamePieceDto;
+import chess.dto.LineDto;
 
 public class OutputView {
 
@@ -21,8 +21,8 @@ public class OutputView {
     }
 
     public static void printBoard(Board board) {
-        for (Line row : board.getRows()) {
-            for (GamePiece piece : row.getGamePieces()) {
+        for (LineDto row : board.getRows()) {
+            for (GamePieceDto piece : row.getGamePieces()) {
                 System.out.print(piece.getName());
             }
             System.out.println();

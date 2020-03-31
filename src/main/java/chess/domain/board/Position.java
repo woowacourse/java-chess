@@ -97,6 +97,10 @@ public class Position implements Comparable<Position> {
         return column;
     }
 
+    public String getName() {
+        return column.getName() + row.getName();
+    }
+
     @Override
     public int compareTo(Position position) {
         if (row.compareTo(position.row) == 0) {
