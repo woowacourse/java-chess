@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import chess.domain.board.Board;
+import chess.domain.piece.PieceScore;
 import chess.domain.piece.Team;
 
 public class Status {
@@ -23,7 +24,7 @@ public class Status {
 	private static double calculateOf(Board board, Team team) {
 		return board.getColumnGroupOf(team)
 			.stream()
-			.mapToDouble(Score::calculateScoreOf)
+			.mapToDouble(PieceScore::calculateScoreOf)
 			.sum();
 	}
 
@@ -40,7 +41,7 @@ public class Status {
 			.orElseThrow(NullPointerException::new);
 	}
 
-    public Map<Team, Double> toMap() {
-	    return Collections.unmodifiableMap(status);
-    }
+	public Map<Team, Double> toMap() {
+		return Collections.unmodifiableMap(status);
+	}
 }

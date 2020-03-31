@@ -7,16 +7,16 @@ import chess.domain.piece.Team;
 import chess.service.ChessService;
 
 public class ConsoleUIChessApplication {
-    public static void main(String[] args) {
-        Board initial = BoardFactory.create();
-        Team first = Team.WHITE;
-        ChessService chessService = ChessService.of(initial, first);
+	public static void main(String[] args) {
+		Board initial = BoardFactory.create();
+		Team first = Team.WHITE;
+		ChessService chessService = ChessService.of(initial, first);
 
-        ChessController controller = new ChessController(chessService, initial, first);
+		ChessController controller = new ChessController(chessService, initial, first);
 
-        controller.start();
-        while (true) {
-            controller.playTurn();
-        }
-    }
+		controller.start();
+		while (true) {
+			controller.playTurn();
+		}
+	}
 }

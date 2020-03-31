@@ -5,8 +5,8 @@ import java.util.List;
 import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
+import chess.domain.position.MoveInfo;
 import chess.service.ChessService;
-import chess.utils.MoveInfo;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -18,16 +18,16 @@ public class ChessController {
 	private static final String DELIMITER = " ";
 	private static final List<String> FIRST_COMMANDS = List.of(START_COMMAND, END_COMMAND);
 	private static final List<String> PLAY_COMMANDS = List.of(MOVE_COMMAND, STATUS_COMMAND);
-    private static final int COMMAND_INDEX = 0;
+	private static final int COMMAND_INDEX = 0;
 
-    private final ChessService service;
+	private final ChessService service;
 	private final Board board;
 	private Team team;
 
 	public ChessController(ChessService chessService, Board board, Team team) {
-        this.service = chessService;
-        this.board = board;
-        this.team = team;
+		this.service = chessService;
+		this.board = board;
+		this.team = team;
 	}
 
 	public void start() {
@@ -63,7 +63,7 @@ public class ChessController {
 	}
 
 	private void move(String input) {
-	    service.move(MoveInfo.of(input));
+		service.move(MoveInfo.of(input));
 
 		OutputView.printBoard(board.getBoard());
 		team = team.next();
