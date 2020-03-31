@@ -19,7 +19,7 @@ public class Pawn extends Piece {
         if (columnGap == 1 && team.isNotEnemy(that.team)) {
             throw new IllegalArgumentException("폰은 공격이 아니면 대각선 이동이 불가합니다.");
         }
-        return !createMovableArea().contains(that.position);
+        return isSameTeam(that.team) || !createMovableArea().contains(that.position);
     }
 
     @Override

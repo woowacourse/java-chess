@@ -38,13 +38,7 @@ public class ChessService {
         if (piece.isNotSameTeam(team)) {
             throw new IllegalArgumentException("아군 기물의 위치가 아닙니다.");
         }
-        if (board.hasPieceIn(Path.of(from, to))) {
-            throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
-        }
-        if (target.isSameTeam(team)) {
-            throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
-        }
-        if (piece.canNotMoveTo(target)) {
+        if (board.hasPieceIn(Path.of(from, to)) || piece.canNotMoveTo(target)) {
             throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
         }
     }

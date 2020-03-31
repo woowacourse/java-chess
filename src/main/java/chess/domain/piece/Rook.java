@@ -12,7 +12,7 @@ public class Rook extends Piece {
 
     @Override
     public boolean canNotMoveTo(Piece that) {
-        return !createMovableArea().contains(that.position);
+        return isSameTeam(that.team) || !createMovableArea().contains(that.position);
     }
 
     @Override
