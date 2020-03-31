@@ -13,6 +13,7 @@ public class Position {
 	private static final int WHITE_PAWN_INITIAL_COLUMN = 2;
 	private static final int ROW_START_INDEX = 0;
 	private static final int COLUMN_START_INDEX = 1;
+	private static final double BOTTOM_ZONE_END_POINT = 4;
 
 	private final Row row;
 	private final Column column;
@@ -51,6 +52,10 @@ public class Position {
 			return true;
 		}
 		return column.getValue() == BLACK_PAWN_INITIAL_COLUMN && color.isBlack();
+	}
+
+	public boolean isHalfBottom() {
+		return column.getValue() <= BOTTOM_ZONE_END_POINT;
 	}
 
 	public boolean isSameRow(Position position) {
