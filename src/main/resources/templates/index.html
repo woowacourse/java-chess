@@ -2,9 +2,175 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <script
+            crossorigin="anonymous"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <style>
+        #chessboard {
+            margin: 0 5% 5% 5%;
+            position: absolute;
+            width: 720px;
+            height: 720px;
+            left: 20%;
+        }
+
+        .cell {
+            margin: .2% 0 .2% 0;
+            table-layout: fixed;
+            width: 85px;
+            height: 85px;
+            text-align: center;
+        }
+
+        .cell:hover {
+            table-layout: fixed;
+            width: 85px;
+            height: 85px;
+            text-align: center;
+            background-color: lightpink;
+        }
+
+
+        .gray {
+            background-color: lightgray;
+        }
+
+        .selected {
+            transform: translateX(10px) translateY(-10px);
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<h1 style="text-align: center">체스</h1>
+<div id="chessboard">
+    <div class="table">
+        <div>
+            <button class="gray cell" id="a8">R</button>
+            <button class="cell" id="b8">N</button>
+            <button class="gray cell" id="c8">B</button>
+            <button class="cell" id="d8">Q</button>
+            <button class="gray cell" id="e8">K</button>
+            <button class="cell" id="f8">B</button>
+            <button class="gray cell" id="g8">N</button>
+            <button class="cell" id="h8">R</button>
+        </div>
+        <div>
+            <button class="cell" id="a7">P</button>
+            <button class="gray cell" id="b7">P</button>
+            <button class="cell" id="c7">P</button>
+            <button class="gray cell" id="d7">P</button>
+            <button class="cell" id="e7">P</button>
+            <button class="gray cell" id="f7">P</button>
+            <button class="cell" id="g7">P</button>
+            <button class="gray cell" id="h7">P</button>
+        </div>
+        <div>
+            <button class="gray cell" id="a6"></button>
+            <button class="cell" id="b6"></button>
+            <button class="gray cell" id="c6"></button>
+            <button class="cell" id="d6"></button>
+            <button class="gray cell" id="e6"></button>
+            <button class="cell" id="f6"></button>
+            <button class="gray cell" id="g6"></button>
+            <button class="cell" id="h6"></button>
+        </div>
+        <div>
+            <button class="cell" id="a5"></button>
+            <button class="gray cell" id="b5"></button>
+            <button class="cell" id="c5"></button>
+            <button class="gray cell" id="d5"></button>
+            <button class="cell" id="e5"></button>
+            <button class="gray cell" id="f5"></button>
+            <button class="cell" id="g5"></button>
+            <button class="gray cell" id="h5"></button>
+        </div>
+        <div>
+            <button class="gray cell" id="a4"></button>
+            <button class="cell" id="b4"></button>
+            <button class="gray cell" id="c4"></button>
+            <button class="cell" id="d4"></button>
+            <button class="gray cell" id="e4"></button>
+            <button class="cell" id="f4"></button>
+            <button class="gray cell" id="g4"></button>
+            <button class="cell" id="h4"></button>
+        </div>
+        <div>
+            <button class="cell" id="a3"></button>
+            <button class="gray cell" id="b3"></button>
+            <button class="cell" id="c3"></button>
+            <button class="gray cell" id="d3"></button>
+            <button class="cell" id="e3"></button>
+            <button class="gray cell" id="f3"></button>
+            <button class="cell" id="g3"></button>
+            <button class="gray cell" id="h3"></button>
+        </div>
+        <div>
+            <button class="gray cell" id="a2">p</button>
+            <button class="cell" id="b2">p</button>
+            <button class="gray cell" id="c2">p</button>
+            <button class="cell" id="d2">p</button>
+            <button class="gray cell" id="e2">p</button>
+            <button class="cell" id="f2">p</button>
+            <button class="gray cell" id="g2">p</button>
+            <button class="cell" id="h2">p</button>
+        </div>
+        <div>
+            <button class="cell" id="a1">r</button>
+            <button class="gray cell" id="b1">n</button>
+            <button class="cell" id="c1">b</button>
+            <button class="gray cell" id="d1">q</button>
+            <button class="cell" id="e1">k</button>
+            <button b class="gray cell" id="f1">b</button>
+            <button class="cell" id="g1">n</button>
+            <button class="gray cell" id="h1">r</button>
+        </div>
+        <label for="sourceSave"></label><input id="sourceSave" value="empty">
+    </div>
+</div>
+
+<script>
+    $(".cell").click(function () {
+        var sourceValue = $("#sourceSave").val();
+        if (sourceValue === "empty") {
+            $("#sourceSave").val($(this).attr("id"));
+            $(this).addClass("selected");
+            return;
+        }
+        validateMovable(sourceValue, $(this).attr("id"));
+    })
+
+    function onError() {
+        alert("룰아세요?");
+    }
+
+    function onSuccess(response) {
+        console.log(response);
+    }
+
+    function validateMovable(sourcePosition, targetPosition) {
+        console.log(sourcePosition, targetPosition);
+        document.getElementById('sourceSave').value = "empty";
+        document.getElementById(sourcePosition).classList.remove("selected");
+
+        //좌표를 post 전송
+        $.ajax({
+            type: 'post',
+            url: 'isMovable',
+            data: {sourcePosition: sourcePosition, targetPosition: targetPosition},
+            dataType: 'json',
+            error: onError,
+            success: onSuccess
+        });
+
+    }
+
+</script>
+
 </body>
 </html>
