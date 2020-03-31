@@ -26,4 +26,11 @@ class BoardTest {
 		Board board = PawnTestingBoard();
 		assertThatThrownBy(() -> board.findPieceBy(D2)).isInstanceOf(IllegalArgumentException.class);
 	}
+
+	@DisplayName("Piece를 이동시킬 때 목적지에 기물이 있으면 예외 발생")
+	@Test
+	void movePawn_ExistTargetPosition_ExceptionThrown() {
+		Board board = PawnTestingBoard();
+		assertThatThrownBy(() -> board.move(D4, D5)).isInstanceOf(IllegalArgumentException.class);
+	}
 }

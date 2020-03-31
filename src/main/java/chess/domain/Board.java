@@ -13,8 +13,16 @@ public class Board {
 	}
 
 	public void move(Position source, Position target) {
+		validateTargetPosition(target);
+
 		Piece sourcePiece = findPieceBy(source);
 		sourcePiece.move(target);
+	}
+
+	private void validateTargetPosition(Position target) {
+		if (isPresent(target)) {
+			throw new IllegalArgumentException("해당 위치에 말이 존재합니다.");
+		}
 	}
 
 	public Piece findPieceBy(Position position) {
@@ -22,5 +30,10 @@ public class Board {
 				.filter(piece -> piece.isSamePosition(position))
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
+	}
+
+	public boolean isPresent(Position position) {
+		return pieces.stream()
+				.anyMatch(piece -> piece.isSamePosition(position));
 	}
 }

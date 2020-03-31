@@ -23,9 +23,6 @@ public abstract class Piece implements Movable {
 
 	@Override
 	public boolean canMove(Position targetPosition) {
-		if (position.equals(targetPosition)) {
-			return false;
-		}
 		return isInPath(targetPosition);
 	}
 
