@@ -1,6 +1,5 @@
 package chess.domain.chessPiece.pieceType;
 
-import chess.domain.RuleStrategy.KingRuleStrategy;
 import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.pieceState.InitialState;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ChessPieceTest {
     @Test
     void PieceType_PieceColorAndMovableStrategy_GenerateInstance() {
-        ChessPiece chessPiece = new King(PieceColor.BLACK, new InitialState(new KingRuleStrategy()));
+        ChessPiece chessPiece = new King(PieceColor.BLACK);
 
         assertThat(chessPiece).isInstanceOf(ChessPiece.class);
     }
@@ -21,7 +20,7 @@ class ChessPieceTest {
     @ParameterizedTest
     @NullSource
     void PieceType_NullPieceColor_ExceptionThrown(PieceColor pieceColor) {
-        assertThatThrownBy(() -> new King(pieceColor, new InitialState(new KingRuleStrategy())))
+        assertThatThrownBy(() -> new King(pieceColor))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("피스 색상이 null입니다.");
     }
@@ -29,7 +28,7 @@ class ChessPieceTest {
     @ParameterizedTest
     @NullSource
     void PieceType_NullState_ExceptionThrown(InitialState initialState) {
-        assertThatThrownBy(() -> new King(PieceColor.BLACK, initialState))
+        assertThatThrownBy(() -> new King(PieceColor.BLACK))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("피스 상태가 null입니다.");
     }

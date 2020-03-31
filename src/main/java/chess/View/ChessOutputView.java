@@ -2,8 +2,6 @@ package chess.View;
 
 import chess.domain.chessBoard.ChessBoard;
 
-import java.util.List;
-
 public class ChessOutputView {
     private ChessOutputView() {
     }
@@ -23,8 +21,8 @@ public class ChessOutputView {
         System.out.println();
     }
 
-    private static void printOneChessRank(List<String> oneChessRank) {
-        oneChessRank.forEach(System.out::print);
+    private static void printOneChessRank(RenderOneChessRank oneChessRank) {
+        oneChessRank.getOneChessRank().forEach(System.out::print);
         System.out.println();
     }
 
