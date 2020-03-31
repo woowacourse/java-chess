@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.domain.position.PositionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ class PieceTest {
 
 	@BeforeEach
 	void setUp() {
-		position = new Position("a4");
+		position = PositionFactory.of("a4");
 		piece = TestPieceFactory.createKing(position, Color.WHITE);
 	}
 
@@ -36,7 +37,7 @@ class PieceTest {
 	@DisplayName("getResource BLACK 일 경우 대문자로 반환")
 	@Test
 	void getResource_when_black_return_upper_case() {
-		Piece piece = TestPieceFactory.createKing(new Position("a4"), Color.BLACK);
+		Piece piece = TestPieceFactory.createKing(PositionFactory.of("a4"), Color.BLACK);
 		assertThat(piece.getResource()).isEqualTo("K");
 	}
 }
