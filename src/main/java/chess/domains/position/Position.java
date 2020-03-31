@@ -6,28 +6,37 @@ import java.util.stream.Collectors;
 public class Position implements Comparable<Position> {
     private static final Map<String, Position> cachedPositions;
 
+    private Column x;
+    private Row y;
+
     static {
         Map<String, Position> positions = new HashMap<>();
         for (Column x : Column.values()) {
-            for (Row y : Row.values()) {
-                Position position = new Position(x, y);
-                positions.put(x.name() + y.toString(), position);
-            }
+            positions.putAll(createPositionsByColumn(x));
         }
         cachedPositions = positions;
     }
 
-    private Column x;
-    private Row y;
+    private static Map<String, Position> createPositionsByColumn(Column x) {
+        Map<String, Position> positions = new HashMap<>();
+        for (Row y : Row.values()) {
+            String positionName = String.valueOf(x.getColumn()) + y.getRow();
+            Position position = new Position(x, y);
+            positions.put(positionName, position);
+        }
+        return positions;
+    }
 
     public Position(Column x, Row y) {
         this.x = x;
         this.y = y;
     }
 
-    public static List<String> fromRow(String row) {
-        return cachedPositions.keySet().stream()
-                .filter(key -> key.endsWith(row)).sorted().collect(Collectors.toList());
+    public static List<Position> fromRow(Row row) {
+        return cachedPositions.values().stream()
+                .filter(position -> position.isRow(row))
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public static Position ofPositionName(String positionName) {
@@ -50,8 +59,12 @@ public class Position implements Comparable<Position> {
         return this.y == target.y;
     }
 
-    public boolean isRow(int row) {
-        return this.y.getRow() == row;
+    public boolean isRow(Row row) {
+        return this.y == row;
+    }
+
+    public boolean isColumn(Column column) {
+        return this.x == column;
     }
 
     public List<Position> findRoute(Position target) {
@@ -75,10 +88,6 @@ public class Position implements Comparable<Position> {
         int xGap = this.xGapBetween(target);
 
         return Direction.findDirection(xGap, yGap);
-    }
-
-    public boolean isColumn(Column column) {
-        return this.x == column;
     }
 
     @Override

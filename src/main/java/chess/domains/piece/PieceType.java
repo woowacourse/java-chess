@@ -9,11 +9,19 @@ public enum PieceType {
     QUEEN("q", 9),
     ROOK("r", 5);
 
-    public final String name;
-    public final double score;
+    private final String name;
+    private final double score;
 
     PieceType(String name, double score) {
         this.name = name;
         this.score = score;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getScore() {
+        return score;
     }
 }
