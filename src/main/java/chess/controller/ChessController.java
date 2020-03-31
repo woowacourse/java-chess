@@ -35,7 +35,6 @@ public class ChessController {
 
         while (executeOperation(chessGame)) {
             OutputView.printBoard(chessGame.createBoard());
-            OutputView.printScore(chessGame.calculateScore());
         }
         if (chessGame.isKingDead()) {
             OutputView.printFinishByKingDead(chessGame.getAliveKingColor());
@@ -48,6 +47,9 @@ public class ChessController {
 
         if(operationType.isMove()) {
             chessGame.move(PositionFactory.of(operations.getFirstArgument()), PositionFactory.of(operations.getSecondArgument()));
+        }
+        if(operationType.isStatus()) {
+            OutputView.printScore(chessGame.calculateScore());
         }
         return (operationType.canExecuteMore() && !chessGame.isKingDead());
     }

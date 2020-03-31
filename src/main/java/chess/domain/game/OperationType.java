@@ -58,4 +58,8 @@ public enum OperationType {
     public boolean isMove() {
         return MOVE.equals(this);
     }
+
+    public boolean isStatus() {
+        return STATUS.equals(this);
+    }
 }
