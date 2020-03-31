@@ -30,7 +30,7 @@ public class ChessWebApplication {
 			Position targetPosition = Position.of(target);
 
 			Map<String, Object> model = new HashMap<>();
-			model.put("isMovable", chessBoard.movePiece(sourcePosition, targetPosition));
+			chessBoard.movePiece(sourcePosition, targetPosition);
 			model.put("source", source);
 			model.put("target", target);
 

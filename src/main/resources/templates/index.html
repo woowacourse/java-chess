@@ -150,7 +150,13 @@
     }
 
     function onSuccess(response) {
-        console.log(response);
+        var sourcePosition = response.source;
+        var targetPosition = response.target;
+        var piece = document.getElementById(sourcePosition).innerText;
+        console.log(piece);
+
+        document.getElementById(sourcePosition).innerText = "";
+        document.getElementById(targetPosition).innerText = piece;
     }
 
     function validateMovable(sourcePosition, targetPosition) {

@@ -36,7 +36,7 @@ public class ChessBoard {
 		return pieces;
 	}
 
-	public boolean movePiece(Position sourcePosition, Position targetPosition) {
+	public void movePiece(Position sourcePosition, Position targetPosition) {
 		Piece sourcePiece = findPieceByPosition(sourcePosition)
 				.orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_SOURCE_EMPTY));
 		validateMovable(sourcePosition, targetPosition);
@@ -44,7 +44,6 @@ public class ChessBoard {
 
 		removeAttackedPiece(targetPosition);
 		sourcePiece.move(targetPosition);
-		return true;
 	}
 
 	private void validateMovable(Position sourcePosition, Position targetPosition) {
