@@ -13,7 +13,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 
 class KingTest {
@@ -29,8 +28,10 @@ class KingTest {
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(D2, new Piece("b", Color.BLACK, PieceType.BISHOP));
-		Board board = new Board(BoardFactory.initializeKingQueen(pieces));
+		pieces.put(D2, new Piece(Color.BLACK, PieceType.BISHOP));
+		pieces.put(E1, new Piece(Color.WHITE, PieceType.KING));
+		pieces.put(D1, new Piece(Color.WHITE, PieceType.QUEEN));
+		Board board = new Board(pieces);
 		Piece king = board.findPieceBy(currentPosition);
 
 		Set<Position> positions = king.findMovablePositions(currentPosition, board::findPieceBy);

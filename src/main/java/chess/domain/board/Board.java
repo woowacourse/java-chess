@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import static chess.domain.piece.Piece.*;
+import static chess.domain.piece.PieceType.*;
 
 import java.util.Map;
 
@@ -39,6 +39,6 @@ public class Board {
 	}
 
 	private boolean isKingOf(Color color, Piece piece) {
-		return piece.isSameColor(color) && piece.getScore() == KING_SCORE;
+		return piece.isSameColor(color) && piece.getScore() == KING.getScore();
 	}
 }

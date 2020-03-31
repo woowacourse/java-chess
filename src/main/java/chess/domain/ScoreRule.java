@@ -1,6 +1,6 @@
 package chess.domain;
 
-import static chess.domain.piece.Piece.*;
+import static chess.domain.piece.PieceType.*;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,7 +40,7 @@ public class ScoreRule {
 		return board.getPieces()
 			.entrySet()
 			.stream()
-			.filter(x -> x.getValue().getScore() == PAWN_SCORE)
+			.filter(x -> x.getValue().getScore() == BLACK_PAWN.getScore())
 			.filter(x -> x.getValue().isSameColor(color))
 			.collect(Collectors.groupingBy(x -> x.getKey().getColumn(), Collectors.counting()));
 	}

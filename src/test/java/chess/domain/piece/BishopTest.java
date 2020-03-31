@@ -13,7 +13,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 
 class BishopTest {
@@ -33,8 +32,9 @@ class BishopTest {
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(B2, new Piece("b", Color.BLACK, PieceType.BISHOP));
-		Board board = new Board(BoardFactory.initializeBishop(pieces));
+		pieces.put(B2, new Piece(Color.BLACK, PieceType.BISHOP));
+		pieces.put(C1, new Piece(Color.WHITE, PieceType.BISHOP));
+		Board board = new Board(pieces);
 		Piece bishop = board.findPieceBy(currentPosition);
 
 		Set<Position> positions = bishop.findMovablePositions(currentPosition, board::findPieceBy);

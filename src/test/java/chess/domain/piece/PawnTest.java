@@ -35,8 +35,8 @@ class PawnTest {
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(A3, new Piece("b", Color.BLACK, BISHOP));
-		pieces.put(C3, new Piece("b", Color.WHITE, BISHOP));
+		pieces.put(A3, new Piece(Color.BLACK, BISHOP));
+		pieces.put(C3, new Piece(Color.WHITE, BISHOP));
 		Board board = new Board(BoardFactory.initializePawn(pieces));
 		Piece pawn = board.findPieceBy(currentPosition);
 

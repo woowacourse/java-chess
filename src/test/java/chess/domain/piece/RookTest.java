@@ -4,6 +4,7 @@ import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -12,7 +13,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 
 class RookTest {
@@ -31,7 +31,12 @@ class RookTest {
 	@ParameterizedTest
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
-		Board board = new Board(BoardFactory.initializeRook(new HashMap<>()));
+		Map<Position, Piece> pieces = new HashMap<>();
+		pieces.put(A1, new Piece(Color.WHITE, PieceType.ROOK));
+		pieces.put(A8, new Piece(Color.BLACK, PieceType.ROOK));
+		pieces.put(H1, new Piece(Color.WHITE, PieceType.ROOK));
+		Board board = new Board(pieces);
+
 		Piece rook = board.findPieceBy(currentPosition);
 
 		Set<Position> positions = rook.findMovablePositions(currentPosition, board::findPieceBy);

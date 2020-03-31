@@ -1,28 +1,30 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Color.*;
+
 import java.util.Set;
 import java.util.function.Function;
 
 import chess.domain.position.Position;
 
 public class Piece {
-	public static final double KING_SCORE = 0;
-	public static final double BISHOP_SCORE = 3;
-	public static final double KNIGHT_SCORE = 2.5;
-	public static final double PAWN_SCORE = 1;
-	public static final double QUEEN_SCORE = 9;
-	public static final double ROOK_SCORE = 5;
-
 	private String name;
 	private Color color;
 	private MovingStrategy movingStrategy;
 	private double score;
 
-	public Piece(String name, Color color, PieceType pieceType) {
-		this.name = name;
+	public Piece(Color color, PieceType pieceType) {
 		this.color = color;
+		this.name = nameByColor(color, pieceType.getName());
 		this.movingStrategy = pieceType.getMovingStrategy();
 		this.score = pieceType.getScore();
+	}
+
+	private String nameByColor(Color color, String name) {
+		if (color == BLACK) {
+			return name.toUpperCase();
+		}
+		return name;
 	}
 
 	public Set<Position> findMovablePositions(Position currentPosition, Function<Position, Piece> pieceFinder) {

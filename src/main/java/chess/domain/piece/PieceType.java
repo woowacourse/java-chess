@@ -1,36 +1,37 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.Piece.*;
 import static chess.domain.position.Direction.*;
 
 import java.util.Arrays;
 
 public enum PieceType {
-	KING(new FixedMovingStrategy(Arrays.asList(
+	KING("k", new FixedMovingStrategy(Arrays.asList(
 		UP, DOWN, LEFT, RIGHT, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN)),
-		KING_SCORE),
-	QUEEN(new StretchMovingStrategy(Arrays.asList(
+		0),
+	QUEEN("q", new StretchMovingStrategy(Arrays.asList(
 		UP, DOWN, LEFT, RIGHT, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN)),
-		QUEEN_SCORE),
-	ROOK(new StretchMovingStrategy(Arrays.asList(
+		9),
+	ROOK("r", new StretchMovingStrategy(Arrays.asList(
 		UP, DOWN, LEFT, RIGHT)),
-		ROOK_SCORE),
-	BISHOP(new StretchMovingStrategy(Arrays.asList(
+		5),
+	BISHOP("b", new StretchMovingStrategy(Arrays.asList(
 		LEFT_UP, RIGHT_UP, LEFT_DOWN, RIGHT_DOWN)),
-		BISHOP_SCORE),
-	KNIGHT(new FixedMovingStrategy(Arrays.asList(
+		3),
+	KNIGHT("n", new FixedMovingStrategy(Arrays.asList(
 		LEFT_LEFT_DOWN, LEFT_LEFT_UP,
 		RIGHT_RIGHT_DOWN, RIGHT_RIGHT_UP,
 		LEFT_DOWN_DOWN, LEFT_UP_UP,
 		RIGHT_DOWN_DOWN, RIGHT_UP_UP)),
-		KNIGHT_SCORE),
-	BLACK_PAWN(new PawnMovingStrategy(Color.BLACK), PAWN_SCORE),
-	WHITE_PAWN(new PawnMovingStrategy(Color.WHITE), PAWN_SCORE);
+		2.5),
+	BLACK_PAWN("P", new PawnMovingStrategy(Color.BLACK), 1),
+	WHITE_PAWN("p", new PawnMovingStrategy(Color.WHITE), 1);
 
+	private final String name;
 	private final MovingStrategy movingStrategy;
 	private final double score;
 
-	PieceType(MovingStrategy movingStrategy, double score) {
+	PieceType(String name, MovingStrategy movingStrategy, double score) {
+		this.name = name;
 		this.movingStrategy = movingStrategy;
 		this.score = score;
 	}
@@ -41,5 +42,9 @@ public enum PieceType {
 
 	public double getScore() {
 		return score;
+	}
+
+	public String getName() {
+		return name;
 	}
 }
