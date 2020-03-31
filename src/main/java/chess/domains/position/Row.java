@@ -37,9 +37,4 @@ public enum Row {
     public int getRow() {
         return row;
     }
-
-    @Override
-    public String toString() {
-        return String.valueOf(row);
-    }
 }

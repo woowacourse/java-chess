@@ -3,20 +3,20 @@ package chess.domains.position;
 import java.util.Arrays;
 
 public enum Column {
-    A(1),
-    B(2),
-    C(3),
-    D(4),
-    E(5),
-    F(6),
-    G(7),
-    H(8);
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
 
     public static final String COLUMN_OUT_OF_RANGE_EXCEPTION_MESSAGE = "Column 범위를 벗어났습니다.";
 
-    private int column;
+    private char column;
 
-    Column(int column) {
+    Column(char column) {
         this.column = column;
     }
 
@@ -33,5 +33,9 @@ public enum Column {
                 .filter(column -> column.column == this.column + block)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(COLUMN_OUT_OF_RANGE_EXCEPTION_MESSAGE));
+    }
+
+    public char getColumn() {
+        return this.column;
     }
 }

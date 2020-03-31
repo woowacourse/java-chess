@@ -9,12 +9,19 @@ public class Position implements Comparable<Position> {
     static {
         Map<String, Position> positions = new HashMap<>();
         for (Column x : Column.values()) {
-            for (Row y : Row.values()) {
-                Position position = new Position(x, y);
-                positions.put(x.name() + y.toString(), position);
-            }
+            positions.putAll(createPositionsByColumn(x));
         }
         cachedPositions = positions;
+    }
+
+    private static Map<String, Position> createPositionsByColumn(Column x) {
+        Map<String, Position> positions = new HashMap<>();
+        for (Row y : Row.values()) {
+            String positionName = String.valueOf(x.getColumn()) + y.getRow();
+            Position position = new Position(x, y);
+            positions.put(positionName, position);
+        }
+        return positions;
     }
 
     private Column x;
