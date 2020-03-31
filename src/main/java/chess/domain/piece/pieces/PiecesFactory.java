@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PiecesFactory {
+	// TODO: 2020/03/30 stream
 	public static Pieces create() {
 		List<Piece> pieces = new ArrayList<>();
 

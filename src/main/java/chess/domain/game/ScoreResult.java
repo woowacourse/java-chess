@@ -60,8 +60,6 @@ public class ScoreResult {
     private double calculateTotalScoreBy(Color color, List<Piece> pieces) {
         return pieces.stream()
                 .filter(piece -> piece.isSameColor(color))
-                .collect(Collectors.toList())
-                .stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
     }

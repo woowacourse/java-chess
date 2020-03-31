@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 
 public class ChessGame {
     private final Pieces pieces;
-    private final Turn turn;
+    private Turn turn;
 
     public ChessGame() {
         pieces = PiecesFactory.create();
@@ -16,7 +16,7 @@ public class ChessGame {
 
     public void move(Position start, Position end) {
         pieces.move(start, end, turn.getColor());
-        turn.change();
+        turn = turn.change();
     }
 
     public ScoreResult calculateScore() {

@@ -2,8 +2,19 @@ package chess.domain.game;
 
 import chess.domain.piece.Color;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Turn {
-    private Color color;
+    private static final List<Turn> turns;
+
+    private final Color color;
+
+    static {
+        turns = Arrays.asList(
+                new Turn(Color.WHITE),
+                new Turn(Color.BLACK));
+    }
 
     public Turn(Color color) {
         validate(color);
@@ -16,12 +27,17 @@ public class Turn {
         }
     }
 
-    public void change() {
+    public Turn change() {
         if (color.isWhite()) {
-            color = Color.BLACK;
-            return;
+            return turns.stream()
+                    .filter(turn -> turn.getColor().isBlack())
+                    .findFirst()
+                    .orElseThrow(UnsupportedOperationException::new);
         }
-        color = Color.WHITE;
+        return turns.stream()
+                .filter(turn -> turn.getColor().isWhite())
+                .findFirst()
+                .orElseThrow(UnsupportedOperationException::new);
     }
 
     public Color getColor() {

@@ -4,6 +4,7 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class Pieces {
 	public void move(Position start, Position end, Color color) {
 		Piece piece = findBy(start, color);
 
-		Set<Position> movablePositions = piece.createMovablePositions(pieces);
+		Positions movablePositions = piece.createMovablePositions(pieces);
 
 		if (!movablePositions.contains(end)) {
 			throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
