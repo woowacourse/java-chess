@@ -9,6 +9,17 @@ import org.junit.jupiter.api.Test;
 import chess.domain.piece.Piece;
 
 class BoardTest {
+	@DisplayName("Bishop을 경로에 맞게 이동")
+	@Test
+	void moveBishop() {
+		Board board = BishopTestingBoard();
+		Piece sourcePiece = board.findPieceBy(D4);
+
+		board.move(D4, E5);
+
+		assertThat(board.findPieceBy(E5)).isEqualTo(sourcePiece);
+	}
+
 	@DisplayName("Pawn을 경로에 맞게 이동")
 	@Test
 	void movePawn() {

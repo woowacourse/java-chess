@@ -34,6 +34,15 @@ public class TestFixture {
 	public static Queen QUEEN_D4 = new Queen(WHITE, D4);
 	public static Rook ROOK_D4 = new Rook(WHITE, D4);
 
+	public static Board BishopTestingBoard() {
+		return new Board(Arrays.asList(
+				BISHOP_D4,
+				new Pawn(WHITE, C5),
+				new Pawn(WHITE, E3),
+				new Pawn(WHITE, C3)
+		));
+	}
+
 	public static Board PawnTestingBoard() {
 		return new Board(Arrays.asList(
 				PAWN_D4,
