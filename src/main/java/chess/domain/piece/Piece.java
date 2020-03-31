@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.piece.movable.Movable;
 import chess.domain.piece.pieces.PieceInitializer;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
+import chess.domain.position.positions.Positions;
 
 import java.util.List;
 import java.util.Objects;

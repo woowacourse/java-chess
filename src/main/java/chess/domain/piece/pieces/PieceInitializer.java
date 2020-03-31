@@ -14,7 +14,7 @@ public enum PieceInitializer {
     E1(PieceType.QUEEN, PositionFactory.of("e1"), Color.WHITE, new BlockedMovable(Directions.EVERY)),
     F1(PieceType.BISHOP, PositionFactory.of("f1"), Color.WHITE, new BlockedMovable(Directions.DIAGONAL)),
     G1(PieceType.KNIGHT, PositionFactory.of("g1"), Color.WHITE, new UnblockedMovable(Directions.KNIGHT)),
-    H1(PieceType.ROOK, PositionFactory.of("h1"), Color.WHITE, new BlockedMovable(Directions.LINEAR)),
+    H1(PieceType.ROOK, PositionFactory.of("h1")),
     A2(PieceType.PAWN, PositionFactory.of("a2"), Color.WHITE, new PawnMovable(Directions.WHITE_PAWN)),
     B2(PieceType.PAWN, PositionFactory.of("b2"), Color.WHITE, new PawnMovable(Directions.WHITE_PAWN)),
     C2(PieceType.PAWN, PositionFactory.of("c2"), Color.WHITE, new PawnMovable(Directions.WHITE_PAWN)),
@@ -50,6 +50,13 @@ public enum PieceInitializer {
         this.position = position;
         this.color = color;
         this.movable = movable;
+    }
+
+    PieceInitializer(PieceType pieceType, Position position) {
+        this.pieceType = pieceType;
+        this.position = position;
+        this.color = Color.WHITE;
+        this.movable = new PawnMovable(Directions.WHITE_PAWN);
     }
 
     public PieceType getPieceType() {

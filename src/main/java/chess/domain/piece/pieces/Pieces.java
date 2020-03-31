@@ -4,7 +4,7 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
+import chess.domain.position.positions.Positions;
 
 import java.util.List;
 
