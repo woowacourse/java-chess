@@ -10,10 +10,12 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Rook extends Piece {
-	private static final String SYMBOL = "r";
+	private final double score;
 
 	public Rook(Position position, Team team) {
 		super(position, team);
+		this.symbol = "r";
+		this.score = 5d;
 	}
 
 	@Override
@@ -56,10 +58,7 @@ public class Rook extends Piece {
 			.findFirst();
 	}
 
-	public String showSymbol() {
-		if (this.team == Team.WHITE) {
-			return SYMBOL;
-		}
-		return SYMBOL.toUpperCase();
+	public double getScore() {
+		return score;
 	}
 }

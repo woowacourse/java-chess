@@ -10,10 +10,12 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Knight extends Piece {
-	private static final String SYMBOL = "n";
+	private final double score;
 
 	public Knight(Position position, Team team) {
 		super(position, team);
+		this.symbol = "n";
+		this.score = 2.5d;
 	}
 
 	@Override
@@ -54,10 +56,7 @@ public class Knight extends Piece {
 			.findFirst();
 	}
 
-	public String showSymbol() {
-		if (this.team == Team.WHITE) {
-			return SYMBOL;
-		}
-		return SYMBOL.toUpperCase();
+	public double getScore() {
+		return score;
 	}
 }

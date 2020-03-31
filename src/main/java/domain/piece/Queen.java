@@ -10,10 +10,12 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Queen extends Piece {
-	private static final String SYMBOL = "q";
+	private final double score;
 
 	public Queen(Position position, Team team) {
 		super(position, team);
+		this.symbol = "q";
+		this.score = 9d;
 	}
 
 	@Override
@@ -58,10 +60,7 @@ public class Queen extends Piece {
 			.findFirst();
 	}
 
-	public String showSymbol() {
-		if (this.team == Team.WHITE) {
-			return SYMBOL;
-		}
-		return SYMBOL.toUpperCase();
+	public double getScore() {
+		return score;
 	}
 }

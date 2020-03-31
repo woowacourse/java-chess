@@ -14,6 +14,7 @@ import domain.piece.team.Team;
 public abstract class Piece implements Movable {
 	protected Position position;
 	protected Team team;
+	protected String symbol;
 
 	public Piece(Position position, Team team) {
 		this.position = position;
@@ -49,22 +50,33 @@ public abstract class Piece implements Movable {
 		ranks.get(rankIndex).getPieces().add(this);
 	}
 
+	public String showSymbol() {
+		if (this.team == Team.WHITE) {
+			return symbol;
+		}
+		return symbol.toUpperCase();
+	}
+
+	public boolean isSameTeam(Team team) {
+		return this.team.equals(team);
+	}
+
 	protected abstract boolean validDirection(Direction direction);
 
 	protected abstract boolean validStepSize(int rowGap, int columnGap);
 
 	protected abstract boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
 
-	public abstract String showSymbol();
+	public abstract double getScore();
 
-	private boolean isInPlace(Position sourcePosition, Position targetPosition) {
+	private boolean inputSameSourceAndTarget(Position sourcePosition, Position targetPosition) {
 		return sourcePosition.equals(targetPosition);
 	}
 
 	@Override
 	public boolean canMove(Position targetPosition, Team turn, List<Rank> ranks) {
 		validateTurn(turn);
-		if (isInPlace(this.position, targetPosition)) {
+		if (inputSameSourceAndTarget(this.position, targetPosition)) {
 			throw new InvalidPositionException(InvalidPositionException.IS_IN_PLACE);
 		}
 		int rowGap = this.position.calculateRowGap(targetPosition);

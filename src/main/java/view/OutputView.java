@@ -4,8 +4,8 @@ import java.util.List;
 
 import domain.board.Board;
 import domain.board.Rank;
-import domain.command.InvalidCommandException;
 import domain.piece.Piece;
+import domain.piece.team.Team;
 
 public class OutputView {
 	public static void printChessGameStart() {
@@ -49,5 +49,19 @@ public class OutputView {
 
 	public static void printErrorMessage(IllegalArgumentException e) {
 		System.out.println(e.getMessage());
+	}
+
+	public static void printTeamScore(double whiteTeamScore, double blackTeamScore) {
+		System.out.println("White팀 점수는 " + whiteTeamScore + "점 입니다.");
+		System.out.println("Black팀 점수는 " + blackTeamScore + "점 입니다.");
+	}
+
+	public static void printTurn(Team turn) {
+		if (turn == Team.WHITE) {
+			System.out.println("White팀 차례입니다.");
+		}
+		if (turn == Team.BLACK) {
+			System.out.println("Black팀 차례입니다.");
+		}
 	}
 }

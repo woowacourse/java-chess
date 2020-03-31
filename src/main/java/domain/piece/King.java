@@ -10,11 +10,14 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class King extends Piece {
-	private static final String SYMBOL = "k";
 	private static final int MAX_STEP_SIZE = 2;
+
+	private final double score;
 
 	public King(Position position, Team team) {
 		super(position, team);
+		this.symbol = "k";
+		this.score = 0d;
 	}
 
 	@Override
@@ -58,10 +61,7 @@ public class King extends Piece {
 			.findFirst();
 	}
 
-	public String showSymbol() {
-		if (this.team == Team.WHITE) {
-			return SYMBOL;
-		}
-		return SYMBOL.toUpperCase();
+	public double getScore() {
+		return score;
 	}
 }

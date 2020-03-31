@@ -12,13 +12,16 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Pawn extends Piece {
-	private static final String SYMBOL = "p";
 	private static final int MiN_STEP_SIZE_OF_DIAGONAL = 1;
+
+	private final double score;
 	private State state;
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
 		state = State.START;
+		this.symbol = "p";
+		this.score = 1d;
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void move(Position targetPosition, List<Rank> ranks) throws InvalidPositionException {
+	public void move(Position targetPosition, List<Rank> ranks) {
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		Direction direction = this.findDirection(rowGap, this.position.calculateColumnGap(targetPosition));
 		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
@@ -80,10 +83,7 @@ public class Pawn extends Piece {
 			.findFirst();
 	}
 
-	public String showSymbol() {
-		if (this.team == Team.WHITE) {
-			return SYMBOL;
-		}
-		return SYMBOL.toUpperCase();
+	public double getScore() {
+		return score;
 	}
 }

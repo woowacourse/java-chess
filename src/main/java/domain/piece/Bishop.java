@@ -10,10 +10,12 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Bishop extends Piece {
-	private static final String SYMBOL = "b";
+	private final double score;
 
 	public Bishop(Position position, Team team) {
 		super(position, team);
+		this.symbol = "b";
+		this.score = 3d;
 	}
 
 	@Override
@@ -58,10 +60,7 @@ public class Bishop extends Piece {
 			.findFirst();
 	}
 
-	public String showSymbol() {
-		if (this.team == Team.WHITE) {
-			return SYMBOL;
-		}
-		return SYMBOL.toUpperCase();
+	public double getScore() {
+		return score;
 	}
 }

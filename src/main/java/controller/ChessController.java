@@ -21,25 +21,30 @@ public class ChessController {
 
 	private void run(Board board, Team turn) {
 		OutputView.printChessBoard(board);
-		String inputChessCommand = InputView.inputCommand();
-		String[] inputCommand = inputChessCommand.split(DELIMITER);
-
 		try {
-			executeCommand(board, turn, inputCommand);
+			executeCommand(board, turn);
+			OutputView.printChessBoard(board);
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e);
 			run(board, turn);
 		}
 	}
 
-	private void executeCommand(Board board, Team turn, String[] inputCommand) {
-		Command command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
-		while (command != Command.END) {
-			OutputView.printChessBoard(board);
+	private void executeCommand(Board board, Team turn) {
+		Command command;
+		String[] inputCommand;
+		do {
+			OutputView.printTurn(turn);
+			inputCommand = InputView.inputCommand().split(DELIMITER);
+			command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
 			if (command == Command.MOVE) {
 				board.move(inputCommand[SOURCE_POSITION], inputCommand[TARGET_POSITION], turn);
 				turn = Team.changeTurn(turn);
 			}
-		}
+			if (command == Command.STATUS) {
+				OutputView.printTeamScore(board.calculateTeamScore(Team.WHITE), board.calculateTeamScore(Team.BLACK));
+			}
+			OutputView.printChessBoard(board);
+		} while (command != Command.END);
 	}
 }
