@@ -47,15 +47,15 @@ public enum OperationType {
 		}
 	}
 
+	public boolean runOperate(ChessGame chessGame, Operations operations) {
+		return operate.apply(chessGame, operations);
+	}
+
 	public boolean isStart() {
 		return START.equals(this);
 	}
 
 	public boolean isEnd() {
 		return END.equals(this);
-	}
-
-	public boolean runOperate(ChessGame chessGame, Operations operations) {
-		return operate.apply(chessGame, operations);
 	}
 }

@@ -35,7 +35,7 @@ public class Piece {
 	}
 
 	public Positions createMovablePositions(List<Piece> pieces) {
-		return movable.createMovablePositions(position, pieces, color);
+		return movable.findMovablePositions(position, pieces, color);
 	}
 
 	public void move(Position position) {
