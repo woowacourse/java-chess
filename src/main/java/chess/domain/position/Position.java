@@ -32,7 +32,7 @@ public class Position {
 
 	public Direction findDirection(Position target) {
 		return Arrays.stream(Direction.values())
-				.filter(strategy -> strategy.isSameDirection(this, target))
+				.filter(strategy -> strategy.isMatch(this, target))
 				.findAny()
 				.orElse(Direction.NON_LINEAR);
 	}

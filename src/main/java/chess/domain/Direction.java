@@ -18,6 +18,7 @@ public enum Direction {
 	}
 
 	public boolean isSameDirection(Position source, Position target) {
+	public boolean isMatch(Position source, Position target) {
 		return filter.test(source, target);
 	}
 }

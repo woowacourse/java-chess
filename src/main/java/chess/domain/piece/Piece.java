@@ -23,15 +23,26 @@ public abstract class Piece implements Movable {
 
 	@Override
 	public boolean canMove(Position targetPosition) {
+		if (position.equals(targetPosition)) {
+			return false;
+		}
 		return isInPath(targetPosition);
 	}
 
 	public boolean canNotMove(Position targetPosition) {
-		return !this.canMove(targetPosition);
+		return !canMove(targetPosition);
+	}
+
+	public boolean canAttack(Piece piece) {
+		return canMove(piece.position) && !isSameSide(piece);
+	}
+
+	public boolean canNotAttack(Piece piece) {
+		return !canAttack(piece);
 	}
 
 	public boolean isBlock(Position source, Position target) {
-		return isBetween(source, target) && findDirection(target).isSameDirection(position, source);
+		return isBetween(source, target) && findDirection(target).isMatch(position, source);
 	}
 
 	private boolean isBetween(Position source, Position target) {

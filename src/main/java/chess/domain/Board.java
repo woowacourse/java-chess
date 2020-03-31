@@ -13,12 +13,31 @@ public class Board {
 	}
 
 	public void move(Position source, Position target) {
-		validateTargetPosition(target);
-		validateBlock(source, target);
-
 		Piece sourcePiece = findPieceBy(source);
-		if (sourcePiece.canMove(target)) {
-			sourcePiece.move(target);
+		validateBlock(source, target);
+		validateAction(sourcePiece, target);
+
+		pieces.removeIf(piece -> piece.isSamePosition(target));
+		sourcePiece.move(target);
+	}
+
+	private void validateAction(Piece sourcePiece, Position target) {
+		if (isPresent(target)) {
+			validateAttack(sourcePiece, findPieceBy(target));
+			return;
+		}
+		validateMove(sourcePiece, target);
+	}
+
+	private void validateAttack(Piece sourcePiece, Piece targetPiece) {
+		if (sourcePiece.canNotAttack(targetPiece)) {
+			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
+		}
+	}
+
+	private void validateMove(Piece sourcePiece, Position target) {
+		if (sourcePiece.canNotMove(target)) {
+			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
 	}
 
@@ -31,12 +50,6 @@ public class Board {
 	private boolean isBlock(Position source, Position target) {
 		return pieces.stream()
 				.anyMatch(piece -> piece.isBlock(source, target));
-	}
-
-	private void validateTargetPosition(Position target) {
-		if (isPresent(target)) {
-			throw new IllegalArgumentException("해당 위치에 말이 존재합니다.");
-		}
 	}
 
 	public Piece findPieceBy(Position position) {
