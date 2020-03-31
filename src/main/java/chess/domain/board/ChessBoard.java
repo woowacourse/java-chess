@@ -71,7 +71,7 @@ public class ChessBoard {
     private BoardSquare getFinishPawnBoard() {
         return chessBoard.keySet().stream()
             .filter(boardSquare -> chessBoard.get(boardSquare) instanceof Pawn)
-            .filter(BoardSquare::isStartRank)
+            .filter(BoardSquare::isLastRank)
             .findFirst()
             .orElseThrow(IllegalAccessError::new);
     }
@@ -79,7 +79,7 @@ public class ChessBoard {
     private boolean isReachFinishPawn() {
         return chessBoard.keySet().stream()
             .filter(boardSquare -> chessBoard.get(boardSquare) instanceof Pawn)
-            .anyMatch(BoardSquare::isStartRank);
+            .anyMatch(BoardSquare::isLastRank);
     }
 
     public MoveState changeFinishPawn(Type hopeType) {
@@ -125,10 +125,10 @@ public class ChessBoard {
                 .findFirst().orElseThrow(IllegalAccessError::new));
         }
         chessBoard.put(moveSquareAfter, currentPiece);
-        MoveIfCastlingRook(moveSquareBefore, moveSquareAfter);
+        moveIfCastlingRook(moveSquareBefore, moveSquareAfter);
     }
 
-    private void MoveIfCastlingRook(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
+    private void moveIfCastlingRook(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
         Set<ChessInitialSetting> removeCastlingElements = castlingElements.stream()
             .filter(castlingElement -> castlingElement.isSameSquare(moveSquareBefore))
             .collect(Collectors.toSet());
@@ -179,18 +179,18 @@ public class ChessBoard {
             .collect(Collectors.toList());
     }
 
-    public boolean isNoPiece(MoveSquare MoveSquares) {
-        return !chessBoard.containsKey(MoveSquares.get(MoveOrder.BEFORE));
+    public boolean isNoPiece(MoveSquare moveSquare) {
+        return !chessBoard.containsKey(moveSquare.get(MoveOrder.BEFORE));
     }
 
     public Color getGameTurn() {
         return gameTurn;
     }
 
-    public boolean isNotMyTurn(MoveSquare MoveSquares) {
-        if (isNoPiece(MoveSquares)) {
+    public boolean isNotMyTurn(MoveSquare moveSquare) {
+        if (isNoPiece(moveSquare)) {
             return true;
         }
-        return !chessBoard.get(MoveSquares.get(MoveOrder.BEFORE)).isSameColor(gameTurn);
+        return !chessBoard.get(moveSquare.get(MoveOrder.BEFORE)).isSameColor(gameTurn);
     }
 }

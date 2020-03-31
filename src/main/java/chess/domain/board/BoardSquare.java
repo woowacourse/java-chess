@@ -1,10 +1,9 @@
 package chess.domain.board;
 
-import util.NullChecker;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import util.NullChecker;
 
 public class BoardSquare {
 
@@ -74,7 +73,7 @@ public class BoardSquare {
         return this.file == boardSquare.file;
     }
 
-    public boolean isStartRank() {
+    public boolean isLastRank() {
         return this.rank == Rank.FIRST || this.rank == Rank.EIGHTH;
     }
 

@@ -53,7 +53,7 @@ public abstract class Piece {
     protected Set<BoardSquare> findSquaresToRemove(BoardSquare s, int fileAddAmount,
         int rankAddAmount) {
         Set<BoardSquare> squaresToRemove = new HashSet<>();
-        for (int i = 0, file = 0, rank = 0; i < 8;
+        for (int i = 0, file = 0, rank = 0; i < BoardSquare.MAX_FILE_AND_RANK_COUNT;
             i++, file += fileAddAmount, rank += rankAddAmount) {
             squaresToRemove.add(s.getAddIfInBoundaryOrMyself(file, rank));
         }
