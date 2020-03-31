@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import domain.board.Board;
+
 class PositionCache {
-	private static final int ROW_START_INDEX = 1;
-	private static final int ROW_END_INDEX = 8;
 	private static final Map<String, Position> POSITION_CACHE = new HashMap<>();
 
 	static {
@@ -16,13 +16,13 @@ class PositionCache {
 	}
 
 	private static void createByRow(Column column) {
-		for (int i = ROW_START_INDEX; i <= ROW_END_INDEX; i++) {
+		for (int i = Board.MIN_ROW_COUNT; i <= Board.MAX_ROW_COUNT; i++) {
 			POSITION_CACHE.put(toKey(column, i), new Position(column, i));
 		}
 	}
 
 	private static String toKey(Column column, int row) {
-		return column.getColumnName() + String.valueOf(row);
+		return column.getColumnName() + row;
 	}
 
 	public static Position of(String inputPosition) {

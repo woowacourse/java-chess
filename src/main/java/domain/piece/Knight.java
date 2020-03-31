@@ -25,7 +25,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	protected boolean validateStepSize(int rowGap, int columnGap) {
+	protected boolean validateStepSize(Position sourcePosition, Position targetPosition) {
 		return true;
 	}
 

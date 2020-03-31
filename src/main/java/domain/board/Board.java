@@ -12,8 +12,10 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Board {
-	public static final int MAX_COLUMN_COUNT = 8;
 	public static final int MIN_COLUMN_COUNT = 1;
+	public static final int MAX_COLUMN_COUNT = 8;
+	public static final int MIN_ROW_COUNT = 1;
+	public static final int MAX_ROW_COUNT = 8;
 	private static final int ROW_INDEX_IN_POSITION = 1;
 	private static final double PAWN_SCORE_WHEN_HAS_SAME_COLUMN = -0.5;
 	private static final int INITIAL_KING_COUNT = 2;

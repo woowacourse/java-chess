@@ -38,7 +38,9 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected boolean validateStepSize(int rowGap, int columnGap) {
+	protected boolean validateStepSize(Position sourcePosition, Position targetPosition) {
+		int rowGap = this.position.calculateRowGap(targetPosition);
+
 		int absStepSize = Math.abs(rowGap);
 		if (state.getValidateStepSize().apply(absStepSize)) {
 			return true;
@@ -57,7 +59,7 @@ public class Pawn extends Piece {
 	@Override
 	public void move(Position targetPosition, List<Rank> ranks) {
 		int rowGap = this.position.calculateRowGap(targetPosition);
-		Direction direction = Direction.findDirection(rowGap, this.position.calculateColumnGap(targetPosition));
+		Direction direction = Direction.findDirection(this.position, targetPosition);
 		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
 		if (Direction.diagonalDirection().contains(direction) && rowGap == MIN_STEP_SIZE_OF_DIAGONAL) {
 			piece.ifPresent(targetPiece -> {

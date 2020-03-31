@@ -67,7 +67,10 @@ public enum Direction {
 				&& piece.getPosition().getRow() == routeRow);
 	}
 
-	public static Direction findDirection(int rowGap, int columnGap) {
+	public static Direction findDirection(Position position, Position targetPosition) {
+		int rowGap = position.calculateRowGap(targetPosition);
+		int columnGap = position.calculateColumnGap(targetPosition);
+
 		return Arrays.stream(values())
 			.filter(direction -> direction.find.apply(rowGap, columnGap))
 			.findFirst()

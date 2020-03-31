@@ -72,11 +72,10 @@ public abstract class Piece implements Movable {
 		if (isInPlace(this.position, targetPosition)) {
 			throw new InvalidPositionException(InvalidPositionException.IS_IN_PLACE);
 		}
-		int rowGap = this.position.calculateRowGap(targetPosition);
-		int columnGap = this.position.calculateColumnGap(targetPosition);
-		Direction direction = Direction.findDirection(rowGap, columnGap);
 
-		return validateDirection(direction) && validateStepSize(rowGap, columnGap) &&
+		Direction direction = Direction.findDirection(this.position, targetPosition);
+
+		return validateDirection(direction) && validateStepSize(this.position, targetPosition) &&
 			validateRoute(direction, targetPosition, ranks);
 	}
 
@@ -110,7 +109,7 @@ public abstract class Piece implements Movable {
 
 	protected abstract boolean validateDirection(Direction direction);
 
-	protected abstract boolean validateStepSize(int rowGap, int columnGap);
+	protected abstract boolean validateStepSize(Position sourcePosition, Position targetPosition);
 
 	protected abstract boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
 
