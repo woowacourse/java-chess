@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 class BoardTest {
 	@DisplayName("Bishop을 경로에 맞게 이동")
@@ -18,6 +19,14 @@ class BoardTest {
 		board.move(D4, E5);
 
 		assertThat(board.findPieceBy(E5)).isEqualTo(sourcePiece);
+	}
+
+	@DisplayName("Bishop을 이동시킬 때 경로가 막혀있으면 예외 발생")
+	@Test
+	void moveBishop_BlockPath_ExceptionThrown() {
+		Board board = BishopTestingBoard();
+		assertThatThrownBy(() -> board.move(D4, B6))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@DisplayName("Pawn을 경로에 맞게 이동")

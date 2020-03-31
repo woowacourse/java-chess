@@ -19,6 +19,7 @@ public class TestFixture {
 	public static Position D3 = new Position("d3");
 	public static Position D2 = new Position("d2");
 
+	public static Position B6 = new Position("b6");
 	public static Position C3 = new Position("c3");
 	public static Position C4 = new Position("c4");
 	public static Position C5 = new Position("c5");
