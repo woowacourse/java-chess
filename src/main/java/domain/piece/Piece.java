@@ -75,8 +75,8 @@ public abstract class Piece implements Movable {
 
 		Direction direction = Direction.findDirection(this.position, targetPosition);
 
-		return validateDirection(direction) && validateStepSize(this.position, targetPosition) &&
-			validateRoute(direction, targetPosition, ranks);
+		return validateDirection(direction) && validateStepSize(this.position, targetPosition)
+			&& validateRoute(direction, targetPosition, ranks);
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public enum Command {
 	public static Command ofGameCommand(String inputCommand) {
 		return Arrays.stream(Command.values())
 			.filter(command -> command.isGameCommand)
-			.filter(gameCommand -> gameCommand.getCommand().equals(inputCommand))
+			.filter(gameCommand -> gameCommand.command.equals(inputCommand))
 			.findFirst()
 			.orElseThrow(() -> new InvalidCommandException(INVALID_GAME_COMMAND));
 	}
@@ -31,7 +31,7 @@ public enum Command {
 	public static Command ofChessCommand(String inputCommand) {
 		return Arrays.stream(Command.values())
 			.filter(command -> command.isChessCommand)
-			.filter(chessCommand -> chessCommand.getCommand().equals(inputCommand))
+			.filter(chessCommand -> chessCommand.command.equals(inputCommand))
 			.findFirst()
 			.orElseThrow(() -> new InvalidCommandException(INVALID_CHESS_COMMAND));
 	}
@@ -46,9 +46,5 @@ public enum Command {
 
 	public Boolean isNotEnd(){
 		return END != this;
-	}
-
-	public String getCommand() {
-		return command;
 	}
 }

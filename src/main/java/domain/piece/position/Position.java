@@ -14,16 +14,15 @@ public class Position {
 	}
 
 	public int calculateColumnGap(Position targetPosition) {
-		return targetPosition.getColumn().getNumber() - this.column.getNumber();
+		return column.gap(targetPosition.column);
 	}
 
 	public int calculateRowGap(Position targetPosition) {
-		return targetPosition.getRow() - this.row;
+		return targetPosition.row - this.row;
 	}
 
 	public boolean isSamePosition(Position position) {
-		return this.getColumn().getNumber() == position.getColumn().getNumber() &&
-			this.getRow() == position.getRow();
+		return this.equals(position);
 	}
 
 	public Column getColumn() {

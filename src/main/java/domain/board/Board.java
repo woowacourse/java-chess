@@ -68,7 +68,7 @@ public class Board {
 
 	private boolean isSameColumn(List<Piece> pawns) {
 		int distinctCount = (int)pawns.stream()
-			.mapToInt(pawn -> pawn.getPosition().getColumn().getNumber())
+			.map(pawn -> pawn.getPosition().getColumn())
 			.distinct()
 			.count();
 		return pawns.size() != distinctCount;

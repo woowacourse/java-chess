@@ -18,6 +18,10 @@ public enum Column {
 		this.number = number;
 	}
 
+	public int gap(Column column){
+		return column.number - this.number;
+	}
+
 	public String getColumnName() {
 		return columnName;
 	}
