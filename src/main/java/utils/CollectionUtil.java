@@ -13,6 +13,7 @@ public class CollectionUtil {
         List<PieceDTO> piecesDTO = new ArrayList<>();
 
         for (Position position : pieces.keySet()) {
+            System.out.println("ii"+position.toString());
             Placeable piece = pieces.get(position);
 
             PieceDTO pieceDTO = new PieceDTO();

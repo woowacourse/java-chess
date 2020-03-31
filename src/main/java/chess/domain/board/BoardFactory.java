@@ -9,7 +9,7 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BoardFactory {
@@ -18,7 +18,7 @@ public class BoardFactory {
     }
 
     private static Map<Position, Placeable> createEmptySource() {
-        Map<Position, Placeable> board = new HashMap<>();
+        Map<Position, Placeable> board = new LinkedHashMap<>();
 
         fillWithEmpty(board);
 
@@ -30,7 +30,7 @@ public class BoardFactory {
     }
 
     private static Map<Position, Placeable> createBoardSource() {
-        Map<Position, Placeable> board = new HashMap<>();
+        Map<Position, Placeable> board = new LinkedHashMap<>();
 
         fillWithEmpty(board);
 
@@ -51,17 +51,6 @@ public class BoardFactory {
         }
     }
 
-    private static void fillSeventhRank(Map<Position, Placeable> board) {
-        addToBoard(board, "A7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "B7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "C7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "D7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "E7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "F7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "G7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "H7", Team.BLACK, PieceType.PAWN);
-    }
-
     private static void fillEighthRank(Map<Position, Placeable> board) {
         addToBoard(board, "A8", Team.BLACK, PieceType.ROOK);
         addToBoard(board, "B8", Team.BLACK, PieceType.KNIGHT);
@@ -71,6 +60,17 @@ public class BoardFactory {
         addToBoard(board, "F8", Team.BLACK, PieceType.BISHOP);
         addToBoard(board, "G8", Team.BLACK, PieceType.KNIGHT);
         addToBoard(board, "H8", Team.BLACK, PieceType.ROOK);
+    }
+
+    private static void fillSeventhRank(Map<Position, Placeable> board) {
+        addToBoard(board, "A7", Team.BLACK, PieceType.PAWN);
+        addToBoard(board, "B7", Team.BLACK, PieceType.PAWN);
+        addToBoard(board, "C7", Team.BLACK, PieceType.PAWN);
+        addToBoard(board, "D7", Team.BLACK, PieceType.PAWN);
+        addToBoard(board, "E7", Team.BLACK, PieceType.PAWN);
+        addToBoard(board, "F7", Team.BLACK, PieceType.PAWN);
+        addToBoard(board, "G7", Team.BLACK, PieceType.PAWN);
+        addToBoard(board, "H7", Team.BLACK, PieceType.PAWN);
     }
 
     private static void fillSecondRank(Map<Position, Placeable> board) {

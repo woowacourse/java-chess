@@ -5,7 +5,7 @@ import chess.controller.ChessGame;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +20,7 @@ public class WebUIApplication {
 
         get("/", (req, res) -> {
             List<PieceDTO> pieces = chessGame.run(req.queryParams("command"));
-
-            Map<String, Object> model = new HashMap<>();
+            Map<String, Object> model = new LinkedHashMap<>();
             model.put("pieces", pieces);
             return render(model, "index.hbs");
         });
