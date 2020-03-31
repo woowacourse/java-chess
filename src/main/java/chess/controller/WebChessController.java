@@ -31,7 +31,6 @@ public class WebChessController implements ChessController {
                 res.redirect("/");
             } catch (Exception e) {
                 res.body(e.getMessage());
-                res.redirect("/");
             }
             return null;
         });
