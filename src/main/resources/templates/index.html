@@ -2,9 +2,392 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
 </head>
 <body>
-Hello World!!
+    <div class="chessBoardWrapper">
+        <div class="chessBoard">
+            <table class="playArea">
+                <tr>
+                    <td>
+
+                    </td>
+                    <td class="fileIndicator">
+                        A
+                    </td>
+                    <td class="fileIndicator">
+                        B
+                    </td>
+                    <td class="fileIndicator">
+                        C
+                    </td>
+                    <td class="fileIndicator">
+                        D
+                    </td>
+                    <td class="fileIndicator">
+                        E
+                    </td>
+                    <td class="fileIndicator">
+                        F
+                    </td>
+                    <td class="fileIndicator">
+                        G
+                    </td>
+                    <td class="fileIndicator">
+                        H
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rankindicator">
+                        8
+                    </td>
+                    <td class="light">
+                        {{a8}}
+                    </td>
+                    <td class="dark">
+                        {{b8}}
+                    </td>
+                    <td class="light">
+                        {{c8}}
+                    </td>
+                    <td class="dark">
+                        {{d8}}
+                    </td>
+                    <td class="light">
+                        {{e8}}
+                    </td>
+                    <td class="dark">
+                        {{f8}}
+                    </td>
+                    <td class="light">
+                        {{g8}}
+                    </td>
+                    <td class="dark">
+                        {{h8}}
+                    </td>
+                    <td class="rankindicator">
+                        8
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rankindicator">
+                        7
+                    </td>
+                    <td class="dark">
+                        {{a7}}
+                    </td>
+                    <td class="light">
+                        {{b7}}
+                    </td>
+                    <td class="dark">
+                        {{c7}}
+                    </td>
+                    <td class="light">
+                        {{d7}}
+                    </td>
+                    <td class="dark">
+                        {{e7}}
+                    </td>
+                    <td class="light">
+                        {{f7}}
+                    </td>
+                    <td class="dark">
+                        {{g7}}
+                    </td>
+                    <td class="light">
+                        {{h7}}
+                    </td>
+                    <td class="rankindicator">
+                        7
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rankindicator">
+                        6
+                    </td>
+                    <td class="light">
+                        {{a6}}
+                    </td>
+                    <td class="dark">
+                        {{b6}}
+                    </td>
+                    <td class="light">
+                        {{c6}}
+                    </td>
+                    <td class="dark">
+                        {{d6}}
+                    </td>
+                    <td class="light">
+                        {{e6}}
+                    </td>
+                    <td class="dark">
+                        {{f6}}
+                    </td>
+                    <td class="light">
+                        {{g6}}
+                    </td>
+                    <td class="dark">
+                        {{h6}}
+                    </td>
+                    <td class="rankindicator">
+                        6
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rankindicator">
+                        5
+                    </td>
+                    <td class="dark">
+                        {{a5}}
+                    </td>
+                    <td class="light">
+                        {{b5}}
+                    </td>
+                    <td class="dark">
+                        {{c5}}
+                    </td>
+                    <td class="light">
+                        {{d5}}
+                    </td>
+                    <td class="dark">
+                        {{e5}}
+                    </td>
+                    <td class="light">
+                        {{f5}}
+                    </td>
+                    <td class="dark">
+                        {{g5}}
+                    </td>
+                    <td class="light">
+                        {{h5}}
+                    </td>
+                    <td class="rankindicator">
+                        5
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rankindicator">
+                        4
+                    </td>
+                    <td class="light">
+                        {{a4}}
+                    </td>
+                    <td class="dark">
+                        {{b4}}
+                    </td>
+                    <td class="light">
+                        {{c4}}
+                    </td>
+                    <td class="dark">
+                        {{d4}}
+                    </td>
+                    <td class="light">
+                        {{e4}}
+                    </td>
+                    <td class="dark">
+                        {{f4}}
+                    </td>
+                    <td class="light">
+                        {{g4}}
+                    </td>
+                    <td class="dark">
+                        {{h4}}
+                    </td>
+                    <td class="rankindicator">
+                        4
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rankindicator">
+                        3
+                    </td>
+                    <td class="dark">
+                        {{a3}}
+                    </td>
+                    <td class="light">
+                        {{b3}}
+                    </td>
+                    <td class="dark">
+                        {{c3}}
+                    </td>
+                    <td class="light">
+                        {{d3}}
+                    </td>
+                    <td class="dark">
+                        {{e3}}
+                    </td>
+                    <td class="light">
+                        {{f3}}
+                    </td>
+                    <td class="dark">
+                        {{g3}}
+                    </td>
+                    <td class="light">
+                        {{h3}}
+                    </td>
+                    <td class="rankindicator">
+                        3
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rankindicator">
+                        2
+                    </td>
+                    <td class="light">
+                        {{a2}}
+                    </td>
+                    <td class="dark">
+                        {{b2}}
+                    </td>
+                    <td class="light">
+                        {{c2}}
+                    </td>
+                    <td class="dark">
+                        {{d2}}
+                    </td>
+                    <td class="light">
+                        {{e2}}
+                    </td>
+                    <td class="dark">
+                        {{f2}}
+                    </td>
+                    <td class="light">
+                        {{g2}}
+                    </td>
+                    <td class="dark">
+                        {{h2}}
+                    </td>
+                    <td class="rankindicator">
+                        2
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rankindicator">
+                        1
+                    </td>
+                    <td class="dark">
+                        {{a1}}
+                    </td>
+                    <td class="light">
+                        {{b1}}
+                    </td>
+                    <td class="dark">
+                        {{c1}}
+                    </td>
+                    <td class="light">
+                        {{d1}}
+                    </td>
+                    <td class="dark">
+                        {{e1}}
+                    </td>
+                    <td class="light">
+                        {{f1}}
+                    </td>
+                    <td class="dark">
+                        {{g1}}
+                    </td>
+                    <td class="light">
+                        {{h1}}
+                    </td>
+                    <td class="rankindicator">
+                        1
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="fileIndicator">
+                        A
+                    </td>
+                    <td class="fileIndicator">
+                        B
+                    </td>
+                    <td class="fileIndicator">
+                        C
+                    </td>
+                    <td class="fileIndicator">
+                        D
+                    </td>
+                    <td class="fileIndicator">
+                        E
+                    </td>
+                    <td class="fileIndicator">
+                        F
+                    </td>
+                    <td class="fileIndicator">
+                        G
+                    </td>
+                    <td class="fileIndicator">
+                        H
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+            <div class="scoreArea">
+                <h1><b>체스 게임</b></h1><br><br>
+                흑 점수: {{blackScore}}점<br>
+                백 점수: {{whiteScore}}점<br><br>
+
+                안내<br>
+                {{notification}}
+            </div>
+        </div>
+
+    </div>
+
 </body>
 </html>
+
+<style>
+    .chessBoardWrapper{
+        width: 1000px;
+        height: 770px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        background-color: saddlebrown;
+    }
+
+    .chessBoard{
+        background-color: darkgoldenrod;
+        margin: 10px;
+        width: 960px;
+        height: 730px;
+        padding: 10px;
+        display: flex;
+    }
+
+    .scoreArea {
+        border-style: solid;
+        border-width: 2px;
+        width: 230px;
+        height: 705px;
+        margin-left: 10px;
+        padding: 10px;
+        border-color: saddlebrown;
+    }
+
+    .playArea {
+        border-style: solid;
+        border-width: 2px;
+        border-color: saddlebrown;
+    }
+
+    .light{
+        width: 80px;
+        height: 80px;
+        background-color: blanchedalmond;
+    }
+
+    .dark{
+        width: 80px;
+        height: 80px;
+        background-color: saddlebrown;
+    }
+
+    .fileIndicator {
+        text-align: center;
+    }
+</style>

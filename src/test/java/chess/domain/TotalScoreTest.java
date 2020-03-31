@@ -33,8 +33,7 @@ public class TotalScoreTest {
 	@DisplayName("점수가 제대로 계산되는지 확인")
 	@MethodSource("scoreCalculateSource")
 	void name(List<Piece> pieces, int expected) {
-		Pieces whitePieces = new Pieces(pieces);
-		TotalScore whiteTotalScore = new TotalScore(whitePieces);
+		TotalScore whiteTotalScore = new TotalScore(pieces);
 		assertThat(whiteTotalScore.getTotalScore()).isEqualTo(expected);
 	}
 }

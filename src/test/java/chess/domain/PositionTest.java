@@ -51,4 +51,10 @@ public class PositionTest {
 		assertThat(source.getPositionsInBetween(destination)).containsAll(positions);
 
 	}
+
+	@Test
+	@DisplayName("위치 toString 확인")
+	void toStringTest() {
+		assertThat(new Position("b1").toString()).isEqualTo("b1");
+	}
 }
