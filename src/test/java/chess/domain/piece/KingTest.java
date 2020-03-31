@@ -28,9 +28,9 @@ class KingTest {
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(D2, new Piece(Color.BLACK, PieceType.BISHOP));
-		pieces.put(E1, new Piece(Color.WHITE, PieceType.KING));
-		pieces.put(D1, new Piece(Color.WHITE, PieceType.QUEEN));
+		pieces.put(D2, new Bishop(Color.BLACK));
+		pieces.put(E1, new King(Color.WHITE));
+		pieces.put(D1, new Queen(Color.WHITE));
 		Board board = new Board(pieces);
 		Piece king = board.findPieceBy(currentPosition);
 

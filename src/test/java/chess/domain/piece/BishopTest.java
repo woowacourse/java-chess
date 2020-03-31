@@ -32,8 +32,8 @@ class BishopTest {
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(B2, new Piece(Color.BLACK, PieceType.BISHOP));
-		pieces.put(C1, new Piece(Color.WHITE, PieceType.BISHOP));
+		pieces.put(B2, new Bishop(Color.BLACK));
+		pieces.put(C1, new Bishop(Color.WHITE));
 		Board board = new Board(pieces);
 		Piece bishop = board.findPieceBy(currentPosition);
 

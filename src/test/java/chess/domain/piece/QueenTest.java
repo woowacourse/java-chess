@@ -33,11 +33,11 @@ class QueenTest {
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(B1, new Piece(Color.BLACK, PieceType.BISHOP));
-		pieces.put(B3, new Piece(Color.BLACK, PieceType.BISHOP));
-		pieces.put(F3, new Piece(Color.WHITE, PieceType.BISHOP));
-		pieces.put(D1, new Piece(Color.WHITE, PieceType.QUEEN));
-		pieces.put(E1, new Piece(Color.WHITE, PieceType.KING));
+		pieces.put(B1, new Bishop(Color.BLACK));
+		pieces.put(B3, new Bishop(Color.BLACK));
+		pieces.put(F3, new Bishop(Color.WHITE));
+		pieces.put(D1, new Queen(Color.WHITE));
+		pieces.put(E1, new King(Color.WHITE));
 		Board board = new Board(pieces);
 		Piece queen = board.findPieceBy(currentPosition);
 

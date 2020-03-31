@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.PieceType.*;
 import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -35,8 +34,8 @@ class PawnTest {
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(A3, new Piece(Color.BLACK, BISHOP));
-		pieces.put(C3, new Piece(Color.WHITE, BISHOP));
+		pieces.put(A3, new Bishop(Color.BLACK));
+		pieces.put(C3, new Bishop(Color.WHITE));
 		Board board = new Board(BoardFactory.initializePawn(pieces));
 		Piece pawn = board.findPieceBy(currentPosition);
 

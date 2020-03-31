@@ -7,17 +7,17 @@ import java.util.function.Function;
 
 import chess.domain.position.Position;
 
-public class Piece {
+public abstract class Piece {
 	private String name;
 	private Color color;
 	private MovingStrategy movingStrategy;
 	private double score;
 
-	public Piece(Color color, PieceType pieceType) {
+	public Piece(Color color, String name, MovingStrategy movingStrategy, double score) {
+		this.name = nameByColor(color, name);
 		this.color = color;
-		this.name = nameByColor(color, pieceType.getName());
-		this.movingStrategy = pieceType.getMovingStrategy();
-		this.score = pieceType.getScore();
+		this.movingStrategy = movingStrategy;
+		this.score = score;
 	}
 
 	private String nameByColor(Color color, String name) {

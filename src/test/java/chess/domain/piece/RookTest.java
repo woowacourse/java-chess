@@ -32,9 +32,9 @@ class RookTest {
 	@MethodSource("generatePositions")
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(A1, new Piece(Color.WHITE, PieceType.ROOK));
-		pieces.put(A8, new Piece(Color.BLACK, PieceType.ROOK));
-		pieces.put(H1, new Piece(Color.WHITE, PieceType.ROOK));
+		pieces.put(A1, new Rook(Color.WHITE));
+		pieces.put(A8, new Rook(Color.BLACK));
+		pieces.put(H1, new Rook(Color.WHITE));
 		Board board = new Board(pieces);
 
 		Piece rook = board.findPieceBy(currentPosition);
