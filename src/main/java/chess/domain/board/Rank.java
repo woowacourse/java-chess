@@ -22,10 +22,6 @@ public enum Rank {
         this.number = number;
     }
 
-    public static int count() {
-        return values().length;
-    }
-
     public String getName() {
         return name;
     }

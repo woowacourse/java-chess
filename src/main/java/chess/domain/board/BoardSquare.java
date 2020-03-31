@@ -25,7 +25,7 @@ public class BoardSquare {
             fileCount++;
         }
         CACHE = Collections.unmodifiableMap(cache);
-        MAX_FILE_AND_RANK_COUNT = Integer.max(fileCount, rankCount);
+        MAX_FILE_AND_RANK_COUNT = Integer.max(fileCount, rankCount / fileCount);
     }
 
     private final File file;

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.BoardSquare;
-import chess.domain.board.ChessInitialSetting;
+import chess.domain.board.CastlingSetting;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -58,14 +58,14 @@ public class KingTest {
 
         Piece piece = King.getPieceInstance(Color.BLACK);
         Set<BoardSquare> availableBoardSquares = piece.getCheatSheet(BoardSquare.of("e8"), board,
-            ChessInitialSetting.getCastlingElements());
+            CastlingSetting.getCastlingElements());
 
         assertThat(availableBoardSquares.contains(BoardSquare.of("c8"))).isTrue();
         assertThat(availableBoardSquares.contains(BoardSquare.of("g8"))).isTrue();
 
         piece = King.getPieceInstance(Color.WHITE);
         availableBoardSquares = piece.getCheatSheet(BoardSquare.of("e1"), board,
-            ChessInitialSetting.getCastlingElements());
+            CastlingSetting.getCastlingElements());
 
         assertThat(availableBoardSquares.contains(BoardSquare.of("c1"))).isTrue();
         assertThat(availableBoardSquares.contains(BoardSquare.of("g1"))).isTrue();
@@ -74,23 +74,23 @@ public class KingTest {
 
         piece = King.getPieceInstance(Color.BLACK);
         availableBoardSquares = piece.getCheatSheet(BoardSquare.of("e8"), board,
-            ChessInitialSetting.getCastlingElements());
+            CastlingSetting.getCastlingElements());
 
         assertThat(availableBoardSquares.contains(BoardSquare.of("c8"))).isFalse();
         assertThat(availableBoardSquares.contains(BoardSquare.of("g8"))).isTrue();
 
         piece = King.getPieceInstance(Color.BLACK);
         availableBoardSquares = piece.getCheatSheet(BoardSquare.of("e7"), board,
-            ChessInitialSetting.getCastlingElements());
+            CastlingSetting.getCastlingElements());
 
         assertThat(availableBoardSquares.contains(BoardSquare.of("c7"))).isFalse();
         assertThat(availableBoardSquares.contains(BoardSquare.of("g7"))).isFalse();
 
         piece = King.getPieceInstance(Color.WHITE);
-        Set<ChessInitialSetting> chessInitialSetting = ChessInitialSetting.getCastlingElements();
-        chessInitialSetting.remove(ChessInitialSetting.WHITE_KING);
+        Set<CastlingSetting> castlingSetting = CastlingSetting.getCastlingElements();
+        castlingSetting.remove(CastlingSetting.WHITE_KING);
         availableBoardSquares = piece.getCheatSheet(BoardSquare.of("e1"), board,
-            chessInitialSetting);
+            castlingSetting);
 
         assertThat(availableBoardSquares.contains(BoardSquare.of("c1"))).isFalse();
         assertThat(availableBoardSquares.contains(BoardSquare.of("g1"))).isFalse();

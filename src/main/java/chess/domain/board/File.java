@@ -38,8 +38,4 @@ public enum File {
             .orElseThrow(() -> new IllegalArgumentException(NO_FILE_EXCEPTION_MESSAGE));
     }
 
-    public static int count() {
-        return values().length;
-    }
-
 }

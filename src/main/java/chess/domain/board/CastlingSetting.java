@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public enum ChessInitialSetting {
+public enum CastlingSetting {
     WHITE_ROOK_LEFT(BoardSquare.of("a1"), Rook.getPieceInstance(Color.WHITE), true),
     WHITE_ROOK_RIGHT(BoardSquare.of("h1"), Rook.getPieceInstance(Color.WHITE), true),
     BLACK_ROOK_LEFT(BoardSquare.of("h8"), Rook.getPieceInstance(Color.BLACK), true),
@@ -53,14 +53,14 @@ public enum ChessInitialSetting {
     private final Piece piece;
     private final boolean CastlingPiece;
 
-    ChessInitialSetting(BoardSquare boardSquare, Piece piece, boolean castlingPiece) {
+    CastlingSetting(BoardSquare boardSquare, Piece piece, boolean castlingPiece) {
         this.boardSquare = boardSquare;
         this.piece = piece;
         CastlingPiece = castlingPiece;
     }
 
     public static boolean isContainsSquare(BoardSquare boardSquare, Piece piece) {
-        return Arrays.stream(ChessInitialSetting.values())
+        return Arrays.stream(CastlingSetting.values())
             .filter(chessInitialSetting -> chessInitialSetting.boardSquare == boardSquare)
             .anyMatch(chessInitialSetting -> chessInitialSetting.piece == piece);
     }
@@ -81,16 +81,12 @@ public enum ChessInitialSetting {
         throw new IllegalArgumentException("잘못된 인자");
     }
 
-    public BoardSquare getBoardSquare() {
-        return boardSquare;
-    }
-
     public Piece getPiece() {
         return piece;
     }
 
-    public static Set<ChessInitialSetting> getCastlingElements() {
-        return Arrays.stream(ChessInitialSetting.values())
+    public static Set<CastlingSetting> getCastlingElements() {
+        return Arrays.stream(CastlingSetting.values())
             .filter(castlingElement -> castlingElement.CastlingPiece)
             .collect(Collectors.toSet());
     }
@@ -104,7 +100,7 @@ public enum ChessInitialSetting {
     }
 
     public static Set<BoardSquare> getCastlingCheatSheets(
-        Set<ChessInitialSetting> castlingElements) {
+        Set<CastlingSetting> castlingElements) {
         Set<BoardSquare> castlingCheatSheets = new HashSet<>();
         if (castlingElements.contains(WHITE_ROOK_LEFT) && castlingElements.contains(WHITE_KING)) {
             castlingCheatSheets.add(WHITE_BISHOP_LEFT.boardSquare);

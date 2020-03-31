@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
-import chess.domain.board.ChessInitialSetting;
+import chess.domain.board.CastlingSetting;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +29,7 @@ public class Knight extends OneTimeMovePiece {
 
     @Override
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board,
-        Set<ChessInitialSetting> castlingElements) {
+        Set<CastlingSetting> castlingElements) {
         return getAllCheatSheet(boardSquare).stream()
             .filter(s -> !(board.containsKey(s) && isSameColor(board.get(s))))
             .collect(Collectors.toSet());

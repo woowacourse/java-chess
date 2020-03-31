@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
-import chess.domain.board.ChessInitialSetting;
+import chess.domain.board.CastlingSetting;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -43,7 +43,7 @@ public abstract class Piece {
 
     public abstract Set<BoardSquare> getCheatSheet(BoardSquare boardSquare,
         Map<BoardSquare, Piece> board,
-        Set<ChessInitialSetting> castlingElements);
+        Set<CastlingSetting> castlingElements);
 
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare,
         Map<BoardSquare, Piece> board) {

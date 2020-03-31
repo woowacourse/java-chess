@@ -14,21 +14,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import util.NullChecker;
 
 public class ChessBoard {
 
-    private Map<BoardSquare, Piece> chessBoard = new HashMap<>();
-    private Color gameTurn = Color.WHITE;
-    private Set<ChessInitialSetting> castlingElements = ChessInitialSetting.getCastlingElements();
+    private final Map<BoardSquare, Piece> chessBoard;
+    private Color gameTurn;
+    private final Set<CastlingSetting> castlingElements;
 
     public ChessBoard() {
-        for (ChessInitialSetting chessInitialSetting : ChessInitialSetting.values()) {
-            chessBoard.put(chessInitialSetting.getBoardSquare(), chessInitialSetting.getPiece());
-        }
+        this(new BoardInitialDefault(), Color.WHITE, CastlingSetting.getCastlingElements());
+    }
+
+    public ChessBoard(BoardInitialization chessBoard, Color gameTurn,
+        Set<CastlingSetting> castlingElements) {
+        NullChecker.validateNotNull(chessBoard, gameTurn, castlingElements);
+        this.chessBoard = chessBoard.getInitialize();
+        this.gameTurn = gameTurn;
+        this.castlingElements = castlingElements;
     }
 
     public static boolean isInitialPoint(BoardSquare boardSquare, Piece piece) {
-        return ChessInitialSetting.isContainsSquare(boardSquare, piece);
+        return CastlingSetting.isContainsSquare(boardSquare, piece);
     }
 
     public Map<BoardSquare, Piece> getChessBoard() {
@@ -39,11 +46,11 @@ public class ChessBoard {
         if (!canMove(moveSquare)) {
             return getWhyCanNotMove(moveSquare);
         }
-        if (!checkChangePawnWhenReachFinish().isEmpty()) {
+        if (isNeedPromotion()) {
             return MoveState.FAIL_MUST_PAWN_CHANGE;
         }
         movePiece(moveSquare);
-        if (!checkChangePawnWhenReachFinish().isEmpty()) {
+        if (isNeedPromotion()) {
             return MoveState.SUCCESS_BUT_PAWN_CHANGE;
         }
         gameTurn = gameTurn.nextTurnIfEmptyMySelf();
@@ -60,14 +67,6 @@ public class ChessBoard {
         return MoveState.FAIL_CAN_NOT_MOVE;
     }
 
-    private Map<BoardSquare, Piece> checkChangePawnWhenReachFinish() {
-        Map<BoardSquare, Piece> needChangeBoard = new HashMap<>();
-        if (isReachFinishPawn()) {
-            needChangeBoard.put(getFinishPawnBoard(), chessBoard.get(getFinishPawnBoard()));
-        }
-        return needChangeBoard;
-    }
-
     private BoardSquare getFinishPawnBoard() {
         return chessBoard.keySet().stream()
             .filter(boardSquare -> chessBoard.get(boardSquare) instanceof Pawn)
@@ -76,14 +75,14 @@ public class ChessBoard {
             .orElseThrow(IllegalAccessError::new);
     }
 
-    private boolean isReachFinishPawn() {
+    private boolean isNeedPromotion() {
         return chessBoard.keySet().stream()
             .filter(boardSquare -> chessBoard.get(boardSquare) instanceof Pawn)
             .anyMatch(BoardSquare::isLastRank);
     }
 
-    public MoveState changeFinishPawn(Type hopeType) {
-        if (isReachFinishPawn()) {
+    public MoveState promotion(Type hopeType) {
+        if (isNeedPromotion()) {
             chessBoard.put(getFinishPawnBoard(), getHopePiece(hopeType));
             gameTurn = gameTurn.nextTurnIfEmptyMySelf();
             return MoveState.SUCCESS;
@@ -92,8 +91,8 @@ public class ChessBoard {
     }
 
     private Piece getHopePiece(Type hopeType) {
-        return Arrays.stream(ChessInitialSetting.values())
-            .map(ChessInitialSetting::getPiece)
+        return Arrays.stream(CastlingSetting.values())
+            .map(CastlingSetting::getPiece)
             .filter(piece -> piece.isSameType(hopeType))
             .filter(piece -> piece.isSameColor(gameTurn))
             .findFirst()
@@ -129,12 +128,12 @@ public class ChessBoard {
     }
 
     private void moveIfCastlingRook(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
-        Set<ChessInitialSetting> removeCastlingElements = castlingElements.stream()
+        Set<CastlingSetting> removeCastlingElements = castlingElements.stream()
             .filter(castlingElement -> castlingElement.isSameSquare(moveSquareBefore))
             .collect(Collectors.toSet());
         if (!castlingElements.isEmpty() && castlingElements.removeAll(removeCastlingElements)
             && moveSquareBefore.isJumpFile(moveSquareAfter)) {
-            MoveSquare moveSquare = ChessInitialSetting.getMoveCastlingRook(moveSquareAfter);
+            MoveSquare moveSquare = CastlingSetting.getMoveCastlingRook(moveSquareAfter);
             Piece currentPiece = chessBoard.remove(moveSquare.get(MoveOrder.BEFORE));
             chessBoard.put(moveSquare.get(MoveOrder.AFTER), currentPiece);
         }

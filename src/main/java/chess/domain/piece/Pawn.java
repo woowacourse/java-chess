@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
+import chess.domain.board.CastlingSetting;
 import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessInitialSetting;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,7 +31,7 @@ public class Pawn extends OneTimeMovePiece {
 
     @Override
     public Set<BoardSquare> getCheatSheet(BoardSquare boardSquare, Map<BoardSquare, Piece> board,
-        Set<ChessInitialSetting> castlingElements) {
+        Set<CastlingSetting> castlingElements) {
         Set<BoardSquare> allCheatSheet = getAllCheatSheet(boardSquare);
         Set<BoardSquare> containsCheatSheet = allCheatSheet.stream()
             .filter(cheatSheet -> !board.containsKey(cheatSheet))

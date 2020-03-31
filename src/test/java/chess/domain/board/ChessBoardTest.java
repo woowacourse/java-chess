@@ -3,14 +3,20 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.piece.Type;
 import chess.domain.state.MoveSquare;
 import chess.domain.state.MoveState;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class ChessBoardTest {
 
@@ -120,7 +126,7 @@ public class ChessBoardTest {
             .isEqualTo(MoveState.FAIL_NOT_ORDER);
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("g2", "g3")))
             .isEqualTo(MoveState.FAIL_MUST_PAWN_CHANGE);
-        assertThat(chessBoard.changeFinishPawn(Type.BISHOP)).isEqualTo(MoveState.SUCCESS);
+        assertThat(chessBoard.promotion(Type.BISHOP)).isEqualTo(MoveState.SUCCESS);
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("g2", "g3")))
             .isEqualTo(MoveState.FAIL_NOT_ORDER);
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("g7", "g6")))
@@ -128,35 +134,23 @@ public class ChessBoardTest {
     }
 
     @DisplayName("캐슬링 되는지 확인")
-    @Test
-    void castling() {
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.movePieceWhenCanMove(new MoveSquare("a2", "a4"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a5"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("b2", "b4"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("b7", "b5"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("c2", "c4"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("c7", "c5"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("b2", "d4"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("d7", "b5"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("e2", "e4"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("e7", "e5"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("f2", "f4"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("f7", "f5"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("g2", "g4"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("g7", "g5"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("h2", "h4"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("h7", "h5"));
+    @ParameterizedTest
+    @CsvSource(value = {"e1, c1, e8, c8", "e1, c1, e8, g8"})
+    void castling(String whiteBefore, String whiteAfter, String blackBefore, String blackAfter) {
+        Map<BoardSquare, Piece> boardInitial = new HashMap<>();
+        boardInitial.put(BoardSquare.of("f1"), Queen.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("e8"), King.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("a8"), Rook.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("h8"), Rook.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("a1"), Rook.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("h1"), Rook.getPieceInstance(Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(new BoardInitialTestUse(boardInitial), Color.WHITE,
+            CastlingSetting.getCastlingElements());
 
-        chessBoard.movePieceWhenCanMove(new MoveSquare("b1", "c3"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("b8", "c6"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("c1", "a3"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("c8", "a6"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("d1", "e2"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("d8", "e7"));
-        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("e1", "c1")))
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare(whiteBefore, whiteAfter)))
             .isEqualTo(MoveState.SUCCESS);
-        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("e8", "c8")))
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare(blackBefore, blackAfter)))
             .isEqualTo(MoveState.SUCCESS);
     }
 }

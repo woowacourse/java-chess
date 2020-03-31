@@ -86,7 +86,7 @@ public class ChessGame {
         MoveState moveState;
         do {
             OutputView.print("폰 재입력 요망");
-            moveState = chessBoard.changeFinishPawn(InputView.inputChangeType());
+            moveState = chessBoard.promotion(InputView.inputChangeType());
             OutputView.printChessBoard(chessBoard);
         } while (moveState != MoveState.SUCCESS);
     }
