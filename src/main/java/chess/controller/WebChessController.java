@@ -4,21 +4,17 @@ import chess.domain.Board;
 import chess.domain.Pieces;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
 import spark.ModelAndView;
-import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
-public class WebChessController implements ChessController{
+public class WebChessController implements ChessController {
     @Override
     public void run() {
         Board board = new Board();
@@ -33,7 +29,7 @@ public class WebChessController implements ChessController{
                 }
                 board.movePiece(new Position(bodyMap.get("source")), new Position(bodyMap.get("destination")));
                 res.redirect("/");
-            }catch(Exception e) {
+            } catch (Exception e) {
                 res.body(e.getMessage());
                 res.redirect("/");
             }
