@@ -11,10 +11,12 @@ public class ChessController {
 
     public ChessController(InputDto inputDto) {
         OutputView.printInitialGuide();
+
         Command command = inputDto.getCommand();
         if (command != Command.START) {
             throw new IllegalArgumentException("start를 해야 합니다.");
         }
+
         chessBoard = new ChessBoard();
         OutputView.printChessBoard(chessBoard.getChessBoard());
     }
