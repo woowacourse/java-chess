@@ -1,6 +1,5 @@
 package chess.domains.piece;
 
-import chess.domains.position.Direction;
 import chess.domains.position.Position;
 
 import java.util.Objects;
@@ -15,8 +14,6 @@ public abstract class Piece {
     static final int TWO_BLOCKS_DOWN = -2;
     private static final String INVALID_MOVE_TO_SAME_POSITION_ERR_MSG = "자신의 말 위치로 이동할 수 없습니다.";
     private static final String INVALID_MOVE_TO_ILLEGAL_POSITION_ERR_MSG = "말의 규칙에 어긋나는 위치로 이동할 수 없습니다.";
-    private static final String INVALID_DIAGONAL_MOVE_OF_PAWN_ERR_MSG = "폰은 상대말을 잡는 경우 이 외에 대각선으로 이동할 수 없습니다.";
-    private static final String INVALID_VERTICAL_MOVE_OF_PAWN_ERR_MSG = "폰은 앞에 있는 상대를 잡을 수 없습니다.";
     private static final String INVALID_MOVE_OPPONENT_PIECE_ERR_MSG = "상대방의 말을 움직일 수 없습니다.";
 
     protected final PieceColor pieceColor;
@@ -68,19 +65,7 @@ public abstract class Piece {
         }
 
         if (is(PieceType.PAWN)) {
-            validPawnMove(targetPiece, source, target);
-        }
-    }
-
-    private void validPawnMove(Piece targetPiece, Position source, Position target) {
-        Direction direction = Direction.findDirection(source, target);
-
-        if (direction.isDiagonal() && targetPiece.is(PieceType.BLANK)) {
-            throw new IllegalArgumentException(INVALID_DIAGONAL_MOVE_OF_PAWN_ERR_MSG);
-        }
-
-        if (direction.isVertical() && !targetPiece.is(PieceType.BLANK)) {
-            throw new IllegalArgumentException(INVALID_VERTICAL_MOVE_OF_PAWN_ERR_MSG);
+            ((Pawn) this).validPawnMove(targetPiece, source, target);
         }
     }
 

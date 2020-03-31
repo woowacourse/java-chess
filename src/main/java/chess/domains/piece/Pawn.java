@@ -1,9 +1,12 @@
 package chess.domains.piece;
 
+import chess.domains.position.Direction;
 import chess.domains.position.Position;
 import chess.domains.position.Row;
 
 public class Pawn extends Piece {
+    private static final String INVALID_DIAGONAL_MOVE_OF_PAWN_ERR_MSG = "폰은 상대말을 잡는 경우 이 외에 대각선으로 이동할 수 없습니다.";
+    private static final String INVALID_VERTICAL_MOVE_OF_PAWN_ERR_MSG = "폰은 앞에 있는 상대를 잡을 수 없습니다.";
 
     public Pawn(PieceColor pieceColor) {
         super(pieceColor, PieceType.PAWN);
@@ -37,5 +40,17 @@ public class Pawn extends Piece {
             return Math.abs(xGap) <= ONE_BLOCK && NO_MOVE < yGap && yGap <= TWO_BLOCKS_UP;
         }
         return Math.abs(xGap) <= ONE_BLOCK && TWO_BLOCKS_DOWN <= yGap && yGap < NO_MOVE;
+    }
+
+    public void validPawnMove(Piece targetPiece, Position source, Position target) {
+        Direction direction = Direction.findDirection(source, target);
+
+        if (direction.isDiagonal() && targetPiece.is(PieceType.BLANK)) {
+            throw new IllegalArgumentException(INVALID_DIAGONAL_MOVE_OF_PAWN_ERR_MSG);
+        }
+
+        if (direction.isVertical() && !targetPiece.is(PieceType.BLANK)) {
+            throw new IllegalArgumentException(INVALID_VERTICAL_MOVE_OF_PAWN_ERR_MSG);
+        }
     }
 }
