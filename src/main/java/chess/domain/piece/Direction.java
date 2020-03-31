@@ -1,4 +1,4 @@
-package chess.domain.movement;
+package chess.domain.piece;
 
 import java.util.Arrays;
 

@@ -53,8 +53,10 @@ public class King extends OneTimeMovePiece {
             boardSquaresForCastling.add(boardSquare);
             int fileCompare = boardSquare.getFileCompare(castlingCheatSheet);
             for (int i = 0; i < BoardSquare.MAX_FILE_AND_RANK_COUNT; i++) {
-                boardSquaresForCastling
-                    .add(boardSquare.getAddIfInBoundaryOrMyself(fileCompare * -i, 0));
+                if (boardSquare.hasIncreased(fileCompare * -i, 0)) {
+                    boardSquaresForCastling
+                        .add(boardSquare.getIncreased(fileCompare * -i, 0));
+                }
             }
             boardSquaresForCastling.remove(boardSquare);
             int nonContains = (int) boardSquaresForCastling.stream()

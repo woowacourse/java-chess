@@ -46,9 +46,11 @@ public class Pawn extends OneTimeMovePiece {
         Map<BoardSquare, Piece> board, Set<BoardSquare> containsCheatSheet) {
         Set<BoardSquare> straightCheatSheet = new HashSet<>();
         for (BoardSquare cheatSheet : containsCheatSheet) {
-            BoardSquare oneMore = cheatSheet
-                .getAddIfInBoundaryOrMyself(0, cheatSheet.getRankCompare(boardSquare));
-            straightCheatSheet.addAll(getFrontCheatSheet(boardSquare, board, oneMore));
+            if (cheatSheet.hasIncreased(0, cheatSheet.getRankCompare(boardSquare))) {
+                BoardSquare oneMore = cheatSheet
+                    .getIncreased(0, cheatSheet.getRankCompare(boardSquare));
+                straightCheatSheet.addAll(getFrontCheatSheet(boardSquare, board, oneMore));
+            }
             straightCheatSheet.add(cheatSheet);
         }
         return straightCheatSheet;
@@ -69,9 +71,12 @@ public class Pawn extends OneTimeMovePiece {
         Set<BoardSquare> allCheatSheet) {
         Set<BoardSquare> diagonalCheatSheet = new HashSet<>();
         for (BoardSquare cheatSheet : allCheatSheet) {
-            diagonalCheatSheet.add(cheatSheet.getAddIfInBoundaryOrMyself(-1, 0));
-            diagonalCheatSheet.add(cheatSheet.getAddIfInBoundaryOrMyself(1, 0));
-            diagonalCheatSheet.remove(cheatSheet);
+            if (cheatSheet.hasIncreased(-1, 0)) {
+                diagonalCheatSheet.add(cheatSheet.getIncreased(-1, 0));
+            }
+            if (cheatSheet.hasIncreased(1, 0)) {
+                diagonalCheatSheet.add(cheatSheet.getIncreased(1, 0));
+            }
         }
         return diagonalCheatSheet.stream()
             .filter(board::containsKey)

@@ -3,22 +3,29 @@ package chess.domain.board;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import util.NullChecker;
 
 public class BoardSquare {
 
     private final static Map<String, BoardSquare> CACHE;
-    public final static int MAX_FILE_AND_RANK_COUNT = Integer.max(Rank.count(), File.count());
     public final static int MIN_FILE_AND_RANK_COUNT = 1;
+    public final static int MAX_FILE_AND_RANK_COUNT;
+    private static final String SQUARE_NOT_CACHED_EXCEPTION_MESSAGE = "잘못된 입력 - Square 인자";
 
     static {
         Map<String, BoardSquare> cache = new HashMap<>();
+        int fileCount = 0;
+        int rankCount = 0;
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
                 cache.put(file.getName() + rank.getName(), new BoardSquare(file, rank));
+                rankCount++;
             }
+            fileCount++;
         }
         CACHE = Collections.unmodifiableMap(cache);
+        MAX_FILE_AND_RANK_COUNT = Integer.max(fileCount, rankCount);
     }
 
     private final File file;
@@ -31,34 +38,29 @@ public class BoardSquare {
 
     public static BoardSquare of(String location) {
         NullChecker.validateNotNull(location);
-        if (CACHE.containsKey(location)) {
-            return CACHE.get(location);
-        }
-        throw new IllegalArgumentException("잘못된 square의 입력입니다");
+        return CACHE.keySet().stream()
+            .filter(key -> key.equals(location))
+            .map(CACHE::get)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(SQUARE_NOT_CACHED_EXCEPTION_MESSAGE));
     }
 
     public static BoardSquare of(File file, Rank rank) {
         NullChecker.validateNotNull(file, rank);
-        String key = file.getName() + rank.getName();
-        return BoardSquare.of(key);
+        return BoardSquare.of(file.getName() + rank.getName());
     }
 
-    private boolean hasCacheAdded(int fileIncrementBy, int rankIncrementBy) {
-        if (file.hasNextIncrement(fileIncrementBy) && rank.hasNextIncrement(rankIncrementBy)) {
-            File incrementFile = file.findAddIncrement(fileIncrementBy);
-            Rank incrementRank = rank.findAddIncrement(rankIncrementBy);
-            return CACHE.containsKey(incrementFile.getName() + incrementRank.getName());
+    public boolean hasIncreased(int fileIncrement, int rankIncrement) {
+        if (file.hasNextIncrement(fileIncrement) && rank.hasNextIncrement(rankIncrement)) {
+            File nextIncrementFile = file.findIncrement(fileIncrement);
+            Rank nextIncrementRank = rank.findIncrement(rankIncrement);
+            return CACHE.containsKey(nextIncrementFile.getName() + nextIncrementRank.getName());
         }
         return false;
     }
 
-    public BoardSquare getAddIfInBoundaryOrMyself(int fileIncrementBy, int rankIncrementBy) {
-        if (hasCacheAdded(fileIncrementBy, rankIncrementBy)) {
-            File incrementFile = file.findAddIncrement(fileIncrementBy);
-            Rank incrementRank = rank.findAddIncrement(rankIncrementBy);
-            return BoardSquare.of(incrementFile, incrementRank);
-        }
-        return this;
+    public BoardSquare getIncreased(int fileIncrement, int rankIncrement) {
+        return BoardSquare.of(file.findIncrement(fileIncrement), rank.findIncrement(rankIncrement));
     }
 
     public int getFileCompare(BoardSquare boardSquare) {
@@ -77,13 +79,31 @@ public class BoardSquare {
         return this.rank == Rank.FIRST || this.rank == Rank.EIGHTH;
     }
 
+    public boolean isJumpFile(BoardSquare boardSquare) {
+        return Math.abs(this.file.compareTo(boardSquare.file)) > 1;
+    }
+
     @Override
     public String toString() {
         return file.getName() + rank.getName();
     }
 
-    public boolean isJumpFile(BoardSquare boardSquare) {
-        return Math.abs(this.file.compareTo(boardSquare.file)) > 1;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BoardSquare that = (BoardSquare) o;
+        return file == that.file &&
+            rank == that.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }
 

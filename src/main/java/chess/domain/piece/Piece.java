@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
 import chess.domain.board.ChessInitialSetting;
-import chess.domain.movement.Direction;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -35,10 +34,11 @@ public abstract class Piece {
         for (Direction direction : color.getChangeDirection(type.getDirections())) {
             int fileIncrementBy = direction.getMultiplyFileAddAmount(count);
             int rankIncrementBy = direction.getMultiplyRankAddAmount(count);
-            availableBoardSquares
-                .add(boardSquare.getAddIfInBoundaryOrMyself(fileIncrementBy, rankIncrementBy));
+            if (boardSquare.hasIncreased(fileIncrementBy, rankIncrementBy)) {
+                availableBoardSquares
+                    .add(boardSquare.getIncreased(fileIncrementBy, rankIncrementBy));
+            }
         }
-        availableBoardSquares.remove(boardSquare);
     }
 
     public abstract Set<BoardSquare> getCheatSheet(BoardSquare boardSquare,
@@ -55,7 +55,9 @@ public abstract class Piece {
         Set<BoardSquare> squaresToRemove = new HashSet<>();
         for (int i = 0, file = 0, rank = 0; i < BoardSquare.MAX_FILE_AND_RANK_COUNT;
             i++, file += fileAddAmount, rank += rankAddAmount) {
-            squaresToRemove.add(s.getAddIfInBoundaryOrMyself(file, rank));
+            if (s.hasIncreased(file, rank)) {
+                squaresToRemove.add(s.getIncreased(file, rank));
+            }
         }
         squaresToRemove.remove(s);
         return squaresToRemove;

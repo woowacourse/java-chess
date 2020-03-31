@@ -35,7 +35,7 @@ public enum Rank {
             .anyMatch(rank -> rank.number == this.number + increment);
     }
 
-    public Rank findAddIncrement(int increment) throws IllegalArgumentException {
+    public Rank findIncrement(int increment) throws IllegalArgumentException {
         return Arrays.stream(Rank.values())
             .filter(rank -> rank.number == this.number + increment)
             .findFirst()

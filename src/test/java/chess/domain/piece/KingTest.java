@@ -60,7 +60,6 @@ public class KingTest {
         Set<BoardSquare> availableBoardSquares = piece.getCheatSheet(BoardSquare.of("e8"), board,
             ChessInitialSetting.getCastlingElements());
 
-        System.out.println(availableBoardSquares + " >>>> ");
         assertThat(availableBoardSquares.contains(BoardSquare.of("c8"))).isTrue();
         assertThat(availableBoardSquares.contains(BoardSquare.of("g8"))).isTrue();
 

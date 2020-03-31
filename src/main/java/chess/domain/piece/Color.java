@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.movement.Direction;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;

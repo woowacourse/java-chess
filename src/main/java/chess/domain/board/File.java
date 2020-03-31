@@ -31,7 +31,7 @@ public enum File {
             .anyMatch(file -> file.number == this.number + increment);
     }
 
-    public File findAddIncrement(int increment) throws IllegalArgumentException {
+    public File findIncrement(int increment) throws IllegalArgumentException {
         return Arrays.stream(File.values())
             .filter(file -> file.number == this.number + increment)
             .findFirst()
