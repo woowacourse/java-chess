@@ -13,15 +13,14 @@ public class Position {
 	private static final int WHITE_PAWN_INITIAL_COLUMN = 2;
 	private static final int ROW_START_INDEX = 0;
 	private static final int COLUMN_START_INDEX = 1;
-	private static final int SUBSTRING_LENGTH = 1;
 
 	private final Row row;
 	private final Column column;
 
 	public Position(String position) {
 		validate(position);
-		this.row = Row.of(position.substring(ROW_START_INDEX, ROW_START_INDEX + SUBSTRING_LENGTH));
-		this.column = Column.of(position.substring(COLUMN_START_INDEX, COLUMN_START_INDEX + SUBSTRING_LENGTH));
+		this.row = Row.of(position.substring(ROW_START_INDEX, ROW_START_INDEX + 1));
+		this.column = Column.of(position.substring(COLUMN_START_INDEX, COLUMN_START_INDEX + 1));
 	}
 
 	public Position(Row row, Column column) {
