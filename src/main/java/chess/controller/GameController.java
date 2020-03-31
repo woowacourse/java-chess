@@ -14,9 +14,11 @@ public class GameController {
         OutputView.printBoard(board.showBoard());
     }
 
-    public static void command(String commandMsg, Board board) {
+    public static void printTurn(Board board) {
         OutputView.printTeamColor(board.getTeamColor());
+    }
 
+    public static void command(String commandMsg, Board board) {
         String[] commands = commandMsg.split(DELIMITER);
         Command command = Command.findCommand(commands[SELECTED_COMMAND]);
 
@@ -36,4 +38,6 @@ public class GameController {
         ChessService.move(board, source, target);
         OutputView.printBoard(board.showBoard());
     }
+
+
 }

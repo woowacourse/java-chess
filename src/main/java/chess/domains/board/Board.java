@@ -1,55 +1,56 @@
 package chess.domains.board;
 
+import chess.domains.piece.Blank;
+import chess.domains.piece.Piece;
 import chess.domains.piece.PieceColor;
 import chess.domains.piece.PieceType;
 import chess.domains.position.Column;
 import chess.domains.position.Position;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
-    public static final String INVALID_LOCATION_ERR_MSG = "위치를 잘못 입력하였습니다.";
     public static final String INVALID_ROUTE_ERR_MSG = "말을 뛰어넘을 수 없습니다.";
     public static final int TWO_KINGS = 2;
     public static final double SCORE_OF_PAWN_SAME_COLUMN = 0.5;
     public static final int COLUMN_SIZE = 8;
 
-    private final Set<PlayingPiece> board = BoardFactory.getBoard();
+    private final Map<Position, Piece> board = BoardFactory.getBoard();
     private PieceColor teamColor = PieceColor.WHITE;
 
-    public List<PlayingPiece> showBoard() {
-        List<PlayingPiece> showingBoard = new ArrayList<>(board);
-        showingBoard.sort(PlayingPiece::compareTo);
-        return showingBoard;
-    }
+    public List<Piece> showBoard() {
+        ArrayList<Position> positions = new ArrayList<>(board.keySet());
+        Collections.sort(positions);
 
-    public PlayingPiece findPiece(Position location) {
-        return board.stream()
-                .filter(piece -> piece.has(location))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_LOCATION_ERR_MSG));
+        return positions.stream()
+                .map(board::get)
+                .collect(Collectors.toList());
     }
 
     public void move(Position source, Position target) {
-        PlayingPiece sourcePiece = findPiece(source);
-        PlayingPiece targetPiece = findPiece(target);
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
 
         sourcePiece.checkSameColorWith(teamColor);
-        sourcePiece.validMove(targetPiece);
+        sourcePiece.validMove(targetPiece, source, target);
 
         if (!sourcePiece.is(PieceType.KNIGHT)) {
-            List<Position> route = sourcePiece.findRoute(targetPiece);
+            List<Position> route = source.findRoute(target);
             validRoute(route);
         }
 
-        exchange(sourcePiece, targetPiece);
+        exchange(source, target);
         teamColor = teamColor.changeTeam();
     }
 
     private void validRoute(List<Position> route) {
+        if (route.isEmpty()) {
+            return;
+        }
         if (isBlocked(route)) {
             throw new IllegalArgumentException(INVALID_ROUTE_ERR_MSG);
         }
@@ -57,49 +58,54 @@ public class Board {
 
     private boolean isBlocked(List<Position> route) {
         return route.stream()
-                .map(this::findPiece)
-                .noneMatch(PlayingPiece::isBlank);
+                .map(board::get)
+                .noneMatch(piece -> piece.is(PieceType.BLANK));
     }
 
-    private void exchange(PlayingPiece sourcePiece, PlayingPiece targetPiece) {
-        this.board.remove(targetPiece);
-        this.board.remove(sourcePiece);
-        this.board.addAll(sourcePiece.moveTo(targetPiece));
+    private void exchange(Position source, Position target) {
+        Piece sourcePiece = board.remove(source);
+
+        board.put(source, new Blank());
+        board.put(target, sourcePiece);
     }
 
     public boolean isGameOver() {
-        int count = (int) board.stream()
+        int count = (int) board.values()
+                .stream()
                 .filter(playingPiece -> playingPiece.is(PieceType.KING))
                 .count();
         return count != TWO_KINGS;
     }
 
-    public double calculateScore(PieceColor teamColor) {
-        double score = board.stream()
+    public double calculateScore() {
+        double score = board.values()
+                .stream()
                 .filter(playingPiece -> playingPiece.isMine(teamColor))
-                .mapToDouble(PlayingPiece::score)
+                .mapToDouble(Piece::score)
                 .sum();
 
-        int pawnCount = countOfPawnsInSameColumn(teamColor);
+        int pawnCount = countOfPawnsInSameColumn();
 
         return score - pawnCount * SCORE_OF_PAWN_SAME_COLUMN;
     }
 
-    private int countOfPawnsInSameColumn(PieceColor teamColor) {
-        Stream<PlayingPiece> myPawns = board.stream()
-                .filter(playingPiece -> playingPiece.isMine(teamColor)
-                        && playingPiece.is(PieceType.PAWN));
-
+    private int countOfPawnsInSameColumn() {
         int pawnCount = 0;
         for (Column column : Column.values()) {
-            pawnCount += countValidPawns(myPawns, column);
+            pawnCount += countValidPawns(column);
         }
         return pawnCount;
     }
 
-    private int countValidPawns(Stream<PlayingPiece> myPawns, Column column) {
-        int sameColumnPiecesCount = (int) myPawns.filter(myPiece -> myPiece.isColumn(column))
+    private int countValidPawns(Column column) {
+        int sameColumnPiecesCount = (int) board.keySet()
+                .stream()
+                .filter(position -> position.isColumn(column))
+                .map(board::get)
+                .filter(playingPiece -> playingPiece.isMine(teamColor)
+                        && playingPiece.is(PieceType.PAWN))
                 .count();
+
         if (sameColumnPiecesCount > 1) {
             return sameColumnPiecesCount;
         }

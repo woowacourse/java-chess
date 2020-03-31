@@ -5,7 +5,7 @@ import chess.domains.position.Position;
 
 public class ChessService {
     public static double calculateScore(Board board) {
-        return board.calculateScore(board.getTeamColor());
+        return board.calculateScore();
     }
 
     public static void move(Board board, String source, String target) {

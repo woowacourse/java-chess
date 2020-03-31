@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domains.board.PlayingPiece;
+import chess.domains.piece.Piece;
 import chess.domains.piece.PieceColor;
 
 import java.util.List;
@@ -18,11 +18,11 @@ public class OutputView {
         System.out.println(STARTING_MSG);
     }
 
-    public static void printBoard(List<PlayingPiece> showingBoard) {
+    public static void printBoard(List<Piece> showingBoard) {
         StringBuilder sb = new StringBuilder(PLAYING_PIECES_COUNT);
 
-        for (PlayingPiece piece : showingBoard) {
-            sb.append(piece.showPieceName());
+        for (Piece piece : showingBoard) {
+            sb.append(piece.name());
         }
 
         for (int i = 0; i < ROW_SIZE; i++) {

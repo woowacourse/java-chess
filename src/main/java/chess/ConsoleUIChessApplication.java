@@ -22,6 +22,7 @@ public class ConsoleUIChessApplication {
 
     private static void startGame(Board board) {
         while (!board.isGameOver()) {
+            GameController.printTurn(board);
             String command = InputView.inputCommand();
             GameController.command(command, board);
         }

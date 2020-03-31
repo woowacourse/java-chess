@@ -4,48 +4,49 @@ import chess.domains.piece.Piece;
 import chess.domains.position.Position;
 import chess.domains.position.Row;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import static chess.domains.board.Board.COLUMN_SIZE;
 
 
 public class BoardFactory {
-    private static Set<PlayingPiece> board;
+    private static Map<Position, Piece> board;
 
     static {
         List<Piece> whitePieces = Piece.getWhitePieces();
+        List<Piece> whitePawnsPieces = Piece.getWhitePawnsPieces();
         List<Piece> blackPieces = Piece.getBlackPieces();
+        List<Piece> blackPawnsPieces = Piece.getBlackPawnsPieces();
         List<Piece> blankPieces = Piece.getBlankPieces();
 
-        Set<PlayingPiece> playingPieces = new HashSet<>();
+        Map<Position, Piece> boardPieces = new HashMap<>();
 
-        playingPieces.addAll(createOneRow(Row.ONE, whitePieces));
-        playingPieces.addAll(createOneRow(Row.TWO, whitePieces));
-        playingPieces.addAll(createOneRow(Row.EIGHT, blackPieces));
-        playingPieces.addAll(createOneRow(Row.SEVEN, blackPieces));
-        playingPieces.addAll(createOneRow(Row.THREE, blankPieces));
-        playingPieces.addAll(createOneRow(Row.FOUR, blankPieces));
-        playingPieces.addAll(createOneRow(Row.FIVE, blankPieces));
-        playingPieces.addAll(createOneRow(Row.SIX, blankPieces));
+        boardPieces.putAll(createOneRow(Row.ONE, whitePieces));
+        boardPieces.putAll(createOneRow(Row.TWO, whitePawnsPieces));
+        boardPieces.putAll(createOneRow(Row.THREE, blankPieces));
+        boardPieces.putAll(createOneRow(Row.FOUR, blankPieces));
+        boardPieces.putAll(createOneRow(Row.FIVE, blankPieces));
+        boardPieces.putAll(createOneRow(Row.SIX, blankPieces));
+        boardPieces.putAll(createOneRow(Row.SEVEN, blackPawnsPieces));
+        boardPieces.putAll(createOneRow(Row.EIGHT, blackPieces));
 
-        board = playingPieces;
+        board = boardPieces;
     }
 
-    public static Set<PlayingPiece> getBoard() {
-        return board;
-    }
-
-    private static Set<PlayingPiece> createOneRow(Row row, List<Piece> pieces) {
+    private static Map<Position, Piece> createOneRow(Row row, List<Piece> pieces) {
         List<Position> aRow = Position.fromRow(row);
+        Map<Position, Piece> boardPieces = new HashMap<>();
 
-        Set<PlayingPiece> playingPieces = new HashSet<>();
         for (int i = 0; i < COLUMN_SIZE; i++) {
-            PlayingPiece piece = new PlayingPiece(aRow.get(i), pieces.get(i));
-            playingPieces.add(piece);
+            boardPieces.put(aRow.get(i), pieces.get(i));
         }
 
-        return playingPieces;
+        return boardPieces;
+    }
+
+    public static Map<Position, Piece> getBoard() {
+        return board;
     }
 }

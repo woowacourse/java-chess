@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 public class Position implements Comparable<Position> {
     private static final Map<String, Position> cachedPositions;
 
+    private Column x;
+    private Row y;
+
     static {
         Map<String, Position> positions = new HashMap<>();
         for (Column x : Column.values()) {
@@ -23,9 +26,6 @@ public class Position implements Comparable<Position> {
         }
         return positions;
     }
-
-    private Column x;
-    private Row y;
 
     public Position(Column x, Row y) {
         this.x = x;
