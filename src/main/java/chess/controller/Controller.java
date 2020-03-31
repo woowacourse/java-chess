@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.domain.Command;
-import chess.domain.FirstCommand;
 import chess.domain.Game;
 import chess.domain.board.Board;
+import chess.domain.command.Command;
+import chess.domain.command.FirstCommand;
 import chess.domain.piece.BlackPiecesFactory;
 import chess.domain.piece.PiecesManager;
 import chess.domain.piece.WhitePiecesFactory;

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.command;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
