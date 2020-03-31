@@ -5,12 +5,13 @@ import static view.InputView.*;
 import domain.board.Board;
 import domain.board.BoardFactory;
 import domain.command.Command;
+import domain.command.InvalidCommandException;
+import domain.command.MoveInfo;
 import domain.piece.team.Team;
-import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-	public ChessController() {
+	ChessController() {
 		Board board = BoardFactory.create();
 		Team turn = Team.WHITE;
 		run(board, turn);
@@ -20,12 +21,11 @@ public class ChessController {
 		OutputView.printChessBoard(board);
 		Command command;
 		do {
-			String inputChessCommand = InputView.inputCommand();
-			String[] inputCommand = inputChessCommand.split(DELIMITER);
-			command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
-
+			String inputCommand = inputCommand();
+			command = Command.of(inputCommand);
 			if (command.isMove()) {
-				board.move(inputCommand[SOURCE_POSITION], inputCommand[TARGET_POSITION], turn);
+				MoveInfo moveInfo = new MoveInfo(inputCommand);
+				board.move(moveInfo.getSourcePosition(), moveInfo.getTargetPosition(), turn);
 				OutputView.printChessBoard(board);
 				turn = Team.changeTurn(turn);
 			}
@@ -33,6 +33,12 @@ public class ChessController {
 			if (command.isStatus()) {
 				OutputView.printScore(board.calculateScore());
 			}
+
+			if (command.isStart()) {
+				throw new InvalidCommandException(InvalidCommandException.INVALID_COMMAND_TYPE);
+			}
 		} while (command.isNotEnd() && board.isKingAlive());
+		OutputView.printGameIsEnd();
+		System.exit(0);
 	}
 }

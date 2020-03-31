@@ -14,9 +14,9 @@ public class Rank {
 		this.pieces = pieces;
 	}
 
-	public Piece findPiece(String position) {
+	public Piece findPiece(Position position) {
 		return pieces.stream()
-			.filter(piece -> piece.getPosition().isSamePosition(Position.of(position)))
+			.filter(piece -> piece.getPosition().isSamePosition(position))
 			.findFirst()
 			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
 	}

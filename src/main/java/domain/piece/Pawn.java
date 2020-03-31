@@ -13,6 +13,7 @@ import domain.piece.team.Team;
 
 public class Pawn extends Piece {
 	private static final int MIN_STEP_SIZE_OF_DIAGONAL = 1;
+	public static final double PAWN_SCORE_WHEN_HAS_SAME_COLUMN = -0.5;
 	private static final double SCORE = 1;
 	private static final String SYMBOL = "p";
 

@@ -32,7 +32,7 @@ public class RookTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"a1, WHITE, a1", "a8, BLACK, a8"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
+	void canMove_SourceSameAsTarget_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
@@ -41,7 +41,7 @@ public class RookTest {
 	@DisplayName("유효하지 않은 방향이 입력되면 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"a1, WHITE, b2", "a3, WHITE, f4", "a8, BLACK, b7", "a8, BLACK, g6"})
-	void canMove_InvalidDirection_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
+	void canMove_InvalidDirection_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_DIRECTION);
@@ -50,7 +50,7 @@ public class RookTest {
 	@DisplayName("목적지로 가는 경로에 기물이 있다면 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"a1, WHITE, a4", "a8,BLACK,a2"})
-	void canMove_InvalidTargetPosition_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
+	void canMove_InvalidTargetPosition_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_PIECE_IN_ROUTE);
@@ -59,19 +59,19 @@ public class RookTest {
 	@DisplayName("기물이 없는 목적지가 입력되면 말 이동")
 	@Test
 	void move_EmptyTargetPosition_Success() {
-		String sourcePosition = "a1";
-		String targetPosition = "a2";
+		Position sourcePosition = Position.of("a1");
+		Position targetPosition = Position.of("a2");
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 
 		Piece pieceAfterMove = board.getRanks().get(1).findPiece(targetPosition);
-		assertThat(pieceAfterMove.getPosition()).isEqualTo(Position.of(targetPosition));
+		assertThat(pieceAfterMove.getPosition()).isEqualTo(targetPosition);
 	}
 
 	@DisplayName("아군이 있는 목적지가 입력되면 예외 발생 ")
 	@Test
 	void move_OurTeamAtTargetPosition_ExceptionThrown() {
-		assertThatThrownBy(() -> board.move("a1", "a3", Team.WHITE))
+		assertThatThrownBy(() -> board.move(Position.of("a1"), Position.of("a3"), Team.WHITE))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -79,8 +79,8 @@ public class RookTest {
 	@DisplayName("적군이 있는 목적지가 입력되면 적군을 잡고 말 이동 ")
 	@Test
 	void move_EnemyAtTargetPosition_Capture() {
-		String sourcePosition = "a3";
-		String targetPosition = "a8";
+		Position sourcePosition = Position.of("a3");
+		Position targetPosition = Position.of("a8");
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 

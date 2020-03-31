@@ -1,50 +1,46 @@
 package domain.command;
 
-import static domain.command.InvalidCommandException.*;
-
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 public enum Command {
-	START("start", true, false),
-	END("end", true, true),
-	MOVE("move", false, true),
-	STATUS("status", false, true);
+	START(command -> command.equals("start")),
+	END(command -> command.equals("end")),
+	MOVE(command -> command.contains("move")),
+	STATUS(command -> command.equals("status"));
 
-	private String command;
-	private boolean isGameCommand;
-	private boolean isChessCommand;
+	public static final int MOVE_ARGUMENT_SIZE = 3;
 
-	Command(String command, boolean isGameCommand, boolean isChessCommand) {
-		this.command = command;
-		this.isGameCommand = isGameCommand;
-		this.isChessCommand = isChessCommand;
+	public Predicate<String> isEquals;
+
+	Command(Predicate<String> isEquals) {
+		this.isEquals = isEquals;
 	}
 
-	public static Command ofGameCommand(String inputCommand) {
-		return Arrays.stream(Command.values())
-			.filter(command -> command.isGameCommand)
-			.filter(gameCommand -> gameCommand.command.equals(inputCommand))
+	public static Command of(String inputCommand) {
+		return Arrays.stream(values())
+			.filter(command -> command.isEquals.test(inputCommand))
 			.findFirst()
-			.orElseThrow(() -> new InvalidCommandException(INVALID_GAME_COMMAND));
+			.orElseThrow(() -> new InvalidCommandException(InvalidCommandException.INVALID_COMMAND_TYPE));
 	}
 
-	public static Command ofChessCommand(String inputCommand) {
-		return Arrays.stream(Command.values())
-			.filter(command -> command.isChessCommand)
-			.filter(chessCommand -> chessCommand.command.equals(inputCommand))
-			.findFirst()
-			.orElseThrow(() -> new InvalidCommandException(INVALID_CHESS_COMMAND));
+	public boolean isStart() {
+		return START.equals(this);
 	}
 
-	public Boolean isMove(){
+	public boolean isMove() {
 		return MOVE.equals(this);
 	}
 
-	public Boolean isStatus(){
+	public boolean isStatus() {
 		return STATUS.equals(this);
 	}
 
-	public Boolean isNotEnd(){
-		return END != this;
+	public boolean isEnd() {
+		return END.equals(this);
+	}
+
+	public boolean isNotEnd() {
+		return !isEnd();
 	}
 }

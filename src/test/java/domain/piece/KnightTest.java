@@ -14,6 +14,7 @@ import domain.board.fixture.KnightBoard;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
+import javafx.geometry.Pos;
 
 public class KnightTest {
 	private Board board;
@@ -32,7 +33,7 @@ public class KnightTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"b1, WHITE, b1", "c3, BLACK, c3"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
+	void canMove_SourceSameAsTarget_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
@@ -41,7 +42,7 @@ public class KnightTest {
 	@DisplayName("유효하지 않은 방향이 입력되면 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"b1, WHITE, a1", "b1, WHITE, c2", "c3, BLACK, d3", "c3, BLACK, d4"})
-	void canMove_InvalidDirection_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
+	void canMove_InvalidDirection_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_DIRECTION);
@@ -50,19 +51,19 @@ public class KnightTest {
 	@DisplayName("기물이 없는 목적지가 입력되면 말 이동")
 	@Test
 	void move_EmptyTargetPosition_Success() {
-		String sourcePosition = "b1";
-		String targetPosition = "c3";
+		Position sourcePosition = Position.of("b1");
+		Position targetPosition = Position.of("c3");
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 
 		Piece pieceAfterMove = board.getRanks().get(2).findPiece(targetPosition);
-		assertThat(pieceAfterMove.getPosition()).isEqualTo(Position.of(targetPosition));
+		assertThat(pieceAfterMove.getPosition()).isEqualTo(targetPosition);
 	}
 
 	@DisplayName("아군이 있는 목적지가 입력되면 예외 발생 ")
 	@Test
 	void move_OurTeamAtTargetPosition_ExceptionThrown() {
-		assertThatThrownBy(() -> board.move("b1", "a3", Team.WHITE))
+		assertThatThrownBy(() -> board.move(Position.of("b1"), Position.of("a3"), Team.WHITE))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -70,8 +71,8 @@ public class KnightTest {
 	@DisplayName("적군이 있는 목적지가 입력되면 적군을 잡고 말 이동 ")
 	@Test
 	void move_EnemyAtTargetPosition_Capture() {
-		String sourcePosition = "b1";
-		String targetPosition = "c3";
+		Position sourcePosition = Position.of("b1");
+		Position targetPosition = Position.of("c3");
 		Rank rank = board.getRanks().get(2);
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);

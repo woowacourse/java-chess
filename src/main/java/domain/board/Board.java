@@ -17,7 +17,6 @@ public class Board {
 	public static final int MIN_ROW_COUNT = 1;
 	public static final int MAX_ROW_COUNT = 8;
 	private static final int ROW_INDEX_IN_POSITION = 1;
-	private static final double PAWN_SCORE_WHEN_HAS_SAME_COLUMN = -0.5;
 	private static final int INITIAL_KING_COUNT = 2;
 
 	private List<Rank> ranks;
@@ -26,18 +25,16 @@ public class Board {
 		this.ranks = ranks;
 	}
 
-	public void move(String sourcePosition, String inputTargetPosition, Team turn) {
+	public void move(Position sourcePosition, Position targetPosition, Team turn) {
 		Rank rank = calculateRank(sourcePosition);
 		Piece piece = rank.findPiece(sourcePosition);
-		Position targetPosition = Position.of(inputTargetPosition);
 		if (piece.canMove(targetPosition, turn, ranks)) {
 			piece.move(targetPosition, ranks);
 		}
 	}
 
-	private Rank calculateRank(String position) {
-		int rankLine = Integer.parseInt(String.valueOf(position.charAt(ROW_INDEX_IN_POSITION)));
-		return ranks.get(rankLine - 1);
+	private Rank calculateRank(Position position) {
+		return ranks.get(position.getRow()-1);
 	}
 
 	public Map<Team, Double> calculateScore() {
@@ -61,7 +58,7 @@ public class Board {
 			.sum();
 
 		if (isSameColumn(pawn)) {
-			sum += pawn.size() * PAWN_SCORE_WHEN_HAS_SAME_COLUMN;
+			sum += pawn.size() * Pawn.PAWN_SCORE_WHEN_HAS_SAME_COLUMN;
 		}
 		return sum;
 	}

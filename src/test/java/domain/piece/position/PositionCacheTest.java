@@ -18,7 +18,7 @@ public class PositionCacheTest {
 	@Test
 	void of_InvalidPosition_ExceptionThrown() {
 		assertThatThrownBy(() -> PositionCache.of("z3"))
-			.isInstanceOf(InvalidPositionException.class)
+			.isInstanceOf(NullPointerException.class)
 			.hasMessage(InvalidPositionException.INVALID_BOUNDARY_POSITION);
 	}
 }
