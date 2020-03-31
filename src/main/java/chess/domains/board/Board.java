@@ -59,7 +59,7 @@ public class Board {
     private boolean isBlocked(List<Position> route) {
         return route.stream()
                 .map(board::get)
-                .noneMatch(piece -> piece.is(PieceType.BLANK));
+                .anyMatch(piece -> !piece.is(PieceType.BLANK));
     }
 
     private void exchange(Position source, Position target) {
