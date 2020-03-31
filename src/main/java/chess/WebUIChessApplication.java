@@ -5,17 +5,22 @@ import chess.domain.board.BoardDTO;
 import chess.domain.command.Command;
 import chess.service.ChessService;
 import spark.ModelAndView;
+import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
+
+        String projectDir = System.getProperty("user.dir");
+        String staticDir = "/src/main/resources";
+        staticFiles.externalLocation(projectDir + staticDir);
+
         ChessService service = new ChessService();
 
         get("/", (req, res) -> {
