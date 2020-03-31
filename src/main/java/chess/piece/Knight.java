@@ -23,7 +23,7 @@ public class Knight extends Piece {
 
 	@Override
 	public boolean checkRange(Location now, Location after) {
-		return now.isKnightRange(after);
+		return false;
 	}
 
 	@Override

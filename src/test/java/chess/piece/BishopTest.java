@@ -15,13 +15,13 @@ class BishopTest {
 	@Test
 	void canMove() {
 		Bishop bishop = Bishop.of(Team.BLACK);
-		Location now = Location.of(8, 'c');
-		Location after = Location.of(7, 'd');
+		Location now = Location.of('c', 8);
+		Location after = Location.of('d', 7);
 		boolean actual = bishop.checkRange(now, after);
 
 		assertThat(actual).isTrue();
 
-		Location cantAfter = Location.of(2, 'c');
+		Location cantAfter = Location.of('c', 2);
 		boolean cantActual = bishop.checkRange(now, cantAfter);
 
 		assertThat(cantActual).isFalse();
@@ -32,11 +32,11 @@ class BishopTest {
 	void name() {
 		Map<Location, Piece> board = new HashMap<>();
 		Bishop givenPiece = Bishop.of(Team.BLACK);
-		board.put(Location.of(1, 'c'), givenPiece);
-		board.put(Location.of(2, 'd'), Bishop.of(Team.WHITE));
-		board.put(Location.of(3, 'e'), Bishop.of(Team.WHITE));
+		board.put(Location.of('c', 1), givenPiece);
+		board.put(Location.of('d', 2), Bishop.of(Team.WHITE));
+		board.put(Location.of('e', 3), Bishop.of(Team.WHITE));
 
-		boolean actual = givenPiece.checkObstacle(board, Location.of(1, 'c'), Location.of(3, 'e'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of('c', 1), Location.of('e', 3));
 		assertThat(actual).isTrue();
 	}
 }

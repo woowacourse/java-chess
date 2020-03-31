@@ -25,14 +25,14 @@ class ChessBoardTest {
 		return Stream.of(
 			Arguments.of(
 				new HashMap<Location, Piece>() {{
-					put(Location.of(1, 'a'), King.of(Team.WHITE));
-					put(Location.of(2, 'a'), King.of(Team.BLACK));
+					put(Location.of('a', 1), King.of(Team.WHITE));
+					put(Location.of('a', 2), King.of(Team.BLACK));
 				}}, true
 			), Arguments.of(
-				new HashMap<Location, Piece>() {{
-					put(Location.of(1, 'a'), Pawn.of(Team.WHITE));
-					put(Location.of(2, 'a'), King.of(Team.BLACK));
-				}}, false
+				false, new HashMap<Location, Piece>() {{
+					put(Location.of('a', 1), Pawn.of(Team.WHITE));
+					put(Location.of('a', 2), King.of(Team.BLACK));
+				}}
 			)
 		);
 	}
@@ -41,8 +41,8 @@ class ChessBoardTest {
 	@Test
 	void canMove() {
 		Map<Location, Piece> board = new HashMap<>();
-		Location starting = Location.of(1, 'a');
-		Location destination = Location.of(2, 'a');
+		Location starting = Location.of('a', 1);
+		Location destination = Location.of('a', 2);
 		board.put(starting, Queen.of(Team.BLACK));
 		board.put(destination, Queen.of(Team.BLACK));
 
@@ -55,14 +55,14 @@ class ChessBoardTest {
 	@Test
 	void testGiveMyPiece() {
 		Map<Location, Piece> board = new HashMap<>();
-		Location bottomLocation = Location.of(1, 'a');
-		Location topLocation = Location.of(2, 'a');
+		Location bottomLocation = Location.of('a', 1);
+		Location topLocation = Location.of('a', 2);
 		board.put(bottomLocation, Queen.of(Team.BLACK));
 		board.put(topLocation, Queen.of(Team.BLACK));
 
 		Map<Location, Piece> actual = new HashMap<>();
-		Location actualBottomLocation = Location.of(1, 'a');
-		Location actualTopLocation = Location.of(2, 'a');
+		Location actualBottomLocation = Location.of('a', 1);
+		Location actualTopLocation = Location.of('a', 2);
 		actual.put(actualBottomLocation, Queen.of(Team.BLACK));
 		actual.put(actualTopLocation, Queen.of(Team.BLACK));
 
@@ -85,8 +85,8 @@ class ChessBoardTest {
 	@Test
 	void isTurn() {
 		Map<Location, Piece> board = new HashMap<>();
-		Location movingLocation = Location.of(1, 'a');
-		Location topLocation = Location.of(2, 'a');
+		Location movingLocation = Location.of('a', 1);
+		Location topLocation = Location.of('a', 2);
 		board.put(movingLocation, Queen.of(Team.BLACK));
 		board.put(topLocation, Queen.of(Team.BLACK));
 

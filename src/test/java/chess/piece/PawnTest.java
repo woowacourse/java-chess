@@ -16,21 +16,21 @@ class PawnTest {
 	@DisplayName("초기 위치의 폰의 이동 반경 테스트")
 	void canMove() {
 		Pawn pawn = Pawn.of(Team.BLACK);
-		Location now = Location.of(7, 'a');
+		Location now = Location.of('a', 7);
 
-		Location moveTwiceForward = Location.of(5, 'a');
+		Location moveTwiceForward = Location.of('a', 5);
 		boolean moveTwiceForwardActual = pawn.checkRange(now, moveTwiceForward);
 		assertThat(moveTwiceForwardActual).isTrue();
 
-		Location moveOnceForward = Location.of(6, 'a');
+		Location moveOnceForward = Location.of('a', 6);
 		boolean moveOnceForwardActual = pawn.checkRange(now, moveOnceForward);
 		assertThat(moveOnceForwardActual).isTrue();
 
-		Location moveDiagonal = Location.of(6, 'b');
-		boolean moveDiagonalAcutal = pawn.checkRange(now, moveDiagonal);
-		assertThat(moveDiagonalAcutal).isTrue();
+		Location moveDiagonal = Location.of('b', 6);
+		boolean moveDiagonalActual = pawn.checkRange(now, moveDiagonal);
+		assertThat(moveDiagonalActual).isTrue();
 
-		Location cantAfter = Location.of(4, 'a');
+		Location cantAfter = Location.of('a', 4);
 		boolean cantActual = pawn.checkRange(now, cantAfter);
 
 		assertThat(cantActual).isFalse();
@@ -40,17 +40,17 @@ class PawnTest {
 	@DisplayName("초기 위치가 아닌 일반적인 폰의 이동")
 	void canMove2() {
 		Pawn pawn = Pawn.of(Team.BLACK);
-		Location now = Location.of(6, 'a');
+		Location now = Location.of('a', 6);
 
-		Location moveOnceForward = Location.of(5, 'a');
+		Location moveOnceForward = Location.of('a', 5);
 		boolean moveOnceForwardActual = pawn.checkRange(now, moveOnceForward);
 		assertThat(moveOnceForwardActual).isTrue();
 
-		Location moveDiagonal = Location.of(5, 'b');
-		boolean moveDiagonalAcutal = pawn.checkRange(now, moveDiagonal);
-		assertThat(moveDiagonalAcutal).isTrue();
+		Location moveDiagonal = Location.of('b', 5);
+		boolean moveDiagonalActual = pawn.checkRange(now, moveDiagonal);
+		assertThat(moveDiagonalActual).isTrue();
 
-		Location moveTwiceForward = Location.of(4, 'a');
+		Location moveTwiceForward = Location.of('a', 4);
 		boolean moveTwiceForwardActual = pawn.checkRange(now, moveTwiceForward);
 		assertThat(moveTwiceForwardActual).isFalse();
 	}
@@ -60,10 +60,10 @@ class PawnTest {
 	void name() {
 		Map<Location, Piece> board = new HashMap<>();
 		Pawn givenPiece = Pawn.of(Team.BLACK);
-		board.put(Location.of(7, 'a'), givenPiece);
-		board.put(Location.of(6, 'b'), Bishop.of(Team.WHITE));
+		board.put(Location.of('a', 7), givenPiece);
+		board.put(Location.of('b', 6), Bishop.of(Team.WHITE));
 
-		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(6, 'b'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of('a', 7), Location.of('b', 6));
 		assertThat(actual).isFalse();
 	}
 
@@ -72,9 +72,9 @@ class PawnTest {
 	void name2() {
 		Map<Location, Piece> board = new HashMap<>();
 		Pawn givenPiece = Pawn.of(Team.BLACK);
-		board.put(Location.of(7, 'a'), givenPiece);
+		board.put(Location.of('a', 7), givenPiece);
 
-		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(6, 'b'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of('a', 7), Location.of('b', 6));
 		assertThat(actual).isTrue();
 	}
 
@@ -86,11 +86,11 @@ class PawnTest {
 		Pawn counterPiece = Pawn.of(Team.WHITE);
 		Pawn destinaionPiece = Pawn.of(Team.WHITE);
 
-		board.put(Location.of(7, 'a'), givenPiece);
-		board.put(Location.of(6, 'a'), counterPiece);
-		board.put(Location.of(5, 'a'), destinaionPiece);
+		board.put(Location.of('a', 7), givenPiece);
+		board.put(Location.of('a', 6), counterPiece);
+		board.put(Location.of('a', 5), destinaionPiece);
 
-		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(5, 'a'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of('a', 7), Location.of('a', 5));
 		assertThat(actual).isTrue();
 	}
 
@@ -100,10 +100,10 @@ class PawnTest {
 		Map<Location, Piece> board = new HashMap<>();
 		Pawn givenPiece = Pawn.of(Team.BLACK);
 		Pawn counterPiece = Pawn.of(Team.WHITE);
-		board.put(Location.of(7, 'a'), givenPiece);
-		board.put(Location.of(6, 'a'), counterPiece);
+		board.put(Location.of('a', 7), givenPiece);
+		board.put(Location.of('a', 6), counterPiece);
 
-		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(6, 'a'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of('a', 7), Location.of('a', 6));
 		assertThat(actual).isTrue();
 	}
 
@@ -113,10 +113,10 @@ class PawnTest {
 		Map<Location, Piece> board = new HashMap<>();
 		Pawn givenPiece = Pawn.of(Team.BLACK);
 		Pawn destinaionPiece = Pawn.of(Team.WHITE);
-		board.put(Location.of(7, 'a'), givenPiece);
-		board.put(Location.of(5, 'a'), destinaionPiece);
+		board.put(Location.of('a', 7), givenPiece);
+		board.put(Location.of('a', 5), destinaionPiece);
 
-		boolean actual = givenPiece.checkObstacle(board, Location.of(7, 'a'), Location.of(5, 'a'));
+		boolean actual = givenPiece.checkObstacle(board, Location.of('a', 7), Location.of('a', 5));
 		assertThat(actual).isTrue();
 	}
 }

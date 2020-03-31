@@ -6,12 +6,11 @@ import view.OutputView;
 
 public class ChessController {
 	public static void main(String[] args) {
-		String command = "";
 		OutputView.printInformation();
 		GameManager gameManager = new GameManager(new PieceFactory().createPieces());
 
 		while (gameManager.isRunning()) {
-			command = InputView.inputStartCommand();
+			String command = InputView.inputStartCommand();
 			if ("start".equals(command)) {
 				start(gameManager);
 			}

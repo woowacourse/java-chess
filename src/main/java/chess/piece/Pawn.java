@@ -23,14 +23,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean checkRange(Location now, Location after) {
-		Team team = this.team;
-
-		if (now.isInitialPawnLocation(team)) {
-			return now.isInitialPawnForwardRange(after, team)
-				|| now.isForwardDiagonal(after, team);
-		}
-		return now.isPawnForwardRange(after, team) ||
-			now.isForwardDiagonal(after, team);
+		return false;
 	}
 
 	@Override

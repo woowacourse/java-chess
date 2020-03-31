@@ -15,7 +15,6 @@ import chess.team.Team;
 public class ChessBoard {
 	public static final int ROW_LENGTH = 8;
 	public static final int COLUMN_LENGTH = 8;
-	private static final long COLUMN_PAWN_COUNT = 2;
 
 	private final Map<Location, Piece> board;
 

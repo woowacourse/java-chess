@@ -23,7 +23,7 @@ public class Queen extends Piece {
 
 	@Override
 	public boolean checkRange(Location now, Location after) {
-		return now.isQueenRange(after);
+		return false;
 	}
 
 	@Override

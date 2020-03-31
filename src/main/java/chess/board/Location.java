@@ -10,120 +10,58 @@ import chess.team.Team;
 
 public class Location {
 	private static final Location[] WHITE_TEAM_INITIAL_PAWN_LOCATIONS = {
-		Location.of(2, 'a'),
-		Location.of(2, 'b'),
-		Location.of(2, 'c'),
-		Location.of(2, 'd'),
-		Location.of(2, 'e'),
-		Location.of(2, 'f'),
-		Location.of(2, 'g'),
-		Location.of(2, 'h')
+		Location.of('a', 2),
+		Location.of('b', 2),
+		Location.of('c', 2),
+		Location.of('d', 2),
+		Location.of('e', 2),
+		Location.of('f', 2),
+		Location.of('g', 2),
+		Location.of('h', 2)
 	};
 	private static final Location[] BLACK_TEAM_INITIAL_PAWN_LOCATIONS = {
-		Location.of(7, 'a'),
-		Location.of(7, 'b'),
-		Location.of(7, 'c'),
-		Location.of(7, 'd'),
-		Location.of(7, 'e'),
-		Location.of(7, 'f'),
-		Location.of(7, 'g'),
-		Location.of(7, 'h')
+		Location.of('a', 7),
+		Location.of('b', 7),
+		Location.of('c', 7),
+		Location.of('d', 7),
+		Location.of('e', 7),
+		Location.of('f', 7),
+		Location.of('g', 7),
+		Location.of('h', 7)
 	};
-	private final int row;
-	private final char col;
 
-	private Location(final int row, final char col) {
+	private final Column column;
+	private final Row row;
+
+	public Location(Column column, Row row) {
+		this.column = column;
 		this.row = row;
-		this.col = col;
 	}
 
 	public static Location of(String input) {
-		Location location = LocationCache.cache.get(input);
+		Location location = Location.LocationCache.cache.get(input);
 		Objects.requireNonNull(location, "잘못된 좌표를 입력했습니다.");
 		return location;
 	}
 
-	public static Location of(int row, char col) {
+	public static Location of(char col, int row) {
 		return of(String.format("%c%d", col, row));
 	}
 
+	public static Location of(Column column, Row row) {
+		return of(String.format("%c%d", column.getSymbol(), row.getNumber()));
+	}
+
 	public boolean isSameCol(Location other) {
-		return this.col == other.col;
+		return this.column == other.column;
 	}
 
 	public boolean isDiagonal(Location destination) {
-		return abs(row - destination.row) == abs(col - destination.col);
-	}
-
-	public boolean isKingRange(Location destination) {
-		boolean rowFlag = abs(row - destination.row) <= 1;
-		boolean colFlag = abs(col - destination.col) <= 1;
-
-		return rowFlag && colFlag && this != destination;
-	}
-
-	public boolean isKnightRange(Location destination) {
-		int[] dx = {2, 2, 1, 1, -1, -1, -2, -2};
-		int[] dy = {1, -1, -2, 2, -2, 2, -1, 1};
-
-		for (int i = 0; i < dx.length; i++) {
-			int nx = this.row + dx[i];
-			int ny = this.col + dy[i];
-			if (destination.row == nx && destination.col == ny) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean isQueenRange(Location destination) {
-		return isDiagonal(destination) || isStraight(destination);
+		return abs(row.minus(destination.row)) == abs(column.minus(destination.column));
 	}
 
 	public boolean isStraight(Location destination) {
 		return this.row == destination.row || isSameCol(destination);
-	}
-
-	public boolean isInitialPawnLocation(Team team) {
-		if (team == Team.BLACK) {
-			return Arrays.asList(BLACK_TEAM_INITIAL_PAWN_LOCATIONS)
-				.contains(this);
-		}
-		return Arrays.asList(WHITE_TEAM_INITIAL_PAWN_LOCATIONS)
-			.contains(this);
-	}
-
-	public boolean isInitialPawnForwardRange(Location after, Team team) {
-		int weight = 1;
-		if (team == Team.BLACK) {
-			weight = -1;
-		}
-
-		boolean result = row + weight == after.row || row + (weight * 2) == after.row;
-
-		return result && col == after.col;
-	}
-
-	public boolean isPawnForwardRange(Location after, Team team) {
-		int weight = 1;
-		if (team == Team.BLACK) {
-			weight = -1;
-		}
-
-		boolean result = (row + weight) == after.row;
-
-		return result && col == after.col;
-	}
-
-	public boolean isForwardDiagonal(Location after, Team team) {
-		int weight = 1;
-
-		if (Team.BLACK == team) {
-			weight = -1;
-		}
-
-		return this.row + weight == after.row
-			&& this.col - 1 == after.col || this.col + 1 == after.col;
 	}
 
 	public Location calculateNextLocation(Location destination, int weight) {
@@ -133,17 +71,26 @@ public class Location {
 		if (row == destination.row) {
 			rowWeight = 0;
 		}
-		if (col == destination.col) {
+		if (column == destination.column) {
 			colWeight = 0;
 		}
-		if (row > destination.row) {
+		if (row.isGreaterThan(destination.row)) {
 			rowWeight = -1 * rowWeight;
 		}
-		if (col > destination.col) {
+		if (column.isGreaterThan(destination.column)) {
 			colWeight = -1 * colWeight;
 		}
 
-		return Location.of(row + rowWeight, (char)(col + colWeight));
+		return Location.of(column.add(colWeight), row.add(rowWeight));
+	}
+
+	public boolean isInitialPawnLocation(Team team) {
+		if (Team.BLACK == team) {
+			return Arrays.asList(BLACK_TEAM_INITIAL_PAWN_LOCATIONS)
+				.contains(this);
+		}
+		return Arrays.asList(WHITE_TEAM_INITIAL_PAWN_LOCATIONS)
+			.contains(this);
 	}
 
 	private static class LocationCache {
@@ -156,10 +103,9 @@ public class Location {
 				for (int column = 0; column < ChessBoard.COLUMN_LENGTH; column++) {
 					char nowColumn = (char)(column + 'a');
 					String key = String.format("%c%d", nowColumn, row);
-					cache.put(key, new Location(row, nowColumn));
+					cache.put(key, new Location(Column.of(nowColumn), Row.of(row)));
 				}
 			}
 		}
 	}
 }
-
