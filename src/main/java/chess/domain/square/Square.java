@@ -101,4 +101,9 @@ public class Square {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "Square{" + name + '}';
+    }
 }

@@ -35,16 +35,16 @@ public class KnightTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"c4", "d5", "d1", "f1", "f5", "g2"})
+    @ValueSource(strings = {"c3", "d4", "f4", "g1"})
     @DisplayName("판의 정보를 가져와서 나이트가 갈 수 있는 칸에 장애물이 있는지 판단하여 이동할 수 있는 리스트 반환하는 테스트")
     void movableKnightSquareTest(String input) {
         Map<Square, Piece> board = new HashMap<>();
-        board.put(Square.of("d5"), King.of(Color.BLACK));
-        board.put(Square.of("c2"), King.of(Color.WHITE));
-        board.put(Square.of("g4"), King.of(Color.WHITE));
+        board.put(Square.of("d4"), King.of(Color.BLACK));
+        board.put(Square.of("c1"), King.of(Color.WHITE));
+        board.put(Square.of("g3"), King.of(Color.WHITE));
         Piece piece = Knight.of(Color.WHITE);
-        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("e3"), board);
+        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("e2"), board);
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
-        assertThat(availableSquares.size()).isEqualTo(6);
+        assertThat(availableSquares.size()).isEqualTo(4);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum Direction {
     N(0, 1),
-    S(-1, 0),
+    S(0, -1),
     E(1, 0),
     W(-1, 0),
     NE(1, 1),
@@ -37,7 +37,7 @@ public enum Direction {
         return Arrays.asList(NE, SE, SW, NW);
     }
 
-    public static List<Direction> queenDirection() {
+    public static List<Direction> everyDirection() {
         return Arrays.asList(N, E, S, W, NE, SE, SW, NW);
     }
 

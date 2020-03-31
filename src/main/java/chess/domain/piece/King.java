@@ -1,8 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.square.Square;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -47,23 +51,31 @@ public class King extends Piece {
 
     @Override
     public Set<Square> calculateScope(Square square) {
-        Set<Square> availableSquares = new HashSet<>();
-        int index = -1;
-        for (int i = 0; i < 2; i++) {
-            availableSquares.add(square.movedSquareInBoundary(index, 0));
-            availableSquares.add(square.movedSquareInBoundary(0, index));
-            availableSquares.add(square.movedSquareInBoundary(index * -1, index));
-            availableSquares.add(square.movedSquareInBoundary(index, index));
-            index *= -1;
-        }
-        return availableSquares;
+        Objects.requireNonNull(square, "square은 필수입니다");
+        return Direction.everyDirection()
+                .stream()
+                .map(square::movedSquareInBoundary)
+                .filter(movedSquare -> isNotSameSquareItself(square, movedSquare))
+                .collect(Collectors.toSet());
+    }
+
+    private boolean isNotSameSquareItself(Square square, Square movedSquare) {
+        return movedSquare != square;
     }
 
     @Override
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         validateNotNull(square, board);
         return calculateScope(square).stream()
-                .filter(s -> !(board.containsKey(s) && board.get(s).getColor() == color))
+                .filter(s -> isAvailableSquare(board, s))
                 .collect(Collectors.toSet());
+    }
+
+    private boolean isAvailableSquare(Map<Square, Piece> board, Square square) {
+        if (!board.containsKey(square)) {
+            return true;
+        }
+        Piece piece = board.get(square);
+        return piece.color != color;
     }
 }

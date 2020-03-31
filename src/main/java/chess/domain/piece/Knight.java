@@ -50,14 +50,28 @@ public class Knight extends Piece {
         return Direction.knightDirection()
                 .stream()
                 .map(square::movedSquareInBoundary)
+                .filter(movedSquare -> isNotSameSquareItself(square, movedSquare))
                 .collect(Collectors.toSet());
     }
+
+    private boolean isNotSameSquareItself(Square square, Square movedSquare) {
+        return movedSquare != square;
+    }
+
 
     @Override
     public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
         validateNotNull(square, board);
         return calculateScope(square).stream()
-                .filter(s -> !(board.containsKey(s) && board.get(s).color == color))
+                .filter(s -> isAvailableSquare(board, s))
                 .collect(Collectors.toSet());
+    }
+
+    private boolean isAvailableSquare(Map<Square, Piece> board, Square square) {
+        if (!board.containsKey(square)) {
+            return true;
+        }
+        Piece piece = board.get(square);
+        return piece.color != color;
     }
 }

@@ -43,8 +43,7 @@ public class KingTest {
         board.put(Square.of("b6"), Pawn.of(Color.BLACK));
         Piece piece = King.of(Color.BLACK);
         Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("a6"), board);
-
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
-        assertThat(availableSquares.size()).isEqualTo(5);
+        assertThat(availableSquares.size()).isEqualTo(4);
     }
 }
