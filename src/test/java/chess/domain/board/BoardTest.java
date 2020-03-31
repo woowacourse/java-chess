@@ -41,7 +41,7 @@ class BoardTest {
 
         Board board = Board.of(setter);
 
-        assertThat(board.hasPieceIn(Path.of(B1, B3))).isTrue();
+        assertThat(board.hasPieceIn(Path.of(B1, B3).toList())).isTrue();
     }
 
     @Test
@@ -52,7 +52,7 @@ class BoardTest {
 
         Board board = Board.of(setter);
 
-        assertThat(board.hasPieceIn(Path.of(B1, B3))).isFalse();
+        assertThat(board.hasPieceIn(Path.of(B1, B3).toList())).isFalse();
     }
 
     @Test

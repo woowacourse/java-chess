@@ -1,10 +1,17 @@
 package chess.domain.position;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Path {
-    public static List<Position> of(Position start, Position end) {
+    private final List<Position> path;
+
+    private Path(List<Position> path) {
+        this.path = path;
+    }
+
+    public static Path of(Position start, Position end) {
         List<Position> path = new ArrayList<>();
 
         Position current = start;
@@ -13,10 +20,10 @@ public class Path {
             path.add(current);
         }
 
-        return path;
+        return new Path(path);
     }
 
-    public static List<Position> of(String start, String end) {
-        return of(Position.of(start), Position.of(end));
+    public List<Position> toList() {
+        return Collections.unmodifiableList(path);
     }
 }
