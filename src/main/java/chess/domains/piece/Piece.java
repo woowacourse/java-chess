@@ -23,8 +23,7 @@ public abstract class Piece {
     private static final List<Piece> blankPieces;
 
     protected final PieceColor pieceColor;
-    private final String name;
-    private final double score;
+    private final PieceType type;
 
     static {
         whitePieces = createBundleByColor(PieceColor.WHITE);
@@ -32,10 +31,9 @@ public abstract class Piece {
         blankPieces = createBlankBundle();
     }
 
-    public Piece(PieceColor pieceColor, String name, double score) {
+    public Piece(PieceColor pieceColor, PieceType type) {
         this.pieceColor = pieceColor;
-        this.name = selectName(pieceColor, name);
-        this.score = score;
+        this.type = type;
     }
 
     private static List<Piece> createBundleByColor(PieceColor color) {
@@ -56,13 +54,6 @@ public abstract class Piece {
 
     public abstract boolean isValidMove(Position currentPosition, Position targetPosition);
 
-    private String selectName(PieceColor pieceColor, String name) {
-        if (pieceColor == PieceColor.BLACK) {
-            return name.toUpperCase();
-        }
-        return name;
-    }
-
     public List<Position> findRoute(Position source, Position target) {
         return source.findRoute(target);
     }
@@ -73,6 +64,10 @@ public abstract class Piece {
 
     public boolean isMine(Piece piece) {
         return isMine(piece.pieceColor);
+    }
+
+    public boolean is(PieceType pieceType) {
+        return this.type == pieceType;
     }
 
     public static List<Piece> getBlackPieces() {
@@ -87,12 +82,15 @@ public abstract class Piece {
         return blankPieces;
     }
 
-    public String getName() {
-        return name;
+    public String name() {
+        if (pieceColor == PieceColor.BLACK) {
+            return type.getName().toUpperCase();
+        }
+        return type.getName();
     }
 
-    public double getScore() {
-        return score;
+    public double score() {
+        return type.getScore();
     }
 
     @Override
@@ -101,11 +99,11 @@ public abstract class Piece {
         if (!(o instanceof Piece)) return false;
         Piece piece = (Piece) o;
         return pieceColor == piece.pieceColor &&
-                Objects.equals(name, piece.name);
+                type == piece.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceColor, name);
+        return Objects.hash(pieceColor, type);
     }
 }

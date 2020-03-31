@@ -1,6 +1,7 @@
 package chess.domains.board;
 
 import chess.domains.piece.PieceColor;
+import chess.domains.piece.PieceType;
 import chess.domains.position.Column;
 import chess.domains.position.Position;
 
@@ -39,7 +40,7 @@ public class Board {
         sourcePiece.checkSameColorWith(teamColor);
         sourcePiece.validMove(targetPiece);
 
-        if (!sourcePiece.isKnight()) {
+        if (!sourcePiece.is(PieceType.KNIGHT)) {
             List<Position> route = sourcePiece.findRoute(targetPiece);
             validRoute(route);
         }
@@ -68,7 +69,7 @@ public class Board {
 
     public boolean isGameOver() {
         int count = (int) board.stream()
-                .filter(PlayingPiece::isKing)
+                .filter(playingPiece -> playingPiece.is(PieceType.KING))
                 .count();
         return count != TWO_KINGS;
     }
@@ -86,8 +87,8 @@ public class Board {
 
     private int countOfPawnsInSameColumn(PieceColor teamColor) {
         Stream<PlayingPiece> myPawns = board.stream()
-                .filter(playingPiece -> playingPiece.isMine(teamColor))
-                .filter(PlayingPiece::isPawn);
+                .filter(playingPiece -> playingPiece.isMine(teamColor)
+                        && playingPiece.is(PieceType.PAWN));
 
         int pawnCount = 0;
         for (Column column : Column.values()) {

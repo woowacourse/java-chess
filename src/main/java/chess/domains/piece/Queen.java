@@ -4,7 +4,7 @@ import chess.domains.position.Position;
 
 public class Queen extends Piece {
     public Queen(PieceColor pieceColor) {
-        super(pieceColor, PieceType.QUEEN.name, PieceType.QUEEN.score);
+        super(pieceColor, PieceType.QUEEN);
     }
 
     @Override

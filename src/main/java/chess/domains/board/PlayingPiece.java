@@ -1,6 +1,9 @@
 package chess.domains.board;
 
-import chess.domains.piece.*;
+import chess.domains.piece.Blank;
+import chess.domains.piece.Piece;
+import chess.domains.piece.PieceColor;
+import chess.domains.piece.PieceType;
 import chess.domains.position.Column;
 import chess.domains.position.Direction;
 import chess.domains.position.Position;
@@ -26,7 +29,7 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
     }
 
     public String showPieceName() {
-        return piece.getName();
+        return piece.name();
     }
 
     public boolean has(Position position) {
@@ -42,7 +45,7 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
             throw new IllegalArgumentException(INVALID_MOVE_TO_ILLEGAL_POSITION_ERR_MSG);
         }
 
-        if (isPawn()) {
+        if (is(PieceType.PAWN)) {
             validPawnMove(targetPiece);
         }
     }
@@ -94,20 +97,12 @@ public class PlayingPiece implements Comparable<PlayingPiece> {
         return changedPieces;
     }
 
-    public boolean isKnight() {
-        return this.piece instanceof Knight;
-    }
-
-    public boolean isKing() {
-        return this.piece instanceof King;
-    }
-
-    public boolean isPawn() {
-        return this.piece instanceof Pawn;
+    public boolean is(PieceType pieceType) {
+        return this.piece.is(pieceType);
     }
 
     public double score() {
-        return piece.getScore();
+        return piece.score();
     }
 
     public boolean isColumn(Column column) {
