@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import util.NullChecker;
 
 public class King extends OneTimeMovePiece {
@@ -43,19 +44,17 @@ public class King extends OneTimeMovePiece {
         Set<CastlingSetting> sameColorCastlingElements = castlingElements.stream()
             .filter(castlingElement -> castlingElement.isSameColor(this))
             .collect(Collectors.toSet());
-
         Set<BoardSquare> castlingCheatSheets = CastlingSetting
             .getCastlingCheatSheets(sameColorCastlingElements);
-        Set<BoardSquare> totalCheatSheet = new HashSet<>();
 
+        Set<BoardSquare> totalCheatSheet = new HashSet<>();
         for (BoardSquare castlingCheatSheet : castlingCheatSheets) {
-            Set<BoardSquare> boardSquaresForCastling = new HashSet<>();
             int fileCompare = boardSquare.getFileCompare(castlingCheatSheet);
-            for (int i = 1; i < BoardSquare.MAX_FILE_AND_RANK_COUNT; i++) {
-                if (boardSquare.hasIncreased(fileCompare * -i, 0)) {
-                    boardSquaresForCastling.add(boardSquare.getIncreased(fileCompare * -i, 0));
-                }
-            }
+            Set<BoardSquare> boardSquaresForCastling = IntStream
+                .range(1, BoardSquare.MAX_FILE_AND_RANK_COUNT)
+                .filter(index -> boardSquare.hasIncreased(fileCompare * -index, 0))
+                .mapToObj(index -> boardSquare.getIncreased(fileCompare * -index, 0))
+                .collect(Collectors.toSet());
             if (boardSquaresForCastling.size() == getNonContains(board, boardSquaresForCastling)) {
                 totalCheatSheet.add(castlingCheatSheet);
             }
