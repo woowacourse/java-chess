@@ -114,8 +114,17 @@
 <!-- load piece-image cdn -->
 <script>
     {{#pieces}}
-        ($("<img class=\"img-fluid\" src=\"img/pieces/{{team}}-{{pieceType}}.png\">")).appendTo($(".chess-board"));
+        ($("<img id=\"{{position}}\" class=\"img-fluid piece\" src=\"img/pieces/{{team}}-{{pieceType}}.png\">")).appendTo($(".chess-board"));
     {{/pieces}}
+
+    $(".chess-board img:nth-child(2n+1):nth-child(-2n+7)").addClass("changed");
+    $(".chess-board img:nth-child(2n+10):nth-child(-2n+16)").addClass("changed");
+    $(".chess-board img:nth-child(2n+17):nth-child(-2n+23)").addClass("changed");
+    $(".chess-board img:nth-child(2n+26):nth-child(-2n+32)").addClass("changed");
+    $(".chess-board img:nth-child(2n+33):nth-child(-2n+39)").addClass("changed");
+    $(".chess-board img:nth-child(2n+42):nth-child(-2n+48)").addClass("changed");
+    $(".chess-board img:nth-child(2n+49):nth-child(-2n+55)").addClass("changed");
+    $(".chess-board img:nth-child(2n+58):nth-child(-2n+64)").addClass("changed");
 </script>
 
 <!-- Bootstrap core JavaScript -->
