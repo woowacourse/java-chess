@@ -13,6 +13,10 @@ public class Position {
 		return PositionCache.of(position);
 	}
 
+	public static Position of(Column column, Row row) {
+		return PositionCache.of(column.getColumnName() + row.getNumber());
+	}
+
 	public int calculateColumnGap(Position targetPosition) {
 		return column.gap(targetPosition.column);
 	}

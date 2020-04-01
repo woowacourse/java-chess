@@ -27,7 +27,6 @@ public class Board {
 		Piece piece = rank.findPiece(sourcePosition);
 		piece.canMove(targetPosition, turn, ranks);
 		piece.move(targetPosition, ranks);
-
 	}
 
 	private Rank calculateRank(Position position) {
