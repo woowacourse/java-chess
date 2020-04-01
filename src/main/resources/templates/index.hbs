@@ -62,15 +62,8 @@
             <em>Woowahan moonuiui Chess Game</em>
         </h3>
 
-            <div class="container chess-board mb-5 row-cols-sm-1 row-cols-lg-2">
-                {{#pieces}}
-                <div class="chess-row row">
-                    {{team}}
-                    {{pieceType}}
-                    {{position}}
-                </div>
-                {{/pieces}}
-            </div>
+        <div class="container chess-board mb-5 row-cols-sm-1 row-cols-lg-2">
+        </div>
 
         <a class="btn btn-primary btn-xl js-scroll-trigger m-1" href="#about">Start</a>
         <a class="btn btn-primary btn-xl js-scroll-trigger m-1" href="#about">Status</a>
@@ -110,6 +103,20 @@
 <a class="scroll-to-top rounded js-scroll-trigger" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
+
+<!-- jquery cdn -->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous">
+</script>
+
+<!-- load piece-image cdn -->
+<script>
+    {{#pieces}}
+        ($("<img class=\"img-fluid\" src=\"img/pieces/{{team}}-{{pieceType}}.png\">")).appendTo($(".chess-board"));
+    {{/pieces}}
+</script>
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>

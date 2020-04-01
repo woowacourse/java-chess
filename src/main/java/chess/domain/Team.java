@@ -3,7 +3,7 @@ package chess.domain;
 public enum Team {
     WHITE("white"),
     BLACK("black"),
-    NONE("");
+    NONE("none");
 
     private String name;
 
