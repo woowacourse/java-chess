@@ -4,6 +4,7 @@ import chess.domain.board.BoardSquare;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import util.NullChecker;
 
 public class MoveSquare {
@@ -26,5 +27,26 @@ public class MoveSquare {
 
     public BoardSquare get(MoveOrder moveOrder) {
         return squares.get(moveOrder);
+    }
+
+    public boolean isJumpFile() {
+        return Math.abs(squares.get(MoveOrder.BEFORE).compareTo(squares.get(MoveOrder.AFTER))) > 1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MoveSquare that = (MoveSquare) o;
+        return Objects.equals(squares, that.squares);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(squares);
     }
 }

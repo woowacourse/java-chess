@@ -79,10 +79,6 @@ public class BoardSquare {
         return this.rank == Rank.FIRST || this.rank == Rank.EIGHTH;
     }
 
-    public boolean isJumpFile(BoardSquare boardSquare) {
-        return Math.abs(this.file.compareTo(boardSquare.file)) > 1;
-    }
-
     @Override
     public String toString() {
         return file.getName() + rank.getName();
@@ -108,6 +104,10 @@ public class BoardSquare {
 
     public boolean isSameRank(Rank rank) {
         return this.rank == rank;
+    }
+
+    public int compareTo(BoardSquare boardSquare) {
+        return this.file.compareTo(boardSquare.file);
     }
 }
 

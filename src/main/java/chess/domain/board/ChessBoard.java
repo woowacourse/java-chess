@@ -131,18 +131,19 @@ public class ChessBoard {
                 .findFirst().orElseThrow(IllegalAccessError::new));
         }
         chessBoard.put(moveSquareAfter, currentPiece);
-        moveIfCastlingRook(moveSquareBefore, moveSquareAfter);
+        moveIfCastlingRook(moveSquare);
     }
 
-    private void moveIfCastlingRook(BoardSquare moveSquareBefore, BoardSquare moveSquareAfter) {
+    private void moveIfCastlingRook(MoveSquare moveSquare) {
         Set<CastlingSetting> removeCastlingElements = castlingElements.stream()
-            .filter(castlingElement -> castlingElement.isSameSquare(moveSquareBefore))
+            .filter(
+                castlingElement -> castlingElement.isSameSquare(moveSquare.get(MoveOrder.BEFORE)))
             .collect(Collectors.toSet());
         if (!castlingElements.isEmpty() && castlingElements.removeAll(removeCastlingElements)
-            && moveSquareBefore.isJumpFile(moveSquareAfter)) {
-            MoveSquare moveSquare = CastlingSetting.getMoveCastlingRook(moveSquareAfter);
-            Piece currentPiece = chessBoard.remove(moveSquare.get(MoveOrder.BEFORE));
-            chessBoard.put(moveSquare.get(MoveOrder.AFTER), currentPiece);
+            && moveSquare.isJumpFile()) {
+            MoveSquare moveSquareRook = CastlingSetting.getMoveCastlingRook(moveSquare);
+            Piece currentPiece = chessBoard.remove(moveSquareRook.get(MoveOrder.BEFORE));
+            chessBoard.put(moveSquareRook.get(MoveOrder.AFTER), currentPiece);
         }
     }
 

@@ -88,7 +88,7 @@ public class KingTest {
 
         piece = King.getPieceInstance(Color.WHITE);
         Set<CastlingSetting> castlingSettings = CastlingSetting.getCastlingElements();
-        castlingSettings.remove(CastlingSetting.WHITE_KING);
+        castlingSettings.remove(CastlingSetting.WHITE_KING_BEFORE);
         availableBoardSquares = piece.getCheatSheet(BoardSquare.of("e1"), board,
             castlingSettings);
 
