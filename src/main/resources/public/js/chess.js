@@ -1,5 +1,5 @@
 function choose(value) {
-    if (document.getElementById('source').value !== '') {
+    if (document.querySelector('.source')) {
         chooseDestination(value);
     } else {
         chooseSource(value);
@@ -28,16 +28,14 @@ async function setPieces() {
 }
 
 function chooseSource(sourceValue) {
-    document.getElementById('source').value = sourceValue;
     document.getElementById(sourceValue).classList.add('source');
 }
 
 function chooseDestination(destinationValue) {
-    var redpoint = document.getElementsByClassName('destination').item(0);
+    var redpoint = document.querySelector('.destination');
     if (redpoint) {
         redpoint.classList.remove('destination');
     }
-    document.getElementById('destination').value = destinationValue;
     document.getElementById(destinationValue).classList.add('destination');
 }
 
@@ -48,8 +46,6 @@ function clearSelection() {
     if (document.querySelector(".destination")) {
         document.querySelector(".destination").classList.remove('destination');
     }
-    document.querySelector("#source").value = "";
-    document.querySelector("#destination").value = "";
 }
 
 function move() {
@@ -65,7 +61,6 @@ function move() {
         success: function (jqXHR) {
             if (jqXHR) {
                 alert(jqXHR);
-
             }
         },
         error: function (jqXHR) {
