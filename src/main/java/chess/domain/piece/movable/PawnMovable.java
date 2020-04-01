@@ -22,12 +22,15 @@ public class PawnMovable implements Movable {
 		Direction direction = getForwardDirection(position);
 		Position movableForwardPosition = position.getMovedPositionBy(direction);
 
-		if (isNotPossessed(movableForwardPosition, pieces)) {
+		if (isPossessed(movableForwardPosition, pieces)) {
+			return movablePositions;
+		}
+
+		movablePositions.add(movableForwardPosition);
+
+		movableForwardPosition = movableForwardPosition.getMovedPositionBy(direction);
+		if (position.isPawnInitial(color) && isNotPossessed(movableForwardPosition, pieces)) {
 			movablePositions.add(movableForwardPosition);
-			movableForwardPosition = movableForwardPosition.getMovedPositionBy(direction);
-			if (position.isPawnInitial(color) && isNotPossessed(movableForwardPosition, pieces)) {
-				movablePositions.add(movableForwardPosition);
-			}
 		}
 
 		return movablePositions;
@@ -52,6 +55,11 @@ public class PawnMovable implements Movable {
 				.filter(direction -> position.isSameRow(position.getMovedPositionBy(direction)))
 				.findFirst()
 				.orElse(Direction.NONE);
+	}
+
+	private boolean isPossessed(Position movablePosition, List<Piece> pieces) {
+		return pieces.stream()
+				.anyMatch(piece -> piece.isSamePosition(movablePosition));
 	}
 
 	private boolean isNotPossessed(Position movablePosition, List<Piece> pieces) {
