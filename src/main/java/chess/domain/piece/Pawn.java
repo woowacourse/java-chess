@@ -23,6 +23,13 @@ public class Pawn extends Piece {
 		return isPawnPath(targetPosition, PAWN_DISTANCE);
 	}
 
+	@Override
+	public boolean canAttack(Piece piece) {
+		return position.isInDiagonal(piece.position) &&
+				position.isInDistance(PAWN_DISTANCE, piece.position) &&
+				isForwardAttack(piece.position) && !isSameSide(piece);
+	}
+
 	private boolean isFirstState() {
 		return side.isInitPawnRow(position);
 	}

@@ -2,12 +2,15 @@ package chess.domain;
 
 import static chess.domain.Side.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
@@ -47,7 +50,7 @@ public class TestFixture {
 	public static ChessBoard PAWN_TEST_BOARD() {
 		return new ChessBoard(Arrays.asList(
 				PAWN_D4,
-				new Pawn(WHITE, D5)
+				new Pawn(BLACK, D5)
 		));
 	}
 
@@ -56,5 +59,12 @@ public class TestFixture {
 				ROOK_D4,
 				new Rook(BLACK, D5)
 		));
+	}
+
+	public static ChessBoard ATTACK_PAWN_TEST_BOARD() {
+		List<Piece> list = new ArrayList<>();
+		list.add(new Pawn(WHITE, D4));
+		list.add(new Pawn(BLACK, E5));
+		return new ChessBoard(list);
 	}
 }

@@ -95,7 +95,7 @@ public class ChessBoard {
 	}
 
 	public boolean isRightTurn(Position source, Side turn) {
-		return findPieceBy(source).isSameSide(turn);
+		return !findPieceBy(source).isSameSide(turn);
 	}
 
 	public List<Piece> getPieces() {
