@@ -12,7 +12,7 @@ public class ChessController {
     public ChessController(InputDto inputDto) {
         OutputView.printInitialGuide();
 
-        Command command = inputDto.getCommand();
+        Command command = inputDto.getCommend();
         if (command != Command.START) {
             throw new IllegalArgumentException("start를 해야 합니다.");
         }
@@ -28,7 +28,7 @@ public class ChessController {
 
         do {
             inputDto = InputView.getCommand();
-            command = inputDto.getCommand();
+            command = inputDto.getCommend();
 
             if (command == Command.MOVE) {
                 move(inputDto.getFrom(), inputDto.getTo());
