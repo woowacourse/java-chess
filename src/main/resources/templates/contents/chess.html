@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="jeseok95@gmail.com"/>
+    <title>체스 게임</title>
+    <link href="../css/chess.css" rel="stylesheet"/>
+    <script src="https://kit.fontawesome.com/c9677c888c.js"></script>
+</head>
+<body>
+<header>
+    <div id=title>
+        <h1>체스 고고</h1>
+    </div>
+</header>
+<article id="contents-box">
+    <table class="board">
+        <!-- 1/8 -->
+        <tr>
+            <td class="white"><img src="../piece/rook_black.png" style="max-width: 100%" alt="blackRook"></td>
+            <td class="grey"><img src="../piece/knight_black.png" style="max-width: 100%" alt="blackKnight"></td>
+            <td class="white"><img src="../piece/bishop_black.png" style="max-width: 100%" alt="blackBishop"></td>
+            <td class="grey"><img src="../piece/king_black.png" style="max-width: 100%" alt="blackKing"></td>
+            <td class="white"><img src="../piece/queen_black.png" style="max-width: 100%" alt="blackQueen"></td>
+            <td class="grey"><img src="../piece/bishop_black.png" style="max-width: 100%" alt="blackBishop"></td>
+            <td class="white"><img src="../piece/knight_black.png" style="max-width: 100%" alt="blackKnight"></td>
+            <td class="grey"><img src="../piece/rook_black.png" style="max-width: 100%" alt="blackRook"></td>
+        </tr>
+        <!-- 2/8 -->
+        <tr>
+            <td class="grey"><img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn"></td>
+            <td class="white"><img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn"></td>
+            <td class="grey"><img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn"></td>
+            <td class="white"><img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn"></td>
+            <td class="grey"><img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn"></td>
+            <td class="white"><img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn"></td>
+            <td class="grey"><img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn"></td>
+            <td class="white"><img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn"></td>
+        </tr>
+        <!-- 3/8 -->
+        <tr>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+        </tr>
+        <!-- 4/8 -->
+        <tr>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+        </tr>
+        <!-- 5/8 -->
+        <tr>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+        </tr>
+        <!-- 6/8 -->
+        <tr>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+            <td class="grey"></td>
+            <td class="white"></td>
+        </tr>
+        <!-- 7/8 -->
+        <tr>
+            <td class="white"><img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn"></td>
+            <td class="grey"><img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn"></td>
+            <td class="white"><img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn"></td>
+            <td class="grey"><img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn"></td>
+            <td class="white"><img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn"></td>
+            <td class="grey"><img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn"></td>
+            <td class="white"><img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn"></td>
+            <td class="grey"><img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn"></td>
+        </tr>
+        <!-- 8/8 -->
+        <tr>
+            <td class="grey"><img src="../piece/rook_white.png" style="max-width: 100%" alt="whiteRook"></td>
+            <td class="white"><img src="../piece/knight_white.png" style="max-width: 100%" alt="whiteKnight"></td>
+            <td class="grey"><img src="../piece/bishop_white.png" style="max-width: 100%" alt="whiteBishop"></td>
+            <td class="white"><img src="../piece/king_white.png" style="max-width: 100%" alt="whiteKing"></td>
+            <td class="grey"><img src="../piece/queen_white.png" style="max-width: 100%" alt="whiteQueen"></td>
+            <td class="white"><img src="../piece/bishop_white.png" style="max-width: 100%" alt="whiteBishop"></td>
+            <td class="grey"><img src="../piece/knight_white.png" style="max-width: 100%" alt="whiteKnight"></td>
+            <td class="white"><img src="../piece/rook_white.png" style="max-width: 100%" alt="whiteRook"></td>
+        </tr>
+    </table>
+</article>
+<nav class="nav">
+    <div class="wrapper">
+        <div class="box">
+            <div class="icon">
+                <a href="../index.html">
+                    <i class="fas fa-rocket fa-3x"></i>
+                </a>
+            </div>
+        </div>
+        <div class="text">
+            처음
+        </div>
+    </div>
+</nav>
+<footer>
+    <p>
+        Copyright 2020
+        <a href="https://github.com/joseph415">https://github.com/joseph415</a>
+        All rights reserved
+    </p>
+</footer>
+</body>
+</html>

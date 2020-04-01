@@ -5,7 +5,7 @@ import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.pieceState.InitialState;
 
 public class Pawn extends ChessPiece {
-
+    
     public static final String NAME = "P";
     private static final int SCORE = 1;
 
