@@ -11,7 +11,6 @@ import chess.domain.piece.Rook;
 import chess.domain.piece.Type;
 import chess.domain.state.MoveSquare;
 import chess.domain.state.MoveState;
-import chess.view.OutputView;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -156,8 +155,6 @@ public class ChessBoardTest {
             .isEqualTo(MoveState.SUCCESS);
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare(blackBefore, blackAfter)))
             .isEqualTo(MoveState.SUCCESS);
-
-        OutputView.printChessBoard(chessBoard);
     }
 
     @DisplayName("중간에 장애물이 있는 경우 캐슬링 불가능한지 확인")
