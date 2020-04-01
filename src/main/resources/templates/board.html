@@ -49,11 +49,47 @@
 
 <script>
     for (let i = 0; i < 64; i++) {
-        let backGroundColor = "white";
+        let cell = "white-cell"
         if (((Math.floor(i / 8) % 2 === 0) && (i % 2 === 0)) || (Math.floor(i / 8) % 2 === 1) && (i % 2 === 1)) {
             // 홀수 줄의 홀수 번째 칸 또는 짝수줄의 짝수번째 칸이라면
-            backGroundColor = "black";
+            cell = "black-cell"
         }
-        $(".cell:eq(" + i + ")").css("background-color", backGroundColor);
+        $(".cell:eq(" + i + ")").addClass(cell);
     }
+
+    let source;
+    let isFirstClick = true;
+    let cell;
+
+    $(".cell").click(function () {
+        cell = $(this);
+        let cellPosition = $(this).attr("id");
+        console.log($(this).attr('id'));
+
+        // 첫 클릭이라면 source에 포지션 저장
+        if (isFirstClick) {
+            source = cellPosition;
+            isFirstClick = false;
+            cell.addClass("selected-cell");
+            return;
+        }
+        // 두번째 클릭이지만 똑같은 기물을 선택했다면 선택 취소
+        if (!isFirstClick && (source === cellPosition)) {
+            source = null;
+            isFirstClick = true;
+            cell.removeClass("selected-cell");
+            return;
+        }
+        // 두번째 클릭이라면 이동
+        $.ajax({
+            url: "/move",
+            data: { source: source, target: cellPosition },
+            method: "POST",
+            // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
+        }).done(function (board) {
+            console.log(board);
+            $("body").html(board);
+        });
+    });
+
 </script>

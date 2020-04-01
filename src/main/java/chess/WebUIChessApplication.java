@@ -41,9 +41,18 @@ public class WebUIChessApplication {
             return render(model, "board.html");
         });
 
+        post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String source = req.queryParams("source");
+            String target = req.queryParams("target");
+            Board board = chessService.move(source, target);
+            List<LineDto> rows = board.getRows();
+            model.put("rows", rows);
+            return render(model, "board.html");
+        });
+
         post("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-
             return render(model, "status.html");
         });
 

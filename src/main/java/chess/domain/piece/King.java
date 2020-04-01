@@ -11,12 +11,12 @@ import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.player.PlayerColor;
 
-public class King extends OrdinaryMovement {
+public class King extends GamePiece {
 
     private static List<Position> originalPositions = Collections.singletonList(Position.of(Column.E, Row.ONE));
 
     public King(PlayerColor playerColor) {
-        super("k", Arrays.asList(N, NE, E, SE, S, SW, W, NW), 1, 0, playerColor);
+        super("k", 0, playerColor, Arrays.asList(N, NE, E, SE, S, SW, W, NW), 1);
     }
 
     @Override

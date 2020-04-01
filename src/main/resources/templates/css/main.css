@@ -42,57 +42,42 @@ body {
     background-color: black;
 }
 
-.selected-cell {
-    background-color: #FFFACD;
-}
-
 .cell > img {
     width: 100%;
     margin: 0 auto;
 }
 
-.path {
-    background-color: yellow;
-}
-
-.side {
+.start {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100%;
     width: 37%;
+    height: 100%;
 }
 
-.button {
-    height: 90px;
+form {
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    margin: 2px 0;
+    height: 50%;
+}
+
+.users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .user {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    background-color: seashell;
-    border-radius: 10px;
-}
-
-.user > img {
-    flex: 1;
-    height: 150px;
-    margin: 0 auto;
-}
-
-.user > p {
-    font-size: 20px;
-    font-family: fantasy;
-    flex: 2;
+    margin: 10px auto;
+    font-size: 30px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: black;
 }
 
 input[type="submit"] {
     width: 100%;
-    height: 100%;
+    height: 100px;
     border-radius: 10px;
     background-color: rosybrown;
     font-family: Arial, Helvetica, Sans-serif;

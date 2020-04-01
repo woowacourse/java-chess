@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
 
@@ -87,7 +88,7 @@ class GamePieceTest {
     void samePlayerColor() {
         Position source = Position.from("d5");
         Position target = Position.from("d4");
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         GamePiece gamePiece = new Rook(BLACK);
         board.put(source, gamePiece);
         board.put(target, new Bishop(BLACK));

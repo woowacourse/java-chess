@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ public class EmptyPiece extends GamePiece {
     private static final GamePiece instance = new EmptyPiece();
 
     private EmptyPiece() {
-        super(".", 0, PlayerColor.NONE);
+        super(".", 0, PlayerColor.NONE, Collections.EMPTY_LIST, 0);
     }
 
     public static GamePiece getInstance() {

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,11 +21,9 @@ public class Pawn extends GamePiece {
     private static final int FIRST_MOVE_COUNT = 2;
     private Direction moveDirection;
     private List<Direction> killDirections;
-    private int moveCount;
 
     public Pawn(PlayerColor playerColor) {
-        super("p", 1, playerColor);
-        moveCount = 1;
+        super("p", 1, playerColor, Collections.EMPTY_LIST, 1);
         moveDirection = Direction.N;
         killDirections = Arrays.asList(Direction.NW, Direction.NE);
         if (playerColor.equals(PlayerColor.BLACK)) {
@@ -34,18 +33,23 @@ public class Pawn extends GamePiece {
     }
 
     @Override
-    protected void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
+    public void validateMoveTo(Map<Position, GamePiece> board, Position source, Position target) {
+        GamePiece targetPiece = board.get(target);
+
+        if (playerColor == targetPiece.playerColor) {
+            throw new InvalidMovementException("자신의 말은 잡을 수 없습니다.");
+        }
+
+        validatePath(board, source, target);
+    }
+
+    private void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
         if (board.get(target) != EmptyPiece.getInstance()) {
             validateKillPath(source, target);
             return;
         }
 
         validateMovePath(board, source, target);
-    }
-
-    @Override
-    public List<Position> getOriginalPositions() {
-        return playerColor.reviseInitialPositions(originalPositions);
     }
 
     private void validateKillPath(Position source, Position target) {
@@ -58,7 +62,7 @@ public class Pawn extends GamePiece {
 
     private void validateMovePath(Map<Position, GamePiece> board, Position source, Position target) {
         List<Position> path = source.pathTo(moveDirection, moveCount);
-        if (originalPositions.contains(source)) {
+        if (playerColor.reviseInitialPositions(originalPositions).contains(source)) {
             path = source.pathTo(moveDirection, FIRST_MOVE_COUNT);
         }
 
@@ -72,5 +76,10 @@ public class Pawn extends GamePiece {
                 .ifPresent(position -> {
                     throw new InvalidMovementException("경로에 기물이 존재합니다.");
                 });
+    }
+
+    @Override
+    public List<Position> getOriginalPositions() {
+        return playerColor.reviseInitialPositions(originalPositions);
     }
 }

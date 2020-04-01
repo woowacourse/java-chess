@@ -25,43 +25,21 @@ public class Board {
         this.status = status;
     }
 
-    protected static Board from(Map<Position, GamePiece> board, Status status) {
+    static Board from(Map<Position, GamePiece> board, Status status) {
         return new Board(board, status);
     }
 
-    public static Board createEmpty() {
-        return new Board(createEmptyMap(), Status.readyStatus());
-    }
-
-    private static Map<Position, GamePiece> createEmptyMap() {
-        return Position.list()
-                .stream()
-                .collect(Collectors.toMap(Function.identity(), position -> EmptyPiece.getInstance()));
-    }
-
-    public Board placeInitialPieces() {
-        Map<Position, GamePiece> initialBoard = createEmptyMap();
-        for (GamePiece piece : GamePiece.createGamePieces()) {
-            placePiecesOnInitialPositions(initialBoard, piece);
-        }
-
-        return new Board(initialBoard, Status.initialStatus());
-    }
-
-    private void placePiecesOnInitialPositions(Map<Position, GamePiece> board, GamePiece piece) {
-        for (Position position : piece.getOriginalPositions()) {
-            board.put(position, piece);
-        }
-    }
-
-    public Board move(Position source, Position target) {
+    public Board move(String sourceInput, String targetInput) {
         if (status.isNotProcessing()) {
             throw new UnsupportedOperationException("먼저 게임을 실행해야합니다.");
         }
 
         Map<Position, GamePiece> board = new HashMap<>(this.board);
+        Position source = Position.from(sourceInput);
+        Position target = Position.from(targetInput);
         GamePiece sourcePiece = board.get(source);
         GamePiece targetPiece = board.get(target);
+
 
         validateSourcePiece(sourcePiece);
         sourcePiece.validateMoveTo(board, source, target);

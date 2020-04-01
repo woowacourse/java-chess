@@ -17,6 +17,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.player.PlayerColor;
@@ -34,11 +35,11 @@ class RookTest {
     @DisplayName("이동 경로 찾기")
     @MethodSource("createSourceToTarget")
     void findMovePath(Position source, Position target, List<Position> expected) {
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).doesNotThrowAnyException();
 
     }
@@ -62,11 +63,11 @@ class RookTest {
     @MethodSource("createInvalidTarget")
     void invalidMovementException(Position target) {
         Position source = Position.from("d5");
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         board.put(source, gamePiece);
 
         assertThatThrownBy(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
     }
@@ -88,7 +89,7 @@ class RookTest {
     @Test
     @DisplayName("장애물이 있을 경우")
     void obstacle() {
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         Position source = Position.from("d5");
         Position target = Position.from("g5");
 
@@ -98,7 +99,7 @@ class RookTest {
         board.put(obstacle, new Pawn(PlayerColor.BLACK));
 
         assertThatThrownBy(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n경로에 기물이 존재합니다.");
     }

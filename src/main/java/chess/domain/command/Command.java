@@ -52,14 +52,14 @@ public class Command {
         return command.equals(CommandType.STATUS);
     }
 
-    public Position getSource() {
+    public String getSource() {
         validateMoveType();
-        return Position.from(flags.get(SOURCE_INDEX));
+        return flags.get(SOURCE_INDEX);
     }
 
-    public Position getTarget() {
+    public String getTarget() {
         validateMoveType();
-        return Position.from(flags.get(TARGET_INDEX));
+        return flags.get(TARGET_INDEX);
     }
 
     private void validateMoveType() {

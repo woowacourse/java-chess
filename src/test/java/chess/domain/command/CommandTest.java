@@ -122,7 +122,7 @@ class CommandTest {
         List<String> input = Arrays.asList("move", "b1", "b2");
         Command command = Command.from(input);
 
-        assertThat(command.getSource()).isEqualTo(Position.from("b1"));
+        assertThat(command.getSource()).isEqualTo("b1");
     }
 
     @Test
@@ -131,7 +131,7 @@ class CommandTest {
         List<String> input = Arrays.asList("move", "b1", "b2");
         Command command = Command.from(input);
 
-        assertThat(command.getTarget()).isEqualTo(Position.from("b2"));
+        assertThat(command.getTarget()).isEqualTo("b2");
     }
 
     @Test

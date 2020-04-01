@@ -1,7 +1,7 @@
 package chess.service;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
+import chess.domain.board.BoardFactory;
 import chess.domain.result.ChessResult;
 
 public class ChessService {
@@ -9,16 +9,16 @@ public class ChessService {
     private Board board;
 
     public Board createEmpty() {
-        board = Board.createEmpty();
+        board = BoardFactory.createEmptyBoard();
         return board;
     }
 
     public Board placeInitialPieces() {
-        board = board.placeInitialPieces();
+        board = BoardFactory.createInitialBoard();
         return board;
     }
 
-    public Board move(Position source, Position target) {
+    public Board move(String source, String target) {
         board = board.move(source, target);
         return board;
     }

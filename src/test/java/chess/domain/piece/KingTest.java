@@ -14,7 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.player.PlayerColor;
@@ -33,11 +33,11 @@ class KingTest {
     @MethodSource("createSourceToTarget")
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d5");
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).doesNotThrowAnyException();
     }
 
@@ -59,11 +59,11 @@ class KingTest {
     @MethodSource("createInvalidTarget")
     void invalidMovementException(Position target) {
         Position source = Position.from("d5");
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         board.put(source, gamePiece);
 
         assertThatThrownBy(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
     }

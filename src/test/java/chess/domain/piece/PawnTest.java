@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.player.PlayerColor;
@@ -34,13 +35,13 @@ class PawnTest {
     @MethodSource("createSourceToTarget")
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d2");
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         board.put(source, gamePiece);
         board.put(Position.from("c3"), new King(PlayerColor.BLACK));
         board.put(Position.from("e3"), new King(PlayerColor.BLACK));
 
         assertThatCode(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).doesNotThrowAnyException();
 
     }
@@ -58,13 +59,13 @@ class PawnTest {
     @DisplayName("이동할 수 없는 source, target")
     @MethodSource("createInvalidTarget")
     void invalidMovementException(Position target) {
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         Position source = Position.from("d5");
 
         board.put(source, gamePiece);
 
         assertThatThrownBy(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
     }
@@ -85,7 +86,7 @@ class PawnTest {
     @DisplayName("기물 플레이어 색에 따른 이동")
     @MethodSource("createPawnAndTarget")
     void blackMove(GamePiece piece, Position source, Position target) {
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         board.put(source, piece);
 
         assertThatCode(() -> piece.validateMoveTo(board, source, target))
@@ -105,7 +106,7 @@ class PawnTest {
     @Test
     @DisplayName("original 위치가 아닌 곳에서 2칸 이동할 경우 예외 처리")
     void moveThrowException() {
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> board = new TreeMap<>(BoardFactory.createEmptyBoard().getBoard());
         GamePiece piece = new Pawn(PlayerColor.BLACK);
         Position source = Position.from("d5");
         board.put(source, piece);
