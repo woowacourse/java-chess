@@ -43,10 +43,4 @@ class PawnTest {
 	void isFirstState_NotSameColumnOrOutOfDistance_False(String position) {
 		assertThat(PAWN_D2.isInPath(new Position(position))).isFalse();
 	}
-
-	@DisplayName("isPawn에서 Pawn 인스턴스인 경우 true 반환")
-	@Test
-	void isPawn() {
-		assertThat(PAWN_D4.isPawn()).isTrue();
-	}
 }

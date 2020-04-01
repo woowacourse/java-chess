@@ -89,10 +89,6 @@ public abstract class Piece implements Movable {
 		return this.side.equals(side);
 	}
 
-	public boolean isPawn() {
-		return false;
-	}
-
 	public boolean isSameCol(Column column) {
 		return position.isSameCol(column);
 	}

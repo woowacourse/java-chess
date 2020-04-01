@@ -64,10 +64,4 @@ class PieceTest {
 	void isSameCol_SameColumn_True() {
 		assertThat(ROOK_D4.isSameCol(Column.FOUR)).isTrue();
 	}
-
-	@DisplayName("isPawn에서 Pawn이 아닐 때 false 반환")
-	@Test
-	void isPawn() {
-		assertThat(ROOK_D4.isPawn()).isFalse();
-	}
 }

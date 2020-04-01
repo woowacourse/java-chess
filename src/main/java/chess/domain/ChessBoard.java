@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -90,7 +91,7 @@ public class ChessBoard {
 
 	public long countColumnPawn(Column column, Side side) {
 		return pieces.stream()
-				.filter(piece -> piece.isPawn() && piece.isSameSide(side) && piece.isSameCol(column))
+				.filter(piece -> piece instanceof Pawn && piece.isSameSide(side) && piece.isSameCol(column))
 				.count();
 	}
 
