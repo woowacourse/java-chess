@@ -1,23 +1,27 @@
 package chess;
 
-import chess.view.User;
+import chess.controller.ChessController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.staticFiles;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/static");
-        get("/form", (req, res) -> {
+        ChessController chessController = new ChessController();
+
+        get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("player1", new User(req.queryParams("player1_name")));
-            model.put("player2", new User(req.queryParams("player2_name")));
-            return render(model, "index3.html");
+            return render(model, "index.html");
+        });
+
+        post("/chessGame", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "chessGame.html");
         });
     }
 

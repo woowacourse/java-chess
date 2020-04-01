@@ -20,7 +20,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("../static/img/game-background.jpg");
+    background-image: url("https://us.123rf.com/450wm/anhoog/anhoog1405/anhoog140500012/29233356-%EC%96%B4%EB%91%90%EC%9A%B4-%EB%82%98%EB%AC%B4%EC%9D%98-%EB%B0%B0%EA%B2%BD-%ED%85%8D%EC%8A%A4%EC%B2%98.jpg?ver=6");
 }
 
 .title-container {
@@ -61,14 +61,15 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /*background-image: url("https://files.slack.com/files-tmb/TFELTJB7V-F010ZL8EAH2-125445a755/image_from_ios_1024.jpg");*/
 }
 
 .white-score-board {
-    background-image: url("/static/img/white-scoreboard.jpeg");
+    background-image: url("img/white-scoreboard.jpeg");
 }
 
 .black-score-board {
-    background-image: url("/static/img/black-scoreboard.jpg");
+    background-image: url("img/black-scoreboard.jpg");
 }
 
 .player-name {
@@ -110,7 +111,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("static/img/board-back.jpg");
+    background-image: url("img/board-back.jpg");
     background-clip: padding-box;
     border-radius: 20px;
     box-shadow: 10px 10px 20px #000808;
@@ -123,7 +124,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("static/img/board-backgoround.jpg");
+    background-image: url("img/board-backgoround.jpg");
 }
 
 .rank-board {
@@ -133,11 +134,26 @@ html, body {
 
 .rank-set {
     box-shadow: 10px 10px 30px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
+/*.rank-text {*/
+/*    font-size: 20px;*/
+/*    padding: 25px 0px 20px 30px;*/
+/*}*/
 .rank-text {
-    font-size: 20px;
-    padding: 25px 0px 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .file-container {
@@ -150,11 +166,11 @@ html, body {
     justify-content: space-evenly;
 }
 
-.file-text {
-    padding: 0px 30px 0px 30px;
-    font-size: 20px;
+/*.file-text {*/
+/*    padding: 0px 30px 0px 30px;*/
+/*    font-size: 20px;*/
 
-}
+/*}*/
 
 .rank {
     display: flex;
@@ -166,15 +182,17 @@ html, body {
 .cell {
     width: 70px;
     height: 70px;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .white-cell {
-    background-image: url("static/img/white-board.jpg");
+    background-image: url("img/white-board.jpg");
     background-clip: content-box;
 }
 
 .black-cell {
-    background-image: url("static/img/black-board2.jpg");
+    background-image: url("img/black-board2.jpg");
     background-clip: content-box;
 }
