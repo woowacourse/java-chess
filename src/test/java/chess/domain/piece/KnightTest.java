@@ -31,7 +31,7 @@ class KnightTest {
 	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
 		Map<Position, Piece> pieces = new HashMap<>();
 		pieces.putAll(BoardFactory.initializePawn(pieces));
-		pieces.put(E2, new BlackPawn());
+		pieces.put(E2, new Pawn(Color.BLACK));
 		pieces.put(B1, new Knight(Color.WHITE));
 		pieces.put(G1, new Knight(Color.WHITE));
 		Board board = new Board(pieces);
