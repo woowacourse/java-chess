@@ -59,8 +59,8 @@ public class PawnTest {
         assertThat(availableSquares.contains(Square.of("b5"))).isFalse();
         assertThat(availableSquares.size()).isEqualTo(1);
 
-        availableSquares = piece.calculateMoveBoundary(Square.of("e6"), board);
-        assertThat(availableSquares.contains(Square.of("f5"))).isTrue();
+        availableSquares = piece.calculateMoveBoundary(Square.of("e7"), board);
+        assertThat(availableSquares.contains(Square.of("e6"))).isTrue();
         assertThat(availableSquares.contains(Square.of("e5"))).isFalse();
         assertThat(availableSquares.size()).isEqualTo(1);
 
