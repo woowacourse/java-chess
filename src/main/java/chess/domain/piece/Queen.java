@@ -10,6 +10,6 @@ public class Queen extends Piece {
     @Override
     public boolean movable(Position source, Position target) {
         return new Rook(this.pieceType, this.team).movable(source, target)
-                && new Bishop(this.pieceType, this.team).movable(source, target);
+                || new Bishop(this.pieceType, this.team).movable(source, target);
     }
 }

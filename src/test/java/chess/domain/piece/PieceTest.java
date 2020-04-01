@@ -11,6 +11,7 @@ class PieceTest {
     void toSymbol() {
         Piece whitePiece = new Bishop(PieceType.BISHOP, Team.WHITE);
         Piece blackPiece = new Bishop(PieceType.BISHOP, Team.BLACK);
+
         assertThat(whitePiece.toSymbol()).isEqualTo("b");
         assertThat(blackPiece.toSymbol()).isEqualTo("B");
     }
@@ -20,7 +21,10 @@ class PieceTest {
     void isEnemy() {
         Piece whitePiece = new Knight(PieceType.KNIGHT, Team.WHITE);
         Piece blackPiece = new Knight(PieceType.KNIGHT, Team.BLACK);
+
         assertThat(whitePiece.isEnemy(blackPiece)).isTrue();
+        assertThat(whitePiece.isEnemy(Team.BLACK)).isTrue();
+        assertThat(blackPiece.isEnemy(Team.WHITE)).isTrue();
     }
 
     @DisplayName("피스가 흰 팀의 킹인지 테스트")
@@ -28,6 +32,7 @@ class PieceTest {
     void isWhiteKing() {
         Piece whiteKing = new King(PieceType.KING, Team.WHITE);
         Piece blackBishop = new Bishop(PieceType.BISHOP, Team.BLACK);
+
         assertThat(whiteKing.isWhiteKing()).isTrue();
         assertThat(blackBishop.isWhiteKing()).isFalse();
     }

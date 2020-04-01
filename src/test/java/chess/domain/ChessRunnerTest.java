@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessRunnerTest {
@@ -52,5 +53,25 @@ class ChessRunnerTest {
         assertThatThrownBy(() -> chessRunner.update("a1", "a2"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("목적지가 잘못되었습니다.");
+    }
+
+    @DisplayName("점수 계산 테스트")
+    @Test
+    void calculateScoreTest() {
+        assertThat(chessRunner.calculateScore()).isEqualTo(38d);
+    }
+
+    @DisplayName("게임이 종료되었는지 검사")
+    @Test
+    void isEndChessTest() {
+        assertThat(chessRunner.isEndChess()).isFalse();
+    }
+
+    @DisplayName("게임이 종료되지 않았을 때 승자를 출력 시 예외 출력")
+    @Test
+    void getWinnerTest() {
+        assertThatThrownBy(() -> {
+            chessRunner.getWinner();
+        }).isInstanceOf(AssertionError.class);
     }
 }
