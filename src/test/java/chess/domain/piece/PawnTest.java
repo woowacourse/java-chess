@@ -15,7 +15,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;

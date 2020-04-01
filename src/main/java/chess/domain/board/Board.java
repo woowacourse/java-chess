@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.EmptyPiece;
@@ -39,7 +37,6 @@ public class Board {
         Position target = Position.from(targetInput);
         GamePiece sourcePiece = board.get(source);
         GamePiece targetPiece = board.get(target);
-
 
         validateSourcePiece(sourcePiece);
         sourcePiece.validateMoveTo(board, source, target);

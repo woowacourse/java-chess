@@ -6,7 +6,6 @@ import chess.domain.board.Board;
 import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
 import chess.domain.result.Score;
-import chess.dto.GamePieceDto;
 import chess.dto.LineDto;
 
 public class OutputView {
@@ -21,12 +20,13 @@ public class OutputView {
     }
 
     public static void printBoard(Board board) {
-        for (LineDto row : board.getRows()) {
-            for (GamePieceDto piece : row.getGamePieces()) {
-                System.out.print(piece.getName());
-            }
-            System.out.println();
-        }
+        board.getRows()
+                .stream()
+                .map(LineDto::getGamePieces)
+                .forEach(pieces -> {
+                    pieces.forEach(piece -> System.out.print(piece.getName()));
+                    System.out.println();
+                });
     }
 
     public static void printExceptionMessage(String message) {
