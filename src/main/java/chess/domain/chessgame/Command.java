@@ -1,8 +1,12 @@
 package chess.domain.chessgame;
 
+import chess.domain.Result;
+import chess.domain.Status;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.position.Position;
+import chess.view.OutputView;
 
-public class ChessMenu {
+public class Command {
 	private static final String NOT_START_MESSAGE = "게임이 시작되지 않았습니다.";
 	private static final char CHAR_INT_CHANGE_VALUE = '0';
 	private static final int SECOND_INDEX = 1;
@@ -13,7 +17,7 @@ public class ChessMenu {
 	private final Menu menu;
 	private final String command;
 
-	public ChessMenu(String command) {
+	public Command(String command) {
 		this.menu = Menu.of(command);
 		this.command = command;
 	}
@@ -26,14 +30,6 @@ public class ChessMenu {
 
 	public boolean isNotEnd() {
 		return menu != Menu.END;
-	}
-
-	public boolean isMove() {
-		return menu == Menu.MOVE;
-	}
-
-	public boolean isStatus() {
-		return menu == Menu.STATUS;
 	}
 
 	public Position createStartPosition() {
@@ -49,5 +45,17 @@ public class ChessMenu {
 		char x = Coordinates[order].charAt(FIRST_INDEX);
 		int y = Coordinates[order].charAt(SECOND_INDEX) - CHAR_INT_CHANGE_VALUE;
 		return Position.of(y, x);
+	}
+
+	public void execute(ChessBoard chessBoard) {
+		if (menu == Menu.MOVE) {
+			chessBoard.move(createStartPosition(), createTargetPosition());
+		}
+
+		if (menu == Menu.STATUS) {
+			Status status = chessBoard.createStatus();
+			Result result = status.getResult();
+			OutputView.printResult(result);
+		}
 	}
 }
