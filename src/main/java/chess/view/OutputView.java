@@ -46,6 +46,6 @@ public class OutputView {
 	}
 
 	public static void printEndGame() {
-		System.out.println("킹이 잡혔습니다! 게임을 종료합니다.");
+		System.out.println("게임을 종료합니다.");
 	}
 }
