@@ -1,41 +1,56 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Color.WHITE;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import chess.domain.board.Board;
-import chess.domain.position.Direction;
-import chess.domain.position.Position;
+import chess.domain.coordinates.Coordinates;
+import chess.domain.coordinates.Direction;
 
 public abstract class AbstractPiece implements Piece {
-	protected String name;
-	protected Color color;
-	protected List<Direction> movableDirections;
-	protected PieceScore score;
+	protected final Set<Direction> movableDirections;
+	protected final String name;
+	protected final Color color;
+	protected final double score;
 
-	protected AbstractPiece(String name, Color color, List<Direction> movableDirections, PieceScore score) {
+	public AbstractPiece(List<Direction> movableDirections, String name, Color color, double score) {
+		this.movableDirections = new HashSet<>(movableDirections);
 		this.name = name;
 		this.color = color;
-		this.movableDirections = movableDirections;
 		this.score = score;
 	}
 
 	@Override
-	public abstract Set<Position> findMovablePositions(Position currentPosition, Board board);
+	public abstract List<Coordinates> findMovableCoordinates(Coordinates from, Coordinates to);
 
 	@Override
-	public boolean isEnemy(Piece that) {
-		return !this.color.equals(that.getColor());
+	public boolean isKing() {
+		return false;
 	}
 
 	@Override
-	public boolean isSameColor(Color color) {
+	public boolean isPawn() {
+		return false;
+	}
+
+	@Override
+	public boolean isAlly(Piece that) {
+		return color.equals(that.getColor());
+	}
+
+	@Override
+	public boolean isTeamOf(Color color) {
 		return getColor().equals(color);
 	}
 
 	@Override
-	public boolean isNotSameColor(Color color) {
-		return !getColor().equals(color);
+	public String getName() {
+		if (WHITE.equals(color)) {
+			return name.toLowerCase();
+		}
+		return name;
 	}
 
 	@Override
@@ -44,12 +59,7 @@ public abstract class AbstractPiece implements Piece {
 	}
 
 	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
 	public double getScore() {
-		return score.getScore();
+		return score;
 	}
 }

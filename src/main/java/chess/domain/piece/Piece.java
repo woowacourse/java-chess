@@ -1,22 +1,23 @@
 package chess.domain.piece;
 
-import java.util.Set;
+import java.util.List;
 
-import chess.domain.board.Board;
-import chess.domain.position.Position;
+import chess.domain.coordinates.Coordinates;
 
 public interface Piece {
-	Set<Position> findMovablePositions(Position currentPosition, Board board);
+	List<Coordinates> findMovableCoordinates(Coordinates from, Coordinates to);
 
-	boolean isEnemy(Piece that);
+	boolean isKing();
 
-	boolean isSameColor(Color color);
+	boolean isPawn();
 
-	boolean isNotSameColor(Color color);
+	boolean isAlly(Piece that);
+
+	boolean isTeamOf(Color color);
+
+	String getName();
 
 	Color getColor();
 
 	double getScore();
-
-	String getName();
 }

@@ -1,11 +1,9 @@
 package chess.domain.piece;
 
-import static chess.domain.position.PositionFixture.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -13,40 +11,41 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
-import chess.domain.position.Position;
+import chess.domain.coordinates.Coordinates;
 
 class QueenTest {
-	static Stream<Arguments> generatePositions() {
+	static Stream<Arguments> generateMovablePositions() {
 		return Stream.of(
-			Arguments.of(D1, B1, true),
-			Arguments.of(D1, B3, true),
-			Arguments.of(D1, A4, false),
-			Arguments.of(D1, A2, false),
-			Arguments.of(D1, F1, false),
-			Arguments.of(D1, F3, false),
-			Arguments.of(D1, E1, false),
-			Arguments.of(D1, H1, false)
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("C2")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("F3")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("F6")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("C7")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("B2"))
 		);
 	}
 
 	@Test
-	public void initTest() {
-		assertThat(new Queen("q", Color.WHITE)).isInstanceOf(Queen.class);
+	public void constructor() {
+		assertThat(new Queen(Color.WHITE)).isInstanceOf(Queen.class);
 	}
 
 	@ParameterizedTest
-	@MethodSource("generatePositions")
-	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
-		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.put(B1, new Bishop("b", Color.BLACK));
-		pieces.put(B3, new Bishop("b", Color.BLACK));
-		pieces.put(F3, new Bishop("B", Color.WHITE));
-		Board board = new Board(BoardFactory.initializeKingQueen(pieces));
-		Piece queen = board.findPieceBy(currentPosition);
+	@MethodSource("generateMovablePositions")
+	void findMovablePositions(Coordinates from, Coordinates to) {
+		List<Coordinates> coordinates = new Queen(Color.WHITE).findMovableCoordinates(from, to);
+		assertThat(coordinates.contains(to)).isTrue();
+	}
 
-		Set<Position> positions = queen.findMovablePositions(currentPosition, board);
-		assertThat(positions.contains(destination)).isEqualTo(expect);
+	@Test
+	void findMovablePositions_NotMovableDirection_ExceptionThrown() {
+		assertThatThrownBy(
+				() -> new Queen(Color.WHITE).findMovableCoordinates(Coordinates.of("C3"), Coordinates.of("A4")))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessageContaining("이동할 수 없는");
+	}
+
+	@Test
+	void isKing() {
+		assertThat(new Queen(Color.WHITE).isKing()).isFalse();
 	}
 }

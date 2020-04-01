@@ -10,12 +10,12 @@ public enum CommandType {
 
 	public static CommandType of(String input) {
 		return Stream.of(CommandType.values())
-			.filter(command -> command.isEqualName(input))
-			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("잘못된 커맨드입니다."));
+				.filter(command -> command.isSameName(input))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("잘못된 커맨드입니다."));
 	}
 
-	private boolean isEqualName(String input) {
+	private boolean isSameName(String input) {
 		return getLowerCaseName().equals(input);
 	}
 

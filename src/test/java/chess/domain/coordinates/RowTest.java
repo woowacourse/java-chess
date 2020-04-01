@@ -1,6 +1,7 @@
-package chess.domain.position;
+package chess.domain.coordinates;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,6 +19,6 @@ class RowTest {
 	@ValueSource(strings = {"0", "9", "a"})
 	void invalidValueTest(String input) {
 		assertThatThrownBy(() -> Row.of(input))
-			.isInstanceOf(IllegalArgumentException.class);
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 }

@@ -1,11 +1,9 @@
 package chess.domain.piece;
 
-import static chess.domain.position.PositionFixture.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -13,37 +11,41 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
-import chess.domain.position.Position;
+import chess.domain.coordinates.Coordinates;
 
 class KnightTest {
-	static Stream<Arguments> generatePositions() {
+	static Stream<Arguments> generateMovablePositions() {
 		return Stream.of(
-			Arguments.of(B1, D2, false),
-			Arguments.of(B1, C3, true),
-			Arguments.of(B1, B3, false),
-			Arguments.of(G1, E2, true)
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("D5")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("B5")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("B1")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("D1")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("E2"))
 		);
 	}
 
 	@Test
-	void initTest() {
-		assertThat(new Knight("n", Color.WHITE)).isInstanceOf(Knight.class);
+	public void constructor() {
+		assertThat(new Knight(Color.WHITE)).isInstanceOf(Knight.class);
 	}
 
 	@ParameterizedTest
-	@MethodSource("generatePositions")
-	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
-		Map<Position, Piece> pieces = new HashMap<>();
-		pieces.putAll(BoardFactory.initializePawn(pieces));
-		pieces.putAll(BoardFactory.initializeKnight(pieces));
-		pieces.put(E2, new Pawn("P", Color.BLACK));
-		Board board = new Board(pieces);
-		Piece knight = board.findPieceBy(currentPosition);
+	@MethodSource("generateMovablePositions")
+	void findMovablePositions(Coordinates from, Coordinates to) {
+		List<Coordinates> coordinates = new Knight(Color.WHITE).findMovableCoordinates(from, to);
+		assertThat(coordinates.contains(to)).isTrue();
+	}
 
-		Set<Position> positions = knight.findMovablePositions(currentPosition, board);
-		System.out.println(positions);
-		assertThat(positions.contains(destination)).isEqualTo(expect);
+	@Test
+	void findMovablePositions_NotMovableDirection_ExceptionThrown() {
+		assertThatThrownBy(
+				() -> new Knight(Color.WHITE).findMovableCoordinates(Coordinates.of("C3"), Coordinates.of("C4")))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessageContaining("이동할 수 없는");
+	}
+
+	@Test
+	void isKing() {
+		assertThat(new Knight(Color.WHITE).isKing()).isFalse();
 	}
 }

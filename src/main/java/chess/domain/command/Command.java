@@ -1,8 +1,11 @@
 package chess.domain.command;
 
-import static chess.domain.command.CommandType.*;
+import static chess.domain.command.CommandType.END;
+import static chess.domain.command.CommandType.MOVE;
+import static chess.domain.command.CommandType.START;
+import static chess.domain.command.CommandType.STATUS;
 
-import chess.domain.position.Position;
+import chess.domain.coordinates.Coordinates;
 
 public class Command {
 	private static final String DELIMITER = " ";
@@ -11,18 +14,18 @@ public class Command {
 	private static final int COMMAND_COLUMN_INDEX = 2;
 
 	private CommandType commandType;
-	private Position targetPosition;
-	private Position destination;
+	private Coordinates targetCoordinates;
+	private Coordinates destination;
 
 	private Command(CommandType commandType) {
 		this.commandType = commandType;
-		this.targetPosition = null;
+		this.targetCoordinates = null;
 		this.destination = null;
 	}
 
-	private Command(CommandType commandType, Position targetPosition, Position destination) {
+	private Command(CommandType commandType, Coordinates targetCoordinates, Coordinates destination) {
 		this.commandType = commandType;
-		this.targetPosition = targetPosition;
+		this.targetCoordinates = targetCoordinates;
 		this.destination = destination;
 	}
 
@@ -31,9 +34,9 @@ public class Command {
 		CommandType commandType = CommandType.of(commands[FIRST_COMMAND_INDEX]);
 
 		if (MOVE.equals(commandType)) {
-			Position targetPosition = Position.of(commands[COMMAND_ROW_INDEX]);
-			Position destination = Position.of(commands[COMMAND_COLUMN_INDEX]);
-			return new Command(commandType, targetPosition, destination);
+			Coordinates targetCoordinates = Coordinates.of(commands[COMMAND_ROW_INDEX]);
+			Coordinates destination = Coordinates.of(commands[COMMAND_COLUMN_INDEX]);
+			return new Command(commandType, targetCoordinates, destination);
 		}
 		return new Command(commandType);
 	}
@@ -50,11 +53,15 @@ public class Command {
 		return commandType == STATUS;
 	}
 
-	public Position getTargetPosition() {
-		return targetPosition;
+	public boolean isEnd() {
+		return commandType == END;
 	}
 
-	public Position getDestination() {
+	public Coordinates getTargetCoordinates() {
+		return targetCoordinates;
+	}
+
+	public Coordinates getDestination() {
 		return destination;
 	}
 }

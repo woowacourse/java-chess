@@ -13,39 +13,37 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.coordinates.Coordinates;
 
-class RookTest {
+class WhitePawnTest {
 	static Stream<Arguments> generateMovablePositions() {
 		return Stream.of(
-				Arguments.of(Coordinates.of("C3"), Coordinates.of("C7")),
-				Arguments.of(Coordinates.of("C3"), Coordinates.of("D3")),
-				Arguments.of(Coordinates.of("C3"), Coordinates.of("A3")),
-				Arguments.of(Coordinates.of("C3"), Coordinates.of("C1"))
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("C4")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("B4")),
+				Arguments.of(Coordinates.of("C3"), Coordinates.of("D4"))
 		);
 	}
 
 	@Test
 	public void constructor() {
-		assertThat(new Rook(Color.WHITE)).isInstanceOf(Rook.class);
+		assertThat(new WhitePawn()).isInstanceOf(Pawn.class);
 	}
 
 	@ParameterizedTest
 	@MethodSource("generateMovablePositions")
 	void findMovablePositions(Coordinates from, Coordinates to) {
-		List<Coordinates> coordinates = new Rook(Color.WHITE).findMovableCoordinates(from, to);
+		List<Coordinates> coordinates = new WhitePawn().findMovableCoordinates(from, to);
 		assertThat(coordinates.contains(to)).isTrue();
 	}
 
 	@Test
 	void findMovablePositions_NotMovableDirection_ExceptionThrown() {
 		assertThatThrownBy(
-				() -> new Rook(Color.WHITE).findMovableCoordinates(Coordinates.of("C3"), Coordinates.of("A4")))
+				() -> new WhitePawn().findMovableCoordinates(Coordinates.of("C3"), Coordinates.of("C2")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("이동할 수 없는");
 	}
 
 	@Test
 	void isKing() {
-		assertThat(new Rook(Color.WHITE).isKing()).isFalse();
+		assertThat(new WhitePawn().isKing()).isFalse();
 	}
 }
-

@@ -1,68 +1,56 @@
 package chess.domain;
 
-import static chess.domain.piece.Color.*;
-
+import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 import chess.domain.board.Board;
-import chess.domain.command.Command;
+import chess.domain.coordinates.Coordinates;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
 
 public class GameManager {
-	private Board board;
-	private Color currentTurn;
+	private final Board board;
+	private Color turn;
 
-	public GameManager(Board board) {
-		this.board = board;
-		this.currentTurn = WHITE;
+	public GameManager(Board board, Color turn) {
+		this.board = Objects.requireNonNull(board, "board가 존재하지 않습니다.");
+		this.turn = Objects.requireNonNull(turn, "turn이 존재하지 않습니다.");
 	}
 
-	public void move(Command command) {
-		Position targetPosition = command.getTargetPosition();
-		Position destination = command.getDestination();
+	public GameManager(Board board) {
+		this(board, Color.WHITE);
+	}
 
-		validateMove(targetPosition, destination);
-
-		board.movePiece(targetPosition, destination);
+	public void move(Coordinates from, Coordinates to) {
+		validateTurn(from);
+		board.movePiece(from, to);
 		nextTurn();
 	}
 
-	private void validateMove(Position targetPosition, Position destination) {
-		Piece target = board.findPieceBy(targetPosition);
-		validateTurn(target);
-		validateMovablePosition(target, targetPosition, destination);
-	}
-
-	private void validateTurn(Piece target) {
-		if (target.isNotSameColor(currentTurn)) {
-			throw new IllegalArgumentException("자신의 턴이 아닙니다.");
-		}
-	}
-
-	private void validateMovablePosition(Piece target, Position targetPosition, Position destination) {
-		Set<Position> movablePositions = target.findMovablePositions(targetPosition, board);
-		if (!movablePositions.contains(destination)) {
-			throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-		}
-	}
-
 	private void nextTurn() {
-		currentTurn = currentTurn.reverse();
+		turn = turn.reverse();
 	}
 
-	public Map<Color, Double> calculateEachScore() {
-		ScoreRule scoreRule = new ScoreRule(board.getPieces());
-		return scoreRule.calculateScore();
+	public boolean isEndOfGame() {
+		return !board.isKingAliveOf(turn);
 	}
 
-	public Color getCurrentTurn() {
-		return currentTurn;
+	private void validateTurn(Coordinates from) {
+		board.findPieceBy(from)
+				.filter(piece -> piece.isTeamOf(turn))
+				.orElseThrow(() -> new IllegalArgumentException(turn + "의 차례입니다."));
 	}
 
-	public boolean isKingAlive() {
-		return board.isKingAliveOf(currentTurn);
+	public Board getBoard() {
+		return board;
+	}
+
+	public Color getEnemyColor() {
+		return turn.reverse();
+	}
+
+	public Map<Coordinates, Piece> getPieces() {
+		return Collections.unmodifiableMap(board.getPieces());
 	}
 }

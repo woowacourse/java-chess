@@ -5,7 +5,7 @@ public enum Color {
 	BLACK;
 
 	public Color reverse() {
-		if (this == WHITE) {
+		if (this.equals(WHITE)) {
 			return BLACK;
 		}
 		return WHITE;

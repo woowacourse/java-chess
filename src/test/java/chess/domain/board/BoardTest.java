@@ -1,39 +1,48 @@
 package chess.domain.board;
 
-import static chess.domain.position.PositionFixture.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Map;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
-import chess.domain.position.Position;
+import chess.domain.coordinates.Coordinates;
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
 
 class BoardTest {
+	private Board board;
+
+	@BeforeEach
+	void setup() {
+		board = BoardFactory.createNewGame();
+	}
+
 	@Test
 	void initBoardTest() {
-		assertThat(BoardFactory.create()).isInstanceOf(Board.class);
+		assertThat(BoardFactory.createNewGame()).isInstanceOf(Board.class);
 	}
 
 	@Test
-	void initRookTest() {
-		Board board = BoardFactory.create();
-		Map<Position, Piece> pieces = board.getPieces();
-
-		assertThat(pieces.get(A1)).isInstanceOf(Rook.class);
+	void isKingAlive() {
+		assertThat(board.isKingAliveOf(Color.WHITE)).isTrue();
 	}
 
 	@Test
-	void isEmptyPositionTest() {
-		Board board = BoardFactory.create();
-		assertThat(board.isNotEmptyPosition(A3)).isFalse();
+	void findPieceBy() {
+		assertThat(board.findPieceBy(Coordinates.of("A2")).get()).isInstanceOf(Pawn.class);
 	}
 
 	@Test
-	void isNotEmptyPositionTest() {
-		Board board = BoardFactory.create();
-		assertThat(board.isNotEmptyPosition(A6)).isFalse();
+	void movePiece() {
+		board.movePiece(Coordinates.of("B2"), Coordinates.of("B3"));
+		assertThat(board.findPieceBy(Coordinates.of("B3")).get()).isInstanceOf(Pawn.class);
+	}
+
+	@Test
+	void movePiece_ExistAlly_ExceptionThrown() {
+		assertThatThrownBy(() -> board.movePiece(Coordinates.of("D1"), Coordinates.of("D2")))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessageContaining("같은 팀의 piece");
 	}
 }

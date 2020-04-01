@@ -1,23 +1,50 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.coordinates.Coordinates;
 import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 
 class GameManagerTest {
-	@Test
-	void calculateScoreTest() {
-		Board board = BoardFactory.create();
-		GameManager game = new GameManager(board);
-		Map<Color, Double> eachColorScore = game.calculateEachScore();
+	private GameManager gameManager;
 
-		assertThat(eachColorScore.get(Color.BLACK)).isEqualTo(38);
-		assertThat(eachColorScore.get(Color.WHITE)).isEqualTo(38);
+	@BeforeEach
+	void setup() {
+		gameManager = new GameManager(BoardFactory.createNewGame());
+	}
+
+	@Test
+	void constructor() {
+		assertThat(new GameManager(BoardFactory.createNewGame())).isInstanceOf(GameManager.class);
+	}
+
+	@Test
+	void move() {
+		gameManager.move(Coordinates.of("B2"), Coordinates.of("B3"));
+		Map<Coordinates, Piece> pieces = gameManager.getPieces();
+		assertThat(pieces.get(Coordinates.of("B3"))).isInstanceOf(Pawn.class);
+	}
+
+	@Test
+	void isEndOfGame() {
+		gameManager.move(Coordinates.of("C2"), Coordinates.of("C3"));
+		gameManager.move(Coordinates.of("D7"), Coordinates.of("D6"));
+		gameManager.move(Coordinates.of("D1"), Coordinates.of("A4"));
+		gameManager.move(Coordinates.of("E8"), Coordinates.of("D7"));
+		gameManager.move(Coordinates.of("A4"), Coordinates.of("D7"));
+		assertThat(gameManager.isEndOfGame()).isTrue();
+	}
+
+	@Test
+	void getEnemyColor() {
+		assertThat(gameManager.getEnemyColor()).isEqualTo(Color.BLACK);
 	}
 }
