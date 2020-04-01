@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="chessStyle.css"/>
+    <title>체스</title>
+</head>
+
+<div id="gameUI">
+    <div id="chessBoard">
+        {{#chessPieces}}
+        <div id="{{position}}" class="board_green">
+            {{#piece}}<img src="images/{{piece}}.png"/>{{/piece}}
+        </div>
+        {{/chessPieces}}
+    </div>
+
+    <div id="commandUI">
+        <button id="start_button" type="button" onclick="start()">START</button>
+        <button id="end_button" type="button" onclick="end()">END</button>
+        <button id="status_button" type="button" onclick="status()">STATUS</button>
+        <div id="chess_informator"></div>
+    </div>
+</div>
+
+</html>

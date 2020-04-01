@@ -47,4 +47,9 @@ public class Piece {
     public double getScore() {
         return this.pieceType.getScore();
     }
+
+    @Override
+    public String toString() {
+        return pieceType.toString() + "_" + team.toString();
+    }
 }

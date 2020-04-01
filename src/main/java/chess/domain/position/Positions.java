@@ -50,4 +50,8 @@ public class Positions {
                 .collect(Collectors.toList());
         return Collections.unmodifiableList(parseResult);
     }
+
+    public static List<Position> getPositions() {
+        return POSITIONS;
+    }
 }
