@@ -8,7 +8,7 @@ import chess.piece.Piece;
 import chess.piece.Team;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoard {
@@ -19,15 +19,15 @@ public class ChessBoard {
     }
 
     public static ChessBoard empty() {
-        Map<Coordinate, Tile> emptyBoard = new HashMap<>();
-        for (File file : File.values()) {
-            makeEmpty(emptyBoard, file);
+        Map<Coordinate, Tile> emptyBoard = new LinkedHashMap<>();
+        for (Rank rank : Rank.values()) {
+            makeEmpty(emptyBoard, rank);
         }
         return new ChessBoard(emptyBoard);
     }
 
-    private static void makeEmpty(Map<Coordinate, Tile> emptyBoard, File file) {
-        for (Rank rank : Rank.values()) {
+    private static void makeEmpty(Map<Coordinate, Tile> emptyBoard, Rank rank) {
+        for (File file : File.values()) {
             Coordinate coordinate = Coordinate.of(file, rank);
             emptyBoard.put(coordinate, new Tile(coordinate, Blank.getInstance()));
         }

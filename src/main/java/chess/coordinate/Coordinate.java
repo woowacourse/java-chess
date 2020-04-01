@@ -51,7 +51,19 @@ public final class Coordinate {
         }
     }
 
+    public String getRawKey() {
+        return this.file.getSymbol() + this.rank.getValue();
+    }
+
     public Rank getRank() {
         return rank;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }

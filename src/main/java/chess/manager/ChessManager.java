@@ -34,6 +34,10 @@ public class ChessManager implements Observable {
         return this.chessBoard.calculateScore(this.currentTeam);
     }
 
+    public double calculateScoreByTeam(Team team) {
+        return this.chessBoard.calculateScore(team);
+    }
+
     public boolean isKingAlive() {
         return isKingAlive;
     }

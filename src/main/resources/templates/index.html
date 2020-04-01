@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>우아한 체스 게임</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="header-wrapper d-flex">
+    <header><h1>우아한 체스 게임</h1></header>
+</div>
+<div class="chess-wrapper flex-wrap d-flex">
+
+    <div class="game-wrapper flex-wrap d-flex">
+        <div class="chess-board flex-wrap d-flex">
+            {{#tilesDto.tiles}}
+            <div class="tile d-flex" id="{{coordinate}}">
+                <img alt="" src="/img/{{piece}}.png">
+            </div>
+            {{/tilesDto.tiles}}
+        </div>
+    </div>
+
+    <div class="info-wrapper flex-wrap d-flex">
+        <div class="button-wrapper d-flex flex-wrap fd-column">
+            <div class="start-wrapper">
+                <input type="button" value="새 게임">
+            </div>
+            <div class="load-wrapper">
+                <input type="button" value="불러오기">
+            </div>
+            <div class="surrender-wrapper">
+                <input type="button" value="항복">
+
+            </div>
+            <div class="end-wrapper">
+                <input type="button" value="저장 후 종료">
+            </div>
+        </div>
+        <div class="status-wrapper d-flex flex-wrap fd-column">
+            <div class="turn-wrapper d-flex flex-wrap">
+                <div class="turn d-flex">
+                    이번 차례 : {{currentTeam}} 팀
+                </div>
+            </div>
+
+            <div class="score-wrapper d-flex flex-wrap fd-column">
+                <div class="black-score-wrapper d-flex">
+                    BLACK 점수 : {{teamScoreDto.blackScore}}점
+                </div>
+                <div class="white-score-wrapper d-flex">
+                    WHITE 점수 : {{teamScoreDto.whiteScore}}점
+                </div>
+            </div>
+            <div class="catch-piece-wrapper d-flex flex-wrap">
+                <div class="black-catch-piece-wrapper d-flex">
+
+                </div>
+                <div class="white-catch-piece-wrapper d-flex">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="/js/app.js" type="module"></script>
+</body>
+</html>

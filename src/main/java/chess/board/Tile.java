@@ -57,4 +57,11 @@ public class Tile {
         return coordinate;
     }
 
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "coordinate=" + coordinate +
+                ", piece=" + piece +
+                '}';
+    }
 }

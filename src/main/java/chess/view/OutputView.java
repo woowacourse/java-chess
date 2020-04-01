@@ -30,7 +30,7 @@ public class OutputView {
     private static void showPieces(Map<Coordinate, Tile> board, Rank rank) {
         for (File file : File.values()) {
             Piece piece = board.get(Coordinate.of(file, rank)).getPiece();
-            System.out.print(PieceRender.findTokenByPiece(piece));
+            System.out.print(ConsolePieceRender.findTokenByPiece(piece));
         }
     }
 
