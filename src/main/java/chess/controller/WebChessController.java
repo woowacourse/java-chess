@@ -23,14 +23,16 @@ public class WebChessController implements ChessController {
             Map<String, Object> model = new HashMap<>();
             model.put("score", getScore(board));
             model.put("notification", message);
+            if (!board.isBothKingAlive()) {
+                model.put("winner", board.getWinner().getName() + "이 승리했습니다!");
+            }
             model.put("pieces", printChessBoard(board));
             return render(model, "index.html");
         });
 
         post("/move", (req, res) -> {
             try {
-                Map<String, String[]> queryMap = req.queryMap().toMap();
-                board.movePiece(new Position(queryMap.get("source")[0]), new Position(queryMap.get("destination")[0]));
+                board.movePiece(new Position(req.queryParams("source")), new Position(req.queryParams("destination")));
                 message.set("");
                 res.redirect("/");
             } catch (Exception e) {
