@@ -8,20 +8,17 @@
     body {
         margin: 0;
     }
-
     .position {
         z-index: 100;
         width: 12.5%;
         height: 80px;
     }
-
     .clickedPosition {
         z-index: 100;
         width: 12.5%;
         height: 80px;
         background-color: rgba(62, 248, 117, 0.17);
     }
-
     .board {
         padding: 70px;
         box-sizing: border-box;
@@ -33,7 +30,7 @@
     }
 
 </style>
-<body>
+<body id="body">
 <div class="board" id="board"
      style="background-image: url('/board.jpg'); width: 800px; height: 800px; background-size: cover;">
     <div class="position" id="A8"></div>
@@ -110,6 +107,11 @@
     <input id="move-button" type="submit" value="이동">
 </form>
 
+<form action="/status" id="status-form" method="get">
+    <input id="status-button" type="submit" value="결과">
+</form>
+<div id="result"></div>
+
 <script>
     let allImages = new Map();
     allImages.set("B", '/bishop_black.png');
@@ -124,6 +126,8 @@
     allImages.set("q", '/queen_white.png');
     allImages.set("R", '/rook_black.png');
     allImages.set("r", '/rook_white.png');
+    allImages.set("BLACK", '/black.cur');
+    allImages.set("WHITE", '/white.cur');
 
     var allPieces = new Map();
     {
@@ -141,32 +145,51 @@
                 alert("{{error}}");
             }
 
-            allPieces.forEach((a, b) => {
-                let positionDiv = document.querySelector("#" + b);
-                positionDiv.style.backgroundImage = 'url(' + allImages.get(a) + ')';
-                positionDiv.style.backgroundSize = "contain";
-            });
+            if ("{{scores}}" !== "") {
+                {
+                    {
+                        #each
+                        scores
+                    }
+                }
+                document.querySelector("#result").innerHTML += "{{@key}} 의 점수 {{this}} <br>";
+                {
+                    {
+                        /each}}
+                    }
 
-            document.querySelector(".board").addEventListener("click", (arg) => {
-                let targetText = document.querySelector("#target-text");
-                let destinationText = document.querySelector("#destination-text");
-                if (targetText.value === arg.target.id) {
-                    targetText.value = "";
-                    arg.target.className = "position";
-                    return;
-                }
-                if (targetText.value === "") {
-                    targetText.value = arg.target.id;
-                    arg.target.className = "clickedPosition";
-                    return;
-                }
-                if (destinationText.value === "") {
-                    destinationText.value = arg.target.id;
-                    arg.target.className = "clickedPosition";
-                    document.querySelector("#move-form").submit();
-                    return;
-                }
-            }, true);
+                    let nowTurn = "{{turn}}";
+                    console.log(nowTurn);
+
+                    document.querySelector("body")
+                        .style
+                        .cursor = "url('" + allImages.get(nowTurn) + "'), auto";
+
+                    allPieces.forEach((a, b) => {
+                        let positionDiv = document.querySelector("#" + b);
+                        positionDiv.style.backgroundImage = 'url(' + allImages.get(a) + ')';
+                        positionDiv.style.backgroundSize = "contain";
+                    });
+
+                    document.querySelector(".board").addEventListener("click", (arg) => {
+                        let targetText = document.querySelector("#target-text");
+                        let destinationText = document.querySelector("#destination-text");
+                        if (targetText.value === arg.target.id) {
+                            targetText.value = "";
+                            arg.target.className = "position";
+                            return;
+                        }
+                        if (targetText.value === "") {
+                            targetText.value = arg.target.id;
+                            arg.target.className = "clickedPosition";
+                            return;
+                        }
+                        if (destinationText.value === "") {
+                            destinationText.value = arg.target.id;
+                            arg.target.className = "clickedPosition";
+                            document.querySelector("#move-form").submit();
+                        }
+                    }, true);
 
 </script>
 </body>

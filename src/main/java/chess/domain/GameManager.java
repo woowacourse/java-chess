@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import chess.domain.board.Board;
-import chess.domain.command.Command;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -21,16 +20,6 @@ public class GameManager {
 	public GameManager(Board board) {
 		this.board = board;
 		this.currentTurn = WHITE;
-	}
-
-	public void move(Command command) {
-		Position targetPosition = command.getTargetPosition();
-		Position destination = command.getDestination();
-
-		validateMove(targetPosition, destination);
-
-		board.movePiece(targetPosition, destination);
-		nextTurn();
 	}
 
 	public void move(Position targetPosition, Position destination) {

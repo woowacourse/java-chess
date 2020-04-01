@@ -21,6 +21,8 @@ public class WebUIApplication {
 		get("/", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
 			model.put("pieces", WebOutputRenderer.toModel(gameManager.getBoard()));
+			model.put("turn", gameManager.getCurrentTurn().name());
+
 			return render(model, "board.html");
 		});
 
@@ -33,6 +35,17 @@ public class WebUIApplication {
 				model.put("error", e.getMessage());
 			}
 			model.put("pieces", WebOutputRenderer.toModel(gameManager.getBoard()));
+			model.put("turn", gameManager.getCurrentTurn().name());
+
+			return render(model, "board.html");
+		});
+
+		get("/status", (request, response) -> {
+			Map<String, Object> model = new HashMap<>();
+			model.put("pieces", WebOutputRenderer.toModel(gameManager.getBoard()));
+			model.put("turn", gameManager.getCurrentTurn().name());
+			model.put("scores", WebOutputRenderer.scoreToModel(gameManager.calculateEachScore()));
+
 			return render(model, "board.html");
 		});
 	}

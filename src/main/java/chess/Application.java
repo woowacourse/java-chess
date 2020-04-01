@@ -38,7 +38,7 @@ public class Application {
 			if (!command.isMove()) {
 				break;
 			}
-			gameManager.move(command);
+			gameManager.move(command.getTargetPosition(), command.getDestination());
 		} while (command.isMove() && gameManager.isKingAlive());
 		printResult(gameManager, command);
 		return command;
