@@ -20,12 +20,12 @@ public class ChessService {
         return chessGame.isEnd();
     }
 
-    public ResponseDto start() {
+    public ResponseDto start(List<String> parameters) {
         chessGame.start();
         return new ResponseDto(createBoardDto());
     }
 
-    public ResponseDto end() {
+    public ResponseDto end(List<String> parameters) {
         chessGame.end();
         return new ResponseDto(createBoardDto());
     }
@@ -35,7 +35,7 @@ public class ChessService {
         return new ResponseDto(createBoardDto());
     }
 
-    public ResponseDto status() {
+    public ResponseDto status(List<String> parameters) {
         Map<Team, Double> score = chessGame.getStatus();
         return new ResponseDto(createBoardDto(), score);
     }

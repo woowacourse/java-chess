@@ -2,6 +2,7 @@ package chess.domain.piece.implementation;
 
 import chess.domain.board.BoardSituation;
 import chess.domain.piece.PieceState;
+import chess.domain.piece.implementation.piece.Pawn;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;

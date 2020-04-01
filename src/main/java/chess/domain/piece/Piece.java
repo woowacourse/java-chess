@@ -9,14 +9,21 @@ import java.util.List;
 
 public abstract class Piece implements PieceState {
 
+    private final MoveStrategy moveStrategy;
     protected final PieceType pieceType;
     protected final Position position;
     protected final Team team;
 
-    protected Piece(PieceType pieceType, Position position, Team team) {
+    protected Piece(MoveStrategy moveStrategy, PieceType pieceType, Position position, Team team) {
+        this.moveStrategy = moveStrategy;
         this.pieceType = pieceType;
         this.position = position;
         this.team = team;
+    }
+
+    @Override
+    public List<Position> getMovablePositions() {
+        return moveStrategy.getMovablePositionsWithoutObstacles(position);
     }
 
     @Override
@@ -28,7 +35,10 @@ public abstract class Piece implements PieceState {
         return movedPieceState(target);
     }
 
-    protected abstract PieceState movedPieceState(Position target);
+    @Override
+    public List<Position> getMovablePositions(BoardSituation boardSituation) {
+        return moveStrategy.getMovablePositions(position, boardSituation);
+    }
 
     @Override
     public PieceType getPieceType() {
@@ -44,4 +54,6 @@ public abstract class Piece implements PieceState {
     public double getPoint(BoardSituation boardSituation) {
         return pieceType.getPoint();
     }
+
+    protected abstract PieceState movedPieceState(Position target);
 }

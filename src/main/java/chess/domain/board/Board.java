@@ -3,11 +3,12 @@ package chess.domain.board;
 import chess.domain.game.Turn;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.implementation.King;
+import chess.domain.piece.implementation.piece.King;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class Board {
     public void move(Position source, Position target, Turn turn) {
         PieceState sourcePiece = board.get(source);
         validateSource(sourcePiece, turn);
-        PieceState piece = sourcePiece.move(target, getBoardState());
+        PieceState piece = sourcePiece.move(target, getBoardState(sourcePiece));
         board.remove(source);
         board.put(target, piece);
         turn.switchTurn();
@@ -88,6 +89,17 @@ public class Board {
                         entry -> entry.getKey(),
                         entry -> entry.getValue().getTeam())
                 );
+        return BoardSituation.of(boardState);
+    }
+
+    private BoardSituation getBoardState(PieceState sourcePiece) {
+        List<Position> positions = sourcePiece.getMovablePositions();
+        Map<Position, Team> boardState = positions.stream()
+                .filter(board::containsKey)
+                .collect(Collectors.toMap(
+                        position -> position,
+                        position -> board.get(position).getTeam()
+                ));
         return BoardSituation.of(boardState);
     }
 }

@@ -1,10 +1,11 @@
-package chess.domain.piece.implementation;
+package chess.domain.piece.implementation.piece;
 
 import chess.domain.board.BoardSituation;
 import chess.domain.direction.MovingDirection;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.implementation.Strategy.PawnStrategy;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -34,7 +35,7 @@ public class Pawn extends Piece {
     }
 
     private Pawn(Position position, Team team) {
-        super(PieceType.PAWN, position, team);
+        super(new PawnStrategy(team), PieceType.PAWN, position, team);
     }
 
     public static Pawn of(Position position, Team team) {

@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.board.initializer.EnumRepositoryBoardInitializer;
 import chess.domain.game.Turn;
 import chess.domain.piece.PieceState;
-import chess.domain.piece.implementation.Knight;
+import chess.domain.piece.implementation.piece.Knight;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;

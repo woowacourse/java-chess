@@ -24,9 +24,14 @@ public class BoardSituation {
         return Objects.isNull(team);
     }
 
-    public boolean canAttack(Position target, chess.domain.player.Team team) {
+    public boolean canAttack(Position target, Team team) {
         Team targetTeam = boardState.get(target);
         return !Objects.isNull(targetTeam) && !team.isSameTeam(targetTeam);
+    }
+
+    public boolean canMoveOrAttack(Position target, Team team) {
+        Team targetTeam = boardState.get(target);
+        return Objects.isNull(targetTeam) || !team.isSameTeam(targetTeam);
     }
 
     public boolean existSamePieceInSameFile(Position position, Team team) {
