@@ -1,46 +1,59 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>체스</title>
     <link rel="stylesheet" type="text/css" href="css/game.css" />
     <script type="text/javascript">
-        function initialBoard() {
-            var files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-            var ranks = ['EIGHT', 'SEVEN', 'SIX', 'FIVE', 'FOUR', 'THREE', 'TWO', 'ONE'];
+      function initialBoard() {
+        var files = ["A", "B", "C", "D", "E", "F", "G", "H"];
+        var ranks = [
+          "EIGHT",
+          "SEVEN",
+          "SIX",
+          "FIVE",
+          "FOUR",
+          "THREE",
+          "TWO",
+          "ONE"
+        ];
 
-            for (var i = 0; i < 8; i++) {
-                for (var j = 0; j < 8; j++) {
-                    var div = document.createElement('div');
-                    var divId = ranks[i] + files[j];
-                    div.id = divId;
+        for (var i = 0; i < 8; i++) {
+          for (var j = 0; j < 8; j++) {
+            var div = document.createElement("div");
+            var divId = ranks[i] + files[j];
+            div.id = divId;
 
-                    var img = document.createElement('img');
-                    // img.src = "image/{{piece}}.png";
-                    div.appendChild(img);
+            // var img = document.createElement("img");
+            // img.src = "image/piece/{{pieceImageUrl}}.png";
+            // div.appendChild(img);
 
-                    if ((i + (j - 1)) % 2 === 0) {
-                        div.className = "black";
-                    } else {
-                        div.className = "white";
-                    }
-
-                    document.getElementById("chess-board").appendChild(div);
-                }
+            if ((i + (j - 1)) % 2 === 0) {
+              div.className = "black";
+            } else {
+              div.className = "white";
             }
+
+            document.getElementById("chess-board").appendChild(div);
+          }
         }
+      }
     </script>
-</head>
+  </head>
 
-<body onload="initialBoard()">
-    <div id="chess-board">
-        {{#pieces}}
-        {{/pieces}}
-    </div>
+  <body onload="initialBoard()">
+    <script id="set-board" type="text/x-handlebars-template">
+      {{#tiles}}
+        <div id="chess-board">
+            {{#if this.pieceImageUrl}}
+                <img src="image/piece/{{pieceImageUrl}}">
+            {{/if}}
+        </div>
+      {{/tiles}}
+    </script>
+
     <div id="start">
-        <button id="start-button" value="start">Start</button>
+      <button id="start-button" value="start">Start</button>
     </div>
-</body>
-
+  </body>
 </html>

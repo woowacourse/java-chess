@@ -93,13 +93,11 @@ public class Board {
         return Collections.unmodifiableMap(parseResult);
     }
 
-//    public List<Tile> tiles() {
-//        List<Tile> tiles = this.board.entrySet().stream()
-//                .map((entry) -> {
-//                    Position position = entry.getKey();
-//                    Piece piece = entry.getValue();
-//                    PieceType pieceType = piece.
-//                })
-//                .collect(Collectors.toList());
-//    }
+    public List<Tile> tiles() {
+        List<Tile> tiles = this.board.entrySet().stream()
+                .map((entry) -> new Tile(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+
+        return Collections.unmodifiableList(tiles);
+    }
 }

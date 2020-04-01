@@ -1,15 +1,17 @@
 package chess.controller;
 
-import chess.controller.dto.BoardDto;
 import chess.controller.dto.BoardScoreDto;
+import chess.controller.dto.TileDto;
 import chess.domain.ChessRunner;
+
+import java.util.List;
 
 public class WebChessController {
     private ChessRunner chessRunner;
 
-    public BoardDto start() {
+    public List<TileDto> start() {
         chessRunner = new ChessRunner();
-        return new BoardDto(chessRunner.getBoardEntities());
+        return chessRunner.tileDtos();
     }
 
     public void move(String source, String target) {

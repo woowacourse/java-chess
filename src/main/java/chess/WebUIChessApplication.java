@@ -2,10 +2,12 @@ package chess;
 
 import chess.controller.WebChessController;
 import chess.controller.dto.BoardDto;
+import chess.controller.dto.TileDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -22,10 +24,11 @@ public class WebUIChessApplication {
         });
 
         post("/game", (req, res) -> {
-            BoardDto boardDto = webChessController.start();
-            Map<String, Object> model = new HashMap<>(boardDto.get());
+            List<TileDto> tileDtos = webChessController.start();
+            Map<String, Object> model = new HashMap<>();
+            model.put("tiles", tileDtos);
 
-            return render(model, "game.html");
+            return render(model, "test.html");
         });
     }
 

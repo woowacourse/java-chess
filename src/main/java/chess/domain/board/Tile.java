@@ -1,27 +1,24 @@
 package chess.domain.board;
 
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Team;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Tile {
     private final Position position;
-    private final PieceType pieceType;
-    private final Team team;
+    private final Piece piece;
 
-    public Tile(Position position, PieceType pieceType, Team team) {
+    public Tile(final Position position, final Piece piece) {
         this.position = position;
-        this.pieceType = pieceType;
-        this.team = team;
+        this.piece = piece;
     }
 
-    public String getPosition() {
+    public String position() {
         return this.position.toString();
     }
 
-    public String getPieceImageUrl() {
-        return this.pieceType.name().toLowerCase()
+    public String pieceImageUrl() {
+        return this.piece.toSymbol()
                 + "_"
-                + this.team.name().toLowerCase();
+                + this.piece.teamName().toLowerCase();
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.controller.dto.TileDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
 import chess.domain.piece.Piece;
@@ -7,9 +8,11 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.strategy.direction.Direction;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ChessRunner {
     private Board board;
@@ -104,5 +107,13 @@ public class ChessRunner {
     public String getWinner() {
         Optional<Team> winner = this.board.getWinner();
         return winner.map(Enum::name).orElseThrow(AssertionError::new);
+    }
+
+    public List<TileDto> tileDtos() {
+        List<TileDto> tileDtos = this.board.tiles().stream()
+                .map(tile -> new TileDto(tile.position(), tile.pieceImageUrl()))
+                .collect(Collectors.toList());
+
+        return Collections.unmodifiableList(tileDtos);
     }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>체스</title>
+    <link rel="stylesheet" type="text/css" href="css/game.css" />
+</head>
+
+<body onload="initialBoard()">
+<div id="chess-board">
+    {{#tiles}}
+    <div id="{{position}}">
+        <img src="image/piece/{{pieceImageUrl}}.png" />
+    </div>
+    {{/tiles}}
+</div>
+<div id="start">
+    <button id="start-button" value="start">Start</button>
+</div>
+</body>
+</html>
