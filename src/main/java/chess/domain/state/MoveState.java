@@ -28,4 +28,12 @@ public enum MoveState {
         }
         return gameTurn;
     }
+
+    public boolean isReady() {
+        return this == READY;
+    }
+
+    public boolean isSuccess() {
+        return this == SUCCESS;
+    }
 }

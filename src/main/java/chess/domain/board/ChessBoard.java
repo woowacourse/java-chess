@@ -57,7 +57,7 @@ public class ChessBoard {
 
     private MoveState moveIfReady(MoveSquare moveSquare, MoveStateChecker moveChecker,
         MoveState moveState) {
-        if (moveState == MoveState.READY) {
+        if (moveState.isReady()) {
             movePiece(moveSquare);
             moveState = moveChecker.check(new MoveStateAfter());
         }
@@ -80,7 +80,7 @@ public class ChessBoard {
 
     public MoveState promotion(Type hopeType) {
         MoveState moveState = new MoveStateChecker(this).check(new MoveStatePromotion());
-        if (moveState == MoveState.SUCCESS) {
+        if (moveState.isSuccess()) {
             chessBoard.put(getFinishPawnBoard(), getHopePiece(hopeType));
         }
         gameTurn = moveState.turnTeam(gameTurn);
