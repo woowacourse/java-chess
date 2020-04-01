@@ -2,7 +2,7 @@ package chess.command;
 
 import chess.progress.Progress;
 
-public class Command {
+public abstract class Command {
     private final String name;
     private final CommandConductable commandConductable;
 
