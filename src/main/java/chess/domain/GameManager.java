@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -68,5 +69,10 @@ public class GameManager {
 
 	public Board getBoard() {
 		return board;
+	}
+
+	public void resetGame() {
+		this.board = BoardFactory.create();
+		this.currentTurn = WHITE;
 	}
 }

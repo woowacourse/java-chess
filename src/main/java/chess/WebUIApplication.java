@@ -19,6 +19,10 @@ public class WebUIApplication {
 		GameManager gameManager = new GameManager(BoardFactory.create());
 
 		get("/", (request, response) -> {
+			return render(new HashMap<>(), "board.html");
+		});
+
+		get("/start", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
 			model.put("pieces", WebOutputRenderer.toModel(gameManager.getBoard()));
 			model.put("turn", gameManager.getCurrentTurn().name());
@@ -47,6 +51,11 @@ public class WebUIApplication {
 			model.put("scores", WebOutputRenderer.scoreToModel(gameManager.calculateEachScore()));
 
 			return render(model, "board.html");
+		});
+
+		post("/end", (request, response) -> {
+			gameManager.resetGame();
+			return render(new HashMap<>(), "board.html");
 		});
 	}
 
