@@ -58,10 +58,6 @@ public class Position {
 		return column.getValue() <= BOTTOM_ZONE_END_POINT;
 	}
 
-	public boolean isSameRow(Position position) {
-		return this.row.equals(position.row);
-	}
-
 	public boolean isDifferentRow(Position position) {
 		return !this.row.equals(position.row);
 	}
@@ -72,5 +68,10 @@ public class Position {
 
 	public Row getRow() {
 		return row;
+	}
+
+	@Override
+	public String toString() {
+		return row.getName() + column.getValue();
 	}
 }
