@@ -1,14 +1,15 @@
 package chess.piece.type.movable;
 
 import chess.location.Location;
+import chess.location.Row;
 import chess.piece.type.Piece;
 import chess.team.Team;
 
 import java.util.Map;
 
 public class PawnPieceMovable implements PieceMovable {
-    private static final int WHITE_PAWN_ROW = 2;
-    private static final int BLACK_PAWN_ROW = 7;
+    private static final Row WHITE_PAWN_ROW = Row.of(2);
+    private static final Row BLACK_PAWN_ROW = Row.of(7);
 
     private final Team team;
 

@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.location.Location;
+import chess.location.Row;
 import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
 import chess.score.Score;
@@ -69,7 +70,7 @@ public class ChessBoard {
     public Score calculateReducePawnScore(Team team) {
         int reducePawnScroe = 0;
         for (int row = MINIMUM_LINE; row < LIMIT_LINE; row++) {
-            int fixRow = row;
+            Row fixRow = Row.of(row);
             int sameRowPawnSize = (int) board.keySet().stream()
                     .filter(location -> location.isSameRow(fixRow))
                     .filter(location -> board.get(location).isSameTeam(team))

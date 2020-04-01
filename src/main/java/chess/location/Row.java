@@ -33,10 +33,6 @@ public enum Row {
         return ONE.value > value || EIGHT.value < value;
     }
 
-    public boolean is(int value) {
-        return this.value == value;
-    }
-
     public boolean is(Row row) {
         return this.value == row.value;
     }
