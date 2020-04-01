@@ -47,6 +47,7 @@ html, body {
 
 .score-board-container {
     width: 15%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     border: 1px black solid;
@@ -54,11 +55,44 @@ html, body {
 }
 
 .score-board {
+    width: 100%;
     height: 50%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url("https://files.slack.com/files-tmb/TFELTJB7V-F010ZL8EAH2-125445a755/image_from_ios_1024.jpg");
+    /*background-image: url("https://files.slack.com/files-tmb/TFELTJB7V-F010ZL8EAH2-125445a755/image_from_ios_1024.jpg");*/
+}
+
+.white-score-board {
+    background-image: url("../img/white-scoreboard.jpeg");
+}
+
+.black-score-board {
+    background-image: url("../img/black-scoreboard.jpg");
+}
+
+.player-name {
+    height: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.black-player-name {
+    color: white;
+}
+
+.black-player-score {
+    color: white;
+}
+
+.player-image {
+    height: 80%;
+}
+
+.player-score {
+    height: 10%;
+    display: flex;
 }
 
 .score-board-boarder {
@@ -77,10 +111,20 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("https://media.istockphoto.com/photos/beige-paper-background-seamless-square-texture-tile-ready-picture-id1168384967?k=6&m=1168384967&s=170667a&w=0&h=9zRsyCo7GadauoTvG11M7Op2f3psSkuiK26QiGlMiOo=");
+    background-image: url("../img/board-back.jpg");
     background-clip: padding-box;
     border-radius: 20px;
     box-shadow: 10px 10px 20px #000808;
+}
+
+.createGame-container {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../img/board-backgoround.jpg");
 }
 
 .rank-board {
@@ -98,6 +142,7 @@ html, body {
 }
 
 .file-container {
+    padding-right: 30px;
     width: 560px;
     padding-top: 15px;
     height: 5%;
