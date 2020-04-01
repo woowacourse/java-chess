@@ -18,18 +18,18 @@ public class ChessGame {
 
 	public void play() {
 		OutputView.printRule();
-		decideMenu();
+		initMenu();
 		chessMenu.validateStart();
 		OutputView.printBoard(chessBoard);
 
-		while (isContinue()) {
-			decideMenu();
+		while (chessMenu.isNotEnd() && chessBoard.isLiveBothKing()) {
+			initMenu();
 			playRound();
 		}
 		OutputView.printEndGame();
 	}
 
-	private void decideMenu() {
+	private void initMenu() {
 		while (isNotAllowedMenu());
 	}
 
@@ -41,10 +41,6 @@ public class ChessGame {
 			OutputView.printErrorMessage(e);
 			return true;
 		}
-	}
-
-	private boolean isContinue() {
-		return chessMenu.isNotEnd() && chessBoard.isLiveBothKing();
 	}
 
 	private void playRound() {
