@@ -1,10 +1,431 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>체스 게임</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background: #333;
+        }
+
+        .wrapper {
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chess-board {
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            background: #5A3C29;
+            box-shadow: 0 0 15px #222;
+        }
+
+        .chess-map {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chess-row {
+            display: flex;
+        }
+
+        .chess-col {
+            display: flex;
+            width: 64px;
+            height: 64px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chess-row:nth-child(2n) .chess-col {
+            background-color: #5A3C29;
+        }
+
+        .chess-row:nth-child(2n) .chess-col:nth-child(2n) {
+            background-color: #EDCAA4;
+        }
+
+        .chess-row:nth-child(2n + 1) .chess-col {
+            background-color: #EDCAA4;
+        }
+
+        .chess-row:nth-child(2n + 1) .chess-col:nth-child(2n) {
+            background-color: #5A3C29;
+        }
+
+        .chess-container {
+            display: flex;
+        }
+
+        .chess-file {
+            display: flex;
+            justify-content: center;
+            background: #EDCAA4;
+        }
+
+        .chess-rank {
+            display: flex;
+            flex-direction: column-reverse;
+            background: #EDCAA4;
+        }
+
+        .chess-symbol {
+            color: #5A3C29;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chess-file .chess-symbol {
+            width: 64px;
+            height: 24px;
+            padding: 0 12px;
+        }
+
+        .chess-rank .chess-symbol {
+            width: 24px;
+            height: 64px;
+            padding: 12 0px;
+            line-height: 64px;
+        }
+
+        .chess-map {
+            display: flex;
+            border: 4px solid #5A3C29;
+        }
+
+        .chess-piece {
+            width: 55px;
+            height: 55px;
+            background-image: url('../chess-pieces.png');
+        }
+
+        .chess-piece.blank {
+            background-image: none;
+        }
+
+        .chess-piece.queen.white {
+            background-position: 0 0;
+        }
+
+        .chess-piece.king.white {
+            background-position: -55px 0;
+        }
+
+        .chess-piece.bishop.white {
+            background-position: -110px 0;
+        }
+
+        .chess-piece.knight.white {
+            background-position: -165px 0;
+        }
+
+        .chess-piece.rook.white {
+            background-position: -220px 0;
+        }
+
+        .chess-piece.pawn.white {
+            background-position: -275px 0;
+        }
+
+        .chess-piece.queen.black {
+            background-position: 0 55px;
+        }
+
+        .chess-piece.king.black {
+            background-position: -55px 55px;
+        }
+
+        .chess-piece.bishop.black {
+            background-position: -110px 55px;
+        }
+
+        .chess-piece.knight.black {
+            background-position: -165px 55px;
+        }
+
+        .chess-piece.rook.black {
+            background-position: -220px 55px;
+        }
+
+        .chess-piece.pawn.black {
+            background-position: -275px 55px;
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<div class="wrapper">
+    <div class="chess-board">
+        <div class="chess-file">
+            <div class="chess-symbol">A</div>
+            <div class="chess-symbol">B</div>
+            <div class="chess-symbol">C</div>
+            <div class="chess-symbol">D</div>
+            <div class="chess-symbol">E</div>
+            <div class="chess-symbol">F</div>
+            <div class="chess-symbol">G</div>
+            <div class="chess-symbol">H</div>
+        </div>
+        <div class="chess-container">
+            <div class="chess-rank">
+                <div class="chess-symbol">1</div>
+                <div class="chess-symbol">2</div>
+                <div class="chess-symbol">3</div>
+                <div class="chess-symbol">4</div>
+                <div class="chess-symbol">5</div>
+                <div class="chess-symbol">6</div>
+                <div class="chess-symbol">7</div>
+                <div class="chess-symbol">8</div>
+            </div>
+            <div class="chess-map">
+                <div class="chess-row">
+                    <div class="chess-col" data-x="0" data-y="7">
+                    </div>
+                    <div class="chess-col" data-x="1" data-y="7">
+                    </div>
+                    <div class="chess-col" data-x="2" data-y="7">
+                    </div>
+                    <div class="chess-col" data-x="3" data-y="7">
+                    </div>
+                    <div class="chess-col" data-x="4" data-y="7">
+                    </div>
+                    <div class="chess-col" data-x="5" data-y="7">
+                    </div>
+                    <div class="chess-col" data-x="6" data-y="7">
+                    </div>
+                    <div class="chess-col" data-x="7" data-y="7">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-x="0" data-y="6">
+                    </div>
+                    <div class="chess-col" data-x="1" data-y="6">
+                    </div>
+                    <div class="chess-col" data-x="2" data-y="6">
+                    </div>
+                    <div class="chess-col" data-x="3" data-y="6">
+                    </div>
+                    <div class="chess-col" data-x="4" data-y="6">
+                    </div>
+                    <div class="chess-col" data-x="5" data-y="6">
+                    </div>
+                    <div class="chess-col" data-x="6" data-y="6">
+                    </div>
+                    <div class="chess-col" data-x="7" data-y="6">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-x="0" data-y="5">
+                    </div>
+                    <div class="chess-col" data-x="1" data-y="5">
+                    </div>
+                    <div class="chess-col" data-x="2" data-y="5">
+                    </div>
+                    <div class="chess-col" data-x="3" data-y="5">
+                    </div>
+                    <div class="chess-col" data-x="4" data-y="5">
+                    </div>
+                    <div class="chess-col" data-x="5" data-y="5">
+                    </div>
+                    <div class="chess-col" data-x="6" data-y="5">
+                    </div>
+                    <div class="chess-col" data-x="7" data-y="5">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-x="0" data-y="4">
+                    </div>
+                    <div class="chess-col" data-x="1" data-y="4">
+                    </div>
+                    <div class="chess-col" data-x="2" data-y="4">
+                    </div>
+                    <div class="chess-col" data-x="3" data-y="4">
+                    </div>
+                    <div class="chess-col" data-x="4" data-y="4">
+                    </div>
+                    <div class="chess-col" data-x="5" data-y="4">
+                    </div>
+                    <div class="chess-col" data-x="6" data-y="4">
+                    </div>
+                    <div class="chess-col" data-x="7" data-y="4">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-x="0" data-y="3">
+                    </div>
+                    <div class="chess-col" data-x="1" data-y="3">
+                    </div>
+                    <div class="chess-col" data-x="2" data-y="3">
+                    </div>
+                    <div class="chess-col" data-x="3" data-y="3">
+                    </div>
+                    <div class="chess-col" data-x="4" data-y="3">
+                    </div>
+                    <div class="chess-col" data-x="5" data-y="3">
+                    </div>
+                    <div class="chess-col" data-x="6" data-y="3">
+                    </div>
+                    <div class="chess-col" data-x="7" data-y="3">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-x="0" data-y="2">
+                    </div>
+                    <div class="chess-col" data-x="1" data-y="2">
+                    </div>
+                    <div class="chess-col" data-x="2" data-y="2">
+                    </div>
+                    <div class="chess-col" data-x="3" data-y="2">
+                    </div>
+                    <div class="chess-col" data-x="4" data-y="2">
+                    </div>
+                    <div class="chess-col" data-x="5" data-y="2">
+                    </div>
+                    <div class="chess-col" data-x="6" data-y="2">
+                    </div>
+                    <div class="chess-col" data-x="7" data-y="2">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-x="0" data-y="1">
+                    </div>
+                    <div class="chess-col" data-x="1" data-y="1">
+                    </div>
+                    <div class="chess-col" data-x="2" data-y="1">
+                    </div>
+                    <div class="chess-col" data-x="3" data-y="1">
+                    </div>
+                    <div class="chess-col" data-x="4" data-y="1">
+                    </div>
+                    <div class="chess-col" data-x="5" data-y="1">
+                    </div>
+                    <div class="chess-col" data-x="6" data-y="1">
+                    </div>
+                    <div class="chess-col" data-x="7" data-y="1">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-x="0" data-y="0">
+                    </div>
+                    <div class="chess-col" data-x="1" data-y="0">
+                    </div>
+                    <div class="chess-col" data-x="2" data-y="0">
+                    </div>
+                    <div class="chess-col" data-x="3" data-y="0">
+                    </div>
+                    <div class="chess-col" data-x="4" data-y="0">
+                    </div>
+                    <div class="chess-col" data-x="5" data-y="0">
+                    </div>
+                    <div class="chess-col" data-x="6" data-y="0">
+                    </div>
+                    <div class="chess-col" data-x="7" data-y="0">
+                    </div>
+                </div>
+            </div>
+            <div class="chess-rank">
+                <div class="chess-symbol">1</div>
+                <div class="chess-symbol">2</div>
+                <div class="chess-symbol">3</div>
+                <div class="chess-symbol">4</div>
+                <div class="chess-symbol">5</div>
+                <div class="chess-symbol">6</div>
+                <div class="chess-symbol">7</div>
+                <div class="chess-symbol">8</div>
+            </div>
+        </div>
+        <div class="chess-file">
+            <div class="chess-symbol">A</div>
+            <div class="chess-symbol">B</div>
+            <div class="chess-symbol">C</div>
+            <div class="chess-symbol">D</div>
+            <div class="chess-symbol">E</div>
+            <div class="chess-symbol">F</div>
+            <div class="chess-symbol">G</div>
+            <div class="chess-symbol">H</div>
+        </div>
+    </div>
+</div>
+<script>
+        const gameId = {{ id }}
+        const templateQueen = color => `<div class="chess-piece queen ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+        const templateKing = color => `<div class="chess-piece king ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+        const templateBishop = color => `<div class="chess-piece bishop ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+        const templateKnight = color => `<div class="chess-piece knight ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+        const templateRook = color => `<div class="chess-piece rook ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+        const templatePawn = color => `<div class="chess-piece pawn ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+        const templateBlank = `<div class="chess-piece blank" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+
+        const createTemplate = {
+            p: templatePawn('white'),
+            q: templateQueen('white'),
+            k: templateKing('white'),
+            r: templateRook('white'),
+            b: templateBishop('white'),
+            n: templateKnight('white'),
+            P: templatePawn('black'),
+            Q: templateQueen('black'),
+            K: templateKing('black'),
+            R: templateRook('black'),
+            B: templateBishop('black'),
+            N: templateKnight('black'),
+        }
+        const findChessCell = (x, y) => document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
+
+        fetch('http://localhost:4567/board/' + gameId)
+        .then(response => response.json())
+        .then(data => drawChessGame(data))
+
+        function drawChessGame({ boardDto, turnDto, statusDto, isFinished }) {
+            drawBoard(boardDto.board)
+        }
+
+        function drawBoard(board) {
+            for (let i = 0; i < 64; i++) {
+                const x = i % 8;
+                const y = 7 - Math.floor(i / 8);
+                const key = board[i]
+                findChessCell(x,y).innerHTML = key == '.' ? templateBlank : createTemplate[key]
+            }
+        }
+
+        function onDragStart(e) {
+            e.dataTransfer.setData('x', e.target.parentElement.dataset.x)
+            e.dataTransfer.setData('y', e.target.parentElement.dataset.y)
+        }
+
+        function onDragOver(e) {
+            e.preventDefault()
+        }
+
+        function onDrop(e) {
+            fetch('http://localhost:4567/move/' + gameId, {
+                method: 'POST',
+                body: JSON.stringify({
+                    sx: parseInt(e.dataTransfer.getData('x')),
+                    sy: parseInt(e.dataTransfer.getData('y')),
+                    tx: parseInt(e.target.parentElement.dataset.x),
+                    ty: parseInt(e.target.parentElement.dataset.y)
+                })
+            })
+            .then(response => response.json())
+            .then(data => drawChessGame(data))
+        }
+    </script>
 </body>
 </html>
