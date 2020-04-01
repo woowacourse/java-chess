@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.game.ChessGame;
+import chess.domain.game.exception.InvalidTurnException;
 import chess.domain.game.state.Ready;
 import chess.domain.piece.Position;
+import chess.domain.piece.exception.NotMovableException;
 import chess.dto.BoardDto;
 import chess.dto.ChessGameDto;
+import chess.dto.ResponseDto;
 import chess.dto.ScoreDto;
 import chess.dto.StatusDto;
 import chess.dto.TurnDto;
@@ -45,15 +48,20 @@ public class WebUIChessApplication {
             Map<String, Double> data = GSON.fromJson(req.body(), Map.class);
             Position source = Position.of(data.get("sx").intValue(), data.get("sy").intValue());
             Position target = Position.of(data.get("tx").intValue(), data.get("ty").intValue());
-            chessGame.move(source, target);
+            try {
+                chessGame.move(source, target);
+            } catch (NotMovableException | InvalidTurnException e) {
+                return GSON.toJson(new ResponseDto(ResponseDto.FAIL, e.getMessage()));
+            }
             return responseChessGame(chessGame);
         });
     }
 
     private static String responseChessGame(ChessGame chessGame) {
-        return GSON.toJson(new ChessGameDto(new BoardDto(chessGame.board()), new TurnDto(chessGame.turn()),
-            new StatusDto(new ScoreDto(chessGame.status().getWhiteScore()),
-                new ScoreDto(chessGame.status().getBlackScore())), chessGame.isFinished()));
+        return GSON.toJson(
+            new ResponseDto(ResponseDto.SUCCESS, new ChessGameDto(new BoardDto(chessGame.board()), new TurnDto(chessGame.turn()),
+                new StatusDto(new ScoreDto(chessGame.status().getWhiteScore()),
+                    new ScoreDto(chessGame.status().getBlackScore())), chessGame.isFinished())));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
