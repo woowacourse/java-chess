@@ -24,6 +24,10 @@ public class Position {
 			.orElseThrow(IllegalArgumentException::new);
 	}
 
+	public static Position of(int x, int y) {
+		return of((char)(x + 96) + String.valueOf(y));
+	}
+
 	public Column getColumn() {
 		return column;
 	}

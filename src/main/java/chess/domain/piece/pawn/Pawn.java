@@ -11,6 +11,12 @@ public class Pawn extends Piece {
 	public static final String BLACK_PAWN = "\u265f";
 	public static final int PAWN_SCORE = 1;
 
+	public String getSymbol() {
+		return symbol;
+	}
+
+	private final String symbol = "p";
+
 	public Pawn(Team team, Position position) {
 		super(new PawnStrategy(team), team, position);
 	}

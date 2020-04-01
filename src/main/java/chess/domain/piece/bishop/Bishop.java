@@ -11,6 +11,12 @@ public class Bishop extends Piece {
 	public static final String BLACK_BISHOP = "\u265d";
 	public static final double BISHOP_SCORE = 3;
 
+	private final String symbol = "b";
+
+	public String getSymbol() {
+		return symbol;
+	}
+
 	public Bishop(Team team, Position position) {
 		super(new BishopStrategy(), team, position);
 	}

@@ -11,6 +11,12 @@ public class Queen extends Piece {
 	public static final String BLACK_QUEEN = "\u265b";
 	public static final int QUEEN_SCORE = 9;
 
+	public String getSymbol() {
+		return symbol;
+	}
+
+	private final String symbol = "q";
+
 	public Queen(Team team, Position position) {
 		super(new QueenStrategy(), team, position);
 	}

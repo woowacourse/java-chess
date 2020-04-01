@@ -11,6 +11,12 @@ public class King extends Piece {
 	public static final String BLACK_KING = "\u265a";
 	public static final double KING_SCORE = 0;
 
+	private final String symbol = "k";
+
+	public String getSymbol() {
+		return symbol;
+	}
+
 	public King(Team team, Position position) {
 		super(new KingStrategy(), team, position);
 	}

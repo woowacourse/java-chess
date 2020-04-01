@@ -39,4 +39,6 @@ public abstract class Piece {
 	}
 
 	public abstract double getScore();
+
+	public abstract String getSymbol();
 }

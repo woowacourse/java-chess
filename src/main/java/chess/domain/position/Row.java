@@ -34,4 +34,8 @@ public enum Row {
 	public String getName() {
 		return name;
 	}
+
+	public int getRow() {
+		return row;
+	}
 }

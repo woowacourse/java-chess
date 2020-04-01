@@ -11,6 +11,12 @@ public class Knight extends Piece {
 	private static final String BLACK_KNIGHT = "\u265e";
 	public static final double KNIGHT_SCORE = 2.5;
 
+	private final String symbol = "n";
+
+	public String getSymbol() {
+		return symbol;
+	}
+
 	public Knight(Team team, Position position) {
 		super(new KnightStrategy(), team, position);
 	}
