@@ -1,6 +1,5 @@
 package chess.domain.chessPiece;
 
-import chess.domain.chessBoard.CatchKingException;
 import chess.domain.chessPiece.pieceState.State;
 import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.PieceColor;
@@ -49,19 +48,20 @@ public abstract class ChessPiece implements Movable, Catchable {
         return this.pieceColor.equals(pieceColor);
     }
 
-    public void checkIsSamePieceColorWith(ChessPiece targetChessPiece) {
+    public void checkSamePieceColorWith(ChessPiece targetChessPiece) {
         if (isSamePieceColorWith(targetChessPiece)) {
             throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
         }
     }
 
-    public void checkCaughtPieceIsKing() {
+    public boolean checkCaughtPieceIsKing() {
         if (this instanceof King) {
-            throw new CatchKingException("왕이 잡혔습니다.");
+            return true;
         }
+        return false;
     }
 
-    public void checkCanCatchWith(Position sourcePosition, Position targetPosition) {
+    public void checkPieceCanCatchWith(Position sourcePosition, Position targetPosition) {
         if (!canCatch(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("체스 피스가 이동할 수 없습니다.");
         }

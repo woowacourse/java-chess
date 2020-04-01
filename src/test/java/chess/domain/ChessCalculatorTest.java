@@ -21,7 +21,7 @@ class ChessCalculatorTest {
 
     @Test
     void calculateScoreOf_ChessBoard_returnScore() {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.create());
+        ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.create(), caughtKing);
 
         assertThat(ChessCalculator.calculateScoreOf(chessBoard)).isEqualTo(34d);
     }

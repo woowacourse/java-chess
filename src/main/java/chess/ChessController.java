@@ -2,7 +2,6 @@ package chess;
 
 import chess.View.ChessInputView;
 import chess.View.ChessOutputView;
-import chess.domain.chessBoard.CatchKingException;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessBoardFactory;
 import chess.domain.command.Command;
@@ -15,11 +14,10 @@ public class ChessController {
 
         Command command = checkStartCommand(ChessInputView.inputCommand());
 
-        try {
+        while (!chessBoard.isCaughtKing()) {
             gameStart(chessBoard, command);
-        } catch (CatchKingException e) {
-            ChessOutputView.printCaughtKing(e.getMessage(), chessBoard);
         }
+        ChessOutputView.printCaughtKing(chessBoard);
     }
 
     private static void gameStart(ChessBoard chessBoard, Command command) {

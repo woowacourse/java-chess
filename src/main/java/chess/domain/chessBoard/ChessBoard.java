@@ -13,12 +13,12 @@ import java.util.Objects;
 
 public class ChessBoard {
 
+    private ChessBoardState chessBoardState;
     private final Map<Position, ChessPiece> chessBoard;
-    private PieceColor playerTurnState;
 
     public ChessBoard(Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
-        playerTurnState = PieceColor.BLACK;
+        chessBoardState = ChessBoardState.initialState();
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
@@ -30,7 +30,7 @@ public class ChessBoard {
         checkLeapablePiece(sourceChessPiece, sourcePosition, targetPosition);
         checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
         moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
-        playerTurnState = playerTurnState.getOppositeColor();
+        chessBoardState.playerTurnChange();
     }
 
     private ChessPiece findSourceChessPieceFrom(Position sourcePosition) {
@@ -39,7 +39,7 @@ public class ChessBoard {
         if (Objects.isNull(chessBoard.get(sourcePosition))) {
             throw new IllegalArgumentException("해당 위치에 체스 피스가 존재하지 않습니다.");
         }
-        playerTurnState.validatePlayerTurn(sourceChessPiece);
+        chessBoardState.validatePlayerTurn(sourceChessPiece);
 
         return sourceChessPiece;
     }
@@ -52,10 +52,10 @@ public class ChessBoard {
 
     private void checkChessPieceRoute(Position sourcePosition, Position targetPosition) {
         MoveDirection checkingDirection = MoveDirection.findDirectionOf(sourcePosition, targetPosition);
-        Position checkingPosition = checkingDirection.move(sourcePosition);
+        Position checkingPosition = checkingDirection.moveDirection(sourcePosition);
 
         while (!checkingPosition.equals(targetPosition) && isChessPieceNotExistAt(checkingPosition)) {
-            checkingPosition = checkingDirection.move(checkingPosition);
+            checkingPosition = checkingDirection.moveDirection(checkingPosition);
         }
     }
 
@@ -71,9 +71,9 @@ public class ChessBoard {
         ChessPiece targetChessPiece = chessBoard.get(targetPosition);
 
         if (Objects.nonNull(targetChessPiece)) {
-            sourceChessPiece.checkIsSamePieceColorWith(targetChessPiece);
-            sourceChessPiece.checkCanCatchWith(sourcePosition, targetPosition);
-            targetChessPiece.checkCaughtPieceIsKing();
+            sourceChessPiece.checkSamePieceColorWith(targetChessPiece);
+            sourceChessPiece.checkPieceCanCatchWith(sourcePosition, targetPosition);
+            chessBoardState.checkCaughtPieceIsKing(targetChessPiece);
             return;
         }
         sourceChessPiece.checkCanMoveWith(sourcePosition, targetPosition);
@@ -97,6 +97,10 @@ public class ChessBoard {
     }
 
     public PieceColor getPlayerColor() {
-        return playerTurnState;
+        return chessBoardState.getPlayerTurnState();
+    }
+
+    public boolean isCaughtKing() {
+        return chessBoardState.isCaughtKing();
     }
 }

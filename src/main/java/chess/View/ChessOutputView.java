@@ -30,8 +30,8 @@ public class ChessOutputView {
         System.out.println(String.format("%s점수: %.1f", chessBoard.getPlayerColor(), score));
     }
 
-    public static void printCaughtKing(String gameOverMessage, ChessBoard chessBoard) {
-        System.out.println(String.format("%s %s승", gameOverMessage, chessBoard.getPlayerColor()));
+    public static void printCaughtKing(ChessBoard chessBoard) {
+        System.out.println(String.format("왕이 잡혔습니다 %s승", chessBoard.getPlayerColor()));
     }
 
     public static void printError(String error) {

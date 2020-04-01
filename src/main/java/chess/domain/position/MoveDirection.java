@@ -45,7 +45,7 @@ public enum MoveDirection {
         return this.isSameDirection.test(fileInterval, rankInterval);
     }
 
-    public Position move(Position sourcePosition) {
+    public Position moveDirection(Position sourcePosition) {
         Objects.requireNonNull(sourcePosition, "유효한 위치가 아닙니다.");
         return moveByUnit.apply(sourcePosition);
     }
