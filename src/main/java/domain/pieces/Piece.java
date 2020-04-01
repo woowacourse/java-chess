@@ -47,7 +47,7 @@ public abstract class Piece {
 
     public abstract boolean isNoneTeam();
 
-    public abstract double getScore();
+    public abstract double getScore(Map<Point, Piece> pieces, Point point);
 
     public abstract List<Direction> getDirection(Team team);
 

@@ -55,7 +55,21 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public double getScore() {
-        return score;
+    public double getScore(Map<Point, Piece> pieces, Point point) {
+        if (getSameColumnPawnCount(pieces, point) < 2) {
+            return score;
+        }
+        return score * 0.5;
+    }
+
+    private int getSameColumnPawnCount(Map<Point, Piece> pieces, Point point) {
+        return (int) pieces.keySet().stream()
+            .filter(streamPoint -> pieces.get(streamPoint).getInitial().equals(initial))
+            .filter(streamPoint -> isSameColumn(streamPoint, point))
+            .count();
+    }
+
+    private boolean isSameColumn(Point streamPoint, Point point) {
+        return streamPoint.getColumnIndex() == point.getColumnIndex();
     }
 }

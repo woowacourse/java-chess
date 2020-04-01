@@ -3,6 +3,7 @@ package controller;
 import domain.commend.CommendType;
 import domain.commend.State;
 import domain.pieces.Pieces;
+import domain.pieces.PiecesFactory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -19,7 +20,9 @@ public class ChessGameController {
         return chessGameController;
     }
 
-    public static void gameChess(Pieces pieces) {
+    public static void gameChess() {
+        OutputView.printStart();
+        Pieces pieces = Pieces.of(PiecesFactory.create());
         State state = State.of(pieces);
         Map<CommendType, Consumer<String>> commends = new HashMap<>();
         init(state, commends);

@@ -5,8 +5,6 @@ import view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        OutputView.printStart();
-        Pieces pieces = Pieces.of(PiecesFactory.create());
-        ChessGameController.gameChess(pieces);
+        ChessGameController.gameChess();
     }
 }

@@ -34,7 +34,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public double getScore() {
+    public double getScore(Map<Point, Piece> pieces, Point point) {
         return score;
     }
 }
