@@ -6,11 +6,7 @@ import view.InputView;
 import view.OutputView;
 
 public class GameController {
-	public GameController() {
-		run();
-	}
-
-	private void run() {
+	public void run() {
 		OutputView.printChessGameStart();
 		Command command = inputGameCommand();
 		if (Command.START == command) {

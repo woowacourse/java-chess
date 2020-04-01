@@ -4,6 +4,6 @@ import controller.GameController;
 
 public class ConsoleUIChessApplication {
 	public static void main(String[] args) {
-		new GameController();
+		new GameController().run();
 	}
 }
