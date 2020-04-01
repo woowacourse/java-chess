@@ -6,6 +6,7 @@
     <title>체스</title>
 </head>
 <body>
+<div>{{error}}</div>
 <main>
     <div class="board">
         {{#board}}
@@ -18,11 +19,20 @@
         {{/pieces}}
         {{/board}}
     </div>
-    <div>
-        <form action="/move" method="post">
-            <input name="source" value="b2">
-            <input name="target" value="b3">
-            <button>Send my greetings</button>
+    <div class="commands">
+        <form class="command" action="/start" method="post">
+            <button>START</button>
+        </form>
+        <form class="command" action="/status" method="get">
+            <button>RESULT</button>
+            <div id="result-view">
+                {{#result}}
+                {{#scores}}
+                BLACK: {{BLACK}} <br/>
+                WHITE: {{WHITE}}
+                {{/scores}}
+                {{/result}}
+            </div>
         </form>
     </div>
 </main>
@@ -41,10 +51,10 @@
         align-items: center;
         height: inherit;
         width: inherit;
-        flex-direction: column;
+        flex-direction: row;
     }
 
-    .board, .cell, .piece {
+    .board, .cell, .piece, .commands, .command {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -55,6 +65,18 @@
         height: 640px;
         flex-direction: row;
         flex-wrap: wrap;
+    }
+
+    .black-cell {
+        background-color: black;
+    }
+
+    .white-cell {
+        background-color: white;
+    }
+
+    .selected-cell {
+        background-color: #84965b;
     }
 
     .cell {
@@ -71,18 +93,61 @@
         width: 100%;
         height: 100%;
     }
+
+    .commands {
+        flex-direction: column;
+    }
+
+    .command {
+        width: 100%;
+    }
 </style>
 
 <script>
+    // cell 별 색깔 부여(흰색, 검은색)
     for (let i = 0; i < 64; i++) {
-        let pieceColor = "black";
-        let backGroundColor = "white";
+        let cell = "white-cell";
         if (((Math.floor(i / 8) % 2 === 0) && (i % 2 === 0)) || (Math.floor(i / 8) % 2 === 1) && (i % 2 === 1)) {
             // 홀수 줄의 홀수 번째 칸 또는 짝수줄의 짝수번째 칸이라면
-            pieceColor = "white";
-            backGroundColor = "black";
+            cell = "black-cell";
         }
-        $(".cell:eq(" + i + ")").css("color", pieceColor)
-            .css("background-color", backGroundColor);
+        $(".cell:eq(" + i + ")").addClass(cell);
     }
+
+    // move 클릭으로 구현
+    let source;
+    let target;
+    let isFirstClick = true;
+
+    $(".piece").click(function () {
+        let cell = $(this).parent();
+        let cellPosition = $(this).parent().attr("id");
+
+        // 첫 클릭이라면 source에 포지션 저장
+        if (isFirstClick) {
+            source = cellPosition;
+            isFirstClick = false;
+            cell.addClass("selected-cell");
+            return;
+        }
+
+        // 두번째 클릭이지만 똑같은 기물을 선택했다면 선택 취소
+        if (!isFirstClick && (source === cellPosition)) {
+            source = null;
+            isFirstClick = true;
+            cell.removeClass("selected-cell");
+            return;
+        }
+
+        // 두번째 클릭이라면 이동
+        $.ajax({
+            url: "/move",
+            data: {source: source, target: cellPosition},
+            method: "POST",
+            dataType: "html"
+        })
+            .done(function (html) {
+                $("html").html(html);
+            });
+    });
 </script>

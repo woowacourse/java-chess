@@ -3,6 +3,7 @@ package chess;
 import chess.domain.board.Board;
 import chess.domain.board.BoardDTO;
 import chess.domain.command.Command;
+import chess.domain.result.ChessResultDTO;
 import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -25,28 +26,43 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Board board = service.placeInitialPieces();
-            model.put("board", BoardDTO.from(board));
+            putBoard(model, service);
 
             return render(model, "index.html");
         });
 
         post("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Board board = service.placeInitialPieces();
-            model.put("board", BoardDTO.from(board));
+            service.placeInitialPieces();
 
+            putBoard(model, service);
             return render(model, "index.html");
         });
 
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Command moveCommand = Command.from(Arrays.asList("move", req.queryParams("source"), req.queryParams("target")));
-            Board board = service.move(moveCommand.getSource(), moveCommand.getTarget());
-            model.put("board", BoardDTO.from(board));
+            try {
+                Command moveCommand = Command.from(Arrays.asList("move", req.queryParams("source"), req.queryParams("target")));
+                service.move(moveCommand.getSource(), moveCommand.getTarget());
+            } catch (RuntimeException e) {
+                model.put("error", e.getMessage());
+            }
 
+            putBoard(model, service);
             return render(model, "index.html");
         });
+
+        get("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("result", new ChessResultDTO(service.calculateResult()));
+
+            putBoard(model, service);
+            return render(model, "index.html");
+        });
+    }
+
+    private static void putBoard(Map<String, Object> model, ChessService service) {
+        model.put("board", BoardDTO.from(service.getBoard()));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

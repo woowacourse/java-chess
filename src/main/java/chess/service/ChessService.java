@@ -29,4 +29,8 @@ public class ChessService {
     public boolean checkGameNotFinished() {
         return board.isNotFinished();
     }
+
+    public Board getBoard() {
+        return board;
+    }
 }

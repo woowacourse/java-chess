@@ -10,6 +10,7 @@ public class Application {
 
     public static void main(String[] args) {
         ChessService service = new ChessService();
+        OutputView.printBoard(service.getBoard());
         Command command;
 
         OutputView.printStart();
