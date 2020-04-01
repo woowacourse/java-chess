@@ -1,6 +1,8 @@
 package domain.board;
 
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import domain.piece.King;
 import domain.piece.Pawn;
@@ -63,30 +65,22 @@ public class Board {
 	}
 
 	private double calculateEachColumnPawn(Column column, Team team) {
-		if (overOnePawnOnSameColumn(column, team)) {
-			return ranks.stream()
-				.flatMap(rank -> rank.getPieces().stream())
-				.filter(piece -> piece.isSameTeam(team))
-				.filter(piece -> piece.getPosition().getColumn() == column)
-				.filter(piece -> piece instanceof Pawn)
+		Supplier<Stream<Piece>> pawnsOnSameColumn = () -> ranks.stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.filter(piece -> (piece.isSameTeam(team)) && (piece.isSameColumn(column)) && (piece instanceof Pawn));
+
+		if (overOnePawnOnSameColumn(pawnsOnSameColumn.get())) {
+			return pawnsOnSameColumn.get()
 				.mapToDouble(piece -> PAWNS_ON_SAME_COLUMN_SCORE)
 				.sum();
 		}
-		return ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece.isSameTeam(team))
-			.filter(piece -> piece.getPosition().getColumn() == column)
-			.filter(piece -> piece instanceof Pawn)
+		return pawnsOnSameColumn.get()
 			.mapToDouble(Piece::getScore)
 			.sum();
 	}
 
-	private boolean overOnePawnOnSameColumn(Column column, Team team) {
-		return ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece.isSameTeam(team))
-			.filter(piece -> piece.getPosition().getColumn() == column)
-			.filter(piece -> piece instanceof Pawn)
+	private boolean overOnePawnOnSameColumn(Stream<Piece> pawnsOnSameColumn) {
+		return pawnsOnSameColumn
 			.count() > MAX_PAWN_NUMBER_TO_GET_HIGH_SCORE;
 	}
 

@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import domain.board.InvalidTurnException;
 import domain.board.Rank;
+import domain.piece.position.Column;
 import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -60,6 +61,10 @@ public abstract class Piece implements Movable {
 
 	public boolean isSamePosition(Position position) {
 		return this.position == position;
+	}
+
+	public boolean isSameColumn(Column column) {
+		return this.position.getColumn() == column;
 	}
 
 	public boolean isSameTeam(Team team) {
