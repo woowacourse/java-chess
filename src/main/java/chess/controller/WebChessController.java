@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.Board;
-import chess.domain.Pieces;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -10,6 +9,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -18,30 +18,32 @@ public class WebChessController implements ChessController {
     @Override
     public void run() {
         Board board = new Board();
-        get("/", (req, res) -> render(printChessBoard(board), "index.html"));
+        AtomicReference<String> message = new AtomicReference<>("");
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("score", getScore(board));
+            model.put("notification", message);
+            model.put("pieces", printChessBoard(board));
+            return render(model, "index.html");
+        });
 
         post("/move", (req, res) -> {
             try {
-                Map<String, String> bodyMap = new HashMap<>();
-                for (String body : req.body().split("&")) {
-                    String[] instruction = body.split("=");
-                    bodyMap.put(instruction[0], instruction[1]);
-                }
-                board.movePiece(new Position(bodyMap.get("source")), new Position(bodyMap.get("destination")));
+                Map<String, String[]> queryMap = req.queryMap().toMap();
+                board.movePiece(new Position(queryMap.get("source")[0]), new Position(queryMap.get("destination")[0]));
+                message.set("");
                 res.redirect("/");
             } catch (Exception e) {
-                res.body(e.getMessage());
+                message.set(e.getMessage());
+                res.redirect("/");
             }
             return null;
         });
     }
 
-    private Map<String, Object> printChessBoard(Board board) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("notification", "테스트 안내 입니다.");
-        model.putAll(getScore(board));
-        Pieces pieces = board.getPieces();
-        for (Piece piece : pieces.getAlivePieces()) {
+    private Map<String, Piece> printChessBoard(Board board) {
+        Map<String, Piece> model = new HashMap<>();
+        for (Piece piece : board.getPieces().getAlivePieces()) {
             model.put(piece.getPosition().toString(), piece);
         }
         return model;

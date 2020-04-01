@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+.chessBoardWrapper {
+    width: 1000px;
+    height: 770px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: saddlebrown;
+}
+
+.chessBoard {
+    background-color: darkgoldenrod;
+    margin: 10px;
+    width: 960px;
+    height: 730px;
+    padding: 10px;
+    display: flex;
+}
+
+.scoreArea {
+    border-style: solid;
+    border-width: 2px;
+    width: 230px;
+    height: 705px;
+    margin-left: 10px;
+    padding: 10px;
+    border-color: saddlebrown;
+}
+
+.playArea {
+    border-style: solid;
+    border-width: 2px;
+    border-color: saddlebrown;
+}
+
+.light {
+    width: 80px;
+    height: 80px;
+    background-color: blanchedalmond;
+}
+
+.dark {
+    width: 80px;
+    height: 80px;
+    background-color: saddlebrown;
+}
+
+.fileIndicator {
+    text-align: center;
+}
+
+.source {
+    background-color: blue !important;
+}
+
+.destination {
+    background-color: red !important;
+}
