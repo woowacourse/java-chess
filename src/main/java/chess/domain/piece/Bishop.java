@@ -63,12 +63,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
-        validateNotNull(square, board);
-        Set<Square> squares = calculateScope(square);
-        Set<Square> squaresIter = calculateScope(square);
-        File currentFile = square.getFile();
-        Rank currentRank = square.getRank();
+    public Set<Square> calculateMovableSquares(Square currentSquare, Map<Square, Piece> board) {
+        validateNotNull(currentSquare, board);
+        Set<Square> squares = calculateScope(currentSquare);
+        Set<Square> squaresIter = calculateScope(currentSquare);
+        File currentFile = currentSquare.getFile();
+        Rank currentRank = currentSquare.getRank();
         for (Square s : squaresIter) {
             File movedFile = s.getFile();
             Rank movedRank = s.getRank();

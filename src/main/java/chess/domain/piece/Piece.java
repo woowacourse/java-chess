@@ -32,7 +32,7 @@ public abstract class Piece {
         return movedSquare != square;
     }
 
-    public abstract Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board);
+    public abstract Set<Square> calculateMovableSquares(Square currentSquare, Map<Square, Piece> board);
 
     public Set<Square> findSquaresToRemove(Square s, int fileAddAmount, int rankAddAmount) {
         Set<Square> squaresToRemove = new HashSet<>();

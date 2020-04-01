@@ -43,7 +43,7 @@ public class KnightTest {
         board.put(Square.of("c1"), King.of(Color.WHITE));
         board.put(Square.of("g3"), King.of(Color.WHITE));
         Piece piece = Knight.of(Color.WHITE);
-        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("e2"), board);
+        Set<Square> availableSquares = piece.calculateMovableSquares(Square.of("e2"), board);
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(4);
     }

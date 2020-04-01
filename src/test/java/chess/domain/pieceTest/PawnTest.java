@@ -22,7 +22,6 @@ public class PawnTest {
         assertThat(piece).isEqualTo(Pawn.of(Color.BLACK));
     }
 
-
     @Test
     @DisplayName("말의 위치(pawn)를 받고 말의 종류에 따라 이동할 수 있는 칸 리스트 반환")
     void calculateScopePawnBlack() {
@@ -54,17 +53,17 @@ public class PawnTest {
         board.put(Square.of("f5"), Knight.of(Color.WHITE));
 
         Piece piece = Pawn.of(Color.BLACK);
-        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
+        Set<Square> availableSquares = piece.calculateMovableSquares(Square.of("c6"), board);
         assertThat(availableSquares.contains(Square.of("c5"))).isTrue();
         assertThat(availableSquares.contains(Square.of("b5"))).isFalse();
         assertThat(availableSquares.size()).isEqualTo(1);
 
-        availableSquares = piece.calculateMoveBoundary(Square.of("e7"), board);
+        availableSquares = piece.calculateMovableSquares(Square.of("e7"), board);
         assertThat(availableSquares.contains(Square.of("e6"))).isTrue();
         assertThat(availableSquares.contains(Square.of("e5"))).isFalse();
         assertThat(availableSquares.size()).isEqualTo(1);
 
-        availableSquares = piece.calculateMoveBoundary(Square.of("g6"), board);
+        availableSquares = piece.calculateMovableSquares(Square.of("g6"), board);
         assertThat(availableSquares.contains(Square.of("g5"))).isTrue();
         assertThat(availableSquares.contains(Square.of("f5"))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(2);

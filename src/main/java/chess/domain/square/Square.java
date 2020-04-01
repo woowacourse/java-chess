@@ -30,7 +30,6 @@ public class Square {
         return CACHE.get(squareName);
     }
 
-
     public static Square of(File file, Rank rank) {
         validateFileRank(file, rank);
         return Square.of(file.getName() + rank.getName());
@@ -86,8 +85,28 @@ public class Square {
         return file.validateIncrementNumber(fileIncrementBy) && rank.validateIncrementNumber(rankIncrementBy);
     }
 
-    public boolean isJustSameFile(Square square) {
-        return (this != square) && (this.file == square.file);
+    public boolean isDiagonalDirectionDistanceOne(Square nextSquare) {
+        File currentFile = this.getFile();
+        Rank currentRank = this.getRank();
+
+        File nextFile = nextSquare.getFile();
+        Rank nextRank = nextSquare.getRank();
+
+        int fileDifference = Math.abs(currentFile.getNumber() - nextFile.getNumber());
+        int rankDifference = Math.abs(currentRank.getNumber() - nextRank.getNumber());
+
+        return fileDifference == 1 && rankDifference == 1;
+    }
+
+    public boolean isJustSameFile(Square nextSquare) {
+        return (this != nextSquare) && (this.file == nextSquare.file);
+    }
+
+    public int calculateDistanceRank(Square nextSquare) {
+        Rank currentRank = this.getRank();
+        Rank nextRank = nextSquare.getRank();
+
+        return Math.abs(currentRank.getNumber() - nextRank.getNumber());
     }
 
     public File getFile() {

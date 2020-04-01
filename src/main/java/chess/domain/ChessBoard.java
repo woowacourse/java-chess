@@ -45,7 +45,7 @@ public class ChessBoard {
         if (!chessBoard.containsKey(before) || chessBoard.get(before).isBlack() != blackTurn) {
             return false;
         }
-        return chessBoard.get(before).calculateMoveBoundary(before, chessBoard).contains(after);
+        return chessBoard.get(before).calculateMovableSquares(before, chessBoard).contains(after);
     }
 
     public void movePiece(List<Square> squares) {

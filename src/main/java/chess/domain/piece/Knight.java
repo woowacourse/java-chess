@@ -55,9 +55,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
-        validateNotNull(square, board);
-        return calculateScope(square).stream()
+    public Set<Square> calculateMovableSquares(Square currentSquare, Map<Square, Piece> board) {
+        validateNotNull(currentSquare, board);
+        return calculateScope(currentSquare).stream()
                 .filter(s -> isAvailableSquare(board, s))
                 .collect(Collectors.toSet());
     }

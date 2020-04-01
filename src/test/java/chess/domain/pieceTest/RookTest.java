@@ -47,7 +47,7 @@ public class RookTest {
         board.put(Square.of("g2"), Pawn.of(Color.WHITE));
 
         Piece piece = Rook.of(Color.BLACK);
-        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
+        Set<Square> availableSquares = piece.calculateMovableSquares(Square.of("c6"), board);
 
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(5);
@@ -69,7 +69,7 @@ public class RookTest {
         board.put(Square.of("g2"), Pawn.of(Color.WHITE));
 
         Piece piece = Rook.of(Color.BLACK);
-        Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
+        Set<Square> availableSquares = piece.calculateMovableSquares(Square.of("c6"), board);
 
         assertThat(availableSquares.contains(Square.of(input))).isFalse();
     }

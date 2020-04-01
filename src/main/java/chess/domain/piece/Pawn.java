@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import chess.exception.WrongPawnSquareScopeCalculationException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -94,35 +94,54 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<Square> calculateMoveBoundary(Square square, Map<Square, Piece> board) {
-        Set<Square> squares = calculateScope(square);
-        Rank currentRank = square.getRank();
-        for (Square s : squares) {
-            Rank movedRank = s.getRank();
-            if (Math.abs(currentRank.getNumber() - movedRank.getNumber()) == 1) {
-                Square squareRight = s;
-                Square squareLeft = s;
-                if (s.getFile() != File.of('a')) {
-                    squareLeft = Square.of(s, -1, 0);
-                }
-                if (s.getFile() != File.of('h')) {
-                    squareRight = Square.of(s, 1, 0);
-                }
-                if (board.containsKey(s) && color == board.get(s).color) {
-                    squares.removeAll(calculateScope(square));
-                }
-                if (board.containsKey(squareRight) && color != board.get(squareRight).color) {
-                    squares.add(squareRight);
-                }
-                if (board.containsKey(squareLeft) && color != board.get(squareLeft).color) {
-                    squares.add(squareLeft);
-                }
-                continue;
+    public Set<Square> calculateMovableSquares(Square currentSquare, Map<Square, Piece> board) {
+        Set<Square> currentSquareScope = calculateScope(currentSquare);
+
+        Set<Square> movableSquares = currentSquareScope.stream()
+                .filter(nextSquare -> hasPieceInDiagonalDirectionDistanceOne(currentSquare, board, nextSquare))
+                .filter(nextSquare -> isDifferentColorWithPieceInDiagonalDirection(board, nextSquare))
+                .collect(Collectors.toSet());
+
+        List<Square> sameFileSquares = currentSquareScope.stream()
+                .filter(currentSquare::isJustSameFile)
+                .collect(Collectors.toList());
+
+        calculatePawnFrontMove(board, movableSquares, sameFileSquares);
+        return movableSquares;
+    }
+
+    private boolean hasPieceInDiagonalDirectionDistanceOne(Square currentSquare, Map<Square, Piece> board, Square nextSquare) {
+        return currentSquare.isDiagonalDirectionDistanceOne(nextSquare) && board.containsKey(nextSquare);
+    }
+
+    private boolean isDifferentColorWithPieceInDiagonalDirection(Map<Square, Piece> board, Square nextSquare) {
+        Piece pieceOfNextSquare = board.get(nextSquare);
+        return pieceOfNextSquare.getColor() != this.color;
+    }
+
+    private void calculatePawnFrontMove(Map<Square, Piece> board, Set<Square> movableSquares, List<Square> sameFileSquares) {
+        if (sameFileSquares.isEmpty()) {
+            throw new WrongPawnSquareScopeCalculationException("Pawn이 갈 수 있는 범위를 잘못 계산하였습니다");
+        }
+        if (sameFileSquares.size() == 2) {
+            Square firstSquare = sameFileSquares.get(0);
+            Square secondSquare = sameFileSquares.get(1);
+            if (!board.containsKey(firstSquare) && !board.containsKey(secondSquare)) {
+                movableSquares.add(firstSquare);
+                movableSquares.add(secondSquare);
             }
-            if (board.containsKey(s) && color == board.get(s).color) {
-                squares.remove(s);
+            if (!board.containsKey(firstSquare) && board.containsKey(secondSquare)) {
+                movableSquares.add(firstSquare);
+            }
+            if (board.containsKey(firstSquare) && !board.containsKey(secondSquare)) {
+                movableSquares.add(secondSquare);
             }
         }
-        return squares;
+        if (sameFileSquares.size() == 1) {
+            Square firstSquare = sameFileSquares.get(0);
+            if (!board.containsKey(firstSquare)) {
+                movableSquares.add(firstSquare);
+            }
+        }
     }
 }
