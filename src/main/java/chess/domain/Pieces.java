@@ -10,10 +10,10 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 public class Pieces {
-	private final Map<Position, Piece> pieces = new HashMap<>();
+	private final Map<Position, Piece> pieces;
 
 	public Pieces(Map<Position, Piece> pieces) {
-		this.pieces.putAll(pieces);
+		this.pieces = new HashMap<>(pieces);
 	}
 
 	public List<Piece> getAlivePieces() {
@@ -44,5 +44,15 @@ public class Pieces {
 			.findFirst()
 			.orElseThrow(() -> new NullPointerException("킹이 한 명도 없습니다."))
 			.getTeam();
+	}
+
+	public void move(Position source, Position destination) {
+		Piece sourcePiece = this.pieces.get(source);
+		this.pieces.put(destination, sourcePiece);
+		this.pieces.remove(source);
+	}
+
+	public void kill(Piece destinationPiece) {
+		this.pieces.values().remove(destinationPiece);
 	}
 }

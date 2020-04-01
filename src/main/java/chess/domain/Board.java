@@ -35,7 +35,7 @@ public class Board {
 		if (destinationPiece != null) {
 			killPiece(sourcePiece, destinationPiece);
 		}
-		sourcePiece.move(destination);
+		pieces.move(source, destination);
 	}
 
 	private void validateDestination(Position source, Position destination) {
@@ -73,7 +73,7 @@ public class Board {
 		if (piece.isSameTeam(destinationPiece)) {
 			throw new IllegalMoveException(SAME_TEAM_PIECE_IN_DESTINATION);
 		}
-		destinationPiece.kill();
+		pieces.kill(destinationPiece);
 	}
 
 	public double calculateScoreByTeam(Team team) {
