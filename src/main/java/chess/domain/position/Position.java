@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 import chess.domain.Direction;
@@ -31,10 +30,7 @@ public class Position {
 	}
 
 	public Direction findDirection(Position target) {
-		return Arrays.stream(Direction.values())
-				.filter(strategy -> strategy.isMatch(this, target))
-				.findAny()
-				.orElse(Direction.NON_LINEAR);
+		return Direction.of(this, target);
 	}
 
 	public boolean isSameRow(Position position) {

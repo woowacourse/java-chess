@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 import chess.domain.position.Position;
@@ -17,7 +18,13 @@ public enum Direction {
 		this.filter = filter;
 	}
 
-	public boolean isSameDirection(Position source, Position target) {
+	public static Direction of(Position source, Position target) {
+		return Arrays.stream(values())
+				.filter(direction -> direction.isMatch(source, target))
+				.findFirst()
+				.orElse(NON_LINEAR);
+	}
+
 	public boolean isMatch(Position source, Position target) {
 		return filter.test(source, target);
 	}
