@@ -14,7 +14,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public List<Position> findMoveModeTrace(Position from, Position to) {
-		if (isNotMovable(from, to) || isNotAbleToMoveDoubleSquare(from, to) || !from.isSameFile(to)) {
+		if (isNotMovable(from, to) || isNotAbleToMoveDoubleSquare(from, to) || !from.isSameColumn(to)) {
 			throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 		}
 

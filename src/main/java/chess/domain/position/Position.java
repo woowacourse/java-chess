@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +10,8 @@ import java.util.stream.Collectors;
 public class Position {
 	public static final int MINIMUM_POSITION_NUMBER = 1;
 	public static final int MAXIMUM_POSITION_NUMBER = 8;
-	private static final Map<String, Position> CACHE = new HashMap<>();
 	private static final int KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE = 2;
+	private static final Map<String, Position> CACHE = new HashMap<>();
 
 	static {
 		for (int col = MINIMUM_POSITION_NUMBER; col <= MAXIMUM_POSITION_NUMBER; col++) {
@@ -45,13 +46,13 @@ public class Position {
 	}
 
 	public static List<Position> findMultipleStepTrace(Position from, Position to) {
-		if (from.isSameRank(to)) {
+		if (from.isSameRow(to)) {
 			List<Cell> files = Cell.valuesBetween(from.getFile(), to.getFile());
 			return files.stream()
 				.map(file -> Position.of(file, from.getRank()))
 				.collect(Collectors.toList());
 		}
-		if (!from.isNotDiagonal(to)) {
+		if (from.isDiagonal(to)) {
 			List<Position> positions = new ArrayList<>();
 			List<Cell> files = Cell.valuesBetween(from.getFile(), to.getFile());
 			List<Cell> ranks = Cell.valuesBetween(from.getRank(), to.getRank());
@@ -60,7 +61,7 @@ public class Position {
 			}
 			return positions;
 		}
-		if (from.isSameFile(to)) {
+		if (from.isSameColumn(to)) {
 			List<Cell> ranks = Cell.valuesBetween(from.getRank(), to.getRank());
 			return ranks.stream()
 				.map(rank -> Position.of(from.getFile(), rank))
@@ -70,18 +71,22 @@ public class Position {
 	}
 
 	public boolean isNotDiagonal(Position other) {
-		return col.calculateAbsolute(other.col) != row.calculateAbsolute(other.row);
+		return !isDiagonal(other);
+	}
+
+	private boolean isDiagonal(Position other) {
+		return col.calculateAbsolute(other.col) == row.calculateAbsolute(other.row);
 	}
 
 	public boolean isNotStraght(Position other) {
 		return !col.equals(other.col) && !row.equals(other.row);
 	}
 
-	public boolean isSameRank(Position other) {
+	public boolean isSameRow(Position other) {
 		return row.equals(other.row);
 	}
 
-	public boolean isSameFile(Position other) {
+	public boolean isSameColumn(Position other) {
 		return col.equals(other.col);
 	}
 
@@ -89,9 +94,13 @@ public class Position {
 		return !(this.row.isNear(other.row) && this.col.isNear(other.col));
 	}
 
-	public boolean isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(Position other) {
+	public boolean isNotKnightMovable(Position other) {
 		return this.col.calculateAbsolute(other.col) * this.row.calculateAbsolute(other.row)
 			!= KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE;
+	}
+
+	public static Collection<Position> values() {
+		return CACHE.values();
 	}
 
 	public Cell getFile() {

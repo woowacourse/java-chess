@@ -39,16 +39,15 @@ public class Board {
 		this.finished = false;
 	}
 
-	//추가하기
 	public void start() {
 		pieces.clear();
-		for (int i = 1; i <= 8; i++) {
-			for (int j = 1; j <= 8; j++) {
-				pieces.put(Position.of(i, j), EMPTY);
-			}
-		}
+		initAllBoardEmpty();
 		initChessBoard(8, BLACK, 7);
 		initChessBoard(1, WHITE, 2);
+	}
+
+	private void initAllBoardEmpty() {
+		Position.values().forEach(position -> pieces.put(position, EMPTY));
 	}
 
 	private void initChessBoard(int othersRank, Team teamColor, int pawnRank) {
@@ -60,12 +59,12 @@ public class Board {
 		pieces.put(Position.of("f" + othersRank), new Bishop(teamColor));
 		pieces.put(Position.of("g" + othersRank), new Knight(teamColor));
 		pieces.put(Position.of("h" + othersRank), new Rook(teamColor));
+
 		for (int i = 0; i < MAXIMUM_POSITION_NUMBER; i++) {
 			pieces.put(Position.of((char)('a' + i) + String.valueOf(pawnRank)), new Pawn(teamColor));
 		}
 	}
 
-	//read 역할
 	public Map<Team, Double> status() {
 		HashMap<Team, Double> collect = pieces.values().stream()
 			.filter(Piece::isNotBlank)
