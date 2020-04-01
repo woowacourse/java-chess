@@ -105,9 +105,5 @@ public class BoardSquare {
     public boolean isSameRank(Rank rank) {
         return this.rank == rank;
     }
-
-    public int compareTo(BoardSquare boardSquare) {
-        return this.file.compareTo(boardSquare.file);
-    }
 }
 

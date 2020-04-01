@@ -29,6 +29,7 @@ public enum CastlingSetting {
     BLACK_KING_LEFT_AFTER(BoardSquare.of("g8"), Knight.getPieceInstance(Color.BLACK), false),
     WHITE_KING_LEFT_AFTER(BoardSquare.of("c1"), Bishop.getPieceInstance(Color.WHITE), false),
     BLACK_KING_RIGHT_AFTER(BoardSquare.of("c8"), Bishop.getPieceInstance(Color.BLACK), false),
+
     WHITE_ROOK_RIGHT_AFTER(BoardSquare.of("f1"), Bishop.getPieceInstance(Color.WHITE), false),
     BLACK_ROOK_LEFT_AFTER(BoardSquare.of("f8"), Bishop.getPieceInstance(Color.BLACK), false),
     WHITE_ROOK_LEFT_AFTER(BoardSquare.of("d1"), Queen.getPieceInstance(Color.WHITE), false),
