@@ -33,10 +33,10 @@ class ChessBoardTest {
 					put(Location.of('a', 2), King.of(Team.BLACK));
 				}}, true
 			), Arguments.of(
-				false, new HashMap<Location, Piece>() {{
+				new HashMap<Location, Piece>() {{
 					put(Location.of('a', 1), Pawn.of(Team.WHITE));
 					put(Location.of('a', 2), King.of(Team.BLACK));
-				}}
+				}}, false
 			)
 		);
 	}
@@ -126,7 +126,7 @@ class ChessBoardTest {
 		board.put(topLocation, Queen.of(Team.BLACK));
 
 		ChessBoard chessBoard = new ChessBoard(board);
-		boolean actual = chessBoard.isTurn(movingLocation, GameState.RUNNING_BLACK_TURN);
+		boolean actual = chessBoard.isNotSameTeam(GameState.RUNNING_BLACK_TURN, movingLocation);
 
 		assertThat(actual).isTrue();
 	}

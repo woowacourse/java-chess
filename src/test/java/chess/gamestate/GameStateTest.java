@@ -6,9 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.piece.Pawn;
-import chess.team.Team;
-
 class GameStateTest {
 
 	@DisplayName("boolean 타입으로 게임상태를 가져오는지 확인")
@@ -27,14 +24,4 @@ class GameStateTest {
 		assertThat(gameState.isGameRunning()).isEqualTo(expect);
 	}
 
-	@DisplayName("피스가 현재 턴인지 확인")
-	@ParameterizedTest
-	@CsvSource(value = {"RUNNING_BLACK_TURN,BLACK,true"
-		, "RUNNING_WHITE_TURN,WHITE,true"
-		, "RUNNING_BLACK_TURN,WHITE,false"
-		, "RUNNING_WHITE_TURN,BLACK,false"})
-	void isTurn(GameState gameState, Team pieceTeam, boolean expect) {
-		boolean actual = gameState.isTurn(Pawn.of(pieceTeam));
-		assertThat(actual).isEqualTo(expect);
-	}
 }

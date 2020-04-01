@@ -1,64 +1,79 @@
 import chess.GameManager;
 import chess.board.Location;
 import chess.piece.PieceFactory;
+import command.FirstCommand;
+import command.RunningCommand;
 import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-	public static void main(String[] args) {
+	public final GameManager gameManage = new GameManager(new PieceFactory().createPieces());
+
+	public void run() {
+		start();
+		running();
+		end();
+	}
+
+	private void start() {
 		OutputView.printInformation();
-		GameManager gameManager = new GameManager(new PieceFactory().createPieces());
 
-		// Command Interface
-		// 	무브의 생성자는 아규먼트 2개로
-		//
-
-		while (gameManager.isRunning()) {
-			String command = InputView.inputStartCommand();
-			if ("start".equals(command)) {
-				start(gameManager);
-			}
-			if (command.matches("move [a-h][1-8] [a-h][1-8]")) {
-				movePiece(command, gameManager);
-			}
-			if ("status".equals(command)) {
-				status(gameManager);
-			}
-			if ("end".equals(command)) {
-				break;
-			}
+		FirstCommand firstCommand = readFirstCommand();
+		if (firstCommand == FirstCommand.END) {
+			end();
 		}
-		OutputView.printStatus(gameManager.createStatistics());
+
+		OutputView.printBoard(gameManage);
 	}
 
-	private static void start(GameManager gameManager) {
-		OutputView.printBoard(gameManager);
+	private FirstCommand readFirstCommand() {
+		try {
+			return FirstCommand.of(InputView.inputCommand());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			return readFirstCommand();
+		}
 	}
 
-	private static void status(GameManager gameManager) {
-		OutputView.printStatus(gameManager.createStatistics());
+	private void running() {
+		RunningCommand runningCommand;
+		do {
+			runningCommand = readRunningCommand();
+			if (runningCommand.isMove()) {
+				move(runningCommand.getNowLocation(), runningCommand.getDestinationLocation());
+			}
+			if (runningCommand.isStatus()) {
+				status();
+			}
+		} while (gameManage.isRunning() && runningCommand.isNotEnd());
 	}
 
-	private static void movePiece(String command, GameManager gameManager) {
-		String commandNow = command.split(" ")[1];
-		String commandDestination = command.split(" ")[2];
-		Location now = Location.of(commandNow);
-		Location destination = Location.of(commandDestination);
-
-		gameManager.movePiece(now, destination);
-		OutputView.printBoard(gameManager);
-
+	private void move(String nowLocation, String destinationLocation) {
+		try {
+			gameManage.movePiece(Location.of(nowLocation), Location.of(destinationLocation));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			running();
+			return;
+		}
+		OutputView.printBoard(gameManage);
 	}
 
-	// public void run() {
-	// 	start();
-	// 	running();
-	// 	end();
-	// }
-	//
-	// private void running() {
-	// }
-	//
-	// private void end() {
-	// }
+	private void status() {
+		OutputView.printStatus(gameManage.createStatistics());
+	}
+
+	private RunningCommand readRunningCommand() {
+		try {
+			return RunningCommand.from(InputView.inputCommand());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			return readRunningCommand();
+		}
+	}
+
+	private void end() {
+		System.exit(1);
+		return;
+	}
 }

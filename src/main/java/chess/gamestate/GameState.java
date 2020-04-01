@@ -2,7 +2,6 @@ package chess.gamestate;
 
 import java.util.Arrays;
 
-import chess.piece.Piece;
 import chess.team.Team;
 
 public enum GameState {
@@ -36,7 +35,7 @@ public enum GameState {
 		return gameRunning;
 	}
 
-	public boolean isTurn(Piece startingPiece) {
-		return startingPiece.isSameTeam(this.team);
+	public Team getTeam() {
+		return team;
 	}
 }

@@ -114,9 +114,9 @@ public class ChessBoard {
 		return kingCount == 2;
 	}
 
-	public boolean isTurn(Location now, GameState gameState) {
+	public boolean isNotSameTeam(GameState gameState, Location now) {
 		Piece startingPiece = board.get(now);
-		return gameState.isTurn(startingPiece);
+		return !startingPiece.isSameTeam(gameState.getTeam());
 	}
 
 	public Map<Location, Piece> getBoard() {

@@ -21,7 +21,7 @@ public class GameManager {
 	public GameManager(Map<Location, Piece> pieces) {
 		Objects.requireNonNull(pieces, "pieces의 정보가 없습니다.");
 		this.chessBoard = new ChessBoard(pieces);
-		this.gameState = GameState.RUNNING_BLACK_TURN;
+		this.gameState = GameState.RUNNING_WHITE_TURN;
 	}
 
 	public boolean isRunning() {
@@ -35,8 +35,8 @@ public class GameManager {
 	}
 
 	private void checkTurn(Location now) {
-		if (chessBoard.isTurn(now, gameState)) {
-			throw new IllegalArgumentException("유저의 턴이 아닙니다.");
+		if (chessBoard.isNotSameTeam(gameState, now)) {
+			throw new IllegalArgumentException("해당 유저의 턴이 아닙니다.");
 		}
 	}
 
