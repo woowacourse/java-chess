@@ -45,15 +45,88 @@
             transform: translateX(10px) translateY(-10px);
         }
 
-        .blackPawn {
-            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/BlackWhite.png?raw=true");
+        .K {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteKing.png?raw=true");
             background-repeat: no-repeat;
             background-size: 40%;
             background-position: center;
         }
 
-        .whitePawn {
+        .k {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackKing.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
 
+        .q {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackQueen.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .Q {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteQueen.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .b {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackBishop.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .B {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteBishop.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .n {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackKnight.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .N {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteKnight.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .r {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackRook.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .R {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteRook.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .p {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackPawn.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .P {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whitePawn.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
         }
     </style>
 </head>
@@ -160,18 +233,10 @@
         alert("initError");
     }
 
-    function findPieceType(pieceName) {
-        if (pieceName === "p") {
-            return "blackPawn"
-        }
-    }
-
     function initSuccess(response) {
         for (position in response) {
             const pieceName = response[position].name;
-            const pieceType = findPieceType(pieceName);
-
-            document.getElementById(position).classList.add(pieceType);
+            document.getElementById(position).classList.add(pieceName);
         }
     }
 

@@ -11,6 +11,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static spark.Spark.*;
 
@@ -36,20 +37,25 @@ public class ChessWebApplication {
 		post("/isMovable", (req, res) -> {
 			String source = req.queryParams("sourcePosition");
 			String target = req.queryParams("targetPosition");
-			String pieceType = "whitePawn";
 
 			Position sourcePosition = Position.of(source);
 			Position targetPosition = Position.of(target);
-
-			Map<String, Object> model = new HashMap<>();
 			chessBoard.movePiece(sourcePosition, targetPosition);
 
+			String pieceType = findPieceType(sourcePosition);
+
+			Map<String, Object> model = new HashMap<>();
 			model.put("source", source);
 			model.put("target", target);
 			model.put("pieceType", pieceType);
 
 			return gson.toJson(model);
 		});
+	}
+
+	private static String findPieceType(final Position sourcePosition) {
+		Optional<Piece> piece = chessBoard.findPieceByPosition(sourcePosition);
+		return piece.map(Piece::getName).get();
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
