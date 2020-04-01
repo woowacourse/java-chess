@@ -37,4 +37,8 @@ public enum Direction {
 	public int getYDegree() {
 		return yDegree;
 	}
+
+	public boolean canOnlyMoveVertical() {
+		return xDegree == 0;
+	}
 }
