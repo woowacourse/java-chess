@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Direction;
-import chess.domain.Type;
 import chess.domain.board.Square;
 
 import java.util.HashMap;

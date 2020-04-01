@@ -1,8 +1,7 @@
 package chess.domain.board;
 
-import chess.domain.Color;
-import chess.domain.File;
-import chess.domain.Type;
+import chess.domain.piece.Color;
+import chess.domain.piece.Type;
 import chess.domain.piece.Piece;
 
 import java.util.HashMap;

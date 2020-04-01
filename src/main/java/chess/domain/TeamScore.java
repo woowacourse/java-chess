@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Square;
+import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 

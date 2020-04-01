@@ -1,8 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.File;
-import chess.domain.Rank;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
