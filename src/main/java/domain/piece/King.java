@@ -56,8 +56,7 @@ public class King extends Piece {
 	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
 		return ranks.stream()
 			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece.getPosition().getColumn().getNumber() == targetPosition.getColumn().getNumber()
-				&& piece.getPosition().getRow() == targetPosition.getRow())
+			.filter(piece -> piece.isSamePosition(targetPosition))
 			.findFirst();
 	}
 

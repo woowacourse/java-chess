@@ -14,6 +14,7 @@ public class Board {
 	private static final int ROW_INDEX = 1;
 	private static final double PAWNS_ON_SAME_COLUMN_SCORE = 0.5;
 	private static final int COUNT_OF_ALL_KING = 2;
+	private static final int MAX_PAWN_NUMBER_TO_GET_HIGH_SCORE = 1;
 
 	private List<Rank> ranks;
 
@@ -37,7 +38,7 @@ public class Board {
 
 	public Piece findPiece(String sourcePosition, Rank rank) {
 		return rank.getPieces().stream()
-			.filter(piece -> piece.getPosition().isSamePosition(Position.of(sourcePosition)))
+			.filter(piece -> piece.isSamePosition(Position.of(sourcePosition)))
 			.findFirst()
 			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
 	}
@@ -86,7 +87,7 @@ public class Board {
 			.filter(piece -> piece.isSameTeam(team))
 			.filter(piece -> piece.getPosition().getColumn() == column)
 			.filter(piece -> piece instanceof Pawn)
-			.count() > 1;
+			.count() > MAX_PAWN_NUMBER_TO_GET_HIGH_SCORE;
 	}
 
 	public boolean isKingDead() {

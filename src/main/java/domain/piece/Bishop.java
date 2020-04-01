@@ -46,7 +46,6 @@ public class Bishop extends Piece {
 			if (targetPiece.team.equals(this.team)) {
 				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 			}
-			System.out.println("target :: "+targetPiece.position.getColumn().getColumnName() + targetPiece.getPosition().getRow() + " " + targetPiece.team);
 			capture(targetPiece, ranks);
 		});
 		this.changePosition(this, targetPosition, ranks);
@@ -55,8 +54,7 @@ public class Bishop extends Piece {
 	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
 		return ranks.stream()
 			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece.getPosition().getColumn().getNumber() == targetPosition.getColumn().getNumber()
-				&& piece.getPosition().getRow() == targetPosition.getRow())
+			.filter(piece -> piece.isSamePosition(targetPosition))
 			.findFirst();
 	}
 

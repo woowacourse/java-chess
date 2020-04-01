@@ -54,7 +54,7 @@ public class Rook extends Piece {
 	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
 		int rankIndex = targetPosition.getRow() - 1;
 		return ranks.get(rankIndex).getPieces().stream()
-			.filter(piece -> piece.getPosition().isSamePosition(targetPosition))
+			.filter(piece -> piece.isSamePosition(targetPosition))
 			.findFirst();
 	}
 

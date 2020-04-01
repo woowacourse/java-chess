@@ -58,6 +58,10 @@ public abstract class Piece implements Movable {
 		return symbol.toUpperCase();
 	}
 
+	public boolean isSamePosition(Position position) {
+		return this.position == position;
+	}
+
 	public boolean isSameTeam(Team team) {
 		return this.team.equals(team);
 	}

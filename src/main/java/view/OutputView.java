@@ -8,6 +8,9 @@ import domain.piece.Piece;
 import domain.piece.team.Team;
 
 public class OutputView {
+	private static final int FIRST_RANK = 1;
+	private static final int LAST_RANK = 8;
+
 	public static void printChessGameStart() {
 		System.out.println("체스 게임을 시작합니다.");
 		System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
@@ -26,14 +29,14 @@ public class OutputView {
 	}
 
 	private static void printEmptyRank() {
-		for (int i = 0; i < 8; i++) {
+		for (int i = FIRST_RANK; i <= LAST_RANK; i++) {
 			System.out.println(".");
 		}
 		System.out.println();
 	}
 
 	private static void printRank(List<Piece> pieces) {
-		for (int i = 1; i <= 8; i++) {
+		for (int i = FIRST_RANK; i <= LAST_RANK; i++) {
 			final int columnIndex = i;
 			if (pieces.stream().anyMatch(p -> columnIndex == p.getPosition().getColumn().getNumber())) {
 				pieces.stream()
