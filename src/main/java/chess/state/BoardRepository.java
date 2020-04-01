@@ -19,10 +19,10 @@ public class BoardRepository {
 
 	static {
 		for (int i = 'a'; i <= 'h'; i++) {
-			initialBoard.put(Position.of(i + "2"),
-				Pawn.of(Team.WHITE, Position.of(i + "2")));
-			initialBoard.put(Position.of(i + "7"),
-				Pawn.of(Team.BLACK, Position.of(i + "7")));
+			initialBoard.put(Position.of((char)i + "2"),
+				Pawn.of(Team.WHITE, Position.of((char)i + "2")));
+			initialBoard.put(Position.of((char)i + "7"),
+				Pawn.of(Team.BLACK, Position.of((char)i + "7")));
 		}
 		initialBoard.put(Position.of("a1"), Rook.of(Team.WHITE, Position.of("a1")));
 		initialBoard.put(Position.of("b1"), Knight.of(Team.WHITE, Position.of("b1")));
