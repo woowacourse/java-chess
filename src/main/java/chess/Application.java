@@ -35,6 +35,7 @@ public class Application {
 	public static void startGame(Command command) {
 		if (command.isStart()) {
 			resumeGame();
+			return;
 		}
 		if (!command.isEnd()) {
 			throw new IllegalArgumentException("처음에는 게임 시작 또는 종료만 할 수 있습니다.");
