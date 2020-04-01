@@ -33,6 +33,13 @@ public class GameManager {
 		nextTurn();
 	}
 
+	public void move(Position targetPosition, Position destination) {
+		validateMove(targetPosition, destination);
+
+		board.movePiece(targetPosition, destination);
+		nextTurn();
+	}
+
 	private void validateMove(Position targetPosition, Position destination) {
 		Piece target = board.findPieceBy(targetPosition);
 		validateTurn(target);

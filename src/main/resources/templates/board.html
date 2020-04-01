@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+
+    .position {
+        z-index: 100;
+        width: 12.5%;
+        height: 80px;
+    }
+
+    .clickedPosition {
+        z-index: 100;
+        width: 12.5%;
+        height: 80px;
+        background-color: rgba(62, 248, 117, 0.17);
+    }
+
+    .board {
+        padding: 70px;
+        box-sizing: border-box;
+        width: 800px;
+        height: 800px;
+        background-size: cover;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+</style>
+<body>
+<div class="board" id="board"
+     style="background-image: url('/board.jpg'); width: 800px; height: 800px; background-size: cover;">
+    <div class="position" id="A8"></div>
+    <div class="position" id="B8"></div>
+    <div class="position" id="C8"></div>
+    <div class="position" id="D8"></div>
+    <div class="position" id="E8"></div>
+    <div class="position" id="F8"></div>
+    <div class="position" id="G8"></div>
+    <div class="position" id="H8"></div>
+    <div class="position" id="A7"></div>
+    <div class="position" id="B7"></div>
+    <div class="position" id="C7"></div>
+    <div class="position" id="D7"></div>
+    <div class="position" id="E7"></div>
+    <div class="position" id="F7"></div>
+    <div class="position" id="G7"></div>
+    <div class="position" id="H7"></div>
+    <div class="position" id="A6"></div>
+    <div class="position" id="B6"></div>
+    <div class="position" id="C6"></div>
+    <div class="position" id="D6"></div>
+    <div class="position" id="E6"></div>
+    <div class="position" id="F6"></div>
+    <div class="position" id="G6"></div>
+    <div class="position" id="H6"></div>
+    <div class="position" id="A5"></div>
+    <div class="position" id="B5"></div>
+    <div class="position" id="C5"></div>
+    <div class="position" id="D5"></div>
+    <div class="position" id="E5"></div>
+    <div class="position" id="F5"></div>
+    <div class="position" id="G5"></div>
+    <div class="position" id="H5"></div>
+    <div class="position" id="A4"></div>
+    <div class="position" id="B4"></div>
+    <div class="position" id="C4"></div>
+    <div class="position" id="D4"></div>
+    <div class="position" id="E4"></div>
+    <div class="position" id="F4"></div>
+    <div class="position" id="G4"></div>
+    <div class="position" id="H4"></div>
+    <div class="position" id="A3"></div>
+    <div class="position" id="B3"></div>
+    <div class="position" id="C3"></div>
+    <div class="position" id="D3"></div>
+    <div class="position" id="E3"></div>
+    <div class="position" id="F3"></div>
+    <div class="position" id="G3"></div>
+    <div class="position" id="H3"></div>
+    <div class="position" id="A2"></div>
+    <div class="position" id="B2"></div>
+    <div class="position" id="C2"></div>
+    <div class="position" id="D2"></div>
+    <div class="position" id="E2"></div>
+    <div class="position" id="F2"></div>
+    <div class="position" id="G2"></div>
+    <div class="position" id="H2"></div>
+    <div class="position" id="A1"></div>
+    <div class="position" id="B1"></div>
+    <div class="position" id="C1"></div>
+    <div class="position" id="D1"></div>
+    <div class="position" id="E1"></div>
+    <div class="position" id="F1"></div>
+    <div class="position" id="G1"></div>
+    <div class="position" id="H1"></div>
+</div>
+
+<form action="/move" id="move-form" method="post" style="display: none">
+    <label for="target-text">출발지 좌표</label>
+    <input id="target-text" name="target" type="text">
+    <label for="destination-text">도착지 좌표</label>
+    <input id="destination-text" name="destination" type="text">
+    <input id="move-button" type="submit" value="이동">
+</form>
+
+<script>
+    let allImages = new Map();
+    allImages.set("B", '/bishop_black.png');
+    allImages.set("b", '/bishop_white.png');
+    allImages.set("K", '/king_black.png');
+    allImages.set("k", '/king_white.png');
+    allImages.set("N", '/knight_black.png');
+    allImages.set("n", '/knight_white.png');
+    allImages.set("P", '/pawn_black.png');
+    allImages.set("p", '/pawn_white.png');
+    allImages.set("Q", '/queen_black.png');
+    allImages.set("q", '/queen_white.png');
+    allImages.set("R", '/rook_black.png');
+    allImages.set("r", '/rook_white.png');
+
+    var allPieces = new Map();
+    {
+        {
+            #each
+            pieces
+        }
+    }
+    allPieces.set("{{@key}}", "{{this}}");
+    {
+        {
+            /each}}
+
+            if ("{{error}}" !== "") {
+                alert("{{error}}");
+            }
+
+            allPieces.forEach((a, b) => {
+                let positionDiv = document.querySelector("#" + b);
+                positionDiv.style.backgroundImage = 'url(' + allImages.get(a) + ')';
+                positionDiv.style.backgroundSize = "contain";
+            });
+
+            document.querySelector(".board").addEventListener("click", (arg) => {
+                let targetText = document.querySelector("#target-text");
+                let destinationText = document.querySelector("#destination-text");
+                if (targetText.value === arg.target.id) {
+                    targetText.value = "";
+                    arg.target.className = "position";
+                    return;
+                }
+                if (targetText.value === "") {
+                    targetText.value = arg.target.id;
+                    arg.target.className = "clickedPosition";
+                    return;
+                }
+                if (destinationText.value === "") {
+                    destinationText.value = arg.target.id;
+                    arg.target.className = "clickedPosition";
+                    document.querySelector("#move-form").submit();
+                    return;
+                }
+            }, true);
+
+</script>
+</body>
+
+</html>
