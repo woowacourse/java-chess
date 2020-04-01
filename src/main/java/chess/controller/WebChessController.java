@@ -21,25 +21,27 @@ public class WebChessController implements ChessController {
         AtomicReference<String> message = new AtomicReference<>("");
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("score", getScore(board));
-            model.put("notification", message);
-            if (!board.isBothKingAlive()) {
-                model.put("winner", board.getWinner().getName() + "이 승리했습니다!");
-            }
-            model.put("pieces", printChessBoard(board));
             return render(model, "index.html");
         });
+
+        get("/status", "application/json", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("pieces", printChessBoard(board));
+            model.put("score", getScore(board));
+            return model;
+        }, new JsonTransformer());
 
         post("/move", (req, res) -> {
             try {
                 board.movePiece(new Position(req.queryParams("source")), new Position(req.queryParams("destination")));
-                message.set("");
-                res.redirect("/");
+                if (!board.isBothKingAlive()) {
+                    return board.getWinner().getName() + "이 승리했습니다!";
+                }
+                return "";
             } catch (Exception e) {
-                message.set(e.getMessage());
-                res.redirect("/");
+                res.status(403);
+                return e.getMessage();
             }
-            return null;
         });
     }
 

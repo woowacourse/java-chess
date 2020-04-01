@@ -6,27 +6,26 @@ function choose(value) {
     }
 }
 
-// function setPieces() {
-//     var pieces = new Map();
-//     pieces.set("k", "king_white");
-//     pieces.set("K", "king_black");
-//     pieces.set("q", "queen_white");
-//     pieces.set("Q", "queen_black");
-//     pieces.set("b", "bishop_white");
-//     pieces.set("B", "bishop_black");
-//     pieces.set("n", "knight_white");
-//     pieces.set("N", "knight_black");
-//     pieces.set("r", "rook_white");
-//     pieces.set("R", "rook_black");
-//     pieces.set("p", "pawn_white");
-//     pieces.set("P", "pawn_black");
-//
-//     Array.from(document.getElementsByClassName('tile')).forEach(e => {
-//         if(e.innerText) {
-//             e.innerHTML = "<img src='/img/"+pieces.get(e.innerText)+".png' width='60px'>";
-//         }
-//     })
-// }
+async function setPieces() {
+    var pieceFileName = new Map();
+    pieceFileName.set("K", "king");
+    pieceFileName.set("Q", "queen");
+    pieceFileName.set("B", "bishop");
+    pieceFileName.set("N", "knight");
+    pieceFileName.set("R", "rook");
+    pieceFileName.set("P", "pawn");
+    pieceFileName.set("BLACK", "black");
+    pieceFileName.set("WHITE", "white");
+
+    let status = await (fetch("/status").then((data) => data.json()));
+
+    Object.keys(status.pieces).forEach(e => {
+        document.querySelector("#" + e).innerHTML = "<img src='/img/" + pieceFileName.get(status.pieces[e].representation) + "_"
+            + pieceFileName.get(status.pieces[e].team) + ".png' width='60px'>";
+    });
+    document.querySelector("#blackScore").innerText = status.score.blackScore;
+    document.querySelector("#whiteScore").innerText = status.score.whiteScore;
+}
 
 function chooseSource(sourceValue) {
     document.getElementById('source').value = sourceValue;
@@ -40,4 +39,40 @@ function chooseDestination(destinationValue) {
     }
     document.getElementById('destination').value = destinationValue;
     document.getElementById(destinationValue).classList.add('destination');
+}
+
+function clearSelection() {
+    if (document.querySelector(".source")) {
+        document.querySelector(".source").classList.remove('source');
+    }
+    if (document.querySelector(".destination")) {
+        document.querySelector(".destination").classList.remove('destination');
+    }
+    document.querySelector("#source").value = "";
+    document.querySelector("#destination").value = "";
+}
+
+function move() {
+    $.ajax({
+        url: '/move', // 요청 할 주소
+        async: false, // false 일 경우 동기 요청으로 변경
+        type: 'POST', // GET, PUT
+        data: {
+            source: document.querySelector(".source").id,
+            destination: document.querySelector(".destination").id
+        }, // 전송할 데이터
+        dataType: 'text', // xml, json, script, html
+        success: function (jqXHR) {
+            if (jqXHR) {
+                alert(jqXHR);
+
+            }
+        },
+        error: function (jqXHR) {
+            alert(jqXHR.responseText);
+        }
+    });
+    document.querySelector(".source").innerHTML = "";
+    clearSelection();
+    setPieces();
 }
