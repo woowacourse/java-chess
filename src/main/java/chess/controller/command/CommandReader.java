@@ -8,13 +8,15 @@ import java.util.function.Function;
 
 public enum CommandReader {
     NONE_COMMAND_READER
-            ("", splitCommand -> new None()),
+            ("none", splitCommand -> new None()),
     START_COMMAND_READER
             ("start", splitCommand -> new Start()),
     MOVE_COMMAND_READER
             ("move", splitCommand -> new Move(splitCommand.get(1), splitCommand.get(2))),
     STATUS_COMMAND_READER
-            ("status", splitCommand -> new Status());
+            ("status", splitCommand -> new Status()),
+    END_COMMAND_READER
+            ("end", splitCommand -> new End());
 
     private final String firstValue;
     private final Function<List<String>, Command> commandCreator;

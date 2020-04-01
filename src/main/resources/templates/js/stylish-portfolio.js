@@ -1,29 +1,36 @@
-var formObj = $("form[role='form']");
-
 (function ($) {
     "use strict"; // Start of use strict
 
     // 마우스 클릭시 toPosition 값을 전송
-    $(".chess-col").on("click", function () {
-        alert($(this).attr("id"))
-        formObj.attr("toPosition", this.val());
-        formObj.submit();
+    $(".piece").on("click", function () {
+        $("#command-form").get(0).submit(function () {
+            $("#command-form").get(0).attr("command", "move " + $(this).attr("id") + " ");
+        });
     });
 
+    var commandInput = $('#command-form [name="command"]');
+
     // 명령어 버튼 클릭 시 해당 명령어 전송
+
+    function submitForm() {
+        $('#command-form [name="command"]').on("change", function () {
+            $("#command-form").get(0).submit();
+        });
+    }
+
     $("#start-button").on("click", function () {
-        formObj.attr("command", "start");
-        formObj.submit();
+        commandInput.val("start").trigger('change');
+        submitForm();
     });
 
     $("#status-button").on("status", function () {
-        formObj.attr("command", "status");
-        formObj.submit();
+        commandInput.val("start").trigger('change');
+        submitForm();
     });
 
     $("#end-button").on("click", function () {
-        formObj.attr("command", "end");
-        formObj.submit();
+        commandInput.val("end").trigger('change');
+        submitForm();
     });
 
     // Closes the sidebar menu

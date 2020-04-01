@@ -106,7 +106,7 @@ public class Board {
         return Collections.unmodifiableList(resultBoard);
     }
 
-    public Map<Position, Placeable> getBoard() {
+    public Map<Position, Placeable> getPositionToPiece() {
         return board;
     }
 }

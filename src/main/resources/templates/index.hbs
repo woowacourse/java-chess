@@ -58,16 +58,21 @@
 <header class="masthead d-flex">
     <div class="container text-center my-auto">
         <h1 class="mb-1">Chess</h1>
-        <h3 class="mb-4">
+        <h3 id="message" class="mb-4">
             <em>Woowahan moonuiui Chess Game</em>
         </h3>
 
-        <div class="container chess-board mb-5 row-cols-sm-1 row-cols-lg-2">
+        <div class="container chess-board mb-5 row-cols-1">
         </div>
 
-        <a class="btn btn-primary btn-xl js-scroll-trigger m-1" href="#about">Start</a>
-        <a class="btn btn-primary btn-xl js-scroll-trigger m-1" href="#about">Status</a>
-        <a class="btn btn-primary btn-xl js-scroll-trigger m-1" href="#about">End</a>
+        <a id="start-button" class="btn btn-primary btn-xl js-scroll-trigger m-1">Start</a>
+        <a id="status-button" class="btn btn-primary btn-xl js-scroll-trigger m-1">Status</a>
+        <a id="end-button" class="btn btn-primary btn-xl js-scroll-trigger m-1">End</a>
+
+<form id="command-form" action="/" method="post" onchange="submit()">
+    <input type="text" name="command" value="none">
+    <input type="submit" value="전송">
+</form>
     </div>
     <div class="overlay"></div>
 </header>
@@ -125,6 +130,16 @@
     $(".chess-board img:nth-child(2n+42):nth-child(-2n+48)").addClass("changed");
     $(".chess-board img:nth-child(2n+49):nth-child(-2n+55)").addClass("changed");
     $(".chess-board img:nth-child(2n+58):nth-child(-2n+64)").addClass("changed");
+</script>
+
+<!-- alert error message -->
+<script>
+var error = "{{error}}";
+
+if (error){
+    $("#message em").html(error);
+}
+
 </script>
 
 <!-- Bootstrap core JavaScript -->

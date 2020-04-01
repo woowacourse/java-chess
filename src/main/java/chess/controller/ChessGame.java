@@ -21,6 +21,11 @@ public class ChessGame {
         Command command = CommandReader.from(input);
         gameState = command.execute(gameState);
         Board board = gameState.getBoard();
-        return CollectionUtil.convertMapToDTO(board.getBoard());
+        return CollectionUtil.convertMapToDTO(board.getPositionToPiece());
+    }
+
+    public List<PieceDTO> stay() {
+        Board board = gameState.getBoard();
+        return CollectionUtil.convertMapToDTO(board.getPositionToPiece());
     }
 }
