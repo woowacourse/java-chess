@@ -7,26 +7,26 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Position {
-    private Column column;
     private Row row;
+    private Column column;
 
     private static final Map<String, Position> cache = new HashMap<>();
 
     static {
-        for (Column column : Column.values()) {
-            createCacheByRow(cache, column);
+        for (Row row : Row.values()) {
+            createCacheByColumn(cache, row);
         }
     }
 
-    private static void createCacheByRow(Map<String, Position> cache, Column column) {
-        for (Row row : Row.values()) {
+    private static void createCacheByColumn(Map<String, Position> cache, Row row) {
+        for (Column column : Column.values()) {
             cache.put(key(column, row), new Position(column, row));
         }
     }
 
     private Position(Column column, Row row) {
-        this.column = column;
         this.row = row;
+        this.column = column;
     }
 
     public static Position of(String key) {

@@ -43,8 +43,8 @@ public class BoardFactory {
     }
 
     private static void fillWithEmpty(Map<Position, Placeable> board) {
-        for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
+        for (Row row : Row.values()) {
+            for (Column column : Column.values()) {
                 Position position = Position.of(column, row);
                 board.put(position, new Empty());
             }
