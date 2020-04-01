@@ -18,17 +18,21 @@ public class MoveStateBefore implements MoveStateStrategy {
             return MoveState.KING_CAPTURED;
         }
         if (!chessBoard.canMove(moveSquare)) {
-            if (chessBoard.isNoPiece(moveSquare)) {
-                return MoveState.FAIL_NO_PIECE;
-            }
-            if (chessBoard.isNotMyTurn(moveSquare)) {
-                return MoveState.FAIL_NOT_ORDER;
-            }
-            return MoveState.FAIL_CAN_NOT_MOVE;
+            return getWhyCanMove(chessBoard);
         }
         if (chessBoard.isNeedPromotion()) {
             return MoveState.FAIL_MUST_PAWN_CHANGE;
         }
         return MoveState.READY;
+    }
+
+    private MoveState getWhyCanMove(ChessBoard chessBoard) {
+        if (chessBoard.isNoPiece(moveSquare)) {
+            return MoveState.FAIL_NO_PIECE;
+        }
+        if (chessBoard.isNotMyTurn(moveSquare)) {
+            return MoveState.FAIL_NOT_ORDER;
+        }
+        return MoveState.FAIL_CAN_NOT_MOVE;
     }
 }

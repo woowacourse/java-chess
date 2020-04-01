@@ -29,10 +29,6 @@ public class MoveSquare {
         return squares.get(moveOrder);
     }
 
-    public boolean isJumpFile() {
-        return Math.abs(squares.get(MoveOrder.BEFORE).compareTo(squares.get(MoveOrder.AFTER))) > 1;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

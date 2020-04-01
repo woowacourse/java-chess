@@ -111,26 +111,22 @@ public class ChessBoard {
         BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.BEFORE);
         BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.AFTER);
         Piece currentPiece = chessBoard.remove(moveSquareBefore);
-        boolean castlingElement = castlingElements.stream()
-            .anyMatch(
-                chessInitialSetting -> chessInitialSetting.isContains(moveSquareBefore));
-        if (castlingElement) {
-            castlingElements.remove(castlingElements.stream()
-                .filter(
-                    chessInitialSetting -> chessInitialSetting.isContains(moveSquareBefore))
-                .findFirst().orElseThrow(IllegalAccessError::new));
-        }
         chessBoard.put(moveSquareAfter, currentPiece);
-        moveIfCastlingRook(moveSquare);
+
+        if (CastlingSetting.canCastling(castlingElements, moveSquare)) {
+            castlingRook(moveSquare);
+        }
+        castlingElements.removeAll(castlingElements.stream()
+            .filter(element -> element.isContains(moveSquareBefore))
+            .collect(Collectors.toSet()));
     }
 
-    private void moveIfCastlingRook(MoveSquare moveSquare) {
+    private void castlingRook(MoveSquare moveSquare) {
         Set<CastlingSetting> removeCastlingElements = castlingElements.stream()
             .filter(
-                castlingElement -> castlingElement.isSameSquare(moveSquare.get(MoveOrder.BEFORE)))
+                castlingElement -> castlingElement.isEqualSquare(moveSquare.get(MoveOrder.BEFORE)))
             .collect(Collectors.toSet());
-        if (!castlingElements.isEmpty() && castlingElements.removeAll(removeCastlingElements)
-            && moveSquare.isJumpFile()) {
+        if (castlingElements.removeAll(removeCastlingElements)) {
             MoveSquare moveSquareRook = CastlingSetting.getMoveCastlingRook(moveSquare);
             Piece currentPiece = chessBoard.remove(moveSquareRook.get(MoveOrder.BEFORE));
             chessBoard.put(moveSquareRook.get(MoveOrder.AFTER), currentPiece);

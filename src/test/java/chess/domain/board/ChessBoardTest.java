@@ -4,14 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Type;
 import chess.domain.state.MoveSquare;
 import chess.domain.state.MoveState;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -137,10 +139,9 @@ public class ChessBoardTest {
 
     @DisplayName("캐슬링 되는지 확인")
     @ParameterizedTest
-    @CsvSource(value = {"e1, c1, e8, c8", "e1, c1, e8, g8"})
+    @CsvSource(value = {"e1, c1, e8, c8", "e1, g1, e8, g8"})
     void castling(String whiteBefore, String whiteAfter, String blackBefore, String blackAfter) {
         Map<BoardSquare, Piece> boardInitial = new HashMap<>();
-        boardInitial.put(BoardSquare.of("f1"), Queen.getPieceInstance(Color.BLACK));
         boardInitial.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
         boardInitial.put(BoardSquare.of("e8"), King.getPieceInstance(Color.BLACK));
         boardInitial.put(BoardSquare.of("a8"), Rook.getPieceInstance(Color.BLACK));
@@ -155,4 +156,61 @@ public class ChessBoardTest {
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare(blackBefore, blackAfter)))
             .isEqualTo(MoveState.SUCCESS);
     }
+
+    @DisplayName("중간에 장애물이 있는 경우 캐슬링 불가능한지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"e1, c1, e8, c8", "e1, g1, e8, g8"})
+    void castlingNo(String whiteBefore, String whiteAfter, String blackBefore, String blackAfter) {
+        Map<BoardSquare, Piece> boardInitial = new HashMap<>();
+        boardInitial.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("e8"), King.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("a8"), Rook.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("h8"), Rook.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("a1"), Rook.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("h1"), Rook.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("d1"), Knight.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("d8"), Knight.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("f1"), Knight.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("f8"), Knight.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("a2"), Pawn.getPieceInstance(Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(new BoardInitialTestUse(boardInitial), Color.WHITE,
+            CastlingSetting.getCastlingElements());
+
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare(whiteBefore, whiteAfter)))
+            .isEqualTo(MoveState.FAIL_CAN_NOT_MOVE);
+        assertThat(chessBoard
+            .movePieceWhenCanMove(new MoveSquare(BoardSquare.of("a2"), BoardSquare.of("a3"))))
+            .isEqualTo(MoveState.SUCCESS);
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare(blackBefore, blackAfter)))
+            .isEqualTo(MoveState.FAIL_CAN_NOT_MOVE);
+    }
+
+    @DisplayName("캐슬링 안되는지 확인 - 캐슬링요소 없을 경우")
+    @ParameterizedTest
+    @CsvSource(value = {"e1, c1, e8, c8", "e1, g1, e8, g8"})
+    void castlingNo2(String whiteBefore, String whiteAfter, String blackBefore, String blackAfter) {
+        Map<BoardSquare, Piece> boardInitial = new HashMap<>();
+        boardInitial.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("e8"), King.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("a8"), Rook.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("h8"), Rook.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("a1"), Rook.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("h1"), Rook.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("d1"), Knight.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("d8"), Knight.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("f1"), Knight.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("f8"), Knight.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("a2"), Pawn.getPieceInstance(Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(new BoardInitialTestUse(boardInitial), Color.WHITE,
+            new HashSet<>(Collections.singletonList(CastlingSetting.BLACK_KING_BEFORE)));
+
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare(whiteBefore, whiteAfter)))
+            .isEqualTo(MoveState.FAIL_CAN_NOT_MOVE);
+        assertThat(chessBoard
+            .movePieceWhenCanMove(new MoveSquare(BoardSquare.of("a2"), BoardSquare.of("a3"))))
+            .isEqualTo(MoveState.SUCCESS);
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare(blackBefore, blackAfter)))
+            .isEqualTo(MoveState.FAIL_CAN_NOT_MOVE);
+    }
+
 }

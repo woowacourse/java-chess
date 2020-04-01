@@ -46,7 +46,7 @@ public enum CastlingSetting {
     }
 
     public static MoveSquare getMoveCastlingRook(MoveSquare moveSquare) {
-        BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.BEFORE);
+        BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.AFTER);
         if (moveSquareAfter == WHITE_KING_LEFT_AFTER.boardSquare) {
             return new MoveSquare(WHITE_ROOK_LEFT_BEFORE.boardSquare,
                 WHITE_ROOK_LEFT_AFTER.boardSquare);
@@ -66,6 +66,29 @@ public enum CastlingSetting {
         throw new IllegalArgumentException("잘못된 인자");
     }
 
+    private static boolean isSameBoardSquare(CastlingSetting before, CastlingSetting after,
+        MoveSquare moveSquare) {
+        return before.boardSquare == moveSquare.get(MoveOrder.BEFORE)
+            && after.boardSquare == moveSquare.get(MoveOrder.AFTER);
+    }
+
+    public static boolean canCastling(Set<CastlingSetting> elements, MoveSquare moveSquare) {
+        if (elements.contains(WHITE_KING_BEFORE) && elements.contains(WHITE_ROOK_LEFT_BEFORE)
+            && isSameBoardSquare(WHITE_KING_BEFORE, WHITE_KING_LEFT_AFTER, moveSquare)) {
+            return true;
+        }
+        if (elements.contains(WHITE_KING_BEFORE) && elements.contains(WHITE_ROOK_RIGHT_BEFORE)
+            && isSameBoardSquare(WHITE_KING_BEFORE, WHITE_KING_RIGHT_AFTER, moveSquare)) {
+            return true;
+        }
+        if (elements.contains(BLACK_KING_BEFORE) && elements.contains(BLACK_ROOK_LEFT_BEFORE)
+            && isSameBoardSquare(BLACK_KING_BEFORE, BLACK_KING_LEFT_AFTER, moveSquare)) {
+            return true;
+        }
+        return elements.contains(BLACK_KING_BEFORE) && elements.contains(BLACK_ROOK_RIGHT_BEFORE)
+            && isSameBoardSquare(BLACK_KING_BEFORE, BLACK_KING_RIGHT_AFTER, moveSquare);
+    }
+
     public Piece getPiece() {
         return piece;
     }
@@ -76,8 +99,8 @@ public enum CastlingSetting {
             .collect(Collectors.toSet());
     }
 
-    public boolean isContains(BoardSquare boardSquare) {
-        return this.boardSquare == boardSquare;
+    public boolean isEqualSquare(BoardSquare boardSquare) {
+        return this.boardSquare.equals(boardSquare);
     }
 
     public boolean isSameColor(Piece piece) {
@@ -106,7 +129,12 @@ public enum CastlingSetting {
         return Collections.unmodifiableSet(castlingCheatSheets);
     }
 
-    public boolean isSameSquare(BoardSquare moveSquare) {
+    public boolean isContains(BoardSquare moveSquare) {
         return this.boardSquare == moveSquare;
+    }
+
+    @Override
+    public String toString() {
+        return boardSquare + "-" + piece.getLetter();
     }
 }
