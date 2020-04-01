@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -91,4 +92,14 @@ public class Board {
 
         return Collections.unmodifiableMap(parseResult);
     }
+
+//    public List<Tile> tiles() {
+//        List<Tile> tiles = this.board.entrySet().stream()
+//                .map((entry) -> {
+//                    Position position = entry.getKey();
+//                    Piece piece = entry.getValue();
+//                    PieceType pieceType = piece.
+//                })
+//                .collect(Collectors.toList());
+//    }
 }

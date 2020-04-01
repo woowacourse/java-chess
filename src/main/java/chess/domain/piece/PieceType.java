@@ -25,10 +25,10 @@ public enum PieceType {
     }
 
     public double getScore() {
-        return score;
+        return this.score;
     }
 
     public String getSymbol() {
-        return symbol;
+        return this.symbol;
     }
 }

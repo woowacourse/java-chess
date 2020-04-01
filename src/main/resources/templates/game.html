@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <title>체스</title>
+    <link rel="stylesheet" type="text/css" href="css/game.css" />
+    <script type="text/javascript">
+        function initialBoard() {
+            var files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+            var ranks = ['EIGHT', 'SEVEN', 'SIX', 'FIVE', 'FOUR', 'THREE', 'TWO', 'ONE'];
+
+            for (var i = 0; i < 8; i++) {
+                for (var j = 0; j < 8; j++) {
+                    var div = document.createElement('div');
+                    var divId = ranks[i] + files[j];
+                    div.id = divId;
+
+                    var img = document.createElement('img');
+                    // img.src = "image/{{piece}}.png";
+                    div.appendChild(img);
+
+                    if ((i + (j - 1)) % 2 === 0) {
+                        div.className = "black";
+                    } else {
+                        div.className = "white";
+                    }
+
+                    document.getElementById("chess-board").appendChild(div);
+                }
+            }
+        }
+    </script>
+</head>
+
+<body onload="initialBoard()">
+    <div id="chess-board">
+        {{#pieces}}
+        {{/pieces}}
+    </div>
+    <div id="start">
+        <button id="start-button" value="start">Start</button>
+    </div>
+</body>
+
+</html>

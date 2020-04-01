@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <title>체스</title>
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <script type="text/javascript">
-        function initialBoard() {
-            var files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-            for (var i = 0; i < 8; i++) {
-                for (var j = 1; j <= 8; j++) {
-                    var div = document.createElement('div');
-                    div.id = files[i] + j;
-                    
-                    if ((i + (j - 1)) % 2 === 0) {
-                      div.className = "black";
-                    } else {
-                      div.className = "white";
-                    }
+<head>
+  <meta charset="utf-8" />
+  <title>체스</title>
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <script type="text/javascript">
+    function initialBoard() {
+      var files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      var ranks = ['EIGHT', 'SEVEN', 'SIX', 'FIVE', 'FOUR', 'THREE', 'TWO', 'ONE'];
 
-                    document.getElementById("chess-board").appendChild(div);
-                }
-            }
+      for (var i = 0; i < 8; i++) {
+        for (var j = 0; j < 8; j++) {
+          var div = document.createElement('div');
+          var divId = ranks[i] + files[j];
+          div.id = divId;
+
+          if ((i + (j - 1)) % 2 === 0) {
+            div.className = "black";
+          } else {
+            div.className = "white";
+          }
+
+          document.getElementById("chess-board").appendChild(div);
         }
-    </script>
-  </head>
+      }
+    }
+  </script>
+</head>
 
-  <body onload="initialBoard()">
-    <div id="chess-board"></div>
-    <div id="start">
+<body onload="initialBoard()">
+  <div id="chess-board">
+  </div>
+  <div id="start">
+    <form action="/game" method="post">
       <button id="start-button" value="start">Start</button>
-    </div>
-  </body>
+    </form>
+  </div>
+</body>
+
 </html>
