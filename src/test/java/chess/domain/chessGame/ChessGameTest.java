@@ -87,6 +87,16 @@ class ChessGameTest {
 			.hasMessage("이동할 체스 피스가 존재하지 않습니다.");
 	}
 
+	@Test
+	void checkCorrectChessTurn_NotCorrectPieceColorSourcePosition_ExceptionThrown() {
+		ChessGame chessGame = ChessGame.from(new ChessBoard(ChessBoardInitializer.create()));
+		ChessCommand chessCommand = ChessCommand.of(Arrays.asList("move", "b7", "b5"));
+
+		assertThatThrownBy(() -> chessGame.move(chessCommand))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("순서에 맞지 않은 말을 이동하였습니다.");
+	}
+
 	@ParameterizedTest
 	@MethodSource("provideChessBoardAndMoveExpectedChessBoard")
 	void shiftGameStatusBy_NotKingOnTargetPosition_ShiftNextPieceColorState(ChessGame chessGame, ChessBoard expected) {

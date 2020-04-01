@@ -43,6 +43,7 @@ public class ChessGame {
 
 	private void moveChessPieceFrom(Position sourcePosition, Position targetPosition) {
 		checkChessPieceExistOn(sourcePosition);
+		checkCorrectChessTurn(sourcePosition);
 		checkLeapable(sourcePosition, targetPosition);
 		checkMovableOrCatchable(sourcePosition, targetPosition);
 		chessBoard.moveChessPiece(sourcePosition, targetPosition);
@@ -51,6 +52,12 @@ public class ChessGame {
 	private void checkChessPieceExistOn(Position sourcePosition) {
 		if (!chessBoard.isChessPieceOn(sourcePosition)) {
 			throw new IllegalArgumentException("이동할 체스 피스가 존재하지 않습니다.");
+		}
+	}
+
+	private void checkCorrectChessTurn(final Position sourcePosition) {
+		if (!chessBoard.isSamePieceColorOn(sourcePosition, gameState.getPieceColor())) {
+			throw new IllegalArgumentException("순서에 맞지 않은 말을 이동하였습니다.");
 		}
 	}
 

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
@@ -64,6 +65,41 @@ public class ChessBoardTest {
 		assertThatThrownBy(() -> new ChessBoard(ChessBoardInitializer.create()).isChessPieceOn(targetPosition))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("체스 위치가 null입니다.");
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"BLACK,true", "WHITE,false"})
+	void isSamePieceColorOn_SameSourcePositionAndPieceColor_ReturnCompareResult(PieceColor pieceColor,
+		boolean expected) {
+		Map<Position, ChessPiece> initialChessBoard = new HashMap<>();
+		initialChessBoard.put(Position.of("c3"), new King(PieceColor.BLACK));
+		ChessBoard chessBoard = new ChessBoard(initialChessBoard);
+
+		assertThat(chessBoard.isSamePieceColorOn(Position.of("c3"), pieceColor)).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void isSamePieceColorOn_NullPosition_ExceptionThrown(Position position) {
+		Map<Position, ChessPiece> initialChessBoard = new HashMap<>();
+		initialChessBoard.put(Position.of("c3"), new King(PieceColor.BLACK));
+		ChessBoard chessBoard = new ChessBoard(initialChessBoard);
+
+		assertThatThrownBy(() -> chessBoard.isSamePieceColorOn(position, PieceColor.BLACK))
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("소스 위치가 null입니다.");
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void isSamePieceColorOn_NullPieceColor_ExceptionThrown(PieceColor pieceColor) {
+		Map<Position, ChessPiece> initialChessBoard = new HashMap<>();
+		initialChessBoard.put(Position.of("c3"), new King(PieceColor.BLACK));
+		ChessBoard chessBoard = new ChessBoard(initialChessBoard);
+
+		assertThatThrownBy(() -> chessBoard.isSamePieceColorOn(Position.of("b1"), pieceColor))
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("피스 색상이 null입니다.");
 	}
 
 	@Test

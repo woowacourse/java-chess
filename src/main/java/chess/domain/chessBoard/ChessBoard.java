@@ -7,6 +7,7 @@ import java.util.Objects;
 import chess.domain.chessGame.ChessStatus;
 import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.pieceType.King;
+import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
@@ -33,6 +34,12 @@ public class ChessBoard {
 	public boolean isChessPieceOn(Position position) {
 		Objects.requireNonNull(position, "체스 위치가 null입니다.");
 		return chessBoard.containsKey(position);
+	}
+
+	public boolean isSamePieceColorOn(final Position sourcePosition, final PieceColor pieceColor) {
+		Objects.requireNonNull(sourcePosition, "소스 위치가 null입니다.");
+		Objects.requireNonNull(pieceColor, "피스 색상이 null입니다.");
+		return chessBoard.get(sourcePosition).isSame(pieceColor);
 	}
 
 	public boolean isLeapableChessPieceOn(Position sourcePosition) {
@@ -121,5 +128,4 @@ public class ChessBoard {
 	public int hashCode() {
 		return Objects.hash(chessBoard);
 	}
-
 }
