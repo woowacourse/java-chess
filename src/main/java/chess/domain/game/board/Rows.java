@@ -17,7 +17,7 @@ public class Rows {
     public Rows(Column column, Pieces pieces) {
         this.pieces = Arrays.stream(Row.values())
                 .map(row -> PositionFactory.of(row, column))
-                .map(pieces::findBy)
+                .map(pieces::findByPosition)
                 .collect(Collectors.toList());
     }
 

@@ -18,7 +18,7 @@ public class Pieces {
 	}
 
 	public void move(Position start, Position end, Color color) {
-		Piece piece = findBy(start, color);
+		Piece piece = findByPosition(start, color);
 
 		Positions movablePositions = piece.createMovablePositions(pieces);
 
@@ -26,24 +26,20 @@ public class Pieces {
 			throw new WrongPositionException();
 		}
 
-		Piece removingPiece = pieces.stream()
-				.filter(findPiece -> findPiece.isSamePosition(end))
-				.findFirst()
-				.orElseGet(Blank::new);
-		pieces.remove(removingPiece);
+		pieces.removeIf(findPiece -> findPiece.isSamePosition(end));
 
 		piece.move(end);
 	}
 
-	public Piece findBy(Position start) {
+	public Piece findByPosition(Position start) {
 		return pieces.stream()
 				.filter(piece -> piece.isSamePosition(start))
 				.findFirst()
 				.orElseGet(Blank::new);
 	}
 
-	private Piece findBy(Position start, Color color) {
-		Piece piece = findBy(start);
+	private Piece findByPosition(Position start, Color color) {
+		Piece piece = findByPosition(start);
 		if (piece.isSameColor(color)) {
 			return piece;
 		}

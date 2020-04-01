@@ -65,6 +65,7 @@ public class UnblockedMovable implements Movable {
      */
     private boolean checkMovable(Position position, List<Piece> pieces, Color color) {
         return pieces.stream()
-                .noneMatch(piece -> piece.isSamePosition(position) && piece.isSameColor(color));
+                .filter(piece -> piece.isSamePosition(position))
+                .noneMatch(piece -> piece.isSameColor(color));
     }
 }

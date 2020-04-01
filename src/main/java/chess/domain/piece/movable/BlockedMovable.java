@@ -125,7 +125,8 @@ public class BlockedMovable implements Movable {
      */
     private boolean isPossessedByDifferentColor(Position position, List<Piece> pieces, Color color) {
         return pieces.stream()
-                .anyMatch(piece -> piece.isSamePosition(position) && piece.isNotSameColor(color));
+                .filter(piece -> piece.isSamePosition(position))
+                .anyMatch(piece -> piece.isNotSameColor(color));
     }
 
 
@@ -141,6 +142,7 @@ public class BlockedMovable implements Movable {
      */
     private boolean isPossessedBySameColor(Position position, List<Piece> pieces, Color color) {
         return pieces.stream()
-                .anyMatch(piece -> piece.isSamePosition(position) && piece.isSameColor(color));
+                .filter(piece -> piece.isSamePosition(position))
+                .anyMatch(piece -> piece.isSameColor(color));
     }
 }
