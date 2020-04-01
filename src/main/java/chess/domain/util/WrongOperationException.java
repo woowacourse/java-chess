@@ -1,11 +1,13 @@
 package chess.domain.util;
 
 public class WrongOperationException extends RuntimeException {
-    public WrongOperationException(String message) {
-        super(message);
+    public static final String ERROR_OPERATION_MESSAGE = "수행할 수 없는 명령입니다.";
+
+    public WrongOperationException(String value) {
+        super(ERROR_OPERATION_MESSAGE + " 입력 : " + value);
     }
 
     public WrongOperationException() {
-        this("수행할 수 없는 명령입니다.");
+        super(ERROR_OPERATION_MESSAGE);
     }
 }
