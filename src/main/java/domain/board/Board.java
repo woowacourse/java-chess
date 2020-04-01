@@ -72,10 +72,11 @@ public class Board {
 	}
 
 	public boolean isKingAlive() {
-		return INITIAL_KING_COUNT == (int)ranks.stream()
+		int kingCount = (int)ranks.stream()
 			.flatMap(rank -> rank.getPieces().stream())
 			.filter(piece -> piece instanceof King)
 			.count();
+		return INITIAL_KING_COUNT == kingCount;
 	}
 
 	public List<Rank> getRanks() {

@@ -35,17 +35,15 @@ public class OutputView {
 		}
 	}
 
-	private static void printRank(List<Piece> pieces) {
+	private static void printRank(List<Piece> rank) {
 		for (int columnIndex = MIN_COLUMN_COUNT; columnIndex <= MAX_COLUMN_COUNT; columnIndex++) {
 			final int columnNumber = columnIndex;
-			if (pieces.stream().anyMatch(piece -> equalsColumn(columnNumber, piece))) {
-				pieces.stream()
-					.filter(piece -> equalsColumn(columnNumber, piece))
-					.map(Piece::showSymbol)
-					.forEach(System.out::print);
-				continue;
-			}
-			System.out.print(EMPTY_CELL_SYMBOL);
+			String pieceSymbol = rank.stream()
+				.filter(p -> equalsColumn(columnNumber, p))
+				.map(Piece::showSymbol)
+				.findFirst()
+				.orElse(EMPTY_CELL_SYMBOL);
+			System.out.print(pieceSymbol);
 		}
 		System.out.println();
 	}
