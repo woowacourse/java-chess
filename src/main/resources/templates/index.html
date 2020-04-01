@@ -196,6 +196,30 @@
         .chess-margin {
             width: 300px;
         }
+
+        .chess-alert {
+            display: flex;
+            position: absolute;
+            width: 300px;
+            height: 150px;
+            background: #5A3C29;
+            border: 20px solid #EDCAA4;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chess-alert-message {
+            font-weight: bold;
+            color: #f1f1f1;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: flex;
+        }
     </style>
 </head>
 <body>
@@ -401,6 +425,9 @@
             <div class="chess-piece pawn white"></div>
         </div>
     </div>
+    <div class="chess-alert hide">
+        <div class="chess-alert-message"></div>
+    </div>
 </div>
 <script>
     const gameId = {{id}}
@@ -414,6 +441,19 @@
 
     const blackScoreElement = document.querySelector('#black-score')
     const whiteScoreElement = document.querySelector('#white-score')
+    const chessAlertElement = document.querySelector('.chess-alert')
+    const chessAlertMessageElement = document.querySelector('.chess-alert-message')
+
+    function showAlert(message, delay) {
+        chessAlertElement.classList.remove('hide')
+        chessAlertElement.classList.add('show')
+        chessAlertMessageElement.innerHTML = message
+
+        setTimeout(() => {
+            chessAlertElement.classList.remove('show')
+            chessAlertElement.classList.add('hide')
+        }, delay)
+    }
 
     const createTemplate = {
         p: templatePawn('white'),
@@ -479,7 +519,7 @@
                     drawChessGame(data.dto);
                     return;
                 }
-                alert(data.dto)});
+                showAlert(data.dto, 1000)});
     }
 </script>
 </body>
