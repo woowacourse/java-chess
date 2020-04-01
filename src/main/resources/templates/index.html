@@ -51,6 +51,10 @@
             background-size: 40%;
             background-position: center;
         }
+
+        .whitePawn {
+
+        }
     </style>
 </head>
 <body>
@@ -137,7 +141,7 @@
             <button class="cell" id="g1">n</button>
             <button class="gray cell" id="h1">r</button>
         </div>
-        <label for="sourceSave"></label><input id="sourceSave" value="empty">
+        <label for="sourcePositionRecord"></label><input id="sourcePositionRecord" value="nonSelectPosition">
     </div>
 </div>
 
@@ -165,7 +169,6 @@
     function initSuccess(response) {
         for (position in response) {
             const pieceName = response[position].name;
-            console.log(position, pieceName);
             const pieceType = findPieceType(pieceName);
 
             document.getElementById(position).classList.add(pieceType);
@@ -173,30 +176,33 @@
     }
 
     $(".cell").click(function () {
-        var sourceValue = $("#sourceSave").val();
-        if (sourceValue === "empty") {
-            $("#sourceSave").val($(this).attr("id"));
+        var sourcePosition = $("#sourcePositionRecord").val();
+
+        if (sourcePosition === "nonSelectPosition") {
+            $("#sourcePositionRecord").val($(this).attr("id"));
             $(this).addClass("selected");
             return;
         }
-        validateMovable(sourceValue, $(this).attr("id"));
-    })
+
+        validateMovable(sourcePosition, $(this).attr("id"));
+    });
 
     function onError() {
-        alert("해당 말이 갈 수 없는 칸입니다");
+        alert("해당말이 갈 수 없는 칸입니다.");
     }
 
     function onSuccess(response) {
         var sourcePosition = response.source;
         var targetPosition = response.target;
-        document.getElementById(sourcePosition).classList.add('blackPawn');
-        //ToDo
+        var pieceType = response.pieceType;
 
+        document.getElementById(sourcePosition).classList.remove(pieceType);
+        document.getElementById(targetPosition).classList.add(pieceType);
     }
 
     function validateMovable(sourcePosition, targetPosition) {
         console.log(sourcePosition, targetPosition);
-        document.getElementById('sourceSave').value = "empty";
+        document.getElementById('sourcePositionRecord').value = "empty";
         document.getElementById(sourcePosition).classList.remove("selected");
 
         //좌표를 post 전송

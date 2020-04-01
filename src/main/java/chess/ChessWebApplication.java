@@ -36,14 +36,17 @@ public class ChessWebApplication {
 		post("/isMovable", (req, res) -> {
 			String source = req.queryParams("sourcePosition");
 			String target = req.queryParams("targetPosition");
+			String pieceType = "whitePawn";
 
 			Position sourcePosition = Position.of(source);
 			Position targetPosition = Position.of(target);
 
 			Map<String, Object> model = new HashMap<>();
 			chessBoard.movePiece(sourcePosition, targetPosition);
+
 			model.put("source", source);
 			model.put("target", target);
+			model.put("pieceType", pieceType);
 
 			return gson.toJson(model);
 		});
