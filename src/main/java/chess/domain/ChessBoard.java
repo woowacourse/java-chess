@@ -71,7 +71,7 @@ public class ChessBoard {
 
 	public boolean isEnd() {
 		return pieces.stream()
-				.filter(piece -> piece.getClass() == King.class)
+				.filter(piece -> piece instanceof King)
 				.count() != 2;
 	}
 
@@ -82,14 +82,14 @@ public class ChessBoard {
 				.sum() + calculatePawnInSameCol(side);
 	}
 
-	public double calculatePawnInSameCol(Side side) {
+	private double calculatePawnInSameCol(Side side) {
 		return Arrays.stream(Column.values())
 				.mapToLong(col -> countColumnPawn(col, side))
 				.filter(i -> i == 1)
 				.count() * 0.5;
 	}
 
-	public long countColumnPawn(Column column, Side side) {
+	private long countColumnPawn(Column column, Side side) {
 		return pieces.stream()
 				.filter(piece -> piece instanceof Pawn && piece.isSameSide(side) && piece.isSameCol(column))
 				.count();

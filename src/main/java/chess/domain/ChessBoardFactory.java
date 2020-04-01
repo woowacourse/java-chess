@@ -29,13 +29,13 @@ public class ChessBoardFactory {
 		return new ChessBoard(chessBoard);
 	}
 
-	public static List<Piece> createPawn(Side side) {
+	private static List<Piece> createPawn(Side side) {
 		return Arrays.stream(Column.values())
 				.map(col -> new Pawn(side, new Position(col, side.getInitPawnRow())))
 				.collect(Collectors.toList());
 	}
 
-	public static List<Piece> createNoble(Side side) {
+	private static List<Piece> createNoble(Side side) {
 		Row row = side.getInitNobleRow();
 		return Arrays.asList(
 				new Rook(side, new Position("a", row)),
