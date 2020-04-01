@@ -15,6 +15,7 @@ public abstract class Piece implements Movable {
 	protected Position position;
 	protected Team team;
 	protected String symbol;
+	protected Direction direction;
 
 	public Piece(Position position, Team team) {
 		this.position = position;
@@ -81,7 +82,7 @@ public abstract class Piece implements Movable {
 		}
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		int columnGap = this.position.calculateColumnGap(targetPosition);
-		Direction direction = findDirection(rowGap, columnGap);
+		this.direction = findDirection(rowGap, columnGap);
 
 		return validDirection(direction) && validStepSize(rowGap, columnGap) &&
 			validateRoute(direction, targetPosition, ranks);
