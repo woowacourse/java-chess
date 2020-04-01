@@ -18,7 +18,7 @@ class ChessGameTest {
 	@DisplayName("게임이 종료되지 않았으면 계속 진행되는 지 테스트")
 	void move() {
 		ChessGame chessGame = new ChessGame(ChessBoardFactory.create());
-		chessGame = chessGame.move(new Position("a2"), new Position("a4"));
+		chessGame.move(new Position("a2"), new Position("a4"));
 		assertThat(chessGame.getTurn()).isEqualTo(Side.BLACK);
 	}
 
@@ -29,7 +29,7 @@ class ChessGameTest {
 				new King(Side.WHITE, new Position("d4")),
 				new King(Side.BLACK, new Position("d5"))));
 		ChessGame chessGame = new ChessGame(new ChessBoard(pieces));
-		chessGame = chessGame.move(new Position("d4"), new Position("d5"));
+		chessGame.move(new Position("d4"), new Position("d5"));
 		assertThat(chessGame.isEnd()).isTrue();
 	}
 
@@ -53,6 +53,7 @@ class ChessGameTest {
 	@DisplayName("게임이 끝내기")
 	void end() {
 		ChessGame chessGame = new ChessGame(ChessBoardFactory.create());
-		assertThat(chessGame.end().isEnd()).isTrue();
+		chessGame.end();
+		assertThat(chessGame.isEnd()).isTrue();
 	}
 }

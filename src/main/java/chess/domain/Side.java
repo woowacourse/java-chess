@@ -20,10 +20,6 @@ public enum Side {
 		this.attackForwardFilter = attackForwardFilter;
 	}
 
-	public static int size() {
-		return values().length;
-	}
-
 	public boolean isInitPawnRow(Position position) {
 		return position.isSameRow(initPawnRow);
 	}

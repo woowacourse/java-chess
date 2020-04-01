@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.position.Position;
 
 public class ChessGame {
-	private final boolean userEnd;
+	private boolean userEnd;
 	private ChessBoard chessBoard;
 	private Side turn;
 
@@ -17,17 +17,10 @@ public class ChessGame {
 		this.userEnd = false;
 	}
 
-	public ChessGame(ChessBoard chessBoard, Side side, boolean userEnd) {
-		this.chessBoard = chessBoard;
-		this.turn = side;
-		this.userEnd = userEnd;
-	}
-
-	public ChessGame move(Position source, Position target) {
+	public void move(Position source, Position target) {
 		validateTurn(source, turn);
 		chessBoard.move(source, target);
-
-		return new ChessGame(chessBoard, turn.reverse());
+		turn = turn.reverse();
 	}
 
 	private void validateTurn(Position source, Side turn) {
@@ -48,8 +41,8 @@ public class ChessGame {
 		return !this.isEnd();
 	}
 
-	public ChessGame end() {
-		return new ChessGame(chessBoard, turn, true);
+	public void end() {
+		userEnd = true;
 	}
 
 	public ChessBoard getChessBoard() {
