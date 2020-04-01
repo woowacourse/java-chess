@@ -1,7 +1,7 @@
 package chess.controller;
 
+import chess.controller.dto.TeamDto;
 import chess.domain.ChessRunner;
-import chess.domain.piece.Team;
 import chess.view.ConsoleInputView;
 import chess.view.ConsoleOutputView;
 import chess.view.InputView;
@@ -13,37 +13,39 @@ public class ChessController {
     private static OutputView outputView = new ConsoleOutputView();
 
     public static void start() {
-        try {
-            runChessGame();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            start();
-        }
-    }
-
-    public static void runChessGame() {
         Command command = Command.of(inputView.askChessRun());
-
         if (command.isStart()) {
             ChessRunner chessRunner = new ChessRunner();
-            GameController startController = command.getGameController();
-            startController.execute(chessRunner, StringUtils.EMPTY);
+            GameController gameController = command.getGameController();
+            gameController.execute(chessRunner, StringUtils.EMPTY);
 
-            do {
-                String commands = inputView.askGameCommand();
-                command = Command.of(commands);
-                GameController gameController = command.getGameController();
-                gameController.execute(chessRunner, commands);
-            } while (!command.isEnd() && findWinner(chessRunner));
+            runChessGame(command, chessRunner);
         }
     }
 
-    private static boolean findWinner(final ChessRunner chessRunner) {
-        Team winner = chessRunner.findWinner();
-        if (winner != null) {
-            outputView.printWinner(winner);
-            return false;
+    private static void runChessGame(Command command, ChessRunner chessRunner) {
+        do {
+            command = validateExecute(command, chessRunner);
+        } while (!command.isEnd() && !chessRunner.isEndChess());
+        printWinner(chessRunner);
+    }
+
+    private static Command validateExecute(Command command, ChessRunner chessRunner) {
+        try {
+            String commands = inputView.askGameCommand();
+            command = Command.of(commands);
+            GameController gameController = command.getGameController();
+            gameController.execute(chessRunner, commands);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
-        return true;
+        return command;
+    }
+
+    private static void printWinner(ChessRunner chessRunner) {
+        if (chessRunner.isEndChess()) {
+            TeamDto teamDto = new TeamDto(chessRunner.getWinner());
+            outputView.printWinner(teamDto.getTeamName());
+        }
     }
 }

@@ -52,19 +52,19 @@ public class Position {
         return findPosition(File.of(fileSymbol), Rank.of(rankSymbol));
     }
 
-    public static List<String> getPositions() {
-        List<String> parseResult = positions.stream()
-                .map(Position::toString)
-                .collect(Collectors.toList());
-        return Collections.unmodifiableList(parseResult);
-    }
-
     public int calculateFileGap(final Position target) {
         return this.file.compareTo(target.file);
     }
 
     public int calculateRankGap(final Position target) {
         return this.rank.getDifference(target.rank);
+    }
+
+    public static List<String> getPositions() {
+        List<String> parseResult = positions.stream()
+                .map(Position::toString)
+                .collect(Collectors.toList());
+        return Collections.unmodifiableList(parseResult);
     }
 
     public int getFile() {

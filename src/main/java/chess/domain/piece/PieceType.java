@@ -1,29 +1,19 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.position.Position;
-import chess.domain.strategy.move.*;
-
 public enum PieceType {
-    KING("k", 0, new KingMoveStrategy()),
-    QUEEN("q", 9, new QueenMoveStrategy()),
-    ROOK("r", 5, new RookMoveStrategy()),
-    BISHOP("b", 3, new BishopMoveStrategy()),
-    KNIGHT("n", 2.5, new KnightMoveStrategy()),
-    PAWN("p", 1, new PawnMoveStrategy());
+    KING("k", 0),
+    QUEEN("q", 9),
+    ROOK("r", 5),
+    BISHOP("b", 3),
+    KNIGHT("n", 2.5),
+    PAWN("p", 1);
 
     private final String symbol;
     private final double score;
-    private final MoveStrategy moveStrategy;
 
-    PieceType(String symbol, double score, MoveStrategy moveStrategy) {
+    PieceType(String symbol, double score) {
         this.symbol = symbol;
         this.score = score;
-        this.moveStrategy = moveStrategy;
-    }
-
-    public boolean movable(final Position source, final Position target, final Board board) {
-        return this.moveStrategy.movable(source, target, board);
     }
 
     public boolean isKing() {

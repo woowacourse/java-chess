@@ -1,23 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.position.Position;
-
-public class Piece {
-    private final PieceType pieceType;
-    private final Team team;
+public abstract class Piece implements MoveStrategy {
+    protected final PieceType pieceType;
+    protected final Team team;
 
     public Piece(final PieceType pieceType, final Team team) {
         this.pieceType = pieceType;
         this.team = team;
-    }
-
-    public String toSymbol() {
-        return this.team.symbolize(this.pieceType.getSymbol());
-    }
-
-    public boolean movable(final Position source, final Position target, final Board board) {
-        return this.pieceType.movable(source, target, board);
     }
 
     public boolean isEnemy(final Piece targetPiece) {
@@ -38,6 +27,10 @@ public class Piece {
 
     public boolean isPawn() {
         return this.pieceType.isPawn();
+    }
+
+    public String toSymbol() {
+        return this.team.symbolize(this.pieceType.getSymbol());
     }
 
     public Team getTeam() {

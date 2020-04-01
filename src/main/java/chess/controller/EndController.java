@@ -9,6 +9,5 @@ public class EndController extends GameController {
 
     @Override
     public void execute(ChessRunner chessRunner, String input) {
-        return;
     }
 }
