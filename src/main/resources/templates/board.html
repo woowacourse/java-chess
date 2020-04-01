@@ -106,13 +106,10 @@
     <input id="move-button" type="submit" value="이동">
 </form>
 
-<form action="/start" id="start-form" method="get">
-    <input id="start-button" type="submit" value="시작">
-</form>
 <form action="/status" id="status-form" method="get">
     <input id="status-button" type="submit" value="결과">
 </form>
-<form action="/end" id="end-form" method="post">
+<form action="/end" id="end-form" method="get">
     <input id="end-button" type="submit" value="종료">
 </form>
 <div id="result"></div>
@@ -147,6 +144,10 @@
         {{#each scores}}
         document.querySelector("#result").innerHTML += "{{@key}} 의 점수 {{this}} <br>";
         {{/each}}
+    }
+
+    if("{{winner}}" !== "") {
+        alert("승자 : {{winner}}");
     }
 
     let nowTurn = "{{turn}}";

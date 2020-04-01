@@ -16,11 +16,9 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIApplication {
 	public static void main(String[] args) {
 		Spark.staticFileLocation("static");
-		GameManager gameManager = new GameManager(BoardFactory.create());
+		final GameManager gameManager = new GameManager(BoardFactory.create());
 
-		get("/", (request, response) -> {
-			return render(new HashMap<>(), "board.html");
-		});
+		get("/", (request, response) -> "index.html");
 
 		get("/start", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
@@ -40,7 +38,11 @@ public class WebUIApplication {
 			}
 			model.put("pieces", WebOutputRenderer.toModel(gameManager.getBoard()));
 			model.put("turn", gameManager.getCurrentTurn().name());
-
+			if (!gameManager.isKingAlive()) {
+				model.put("winner", gameManager.getCurrentTurn().reverse());
+				gameManager.resetGame();
+				return render(model, "end.html");
+			}
 			return render(model, "board.html");
 		});
 
@@ -53,9 +55,9 @@ public class WebUIApplication {
 			return render(model, "board.html");
 		});
 
-		post("/end", (request, response) -> {
+		get("/end", (request, response) -> {
 			gameManager.resetGame();
-			return render(new HashMap<>(), "board.html");
+			return render(new HashMap<>(), "end.html");
 		});
 	}
 
