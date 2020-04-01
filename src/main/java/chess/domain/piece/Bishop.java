@@ -4,7 +4,6 @@ import chess.domain.Position;
 import chess.exception.IllegalMoveException;
 
 public class Bishop extends Piece {
-
 	public Bishop(Position position, Team team) {
 		super(position, team);
 		this.representation = 'B';

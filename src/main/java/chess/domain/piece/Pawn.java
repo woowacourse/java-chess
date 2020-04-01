@@ -8,7 +8,6 @@ import chess.domain.Position;
 import chess.exception.IllegalMoveException;
 
 public class Pawn extends Piece {
-
 	public static final List<Direction> LOWER_TEAM_POSSIBLE_DIRECTIONS = Arrays.asList(Direction.NORTH,
 		Direction.NORTHNORTH, Direction.NORTHEAST, Direction.NORTHWEST);
 	public static final List<Direction> UPPER_TEAM_POSSIBLE_DIRECTIONS = Arrays.asList(Direction.SOUTH,
