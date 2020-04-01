@@ -51,16 +51,19 @@ public class ScoreCalculator {
     private static double calculateScoreOf(final Map<Position, Piece> board, Position position) {
         if (board.get(position).is(PieceType.PAWN)) {
             return board.get(position)
-                .getScore(isSameTeamPieceOnSameColumnOf(board, position));
+                .getScore(isSameTeamPawnOnSameColumnOfPawn(board, position));
         }
         return board.get(position).getScore();
     }
 
-    private static boolean isSameTeamPieceOnSameColumnOf(
+    private static boolean isSameTeamPawnOnSameColumnOfPawn(
         final Map<Position, Piece> board, Position position) {
 
+        if (!board.containsKey(position) || board.get(position).is(PieceType.PAWN)) {
+            throw new IllegalArgumentException("start 위치에 기물이 없거나 폰이 아닙니다.");
+        }
         return position.getSameColumnPositions().stream()
-            .anyMatch(target -> board.containsKey(target)    /* 해당위치에 기물이 존재함 */
+            .anyMatch(target -> board.containsKey(target)    /* 도착위치에 기물이 존재함 */
                 && board.get(target).is(PieceType.PAWN)      /* 그 기물이 폰임 */
                 && board.get(target).isSameTeam(board.get(position)));
     }
