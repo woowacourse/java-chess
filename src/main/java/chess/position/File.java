@@ -27,44 +27,6 @@ public enum File {
         this.number = number;
     }
 
-    public static List<File> valuesBetween(File start, File end) {
-        if (start.getNumber() > end.getNumber()) {
-            return Arrays.stream(values())
-                    .sorted(Comparator.reverseOrder())
-                    .filter(file -> file.getNumber() < start.getNumber() && file.getNumber() > end.getNumber())
-                    .collect(Collectors.toList());
-        }
-        return Arrays.stream(values())
-                .filter(file -> file.getNumber() > start.getNumber() && file.getNumber() < end.getNumber())
-                .collect(Collectors.toList());
-    }
-
-    public static File[] valuesExceptNone(){
-        List<File> valuesExceptNone = new ArrayList(Arrays.asList(values()));
-        valuesExceptNone.remove(NONE);
-        return valuesExceptNone.toArray(new File[0]);
-    }
-
-    private static boolean between(File target, File smaller, File bigger) {
-        return target.compareTo(smaller) >= 0 && target.compareTo(bigger) <= 0;
-    }
-
-    private static File max(File file1, File file2) {
-        if (file1.compareTo(file2) > 0) {
-            return file1;
-        } else {
-            return file2;
-        }
-    }
-
-    private static File min(File file1, File file2) {
-        if (file1.compareTo(file2) < 0) {
-            return file1;
-        } else {
-            return file2;
-        }
-    }
-
     public static File of(String name) {
         return Arrays.stream(values())
                 .filter(value -> value.name.equals(name))
@@ -79,18 +41,18 @@ public enum File {
                 .orElse(NONE);
     }
 
-    public File[] valuesWithDifferenceBelow(int distance) {
+    public static File[] valuesExceptNone() {
+        List<File> valuesExceptNone = new ArrayList(Arrays.asList(values()));
+        valuesExceptNone.remove(NONE);
+        return valuesExceptNone.toArray(new File[0]);
+    }
+
+    public static List<File> valuesBetween(File start, File end) {
+        int bigger = Math.max(start.getNumber(), end.getNumber());
+        int smaller = Math.min(start.getNumber(), end.getNumber());
         return Arrays.stream(values())
-                .filter(file -> findDifference(file) <= distance)
-                .toArray(File[]::new);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getNumber() {
-        return this.number;
+                .filter(file -> file.getNumber() > smaller && file.getNumber() < bigger)
+                .collect(Collectors.toList());
     }
 
     public boolean isNear(File other) {
@@ -107,5 +69,13 @@ public enum File {
 
     public boolean isNone() {
         return this == NONE;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNumber() {
+        return this.number;
     }
 }

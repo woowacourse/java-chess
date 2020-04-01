@@ -20,7 +20,7 @@ public class ChessGame {
     private void start() {
         OutputView.printGameIntro();
         requestCommand();
-        OutputView.printBoard(board);
+        OutputView.printBoard(board.getPieces());
     }
 
     private void requestCommand() {
@@ -55,7 +55,7 @@ public class ChessGame {
             Position source = Position.of(InputView.requestPosition());
             Position target = Position.of(InputView.requestPosition());
             board.moveIfPossible(source, target);
-            OutputView.printBoard(board);
+            OutputView.printBoard(board.getPieces());
         }
     }
 

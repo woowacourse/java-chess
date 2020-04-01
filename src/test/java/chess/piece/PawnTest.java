@@ -25,37 +25,12 @@ public class PawnTest {
 		assertThat(pawn).isInstanceOf(Pawn.class);
 	}
 
-	@DisplayName("폰은 앞으로 1칸만큼 이동가능, 이동 경로를 반환할 수 있다.")
-	@ParameterizedTest
-	@MethodSource("startDestinationTraceProvider")
-	void pawnPathTest(Position start, Position destination, List<Position> trace) {
-		Pawn pawn = new Pawn(BLACK);
-		List<Position> actual = pawn.movePathExceptSourceAndTarget(start, destination);
-		assertThat(actual).isEqualTo(trace);
-	}
-
-	private static Stream<Arguments> startDestinationTraceProvider() {
-		return Stream.of(
-			Arguments.of(Position.of("e5"), Position.of("e6"), Collections.emptyList()),
-			Arguments.of(Position.of("e5"), Position.of("e7"), singletonList(Position.of("e6")))
-		);
-	}
-
 	@DisplayName("체스말의 팀과 종류에 따라 심볼이 반환된다.")
 	@ParameterizedTest
 	@CsvSource(value = {"BLACK,P", "WHITE,p"})
 	void getSymbolTest(Team team, String expected) {
 		Piece piece = new Pawn(team);
 		assertThat(piece.getSymbol()).isEqualTo(expected);
-	}
-
-	@DisplayName("처음 움직일 때 한 칸이나 두 칸을 움직여도 예외가 발생하지 않는지 테스트")
-	@ParameterizedTest
-	@CsvSource(value = {"a1,a2", "a1,a3"})
-	void initialMoveTest(String start, String end) {
-		Pawn pawn = new Pawn(BLACK);
-		assertThatCode(() -> pawn.movePathExceptSourceAndTarget(Position.of(start), Position.of(end)))
-			.doesNotThrowAnyException();
 	}
 
 	@DisplayName("맨 처음 움직임 이후부터는 2칸을 움직였을때 예외가 발생하는지 테스트")

@@ -1,6 +1,9 @@
 package chess.position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Position {
 
@@ -16,8 +19,8 @@ public class Position {
     }
 
     private final File file;
-    private final Rank rank;
 
+    private final Rank rank;
     private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
@@ -30,14 +33,14 @@ public class Position {
         return CACHE.get(getKey(file, rank));
     }
 
-    private static String getKey(File file, Rank rank) {
-        return file.getName() + rank.getName();
-    }
-
     public static Position of(String key) {
         String lowerCaseKey = key.toLowerCase();
         validate(lowerCaseKey);
         return CACHE.get(lowerCaseKey);
+    }
+
+    private static String getKey(File file, Rank rank) {
+        return file.getName() + rank.getName();
     }
 
     private static void validate(String key) {
@@ -54,21 +57,6 @@ public class Position {
             positions.add(Position.of(files.get(i), ranks.get(i)));
         }
         return positions;
-    }
-
-    public static List<Position> collectPositionsBetween(Position start, Position end) {
-        List<Position> positions = new ArrayList<>();
-        List<File> files = File.valuesBetween(start.getFile(), end.getFile());
-        List<Rank> ranks = Rank.valuesBetween(start.getRank(), end.getRank());
-        for (int i = 0; i < files.size(); i++) {
-            positions.add(Position.of(files.get(i), ranks.get(i)));
-        }
-        return Collections.unmodifiableList(positions);
-    }
-
-
-    public int differenceOfFile(Position other) {
-        return Math.abs(getFileNumber() - other.getFileNumber());
     }
 
     public int differenceOfRank(Position other) {
@@ -135,20 +123,18 @@ public class Position {
                 == KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE;
     }
 
-    public File[] fileValuesWithDifferenceBelow(int distance) {
-        return this.file.valuesWithDifferenceBelow(distance);
-    }
-
-    public Rank[] rankValuesWithDifferenceBelow(int distance) {
-        return this.rank.valuesWithDifferenceBelow(distance);
-    }
-
     public int increaseAmountOfRank(Position other) {
         return other.getRankNumber() - getRankNumber();
     }
 
     public int increaseAmountOfFile(Position other) {
         return other.getFileNumber() - getFileNumber();
+    }
+
+    public Position at(Direction direction) {
+        File file = this.file.getFileUsingIncreaseAmount(direction.getIncreaseAmountOfFile());
+        Rank rank = this.rank.getRankUsingIncreaseAmount(direction.getIncreaseAmountOfRank());
+        return Position.of(file, rank);
     }
 
     public File getFile() {
@@ -165,12 +151,5 @@ public class Position {
 
     public int getRankNumber() {
         return this.rank.getNumber();
-    }
-
-    public Position at(Direction direction) {
-        File file = this.file.getFileUsingIncreaseAmount(direction.getIncreaseAmountOfFile());
-        Rank rank = this.rank.getRankUsingIncreaseAmount(direction.getIncreaseAmountOfRank());
-
-        return Position.of(file, rank);
     }
 }

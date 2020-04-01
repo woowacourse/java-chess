@@ -16,7 +16,13 @@ public abstract class MoveValidator {
     }
 
     public void throwExceptionIfNotMovable(Board board, Position source, Position target) {
-        //TODO: 상대방의 모든 이동 가능 장소를 구할때 자신의 차례가 아니라고 인식돼서 다 거르는 현상 수정
+        throwExceptionIfNotMovableWithoutConsideringKingCouldBeKilledNextTurn(board, source, target);
+        if (isKingKilledIfMoves(board, source, target)) {
+            throw new IllegalArgumentException("왕을 방어하세요.");
+        }
+    }
+
+    public void throwExceptionIfNotMovableWithoutConsideringKingCouldBeKilledNextTurn(Board board, Position source, Position target) {
         if (board.isNotTurnOf(source)) {
             throw new IllegalArgumentException("해당 말의 차례가 아닙니다.");
         }
@@ -29,9 +35,6 @@ public abstract class MoveValidator {
         }
         if (board.isExistAt(target) && board.isSameTeamBetween(source, target)) {
             throw new IllegalArgumentException("본인의 말은 잡을 수 없습니다.");
-        }
-        if (isKingKilledIfMoves(board, source, target)) {
-            throw new IllegalArgumentException("왕을 방어하세요.");
         }
     }
 

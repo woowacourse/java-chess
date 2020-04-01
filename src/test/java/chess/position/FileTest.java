@@ -13,8 +13,7 @@ class FileTest {
     @ParameterizedTest
     @ValueSource(strings = {"n", "i", "z"})
     void invalidOfTest(String name) {
-        assertThatThrownBy(() -> File.of(name)).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바른 열값이 아닙니다.");
+        assertThat(File.of(name)).isEqualTo(File.NONE);
     }
 
     @DisplayName("File.of() 테스트")

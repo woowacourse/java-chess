@@ -11,8 +11,7 @@ public class RankTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"0", "9"})
 	void invalidOfTest(String name) {
-		assertThatThrownBy(() -> Rank.of(name)).isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("올바른 행값이 아닙니다.");
+		assertThat(Rank.of(name)).isEqualTo(Rank.NONE);
 	}
 
 	@DisplayName("Rank.of() 테스트")

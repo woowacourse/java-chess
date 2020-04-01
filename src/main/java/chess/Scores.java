@@ -1,19 +1,21 @@
 package chess;
 
-public class Scores {
-    private final int whiteScore;
-    private final int blackScore;
+import chess.piece.Team;
 
-    public Scores(int whiteScore, int blackScore) {
-        this.whiteScore = whiteScore;
-        this.blackScore = blackScore;
+public class Scores {
+    private final double whiteScore;
+    private final double blackScore;
+
+    public Scores(Board board) {
+        this.whiteScore = board.calculateScoreOf(Team.WHITE);
+        this.blackScore = board.calculateScoreOf(Team.BLACK);
     }
 
-    public int getWhiteScore() {
+    public double getWhiteScore() {
         return whiteScore;
     }
 
-    public int getBlackScore() {
+    public double getBlackScore() {
         return blackScore;
     }
 }

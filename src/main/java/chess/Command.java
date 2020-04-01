@@ -34,10 +34,6 @@ public enum Command {
         return this == START;
     }
 
-    public boolean isNotStart() {
-        return !isStart();
-    }
-
     public boolean isEnd() {
         return this == END;
     }
@@ -48,13 +44,5 @@ public enum Command {
 
     public boolean isStatus() {
         return this == STATUS;
-    }
-
-    public boolean isInGameCommand() {
-        return isInGameCommand;
-    }
-
-    public boolean isNotInGameCommand() {
-        return !isInGameCommand;
     }
 }

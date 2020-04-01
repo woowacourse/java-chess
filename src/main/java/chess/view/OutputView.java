@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.Board;
 import chess.Scores;
 import chess.piece.Piece;
 import chess.position.File;
@@ -19,9 +18,8 @@ public class OutputView {
     private static final String START_COMMAND_INFORMATION_MESSAGE = "> 게임 시작 : start";
     private static final String END_COMMAND_INFORMATION_MESSAGE = "> 게임 종료 : end";
     private static final String MOVE_COMMAND_INFORMATION_MESSAGE = "> 말 이동 : move source위치 target위치 - 예. move b2 b3";
-    private static final String INVALID_COMMAND_INPUT_MESSAGE = "잘못된 명령어를 입력하셨습니다.";
-    private static final String WHITE_SCORE_MESSAGE_FORMAT = "백팀 점수 : %d";
-    private static final String BLACK_SCORE_MESSAGE_FORMAT = "흑팀 점수 : %d";
+    private static final String WHITE_SCORE_MESSAGE_FORMAT = "백팀 점수 : %,.1f";
+    private static final String BLACK_SCORE_MESSAGE_FORMAT = "흑팀 점수 : %,.1f";
 
     public static void printGameIntro() {
         System.out.println(GAME_INTRO_MESSAGE);
@@ -34,20 +32,10 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printBoard(Board board) {
-        Map<Position, Piece> pieces = board.getPieces();
+    public static void printBoard(Map<Position, Piece> pieces) {
         StringBuilder builder = new StringBuilder();
-
         for (Rank rank : ReverseOrderOfRankValuesExceptNone()) {
-            for (File file : File.valuesExceptNone()) {
-                if (pieces.get(Position.of(file, rank)) != null) {
-                    Piece piece = pieces.get(Position.of(file, rank));
-                    builder.append(findSymbol(piece));
-                } else {
-                    builder.append(".");
-                }
-            }
-            builder.append("\n");
+            builder.append(informationOf(pieces, rank));
         }
         System.out.println(builder);
     }
@@ -58,12 +46,13 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    public static void invalidCommandInputMessage() {
-        System.out.println(INVALID_COMMAND_INPUT_MESSAGE);
-    }
-
-    private static String findSymbol(Piece piece) {
-        return piece.getSymbol();
+    private static StringBuilder informationOf(Map<Position, Piece> pieces, Rank rank) {
+        StringBuilder builder = new StringBuilder();
+        for (File file : File.valuesExceptNone()) {
+            builder.append(pieces.get(Position.of(file, rank)).getSymbol());
+        }
+        builder.append("\n");
+        return builder;
     }
 
     public static void printScores(Scores scores) {

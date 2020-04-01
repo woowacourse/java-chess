@@ -2,7 +2,6 @@ package chess.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,6 @@ public enum Rank {
     EIGHT("8", 8),
     NONE("", 0);
 
-    private static final String ILLEGAL_RANK_NAME_EXCEPTION_MESSAGE = "올바른 행값이 아닙니다.";
     private static final int MINIMUM_DISTANCE = 1;
 
     private final String name;
@@ -26,38 +24,6 @@ public enum Rank {
     Rank(String name, int number) {
         this.name = name;
         this.number = number;
-    }
-
-    public static List<Rank> valuesBetween(Rank start, Rank end) {
-        if (start.getNumber() > end.getNumber()) {
-            return Arrays.stream(values())
-                    .sorted(Comparator.reverseOrder())
-                    .filter(rank -> rank.getNumber() < start.getNumber() && rank.getNumber() > end.getNumber())
-                    .collect(Collectors.toList());
-        }
-        return Arrays.stream(values())
-                .filter(rank -> rank.getNumber() > start.getNumber() && rank.getNumber() < end.getNumber())
-                .collect(Collectors.toList());
-    }
-
-    private static boolean between(Rank target, Rank smaller, Rank bigger) {
-        return target.compareTo(smaller) >= 0 && target.compareTo(bigger) <= 0;
-    }
-
-    private static Rank max(Rank rank1, Rank rank2) {
-        if (rank1.compareTo(rank2) > 0) {
-            return rank1;
-        } else {
-            return rank2;
-        }
-    }
-
-    private static Rank min(Rank rank1, Rank rank2) {
-        if (rank1.compareTo(rank2) < 0) {
-            return rank1;
-        } else {
-            return rank2;
-        }
     }
 
     public static Rank of(String name) {
@@ -80,18 +46,20 @@ public enum Rank {
         return valuesExceptNone.toArray(new Rank[0]);
     }
 
-    public Rank[] valuesWithDifferenceBelow(int distance) {
+    public static List<Rank> valuesBetween(Rank start, Rank end) {
+        int bigger = Math.max(start.getNumber(), end.getNumber());
+        int smaller = Math.min(start.getNumber(), end.getNumber());
         return Arrays.stream(values())
-                .filter(rank -> findDifference(rank) <= distance)
-                .toArray(Rank[]::new);
+                .filter(rank -> rank.getNumber() > smaller && rank.getNumber() < bigger)
+                .collect(Collectors.toList());
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public int getNumber() {
-        return this.number;
+    public static List<Rank> valuesRangeClosed(Rank start, Rank end) {
+        int bigger = Math.max(start.getNumber(), end.getNumber());
+        int smaller = Math.min(start.getNumber(), end.getNumber());
+        return Arrays.stream(values())
+                .filter(rank -> rank.getNumber() >= smaller && rank.getNumber() <= bigger)
+                .collect(Collectors.toList());
     }
 
     public boolean isNear(Rank other) {
@@ -108,5 +76,13 @@ public enum Rank {
 
     public boolean isNone() {
         return this == NONE;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getNumber() {
+        return this.number;
     }
 }

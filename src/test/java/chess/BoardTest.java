@@ -68,7 +68,7 @@ public class BoardTest {
     void moveTest() {
         Position from = Position.of(A, ONE);
         Position to = Position.of(A, TWO);
-        board.move(board.getPieces(), from, to);
+        board.move(from, to);
         assertThat(board.getPiece(to)).isEqualTo(rook);
     }
 }
