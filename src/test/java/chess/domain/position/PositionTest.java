@@ -15,7 +15,7 @@ public class PositionTest {
 
     @Test
     void of_정상적인_사용() {
-        assertThat(Position.of(X.A, Y.ONE)).isEqualTo(Position.of("a1"));
+        assertThat(Position.of(File.A, Rank.ONE)).isEqualTo(Position.of("a1"));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class PositionTest {
         assertThat(Position.of("a1").canIncrease(5, 6)).isTrue();
         assertThat(Position.of("a1").canIncrease(-1, 1)).isFalse();
 
-        assertThat(Position.of("a1").canIncrease(X.of(5), Y.of(6))).isTrue();
+        assertThat(Position.of("a1").canIncrease(File.of(5), Rank.of(6))).isTrue();
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PositionTest {
         assertThat(Position.of("a1").canDecrease(-5, -6)).isTrue();
         assertThat(Position.of("a1").canDecrease(1, -1)).isFalse();
 
-        assertThat(Position.of("a1").canDecrease(X.of(5), Y.of(6))).isFalse();
+        assertThat(Position.of("a1").canDecrease(File.of(5), Rank.of(6))).isFalse();
     }
 
     @Test
@@ -128,12 +128,12 @@ public class PositionTest {
 
     @Test
     void isY() {
-        assertThat(Position.of(X.A, Y.ONE).isY(Y.ONE)).isTrue();
-        assertThat(Position.of(X.A, Y.ONE).isY(Y.TWO)).isFalse();
+        assertThat(Position.of(File.A, Rank.ONE).isY(Rank.ONE)).isTrue();
+        assertThat(Position.of(File.A, Rank.ONE).isY(Rank.TWO)).isFalse();
     }
 
     @Test
     void testToString() {
-        assertThat(Position.of(X.G, Y.SEVEN).toString()).isEqualTo("g7");
+        assertThat(Position.of(File.G, Rank.SEVEN).toString()).isEqualTo("g7");
     }
 }

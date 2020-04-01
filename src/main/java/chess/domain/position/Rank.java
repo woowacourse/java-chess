@@ -5,10 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * 체스의 Rank 에 해당
- */
-public enum Y {
+public enum Rank {
     /* 순서를 오름차순으로 바꾸면
      * 콘솔에 출력되는 체스판의 아래-위가 역전됨 */
     EIGHT(8),
@@ -22,65 +19,65 @@ public enum Y {
 
     private int y;
 
-    Y(int y) {
+    Rank(int y) {
         this.y = y;
     }
 
-    public static Y of(int y) {
+    public static Rank of(int y) {
         return Arrays.stream(values())
             .filter(x -> x.y == y)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("체스의 Y 축에 존재하지 않는 Rank입니다."));
     }
 
-    public boolean canIncrease(Y y) {
-        return canIncrease(y.y);
+    public boolean canIncrease(Rank rank) {
+        return canIncrease(rank.y);
     }
 
     public boolean canIncrease(int y) {
         return (ONE.y <= (this.y + y)) && ((this.y + y) <= EIGHT.y);
     }
 
-    public Y increase(int y) {
+    public Rank increase(int y) {
         if (!canIncrease(y)) {
             throw new IllegalArgumentException("현재 Y 위치에서 " + y + "만큼 increase 할 수 없습니다.");
         }
-        return Y.of(this.y + y);
+        return Rank.of(this.y + y);
     }
 
-    public boolean canDecrease(Y y) {
-        return canDecrease(y.y);
+    public boolean canDecrease(Rank rank) {
+        return canDecrease(rank.y);
     }
 
     public boolean canDecrease(int y) {
         return canIncrease(-y);
     }
 
-    public Y decrease(Y y) {
-        return decrease(y.y);
+    public Rank decrease(Rank rank) {
+        return decrease(rank.y);
     }
 
-    public Y decrease(int y) {
+    public Rank decrease(int y) {
         if (!canDecrease(y)) {
             throw new IllegalArgumentException("현재 Y 위치에서 " + y + "만큼 decrease 할 수 없습니다.");
         }
-        return Y.of(this.y - y);
+        return Rank.of(this.y - y);
     }
 
-    public int calculateDistance(Y y) {
-        int distance = this.y - y.y;
+    public int calculateDistance(Rank rank) {
+        int distance = this.y - rank.y;
         if (distance > 0) {
             return distance;
         }
         return -distance;
     }
 
-    public boolean isLargerThan(Y y) {
-        return canDecrease(y);
+    public boolean isLargerThan(Rank rank) {
+        return canDecrease(rank);
     }
 
-    public static List<Y> getPathFromTo(final Y from, final Y to) {
-        List<Y> path;
+    public static List<Rank> getPathFromTo(final Rank from, final Rank to) {
+        List<Rank> path;
 
         if (from.y < to.y) {
             path = getPathFromSmallerToLarger(from, to);
@@ -93,24 +90,24 @@ public enum Y {
         return Collections.singletonList(from);    /* from == to*/
     }
 
-    private static List<Y> getPathFromSmallerToLarger(final Y smaller, final Y larger) {
-        List<Y> path = new ArrayList<>();
+    private static List<Rank> getPathFromSmallerToLarger(final Rank smaller, final Rank larger) {
+        List<Rank> path = new ArrayList<>();
 
         if (smaller.y >= larger.y) {
             throw new IllegalArgumentException("smaller Y 가 lager Y 보다 작아야합니다.");
         }
 
-        Y yOnPath = smaller;
-        while (yOnPath.y < larger.y) {
-            path.add(yOnPath);
-            yOnPath = yOnPath.increase(1);
+        Rank rankOnPath = smaller;
+        while (rankOnPath.y < larger.y) {
+            path.add(rankOnPath);
+            rankOnPath = rankOnPath.increase(1);
         }
-        path.add(yOnPath);
+        path.add(rankOnPath);
         return Collections.unmodifiableList(path);
     }
 
-    private static List<Y> reverseOrder(final List<Y> path) {
-        List<Y> reversedPath = new ArrayList<>();
+    private static List<Rank> reverseOrder(final List<Rank> path) {
+        List<Rank> reversedPath = new ArrayList<>();
 
         for (int i = path.size() - 1; i >= 0; i--) {
             reversedPath.add(path.get(i));

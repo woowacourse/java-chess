@@ -16,81 +16,83 @@ public class XTest {
 
     @Test
     void of() {
-        assertThat(X.of(1)).isEqualTo(X.A);
-        assertThat(X.of(2)).isEqualTo(X.B);
+        assertThat(File.of(1)).isEqualTo(File.A);
+        assertThat(File.of(2)).isEqualTo(File.B);
     }
 
     @Test
     void of_잘못된_사용() {
-        assertThatThrownBy(() -> X.of(0)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> File.of(0)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void canIncrease_증가할_수_있을때() {
-        assertThat(X.A.canIncrease(7)).isTrue();
-        assertThat(X.B.canIncrease(-1)).isTrue();
+        assertThat(File.A.canIncrease(7)).isTrue();
+        assertThat(File.B.canIncrease(-1)).isTrue();
     }
 
     @Test
     void canIncrease_증가할_수_없을때() {
-        assertThat(X.B.canIncrease(7)).isFalse();
-        assertThat(X.B.canIncrease(-2)).isFalse();
+        assertThat(File.B.canIncrease(7)).isFalse();
+        assertThat(File.B.canIncrease(-2)).isFalse();
     }
 
     @Test
     void increase_증가할_수_있을때() {
-        assertThat(X.B.increase(3)).isEqualTo(X.E);
+        assertThat(File.B.increase(3)).isEqualTo(File.E);
     }
 
     @Test
     void increase_증가할_수_없을때() {
-        assertThatThrownBy(() -> X.B.increase(-3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> File.B.increase(-3)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void canDecrease_감소할_수_있을때() {
-        assertThat(X.A.canDecrease(-6)).isTrue();
-        assertThat(X.B.canDecrease(1)).isTrue();
+        assertThat(File.A.canDecrease(-6)).isTrue();
+        assertThat(File.B.canDecrease(1)).isTrue();
     }
 
     @Test
     void canDecrease_감소할_수_없을때() {
-        assertThat(X.B.canDecrease(7)).isFalse();
-        assertThat(X.B.canDecrease(-7)).isFalse();
+        assertThat(File.B.canDecrease(7)).isFalse();
+        assertThat(File.B.canDecrease(-7)).isFalse();
     }
 
     @Test
     void decrease_감소할_수_있을때() {
-        assertThat(X.H.decrease(3)).isEqualTo(X.E);
+        assertThat(File.H.decrease(3)).isEqualTo(File.E);
     }
 
     @Test
     void decrease_감소할_수_없을때() {
-        assertThatThrownBy(() -> X.B.decrease(-9)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> File.B.decrease(-9)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void calculateDistance() {
-        assertThat(X.A.calculateDistance(X.H)).isEqualTo(7);
-        assertThat(X.A.calculateDistance(X.A)).isEqualTo(0);
+        assertThat(File.A.calculateDistance(File.H)).isEqualTo(7);
+        assertThat(File.A.calculateDistance(File.A)).isEqualTo(0);
     }
 
     @Test
     void isLargerThan() {
-        assertThat(X.A.isLargerThan(X.A)).isFalse();
-        assertThat(X.H.isLargerThan(X.G)).isTrue();
+        assertThat(File.A.isLargerThan(File.A)).isFalse();
+        assertThat(File.H.isLargerThan(File.G)).isTrue();
     }
 
     @ParameterizedTest
     @MethodSource("getPathTestCase")
-    void getPathFromTo(X from, X to, List<X> expected) {
-        assertThat(X.getPathFromTo(from, to)).isEqualTo(expected);
+    void getPathFromTo(File from, File to, List<File> expected) {
+        assertThat(File.getPathFromTo(from, to)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> getPathTestCase() {
         return Stream.of(
-            Arguments.of(X.A, X.H, Arrays.asList(X.A, X.B, X.C, X.D, X.E, X.F, X.G, X.H)),
-            Arguments.of(X.A, X.A, Collections.singletonList(X.A))
+            Arguments.of(
+                File.A, File.H,
+                Arrays.asList(File.A, File.B, File.C, File.D, File.E, File.F, File.G, File.H)),
+            Arguments.of(File.A, File.A, Collections.singletonList(File.A))
         );
     }
 }

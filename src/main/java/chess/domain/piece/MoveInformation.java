@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Team;
 import chess.domain.position.Position;
-import chess.domain.position.Y;
+import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Map;
 
@@ -104,9 +104,9 @@ public class MoveInformation {
             throw new UnsupportedOperationException("해당 기능은 움직일 기물이 폰일 경우에만 지원합니다.");
         }
         if (board.get(from).belongs(Team.WHITE)) {
-            return from.isY(Y.TWO);
+            return from.isY(Rank.TWO);
         }
-        return from.isY(Y.SEVEN);
+        return from.isY(Rank.SEVEN);
     }
 
     public boolean isEnemyOnEnd() {

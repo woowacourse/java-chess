@@ -4,9 +4,9 @@ import chess.domain.Team;
 import chess.domain.piece.MoveInformation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.X;
-import chess.domain.position.Y;
+import chess.domain.position.Rank;
 import chess.domain.score.Score;
 import chess.domain.score.ScoreCalculator;
 import java.util.Collections;
@@ -51,18 +51,18 @@ public class Board {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (Y y : Y.values()) {
-            stringBuilder.append(makeStringByX(y));
+        for (Rank rank : Rank.values()) {
+            stringBuilder.append(makeStringByX(rank));
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
 
-    private String makeStringByX(Y y) {
+    private String makeStringByX(Rank rank) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (X x : X.values()) {
-            stringBuilder.append(makeStringByPosition(Position.of(x, y)));
+        for (File file : File.values()) {
+            stringBuilder.append(makeStringByPosition(Position.of(file, rank)));
         }
         return stringBuilder.toString();
     }

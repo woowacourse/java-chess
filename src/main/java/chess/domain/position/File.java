@@ -5,10 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * 체스의 File
- */
-public enum X {
+public enum File {
     A(1, "a"),
     B(2, "b"),
     C(3, "c"),
@@ -21,19 +18,19 @@ public enum X {
     private int x;
     private String expression;
 
-    X(int x, String expression) {
+    File(int x, String expression) {
         this.x = x;
         this.expression = expression;
     }
 
-    public static X of(final String expression) {
+    public static File of(final String expression) {
         return Arrays.stream(values())
             .filter(x -> x.expression.equals(expression))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("체스의 X 축에 존재하지 않는 표현입니다."));
     }
 
-    public static X of(final int x) {
+    public static File of(final int x) {
         return Arrays.stream(values())
             .filter(value -> value.x == x)
             .findFirst()
@@ -44,75 +41,75 @@ public enum X {
         return (A.x <= (this.x + x)) && ((this.x + x) <= H.x);
     }
 
-    public boolean canIncrease(final X x) {
-        return canIncrease(x.x);
+    public boolean canIncrease(final File file) {
+        return canIncrease(file.x);
     }
 
-    public X increase(final int x) {
+    public File increase(final int x) {
         if (!canIncrease(x)) {
             throw new IllegalArgumentException("현재 X 위치에서 " + x + "만큼 increase 할 수 없습니다.");
         }
-        return X.of(this.x + x);
+        return File.of(this.x + x);
     }
 
     public boolean canDecrease(int x) {
         return canIncrease(-x);
     }
 
-    public boolean canDecrease(final X x) {
-        return canDecrease(x.x);
+    public boolean canDecrease(final File file) {
+        return canDecrease(file.x);
     }
 
-    public X decrease(final X x) {
-        return decrease(x.x);
+    public File decrease(final File file) {
+        return decrease(file.x);
     }
 
-    public X decrease(final int x) {
+    public File decrease(final int x) {
         if (!canDecrease(x)) {
             throw new IllegalArgumentException("현재 X 위치에서 " + x + "만큼 decrease 할 수 없습니다.");
         }
-        return X.of(this.x - x);
+        return File.of(this.x - x);
     }
 
-    public int calculateDistance(final X x) {
-        int distance = this.x - x.x;
+    public int calculateDistance(final File file) {
+        int distance = this.x - file.x;
         if (distance > 0) {
             return distance;
         }
         return -distance;
     }
 
-    public boolean isLargerThan(final X x) {
-        return canDecrease(x);
+    public boolean isLargerThan(final File file) {
+        return canDecrease(file);
     }
 
-    public static List<X> getPathFromTo(final X from, final X to) {
+    public static List<File> getPathFromTo(final File from, final File to) {
         if (from.x < to.x) {
             return Collections.unmodifiableList(
                 getPathFromSmallerToLarger(from, to)
             );
         }
         if (to.x < from.x) {
-            List<X> path = getPathFromSmallerToLarger(to, from);
+            List<File> path = getPathFromSmallerToLarger(to, from);
             return Collections.unmodifiableList(reverseOrder(path));
         }
         return Collections.singletonList(from);    /* from == to*/
     }
 
-    private static List<X> getPathFromSmallerToLarger(final X smaller, final X larger) {
-        List<X> path = new ArrayList<>();
+    private static List<File> getPathFromSmallerToLarger(final File smaller, final File larger) {
+        List<File> path = new ArrayList<>();
 
-        X xOnPath = smaller;
-        while (xOnPath.x < larger.x) {
-            path.add(xOnPath);
-            xOnPath = xOnPath.increase(1);
+        File fileOnPath = smaller;
+        while (fileOnPath.x < larger.x) {
+            path.add(fileOnPath);
+            fileOnPath = fileOnPath.increase(1);
         }
-        path.add(xOnPath);
+        path.add(fileOnPath);
         return Collections.unmodifiableList(path);
     }
 
-    private static List<X> reverseOrder(final List<X> path) {
-        List<X> reversedPath = new ArrayList<>();
+    private static List<File> reverseOrder(final List<File> path) {
+        List<File> reversedPath = new ArrayList<>();
 
         for (int i = path.size() - 1; i >= 0; i--) {
             reversedPath.add(path.get(i));
