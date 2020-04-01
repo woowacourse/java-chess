@@ -1,23 +1,25 @@
 (function ($) {
     "use strict"; // Start of use strict
 
-    // 마우스 클릭시 toPosition 값을 전송
-    $(".piece").on("click", function () {
-        $("#command-form").get(0).submit(function () {
-            $("#command-form").get(0).attr("command", "move " + $(this).attr("id") + " ");
-        });
-    });
-
-    var commandInput = $('#command-form [name="command"]');
-
-    // 명령어 버튼 클릭 시 해당 명령어 전송
-
     function submitForm() {
         $('#command-form [name="command"]').on("change", function () {
             $("#command-form").get(0).submit();
         });
     }
 
+    // 마우스 클릭시 toPosition 값을 전송
+    $(".piece").on("click", function () {
+        var toPosition = $(this).attr("id");
+        $(".piece").on("click", function () {
+            var fromPosition = $(this).attr("id");
+            commandInput.val("move " + toPosition + " " + fromPosition).trigger('change');
+            submitForm();
+        });
+    });
+
+    var commandInput = $('#command-form [name="command"]');
+
+    // 명령어 버튼 클릭 시 해당 명령어 전송
     $("#start-button").on("click", function () {
         commandInput.val("start").trigger('change');
         submitForm();
