@@ -30,6 +30,10 @@ public enum Direction {
 		this.yDegree = yDegree;
 	}
 
+	public boolean canOnlyMoveVertical() {
+		return xDegree == 0;
+	}
+
 	public int getXDegree() {
 		return xDegree;
 	}
