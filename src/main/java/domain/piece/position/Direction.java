@@ -40,6 +40,21 @@ public enum Direction {
 		return Math.abs(rowGap) == Math.abs(columnGap);
 	}
 
+	public boolean isNotContain(List<Direction> directions){
+		return !directions.contains(this);
+	}
+
+	public static Direction findDirection(Position position, Position targetPosition) {
+		int rowGap = position.calculateRowGap(targetPosition);
+		int columnGap = position.calculateColumnGap(targetPosition);
+
+		return Arrays.stream(values())
+			.filter(direction -> direction.find.apply(rowGap, columnGap))
+			.findFirst()
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION));
+
+	}
+
 	public boolean hasPieceInRoute(Position position, Position targetPosition, List<Rank> ranks) {
 		int loopCount = calculateLoopCount(position, targetPosition) - 1;
 		int routeRow = position.getRow();
@@ -65,17 +80,6 @@ public enum Direction {
 			.flatMap(rank -> rank.getPieces().stream())
 			.anyMatch(piece -> piece.getPosition().getColumn().getNumber() == routeColumn
 				&& piece.getPosition().getRow() == routeRow);
-	}
-
-	public static Direction findDirection(Position position, Position targetPosition) {
-		int rowGap = position.calculateRowGap(targetPosition);
-		int columnGap = position.calculateColumnGap(targetPosition);
-
-		return Arrays.stream(values())
-			.filter(direction -> direction.find.apply(rowGap, columnGap))
-			.findFirst()
-			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION));
-
 	}
 
 	public static List<Direction> everyDirection() {

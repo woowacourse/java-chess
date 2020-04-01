@@ -17,21 +17,18 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	protected boolean validateDirection(Direction direction) {
-		if (Direction.knightDirection().contains(direction)) {
-			return true;
+	protected void validateDirection(Direction direction) {
+		if (direction.isNotContain(Direction.knightDirection())) {
+			throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 		}
-		throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 	}
 
 	@Override
-	protected boolean validateStepSize(Position sourcePosition, Position targetPosition) {
-		return true;
+	protected void validateStepSize(Position sourcePosition, Position targetPosition) {
 	}
 
 	@Override
-	protected boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
-		return true;
+	protected void validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
 	}
 
 	@Override

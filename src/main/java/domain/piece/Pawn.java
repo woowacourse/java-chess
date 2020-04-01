@@ -25,36 +25,31 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected boolean validateDirection(Direction direction) {
+	protected void validateDirection(Direction direction) {
 		if (Team.WHITE.equals(this.team)) {
-			if (Direction.whitePawnDirection().contains(direction)) {
-				return true;
+			if (direction.isNotContain(Direction.whitePawnDirection())) {
+				throw new InvalidPositionException(INVALID_DIRECTION);
 			}
+		} else if (direction.isNotContain(Direction.blackPawnDirection())) {
 			throw new InvalidPositionException(INVALID_DIRECTION);
 		}
-		if (Direction.blackPawnDirection().contains(direction)) {
-			return true;
-		}
-		throw new InvalidPositionException(INVALID_DIRECTION);
 	}
 
 	@Override
-	protected boolean validateStepSize(Position sourcePosition, Position targetPosition) {
+	protected void validateStepSize(Position sourcePosition, Position targetPosition) {
 		int rowGap = this.position.calculateRowGap(targetPosition);
 
 		int absStepSize = Math.abs(rowGap);
-		if (state.getValidateStepSize().apply(absStepSize)) {
-			return true;
+		if (!state.getIsValidStepSize().apply(absStepSize)) {
+			throw new InvalidPositionException(INVALID_STEP_SIZE);
 		}
-		throw new InvalidPositionException(INVALID_STEP_SIZE);
 	}
 
 	@Override
-	protected boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
+	protected void validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
 		if (direction.hasPieceInRoute(this.position, targetPosition, ranks)) {
 			throw new InvalidPositionException(HAS_PIECE_IN_ROUTE);
 		}
-		return true;
 	}
 
 	@Override

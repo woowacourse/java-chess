@@ -17,24 +17,21 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	protected boolean validateDirection(Direction direction) {
-		if (Direction.diagonalDirection().contains(direction)) {
-			return true;
+	protected void validateDirection(Direction direction) {
+		if (direction.isNotContain(Direction.diagonalDirection())) {
+			throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 		}
-		throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 	}
 
 	@Override
-	protected boolean validateStepSize(Position sourcePosition, Position targetPosition) {
-		return true;
+	protected void validateStepSize(Position sourcePosition, Position targetPosition) {
 	}
 
 	@Override
-	protected boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
+	protected void validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
 		if (direction.hasPieceInRoute(this.position, targetPosition, ranks)) {
 			throw new InvalidPositionException(InvalidPositionException.HAS_PIECE_IN_ROUTE);
 		}
-		return true;
 	}
 
 	@Override

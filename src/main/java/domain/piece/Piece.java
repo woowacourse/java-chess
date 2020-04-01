@@ -67,16 +67,16 @@ public abstract class Piece implements Movable {
 	}
 
 	@Override
-	public boolean canMove(Position targetPosition, Team turn, List<Rank> ranks) {
+	public void canMove(Position targetPosition, Team turn, List<Rank> ranks) {
 		validateTurn(turn);
 		if (isInPlace(this.position, targetPosition)) {
 			throw new InvalidPositionException(InvalidPositionException.IS_IN_PLACE);
 		}
 
 		Direction direction = Direction.findDirection(this.position, targetPosition);
-
-		return validateDirection(direction) && validateStepSize(this.position, targetPosition)
-			&& validateRoute(direction, targetPosition, ranks);
+		validateDirection(direction);
+		validateStepSize(this.position, targetPosition);
+		validateRoute(direction, targetPosition, ranks);
 	}
 
 	@Override
@@ -107,11 +107,11 @@ public abstract class Piece implements Movable {
 		return Objects.hash(position, team);
 	}
 
-	protected abstract boolean validateDirection(Direction direction);
+	protected abstract void validateDirection(Direction direction);
 
-	protected abstract boolean validateStepSize(Position sourcePosition, Position targetPosition);
+	protected abstract void validateStepSize(Position sourcePosition, Position targetPosition);
 
-	protected abstract boolean validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
+	protected abstract void validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
 
 	public abstract double getScore();
 

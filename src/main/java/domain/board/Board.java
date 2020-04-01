@@ -28,13 +28,13 @@ public class Board {
 	public void move(Position sourcePosition, Position targetPosition, Team turn) {
 		Rank rank = calculateRank(sourcePosition);
 		Piece piece = rank.findPiece(sourcePosition);
-		if (piece.canMove(targetPosition, turn, ranks)) {
-			piece.move(targetPosition, ranks);
-		}
+		piece.canMove(targetPosition, turn, ranks);
+		piece.move(targetPosition, ranks);
+
 	}
 
 	private Rank calculateRank(Position position) {
-		return ranks.get(position.getRow()-1);
+		return ranks.get(position.getRow() - 1);
 	}
 
 	public Map<Team, Double> calculateScore() {
