@@ -6,9 +6,10 @@ import chess.team.Team;
 
 public class Rook extends Piece {
     private static final char NAME = 'r';
-    private static final int SCORE = 5;
+    private static final Score SCORE = new Score(5);
+
 
     public Rook(Team team) {
-        super(NAME, new Score(SCORE), team, new RookPieceMovable());
+        super(NAME, SCORE, team, new RookPieceMovable());
     }
 }

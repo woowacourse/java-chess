@@ -6,9 +6,9 @@ import chess.team.Team;
 
 public class King extends Piece {
 	private static final char NAME = 'k';
-	private static final int SCORE = 0;
+	private static final Score SCORE = new Score(0);
 
 	public King(Team team) {
-		super(NAME, new Score(SCORE), team, new KingPieceMovable());
+		super(NAME, SCORE, team, new KingPieceMovable());
 	}
 }
