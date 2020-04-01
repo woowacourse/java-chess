@@ -25,7 +25,7 @@ public class PawnMovable implements Movable {
 	/**
 	 * Constructor는 방향을 주입받아 이를 저장한다.
 	 *
-	 * @param moveDirections 움직일 수 있는 방향의 목록이다.일반적으로 전진 및 대각선 전진(왼쪽방향, 오른쪽 방향)의 세 가지 방향을 포함한다.
+	 * @param moveDirections 움직일 수 있는 방향의 목록이다. 일반적으로 전진 및 대각선 전진(왼쪽방향, 오른쪽 방향)의 세 가지 방향을 포함한다.
 	 */
 	public PawnMovable(Directions moveDirections) {
 		this.moveDirections = moveDirections;
@@ -149,7 +149,7 @@ public class PawnMovable implements Movable {
 	}
 
 	/**
-	 * isPossessed는 위치값과 말의 목록을 받아 그 위치에 말이 없는지 점검한다.
+	 * isNotPossessed는 위치값과 말의 목록을 받아 그 위치에 말이 없는지 점검한다.
 	 * 만약 말이 하나도 없을 경우, true를 반환한다.
 	 * 그렇지 않을 경우 false를 반환한다.
 	 *

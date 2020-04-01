@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * UnblockedMovable은 정해진 칸으로만 움직이는 King,Knight의 움직이는 방법을 구현한 클래스이다.
+ * UnblockedMovable은 정해진 칸으로만 움직이는 King, Knight의 움직이는 방법을 구현한 클래스이다.
  * UnblockedMovable이란 이름은 막히지 않는(즉 Rook이나 Bishop처럼 누군가에 의해 막힐 때까지 전진하는 로직이 아닌) 움직임을 가졌다는 의미를 가진다.
  * UnblockedMovable을 사용하는 말의 움직임 규칙은 아래와 같다.
  * - 갈 수 있는 칸에 대해, 다른 말이 있는지 확인한다. 만약 아군이 있으면 이동할 수 없고, 비어있거나 적이 있다면 이동할 수 있다.
@@ -55,7 +55,7 @@ public class UnblockedMovable implements Movable {
 
 	/**
 	 * checkMovable은 위치와 모든 말의 목록 및 말의 색상을 전달받아, 그 위치에 아군 말이 있는지 여부를 검사한다.
-	 * 만약 그 위치에 아군 말이 있을 경우, 그 위치로는 이동할 수 없으므로 false를 리턴한다.
+	 * 만약 그 위치에 아군 말이 있을 경우, 그 위치로는 이동할 수 없으므로 false를 반환한다.
 	 * 그러나 적군 말(잡을 수 있다)이 있거나 비어있는 경우 true를 반환한다.
 	 *
 	 * @param position 말의 현재 위치이다.
