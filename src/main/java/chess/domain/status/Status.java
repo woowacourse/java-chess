@@ -10,8 +10,7 @@ public class Status {
 
     public Status(Player player, double score) {
         Objects.requireNonNull(player);
-        Objects.requireNonNull(score);
-        
+
         this.player = player;
         this.score = score;
     }

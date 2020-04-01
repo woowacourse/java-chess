@@ -18,7 +18,7 @@ public class PieceFactory {
         createPieces(Player.BLACK, Column.EIGHT, Column.SEVEN);
     }
 
-    public static void createPieces(Player player, Column column, Column pawnColumn){
+    public static void createPieces(Player player, Column column, Column pawnColumn) {
         pieces.put(new Rook(player), Arrays.asList(Positions.of(Row.A, column), Positions.of(Row.H, column)));
         pieces.put(new Knight(player), Arrays.asList(Positions.of(Row.B, column), Positions.of(Row.G, column)));
         pieces.put(new Bishop(player), Arrays.asList(Positions.of(Row.C, column), Positions.of(Row.F, column)));

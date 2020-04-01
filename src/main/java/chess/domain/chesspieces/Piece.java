@@ -25,7 +25,7 @@ public abstract class Piece {
         this.pieceInfo = pieceInfo;
     }
 
-    public boolean validateTileSize(Position from, Position to){
+    public boolean validateTileSize(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
 
@@ -37,7 +37,7 @@ public abstract class Piece {
 
     public boolean validateDirection(Direction direction, Piece target) {
         return hasDirection(direction);
-    };
+    }
 
     protected final boolean hasDirection(Direction direction) {
         return directions.contains(direction);
@@ -54,7 +54,6 @@ public abstract class Piece {
     public double getScore() {
         return pieceInfo.getScore();
     }
-
 
     public boolean movable(Position from, Position to) {
         Objects.requireNonNull(from);

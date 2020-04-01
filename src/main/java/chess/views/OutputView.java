@@ -29,11 +29,10 @@ public class OutputView {
 
         for (Column column : Column.values()) {
             for (Row row : Row.values()) {
-                Optional<Piece> piece = Optional.ofNullable(chessBoard.get(Positions.of(row, column)));
-                piece.ifPresent(value -> stringBuilder.append(value.getDisplay()));
-                if (!piece.isPresent()) {
-                    stringBuilder.append(EMPTY);
-                }
+                String display = Optional.ofNullable(chessBoard.get(Positions.of(row, column)))
+                        .map(Piece::getDisplay)
+                        .orElse(EMPTY);
+                stringBuilder.append(display);
             }
             stringBuilder.append(NEW_LINE);
         }
@@ -60,7 +59,6 @@ public class OutputView {
 
         System.out.println(stringBuilder.toString());
     }
-
 
     public static void printGameOver() {
         System.out.println("King이 잡혀서 게임을 종료합니다.");

@@ -20,16 +20,16 @@ public class Result {
     }
 
     private List<Player> createWinners() {
-         double maxScore =  statuses.stream()
+        double maxScore = statuses.stream()
                 .max(Comparator.comparingDouble(Status::getScore))
                 .orElseThrow(() -> new IllegalArgumentException("계산 오류 입니다."))
                 .getScore();
-
 
         List<Player> winners = statuses.stream()
                 .filter(status -> status.isSameScore(maxScore))
                 .map(Status::getPlayer)
                 .collect(Collectors.toList());
+
         return winners;
     }
 
