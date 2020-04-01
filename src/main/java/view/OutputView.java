@@ -69,4 +69,8 @@ public class OutputView {
 		System.out.println(winner.getName() + "팀이 상대팀의 King을 잡았습니다!");
 		System.out.println("승리한 팀은 " + winner.getName() + "팀 입니다.");
 	}
+
+	public static void printChessCommand() {
+		System.out.println("( move 'source' 'target' / status / end ) 중 하나를 선택해주세요.");
+	}
 }

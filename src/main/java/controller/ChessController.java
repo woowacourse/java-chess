@@ -2,7 +2,7 @@ package controller;
 
 import domain.board.Board;
 import domain.board.BoardFactory;
-import domain.command.Command;
+import domain.command.ChessCommand;
 import domain.piece.team.Team;
 import view.InputView;
 import view.OutputView;
@@ -32,22 +32,23 @@ public class ChessController {
 	}
 
 	private void executeCommand(Board board) {
-		Command command;
+		ChessCommand chessCommand;
 		String[] inputCommand;
 		do {
 			checkKingDead(board);
 			OutputView.printTurn(team);
+			OutputView.printChessCommand();
 			inputCommand = InputView.inputCommand().split(DELIMITER);
-			command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
-			if (command == Command.MOVE) {
+			chessCommand = ChessCommand.ofChessCommand(inputCommand[COMMAND_INDEX]);
+			if (chessCommand == ChessCommand.MOVE) {
 				board.move(inputCommand[SOURCE_POSITION], inputCommand[TARGET_POSITION], team);
 				team = Team.changeTurn(team);
 			}
-			if (command == Command.STATUS) {
+			if (chessCommand == ChessCommand.STATUS) {
 				OutputView.printTeamScore(board.calculateTeamScore(Team.WHITE), board.calculateTeamScore(Team.BLACK));
 			}
 			OutputView.printChessBoard(board);
-		} while (command != Command.END);
+		} while (chessCommand != ChessCommand.END);
 	}
 
 	private void checkKingDead(Board board) {
