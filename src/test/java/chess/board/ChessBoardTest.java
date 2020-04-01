@@ -13,10 +13,14 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.gamestate.GameState;
+import chess.piece.Bishop;
 import chess.piece.King;
+import chess.piece.Knight;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
+import chess.piece.Rook;
+import chess.result.Score;
 import chess.team.Team;
 
 class ChessBoardTest {
@@ -33,6 +37,37 @@ class ChessBoardTest {
 					put(Location.of('a', 1), Pawn.of(Team.WHITE));
 					put(Location.of('a', 2), King.of(Team.BLACK));
 				}}
+			)
+		);
+	}
+
+	private static Stream<Arguments> providerBoard() {
+		return Stream.of(
+			Arguments.of(
+				new HashMap<Location, Piece>() {{
+					put(Location.of("b8"), King.of(Team.BLACK));
+					put(Location.of("c8"), Rook.of(Team.BLACK));
+					put(Location.of("a7"), Pawn.of(Team.BLACK));
+					put(Location.of("c7"), Pawn.of(Team.BLACK));
+					put(Location.of("d7"), Bishop.of(Team.BLACK));
+					put(Location.of("b6"), Pawn.of(Team.BLACK));
+					put(Location.of("e6"), Queen.of(Team.BLACK));
+				}}, Team.BLACK, 20
+			),
+			Arguments.of(
+				new HashMap<Location, Piece>() {{
+					put(Location.of("e1"), Rook.of(Team.WHITE));
+					put(Location.of("f1"), King.of(Team.WHITE));
+
+					put(Location.of("f2"), Pawn.of(Team.WHITE));
+					put(Location.of("g2"), Pawn.of(Team.WHITE));
+
+					put(Location.of("f3"), Pawn.of(Team.WHITE));
+					put(Location.of("h3"), Pawn.of(Team.WHITE));
+
+					put(Location.of("f4"), Knight.of(Team.WHITE));
+					put(Location.of("g4"), Queen.of(Team.WHITE));
+				}}, Team.WHITE, 19.5
 			)
 		);
 	}
@@ -94,5 +129,25 @@ class ChessBoardTest {
 		boolean actual = chessBoard.isTurn(movingLocation, GameState.RUNNING_BLACK_TURN);
 
 		assertThat(actual).isTrue();
+	}
+
+	// abcdefgh
+	// .KR.....  8
+	// P.PB....  7
+	// .P..Q...  6
+	// ........  5
+	// .....nq.  4
+	// .....p.p  3
+	// .....pp.  2
+	// ....rk..  1
+	@DisplayName("결과 계산")
+	@ParameterizedTest()
+	@MethodSource("providerBoard")
+	void calculateScore(Map<Location, Piece> board, Team team, double expect) {
+		System.out.println(board.size());
+		ChessBoard chessBoard = new ChessBoard(board);
+		Score score = chessBoard.calculateScore(team);
+
+		assertThat(score.getAmount()).isEqualTo(expect);
 	}
 }

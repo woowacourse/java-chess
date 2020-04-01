@@ -16,9 +16,12 @@ public class Score {
 	}
 
 	private double calculateScore(List<Piece> pieces, int halfScorePawnCount) {
-		return pieces.stream()
+		double reduce = pieces.stream()
 			.mapToDouble(Piece::getScore)
-			.reduce(0d, Double::sum) - (halfScorePawnCount * HALF_VALUE);
+			.sum();
+		System.out.println(reduce);
+		System.out.println(halfScorePawnCount * HALF_VALUE);
+		return reduce - (halfScorePawnCount * HALF_VALUE);
 	}
 
 	public double getAmount() {

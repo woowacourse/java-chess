@@ -40,7 +40,6 @@ public class ChessController {
 	}
 
 	private static void movePiece(String command, GameManager gameManager) {
-
 		String commandNow = command.split(" ")[1];
 		String commandDestination = command.split(" ")[2];
 		Location now = Location.of(commandNow);
@@ -50,4 +49,16 @@ public class ChessController {
 		OutputView.printBoard(gameManager);
 
 	}
+
+	// public void run() {
+	// 	start();
+	// 	running();
+	// 	end();
+	// }
+	//
+	// private void running() {
+	// }
+	//
+	// private void end() {
+	// }
 }

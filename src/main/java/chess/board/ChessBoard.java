@@ -85,10 +85,10 @@ public class ChessBoard {
 			.filter(location -> board.get(location).isPawn())
 			.collect(Collectors.toList());
 
-		return new Score(new ArrayList<>(teamPieces.values()), getHalfScorePawnCount(sameTeamPawns));
+		return new Score(new ArrayList<>(teamPieces.values()), getHalfScoreCount(sameTeamPawns));
 	}
 
-	private int getHalfScorePawnCount(List<Location> sameTeamPawns) {
+	private int getHalfScoreCount(List<Location> sameTeamPawns) {
 		int halfScorePawnCount = 0;
 
 		for (Location location : sameTeamPawns) {
@@ -98,7 +98,7 @@ public class ChessBoard {
 					count++;
 				}
 			}
-			if (count > 2) {
+			if (count >= 2) {
 				halfScorePawnCount++;
 			}
 		}
