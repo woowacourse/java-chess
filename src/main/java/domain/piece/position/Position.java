@@ -2,9 +2,9 @@ package domain.piece.position;
 
 public class Position {
 	private Column column;
-	private int row;
+	private Row row;
 
-	Position(Column column, int row) {
+	Position(Column column, Row row) {
 		this.column = column;
 		this.row = row;
 	}
@@ -18,7 +18,7 @@ public class Position {
 	}
 
 	public int calculateRowGap(Position targetPosition) {
-		return targetPosition.row - this.row;
+		return row.gap(targetPosition.row);
 	}
 
 	public boolean isSamePosition(Position position) {
@@ -29,7 +29,7 @@ public class Position {
 		return column;
 	}
 
-	public int getRow() {
+	public Row getRow() {
 		return row;
 	}
 }

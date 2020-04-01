@@ -14,9 +14,6 @@ import domain.piece.team.Team;
 public class Board {
 	public static final int MIN_COLUMN_COUNT = 1;
 	public static final int MAX_COLUMN_COUNT = 8;
-	public static final int MIN_ROW_COUNT = 1;
-	public static final int MAX_ROW_COUNT = 8;
-	private static final int ROW_INDEX_IN_POSITION = 1;
 	private static final int INITIAL_KING_COUNT = 2;
 
 	private List<Rank> ranks;
@@ -34,7 +31,7 @@ public class Board {
 	}
 
 	private Rank calculateRank(Position position) {
-		return ranks.get(position.getRow() - 1);
+		return ranks.get(position.getRow().getRankIndex());
 	}
 
 	public Map<Team, Double> calculateScore() {

@@ -42,16 +42,16 @@ public abstract class Piece implements Movable {
 	}
 
 	protected void capture(Piece targetPiece, List<Rank> ranks) {
-		int targetRankIndex = targetPiece.position.getRow() - 1;
+		int targetRankIndex = targetPiece.position.getRow().getRankIndex();
 		ranks.get(targetRankIndex).getPieces().remove(targetPiece);
 	}
 
 	protected void changePosition(Position targetPosition, List<Rank> ranks) {
-		int sourceRankIndex = this.position.getRow() - 1;
+		int sourceRankIndex = this.position.getRow().getRankIndex();
 		ranks.get(sourceRankIndex).getPieces().remove(this);
 
 		this.position = targetPosition;
-		int targetRankIndex = targetPosition.getRow() - 1;
+		int targetRankIndex = targetPosition.getRow().getRankIndex();
 		ranks.get(targetRankIndex).getPieces().add(this);
 	}
 
