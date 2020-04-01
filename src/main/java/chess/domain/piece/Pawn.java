@@ -120,9 +120,8 @@ public class Pawn extends Piece {
     }
 
     private void calculatePawnFrontMove(Map<Square, Piece> board, Set<Square> movableSquares, List<Square> sameFileSquares) {
-        if (sameFileSquares.isEmpty()) {
-            throw new WrongPawnSquareScopeCalculationException("Pawn이 갈 수 있는 범위를 잘못 계산하였습니다");
-        }
+        validatesaemFileSquares(sameFileSquares);
+
         if (sameFileSquares.size() == 2) {
             Square firstSquare = sameFileSquares.get(0);
             Square secondSquare = sameFileSquares.get(1);
@@ -142,6 +141,12 @@ public class Pawn extends Piece {
             if (!board.containsKey(firstSquare)) {
                 movableSquares.add(firstSquare);
             }
+        }
+    }
+
+    private void validatesaemFileSquares(List<Square> sameFileSquares) {
+        if (sameFileSquares.isEmpty()) {
+            throw new WrongPawnSquareScopeCalculationException("Pawn이 갈 수 있는 범위를 잘못 계산하였습니다");
         }
     }
 }

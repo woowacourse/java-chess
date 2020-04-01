@@ -35,15 +35,6 @@ public class Square {
         return Square.of(file.getName() + rank.getName());
     }
 
-    public static Square of(Square square, int fileIncrementBy, int rankIncrementBy) {
-        Objects.requireNonNull(square, "square은 필수입니다");
-        File currentFile = square.getFile();
-        Rank currentRank = square.getRank();
-        File fileIncremented = File.of(currentFile.getNumber() + fileIncrementBy);
-        Rank rankIncremented = Rank.of(currentRank.getNumber() + rankIncrementBy);
-        return Square.of(fileIncremented, rankIncremented);
-    }
-
     private static void validateFileRank(File file, Rank rank) {
         Objects.requireNonNull(file, "file은 필수입니다");
         Objects.requireNonNull(rank, "rank는 필수입니다");
@@ -65,7 +56,11 @@ public class Square {
 
     public Square movedSquareInBoundary(int fileIncrementBy, int rankIncrementBy) {
         if (isIncrementedInBoundary(fileIncrementBy, rankIncrementBy)) {
-            return Square.of(this, fileIncrementBy, rankIncrementBy);
+            File currentFile = getFile();
+            Rank currentRank = getRank();
+            File fileIncremented = File.of(currentFile.getNumber() + fileIncrementBy);
+            Rank rankIncremented = Rank.of(currentRank.getNumber() + rankIncrementBy);
+            return Square.of(fileIncremented, rankIncremented);
         }
         return this;
     }
