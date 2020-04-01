@@ -3,21 +3,15 @@ package chess.domain.chessBoard;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.RuleStrategy.KingRuleStrategy;
-import chess.domain.RuleStrategy.KnightRuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.BishopRuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.QueenRuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.RookRuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnRuleStrategy;
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.pieceState.InitialState;
-import chess.domain.chessPiece.pieceType.Bishop;
 import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.Knight;
-import chess.domain.chessPiece.pieceType.Pawn;
 import chess.domain.chessPiece.pieceType.PieceColor;
-import chess.domain.chessPiece.pieceType.Queen;
-import chess.domain.chessPiece.pieceType.Rook;
+import chess.domain.chessPiece.pieceType.nonLeapablePieceType.Bishop;
+import chess.domain.chessPiece.pieceType.nonLeapablePieceType.Queen;
+import chess.domain.chessPiece.pieceType.nonLeapablePieceType.Rook;
+import chess.domain.chessPiece.pieceType.nonLeapablePieceType.pawn.BlackPawn;
+import chess.domain.chessPiece.pieceType.nonLeapablePieceType.pawn.WhitePawn;
 import chess.domain.position.ChessFile;
 import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
@@ -26,34 +20,42 @@ public class ChessBoardInitializer {
 
 	public static Map<Position, ChessPiece> create() {
 		Map<Position, ChessPiece> chessBoard = new HashMap<>();
-
-		addOtherPiecesBy(chessBoard, PieceColor.WHITE, 1);
-		addPawnPiecesBy(chessBoard, PieceColor.WHITE, 2);
-		addPawnPiecesBy(chessBoard, PieceColor.BLACK, 7);
-		addOtherPiecesBy(chessBoard, PieceColor.BLACK, 8);
+		setPawn(chessBoard);
+		setOthers(chessBoard);
 		return chessBoard;
 	}
 
-	private static void addPawnPiecesBy(Map<Position, ChessPiece> chessBoard, PieceColor pieceColor, int rank) {
-		for (ChessFile file : ChessFile.values()) {
-			chessBoard.put(Position.of(file, ChessRank.from(rank)), new Pawn(pieceColor,
-				new InitialState(pieceColor.getPawnRuleStrategyBy(PawnRuleStrategy.INITIAL_STATE_MOVABLE_RANGE))));
+	private static void setPawn(Map<Position, ChessPiece> chessBoard) {
+		setWhitePawn(chessBoard, 2);
+		setBlackPawn(chessBoard, 7);
+	}
+
+	private static void setWhitePawn(Map<Position, ChessPiece> chessBoard, int chessRank) {
+		for (ChessFile chessFile : ChessFile.values()) {
+			chessBoard.put(Position.of(chessFile, ChessRank.from(chessRank)), new WhitePawn());
 		}
 	}
 
-	private static void addOtherPiecesBy(Map<Position, ChessPiece> chessBoard, PieceColor pieceColor, int rank) {
-		chessBoard.put(Position.of("a" + rank), new Rook(pieceColor, new InitialState(new RookRuleStrategy())));
-		chessBoard.put(Position.of("b" + rank),
-			new Knight(pieceColor, new InitialState(new KnightRuleStrategy())));
-		chessBoard.put(Position.of("c" + rank),
-			new Bishop(pieceColor, new InitialState(new BishopRuleStrategy())));
-		chessBoard.put(Position.of("d" + rank), new Queen(pieceColor, new InitialState(new QueenRuleStrategy())));
-		chessBoard.put(Position.of("e" + rank), new King(pieceColor, new InitialState(new KingRuleStrategy())));
-		chessBoard.put(Position.of("f" + rank),
-			new Bishop(pieceColor, new InitialState(new BishopRuleStrategy())));
-		chessBoard.put(Position.of("g" + rank),
-			new Knight(pieceColor, new InitialState(new KnightRuleStrategy())));
-		chessBoard.put(Position.of("h" + rank), new Rook(pieceColor, new InitialState(new RookRuleStrategy())));
+	private static void setBlackPawn(Map<Position, ChessPiece> chessBoard, int chessRank) {
+		for (ChessFile chessFile : ChessFile.values()) {
+			chessBoard.put(Position.of(chessFile, ChessRank.from(chessRank)), new BlackPawn());
+		}
+	}
+
+	private static void setOthers(Map<Position, ChessPiece> chessBoard) {
+		setOthersBy(chessBoard, PieceColor.WHITE, 1);
+		setOthersBy(chessBoard, PieceColor.BLACK, 8);
+	}
+
+	private static void setOthersBy(Map<Position, ChessPiece> chessBoard, PieceColor pieceColor, int chessRank) {
+		chessBoard.put(Position.of(ChessFile.A, ChessRank.from(chessRank)), new Rook(pieceColor));
+		chessBoard.put(Position.of(ChessFile.B, ChessRank.from(chessRank)), new Knight(pieceColor));
+		chessBoard.put(Position.of(ChessFile.C, ChessRank.from(chessRank)), new Bishop(pieceColor));
+		chessBoard.put(Position.of(ChessFile.D, ChessRank.from(chessRank)), new Queen(pieceColor));
+		chessBoard.put(Position.of(ChessFile.E, ChessRank.from(chessRank)), new King(pieceColor));
+		chessBoard.put(Position.of(ChessFile.F, ChessRank.from(chessRank)), new Bishop(pieceColor));
+		chessBoard.put(Position.of(ChessFile.G, ChessRank.from(chessRank)), new Knight(pieceColor));
+		chessBoard.put(Position.of(ChessFile.H, ChessRank.from(chessRank)), new Rook(pieceColor));
 	}
 
 }

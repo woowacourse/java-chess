@@ -11,7 +11,7 @@ public abstract class ChessPiece implements Movable, Catchable {
 	protected final PieceColor pieceColor;
 	protected PieceState pieceState;
 
-	public ChessPiece(PieceColor pieceColor, PieceState pieceState) {
+	protected ChessPiece(PieceColor pieceColor, PieceState pieceState) {
 		Objects.requireNonNull(pieceColor, "피스 색상이 null입니다.");
 		Objects.requireNonNull(pieceState, "피스 전략이 null입니다.");
 		this.pieceColor = pieceColor;
@@ -19,36 +19,38 @@ public abstract class ChessPiece implements Movable, Catchable {
 	}
 
 	@Override
-	public boolean canLeap() {
-		return pieceState.canLeap();
-	}
+	public abstract boolean canLeap();
 
 	@Override
 	public boolean canMove(Position sourcePosition, Position targetPosition) {
 		validate(sourcePosition, targetPosition);
 
-		if (pieceState.canMove(sourcePosition, targetPosition)) {
-			pieceState = pieceState.shiftNextState(pieceColor);
+		if (isMovable(sourcePosition, targetPosition)) {
+			pieceState = pieceState.shiftNextState();
 			return true;
 		}
 		return false;
 	}
+
+	private void validate(final Position sourcePosition, final Position targetPosition) {
+		Objects.requireNonNull(sourcePosition, "소스 위치가 null입니다.");
+		Objects.requireNonNull(targetPosition, "타겟 위치가 null입니다.");
+	}
+
+	protected abstract boolean isMovable(Position sourcePosition, Position targetPosition);
 
 	@Override
 	public boolean canCatch(Position sourcePosition, Position targetPosition) {
 		validate(sourcePosition, targetPosition);
 
-		if (pieceState.canCatch(sourcePosition, targetPosition)) {
-			pieceState = pieceState.shiftNextState(pieceColor);
+		if (isCatchable(sourcePosition, targetPosition)) {
+			pieceState = pieceState.shiftNextState();
 			return true;
 		}
 		return false;
 	}
 
-	private void validate(Position sourcePosition, Position targetPosition) {
-		Objects.requireNonNull(sourcePosition, "소스 위치가 null입니다.");
-		Objects.requireNonNull(targetPosition, "타겟 위치가 null입니다.");
-	}
+	protected abstract boolean isCatchable(Position sourcePosition, Position targetPosition);
 
 	public boolean isSamePieceColorWith(ChessPiece chessPiece) {
 		Objects.requireNonNull(chessPiece, "체스 피스가 null입니다.");

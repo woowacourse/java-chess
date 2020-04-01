@@ -22,7 +22,7 @@ class ChessTurnStateTest {
 
 	@Test
 	void shiftEndState_KingNotCaught_GenerateEndState() {
-		ChessTurnState chessTurnState = new WhiteTurnState();
+		ChessTurnState chessTurnState = new BlackTurnState();
 
 		assertThat(chessTurnState.shiftEndState(false)).isInstanceOf(EndState.class);
 	}

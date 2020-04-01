@@ -9,8 +9,8 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.pieceType.Pawn;
 import chess.domain.chessPiece.pieceType.PieceColor;
+import chess.domain.chessPiece.pieceType.nonLeapablePieceType.pawn.Pawn;
 import chess.domain.position.ChessFile;
 import chess.domain.position.Position;
 

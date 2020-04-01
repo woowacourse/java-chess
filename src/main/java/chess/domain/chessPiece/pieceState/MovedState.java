@@ -1,20 +1,12 @@
 package chess.domain.chessPiece.pieceState;
 
-import java.util.Objects;
-
-import chess.domain.RuleStrategy.RuleStrategy;
-import chess.domain.chessPiece.pieceType.PieceColor;
-
 public class MovedState extends ChessMoveState {
 
-	public MovedState(RuleStrategy ruleStrategy) {
-		super(ruleStrategy);
-	}
+	public static final int MOVED_STATE_PAWN_MOVABLE_RANGE = 1;
 
 	@Override
-	public PieceState shiftNextState(PieceColor pieceColor) {
-		Objects.requireNonNull(pieceColor, "피스 색상이 존재하지 않습니다.");
-		return this;
+	public int getPawnMovableRange() {
+		return MOVED_STATE_PAWN_MOVABLE_RANGE;
 	}
 
 }

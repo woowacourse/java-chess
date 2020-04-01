@@ -14,20 +14,16 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import chess.domain.RuleStrategy.KingRuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.QueenRuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnRuleStrategy;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessBoardInitializer;
 import chess.domain.chessGame.gameState.BlackTurnState;
 import chess.domain.chessGame.gameState.EndState;
 import chess.domain.chessGame.gameState.KingCaughtState;
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.pieceState.InitialState;
 import chess.domain.chessPiece.pieceType.King;
-import chess.domain.chessPiece.pieceType.Pawn;
 import chess.domain.chessPiece.pieceType.PieceColor;
-import chess.domain.chessPiece.pieceType.Queen;
+import chess.domain.chessPiece.pieceType.nonLeapablePieceType.Queen;
+import chess.domain.chessPiece.pieceType.nonLeapablePieceType.pawn.WhitePawn;
 import chess.domain.position.Position;
 
 class ChessGameTest {
@@ -47,15 +43,13 @@ class ChessGameTest {
 
 	private static Stream<Arguments> provideChessBoardAndMoveExpectedChessBoard() {
 		Map<Position, ChessPiece> initialChessBoard = new HashMap<>();
-		initialChessBoard.put(Position.of("b1"),
-			new Pawn(PieceColor.WHITE, new InitialState(new WhitePawnRuleStrategy(2))));
+		initialChessBoard.put(Position.of("b1"), new WhitePawn());
 
 		ChessBoard chessBoard = new ChessBoard(initialChessBoard);
 		ChessGame chessGame = ChessGame.from(chessBoard);
 
 		Map<Position, ChessPiece> expectedChessBoard = new HashMap<>();
-		expectedChessBoard.put(Position.of("b2"),
-			new Pawn(PieceColor.WHITE, new InitialState(new WhitePawnRuleStrategy(2))));
+		expectedChessBoard.put(Position.of("b2"), new WhitePawn());
 		ChessBoard expected = new ChessBoard(expectedChessBoard);
 
 		return Stream.of(Arguments.of(chessGame, expected));
@@ -84,8 +78,7 @@ class ChessGameTest {
 	void move_NotOnSourcePosition_ExceptionThrown() {
 		ChessCommand chessCommand = ChessCommand.of(Arrays.asList("move", "b1", "b2"));
 		Map<Position, ChessPiece> initialChessBoard = new HashMap<>();
-		initialChessBoard.put(Position.of("b3"),
-			new Queen(PieceColor.WHITE, new InitialState(new QueenRuleStrategy())));
+		initialChessBoard.put(Position.of("b3"), new Queen(PieceColor.WHITE));
 		ChessBoard chessBoard = new ChessBoard(initialChessBoard);
 		ChessGame chessGame = ChessGame.from(chessBoard);
 
@@ -106,8 +99,8 @@ class ChessGameTest {
 	@Test
 	void shiftGameStatusBy_KingOnTargetPosition_ShiftKingCaughtState() {
 		Map<Position, ChessPiece> initialChessBoard = new HashMap<>();
-		initialChessBoard.put(Position.of("b1"), new King(PieceColor.WHITE, new InitialState(new KingRuleStrategy())));
-		initialChessBoard.put(Position.of("b2"), new King(PieceColor.BLACK, new InitialState(new KingRuleStrategy())));
+		initialChessBoard.put(Position.of("b1"), new King(PieceColor.WHITE));
+		initialChessBoard.put(Position.of("b2"), new King(PieceColor.BLACK));
 		ChessBoard chessBoard = new ChessBoard(initialChessBoard);
 		ChessGame chessGame = ChessGame.from(chessBoard);
 		ChessCommand chessCommand = ChessCommand.of(Arrays.asList("move", "b1", "b2"));
@@ -160,8 +153,8 @@ class ChessGameTest {
 	@Test
 	void isKingCaught_KingCaughtState_ReturnTrue() {
 		Map<Position, ChessPiece> initialChessBoard = new HashMap<>();
-		initialChessBoard.put(Position.of("b1"), new King(PieceColor.WHITE, new InitialState(new KingRuleStrategy())));
-		initialChessBoard.put(Position.of("b2"), new King(PieceColor.BLACK, new InitialState(new KingRuleStrategy())));
+		initialChessBoard.put(Position.of("b1"), new King(PieceColor.WHITE));
+		initialChessBoard.put(Position.of("b2"), new King(PieceColor.BLACK));
 		ChessBoard chessBoard = new ChessBoard(initialChessBoard);
 		ChessGame chessGame = ChessGame.from(chessBoard);
 		ChessCommand chessCommand = ChessCommand.of(Arrays.asList("move", "b1", "b2"));

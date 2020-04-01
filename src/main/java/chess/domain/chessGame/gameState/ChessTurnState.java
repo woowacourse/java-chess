@@ -4,23 +4,15 @@ import chess.domain.chessPiece.pieceType.PieceColor;
 
 public abstract class ChessTurnState implements GameState {
 
-	protected final PieceColor pieceColor;
-
-	protected ChessTurnState(PieceColor pieceColor) {
-		this.pieceColor = pieceColor;
-	}
-
 	@Override
 	public GameState shiftEndState(boolean isKingOnTargetPosition) {
 		if (isKingOnTargetPosition) {
-			return new KingCaughtState(pieceColor);
+			return new KingCaughtState(getPieceColor());
 		}
-		return new EndState(pieceColor);
+		return new EndState(getPieceColor());
 	}
 
 	@Override
-	public PieceColor getPieceColor() {
-		return pieceColor;
-	}
+	public abstract PieceColor getPieceColor();
 
 }

@@ -2,6 +2,10 @@ package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -27,6 +31,63 @@ class MoveDirectionTest {
 		Position position = Position.of("d4");
 
 		assertThat(moveDirection.move(position)).isEqualTo(expected);
+	}
+
+	@Test
+	void getQueenMovableDirections_ReturnQueenMovableDirections() {
+		List<MoveDirection> expected = Arrays.asList(MoveDirection.values());
+
+		assertThat(MoveDirection.getQueenMovableDirections()).isEqualTo(expected);
+	}
+
+	@Test
+	void getRookMovableDirections_ReturnRookMovableDirections() {
+		List<MoveDirection> expected = Arrays.asList(
+			MoveDirection.N,
+			MoveDirection.E,
+			MoveDirection.S,
+			MoveDirection.W);
+
+		assertThat(MoveDirection.getRookMovableDirections()).isEqualTo(expected);
+	}
+
+	@Test
+	void getBishopMovableDirections_ReturnBishopMovableDirections() {
+		List<MoveDirection> expected = Arrays.asList(
+			MoveDirection.NE,
+			MoveDirection.SE,
+			MoveDirection.SW,
+			MoveDirection.NW);
+
+		assertThat(MoveDirection.getBishopMovableDirections()).isEqualTo(expected);
+	}
+
+	@Test
+	void getBlackPawnMovableDirections_ReturnBlackPawnMovableDirections() {
+		List<MoveDirection> expected = Arrays.asList(MoveDirection.S);
+
+		assertThat(MoveDirection.getBlackPawnMovableDirections()).isEqualTo(expected);
+	}
+
+	@Test
+	void getBlackPawnCatchableDirections_ReturnBlackPawnCatchableDirections() {
+		List<MoveDirection> expected = Arrays.asList(MoveDirection.SW, MoveDirection.SE);
+
+		assertThat(MoveDirection.getBlackPawnCatchableDirections()).isEqualTo(expected);
+	}
+
+	@Test
+	void getWhitePawnMovableDirections_ReturnWhitePawnMovableDirections() {
+		List<MoveDirection> expected = Arrays.asList(MoveDirection.N);
+
+		assertThat(MoveDirection.getWhitePawnMovableDirections()).isEqualTo(expected);
+	}
+
+	@Test
+	void getWhitePawnCatchableDirections_ReturnWhitePawnCatchableDirections() {
+		List<MoveDirection> expected = Arrays.asList(MoveDirection.NW, MoveDirection.NE);
+
+		assertThat(MoveDirection.getWhitePawnCatchableDirections()).isEqualTo(expected);
 	}
 
 }

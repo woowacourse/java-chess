@@ -3,23 +3,17 @@ package chess.domain.chessPiece.pieceType;
 import java.util.Arrays;
 import java.util.function.Function;
 
-import chess.domain.RuleStrategy.RuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.BlackPawnRuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnRuleStrategy;
-
 public enum PieceColor {
 
-	WHITE("white", String::toLowerCase, WhitePawnRuleStrategy::new),
-	BLACK("black", String::toUpperCase, BlackPawnRuleStrategy::new);
+	WHITE("white", String::toLowerCase),
+	BLACK("black", String::toUpperCase);
 
 	private final String color;
 	private final Function<String, String> convertFrom;
-	private final Function<Integer, RuleStrategy> pawnRuleStrategy;
 
-	PieceColor(String color, Function<String, String> convertFrom, Function<Integer, RuleStrategy> pawnRuleStrategy) {
+	PieceColor(String color, Function<String, String> convertFrom) {
 		this.color = color;
 		this.convertFrom = convertFrom;
-		this.pawnRuleStrategy = pawnRuleStrategy;
 	}
 
 	public static PieceColor of(String color) {
@@ -36,8 +30,12 @@ public enum PieceColor {
 		return convertFrom.apply(pieceName);
 	}
 
-	public RuleStrategy getPawnRuleStrategyBy(int movableRange) {
-		return pawnRuleStrategy.apply(movableRange);
+	public boolean isBlack() {
+		return this.equals(BLACK);
+	}
+
+	public boolean isWhite() {
+		return this.equals(WHITE);
 	}
 
 	public String getColor() {

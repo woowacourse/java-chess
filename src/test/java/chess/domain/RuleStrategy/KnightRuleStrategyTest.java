@@ -38,7 +38,7 @@ class KnightRuleStrategyTest {
 
 	@ParameterizedTest
 	@CsvSource(value = {"b3", "b5", "c2", "e2", "f3", "f5", "c6", "e6"})
-	void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
+	void isMovable_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
 		KnightRuleStrategy knightRuleStrategy = new KnightRuleStrategy();
 		Position sourcePosition = Position.of("d4");
 
@@ -47,7 +47,7 @@ class KnightRuleStrategyTest {
 
 	@ParameterizedTest
 	@CsvSource(value = {"d5", "e4", "d3", "c4"})
-	void canMove_NonMovableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
+	void isMovable_NonMovableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
 		KnightRuleStrategy knightRuleStrategy = new KnightRuleStrategy();
 		Position sourcePosition = Position.of("d4");
 

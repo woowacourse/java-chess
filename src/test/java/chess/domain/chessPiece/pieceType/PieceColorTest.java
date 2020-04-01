@@ -7,9 +7,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.BlackPawnRuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnRuleStrategy;
-
 public class PieceColorTest {
 
 	@ParameterizedTest
@@ -33,10 +30,15 @@ public class PieceColorTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = {1, 2})
-	void getPawnRuleStrategyBy_MovableRange_ReturnPawnRuleStrategyByPieceColor(int movableRange) {
-		assertThat(PieceColor.BLACK.getPawnRuleStrategyBy(movableRange)).isInstanceOf(BlackPawnRuleStrategy.class);
-		assertThat(PieceColor.WHITE.getPawnRuleStrategyBy(movableRange)).isInstanceOf(WhitePawnRuleStrategy.class);
+	@CsvSource(value = {"BLACK,true", "WHITE,false"})
+	void isBlack_ReturnCompareResult(PieceColor pieceColor, boolean expected) {
+		assertThat(pieceColor.isBlack()).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"BLACK,false", "WHITE,true"})
+	void isWhite_ReturnCompareResult(PieceColor pieceColor, boolean expected) {
+		assertThat(pieceColor.isWhite()).isEqualTo(expected);
 	}
 
 }

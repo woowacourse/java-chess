@@ -36,7 +36,6 @@ public class ChessController {
 		return chessCommand;
 	}
 
-	// NOTE: 2020/03/30 해당 분기문을 줄일 수 있는 방법 생각해보기
 	private void playChessGameBy(ChessCommand chessCommand) {
 		if (chessCommand.isMoveChessCommand()) {
 			chessGame.move(chessCommand);
