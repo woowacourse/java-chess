@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import static chess.domain.position.File.*;
-import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
@@ -14,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
-import chess.domain.position.Position3;
+import chess.domain.position.Position;
 
 public class BoardTest {
 	private Board board;
@@ -22,9 +20,9 @@ public class BoardTest {
 
 	@BeforeEach
 	void setup() {
-		Map<Position3, Piece> pieces = new HashMap<>();
+		Map<Position, Piece> pieces = new HashMap<>();
 		rook = new Rook(Team.WHITE);
-		pieces.put(Position3.of(A, ONE), rook);
+		pieces.put(Position.of("a1"), rook);
 		board = new Board(pieces);
 	}
 
@@ -37,8 +35,8 @@ public class BoardTest {
 	@DisplayName("move메서드를 실행하면 Map이 수정되는지 테스트")
 	@Test
 	void moveTest() {
-		Position3 from = Position3.of(A, ONE);
-		Position3 to = Position3.of(A, TWO);
+		Position from = Position.of("a1");
+		Position to = Position.of("a2");
 		board.move(from, to);
 		assertThat(board.getPiece(to)).isEqualTo(rook);
 	}

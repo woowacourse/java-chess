@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Team.*;
-import static chess.domain.position.File.*;
-import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -16,23 +14,23 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.position.Position3;
+import chess.domain.position.Position;
 
 public class RookTest {
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
-	void rookPathTest(Position3 start, Position3 destination, List<Position3> trace) {
+	void rookPathTest(Position start, Position destination, List<Position> trace) {
 		Rook rook = new Rook(BLACK);
-		List<Position3> actual = rook.findMoveModeTrace(start, destination);
+		List<Position> actual = rook.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position3.of(B, FOUR), Position3.of(B, SIX),
-				Arrays.asList(Position3.of(B, FIVE))),
-			Arguments.of(Position3.of(B, FOUR), Position3.of(E, FOUR),
-				Arrays.asList(Position3.of(C, FOUR), Position3.of(D, FOUR)))
+			Arguments.of(Position.of("b4"), Position.of("b7"),
+				Arrays.asList(Position.of("b5"), Position.of("b6"))),
+			Arguments.of(Position.of("b4"), Position.of("e4"),
+				Arrays.asList(Position.of("c4"), Position.of("d4")))
 		);
 	}
 
@@ -40,7 +38,7 @@ public class RookTest {
 	@Test
 	void invalidMovementTest() {
 		Rook rook = new Rook(BLACK);
-		assertThatThrownBy(() -> rook.findMoveModeTrace(Position3.of(A, ONE), Position3.of(B, TWO)))
+		assertThatThrownBy(() -> rook.findMoveModeTrace(Position.of("a1"), Position.of("b2")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

@@ -42,6 +42,11 @@ public class Board {
 	//추가하기
 	public void start() {
 		pieces.clear();
+		for (int i = 1; i <= 8; i++) {
+			for (int j = 1; j <= 8; j++) {
+				pieces.put(Position.of(i, j), EMPTY);
+			}
+		}
 		initChessBoard(8, BLACK, 7);
 		initChessBoard(1, WHITE, 2);
 	}
@@ -63,6 +68,7 @@ public class Board {
 	//read 역할
 	public Map<Team, Double> status() {
 		HashMap<Team, Double> collect = pieces.values().stream()
+			.filter(Piece::isNotBlank)
 			.collect(groupingBy(Piece::getTeam, HashMap::new, summingDouble(Piece::getScore)));
 
 		for (int file = 1; file <= 8; file++) {

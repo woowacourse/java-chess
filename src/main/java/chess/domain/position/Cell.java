@@ -53,4 +53,11 @@ public class Cell {
 	public int hashCode() {
 		return Objects.hash(number);
 	}
+
+	@Override
+	public String toString() {
+		return "Cell{" +
+			"number=" + number +
+			'}';
+	}
 }

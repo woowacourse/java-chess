@@ -41,7 +41,7 @@ public class Position {
 	}
 
 	private static String getKey(int file, int rank) {
-		return (char)('a' + file) + String.valueOf(rank);
+		return (char)('a' + file - 1) + String.valueOf(rank);
 	}
 
 	public static List<Position> findMultipleStepTrace(Position from, Position to) {
@@ -78,11 +78,11 @@ public class Position {
 	}
 
 	public boolean isSameRank(Position other) {
-		return this.row == other.row;
+		return row.equals(other.row);
 	}
 
 	public boolean isSameFile(Position other) {
-		return this.col == other.col;
+		return col.equals(other.col);
 	}
 
 	public boolean isNotDistanceOneSquare(Position other) {

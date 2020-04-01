@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Team.*;
-import static chess.domain.position.File.*;
-import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Collections;
@@ -16,28 +14,28 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.position.Position3;
+import chess.domain.position.Position;
 
 public class KingTest {
 	@DisplayName("킹은 직선, 대각선 1칸만큼 이동가능, 이동 경로를 반환할 수 있다.")
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
-	void kingPathTest(Position3 start, Position3 destination, List<Position3> trace) {
+	void kingPathTest(Position start, Position destination, List<Position> trace) {
 		King king = new King(BLACK);
-		List<Position3> actual = king.findMoveModeTrace(start, destination);
+		List<Position> actual = king.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
 
 	private static Stream<Arguments> startDestinationTraceProvider() {
 		return Stream.of(
-			Arguments.of(Position3.of(E, FIVE), Position3.of(D, SIX), Collections.emptyList()),
-			Arguments.of(Position3.of(E, FIVE), Position3.of(E, SIX), Collections.emptyList()),
-			Arguments.of(Position3.of(E, FIVE), Position3.of(F, SIX), Collections.emptyList()),
-			Arguments.of(Position3.of(E, FIVE), Position3.of(D, FIVE), Collections.emptyList()),
-			Arguments.of(Position3.of(E, FIVE), Position3.of(F, FIVE), Collections.emptyList()),
-			Arguments.of(Position3.of(E, FIVE), Position3.of(D, FOUR), Collections.emptyList()),
-			Arguments.of(Position3.of(E, FIVE), Position3.of(E, FOUR), Collections.emptyList()),
-			Arguments.of(Position3.of(E, FIVE), Position3.of(F, FOUR), Collections.emptyList())
+			Arguments.of(Position.of("e5"), Position.of("d6"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("e6"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("f6"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("d5"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("f5"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("d4"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("e4"), Collections.emptyList()),
+			Arguments.of(Position.of("e5"), Position.of("f4"), Collections.emptyList())
 		);
 	}
 
@@ -45,7 +43,7 @@ public class KingTest {
 	@Test
 	void invalidMovementTest() {
 		King king = new King(BLACK);
-		assertThatThrownBy(() -> king.findMoveModeTrace(Position3.of(A, ONE), Position3.of(B, THREE)))
+		assertThatThrownBy(() -> king.findMoveModeTrace(Position.of("a1"), Position.of("b3")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}
