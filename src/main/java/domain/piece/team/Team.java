@@ -5,13 +5,15 @@ import java.util.function.Function;
 import domain.piece.position.Direction;
 
 public enum Team {
-	WHITE((direction) -> Direction.whitePawnDirection().contains(direction)),
-	BLACK((direction) -> Direction.blackPawnDirection().contains(direction));
+	WHITE("White", (direction) -> Direction.whitePawnDirection().contains(direction)),
+	BLACK("Black", (direction) -> Direction.blackPawnDirection().contains(direction));
 
-	private Function<Direction, Boolean> directionValidation;
+	private String name;
+	private Function<Direction, Boolean> pawnDirectionValidation;
 
-	Team(Function<Direction, Boolean> directionValidation) {
-		this.directionValidation = directionValidation;
+	Team(String name, Function<Direction, Boolean> pawnDirectionValidation) {
+		this.name = name;
+		this.pawnDirectionValidation = pawnDirectionValidation;
 	}
 
 	public static Team changeTurn(Team turn) {
@@ -21,7 +23,11 @@ public enum Team {
 		return WHITE;
 	}
 
-	public Function<Direction, Boolean> getDirectionValidation() {
-		return directionValidation;
+	public String getName() {
+		return name;
+	}
+
+	public Function<Direction, Boolean> getPawnDirectionValidation() {
+		return pawnDirectionValidation;
 	}
 }

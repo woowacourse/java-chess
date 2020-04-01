@@ -35,6 +35,7 @@ public class ChessController {
 		Command command;
 		String[] inputCommand;
 		do {
+			checkKingDead(board);
 			OutputView.printTurn(team);
 			inputCommand = InputView.inputCommand().split(DELIMITER);
 			command = Command.ofChessCommand(inputCommand[COMMAND_INDEX]);
@@ -47,5 +48,12 @@ public class ChessController {
 			}
 			OutputView.printChessBoard(board);
 		} while (command != Command.END);
+	}
+
+	private void checkKingDead(Board board) {
+		if (board.isKingDead()) {
+			OutputView.printWinner(board.findWinner());
+			System.exit(0);
+		}
 	}
 }

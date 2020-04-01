@@ -64,4 +64,9 @@ public class OutputView {
 			System.out.println("Black팀 차례입니다.");
 		}
 	}
+
+	public static void printWinner(Team winner) {
+		System.out.println(winner.getName() + "팀이 상대팀의 King을 잡았습니다!");
+		System.out.println("승리한 팀은 " + winner.getName() + "팀 입니다.");
+	}
 }

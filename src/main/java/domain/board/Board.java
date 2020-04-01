@@ -2,6 +2,7 @@ package domain.board;
 
 import java.util.List;
 
+import domain.piece.King;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.position.Column;
@@ -12,6 +13,7 @@ import domain.piece.team.Team;
 public class Board {
 	private static final int ROW_INDEX = 1;
 	private static final double PAWNS_ON_SAME_COLUMN_SCORE = 0.5;
+	private static final int COUNT_OF_ALL_KING = 2;
 
 	private List<Rank> ranks;
 
@@ -85,5 +87,26 @@ public class Board {
 			.filter(piece -> piece.getPosition().getColumn() == column)
 			.filter(piece -> piece instanceof Pawn)
 			.count() > 1;
+	}
+
+	public boolean isKingDead() {
+		return ranks.stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.filter(piece -> piece instanceof King)
+			.count() < COUNT_OF_ALL_KING;
+	}
+
+	public Team findWinner() {
+		if (isWhiteKingAlive()) {
+			return Team.WHITE;
+		}
+		return Team.BLACK;
+	}
+
+	private boolean isWhiteKingAlive() {
+		return ranks.stream()
+			.flatMap(rank -> rank.getPieces().stream())
+			.filter(piece -> piece instanceof King)
+			.anyMatch(piece -> piece.isSameTeam(Team.WHITE));
 	}
 }

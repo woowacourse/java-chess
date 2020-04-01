@@ -26,7 +26,7 @@ public class Pawn extends Piece {
 
 	@Override
 	protected boolean validDirection(Direction direction) {
-		if (team.getDirectionValidation().apply(direction)) {
+		if (team.getPawnDirectionValidation().apply(direction)) {
 			return true;
 		}
 		throw new InvalidPositionException(INVALID_DIRECTION);
