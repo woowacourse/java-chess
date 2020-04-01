@@ -1,5 +1,9 @@
 package chess.domain.board;
 
+import chess.domain.move.MoveStateAfter;
+import chess.domain.move.MoveStateBefore;
+import chess.domain.move.MoveStateChecker;
+import chess.domain.move.MoveStatePromotion;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
@@ -19,8 +23,8 @@ import util.NullChecker;
 public class ChessBoard {
 
     private final Map<BoardSquare, Piece> chessBoard;
-    private Color gameTurn;
     private final Set<CastlingSetting> castlingElements;
+    private Color gameTurn;
 
     public ChessBoard() {
         this(new BoardInitialDefault(), Color.WHITE, CastlingSetting.getCastlingElements());
@@ -44,34 +48,20 @@ public class ChessBoard {
     }
 
     public MoveState movePieceWhenCanMove(MoveSquare moveSquare) {
-        if (isKingCaptured()) {
-            return MoveState.KING_CAPTURED;
-        }
-        if (!canMove(moveSquare)) {
-            return getWhyCanNotMove(moveSquare);
-        }
-        if (isNeedPromotion()) {
-            return MoveState.FAIL_MUST_PAWN_CHANGE;
-        }
-        movePiece(moveSquare);
-        if (isKingCaptured()) {
-            return MoveState.KING_CAPTURED;
-        }
-        if (isNeedPromotion()) {
-            return MoveState.SUCCESS_BUT_PAWN_CHANGE;
-        }
-        gameTurn = gameTurn.nextTurnIfEmptyMySelf();
-        return MoveState.SUCCESS;
+        MoveStateChecker moveChecker = new MoveStateChecker(this);
+        MoveState moveState = moveChecker.check(new MoveStateBefore(moveSquare));
+        moveState = moveIfReady(moveSquare, moveChecker, moveState);
+        gameTurn = moveState.turnTeam(gameTurn);
+        return moveState;
     }
 
-    private MoveState getWhyCanNotMove(MoveSquare moveSquare) {
-        if (isNoPiece(moveSquare)) {
-            return MoveState.FAIL_NO_PIECE;
+    private MoveState moveIfReady(MoveSquare moveSquare, MoveStateChecker moveChecker,
+        MoveState moveState) {
+        if (moveState == MoveState.READY) {
+            movePiece(moveSquare);
+            moveState = moveChecker.check(new MoveStateAfter());
         }
-        if (isNotMyTurn(moveSquare)) {
-            return MoveState.FAIL_NOT_ORDER;
-        }
-        return MoveState.FAIL_CAN_NOT_MOVE;
+        return moveState;
     }
 
     private BoardSquare getFinishPawnBoard() {
@@ -82,19 +72,19 @@ public class ChessBoard {
             .orElseThrow(IllegalAccessError::new);
     }
 
-    private boolean isNeedPromotion() {
+    public boolean isNeedPromotion() {
         return chessBoard.keySet().stream()
             .filter(boardSquare -> chessBoard.get(boardSquare) instanceof Pawn)
             .anyMatch(BoardSquare::isLastRank);
     }
 
     public MoveState promotion(Type hopeType) {
-        if (isNeedPromotion()) {
+        MoveState moveState = new MoveStateChecker(this).check(new MoveStatePromotion());
+        if (moveState == MoveState.SUCCESS) {
             chessBoard.put(getFinishPawnBoard(), getHopePiece(hopeType));
-            gameTurn = gameTurn.nextTurnIfEmptyMySelf();
-            return MoveState.SUCCESS;
         }
-        return MoveState.SUCCESS_BUT_PAWN_CHANGE;
+        gameTurn = moveState.turnTeam(gameTurn);
+        return moveState;
     }
 
     private Piece getHopePiece(Type hopeType) {
@@ -106,7 +96,7 @@ public class ChessBoard {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    private boolean canMove(MoveSquare moveSquare) {
+    public boolean canMove(MoveSquare moveSquare) {
         BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.BEFORE);
         BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.AFTER);
         Piece movePieceBefore = chessBoard.get(moveSquareBefore);

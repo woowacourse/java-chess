@@ -32,13 +32,13 @@ public class ChessBoardTest {
     @Test
     void canMove() {
         ChessBoard chessBoard = new ChessBoard();
-        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a6")).isSuccess())
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a6")).isSucceed())
             .isFalse();
-        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a2", "a3")).isSuccess())
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a2", "a3")).isSucceed())
             .isTrue();
-        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a6")).isSuccess())
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "a6")).isSucceed())
             .isTrue();
-        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "b1")).isSuccess())
+        assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("a7", "b1")).isSucceed())
             .isFalse();
     }
 

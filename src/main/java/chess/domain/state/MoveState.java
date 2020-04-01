@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import chess.domain.piece.Color;
+
 public enum MoveState {
     SUCCESS_BUT_PAWN_CHANGE(true),
     SUCCESS(true),
@@ -7,15 +9,23 @@ public enum MoveState {
     FAIL_NOT_ORDER(false),
     FAIL_CAN_NOT_MOVE(false),
     FAIL_MUST_PAWN_CHANGE(false),
+    READY(false),
     KING_CAPTURED(false);
 
-    private final boolean success;
+    private final boolean succeed;
 
-    MoveState(boolean success) {
-        this.success = success;
+    MoveState(boolean succeed) {
+        this.succeed = succeed;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public boolean isSucceed() {
+        return succeed;
+    }
+
+    public Color turnTeam(Color gameTurn) {
+        if (this == SUCCESS) {
+            return gameTurn.nextTurnIfEmptyMySelf();
+        }
+        return gameTurn;
     }
 }
