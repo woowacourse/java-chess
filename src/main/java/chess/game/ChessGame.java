@@ -1,5 +1,6 @@
 package chess.game;
 
+import chess.board.ChessBoardCreater;
 import chess.command.Command;
 import chess.board.ChessBoard;
 import chess.location.Location;
@@ -22,7 +23,7 @@ public class ChessGame {
     private Team turn;
 
     public ChessGame() {
-        chessBoard = new ChessBoard();
+        chessBoard = ChessBoardCreater.create();
         white = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
         black = new Player(new ChessSet(chessBoard.giveMyPiece(BLACK)), BLACK);
         turn = Team.WHITE;

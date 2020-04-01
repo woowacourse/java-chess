@@ -12,16 +12,15 @@ import chess.piece.type.Piece;
 import chess.score.Score;
 import chess.team.Team;
 
-import static chess.board.ChessBoardMaker.*;
+import static chess.board.ChessBoardCreater.*;
 
 public class ChessBoard {
     private static final double PAWN_REDUCE_VALUE = 0.5;
 
     private final Map<Location, Piece> board;
 
-    public ChessBoard() {
-        this.board = new HashMap<>();
-        makeChessBoard(board);
+    public ChessBoard(Map<Location, Piece> board) {
+        this.board = board;
     }
 
     public boolean canMove(Location now, Location destination) {

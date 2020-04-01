@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.board.ChessBoard;
+import chess.board.ChessBoardCreater;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class BishopTest {
     @Test
     @DisplayName("갈 수 있는 곳 테스트")
     void canMove() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
         Bishop bishop = new Bishop(Team.BLACK);
         Location now = new Location(8, 'c');
         Location after = new Location(7, 'd');
@@ -29,7 +30,7 @@ class BishopTest {
     @Test
     @DisplayName("갈 수 없는 곳 확인")
     void canMove2() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
         Bishop bishop = new Bishop(Team.BLACK);
         Location now = new Location(8, 'c');
         Location cantAfter = new Location(2, 'c');

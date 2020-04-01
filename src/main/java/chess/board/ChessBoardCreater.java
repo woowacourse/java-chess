@@ -4,9 +4,10 @@ import chess.location.Location;
 import chess.piece.type.*;
 import chess.team.Team;
 
+import java.util.HashMap;
 import java.util.Map;
 
-class ChessBoardMaker {
+public class ChessBoardCreater {
     static final int MINIMUM_LINE = 0;
     static final int LIMIT_LINE = 8;
     private static final char COL_START = 'a';
@@ -15,11 +16,13 @@ class ChessBoardMaker {
     private static final int BLACK_PAWN_LINE = 7;
     private static final int BLACK_NOBLE_LINE = 8;
 
-    static void makeChessBoard(Map<Location, Piece> board) {
+    public static ChessBoard create() {
+        Map<Location, Piece> board = new HashMap<>();
         putNoble(board, WHITE_NOBLE_LINE, Team.WHITE);
         putPawns(board, WHITE_PAWN_LINE, Team.WHITE);
         putPawns(board, BLACK_PAWN_LINE, Team.BLACK);
         putNoble(board, BLACK_NOBLE_LINE, Team.BLACK);
+        return new ChessBoard(board);
     }
 
     private static void putNoble(Map<Location, Piece> board, int row, Team team) {

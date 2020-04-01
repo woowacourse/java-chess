@@ -1,6 +1,7 @@
 package chess.piece.type;
 
 import chess.board.ChessBoard;
+import chess.board.ChessBoardCreater;
 import chess.location.Location;
 import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ class PawnTest {
     @Test
     @DisplayName("초기 위치의 폰의 2단 이동 테스트")
     void canMove1() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(7, 'a');
@@ -28,7 +29,7 @@ class PawnTest {
     @Test
     @DisplayName("초기 위치의 폰의 1단 이동 테스트")
     void canMove2() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(7, 'a');
@@ -41,7 +42,7 @@ class PawnTest {
     @Test
     @DisplayName("초기 위치의 폰의 대각선 이동 테스트")
     void canMove3() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(7, 'a');
@@ -54,7 +55,7 @@ class PawnTest {
     @Test
     @DisplayName("초기 위치의 폰의 이동 테스트")
     void cantMove() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(7, 'a');
@@ -67,7 +68,7 @@ class PawnTest {
     @Test
     @DisplayName("초기 위치가 아닌 일반적인 폰의 1단 이동")
     void canMove4() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(6, 'a');
@@ -80,7 +81,7 @@ class PawnTest {
     @Test
     @DisplayName("초기 위치가 아닌 일반적인 폰의 대각선 이동")
     void canMove5() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(6, 'a');
@@ -93,7 +94,7 @@ class PawnTest {
     @Test
     @DisplayName("초기 위치가 아닌 일반적인 폰의 2단 이동")
     void cantMove2() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Pawn pawn = new Pawn(Team.BLACK);
         Location now = new Location(6, 'a');

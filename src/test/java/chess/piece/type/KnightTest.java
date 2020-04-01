@@ -1,6 +1,7 @@
 package chess.piece.type;
 
 import chess.board.ChessBoard;
+import chess.board.ChessBoardCreater;
 import chess.location.Location;
 import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,7 @@ class KnightTest {
     @Test
     @DisplayName("갈 수 있는 곳 테스트")
     void canMove1() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Knight knight = new Knight(Team.BLACK);
         Location now = new Location(8, 'g');
@@ -25,7 +26,7 @@ class KnightTest {
     @Test
     @DisplayName("갈 수 있는 곳 테스트")
     void canMove2() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Knight knight = new Knight(Team.BLACK);
         Location now = new Location(8, 'g');
@@ -38,7 +39,7 @@ class KnightTest {
     @Test
     @DisplayName("갈 수 없는 곳 테스트")
     void canMove() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         Knight knight = new Knight(Team.BLACK);
         Location now = new Location(8, 'g');
