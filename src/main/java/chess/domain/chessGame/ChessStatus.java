@@ -16,7 +16,8 @@ import chess.domain.position.Position;
 
 public class ChessStatus {
 
-	private static final Double PAWN_ALONE_ON_FILE_SCORE = 1.;
+	private static final double PAWN_ALONE_ON_FILE_SCORE = 1.;
+	private static final double PAWN_EXIST_SAME_FILE_CONSTANT = 0.5;
 
 	private final Map<PieceColor, Double> chessStatus;
 
@@ -64,10 +65,14 @@ public class ChessStatus {
 				chessPiece -> chessPiece instanceof Pawn,
 				summingDouble(ChessPiece::getScore)));
 
-		if (partitioningByPawn.get(pawnKey) > PAWN_ALONE_ON_FILE_SCORE) {
-			return (partitioningByPawn.get(pawnKey) / 2) + partitioningByPawn.get(notPawnKey);
+		return calculatePawnScore(partitioningByPawn.get(pawnKey)) + partitioningByPawn.get(notPawnKey);
+	}
+
+	private static double calculatePawnScore(double pawnTotalScore) {
+		if (pawnTotalScore > PAWN_ALONE_ON_FILE_SCORE) {
+			return pawnTotalScore * PAWN_EXIST_SAME_FILE_CONSTANT;
 		}
-		return partitioningByPawn.get(pawnKey) + partitioningByPawn.get(notPawnKey);
+		return pawnTotalScore;
 	}
 
 	public double getStatusOf(PieceColor pieceColor) {

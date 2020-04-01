@@ -16,7 +16,7 @@ public abstract class ChessEndState implements GameState {
 	}
 
 	@Override
-	public GameState shiftEndState(boolean isKingCaught) {
+	public GameState shiftEndState(boolean isKingOnTargetPosition) {
 		throw new UnsupportedOperationException("End 상태에서 변경될 수 없습니다.");
 	}
 

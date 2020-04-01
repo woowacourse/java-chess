@@ -35,6 +35,11 @@ public class ChessBoard {
 		return chessBoard.containsKey(position);
 	}
 
+	public boolean isLeapableChessPieceOn(Position sourcePosition) {
+		Objects.requireNonNull(sourcePosition, "체스 위치가 null입니다.");
+		return chessBoard.get(sourcePosition).canLeap();
+	}
+
 	public void checkChessPieceExistInRoute(Position sourcePosition, Position targetPosition) {
 		validate(sourcePosition, targetPosition);
 		MoveDirection checkingDirection = findDirectionFrom(sourcePosition, targetPosition);
@@ -60,14 +65,9 @@ public class ChessBoard {
 
 	private boolean isChessPieceNotExistOn(Position checkingPosition) {
 		if (Objects.nonNull(chessBoard.get(checkingPosition))) {
-			throw new NullPointerException("체스 피스의 이동 경로에 다른 체스 피스가 존재합니다.");
+			throw new IllegalArgumentException("체스 피스의 이동 경로에 다른 체스 피스가 존재합니다.");
 		}
 		return true;
-	}
-
-	public boolean isLeapableChessPieceOn(Position sourcePosition) {
-		Objects.requireNonNull(sourcePosition, "체스 위치가 null입니다.");
-		return chessBoard.get(sourcePosition).canLeap();
 	}
 
 	public void checkCanMove(Position sourcePosition, Position targetPosition) {
@@ -103,6 +103,23 @@ public class ChessBoard {
 
 	public String getChessPieceNameOn(Position position) {
 		return chessBoard.get(position).getName();
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		final ChessBoard that = (ChessBoard)object;
+		return Objects.equals(chessBoard, that.chessBoard);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(chessBoard);
 	}
 
 }

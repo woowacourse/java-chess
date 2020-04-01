@@ -6,7 +6,7 @@ public interface GameState {
 
 	GameState shiftNextTurnState();
 
-	GameState shiftEndState(boolean isKingCaught);
+	GameState shiftEndState(boolean isKingOnTargetPosition);
 
 	PieceColor getPieceColor();
 

@@ -13,24 +13,24 @@ public class ChessCommand {
 	private static final int TARGET_POSITION_INDEX = 2;
 	private static final int STATUS_PIECE_COLOR_INDEX = 1;
 
-	private final CommandStatus commandStatus;
+	private final CommandType commandType;
 	private final List<String> commandArguments;
 
-	private ChessCommand(CommandStatus commandStatus, List<String> commandArguments) {
-		this.commandStatus = commandStatus;
+	private ChessCommand(CommandType commandType, List<String> commandArguments) {
+		this.commandType = commandType;
 		this.commandArguments = commandArguments;
 	}
 
 	public static ChessCommand of(List<String> commandArguments) {
 		validate(commandArguments);
 
-		CommandStatus commandStatus = CommandStatus.of(commandArguments.get(COMMAND_STATUS_INDEX));
-		validateArgumentsSize(commandStatus, commandArguments.size());
-		return new ChessCommand(commandStatus, commandArguments);
+		CommandType commandType = CommandType.of(commandArguments.get(COMMAND_STATUS_INDEX));
+		validateArgumentsSize(commandType, commandArguments.size());
+		return new ChessCommand(commandType, commandArguments);
 	}
 
-	private static void validateArgumentsSize(CommandStatus commandStatus, int argumentsSize) {
-		if (!commandStatus.isCorrectArgumentsSize(argumentsSize)) {
+	private static void validateArgumentsSize(CommandType commandType, int argumentsSize) {
+		if (!commandType.isCorrectArgumentsSize(argumentsSize)) {
 			throw new IllegalArgumentException("유효한 명령어 인자가 아닙니다.");
 		}
 	}
@@ -42,44 +42,44 @@ public class ChessCommand {
 	}
 
 	public boolean isStartChessCommand() {
-		return this.commandStatus.isStartCommandStatus();
+		return this.commandType.isStartCommandType();
 	}
 
 	public boolean isMoveChessCommand() {
-		return this.commandStatus.isMoveCommandStatus();
+		return this.commandType.isMoveCommandType();
 	}
 
 	public boolean isStatusChessCommand() {
-		return this.commandStatus.isStatusCommandStatus();
+		return this.commandType.isStatusCommandType();
 	}
 
 	public boolean isEndChessCommand() {
-		return this.commandStatus.isEndCommandStatus();
+		return this.commandType.isEndCommandType();
 	}
 
 	public Position getSourcePosition() {
-		checkIsMoveCommandStatus();
+		checkIsMoveCommandType();
 		return Position.of(commandArguments.get(SOURCE_POSITION_INDEX));
 	}
 
 	public Position getTargetPosition() {
-		checkIsMoveCommandStatus();
+		checkIsMoveCommandType();
 		return Position.of(commandArguments.get(TARGET_POSITION_INDEX));
 	}
 
-	private void checkIsMoveCommandStatus() {
-		if (!this.commandStatus.isMoveCommandStatus()) {
+	private void checkIsMoveCommandType() {
+		if (!this.commandType.isMoveCommandType()) {
 			throw new UnsupportedOperationException("move 명령어만 지원하는 기능입니다.");
 		}
 	}
 
 	public PieceColor getStatusPieceColor() {
-		checkIsStatusCommandStatus();
+		checkIsStatusCommandType();
 		return PieceColor.of(commandArguments.get(STATUS_PIECE_COLOR_INDEX));
 	}
 
-	private void checkIsStatusCommandStatus() {
-		if (!this.commandStatus.isStatusCommandStatus()) {
+	private void checkIsStatusCommandType() {
+		if (!this.commandType.isStatusCommandType()) {
 			throw new UnsupportedOperationException("status 명령어만 지원하는 기능입니다.");
 		}
 	}

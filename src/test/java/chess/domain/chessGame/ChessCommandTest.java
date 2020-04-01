@@ -35,91 +35,91 @@ class ChessCommandTest {
 	}
 
 	@Test
-	void isStartChessCommand_StartCommandStatus_ReturnTrue() {
+	void isStartChessCommand_StartCommandType_ReturnTrue() {
 		List<String> commandArguments = Arrays.asList("start");
 
 		assertThat(ChessCommand.of(commandArguments).isStartChessCommand()).isTrue();
 	}
 
 	@Test
-	void isStartChessCommand_NotStartCommandStatus_ReturnFalse() {
+	void isStartChessCommand_NotStartCommandType_ReturnFalse() {
 		List<String> commandArguments = Arrays.asList("status", "white");
 
 		assertThat(ChessCommand.of(commandArguments).isStartChessCommand()).isFalse();
 	}
 
 	@Test
-	void isMoveChessCommand_MoveCommandStatus_ReturnTrue() {
+	void isMoveChessCommand_MoveCommandType_ReturnTrue() {
 		List<String> commandArguments = Arrays.asList("move", "b1", "b2");
 
 		assertThat(ChessCommand.of(commandArguments).isMoveChessCommand()).isTrue();
 	}
 
 	@Test
-	void isMoveChessCommand_NotMoveCommandStatus_ReturnFalse() {
+	void isMoveChessCommand_NotMoveCommandType_ReturnFalse() {
 		List<String> commandArguments = Arrays.asList("start");
 
 		assertThat(ChessCommand.of(commandArguments).isMoveChessCommand()).isFalse();
 	}
 
 	@Test
-	void isStatusChessCommand_StatusCommandStatus_ReturnTrue() {
+	void isStatusChessCommand_StatusCommandType_ReturnTrue() {
 		List<String> commandArguments = Arrays.asList("status", "white");
 
 		assertThat(ChessCommand.of(commandArguments).isStatusChessCommand()).isTrue();
 	}
 
 	@Test
-	void isStatusChessCommand_NotStatusCommandStatus_ReturnFalse() {
+	void isStatusChessCommand_NotStatusCommandType_ReturnFalse() {
 		List<String> commandArguments = Arrays.asList("end");
 
 		assertThat(ChessCommand.of(commandArguments).isStatusChessCommand()).isFalse();
 	}
 
 	@Test
-	void isEndChessCommand_EndCommandStatus_ReturnTrue() {
+	void isEndChessCommand_EndCommandType_ReturnTrue() {
 		List<String> commandArguments = Arrays.asList("end");
 
 		assertThat(ChessCommand.of(commandArguments).isEndChessCommand()).isTrue();
 	}
 
 	@Test
-	void isEndChessCommand_NotEndCommandStatus_ReturnFalse() {
+	void isEndChessCommand_NotEndCommandType_ReturnFalse() {
 		List<String> commandArguments = Arrays.asList("start");
 
 		assertThat(ChessCommand.of(commandArguments).isEndChessCommand()).isFalse();
 	}
 
 	@Test
-	void getSourcePosition_MoveCommandStatus_ReturnSourcePosition() {
+	void getSourcePosition_MoveCommandType_ReturnSourcePosition() {
 		List<String> commandArguments = Arrays.asList("move", "b1", "b2");
 
 		assertThat(ChessCommand.of(commandArguments).getSourcePosition()).isEqualTo(Position.of("b1"));
 	}
 
 	@Test
-	void getTargetPosition_MoveCommandStatus_ReturnTargetPosition() {
+	void getTargetPosition_MoveCommandType_ReturnTargetPosition() {
 		List<String> commandArguments = Arrays.asList("move", "b1", "b2");
 
 		assertThat(ChessCommand.of(commandArguments).getTargetPosition()).isEqualTo(Position.of("b2"));
 	}
 
 	@Test
-	void checkIsMoveCommandStatus_NotMoveCommandStatus_ExceptionThrown() {
+	void checkIsMoveCommandType_NotMoveCommandType_ExceptionThrown() {
 		assertThatThrownBy(() -> ChessCommand.of(Arrays.asList("status", "white")).getSourcePosition())
 			.isInstanceOf(UnsupportedOperationException.class)
 			.hasMessage("move 명령어만 지원하는 기능입니다.");
 	}
 
 	@Test
-	void getStatusPieceColor_StatusCommandStatus_ReturnStatusPieceColor() {
+	void getStatusPieceColor_StatusCommandType_ReturnStatusPieceColor() {
 		List<String> commandArguments = Arrays.asList("status", "white");
 
 		assertThat(ChessCommand.of(commandArguments).getStatusPieceColor()).isEqualTo(PieceColor.WHITE);
 	}
 
 	@Test
-	void checkIsStatusCommandStatus_NotStatusCommandStatus_ExceptionThrown() {
+	void checkIsStatusCommandType_NotStatusCommandType_ExceptionThrown() {
 		assertThatThrownBy(() -> ChessCommand.of(Arrays.asList("start")).getStatusPieceColor())
 			.isInstanceOf(UnsupportedOperationException.class)
 			.hasMessage("status 명령어만 지원하는 기능입니다.");

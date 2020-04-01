@@ -11,8 +11,8 @@ public abstract class ChessTurnState implements GameState {
 	}
 
 	@Override
-	public GameState shiftEndState(boolean isKingCaught) {
-		if (isKingCaught) {
+	public GameState shiftEndState(boolean isKingOnTargetPosition) {
+		if (isKingOnTargetPosition) {
 			return new KingCaughtState(pieceColor);
 		}
 		return new EndState(pieceColor);

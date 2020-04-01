@@ -64,10 +64,21 @@ public abstract class ChessPiece implements Movable, Catchable {
 
 	public abstract double getScore();
 
-	// TODO: 2020/03/30 사용 위치 확인하고 지우기.
 	@Override
-	public String toString() {
-		return getName();
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		final ChessPiece that = (ChessPiece)object;
+		return this.getName().equals(that.getName());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(pieceColor, pieceState);
 	}
 
 }

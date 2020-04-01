@@ -22,7 +22,6 @@ import chess.domain.position.ChessFile;
 import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 
-// TODO: 2020/03/26 InitialChessBoard로 명명 수정? test는 삭제해도 괜찮을 듯, Factory 패턴에 대해서 찾아보기
 public class ChessBoardInitializer {
 
 	public static Map<Position, ChessPiece> create() {
