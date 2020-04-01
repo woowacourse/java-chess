@@ -23,6 +23,7 @@
 
         .wrapper {
             display: flex;
+            width: 100%;
             height: 100%;
             justify-content: center;
             align-items: center;
@@ -166,10 +167,40 @@
         .chess-piece.pawn.black {
             background-position: -275px 55px;
         }
+
+        .chess-status {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            height: 300px;
+            align-items: center;
+            justify-content: space-around;
+            background: #5A3C29;
+        }
+
+        .chess-score-board {
+            display: flex;
+            flex-direction: row-reverse;
+            width: 260px;
+            height: 120px;
+            justify-content: center;
+            align-items: center;
+            background: #EDCAA4;
+        }
+
+        .chess-score {
+            font-weight: bold;
+            color: #5A3C29;
+         }
+
+        .chess-margin {
+            width: 300px;
+        }
     </style>
 </head>
 <body>
 <div class="wrapper">
+    <div class="chess-margin"></div>
     <div class="chess-board">
         <div class="chess-file">
             <div class="chess-symbol">A</div>
@@ -360,6 +391,16 @@
             <div class="chess-symbol">H</div>
         </div>
     </div>
+    <div class="chess-status">
+        <div class="chess-score-board">
+            <div id="black-score"  class="chess-score"></div>
+            <div class="chess-piece pawn black"></div>
+        </div>
+        <div class="chess-score-board">
+            <div id="white-score" class="chess-score"></div>
+            <div class="chess-piece pawn white"></div>
+        </div>
+    </div>
 </div>
 <script>
         const gameId = {{ id }}
@@ -370,6 +411,9 @@
         const templateRook = color => `<div class="chess-piece rook ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
         const templatePawn = color => `<div class="chess-piece pawn ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
         const templateBlank = `<div class="chess-piece blank" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+
+        const blackScoreElement = document.querySelector('#black-score')
+        const whiteScoreElement = document.querySelector('#white-score')
 
         const createTemplate = {
             p: templatePawn('white'),
@@ -393,6 +437,7 @@
 
         function drawChessGame({ boardDto, turnDto, statusDto, isFinished }) {
             drawBoard(boardDto.board)
+            drawStatus(statusDto)
         }
 
         function drawBoard(board) {
@@ -402,6 +447,11 @@
                 const key = board[i]
                 findChessCell(x,y).innerHTML = key == '.' ? templateBlank : createTemplate[key]
             }
+        }
+
+        function drawStatus(statusDto) {
+            blackScoreElement.innerHTML = statusDto.black.score;
+            whiteScoreElement.innerHTML = statusDto.white.score;
         }
 
         function onDragStart(e) {
