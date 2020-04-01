@@ -1,12 +1,13 @@
-package chess.domain.board;
+package chess.domain.board.initializer;
 
+import chess.domain.board.BoardInitializer;
 import chess.domain.piece.PieceState;
-import chess.domain.piece.implementation.Bishop;
-import chess.domain.piece.implementation.King;
-import chess.domain.piece.implementation.Knight;
-import chess.domain.piece.implementation.Pawn;
-import chess.domain.piece.implementation.Queen;
-import chess.domain.piece.implementation.Rook;
+import chess.domain.piece.implementation.piece.Bishop;
+import chess.domain.piece.implementation.piece.King;
+import chess.domain.piece.implementation.piece.Knight;
+import chess.domain.piece.implementation.piece.Pawn;
+import chess.domain.piece.implementation.piece.Queen;
+import chess.domain.piece.implementation.piece.Rook;
 import chess.domain.player.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;

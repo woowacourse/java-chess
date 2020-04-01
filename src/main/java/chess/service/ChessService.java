@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.controller.dto.PieceDto;
 import chess.controller.dto.ResponseDto;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
@@ -18,12 +19,12 @@ public class ChessService {
         return chessGame.isEnd();
     }
 
-    public ResponseDto start() {
+    public ResponseDto start(List<String> parameters) {
         chessGame.start();
         return new ResponseDto(createBoardDto());
     }
 
-    public ResponseDto end() {
+    public ResponseDto end(List<String> parameters) {
         chessGame.end();
         return new ResponseDto(createBoardDto());
     }
@@ -33,19 +34,19 @@ public class ChessService {
         return new ResponseDto(createBoardDto());
     }
 
-    public ResponseDto status() {
+    public ResponseDto status(List<String> parameters) {
         Map<Team, Double> score = chessGame.getStatus();
         return new ResponseDto(createBoardDto(), score);
     }
 
-    private Map<Position, String> createBoardDto() {
+    private Map<Position, PieceDto> createBoardDto() {
         Board board = chessGame.getBoard();
         return board.getBoard()
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
-                        entry -> entry.getValue().getFigure()
+                        entry -> PieceDto.of(entry.getValue())
                 ));
     }
 }
