@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
 
 html, body {
-    height: 883px;
+    height: 1000px;
     padding: 0px;
     margin: 0px;
     font-family: 'Do Hyeon', sans-serif;
@@ -19,8 +19,7 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-image: url("https://us.123rf.com/450wm/anhoog/anhoog1405/anhoog140500012/29233356-%EC%96%B4%EB%91%90%EC%9A%B4-%EB%82%98%EB%AC%B4%EC%9D%98-%EB%B0%B0%EA%B2%BD-%ED%85%8D%EC%8A%A4%EC%B2%98.jpg?ver=6");
+    background-image: url("img/game-background.jpg");
 }
 
 .title-container {
@@ -39,10 +38,9 @@ html, body {
 
 
 .chess-board-container {
-    height: 85%;
+    height: 70%;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .score-board-container {
@@ -61,7 +59,6 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /*background-image: url("https://files.slack.com/files-tmb/TFELTJB7V-F010ZL8EAH2-125445a755/image_from_ios_1024.jpg");*/
 }
 
 .white-score-board {
@@ -117,16 +114,6 @@ html, body {
     box-shadow: 10px 10px 20px #000808;
 }
 
-.createGame-container {
-    width: 15%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-image: url("img/board-backgoround.jpg");
-}
-
 .rank-board {
     display: flex;
     flex-direction: row;
@@ -140,44 +127,17 @@ html, body {
     justify-content: center;
 }
 
-/*.rank-text {*/
-/*    font-size: 20px;*/
-/*    padding: 25px 0px 20px 30px;*/
-/*}*/
-.rank-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .file-text {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.file-container {
-    padding-right: 30px;
-    width: 560px;
-    padding-top: 15px;
-    height: 5%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-/*.file-text {*/
-/*    padding: 0px 30px 0px 30px;*/
-/*    font-size: 20px;*/
-
-/*}*/
-
 .rank {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-
 
 .cell {
     width: 70px;
@@ -195,4 +155,9 @@ html, body {
 .black-cell {
     background-image: url("img/black-board2.jpg");
     background-clip: content-box;
+}
+
+.piece-img {
+    width: 70px;
+    height: 70px;
 }

@@ -3,114 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>체스게임</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
-
-        html, body {
-            height: 1200px;
-            padding: 0px;
-            margin: 0px;
-            font-family: 'Do Hyeon', sans-serif;
-        }
-
-        .container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-        }
-
-        .game-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-image: url("img/game-background.jpg");
-        }
-
-        .title-container {
-            height: 15%;
-            color: white;
-            font-size: 30px;
-            display: flex;
-        }
-
-        .title {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-
-        .chess-board-container {
-            height: 60%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .start-button {
-            height: 15%;
-        }
-
-        .board {
-            width: 650px;
-            height: 650px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-image: url("img/board-back.jpg");
-            background-clip: padding-box;
-            border-radius: 20px;
-            box-shadow: 10px 10px 20px #000808;
-        }
-
-        .rank-board {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .rank-set {
-            box-shadow: 10px 10px 30px black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .file-text {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .rank {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-
-        .cell {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .white-cell {
-            background-image: url("img/white-board.jpg");
-            background-clip: content-box;
-        }
-
-        .black-cell {
-            background-image: url("img/black-board2.jpg");
-            background-clip: content-box;
-        }
-    </style>
-
+    <link href="style-index.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -125,42 +18,42 @@
                         <div class="rank">
                             <div class='cell white-cell' id='A8'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/rook_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKROOK.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='B8'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/bishop_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKBISHOP.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='C8'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/knight_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKKNIGHT.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='D8'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/queen_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKQUEEN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='E8'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/king_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKKING.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='F8'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/knight_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKKNIGHT.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='G8'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/bishop_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKBISHOP.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='H8'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/rook_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKROOK.png' width='70'>
                                 </div>
                             </div>
                             <div class='rank_text cell'>8</div>
@@ -168,42 +61,42 @@
                         <div class="rank">
                             <div class='cell black-cell' id='A7'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/pawn_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='B7'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/pawn_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='C7'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/pawn_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='D7'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/pawn_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='E7'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/pawn_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='F7'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/pawn_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='G7'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/pawn_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='H7'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='img/piece/pawn_black.png' width='70'>
+                                    <img alt='' height='70' src='img/piece/BLACKPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='rank_text cell'>7</div>
@@ -255,42 +148,42 @@
                         <div class="rank">
                             <div class='cell white-cell' id='A2'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/pawn_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='B2'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/pawn_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='C2'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/pawn_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='D2'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/pawn_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='E2'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/pawn_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='F2'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/pawn_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='G2'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/pawn_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='H2'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/pawn_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEPAWN.png' width='70'>
                                 </div>
                             </div>
                             <div class='rank_text cell'>2</div>
@@ -298,42 +191,42 @@
                         <div class="rank">
                             <div class='cell black-cell' id='A1'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/rook_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEROOK.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='B1'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/bishop_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEBISHOP.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='C1'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/knight_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEKNIGHT.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='D1'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/queen_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEQUEEN.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='E1'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/king_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEKING.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='F1'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/knight_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEKNIGHT.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell black-cell' id='G1'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/bishop_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEBISHOP.png' width='70'>
                                 </div>
                             </div>
                             <div class='cell white-cell' id='H1'>
                                 <div class='piece'>
-                                    <img alt='' height='70' src='../img/piece/rook_white.png' width='70'>
+                                    <img alt='' height='70' src='../img/piece/WHITEROOK.png' width='70'>
                                 </div>
                             </div>
                             <div class='rank_text cell'>1</div>
@@ -355,6 +248,8 @@
         </div>
         <div class="start-button">
             <form action="/chessGame" method="post">
+                <input hidden="hidden" name="command" type="text" value="start">
+                <input hidden="hidden" name="parameter" type="text" value="">
                 <input type="submit" value="게임 시작"/>
             </form>
         </div>

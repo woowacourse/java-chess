@@ -21,17 +21,20 @@ public class ChessService {
 
     public ResponseDto start(List<String> parameters) {
         chessGame.start();
-        return new ResponseDto(createBoardDto());
+        Map<Team, Double> score = chessGame.getStatus();
+        return new ResponseDto(createBoardDto(), score);
     }
 
     public ResponseDto end(List<String> parameters) {
         chessGame.end();
-        return new ResponseDto(createBoardDto());
+        Map<Team, Double> score = chessGame.getStatus();
+        return new ResponseDto(createBoardDto(), score);
     }
 
     public ResponseDto move(List<String> parameters) {
         chessGame.move(MoveParameter.of(parameters));
-        return new ResponseDto(createBoardDto());
+        Map<Team, Double> score = chessGame.getStatus();
+        return new ResponseDto(createBoardDto(), score);
     }
 
     public ResponseDto status(List<String> parameters) {

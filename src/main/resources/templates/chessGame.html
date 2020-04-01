@@ -3,169 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>체스게임</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
-
-        html, body {
-            height: 883px;
-            padding: 0px;
-            margin: 0px;
-            font-family: 'Do Hyeon', sans-serif;
-        }
-
-        .container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-        }
-
-        .game-container {
-            width: 85%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-image: url("https://us.123rf.com/450wm/anhoog/anhoog1405/anhoog140500012/29233356-%EC%96%B4%EB%91%90%EC%9A%B4-%EB%82%98%EB%AC%B4%EC%9D%98-%EB%B0%B0%EA%B2%BD-%ED%85%8D%EC%8A%A4%EC%B2%98.jpg?ver=6");
-        }
-
-        .title-container {
-            height: 15%;
-            color: white;
-            font-size: 30px;
-            display: flex;
-        }
-
-        .title {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-
-        .chess-board-container {
-            height: 85%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .score-board-container {
-            width: 15%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            border: 1px black solid;
-            align-items: center;
-        }
-
-        .score-board {
-            width: 100%;
-            height: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .white-score-board {
-            background-image: url("img/white-scoreboard.jpeg");
-        }
-
-        .black-score-board {
-            background-image: url("img/black-scoreboard.jpg");
-        }
-
-        .player-name {
-            height: 10%;
-            display: flex;
-            align-items: center;
-        }
-
-        .black-player-name {
-            color: white;
-        }
-
-        .black-player-score {
-            color: white;
-        }
-
-        .player-image {
-            height: 80%;
-        }
-
-        .player-score {
-            height: 10%;
-            display: flex;
-        }
-
-        .score-board-boarder {
-            width: 100%;
-            border: black 2px solid;
-        }
-
-        .doo {
-            width: 100%;
-        }
-
-        .board {
-            width: 650px;
-            height: 650px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-image: url("img/board-back.jpg");
-            background-clip: padding-box;
-            border-radius: 20px;
-            box-shadow: 10px 10px 20px #000808;
-        }
-
-        .rank-board {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .rank-set {
-            box-shadow: 10px 10px 30px black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .file-text {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .rank {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .cell {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .white-cell {
-            background-image: url("img/white-board.jpg");
-            background-clip: content-box;
-        }
-
-        .black-cell {
-            background-image: url("img/black-board2.jpg");
-            background-clip: content-box;
-        }
-    </style>
-
+    <link href="style-game.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -236,7 +74,9 @@
                             <div class='cell black-cell' id='A3'></div>
                             <div class='cell white-cell' id='B3'></div>
                             <div class='cell black-cell' id='C3'></div>
-                            <div class='cell white-cell' id='D3'></div>
+                            <div class='cell white-cell' id='D3'>
+                                <img alt="" src="">
+                            </div>
                             <div class='cell black-cell' id='E3'></div>
                             <div class='cell white-cell' id='F3'></div>
                             <div class='cell black-cell' id='G3'></div>
@@ -283,7 +123,7 @@
     </div>
     <div class="score-board-container">
         <div class="score-board black-score-board">
-            <div class="player-name black-player-name">{{player2.name}}</div>
+            <div class="player-name black-player-name">Player1</div>
             <div class="player-image black-player-image">
                 <img class="doo" src="img/doo.jpg">
             </div>
@@ -292,7 +132,7 @@
         </div>
         <div class="score-board-boarder"></div>
         <div class="score-board white-score-board">
-            <div class="player-name white-player-name">{{player1.name}}</div>
+            <div class="player-name white-player-name">Player2</div>
             <div class="player-image white-player-image">
                 <img class="doo" src="img/doo.jpg">
             </div>
@@ -302,4 +142,63 @@
     </div>
 </div>
 </body>
+<script id="board-data" type="text/x-mustache">
+    {{#board}}
+    document.getElementById("{{key}}").innerHTML = '<div class="piece"><img class="piece-img" src="../img/piece/{{value}}.png"></div>'
+    {{/board}}
+
+
+
+
+</script>
+
+<script>
+    var x = document.getElementById('board-data');
+    eval(x.innerText);
+</script>
+<script>
+    let params = "";
+    let pieceCell = document.getElementsByClassName('cell');
+    for (let i = 0; i < pieceCell.length; i++) {
+        pieceCell.item(i).addEventListener('mouseover', function (event) {
+            event.target.style.backgroundColor = 'red';
+            event.target.style.opacity = 0.5;
+        }, false);
+        pieceCell.item(i).addEventListener('mouseout', function (event) {
+            event.target.style.backgroundColor = '';
+            event.target.style.opacity = 1.0;
+        }, false);
+        pieceCell.item(i).addEventListener('click', function (event) {
+            if (params == "") {
+                params += pieceCell.item(i).getAttribute("id");
+                params += "_";
+                alert(params);
+            } else {
+                params += pieceCell.item(i).getAttribute("id");
+                alert(params);
+                let method = "post";
+                let path = "/chessGame";
+                let form = document.createElement("form");
+                form.setAttribute("method", method);
+                form.setAttribute("action", path);
+
+                let command = document.createElement("input");
+                command.setAttribute("type", "hidden");
+                command.setAttribute("name", "command");
+                command.setAttribute("value", "move");
+                form.appendChild(command);
+
+                let parameter = document.createElement("input");
+                parameter.setAttribute("type", "hidden");
+                parameter.setAttribute("name", "parameter");
+                parameter.setAttribute("value", params);
+                params = "";
+                form.appendChild(parameter);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+</script>
+
 </html>
