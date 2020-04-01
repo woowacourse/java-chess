@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessService {
-
     private ChessGame chessGame = new ChessGame();
 
     public boolean isEnd() {

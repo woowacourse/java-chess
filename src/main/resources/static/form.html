@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>체스게임</title>
+    <title>체스 게임 시작</title>
 
     <link href="style.css" rel="stylesheet"/>
 
@@ -20,9 +20,9 @@
         </div>
     </div>
     <div class="createGame-container">
-        <form action="index.html">
-            <div class="player1-input">플레이어 1 : <input type="text" value="플레이어1"></div>
-            <div class="player2-input">플레이어 2 : <input type="text" value="플레이어2"></div>
+        <form action="/form" method="get">
+            <div class="player1-input">플레이어 1 : <input name="player1_name" placeholder="플레이어1" type="text"></div>
+            <div class="player2-input">플레이어 2 : <input name="player2_name" placeholder="플레이어2" type="text"></div>
             <div>
                 <input type="submit">
             </div>

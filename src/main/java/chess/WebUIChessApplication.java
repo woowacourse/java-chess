@@ -1,5 +1,6 @@
 package chess;
 
+import chess.view.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -7,12 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.staticFiles;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
+        staticFiles.location("/static");
+        get("/form", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            model.put("player1", new User(req.queryParams("player1_name")));
+            model.put("player2", new User(req.queryParams("player2_name")));
+            return render(model, "index3.html");
         });
     }
 
