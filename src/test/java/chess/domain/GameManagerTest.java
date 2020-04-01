@@ -2,16 +2,14 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.coordinates.Coordinates;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 
 class GameManagerTest {
 	private GameManager gameManager;
@@ -29,8 +27,8 @@ class GameManagerTest {
 	@Test
 	void move() {
 		gameManager.move(Coordinates.of("B2"), Coordinates.of("B3"));
-		Map<Coordinates, Piece> pieces = gameManager.getPieces();
-		assertThat(pieces.get(Coordinates.of("B3"))).isInstanceOf(Pawn.class);
+		Board board = gameManager.getBoard();
+		assertThat(board.findPieceBy(Coordinates.of("B3")).get()).isInstanceOf(Pawn.class);
 	}
 
 	@Test

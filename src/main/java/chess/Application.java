@@ -7,7 +7,6 @@ import static chess.view.OutputView.printStartMessage;
 import static chess.view.OutputView.printWinner;
 
 import chess.domain.GameManager;
-import chess.domain.ScoreRule;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.command.Command;
@@ -58,8 +57,7 @@ public class Application {
 			gameManager.move(command.getTargetCoordinates(), command.getDestination());
 		}
 		if (command.isStatus()) {
-			ScoreRule scoreRule = new ScoreRule(gameManager.getPieces());
-			printScore(scoreRule.calculateScore());
+			printScore(gameManager.calculateScore());
 		}
 		if (command.isEnd()) {
 			System.exit(EXIT_SUCCESSFULLY);

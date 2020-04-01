@@ -18,7 +18,7 @@ public class ScoreRule {
 		this.pieces = pieces;
 	}
 
-	public Map<Color, Double> calculateScore() {
+	public GameResult calculateScore() {
 		Map<Color, Double> eachScore = pieces.values()
 				.stream()
 				.collect(Collectors.toMap(Piece::getColor, Piece::getScore, Double::sum));
@@ -26,8 +26,7 @@ public class ScoreRule {
 		for (Color color : Color.values()) {
 			eachScore.put(color, eachScore.get(color) - discountPawnScore(color));
 		}
-
-		return eachScore;
+		return new GameResult(eachScore);
 	}
 
 	private double discountPawnScore(Color color) {

@@ -1,13 +1,10 @@
 package chess.domain;
 
-import java.util.Collections;
-import java.util.Map;
 import java.util.Objects;
 
 import chess.domain.board.Board;
 import chess.domain.coordinates.Coordinates;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 
 public class GameManager {
 	private final Board board;
@@ -32,6 +29,11 @@ public class GameManager {
 		turn = turn.reverse();
 	}
 
+	public GameResult calculateScore() {
+		ScoreRule scoreRule = new ScoreRule(board.getPieces());
+		return scoreRule.calculateScore();
+	}
+
 	public boolean isEndOfGame() {
 		return !board.isKingAliveOf(turn);
 	}
@@ -48,9 +50,5 @@ public class GameManager {
 
 	public Color getEnemyColor() {
 		return turn.reverse();
-	}
-
-	public Map<Coordinates, Piece> getPieces() {
-		return Collections.unmodifiableMap(board.getPieces());
 	}
 }

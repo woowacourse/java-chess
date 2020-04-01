@@ -2,8 +2,6 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
 import chess.domain.board.Board;
@@ -15,9 +13,9 @@ class ScoreRuleTest {
 	void calculateScoreTest() {
 		Board board = BoardFactory.createNewGame();
 		ScoreRule scoreRule = new ScoreRule(board.getPieces());
-		Map<Color, Double> scores = scoreRule.calculateScore();
+		GameResult scores = scoreRule.calculateScore();
 
-		assertThat(scores.get(Color.BLACK)).isEqualTo(38);
-		assertThat(scores.get(Color.WHITE)).isEqualTo(38);
+		assertThat(scores.getScoreBy(Color.BLACK)).isEqualTo(38);
+		assertThat(scores.getScoreBy(Color.WHITE)).isEqualTo(38);
 	}
 }
