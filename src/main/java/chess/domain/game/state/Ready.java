@@ -14,7 +14,7 @@ public class Ready implements State {
 
 	@Override
 	public State end() {
-		return new Finished(Board.EMPTY);
+		return new Finished(Board.EMPTY, Turn.from(Color.WHITE));
 	}
 
 	@Override
@@ -29,6 +29,11 @@ public class Ready implements State {
 
 	@Override
 	public Score score(Color color) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Turn turn() {
 		throw new UnsupportedOperationException();
 	}
 

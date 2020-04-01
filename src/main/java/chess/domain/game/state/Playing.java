@@ -24,7 +24,7 @@ public class Playing implements State {
 
 	@Override
 	public State end() {
-		return new Finished(board);
+		return new Finished(board, turn);
 	}
 
 	@Override
@@ -58,6 +58,11 @@ public class Playing implements State {
 	@Override
 	public Score score(Color color) {
 		return Score.calculate(board.findPiecesByColor(color));
+	}
+
+	@Override
+	public Turn turn() {
+		return turn;
 	}
 
 	@Override

@@ -27,6 +27,10 @@ public class ChessGame {
 		return state.board();
 	}
 
+	public Turn turn() {
+		return state.turn();
+	}
+
 	public boolean isFinished() {
 		return state.isFinished();
 	}
