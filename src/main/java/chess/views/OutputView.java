@@ -32,7 +32,11 @@ public class OutputView {
                 String display = Optional.ofNullable(chessBoard.get(Positions.of(row, column)))
                         .map(Piece::getDisplay)
                         .orElse(EMPTY);
+<<<<<<< HEAD
                 stringBuilder.append(display);
+=======
+                    stringBuilder.append(display);
+>>>>>>> da51a79... refactor : 전반적인 컨벤션 수정 및 OutputView 체스판 출력 리팩토링
             }
             stringBuilder.append(NEW_LINE);
         }

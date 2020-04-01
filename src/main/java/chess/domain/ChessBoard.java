@@ -26,21 +26,26 @@ public class ChessBoard {
         isKingTaken = false;
     }
 
-    public void move(Position from, Position to) {
+    public boolean move(Position from, Position to) {
         Piece source = chessBoard.get(from);
         Piece target = chessBoard.get(to);
         validateSamePosition(from, to);
         validateSource(source);
         validateIsPlayer(source, target);
 
+
         if (movable(from, to)) {
             chessBoard.put(to, source);
             chessBoard.remove(from);
 
+
             if (target instanceof King) {
                 this.isKingTaken = true;
             }
+
+            return true;
         }
+        return false;
     }
 
     private void validateSamePosition(Position from, Position to) {
@@ -62,7 +67,6 @@ public class ChessBoard {
         if (Objects.nonNull(target) && source.isSamePlayer(target)) {
             throw new NotMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
         }
-        ;
     }
 
     private boolean movable(Position from, Position to) {
@@ -116,7 +120,6 @@ public class ChessBoard {
     public int getPawnCountPerStage(List<Piece> columnLine, Player player) {
         return (int) columnLine.stream()
                 .filter(piece -> piece instanceof Pawn)
-                .map(piece -> (Pawn) piece)
                 .filter(pawn -> pawn.getPlayer() == player)
                 .count();
     }
