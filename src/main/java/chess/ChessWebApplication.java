@@ -40,22 +40,25 @@ public class ChessWebApplication {
 
 			Position sourcePosition = Position.of(source);
 			Position targetPosition = Position.of(target);
-			chessBoard.movePiece(sourcePosition, targetPosition);
 
-			String pieceType = findPieceType(sourcePosition);
+			String sourcePieceType = findPieceType(sourcePosition);
+			String targetPieceType = findPieceType(targetPosition);
 
 			Map<String, Object> model = new HashMap<>();
 			model.put("source", source);
 			model.put("target", target);
-			model.put("pieceType", pieceType);
+			model.put("sourcePieceType", sourcePieceType);
+			model.put("isAttack", chessBoard.findPieceByPosition(targetPosition).isPresent());
+			model.put("targetPieceType", targetPieceType);
 
+			chessBoard.movePiece(sourcePosition, targetPosition);
 			return gson.toJson(model);
 		});
 	}
 
-	private static String findPieceType(final Position sourcePosition) {
-		Optional<Piece> piece = chessBoard.findPieceByPosition(sourcePosition);
-		return piece.map(Piece::getName).get();
+	private static String findPieceType(final Position position) {
+		Optional<Piece> piece = chessBoard.findPieceByPosition(position);
+		return piece.map(Piece::getName).orElse("");
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
