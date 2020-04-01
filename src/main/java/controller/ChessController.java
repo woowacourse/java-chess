@@ -2,7 +2,10 @@ package controller;
 
 import domain.board.Board;
 import domain.board.BoardFactory;
+import domain.board.InvalidTurnException;
 import domain.command.ChessCommand;
+import domain.command.InvalidCommandException;
+import domain.piece.position.InvalidPositionException;
 import domain.piece.team.Team;
 import view.InputView;
 import view.OutputView;
@@ -25,7 +28,7 @@ public class ChessController {
 			OutputView.printChessBoard(board);
 			executeCommand(board);
 			OutputView.printChessBoard(board);
-		} catch (IllegalArgumentException e) {
+		} catch (InvalidCommandException | InvalidPositionException | InvalidTurnException e) {
 			OutputView.printErrorMessage(e);
 			run(board);
 		}
