@@ -29,15 +29,19 @@ public class PawnTest {
         Piece pieceBlack = Pawn.of(Color.BLACK);
         Piece pieceWhite = Pawn.of(Color.WHITE);
 
-        Set<Square> availableSquaresBlack = pieceBlack.calculateScope(Square.of("a7"));
-        Set<Square> availableSquaresWhite = pieceWhite.calculateScope(Square.of("a6"));
+        Set<Square> squareScopeBlack = pieceBlack.calculateScope(Square.of("a7"));
+        Set<Square> squareScopeWhite = pieceWhite.calculateScope(Square.of("a6"));
 
-        assertThat(availableSquaresBlack.contains(Square.of("a6"))).isTrue();
-        assertThat(availableSquaresBlack.contains(Square.of("a5"))).isTrue();
-        assertThat(availableSquaresWhite.contains(Square.of("a7"))).isTrue();
+        System.out.println("white:" + squareScopeWhite);
+        System.out.println("black:" + squareScopeBlack);
+        assertThat(squareScopeBlack.contains(Square.of("a6"))).isTrue();
+        assertThat(squareScopeBlack.contains(Square.of("a5"))).isTrue();
 
-        assertThat(availableSquaresBlack.size()).isEqualTo(2);
-        assertThat(availableSquaresWhite.size()).isEqualTo(1);
+        assertThat(squareScopeWhite.contains(Square.of("a7"))).isTrue();
+        assertThat(squareScopeWhite.contains(Square.of("b7"))).isTrue();
+
+        assertThat(squareScopeBlack.size()).isEqualTo(3);
+        assertThat(squareScopeWhite.size()).isEqualTo(2);
     }
 
     @Test
@@ -52,10 +56,12 @@ public class PawnTest {
         Piece piece = Pawn.of(Color.BLACK);
         Set<Square> availableSquares = piece.calculateMoveBoundary(Square.of("c6"), board);
         assertThat(availableSquares.contains(Square.of("c5"))).isTrue();
+        assertThat(availableSquares.contains(Square.of("b5"))).isFalse();
         assertThat(availableSquares.size()).isEqualTo(1);
 
         availableSquares = piece.calculateMoveBoundary(Square.of("e6"), board);
         assertThat(availableSquares.contains(Square.of("f5"))).isTrue();
+        assertThat(availableSquares.contains(Square.of("e5"))).isFalse();
         assertThat(availableSquares.size()).isEqualTo(1);
 
         availableSquares = piece.calculateMoveBoundary(Square.of("g6"), board);

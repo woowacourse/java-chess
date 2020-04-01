@@ -1,10 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Pawn extends Piece {
@@ -48,17 +50,47 @@ public class Pawn extends Piece {
 
     @Override
     public Set<Square> calculateScope(Square square) {
-        Set<Square> availableSquares = new HashSet<>();
-        int index = 1;
-        if (color.equals(Color.BLACK)) {
-            index *= -1;
+        Objects.requireNonNull(square, "square은 필수입니다");
+        if (color == Color.BLACK) {
+            return calculateBlackScope(square);
         }
-        if ((color.equals(Color.BLACK) && square.getRank() == Rank.of(7)) ||
-                (color.equals(Color.WHITE) && square.getRank() == Rank.of(2))) {
-            availableSquares.add(square.movedSquareInBoundary(0, index * 2));
+        return calculateWhiteScope(square);
+    }
+
+    private Set<Square> calculateWhiteScope(Square square) {
+        Set<Square> scope = new HashSet<>();
+        addToWhiteScopeIfInitialMove(square, scope);
+        scope.addAll(Direction.whitePawnDirection()
+                .stream()
+                .map(direction -> square.movedSquareInBoundary(direction, 1))
+                .filter(movedSquare -> isNotSameSquareItself(square, movedSquare))
+                .collect(Collectors.toSet()));
+        return scope;
+    }
+
+    private void addToWhiteScopeIfInitialMove(Square square, Set<Square> scope) {
+        if (square.getRank() == Rank.of(2)) {
+            scope.add(square.movedSquareInBoundary(Direction.N, 2));
+            scope.remove(square);
         }
-        availableSquares.add(square.movedSquareInBoundary(0, index));
-        return availableSquares;
+    }
+
+    private Set<Square> calculateBlackScope(Square square) {
+        Set<Square> scope = new HashSet<>();
+        addToBlackScopeIfInitialMove(square, scope);
+        scope.addAll(Direction.blackPawnDirection()
+                .stream()
+                .map(direction -> square.movedSquareInBoundary(direction, 1))
+                .filter(movedSquare -> isNotSameSquareItself(square, movedSquare))
+                .collect(Collectors.toSet()));
+        return scope;
+    }
+
+    private void addToBlackScopeIfInitialMove(Square square, Set<Square> scope) {
+        if (square.getRank() == Rank.of(7)) {
+            scope.add(square.movedSquareInBoundary(Direction.S, 2));
+            scope.remove(square);
+        }
     }
 
     @Override
