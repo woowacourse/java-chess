@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +27,7 @@ class KingTest {
 
 	@ParameterizedTest
 	@MethodSource("generatePositions")
-	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
+	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) throws SQLException {
 		Map<Position, Piece> pieces = new HashMap<>();
 		pieces.put(D2, new Bishop(Color.BLACK));
 		pieces.put(E1, new King(Color.WHITE));

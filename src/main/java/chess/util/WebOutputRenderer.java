@@ -1,5 +1,6 @@
 package chess.util;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -7,7 +8,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 
 public class WebOutputRenderer {
-	public static Map<String, Object> toModel(Board board) {
+	public static Map<String, Object> toModel(Board board) throws SQLException {
 		return board.getPieces()
 			.entrySet()
 			.stream()

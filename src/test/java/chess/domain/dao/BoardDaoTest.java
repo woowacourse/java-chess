@@ -70,4 +70,10 @@ class BoardDaoTest {
 
 		assertThat(boardDao.findPiece(A1)).isNull();
 	}
+
+	@Test
+	public void deleteAll() throws SQLException {
+		BoardDao boardDao = new BoardDao();
+		boardDao.deleteAll();
+	}
 }

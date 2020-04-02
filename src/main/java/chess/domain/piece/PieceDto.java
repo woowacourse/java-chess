@@ -9,9 +9,9 @@ public class PieceDto {
 	private Position position;
 	private Piece piece;
 
-	private PieceDto(Position position, Piece pieceName) {
+	private PieceDto(Position position, Piece piece) {
 		this.position = position;
-		this.piece = pieceName;
+		this.piece = piece;
 	}
 
 	public static PieceDto of(String position, String pieceName) {

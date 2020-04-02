@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import chess.domain.piece.PieceDto;
 import chess.domain.piece.PieceEditDto;
@@ -62,11 +64,26 @@ public class BoardDao {
 		return PieceDto.of(findPiecePosition, name);
 	}
 
-	public void editPieceByPosition(PieceEditDto pieceEditDto) throws SQLException {
-		String query = "UPDATE piece SET name = ? WHERE position = ?";
+	public List<PieceDto> findAllPieces() throws SQLException {
+		List<PieceDto> results = new ArrayList<>();
+		String query = "SELECT * FROM piece";
 		PreparedStatement statement = getConnection().prepareStatement(query);
-		statement.setString(1, pieceEditDto.getWantPieceName());
-		statement.setString(2, pieceEditDto.getTargetPositionValue());
+		ResultSet result = statement.executeQuery();
+
+		while (result.next()) {
+			results.add(PieceDto.of(result.getString("position"),
+				result.getString("name")));
+		}
+
+		return results;
+	}
+
+	public void editPieceByPosition(PieceEditDto pieceEditDto) throws SQLException {
+		String query = "INSERT INTO piece VALUE (?, ?) ON DUPLICATE KEY UPDATE name = ?";
+		PreparedStatement statement = getConnection().prepareStatement(query);
+		statement.setString(1, pieceEditDto.getTargetPositionValue());
+		statement.setString(2, pieceEditDto.getWantPieceName());
+		statement.setString(3, pieceEditDto.getWantPieceName());
 		statement.executeUpdate();
 	}
 
@@ -74,6 +91,12 @@ public class BoardDao {
 		String query = "DELETE FROM piece WHERE position = ?";
 		PreparedStatement statement = getConnection().prepareStatement(query);
 		statement.setString(1, position.getValue());
+		statement.executeUpdate();
+	}
+
+	public void deleteAll() throws SQLException {
+		String query = "DELETE FROM piece";
+		PreparedStatement statement = getConnection().prepareStatement(query);
 		statement.executeUpdate();
 	}
 }

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.GameManager;
-import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import chess.util.WebOutputRenderer;
 import spark.ModelAndView;
@@ -16,11 +15,20 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIApplication {
 	public static void main(String[] args) {
 		Spark.staticFileLocation("static");
-		final GameManager gameManager = new GameManager(BoardFactory.create());
+		final GameManager gameManager = new GameManager();
 
 		get("/", (request, response) -> "index.html");
 
 		get("/start", (request, response) -> {
+			gameManager.resetGame();
+			Map<String, Object> model = new HashMap<>();
+			model.put("pieces", WebOutputRenderer.toModel(gameManager.getBoard()));
+			model.put("turn", gameManager.getCurrentTurn().name());
+
+			return render(model, "board.html");
+		});
+
+		get("/resume", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
 			model.put("pieces", WebOutputRenderer.toModel(gameManager.getBoard()));
 			model.put("turn", gameManager.getCurrentTurn().name());
