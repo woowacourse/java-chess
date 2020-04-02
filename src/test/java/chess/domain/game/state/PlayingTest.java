@@ -56,10 +56,11 @@ public class PlayingTest {
 	}
 
 	@Test
-	@DisplayName("초기 게임 점수 확인")
-	void score() {
-		assertThat(state.score(Color.WHITE).getValue()).isEqualTo(38);
-		assertThat(state.score(Color.BLACK).getValue()).isEqualTo(38);
+	@DisplayName("초기 게임 결과 확인")
+	void status() {
+		assertThat(state.status().getWhiteScore().getValue()).isEqualTo(38);
+		assertThat(state.status().getBlackScore().getValue()).isEqualTo(38);
+		assertThat(state.status().getWinner()).isEqualTo(Color.NONE);
 	}
 
 	@Test

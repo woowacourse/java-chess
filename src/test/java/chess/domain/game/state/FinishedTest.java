@@ -6,10 +6,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.game.Board;
+import chess.domain.game.Status;
+import chess.domain.game.Turn;
 import chess.domain.piece.Position;
 
 public class FinishedTest {
-	private State state = new Finished(Board.EMPTY);
+	private State state = new Finished(Board.EMPTY, Turn.WHITE);
 
 	@Test
 	@DisplayName("피니시드 생성")
@@ -40,6 +42,12 @@ public class FinishedTest {
 	@DisplayName("게임 종료 후 체스판 확인")
 	void board() {
 		assertThat(state.board()).isInstanceOf(Board.class);
+	}
+
+	@Test
+	@DisplayName("게임 종료 후 결과 확인")
+	void status() {
+		assertThat(state.status()).isInstanceOf(Status.class);
 	}
 
 	@Test

@@ -72,18 +72,19 @@
             border-bottom: 1px solid #5A3C29;
             color: #5A3C29;
         }
+
     </style>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="chess-menu">
-            <div class="chess-games"></div>
-            <div class="chess-create">
-                <div class="chess-create-submit">방 만들기</div>
-            </div>
+<div class="wrapper">
+    <div class="chess-menu">
+        <div class="chess-games"></div>
+        <div class="chess-create">
+            <div class="chess-create-submit">방 만들기</div>
         </div>
     </div>
-    <script>
+</div>
+<script>
         const templateGame = id => `<a href="/game/${id}" class="chess-game"><div class="chess-game-title">체스 게임 ${id}</div></a>`
 
         const chessGamesElement = document.querySelector('.chess-games')
@@ -107,6 +108,7 @@
         function drawGameList(games) {
             games.forEach(id => chessGamesElement.innerHTML += templateGame(id))
         }
-    </script>
+
+</script>
 </body>
 </html>

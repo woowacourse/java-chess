@@ -42,6 +42,13 @@ public class ReadyTest {
 	}
 
 	@Test
+	@DisplayName("게임 결과 확인시 예외 발생")
+	void status() {
+		assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(
+				() -> state.status());
+	}
+
+	@Test
 	@DisplayName("게임 준비 상태는 종료 상태가 아니다")
 	void isFinished() {
 		assertThat(state.isFinished()).isFalse();
