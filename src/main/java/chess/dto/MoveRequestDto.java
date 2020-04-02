@@ -1,12 +1,16 @@
-package chess.domain;
+package chess.dto;
 
-public class MoveDto {
+public class MoveRequestDto {
     private String from;
     private String to;
 
-    public MoveDto(final String from, final String to) {
+    public MoveRequestDto(final String from, final String to) {
         this.from = from;
         this.to = to;
+    }
+
+    public MoveRequestDto(final String from) {
+        this.from = from;
     }
 
     public String getFrom() {

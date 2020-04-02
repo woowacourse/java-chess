@@ -1,81 +1,83 @@
 package chess;
 
-import static chess.JsonUtil.*;
+import static chess.util.JsonUtil.*;
 import static spark.Spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import chess.domain.MoveDto;
-import chess.domain.board.Board;
-import chess.service.BoardService;
+import chess.dto.MoveRequestDto;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
-import spark.Response;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
-    private static BoardService boardService;
+    private static ChessService chessService = new ChessService();
 
     public static void main(String[] args) {
 
         port(8080);
         staticFiles.location("/public");
 
-        options("/*",
-            (request, response) -> {
-
-                String accessControlRequestHeaders = request
-                    .headers("Access-Control-Request-Headers");
-                if (accessControlRequestHeaders != null) {
-                    response.header("Access-Control-Allow-Headers",
-                        accessControlRequestHeaders);
-                }
-
-                String accessControlRequestMethod = request
-                    .headers("Access-Control-Request-Method");
-                if (accessControlRequestMethod != null) {
-                    response.header("Access-Control-Allow-Methods",
-                        accessControlRequestMethod);
-                }
-
-                return "OK";
-            });
-
-        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
-
-        get("/", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+        options("/*", (request, response) -> {
+            String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
+            if (accessControlRequestHeaders != null) {
+                response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+            }
+            String accessControlRequestMethod = request
+                .headers("Access-Control-Request-Method");
+            if (accessControlRequestMethod != null) {
+                response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
+            }
+            return "OK";
         });
 
-        get("/board", (request, response) -> {
-            validate(response);
-            return boardService.getBoard();
-        }, json());
-
-        post("/board", (request, response) -> {
+        before((request, response) -> {
+            response.header("Access-Control-Allow-Origin", "*");
             response.type("application/json");
-            boardService = new BoardService(Board.init());
-            return boardService.getBoard();
-        }, json());
+        });
 
-        post("/move", (request, response) -> {
-            validate(response);
-            MoveDto dto = new Gson().fromJson(request.body(), MoveDto.class);
-            return boardService.move(dto.getFrom(), dto.getTo());
-        }, json());
+        get("/", (request, response) -> {
+            response.type("text/html");
+            return render(new HashMap<>());
+        });
+
+        get("/boards", (request, response) -> chessService.getBoards(), json());
+
+        post("/boards", (request, response) -> chessService.addBoard(), json());
+
+        get("/scores", (request, response) -> chessService.getScores(), json());
+
+        path("/boards", () -> {
+            get("/:id", (request, response) -> chessService.getBoard(getId(request)), json());
+
+            post("/:id", (request, response) -> chessService.resetBoard(getId(request)), json());
+
+            path("/:id", () -> {
+                get("/turn", (request, response) -> chessService.isWhiteTurn(getId(request)), json());
+
+                post("/movable", (request, response) -> {
+                    MoveRequestDto dto = new Gson().fromJson(request.body(), MoveRequestDto.class);
+                    return chessService.findAllAvailablePath(getId(request), dto.getFrom());
+                }, json());
+
+                post("/move", (request, response) -> {
+                    MoveRequestDto dto = new Gson().fromJson(request.body(), MoveRequestDto.class);
+                    return chessService.move(getId(request), dto.getFrom(), dto.getTo());
+                }, json());
+
+                get("/score", (request, response) -> chessService.getScore(getId(request)), json());
+            });
+        });
     }
 
-    public static void validate(final Response response) {
-        response.type("application/json");
-        if (Objects.isNull(boardService)) {
-            boardService = new BoardService(Board.init());
-        }
+    public static Long getId(final Request request) {
+        return Long.valueOf(request.params(":id"));
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static String render(Map<String, Object> model) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.html"));
     }
 }
