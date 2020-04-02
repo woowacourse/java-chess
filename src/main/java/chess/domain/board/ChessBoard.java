@@ -84,7 +84,7 @@ public class ChessBoard {
     }
 
     public MoveState promotion(Type hopeType) {
-        MoveState moveState = PROMOTION_MOVE_CHECKER.check(this, null);
+        MoveState moveState = PROMOTION_MOVE_CHECKER.check(this);
         if (moveState.isSuccess()) {
             chessBoard.put(getFinishPawnBoard(), getHopePiece(hopeType));
         }
