@@ -39,13 +39,13 @@ public class Pawn extends Piece {
 	}
 
 	private void validateIsSouth(Direction direction) {
-		if (direction != Direction.S) {
+		if (direction != Direction.SOUTH) {
 			throw new CanNotMoveException("흑색 팀 Pawn은 아래로만 움직일 수 있습니다.");
 		}
 	}
 
 	private void validateIsNorth(Direction direction) {
-		if (direction != Direction.N) {
+		if (direction != Direction.NORTH) {
 			throw new CanNotMoveException("백색 팀 Pawn은 위로만 움직일 수 있습니다.");
 		}
 	}

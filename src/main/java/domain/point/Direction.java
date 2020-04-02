@@ -4,14 +4,14 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Direction {
-	N(-1, 0, DirectionPredicates::isN),
-	NE(-1, 1, DirectionPredicates::isNe),
-	E(0, 1, DirectionPredicates::isE),
-	SE(1, 1, DirectionPredicates::isSe),
-	S(1, 0, DirectionPredicates::isS),
-	SW(1, -1, DirectionPredicates::isSw),
-	W(0, -1, DirectionPredicates::isW),
-	NW(-1, -1, DirectionPredicates::isNw),
+	NORTH(-1, 0, DirectionPredicates::isN),
+	NORTH_EAST(-1, 1, DirectionPredicates::isNe),
+	EAST(0, 1, DirectionPredicates::isE),
+	SOUTH_EAST(1, 1, DirectionPredicates::isSe),
+	SOUTH(1, 0, DirectionPredicates::isS),
+	SOUTH_WEST(1, -1, DirectionPredicates::isSw),
+	WEST(0, -1, DirectionPredicates::isW),
+	NORTH_WEST(-1, -1, DirectionPredicates::isNw),
 	KNIGHT(0, 0, DirectionPredicates::isKnight),
 	ELSE(0, 0, DirectionPredicates::isElse);
 
@@ -44,7 +44,7 @@ public enum Direction {
 	}
 
 	public boolean isNotStraight() {
-		return !Arrays.asList(E, W, S, N).contains(this);
+		return !Arrays.asList(EAST, WEST, SOUTH, NORTH).contains(this);
 	}
 
 	public boolean isNotDiagonalUp() {
@@ -52,7 +52,7 @@ public enum Direction {
 	}
 
 	private boolean isDiagonalUp() {
-		return this == NW || this == NE;
+		return this == NORTH_WEST || this == NORTH_EAST;
 	}
 
 	public boolean isNotDiagonalDown() {
@@ -60,7 +60,7 @@ public enum Direction {
 	}
 
 	private boolean isDiagonalDown() {
-		return this == SW || this == SE;
+		return this == SOUTH_WEST || this == SOUTH_EAST;
 	}
 
 	public boolean isNotDiagonal() {
