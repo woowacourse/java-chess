@@ -81,6 +81,6 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return String.valueOf(name);
+        return String.valueOf(name) + "_" + isBlack();
     }
 }

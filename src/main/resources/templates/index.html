@@ -1,108 +1,109 @@
 <!DOCTYPE html>
 <html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Java chess game </title>
-        <link rel="stylesheet" href="chess.css" type="text/css">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title>Java chess game </title>
+    <link rel="stylesheet" href="chess.css" type="text/css">
+</head>
 
-    <body>
-        <div id="game">
-            <div class='cellprefix'>8</div>
-            <div class='gamecell' id='a_8'></div>
-            <div class='gamecell grey' id='b_8'></div>
-            <div class='gamecell' id='c_8'></div>
-            <div class='gamecell grey' id='d_8'></div>
-            <div class='gamecell' id='e_8'></div>
-            <div class='gamecell grey' id='f_8'></div>
-            <div class='gamecell' id='g_8'></div>
-            <div class='gamecell grey' id='h_8'></div>
+<body onload="getChessBoard();">
 
-            <div class='cellprefix'>7</div>
-            <div class='gamecell grey' id='a_7'></div>
-            <div class='gamecell' id='b_7'></div>
-            <div class='gamecell grey' id='c_7'></div>
-            <div class='gamecell' id='d_7'></div>
-            <div class='gamecell grey' id='e_7'></div>
-            <div class='gamecell' id='f_7'></div>
-            <div class='gamecell grey' id='g_7'></div>
-            <div class='gamecell' id='h_7'></div>
+<div id="game">
+    <div class='cellprefix'>8</div>
+    <div class='gamecell' id='a_8'></div>
+    <div class='gamecell grey' id='b_8'></div>
+    <div class='gamecell' id='c_8'></div>
+    <div class='gamecell grey' id='d_8'></div>
+    <div class='gamecell' id='e_8'></div>
+    <div class='gamecell grey' id='f_8'></div>
+    <div class='gamecell' id='g_8'></div>
+    <div class='gamecell grey' id='h_8'></div>
 
-            <div class='cellprefix'>6</div>
-            <div class='gamecell' id='a_6'></div>
-            <div class='gamecell grey' id='b_6'></div>
-            <div class='gamecell' id='c_6'></div>
-            <div class='gamecell grey' id='d_6'></div>
-            <div class='gamecell' id='e_6'></div>
-            <div class='gamecell grey' id='f_6'></div>
-            <div class='gamecell' id='g_6'></div>
-            <div class='gamecell grey' id='h_6'></div>
+    <div class='cellprefix'>7</div>
+    <div class='gamecell grey' id='a_7'></div>
+    <div class='gamecell' id='b_7'></div>
+    <div class='gamecell grey' id='c_7'></div>
+    <div class='gamecell' id='d_7'></div>
+    <div class='gamecell grey' id='e_7'></div>
+    <div class='gamecell' id='f_7'></div>
+    <div class='gamecell grey' id='g_7'></div>
+    <div class='gamecell' id='h_7'></div>
 
-            <div class='cellprefix'>5</div>
-            <div class='gamecell grey' id='a_5'></div>
-            <div class='gamecell' id='b_5'></div>
-            <div class='gamecell grey' id='c_5'></div>
-            <div class='gamecell' id='d_5'></div>
-            <div class='gamecell grey' id='e_5'></div>
-            <div class='gamecell' id='f_5'></div>
-            <div class='gamecell grey' id='g_5'></div>
-            <div class='gamecell' id='h_5'></div>
+    <div class='cellprefix'>6</div>
+    <div class='gamecell' id='a_6'></div>
+    <div class='gamecell grey' id='b_6'></div>
+    <div class='gamecell' id='c_6'></div>
+    <div class='gamecell grey' id='d_6'></div>
+    <div class='gamecell' id='e_6'></div>
+    <div class='gamecell grey' id='f_6'></div>
+    <div class='gamecell' id='g_6'></div>
+    <div class='gamecell grey' id='h_6'></div>
 
-            <div class='cellprefix'>4</div>
-            <div class='gamecell' id='a_4'></div>
-            <div class='gamecell grey' id='b_4'></div>
-            <div class='gamecell' id='c_4'></div>
-            <div class='gamecell grey' id='d_4'></div>
-            <div class='gamecell' id='e_4'></div>
-            <div class='gamecell grey' id='f_4'></div>
-            <div class='gamecell' id='g_4'></div>
-            <div class='gamecell grey' id='h_4'></div>
+    <div class='cellprefix'>5</div>
+    <div class='gamecell grey' id='a_5'></div>
+    <div class='gamecell' id='b_5'></div>
+    <div class='gamecell grey' id='c_5'></div>
+    <div class='gamecell' id='d_5'></div>
+    <div class='gamecell grey' id='e_5'></div>
+    <div class='gamecell' id='f_5'></div>
+    <div class='gamecell grey' id='g_5'></div>
+    <div class='gamecell' id='h_5'></div>
 
-            <div class='cellprefix'>3</div>
-            <div class='gamecell grey' id='a_3'></div>
-            <div class='gamecell' id='b_3'></div>
-            <div class='gamecell grey' id='c_3'></div>
-            <div class='gamecell' id='d_3'></div>
-            <div class='gamecell grey' id='e_3'></div>
-            <div class='gamecell' id='f_3'></div>
-            <div class='gamecell grey' id='g_3'></div>
-            <div class='gamecell' id='h_3'></div>
+    <div class='cellprefix'>4</div>
+    <div class='gamecell' id='a_4'></div>
+    <div class='gamecell grey' id='b_4'></div>
+    <div class='gamecell' id='c_4'></div>
+    <div class='gamecell grey' id='d_4'></div>
+    <div class='gamecell' id='e_4'></div>
+    <div class='gamecell grey' id='f_4'></div>
+    <div class='gamecell' id='g_4'></div>
+    <div class='gamecell grey' id='h_4'></div>
 
-            <div class='cellprefix'>2</div>
-            <div class='gamecell' id='a_2'></div>
-            <div class='gamecell grey' id='b_2'></div>
-            <div class='gamecell' id='c_2'></div>
-            <div class='gamecell grey' id='d_2'></div>
-            <div class='gamecell' id='e_2'></div>
-            <div class='gamecell grey' id='f_2'></div>
-            <div class='gamecell' id='g_2'></div>
-            <div class='gamecell grey' id='h_2'></div>
+    <div class='cellprefix'>3</div>
+    <div class='gamecell grey' id='a_3'></div>
+    <div class='gamecell' id='b_3'></div>
+    <div class='gamecell grey' id='c_3'></div>
+    <div class='gamecell' id='d_3'></div>
+    <div class='gamecell grey' id='e_3'></div>
+    <div class='gamecell' id='f_3'></div>
+    <div class='gamecell grey' id='g_3'></div>
+    <div class='gamecell' id='h_3'></div>
 
-            <div class='cellprefix'>1</div>
-            <div class='gamecell grey' id='a_1'></div>
-            <div class='gamecell' id='b_1'></div>
-            <div class='gamecell grey' id='c_1'></div>
-            <div class='gamecell' id='d_1'></div>
-            <div class='gamecell grey' id='e_1'></div>
-            <div class='gamecell' id='f_1'></div>
-            <div class='gamecell grey' id='g_1'></div>
-            <div class='gamecell' id='h_1'></div>
+    <div class='cellprefix'>2</div>
+    <div class='gamecell' id='a_2'></div>
+    <div class='gamecell grey' id='b_2'></div>
+    <div class='gamecell' id='c_2'></div>
+    <div class='gamecell grey' id='d_2'></div>
+    <div class='gamecell' id='e_2'></div>
+    <div class='gamecell grey' id='f_2'></div>
+    <div class='gamecell' id='g_2'></div>
+    <div class='gamecell grey' id='h_2'></div>
 
-            <div class='cellprefix'></div>
-            <div class='cellprefix'>a</div>
-            <div class='cellprefix'>b</div>
-            <div class='cellprefix'>c</div>
-            <div class='cellprefix'>d</div>
-            <div class='cellprefix'>e</div>
-            <div class='cellprefix'>f</div>
-            <div class='cellprefix'>g</div>
-            <div class='cellprefix'>h</div>
-            <div id='turn'>It's whites Turn!</div>
-        </div>
+    <div class='cellprefix'>1</div>
+    <div class='gamecell grey' id='a_1'></div>
+    <div class='gamecell' id='b_1'></div>
+    <div class='gamecell grey' id='c_1'></div>
+    <div class='gamecell' id='d_1'></div>
+    <div class='gamecell grey' id='e_1'></div>
+    <div class='gamecell' id='f_1'></div>
+    <div class='gamecell grey' id='g_1'></div>
+    <div class='gamecell' id='h_1'></div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <div class='cellprefix'></div>
+    <div class='cellprefix'>a</div>
+    <div class='cellprefix'>b</div>
+    <div class='cellprefix'>c</div>
+    <div class='cellprefix'>d</div>
+    <div class='cellprefix'>e</div>
+    <div class='cellprefix'>f</div>
+    <div class='cellprefix'>g</div>
+    <div class='cellprefix'>h</div>
+    <div id='turn'>It's whites Turn!</div>
+</div>
 
-        <script type="text/javascript" src="chessMove.js"></script>
-    </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="chessMove.js"></script>
+</body>
 </html>

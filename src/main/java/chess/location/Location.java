@@ -81,7 +81,7 @@ public class Location {
         return new Location(row.plus(value), col);
     }
 
-    public Location plusBy(int rowValue ,int colValue) {
+    public Location plusBy(int rowValue, int colValue) {
         return new Location(row.plus(rowValue), col.plus(colValue));
     }
 
@@ -106,7 +106,7 @@ public class Location {
 
     @Override
     public String toString() {
-        return "[" + col + ", " + row + "]";
+        return col.getValue() + "_" + row.getValue();
     }
 
     @Override

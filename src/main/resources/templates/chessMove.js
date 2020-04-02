@@ -44,6 +44,41 @@ var main = {
     }
 }
 
+function getChessBoard() {
+    console.log("로딩 완료111")
+
+    $.ajax({
+        url: "/start/board",
+        type: "get",
+        success: function (data) {
+            var jsonData = JSON.parse(data);
+            console.log(jsonData)
+            for (var i = 0; i < jsonData.boardValue.length; i++) {
+                var piece = jsonData.boardValue[i];
+                console.log(jsonData.boardValue[i].location);
+                $('#' + piece.location).html(main.variables.pieces[piece.pieceName].img);
+                $('#' + piece.location).attr('chess', piece.pieceName);
+            }
+            // for (let gamepiece in main.variables.pieces) {
+            //     $('#' + main.variables.pieces[gamepiece].position).html(main.variables.pieces[gamepiece].img);
+            //     $('#' + main.variables.pieces[gamepiece].position).attr('chess', gamepiece);
+            // }
+        },
+        error: function (errorThrown) {
+            alert(errorThrown);
+        },
+    });
+}
+
+function convertPiece(pieceName) {
+    for (let piecesKey in main.variables.pieces) {
+        if(piecesKey == pieceName) {
+            return piecesKey;
+        }
+    }
+    return null;
+}
+
 
 function allowDrop(ev) {
     // 고유의 동작 제거
@@ -59,8 +94,6 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     var des = ev.target.id;
     console.log(data + " to " + des.toString());
-
-
 }
 
 // function dragstart_handler(event) {
@@ -77,14 +110,6 @@ function drop(ev) {
 //     event.target.appendChild(document.getElementById(data));
 // }
 //
-// function gamesetup() {
-//     $('.gamecell').attr('chess', 'null');
-//     $('#' + main.variables.pieces[gamepiece].position).html(main.variables.pieces[gamepiece].img);
-//     for (gamepiece in main.variables.pieces) {
-//         $('#' + main.variables.pieces[gamepiece].position).html(main.variables.pieces[gamepiece].img);
-//         $('#' + main.variables.pieces[gamepiece].position).attr('chess', gamepiece);
-//     }
-// }
 
 $(document).ready(function () {
     $('.gamecell').attr({
