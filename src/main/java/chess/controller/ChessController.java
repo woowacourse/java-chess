@@ -1,49 +1,43 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
-import chess.domain.position.Position;
-import chess.views.InputDto;
-import chess.views.InputView;
-import chess.views.OutputView;
+import chess.controller.dto.RequestDto;
+import chess.controller.dto.ResponseDto;
+import chess.domain.game.ChessGame;
+import chess.domain.game.Command;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 public class ChessController {
-    private final ChessBoard chessBoard;
+    private Map<Command, Function<RequestDto, ResponseDto>> commands;
+    private ChessGame chessGame;
 
-    public ChessController(InputDto inputDto) {
-        OutputView.printInitialGuide();
-
-        Command command = inputDto.getCommend();
-        if (command != Command.START) {
-            throw new IllegalArgumentException("start를 해야 합니다.");
-        }
-
-        chessBoard = new ChessBoard();
-        OutputView.printChessBoard(chessBoard.getChessBoard());
+    public ChessController() {
+        this.commands = new HashMap<>();
+        commands.put(Command.START, this::start);
+        commands.put(Command.MOVE, this::move);
+        commands.put(Command.STATUS, this::status);
+        chessGame = new ChessGame();
     }
 
-    public void play() {
-        OutputView.printInitialGuide();
-        InputDto inputDto;
-        Command command;
-
-        do {
-            inputDto = InputView.getCommand();
-            command = inputDto.getCommend();
-
-            if (command == Command.MOVE) {
-                move(inputDto.getFrom(), inputDto.getTo());
-            } else if (command == Command.STATUS) {
-                status();
-            }
-        } while(!chessBoard.isGameOver() && command != Command.END);
+    public ResponseDto start(RequestDto requestDto) {
+        return chessGame.start(requestDto);
     }
 
-    private void move(Position from, Position to) {
-        chessBoard.move(from, to);
-        OutputView.printChessBoard(chessBoard.getChessBoard());
+    public ResponseDto move(RequestDto requestDto) {
+        return chessGame.move(requestDto);
     }
 
-    private void status() {
-        OutputView.printStatus(chessBoard.createResult());
+    public ResponseDto status(RequestDto requestDto) {
+        return chessGame.status(requestDto);
+    }
+
+    public ResponseDto end(RequestDto requestDto) {
+        return chessGame.end(requestDto);
+    }
+
+    public ResponseDto getResponseDto(RequestDto requestDto) {
+        return commands.get(requestDto.getCommend()).apply(requestDto);
     }
 }

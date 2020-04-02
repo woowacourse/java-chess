@@ -1,7 +1,7 @@
-package chess.domain.chesspieces;
+package chess.domain.chesspiece;
 
-import chess.domain.Player;
 import chess.domain.direction.Direction;
+import chess.domain.game.Player;
 import chess.domain.position.Position;
 
 import java.util.Objects;

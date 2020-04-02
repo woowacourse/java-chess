@@ -1,6 +1,6 @@
-package chess.controller;
+package chess.domain.game;
 
-import chess.Exceptions.IllegalCommandException;
+import chess.Exception.IllegalCommandException;
 
 import java.util.Arrays;
 import java.util.Objects;

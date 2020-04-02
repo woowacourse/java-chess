@@ -1,7 +1,7 @@
-package chess.domain.chesspieces;
+package chess.domain.chesspiece;
 
-import chess.domain.Player;
 import chess.domain.direction.Direction;
+import chess.domain.game.Player;
 
 public class King extends Piece {
     private static final String KING_NAME = "KING";

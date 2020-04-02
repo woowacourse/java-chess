@@ -1,4 +1,4 @@
-package chess.Exceptions;
+package chess.Exception;
 
 public class IllegalDirectionException extends RuntimeException {
     public IllegalDirectionException() {

@@ -1,11 +1,11 @@
-package chess.views;
+package chess.controller.dto;
 
-import chess.Exceptions.IllegalInputException;
-import chess.controller.Command;
+import chess.Exception.IllegalInputException;
+import chess.domain.game.Command;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 
-public class InputDto {
+public class RequestDto {
     private static final String DELIMITER = " ";
     private static final int BASIC_INPUTS_SIZE = 1;
     private static final int MOVE_INPUTS_SIZE = 3;
@@ -19,7 +19,7 @@ public class InputDto {
     private Position from;
     private Position to;
 
-    public InputDto(String input) {
+    public RequestDto(String input) {
         this.inputs = input.split(DELIMITER);
         this.commend = Command.of(inputs[COMMEND_INDEX]);
 

@@ -1,4 +1,4 @@
-package chess.Exceptions;
+package chess.Exception;
 
 public class IllegalPlayerException extends RuntimeException {
     public IllegalPlayerException() {

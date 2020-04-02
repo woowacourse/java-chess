@@ -1,4 +1,4 @@
-package chess.Exceptions;
+package chess.Exception;
 
 public class NotStartPlayingException extends RuntimeException{
     public NotStartPlayingException() {

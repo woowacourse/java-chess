@@ -1,4 +1,4 @@
-package chess.Exceptions;
+package chess.Exception;
 
 public class IllegalCommandException extends RuntimeException {
     public IllegalCommandException() {

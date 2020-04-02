@@ -1,11 +1,10 @@
-package chess.domain;
+package chess.domain.game;
 
-import chess.Exceptions.NotMoveException;
-import chess.PieceFactory;
-import chess.domain.chesspieces.King;
-import chess.domain.chesspieces.Pawn;
-import chess.domain.chesspieces.Piece;
-import chess.domain.chesspieces.PieceInfo;
+import chess.Exception.NotMoveException;
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.Piece;
+import chess.domain.chesspiece.PieceInfo;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.component.Row;
@@ -15,15 +14,20 @@ import chess.domain.status.Status;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ChessBoard {
+public class ChessBoard implements ChessBoardStrategy {
     private final Map<Position, Piece> chessBoard = new HashMap<>();
     private boolean isKingTaken;
 
     public ChessBoard() {
-        for (Map.Entry<Piece, List<Position>> entry : PieceFactory.create().entrySet()) {
+        isKingTaken = false;
+    }
+
+    @Override
+    public Map<Position, Piece> create(Map<Piece, List<Position>> initPieces) {
+        for (Map.Entry<Piece, List<Position>> entry : initPieces.entrySet()) {
             entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
         }
-        isKingTaken = false;
+        return chessBoard;
     }
 
     public boolean move(Position from, Position to) {
@@ -33,11 +37,9 @@ public class ChessBoard {
         validateSource(source);
         validateIsPlayer(source, target);
 
-
         if (movable(from, to)) {
             chessBoard.put(to, source);
             chessBoard.remove(from);
-
 
             if (target instanceof King) {
                 this.isKingTaken = true;

@@ -1,6 +1,6 @@
 package chess.domain.status;
 
-import chess.domain.Player;
+import chess.domain.game.Player;
 
 import java.util.Comparator;
 import java.util.List;

@@ -1,4 +1,4 @@
-package chess.Exceptions;
+package chess.Exception;
 
 public class NotMoveException extends RuntimeException{
     public NotMoveException(String message) {
