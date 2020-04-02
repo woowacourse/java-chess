@@ -3,6 +3,7 @@ package chess;
 import chess.controller.GameController;
 import chess.domains.board.Board;
 import chess.domains.piece.Piece;
+import chess.domains.piece.PieceColor;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -28,6 +29,8 @@ public class WebUIChessApplication {
             List<Piece> pieces = board.showBoard();
             List<String> pieceCodes = convertView(pieces);
             model.put("pieces", pieceCodes);
+            model.put("white_score", board.calculateScore(PieceColor.WHITE));
+            model.put("black_score", board.calculateScore(PieceColor.BLACK));
             return render(model, "index.html");
         });
 
@@ -38,6 +41,8 @@ public class WebUIChessApplication {
             List<Piece> pieces = board.showBoard();
             List<String> pieceCodes = convertView(pieces);
             model.put("pieces", pieceCodes);
+            model.put("white_score", board.calculateScore(PieceColor.WHITE));
+            model.put("black_score", board.calculateScore(PieceColor.BLACK));
             return render(model, "index.html");
         });
     }

@@ -89,6 +89,18 @@ public class Board {
         return score - pawnCount * SCORE_OF_PAWN_SAME_COLUMN;
     }
 
+    public double calculateScore(PieceColor pieceColor) {
+        double score = board.values()
+                .stream()
+                .filter(playingPiece -> playingPiece.isMine(pieceColor))
+                .mapToDouble(Piece::score)
+                .sum();
+
+        int pawnCount = countOfPawnsInSameColumn();
+
+        return score - pawnCount * SCORE_OF_PAWN_SAME_COLUMN;
+    }
+
     private int countOfPawnsInSameColumn() {
         int pawnCount = 0;
         for (Column column : Column.values()) {
