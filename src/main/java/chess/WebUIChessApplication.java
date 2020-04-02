@@ -31,5 +31,4 @@ public class WebUIChessApplication {
             OutputView.printStatus(state.getPieces());
         }
     }
-
 }
