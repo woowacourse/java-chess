@@ -86,7 +86,7 @@ public class Path {
 		int locationOfY = sourcePosition.getRank();
 
 		if (sourcePosition.isInitialPawnPosition(pieces.get(sourcePosition).getColor())) {
-			for (int i = 0; i < INITIAL_MOVABLE_PAWN_DISTANCE; i++) {
+			for (int i = 1; i <= INITIAL_MOVABLE_PAWN_DISTANCE; i++) {
 				int afterMoveOfY = locationOfY + i;
 				if (!isNotBlankPosition(pieces, locationOfX, afterMoveOfY)) {
 					positions.add(Position.of(locationOfX, afterMoveOfY));
