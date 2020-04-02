@@ -4,23 +4,22 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.util.Direction;
-import chess.exception.OutOfBoardRangeException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PawnMoveStrategy extends DefaultMoveStrategy {
+public abstract class PawnMoveStrategy implements MoveStrategy {
     @Override
     public List<Position> getPossiblePositions(Board board, Piece piece) {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {
-            try {
+            if (piece.isNextPositionValid(direction)) {
                 Position nextPosition = piece.getPosition().moveBy(direction);
                 Piece nextPiece = board.findPieceBy(nextPosition);
 
                 if (direction == getForwardDirection()) {
-                    if (isBlankPieceInsideBoard(nextPiece)) {
+                    if (nextPiece.isBlank()) {
                         possiblePositions.add(nextPosition);
                     }
                     if (isFirstMove(piece)) {
@@ -29,10 +28,9 @@ public abstract class PawnMoveStrategy extends DefaultMoveStrategy {
                     continue;
                 }
 
-                if (isOpponentPieceInsideBoard(piece, nextPiece)) {
+                if (piece.isOtherTeam(nextPiece)) {
                     possiblePositions.add(nextPosition);
                 }
-            } catch (OutOfBoardRangeException ignored) {
             }
         }
         return possiblePositions;

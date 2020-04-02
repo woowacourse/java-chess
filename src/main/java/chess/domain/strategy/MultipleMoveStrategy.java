@@ -4,31 +4,34 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.util.Direction;
-import chess.exception.OutOfBoardRangeException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MultipleMoveStrategy extends DefaultMoveStrategy {
+public abstract class MultipleMoveStrategy implements MoveStrategy {
     @Override
     public List<Position> getPossiblePositions(Board board, Piece piece) {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {
-            try {
-                Position nextPosition = piece.getPosition().moveBy(direction);
-                Piece nextPiece = board.findPieceBy(nextPosition);
+            Piece tempPiece = piece;
+            while (tempPiece.isNextPositionValid(direction)) {
+                Position nextPosition = tempPiece.getPosition().moveBy(direction);
+                tempPiece = board.findPieceBy(nextPosition);
 
-                while (isBlankPieceInsideBoard(nextPiece)) {
+                if (tempPiece.isBlank()) {
                     possiblePositions.add(nextPosition);
-                    nextPosition = nextPosition.moveBy(direction);
-                    nextPiece = board.findPieceBy(nextPosition);
+                    tempPiece = board.findPieceBy(nextPosition);
                 }
 
-                if (isOpponentPieceInsideBoard(piece, nextPiece)) {
+                else if (tempPiece.isOtherTeam(piece)) {
                     possiblePositions.add(nextPosition);
+                    break;
                 }
-            } catch (OutOfBoardRangeException ignored) {
+
+                else if (tempPiece.isSameTeam(piece)) {
+                    break;
+                }
             }
         }
         return possiblePositions;

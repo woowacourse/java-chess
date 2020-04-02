@@ -33,11 +33,11 @@ public class QueenTest {
     @ParameterizedTest
     @MethodSource("getCasesForQueenMoveByDirection")
     void bishopMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
-        INITIALIZED_POSITIONS.set(36, Piece.createWhiteBishop(new Position(5, 5)));
+        INITIALIZED_POSITIONS.set(36, Piece.createWhiteQueen(new Position(5, 5)));
         INITIALIZED_POSITIONS.set(20, Piece.createWhitePawn(new Position(5, 3)));
         INITIALIZED_POSITIONS.set(33, Piece.createBlackKnight(new Position(2, 5)));
         INITIALIZED_POSITIONS.set(54, Piece.createBlackRook(new Position(7, 7)));
-        INITIALIZED_POSITIONS.set(0, Piece.createWhiteQueen(new Position(1, 1)));
+        INITIALIZED_POSITIONS.set(0, Piece.createWhiteBishop(new Position(1, 1)));
         Board board = new Board(INITIALIZED_POSITIONS);
         assertThat(moveStrategy.getPossiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }

@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.domain.util.Direction;
 import chess.exception.PieceImpossibleMoveException;
 
 import java.util.Objects;
@@ -86,6 +87,10 @@ public class Piece {
         return this.pieceType.isOtherTeam(nextPiece.pieceType);
     }
 
+    public boolean isSameTeam(Piece nextPiece) {
+        return this.pieceType.isSameTeam(nextPiece.pieceType);
+    }
+
     public boolean isSameTeam(Team team) {
         return this.pieceType.isSameTeam(team);
     }
@@ -96,6 +101,11 @@ public class Piece {
 
     public boolean isBlank() {
         return pieceType == PieceType.BLANK;
+    }
+
+    public boolean isNextPositionValid(final Direction direction) {
+        return Position.isInBoardRange(position.getX() + direction.getColumn(),
+                position.getY() + direction.getRow());
     }
 
     public char getRepresentation() {

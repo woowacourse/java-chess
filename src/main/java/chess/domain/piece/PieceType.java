@@ -43,6 +43,10 @@ public enum PieceType {
         return team.isNotSame(pieceType.team);
     }
 
+    public boolean isSameTeam(final PieceType pieceType) {
+        return team == pieceType.team;
+    }
+
     public boolean isSameTeam(final Team team) {
         return this.team == team;
     }

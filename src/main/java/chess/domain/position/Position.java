@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.piece.Piece;
 import chess.domain.util.Direction;
 import chess.exception.InvalidPositionException;
 import chess.exception.OutOfBoardRangeException;
@@ -37,14 +36,6 @@ public class Position {
 
     public Position moveBy(Direction direction) {
         return new Position(x + direction.getColumn(), y + direction.getRow());
-    }
-
-    public static boolean isInBoardRange(Piece piece) {
-        return isInBoardRange(piece.getPosition());
-    }
-
-    public static boolean isInBoardRange(Position position) {
-        return isInBoardRange(position.x, position.y);
     }
 
     public static boolean isInBoardRange(int x, int y) {
