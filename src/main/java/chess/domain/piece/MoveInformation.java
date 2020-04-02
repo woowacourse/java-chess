@@ -71,7 +71,7 @@ public class MoveInformation {
     }
 
     public boolean doAnyPieceExistInBetween() {
-        if (board.get(from).is(PieceType.KNIGHT)) {
+        if (board.get(from).isKnight()) {
             throw new UnsupportedOperationException("나이트에 대해서 이 기능을 지원하지 않습니다.");
         }
         List<Position> path = Position.getPath(from, to);
@@ -100,7 +100,7 @@ public class MoveInformation {
     }
 
     public boolean isStartOnInitialPosition() {
-        if (!board.get(from).is(PieceType.PAWN)) {
+        if (!board.get(from).isPawn()) {
             throw new UnsupportedOperationException("해당 기능은 움직일 기물이 폰일 경우에만 지원합니다.");
         }
         if (board.get(from).belongs(Team.WHITE)) {

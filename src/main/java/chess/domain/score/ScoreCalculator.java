@@ -2,7 +2,6 @@ package chess.domain.score;
 
 import chess.domain.Team;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,7 +36,7 @@ public class ScoreCalculator {
 
     private static boolean isKingKilled(final Map<Position, Piece> board, final Team killed) {
         return board.entrySet().stream()
-            .noneMatch(entry -> entry.getValue().is(PieceType.KING)
+            .noneMatch(entry -> entry.getValue().isKing()
                 && entry.getValue().belongs(killed));
     }
 
@@ -49,22 +48,23 @@ public class ScoreCalculator {
     }
 
     private static double calculateScoreOf(final Map<Position, Piece> board, Position position) {
-        if (board.get(position).is(PieceType.PAWN)) {
-            return board.get(position)
-                .getScore(isSameTeamPawnOnSameColumnOfPawn(board, position));
+        Piece fromPiece = board.get(position);
+
+        if (fromPiece.isPawn()) {
+            return fromPiece.getScore(isSameTeamPawnOnSameColumnOfPawn(board, position));
         }
-        return board.get(position).getScore();
+        return fromPiece.getScore();
     }
 
     private static boolean isSameTeamPawnOnSameColumnOfPawn(
         final Map<Position, Piece> board, Position position) {
 
-        if (!board.containsKey(position) || board.get(position).is(PieceType.PAWN)) {
+        if (!board.containsKey(position) || !board.get(position).isPawn()) {
             throw new IllegalArgumentException("start 위치에 기물이 없거나 폰이 아닙니다.");
         }
         return position.getSameColumnPositions().stream()
             .anyMatch(target -> board.containsKey(target)    /* 도착위치에 기물이 존재함 */
-                && board.get(target).is(PieceType.PAWN)      /* 그 기물이 폰임 */
+                && board.get(target).isPawn()      /* 그 기물이 폰임 */
                 && board.get(target).isSameTeam(board.get(position)));
     }
 }

@@ -1,8 +1,13 @@
 package chess.domain.board;
 
 import chess.domain.Team;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,55 +30,54 @@ public class BoardFactory {
     }
 
     private static void fillSeventhRank(Map<Position, Piece> board) {
-        addToBoard(board, "a7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "b7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "c7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "d7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "e7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "f7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "g7", Team.BLACK, PieceType.PAWN);
-        addToBoard(board, "h7", Team.BLACK, PieceType.PAWN);
+        addToBoard(board, "a7", new Pawn(Team.BLACK));
+        addToBoard(board, "b7", new Pawn(Team.BLACK));
+        addToBoard(board, "c7", new Pawn(Team.BLACK));
+        addToBoard(board, "d7", new Pawn(Team.BLACK));
+        addToBoard(board, "e7", new Pawn(Team.BLACK));
+        addToBoard(board, "f7", new Pawn(Team.BLACK));
+        addToBoard(board, "g7", new Pawn(Team.BLACK));
+        addToBoard(board, "h7", new Pawn(Team.BLACK));
     }
 
     private static void fillEighthRank(Map<Position, Piece> board) {
-        addToBoard(board, "a8", Team.BLACK, PieceType.ROOK);
-        addToBoard(board, "b8", Team.BLACK, PieceType.KNIGHT);
-        addToBoard(board, "c8", Team.BLACK, PieceType.BISHOP);
-        addToBoard(board, "d8", Team.BLACK, PieceType.QUEEN);
-        addToBoard(board, "e8", Team.BLACK, PieceType.KING);
-        addToBoard(board, "f8", Team.BLACK, PieceType.BISHOP);
-        addToBoard(board, "g8", Team.BLACK, PieceType.KNIGHT);
-        addToBoard(board, "h8", Team.BLACK, PieceType.ROOK);
+        addToBoard(board, "a8", new Rook(Team.BLACK));
+        addToBoard(board, "b8", new Knight(Team.BLACK));
+        addToBoard(board, "c8", new Bishop(Team.BLACK));
+        addToBoard(board, "d8", new Queen(Team.BLACK));
+        addToBoard(board, "e8", new King(Team.BLACK));
+        addToBoard(board, "f8", new Bishop(Team.BLACK));
+        addToBoard(board, "g8", new Knight(Team.BLACK));
+        addToBoard(board, "h8", new Rook(Team.BLACK));
     }
 
     private static void fillSecondRank(Map<Position, Piece> board) {
-        addToBoard(board, "a2", Team.WHITE, PieceType.PAWN);
-        addToBoard(board, "b2", Team.WHITE, PieceType.PAWN);
-        addToBoard(board, "c2", Team.WHITE, PieceType.PAWN);
-        addToBoard(board, "d2", Team.WHITE, PieceType.PAWN);
-        addToBoard(board, "e2", Team.WHITE, PieceType.PAWN);
-        addToBoard(board, "f2", Team.WHITE, PieceType.PAWN);
-        addToBoard(board, "g2", Team.WHITE, PieceType.PAWN);
-        addToBoard(board, "h2", Team.WHITE, PieceType.PAWN);
+        addToBoard(board, "a2", new Pawn(Team.WHITE));
+        addToBoard(board, "b2", new Pawn(Team.WHITE));
+        addToBoard(board, "c2", new Pawn(Team.WHITE));
+        addToBoard(board, "d2", new Pawn(Team.WHITE));
+        addToBoard(board, "e2", new Pawn(Team.WHITE));
+        addToBoard(board, "f2", new Pawn(Team.WHITE));
+        addToBoard(board, "g2", new Pawn(Team.WHITE));
+        addToBoard(board, "h2", new Pawn(Team.WHITE));
     }
 
     private static void fillFirstRank(Map<Position, Piece> board) {
-        addToBoard(board, "a1", Team.WHITE, PieceType.ROOK);
-        addToBoard(board, "b1", Team.WHITE, PieceType.KNIGHT);
-        addToBoard(board, "c1", Team.WHITE, PieceType.BISHOP);
-        addToBoard(board, "d1", Team.WHITE, PieceType.QUEEN);
-        addToBoard(board, "e1", Team.WHITE, PieceType.KING);
-        addToBoard(board, "f1", Team.WHITE, PieceType.BISHOP);
-        addToBoard(board, "g1", Team.WHITE, PieceType.KNIGHT);
-        addToBoard(board, "h1", Team.WHITE, PieceType.ROOK);
+        addToBoard(board, "a1", new Rook(Team.WHITE));
+        addToBoard(board, "b1", new Knight(Team.WHITE));
+        addToBoard(board, "c1", new Bishop(Team.WHITE));
+        addToBoard(board, "d1", new Queen(Team.WHITE));
+        addToBoard(board, "e1", new King(Team.WHITE));
+        addToBoard(board, "f1", new Bishop(Team.WHITE));
+        addToBoard(board, "g1", new Knight(Team.WHITE));
+        addToBoard(board, "h1", new Rook(Team.WHITE));
     }
 
     private static void addToBoard(
         Map<Position, Piece> board,
         String position,
-        Team team,
-        PieceType pieceType
+        Piece piece
     ) {
-        board.put(Position.of(position), new Piece(team, pieceType));
+        board.put(Position.of(position), piece);
     }
 }

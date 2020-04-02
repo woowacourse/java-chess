@@ -23,3 +23,4 @@
 - Piece Type (=기물 종류) : 폰, 룩, 나이트, 비숍, 퀸, 킹이 있다.
 - start (=from) : 기물을 A 위치에서 B 위치로 이동시킬 때, A 위치
 - end (=to, target) : 기물을 A 위치에서 B 위치로 이동시킬 때, B 위치
+- acronym : 번역하면 "두문자어". 예를들면 WHITE 팀 Pawn 의 acronym 은 p 이고, BLACK 팀 BISHOP 은 B 이다.

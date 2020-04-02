@@ -2,7 +2,6 @@ package chess.domain.gamestatus;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.piece.PieceType;
 
 public class Running extends Started {
 
@@ -32,7 +31,7 @@ public class Running extends Started {
     private GameStatus decideNextStatus() {
         Team nextTeam = currentTeam.opponent();
 
-        if (!board.isPieceOnBoard(nextTeam, PieceType.KING)) {
+        if (!board.isPieceOnBoard(nextTeam)) {
             return new Finished(this.board);
         }
         return new Running(this.board, nextTeam);

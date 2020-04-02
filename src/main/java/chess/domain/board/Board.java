@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.Team;
 import chess.domain.piece.MoveInformation;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -41,10 +40,10 @@ public class Board {
         }
     }
 
-    public boolean isPieceOnBoard(Team team, PieceType pieceType) {
+    public boolean isPieceOnBoard(Team team) {
         return this.board.entrySet().stream()
             .anyMatch(entry -> entry.getValue().belongs(team)
-                && entry.getValue().is(pieceType));
+                && entry.getValue().isKing());
     }
 
     @Override
