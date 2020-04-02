@@ -1,20 +1,17 @@
 package chess.domain.state;
 
-import java.util.List;
-
 import chess.domain.Board;
 import chess.domain.Team;
 import chess.domain.Turn;
 import chess.domain.position.Position;
-import chess.dto.ResponseDto;
 
-public class Start extends Ready {
+public class Playing extends Ready {
 	protected final Board board;
-	private Turn turn;
+	private final Turn turn;
 
-	public Start(Board board) {
+	public Playing(Board board, Turn turn) {
 		this.board = board;
-		this.turn = new Turn(Team.WHITE);
+		this.turn = turn;
 	}
 
 	@Override
@@ -28,10 +25,10 @@ public class Start extends Ready {
 	}
 
 	@Override
-	public ChessGameState move(List<String> parameters) {
-		board.move(Position.of(parameters.get(0)), Position.of(parameters.get(1)), turn);
+	public ChessGameState move(Position source, Position target) {
+		board.move(source, target, turn);
 		if (board.isKingDead()) {
-			return new Finish(board, turn);
+			return new Finish(board);
 		}
 		turn.switchTurn();
 		return this;
@@ -39,11 +36,16 @@ public class Start extends Ready {
 
 	@Override
 	public ChessGameState end() {
-		return new Finish(board, turn);
+		return new Finish(board);
 	}
 
 	@Override
-	public ResponseDto getResponse() {
-		return new ResponseDto(board.getDto(), Score.of(board));
+	public Board board() {
+		return board;
+	}
+
+	@Override
+	public Score score(Team team) {
+		return Score.calculate(board.findPiecesByTeam(team));
 	}
 }

@@ -50,6 +50,10 @@ public class Position {
 		return new Position(column.plus(x), row.plus(y));
 	}
 
+	public boolean equalsX(int x) {
+		return this.column.getColumn() == x;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

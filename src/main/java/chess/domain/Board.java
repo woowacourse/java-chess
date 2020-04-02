@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -79,5 +80,11 @@ public class Board {
 
 	public Map<Position, Piece> getBoard() {
 		return Collections.unmodifiableMap(board);
+	}
+
+	public List<Piece> findPiecesByTeam(Team team) {
+		return board.values().stream()
+			.filter(value -> value.getTeam() == team)
+			.collect(Collectors.toList());
 	}
 }

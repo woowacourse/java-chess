@@ -1,17 +1,11 @@
 package chess.domain.state;
 
-import java.util.List;
-
 import chess.domain.Board;
-import chess.dto.ResponseDto;
+import chess.domain.Team;
+import chess.domain.Turn;
+import chess.domain.position.Position;
 
 public class Ready implements ChessGameState {
-	protected final Board board;
-
-	public Ready() {
-		this.board = BoardRepository.create();
-	}
-
 	@Override
 	public boolean isEnd() {
 		return false;
@@ -19,11 +13,11 @@ public class Ready implements ChessGameState {
 
 	@Override
 	public ChessGameState start() {
-		return new Start(board);
+		return new Playing(BoardRepository.create(), new Turn(Team.WHITE));
 	}
 
 	@Override
-	public ChessGameState move(List<String> parameters) {
+	public ChessGameState move(Position source, Position target) {
 		throw new UnsupportedOperationException("아직 게임이 시작되지 않았습니다.");
 	}
 
@@ -33,7 +27,12 @@ public class Ready implements ChessGameState {
 	}
 
 	@Override
-	public ResponseDto getResponse() {
-		return new ResponseDto(board.getDto());
+	public Board board() {
+		throw new UnsupportedOperationException("게임이 아직 준비중입니다.");
+	}
+
+	@Override
+	public Score score(Team team) {
+		throw new UnsupportedOperationException("게임이 아직 준비중입니다.");
 	}
 }

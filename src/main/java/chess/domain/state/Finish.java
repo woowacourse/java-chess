@@ -1,17 +1,14 @@
 package chess.domain.state;
 
-import java.util.List;
-
 import chess.domain.Board;
-import chess.domain.Turn;
-import chess.dto.ResponseDto;
+import chess.domain.Team;
+import chess.domain.position.Position;
 
-public class Finish extends Start {
-	private final Turn turn;
+public class Finish implements ChessGameState {
+	private final Board board;
 
-	public Finish(Board board, Turn turn) {
-		super(board);
-		this.turn = turn;
+	public Finish(Board board) {
+		this.board = board;
 	}
 
 	@Override
@@ -21,12 +18,11 @@ public class Finish extends Start {
 
 	@Override
 	public ChessGameState start() {
-		ChessGameState nextState = new Ready();
-		return nextState.start();
+		throw new UnsupportedOperationException("게임이 종료되었습니다.");
 	}
 
 	@Override
-	public ChessGameState move(List<String> parameters) {
+	public ChessGameState move(Position source, Position target) {
 		throw new UnsupportedOperationException("게임이 종료되었습니다.");
 	}
 
@@ -36,7 +32,12 @@ public class Finish extends Start {
 	}
 
 	@Override
-	public ResponseDto getResponse() {
-		return new ResponseDto(board.getDto(), turn);
+	public Board board() {
+		return board;
+	}
+
+	@Override
+	public Score score(Team team) {
+		return Score.calculate(board.findPiecesByTeam(team));
 	}
 }

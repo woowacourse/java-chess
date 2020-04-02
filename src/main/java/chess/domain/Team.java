@@ -2,7 +2,8 @@ package chess.domain;
 
 public enum Team {
 	WHITE,
-	BLACK;
+	BLACK,
+	NONE;
 
 	public Team switchTeam() {
 		if (this == WHITE) {

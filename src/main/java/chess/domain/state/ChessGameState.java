@@ -1,8 +1,8 @@
 package chess.domain.state;
 
-import java.util.List;
-
-import chess.dto.ResponseDto;
+import chess.domain.Board;
+import chess.domain.Team;
+import chess.domain.position.Position;
 
 public interface ChessGameState {
 
@@ -10,13 +10,11 @@ public interface ChessGameState {
 
 	ChessGameState start();
 
-	ChessGameState move(List<String> parameters);
+	ChessGameState move(Position source, Position target);
 
 	ChessGameState end();
 
-	default void exception() {
-		throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
-	}
+	Board board();
 
-	ResponseDto getResponse();
+	Score score(Team team);
 }

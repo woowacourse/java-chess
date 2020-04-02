@@ -30,6 +30,10 @@ public abstract class Piece {
 		return this instanceof King;
 	}
 
+	public boolean isPawn() {
+		return false;
+	}
+
 	public Position getPosition() {
 		return position;
 	}
@@ -38,7 +42,10 @@ public abstract class Piece {
 		return team;
 	}
 
-	public abstract double getScore();
+	public abstract int getScore();
 
 	public abstract String getSymbol();
+
+	;
+
 }

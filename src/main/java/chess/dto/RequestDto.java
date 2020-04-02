@@ -2,8 +2,6 @@ package chess.dto;
 
 import java.util.List;
 
-import chess.domain.state.Command;
-
 public class RequestDto {
 	private final Command command;
 	private final List<String> parameters;
