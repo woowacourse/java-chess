@@ -82,7 +82,7 @@ public class ChessWebApplication {
 
 	private static String findPieceType(final Position position) {
 		Optional<Piece> piece = chessBoard.findPieceByPosition(position);
-		return piece.map(Piece::getName).orElse("");
+		return piece.map(Piece::getPieceName).orElse("");
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {

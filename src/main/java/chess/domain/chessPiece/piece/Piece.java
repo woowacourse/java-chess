@@ -63,10 +63,6 @@ public abstract class Piece implements PieceAbility {
 		return this.position.isSameFile(file);
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public Position getPosition() {
 		return position;
 	}
