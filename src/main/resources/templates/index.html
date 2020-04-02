@@ -35,7 +35,7 @@
             background-color: pink;
         }
 
-        #command {
+        .command {
             width: 500px;
             height: 20px;
         }
@@ -158,9 +158,10 @@
     </div>
     <!-- game_ui end -->
     <div class="game_info">
-        <h3>게임 명령 입력할 거야</h3>
+        <h3>게임 명령 입력할 거야 {{turn}}</h3>
         <form action="/move" class="game_interface" method="post">
-            <input id="command" name="command" type="text"/>
+            <input class="command" name="source" type="text"/>
+            <input class="command" name="target" type="text"/>
             <input type="submit" value="입력"/>
         </form>
 
