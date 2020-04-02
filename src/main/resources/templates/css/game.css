@@ -27,14 +27,16 @@
   background-color: #fece9e;
 }
 
-#start {
+#content {
   position: relative;
   width: 80%;
   height: 100%;
   left: 30px;
 }
 
-#start-button {
+#status-button,
+#end-button,
+#move-button {
   width: 80px;
   height: 50px;
   font-family: BMHANNAPro;
@@ -43,11 +45,38 @@
   font-size: 20px;
 }
 
-#start-button:hover {
+#status-button:hover,
+#end-button:hover,
+#move-button:hover {
   background-color: black;
   color: white;
 }
 
 img {
-  width: 40px; 
+  width: 50px; 
+}
+
+#source-label,
+#target-label {
+  font-family: BMHANNAPro;
+  font-size:30px;
+}
+
+#source,
+#target {
+  font-family: BMHANNAPro;
+  size:50;
+}
+
+#currentTeam {
+  font-family: BMHANNAPro;
+  font-size: 30px;
+}
+
+#message {
+  width: 500px;
+  height: 40px;
+  resize: none;
+  font-family: BMHANNAPro;
+  font-size: 30px;
 }
