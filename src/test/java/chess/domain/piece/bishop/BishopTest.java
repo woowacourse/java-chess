@@ -2,7 +2,7 @@ package chess.domain.piece.bishop;
 
 import chess.domain.UserInterface;
 import chess.domain.board.Board;
-import chess.domain.board.ChessBoard;
+import chess.domain.board.InitializedBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
@@ -28,7 +28,7 @@ class BishopTest {
         //todo: check convention
         Bishop bishop = (Bishop) PieceFactory.createPiece(Bishop.class, from, team);
 
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
         Piece moved = bishop.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -40,7 +40,7 @@ class BishopTest {
         //todo: check convention, 타입캐스팅 해도 될 지
         Bishop bishop = (Bishop) PieceFactory.createPiece(Bishop.class, from, team);
 
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
 
         assertThatThrownBy(() -> bishop.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -51,7 +51,7 @@ class BishopTest {
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         Bishop bishop = (Bishop) PieceFactory.createPiece(Bishop.class, from, team);
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
         boolean hasHindrance = bishop.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
     }

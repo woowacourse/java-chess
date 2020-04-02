@@ -2,7 +2,7 @@ package chess.domain.piece.pawn;
 
 import chess.domain.UserInterface;
 import chess.domain.board.Board;
-import chess.domain.board.ChessBoard;
+import chess.domain.board.InitializedBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
@@ -27,7 +27,7 @@ class InitializedPawnTest {
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, team);
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
         boolean hasHindrance = initializedPawn.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
     }
@@ -40,7 +40,7 @@ class InitializedPawnTest {
         //todo: check convention
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, Position.of(1,2), team);
 
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
 
         Piece moved = initializedPawn.move(to, board);
         assertThat(moved).isInstanceOf(MovedPawn.class);
@@ -53,7 +53,7 @@ class InitializedPawnTest {
         //todo: check convention, 타입캐스팅 해도 될 지
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, team);
 
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
 
 
         assertThatThrownBy(() -> initializedPawn.move(to, board))

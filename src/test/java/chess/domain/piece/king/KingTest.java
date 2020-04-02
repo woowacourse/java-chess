@@ -2,7 +2,7 @@ package chess.domain.piece.king;
 
 import chess.domain.UserInterface;
 import chess.domain.board.Board;
-import chess.domain.board.ChessBoard;
+import chess.domain.board.InitializedBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
@@ -28,7 +28,7 @@ class KingTest {
         //todo: check convention
         King king = (King) PieceFactory.createPiece(King.class, from, team);
 
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
         Piece moved = king.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -40,7 +40,7 @@ class KingTest {
         //todo: check convention, 타입캐스팅 해도 될 지
         King kin = (King) PieceFactory.createPiece(King.class, from, team);
 
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
 
         assertThatThrownBy(() -> kin.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);

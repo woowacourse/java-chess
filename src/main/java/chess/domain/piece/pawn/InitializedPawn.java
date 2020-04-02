@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.move.CanNotMoveStrategy;
 import chess.domain.piece.Piece;
+import chess.domain.piece.score.Score;
+import chess.domain.piece.state.Pawn;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 
@@ -13,8 +15,8 @@ import java.util.List;
 public class InitializedPawn extends Pawn {
     public static final int MAX_DISTANCE = 2;
 
-    public InitializedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
-        super(name, position, team, canNotMoveStrategies);
+    public InitializedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
+        super(name, position, team, canNotMoveStrategies, score);
     }
 
     @Override

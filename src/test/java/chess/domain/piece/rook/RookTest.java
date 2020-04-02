@@ -2,7 +2,7 @@ package chess.domain.piece.rook;
 
 import chess.domain.UserInterface;
 import chess.domain.board.Board;
-import chess.domain.board.ChessBoard;
+import chess.domain.board.InitializedBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
@@ -29,7 +29,7 @@ class RookTest {
         //todo: check convention
         Rook rook = (Rook) PieceFactory.createPiece(Rook.class, from, team);
 
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
         Piece moved = rook.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -41,7 +41,7 @@ class RookTest {
         //todo: check convention, 타입캐스팅 해도 될 지
         Rook rook = (Rook) PieceFactory.createPiece(Rook.class, from, team);
 
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
 
 
         assertThatThrownBy(() -> rook.move(to, board))
@@ -53,7 +53,7 @@ class RookTest {
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         Rook rook = (Rook) PieceFactory.createPiece(Rook.class, from, team);
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
         boolean hasHindrance = rook.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
     }

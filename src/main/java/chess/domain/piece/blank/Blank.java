@@ -13,9 +13,10 @@ public class Blank extends Started {
     }
 
     public static Blank of() {
-        return new Blank(".", Team.NOT_ASSIGNED);
+        String name = ".";
+        Team team = Team.NOT_ASSIGNED;
+        return new Blank(name, team);
     }
-
 
     @Override
     public Piece move(Position to, Board board) {

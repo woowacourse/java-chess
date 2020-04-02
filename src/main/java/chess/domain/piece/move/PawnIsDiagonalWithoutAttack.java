@@ -2,7 +2,7 @@ package chess.domain.piece.move;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.piece.pawn.Pawn;
+import chess.domain.piece.state.Pawn;
 import chess.domain.piece.state.Initialized;
 import chess.domain.position.Position;
 

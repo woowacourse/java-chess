@@ -12,8 +12,7 @@ import chess.domain.position.Position;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ChessBoard implements Board {
-    private static final int SIZE = 64;
+public class InitializedBoard implements Board {
     private static final int LINE_START_INDEX = 1;
     private static final int LINE_END_INDEX = 8;
     private static final int BLACK_PAWN_ROW = 7;
@@ -24,33 +23,37 @@ public class ChessBoard implements Board {
     private final Map<Position, Piece> pieces;
     private final UserInterface userInterface;
 
-    private ChessBoard(Map<Position, Piece> pieces, UserInterface userInterface) {
+    //todo: 상속을 하려니 private 생성자를 쓸 수 없었습니다. 그래서 default 생성자로 만들었는데요.
+    //todo: 아예 정적 팩토리 메소드를 없애고 생성자만 둘까도 생각해봤지만, 생성 시 초기화하는 것이라는 의미를 주고 싶어
+    //todo: 정적팩토리 메소드를 사용하며 생성자를 default로 두었습니다. 정적팩토리 메서드 사용 시 생성자는 private으로 두는 게 원칙이라고 알고 있어,
+    //todo: 이 코드에 문제가 있는 것 같은데요. 조금 더 나은 방식을 가르쳐주시면 감사하겠습다!
+    InitializedBoard(Map<Position, Piece> pieces, UserInterface userInterface) {
         this.pieces = pieces;
         this.userInterface = userInterface;
     }
 
-    public static ChessBoard initiaize(UserInterface userInterface) {
+    public static InitializedBoard initiaize(UserInterface userInterface) {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeBlanks(pieces);
         initializeWhiteTeam(pieces);
-        return new ChessBoard(pieces, userInterface);
+        return new InitializedBoard(pieces, userInterface);
     }
 
 
     @Override
     public Board movePiece() {
         MovingFlow movingFlow = userInterface.inputMovingFlow();
-        return MoveExceptionHandler.handle(this::move, movingFlow, userInterface, this);
+        return MoveExceptionHandler.handle(this::movePiece, movingFlow, userInterface, this);
     }
 
-    private Board move(Position from, Position to, Board board) {
+    private Board movePiece(Position from, Position to, Board board) {
         Map<Position, Piece> pieces = clonePieces(this.pieces);
         Piece piece = board.getPiece(from);
         piece = piece.move(to, board);
         pieces.put(from, Blank.of());
         pieces.put(to, piece);
-        return new ChessBoard(pieces, userInterface);
+        return new InitializedBoard(pieces, userInterface);
     }
 
     @Override

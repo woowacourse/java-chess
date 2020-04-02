@@ -2,6 +2,7 @@ package chess.domain.piece.state;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +21,13 @@ class InitializedTest {
     @DisplayName("#isHeadingNotForward : return boolean as to current position and to")
     @MethodSource({"getCasesForIsHeadingBackward"})
     void isHeadingBackward(Position from, Position to, Team team, boolean expected) {
-        Initialized initialized = new Initialized("testInitiaiizedPiece", from, team, new ArrayList<>()) {
+        Initialized initialized = new Initialized("testInitiaiizedPiece", from, team, new ArrayList<>(), new Score(-1)) {
+
+            @Override
+            public Score calculateScore(Board board) {
+                return null;
+            }
+
             @Override
             public boolean hasHindrance(Position to, Board board) {
                 return false;

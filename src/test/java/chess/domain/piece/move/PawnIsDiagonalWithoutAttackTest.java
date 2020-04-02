@@ -2,7 +2,7 @@ package chess.domain.piece.move;
 
 import chess.domain.UserInterface;
 import chess.domain.board.Board;
-import chess.domain.board.ChessBoard;
+import chess.domain.board.InitializedBoard;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.team.Team;
@@ -29,7 +29,7 @@ class PawnIsDiagonalWithoutAttackTest {
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, team);
 
 
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
         boolean canNotMove = pawnIsDiagonalWithoutAttack.canNotMove(initializedPawn, to, board);
         assertThat(canNotMove).isEqualTo(expected);
     }

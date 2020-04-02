@@ -10,6 +10,7 @@ import chess.domain.piece.pawn.InitializedPawn;
 import chess.domain.piece.pawn.MovedPawn;
 import chess.domain.piece.queen.Queen;
 import chess.domain.piece.rook.Rook;
+import chess.domain.piece.score.Score;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,25 +18,58 @@ import java.util.Collections;
 import java.util.List;
 
 enum PieceType {
-    INITIALIZED_PAWN("p", InitializedPawn.class, initializedPawnCanNotMoveStrategies(), new NullList()),
-    RUNNING_PAWN("p", MovedPawn.class, movedPawnCanNotMoveStrategies(), new NullList()),
-    ROOK("r", Rook.class, rookCanNotMoveStrategies(), Arrays.asList(new InitialColumn(1),new InitialColumn(8))),
-    KNIGHT("n", Knight.class, knightCanNotMoveStrategies(), Arrays.asList(new InitialColumn(2),new InitialColumn(7))),
-    BISHOP("b", Bishop.class, bishopCanNotMoveStrategies(), Arrays.asList(new InitialColumn(3), new InitialColumn(6))),
-    QUEEN("q", Queen.class, queenCanNotMoveStrategies(), Collections.singletonList(new InitialColumn(4))),
-    KING("k", King.class, kingCanNotMoveStrategies(), Collections.singletonList(new InitialColumn(5)));
+    INITIALIZED_PAWN("p",
+            InitializedPawn.class,
+            initializedPawnCanNotMoveStrategies(),
+            new NullList(),
+            new Score(1)),
+    RUNNING_PAWN("p",
+            MovedPawn.class,
+            movedPawnCanNotMoveStrategies(),
+            new NullList(),
+            new Score(1)),
+    ROOK("r",
+            Rook.class,
+            rookCanNotMoveStrategies(),
+            Arrays.asList(new InitialColumn(1), new InitialColumn(8)),
+            new Score(5)),
+    KNIGHT("n",
+            Knight.class,
+            knightCanNotMoveStrategies(),
+            Arrays.asList(new InitialColumn(2), new InitialColumn(7)),
+            new Score(2.5)),
+    BISHOP("b",
+            Bishop.class,
+            bishopCanNotMoveStrategies(),
+            Arrays.asList(new InitialColumn(3), new InitialColumn(6)),
+            new Score(3)),
+    QUEEN("q",
+            Queen.class,
+            queenCanNotMoveStrategies(),
+            Collections.singletonList(new InitialColumn(4)),
+            new Score(3)),
+    KING("k",
+            King.class,
+            kingCanNotMoveStrategies(),
+            Collections.singletonList(new InitialColumn(5)),
+            new Score(0));
 
 
     private final String name;
     private final Class<? extends Piece> type;
     private final List<CanNotMoveStrategy> canNotMoveStrategies;
     private final List<InitialColumn> initialColumns;
+    private final Score score;
 
-    PieceType(String name, Class<? extends Piece> type, List<CanNotMoveStrategy> canNotMoveStrategies, List<InitialColumn> initialColumns) {
+    PieceType(String name, Class<? extends Piece> type,
+              List<CanNotMoveStrategy> canNotMoveStrategies,
+              List<InitialColumn> initialColumns,
+              Score score) {
         this.name = name;
         this.type = type;
         this.canNotMoveStrategies = canNotMoveStrategies;
         this.initialColumns = initialColumns;
+        this.score = score;
     }
 
     static PieceType valueOf(Class<? extends Piece> type) {
@@ -130,6 +164,10 @@ enum PieceType {
                 new CanNotReach(Knight.MAX_DISTANCE),
                 new IsHeadingStraightDirection()
         );
+    }
+
+    public Score getScore() {
+        return score;
     }
 
     private static class NullList extends ArrayList {

@@ -2,8 +2,9 @@ package chess.domain.piece.move;
 
 import chess.domain.UserInterface;
 import chess.domain.board.Board;
-import chess.domain.board.ChessBoard;
+import chess.domain.board.InitializedBoard;
 import chess.domain.piece.Piece;
+import chess.domain.piece.score.Score;
 import chess.domain.piece.state.Initialized;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
@@ -27,7 +28,13 @@ class IsAttackingSameTeamTest {
     @DisplayName("#canNotMove : return boolean as to isHeading to team which piece in the position belong to")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Team team, boolean expected) {
-        Initialized initializedPiece = new Initialized("testInitializedPiece", Position.of(1,1), team, new ArrayList<>()) {
+        Initialized initializedPiece = new Initialized("testInitializedPiece", Position.of(1,1), team, new ArrayList<>(), new Score(-1)) {
+
+            @Override
+            public Score calculateScore(Board board) {
+                return null;
+            }
+
             @Override
             public boolean hasHindrance(Position to, Board board) {
                 return false;
@@ -45,7 +52,7 @@ class IsAttackingSameTeamTest {
             }
         };
         
-        Board board = ChessBoard.initiaize(userInterface);
+        Board board = InitializedBoard.initiaize(userInterface);
         Position to = Position.of(1,7);
         boolean canNotMove = isAttackingSameTeam.canNotMove(initializedPiece, to, board);
         assertThat(canNotMove).isEqualTo(expected);

@@ -2,6 +2,7 @@ package chess.domain.piece.state;
 
 import chess.domain.board.Board;
 import chess.domain.piece.move.CanNotMoveStrategy;
+import chess.domain.piece.score.Score;
 import chess.domain.position.Direction;
 import chess.domain.position.Distance;
 import chess.domain.piece.Piece;
@@ -14,12 +15,20 @@ import java.util.Objects;
 public abstract class Initialized extends Started {
     protected final List<CanNotMoveStrategy> canNotMoveStrategies;
     protected final Position position;
+    protected final Score score;
 
-    protected Initialized(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies) {
+    public Initialized(String name,
+                          Position position,
+                          Team team,
+                          List<CanNotMoveStrategy> canNotMoveStrategies,
+                          Score score) {
         super(name, team);
         this.position = position;
         this.canNotMoveStrategies = canNotMoveStrategies;
+        this.score = score;
     }
+
+    public abstract Score calculateScore(Board board);
 
     public abstract boolean hasHindrance(Position to, Board board);
 
@@ -98,12 +107,14 @@ public abstract class Initialized extends Started {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Initialized that = (Initialized) o;
-        return Objects.equals(canNotMoveStrategies, that.canNotMoveStrategies);
+        return Objects.equals(canNotMoveStrategies, that.canNotMoveStrategies) &&
+                Objects.equals(position, that.position) &&
+                Objects.equals(score, that.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(canNotMoveStrategies);
+        return Objects.hash(canNotMoveStrategies, position, score);
     }
 
     public boolean isHeadingStraight(Position to) {

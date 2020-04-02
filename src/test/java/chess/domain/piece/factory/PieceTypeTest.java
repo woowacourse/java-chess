@@ -35,14 +35,14 @@ class PieceTypeTest {
 
     private static Stream<Arguments> getCasesForfindTypeByInitialColumn() {
         return Stream.of(
-                Arguments.of(new InitialColumn(1), Rook.class),
-                Arguments.of(new InitialColumn(2), Knight.class),
-                Arguments.of(new InitialColumn(3), Bishop.class),
-                Arguments.of(new InitialColumn(4), Queen.class),
-                Arguments.of(new InitialColumn(5), King.class),
-                Arguments.of(new InitialColumn(6), Bishop.class),
-                Arguments.of(new InitialColumn(7), Knight.class),
-                Arguments.of(new InitialColumn(8), Rook.class)
+                Arguments.of(1, Rook.class),
+                Arguments.of(2, Knight.class),
+                Arguments.of(3, Bishop.class),
+                Arguments.of(4, Queen.class),
+                Arguments.of(5, King.class),
+                Arguments.of(6, Bishop.class),
+                Arguments.of(7, Knight.class),
+                Arguments.of(8, Rook.class)
         );
     }
 
