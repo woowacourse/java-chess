@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessService {
+
     private ChessGame chessGame = new ChessGame();
 
     public boolean isEnd() {
@@ -19,11 +20,11 @@ public class ChessService {
     }
 
     public void start(List<String> parameters) {
-        chessGame.start();
+        chessGame.start(parameters.get(0));
     }
 
     public void end(List<String> parameters) {
-        chessGame.end();
+        chessGame.end(parameters.get(0));
     }
 
     public void move(List<String> parameters) {

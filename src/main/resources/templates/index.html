@@ -246,12 +246,21 @@
                 </div>
             </div>
         </div>
-        <div class="start-button">
-            <form action="/chessGame" method="post">
-                <input hidden="hidden" name="command" type="text" value="start">
-                <input hidden="hidden" name="parameter" type="text" value="">
-                <input type="submit" value="게임 시작"/>
-            </form>
+        <div class="buttons">
+            <div class="start-button">
+                <form action="/chessGame" method="post">
+                    <input hidden="hidden" name="command" type="text" value="start">
+                    <input hidden="hidden" name="parameter" type="text" value="new">
+                    <input type="submit" value="게임 시작"/>
+                </form>
+            </div>
+            <div class="load-button">
+                <form action="/chessGame" method="post">
+                    <input hidden="hidden" name="command" type="text" value="start">
+                    <input hidden="hidden" name="parameter" type="text" value="load">
+                    <input type="submit" value="불러오기"/>
+                </form>
+            </div>
         </div>
     </div>
 </div>

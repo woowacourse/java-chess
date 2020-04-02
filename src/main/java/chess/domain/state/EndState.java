@@ -17,17 +17,23 @@ public class EndState implements State {
     }
 
     @Override
-    public State start() {
-        return new RunningState(Board.of(new EnumRepositoryBoardInitializer()));
+    public State start(String param) {
+        if ("new".equals(param)) {
+            return new RunningState(Board.of(new EnumRepositoryBoardInitializer()), Turn.from(Team.WHITE));
+        }
+        if ("load".equals(param)) {
+            // 게임 불러오기
+        }
+        throw new IllegalArgumentException("잘못된 시작입니다.");
     }
 
     @Override
-    public State move(MoveParameter moveParameter, Turn turn) {
+    public State move(MoveParameter moveParameter) {
         throw new UnsupportedOperationException("게임이 종료되었습니다.");
     }
 
     @Override
-    public State end() {
+    public State end(String param) {
         throw new UnsupportedOperationException("이미 종료 되었습니다.");
     }
 
