@@ -1,9 +1,9 @@
 package chess;
 
-import chess.controller.GameController;
 import chess.domains.board.Board;
 import chess.domains.piece.Piece;
 import chess.domains.piece.PieceColor;
+import chess.service.WebService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -29,20 +29,23 @@ public class WebUIChessApplication {
             List<Piece> pieces = board.showBoard();
             List<String> pieceCodes = convertView(pieces);
             model.put("pieces", pieceCodes);
-            model.put("white_score", board.calculateScore(PieceColor.WHITE));
-            model.put("black_score", board.calculateScore(PieceColor.BLACK));
+            model.put("turn", printTurn(WebService.turn(board)));
+            model.put("white_score", WebService.calculateScore(board, PieceColor.WHITE));
+            model.put("black_score", WebService.calculateScore(board, PieceColor.BLACK));
             return render(model, "index.html");
         });
 
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String commandMsg = req.queryParams("command");
-            GameController.command(commandMsg, board);
+            String source = req.queryParams("source");
+            String target = req.queryParams("target");
+            WebService.move(board, source, target);
             List<Piece> pieces = board.showBoard();
+            model.put("turn", printTurn(WebService.turn(board)));
             List<String> pieceCodes = convertView(pieces);
             model.put("pieces", pieceCodes);
-            model.put("white_score", board.calculateScore(PieceColor.WHITE));
-            model.put("black_score", board.calculateScore(PieceColor.BLACK));
+            model.put("white_score", WebService.calculateScore(board, PieceColor.WHITE));
+            model.put("black_score", WebService.calculateScore(board, PieceColor.BLACK));
             return render(model, "index.html");
         });
     }
@@ -94,6 +97,10 @@ public class WebUIChessApplication {
             }
         }
         return pieceCodes;
+    }
+
+    private static String printTurn(String turn) {
+        return turn + "의 순서입니다.";
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
