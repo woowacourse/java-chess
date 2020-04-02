@@ -78,10 +78,8 @@ class BoardTest {
     @Test
     @DisplayName("source 기물이 없는 경우")
     void moveWithEmptySource() {
-        assertThatThrownBy(() -> {
-            Board.createEmpty().placeInitialPieces().move(Position.from("d3"), Position.from("d5"));
-        }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n기물이 존재하지 않습니다.");
+        Board board = Board.createEmpty().placeInitialPieces();
+        assertThat(board.move(Position.from("d3"), Position.from("d5"))).isEqualTo(board);
     }
 
     @ParameterizedTest
@@ -92,10 +90,7 @@ class BoardTest {
         map.put(Position.from("d5"), gamePiece);
         Board board = Board.from(map, new Status(turn, StatusType.PROCESSING));
 
-        assertThatThrownBy(() -> {
-            board.move(Position.from("d5"), Position.from("g8"));
-        }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n해당 플레이어의 턴이 아닙니다.");
+        assertThat(board.move(Position.from("d5"), Position.from("g8"))).isEqualTo(board);
     }
 
     static Stream<Arguments> createBoardAndTurn() {
@@ -156,8 +151,6 @@ class BoardTest {
         board.put(source, gamePiece);
         board.put(target, BLACK_BISHOP.getGamePiece());
         Board given = Board.from(board, Status.initialStatus().nextTurn());
-        assertThatThrownBy(() -> given.move(source, target))
-                .isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n자신의 말은 잡을 수 없습니다.");
+        assertThat(given.move(source, target)).isEqualTo(given);
     }
 }

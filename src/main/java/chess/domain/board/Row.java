@@ -3,7 +3,7 @@ package chess.domain.board;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Row {
+public enum Row implements Location {
 
     ONE("1"),
     TWO("2"),

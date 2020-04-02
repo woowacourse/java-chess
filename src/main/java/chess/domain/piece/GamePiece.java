@@ -34,15 +34,15 @@ public abstract class GamePiece {
         return score * count;
     }
 
-    public boolean isSameTeam(GamePiece piece) {
-        return playerColor == piece.playerColor;
-    }
-
     public List<Position> getOriginalPositions() {
         return originalPositions;
     }
 
     public String getName() {
         return name;
+    }
+
+    public PlayerColor getPlayerColor() {
+        return playerColor;
     }
 }

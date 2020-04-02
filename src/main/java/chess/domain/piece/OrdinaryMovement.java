@@ -1,27 +1,22 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
+import chess.domain.board.Position;
+
 import java.util.Collections;
 import java.util.List;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
-import chess.domain.player.PlayerColor;
+public class OrdinaryMovement {
 
-public class OrdinaryMovement extends GamePiece {
+    private final List<Direction> directions;
+    private final int moveCount;
 
-    protected final List<Direction> directions;
-    protected final int moveCount;
-
-    public OrdinaryMovement(String name, List<Position> originalPositions, List<Direction> directions, int moveCount,
-            double score, PlayerColor playerColor) {
-        super(name, originalPositions, score, playerColor);
+    public OrdinaryMovement(List<Direction> directions, int moveCount) {
         this.directions = directions;
         this.moveCount = moveCount;
     }
 
-    @Override
-    protected boolean canMove(Board board, Position source, Position target) {
+    public boolean canMove(Board board, Position source, Position target) {
         List<Position> path = findPath(source, target);
 
         if (path.equals(Collections.emptyList())) {

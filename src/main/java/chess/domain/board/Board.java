@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
@@ -12,7 +11,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
-import static java.util.stream.Collectors.toList;
 
 public class Board {
 
@@ -62,7 +60,9 @@ public class Board {
         GamePiece sourcePiece = board.get(source);
         GamePiece targetPiece = board.get(target);
 
-        validateSourcePiece(sourcePiece, targetPiece);
+        if (!isPieceCanMove(sourcePiece, targetPiece)) {
+            return this;
+        }
 
         if (!sourcePiece.canMoveTo(this, source, target)) {
             return this;
@@ -79,19 +79,20 @@ public class Board {
         return new Board(board, nextStatus);
     }
 
-    private void validateSourcePiece(GamePiece sourcePiece, GamePiece targetPiece) {
+    private boolean isPieceCanMove(GamePiece sourcePiece, GamePiece targetPiece) {
         if (sourcePiece.equals(EmptyPiece.getInstance())) {
-            throw new InvalidMovementException("기물이 존재하지 않습니다.");
+            return false;
         }
         if (status.isWhiteTurn() && sourcePiece.is(PlayerColor.BLACK)) {
-            throw new InvalidMovementException("해당 플레이어의 턴이 아닙니다.");
+            return false;
         }
         if (status.isBlackTurn() && sourcePiece.is(PlayerColor.WHITE)) {
-            throw new InvalidMovementException("해당 플레이어의 턴이 아닙니다.");
+            return false;
         }
-        if (sourcePiece.isSameTeam(targetPiece)) {
-            throw new InvalidMovementException("자신의 말은 잡을 수 없습니다.");
+        if (sourcePiece.is(targetPiece.getPlayerColor())) {
+            return false;
         }
+        return true;
     }
 
     public boolean isNotFinished() {
@@ -114,8 +115,8 @@ public class Board {
         return getLine(Position::getColumn);
     }
 
-    private <T> List<Line> getLine(Function<Position, T> filter) {
-        Map<T, Line> lines = board.entrySet()
+    private List<Line> getLine(Function<Position, Location> filter) {
+        Map<Location, Line> lines = board.entrySet()
                 .stream()
                 .collect(groupingBy(entry -> filter.apply(entry.getKey()),       // key
                         () -> new TreeMap<>(Collections.reverseOrder()),    // 리턴타입은 reversed TreeMap
