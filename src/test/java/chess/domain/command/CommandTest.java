@@ -18,18 +18,26 @@ import chess.domain.board.Position;
 public class CommandTest {
 	@DisplayName("Command가 end, status, move 만 오도록 에러메세지를 내는지 테스트")
 	@ParameterizedTest
-	@ValueSource(strings = {"hello", "world", "1231"})
+	@ValueSource(strings = {"hello", "hihi", "1231"})
 	void commandConstructorTest(String command) {
-		assertThatThrownBy(() -> new Command(command.split(" ")))
+		assertThatThrownBy(() -> new Command(command))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("명령은 move, status, end");
+	}
+
+	@DisplayName("Command의 길이가 1과 3이 아니라면 에러메세지를 내는지 테스트")
+	@ParameterizedTest
+	@ValueSource(strings = {"hello world", "move b1 b2 b3"})
+	void validateLengthTest(String command) {
+		assertThatThrownBy(() -> new Command(command))
+			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@DisplayName("Command에 empty이 오면 에러를 내는 테스트")
 	@ParameterizedTest
 	@EmptySource
 	void EmptyConstructorTest(String command) {
-		assertThatThrownBy(() -> new Command(command.split(" ")))
+		assertThatThrownBy(() -> new Command(command))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("빈 값은 들어올 수 없습니다");
 	}
@@ -37,35 +45,35 @@ public class CommandTest {
 	@DisplayName("source position을 정상적으로 갖고오는지 테스트")
 	@Test
 	void getMoveSourceTest() {
-		Command command = new Command("move b1 b2".split(" "));
-		assertThat(command.getMoveSource()).isEqualTo(Position.of("b1"));
+		Command command = new Command("move b1 b2");
+		assertThat(command.getSourceCommand()).isEqualTo(Position.of("b1"));
 	}
 
 	@DisplayName("target position을 정상적으로 갖고오는지 테스트")
 	@Test
 	void getMoveTargetTest() {
-		Command command = new Command("move b1 b2".split(" "));
-		assertThat(command.getMoveTarget()).isEqualTo(Position.of("b2"));
+		Command command = new Command("move b1 b2");
+		assertThat(command.getTargetCommand()).isEqualTo(Position.of("b2"));
 	}
 
 	@DisplayName("Command에 end가 있는지 테스트")
 	@Test
 	void isEndTest() {
-		Command command = new Command("end".split(" "));
+		Command command = new Command("end");
 		assertThat(command.isEnd()).isTrue();
 	}
 
 	@DisplayName("Command에 status가 있는지 테스트")
 	@Test
 	void isStatusTest() {
-		Command command = new Command("status".split(" "));
+		Command command = new Command("status");
 		assertThat(command.isStatus()).isTrue();
 	}
 
 	@DisplayName("Command에 move가 있는지 테스트")
 	@Test
 	void isMoveTest() {
-		Command command = new Command("move b1 b2".split(" "));
+		Command command = new Command("move b1 b2");
 		assertThat(command.isMove()).isTrue();
 	}
 }

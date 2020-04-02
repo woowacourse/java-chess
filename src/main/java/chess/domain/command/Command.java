@@ -11,20 +11,35 @@ import chess.domain.board.Position;
  */
 public class Command {
 	public static final int COMMAND_INDEX = 0;
-	public static final int SOURCE_POSITION_INDEX = 1;
-	public static final int TARGET_POSITION_INDEX = 2;
+	private static final int SOURCE_POSITION_INDEX = 1;
+	private static final int TARGET_POSITION_INDEX = 2;
+	private static final int MOVE_COMMAND_SIZE = 3;
+	public static final int BASIC_COMMAND_SIZE = 1;
+	public static final String DELIMITER = " ";
+	public static final int LIMIT = -1;
 
 	private String[] command;
 
-	public Command(String[] input) {
-		validate(input);
-		this.command = input;
+	public Command(String input) {
+		String[] tempCommand = splitCommand(input);
+		validate(tempCommand);
+		command = tempCommand;
+	}
+
+	private String[] splitCommand(String input) {
+		return input.split(DELIMITER, LIMIT);
 	}
 
 	private void validate(String[] input) {
-		String command = input[COMMAND_INDEX];
-		validateNullAndEmpty(command);
-		validateStartOrEndOrMove(command);
+		validateLength(input);
+		validateNullAndEmpty(input[COMMAND_INDEX]);
+		validateStartOrEndOrMove(input[COMMAND_INDEX]);
+	}
+
+	private static void validateLength(String[] input) {
+		if (input.length != BASIC_COMMAND_SIZE && input.length != MOVE_COMMAND_SIZE) {
+			throw new IllegalArgumentException("명령문의 길이가 1 또는 3이어야합니다.");
+		}
 	}
 
 	private void validateNullAndEmpty(String command) {
@@ -34,28 +49,29 @@ public class Command {
 	}
 
 	private void validateStartOrEndOrMove(String input) {
-		if (!input.equalsIgnoreCase("move") && !input.equalsIgnoreCase("end") && !input.equalsIgnoreCase("status")) {
+		if (!CommandType.MOVE.isSame(input) && !CommandType.END.isSame(input) && !CommandType.STATUS.isSame(input)) {
 			throw new IllegalArgumentException("명령은 move, status, end만 들어올 수 있습니다.");
 		}
 	}
 
-	public Position getMoveSource() {
+	public Position getSourceCommand() {
 		return Position.of(command[SOURCE_POSITION_INDEX]);
 	}
 
-	public Position getMoveTarget() {
+	public Position getTargetCommand() {
 		return Position.of(command[TARGET_POSITION_INDEX]);
 	}
 
 	public boolean isEnd() {
-		return "end".equalsIgnoreCase(command[COMMAND_INDEX]);
+		return CommandType.END.isSame(command[COMMAND_INDEX]);
 	}
 
 	public boolean isStatus() {
-		return "status".equalsIgnoreCase(command[COMMAND_INDEX]);
+		return CommandType.STATUS.isSame(command[COMMAND_INDEX]);
 	}
 
 	public boolean isMove() {
-		return "move".equalsIgnoreCase(command[COMMAND_INDEX]);
+		return CommandType.MOVE.isSame(command[COMMAND_INDEX]);
 	}
+
 }
