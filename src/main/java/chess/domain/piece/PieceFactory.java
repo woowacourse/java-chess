@@ -11,8 +11,6 @@ public class PieceFactory {
     private static final int team2PawnsRank = 7;
     private static List<String> PawnPositions = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 
-    private static PieceFactory instance;
-
     private Map<Position, Piece> pieces = new HashMap<>();
 
     private PieceFactory() {
@@ -21,10 +19,7 @@ public class PieceFactory {
     }
 
     public static PieceFactory getInstance() {
-        if (instance == null) {
-            instance = new PieceFactory();
-        }
-        return instance;
+        return new PieceFactory();
     }
 
     public Map<Position, Piece> getPieces() {
