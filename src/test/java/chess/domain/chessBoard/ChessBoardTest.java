@@ -25,14 +25,14 @@ public class ChessBoardTest {
     void contains_containsPosition_returnTrue() {
         ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.create());
 
-        assertThat(chessBoard.contains(ChessFile.from('a'), ChessRank.from(1))).isTrue();
+        assertThat(chessBoard.contains(ChessFile.A, ChessRank.ONE)).isTrue();
     }
 
     @Test
     void getChessPiece_containValue_returnChessPiece() {
         ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.create());
 
-        assertThat(chessBoard.getChessPiece(ChessFile.from('a'), ChessRank.from(1))).isInstanceOf(Rook.class);
+        assertThat(chessBoard.getChessPiece(ChessFile.A, ChessRank.ONE)).isInstanceOf(Rook.class);
     }
 
     @Test
@@ -75,6 +75,6 @@ public class ChessBoardTest {
 
         chessBoard.move(source, target);
 
-        assertThat(chessBoard.getChessPiece(ChessFile.from('b'), ChessRank.from(5))).isInstanceOf(Pawn.class);
+        assertThat(chessBoard.getChessPiece(ChessFile.B, ChessRank.FIVE)).isInstanceOf(Pawn.class);
     }
 }

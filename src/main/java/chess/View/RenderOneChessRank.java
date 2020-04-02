@@ -1,9 +1,11 @@
 package chess.View;
 
 import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessPiece.ChessPiece;
 import chess.domain.position.ChessFile;
 import chess.domain.position.ChessRank;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,26 +24,28 @@ public class RenderOneChessRank {
     }
 
     private static List<String> generateChessView(ChessBoard chessBoard, ChessRank rank) {
-        List<String> oneChessRank = ChessFile.values().stream()
+        List<String> oneChessRank = Arrays.stream(ChessFile.values())
                 .map(file -> chessBoardContainPieceAt(chessBoard, file, rank))
                 .collect(Collectors.toList());
 
-        oneChessRank.add(String.format("  %s", rank));
+        oneChessRank.add(String.format("  %s", rank.getChessRank()));
 
         return oneChessRank;
     }
 
     private static String chessBoardContainPieceAt(ChessBoard chessBoard, ChessFile file, ChessRank rank) {
         if (chessBoard.contains(file, rank)) {
-            return String.valueOf(chessBoard.getChessPiece(file, rank).getName());
+            ChessPiece chessPiece = chessBoard.getChessPiece(file, rank);
+            return String.valueOf(chessPiece.getName());
         }
         return EMPTY_CHESS_PIECE;
     }
 
     public static RenderOneChessRank generateChessRankGuide() {
-        return new RenderOneChessRank(ChessFile.values().stream()
-                .map(String::valueOf)
-                .collect(Collectors.toList()));
+        return new RenderOneChessRank(Arrays.stream(ChessFile.values())
+                .map(chessFile2 -> String.valueOf(chessFile2.getChessFile()))
+                .collect(Collectors.toList())
+        );
     }
 
     public List<String> getOneChessRank() {

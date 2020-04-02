@@ -1,44 +1,34 @@
 package chess.domain.position;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Objects;
 
-public class ChessFile {
+public enum ChessFile {
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
 
-    private static final char LOWER_BOUND = 'a';
-    private static final char UPPER_BOUND = 'h';
-    private static final Map<Character, ChessFile> CHESS_FILE_CACHE = new HashMap<>();
+    private char chessFile;
 
-    private final char chessFile;
-
-
-    static {
-        for (char character = LOWER_BOUND; character <= UPPER_BOUND; character++) {
-            CHESS_FILE_CACHE.put(character, new ChessFile(character));
-        }
-    }
-
-    private ChessFile(char chessFile) {
-        validate(chessFile);
+    ChessFile(char chessFile) {
         this.chessFile = chessFile;
     }
 
-    private void validate(char chessFile) {
-        if (chessFile < LOWER_BOUND || chessFile > UPPER_BOUND) {
-            throw new IllegalArgumentException("유효한 체스 파일이 아닙니다.");
-        }
+    public static ChessFile findValueOf(char inputChessFile) {
+        return Arrays.stream(ChessFile.values())
+                .filter(chessFile2 -> chessFile2.getChessFile() == inputChessFile)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("움직을 수 없습니다."));
     }
-
-    public static ChessFile from(char chessFile) {
-        return CHESS_FILE_CACHE.getOrDefault(chessFile, new ChessFile(chessFile));
-    }
-
-    public static List<ChessFile> values() {
-        return new ArrayList<>(CHESS_FILE_CACHE.values());
-    }
-
 
     public ChessFile move(int fileMovingUnit) {
-        return from((char) (this.chessFile + fileMovingUnit));
+        char movingChessFile = (char) (this.chessFile + fileMovingUnit);
+        return findValueOf(movingChessFile);
     }
 
     public int intervalTo(ChessFile targetFile) {

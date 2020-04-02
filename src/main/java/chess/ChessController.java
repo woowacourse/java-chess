@@ -13,11 +13,15 @@ public class ChessController {
         ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.create());
 
         Command command = checkStartCommand(ChessInputView.inputCommand());
+        CommandType commandType = CommandType.findValueOf(command);
 
-        while (!chessBoard.isCaughtKing()) {
+        while (!chessBoard.isCaughtKing() && !commandType.isEnd()) {
             gameStart(chessBoard, command);
         }
-        ChessOutputView.printCaughtKing(chessBoard);
+
+        if (chessBoard.isCaughtKing()) {
+            ChessOutputView.printCaughtKing(chessBoard);
+        }
     }
 
     private static void gameStart(ChessBoard chessBoard, Command command) {
@@ -25,7 +29,7 @@ public class ChessController {
 
         while (!(commandType.isEnd())) {
             chessBoard = playGame(chessBoard, command, commandType);
-            command = Command.from(ChessInputView.inputCommand());
+            command = Command.from(ChessInputView.inputCommand(chessBoard));
             commandType = CommandType.findValueOf(command);
         }
 

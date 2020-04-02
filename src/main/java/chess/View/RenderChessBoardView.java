@@ -3,8 +3,7 @@ package chess.View;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.position.ChessRank;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class RenderChessBoardView {
@@ -16,9 +15,10 @@ public class RenderChessBoardView {
     }
 
     private List<RenderOneChessRank> generateChessBoardView(ChessBoard chessBoard) {
-        this.chessBoardView.add(RenderOneChessRank.generateChessRankGuide());
+        Objects.requireNonNull(chessBoard, "체스 보드가 null 입니다.");
+        this.chessBoardView = new ArrayList<>(Collections.singletonList(RenderOneChessRank.generateChessRankGuide()));
 
-        chessBoardView.addAll(ChessRank.values().stream()
+        chessBoardView.addAll(Arrays.stream(ChessRank.values())
                 .map(rank -> RenderOneChessRank.generateOneChessRank(chessBoard, rank))
                 .collect(Collectors.toList()));
 

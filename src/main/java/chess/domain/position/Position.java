@@ -28,7 +28,7 @@ public class Position {
     }
 
     private Position(String key) {
-        this(ChessFile.from(key.charAt(FILE_INDEX)), ChessRank.from(key.charAt(RANK_INDEX)));
+        this(ChessFile.findValueOf(key.charAt(FILE_INDEX)), ChessRank.findValueOf(key.charAt(RANK_INDEX)));
     }
 
     public static Position of(ChessFile chessFile, ChessRank chessRank) {

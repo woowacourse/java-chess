@@ -1,7 +1,6 @@
 package chess.domain.chessPiece.pieceType;
 
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.pieceState.InitialState;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
@@ -25,11 +24,4 @@ class ChessPieceTest {
                 .hasMessage("피스 색상이 null입니다.");
     }
 
-    @ParameterizedTest
-    @NullSource
-    void PieceType_NullState_ExceptionThrown(InitialState initialState) {
-        assertThatThrownBy(() -> new King(PieceColor.BLACK))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("피스 상태가 null입니다.");
-    }
 }

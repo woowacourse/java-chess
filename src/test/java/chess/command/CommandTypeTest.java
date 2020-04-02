@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CommandTypeTest {
 
@@ -13,6 +14,13 @@ class CommandTypeTest {
         Command command = Command.from("move");
 
         assertThat(CommandType.findValueOf(command)).isEqualTo(CommandType.MOVE);
+    }
+
+
+    @Test
+    void Command_ErrorStringCommand_ExceptionThrown() {
+        assertThatThrownBy(() -> CommandType.findValueOf(Command.from("asd")))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest

@@ -7,6 +7,7 @@ import chess.domain.position.ChessRank;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -90,7 +91,7 @@ public class ChessBoard {
     }
 
     public Stream<ChessPiece> generatePlayerChessPieceOnChessFile() {
-        return ChessFile.values().stream()
+        return Arrays.stream(ChessFile.values())
                 .flatMap(this::getChessPiecesOn);
     }
 

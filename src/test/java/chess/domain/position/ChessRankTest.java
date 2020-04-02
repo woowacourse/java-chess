@@ -12,13 +12,13 @@ public class ChessRankTest {
 
     @Test
     void from_RankPosition_ReturnInstance() {
-        assertThat(ChessRank.from(1)).isInstanceOf(ChessRank.class);
+        assertThat(ChessRank.ONE).isInstanceOf(ChessRank.class);
     }
 
     @Test
     void from_EqualInstance_ReturnTrue() {
-        ChessRank chessRank1 = ChessRank.from(1);
-        ChessRank chessRank2 = ChessRank.from(1);
+        ChessRank chessRank1 = ChessRank.ONE;
+        ChessRank chessRank2 = ChessRank.ONE;
 
         assertThat(chessRank1.equals(chessRank2)).isTrue();
         assertThat(chessRank1 == chessRank2).isTrue();
@@ -27,22 +27,22 @@ public class ChessRankTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 9})
     void validate_InvalidChessRank_ExceptionThrown(int invalidChessRank) {
-        assertThatThrownBy(() -> ChessRank.from(invalidChessRank))
+        assertThatThrownBy(() -> ChessRank.findValueOf(invalidChessRank))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void move_RankMovingUnit_ReturnMovedChessRank() {
-        ChessRank sourceRank = ChessRank.from(1);
+        ChessRank sourceRank = ChessRank.ONE;
 
-        ChessRank expected = ChessRank.from(2);
+        ChessRank expected = ChessRank.TWO;
         assertThat(sourceRank.move(1)).isEqualTo(expected);
     }
 
     @Test
     void intervalTo_TargetChessRank_CalculateInterval() {
-        ChessRank sourceRank = ChessRank.from(1);
-        ChessRank targetRank = ChessRank.from(2);
+        ChessRank sourceRank = ChessRank.ONE;
+        ChessRank targetRank = ChessRank.TWO;
 
         int expected = 2 - 1;
         assertThat(sourceRank.intervalTo(targetRank)).isEqualTo(expected);
@@ -51,7 +51,7 @@ public class ChessRankTest {
     @ParameterizedTest
     @NullSource
     void intervalTo_NullChessRank_ExceptionThrown(ChessRank chessRank) {
-        assertThatThrownBy(() -> ChessRank.from(1).intervalTo(chessRank))
+        assertThatThrownBy(() -> ChessRank.ONE.intervalTo(chessRank))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("비교할 타겟 랭크가 존재하지 않습니다.");
     }

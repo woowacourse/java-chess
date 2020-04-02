@@ -1,48 +1,41 @@
 package chess.domain.position;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Objects;
 
-public class ChessRank {
+public enum ChessRank {
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8);
 
-    private static final int LOWER_BOUND = 1;
-    private static final int UPPER_BOUND = 8;
-    private static final Map<Integer, ChessRank> CHESS_RANK_CACHE = new HashMap<>();
+    private int chessRank;
 
-    private final int chessRank;
-
-    static {
-        for (int i = LOWER_BOUND; i <= UPPER_BOUND; i++) {
-            CHESS_RANK_CACHE.put(i, new ChessRank(i));
-        }
-    }
-
-    private ChessRank(int chessRank) {
-        validate(chessRank);
+    ChessRank(int chessRank) {
         this.chessRank = chessRank;
     }
 
-    private void validate(int chessRank) {
-        if (chessRank < LOWER_BOUND || chessRank > UPPER_BOUND) {
-            throw new IllegalArgumentException("유효한 체스 랭크가 아닙니다.");
-        }
+    public static ChessRank findValueOf(char inputChessRank) {
+        return Arrays.stream(ChessRank.values())
+                .filter(chessRank2 -> chessRank2.getChessRank() == Character.getNumericValue(inputChessRank))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("움직을 수 없습니다."));
     }
 
-    public static ChessRank from(int chessRank) {
-        return CHESS_RANK_CACHE.getOrDefault(chessRank, new ChessRank(chessRank));
+    public static ChessRank findValueOf(int inputChessRank) {
+        return Arrays.stream(ChessRank.values())
+                .filter(chessRank2 -> chessRank2.getChessRank() == inputChessRank)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("움직을 수 없습니다."));
     }
 
-    public static ChessRank from(char chessRank) {
-        int parsedChessRank = Character.getNumericValue(chessRank);
-        return CHESS_RANK_CACHE.getOrDefault(parsedChessRank, new ChessRank(parsedChessRank));
-    }
-
-    public static List<ChessRank> values() {
-        return new ArrayList<>(CHESS_RANK_CACHE.values());
-    }
-
-
-    public ChessRank move(int rankMovingUnit) {
-        return from(this.chessRank + rankMovingUnit);
+    public ChessRank move(int fileMovingUnit) {
+        int movingChessRank = (this.chessRank + fileMovingUnit);
+        return findValueOf(movingChessRank);
     }
 
     public int intervalTo(ChessRank targetRank) {

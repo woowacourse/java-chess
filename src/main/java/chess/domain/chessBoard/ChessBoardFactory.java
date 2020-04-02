@@ -14,10 +14,10 @@ public class ChessBoardFactory {
     public static Map<Position, ChessPiece> create() {
         Map<Position, ChessPiece> chessBoard = new HashMap<>();
 
-        addOtherPiecesBy(chessBoard, PieceColor.WHITE, ChessRank.from(1));
-        addPawnPiecesBy(chessBoard, PieceColor.WHITE, ChessRank.from(2));
-        addPawnPiecesBy(chessBoard, PieceColor.BLACK, ChessRank.from(7));
-        addOtherPiecesBy(chessBoard, PieceColor.BLACK, ChessRank.from(8));
+        addOtherPiecesBy(chessBoard, PieceColor.WHITE, ChessRank.ONE);
+        addPawnPiecesBy(chessBoard, PieceColor.WHITE, ChessRank.TWO);
+        addPawnPiecesBy(chessBoard, PieceColor.BLACK, ChessRank.SEVEN);
+        addOtherPiecesBy(chessBoard, PieceColor.BLACK, ChessRank.EIGHT);
         return chessBoard;
     }
 
@@ -28,14 +28,14 @@ public class ChessBoardFactory {
     }
 
     private static void addOtherPiecesBy(Map<Position, ChessPiece> chessBoard, PieceColor pieceColor, ChessRank rank) {
-        chessBoard.put(Position.of(ChessFile.from('a'), rank), new Rook(pieceColor));
-        chessBoard.put(Position.of(ChessFile.from('c'), rank), new Bishop(pieceColor));
-        chessBoard.put(Position.of(ChessFile.from('b'), rank), new Knight(pieceColor));
-        chessBoard.put(Position.of(ChessFile.from('d'), rank), new Queen(pieceColor));
-        chessBoard.put(Position.of(ChessFile.from('e'), rank), new King(pieceColor));
-        chessBoard.put(Position.of(ChessFile.from('f'), rank), new Bishop(pieceColor));
-        chessBoard.put(Position.of(ChessFile.from('g'), rank), new Knight(pieceColor));
-        chessBoard.put(Position.of(ChessFile.from('h'), rank), new Rook(pieceColor));
+        chessBoard.put(Position.of(ChessFile.A, rank), new Rook(pieceColor));
+        chessBoard.put(Position.of(ChessFile.B, rank), new Knight(pieceColor));
+        chessBoard.put(Position.of(ChessFile.C, rank), new Bishop(pieceColor));
+        chessBoard.put(Position.of(ChessFile.D, rank), new Queen(pieceColor));
+        chessBoard.put(Position.of(ChessFile.E, rank), new King(pieceColor));
+        chessBoard.put(Position.of(ChessFile.F, rank), new Bishop(pieceColor));
+        chessBoard.put(Position.of(ChessFile.G, rank), new Knight(pieceColor));
+        chessBoard.put(Position.of(ChessFile.H, rank), new Rook(pieceColor));
     }
 
 }

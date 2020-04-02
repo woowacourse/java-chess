@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CommandTest {
 
@@ -15,12 +14,6 @@ class CommandTest {
     @ValueSource(strings = {"start", "end", "move", "status"})
     void Command_StringCommand_returnInstance(String command) {
         Assertions.assertThat(Command.from(command)).isInstanceOf(Command.class);
-    }
-
-    @Test
-    void Command_ErrorStringCommand_ExceptionThrown() {
-        String command = "Asd";
-        assertThatThrownBy(() -> Command.from(command)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
