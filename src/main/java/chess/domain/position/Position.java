@@ -17,7 +17,7 @@ public class Position {
 
     public Position(String position) {
         if (position.length() != 2) {
-            throw new InvalidPositionException("좌표를 올바른 방식으로 입력해 주세요");
+            throw new InvalidPositionException(position);
         }
         this.x = String.valueOf(position.charAt(0));
         this.y = String.valueOf(position.charAt(1));
@@ -26,7 +26,7 @@ public class Position {
     public Position(int x, int y) {
         this(String.valueOf((char) (x + ASCII_GAP)), String.valueOf(y));
         if (!isInBoardRange(x, y)) {
-            throw new OutOfBoardRangeException("체스 보드 판의 범위를 넘어섰습니다.");
+            throw new OutOfBoardRangeException();
         }
     }
 
