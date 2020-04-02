@@ -1,10 +1,10 @@
 package chess;
 
+import chess.domain.state.ChessGameState;
+import chess.domain.state.Command;
+import chess.domain.state.Ready;
 import chess.dto.RequestDto;
 import chess.dto.ResponseDto;
-import chess.state.ChessGameState;
-import chess.state.Command;
-import chess.state.Ready;
 
 public class ChessService {
 	private ChessGameState state;

@@ -2,7 +2,7 @@ package chess.dto;
 
 import java.util.List;
 
-import chess.state.Command;
+import chess.domain.state.Command;
 
 public class RequestDto {
 	private final Command command;

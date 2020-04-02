@@ -1,4 +1,4 @@
-package chess.state;
+package chess.domain.state;
 
 import java.util.HashMap;
 import java.util.Map;
