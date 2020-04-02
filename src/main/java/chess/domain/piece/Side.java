@@ -15,4 +15,11 @@ public enum Side {
     public String toString() {
         return value;
     }
+
+    public Side changeTurn() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }
