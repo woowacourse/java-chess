@@ -1,15 +1,15 @@
 package chess.domain.piece;
 
-import java.util.List;
 import java.util.Map;
 
 import chess.domain.Color;
 import chess.domain.PieceScore;
 import chess.domain.board.Position;
+import chess.domain.piece.strategy.BasicOneMoveStrategy;
 
 public class Knight extends Piece {
 	public Knight(Color color, String symbol) {
-		super(color, symbol);
+		super(color, symbol, new BasicOneMoveStrategy(Direction.knightDirection()));
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public List<Position> movablePositions(Position source, Map<Position, Piece> pieces) {
-		return Moving.goAndCatchOneTimePositions(Direction.knightDirection(), source);
+	public Path findPathByRule(Path path, Map<Position, Piece> pieces) {
+		return moveStrategy.findMovablePositions(path, pieces);
 	}
 }
