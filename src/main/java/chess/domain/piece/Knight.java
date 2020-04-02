@@ -19,7 +19,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected void validateMove(Position destination) {
+    public void validateMove(Position destination) {
         Direction direction = position.calculateDirection(destination);
         if (!possibleDirections.contains(direction)) {
             throw new IllegalMoveException(ILLEGAL_MOVE);

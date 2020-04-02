@@ -14,7 +14,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected void validateMove(Position destination) {
+    public void validateMove(Position destination) {
         if (this.position.isNonDiagonalDirection(destination) && this.position.isNonLinearDirection(destination)) {
             throw new IllegalMoveException(ILLEGAL_MOVE);
         }

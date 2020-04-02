@@ -21,7 +21,7 @@ public abstract class Piece {
         this.isAlive = true;
     }
 
-    protected abstract void validateMove(Position destination);
+    public abstract void validateMove(Position destination);
 
     public abstract void validateDestination(Position destination, Piece destinationPiece, List<Piece> piecesInBetween);
 

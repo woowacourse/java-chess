@@ -23,7 +23,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected void validateMove(Position destination) {
+    public void validateMove(Position destination) {
         if (this.team == Team.WHITE)
             validateMoveByDirection(destination, LOWER_TEAM_POSSIBLE_DIRECTIONS);
         if (this.team == Team.BLACK)

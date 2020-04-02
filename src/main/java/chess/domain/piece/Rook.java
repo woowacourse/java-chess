@@ -14,7 +14,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected void validateMove(Position destination) {
+    public void validateMove(Position destination) {
         if (this.position.isNonLinearDirection(destination)) {
             throw new IllegalMoveException(ILLEGAL_MOVE);
         }

@@ -52,6 +52,10 @@ public class Pieces {
         piece.kill();
     }
 
+    public void validateMove(Position source, Position destination) {
+        findByPosition(source).validateMove(destination);
+    }
+
     public void move(Position source, Position destination) {
         Piece sourcePiece = findByPosition(source);
         sourcePiece.move(destination);
