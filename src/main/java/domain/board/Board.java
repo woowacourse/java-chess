@@ -1,10 +1,9 @@
 package domain.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import domain.piece.King;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.position.Position;
@@ -21,22 +20,29 @@ public class Board {
 		this.ranks = ranks;
 	}
 
-	public Rank calculateRank(Position position) {
-		return ranks.get(position.getRow().getRankIndex());
+	public Optional<Piece> findPiece(Position position) {
+		return ranks.stream()
+			.map(rank -> rank.findPiece(position))
+			.filter(Optional::isPresent)
+			.map(Optional::get)
+			.findFirst();
 	}
 
-	public double calculateScoreByTeam(Team team) {
-		List<Piece> pawn = ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece instanceof Pawn)
-			.filter(piece -> piece.isTeam(team))
-			.collect(Collectors.toList());
-
+	double calculateScoreByTeam(Team team) {
 		double sum = ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece.isTeam(team))
-			.mapToDouble(Piece::getScore)
-			.sum();
+			.map(Rank::calculateScore)
+			.reduce(0.0, Double::sum);
+
+		return applyPawnScore(team, sum);
+	}
+
+	private double applyPawnScore(Team team, double sum) {
+		List<Piece> pawn = new ArrayList<>();
+
+		ranks.stream()
+			.map(rank -> rank.findPawn(team))
+			.map(pawn::addAll)
+			.close();
 
 		if (isSameColumn(pawn)) {
 			sum += pawn.size() * Pawn.PAWN_SCORE_WHEN_HAS_SAME_COLUMN;
@@ -49,23 +55,20 @@ public class Board {
 			.map(pawn -> pawn.getPosition().getColumn())
 			.distinct()
 			.count();
+
 		return pawns.size() != distinctCount;
 	}
 
-	public boolean isKingAlive() {
-		int kingCount = (int)ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece instanceof King)
-			.count();
+	boolean isKingAlive() {
+		int kingCount = ranks.stream()
+			.map(Rank::calculateCountOfKing)
+			.reduce(0, Integer::sum);
+
 		return INITIAL_KING_COUNT == kingCount;
 	}
 
-	public Optional<Piece> findPiece(Position position) {
-		return ranks.stream()
-			.map(rank -> rank.findPiece(position))
-			.filter(Optional::isPresent)
-			.map(Optional::get)
-			.findFirst();
+	private Rank calculateRank(Position position) {
+		return ranks.get(position.getRow().getRankIndex());
 	}
 
 	public void remove(Piece piece) {
