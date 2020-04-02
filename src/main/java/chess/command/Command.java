@@ -1,6 +1,5 @@
-package chess.domain.command;
+package chess.command;
 
-import chess.domain.ChessCalculator;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.position.Position;
 import utils.CommandParser;
@@ -30,7 +29,7 @@ public class Command {
     }
 
     public double commandStatusRun(ChessBoard chessBoard) {
-        return ChessCalculator.calculateScoreOf(chessBoard);
+        return chessBoard.calculateScore();
     }
 
     private Position sourcePosition() {

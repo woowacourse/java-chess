@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessBoardFactory;
+import chess.domain.chessBoard.ChessCalculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;

@@ -10,6 +10,7 @@ import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class ChessBoard {
 
@@ -82,6 +83,22 @@ public class ChessBoard {
     private void moveChessPiece(ChessPiece sourceChessPiece, Position sourcePosition, Position targetPosition) {
         chessBoard.put(targetPosition, sourceChessPiece);
         chessBoard.remove(sourcePosition);
+    }
+
+    public double calculateScore() {
+        return ChessCalculator.calculateScoreOf(this);
+    }
+
+    public Stream<ChessPiece> generatePlayerChessPieceOnChessFile() {
+        return ChessFile.values().stream()
+                .flatMap(this::getChessPiecesOn);
+    }
+
+    private Stream<ChessPiece> getChessPiecesOn(ChessFile chessFile) {
+        return chessBoard.entrySet().stream()
+                .filter(entry -> entry.getKey().isSameFilePosition(chessFile))
+                .filter(entry -> entry.getValue().isSamePieceColorWith(getPlayerColor()))
+                .map(Map.Entry::getValue);
     }
 
     public Map<Position, ChessPiece> getChessBoard() {

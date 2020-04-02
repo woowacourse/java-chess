@@ -2,10 +2,10 @@ package chess;
 
 import chess.View.ChessInputView;
 import chess.View.ChessOutputView;
+import chess.command.Command;
+import chess.command.CommandType;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessBoardFactory;
-import chess.domain.command.Command;
-import chess.domain.command.CommandType;
 
 public class ChessController {
     public static void run() {

@@ -1,13 +1,9 @@
-package chess.domain;
+package chess.domain.chessBoard;
 
-import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.pieceType.Pawn;
-import chess.domain.position.ChessFile;
 
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class ChessCalculator {
 
@@ -28,31 +24,21 @@ public class ChessCalculator {
     }
 
     private static double calculateUnConsiderateTotalScore(ChessBoard chessBoard) {
-        return ChessFile.values().stream()
-                .flatMap(chessFile -> getChessPiecesOn(chessFile, chessBoard))
+        return chessBoard.generatePlayerChessPieceOnChessFile()
                 .mapToDouble(ChessPiece::getScore)
                 .sum();
     }
 
     private static double calculatePawnScore(ChessBoard chessBoard) {
-        return ChessFile.values().stream()
-                .flatMap(chessFile -> getChessPiecesOn(chessFile, chessBoard))
+        return chessBoard.generatePlayerChessPieceOnChessFile()
                 .filter(chessPiece -> chessPiece instanceof Pawn)
                 .mapToDouble(ChessPiece::getScore)
                 .sum();
     }
 
     private static long calculatePawnCountOnChessFile(ChessBoard chessBoard) {
-        return ChessFile.values().stream()
-                .flatMap(chessFile -> getChessPiecesOn(chessFile, chessBoard))
+        return chessBoard.generatePlayerChessPieceOnChessFile()
                 .filter(chessPiece -> chessPiece instanceof Pawn)
                 .count();
-    }
-
-    private static Stream<ChessPiece> getChessPiecesOn(ChessFile chessFile, ChessBoard chessBoard) {
-        return chessBoard.getChessBoard().entrySet().stream()
-                .filter(entry -> entry.getKey().isSameFilePosition(chessFile))
-                .filter(entry -> entry.getValue().isSamePieceColorWith(chessBoard.getPlayerColor()))
-                .map(Map.Entry::getValue);
     }
 }
