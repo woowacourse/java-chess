@@ -2,9 +2,11 @@ package domain.piece.position;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 
-import domain.board.Rank;
+import domain.board.Board;
+import domain.piece.Piece;
 
 public enum Direction {
 	N(1, 0, (rowGap, columnGap) -> rowGap > 0 && columnGap == 0),
@@ -40,7 +42,7 @@ public enum Direction {
 		return Math.abs(rowGap) == Math.abs(columnGap);
 	}
 
-	public boolean isNotContain(List<Direction> directions){
+	public boolean isNotContain(List<Direction> directions) {
 		return !directions.contains(this);
 	}
 
@@ -55,14 +57,15 @@ public enum Direction {
 
 	}
 
-	public boolean hasPieceInRoute(Position position, Position targetPosition, List<Rank> ranks) {
+	public boolean hasPieceInRoute(Position position, Position targetPosition, Board board) {
 		int loopCount = calculateLoopCount(position, targetPosition) - 1;
 		int routeRow = position.getRow().getNumber();
 		int routeColumn = position.getColumn().getNumber();
 		for (int i = 0; i < loopCount; i++) {
 			routeRow += this.rowGap;
 			routeColumn += this.columnGap;
-			if (hasPieceInBoard(ranks, routeRow, routeColumn)) {
+			Optional<Piece> piece = board.findPiece(Position.of(routeColumn, routeRow));
+			if (piece.isPresent()) {
 				return true;
 			}
 		}
@@ -73,13 +76,6 @@ public enum Direction {
 		int columnGap = Math.abs(position.calculateColumnGap(targetPosition));
 		int rowGap = Math.abs(position.calculateRowGap(targetPosition));
 		return Math.max(columnGap, rowGap);
-	}
-
-	private boolean hasPieceInBoard(List<Rank> ranks, int routeRow, int routeColumn) {
-		return ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.anyMatch(piece -> piece.getPosition().getColumn().getNumber() == routeColumn
-				&& piece.getPosition().getRow().getNumber() == routeRow);
 	}
 
 	public static List<Direction> everyDirection() {

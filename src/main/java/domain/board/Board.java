@@ -1,8 +1,7 @@
 package domain.board;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import domain.piece.King;
@@ -22,25 +21,11 @@ public class Board {
 		this.ranks = ranks;
 	}
 
-	public void move(Position sourcePosition, Position targetPosition, Team turn) {
-		Rank rank = calculateRank(sourcePosition);
-		Piece piece = rank.findPiece(sourcePosition);
-		piece.canMove(targetPosition, turn, ranks);
-		piece.move(targetPosition, ranks);
-	}
-
-	private Rank calculateRank(Position position) {
+	public Rank calculateRank(Position position) {
 		return ranks.get(position.getRow().getRankIndex());
 	}
 
-	public Map<Team, Double> calculateScore() {
-		Map<Team, Double> scoreBoard = new HashMap<>();
-		scoreBoard.put(Team.WHITE, calculateScoreByTeam(Team.WHITE));
-		scoreBoard.put(Team.BLACK, calculateScoreByTeam(Team.BLACK));
-		return scoreBoard;
-	}
-
-	private double calculateScoreByTeam(Team team) {
+	public double calculateScoreByTeam(Team team) {
 		List<Piece> pawn = ranks.stream()
 			.flatMap(rank -> rank.getPieces().stream())
 			.filter(piece -> piece instanceof Pawn)
@@ -73,6 +58,22 @@ public class Board {
 			.filter(piece -> piece instanceof King)
 			.count();
 		return INITIAL_KING_COUNT == kingCount;
+	}
+
+	public Optional<Piece> findPiece(Position position) {
+		return ranks.stream()
+			.map(rank -> rank.findPiece(position))
+			.filter(Optional::isPresent)
+			.map(Optional::get)
+			.findFirst();
+	}
+
+	public void remove(Piece piece) {
+		calculateRank(piece.getPosition()).getPieces().remove(piece);
+	}
+
+	public void add(Piece piece, Position targetPosition) {
+		calculateRank(targetPosition).getPieces().add(piece);
 	}
 
 	public List<Rank> getRanks() {

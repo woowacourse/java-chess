@@ -1,8 +1,6 @@
 package domain.piece;
 
-import java.util.List;
-
-import domain.board.Rank;
+import domain.board.Board;
 import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -18,17 +16,18 @@ public class Rook extends Piece {
 
 	@Override
 	protected void validateDirection(Direction direction) {
-		if(direction.isNotContain(Direction.linearDirection())){
+		if (direction.isNotContain(Direction.linearDirection())) {
 			throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 		}
 	}
 
 	@Override
-	protected void validateStepSize(Position sourcePosition, Position targetPosition) {}
+	protected void validateStepSize(Position sourcePosition, Position targetPosition) {
+	}
 
 	@Override
-	protected void validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
-		if (direction.hasPieceInRoute(this.position, targetPosition, ranks)) {
+	protected void validateRoute(Direction direction, Position targetPosition, Board board) {
+		if (direction.hasPieceInRoute(this.position, targetPosition, board)) {
 			throw new InvalidPositionException(InvalidPositionException.HAS_PIECE_IN_ROUTE);
 		}
 	}

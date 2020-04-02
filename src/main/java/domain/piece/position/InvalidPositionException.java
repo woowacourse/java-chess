@@ -9,6 +9,7 @@ public class InvalidPositionException extends IllegalArgumentException {
 	public static final String INVALID_DIRECTION = "현재 위치에서 목적지의 방향이 올바르지 않습니다.";
 	public static final String HAS_OUR_TEAM_AT_TARGET_POSITION = "목적지에 아군이 있습니다.";
 	public static final String HAS_PIECE_AT_TARGET_POSITION = "목적지에 기물이 있습니다.";
+	public static final String INVALID_POSITON = "위치가 잘못되었습니다.";
 
 	public InvalidPositionException(String s) {
 		super(s);

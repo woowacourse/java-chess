@@ -1,11 +1,10 @@
 package domain.piece;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import domain.board.Board;
 import domain.board.InvalidTurnException;
-import domain.board.Rank;
 import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -34,25 +33,14 @@ public abstract class Piece implements Movable {
 		return sourcePosition.equals(targetPosition);
 	}
 
-	protected Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
-		return ranks.stream()
-			.flatMap(rank -> rank.getPieces().stream())
-			.filter(piece -> piece.getPosition().equals(targetPosition))
-			.findFirst();
+	protected void capture(Piece targetPiece, Board board) {
+		board.remove(targetPiece);
 	}
 
-	protected void capture(Piece targetPiece, List<Rank> ranks) {
-		int targetRankIndex = targetPiece.position.getRow().getRankIndex();
-		ranks.get(targetRankIndex).getPieces().remove(targetPiece);
-	}
-
-	protected void changePosition(Position targetPosition, List<Rank> ranks) {
-		int sourceRankIndex = this.position.getRow().getRankIndex();
-		ranks.get(sourceRankIndex).getPieces().remove(this);
-
+	protected void changePosition(Position targetPosition, Board board) {
+		board.remove(this);
 		this.position = targetPosition;
-		int targetRankIndex = targetPosition.getRow().getRankIndex();
-		ranks.get(targetRankIndex).getPieces().add(this);
+		board.add(this, targetPosition);
 	}
 
 	public String showSymbol() {
@@ -67,7 +55,7 @@ public abstract class Piece implements Movable {
 	}
 
 	@Override
-	public void canMove(Position targetPosition, Team turn, List<Rank> ranks) {
+	public void canMove(Position targetPosition, Team turn, Board board) {
 		validateTurn(turn);
 		if (isInPlace(this.position, targetPosition)) {
 			throw new InvalidPositionException(InvalidPositionException.IS_IN_PLACE);
@@ -76,19 +64,19 @@ public abstract class Piece implements Movable {
 		Direction direction = Direction.findDirection(this.position, targetPosition);
 		validateDirection(direction);
 		validateStepSize(this.position, targetPosition);
-		validateRoute(direction, targetPosition, ranks);
+		validateRoute(direction, targetPosition, board);
 	}
 
 	@Override
-	public void move(Position targetPosition, List<Rank> ranks) {
-		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
+	public void move(Position targetPosition, Board board) {
+		Optional<Piece> piece = board.findPiece(targetPosition);
 		piece.ifPresent(targetPiece -> {
 			if (targetPiece.team.equals(this.team)) {
 				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 			}
-			capture(targetPiece, ranks);
+			capture(targetPiece, board);
 		});
-		this.changePosition(targetPosition, ranks);
+		this.changePosition(targetPosition, board);
 	}
 
 	@Override
@@ -111,7 +99,7 @@ public abstract class Piece implements Movable {
 
 	protected abstract void validateStepSize(Position sourcePosition, Position targetPosition);
 
-	protected abstract void validateRoute(Direction direction, Position targetPosition, List<Rank> ranks);
+	protected abstract void validateRoute(Direction direction, Position targetPosition, Board ranks);
 
 	public abstract double getScore();
 

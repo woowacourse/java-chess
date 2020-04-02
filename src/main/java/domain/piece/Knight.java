@@ -1,8 +1,6 @@
 package domain.piece;
 
-import java.util.List;
-
-import domain.board.Rank;
+import domain.board.Board;
 import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -28,7 +26,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	protected void validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
+	protected void validateRoute(Direction direction, Position targetPosition, Board board) {
 	}
 
 	@Override

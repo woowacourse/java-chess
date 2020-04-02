@@ -2,10 +2,9 @@ package domain.piece;
 
 import static domain.piece.position.InvalidPositionException.*;
 
-import java.util.List;
 import java.util.Optional;
 
-import domain.board.Rank;
+import domain.board.Board;
 import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -46,29 +45,29 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected void validateRoute(Direction direction, Position targetPosition, List<Rank> ranks) {
-		if (direction.hasPieceInRoute(this.position, targetPosition, ranks)) {
+	protected void validateRoute(Direction direction, Position targetPosition, Board board) {
+		if (direction.hasPieceInRoute(this.position, targetPosition, board)) {
 			throw new InvalidPositionException(HAS_PIECE_IN_ROUTE);
 		}
 	}
 
 	@Override
-	public void move(Position targetPosition, List<Rank> ranks) {
+	public void move(Position targetPosition, Board board) {
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		Direction direction = Direction.findDirection(this.position, targetPosition);
-		Optional<Piece> piece = hasPieceInBoard(ranks, targetPosition);
+		Optional<Piece> piece = board.findPiece(targetPosition);
 		if (Direction.diagonalDirection().contains(direction) && rowGap == MIN_STEP_SIZE_OF_DIAGONAL) {
 			piece.ifPresent(targetPiece -> {
 				if (targetPiece.team.equals(this.team)) {
 					throw new InvalidPositionException(HAS_OUR_TEAM_AT_TARGET_POSITION);
 				}
-				capture(targetPiece, ranks);
+				capture(targetPiece, board);
 			});
 		}
 		if (Direction.linearDirection().contains(direction) && piece.isPresent()) {
 			throw new InvalidPositionException(HAS_PIECE_AT_TARGET_POSITION);
 		}
-		this.changePosition(targetPosition, ranks);
+		this.changePosition(targetPosition, board);
 		this.state = State.RUN;
 	}
 

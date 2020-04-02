@@ -1,5 +1,7 @@
 package domain.piece.position;
 
+import java.util.Arrays;
+
 public class Position {
 	private Column column;
 	private Row row;
@@ -14,7 +16,21 @@ public class Position {
 	}
 
 	public static Position of(Column column, Row row) {
-		return PositionCache.of(column.getColumnName() + row.getNumber());
+		return of(column.getColumnName() + row.getNumber());
+	}
+
+	public static Position of(int inputColumn, int inputRow) {
+		Column column = Arrays.stream(Column.values())
+			.filter(value -> value.getNumber() == inputColumn)
+			.findFirst()
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_POSITON));
+
+		Row row = Arrays.stream(Row.values())
+			.filter(value -> value.getNumber() == inputRow)
+			.findFirst()
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_POSITON));
+
+		return of(column, row);
 	}
 
 	public int calculateColumnGap(Position targetPosition) {

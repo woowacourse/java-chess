@@ -4,6 +4,7 @@ import static view.InputView.*;
 
 import domain.board.Board;
 import domain.board.BoardFactory;
+import domain.board.BoardGame;
 import domain.command.Command;
 import domain.command.InvalidCommandException;
 import domain.command.MoveInfo;
@@ -12,12 +13,12 @@ import view.OutputView;
 
 public class ChessController {
 	ChessController() {
-		Board board = BoardFactory.create();
+		BoardGame game = new BoardGame();
 		Team turn = Team.WHITE;
-		run(board, turn);
+		run(game, turn);
 	}
 
-	private void run(Board board, Team turn) {
+	private void run(BoardGame board, Team turn) {
 		OutputView.printChessBoard(board);
 		Command command;
 		do {
@@ -25,7 +26,7 @@ public class ChessController {
 			command = Command.of(inputCommand);
 			if (command.isMove()) {
 				MoveInfo moveInfo = new MoveInfo(inputCommand);
-				board.move(moveInfo.getSourcePosition(), moveInfo.getTargetPosition(), turn);
+				board.move(moveInfo, turn);
 				OutputView.printChessBoard(board);
 				turn = Team.changeTurn(turn);
 			}

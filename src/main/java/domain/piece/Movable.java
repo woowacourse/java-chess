@@ -1,13 +1,11 @@
 package domain.piece;
 
-import java.util.List;
-
-import domain.board.Rank;
+import domain.board.Board;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public interface Movable {
-	void canMove(Position targetPosition, Team turn, List<Rank> ranks);
+	void canMove(Position targetPosition, Team turn, Board ranks);
 
-	void move(Position targetPosition, List<Rank> board);
+	void move(Position targetPosition, Board ranks);
 }

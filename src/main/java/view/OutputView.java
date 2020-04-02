@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.board.Board;
+import domain.board.BoardGame;
 import domain.board.Rank;
 import domain.piece.Piece;
 import domain.piece.team.Team;
@@ -27,8 +28,8 @@ public class OutputView {
 		System.out.println(INPUT_COMMAND_MESSAGE);
 	}
 
-	public static void printChessBoard(Board board) {
-		List<Rank> ranks = board.getRanks();
+	public static void printChessBoard(BoardGame board) {
+		List<Rank> ranks = board.getBoard().getRanks();
 		for (int rankIndex = ranks.size() - 1; rankIndex >= 0; rankIndex--) {
 			List<Piece> pieces = ranks.get(rankIndex).getPieces();
 			printRank(pieces);

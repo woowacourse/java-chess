@@ -2,6 +2,8 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,20 +11,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import domain.board.Board;
-import domain.board.Rank;
+import domain.board.BoardGame;
 import domain.board.fixture.PawnBoard;
+import domain.command.MoveInfo;
+import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
-import javafx.geometry.Pos;
 
 public class PawnTest {
-	private Board board;
+	private BoardGame chessGame;
 
 	@BeforeEach
 	void setUp() {
-		board = new Board(new PawnBoard().create().getRanks());
+		chessGame = new BoardGame(new PawnBoard().create());
 	}
 
 	@DisplayName("폰 생성")
@@ -31,55 +33,73 @@ public class PawnTest {
 		Assertions.assertThat(new Pawn(Position.of("b1"), Team.WHITE)).isInstanceOf(Pawn.class);
 	}
 
+	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
+	@ParameterizedTest
+	@CsvSource({"move a1 a1, WHITE", "move d1 d1, BLACK"})
+	void canMove_SourceSameAsTarget_ExceptionThrown(MoveInfo moveInfo, Team team) {
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), team);
+
+		assertThatThrownBy(() -> pawn.canMove(moveInfo.getTargetPosition(), team, chessGame.getBoard()))
+			.isInstanceOf(InvalidPositionException.class)
+			.hasMessage(InvalidPositionException.IS_IN_PLACE);
+	}
+
 	@DisplayName("유효하지 않은 방향이 입력되면 예외 발생")
 	@ParameterizedTest
-	@CsvSource({"a1, WHITE, c1", "d1, WHITE, c1", "a1, WHITE, b3", "a3, WHITE, a2", "e2, BLACK, e3", "g3, BLACK, h1"})
-	void canMove_InvalidDirection_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
-		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
+	@CsvSource({"E, move a1 c1, WHITE", "W, move d1 c1, WHITE", "NNE, move a1 b3, WHITE",
+		"S, move a3 a2, WHITE", "N, move e2 e3, BLACK", "W, move g3 h1, BLACK"})
+	void validateDirection_InvalidDirection_ExceptionThrown(Direction direction, MoveInfo moveInfo, Team team) {
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), team);
+
+		assertThatThrownBy(() -> pawn.validateDirection(direction))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_DIRECTION);
 	}
 
 	@DisplayName("말이 움직일 수 없는 칸 수가 입력되면 예외 발생")
 	@ParameterizedTest
-	@CsvSource({"b1, WHITE, b4", "b5, BLACK, b2"})
-	void canMove_InvalidStepSize_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
-		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
+	@CsvSource({"move b1 b4, WHITE", "move b5 b2, BLACK"})
+	void validateStepSize_InvalidStepSize_ExceptionThrown(MoveInfo moveInfo, Team team) {
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), team);
+
+		assertThatThrownBy(() -> pawn.validateStepSize(moveInfo.getSourcePosition(), moveInfo.getTargetPosition()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_STEP_SIZE);
 	}
 
 	@DisplayName("목적지로 가는 경로에 기물이 있다면 예외 발생")
 	@ParameterizedTest
-	@CsvSource({"f1, WHITE, f3", "e1, WHITE, e3"})
-	void canMove_InvalidTargetPosition_ExceptionThrown(Position sourcePosition, Team team, Position targetPosition) {
-		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
+	@CsvSource({"N, move f1 f3, WHITE", "N, move e1 e3, WHITE"})
+	void validateRoute_InvalidTargetPosition_ExceptionThrown(Direction direction, MoveInfo moveInfo, Team team) {
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), team);
+
+		assertThatThrownBy(() -> pawn.validateRoute(direction, moveInfo.getTargetPosition(), chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_PIECE_IN_ROUTE);
 	}
 
 	@DisplayName("처음 상태의 Pawn은 2칸 이동 가능")
 	@Test
-	void move_StateIsStart_Success() {
-		Position sourcePosition = Position.of("b1");
-		Position targetPosition = Position.of("b3");
+	void canMove_StartAndTwoStep_Success() {
+		MoveInfo moveInfo = new MoveInfo("move b1 b3");
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), Team.WHITE);
 
-		board.move(sourcePosition, targetPosition, Team.WHITE);
+		pawn.canMove(moveInfo.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		pawn.move(moveInfo.getTargetPosition(), chessGame.getBoard());
 
-		Piece pieceAfterMove = board.getRanks().get(2).findPiece(targetPosition);
-		assertThat(pieceAfterMove.getPosition()).isEqualTo(targetPosition);
+		assertThat(pawn.position).isEqualTo(moveInfo.getTargetPosition());
 	}
 
 	@DisplayName("진행 상태의 Pawn은 2칸 이동 불가능")
 	@Test
-	void move_StateIsRun_ExceptionThrown() {
-		Position sourcePosition = Position.of( "b1");
-		Position firstTargetPosition = Position.of("b3");
-		Position secondTargetPosition = Position.of("b5");
+	void move_RunAndTwoStep_ExceptionThrown() {
+		MoveInfo moveInfo = new MoveInfo("move b1 b3");
+		MoveInfo invalidInfo = new MoveInfo("move b3 b5");
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), Team.WHITE);
 
-		board.move(sourcePosition, firstTargetPosition, Team.WHITE);
+		pawn.move(moveInfo.getTargetPosition(), chessGame.getBoard());
 
-		assertThatThrownBy(() -> board.move(firstTargetPosition, secondTargetPosition, Team.WHITE))
+		assertThatThrownBy(() -> pawn.canMove(invalidInfo.getTargetPosition(), Team.WHITE, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_STEP_SIZE);
 	}
@@ -87,42 +107,45 @@ public class PawnTest {
 	@DisplayName("기물이 없는 목적지가 입력되면 말 이동")
 	@Test
 	void move_EmptyTargetPosition_Success() {
-		Position sourcePosition = Position.of("a1");
-		Position targetPosition = Position.of("a2");
+		MoveInfo moveInfo = new MoveInfo("move a1 a2");
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), Team.WHITE);
 
-		board.move(sourcePosition, targetPosition, Team.WHITE);
+		pawn.move(moveInfo.getTargetPosition(), chessGame.getBoard());
 
-		Piece pieceAfterMove = board.getRanks().get(1).findPiece(targetPosition);
-		assertThat(pieceAfterMove.getPosition()).isEqualTo(targetPosition);
+		assertThat(pawn.position).isEqualTo(moveInfo.getTargetPosition());
 	}
 
 	@DisplayName("직선 - 기물이 있는 목적지가 입력되면 예외 발생 ")
 	@Test
 	void move_PieceAtLinearTargetPosition_ExceptionThrown() {
-		assertThatThrownBy(() -> board.move(Position.of("e2"), Position.of("e1"), Team.BLACK))
+		MoveInfo moveInfo = new MoveInfo("move e2 e1");
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), Team.WHITE);
+
+		assertThatThrownBy(() -> pawn.move(moveInfo.getTargetPosition(), chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_PIECE_AT_TARGET_POSITION);
 	}
 
+	// TODO: 2020-04-02 게터 
 	@DisplayName("대각선 - 적군이 있는 목적지가 입력되면 적군을 잡고 말 이동 ")
 	@Test
 	void move_EnemyAtDiagonalTargetPosition_Capture() {
-		Position sourcePosition = Position.of("d1");
-		Position targetPosition = Position.of("e2");
+		MoveInfo moveInfo = new MoveInfo("move d1 e2");
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), Team.WHITE);
 
-		board.move(sourcePosition, targetPosition, Team.WHITE);
+		pawn.move(moveInfo.getTargetPosition(), chessGame.getBoard());
 
-		Piece targetPiece = board.getRanks().get(1).findPiece(targetPosition);
-		assertThat(board.getRanks().get(0).getPieces().contains(targetPiece)).isFalse();
+		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveInfo.getTargetPosition());
+		assertThat(targetPiece.get()).isEqualTo(pawn);
 	}
 
 	@DisplayName("대각선 - 아군이 있는 목적지가 입력되면 예외 발생")
 	@Test
 	void move_OurTeamAtDiagonalTargetPosition_ExceptionThrown() {
-		Position sourcePosition = Position.of("e1");
-		Position targetPosition = Position.of("f2");
+		MoveInfo moveInfo = new MoveInfo("move e1 f2");
+		Pawn pawn = new Pawn(moveInfo.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Team.WHITE))
+		assertThatThrownBy(() -> pawn.move(moveInfo.getTargetPosition(), chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}

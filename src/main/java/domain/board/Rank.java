@@ -2,9 +2,9 @@ package domain.board;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import domain.piece.Piece;
-import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 
 public class Rank {
@@ -14,11 +14,10 @@ public class Rank {
 		this.pieces = pieces;
 	}
 
-	public Piece findPiece(Position position) {
+	public Optional<Piece> findPiece(Position position) {
 		return pieces.stream()
 			.filter(piece -> piece.getPosition().isSamePosition(position))
-			.findFirst()
-			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
+			.findFirst();
 	}
 
 	public List<Piece> getPieces() {
