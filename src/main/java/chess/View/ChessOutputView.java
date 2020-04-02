@@ -1,6 +1,7 @@
 package chess.View;
 
 import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessPiece.pieceType.PieceColor;
 
 public class ChessOutputView {
     private ChessOutputView() {
@@ -27,11 +28,13 @@ public class ChessOutputView {
     }
 
     public static void scoreOf(ChessBoard chessBoard, double score) {
-        System.out.println(String.format("%s점수: %.1f", chessBoard.getPlayerColor(), score));
+        PieceColor playerTurn = chessBoard.getPlayerColor();
+        System.out.println(String.format("%s점수: %.1f", playerTurn.getColor(), score));
     }
 
     public static void printCaughtKing(ChessBoard chessBoard) {
-        System.out.println(String.format("왕이 잡혔습니다 %s승", chessBoard.getPlayerColor()));
+        PieceColor playerTurn = chessBoard.getPlayerColor();
+        System.out.println(String.format("왕이 잡혔습니다 %s승", playerTurn.getColor()));
     }
 
     public static void printError(String error) {

@@ -10,13 +10,15 @@ import java.util.function.Supplier;
 
 public enum PieceColor {
 
-    WHITE(String::toLowerCase, WhitePawnRule::new),
-    BLACK(String::toUpperCase, BlackPawnRule::new);
+    WHITE("white", String::toLowerCase, WhitePawnRule::new),
+    BLACK("black", String::toUpperCase, BlackPawnRule::new);
 
+    private final String color;
     private final Function<String, String> convertName;
     private final Supplier<Rule> pawnRuleStrategy;
 
-    PieceColor(Function<String, String> convertName, Supplier<Rule> pawnRuleStrategy) {
+    PieceColor(String color, Function<String, String> convertName, Supplier<Rule> pawnRuleStrategy) {
+        this.color = color;
         this.convertName = convertName;
         this.pawnRuleStrategy = pawnRuleStrategy;
     }
@@ -36,6 +38,10 @@ public enum PieceColor {
 
     public Rule getPawnRuleStrategyBy() {
         return pawnRuleStrategy.get();
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public PieceColor getOppositeColor() {
