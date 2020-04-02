@@ -45,7 +45,6 @@ h1 {
 
 .position {
     width: calc(100% / 6);
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,6 +56,11 @@ h1 {
 .position:after {
     content: "";
     padding-bottom: 100%;
+}
+
+.piece {
+    position: absolute;
+    width: calc(100% / 8);
 }
 
 .row:nth-of-type(2n - 1) .position:nth-of-type(2n - 1),
@@ -97,7 +101,8 @@ h1 {
 
 .menuButton {
     margin: 0 20px;
-    padding: 5px;
+    width: 60px;
+    height: 40px;
     font-family: serif;
     font-size: 12px;
     background-color: cornsilk;

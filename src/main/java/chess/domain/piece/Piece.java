@@ -53,17 +53,12 @@ public class Piece {
         return initialPositions().contains(position);
     }
 
-
-    public String consoleName() {
+    @Override
+    public String toString() {
         if (side == Side.WHITE) {
             return type.getName();
         }
         return type.getName().toUpperCase();
-    }
-
-    @Override
-    public String toString() {
-        return side.name() + type.getName();
     }
 
     public static List<Piece> getPieces() {

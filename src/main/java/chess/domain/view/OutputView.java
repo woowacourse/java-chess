@@ -43,7 +43,7 @@ public class OutputView {
 
     private static String parsedPiece(Optional<Piece> piece) {
         if (piece.isPresent()) {
-            return piece.get().consoleName();
+            return piece.get().toString();
         }
         return EMPTY_POSITION;
     }
