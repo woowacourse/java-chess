@@ -21,8 +21,8 @@ public class TeamScore {
         double whiteScore = chessBoard.values().stream()
                 .filter(piece -> piece.getColor().equals(Color.WHITE))
                 .mapToDouble(Piece::getScore).sum();
-        blackScore -= calculatePawnScore(blackScore, Color.BLACK, chessBoard);
-        whiteScore -= calculatePawnScore(whiteScore, Color.WHITE, chessBoard);
+        blackScore -= calculatePawnScore(Color.BLACK, chessBoard);
+        whiteScore -= calculatePawnScore(Color.WHITE, chessBoard);
         setTeamScore(teamScore, blackScore, whiteScore);
         return teamScore;
     }
@@ -32,7 +32,7 @@ public class TeamScore {
         teamScore.put(Color.WHITE, whiteScore);
     }
 
-    private static double calculatePawnScore(Double score, Color color, Map<Square, Piece> chessBoard) {
+    private static double calculatePawnScore(Color color, Map<Square, Piece> chessBoard) {
         List<Square> pawns = chessBoard.keySet().stream()
                 .filter(square -> chessBoard.get(square) == Pawn.of(color))
                 .collect(Collectors.toList());
@@ -43,23 +43,5 @@ public class TeamScore {
                     .count();
         }
         return count * Pawn.REDUCED_PAWN_SCORE;
-    }
-
-    public static List<Color> getWinners(Map<Square, Piece> chessBoard) {
-        Map<Color, Double> teamScores = calculateTeamScore(chessBoard);
-        return analyzeWinner(teamScores);
-    }
-
-    private static List<Color> analyzeWinner(Map<Color, Double> teamScores) {
-        List<Color> winner = new ArrayList<>();
-        winner.add(Color.BLACK);
-        winner.add(Color.WHITE);
-        if (teamScores.get(Color.BLACK) > teamScores.get(Color.WHITE)) {
-            winner.remove(Color.WHITE);
-        }
-        if (teamScores.get(Color.BLACK) < teamScores.get(Color.WHITE)) {
-            winner.remove(Color.BLACK);
-        }
-        return winner;
     }
 }
