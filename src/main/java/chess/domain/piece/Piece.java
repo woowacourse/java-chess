@@ -5,15 +5,18 @@ import chess.domain.position.Position;
 import chess.domain.util.Direction;
 import chess.exception.PieceImpossibleMoveException;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class Piece {
     protected PieceType pieceType;
+    protected char representation;
+    protected Team team;
     protected Position position;
 
-    public Piece(PieceType pieceType, Position position) {
+    public Piece(PieceType pieceType, char representation, Team team, Position position) {
         this.pieceType = pieceType;
+        this.representation = representation;
+        this.team = team;
         this.position = position;
     }
 
@@ -25,19 +28,19 @@ public abstract class Piece {
     }
 
     public boolean isKing() {
-        return pieceType == PieceType.WHITE_KING | pieceType == PieceType.BLACK_KING;
+        return this instanceof King;
     }
 
-    public boolean isOtherTeam(Piece nextPiece) {
-        return this.pieceType.isOtherTeam(nextPiece.pieceType);
+    public boolean isOtherTeam(final Piece piece) {
+        return team.isNotSame(piece.team);
     }
 
-    public boolean isSameTeam(Piece nextPiece) {
-        return this.pieceType.isSameTeam(nextPiece.pieceType);
+    public boolean isSameTeam(final Piece piece) {
+        return team == piece.team;
     }
 
-    public boolean isSameTeam(Team team) {
-        return this.pieceType.isSameTeam(team);
+    public boolean isSameTeam(final Team team) {
+        return this.team == team;
     }
 
     public boolean isPawn() {
@@ -54,7 +57,7 @@ public abstract class Piece {
     }
 
     public char getRepresentation() {
-        return pieceType.representation();
+        return representation;
     }
 
     public Position getPosition() {
@@ -63,10 +66,6 @@ public abstract class Piece {
 
     public PieceType getPieceType() {
         return pieceType;
-    }
-
-    public int getRow() {
-        return position.getY();
     }
 
     public double score() {
@@ -95,6 +94,6 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return String.valueOf(pieceType.representation());
+        return String.valueOf(representation);
     }
 }

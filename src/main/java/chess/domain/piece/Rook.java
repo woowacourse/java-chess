@@ -4,20 +4,20 @@ import chess.domain.position.Position;
 
 
 public class Rook extends Piece {
-    public Rook(final PieceType pieceType, final Position position) {
-        super(pieceType, position);
+    public Rook(final PieceType pieceType, final char representation, final Team team, final Position position) {
+        super(pieceType, representation, team, position);
     }
 
     public static Piece createWhite(Position position) {
-        return new Rook(PieceType.WHITE_ROOK, position);
+        return new Rook(PieceType.ROOK, 'r', Team.WHITE, position);
     }
 
     public static Piece createBlack(Position position) {
-        return new Rook(PieceType.BLACK_ROOK, position);
+        return new Rook(PieceType.ROOK, 'R', Team.BLACK, position);
     }
 
     @Override
     public Piece moveTo(final Position toPosition) {
-        return new Rook(pieceType, toPosition);
+        return new Rook(pieceType, representation, team, toPosition);
     }
 }

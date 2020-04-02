@@ -130,7 +130,7 @@ public class BoardTest {
     private static Stream<Arguments> getCasesForPieceMove() {
         return Stream.of(
                 Arguments.of("a2", "a4", PieceType.WHITE_PAWN, PieceType.BLANK),
-                Arguments.of("b1", "c3", PieceType.WHITE_KNIGHT, PieceType.BLANK)
+                Arguments.of("b1", "c3", PieceType.KNIGHT, PieceType.BLANK)
         );
     }
 }

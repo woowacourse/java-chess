@@ -14,24 +14,24 @@ public class PieceTest {
     @DisplayName("체스 말 각각의 표식")
     @ParameterizedTest
     @MethodSource("getCasesForPieceRepresentation")
-    void representationTest(Piece piece, char expectedRepresentation) {
-        assertThat(piece.getRepresentation()).isEqualTo(expectedRepresentation);
+    void representationTest(Piece piece, String expectedRepresentation) {
+        assertThat(piece.toString()).isEqualTo(expectedRepresentation);
     }
 
     private static Stream<Arguments> getCasesForPieceRepresentation() {
         return Stream.of(
-                Arguments.of(Pawn.createWhite(new Position(1, 2)), 'p'),
-                Arguments.of(Pawn.createBlack(new Position(1, 7)), 'P'),
-                Arguments.of(Rook.createWhite(new Position(1, 1)), 'r'),
-                Arguments.of(Rook.createBlack(new Position(1, 8)), 'R'),
-                Arguments.of(Knight.createWhite(new Position(2, 1)), 'n'),
-                Arguments.of(Knight.createBlack(new Position(2, 8)), 'N'),
-                Arguments.of(Bishop.createWhite(new Position(3, 1)), 'b'),
-                Arguments.of(Bishop.createBlack(new Position(3, 8)), 'B'),
-                Arguments.of(Queen.createWhite(new Position(4, 1)), 'q'),
-                Arguments.of(Queen.createBlack(new Position(4, 8)), 'Q'),
-                Arguments.of(King.createWhite(new Position(5, 1)), 'k'),
-                Arguments.of(King.createBlack(new Position(5, 8)), 'K')
+                Arguments.of(Pawn.createWhite(new Position(1, 2)), "p"),
+                Arguments.of(Pawn.createBlack(new Position(1, 7)), "P"),
+                Arguments.of(Rook.createWhite(new Position(1, 1)), "r"),
+                Arguments.of(Rook.createBlack(new Position(1, 8)), "R"),
+                Arguments.of(Knight.createWhite(new Position(2, 1)), "n"),
+                Arguments.of(Knight.createBlack(new Position(2, 8)), "N"),
+                Arguments.of(Bishop.createWhite(new Position(3, 1)), "b"),
+                Arguments.of(Bishop.createBlack(new Position(3, 8)), "B"),
+                Arguments.of(Queen.createWhite(new Position(4, 1)), "q"),
+                Arguments.of(Queen.createBlack(new Position(4, 8)), "Q"),
+                Arguments.of(King.createWhite(new Position(5, 1)), "k"),
+                Arguments.of(King.createBlack(new Position(5, 8)), "K")
         );
     }
 
