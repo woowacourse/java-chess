@@ -213,6 +213,30 @@
             color: #f1f1f1;
         }
 
+        .chess-result {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            width: 300px;
+            height: 150px;
+            background: #5A3C29;
+            border: 20px solid #EDCAA4;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .chess-result-message {
+            font-weight: bold;
+            color: #f1f1f1;
+        }
+
+        .chess-result-restart {
+            background: #EDCAA4;
+            color: #5A3C29;
+            cursor: pointer;
+            padding: 5px;
+        }
+
         .hide {
             display: none;
         }
@@ -428,6 +452,10 @@
     <div class="chess-alert hide">
         <div class="chess-alert-message"></div>
     </div>
+    <div class="chess-result hide">
+        <div class="chess-result-message"></div>
+        <div class="chess-result-restart">새로 시작</div>
+    </div>
 </div>
 <script>
     const gameId = {{id}}
@@ -444,15 +472,38 @@
     const chessAlertElement = document.querySelector('.chess-alert')
     const chessAlertMessageElement = document.querySelector('.chess-alert-message')
 
+    const chessResultElement = document.querySelector('.chess-result')
+    const chessResultMessageElement = document.querySelector('.chess-result-message')
+    const chessResultRestartElement = document.querySelector('.chess-result-restart')
+
+    chessResultRestartElement.onclick = () => {
+        fetch('/restart/' + gameId, {
+           method: 'POST'
+        }).then(response => response.json())
+        .then(data => {
+            if (data.statusCode == 1) {
+                location.reload()
+            }
+        })
+    }
+
     function showAlert(message, delay) {
-        chessAlertElement.classList.remove('hide')
-        chessAlertElement.classList.add('show')
+        show(chessAlertElement)
         chessAlertMessageElement.innerHTML = message
 
         setTimeout(() => {
-            chessAlertElement.classList.remove('show')
-            chessAlertElement.classList.add('hide')
+            hide(chessAlertElement)
         }, delay)
+    }
+
+    function show(element) {
+        element.classList.remove('hide')
+        element.classList.add('show')
+    }
+
+    function hide(element) {
+        element.classList.remove('show')
+        element.classList.add('hide')
     }
 
     const createTemplate = {
@@ -478,6 +529,19 @@
     function drawChessGame({boardDto, turnDto, statusDto, isFinished}) {
         drawBoard(boardDto.board)
         drawStatus(statusDto)
+        drawResult(statusDto, isFinished)
+    }
+
+    function drawResult(winner, isFinished) {
+        if (!isFinished) {
+            return;
+        }
+
+        const black = statusDto.black.score;
+        const white = statusDto.white.score;
+
+        show(chessResultElement)
+        chessResultMessageElement.innerHTML = winner + ' 승'
     }
 
     function drawBoard(board) {
