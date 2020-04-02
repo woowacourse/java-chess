@@ -28,10 +28,6 @@ public class Board {
 		pieces.put(to, target);
 	}
 
-	public Map<Position, Piece> getPieces() {
-		return pieces;
-	}
-
 	public boolean isKingAliveOf(Color color) {
 		return pieces.values().stream()
 			.anyMatch(piece -> isKingOf(color, piece));
@@ -39,5 +35,9 @@ public class Board {
 
 	private boolean isKingOf(Color color, Piece piece) {
 		return piece.isSameColor(color) && piece instanceof King;
+	}
+
+	public Map<Position, Piece> getPieces() {
+		return pieces;
 	}
 }
