@@ -22,7 +22,7 @@ public class QueenTest {
     void setUp() {
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
-                INITIALIZED_POSITIONS.add(new Blank(new BlankMoveStrategy(), '.', Team.BLANK, new Position(col, row)));
+                INITIALIZED_POSITIONS.add(Piece.createBlank(new Position(col, row)));
             }
         }
     }
@@ -31,17 +31,17 @@ public class QueenTest {
     @ParameterizedTest
     @MethodSource("getCasesForQueenMoveByDirection")
     void bishopMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
-        INITIALIZED_POSITIONS.set(36, new Bishop(new BishopMoveStrategy(), 'q', Team.WHITE, new Position(5, 5)));
-        INITIALIZED_POSITIONS.set(20, new WhitePawn(new WhitePawnMoveStrategy(), 'p', Team.WHITE, new Position(5, 3)));
-        INITIALIZED_POSITIONS.set(33, new Knight(new KnightMoveStrategy(), 'N', Team.BLACK, new Position(2, 5)));
-        INITIALIZED_POSITIONS.set(54, new Rook(new RookMoveStrategy(), 'R', Team.BLACK, new Position(7, 7)));
-        INITIALIZED_POSITIONS.set(0, new Queen(new QueenMoveStrategy(), 'q', Team.WHITE, new Position(1, 1)));
+        INITIALIZED_POSITIONS.set(36, Piece.createWhiteBishop(new Position(5, 5)));
+        INITIALIZED_POSITIONS.set(20, Piece.createWhitePawn(new Position(5, 3)));
+        INITIALIZED_POSITIONS.set(33, Piece.createBlackKnight(new Position(2, 5)));
+        INITIALIZED_POSITIONS.set(54, Piece.createBlackRook(new Position(7, 7)));
+        INITIALIZED_POSITIONS.set(0, Piece.createWhiteQueen(new Position(1, 1)));
         assertThat(moveStrategy.getPossiblePositions(INITIALIZED_POSITIONS, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForQueenMoveByDirection() {
         return Stream.of(
-                Arguments.of(new QueenMoveStrategy(), new Queen(new QueenMoveStrategy(), 'q', Team.WHITE, new Position(5, 5)),
+                Arguments.of(new QueenMoveStrategy(), Piece.createWhiteQueen(new Position(5, 5)),
                         Arrays.asList(
                                 new Position(5, 6), new Position(5, 7),
                                 new Position(5, 8), new Position(6, 6),

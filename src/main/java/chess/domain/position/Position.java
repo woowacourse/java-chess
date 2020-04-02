@@ -20,7 +20,7 @@ public class Position {
     }
 
     public Position(String position) {
-        this(String.valueOf(position.charAt(0)), String.valueOf(position.charAt(1)));
+        this(String.valueOf(position.charAt(0) - ASCII_GAP), String.valueOf(position.charAt(1)));
         if (position.length() != 2) {
             throw new InvalidPositionException(position);
         }
@@ -67,5 +67,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

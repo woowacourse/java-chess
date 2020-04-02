@@ -1,7 +1,6 @@
 package chess.domain.strategy;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
@@ -16,7 +15,7 @@ public abstract class DefaultMoveStrategy implements MoveStrategy {
     public Board movePieceWithTurnValidation(Board board, final Piece fromPiece, final Piece toPiece, final Team currentTurn) {
         List<Piece> movedBoard = new ArrayList<>(board.getBoard());
 
-        if (fromPiece.isNotSameTeam(currentTurn)) {
+        if (!fromPiece.isSameTeam(currentTurn)) {
             throw new TakeTurnException("체스 게임 순서를 지켜주세요.");
         }
 
@@ -26,8 +25,8 @@ public abstract class DefaultMoveStrategy implements MoveStrategy {
 
     private void movePiece(final List<Piece> board, final Piece fromPiece, final Piece toPiece) {
         if (getPossiblePositions(board, fromPiece).contains(toPiece.getPosition())) {
-            board.set(boardIndexOf(toPiece.getPosition()), fromPiece.movedPiece(toPiece.getPosition()));
-            board.set(boardIndexOf(fromPiece.getPosition()), new Blank(new BlankMoveStrategy(), '.', Team.BLANK, fromPiece.getPosition()));
+            board.set(boardIndexOf(toPiece.getPosition()), fromPiece.move(toPiece.getPosition()));
+            board.set(boardIndexOf(fromPiece.getPosition()), Piece.createBlank(fromPiece.getPosition()));
             Board.changeFlagWhenKingCaptured(toPiece);
             return;
         }

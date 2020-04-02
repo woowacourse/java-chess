@@ -28,16 +28,16 @@ public class PawnTest {
 
     private static Stream<Arguments> getCasesForPawnMoveByDirection() {
         return Stream.of(
-                Arguments.of(new WhitePawnMoveStrategy(), new WhitePawn(new WhitePawnMoveStrategy(), 'p', Team.WHITE, new Position(2, 2)),
+                Arguments.of(new WhitePawnMoveStrategy(), Piece.createWhitePawn(new Position(2, 2)),
                         Arrays.asList(new Position(2, 3), new Position(2, 4))),
 
-                Arguments.of(new WhitePawnMoveStrategy(), new WhitePawn(new WhitePawnMoveStrategy(), 'p', Team.WHITE, new Position(3, 4)),
+                Arguments.of(new WhitePawnMoveStrategy(), Piece.createWhitePawn(new Position(3, 4)),
                         Arrays.asList(new Position(3, 5))),
 
-                Arguments.of(new BlackPawnMoveStrategy(), new BlackPawn(new BlackPawnMoveStrategy(),  'P', Team.BLACK, new Position(2, 7)),
+                Arguments.of(new BlackPawnMoveStrategy(), Piece.createBlackPawn(new Position(2, 7)),
                         Arrays.asList(new Position(2, 6), new Position(2, 5))),
 
-                Arguments.of(new BlackPawnMoveStrategy(), new BlackPawn(new BlackPawnMoveStrategy(), 'P', Team.BLACK, new Position(4, 6)),
+                Arguments.of(new BlackPawnMoveStrategy(), Piece.createBlackPawn(new Position(4, 6)),
                         Arrays.asList(new Position(4, 5)))
         );
     }

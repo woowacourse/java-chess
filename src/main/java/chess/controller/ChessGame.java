@@ -41,7 +41,8 @@ public class ChessGame {
                 if (command.isMove()) {
                     Piece fromPiece = board.findPieceBy(new Position(inputCommand[FROM_POSITION_INDEX]));
                     Piece toPiece = board.findPieceBy(new Position(inputCommand[TO_POSITION_INDEX]));
-                    board = fromPiece.move(board, toPiece, currentTurn);
+
+                    board = fromPiece.movePiece(board, toPiece, currentTurn);
                     currentTurn = reverseTurn(currentTurn);
                     OutputView.printBoard(board.getBoard());
                 }

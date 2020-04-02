@@ -1,6 +1,5 @@
 package chess.domain.strategy;
 
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.util.Direction;
@@ -39,7 +38,7 @@ public abstract class PawnMoveStrategy extends DefaultMoveStrategy {
 
 
     private boolean isFirstMove(Piece piece) {
-        return ((Pawn) piece).getRow() == getInitialPawnRow();
+        return piece.getRow() == getInitialPawnRow();
     }
 
     protected abstract int getInitialPawnRow();

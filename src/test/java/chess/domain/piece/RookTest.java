@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.strategy.BlankMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
 import chess.domain.strategy.RookMoveStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,7 @@ public class RookTest {
     void setUp() {
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
-                INITIALIZED_POSITIONS.add(new Blank(new BlankMoveStrategy(), '.', Team.BLANK, new Position(col, row)));
+                INITIALIZED_POSITIONS.add(Piece.createBlank(new Position(col, row)));
             }
         }
     }
@@ -33,13 +32,13 @@ public class RookTest {
     @ParameterizedTest
     @MethodSource("getCasesForRookMoveByDirection")
     void rookMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
-        INITIALIZED_POSITIONS.set(36, new Rook(new RookMoveStrategy(), 'r', Team.WHITE, new Position(5, 5)));
+        INITIALIZED_POSITIONS.set(36, Piece.createWhiteRook(new Position(5, 5)));
         assertThat(moveStrategy.getPossiblePositions(INITIALIZED_POSITIONS, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForRookMoveByDirection() {
         return Stream.of(
-                Arguments.of(new RookMoveStrategy(), new Rook(new RookMoveStrategy(), 'r', Team.WHITE, new Position(5, 5)),
+                Arguments.of(new RookMoveStrategy(), Piece.createWhiteRook(new Position(5, 5)),
                         Arrays.asList(
                                 new Position(5, 6), new Position(5, 7),
                                 new Position(5, 8), new Position(6, 5),
