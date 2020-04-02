@@ -17,7 +17,7 @@ public class King extends Piece {
 
 	public static King of(Team team) {
 		King king = KingCache.kingCache.get(team);
-		Objects.requireNonNull(king, "비숍이 존재하지 않습니다.");
+		Objects.requireNonNull(king, "킹이 존재하지 않습니다.");
 		return king;
 	}
 

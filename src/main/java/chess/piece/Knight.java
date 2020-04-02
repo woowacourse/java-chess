@@ -17,7 +17,7 @@ public class Knight extends Piece {
 
 	public static Knight of(Team team) {
 		Knight knight = KnightCache.knightCache.get(team);
-		Objects.requireNonNull(knight, "비숍이 존재하지 않습니다.");
+		Objects.requireNonNull(knight, "나이트가 존재하지 않습니다.");
 		return knight;
 	}
 

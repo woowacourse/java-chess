@@ -74,6 +74,5 @@ public class ChessController {
 
 	private void end() {
 		System.exit(1);
-		return;
 	}
 }

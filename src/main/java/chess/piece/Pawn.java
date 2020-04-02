@@ -17,7 +17,7 @@ public class Pawn extends Piece {
 
 	public static Pawn of(Team team) {
 		Pawn pawn = PawnCache.pawnCache.get(team);
-		Objects.requireNonNull(pawn, "비숍이 존재하지 않습니다.");
+		Objects.requireNonNull(pawn, "폰이 존재하지 않습니다.");
 		return pawn;
 	}
 

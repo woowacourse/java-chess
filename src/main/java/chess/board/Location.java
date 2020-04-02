@@ -11,26 +11,26 @@ import chess.piece.stategy.Direction;
 import chess.team.Team;
 
 public class Location {
-	private static final Location[] WHITE_TEAM_INITIAL_PAWN_LOCATIONS = {
-		Location.of('a', 2),
-		Location.of('b', 2),
-		Location.of('c', 2),
-		Location.of('d', 2),
-		Location.of('e', 2),
-		Location.of('f', 2),
-		Location.of('g', 2),
-		Location.of('h', 2)
-	};
-	private static final Location[] BLACK_TEAM_INITIAL_PAWN_LOCATIONS = {
-		Location.of('a', 7),
-		Location.of('b', 7),
-		Location.of('c', 7),
-		Location.of('d', 7),
-		Location.of('e', 7),
-		Location.of('f', 7),
-		Location.of('g', 7),
-		Location.of('h', 7)
-	};
+	private static final List<Location> WHITE_TEAM_INITIAL_PAWN_LOCATIONS = Arrays.asList(
+		Location.of(Column.A, Row.TWO),
+		Location.of(Column.B, Row.TWO),
+		Location.of(Column.C, Row.TWO),
+		Location.of(Column.D, Row.TWO),
+		Location.of(Column.E, Row.TWO),
+		Location.of(Column.F, Row.TWO),
+		Location.of(Column.G, Row.TWO),
+		Location.of(Column.H, Row.TWO)
+	);
+	private static final List<Location> BLACK_TEAM_INITIAL_PAWN_LOCATIONS = Arrays.asList(
+		Location.of(Column.A, Row.SEVEN),
+		Location.of(Column.B, Row.SEVEN),
+		Location.of(Column.C, Row.SEVEN),
+		Location.of(Column.D, Row.SEVEN),
+		Location.of(Column.E, Row.SEVEN),
+		Location.of(Column.F, Row.SEVEN),
+		Location.of(Column.G, Row.SEVEN),
+		Location.of(Column.H, Row.SEVEN)
+	);
 
 	private final Column column;
 	private final Row row;
@@ -80,11 +80,9 @@ public class Location {
 
 	public boolean isInitialPawnLocation(Team team) {
 		if (Team.BLACK == team) {
-			return Arrays.asList(BLACK_TEAM_INITIAL_PAWN_LOCATIONS)
-				.contains(this);
+			return BLACK_TEAM_INITIAL_PAWN_LOCATIONS.contains(this);
 		}
-		return Arrays.asList(WHITE_TEAM_INITIAL_PAWN_LOCATIONS)
-			.contains(this);
+		return WHITE_TEAM_INITIAL_PAWN_LOCATIONS.contains(this);
 	}
 
 	public boolean validEverySpaceRange(Location destination, List<Direction> directions) {

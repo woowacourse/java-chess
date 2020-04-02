@@ -17,7 +17,7 @@ public class Rook extends Piece {
 
 	public static Rook of(Team team) {
 		Rook rook = RookCache.rookCache.get(team);
-		Objects.requireNonNull(rook, "비숍이 존재하지 않습니다.");
+		Objects.requireNonNull(rook, "룩이 존재하지 않습니다.");
 		return rook;
 	}
 

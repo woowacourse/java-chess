@@ -17,7 +17,7 @@ public class Queen extends Piece {
 
 	public static Queen of(Team team) {
 		Queen queen = QueenCache.queenCache.get(team);
-		Objects.requireNonNull(queen, "비숍이 존재하지 않습니다.");
+		Objects.requireNonNull(queen, "퀸이 존재하지 않습니다.");
 		return queen;
 	}
 

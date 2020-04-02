@@ -53,6 +53,7 @@ public class ChessBoard {
 		for (int weight = 2; weight <= 8 && nextLocation != destination; weight++) {
 			if (board.containsKey(nextLocation)) {
 				obstacle = true;
+				break;
 			}
 			nextLocation = now.calculateNextLocation(destination, weight);
 		}
