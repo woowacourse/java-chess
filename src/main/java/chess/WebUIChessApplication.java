@@ -1,7 +1,6 @@
 package chess;
 
 import chess.controller.WebChessController;
-import chess.controller.dto.BoardDto;
 import chess.controller.dto.TileDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -20,7 +19,7 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return render(model, "start.html");
         });
 
         post("/game", (req, res) -> {
@@ -28,7 +27,7 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             model.put("tiles", tileDtos);
 
-            return render(model, "test.html");
+            return render(model, "game.html");
         });
     }
 

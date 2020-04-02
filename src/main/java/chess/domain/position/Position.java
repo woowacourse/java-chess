@@ -67,6 +67,19 @@ public class Position {
         return Collections.unmodifiableList(parseResult);
     }
 
+    public static List<Integer> getPositionsIndex() {
+        List<Integer> indexes = positions.stream()
+                .map(Position::index)
+                .collect(Collectors.toList());
+
+        return Collections.unmodifiableList(indexes);
+    }
+
+    private int index() {
+        return ((this.rank.getSymbol() - 8) * -1)
+                + (this.file.getNumber() - 1);
+    }
+
     public int getFile() {
         return this.file.getNumber();
     }

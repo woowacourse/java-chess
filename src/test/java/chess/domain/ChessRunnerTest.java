@@ -1,8 +1,11 @@
 package chess.domain;
 
+import chess.controller.dto.TileDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -73,5 +76,10 @@ class ChessRunnerTest {
         assertThatThrownBy(() -> {
             chessRunner.getWinner();
         }).isInstanceOf(AssertionError.class);
+    }
+
+    @Test
+    void tileDtosTest() {
+        List<TileDto> tileDtos = chessRunner.tileDtos();
     }
 }

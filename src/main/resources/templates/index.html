@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
     <title>체스</title>
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <script type="text/javascript">
       function initialBoard() {
         var files = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -21,10 +21,10 @@
         for (var i = 0; i < 8; i++) {
           for (var j = 0; j < 8; j++) {
             var div = document.createElement("div");
-            var divId = ranks[i] + files[j];
+            var divId = files[j] + ranks[i];
             div.id = divId;
 
-            if ((i + (j - 1)) % 2 === 0) {
+            if ((i + j) % 2 === 0) {
               div.className = "white";
             } else {
               div.className = "black";
@@ -34,15 +34,16 @@
           }
         }
       }
-    </script>
-  </head>
 
-  <body onload="initialBoard()">
-    <div id="chess-board"></div>
-    <div id="start">
-      <form action="/game" method="post">
+    </script>
+</head>
+
+<body onload="initialBoard()">
+<div id="chess-board"></div>
+<div id="start">
+    <form action="/game" method="post">
         <button id="start-button" value="start">Start</button>
-      </form>
-    </div>
-  </body>
+    </form>
+</div>
+</body>
 </html>

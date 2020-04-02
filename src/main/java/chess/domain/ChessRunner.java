@@ -3,6 +3,7 @@ package chess.domain;
 import chess.controller.dto.TileDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
+import chess.domain.board.Tile;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
@@ -110,9 +111,27 @@ public class ChessRunner {
     }
 
     public List<TileDto> tileDtos() {
-        List<TileDto> tileDtos = this.board.tiles().stream()
-                .map(tile -> new TileDto(tile.position(), tile.pieceImageUrl()))
+        List<TileDto> tileDtos = Position.getPositions().stream()
+                .map(TileDto::new)
                 .collect(Collectors.toList());
+
+        List<Integer> indexes = Position.getPositionsIndex();
+        for (int i = 0; i < indexes.size(); i++) {
+            if (indexes.get(i) % 2 == 0) {
+                tileDtos.get(i).setTeam("white");
+            } else {
+                tileDtos.get(i).setTeam("black");
+            }
+        }
+
+        List<Tile> tiles = this.board.tiles();
+        for (Tile tile : tiles) {
+            TileDto tileDto = tileDtos.stream()
+                    .filter(td -> td.getPosition().equals(tile.position()))
+                    .findFirst()
+                    .orElseThrow(IllegalArgumentException::new);
+            tileDto.setPieceImageUrl(tile.pieceImageUrl());
+        }
 
         return Collections.unmodifiableList(tileDtos);
     }

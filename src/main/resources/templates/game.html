@@ -1,59 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <title>체스</title>
-    <link rel="stylesheet" type="text/css" href="css/game.css" />
-    <script type="text/javascript">
-      function initialBoard() {
-        var files = ["A", "B", "C", "D", "E", "F", "G", "H"];
-        var ranks = [
-          "EIGHT",
-          "SEVEN",
-          "SIX",
-          "FIVE",
-          "FOUR",
-          "THREE",
-          "TWO",
-          "ONE"
-        ];
 
-        for (var i = 0; i < 8; i++) {
-          for (var j = 0; j < 8; j++) {
-            var div = document.createElement("div");
-            var divId = ranks[i] + files[j];
-            div.id = divId;
+<head>
+  <meta charset="utf-8" />
+  <title>체스</title>
+  <link rel="stylesheet" type="text/css" href="css/game.css" />
+</head>
 
-            // var img = document.createElement("img");
-            // img.src = "image/piece/{{pieceImageUrl}}.png";
-            // div.appendChild(img);
+<body>
 
-            if ((i + (j - 1)) % 2 === 0) {
-              div.className = "black";
-            } else {
-              div.className = "white";
-            }
-
-            document.getElementById("chess-board").appendChild(div);
-          }
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="initialBoard()">
-    <script id="set-board" type="text/x-handlebars-template">
-      {{#tiles}}
-        <div id="chess-board">
-            {{#if this.pieceImageUrl}}
-                <img src="image/piece/{{pieceImageUrl}}">
-            {{/if}}
-        </div>
-      {{/tiles}}
-    </script>
-
-    <div id="start">
-      <button id="start-button" value="start">Start</button>
+  <div id="chess-board">
+    {{#tiles}}
+    <div id="{{position}}" class="{{team}}">
+      {{#if pieceImageUrl}}
+      <img src="image/piece/{{pieceImageUrl}}.png" />
+      {{/if}}
     </div>
-  </body>
+    {{/tiles}}
+  </div>
+
+  <div id="start">
+    <button id="start-button" value="start">Start</button>
+  </div>
+</body>
 </html>
