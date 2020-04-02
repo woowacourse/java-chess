@@ -1,9 +1,8 @@
 package chess.domain.game.state;
 
 import chess.domain.game.Board;
-import chess.domain.game.Score;
+import chess.domain.game.Status;
 import chess.domain.game.Turn;
-import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public interface State {
@@ -15,9 +14,9 @@ public interface State {
 
 	Board board();
 
-	Score score(Color color);
-
 	Turn turn();
+
+	Status status();
 
 	boolean isFinished();
 }

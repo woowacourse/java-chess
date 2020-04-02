@@ -1,27 +1,40 @@
 package chess.dto;
 
-public class StatusDto {
-	private ScoreDto white;
-	private ScoreDto black;
+import chess.domain.game.Score;
+import chess.domain.piece.Color;
 
-	public StatusDto(ScoreDto white, ScoreDto black) {
+public class StatusDto {
+	private Score white;
+	private Score black;
+	private Color winner;
+
+	public StatusDto(Score white, Score black, Color winner) {
 		this.white = white;
 		this.black = black;
+		this.winner = winner;
 	}
 
-	public ScoreDto getWhite() {
+	public Score getWhite() {
 		return white;
 	}
 
-	public void setWhite(ScoreDto white) {
+	public void setWhite(Score white) {
 		this.white = white;
 	}
 
-	public ScoreDto getBlack() {
+	public Score getBlack() {
 		return black;
 	}
 
-	public void setBlack(ScoreDto black) {
+	public void setBlack(Score black) {
 		this.black = black;
+	}
+
+	public Color getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Color winner) {
+		this.winner = winner;
 	}
 }

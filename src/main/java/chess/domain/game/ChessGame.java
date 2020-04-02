@@ -36,8 +36,6 @@ public class ChessGame {
 	}
 
 	public Status status() {
-		Score white = state.score(Color.WHITE);
-		Score black = state.score(Color.BLACK);
-		return new Status(white, black);
+		return state.status();
 	}
 }
