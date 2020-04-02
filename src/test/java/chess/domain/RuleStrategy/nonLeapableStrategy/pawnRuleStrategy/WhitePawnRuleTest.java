@@ -7,11 +7,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class WhitePawnRuleStrategyTest {
+class WhitePawnRuleTest {
 
     @Test
     void WhitePawnRuleStrategy_MovableAndCatchableDirections_GenerateInstance() {
-        assertThat(new WhitePawnRuleStrategy()).isInstanceOf(WhitePawnRuleStrategy.class);
+        assertThat(new WhitePawnRule()).isInstanceOf(WhitePawnRule.class);
     }
 
     @ParameterizedTest
@@ -19,7 +19,7 @@ class WhitePawnRuleStrategyTest {
     void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
         Position sourcePosition = Position.of("c3");
 
-        assertThat(new WhitePawnRuleStrategy().canMove(sourcePosition, targetPosition)).isTrue();
+        assertThat(new WhitePawnRule().canMove(sourcePosition, targetPosition)).isTrue();
     }
 
     @ParameterizedTest
@@ -27,7 +27,7 @@ class WhitePawnRuleStrategyTest {
     void canMove_NonMovableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
         Position sourcePosition = Position.of("c3");
 
-        assertThat(new WhitePawnRuleStrategy().canMove(sourcePosition, targetPosition)).isFalse();
+        assertThat(new WhitePawnRule().canMove(sourcePosition, targetPosition)).isFalse();
     }
 
     @ParameterizedTest
@@ -35,7 +35,7 @@ class WhitePawnRuleStrategyTest {
     void canMoveToCatch_CatchableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
         Position sourcePosition = Position.of("c3");
 
-        assertThat(new WhitePawnRuleStrategy().canMoveToCatch(sourcePosition, targetPosition)).isTrue();
+        assertThat(new WhitePawnRule().canMoveToCatch(sourcePosition, targetPosition)).isTrue();
     }
 
     @ParameterizedTest
@@ -43,7 +43,7 @@ class WhitePawnRuleStrategyTest {
     void canMoveToCatch_NonCatchableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
         Position sourcePosition = Position.of("c3");
 
-        assertThat(new WhitePawnRuleStrategy().canMoveToCatch(sourcePosition, targetPosition)).isFalse();
+        assertThat(new WhitePawnRule().canMoveToCatch(sourcePosition, targetPosition)).isFalse();
     }
 
 }

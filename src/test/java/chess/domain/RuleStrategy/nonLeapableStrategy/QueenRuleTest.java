@@ -7,29 +7,29 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RookRuleStrategyTest {
+class QueenRuleTest {
 
     @Test
-    void RookRuleStrategy_MovableDirection_GenerateInstance() {
-        assertThat(new RookRuleStrategy()).isInstanceOf(RookRuleStrategy.class);
+    void QueenRuleStrategy_MovableDirection_GenerateInstance() {
+        assertThat(new QueenRule()).isInstanceOf(QueenRule.class);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"d1", "d8", "a4", "h4"})
+    @CsvSource(value = {"a1", "d1", "d8", "a7", "h8", "g1", "a4", "h4"})
     void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
-        RookRuleStrategy rookRuleStrategy = new RookRuleStrategy();
+        QueenRule queenRuleStrategy = new QueenRule();
         Position sourcePosition = Position.of("d4");
 
-        assertThat(rookRuleStrategy.canMove(sourcePosition, targetPosition)).isTrue();
+        assertThat(queenRuleStrategy.canMove(sourcePosition, targetPosition)).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a1", "a7", "g1", "g7"})
+    @CsvSource(value = {"b3", "c2", "f3", "e6"})
     void canMove_NonMovableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
-        RookRuleStrategy rookRuleStrategy = new RookRuleStrategy();
+        QueenRule queenRuleStrategy = new QueenRule();
         Position sourcePosition = Position.of("d4");
 
-        assertThat(rookRuleStrategy.canMove(sourcePosition, targetPosition)).isFalse();
+        assertThat(queenRuleStrategy.canMove(sourcePosition, targetPosition)).isFalse();
     }
 
 }

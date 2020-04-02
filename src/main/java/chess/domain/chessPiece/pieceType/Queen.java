@@ -1,6 +1,6 @@
 package chess.domain.chessPiece.pieceType;
 
-import chess.domain.RuleStrategy.nonLeapableStrategy.QueenRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.QueenRule;
 import chess.domain.chessPiece.ChessPiece;
 
 public class Queen extends ChessPiece {
@@ -10,7 +10,7 @@ public class Queen extends ChessPiece {
 
     public Queen(PieceColor pieceColor) {
         super(pieceColor);
-        ruleStrategy = new QueenRuleStrategy();
+        rule = new QueenRule();
     }
 
     @Override

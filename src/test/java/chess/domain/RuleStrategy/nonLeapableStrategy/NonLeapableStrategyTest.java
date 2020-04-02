@@ -13,7 +13,7 @@ class NonLeapableStrategyTest {
     @ParameterizedTest
     @NullSource
     void validate_NullSource_ExceptionThrown(Position sourcePosition) {
-        NonLeapableStrategy nonLeapableStrategy = new QueenRuleStrategy();
+        NonLeapable nonLeapableStrategy = new QueenRule();
         Position targetPosition = Position.of("b1");
 
         assertThatThrownBy(() -> nonLeapableStrategy.canMove(sourcePosition, targetPosition))
@@ -24,7 +24,7 @@ class NonLeapableStrategyTest {
     @ParameterizedTest
     @NullSource
     void validate_NullTarget_ExceptionThrown(Position targetPosition) {
-        NonLeapableStrategy nonLeapableStrategy = new QueenRuleStrategy();
+        NonLeapable nonLeapableStrategy = new QueenRule();
         Position sourcePosition = Position.of("b1");
 
         assertThatThrownBy(() -> nonLeapableStrategy.canMove(sourcePosition, targetPosition))
@@ -34,7 +34,7 @@ class NonLeapableStrategyTest {
 
     @Test
     void canLeap_ReturnFalse() {
-        assertThat(new QueenRuleStrategy().canLeap()).isFalse();
+        assertThat(new QueenRule().canLeap()).isFalse();
     }
 
 }

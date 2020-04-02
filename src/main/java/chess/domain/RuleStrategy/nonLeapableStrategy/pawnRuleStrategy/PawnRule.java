@@ -1,6 +1,6 @@
 package chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy;
 
-import chess.domain.RuleStrategy.nonLeapableStrategy.NonLeapableStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.NonLeapable;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
 
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class PawnRuleStrategy extends NonLeapableStrategy {
+public abstract class PawnRule extends NonLeapable {
 
     protected PawnState pawnState;
     protected final List<MoveDirection> catchableDirections;
 
-    public PawnRuleStrategy() {
+    public PawnRule() {
         this.pawnState = PawnState.initialState();
         this.catchableDirections = new ArrayList<>();
     }

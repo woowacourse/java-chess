@@ -2,7 +2,7 @@ package chess.domain.RuleStrategy;
 
 import chess.domain.position.Position;
 
-public interface RuleStrategy {
+public interface Rule {
 
     boolean canLeap();
 

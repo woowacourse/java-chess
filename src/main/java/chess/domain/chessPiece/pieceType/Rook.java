@@ -1,6 +1,6 @@
 package chess.domain.chessPiece.pieceType;
 
-import chess.domain.RuleStrategy.nonLeapableStrategy.RookRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.RookRule;
 import chess.domain.chessPiece.ChessPiece;
 
 public class Rook extends ChessPiece {
@@ -10,7 +10,7 @@ public class Rook extends ChessPiece {
 
     public Rook(PieceColor pieceColor) {
         super(pieceColor);
-        ruleStrategy = new RookRuleStrategy();
+        rule = new RookRule();
     }
 
     @Override

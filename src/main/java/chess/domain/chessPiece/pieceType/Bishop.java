@@ -1,6 +1,6 @@
 package chess.domain.chessPiece.pieceType;
 
-import chess.domain.RuleStrategy.nonLeapableStrategy.BishopRuleStrategy;
+import chess.domain.RuleStrategy.nonLeapableStrategy.BishopRule;
 import chess.domain.chessPiece.ChessPiece;
 
 public class Bishop extends ChessPiece {
@@ -10,7 +10,7 @@ public class Bishop extends ChessPiece {
 
     public Bishop(PieceColor pieceColor) {
         super(pieceColor);
-        ruleStrategy = new BishopRuleStrategy();
+        rule = new BishopRule();
     }
 
     @Override

@@ -9,7 +9,7 @@ public class Pawn extends ChessPiece {
 
     public Pawn(PieceColor pieceColor) {
         super(pieceColor);
-        ruleStrategy = pieceColor.getPawnRuleStrategyBy();
+        rule = pieceColor.getPawnRuleStrategyBy();
     }
 
     @Override

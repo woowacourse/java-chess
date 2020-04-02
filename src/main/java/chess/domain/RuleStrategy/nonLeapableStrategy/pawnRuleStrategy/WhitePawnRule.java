@@ -4,9 +4,9 @@ import chess.domain.position.MoveDirection;
 
 import java.util.Arrays;
 
-public class WhitePawnRuleStrategy extends PawnRuleStrategy {
+public class WhitePawnRule extends PawnRule {
 
-    public WhitePawnRuleStrategy() {
+    public WhitePawnRule() {
         super();
         this.movableDirections.add(MoveDirection.N);
         this.catchableDirections.addAll(Arrays.asList(MoveDirection.NW, MoveDirection.NE));

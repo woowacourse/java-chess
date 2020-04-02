@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 import java.util.Objects;
 
-public class KnightRuleStrategy implements RuleStrategy {
+public class KnightRule implements Rule {
 
     public static final int KNIGHT_MOVABLE_RANGE = 3;
 

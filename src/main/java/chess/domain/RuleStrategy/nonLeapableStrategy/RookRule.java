@@ -5,8 +5,8 @@ import chess.domain.position.Position;
 
 import java.util.Arrays;
 
-public class RookRuleStrategy extends NonLeapableStrategy {
-    public RookRuleStrategy() {
+public class RookRule extends NonLeapable {
+    public RookRule() {
         this.movableDirections.addAll(Arrays.asList(
                 MoveDirection.N,
                 MoveDirection.E,

@@ -1,8 +1,8 @@
 package chess.domain.chessPiece.pieceType;
 
-import chess.domain.RuleStrategy.RuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.BlackPawnRuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnRuleStrategy;
+import chess.domain.RuleStrategy.Rule;
+import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.BlackPawnRule;
+import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnRule;
 import chess.domain.chessPiece.ChessPiece;
 
 import java.util.function.Function;
@@ -10,13 +10,13 @@ import java.util.function.Supplier;
 
 public enum PieceColor {
 
-    WHITE(String::toLowerCase, WhitePawnRuleStrategy::new),
-    BLACK(String::toUpperCase, BlackPawnRuleStrategy::new);
+    WHITE(String::toLowerCase, WhitePawnRule::new),
+    BLACK(String::toUpperCase, BlackPawnRule::new);
 
     private final Function<String, String> convertName;
-    private final Supplier<RuleStrategy> pawnRuleStrategy;
+    private final Supplier<Rule> pawnRuleStrategy;
 
-    PieceColor(Function<String, String> convertName, Supplier<RuleStrategy> pawnRuleStrategy) {
+    PieceColor(Function<String, String> convertName, Supplier<Rule> pawnRuleStrategy) {
         this.convertName = convertName;
         this.pawnRuleStrategy = pawnRuleStrategy;
     }
@@ -34,7 +34,7 @@ public enum PieceColor {
         return convertName.apply(pieceName);
     }
 
-    public RuleStrategy getPawnRuleStrategyBy() {
+    public Rule getPawnRuleStrategyBy() {
         return pawnRuleStrategy.get();
     }
 

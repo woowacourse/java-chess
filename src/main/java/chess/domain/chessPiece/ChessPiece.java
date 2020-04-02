@@ -1,7 +1,7 @@
 package chess.domain.chessPiece;
 
-import chess.domain.RuleStrategy.RuleStrategy;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnRuleStrategy;
+import chess.domain.RuleStrategy.Rule;
+import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnRule;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
 public abstract class ChessPiece implements Movable, Catchable {
 
     protected final PieceColor pieceColor;
-    protected RuleStrategy ruleStrategy;
+    protected Rule rule;
 
     public ChessPiece(PieceColor pieceColor) {
         Objects.requireNonNull(pieceColor, "피스 색상이 null입니다.");
@@ -19,20 +19,20 @@ public abstract class ChessPiece implements Movable, Catchable {
 
     @Override
     public boolean canLeap() {
-        return ruleStrategy.canLeap();
+        return rule.canLeap();
     }
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition) {
-        return ruleStrategy.canMove(sourcePosition, targetPosition);
+        return rule.canMove(sourcePosition, targetPosition);
     }
 
     @Override
     public boolean canCatch(Position sourcePosition, Position targetPosition) {
-        if (ruleStrategy instanceof PawnRuleStrategy) {
-            return ((PawnRuleStrategy) ruleStrategy).canMoveToCatch(sourcePosition, targetPosition);
+        if (rule instanceof PawnRule) {
+            return ((PawnRule) rule).canMoveToCatch(sourcePosition, targetPosition);
         }
-        return ruleStrategy.canMove(sourcePosition, targetPosition);
+        return rule.canMove(sourcePosition, targetPosition);
     }
 
     public boolean isSamePieceColorWith(ChessPiece chessPiece) {

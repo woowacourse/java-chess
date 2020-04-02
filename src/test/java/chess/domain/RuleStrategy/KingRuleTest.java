@@ -9,11 +9,11 @@ import org.junit.jupiter.params.provider.NullSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class KingRuleStrategyTest {
+class KingRuleTest {
 
     @Test
     void KingRuleStrategy_GenerateInstance() {
-        assertThat(new KingRuleStrategy()).isInstanceOf(KingRuleStrategy.class);
+        assertThat(new KingRule()).isInstanceOf(KingRule.class);
     }
 
     @ParameterizedTest
@@ -21,7 +21,7 @@ class KingRuleStrategyTest {
     void validate_NullSourcePosition_ExceptionThrown(Position sourcePosition) {
         Position targetPosition = Position.of("b1");
 
-        assertThatThrownBy(() -> new KingRuleStrategy().canMove(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> new KingRule().canMove(sourcePosition, targetPosition))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("소스 위치가 존재하지 않습니다.");
     }
@@ -31,7 +31,7 @@ class KingRuleStrategyTest {
     void validate_NullTargetPosition_ExceptionThrown(Position targetPosition) {
         Position sourcePosition = Position.of("b1");
 
-        assertThatThrownBy(() -> new KingRuleStrategy().canMove(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> new KingRule().canMove(sourcePosition, targetPosition))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("타겟 위치가 존재하지 않습니다.");
     }
@@ -39,7 +39,7 @@ class KingRuleStrategyTest {
     @ParameterizedTest
     @CsvSource(value = {"a4", "a3", "b3", "c3", "c4", "c5", "b5", "a5"})
     void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
-        KingRuleStrategy kingRuleStrategy = new KingRuleStrategy();
+        KingRule kingRuleStrategy = new KingRule();
         Position sourcePosition = Position.of("b4");
 
         assertThat(kingRuleStrategy.canMove(sourcePosition, targetPosition)).isTrue();
@@ -48,7 +48,7 @@ class KingRuleStrategyTest {
     @ParameterizedTest
     @CsvSource(value = {"d6", "a2", "a6", "d2", "d4"})
     void canMove_NonMovableSourcePositionAndTargetPosition_ReturnFalse(Position targetPosition) {
-        KingRuleStrategy kingRuleStrategy = new KingRuleStrategy();
+        KingRule kingRuleStrategy = new KingRule();
         Position sourcePosition = Position.of("b4");
 
         assertThat(kingRuleStrategy.canMove(sourcePosition, targetPosition)).isFalse();
@@ -56,7 +56,7 @@ class KingRuleStrategyTest {
 
     @Test
     void canLeap_ReturnTrue() {
-        assertThat(new KingRuleStrategy().canLeap()).isTrue();
+        assertThat(new KingRule().canLeap()).isTrue();
     }
 
 }

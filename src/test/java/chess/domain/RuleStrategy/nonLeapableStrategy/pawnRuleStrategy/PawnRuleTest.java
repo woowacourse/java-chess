@@ -10,19 +10,19 @@ import org.junit.jupiter.params.provider.NullSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PawnRuleStrategyTest {
+class PawnRuleTest {
 
     @Test
     void PawnRuleStrategy_MovableAndCatchableDirections_GenerateInstance() {
-        PawnRuleStrategy pawnRuleStrategy = new BlackPawnRuleStrategy();
+        PawnRule pawnRuleStrategy = new BlackPawnRule();
 
-        assertThat(pawnRuleStrategy).isInstanceOf(PawnRuleStrategy.class);
+        assertThat(pawnRuleStrategy).isInstanceOf(PawnRule.class);
     }
 
     @ParameterizedTest
     @NullSource
     void validate_NullSourcePosition_ExceptionThrown(Position sourcePosition) {
-        PawnRuleStrategy pawnRuleStrategy = new BlackPawnRuleStrategy();
+        PawnRule pawnRuleStrategy = new BlackPawnRule();
         Position targetPosition = Position.of("b1");
 
         assertThatThrownBy(() -> pawnRuleStrategy.canMoveToCatch(sourcePosition, targetPosition))
@@ -33,7 +33,7 @@ class PawnRuleStrategyTest {
     @ParameterizedTest
     @NullSource
     void validate_NullTargetPosition_ExceptionThrown(Position targetPosition) {
-        PawnRuleStrategy pawnRuleStrategy = new BlackPawnRuleStrategy();
+        PawnRule pawnRuleStrategy = new BlackPawnRule();
         Position sourcePosition = Position.of("b1");
 
         assertThatThrownBy(() -> pawnRuleStrategy.canMoveToCatch(sourcePosition, targetPosition))
