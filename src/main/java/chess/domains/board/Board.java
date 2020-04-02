@@ -22,6 +22,12 @@ public class Board {
     private final Map<Position, Piece> board = BoardFactory.getBoard();
     private PieceColor teamColor = PieceColor.WHITE;
 
+    public void initialize() {
+        Map<Position, Piece> board = BoardFactory.getBoard();
+        this.board.putAll(board);
+        this.teamColor = PieceColor.WHITE;
+    }
+
     public List<Piece> showBoard() {
         ArrayList<Position> positions = new ArrayList<>(board.keySet());
         Collections.sort(positions);

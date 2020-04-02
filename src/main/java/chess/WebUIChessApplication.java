@@ -26,6 +26,7 @@ public class WebUIChessApplication {
 
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            board.initialize();
             List<Piece> pieces = board.showBoard();
             List<String> pieceCodes = convertView(pieces);
             model.put("pieces", pieceCodes);

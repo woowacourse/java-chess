@@ -48,6 +48,6 @@ public class BoardFactory {
     }
 
     public static Map<Position, Piece> getBoard() {
-        return board;
+        return new HashMap<>(board);
     }
 }
