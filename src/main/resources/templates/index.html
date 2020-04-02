@@ -121,20 +121,20 @@
                 <td class="cell" id="C2">{{pieces.50}}</td>
                 <td class="cell" id="D2">{{pieces.51}}</td>
                 <td class="cell" id="E2">{{pieces.52}}</td>
-                <td class="cell" id="F2">{{pieces.52}}</td>
-                <td class="cell" id="G2">{{pieces.53}}</td>
-                <td class="cell" id="H2">{{pieces.54}}</td>
+                <td class="cell" id="F2">{{pieces.53}}</td>
+                <td class="cell" id="G2">{{pieces.54}}</td>
+                <td class="cell" id="H2">{{pieces.55}}</td>
                 <td class="coordinate">2</td>
             </tr>
             <tr>
-                <td class="cell" id="A1">{{pieces.55}}</td>
-                <td class="cell" id="B1">{{pieces.56}}</td>
-                <td class="cell" id="C1">{{pieces.57}}</td>
-                <td class="cell" id="D1">{{pieces.58}}</td>
-                <td class="cell" id="E1">{{pieces.59}}</td>
-                <td class="cell" id="F1">{{pieces.60}}</td>
-                <td class="cell" id="G1">{{pieces.61}}</td>
-                <td class="cell" id="H1">{{pieces.62}}</td>
+                <td class="cell" id="A1">{{pieces.56}}</td>
+                <td class="cell" id="B1">{{pieces.57}}</td>
+                <td class="cell" id="C1">{{pieces.58}}</td>
+                <td class="cell" id="D1">{{pieces.59}}</td>
+                <td class="cell" id="E1">{{pieces.60}}</td>
+                <td class="cell" id="F1">{{pieces.61}}</td>
+                <td class="cell" id="G1">{{pieces.62}}</td>
+                <td class="cell" id="H1">{{pieces.63}}</td>
                 <td class="coordinate">1</td>
             </tr>
             <tr>
@@ -155,9 +155,9 @@
     <!-- game_ui end -->
     <div class="game_interface">
         <h3>게임 명령 입력할 거야</h3>
-        <form action="/start" method="post">
-            <input id="command" type="text"/>
-            <input id="" type="button" value="입력"/>
+        <form action="/move" method="post">
+            <input id="command" name="command" type="text"/>
+            <input type="submit" value="입력"/>
         </form>
     </div>
 </div>

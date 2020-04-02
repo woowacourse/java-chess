@@ -1,5 +1,6 @@
 package chess;
 
+import chess.controller.GameController;
 import chess.domains.board.Board;
 import chess.domains.piece.Piece;
 import spark.ModelAndView;
@@ -11,9 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
+        Board board = new Board();
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -21,7 +25,16 @@ public class WebUIChessApplication {
 
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Board board = new Board();
+            List<Piece> pieces = board.showBoard();
+            List<String> pieceCodes = convertView(pieces);
+            model.put("pieces", pieceCodes);
+            return render(model, "index.html");
+        });
+
+        post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String commandMsg = req.queryParams("command");
+            GameController.command(commandMsg, board);
             List<Piece> pieces = board.showBoard();
             List<String> pieceCodes = convertView(pieces);
             model.put("pieces", pieceCodes);
@@ -31,7 +44,8 @@ public class WebUIChessApplication {
 
     private static List<String> convertView(List<Piece> pieces) {
         List<String> pieceCodes = new ArrayList<>();
-        for (Piece piece : pieces) {
+        for
+        (Piece piece : pieces) {
             switch (piece.name()) {
                 case "r":
                     pieceCodes.add("♖");
