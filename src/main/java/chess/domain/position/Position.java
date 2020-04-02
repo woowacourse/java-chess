@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.util.Direction;
 import chess.exception.InvalidPositionException;
 import chess.exception.OutOfBoardRangeException;
 
@@ -31,6 +32,10 @@ public class Position {
         }
         this.x = x;
         this.y = y;
+    }
+
+    public Position move(Direction direction) {
+        return new Position(x + direction.getColumn(), y + direction.getRow());
     }
 
     public boolean isInBoardRange(int x, int y) {

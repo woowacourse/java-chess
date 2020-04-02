@@ -1,7 +1,5 @@
 package chess.domain.util;
 
-import chess.domain.position.Position;
-
 public enum Direction {
     NORTH(0, 1),
     SOUTH(0, -1),
@@ -28,9 +26,11 @@ public enum Direction {
         this.row = row;
     }
 
-    public Position move(Position currentPosition) {
-        return new Position(currentPosition.getX() + col, currentPosition.getY() + row);
+    public int getColumn() {
+        return col;
     }
 
-
+    public int getRow() {
+        return row;
+    }
 }

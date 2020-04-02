@@ -16,14 +16,14 @@ public abstract class PawnMoveStrategy extends DefaultMoveStrategy {
 
         for (Direction direction : getDirections()) {
             try {
-                Position nextPosition = direction.move(piece.getPosition());
+                Position nextPosition = piece.getPosition().move(direction);
 
                 if (direction == getForwardDirection()) {
                     if (isBlankPieceInsideBoard(board, nextPosition)) {
                         possiblePositions.add(nextPosition);
                     }
                     if (isFirstMove(piece)) {
-                        possiblePositions.add(direction.move(nextPosition));
+                        possiblePositions.add(nextPosition.move(direction));
                     }
                     continue;
                 }

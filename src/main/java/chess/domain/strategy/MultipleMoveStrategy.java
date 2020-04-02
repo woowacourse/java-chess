@@ -15,11 +15,11 @@ public abstract class MultipleMoveStrategy extends DefaultMoveStrategy {
 
         for (Direction direction : getDirections()) {
             try {
-                Position nextPosition = direction.move(piece.getPosition());
+                Position nextPosition = piece.getPosition().move(direction);
 
                 while (isBlankPieceInsideBoard(board, nextPosition)) {
                     possiblePositions.add(nextPosition);
-                    nextPosition = direction.move(nextPosition);
+                    nextPosition = piece.getPosition().move(direction);
                 }
 
                 if (isOpponentPieceInsideBoard(board, piece, nextPosition)) {

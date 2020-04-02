@@ -15,7 +15,7 @@ public abstract class SingleMoveStrategy extends DefaultMoveStrategy {
 
         for (Direction direction : getDirections()) {
             try {
-                Position nextPosition = direction.move(piece.getPosition());
+                Position nextPosition = piece.getPosition().move(direction);
                 if (isBlankPieceInsideBoard(board, nextPosition)) {
                     possiblePositions.add(nextPosition);
                 }
