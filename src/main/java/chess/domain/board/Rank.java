@@ -10,10 +10,10 @@ import java.util.Arrays;
 public enum Rank {
 	EIGHT(8),
 	SEVEN(7),
-	THREE(3),
 	SIX(6),
 	FIVE(5),
 	FOUR(4),
+	THREE(3),
 	TWO(2),
 	ONE(1);
 
