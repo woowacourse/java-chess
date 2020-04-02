@@ -48,6 +48,10 @@
 			transform: translateX(10px) translateY(-10px);
 		}
 
+		.navbar {
+			height: 59px;
+		}
+
 		.K {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteKing.png?raw=true");
 			background-repeat: no-repeat;
@@ -131,7 +135,6 @@
 			background-size: 40%;
 			background-position: center;
 		}
-
 	</style>
 </head>
 <body>
@@ -140,8 +143,9 @@
 		<div class="navbar-right">
 			<button class="btn btn-default navbar-btn reStart" type="button">새게임</button>
 		</div>
-		<h3 class="navbar-text" style="text-align: center">체스</h3>
+		<h3 class="navbar-text">체스</h3>
 	</div>
+	<label for="sourcePositionRecord"></label><input hidden id="sourcePositionRecord" value="nonSelectPosition">
 </nav>
 <div id="chessboard">
 	<div class="table">
@@ -225,7 +229,6 @@
 			<button class="cell" id="g1"></button>
 			<button class="gray cell" id="h1"></button>
 		</div>
-		<label for="sourcePositionRecord"></label><input hidden id="sourcePositionRecord" value="nonSelectPosition">
 	</div>
 </div>
 

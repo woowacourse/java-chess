@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,15 +67,17 @@ public class ChessWebApplication {
 			model.put("isAttack", isAttack);
 
 			chessBoard.movePiece(sourcePosition, targetPosition);
-
-			//db처리
-			if (isAttack) {
-				pieceDao.deletePiece(targetPosition);
-			}
-			pieceDao.updatePiece(sourcePosition, targetPosition);
+			updateDataBase(sourcePosition, targetPosition, isAttack);
 
 			return gson.toJson(model);
 		});
+	}
+
+	private static void updateDataBase(final Position sourcePosition, final Position targetPosition, final boolean isAttack) throws SQLException {
+		if (isAttack) {
+			pieceDao.deletePiece(targetPosition);
+		}
+		pieceDao.updatePiece(sourcePosition, targetPosition);
 	}
 
 	private static String findPieceType(final Position position) {
