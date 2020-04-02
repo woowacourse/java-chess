@@ -3,6 +3,7 @@ package chess.domain.board;
 import static java.util.stream.Collectors.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -46,6 +47,13 @@ public class Board {
             .filter(position -> position.existsBetween(start, end))
             .collect(toMap(Function.identity(), board::get));
         return new Path(path, start, end);
+    }
+
+    public List<Position> findAllAvailablePath(final Position start) {
+        return board.keySet()
+            .stream()
+            .filter(position -> board.get(start).isMovable(generatePath(start, position)))
+            .collect(toList());
     }
 
     public void move(final Position start, final Position end) {
