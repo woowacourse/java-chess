@@ -1,14 +1,11 @@
 package chess.view;
 
-import java.util.Map;
-import java.util.Objects;
-
 import chess.domain.Color;
+import chess.domain.GameManager;
 import chess.domain.PieceScore;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.domain.piece.Piece;
 
 /**
  *
@@ -35,24 +32,22 @@ public class OutputView {
 		System.out.println("게임을 종료합니다.");
 	}
 
-	public static void printChessBoard(Map<Position, Piece> pieces) {
+	public static void printChessBoard(GameManager gameManager) {
 		for (Rank rank : Rank.values()) {
 			for (File file : File.values()) {
 				Position position = Position.of(file, rank);
-
-				if (Objects.isNull(pieces.get(position))) {
+				if (gameManager.getPiece(file.getFile() + rank.getRank()).isBlank()) {
 					System.out.print(BLANK_POSITION);
 					continue;
 				}
-
-				System.out.print(pieces.get(position).getSymbol());
+				System.out.print(gameManager.getPiece(file.getFile() + rank.getRank()).getSymbol());
 			}
 			System.out.println();
 		}
 	}
 
-	public static void printStatus(Map<Position, Piece> pieces) {
-		System.out.println("하얀색 진영의 점수 : " + PieceScore.calculateByColor(pieces, Color.WHITE));
-		System.out.println("검정색 진영의 점수 : " + PieceScore.calculateByColor(pieces, Color.BLACK));
+	public static void printStatus(GameManager gameManager) {
+		System.out.println("하얀색 진영의 점수 : " + PieceScore.calculateByColor(gameManager, Color.WHITE));
+		System.out.println("검정색 진영의 점수 : " + PieceScore.calculateByColor(gameManager, Color.BLACK));
 	}
 }

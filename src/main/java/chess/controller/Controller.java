@@ -1,14 +1,9 @@
 package chess.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import chess.domain.ChessBoard;
-import chess.domain.Color;
-import chess.domain.board.Position;
+import chess.domain.GameManager;
 import chess.domain.command.Command;
 import chess.domain.command.FirstCommand;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -26,7 +21,7 @@ public class Controller {
 
 	private static void start() {
 		OutputView.printGameInstruction();
-		FirstCommand command = FirstCommand.of(InputView.inputCommand());
+		FirstCommand command = new FirstCommand(InputView.inputCommand());
 
 		if (command.isEnd()) {
 			end();
@@ -35,39 +30,30 @@ public class Controller {
 
 	private static void running() {
 		Command command;
-		Map<Position, Piece> pieces = new HashMap<>();
-		ChessBoard chessBoard = new ChessBoard(pieces);
-		Color color = Color.WHITE;
+		Pieces pieces = new Pieces(Pieces.initPieces());
+		GameManager gameManager = new GameManager(pieces);
 
-		OutputView.printChessBoard(pieces);
+		OutputView.printChessBoard(gameManager);
 
 		do {
 			command = readCommand();
 			if (command.isMove()) {
-				color = moveTurn(color, command, chessBoard);
+				move(command, gameManager);
+			} else if (command.isStatus()) {
+				OutputView.printStatus(gameManager);
 			}
-
-			if (command.isStatus()) {
-				OutputView.printStatus(pieces);
-			}
-		} while (command.isEnd() || !chessBoard.isKingNotDead(color));
-
-		OutputView.printStatus(pieces);
+			OutputView.printChessBoard(gameManager);
+		} while (!command.isEnd() || !gameManager.isKingDead());
+		OutputView.printStatus(gameManager);
 		end();
 	}
 
-	private static Color moveTurn(Color color, Command command, ChessBoard chessBoard) {
+	private static void move(Command command, GameManager gameManager) {
 		try {
-			chessBoard.moveFromTo(color, command.getMoveSource(), command.getMoveTarget());
-			return changeColor(color);
-		} catch (UnsupportedOperationException e) {
+			gameManager.moveFromTo(command);
+		} catch (IllegalArgumentException e) {
 			OutputView.printException(e);
 		}
-		return color;
-	}
-
-	private static Color changeColor(Color color) {
-		return Color.reverse(color);
 	}
 
 	private static void end() {
