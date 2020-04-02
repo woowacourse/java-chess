@@ -10,7 +10,7 @@
         }
 
         #chess_board {
-            font-size: 70px;
+            font-size: 50px;
             text-align: center;
         }
 
@@ -42,12 +42,37 @@
 
         .score_board {
             text-align: center;
+            display: flex;
+        }
+
+        .score_box {
+            border: thin solid black;
+            width: 200px;
+            height: 200px;
+            font-size: 30px;
+        }
+
+        .score {
+            font-size: 50px;
         }
     </style>
     <script
             crossorigin="anonymous"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            document.getElementById("startBtn").onclick = function () {
+                window.location.href = '/start';
+            };
+            // document.getElementById("startBtn").addEventListener("click", function() {
+            //
+            // });
+            if (window.location.pathname !== "/") {
+                document.getElementById("startBtn").innerHTML = ("재시작");
+            }
+        });
+    </script>
 </head>
 <body>
 <div class="container">
@@ -151,7 +176,7 @@
                 <td class="coordinate">G</td>
                 <td class="coordinate">H</td>
                 <td class="coordinate">
-                    <button id="startBtn" onClick="location.href='/start'">게임시작</button>
+                    <button id="startBtn">게임시작</button>
                 </td>
             </tr>
         </table>
@@ -164,9 +189,17 @@
             <input class="command" name="target" type="text"/>
             <input type="submit" value="입력"/>
         </form>
-
         <div class="score_board">
-            <p>{{white_score}}:{{black_score}}</p>
+            <div class="score_box">
+                WHITE
+                <br/>
+                <p class="score">{{white_score}}</p>
+            </div>
+            <div class="score_box">
+                BLACK
+                <br/>
+                <p class="score">{{black_score}}</p>
+            </div>
         </div>
     </div>
 </div>
