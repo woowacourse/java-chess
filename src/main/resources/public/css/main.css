@@ -20,7 +20,7 @@ h1 {
     font-weight: normal;
 }
 
-.wood {
+.border {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,4 +82,23 @@ h1 {
     font-family: serif;
     font-size: 12px;
     font-weight: 800;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    padding: 20px 0;
+    margin: 0 auto;
+}
+
+.menuButton {
+    margin: 0 20px;
+    padding: 5px;
+    font-family: serif;
+    font-size: 12px;
+    background-color: cornsilk;
 }
