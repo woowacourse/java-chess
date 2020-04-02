@@ -6,6 +6,7 @@ import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnR
 import chess.domain.chessPiece.ChessPiece;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public enum PieceColor {
 
@@ -13,9 +14,9 @@ public enum PieceColor {
     BLACK(String::toUpperCase, BlackPawnRuleStrategy::new);
 
     private final Function<String, String> convertName;
-    private final Function<Integer, RuleStrategy> pawnRuleStrategy;
+    private final Supplier<RuleStrategy> pawnRuleStrategy;
 
-    PieceColor(Function<String, String> convertName, Function<Integer, RuleStrategy> pawnRuleStrategy) {
+    PieceColor(Function<String, String> convertName, Supplier<RuleStrategy> pawnRuleStrategy) {
         this.convertName = convertName;
         this.pawnRuleStrategy = pawnRuleStrategy;
     }
@@ -33,8 +34,8 @@ public enum PieceColor {
         return convertName.apply(pieceName);
     }
 
-    public RuleStrategy getPawnRuleStrategyBy(int movableRange) {
-        return pawnRuleStrategy.apply(movableRange);
+    public RuleStrategy getPawnRuleStrategyBy() {
+        return pawnRuleStrategy.get();
     }
 
     public PieceColor getOppositeColor() {

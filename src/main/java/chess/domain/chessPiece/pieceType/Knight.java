@@ -2,7 +2,6 @@ package chess.domain.chessPiece.pieceType;
 
 import chess.domain.RuleStrategy.KnightRuleStrategy;
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.pieceState.InitialState;
 
 public class Knight extends ChessPiece {
 
@@ -11,7 +10,7 @@ public class Knight extends ChessPiece {
 
     public Knight(PieceColor pieceColor) {
         super(pieceColor);
-        state = new InitialState(new KnightRuleStrategy());
+        ruleStrategy = new KnightRuleStrategy();
     }
 
     @Override

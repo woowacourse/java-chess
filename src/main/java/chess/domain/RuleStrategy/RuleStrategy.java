@@ -4,8 +4,7 @@ import chess.domain.position.Position;
 
 public interface RuleStrategy {
 
-	boolean canLeap();
+    boolean canLeap();
 
-	boolean canMove(Position sourcePosition, Position targetPosition);
-
+    boolean canMove(Position sourcePosition, Position targetPosition);
 }

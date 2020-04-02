@@ -2,7 +2,6 @@ package chess.domain.chessPiece.pieceType;
 
 import chess.domain.RuleStrategy.nonLeapableStrategy.RookRuleStrategy;
 import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.pieceState.InitialState;
 
 public class Rook extends ChessPiece {
 
@@ -11,7 +10,7 @@ public class Rook extends ChessPiece {
 
     public Rook(PieceColor pieceColor) {
         super(pieceColor);
-        state = new InitialState(new RookRuleStrategy());
+        ruleStrategy = new RookRuleStrategy();
     }
 
     @Override

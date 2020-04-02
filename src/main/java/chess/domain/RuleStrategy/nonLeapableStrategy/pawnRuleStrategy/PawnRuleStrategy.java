@@ -10,14 +10,12 @@ import java.util.Objects;
 
 public abstract class PawnRuleStrategy extends NonLeapableStrategy {
 
-    public static final int INITIAL_STATE_MOVABLE_RANGE = 2;
-    public static final int MOVED_STATE_MOVABLE_RANGE = 1;
+    protected PawnState pawnState;
+    protected final List<MoveDirection> catchableDirections;
 
-    protected final int movableRange;
-    protected final List<MoveDirection> catchableDirections = new ArrayList<>();
-
-    public PawnRuleStrategy(int movableRange) {
-        this.movableRange = movableRange;
+    public PawnRuleStrategy() {
+        this.pawnState = PawnState.initialState();
+        this.catchableDirections = new ArrayList<>();
     }
 
     public boolean canMoveToCatch(Position sourcePosition, Position targetPosition) {
@@ -32,7 +30,8 @@ public abstract class PawnRuleStrategy extends NonLeapableStrategy {
 
     private boolean canCatchDirection(Position sourcePosition, Position targetPosition) {
         return catchableDirections.stream()
-                .anyMatch(catchableDirections -> catchableDirections.isSameDirectionFrom(sourcePosition, targetPosition));
+                .anyMatch(catchableDirections ->
+                        catchableDirections.isSameDirectionFrom(sourcePosition, targetPosition));
     }
 
     private boolean canCatchRange(Position sourcePosition, Position targetPosition) {
@@ -47,7 +46,10 @@ public abstract class PawnRuleStrategy extends NonLeapableStrategy {
         int chessFileGap = Math.abs(sourcePosition.calculateChessFileGapTo(targetPosition));
         int chessRankGap = Math.abs(sourcePosition.calculateChessRankGapTo(targetPosition));
 
-        return (chessFileGap == 0) && (chessRankGap <= this.movableRange);
+        if (!pawnState.isPawnMovedState()) {
+            pawnState = PawnState.switchedPawnMovedState();
+            return (chessFileGap == 0) && (chessRankGap <= 2);
+        }
+        return (chessFileGap == 0) && (chessRankGap == 1);
     }
-
 }

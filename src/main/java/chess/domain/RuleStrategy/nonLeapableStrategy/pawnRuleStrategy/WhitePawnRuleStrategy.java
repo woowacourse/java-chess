@@ -1,15 +1,15 @@
 package chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy;
 
-import java.util.Arrays;
-
 import chess.domain.position.MoveDirection;
+
+import java.util.Arrays;
 
 public class WhitePawnRuleStrategy extends PawnRuleStrategy {
 
-	public WhitePawnRuleStrategy(int movableRange) {
-		super(movableRange);
-		this.movableDirections.add(MoveDirection.N);
-		this.catchableDirections.addAll(Arrays.asList(MoveDirection.NW, MoveDirection.NE));
-	}
+    public WhitePawnRuleStrategy() {
+        super();
+        this.movableDirections.add(MoveDirection.N);
+        this.catchableDirections.addAll(Arrays.asList(MoveDirection.NW, MoveDirection.NE));
+    }
 
 }
