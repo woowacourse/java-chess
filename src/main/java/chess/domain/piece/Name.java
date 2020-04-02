@@ -7,7 +7,7 @@ public enum Name {
 	BISHOP("B", "♝", "♗"),
 	KNIGHT("N", "♞", "♘"),
 	PAWN("P", "♟", "♙"),
-	EMPTY(".", "", "");
+	EMPTY(".", " ", " ");
 
 	private final String name;
 	private final String blackSymbol;

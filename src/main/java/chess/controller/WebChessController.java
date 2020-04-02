@@ -7,13 +7,19 @@ import java.util.Map;
 import chess.domain.board.Board;
 import chess.domain.board.dto.BoardDTO;
 import chess.domain.piece.Team;
+import chess.domain.position.MoveInfo;
 import chess.service.ChessService;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController implements ChessController {
+	private static final Gson GSON = new Gson();
+
 	private final ChessService service;
 	private final Board board;
 	private Team team;
@@ -33,13 +39,25 @@ public class WebChessController implements ChessController {
 		return render(BoardDTO.of(board).getBoard(), "index.html");
 	}
 
-
 	private String render(Map<String, String> model, String templatePath) {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 
 	@Override
-	public void playTurn(String input) {
+	public void playTurn() {
+		post("/api/move", this::updateBoard);
+	}
 
+	private String updateBoard(Request request, Response response) {
+		JsonParser parser = new JsonParser();
+		JsonElement element = parser.parse(request.body());
+
+		String from = element.getAsJsonObject().get("from").getAsString();
+		String to = element.getAsJsonObject().get("to").getAsString();
+
+		service.move(MoveInfo.of(from, to), team);
+		team = team.next();
+
+		return GSON.toJson(from + " " + to);
 	}
 }

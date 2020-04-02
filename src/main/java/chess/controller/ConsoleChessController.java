@@ -39,7 +39,8 @@ public class ConsoleChessController implements ChessController {
 	}
 
 	@Override
-	public void playTurn(String input) {
+	public void playTurn() {
+		String input = InputView.inputMoveOrStatus();
 		Command command = Command.of(input);
 
 		if (command.isNotPlay()) {

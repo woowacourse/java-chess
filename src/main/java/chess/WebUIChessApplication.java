@@ -20,5 +20,6 @@ public class WebUIChessApplication {
 		ChessController controller = new WebChessController(chessService, initial, first);
 
 		controller.start();
+		controller.playTurn();
 	}
 }

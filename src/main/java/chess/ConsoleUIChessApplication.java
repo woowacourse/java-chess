@@ -5,7 +5,6 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Team;
 import chess.service.ChessService;
-import chess.view.InputView;
 
 public class ConsoleUIChessApplication {
 	public static void main(String[] args) {
@@ -17,7 +16,7 @@ public class ConsoleUIChessApplication {
 
 		controller.start();
 		while (true) {
-			controller.playTurn(InputView.inputMoveOrStatus());
+			controller.playTurn();
 		}
 	}
 }
