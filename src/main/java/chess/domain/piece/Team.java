@@ -3,8 +3,8 @@ package chess.domain.piece;
 import java.util.function.Function;
 
 public enum Team {
-    WHITE(Character::toLowerCase, "흰색"),
-    BLACK(Character::toUpperCase, "검은색");
+    WHITE(Character::toLowerCase, "백"),
+    BLACK(Character::toUpperCase, "");
 
     private final Function<Character, Character> teamRepresentation;
     private final String name;

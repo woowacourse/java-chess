@@ -41,8 +41,14 @@ async function chooseDestination(destinationValue) {
 }
 
 function clearSelection() {
-    document.querySelector(".source").classList.remove('source');
-    document.querySelector(".destination").classList.remove('destination');
+    let source = document.querySelector(".source");
+    let destination = document.querySelector(".destination");
+    if (source) {
+        source.classList.remove('source');
+    }
+    if (destination) {
+        destination.classList.remove('destination');
+    }
 }
 
 async function move() {

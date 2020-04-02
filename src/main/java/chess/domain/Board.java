@@ -15,9 +15,11 @@ public class Board {
     private static final String SAME_TEAM_PIECE_IN_DESTINATION = "해당 자리에 같은 팀 말이 있기 때문에 말을 움직일 수 없습니다!";
 
     private Pieces pieces;
+    private Turn turn;
 
     public Board() {
         this.pieces = new Pieces(PieceFactory.getInstance().getPieces());
+        this.turn = new Turn(Team.WHITE);
     }
 
     public void movePiece(Position source, Position destination) {
@@ -34,6 +36,7 @@ public class Board {
             killPiece(sourcePiece, destinationPiece);
         }
         pieces.move(source, destination);
+        this.turn = turn.changeTurn();
     }
 
     private void validateSameDestination(Position source, Position destination) {
@@ -45,6 +48,9 @@ public class Board {
     private void validateSource(Piece piece) {
         if (piece == null) {
             throw new NullPieceException(NO_PIECE_IN_SOURCE);
+        }
+        if (!turn.isTurnOf(piece.getTeam())) {
+            throw new IllegalMoveException("현재 " + turn + "의 차례입니다!");
         }
     }
 
@@ -69,6 +75,10 @@ public class Board {
 
     public Team getWinner() {
         return pieces.teamWithAliveKing();
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 
     public void reset() {
