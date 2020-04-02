@@ -37,8 +37,9 @@ public class Rank {
 			.count();
 	}
 
-	public double calculateScore() {
+	public double calculateScore(Team team) {
 		return pieces.stream()
+			.filter(piece -> piece.isTeam(team))
 			.map(Piece::getScore)
 			.reduce(0.0, Double::sum);
 	}

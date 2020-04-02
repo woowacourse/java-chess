@@ -30,7 +30,7 @@ public class Board {
 
 	double calculateScoreByTeam(Team team) {
 		double sum = ranks.stream()
-			.map(Rank::calculateScore)
+			.map(rank -> rank.calculateScore(team))
 			.reduce(0.0, Double::sum);
 
 		return applyPawnScore(team, sum);
