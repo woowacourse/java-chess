@@ -8,12 +8,7 @@ public class Blank extends ChessPiece {
 	private static final String NOT_SUPPORT_MESSAGE = "BLANK에서는 지원하지 않는 기능입니다.";
 
 	public Blank(Position position) {
-		super(position, null);
-	}
-
-	@Override
-	public String getName() {
-		return NAME;
+		super(position, null, NAME);
 	}
 
 	@Override

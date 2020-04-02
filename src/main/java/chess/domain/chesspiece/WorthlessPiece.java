@@ -8,8 +8,8 @@ public abstract class WorthlessPiece extends ChessPiece {
 
 	private static final String NOT_SUPPORT_MESSAGE = "WorthlessPiece에서는 지원하지 않는 기능입니다.";
 
-	public WorthlessPiece(Position position, Team team) {
-		super(position, team);
+	public WorthlessPiece(Position position, Team team, String name) {
+		super(position, team, name);
 	}
 
 	@Override

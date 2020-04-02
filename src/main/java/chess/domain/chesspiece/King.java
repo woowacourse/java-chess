@@ -21,12 +21,7 @@ public class King extends WorthlessPiece {
 	}
 
 	public King(Position position, Team team) {
-		super(position, team);
-	}
-
-	@Override
-	public String getName() {
-		return NameUtils.parseName(NAME, team);
+		super(position, team, NAME);
 	}
 
 	@Override

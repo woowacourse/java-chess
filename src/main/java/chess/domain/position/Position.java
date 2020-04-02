@@ -11,7 +11,8 @@ public class Position {
 	private static final int MAX_VER_INT = 8;
 	private static final char MIN_VER_CHAR = 'a';
 	private static final char MAX_VER_CHAR = 'h';
-	private static final int CHAR_DEFORMATION_VALUE = 96;
+	private static final int ALPHABET_DEFORMATION_VALUE = 96;
+	private static final int NUMBER_DEFORMATION_VALUE = 48;
 	private static final String NOT_ABLE_VALUE_MESSAGE = "허용되는 좌표 값이 아닙니다.";
 
 	private final int x;
@@ -26,7 +27,13 @@ public class Position {
 	public static Position of(int x, char y) {
 		validateIntRange(x);
 		validateCharRange(y);
-		return new Position(x, y - CHAR_DEFORMATION_VALUE);
+		return new Position(x, y - ALPHABET_DEFORMATION_VALUE);
+	}
+
+	public static Position of(String position) {
+		char alphabet = position.charAt(0);
+		int number = Integer.parseInt(position.substring(1, 2));
+		return Position.of(number, alphabet);
 	}
 
 	private static void validateIntRange(int num) {
@@ -84,5 +91,10 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
+	}
+
+	@Override
+	public String toString() {
+		return ((char)(y + ALPHABET_DEFORMATION_VALUE)) + "" + x;
 	}
 }

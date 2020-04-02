@@ -2,9 +2,159 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-Hello World!!
+
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'get',
+            url: '/init',
+            dataType: 'json',
+            error: function () {
+                alert("initError");
+            },
+            success: initSuccess
+        });
+    });
+
+    function initSuccess(response) {
+        for (position in response) {
+            const pieceName = response[position].name;
+            document.getElementById(position).classList.add(pieceName);
+        }
+    }
+
+    let startPosition = '';
+    $(function () {
+        $('.cell').click(function () {
+            const targetPosition = $(this).attr('id');
+            if (startPosition == '') {
+                startPosition = targetPosition;
+            } else {
+                requestMove(startPosition, targetPosition);
+                startPosition = '';
+            }
+        })
+    });
+
+    function requestMove(startPosition, targetPosition) {
+        $.ajax({
+            type: 'get',
+            url: '/move/' + startPosition + " " + targetPosition,
+            dataType: 'json',
+            error: function () {
+                alert("initError");
+            },
+            success: function (response) {
+                if (response == true) {
+                    swap(startPosition, targetPosition)
+                } else {
+                    alert("이동 실패")
+                }
+            }
+        });
+    }
+
+    function swap(startPosition, targetPosition) {
+        let v1 = document.getElementById(startPosition).className;
+        let className = v1.substring(v1.lastIndexOf("cell") + 5, v1.length);
+        document.getElementById(startPosition).classList.remove(className);
+        console.log(className);
+
+        let v2 = document.getElementById(targetPosition).className;
+        let className2 = v2.substring(v2.lastIndexOf("cell") + 5, v2.length);
+        console.log(className2);
+        // document.getElementById(targetPosition).classList.remove(className2);
+    document.getElementById(targetPosition).classList.add(className);
+    }
+</script>
+
+<div class="chessboard">
+    <div class="row">
+        <button id="a8" class="black cell"></button>
+        <button id="b8" class="cell"></button>
+        <button id="c8" class="black cell"></button>
+        <button id="d8" class="cell"></button>
+        <button id="e8" class="black cell"></button>
+        <button id="f8" class="cell"></button>
+        <button id="g8" class="black cell"></button>
+        <button id="h8" class="cell"></button>
+    </div>
+    <div class="row">
+        <button id="a7" class="cell"></button>
+        <button id="b7" class="black cell"></button>
+        <button id="c7" class="cell"></button>
+        <button id="d7" class="black cell"></button>
+        <button id="e7" class="cell"></button>
+        <button id="f7" class="black cell"></button>
+        <button id="g7" class="cell"></button>
+        <button id="h7" class="black cell"></button>
+    </div>
+    <div class="row">
+        <button id="a6" class="black cell"></button>
+        <button id="b6" class="cell"></button>
+        <button id="c6" class="black cell"></button>
+        <button id="d6" class="cell"></button>
+        <button id="e6" class="black cell"></button>
+        <button id="f6" class="cell"></button>
+        <button id="g6" class="black cell"></button>
+        <button id="h6" class="cell"></button>
+    </div>
+    <div class="row">
+        <button id="a5" class="cell"></button>
+        <button id="b5" class="black cell"></button>
+        <button id="c5" class="cell"></button>
+        <button id="d5" class="black cell"></button>
+        <button id="e5" class="cell"></button>
+        <button id="f5" class="black cell"></button>
+        <button id="g5" class="cell"></button>
+        <button id="h5" class="black cell"></button>
+    </div>
+    <div class="row">
+        <button id="a4" class="black cell"></button>
+        <button id="b4" class="cell"></button>
+        <button id="c4" class="black cell"></button>
+        <button id="d4" class="cell"></button>
+        <button id="e4" class="black cell"></button>
+        <button id="f4" class="cell"></button>
+        <button id="g4" class="black cell"></button>
+        <button id="h4" class="cell"></button>
+    </div>
+    <div class="row">
+        <button id="a3" class="cell"></button>
+        <button id="b3" class="black cell"></button>
+        <button id="c3" class="cell"></button>
+        <button id="d3" class="black cell"></button>
+        <button id="e3" class="cell"></button>
+        <button id="f3" class="black cell"></button>
+        <button id="g3" class="cell"></button>
+        <button id="h3" class="black cell"></button>
+    </div>
+    <div class="row">
+        <button id="a2" class="black cell"></button>
+        <button id="b2" class="cell"></button>
+        <button id="c2" class="black cell"></button>
+        <button id="d2" class="cell"></button>
+        <button id="e2" class="black cell"></button>
+        <button id="f2" class="cell"></button>
+        <button id="g2" class="black cell"></button>
+        <button id="h2" class="cell"></button>
+    </div>
+    <div class="row">
+        <button id="a1" class="cell"></button>
+        <button id="b1" class="black cell"></button>
+        <button id="c1" class="cell"></button>
+        <button id="d1" class="black cell"></button>
+        <button id="e1" class="cell"></button>
+        <button id="f1" class="black cell"></button>
+        <button id="g1" class="cell"></button>
+        <button id="h1" class="black cell"></button>
+    </div>
+
+</div>
 </body>
 </html>

@@ -8,12 +8,7 @@ public class Knight extends WorthlessPiece {
 	private static final String NAME = "n";
 
 	public Knight(Position position, Team team) {
-		super(position, team);
-	}
-
-	@Override
-	public String getName() {
-		return NameUtils.parseName(NAME, team);
+		super(position, team, NAME);
 	}
 
 	@Override

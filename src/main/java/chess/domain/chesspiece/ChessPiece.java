@@ -7,15 +7,18 @@ import chess.domain.MoveManager;
 import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.domain.utils.NameUtils;
 
 public abstract class ChessPiece {
+	protected final String name;
 	protected final Team team;
 	protected Position position;
 	protected final MoveManager moveManager;
 
-	public ChessPiece(Position position, Team team) {
+	public ChessPiece(Position position, Team team, String name) {
 		this.position = position;
 		this.team = team;
+		this.name = NameUtils.parseName(name, team);
 		this.moveManager = new MoveManager(this.position);
 	}
 
@@ -63,7 +66,9 @@ public abstract class ChessPiece {
 
 	public abstract Positions makePathAndValidate(ChessPiece targetPiece);
 
-	public abstract String getName();
+	public String getName() {
+		return this.name;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -79,5 +84,9 @@ public abstract class ChessPiece {
 	@Override
 	public int hashCode() {
 		return Objects.hash(team, position);
+	}
+
+	public Position getPosition() {
+		return position;
 	}
 }
