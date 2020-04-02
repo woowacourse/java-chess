@@ -1,0 +1,116 @@
+#chessboard {
+	margin: 0 5% 5% 5%;
+	position: absolute;
+	width: 720px;
+	height: 720px;
+	left: 20%;
+}
+
+.cell {
+	margin: .2% 0 .2% 0;
+	table-layout: fixed;
+	width: 85px;
+	height: 85px;
+	text-align: center;
+}
+
+.cell:hover {
+	table-layout: fixed;
+	width: 85px;
+	height: 85px;
+	text-align: center;
+	background-color: lightpink;
+}
+
+
+.gray {
+	background-color: lightgray;
+}
+
+.selected {
+	transform: translateX(10px) translateY(-10px);
+}
+
+.K {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteKing.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.k {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackKing.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.q {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackQueen.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.Q {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteQueen.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.b {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackBishop.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.B {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteBishop.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.n {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackKnight.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.N {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteKnight.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.r {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackRook.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.R {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteRook.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.p {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackPawn.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}
+
+.P {
+	background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whitePawn.png?raw=true");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: center;
+}

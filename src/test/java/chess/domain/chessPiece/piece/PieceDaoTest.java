@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,9 +36,8 @@ class PieceDaoTest {
 
 	@Test
 	void delete() {
-		Piece piece = new Pawn(Position.of("a1"), new BlackTeam());
 		try {
-			pieceDao.deletePiece(piece);
+			pieceDao.deletePiece(Position.of("a1"));
 		} catch (Exception e) {
 			System.out.println("error");
 			e.printStackTrace();
@@ -48,13 +46,14 @@ class PieceDaoTest {
 
 	@Test
 	void update() {
-		Piece knight = new Knight(Position.of("c1"), new BlackTeam());
+		Position knightPosition = Position.of("c1");
+		Piece knight = new Knight(knightPosition, new BlackTeam());
 		Piece pawn = new Pawn(Position.of("c2"), new BlackTeam());
 		Position targetPosition = Position.of("b3");
 		try {
 			pieceDao.addPiece(knight);
 			pieceDao.addPiece(pawn);
-			pieceDao.updatePiece(knight, targetPosition);
+			pieceDao.updatePiece(Position.of("c1"), targetPosition);
 		} catch (Exception e) {
 			System.out.println("error");
 			e.printStackTrace();
@@ -65,19 +64,6 @@ class PieceDaoTest {
 	void deleteAll() {
 		try {
 			pieceDao.deleteAll();
-		} catch (Exception e) {
-			System.out.println("error");
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	void readPieces() {
-		try {
-			ResultSet rs = pieceDao.readPieces();
-			if (rs.next()) {
-				System.out.println(rs.getObject(4));
-			}
 		} catch (Exception e) {
 			System.out.println("error");
 			e.printStackTrace();
