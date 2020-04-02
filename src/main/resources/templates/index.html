@@ -31,13 +31,17 @@
             font-size: 20px;
         }
 
-        .game_interface {
+        .game_info {
             background-color: pink;
         }
 
         #command {
             width: 500px;
             height: 20px;
+        }
+
+        .score_board {
+            text-align: center;
         }
     </style>
     <script
@@ -153,12 +157,16 @@
         </table>
     </div>
     <!-- game_ui end -->
-    <div class="game_interface">
+    <div class="game_info">
         <h3>게임 명령 입력할 거야</h3>
-        <form action="/move" method="post">
+        <form action="/move" class="game_interface" method="post">
             <input id="command" name="command" type="text"/>
             <input type="submit" value="입력"/>
         </form>
+
+        <div class="score_board">
+            <p>{{white_score}}:{{black_score}}</p>
+        </div>
     </div>
 </div>
 </body>
