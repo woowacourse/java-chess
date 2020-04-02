@@ -12,7 +12,7 @@ public class ChessBoardAssembler {
 	private static final int INDEX_ADJUST = 1;
 	private static final int ROW_COUNT = Row.size();
 	private static final int COL_COUNT = Column.size();
-	private static final String BLANK_CHAR = ".";
+	private static final String BLANK_CHAR = "";
 
 	private ChessBoardAssembler() {
 	}

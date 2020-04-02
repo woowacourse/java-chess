@@ -10,7 +10,7 @@ import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public class ConsoleChessController {
 	public void run() {
 		OutputView.printInitMessage();
 		ChessGame chessGame = new ChessGame(ChessBoardFactory.create());
