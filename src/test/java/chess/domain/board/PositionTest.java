@@ -13,4 +13,12 @@ public class PositionTest {
 		assertThat(Position.of(File.A, Rank.ONE)).isEqualTo(Position.of("a1"));
 		assertThat(Position.of(8, 1)).isEqualTo(Position.of("a1"));
 	}
+
+	@DisplayName("of 메서드에 대해서 체스판 범위 밖의 값을 입력했을 때 예외처리")
+	@Test
+	void ofExceptionTest() {
+		assertThatThrownBy(() -> {
+			Position.of("a9");
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
 }

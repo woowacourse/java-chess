@@ -1,10 +1,15 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.domain.Color;
+
 public class Position {
+
 	private final File file;
 	private final Rank rank;
 
@@ -30,8 +35,19 @@ public class Position {
 
 	private static void validateInvalidPosition(String position) {
 		if (!PositionCache.BOARD.containsKey(position)) {
-			throw new IllegalArgumentException("유효하지 않은 Position을 입력했습니다.");
+			throw new IllegalArgumentException("체스판 범위를 벗어난 Position을 입력했습니다.");
 		}
+	}
+
+	public boolean isInitialPawnPosition(Color color) {
+		if (color == Color.WHITE) {
+			return PositionCache.WHITE_PAWN_INITIAL_POSITION.contains(this);
+		}
+
+		if (color == Color.BLACK) {
+			return PositionCache.BLACK_PAWN_INITIAL_POSITION.contains(this);
+		}
+		return false;
 	}
 
 	public int getRank() {
@@ -54,18 +70,42 @@ public class Position {
 	}
 
 	@Override
+	public String toString() {
+		return "Position{" +
+			"file=" + file +
+			", rank=" + rank +
+			'}';
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(file, rank);
 	}
 
 	private static class PositionCache {
 		private static final Map<String, Position> BOARD = new HashMap<>();
+		private static final List<Position> WHITE_PAWN_INITIAL_POSITION = new ArrayList<>();
+		private static final List<Position> BLACK_PAWN_INITIAL_POSITION = new ArrayList<>();
 
 		static {
 			makeBoard();
+			makeWhitePawnInitialPosition();
+			makeBlackPawnInitialPosition();
 		}
 
 		private PositionCache() {
+		}
+
+		private static void makeWhitePawnInitialPosition() {
+			for (File file : File.values()) {
+				WHITE_PAWN_INITIAL_POSITION.add(Position.of(file, Rank.TWO));
+			}
+		}
+
+		private static void makeBlackPawnInitialPosition() {
+			for (File file : File.values()) {
+				BLACK_PAWN_INITIAL_POSITION.add(Position.of(file, Rank.SEVEN));
+			}
 		}
 
 		private static void makeBoard() {
