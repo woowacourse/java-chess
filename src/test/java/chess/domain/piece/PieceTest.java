@@ -2,31 +2,26 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.ChessBoard;
 import chess.domain.Color;
+import chess.domain.GameManager;
 import chess.domain.PieceScore;
-import chess.domain.board.Position;
 
 /**
  *
  *    @author AnHyungJu, LeeHoBin
  */
 public class PieceTest {
-	private ChessBoard chessBoard;
-	private Map<Position, Piece> pieces;
+	private GameManager gameManager;
+	private Pieces pieces;
 
 	@BeforeEach
 	void setUp() {
-		pieces = new HashMap<>();
-		chessBoard = new ChessBoard(pieces);
+		pieces = new Pieces(Pieces.initPieces());
+		gameManager = new GameManager(pieces);
 	}
 
 	@DisplayName("Piece의 색깔과 같은 색깔인지 확인하는 테스트")
@@ -44,15 +39,6 @@ public class PieceTest {
 		Piece piece = new King(Color.BLACK, "K");
 
 		assertThat(piece.isSameName(PieceScore.KING)).isTrue();
-	}
-
-	@DisplayName("Piece의 위치에서 예외를 제외한 갈 수 있는 방법 가짓수 확인 테스트")
-	@Test
-	void movablePositionsTest() {
-		Piece piece = pieces.get(Position.of("b1"));
-		List<Position> positions = piece.movablePositions(Position.of("b1"), pieces);
-
-		assertThat(positions.size()).isEqualTo(3);
 	}
 
 	@DisplayName("Piece가 Pawn인지 확인하는 테스트")
