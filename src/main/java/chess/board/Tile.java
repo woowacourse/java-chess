@@ -7,7 +7,7 @@ import chess.piece.Piece;
 import chess.piece.Pieces;
 import chess.piece.Team;
 
-public class Tile {
+public class Tile implements Comparable<Tile> {
     private final Coordinate coordinate;
     private Piece piece;
 
@@ -63,5 +63,10 @@ public class Tile {
                 "coordinate=" + coordinate +
                 ", piece=" + piece +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Tile o) {
+        return this.coordinate.compareTo(o.coordinate);
     }
 }

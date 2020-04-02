@@ -68,9 +68,23 @@ body {
 .tile {
     width: 60px;
     height: 60px;
-    background-color: #643615;
     border: 1px solid;
     margin: -1px;
+}
+
+.tile {
+    background-color: beige;
+}
+
+.tile:nth-child(-2n+7),
+.tile:nth-child(8) ~ .tile:nth-child(-2n+16),
+.tile:nth-child(16) ~ .tile:nth-child(-2n+23),
+.tile:nth-child(25) ~ .tile:nth-child(-2n+32),
+.tile:nth-child(32) ~ .tile:nth-child(-2n+39),
+.tile:nth-child(41) ~ .tile:nth-child(-2n+48),
+.tile:nth-child(47) ~ .tile:nth-child(-2n+55),
+.tile:nth-child(57) ~ .tile:nth-child(-2n+64) {
+    background-color: #441a03;
 }
 
 img {

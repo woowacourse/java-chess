@@ -25,6 +25,10 @@ public class DefaultResponse<T> {
         return new DefaultResponse<>(HttpStatus.CREATED_201, data, message);
     }
 
+    public static <T> DefaultResponse<T> CREATED(T data) {
+        return new DefaultResponse<>(HttpStatus.CREATED_201, data, null);
+    }
+
     public static <T> DefaultResponse<T> BADREQUEST(T data, String message) {
         return new DefaultResponse<>(HttpStatus.BAD_REQUEST_400, data, message);
     }
