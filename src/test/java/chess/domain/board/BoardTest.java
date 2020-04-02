@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.piece.Type;
+import chess.view.OutputView;
 
 public class BoardTest {
     @DisplayName("판 초기화 테스트")
@@ -109,4 +110,11 @@ public class BoardTest {
         assertThat(board.countPawnsOnSameColumn(Side.BLACK)).isEqualTo(0);
     }
 
+    @DisplayName("갈 수 있는 곳 다 나오기")
+    @Test
+    void findAllAvailablePath() {
+        Board board = Board.init();
+        OutputView.showBoard(board);
+        System.out.println(board.findAllAvailablePath(Position.of("b2")));
+    }
 }

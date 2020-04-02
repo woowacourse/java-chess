@@ -12,7 +12,7 @@ import chess.view.OutputView;
 public class ChessController {
     private static Board board = Board.init();
     private static Judge judge = new BasicJudge(board);
-    private static ChessContext context = new ChessContext(board, judge);
+    private static ChessContext context = new ChessContext(board);
 
     public static void run() {
         OutputView.instruction();
