@@ -39,7 +39,7 @@ class PawnTest {
 		Board board = new Board(BoardFactory.initializePawn(pieces));
 		Piece pawn = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = pawn.findMovablePositions(currentPosition, board::findPieceBy);
+		Set<Position> positions = pawn.findMovablePositions(currentPosition, board.getPieces());
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}
 }

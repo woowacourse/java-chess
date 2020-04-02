@@ -39,7 +39,7 @@ class RookTest {
 
 		Piece rook = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = rook.findMovablePositions(currentPosition, board::findPieceBy);
+		Set<Position> positions = rook.findMovablePositions(currentPosition, board.getPieces());
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}
 }

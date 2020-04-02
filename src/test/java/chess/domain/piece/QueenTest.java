@@ -41,7 +41,7 @@ class QueenTest {
 		Board board = new Board(pieces);
 		Piece queen = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = queen.findMovablePositions(currentPosition, board::findPieceBy);
+		Set<Position> positions = queen.findMovablePositions(currentPosition, board.getPieces());
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}
 }
