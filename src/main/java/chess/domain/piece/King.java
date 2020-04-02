@@ -7,11 +7,11 @@ public class King extends Piece {
         super(pieceType, representation, team, position);
     }
 
-    public static Piece createWhite(Position position) {
+    public static Piece createWhite(final Position position) {
         return new King(PieceType.KING, 'k', Team.WHITE, position);
     }
 
-    public static Piece createBlack(Position position) {
+    public static Piece createBlack(final Position position) {
         return new King(PieceType.KING, 'K', Team.BLACK, position);
     }
 

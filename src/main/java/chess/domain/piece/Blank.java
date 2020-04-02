@@ -8,7 +8,7 @@ public class Blank extends Piece {
         super(pieceType, representation, team, position);
     }
 
-    public static Piece create(Position position) {
+    public static Piece create(final Position position) {
         return new Blank(PieceType.BLANK, '.', Team.BLANK, position);
     }
 

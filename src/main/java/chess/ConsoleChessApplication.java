@@ -10,6 +10,7 @@ public class ConsoleChessApplication {
             chessGame.run();
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
+            chessGame.run();
         }
     }
 }

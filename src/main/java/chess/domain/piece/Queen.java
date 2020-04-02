@@ -7,11 +7,11 @@ public class Queen extends Piece {
         super(pieceType, representation, team, position);
     }
 
-    public static Piece createWhite(Position position) {
+    public static Piece createWhite(final Position position) {
         return new Queen(PieceType.QUEEN, 'q', Team.WHITE, position);
     }
 
-    public static Piece createBlack(Position position) {
+    public static Piece createBlack(final Position position) {
         return new Queen(PieceType.QUEEN, 'Q', Team.BLACK, position);
     }
 

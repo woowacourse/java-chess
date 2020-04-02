@@ -8,11 +8,11 @@ public class Rook extends Piece {
         super(pieceType, representation, team, position);
     }
 
-    public static Piece createWhite(Position position) {
+    public static Piece createWhite(final Position position) {
         return new Rook(PieceType.ROOK, 'r', Team.WHITE, position);
     }
 
-    public static Piece createBlack(Position position) {
+    public static Piece createBlack(final Position position) {
         return new Rook(PieceType.ROOK, 'R', Team.BLACK, position);
     }
 

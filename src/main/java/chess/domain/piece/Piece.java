@@ -13,7 +13,7 @@ public abstract class Piece {
     protected Team team;
     protected Position position;
 
-    public Piece(PieceType pieceType, char representation, Team team, Position position) {
+    public Piece(final PieceType pieceType, final char representation, final Team team, final Position position) {
         this.pieceType = pieceType;
         this.representation = representation;
         this.team = team;
@@ -25,10 +25,6 @@ public abstract class Piece {
             return true;
         }
         throw new PieceImpossibleMoveException("해당 포지션으로 이동할 수 없습니다.");
-    }
-
-    public boolean isKing() {
-        return this instanceof King;
     }
 
     public boolean isOtherTeam(final Piece piece) {
@@ -43,21 +39,21 @@ public abstract class Piece {
         return this.team == team;
     }
 
+    public boolean isKing() {
+        return this instanceof King;
+    }
+
     public boolean isPawn() {
-        return PieceType.isPawn(this);
+        return this instanceof Pawn;
     }
 
     public boolean isBlank() {
-        return pieceType == PieceType.BLANK;
+        return this instanceof Blank;
     }
 
     public boolean isNextPositionValid(final Direction direction) {
         return Position.isInBoardRange(position.getX() + direction.getColumn(),
                 position.getY() + direction.getRow());
-    }
-
-    public char getRepresentation() {
-        return representation;
     }
 
     public Position getPosition() {

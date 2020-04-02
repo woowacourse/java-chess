@@ -5,7 +5,7 @@ public enum Team {
     BLACK,
     BLANK;
 
-    public boolean isNotSame(Team team) {
+    public boolean isNotSame(final Team team) {
         return this != team && this != BLANK && team != BLANK;
     }
 }

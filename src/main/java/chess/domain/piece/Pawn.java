@@ -7,11 +7,11 @@ public class Pawn extends Piece {
         super(pieceType, representation, team, position);
     }
 
-    public static Piece createWhite(Position position) {
+    public static Piece createWhite(final Position position) {
         return new Pawn(PieceType.FIRST_WHITE_PAWN, 'p', Team.WHITE, position);
     }
 
-    public static Piece createBlack(Position position) {
+    public static Piece createBlack(final Position position) {
         return new Pawn(PieceType.FIRST_BLACK_PAWN, 'P', Team.BLACK, position);
     }
 

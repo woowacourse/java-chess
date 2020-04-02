@@ -7,11 +7,11 @@ public class Bishop extends Piece {
         super(pieceType, representation, team, position);
     }
 
-    public static Piece createWhite(Position position) {
+    public static Piece createWhite(final Position position) {
         return new Bishop(PieceType.BISHOP, 'b', Team.WHITE, position);
     }
 
-    public static Piece createBlack(Position position) {
+    public static Piece createBlack(final Position position) {
         return new Bishop(PieceType.BISHOP, 'B', Team.BLACK, position);
     }
 

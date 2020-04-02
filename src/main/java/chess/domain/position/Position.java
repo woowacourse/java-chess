@@ -15,18 +15,18 @@ public class Position {
     private final int x;
     private final int y;
 
-    public Position(String x, String y) {
+    public Position(final String x, final String y) {
         this(Integer.parseInt(x), Integer.parseInt(y));
     }
 
-    public Position(String position) {
+    public Position(final String position) {
         this(String.valueOf(position.charAt(0) - ASCII_GAP), String.valueOf(position.charAt(1)));
         if (position.length() != 2) {
             throw new InvalidPositionException(position);
         }
     }
 
-    public Position(int x, int y) {
+    public Position(final int x, final int y) {
         if (!isInBoardRange(x, y)) {
             throw new OutOfBoardRangeException();
         }
@@ -34,11 +34,11 @@ public class Position {
         this.y = y;
     }
 
-    public Position moveBy(Direction direction) {
+    public Position moveBy(final Direction direction) {
         return new Position(x + direction.getColumn(), y + direction.getRow());
     }
 
-    public static boolean isInBoardRange(int x, int y) {
+    public static boolean isInBoardRange(final int x, final int y) {
         return x <= END_INDEX && x >= START_INDEX &&
                 y <= END_INDEX && y >= START_INDEX;
     }
@@ -67,13 +67,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
     }
 }

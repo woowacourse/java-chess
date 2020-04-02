@@ -9,7 +9,7 @@ public class GameResult {
     private static final int PAWN_CRITICAL_COUNT = 2;
     private static final int DIVIDEND_WHEN_MULTIPLE_PAWN_IN_COLUMN = 2;
 
-    public double calculateScore(Board board, Team team) {
+    public double calculateScore(final Board board, final Team team) {
         double totalScore = 0;
 
         for (int col = Position.START_INDEX; col <= Position.END_INDEX; col++) {
