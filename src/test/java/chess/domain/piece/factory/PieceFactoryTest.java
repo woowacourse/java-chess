@@ -1,14 +1,14 @@
 package chess.domain.piece.factory;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.bishop.Bishop;
-import chess.domain.piece.king.King;
-import chess.domain.piece.pawn.InitializedPawn;
-import chess.domain.piece.pawn.MovedPawn;
-import chess.domain.piece.queen.Queen;
-import chess.domain.piece.rook.Rook;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.InitializedPawn;
+import chess.domain.piece.MovedPawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.piece.team.Team;
-import chess.domain.position.Position;
+import chess.domain.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

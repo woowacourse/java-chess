@@ -1,8 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.UserInterface;
-import chess.domain.position.MovingFlow;
-import chess.domain.position.Position;
+import chess.domain.ui.UserInterface;
+import chess.domain.piece.position.MovingFlow;
+import chess.domain.piece.position.Position;
 
 class MoveExceptionHandler {
     static Board handle(Movable movable, MovingFlow movingFlow, UserInterface userInterface, Board board) {

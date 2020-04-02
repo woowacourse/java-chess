@@ -1,11 +1,14 @@
-package chess.domain.piece.state;
+package chess.domain.piece.policy.move;
 
+import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
+import chess.domain.board.RunningBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 import chess.domain.piece.position.Position;
+import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,13 +19,16 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InitializedTest {
+class IsAttackingSameTeamTest {
+
+    private IsAttackingSameTeam isAttackingSameTeam = new IsAttackingSameTeam();
+    private UserInterface userInterface = new Console();
 
     @ParameterizedTest
-    @DisplayName("#isHeadingNotForward : return boolean as to current position and to")
-    @MethodSource({"getCasesForIsHeadingBackward"})
-    void isHeadingBackward(Position from, Position to, Team team, boolean expected) {
-        Initialized initialized = new Initialized("testInitiaiizedPiece", from, team, new ArrayList<>(), new Score(-1)) {
+    @DisplayName("#canNotMove : return boolean as to isHeading to team which piece in the position belong to")
+    @MethodSource({"getCasesForCanNotMove"})
+    void canNotMove(Team team, boolean expected) {
+        Initialized initializedPiece = new Initialized("testInitializedPiece", Position.of(1,1), team, new ArrayList<>(), new Score(-1)) {
 
             @Override
             public Score calculateScore(Board board) {
@@ -37,6 +43,7 @@ class InitializedTest {
             @Override
             protected boolean canNotMove(Position to, Board board) {
                 return false;
+
             }
 
             @Override
@@ -44,19 +51,17 @@ class InitializedTest {
                 return null;
             }
         };
-
-        boolean isHeadingBackward = initialized.isHeadingNotForward(to);
-        assertThat(isHeadingBackward).isEqualTo(expected);
+        
+        Board board = RunningBoard.initiaize(userInterface);
+        Position to = Position.of(1,7);
+        boolean canNotMove = isAttackingSameTeam.canNotMove(initializedPiece, to, board);
+        assertThat(canNotMove).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> getCasesForIsHeadingBackward() {
+    private static Stream<Arguments> getCasesForCanNotMove() {
         return Stream.of(
-                Arguments.of(
-                        Position.of(1,1), Position.of(1,2), Team.WHITE, false
-                ),
-                Arguments.of(
-                        Position.of(1,1), Position.of(1,2), Team.BLACK, true
-                )
+                Arguments.of(Team.WHITE, false),
+                Arguments.of(Team.BLACK, true)
         );
     }
 }

@@ -3,7 +3,7 @@ package chess.domain.piece.factory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
-import chess.domain.position.Position;
+import chess.domain.piece.position.Position;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

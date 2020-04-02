@@ -1,13 +1,14 @@
 package chess.domain.piece.state;
 
-import chess.domain.UserInterface;
+import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
-import chess.domain.board.InitializedBoard;
+import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.pawn.InitializedPawn;
+import chess.domain.piece.InitializedPawn;
 import chess.domain.piece.score.Score;
+import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
-import chess.domain.position.Position;
+import chess.domain.piece.position.Position;
 import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,7 +29,7 @@ class PawnTest {
         //todo: check casting
         Initialized pawn = (Initialized) PieceFactory.createPiece(InitializedPawn.class, position, Team.WHITE);
         UserInterface userInterface = new Console();
-        Board board = InitializedBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize(userInterface);
         //when
         Score score = pawn.calculateScore(board);
         //then

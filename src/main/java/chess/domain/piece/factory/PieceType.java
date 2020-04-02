@@ -1,15 +1,15 @@
 package chess.domain.piece.factory;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.bishop.Bishop;
+import chess.domain.piece.Bishop;
 
-import chess.domain.piece.king.King;
-import chess.domain.piece.knight.Knight;
-import chess.domain.piece.move.*;
-import chess.domain.piece.pawn.InitializedPawn;
-import chess.domain.piece.pawn.MovedPawn;
-import chess.domain.piece.queen.Queen;
-import chess.domain.piece.rook.Rook;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.policy.move.*;
+import chess.domain.piece.InitializedPawn;
+import chess.domain.piece.MovedPawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.piece.score.Score;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ enum PieceType {
             Queen.class,
             queenCanNotMoveStrategies(),
             Collections.singletonList(new InitialColumn(4)),
-            new Score(3)),
+            new Score(9)),
     KING("k",
             King.class,
             kingCanNotMoveStrategies(),

@@ -1,6 +1,6 @@
 package chess.domain.piece.team;
 
-import chess.domain.position.Direction;
+import chess.domain.piece.position.Direction;
 
 public enum Team {
     WHITE(Direction.NORTH),

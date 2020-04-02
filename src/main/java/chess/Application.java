@@ -2,9 +2,9 @@ package chess;
 
 import chess.domain.board.BoardSerializer;
 import chess.ui.Command;
-import chess.domain.UserInterface;
+import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
-import chess.domain.board.InitializedBoard;
+import chess.domain.board.RunningBoard;
 import chess.ui.Console;
 import chess.view.OutputView;
 
@@ -13,7 +13,7 @@ public class Application {
         UserInterface userInterface = new Console();
         //todo: refac start variable
         Command start = userInterface.inputStart();
-        Board board = InitializedBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize(userInterface);
         OutputView.printBoard(BoardSerializer.serialize(board));
         System.out.println();
         board = board.movePiece();
