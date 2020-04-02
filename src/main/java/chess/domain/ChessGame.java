@@ -17,6 +17,10 @@ public class ChessGame {
 		this.isEnd = isEnd;
 	}
 
+	public static ChessGame start() {
+		return new ChessGame(ChessBoardFactory.create(), Side.WHITE);
+	}
+
 	public ChessGame move(Position source, Position target) {
 		validateTurn(source);
 		board.move(source, target);
