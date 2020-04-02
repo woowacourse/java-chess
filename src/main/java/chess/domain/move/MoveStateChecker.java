@@ -1,18 +1,18 @@
 package chess.domain.move;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.state.MoveSquare;
 import chess.domain.state.MoveState;
 
 public class MoveStateChecker {
 
-    private final ChessBoard chessBoard;
+    private final MoveStateStrategy moveStateStrategy;
 
-    public MoveStateChecker(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
+    public MoveStateChecker(MoveStateStrategy moveStateStrategy) {
+        this.moveStateStrategy = moveStateStrategy;
     }
 
-    public MoveState check(MoveStateStrategy moveStateStrategy) {
-        return moveStateStrategy.getMoveState(chessBoard);
+    public MoveState check(ChessBoard chessBoard, MoveSquare moveSquare) {
+        return moveStateStrategy.getMoveState(chessBoard, moveSquare);
     }
-
 }

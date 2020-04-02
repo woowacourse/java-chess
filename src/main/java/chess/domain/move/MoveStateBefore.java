@@ -3,22 +3,18 @@ package chess.domain.move;
 import chess.domain.board.ChessBoard;
 import chess.domain.state.MoveSquare;
 import chess.domain.state.MoveState;
+import util.NullChecker;
 
 public class MoveStateBefore implements MoveStateStrategy {
 
-    public final MoveSquare moveSquare;
-
-    public MoveStateBefore(MoveSquare moveSquare) {
-        this.moveSquare = moveSquare;
-    }
-
     @Override
-    public MoveState getMoveState(ChessBoard chessBoard) {
+    public MoveState getMoveState(ChessBoard chessBoard, MoveSquare moveSquare) {
+        NullChecker.validateNotNull(chessBoard, moveSquare);
         if (chessBoard.isKingCaptured()) {
             return MoveState.KING_CAPTURED;
         }
         if (!chessBoard.canMove(moveSquare)) {
-            return getWhyCanMove(chessBoard);
+            return getWhyCanMove(chessBoard, moveSquare);
         }
         if (chessBoard.isNeedPromotion()) {
             return MoveState.FAIL_MUST_PAWN_CHANGE;
@@ -26,7 +22,7 @@ public class MoveStateBefore implements MoveStateStrategy {
         return MoveState.READY;
     }
 
-    private MoveState getWhyCanMove(ChessBoard chessBoard) {
+    private MoveState getWhyCanMove(ChessBoard chessBoard, MoveSquare moveSquare) {
         if (chessBoard.isNoPiece(moveSquare)) {
             return MoveState.FAIL_NO_PIECE;
         }

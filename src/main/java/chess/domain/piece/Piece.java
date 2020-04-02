@@ -50,16 +50,16 @@ public abstract class Piece {
         return getCheatSheet(boardSquare, board, new HashSet<>());
     }
 
-    protected Set<BoardSquare> findSquaresToRemove(BoardSquare s, int fileAddAmount,
+    protected Set<BoardSquare> findSquaresToRemove(BoardSquare boardSquare, int fileAddAmount,
         int rankAddAmount) {
         Set<BoardSquare> squaresToRemove = new HashSet<>();
         for (int i = 0, file = 0, rank = 0; i < BoardSquare.MAX_FILE_AND_RANK_COUNT;
             i++, file += fileAddAmount, rank += rankAddAmount) {
-            if (s.hasIncreased(file, rank)) {
-                squaresToRemove.add(s.getIncreased(file, rank));
+            if (boardSquare.hasIncreased(file, rank)) {
+                squaresToRemove.add(boardSquare.getIncreased(file, rank));
             }
         }
-        squaresToRemove.remove(s);
+        squaresToRemove.remove(boardSquare);
         return squaresToRemove;
     }
 

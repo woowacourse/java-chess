@@ -22,6 +22,13 @@ import util.NullChecker;
 
 public class ChessBoard {
 
+    private static final MoveStateChecker BEFORE_MOVE_CHECKER
+        = new MoveStateChecker(new MoveStateBefore());
+    private static final MoveStateChecker AFTER_MOVE_CHECKER
+        = new MoveStateChecker(new MoveStateAfter());
+    private static final MoveStateChecker PROMOTION_MOVE_CHECKER
+        = new MoveStateChecker(new MoveStatePromotion());
+
     private final Map<BoardSquare, Piece> chessBoard;
     private final Set<CastlingSetting> castlingElements;
     private Color gameTurn;
@@ -48,18 +55,16 @@ public class ChessBoard {
     }
 
     public MoveState movePieceWhenCanMove(MoveSquare moveSquare) {
-        MoveStateChecker moveChecker = new MoveStateChecker(this);
-        MoveState moveState = moveChecker.check(new MoveStateBefore(moveSquare));
-        moveState = moveIfReady(moveSquare, moveChecker, moveState);
+        MoveState moveState = BEFORE_MOVE_CHECKER.check(this, moveSquare);
+        moveState = moveIfReady(moveSquare, moveState);
         gameTurn = moveState.turnTeam(gameTurn);
         return moveState;
     }
 
-    private MoveState moveIfReady(MoveSquare moveSquare, MoveStateChecker moveChecker,
-        MoveState moveState) {
+    private MoveState moveIfReady(MoveSquare moveSquare, MoveState moveState) {
         if (moveState.isReady()) {
             movePiece(moveSquare);
-            moveState = moveChecker.check(new MoveStateAfter());
+            moveState = AFTER_MOVE_CHECKER.check(this, moveSquare);
         }
         return moveState;
     }
@@ -79,7 +84,7 @@ public class ChessBoard {
     }
 
     public MoveState promotion(Type hopeType) {
-        MoveState moveState = new MoveStateChecker(this).check(new MoveStatePromotion());
+        MoveState moveState = PROMOTION_MOVE_CHECKER.check(this, null);
         if (moveState.isSuccess()) {
             chessBoard.put(getFinishPawnBoard(), getHopePiece(hopeType));
         }
