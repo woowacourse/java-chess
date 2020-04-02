@@ -5,6 +5,7 @@ import view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        ChessGameController.gameChess();
+        ChessGameController chessGameController = ChessGameController.getInstance();
+        chessGameController.gameChess();
     }
 }

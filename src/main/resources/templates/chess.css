@@ -1,0 +1,49 @@
+div {
+    display: table;
+}
+
+div table {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    background-color: burlywood;
+}
+
+input[type=text], select {
+    width: 300px;
+    padding: 12px 20px;
+    margin: 8px 8px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+th, td {
+    width: 50px;
+    height: 50px;
+}
+
+td {
+    background:#FFE7AA;
+    border: 1px solid black;
+}
+
+tr:nth-child(odd) td:nth-child(even),
+tr:nth-child(even) td:nth-child(odd) {
+    background:#D4B66A;
+}
