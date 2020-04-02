@@ -7,30 +7,28 @@ import java.util.Objects;
 
 public class Position {
     private static final int ASCII_GAP = 96;
-    private static final int FIRST_INDEX = 0;
     public static final int END_INDEX = 8;
     public static final int START_INDEX = 1;
     public static final int ROW_SIZE = 8;
 
-    private final String x;
-    private final String y;
+    private final int x;
+    private final int y;
+
+    public Position(String x, String y) {
+        this(Integer.parseInt(x), Integer.parseInt(y));
+    }
 
     public Position(String position) {
+        this(String.valueOf(position.charAt(0)), String.valueOf(position.charAt(1)));
         if (position.length() != 2) {
             throw new InvalidPositionException(position);
         }
-        this.x = String.valueOf(position.charAt(0));
-        this.y = String.valueOf(position.charAt(1));
     }
 
     public Position(int x, int y) {
-        this(String.valueOf((char) (x + ASCII_GAP)), String.valueOf(y));
         if (!isInBoardRange(x, y)) {
             throw new OutOfBoardRangeException();
         }
-    }
-
-    public Position(String x, String y) {
         this.x = x;
         this.y = y;
     }
@@ -41,11 +39,11 @@ public class Position {
     }
 
     public int getX() {
-        return x.charAt(FIRST_INDEX) - ASCII_GAP;
+        return x;
     }
 
     public int getY() {
-        return Integer.parseInt(y);
+        return y;
     }
 
     @Override
@@ -64,13 +62,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "x='" + x + '\'' +
-                ", y='" + y + '\'' +
-                '}';
     }
 }
