@@ -30,14 +30,14 @@ public class ChessController {
     private static boolean proceed(ChessBoard chessBoard) {
         List<Square> moveSquares = new ArrayList<>();
         List<String> stateInput = Arrays.asList(InputView.inputState().split(" "));
-        if (checkState(chessBoard, moveSquares, stateInput)) {
+        if (isNotEndState(chessBoard, moveSquares, stateInput)) {
             return true;
         }
         OutputView.printChessBoard(chessBoard.getChessBoard());
         return false;
     }
 
-    private static boolean checkState(ChessBoard chessBoard, List<Square> moveSquares, List<String> stateInput) {
+    private static boolean isNotEndState(ChessBoard chessBoard, List<Square> moveSquares, List<String> stateInput) {
         if (isInputStateMove(stateInput)) {
             moveSquares = getMoveSquare(stateInput);
         }
