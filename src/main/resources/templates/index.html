@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>체스</title>
+<!--	<link href="./style.css" rel="stylesheet" type="text/css">-->
 	<script
 			crossorigin="anonymous"
 			integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -10,7 +11,6 @@
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" rel="stylesheet">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 	<style>
 		#chessboard {
 			margin: 0 5% 5% 5%;
@@ -36,9 +36,12 @@
 			background-color: lightpink;
 		}
 
-
 		.gray {
 			background-color: lightgray;
+		}
+
+		.reStart {
+			margin-right: 10px;
 		}
 
 		.selected {
@@ -128,17 +131,18 @@
 			background-size: 40%;
 			background-position: center;
 		}
+
 	</style>
 </head>
 <body>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
 	<div class="container-fluid">
-		<div class="navbar-header">
+		<div class="navbar-right">
 			<button class="btn btn-default navbar-btn reStart" type="button">새게임</button>
 		</div>
+		<h3 class="navbar-text" style="text-align: center">체스</h3>
 	</div>
 </nav>
-<h1 style="text-align: center">체스</h1>
 <div id="chessboard">
 	<div class="table">
 		<div>
@@ -226,6 +230,8 @@
 </div>
 
 <script>
+	const initValueOfSourcePositionRecord = "nonSelectPosition";
+
 	$(document).ready(function () {
 		$.ajax({
 			type: 'get',
@@ -237,9 +243,9 @@
 	});
 
 	$(".cell").click(function () {
-		var sourcePosition = $("#sourcePositionRecord").val();
+		const sourcePosition = $("#sourcePositionRecord").val();
 
-		if (sourcePosition === "nonSelectPosition") {
+		if (sourcePosition === initValueOfSourcePositionRecord) {
 			$("#sourcePositionRecord").val($(this).attr("id"));
 			$(this).addClass("selected");
 			return;
@@ -250,7 +256,7 @@
 
 	function validateMovable(sourcePosition, targetPosition) {
 		console.log(sourcePosition, targetPosition);
-		document.getElementById('sourcePositionRecord').value = "nonSelectPosition";
+		document.getElementById('sourcePositionRecord').value = initValueOfSourcePositionRecord;
 		document.getElementById(sourcePosition).classList.remove("selected");
 
 		//좌표를 post 전송
@@ -259,13 +265,13 @@
 			url: 'isMovable',
 			data: {sourcePosition: sourcePosition, targetPosition: targetPosition},
 			dataType: 'json',
-			error: onError,
-			success: onSuccess
+			error: notMovable,
+			success: movable
 		});
 
 	}
 
-	function onSuccess(response) {
+	function movable(response) {
 		var sourcePosition = response.source;
 		var targetPosition = response.target;
 		var sourcePieceType = response.sourcePieceType;
@@ -282,7 +288,7 @@
 		document.getElementById(targetPosition).classList.add(sourcePieceType);
 	}
 
-	function onError() {
+	function notMovable() {
 		alert("해당말이 갈 수 없는 칸입니다.");
 	}
 
