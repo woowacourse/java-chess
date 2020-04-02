@@ -72,6 +72,6 @@ public class Path {
         if (piece.is(Side.BLACK)) {
             return start.isGreaterThan(end);
         }
-        return !start.isGreaterThan(end);
+        return !start.isGreaterThan(end) && start.row() != end.row();
     }
 }
