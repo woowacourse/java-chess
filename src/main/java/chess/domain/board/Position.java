@@ -70,7 +70,7 @@ public class Position {
         return Position.rowGap(this, start) == Position.columnGap(this, start)
             && Position.rowGap(this, end) == Position.columnGap(this, end)
             && isMiddle(this.column(), start.column(), end.column())
-            && isMiddle(this.row(), start.row(), end.row());
+                && isMiddle(this.row(), start.row(), end.row());
     }
 
     private boolean isMiddle(final int middle, final int start, final int end) {
@@ -78,6 +78,11 @@ public class Position {
             return middle >= end && middle <= start;
         }
         return middle <= end && middle >= start;
+    }
+
+    @Override
+    public String toString() {
+        return column.getName() + row.getName();
     }
 
     static class PositionCache {

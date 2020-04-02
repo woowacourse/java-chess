@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 
-import java.util.Arrays;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class WoowaJudge implements Judge {
@@ -17,28 +17,30 @@ public class WoowaJudge implements Judge {
     }
 
     @Override
-    public double calculateScore(final Side side) {
-        double sum = Arrays.stream(Type.values())
-                .mapToDouble(type -> board.count(type, side) * type.getScore())
-            .sum();
-        return sum - board.countPawnsOnSameColumn(side) * PAWN_SCORE_DEDUCTION_IF_ON_SAME_COLUMN;
+    public double calculateScore(final Side side) throws SQLException {
+        double defaultSum = 0;
+        for (Type type : Type.values()) {
+            defaultSum += board.count(type, side) * type.getScore();
+        }
+
+        return defaultSum - board.countPawnsOnSameColumn(side) * PAWN_SCORE_DEDUCTION_IF_ON_SAME_COLUMN;
     }
 
     @Override
-    public boolean isGameOver() {
+    public boolean isGameOver() throws SQLException {
         return isWhiteWinner() || isBlackWinner();
     }
 
-    private boolean isBlackWinner() {
+    private boolean isBlackWinner() throws SQLException {
         return board.count(Type.KING, Side.WHITE) == 0;
     }
 
-    private boolean isWhiteWinner() {
+    private boolean isWhiteWinner() throws SQLException {
         return board.count(Type.KING, Side.BLACK) == 0;
     }
 
     @Override
-    public Optional<Side> winner() {
+    public Optional<Side> winner() throws SQLException {
         final Optional<Side> finalWinner = finalWinner();
         if (!finalWinner.isPresent()) {
             return onGoingWinner();
@@ -46,7 +48,7 @@ public class WoowaJudge implements Judge {
         return Optional.empty();
     }
 
-    public Optional<Side> finalWinner() {
+    public Optional<Side> finalWinner() throws SQLException {
         if (isGameOver() && isWhiteWinner()) {
             return Optional.of(Side.WHITE);
         }
@@ -56,7 +58,7 @@ public class WoowaJudge implements Judge {
         return Optional.empty();
     }
 
-    public Optional<Side> onGoingWinner() {
+    public Optional<Side> onGoingWinner() throws SQLException {
         if (calculateScore(Side.WHITE) > calculateScore(Side.BLACK)) {
             return Optional.of(Side.WHITE);
         }

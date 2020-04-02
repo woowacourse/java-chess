@@ -1,54 +1,47 @@
 package chess.domain.board;
 
-import java.util.Map;
-import java.util.Optional;
-
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
+import chess.exceptions.InvalidInputException;
+
+import java.util.Map;
 
 public class Path {
-    private Map<Position, Optional<Piece>> path;
+    private Map<Position, Piece> piecesOnPath;
     private Position start;
     private Position end;
 
-    public Path(final Map<Position, Optional<Piece>> path, final Position start, final Position end) {
-        validate(path, start, end);
-        this.path = path;
+    public Path(final Map<Position, Piece> piecesOnPath, final Position start, final Position end) {
+        validate(piecesOnPath, start);
+        this.piecesOnPath = piecesOnPath;
         this.start = start;
         this.end = end;
     }
 
-    private void validate(final Map<Position, Optional<Piece>> path, final Position start, final Position end) {
-        if (!path.containsKey(start) || !path.containsKey(end)) {
-            throw new IllegalArgumentException();
+    private void validate(final Map<Position, Piece> path, final Position start) {
+        if (!path.containsKey(start)) {
+            throw new InvalidInputException();
         }
-        if (!path.get(start).isPresent()) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public boolean isEnemyOnEnd() {
-        if (isEndEmpty() || isStartEmpty()) {
-            return false;
-        }
-        Piece startPiece = path.get(start).get();
-        Piece endPiece = path.get(end).get();
-        return startPiece.isEnemyOf(endPiece);
     }
 
     public boolean isEndEmpty() {
-        return !path.get(end).isPresent();
+        return !piecesOnPath.containsKey(end);
     }
 
-    private boolean isStartEmpty() {
-        return !path.get(start).isPresent();
+    public boolean isEnemyOnEnd() {
+        if (!piecesOnPath.containsKey(end)) {
+            return false;
+        }
+        Piece startPiece = piecesOnPath.get(start);
+        Piece endPiece = piecesOnPath.get(end);
+        return startPiece.isEnemyOf(endPiece);
     }
 
     public boolean isBlocked() {
-        return path.keySet()
-            .stream()
-            .filter(key -> key != start && key != end)
-            .anyMatch(key -> path.get(key).isPresent());
+        return piecesOnPath.keySet()
+                .stream()
+                .filter(key -> key != start && key != end)
+                .anyMatch(key -> true);
     }
 
     public double distanceSquare() {
@@ -64,12 +57,12 @@ public class Path {
     }
 
     public boolean isOnInitialPosition() {
-        Piece piece = path.get(start).get();
+        Piece piece = piecesOnPath.get(start);
         return piece.isOnInitialPosition(start);
     }
 
     public boolean headingForward() {
-        Piece piece = path.get(start).get();
+        Piece piece = piecesOnPath.get(start);
         if (piece.is(Side.BLACK)) {
             return start.row() > end.row();
         }

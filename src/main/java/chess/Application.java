@@ -1,10 +1,6 @@
 package chess;
 
-import static chess.domain.Command.*;
-
-import java.util.Arrays;
-import java.util.List;
-
+import chess.dao.FakeBoardDAO;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.judge.Judge;
@@ -13,12 +9,16 @@ import chess.domain.view.InputView;
 import chess.domain.view.OutputView;
 import chess.exceptions.InvalidInputException;
 
+import java.sql.SQLException;
+
+import static chess.domain.Command.*;
+
 public class Application {
     private static final String DELIMITER = " ";
     private static Board board;
     private static Judge judge;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         OutputView.instruction();
         while (true) {
             String command = InputView.getInput();
@@ -51,18 +51,18 @@ public class Application {
         }
     }
 
-    public static void initialize() {
-        board = Board.init();
+    public static void initialize() throws SQLException {
+        board = new Board(FakeBoardDAO.initialFakeBoardDAO());
         judge = new WoowaJudge(board);
         OutputView.showBoard(board);
     }
 
-    public static void move(final String command) {
+    public static void move(final String command) throws SQLException {
         tryToMove(startPosition(command), endPosition(command));
         OutputView.showBoard(board);
     }
 
-    public static void tryToMove(final Position start, final Position end) {
+    public static void tryToMove(final Position start, final Position end) throws SQLException {
         try {
             board.move(start, end);
         } catch (InvalidInputException e) {

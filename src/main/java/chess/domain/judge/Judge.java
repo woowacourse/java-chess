@@ -1,14 +1,15 @@
 package chess.domain.judge;
 
-import java.util.Optional;
-
 import chess.domain.piece.Side;
 
+import java.sql.SQLException;
+import java.util.Optional;
+
 public interface Judge {
-    double calculateScore(final Side side);
+    double calculateScore(final Side side) throws SQLException;
 
-    boolean isGameOver();
+    boolean isGameOver() throws SQLException;
 
-    Optional<Side> winner();
+    Optional<Side> winner() throws SQLException;
 
 }

@@ -21,6 +21,10 @@ public class Piece {
         return PieceCache.pieces.get(PieceCache.key(type, side));
     }
 
+    public static Piece of(final String pieceString) {
+        return PieceCache.pieces.get(pieceString);
+    }
+
     public boolean is(final Type type) {
         return this.type == type;
     }
@@ -49,12 +53,17 @@ public class Piece {
         return initialPositions().contains(position);
     }
 
-    @Override
-    public String toString() {
+
+    public String consoleName() {
         if (side == Side.WHITE) {
             return type.getName();
         }
         return type.getName().toUpperCase();
+    }
+
+    @Override
+    public String toString() {
+        return side.name() + type.getName();
     }
 
     public static List<Piece> getPieces() {
