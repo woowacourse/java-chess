@@ -42,13 +42,14 @@ public class WebUIChessApplication {
         });
 
         post("/move", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             String source = req.queryParams("source");
             String target = req.queryParams("target");
-            Board board = chessService.move(source, target);
-            List<LineDto> rows = board.getRows();
-            model.put("rows", rows);
-            return render(model, "board.html");
+            try {
+                chessService.move(source, target);
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
+            return true;
         });
 
         post("/status", (req, res) -> {

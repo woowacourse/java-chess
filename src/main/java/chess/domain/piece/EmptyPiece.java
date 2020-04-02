@@ -20,11 +20,6 @@ public class EmptyPiece extends GamePiece {
     }
 
     @Override
-    public void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
-        throw new UnsupportedOperationException("기물이 존재하지 않습니다.");
-    }
-
-    @Override
     public List<Position> getOriginalPositions() {
         throw new UnsupportedOperationException("기물이 존재하지 않습니다.");
     }

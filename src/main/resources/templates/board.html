@@ -41,6 +41,9 @@
                 <img src="./img/WHITE_p.png">
                 <p>{{secondUser}}</p>
             </div>
+            <div id="message">
+                {{msg}}
+            </div>
         </div>
     </div>
 </body>
@@ -60,8 +63,12 @@
     let source;
     let isFirstClick = true;
     let cell;
+    let before;
 
     $(".cell").click(function () {
+        if (cell !== null) {
+            before = cell;
+        }
         cell = $(this);
         let cellPosition = $(this).attr("id");
         console.log($(this).attr('id'));
@@ -73,6 +80,7 @@
             cell.addClass("selected-cell");
             return;
         }
+
         // 두번째 클릭이지만 똑같은 기물을 선택했다면 선택 취소
         if (!isFirstClick && (source === cellPosition)) {
             source = null;
@@ -80,16 +88,28 @@
             cell.removeClass("selected-cell");
             return;
         }
+        
         // 두번째 클릭이라면 이동
         $.ajax({
             url: "/move",
             data: { source: source, target: cellPosition },
             method: "POST",
             // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
-        }).done(function (board) {
-            console.log(board);
-            $("body").html(board);
+        }).done(function (posible) {
+            if (posible !== "true") {
+                alert(posible);
+                isFirstClick = true;
+                before.removeClass("selected-cell");
+                return;
+            }
+            move(source, cellPosition);
+            isFirstClick = true;
+            before.removeClass("selected-cell");
         });
     });
 
+    function move(from, to) {
+        document.getElementById(to).replaceChild(document.getElementById(from).firstElementChild, 
+        document.getElementById(to).firstElementChild);
+    }
 </script>
