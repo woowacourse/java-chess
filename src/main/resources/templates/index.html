@@ -9,118 +9,129 @@
   </head>
   <body>
     <h1>우아한테크체스</h1>
-    <main>
-      <div class="wood">
-        <div class="board">
-          <div class="row">
-            <div class="row-location">8</div>
-            <div class="position" id="a8"></div>
-            <div class="position" id="b8"></div>
-            <div class="position" id="c8"></div>
-            <div class="position" id="d8"></div>
-            <div class="position" id="e8"></div>
-            <div class="position" id="f8"></div>
-            <div class="position" id="g8"></div>
-            <div class="position" id="h8"></div>
+    <p class="message"></p>
+    <div class="chess-game">
+      <main>
+        <div class="board-box">
+          <div class="board">
+            <div class="row">
+              <div class="row-location">8</div>
+              <div class="position" id="a8"></div>
+              <div class="position" id="b8"></div>
+              <div class="position" id="c8"></div>
+              <div class="position" id="d8"></div>
+              <div class="position" id="e8"></div>
+              <div class="position" id="f8"></div>
+              <div class="position" id="g8"></div>
+              <div class="position" id="h8"></div>
+            </div>
+            <div class="row">
+              <div class="row-location">7</div>
+              <div class="position" id="a7"></div>
+              <div class="position" id="b7"></div>
+              <div class="position" id="c7"></div>
+              <div class="position" id="d7"></div>
+              <div class="position" id="e7"></div>
+              <div class="position" id="f7"></div>
+              <div class="position" id="g7"></div>
+              <div class="position" id="h7"></div>
+            </div>
+            <div class="row">
+              <div class="row-location">6</div>
+              <div class="position" id="a6"></div>
+              <div class="position" id="b6"></div>
+              <div class="position" id="c6"></div>
+              <div class="position" id="d6"></div>
+              <div class="position" id="e6"></div>
+              <div class="position" id="f6"></div>
+              <div class="position" id="g6"></div>
+              <div class="position" id="h6"></div>
+            </div>
+            <div class="row">
+              <div class="row-location">5</div>
+              <div class="position" id="a5"></div>
+              <div class="position" id="b5"></div>
+              <div class="position" id="c5"></div>
+              <div class="position" id="d5"></div>
+              <div class="position" id="e5"></div>
+              <div class="position" id="f5"></div>
+              <div class="position" id="g5"></div>
+              <div class="position" id="h5"></div>
+            </div>
+            <div class="row">
+              <div class="row-location">4</div>
+              <div class="position" id="a4"></div>
+              <div class="position" id="b4"></div>
+              <div class="position" id="c4"></div>
+              <div class="position" id="d4"></div>
+              <div class="position" id="e4"></div>
+              <div class="position" id="f4"></div>
+              <div class="position" id="g4"></div>
+              <div class="position" id="h4"></div>
+            </div>
+            <div class="row">
+              <div class="row-location">3</div>
+              <div class="position" id="a3"></div>
+              <div class="position" id="b3"></div>
+              <div class="position" id="c3"></div>
+              <div class="position" id="d3"></div>
+              <div class="position" id="e3"></div>
+              <div class="position" id="f3"></div>
+              <div class="position" id="g3"></div>
+              <div class="position" id="h3"></div>
+            </div>
+            <div class="row">
+              <div class="row-location">2</div>
+              <div class="position" id="a2"></div>
+              <div class="position" id="b2"></div>
+              <div class="position" id="c2"></div>
+              <div class="position" id="d2"></div>
+              <div class="position" id="e2"></div>
+              <div class="position" id="f2"></div>
+              <div class="position" id="g2"></div>
+              <div class="position" id="h2"></div>
+            </div>
+            <div class="row">
+              <div class="row-location">1</div>
+              <div class="position" id="a1"></div>
+              <div class="position" id="b1"></div>
+              <div class="position" id="c1"></div>
+              <div class="position" id="d1"></div>
+              <div class="position" id="e1"></div>
+              <div class="position" id="f1"></div>
+              <div class="position" id="g1"></div>
+              <div class="position" id="h1"></div>
+            </div>
           </div>
-          <div class="row">
-            <div class="row-location">7</div>
-            <div class="position" id="a7"></div>
-            <div class="position" id="b7"></div>
-            <div class="position" id="c7"></div>
-            <div class="position" id="d7"></div>
-            <div class="position" id="e7"></div>
-            <div class="position" id="f7"></div>
-            <div class="position" id="g7"></div>
-            <div class="position" id="h7"></div>
-          </div>
-          <div class="row">
-            <div class="row-location">6</div>
-            <div class="position" id="a6"></div>
-            <div class="position" id="b6"></div>
-            <div class="position" id="c6"></div>
-            <div class="position" id="d6"></div>
-            <div class="position" id="e6"></div>
-            <div class="position" id="f6"></div>
-            <div class="position" id="g6"></div>
-            <div class="position" id="h6"></div>
-          </div>
-          <div class="row">
-            <div class="row-location">5</div>
-            <div class="position" id="a5"></div>
-            <div class="position" id="b5"></div>
-            <div class="position" id="c5"></div>
-            <div class="position" id="d5"></div>
-            <div class="position" id="e5"></div>
-            <div class="position" id="f5"></div>
-            <div class="position" id="g5"></div>
-            <div class="position" id="h5"></div>
-          </div>
-          <div class="row">
-            <div class="row-location">4</div>
-            <div class="position" id="a4"></div>
-            <div class="position" id="b4"></div>
-            <div class="position" id="c4"></div>
-            <div class="position" id="d4"></div>
-            <div class="position" id="e4"></div>
-            <div class="position" id="f4"></div>
-            <div class="position" id="g4"></div>
-            <div class="position" id="h4"></div>
-          </div>
-          <div class="row">
-            <div class="row-location">3</div>
-            <div class="position" id="a3"></div>
-            <div class="position" id="b3"></div>
-            <div class="position" id="c3"></div>
-            <div class="position" id="d3"></div>
-            <div class="position" id="e3"></div>
-            <div class="position" id="f3"></div>
-            <div class="position" id="g3"></div>
-            <div class="position" id="h3"></div>
-          </div>
-          <div class="row">
-            <div class="row-location">2</div>
-            <div class="position" id="a2"></div>
-            <div class="position" id="b2"></div>
-            <div class="position" id="c2"></div>
-            <div class="position" id="d2"></div>
-            <div class="position" id="e2"></div>
-            <div class="position" id="f2"></div>
-            <div class="position" id="g2"></div>
-            <div class="position" id="h2"></div>
-          </div>
-          <div class="row">
-            <div class="row-location">1</div>
-            <div class="position" id="a1"></div>
-            <div class="position" id="b1"></div>
-            <div class="position" id="c1"></div>
-            <div class="position" id="d1"></div>
-            <div class="position" id="e1"></div>
-            <div class="position" id="f1"></div>
-            <div class="position" id="g1"></div>
-            <div class="position" id="h1"></div>
+          <div class="row column-locations">
+            <div class="column-location">a</div>
+            <div class="column-location">b</div>
+            <div class="column-location">c</div>
+            <div class="column-location">d</div>
+            <div class="column-location">e</div>
+            <div class="column-location">f</div>
+            <div class="column-location">g</div>
+            <div class="column-location">h</div>
           </div>
         </div>
-        <div class="row column-locations">
-          <div class="column-location">a</div>
-          <div class="column-location">b</div>
-          <div class="column-location">c</div>
-          <div class="column-location">d</div>
-          <div class="column-location">e</div>
-          <div class="column-location">f</div>
-          <div class="column-location">g</div>
-          <div class="column-location">h</div>
+        <div class="buttons">
+          <!--        <div class="button status" onclick="alert('아직 지원하지 않습니다.')">점수판</div>-->
+          <!--        <div class="button undo" onclick="alert('아직 지원하지 않습니다.')">실행취소</div>-->
+          <div class="button restart">초기화</div>
         </div>
-        <div class="commands">
-          <div class="command"></div>
+      </main>
+      <div class="rooms">
+        <div class="room-add">♟ 새 게임 추가하기</div>
+        <div class="room-header">
+          <div class="room-number">게임</div>
+          <div class="players">
+            <div class="player">게스트</div>
+            <div class="player">호스트</div>
+          </div>
+          <div class="room-status">점수</div>
         </div>
       </div>
-      <div class="buttons">
-        <div class="button status" onclick="alert('아직 지원하지 않습니다.')">점수판</div>
-        <div class="button undo" onclick="alert('아직 지원하지 않습니다.')">실행취소</div>
-        <div class="button restart">초기화</div>
-      </div>
-    </main>
+    </div>
     <audio id="drop-sound" src="./audio/drop.mp3"></audio>
     <audio id="kill-sound" src="./audio/kill.wav"></audio>
     <script type="application/javascript" src="./js/main.js"></script>
