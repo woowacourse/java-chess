@@ -74,5 +74,15 @@ public abstract class Piece implements PieceAbility {
 	public TeamStrategy getTeamStrategy() {
 		return teamStrategy;
 	}
+
+	public String getFile() {
+		return position.getFile();
+	}
+
+	public String getRank() {
+		return position.getRank();
+	}
+
+	;
 }
 

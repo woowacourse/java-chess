@@ -131,6 +131,13 @@
 	</style>
 </head>
 <body>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button class="btn btn-default navbar-btn reStart" type="button">새게임</button>
+		</div>
+	</div>
+</nav>
 <h1 style="text-align: center">체스</h1>
 <div id="chessboard">
 	<div class="table">
@@ -214,7 +221,7 @@
 			<button class="cell" id="g1"></button>
 			<button class="gray cell" id="h1"></button>
 		</div>
-		<label for="sourcePositionRecord"></label><input id="sourcePositionRecord" value="nonSelectPosition">
+		<label for="sourcePositionRecord"></label><input hidden id="sourcePositionRecord" value="nonSelectPosition">
 	</div>
 </div>
 
@@ -222,23 +229,12 @@
 	$(document).ready(function () {
 		$.ajax({
 			type: 'get',
-			url: 'init',
+			url: 'continue',
 			dataType: 'json',
-			error: initError,
-			success: initSuccess
+			error: getPieceInfoError,
+			success: getPieceInfoSuccess
 		});
 	});
-
-	function initError() {
-		alert("initError");
-	}
-
-	function initSuccess(response) {
-		for (position in response) {
-			const pieceName = response[position].name;
-			document.getElementById(position).classList.add(pieceName);
-		}
-	}
 
 	$(".cell").click(function () {
 		var sourcePosition = $("#sourcePositionRecord").val();
@@ -288,6 +284,28 @@
 
 	function onError() {
 		alert("해당말이 갈 수 없는 칸입니다.");
+	}
+
+	$(".reStart").click(function () {
+		$.ajax({
+			type: 'get',
+			url: 'init',
+			dataType: 'json',
+			error: getPieceInfoError,
+			success: getPieceInfoSuccess
+		});
+		alert("새로운게임이 시작되었습니다. 새로고침하여 시작하세요.");
+	});
+
+	function getPieceInfoError() {
+		alert("error");
+	}
+
+	function getPieceInfoSuccess(response) {
+		for (position in response) {
+			const pieceName = response[position];
+			document.getElementById(position).classList.add(pieceName);
+		}
 	}
 
 </script>
