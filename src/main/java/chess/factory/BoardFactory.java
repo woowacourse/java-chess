@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.Team;
+import chess.domain.Turn;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Row;
 import chess.domain.chesspiece.Bishop;
@@ -40,7 +41,7 @@ public class BoardFactory {
 		board.addAll(createWhiteTeam());
 		board.addAll(createBlankTeam());
 		board.addAll(createBlackTeam());
-		return new ChessBoard(board);
+		return new ChessBoard(board, new Turn());
 	}
 
 	private static List<Row> createWhiteTeam() {
