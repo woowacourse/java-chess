@@ -532,16 +532,12 @@
         drawResult(statusDto, isFinished)
     }
 
-    function drawResult(winner, isFinished) {
+    function drawResult(statusDto, isFinished) {
         if (!isFinished) {
             return;
         }
-
-        const black = statusDto.black.score;
-        const white = statusDto.white.score;
-
         show(chessResultElement)
-        chessResultMessageElement.innerHTML = winner + ' 승'
+        chessResultMessageElement.innerHTML = statusDto.winner + ' 승'
     }
 
     function drawBoard(board) {
