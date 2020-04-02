@@ -23,6 +23,20 @@ public class Board {
         this.board = board;
     }
 
+    public static int getBoardIndexByStringPosition(String position) {
+        String x = String.valueOf(position.charAt(0));
+        String y = String.valueOf(position.charAt(1));
+
+        int col = x.charAt(FIRST_INDEX) - ASCII_GAP;
+        int row = Integer.parseInt(y);
+
+        return getBoardIndex(col, row);
+    }
+
+    public static int getBoardIndex(final int col, final int row) {
+        return (row - 1) * Position.ROW_SIZE + col - 1;
+    }
+
     public void move(final String from, final String to, final Team currentTurn) {
         Piece fromPiece = findPieceBy(new Position(from));
         Piece toPiece = findPieceBy(new Position(to));
@@ -60,26 +74,8 @@ public class Board {
         return isFinished;
     }
 
-    public boolean isBlank(Position position) {
-        return board.get(boardIndexOf(position)).isBlank();
-    }
-
     public int boardIndexOf(Position position) {
         return getBoardIndex(position.getX(), position.getY());
-    }
-
-    public int getBoardIndexByStringPosition(String position) {
-        String x = String.valueOf(position.charAt(0));
-        String y = String.valueOf(position.charAt(1));
-
-        int col = x.charAt(FIRST_INDEX) - ASCII_GAP;
-        int row = Integer.parseInt(y);
-
-        return getBoardIndex(col, row);
-    }
-
-    private int getBoardIndex(final int col, final int row) {
-        return (row - 1) * Position.ROW_SIZE + col - 1;
     }
 
     public List<Piece> getBoard() {

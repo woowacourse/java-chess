@@ -36,7 +36,7 @@ public class BoardTest {
     @MethodSource("getCasesForFindingPieceByStringPosition")
     void findPiece(String position, Piece expectedPiece) {
         Board board = BoardFactory.createBoard();
-        int index = board.getBoardIndexByStringPosition(position);
+        int index = Board.getBoardIndexByStringPosition(position);
         assertThat(board.findPieceBy(index)).isEqualTo(expectedPiece);
     }
 

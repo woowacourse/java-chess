@@ -17,7 +17,7 @@ public class GameResult {
             double pawnScore = 0;
 
             for (int row = Position.START_INDEX; row <= Position.END_INDEX; row++) {
-                Piece piece = board.findPieceBy((row - 1) * Position.ROW_SIZE + col - 1);
+                Piece piece = board.findPieceBy(Board.getBoardIndex(col, row));
 
                 if (piece.isSameTeam(team) && piece.isPawn()) {
                     pawnCount += 1;
