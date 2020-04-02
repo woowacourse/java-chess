@@ -19,6 +19,10 @@ async function setPieces() {
 
     let status = await (fetch("/status").then((data) => data.json()));
 
+    Object.values(document.querySelectorAll(".tile")).forEach(e => {
+        e.innerHTML = "";
+    });
+
     Object.keys(status.pieces).forEach(e => {
         document.querySelector("#" + e).innerHTML = "<img src='/img/" + pieceFileName.get(status.pieces[e].representation) + "_"
             + pieceFileName.get(status.pieces[e].team) + ".png' width='60px'>";
@@ -31,43 +35,35 @@ function chooseSource(sourceValue) {
     document.getElementById(sourceValue).classList.add('source');
 }
 
-function chooseDestination(destinationValue) {
-    var redpoint = document.querySelector('.destination');
-    if (redpoint) {
-        redpoint.classList.remove('destination');
-    }
-    document.getElementById(destinationValue).classList.add('destination');
+async function chooseDestination(destinationValue) {
+    await document.getElementById(destinationValue).classList.add('destination');
+    await move();
 }
 
 function clearSelection() {
-    if (document.querySelector(".source")) {
-        document.querySelector(".source").classList.remove('source');
-    }
-    if (document.querySelector(".destination")) {
-        document.querySelector(".destination").classList.remove('destination');
-    }
+    document.querySelector(".source").classList.remove('source');
+    document.querySelector(".destination").classList.remove('destination');
 }
 
-function move() {
-    $.ajax({
-        url: '/move', // 요청 할 주소
-        async: false, // false 일 경우 동기 요청으로 변경
-        type: 'POST', // GET, PUT
+async function move() {
+    await $.ajax({
+        url: '/move',
+        async: true,
+        type: 'POST',
         data: {
             source: document.querySelector(".source").id,
             destination: document.querySelector(".destination").id
-        }, // 전송할 데이터
-        dataType: 'text', // xml, json, script, html
+        },
+        dataType: 'text',
         success: function (jqXHR) {
             if (jqXHR) {
                 alert(jqXHR);
             }
+            setPieces();
         },
         error: function (jqXHR) {
             alert(jqXHR.responseText);
-        }
+        },
+        complete: clearSelection()
     });
-    document.querySelector(".source").innerHTML = "";
-    clearSelection();
-    setPieces();
 }

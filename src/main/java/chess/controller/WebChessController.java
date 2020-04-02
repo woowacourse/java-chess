@@ -9,16 +9,15 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class WebChessController implements ChessController {
+    private Board board = new Board();
+
     @Override
     public void run() {
-        Board board = new Board();
-        AtomicReference<String> message = new AtomicReference<>("");
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -43,6 +42,16 @@ public class WebChessController implements ChessController {
                 return e.getMessage();
             }
         });
+
+        get("/reset", (req, res) -> {
+            board = resetBoard();
+            res.redirect("/");
+            return null;
+        });
+    }
+
+    public Board resetBoard() {
+        return new Board();
     }
 
     private Map<String, Piece> printChessBoard(Board board) {

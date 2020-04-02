@@ -14,7 +14,7 @@ public class Board {
     private static final String NO_PIECE_IN_SOURCE = "해당 위치에 말이 없습니다.";
     private static final String SAME_TEAM_PIECE_IN_DESTINATION = "해당 자리에 같은 팀 말이 있기 때문에 말을 움직일 수 없습니다!";
 
-    private final Pieces pieces;
+    private Pieces pieces;
 
     public Board() {
         this.pieces = new Pieces(PieceFactory.getInstance().getPieces());
@@ -69,5 +69,9 @@ public class Board {
 
     public Team getWinner() {
         return pieces.teamWithAliveKing();
+    }
+
+    public void reset() {
+        this.pieces = new Pieces(PieceFactory.getInstance().getPieces());
     }
 }
