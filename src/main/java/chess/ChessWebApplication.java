@@ -51,22 +51,19 @@ public class ChessWebApplication {
 
 
 		post("/isMovable", (req, res) -> {
-			String source = req.queryParams("sourcePosition");
-			String target = req.queryParams("targetPosition");
-
-			Position sourcePosition = Position.of(source);
-			Position targetPosition = Position.of(target);
+			Position sourcePosition = Position.of(req.queryParams("sourcePosition"));
+			Position targetPosition = Position.of(req.queryParams("targetPosition"));
 
 			String sourcePieceType = findPieceType(sourcePosition);
 			String targetPieceType = findPieceType(targetPosition);
 			boolean isAttack = chessBoard.findPieceByPosition(targetPosition).isPresent();
 
 			Map<String, Object> model = new HashMap<>();
-			model.put("source", source);
-			model.put("target", target);
+			model.put("sourcePosition", req.queryParams("sourcePosition"));
+			model.put("targetPosition", req.queryParams("targetPosition"));
 			model.put("sourcePieceType", sourcePieceType);
-			model.put("isAttack", isAttack);
 			model.put("targetPieceType", targetPieceType);
+			model.put("isAttack", isAttack);
 
 			chessBoard.movePiece(sourcePosition, targetPosition);
 
