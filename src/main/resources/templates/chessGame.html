@@ -2,25 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="chessStyle.css"/>
+    <link href="./chessStyle.css" rel="stylesheet" type="text/css"/>
     <title>체스</title>
 </head>
 
+<body>
 <div id="gameUI">
+    <h1 id="title">크리스마스 체스</h1>
     <div id="chessBoard">
         {{#chessPieces}}
-        <div id="{{position}}" class="board_green">
-            {{#piece}}<img src="images/{{piece}}.png"/>{{/piece}}
+        <div id="{{position}}" class="tile">
+            {{#if piece}}
+            <img alt="position" src="./images/{{piece}}.png"/>
+            {{else}}
+            <img alt="empty" src="./images/blank.png"/>
+            {{/if}}
         </div>
         {{/chessPieces}}
     </div>
 
     <div id="commandUI">
-        <button id="start_button" type="button" onclick="start()">START</button>
-        <button id="end_button" type="button" onclick="end()">END</button>
-        <button id="status_button" type="button" onclick="status()">STATUS</button>
-        <div id="chess_informator"></div>
+        <div id="current_team"> 현재 차례 : {{currentTeam}}팀</div>
+        {{#if score}}
+        <div id="chess_score">{{currentTeam}}팀의 점수는 {{score}}점 입니다.</div>
+        {{/if}}
+
+        {{#if winner}}
+        <div id="chess_winner">{{winner}}팀이 우승했습니다. 게임 끝~</div>
+        {{else}}
+        <form action="/status" method="post">
+            <button id="status_button" name="status" type="submit">STATUS</button>
+        </form>
+        <form action="/end" method="post">
+            <button id="end_button" name="end" type="submit">END</button>
+        </form>
+        <br/>
+        <form action="/move" method="post">
+            <input id="move_input" name="move_cmd"/>
+            <button id="move_button" type="submit">MOVE</button>
+        </form>
+        {{/if}}
     </div>
 </div>
+</body>
 
 </html>

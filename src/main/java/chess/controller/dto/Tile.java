@@ -19,5 +19,4 @@ public class Tile {
     public Piece getPiece() {
         return piece;
     }
-
 }

@@ -9,11 +9,11 @@ import chess.domain.position.Positions;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class WebBoardDto {
+public class TileDto {
     private final List<Tile> tiles;
 
-    public WebBoardDto() {
-        this.tiles = toDto(new Board(BoardInitializer.initializeAll()));
+    public TileDto(Board board) {
+        this.tiles = toDto(board);
     }
 
     private List<Tile> toDto(Board board) {
@@ -32,8 +32,6 @@ public class WebBoardDto {
 
         return boardResult;
     }
-
-
 
     public List<Tile> getTiles() {
         return tiles;

@@ -1,17 +1,18 @@
 package chess.controller;
 
 import chess.controller.dto.BoardDto;
+import chess.controller.dto.TileDto;
 import chess.domain.ChessRunner;
 import chess.domain.piece.Team;
 
 public class ChessManager {
 
     private ChessRunner chessRunner;
-    private boolean runFlag;
+    private boolean isPlaying;
 
     public ChessManager() {
         this.chessRunner = new ChessRunner();
-        runFlag = true;
+        isPlaying = true;
     }
 
     public void start() {
@@ -19,12 +20,12 @@ public class ChessManager {
     }
 
     public void end() {
-        runFlag = false;
+        isPlaying = false;
     }
 
     public void move(String source, String target) {
         chessRunner.update(source, target);
-        runFlag = stopGameIfWinnerExists();
+        isPlaying = stopGameIfWinnerExists();
     }
 
     private boolean stopGameIfWinnerExists() {
@@ -32,11 +33,15 @@ public class ChessManager {
     }
 
     public boolean isPlaying() {
-        return runFlag;
+        return isPlaying;
     }
 
     public BoardDto getBoard() {
         return new BoardDto(chessRunner.getBoard());
+    }
+
+    public TileDto getTileDto() {
+        return new TileDto(chessRunner.getBoard());
     }
 
     public ChessManager get() {
