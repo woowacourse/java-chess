@@ -2,12 +2,10 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.Color;
-import chess.domain.GameManager;
 import chess.domain.PieceScore;
 
 /**
@@ -15,15 +13,6 @@ import chess.domain.PieceScore;
  *    @author AnHyungJu, LeeHoBin
  */
 public class PieceTest {
-	private GameManager gameManager;
-	private Pieces pieces;
-
-	@BeforeEach
-	void setUp() {
-		pieces = new Pieces(Pieces.initPieces());
-		gameManager = new GameManager(pieces);
-	}
-
 	@DisplayName("Piece의 색깔과 같은 색깔인지 확인하는 테스트")
 	@Test
 	void isSameColorTest() {

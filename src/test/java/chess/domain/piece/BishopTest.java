@@ -2,34 +2,58 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.Color;
+import chess.domain.GameManager;
 import chess.domain.PieceScore;
+import chess.domain.board.Position;
+import chess.domain.command.Command;
 
 class BishopTest {
+	Map<Position, Piece> originPiece;
+	Pieces pieces;
+	GameManager gameManager;
+
+	@BeforeEach
+	void setUp() {
+		originPiece = new HashMap<>();
+		BlankPieceFactory.create(originPiece);
+		pieces = new Pieces(originPiece);
+		gameManager = new GameManager(pieces);
+	}
 
 	@DisplayName("Bishop 클래스가 PieceScore에 있는 Enum Bishop과 동일한지 테스트")
 	@Test
-	void isSameName() {
+	void isSameNameTest() {
 		Bishop bishop = new Bishop(Color.WHITE, "b");
 		assertThat(bishop.isSameName(PieceScore.BISHOP)).isTrue();
 	}
 
-	// @DisplayName("해당 말의 룰에 따라 갈 수 있는 경우를 모두 반환할 때 그 사이즈를 체크하는 테스트")
-	// @Test
-	// void movablePositions() {
-	// 	Map<Position, Piece> originPiece = new HashMap<>();
-	// 	BlankPieceFactory.create(originPiece);
-	// 	Pieces pieces = new Pieces(originPiece);
-	// 	pieces.addPiece(Position.of("a1"), new Bishop(Color.WHITE, "b"));
-	// 	pieces.addPiece(Position.of("d4"), new Bishop(Color.WHITE, "b"));
-	//
-	// 	Piece piece = pieces.getPieceByPosition(Position.of("a1"));
-	// 	List<Position> positions = piece.movablePositions(Position.of("a1"), originPiece);
-	//
-	// 	assertThat(positions.size()).isEqualTo(4);
-	//
-	// }
+	@DisplayName("비숍이 대각선으로 가는지 테스트")
+	@Test
+	void goTest() {
+		Bishop bishop = new Bishop(Color.WHITE, "b");
+		pieces.addPiece(Position.of("b2"), bishop);
+
+		gameManager.moveFromTo(new Command("move b2 h8"));
+
+		assertThat(pieces.getPieceByPosition(Position.of("h8"))).isEqualTo(bishop);
+	}
+
+	@DisplayName("비숍이 못 가는 곳 테스트")
+	@Test
+	void goExceptionTest() {
+		Bishop bishop = new Bishop(Color.WHITE, "b");
+		pieces.addPiece(Position.of("b2"), bishop);
+
+		assertThatThrownBy(() -> {
+			gameManager.moveFromTo(new Command("move b2 h2"));
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
 }
