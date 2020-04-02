@@ -6,7 +6,7 @@ import command.RunningCommand;
 import view.InputView;
 import view.OutputView;
 
-public class ChessController {
+public class ConsoleController {
 	public final GameManager gameManage = new GameManager(new PieceFactory().createPieces());
 
 	public void run() {

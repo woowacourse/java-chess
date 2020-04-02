@@ -55,4 +55,8 @@ public class GameManager {
 	public Map<Location, Piece> getBoard() {
 		return chessBoard.getBoard();
 	}
+
+	public GameState getGameState() {
+		return gameState;
+	}
 }

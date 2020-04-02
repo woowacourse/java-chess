@@ -128,6 +128,14 @@ public class Location {
 		return columnAbs == 2 || rowAbs == 2;
 	}
 
+	@Override
+	public String toString() {
+		return "Location{" +
+			"column=" + column +
+			", row=" + row +
+			'}';
+	}
+
 	private static class LocationCache {
 		private static final HashMap<String, Location> cache;
 
