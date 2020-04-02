@@ -1,6 +1,50 @@
 var start;
 var end;
 
+var main = {
+    variables: {
+        pieces: {
+            k: {
+                img: '&#9812;'
+            },
+            q: {
+                img: '&#9813;'
+            },
+            b: {
+                img: '&#9815;'
+            },
+            n: {
+                img: '&#9816;'
+            },
+            r: {
+                img: '&#9814;'
+            },
+            p: {
+                img: '&#9817;'
+            },
+            K: {
+                img: '&#9818;'
+            },
+            Q: {
+                img: '&#9819;'
+            },
+            B: {
+                img: '&#9821;'
+            },
+            N: {
+                img: '&#9822;'
+            },
+            R: {
+                img: '&#9820;'
+            },
+            P: {
+                img: '&#9823;'
+            }
+        }
+    }
+}
+
+
 function allowDrop(ev) {
     // 고유의 동작 제거
     ev.preventDefault();
@@ -15,6 +59,8 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     var des = ev.target.id;
     console.log(data + " to " + des.toString());
+
+
 }
 
 // function dragstart_handler(event) {
