@@ -38,8 +38,8 @@ public class Board {
     }
 
     public void move(final String from, final String to, final Team currentTurn) {
-        Piece fromPiece = findPieceBy(new Position(from));
-        Piece toPiece = findPieceBy(new Position(to));
+        Piece fromPiece = findPieceBy(Position.of(from));
+        Piece toPiece = findPieceBy(Position.of(to));
 
         if (!fromPiece.isSameTeam(currentTurn)) {
             throw new TakeTurnException("체스 게임 순서를 지켜주세요.");

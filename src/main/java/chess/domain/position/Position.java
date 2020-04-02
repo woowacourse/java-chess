@@ -15,23 +15,24 @@ public class Position {
     private final int x;
     private final int y;
 
-    public Position(final String x, final String y) {
-        this(Integer.parseInt(x), Integer.parseInt(y));
-    }
-
-    public Position(final String position) {
-        this(String.valueOf(position.charAt(0) - ASCII_GAP), String.valueOf(position.charAt(1)));
-        if (position.length() != 2) {
-            throw new InvalidPositionException(position);
-        }
-    }
-
     public Position(final int x, final int y) {
         if (!isInBoardRange(x, y)) {
             throw new OutOfBoardRangeException();
         }
         this.x = x;
         this.y = y;
+    }
+
+    public static Position of(final String position) {
+        if (position.length() != 2) {
+            throw new InvalidPositionException(position);
+        }
+        return of(String.valueOf(position.charAt(0) - ASCII_GAP),
+                String.valueOf(position.charAt(1)));
+    }
+
+    public static Position of(final String x, final String y) {
+        return new Position(Integer.parseInt(x), Integer.parseInt(y));
     }
 
     public Position moveBy(final Direction direction) {

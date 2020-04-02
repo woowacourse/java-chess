@@ -123,8 +123,8 @@ public class BoardTest {
         Board board = BoardFactory.createBoard();
 
         board.move(from, to, Team.WHITE);
-        assertThat(board.findPieceBy(new Position(from)).getPieceType()).isEqualTo(toPieceType);
-        assertThat(board.findPieceBy(new Position(to)).getPieceType()).isEqualTo(fromPieceType);
+        assertThat(board.findPieceBy(Position.of(from)).getPieceType()).isEqualTo(toPieceType);
+        assertThat(board.findPieceBy(Position.of(to)).getPieceType()).isEqualTo(fromPieceType);
     }
 
     private static Stream<Arguments> getCasesForPieceMove() {
