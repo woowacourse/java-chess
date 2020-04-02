@@ -7,11 +7,11 @@ import java.sql.Connection;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class chessDAOTest {
-    private static chessDAO chessDAO;
+    private static ChessDAO chessDAO;
 
     @Test
     public void connection() {
-        chessDAO = new chessDAO();
+        chessDAO = new ChessDAO();
         Connection con = chessDAO.getConnection();
         assertNotNull(con);
     }

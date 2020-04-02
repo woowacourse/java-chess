@@ -24,6 +24,10 @@ public class Turn {
         return this.team == team;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
     @Override
     public String toString() {
         return team.getName();

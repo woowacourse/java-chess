@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.domain.ChessDAO;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -46,6 +47,14 @@ public class WebChessController implements ChessController {
 
         get("/reset", (req, res) -> {
             board = resetBoard();
+            res.redirect("/");
+            return null;
+        });
+
+        get("/save", (req, res) -> {
+            ChessDAO chessDAO = new ChessDAO();
+            chessDAO.addPiece(board.getPieces().getAlivePieces());
+            chessDAO.addTurn(board.getTurn());
             res.redirect("/");
             return null;
         });
