@@ -47,24 +47,26 @@ public class ScoreCalculator {
             .sum();
     }
 
-    private static double calculateScoreOf(final Map<Position, Piece> board, Position position) {
-        Piece fromPiece = board.get(position);
+    private static double calculateScoreOf(final Map<Position, Piece> board, Position target) {
+        Piece fromPiece = board.get(target);
 
         if (fromPiece.isPawn()) {
-            return fromPiece.getScore(isSameTeamPawnOnSameColumnOfPawn(board, position));
+            return fromPiece.getScore(isSameTeamPawnOnSameColumnOfPawn(board, target));
         }
         return fromPiece.getScore();
     }
 
     private static boolean isSameTeamPawnOnSameColumnOfPawn(
-        final Map<Position, Piece> board, Position position) {
+        final Map<Position, Piece> board, Position target) {
 
-        if (!board.containsKey(position) || !board.get(position).isPawn()) {
+        if (!board.containsKey(target) || !board.get(target).isPawn()) {
             throw new IllegalArgumentException("start 위치에 기물이 없거나 폰이 아닙니다.");
         }
-        return position.getSameColumnPositions().stream()
-            .anyMatch(target -> board.containsKey(target)    /* 도착위치에 기물이 존재함 */
-                && board.get(target).isPawn()      /* 그 기물이 폰임 */
-                && board.get(target).isSameTeam(board.get(position)));
+        return target.getSameColumnPositions().stream()
+            .anyMatch(position -> board.containsKey(position)    /* 도착위치에 기물이 존재함 */
+                && board.get(position).isPawn()                /* 그 기물이 폰임 */
+                && board.get(position).isSameTeam(board.get(target))    /* 그 기물이 같은팀임 */
+                && position != target                            /* 그 기물이 자기 자신이 아님 */
+            );
     }
 }

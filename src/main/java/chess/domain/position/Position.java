@@ -176,9 +176,14 @@ public class Position {
         return this.rank == rank;
     }
 
+    public boolean isX(File file) {
+        return this.file == file;
+    }
+
+
     public List<Position> getSameColumnPositions() {
         return CACHE.values().stream()
-            .filter(position -> position.isY(this.rank))
+            .filter(position -> position.isX(this.file))
             .collect(Collectors.toList());
     }
 

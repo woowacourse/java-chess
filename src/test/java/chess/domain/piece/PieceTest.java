@@ -19,6 +19,14 @@ public class PieceTest {
         assertThat(piece.getAcronym()).isEqualTo(expected);
     }
 
+    @Test
+    void isSameTeam() {
+        assertThat(new Pawn(Team.WHITE).isSameTeam(new Bishop(Team.WHITE)))
+            .isTrue();
+        assertThat(new Pawn(Team.WHITE).isSameTeam(new Bishop(Team.BLACK)))
+            .isFalse();
+    }
+
     private static Stream<Arguments> pieceConstructorSourceAndExpected() {
         return Stream.of(
             Arguments.of(new Pawn(Team.BLACK), "P"),

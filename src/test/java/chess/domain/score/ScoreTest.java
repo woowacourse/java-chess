@@ -48,4 +48,25 @@ public class ScoreTest {
         Score score = ScoreCalculator.calculate(board);
         assertThat(score.isDraw()).isTrue();
     }
+
+    @Test
+    void 폰의_특수한_점수계산() {
+        Map<Position, Piece> board = new HashMap<>();
+        board.put(Position.of("a1"), new Pawn(Team.WHITE));
+        board.put(Position.of("a2"), new Pawn(Team.WHITE));
+        board.put(Position.of("e8"), new King(Team.WHITE));
+
+        board.put(Position.of("c7"), new Pawn(Team.BLACK));
+        board.put(Position.of("a3"), new Pawn(Team.BLACK));
+        board.put(Position.of("b4"), new King(Team.BLACK));
+
+        Map<String, Double> expected = new HashMap<>();
+        expected.put(Team.WHITE.toString(), 1.0);
+        expected.put(Team.BLACK.toString(), 2.0);
+
+        Score score = ScoreCalculator.calculate(board);
+        assertThat(score.getScores()).isEqualTo(expected);
+//        assertThat(score.getScores().get(Team.WHITE.toString())).isEqualTo(1.0);
+//        assertThat(score.getScores().get(Team.BLACK.toString())).isEqualTo(2.0);
+    }
 }
