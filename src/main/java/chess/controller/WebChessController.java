@@ -27,6 +27,7 @@ public class WebChessController implements ChessController {
             Map<String, Object> model = new HashMap<>();
             model.put("pieces", printChessBoard(board));
             model.put("score", getScore(board));
+            model.put("turn", board.getTurn());
             return model;
         }, new JsonTransformer());
 

@@ -17,6 +17,10 @@ async function setPieces() {
     pieceFileName.set("BLACK", "black");
     pieceFileName.set("WHITE", "white");
 
+    var teamName = new Map();
+    teamName.set("BLACK", "흑");
+    teamName.set("WHITE", "백");
+
     let status = await (fetch("/status").then((data) => data.json()));
 
     Object.values(document.querySelectorAll(".tile")).forEach(e => {
@@ -29,6 +33,7 @@ async function setPieces() {
     });
     document.querySelector("#blackScore").innerText = status.score.blackScore;
     document.querySelector("#whiteScore").innerText = status.score.whiteScore;
+    document.querySelector("#turnInfo").innerText = teamName.get(status.turn.team) + "의 차례입니다.";
 }
 
 function chooseSource(sourceValue) {

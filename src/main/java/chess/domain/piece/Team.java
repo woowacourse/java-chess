@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 public enum Team {
     WHITE(Character::toLowerCase, "백"),
-    BLACK(Character::toUpperCase, "");
+    BLACK(Character::toUpperCase, "흑");
 
     private final Function<Character, Character> teamRepresentation;
     private final String name;
