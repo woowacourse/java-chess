@@ -36,15 +36,13 @@ class RowTest {
     @DisplayName("jump Rank")
     @MethodSource("createJumpRank")
     void jump(int index, Row actual, Row expected) {
-        assertThat(actual.jump(index).orElse(null)).isEqualTo(expected);
+        assertThat(actual.jump(index)).isEqualTo(expected);
     }
 
     static Stream<Arguments> createJumpRank() {
         return Stream.of(
                 Arguments.of(3, ONE, FOUR),
-                Arguments.of(-2, EIGHT, SIX),
-                Arguments.of(2, SEVEN, null),
-                Arguments.of(-3, TWO, null)
+                Arguments.of(-2, EIGHT, SIX)
         );
     }
 
@@ -52,13 +50,13 @@ class RowTest {
     @DisplayName("다음 Rank")
     @MethodSource("createNextRank")
     void next(Row actual, Row expected) {
-        assertThat(actual.next().orElse(null)).isEqualTo(expected);
+        assertThat(actual.next()).isEqualTo(expected);
     }
 
     static Stream<Arguments> createNextRank() {
         return Stream.of(
                 Arguments.of(ONE, TWO),
-                Arguments.of(EIGHT, null)
+                Arguments.of(SEVEN, EIGHT)
         );
     }
 
@@ -66,13 +64,13 @@ class RowTest {
     @DisplayName("이전 Rank")
     @MethodSource("createPreviousRank")
     void previous(Row actual, Row expected) {
-        assertThat(actual.previous().orElse(null)).isEqualTo(expected);
+        assertThat(actual.previous()).isEqualTo(expected);
     }
 
     static Stream<Arguments> createPreviousRank() {
         return Stream.of(
                 Arguments.of(TWO, ONE),
-                Arguments.of(ONE, null)
+                Arguments.of(EIGHT, SEVEN)
         );
     }
 }

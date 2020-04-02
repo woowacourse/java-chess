@@ -1,6 +1,7 @@
 package chess.view;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import chess.domain.board.Board;
 import chess.domain.board.Line;
@@ -22,10 +23,10 @@ public class OutputView {
 
     public static void printBoard(Board board) {
         for (Line row : board.getRows()) {
-            for (GamePiece piece : row.getGamePieces()) {
-                System.out.print(piece.getName());
-            }
-            System.out.println();
+            System.out.println(row.getGamePieces()
+                    .stream()
+                    .map(GamePiece::getName)
+                    .collect(Collectors.joining("")));
         }
     }
 

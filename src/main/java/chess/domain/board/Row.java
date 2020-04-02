@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public enum Row {
 
@@ -41,19 +40,15 @@ public enum Row {
         return opposite.get(this);
     }
 
-    public Optional<Row> jump(int index) {
-        try {
-            return Optional.of(values()[ordinal() + index]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return Optional.empty();
-        }
+    public Row jump(int index) {
+        return values()[ordinal() + index];
     }
 
-    public Optional<Row> next() {
+    public Row next() {
         return jump(NEXT_INDEX);
     }
 
-    public Optional<Row> previous() {
+    public Row previous() {
         return jump(PREVIOUS_INDEX);
     }
 

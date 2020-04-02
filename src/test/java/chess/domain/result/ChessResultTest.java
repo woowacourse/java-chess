@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import chess.domain.board.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class ChessResultTest {
     @DisplayName("초기 board score 계산")
     void calculateScore() {
         Board board = Board.createEmpty().placeInitialPieces();
-        ChessResult chessResult = ChessResult.from(board.getBoard());
+        ChessResult chessResult = ChessResult.from(board);
         Map<PlayerColor, Score> scores = chessResult.getResult();
         Map<PlayerColor, Score> expected = new HashMap<>();
         expected.put(BLACK, Score.from(38));
@@ -41,7 +42,7 @@ class ChessResultTest {
         map.put(Position.from("f4"), WHITE_PAWN.getGamePiece());
         map.put(Position.from("f6"), WHITE_PAWN.getGamePiece());
         map.put(Position.from("h3"), WHITE_PAWN.getGamePiece());
-        ChessResult chessResult = ChessResult.from(map);
+        ChessResult chessResult = ChessResult.from(Board.from(map, Status.initialStatus()));
 
         assertThat(chessResult.getResult().get(WHITE)).isEqualTo(Score.from(3.5));
     }

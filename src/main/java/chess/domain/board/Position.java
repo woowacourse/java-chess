@@ -1,14 +1,8 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
 import chess.domain.piece.Direction;
+
+import java.util.*;
 
 public class Position implements Comparable<Position> {
 
@@ -17,10 +11,14 @@ public class Position implements Comparable<Position> {
     static {
         positions = new HashMap<>();
         for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-                String name = nameOf(column, row);
-                positions.put(name, new Position(column, row));
-            }
+            createPosition(column);
+        }
+    }
+
+    private static void createPosition(Column column) {
+        for (Row row : Row.values()) {
+            String name = nameOf(column, row);
+            positions.put(name, new Position(column, row));
         }
     }
 
@@ -64,15 +62,11 @@ public class Position implements Comparable<Position> {
         return of(column, row.opposite());
     }
 
-    public Optional<Position> nextPositionOf(Direction direction) {
-        Column columnDestination = direction.findColumnDestination(column).orElse(null);
-        Row rowDestination = direction.findRowDestination(row).orElse(null);
+    public Position nextPositionOf(Direction direction) {
+        Column columnDestination = direction.findColumnDestination(column);
+        Row rowDestination = direction.findRowDestination(row);
 
-        if (columnDestination == null || rowDestination == null) {
-            return Optional.empty();
-        }
-
-        return Optional.of(of(columnDestination, rowDestination));
+        return of(columnDestination, rowDestination);
     }
 
     public List<Position> pathTo(Direction direction, int count) {
@@ -80,11 +74,12 @@ public class Position implements Comparable<Position> {
         Position nextPosition = this;
 
         for (int i = 0; i < count; i++) {
-            nextPosition = nextPosition.nextPositionOf(direction).orElse(null);
-            if (nextPosition == null) {
-                return path;
+            try {
+                nextPosition = nextPosition.nextPositionOf(direction);
+                path.add(nextPosition);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                break;
             }
-            path.add(nextPosition);
         }
         return path;
     }

@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
-import java.util.Optional;
-import java.util.function.Function;
-
 import chess.domain.board.Column;
 import chess.domain.board.Row;
+
+import java.util.function.Function;
 
 /*
  *  N(North) - 북쪽으로 한 칸 이동(Row 1 증가)
@@ -15,13 +14,13 @@ import chess.domain.board.Row;
 
 public enum Direction {
 
-    N(Optional::of, Row::next),
+    N(Function.identity(), Row::next),
     NE(Column::next, Row::next),
-    E(Column::next, Optional::of),
+    E(Column::next, Function.identity()),
     SE(Column::next, Row::previous),
-    S(Optional::of, Row::previous),
+    S(Function.identity(), Row::previous),
     SW(Column::previous, Row::previous),
-    W(Column::previous, Optional::of),
+    W(Column::previous, Function.identity()),
     NW(Column::previous, Row::next),
     NNE(Column::next, row -> row.jump(2)),
     NEE(column -> column.jump(2), Row::next),
@@ -32,19 +31,19 @@ public enum Direction {
     NWW(column -> column.jump(-2), Row::next),
     NNW(Column::previous, row -> row.jump(2));
 
-    private final Function<Column, Optional<Column>> columnDestination;
-    private final Function<Row, Optional<Row>> rowDestination;
+    private final Function<Column, Column> columnDestination;
+    private final Function<Row, Row> rowDestination;
 
-    Direction(Function<Column, Optional<Column>> columnDestination, Function<Row, Optional<Row>> rowDestination) {
+    Direction(Function<Column, Column> columnDestination, Function<Row, Row> rowDestination) {
         this.columnDestination = columnDestination;
         this.rowDestination = rowDestination;
     }
 
-    public Optional<Column> findColumnDestination(Column column) {
+    public Column findColumnDestination(Column column) {
         return columnDestination.apply(column);
     }
 
-    public Optional<Row> findRowDestination(Row row) {
+    public Row findRowDestination(Row row) {
         return rowDestination.apply(row);
     }
 }

@@ -11,6 +11,9 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
+
 public class Board {
 
     private final Map<Position, GamePiece> board;
@@ -61,7 +64,7 @@ public class Board {
 
         validateSourcePiece(sourcePiece, targetPiece);
 
-        if(!sourcePiece.canMoveTo(this, source, target)) {
+        if (!sourcePiece.canMoveTo(this, source, target)) {
             return this;
         }
 
@@ -100,11 +103,34 @@ public class Board {
     }
 
     public ChessResult calculateResult() {
-        return ChessResult.from(board);
+        return ChessResult.from(this);
     }
 
     public List<Line> getRows() {
-        return Line.listsByRow(board);
+        return getLine(Position::getRow);
+    }
+
+    public List<Line> getColumns() {
+        return getLine(Position::getColumn);
+    }
+
+    private <T> List<Line> getLine(Function<Position, T> filter) {
+        Map<T, Line> lines = board.entrySet()
+                .stream()
+                .collect(groupingBy(entry -> filter.apply(entry.getKey()),       // key
+                        () -> new TreeMap<>(Collections.reverseOrder()),    // 리턴타입은 reversed TreeMap
+                        mapping(Map.Entry::getValue, collectingAndThen(toList(), Line::new))));// value(Line)
+
+        return new ArrayList<>(lines.values());
+    }
+
+    public Map<GamePiece, Integer> countEachGamePiece(PlayerColor playerColor) {
+        List<GamePiece> gamePieces = new ArrayList<>(board.values());
+        return gamePieces.stream()
+                .distinct()
+                .filter(gamePiece -> gamePiece != EmptyPiece.getInstance())
+                .filter(gamePiece -> gamePiece.is(playerColor))
+                .collect(Collectors.toMap(gamePiece -> gamePiece, gamePiece -> Collections.frequency(gamePieces, gamePiece)));
     }
 
     public Map<Position, GamePiece> getBoard() {

@@ -36,15 +36,13 @@ class ColumnTest {
     @DisplayName("jump File")
     @MethodSource("createJumpFile")
     void jump(int index, Column actual, Column expected) {
-        assertThat(actual.jump(index).orElse(null)).isEqualTo(expected);
+        assertThat(actual.jump(index)).isEqualTo(expected);
     }
 
     static Stream<Arguments> createJumpFile() {
         return Stream.of(
                 Arguments.of(3, A, D),
-                Arguments.of(-2, H, F),
-                Arguments.of(2, G, null),
-                Arguments.of(-3, B, null)
+                Arguments.of(-2, H, F)
         );
     }
 
@@ -52,13 +50,13 @@ class ColumnTest {
     @DisplayName("다음 File")
     @MethodSource("createNextFile")
     void next(Column actual, Column expected) {
-        assertThat(actual.next().orElse(null)).isEqualTo(expected);
+        assertThat(actual.next()).isEqualTo(expected);
     }
 
     static Stream<Arguments> createNextFile() {
         return Stream.of(
                 Arguments.of(B, C),
-                Arguments.of(H, null)
+                Arguments.of(G, H)
         );
     }
 
@@ -66,13 +64,13 @@ class ColumnTest {
     @DisplayName("이전 File")
     @MethodSource("createPreviousFile")
     void previous(Column actual, Column expected) {
-        assertThat(actual.previous().orElse(null)).isEqualTo(expected);
+        assertThat(actual.previous()).isEqualTo(expected);
     }
 
     static Stream<Arguments> createPreviousFile() {
         return Stream.of(
                 Arguments.of(B, A),
-                Arguments.of(A, null)
+                Arguments.of(H, G)
         );
     }
 }

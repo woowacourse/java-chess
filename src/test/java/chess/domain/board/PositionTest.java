@@ -87,13 +87,15 @@ class PositionTest {
     @MethodSource("createDirection")
     void destinationOf(Direction direction, Position expected) {
         Position pivot = Position.from("d5");
-        assertThat(pivot.nextPositionOf(direction).orElse(null)).isEqualTo(expected);
+        assertThat(pivot.nextPositionOf(direction)).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @DisplayName("주어진 방향으로 이동할 수 없을 경우")
     @MethodSource("createOutOfIndex")
     void destinationOutOfIndex(Direction direction, Position position) {
-        assertThat(position.nextPositionOf(direction).orElse(null)).isEqualTo(null);
+        assertThatThrownBy(() -> {
+            position.nextPositionOf(direction);
+        }).isInstanceOf(ArrayIndexOutOfBoundsException.class);
     }
 }

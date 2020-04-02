@@ -20,8 +20,8 @@ class DirectionTest {
     @DisplayName("주어진 방향으로 이동했을 때의 포지션")
     @MethodSource("createDirection")
     void findDestination(Direction direction, Position expected) {
-        Column column = direction.findColumnDestination(Column.D).orElse(null);
-        Row row = direction.findRowDestination(Row.FIVE).orElse(null);
+        Column column = direction.findColumnDestination(Column.D);
+        Row row = direction.findRowDestination(Row.FIVE);
 
         assertThat(Position.of(column, row)).isEqualTo(expected);
     }
