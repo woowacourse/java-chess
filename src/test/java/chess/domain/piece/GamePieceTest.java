@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import chess.domain.board.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,19 +49,5 @@ class GamePieceTest {
                 Arguments.of(BLACK_ROOK.getGamePiece(), false),
                 Arguments.of(WHITE_ROOK.getGamePiece(), true)
         );
-    }
-
-    @Test
-    void samePlayerColor() {
-        Position source = Position.from("d5");
-        Position target = Position.from("d4");
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = BLACK_ROOK.getGamePiece();
-        board.put(source, gamePiece);
-        board.put(target, BLACK_BISHOP.getGamePiece());
-
-        assertThatThrownBy(() -> gamePiece.validateMoveTo(board, source, target))
-                .isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n자신의 말은 잡을 수 없습니다.");
     }
 }

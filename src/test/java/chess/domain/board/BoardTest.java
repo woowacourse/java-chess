@@ -1,22 +1,23 @@
 package chess.domain.board;
 
-import static chess.domain.piece.ChessPiece.*;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import chess.domain.exception.InvalidMovementException;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.GamePiece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.exception.InvalidMovementException;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.GamePiece;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static chess.domain.piece.ChessPiece.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
@@ -71,10 +72,7 @@ class BoardTest {
         map.put(Position.from("d5"), BLACK_PAWN.getGamePiece());
         Board board = Board.from(map, new Status(1, StatusType.PROCESSING));
 
-        assertThatThrownBy(() -> {
-            board.move(Position.from("d5"), Position.from("d6"));
-        }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
+        assertThat(board.move(Position.from("d5"), Position.from("d6"))).isEqualTo(board);
     }
 
     @Test
@@ -116,10 +114,8 @@ class BoardTest {
         map.put(Position.from("e3"), BLACK_BISHOP.getGamePiece());
         Board board = Board.from(map, new Status(0, StatusType.PROCESSING));
 
-        assertThatThrownBy(() -> {
-            board.move(source, target);
-        }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n경로에 기물이 존재합니다.");
+        assertThat(board.move(source, target)).isEqualTo(board);
+
     }
 
     static Stream<Arguments> createPathWithObstacle() {
@@ -149,5 +145,19 @@ class BoardTest {
                 Arguments.of(Position.from("d6"), Position.from("d5"), true),
                 Arguments.of(Position.from("d6"), Position.from("c5"), false)
         );
+    }
+
+    @Test
+    void samePlayerColor() {
+        Position source = Position.from("d5");
+        Position target = Position.from("d4");
+        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        GamePiece gamePiece = BLACK_ROOK.getGamePiece();
+        board.put(source, gamePiece);
+        board.put(target, BLACK_BISHOP.getGamePiece());
+        Board given = Board.from(board, Status.initialStatus().nextTurn());
+        assertThatThrownBy(() -> given.move(source, target))
+                .isInstanceOf(InvalidMovementException.class)
+                .hasMessage("이동할 수 없습니다.\n자신의 말은 잡을 수 없습니다.");
     }
 }

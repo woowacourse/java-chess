@@ -2,13 +2,12 @@ package chess.domain.piece;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
-import chess.domain.exception.InvalidMovementException;
 import chess.domain.player.PlayerColor;
 
 public class Pawn extends GamePiece {
@@ -31,38 +30,31 @@ public class Pawn extends GamePiece {
     }
 
     @Override
-    protected void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
-        if (board.get(target) != EmptyPiece.getInstance()) {
-            validateKillPath(source, target);
-            return;
+    protected boolean canMove(Board board, Position source, Position target) {
+        if (board.isNotEmpty(target)) {
+            return canKill(source, target);
         }
 
-        validateMovePath(board, source, target);
+        return canJustMove(board, source, target);
     }
 
-    private void validateKillPath(Position source, Position target) {
-        killDirections.stream()
+    private boolean canKill(Position source, Position target) {
+        return killDirections.stream()
                 .map(direction -> source.pathTo(direction, moveCount))
-                .filter(eachPath -> eachPath.contains(target))
-                .findFirst()
-                .orElseThrow(() -> new InvalidMovementException("이동할 수 없는 경로입니다."));
+                .anyMatch(eachPath -> eachPath.contains(target));
     }
 
-    private void validateMovePath(Map<Position, GamePiece> board, Position source, Position target) {
+    private boolean canJustMove(Board board, Position source, Position target) {
         List<Position> path = source.pathTo(moveDirection, moveCount);
         if (originalPositions.contains(source)) {
             path = source.pathTo(moveDirection, FIRST_MOVE_COUNT);
         }
 
         if (!path.contains(target)) {
-            throw new InvalidMovementException("이동할 수 없는 경로입니다.");
+            return false;
         }
 
-        path.stream()
-                .filter(position -> board.get(position) != EmptyPiece.getInstance())
-                .findFirst()
-                .ifPresent(position -> {
-                    throw new InvalidMovementException("경로에 기물이 존재합니다.");
-                });
+        return path.stream()
+                .noneMatch(board::isNotEmpty);
     }
 }

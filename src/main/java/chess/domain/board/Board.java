@@ -21,7 +21,7 @@ public class Board {
         this.status = status;
     }
 
-    protected static Board from(Map<Position, GamePiece> board, Status status) {
+    public static Board from(Map<Position, GamePiece> board, Status status) {
         return new Board(board, status);
     }
 
@@ -59,8 +59,11 @@ public class Board {
         GamePiece sourcePiece = board.get(source);
         GamePiece targetPiece = board.get(target);
 
-        validateSourcePiece(sourcePiece);
-        sourcePiece.validateMoveTo(board, source, target);
+        validateSourcePiece(sourcePiece, targetPiece);
+
+        if(!sourcePiece.canMoveTo(this, source, target)) {
+            return this;
+        }
 
         board.put(target, sourcePiece);
         board.put(source, EmptyPiece.getInstance());
@@ -73,7 +76,7 @@ public class Board {
         return new Board(board, nextStatus);
     }
 
-    private void validateSourcePiece(GamePiece sourcePiece) {
+    private void validateSourcePiece(GamePiece sourcePiece, GamePiece targetPiece) {
         if (sourcePiece.equals(EmptyPiece.getInstance())) {
             throw new InvalidMovementException("기물이 존재하지 않습니다.");
         }
@@ -83,10 +86,17 @@ public class Board {
         if (status.isBlackTurn() && sourcePiece.is(PlayerColor.WHITE)) {
             throw new InvalidMovementException("해당 플레이어의 턴이 아닙니다.");
         }
+        if (sourcePiece.isSameTeam(targetPiece)) {
+            throw new InvalidMovementException("자신의 말은 잡을 수 없습니다.");
+        }
     }
 
     public boolean isNotFinished() {
         return status.isNotFinished();
+    }
+
+    public boolean isNotEmpty(Position position) {
+        return !board.get(position).equals(EmptyPiece.getInstance());
     }
 
     public ChessResult calculateResult() {

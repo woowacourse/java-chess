@@ -3,6 +3,7 @@ package chess.domain.piece;
 import java.util.Collections;
 import java.util.Map;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.player.PlayerColor;
 
@@ -19,7 +20,7 @@ public class EmptyPiece extends GamePiece {
     }
 
     @Override
-    public void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
+    public boolean canMove(Board board, Position source, Position target) {
         throw new UnsupportedOperationException("기물이 존재하지 않습니다.");
     }
 }

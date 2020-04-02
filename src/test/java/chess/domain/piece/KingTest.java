@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import chess.domain.board.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -29,7 +30,7 @@ class KingTest {
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target);
         }).doesNotThrowAnyException();
     }
 
@@ -55,10 +56,7 @@ class KingTest {
         GamePiece gamePiece = ChessPiece.WHITE_KING.getGamePiece();
         board.put(source, gamePiece);
 
-        assertThatThrownBy(() -> {
-            gamePiece.validatePath(board, source, target);
-        }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
+        assertThat(gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target)).isFalse();
     }
 
     static Stream<Arguments> createInvalidTarget() {

@@ -1,23 +1,19 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Stream;
-
+import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.board.Status;
+import chess.domain.exception.InvalidMovementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
+import java.util.*;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.*;
 
 class QueenTest {
 
@@ -30,7 +26,7 @@ class QueenTest {
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target);
         }).doesNotThrowAnyException();
     }
 
@@ -66,10 +62,7 @@ class QueenTest {
         GamePiece gamePiece = ChessPiece.WHITE_QUEEN.getGamePiece();
         board.put(source, gamePiece);
 
-        assertThatThrownBy(() -> {
-            gamePiece.validatePath(board, source, target);
-        }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
+        assertThat(gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target)).isFalse();
     }
 
     static Stream<Arguments> createInvalidTarget() {
@@ -99,9 +92,7 @@ class QueenTest {
         board.put(source, piece);
         board.put(obstacle, ChessPiece.BLACK_PAWN.getGamePiece());
 
-        assertThatThrownBy(() -> {
-            piece.validatePath(board, source, target);
-        }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n경로에 기물이 존재합니다.");
+        assertThat(piece.canMove(Board.from(board, Status.initialStatus()), source, target)).isFalse();
+
     }
 }

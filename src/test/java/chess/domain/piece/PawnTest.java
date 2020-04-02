@@ -1,6 +1,13 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
+import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.board.Status;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,15 +15,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class PawnTest {
 
@@ -32,7 +32,7 @@ class PawnTest {
         board.put(Position.from("e3"), ChessPiece.BLACK_KING.getGamePiece());
 
         assertThatCode(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target);
         }).doesNotThrowAnyException();
 
     }
@@ -56,10 +56,7 @@ class PawnTest {
 
         board.put(source, piece);
 
-        assertThatThrownBy(() -> {
-            piece.validatePath(board, source, target);
-        }).isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
+        assertThat(piece.canMove(Board.from(board, Status.initialStatus()), source, target)).isFalse();
     }
 
     static Stream<Arguments> createInvalidTarget() {
@@ -81,7 +78,7 @@ class PawnTest {
         Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
         board.put(source, gamePiece);
 
-        assertThatCode(() -> gamePiece.validateMoveTo(board, source, target))
+        assertThatCode(() -> gamePiece.canMoveTo(Board.from(board, Status.initialStatus()), source, target))
                 .doesNotThrowAnyException();
     }
 
@@ -103,8 +100,7 @@ class PawnTest {
         Position source = Position.from("d5");
         board.put(source, gamePiece);
 
-        assertThatThrownBy(() -> gamePiece.validateMoveTo(board, source, Position.from("d3")))
-                .isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
+        assertThat(gamePiece.canMove(Board.from(board, Status.initialStatus()), source, Position.from("d3"))).isFalse();
+
     }
 }

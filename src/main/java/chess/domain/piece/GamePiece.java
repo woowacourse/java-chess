@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
 import java.util.List;
-import java.util.Map;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
 import chess.domain.player.PlayerColor;
 
 public abstract class GamePiece {
@@ -21,17 +20,11 @@ public abstract class GamePiece {
         this.playerColor = playerColor;
     }
 
-    public void validateMoveTo(Map<Position, GamePiece> board, Position source, Position target) {
-        GamePiece targetPiece = board.get(target);
-
-        if (playerColor == targetPiece.playerColor) {
-            throw new InvalidMovementException("자신의 말은 잡을 수 없습니다.");
-        }
-
-        validatePath(board, source, target);
+    public boolean canMoveTo(Board board, Position source, Position target) {
+        return canMove(board, source, target);
     }
 
-    protected abstract void validatePath(Map<Position, GamePiece> board, Position source, Position target);
+    protected abstract boolean canMove(Board board, Position source, Position target);
 
     public boolean is(PlayerColor playerColor) {
         return playerColor.equals(this.playerColor);
@@ -39,6 +32,10 @@ public abstract class GamePiece {
 
     public double calculateScore(int count) {
         return score * count;
+    }
+
+    public boolean isSameTeam(GamePiece piece) {
+        return playerColor == piece.playerColor;
     }
 
     public List<Position> getOriginalPositions() {
