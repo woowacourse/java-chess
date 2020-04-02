@@ -20,7 +20,9 @@ public class ChessGame {
 	public void move(Position source, Position target) {
 		validateTurn(source, turn);
 		chessBoard.move(source, target);
-		turn = turn.reverse();
+		if (!isEnd()) {
+			turn = turn.reverse();
+		}
 	}
 
 	private void validateTurn(Position source, Side turn) {
@@ -42,6 +44,7 @@ public class ChessGame {
 	}
 
 	public void end() {
+		turn = turn.reverse();
 		userEnd = true;
 	}
 

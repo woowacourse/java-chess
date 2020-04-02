@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <style type="text/css">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            font-family: 'Malgun Gothic', serif;
+        }
+        div * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        #title {
+            max-width: 500px;
+            max-height: 100px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        #game {
+            border: black solid;
+            max-width: 600px;
+            max-height: 600px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            margin: 20px auto;
+        }
+        .gamecell {
+            width: 12.5%;
+            height: 12.5%;
+            float: left;
+            margin: 0;
+            font-size: 30pt;
+            z-index: 1;
+            position: relative;
+        }
+        .gamecelltext{
+            position: absolute;
+            margin: auto;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        .result {
+            max-width: 100px;
+            max-height: 50px;
+            width: 100%;
+            height: 100%;
+            margin: 10px auto;
+            text-align: center;
+        }
+        .turn {
+            max-width: 300px;
+            max-height: 20px;
+            width: 100%;
+            height: 100%;
+            margin: 10px auto;
+            text-align: center;
+        }
+        .error{
+            max-width: 600px;
+            max-height: 20px;
+            width: 100%;
+            height: 100%;
+            margin: 10px auto;
+            text-align: center;
+        }
+        form {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="title">
+    <h1 class="title">우아한 체스판</h1>
+</div>
+<div id="game">
+    {{#piece.chessboard}}
+    {{#.}}
+    <div class="gamecell">
+        <div class="gamecelltext">
+            <p>{{.}}</p>
+        </div>
+    </div>
+    {{/.}}
+    {{/piece.chessboard}}
+</div>
+<div class="result">
+    <p>흑 : {{blackscore}}</p>
+    <p>백 : {{whitescore}}</p>
+</div>
+<div class="turn">
+    <p>현재 턴은 {{turn}}입니다.</p>
+</div>
+<div class="error">
+    {{#error}}
+    <p>에러 : {{error}}</p>
+    {{/error}}
+</div>
+<div class="gameinput">
+    <form action="/game" method="post">
+        <label>
+            <input type="text" name="source">
+            <input type="text" name="target">
+        </label>
+        <input type="submit" value="이동" formaction="/game">
+        <input type="submit" value="기권" formaction="/end">
+    </form>
+</div>
+</body>
+</html>
