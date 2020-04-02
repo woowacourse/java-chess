@@ -15,7 +15,7 @@ public class DirectionTest {
     @ParameterizedTest
     @MethodSource("getCasesForMoveByDirections")
     void move(Position from, Direction direction, Position expectedTo) {
-        Position to = from.move(direction);
+        Position to = from.moveBy(direction);
         assertThat(to).isEqualTo(expectedTo);
     }
 

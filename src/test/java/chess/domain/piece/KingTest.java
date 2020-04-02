@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
-import chess.domain.strategy.*;
+import chess.domain.strategy.KingMoveStrategy;
+import chess.domain.strategy.MoveStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,7 +36,8 @@ public class KingTest {
         INITIALIZED_POSITIONS.set(36, Piece.createWhiteKing(new Position(5, 5)));
         INITIALIZED_POSITIONS.set(27, Piece.createWhiteRook(new Position(4, 4)));
         INITIALIZED_POSITIONS.set(37, Piece.createBlackBishop(new Position(6, 5)));
-        assertThat(moveStrategy.getPossiblePositions(INITIALIZED_POSITIONS, piece)).isEqualTo(expectedToPositions);
+        Board board = new Board(INITIALIZED_POSITIONS);
+        assertThat(moveStrategy.getPossiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForKingMoveByDirection() {

@@ -2,9 +2,7 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
-import chess.domain.position.Position;
 import chess.domain.result.GameResult;
 import chess.domain.util.Command;
 import chess.exception.InvalidPositionException;
@@ -39,10 +37,7 @@ public class ChessGame {
             }
             try {
                 if (command.isMove()) {
-                    Piece fromPiece = board.findPieceBy(new Position(inputCommand[FROM_POSITION_INDEX]));
-                    Piece toPiece = board.findPieceBy(new Position(inputCommand[TO_POSITION_INDEX]));
-
-                    board = fromPiece.movePiece(board, toPiece, currentTurn);
+                    board.move(inputCommand[FROM_POSITION_INDEX], inputCommand[TO_POSITION_INDEX], currentTurn);
                     currentTurn = reverseTurn(currentTurn);
                     OutputView.printBoard(board.getBoard());
                 }

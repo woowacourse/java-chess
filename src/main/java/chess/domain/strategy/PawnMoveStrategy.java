@@ -1,5 +1,6 @@
 package chess.domain.strategy;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.util.Direction;
@@ -10,24 +11,25 @@ import java.util.List;
 
 public abstract class PawnMoveStrategy extends DefaultMoveStrategy {
     @Override
-    public List<Position> getPossiblePositions(List<Piece> board, Piece piece) {
+    public List<Position> getPossiblePositions(Board board, Piece piece) {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {
             try {
-                Position nextPosition = piece.getPosition().move(direction);
+                Position nextPosition = piece.getPosition().moveBy(direction);
+                Piece nextPiece = board.findPieceBy(nextPosition);
 
                 if (direction == getForwardDirection()) {
-                    if (isBlankPieceInsideBoard(board, nextPosition)) {
+                    if (isBlankPieceInsideBoard(nextPiece)) {
                         possiblePositions.add(nextPosition);
                     }
                     if (isFirstMove(piece)) {
-                        possiblePositions.add(nextPosition.move(direction));
+                        possiblePositions.add(nextPosition.moveBy(direction));
                     }
                     continue;
                 }
 
-                if (isOpponentPieceInsideBoard(board, piece, nextPosition)) {
+                if (isOpponentPieceInsideBoard(piece, nextPiece)) {
                     possiblePositions.add(nextPosition);
                 }
             } catch (OutOfBoardRangeException ignored) {

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.strategy.KnightMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
@@ -33,7 +34,8 @@ public class KnightTest {
     @MethodSource("getCasesForKnightMoveByDirection")
     void knightMove(MoveStrategy moveStrategy,  Piece piece, List<Position> expectedToPositions) {
         INITIALIZED_POSITIONS.set(36, Piece.createWhiteKnight(new Position(5, 5)));
-        assertThat(moveStrategy.getPossiblePositions(INITIALIZED_POSITIONS, piece)).isEqualTo(expectedToPositions);
+        Board board = new Board(INITIALIZED_POSITIONS);
+        assertThat(moveStrategy.getPossiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForKnightMoveByDirection() {

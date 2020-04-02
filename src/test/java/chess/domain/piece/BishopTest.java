@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
-import chess.domain.strategy.*;
+import chess.domain.strategy.BishopMoveStrategy;
+import chess.domain.strategy.MoveStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,7 +36,8 @@ public class BishopTest {
         INITIALIZED_POSITIONS.set(36, Piece.createWhiteBishop(new Position(5, 5)));
         INITIALIZED_POSITIONS.set(54, Piece.createBlackRook(new Position(7, 7)));
         INITIALIZED_POSITIONS.set(0, Piece.createWhiteQueen(new Position(1, 1)));
-        assertThat(moveStrategy.getPossiblePositions(INITIALIZED_POSITIONS, piece)).isEqualTo(expectedToPositions);
+        Board board = new Board(INITIALIZED_POSITIONS);
+        assertThat(moveStrategy.getPossiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForBishopMoveByDirection() {

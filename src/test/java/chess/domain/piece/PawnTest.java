@@ -23,7 +23,7 @@ public class PawnTest {
     @MethodSource("getCasesForPawnMoveByDirection")
     void pawnMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
         Board board = BoardFactory.createBoard();
-        assertThat(moveStrategy.getPossiblePositions(board.getBoard(), piece)).isEqualTo(expectedToPositions);
+        assertThat(moveStrategy.getPossiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForPawnMoveByDirection() {

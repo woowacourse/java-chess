@@ -124,12 +124,9 @@ public class BoardTest {
     void movePiece(String from, String to, PieceType fromPieceType, PieceType toPieceType) {
         Board board = BoardFactory.createBoard();
 
-        Piece fromPiece = board.findPieceBy(new Position(from));
-        Piece toPiece = board.findPieceBy(new Position(to));
-        Board movedBoard = fromPiece.movePiece(board, toPiece, Team.WHITE);
-
-        assertThat(movedBoard.findPieceBy(movedBoard.getBoardIndexByStringPosition(from)).getPieceType()).isEqualTo(toPieceType);
-        assertThat(movedBoard.findPieceBy(movedBoard.getBoardIndexByStringPosition(to)).getPieceType()).isEqualTo(fromPieceType);
+        board.move(from, to, Team.WHITE);
+        assertThat(board.findPieceBy(new Position(from)).getPieceType()).isEqualTo(toPieceType);
+        assertThat(board.findPieceBy(new Position(to)).getPieceType()).isEqualTo(fromPieceType);
     }
 
     private static Stream<Arguments> getCasesForPieceMove() {

@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.exception.PieceImpossibleMoveException;
 
 import java.util.Objects;
 
@@ -66,12 +67,15 @@ public class Piece {
         return new Piece(PieceType.BLACK_KING, position);
     }
 
-    public Piece move(Position toPosition) {
+    public Piece moveTo(final Position toPosition) {
         return new Piece(pieceType, toPosition);
     }
 
-    public Board movePiece(Board board, Piece toPiece, Team currentTurn) {
-        return pieceType.movePieceWithTurnValidation(board, this, toPiece, currentTurn);
+    public boolean isMovable(final Board board,  final Piece toPiece) {
+        if (pieceType.getPossiblePositions(board, this).contains(toPiece.getPosition())) {
+            return true;
+        }
+        throw new PieceImpossibleMoveException("해당 포지션으로 이동할 수 없습니다.");
     }
 
     public boolean isKing() {

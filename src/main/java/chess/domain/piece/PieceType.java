@@ -1,7 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.position.Position;
 import chess.domain.strategy.*;
+
+import java.util.List;
 
 public enum PieceType {
     WHITE_PAWN(new WhitePawnMoveStrategy(), 'p', Team.WHITE, 1),
@@ -32,16 +35,8 @@ public enum PieceType {
         this.score = score;
     }
 
-    public char representation() {
-        return representation;
-    }
-
-    public double score() {
-        return score;
-    }
-
-    public Team team() {
-        return team;
+    public List<Position> getPossiblePositions(Board board, Piece piece) {
+        return moveStrategy.getPossiblePositions(board, piece);
     }
 
     public boolean isOtherTeam(final PieceType pieceType) {
@@ -52,7 +47,11 @@ public enum PieceType {
         return this.team == team;
     }
 
-    public Board movePieceWithTurnValidation(final Board board, final Piece piece, final Piece toPiece, final Team currentTurn) {
-        return moveStrategy.movePieceWithTurnValidation(board, piece, toPiece, currentTurn);
+    public char representation() {
+        return representation;
+    }
+
+    public double score() {
+        return score;
     }
 }
