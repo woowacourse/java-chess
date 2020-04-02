@@ -1,12 +1,13 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceGenerator;
+import chess.domain.piece.Team;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessDAO {
     public Connection getConnection() {
@@ -64,5 +65,29 @@ public class ChessDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, turn.getTeam().toString());
         pstmt.executeUpdate();
+    }
+
+    public Pieces getPieces() throws SQLException {
+        String query = "SELECT * FROM Pieces";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+
+        Map<Position, Piece> pieces = new HashMap<>();
+
+
+        while (rs.next()) {
+            pieces.put(new Position(rs.getString("position")), PieceGenerator.make(rs.getString("representation"), rs.getString("team"), rs.getString("position")));
+        }
+        return new Pieces(pieces);
+    }
+
+    public Turn getTurn() throws SQLException {
+        String query = "SELECT * FROM Turn";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) return null;
+
+        return new Turn(Team.valueOf(rs.getString("turn")));
     }
 }

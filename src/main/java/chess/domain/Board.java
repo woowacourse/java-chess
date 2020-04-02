@@ -18,8 +18,12 @@ public class Board {
     private Turn turn;
 
     public Board() {
-        this.pieces = new Pieces(PieceFactory.getInstance().getPieces());
-        this.turn = new Turn(Team.WHITE);
+        this(new Pieces(PieceFactory.getInstance().getPieces()), new Turn(Team.WHITE));
+    }
+
+    public Board(Pieces pieces, Turn turn) {
+        this.pieces = pieces;
+        this.turn = turn;
     }
 
     public void movePiece(Position source, Position destination) {

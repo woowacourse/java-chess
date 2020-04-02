@@ -58,6 +58,13 @@ public class WebChessController implements ChessController {
             res.redirect("/");
             return null;
         });
+
+        get("/load", (req, res) -> {
+            ChessDAO chessDAO = new ChessDAO();
+            board = new Board(chessDAO.getPieces(), chessDAO.getTurn());
+            res.redirect("/");
+            return null;
+        });
     }
 
     public Board resetBoard() {
