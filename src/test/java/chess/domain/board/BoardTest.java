@@ -92,8 +92,8 @@ public class BoardTest {
     void calculateScoreWithoutSameFilePawnTest() {
         Board board = new Board();
 
-        Assertions.assertThat(Score.calculateScore(board, Team.WHITE)).isEqualTo(38d);
-        Assertions.assertThat(Score.calculateScore(board, Team.BLACK)).isEqualTo(38d);
+        Assertions.assertThat(Score.calculateScore(board.get(), Team.WHITE)).isEqualTo(38d);
+        Assertions.assertThat(Score.calculateScore(board.get(), Team.BLACK)).isEqualTo(38d);
     }
 
     @DisplayName("같은 세로줄에 폰이 있을 때 점수 계산")
@@ -105,6 +105,6 @@ public class BoardTest {
         sameFilePawn.put(Positions.of("a5"), new Piece(PieceType.PAWN, Team.WHITE));
         Board board = new Board(sameFilePawn);
 
-        Assertions.assertThat(Score.calculateScore(board, Team.WHITE)).isEqualTo(1.5d);
+        Assertions.assertThat(Score.calculateScore(board.get(), Team.WHITE)).isEqualTo(1.5d);
     }
 }

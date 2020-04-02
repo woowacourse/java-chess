@@ -28,6 +28,7 @@ public class WebUIChessApplication {
             return render(model, "chessGameStart.html");
         });
 
+        //playing
         post("/playing", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("chessPieces", tiles);
@@ -48,6 +49,7 @@ public class WebUIChessApplication {
 
             if (!chessManager.isPlaying()) {
                 Team winner = chessManager.getWinner();
+                chessManager.end();
                 model.put("winner", winner);
             }
 

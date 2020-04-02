@@ -8,11 +8,11 @@ import chess.domain.piece.Team;
 public class ChessManager {
 
     private ChessRunner chessRunner;
-    private boolean isPlaying;
+    private boolean playing;
 
     public ChessManager() {
         this.chessRunner = new ChessRunner();
-        isPlaying = true;
+        playing = true;
     }
 
     public void start() {
@@ -20,12 +20,12 @@ public class ChessManager {
     }
 
     public void end() {
-        isPlaying = false;
+        playing = false;
     }
 
     public void move(String source, String target) {
         chessRunner.update(source, target);
-        isPlaying = stopGameIfWinnerExists();
+        playing = stopGameIfWinnerExists();
     }
 
     private boolean stopGameIfWinnerExists() {
@@ -33,7 +33,7 @@ public class ChessManager {
     }
 
     public boolean isPlaying() {
-        return isPlaying;
+        return playing;
     }
 
     public BoardDto getBoard() {
@@ -42,10 +42,6 @@ public class ChessManager {
 
     public TileDto getTileDto() {
         return new TileDto(chessRunner.getBoard());
-    }
-
-    public ChessManager get() {
-        return this;
     }
 
     public double calculateScore() {

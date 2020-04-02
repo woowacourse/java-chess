@@ -1,6 +1,5 @@
 package chess.domain.score;
 
-import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.File;
@@ -13,21 +12,21 @@ import java.util.stream.Collectors;
 public class Score {
     private static final double PAWN_SCORE_IN_SAME_FILE = 0.5d;
 
-    public static double calculateScore(Board board, Team team) {
+    public static double calculateScore(Map<Position, Piece> board, Team team) {
         double totalScore = calculateTotalScore(board, team);
         return calculatePawnScore(board, team, totalScore);
     }
 
-    private static double calculateTotalScore(Board board, Team team) {
-        return board.get().values().stream()
+    private static double calculateTotalScore(Map<Position, Piece> board, Team team) {
+        return board.values().stream()
                 .filter(piece -> team.isSameTeamWith(piece.getTeam()))
                 .mapToDouble(Piece::getScore)
                 .sum();
     }
 
-    private static double calculatePawnScore(Board board, Team team, double score) {
+    private static double calculatePawnScore(Map<Position, Piece> board, Team team, double score) {
         for (File file : File.values()) {
-            List<Map.Entry<Position, Piece>> sameFile = board.get().entrySet().stream()
+            List<Map.Entry<Position, Piece>> sameFile = board.entrySet().stream()
                     .filter(entry -> File.of(entry.getKey().getFile()).equals(file))
                     .filter(entry -> entry.getValue().isPawn() && !entry.getValue().isEnemy(team))
                     .collect(Collectors.toList());

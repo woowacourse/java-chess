@@ -51,7 +51,7 @@ public class ChessRunner {
     }
 
     public double calculateScore() {
-        return Score.calculateScore(board, currentTeam);
+        return Score.calculateScore(board.get(), currentTeam);
     }
 
     public Board getBoard() {
