@@ -57,7 +57,8 @@ public class WebUIChessApplication {
         });
 
         post("/restart/:id", (req, res) -> {
-            return 0;
+            CHESS_GAMES.remove(req.params(":id"));
+            return GSON.toJson(new ResponseDto(ResponseDto.SUCCESS, null));
         });
     }
 
