@@ -13,10 +13,11 @@ import java.util.List;
 
 public class ChessController {
 
-    public static void run() {
+    ChessBoard chessBoard = new ChessBoard();
+
+    public void run() {
         OutputView.printGameInformation();
-        ChessBoard chessBoard = initGame();
-        if (chessBoard == null) {
+        if (!initGame()) {
             return;
         }
         boolean isEnd = false;
@@ -74,13 +75,12 @@ public class ChessController {
         return stateInput.size() != 1;
     }
 
-    private static ChessBoard initGame() {
+    private boolean initGame() {
         if (!startChessGame()) {
-            return null;
+            return false;
         }
-        ChessBoard chessBoard = new ChessBoard();
-        OutputView.printChessBoard(chessBoard.getChessBoard());
-        return chessBoard;
+        OutputView.printChessBoard(this.chessBoard.getChessBoard());
+        return true;
     }
 
     private static List<Square> getMoveSquare(List<String> input) {
