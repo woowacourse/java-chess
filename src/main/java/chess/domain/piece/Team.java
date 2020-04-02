@@ -6,6 +6,6 @@ public enum Team {
     BLANK;
 
     public boolean isNotSame(Team team) {
-        return this != team && team != BLANK;
+        return this != team && this != BLANK && team != BLANK;
     }
 }

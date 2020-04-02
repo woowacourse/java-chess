@@ -4,9 +4,9 @@ import chess.domain.util.Direction;
 
 import java.util.List;
 
-public class WhitePawnMoveStrategy extends PawnMoveStrategy {
+public class FirstBlackPawnMoveStrategy extends PawnMoveStrategy {
     @Override
     public List<Direction> getDirections() {
-        return Direction.getDirectionsOfWhitePawn();
+        return Direction.getDirectionsOfFirstBlackPawn();
     }
 }

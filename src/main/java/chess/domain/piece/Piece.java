@@ -5,71 +5,16 @@ import chess.domain.position.Position;
 import chess.domain.util.Direction;
 import chess.exception.PieceImpossibleMoveException;
 
+import java.util.Arrays;
 import java.util.Objects;
 
-public class Piece {
-    private PieceType pieceType;
-    private Position position;
+public abstract class Piece {
+    protected PieceType pieceType;
+    protected Position position;
 
     public Piece(PieceType pieceType, Position position) {
         this.pieceType = pieceType;
         this.position = position;
-    }
-
-    public static Piece createBlank(Position position) {
-        return new Piece(PieceType.BLANK, position);
-    }
-
-    public static Piece createWhitePawn(Position position) {
-        return new Piece(PieceType.WHITE_PAWN, position);
-    }
-
-    public static Piece createBlackPawn(Position position) {
-        return new Piece(PieceType.BLACK_PAWN, position);
-    }
-
-    public static Piece createWhiteKnight(Position position) {
-        return new Piece(PieceType.WHITE_KNIGHT, position);
-    }
-
-    public static Piece createBlackKnight(Position position) {
-        return new Piece(PieceType.BLACK_KNIGHT, position);
-    }
-
-    public static Piece createWhiteBishop(Position position) {
-        return new Piece(PieceType.WHITE_BISHOP, position);
-    }
-
-    public static Piece createBlackBishop(Position position) {
-        return new Piece(PieceType.BLACK_BISHOP, position);
-    }
-
-    public static Piece createWhiteRook(Position position) {
-        return new Piece(PieceType.WHITE_ROOK, position);
-    }
-
-    public static Piece createBlackRook(Position position) {
-        return new Piece(PieceType.BLACK_ROOK, position);
-    }
-
-    public static Piece createWhiteQueen(Position position) {
-        return new Piece(PieceType.WHITE_QUEEN, position);
-    }
-
-    public static Piece createBlackQueen(Position position) {
-        return new Piece(PieceType.BLACK_QUEEN, position);
-    }
-
-    public static Piece createWhiteKing(Position position) {
-        return new Piece(PieceType.WHITE_KING, position);
-    }
-
-    public static Piece createBlackKing(Position position) {
-        return new Piece(PieceType.BLACK_KING, position);
-    }
-
-    public Piece moveTo(final Position toPosition) {
-        return new Piece(pieceType, toPosition);
     }
 
     public boolean isMovable(final Board board,  final Piece toPiece) {
@@ -96,7 +41,7 @@ public class Piece {
     }
 
     public boolean isPawn() {
-        return pieceType == PieceType.WHITE_PAWN | pieceType == PieceType.BLACK_PAWN;
+        return PieceType.isPawn(this);
     }
 
     public boolean isBlank() {
@@ -127,6 +72,8 @@ public class Piece {
     public double score() {
         return pieceType.score();
     }
+
+    public abstract Piece moveTo(final Position toPosition);
 
     @Override
     public boolean equals(final Object o) {

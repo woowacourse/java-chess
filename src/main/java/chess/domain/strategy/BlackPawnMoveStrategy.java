@@ -9,14 +9,4 @@ public class BlackPawnMoveStrategy extends PawnMoveStrategy {
     public List<Direction> getDirections() {
         return Direction.getDirectionsOfBlackPawn();
     }
-
-    @Override
-    public int getInitialPawnRow() {
-        return 7;
-    }
-
-    @Override
-    protected Direction getForwardDirection() {
-        return Direction.SOUTH;
-    }
 }

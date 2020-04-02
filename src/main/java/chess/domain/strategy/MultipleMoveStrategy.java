@@ -14,22 +14,23 @@ public abstract class MultipleMoveStrategy implements MoveStrategy {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {
-            Piece tempPiece = piece;
-            while (tempPiece.isNextPositionValid(direction)) {
-                Position nextPosition = tempPiece.getPosition().moveBy(direction);
-                tempPiece = board.findPieceBy(nextPosition);
 
-                if (tempPiece.isBlank()) {
+            Piece nextPiece = piece;
+            while (nextPiece.isNextPositionValid(direction)) {
+                Position nextPosition = nextPiece.getPosition().moveBy(direction);
+                nextPiece = board.findPieceBy(nextPosition);
+
+                if (nextPiece.isBlank()) {
                     possiblePositions.add(nextPosition);
-                    tempPiece = board.findPieceBy(nextPosition);
+                    nextPiece = board.findPieceBy(nextPosition);
                 }
 
-                else if (tempPiece.isOtherTeam(piece)) {
+                else if (nextPiece.isOtherTeam(piece)) {
                     possiblePositions.add(nextPosition);
                     break;
                 }
 
-                else if (tempPiece.isSameTeam(piece)) {
+                else if (nextPiece.isSameTeam(piece)) {
                     break;
                 }
             }

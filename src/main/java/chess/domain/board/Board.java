@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
@@ -32,7 +33,7 @@ public class Board {
 
         if (fromPiece.isMovable(this, toPiece)) {
             board.set(boardIndexOf(toPiece.getPosition()), fromPiece.moveTo(toPiece.getPosition()));
-            board.set(boardIndexOf(fromPiece.getPosition()), Piece.createBlank(fromPiece.getPosition()));
+            board.set(boardIndexOf(fromPiece.getPosition()), Blank.create(fromPiece.getPosition()));
         }
         changeFlagWhenKingCaptured(toPiece);
     }

@@ -4,9 +4,11 @@ import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.strategy.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum PieceType {
+    FIRST_WHITE_PAWN(new FirstWhitePawnMoveStrategy(), 'p', Team.WHITE, 1),
     WHITE_PAWN(new WhitePawnMoveStrategy(), 'p', Team.WHITE, 1),
     WHITE_KNIGHT(new KnightMoveStrategy(), 'n', Team.WHITE, 2.5),
     WHITE_BISHOP(new BishopMoveStrategy(), 'b', Team.WHITE, 3),
@@ -14,6 +16,7 @@ public enum PieceType {
     WHITE_QUEEN(new QueenMoveStrategy(), 'q', Team.WHITE, 9),
     WHITE_KING(new KingMoveStrategy(), 'k', Team.WHITE, 0),
 
+    FIRST_BLACK_PAWN(new FirstBlackPawnMoveStrategy(), 'P', Team.BLACK, 1),
     BLACK_PAWN(new BlackPawnMoveStrategy(), 'P', Team.BLACK, 1),
     BLACK_KNIGHT(new KnightMoveStrategy(), 'N', Team.BLACK, 2.5),
     BLACK_BISHOP(new BishopMoveStrategy(), 'B', Team.BLACK, 3),
@@ -33,6 +36,10 @@ public enum PieceType {
         this.representation = representation;
         this.team = team;
         this.score = score;
+    }
+
+    public static boolean isPawn(final Piece piece) {
+        return Arrays.asList(FIRST_WHITE_PAWN, FIRST_BLACK_PAWN, WHITE_PAWN, BLACK_PAWN).contains(piece.pieceType);
     }
 
     public List<Position> getPossiblePositions(Board board, Piece piece) {
@@ -57,5 +64,12 @@ public enum PieceType {
 
     public double score() {
         return score;
+    }
+
+    public PieceType notFirstStep() {
+        if (this == FIRST_WHITE_PAWN) {
+            return WHITE_PAWN;
+        }
+        return BLACK_PAWN;
     }
 }

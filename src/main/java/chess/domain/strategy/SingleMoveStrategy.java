@@ -14,6 +14,7 @@ public abstract class SingleMoveStrategy implements MoveStrategy {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {
+
             if (piece.isNextPositionValid(direction)) {
                 Position nextPosition = piece.getPosition().moveBy(direction);
                 Piece nextPiece = board.findPieceBy(nextPosition);
@@ -22,7 +23,7 @@ public abstract class SingleMoveStrategy implements MoveStrategy {
                     possiblePositions.add(nextPosition);
                 }
 
-                if (piece.isOtherTeam(nextPiece)) {
+                else if (nextPiece.isOtherTeam(piece)) {
                     possiblePositions.add(nextPosition);
                 }
             }

@@ -14,34 +14,23 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {
+
             if (piece.isNextPositionValid(direction)) {
                 Position nextPosition = piece.getPosition().moveBy(direction);
                 Piece nextPiece = board.findPieceBy(nextPosition);
 
-                if (direction == getForwardDirection()) {
+                if (direction.isForwardDirection()) {
                     if (nextPiece.isBlank()) {
                         possiblePositions.add(nextPosition);
-                    }
-                    if (isFirstMove(piece)) {
-                        possiblePositions.add(nextPosition.moveBy(direction));
                     }
                     continue;
                 }
 
-                if (piece.isOtherTeam(nextPiece)) {
+                if (nextPiece.isOtherTeam(piece)) {
                     possiblePositions.add(nextPosition);
                 }
             }
         }
         return possiblePositions;
     }
-
-
-    private boolean isFirstMove(Piece piece) {
-        return piece.getRow() == getInitialPawnRow();
-    }
-
-    protected abstract int getInitialPawnRow();
-
-    protected abstract Direction getForwardDirection();
 }

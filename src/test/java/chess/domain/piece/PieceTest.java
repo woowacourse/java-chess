@@ -20,18 +20,18 @@ public class PieceTest {
 
     private static Stream<Arguments> getCasesForPieceRepresentation() {
         return Stream.of(
-                Arguments.of(Piece.createWhitePawn(new Position(1, 2)), 'p'),
-                Arguments.of(Piece.createBlackPawn(new Position(1, 7)), 'P'),
-                Arguments.of(Piece.createWhiteRook(new Position(1, 1)), 'r'),
-                Arguments.of(Piece.createBlackRook(new Position(1, 8)), 'R'),
-                Arguments.of(Piece.createWhiteKnight(new Position(2, 1)), 'n'),
-                Arguments.of(Piece.createBlackKnight(new Position(2, 8)), 'N'),
-                Arguments.of(Piece.createWhiteBishop(new Position(3, 1)), 'b'),
-                Arguments.of(Piece.createBlackBishop(new Position(3, 8)), 'B'),
-                Arguments.of(Piece.createWhiteQueen(new Position(4, 1)), 'q'),
-                Arguments.of(Piece.createBlackQueen(new Position(4, 8)), 'Q'),
-                Arguments.of(Piece.createWhiteKing(new Position(5, 1)), 'k'),
-                Arguments.of(Piece.createBlackKing(new Position(5, 8)), 'K')
+                Arguments.of(Pawn.createWhite(new Position(1, 2)), 'p'),
+                Arguments.of(Pawn.createBlack(new Position(1, 7)), 'P'),
+                Arguments.of(Rook.createWhite(new Position(1, 1)), 'r'),
+                Arguments.of(Rook.createBlack(new Position(1, 8)), 'R'),
+                Arguments.of(Knight.createWhite(new Position(2, 1)), 'n'),
+                Arguments.of(Knight.createBlack(new Position(2, 8)), 'N'),
+                Arguments.of(Bishop.createWhite(new Position(3, 1)), 'b'),
+                Arguments.of(Bishop.createBlack(new Position(3, 8)), 'B'),
+                Arguments.of(Queen.createWhite(new Position(4, 1)), 'q'),
+                Arguments.of(Queen.createBlack(new Position(4, 8)), 'Q'),
+                Arguments.of(King.createWhite(new Position(5, 1)), 'k'),
+                Arguments.of(King.createBlack(new Position(5, 8)), 'K')
         );
     }
 
@@ -44,18 +44,18 @@ public class PieceTest {
 
     private static Stream<Arguments> getCasesForPieceInitialPosition() {
         return Stream.of(
-                Arguments.of(Piece.createWhitePawn(new Position(1, 2)), new Position(1, 2)),
-                Arguments.of(Piece.createBlackPawn(new Position(1, 7)), new Position(1, 7)),
-                Arguments.of(Piece.createWhiteRook(new Position(1, 1)), new Position(1, 1)),
-                Arguments.of(Piece.createBlackRook(new Position(1, 8)), new Position(1, 8)),
-                Arguments.of(Piece.createWhiteKnight(new Position(2, 1)), new Position(2, 1)),
-                Arguments.of(Piece.createBlackKnight(new Position(2, 8)), new Position(2, 8)),
-                Arguments.of(Piece.createWhiteBishop(new Position(3, 1)), new Position(3, 1)),
-                Arguments.of(Piece.createBlackBishop(new Position(3, 8)), new Position(3, 8)),
-                Arguments.of(Piece.createWhiteQueen(new Position(4, 1)), new Position(4, 1)),
-                Arguments.of(Piece.createBlackQueen(new Position(4, 8)), new Position(4, 8)),
-                Arguments.of(Piece.createWhiteKing(new Position(5, 1)), new Position(5, 1)),
-                Arguments.of(Piece.createBlackKing(new Position(5, 8)), new Position(5, 8)));
+                Arguments.of(Pawn.createWhite(new Position(1, 2)), new Position(1, 2)),
+                Arguments.of(Pawn.createBlack(new Position(1, 7)), new Position(1, 7)),
+                Arguments.of(Rook.createWhite(new Position(1, 1)), new Position(1, 1)),
+                Arguments.of(Rook.createBlack(new Position(1, 8)), new Position(1, 8)),
+                Arguments.of(Knight.createWhite(new Position(2, 1)), new Position(2, 1)),
+                Arguments.of(Knight.createBlack(new Position(2, 8)), new Position(2, 8)),
+                Arguments.of(Bishop.createWhite(new Position(3, 1)), new Position(3, 1)),
+                Arguments.of(Bishop.createBlack(new Position(3, 8)), new Position(3, 8)),
+                Arguments.of(Queen.createWhite(new Position(4, 1)), new Position(4, 1)),
+                Arguments.of(Queen.createBlack(new Position(4, 8)), new Position(4, 8)),
+                Arguments.of(King.createWhite(new Position(5, 1)), new Position(5, 1)),
+                Arguments.of(King.createBlack(new Position(5, 8)), new Position(5, 8)));
     }
 
     @DisplayName("체스 말 각각의 점수 확인")
@@ -67,18 +67,18 @@ public class PieceTest {
 
     private static Stream<Arguments> getCasesForPieceScore() {
         return Stream.of(
-                Arguments.of(Piece.createWhitePawn(new Position(1, 2)), 1),
-                Arguments.of(Piece.createBlackPawn(new Position(1, 7)), 1),
-                Arguments.of(Piece.createWhiteRook(new Position(1, 1)), 5),
-                Arguments.of(Piece.createBlackRook(new Position(1, 8)), 5),
-                Arguments.of(Piece.createWhiteKnight(new Position(2, 1)), 2.5),
-                Arguments.of(Piece.createBlackKnight(new Position(2, 8)), 2.5),
-                Arguments.of(Piece.createWhiteBishop(new Position(3, 1)), 3),
-                Arguments.of(Piece.createBlackBishop(new Position(3, 8)), 3),
-                Arguments.of(Piece.createWhiteQueen(new Position(4, 1)), 9),
-                Arguments.of(Piece.createBlackQueen(new Position(4, 8)), 9),
-                Arguments.of(Piece.createWhiteKing(new Position(5, 1)), 0),
-                Arguments.of(Piece.createBlackKing(new Position(5, 8)), 0)
+                Arguments.of(Pawn.createWhite(new Position(1, 2)), 1),
+                Arguments.of(Pawn.createBlack(new Position(1, 7)), 1),
+                Arguments.of(Rook.createWhite(new Position(1, 1)), 5),
+                Arguments.of(Rook.createBlack(new Position(1, 8)), 5),
+                Arguments.of(Knight.createWhite(new Position(2, 1)), 2.5),
+                Arguments.of(Knight.createBlack(new Position(2, 8)), 2.5),
+                Arguments.of(Bishop.createWhite(new Position(3, 1)), 3),
+                Arguments.of(Bishop.createBlack(new Position(3, 8)), 3),
+                Arguments.of(Queen.createWhite(new Position(4, 1)), 9),
+                Arguments.of(Queen.createBlack(new Position(4, 8)), 9),
+                Arguments.of(King.createWhite(new Position(5, 1)), 0),
+                Arguments.of(King.createBlack(new Position(5, 8)), 0)
         );
     }
 }

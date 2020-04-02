@@ -24,7 +24,7 @@ public class KingTest {
     void setUp() {
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
-                INITIALIZED_POSITIONS.add(Piece.createBlank(new Position(col, row)));
+                INITIALIZED_POSITIONS.add(Blank.create(new Position(col, row)));
             }
         }
     }
@@ -33,16 +33,16 @@ public class KingTest {
     @ParameterizedTest
     @MethodSource("getCasesForKingMoveByDirection")
     void kingMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
-        INITIALIZED_POSITIONS.set(36, Piece.createWhiteKing(new Position(5, 5)));
-        INITIALIZED_POSITIONS.set(27, Piece.createWhiteRook(new Position(4, 4)));
-        INITIALIZED_POSITIONS.set(37, Piece.createBlackBishop(new Position(6, 5)));
+        INITIALIZED_POSITIONS.set(36, King.createWhite(new Position(5, 5)));
+        INITIALIZED_POSITIONS.set(27, Rook.createWhite(new Position(4, 4)));
+        INITIALIZED_POSITIONS.set(37, Bishop.createBlack(new Position(6, 5)));
         Board board = new Board(INITIALIZED_POSITIONS);
         assertThat(moveStrategy.getPossiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForKingMoveByDirection() {
         return Stream.of(
-                Arguments.of(new KingMoveStrategy(), Piece.createWhiteKing(new Position(5, 5)),
+                Arguments.of(new KingMoveStrategy(), King.createWhite(new Position(5, 5)),
                         Arrays.asList(
                                 new Position(5, 6),
                                 new Position(6, 6),

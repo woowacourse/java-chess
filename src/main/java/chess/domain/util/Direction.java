@@ -9,6 +9,8 @@ public enum Direction {
     SOUTH(0, -1),
     EAST(1, 0),
     WEST(-1, 0),
+    NORTH_NORTH(0, 2),
+    SOUTH_SOUTH(0, -2),
     NORTH_EAST(1, 1),
     NORTH_WEST(-1, 1),
     SOUTH_EAST(1, -1),
@@ -38,9 +40,21 @@ public enum Direction {
         return row;
     }
 
+    public static List<Direction> getDirectionsOfFirstWhitePawn() {
+        return new ArrayList<>(
+                Arrays.asList(NORTH, NORTH_NORTH, NORTH_EAST, NORTH_WEST)
+        );
+    }
+
     public static List<Direction> getDirectionsOfWhitePawn() {
         return new ArrayList<>(
                 Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST)
+        );
+    }
+
+    public static List<Direction> getDirectionsOfFirstBlackPawn() {
+        return new ArrayList<>(
+                Arrays.asList(SOUTH, SOUTH_SOUTH, SOUTH_EAST, SOUTH_WEST)
         );
     }
 
@@ -82,4 +96,7 @@ public enum Direction {
     }
 
 
+    public boolean isForwardDirection() {
+        return Arrays.asList(NORTH, NORTH_NORTH, SOUTH, SOUTH_SOUTH).contains(this);
+    }
 }

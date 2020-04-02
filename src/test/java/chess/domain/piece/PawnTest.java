@@ -3,9 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
-import chess.domain.strategy.BlackPawnMoveStrategy;
-import chess.domain.strategy.MoveStrategy;
-import chess.domain.strategy.WhitePawnMoveStrategy;
+import chess.domain.strategy.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -28,16 +26,16 @@ public class PawnTest {
 
     private static Stream<Arguments> getCasesForPawnMoveByDirection() {
         return Stream.of(
-                Arguments.of(new WhitePawnMoveStrategy(), Piece.createWhitePawn(new Position(2, 2)),
+                Arguments.of(new FirstWhitePawnMoveStrategy(), Pawn.createWhite(new Position(2, 2)),
                         Arrays.asList(new Position(2, 3), new Position(2, 4))),
 
-                Arguments.of(new WhitePawnMoveStrategy(), Piece.createWhitePawn(new Position(3, 4)),
+                Arguments.of(new WhitePawnMoveStrategy(), Pawn.createWhite(new Position(3, 4)),
                         Arrays.asList(new Position(3, 5))),
 
-                Arguments.of(new BlackPawnMoveStrategy(), Piece.createBlackPawn(new Position(2, 7)),
+                Arguments.of(new FirstBlackPawnMoveStrategy(), Pawn.createBlack(new Position(2, 7)),
                         Arrays.asList(new Position(2, 6), new Position(2, 5))),
 
-                Arguments.of(new BlackPawnMoveStrategy(), Piece.createBlackPawn(new Position(4, 6)),
+                Arguments.of(new BlackPawnMoveStrategy(), Pawn.createBlack(new Position(4, 6)),
                         Arrays.asList(new Position(4, 5)))
         );
     }
