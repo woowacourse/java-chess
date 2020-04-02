@@ -44,4 +44,11 @@ public abstract class Piece {
 	public String getName() {
 		return name.getName();
 	}
+
+	public String getSymbol() {
+		if (Team.WHITE == team) {
+			return name.getWhiteSymbol();
+		}
+		return name.getBlackSymbol();
+	}
 }

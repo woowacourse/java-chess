@@ -1,10 +1,11 @@
 package chess;
 
-import chess.controller.ChessController;
+import chess.controller.ConsoleChessController;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Team;
 import chess.service.ChessService;
+import chess.view.InputView;
 
 public class ConsoleUIChessApplication {
 	public static void main(String[] args) {
@@ -12,11 +13,11 @@ public class ConsoleUIChessApplication {
 		Team first = Team.WHITE;
 		ChessService chessService = ChessService.of(initial);
 
-		ChessController controller = new ChessController(chessService, initial, first);
+		ConsoleChessController controller = new ConsoleChessController(chessService, initial, first);
 
 		controller.start();
 		while (true) {
-			controller.playTurn();
+			controller.playTurn(InputView.inputMoveOrStatus());
 		}
 	}
 }
