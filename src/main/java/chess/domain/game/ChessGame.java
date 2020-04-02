@@ -47,4 +47,8 @@ public class ChessGame {
                         value -> state.getPoints(value)
                 ));
     }
+
+    public Team getWinner() {
+        return state.getWinner();
+    }
 }

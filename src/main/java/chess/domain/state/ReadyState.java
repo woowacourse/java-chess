@@ -43,4 +43,9 @@ public class ReadyState implements State {
     public boolean isEnd() {
         return false;
     }
+
+    @Override
+    public Team getWinner() {
+        throw new UnsupportedOperationException("게임이 아직 시작되지 않았습니다.");
+    }
 }

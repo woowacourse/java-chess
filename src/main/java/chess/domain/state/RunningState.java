@@ -3,6 +3,8 @@ package chess.domain.state;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
 import chess.domain.game.Turn;
+import chess.domain.piece.PieceState;
+import chess.domain.piece.implementation.piece.King;
 import chess.domain.player.Team;
 
 public class RunningState implements State {
@@ -22,14 +24,18 @@ public class RunningState implements State {
     public State move(MoveParameter moveParameter, Turn turn) {
         board.move(moveParameter.getSource(), moveParameter.getTarget(), turn);
         if (board.isEnd()) {
-            return new EndState(board);
+            Team winner = board.getBoard().values().stream()
+                    .filter(piece -> piece instanceof King)
+                    .map(PieceState::getTeam)
+                    .findFirst().get();
+            return new EndState(board, winner);
         }
         return this;
     }
 
     @Override
     public State end() {
-        return new EndState(board);
+        throw new UnsupportedOperationException("임시 - 게임 실행 중 ");
     }
 
     @Override
@@ -45,5 +51,10 @@ public class RunningState implements State {
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public Team getWinner() {
+        throw new UnsupportedOperationException("게임이 아직 끝나지 않았습니다.");
     }
 }

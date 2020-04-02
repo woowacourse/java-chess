@@ -2,20 +2,23 @@ package chess.domain.state;
 
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
+import chess.domain.board.initializer.EnumRepositoryBoardInitializer;
 import chess.domain.game.Turn;
 import chess.domain.player.Team;
 
 public class EndState implements State {
 
     private final Board board;
+    private final Team winner;
 
-    public EndState(Board board) {
+    public EndState(Board board, Team winner) {
         this.board = board;
+        this.winner = winner;
     }
 
     @Override
     public State start() {
-        return new RunningState(board);
+        return new RunningState(Board.of(new EnumRepositoryBoardInitializer()));
     }
 
     @Override
@@ -41,5 +44,10 @@ public class EndState implements State {
     @Override
     public boolean isEnd() {
         return true;
+    }
+
+    @Override
+    public Team getWinner() {
+        return winner;
     }
 }

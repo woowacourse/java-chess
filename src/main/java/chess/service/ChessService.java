@@ -1,7 +1,6 @@
 package chess.service;
 
 import chess.controller.dto.PieceDto;
-import chess.controller.dto.ResponseDto;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
@@ -19,30 +18,23 @@ public class ChessService {
         return chessGame.isEnd();
     }
 
-    public ResponseDto start(List<String> parameters) {
+    public void start(List<String> parameters) {
         chessGame.start();
-        Map<Team, Double> score = chessGame.getStatus();
-        return new ResponseDto(createBoardDto(), score);
     }
 
-    public ResponseDto end(List<String> parameters) {
+    public void end(List<String> parameters) {
         chessGame.end();
-        Map<Team, Double> score = chessGame.getStatus();
-        return new ResponseDto(createBoardDto(), score);
     }
 
-    public ResponseDto move(List<String> parameters) {
+    public void move(List<String> parameters) {
         chessGame.move(MoveParameter.of(parameters));
-        Map<Team, Double> score = chessGame.getStatus();
-        return new ResponseDto(createBoardDto(), score);
     }
 
-    public ResponseDto status(List<String> parameters) {
+    public void status(List<String> parameters) {
         Map<Team, Double> score = chessGame.getStatus();
-        return new ResponseDto(createBoardDto(), score);
     }
 
-    private Map<Position, PieceDto> createBoardDto() {
+    public Map<Position, PieceDto> createBoardDto() {
         Board board = chessGame.getBoard();
         return board.getBoard()
                 .entrySet()
@@ -51,5 +43,13 @@ public class ChessService {
                         entry -> entry.getKey(),
                         entry -> PieceDto.of(entry.getValue())
                 ));
+    }
+
+    public Map<Team, Double> createScoreDto() {
+        return chessGame.getStatus();
+    }
+
+    public Team getWinner() {
+        return chessGame.getWinner();
     }
 }

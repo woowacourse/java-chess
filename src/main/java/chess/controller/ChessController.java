@@ -1,19 +1,22 @@
 package chess.controller;
 
 import chess.controller.dto.Command;
+import chess.controller.dto.PieceDto;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
+import chess.domain.player.Team;
+import chess.domain.position.Position;
 import chess.service.ChessService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 public class ChessController {
 
     private ChessService chessService = new ChessService();
-    private Map<Command, Function<List<String>, ResponseDto>> runner;
+    private Map<Command, Consumer<List<String>>> runner;
 
     public ChessController() {
         this.runner = new HashMap<>();
@@ -28,25 +31,44 @@ public class ChessController {
         return chessService.isEnd();
     }
 
-    public synchronized ResponseDto run(RequestDto requestDto) {
-        Command command = requestDto.getCommand();
-        return runner.get(command).apply(requestDto.getParameter());
+    public ResponseDto run(RequestDto requestDto) {
+        String message = null;
+        try {
+            Command command = requestDto.getCommand();
+            runner.get(command).accept(requestDto.getParameter());
+            if (chessService.isEnd()) {
+                Team team = chessService.getWinner();
+                message = team.toString() + "가 승리했습니다.";
+            }
+        } catch (IllegalArgumentException | UnsupportedOperationException e) {
+            message = e.getMessage();
+        } finally {
+            Map<Position, PieceDto> boardDto = chessService.createBoardDto();
+            Map<Team, Double> scoreDto = chessService.createScoreDto();
+            return new ResponseDto(boardDto, scoreDto, message);
+        }
     }
 
-    private ResponseDto start(List<String> parameter) {
-        return chessService.start(parameter);
+    private void start(List<String> parameter) {
+        chessService.start(parameter);
     }
 
-    private ResponseDto end(List<String> parameter) {
-        return chessService.end(parameter);
+    private void end(List<String> parameter) {
+        chessService.end(parameter);
     }
 
-    private ResponseDto move(List<String> parameter) {
-        return chessService.move(parameter);
+    private void move(List<String> parameter) {
+        chessService.move(parameter);
     }
 
-    private ResponseDto status(List<String> parameter) {
-        return chessService.status(parameter);
+    private void status(List<String> parameter) {
+        chessService.status(parameter);
+    }
+
+    public ResponseDto getResponseDto() {
+        Map<Position, PieceDto> boardDto = chessService.createBoardDto();
+        Map<Team, Double> scoreDto = chessService.createScoreDto();
+        return new ResponseDto(boardDto, scoreDto);
     }
 
     private ResponseDto unknown(List<String> parameter) {

@@ -18,4 +18,6 @@ public interface State {
     double getPoints(Team team);
 
     boolean isEnd();
+
+    Team getWinner();
 }

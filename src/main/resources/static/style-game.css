@@ -43,6 +43,11 @@ html, body {
     justify-content: center;
 }
 
+.buttons {
+    height: 15%;
+    display: flex;
+}
+
 .score-board-container {
     width: 15%;
     height: 100%;

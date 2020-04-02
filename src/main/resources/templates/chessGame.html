@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>체스게임</title>
     <link href="style-game.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -120,23 +121,39 @@
                 </div>
             </div>
         </div>
+        <div class="buttons">
+            <div class="restart-button">
+                <form action="/chessGame" method="post">
+                    <input hidden="hidden" name="command" type="text" value="start">
+                    <input hidden="hidden" name="parameter" type="text" value="">
+                    <input type="submit" value="재시작"/>
+                </form>
+            </div>
+            <div class="end-button">
+                <form action="/chessGame" method="post">
+                    <input hidden="hidden" name="command" type="text" value="end">
+                    <input hidden="hidden" name="parameter" type="text" value="">
+                    <input type="submit" value="게임 종료"/>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="score-board-container">
         <div class="score-board black-score-board">
-            <div class="player-name black-player-name">Player1</div>
+            <div class="player-name black-player-name">BLACK</div>
             <div class="player-image black-player-image">
                 <img class="doo" src="img/doo.jpg">
             </div>
-            <div class="player-score black-player-score">
+            <div class="player-score black-player-score" id="BLACK-SCORE">
             </div>
         </div>
         <div class="score-board-boarder"></div>
         <div class="score-board white-score-board">
-            <div class="player-name white-player-name">Player2</div>
+            <div class="player-name white-player-name">WHITE</div>
             <div class="player-image white-player-image">
                 <img class="doo" src="img/doo.jpg">
             </div>
-            <div class="player-score white-player-score">
+            <div class="player-score white-player-score" id="WHITE-SCORE">
             </div>
         </div>
     </div>
@@ -144,8 +161,15 @@
 </body>
 <script id="board-data" type="text/x-mustache">
     {{#board}}
-    document.getElementById("{{key}}").innerHTML = '<div class="piece"><img class="piece-img" src="../img/piece/{{value}}.png"></div>'
+        document.getElementById("{{key}}").innerHTML = '<div class="piece"><img class="piece-img" src="../img/piece/{{value}}.png"></div>'
     {{/board}}
+    {{#if message}}
+        alert("{{message}}");
+    {{/if }}
+    {{#score}}
+        document.getElementById("{{key}}-SCORE").innerText = {{value}}
+    {{/score}}
+
 
 
 
@@ -172,10 +196,22 @@
             if (params == "") {
                 params += pieceCell.item(i).getAttribute("id");
                 params += "_";
-                alert(params);
             } else {
                 params += pieceCell.item(i).getAttribute("id");
-                alert(params);
+                //     $.ajax({
+                //         type: "POST"
+                //         , url: "/chessGame"
+                //         , data: {command: 'move', parameter: params}
+                //         , success: function (data) {
+                //             alert("성공");
+                //             params = "";
+                //         }
+                //         , error: function (data) {
+                //             alert("error");
+                //             params = "";
+                //         }
+                //     });
+                // }
                 let method = "post";
                 let path = "/chessGame";
                 let form = document.createElement("form");

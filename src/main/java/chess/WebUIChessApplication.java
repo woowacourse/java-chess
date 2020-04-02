@@ -26,6 +26,16 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
+        get("/chessGame", (req, res) -> {
+            ResponseDto responseDto = chessController.getResponseDto();
+            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
+            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
+            Map<String, Object> model = new HashMap<>();
+            model.put("board", boardDto);
+            model.put("score", scoreDto);
+            return render(model, "chessGame.html");
+        });
+
         post("/chessGame", (req, res) -> {
             RequestDto requestDto = getRequestDtoFrom(req);
             ResponseDto responseDto = chessController.run(requestDto);
@@ -34,8 +44,10 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             model.put("board", boardDto);
             model.put("score", scoreDto);
+            model.put("message", responseDto.getMessage());
             return render(model, "chessGame.html");
         });
+
     }
 
     private static RequestDto getRequestDtoFrom(final Request req) {
