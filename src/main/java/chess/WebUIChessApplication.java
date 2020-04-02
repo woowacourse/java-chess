@@ -39,13 +39,19 @@ public class WebUIChessApplication {
         //move source target
         post("/move", (req, res) -> {
             String cmd = req.queryParams("move_cmd");
-            Command.MOVE.apply(chessManager, cmd);
+            String errorMessage = null;
+            try {
+                Command.MOVE.apply(chessManager, cmd);
+            } catch (Exception e) {
+                errorMessage = "이동할 수 없는 곳입니다. 다시 입력해주세요.";
+            }
             List<Tile> tiles2 = chessManager.getTileDto().getTiles();
             Team currentTeam2 = chessManager.getCurrentTeam();
             Map<String, Object> model = new HashMap<>();
             model.put("chessPieces", tiles2);
             model.put("currentTeam", currentTeam2);
             model.put("cmd", cmd);
+            model.put("error", errorMessage);
 
             if (!chessManager.isPlaying()) {
                 Team winner = chessManager.getWinner();
