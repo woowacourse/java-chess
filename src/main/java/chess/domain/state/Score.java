@@ -28,7 +28,7 @@ public class Score {
 
 	private static double sum(List<Piece> pieces) {
 		return pieces.stream()
-			.mapToInt(Piece::getScore)
+			.mapToDouble(Piece::getScore)
 			.sum();
 	}
 

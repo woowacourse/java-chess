@@ -26,6 +26,11 @@ public class Pawn extends Piece {
 	}
 
 	@Override
+	public boolean isPawn() {
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		if (team.equals(Team.WHITE)) {
 			return WHITE_PAWN;

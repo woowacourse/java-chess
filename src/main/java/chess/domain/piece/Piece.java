@@ -42,10 +42,7 @@ public abstract class Piece {
 		return team;
 	}
 
-	public abstract int getScore();
+	public abstract double getScore();
 
 	public abstract String getSymbol();
-
-	;
-
 }
