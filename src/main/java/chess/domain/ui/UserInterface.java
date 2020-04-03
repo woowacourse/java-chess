@@ -5,5 +5,8 @@ import chess.ui.Command;
 
 public interface UserInterface {
     MovingFlow inputMovingFlow();
+
     Command inputStart();
+
+    Command inputStatus();
 }

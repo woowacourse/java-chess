@@ -11,6 +11,7 @@ import chess.domain.piece.MovedPawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.score.Score;
+import chess.domain.piece.team.Team;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,8 +92,8 @@ public enum PieceType {
         throw new IllegalArgumentException(String.format("%d에 해당하는 체스 말을 찾을 수 없습니다.", initialColumn));
     }
 
-    public String getName() {
-        return name;
+    public String getName(Team team) {
+        return Team.convertName(name, team);
     }
 
     public List<CanNotMoveStrategy> getCanNotMoveStrategies() {

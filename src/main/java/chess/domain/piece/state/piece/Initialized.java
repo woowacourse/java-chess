@@ -41,8 +41,6 @@ public abstract class Initialized extends Started {
         this.moveType = moveType;
     }
 
-    public abstract Score calculateScore(Board board);
-
     public abstract boolean hasHindrance(Position to, Board board);
 
     @Override
@@ -55,8 +53,14 @@ public abstract class Initialized extends Started {
         return false;
     }
 
+
     public boolean isSameTeam(Piece piece) {
         return team.isSame(piece.getTeam());
+    }
+
+    @Override
+    public boolean isSameTeam(Team team) {
+        return this.team.isSame(team);
     }
 
     @Override
@@ -66,7 +70,7 @@ public abstract class Initialized extends Started {
 
     @Override
     public boolean isKing() {
-        return name.equals(PieceType.KING.getName());
+        return name.equals(PieceType.KING.getName(team));
     }
 
     @Override

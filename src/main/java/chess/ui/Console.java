@@ -31,5 +31,12 @@ public class Console implements UserInterface {
         return Command.of(input);
     }
 
+    @Override
+    public Command inputStatus() {
+        InputView.printResultRequest();
+        String input = scanner.nextLine();
+        //todo: refac
+        return Command.of(input);
+    }
 
 }

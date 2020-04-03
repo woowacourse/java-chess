@@ -3,18 +3,20 @@ package chess.domain.piece.team;
 import chess.domain.piece.position.Direction;
 
 public enum Team {
-    WHITE(Direction.NORTH, Team::isBlack),
-    BLACK(Direction.SOUTH, Team::isWhite),
+    WHITE(Direction.NORTH, Team::isBlack, "White"),
+    BLACK(Direction.SOUTH, Team::isWhite, "Black"),
     NOT_ASSIGNED(Direction.STAY, (ignored) -> {
         throw new IllegalStateException("팀이 정해져있지 않아 적을 식별할 수 없습니다.");
-    });
+    }, "Not Assigned");
 
-    private Direction forwardDirection;
-    private OppositeIdentifier oppositeIdentifier;
+    private final Direction forwardDirection;
+    private final OppositeIdentifier oppositeIdentifier;
+    private final String name;
 
-    Team(Direction forwardDirection, OppositeIdentifier oppositeIdentifier) {
+    Team(Direction forwardDirection, OppositeIdentifier oppositeIdentifier, String name) {
         this.forwardDirection = forwardDirection;
         this.oppositeIdentifier = oppositeIdentifier;
+        this.name = name;
     }
 
     public Direction getForwardDirection() {
@@ -29,12 +31,12 @@ public enum Team {
         return oppositeIdentifier.isOpposite(other);
     }
 
-    public String convertName(String name) {
-        if (isWhite()) {
+    public static String convertName(String name, Team team) {
+        if (team.isWhite()) {
             return name.toLowerCase();
         }
 
-        if (isBlack()) {
+        if (team.isBlack()) {
             return name.toUpperCase();
         }
 
@@ -49,7 +51,24 @@ public enum Team {
         return this == WHITE;
     }
 
+    public Team getOpposite() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+
+        if (this == BLACK) {
+            return WHITE;
+        }
+
+        return NOT_ASSIGNED;
+    }
+
     private interface OppositeIdentifier {
         boolean isOpposite(Team team);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.board.BoardSerializer;
+import chess.domain.board.Result;
 import chess.ui.Command;
 import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
@@ -15,10 +16,17 @@ public class Application {
         Command start = userInterface.inputStart();
         Board board = RunningBoard.initiaize(userInterface);
         OutputView.printBoard(BoardSerializer.serialize(board));
-        System.out.println();
-        board = board.movePiece();
-        OutputView.printBoard(BoardSerializer.serialize(board));
-        System.out.println();
+
+        while (board.isNotFinished()) {
+            board = board.movePiece();
+            OutputView.printBoard(BoardSerializer.serialize(board));
+        }
+
+        Command command = userInterface.inputStatus();
+        Result result = board.concludeResult();
+        OutputView.printResult(result.getWinner(), result.getLoser(), result.getWinnerScore(), result.getLoserScore());
+
+
         OutputView.printEnd();
     }
 }

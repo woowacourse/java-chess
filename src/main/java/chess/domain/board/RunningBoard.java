@@ -1,18 +1,17 @@
 package chess.domain.board;
 
-import chess.domain.ui.UserInterface;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Blank;
-import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.InitializedPawn;
-import chess.domain.piece.team.Team;
-import chess.domain.piece.position.MovingFlow;
+import chess.domain.piece.Piece;
+import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.team.Team;
+import chess.domain.ui.UserInterface;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
-public class RunningBoard implements Board {
+public class RunningBoard extends StartedBoard {
     private static final int LINE_START_INDEX = 1;
     private static final int LINE_END_INDEX = 8;
     private static final int BLACK_PAWN_ROW = 7;
@@ -20,16 +19,12 @@ public class RunningBoard implements Board {
     private static final int BLANK_START_INDEX = 3;
     private static final int BLANK_END_INDEX = 6;
 
-    private final Map<Position, Piece> pieces;
-    private final UserInterface userInterface;
-
     //todo: 상속을 하려니 private 생성자를 쓸 수 없었습니다. 그래서 default 생성자로 만들었는데요.
     //todo: 아예 정적 팩토리 메소드를 없애고 생성자만 둘까도 생각해봤지만, 생성 시 초기화하는 것이라는 의미를 주고 싶어
     //todo: 정적팩토리 메소드를 사용하며 생성자를 default로 두었습니다. 정적팩토리 메서드 사용 시 생성자는 private으로 두는 게 원칙이라고 알고 있어,
     //todo: 이 코드에 문제가 있는 것 같은데요. 조금 더 나은 방식을 가르쳐주시면 감사하겠습다!
     RunningBoard(Map<Position, Piece> pieces, UserInterface userInterface) {
-        this.pieces = pieces;
-        this.userInterface = userInterface;
+        super(pieces, userInterface);
     }
 
     public static RunningBoard initiaize(UserInterface userInterface) {
@@ -42,35 +37,13 @@ public class RunningBoard implements Board {
 
 
     @Override
-    public Board movePiece() {
-        MovingFlow movingFlow = userInterface.inputMovingFlow();
-        return MoveExceptionHandler.handle(this::movePiece, movingFlow, userInterface, this);
-    }
-
-    private Board movePiece(Position from, Position to, Board board) {
-        Map<Position, Piece> pieces = clonePieces(this.pieces);
-        Piece piece = board.getPiece(from);
-        piece = piece.move(to, board);
-        pieces.put(from, Blank.of());
-        pieces.put(to, piece);
-        return new RunningBoard(pieces, userInterface);
+    public boolean isNotFinished() {
+        return true;
     }
 
     @Override
-    public Piece getPiece(Position position) {
-        return pieces.get(position);
-    }
-
-    @Override
-    public Map<Position, Piece> getPieces() {
-        return pieces;
-    }
-
-    private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {
-        return board.entrySet()
-                .stream()
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        Map.Entry::getValue));
+    public Result concludeResult() {
+        throw new IllegalStateException("게임이 끝나지 않아, 승패를 결정할 수 없습니다.");
     }
 
     private static void initializeBlackTeam(Map<Position, Piece> pieces) {

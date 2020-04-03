@@ -20,7 +20,7 @@ public class PieceFactory {
                     Team.class,
                     List.class,
                     Score.class);
-            return constructor.newInstance(pieceType.getName(), position, team, pieceType.getCanNotMoveStrategies(), pieceType.getScore());
+            return constructor.newInstance(pieceType.getName(team), position, team, pieceType.getCanNotMoveStrategies(), pieceType.getScore());
         } catch (NoSuchMethodException
                 | InvocationTargetException
                 | IllegalAccessException
@@ -43,7 +43,7 @@ public class PieceFactory {
                     List.class,
                     Score.class,
                     MoveType.class);
-            return constructor.newInstance(pieceType.getName(), position, team, pieceType.getCanNotMoveStrategies(), pieceType.getScore(), moveType);
+            return constructor.newInstance(pieceType.getName(team), position, team, pieceType.getCanNotMoveStrategies(), pieceType.getScore(), moveType);
         } catch (NoSuchMethodException
                 | InvocationTargetException
                 | IllegalAccessException

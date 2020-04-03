@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.score.Score;
 import chess.domain.piece.state.piece.Started;
 import chess.domain.piece.team.Team;
 import chess.domain.board.Board;
@@ -44,6 +45,16 @@ public class Blank extends Started {
 
     @Override
     public boolean attackedKing() {
+        throw new IllegalStateException("체스 말이 아닙니다.");
+    }
+
+    @Override
+    public boolean isSameTeam(Team team) {
+        throw new IllegalStateException("체스 말이 아닙니다.");
+    }
+
+    @Override
+    public Score calculateScore(Board board) {
         throw new IllegalStateException("체스 말이 아닙니다.");
     }
 }

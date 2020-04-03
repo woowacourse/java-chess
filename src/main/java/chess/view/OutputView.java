@@ -15,9 +15,15 @@ public class OutputView {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public static void printEnd() {
         System.out.println("end");
+    }
+
+    public static void printResult(String winner, String loser, String winnerScore, String loserScore) {
+        System.out.println(String.format("%s팀이 %s팀을 %s : %s 로 승리하였습니다.", winner, loser, winnerScore, loserScore));
+
     }
 }
