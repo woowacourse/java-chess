@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class WebUIChessApplication {
     private static State state;
+    private static String announcement;
 
     public static void main(String[] args) {
         Spark.port(8080);
@@ -23,16 +24,25 @@ public class WebUIChessApplication {
 
         Pieces startPieces = new Pieces(new StartPieces().getInstance());
         state = new Ended(startPieces);
+        announcement = "게임을 시작하려면 start를 눌러주세요.";
 
         Spark.get("/chess", (request, response) -> {
             Map<String, Object> map = new HashMap<>();
             map.put("table", BoardToTable.of(Board.of(state.getSet()).getLists()).getBoardHtml());
+            map.put("announcement", announcement);
             return render(map, "/chess.html");
         });
 
         Spark.post("/chess", (request, response) -> {
-            state = state.pushCommend(request.queryParams("commend"));
-            response.redirect("/chess");
+            try {
+                state = state.pushCommend(request.queryParams("commend"));
+                announcement = "명령이 입력되었습니다.";
+                response.redirect("/chess");
+            } catch (Exception e) {
+                announcement = e.getMessage();
+                response.redirect("/chess");
+            }
+
             return "";
         });
     }
