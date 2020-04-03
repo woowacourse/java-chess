@@ -27,13 +27,22 @@ public class ChessRunner {
     public void update(String source, String target) {
         Position sourcePosition = Position.of(source);
         Position targetPosition = Position.of(target);
-        Piece sourcePiece = this.board.getPiece(sourcePosition);
+        Piece sourcePiece = getSourcePiece(sourcePosition);
 
         checkCorrectTurn(sourcePiece);
         checkUpdateBoard(sourcePosition, targetPosition, sourcePiece);
 
         updateBoard(sourcePosition, targetPosition);
         changeTeam();
+    }
+
+    private Piece getSourcePiece(Position source) {
+        Optional<Piece> sourcePiece = this.board.getPiece(source);
+        if (!sourcePiece.isPresent()) {
+            throw new IllegalArgumentException("비어있는 위치를 선택했습니다.");
+        }
+
+        return sourcePiece.get();
     }
 
     private void checkCorrectTurn(Piece sourcePiece) {
@@ -76,8 +85,8 @@ public class ChessRunner {
     }
 
     private boolean isMovableTarget(final Piece sourcePiece, final Position targetPosition) {
-        Piece targetPiece = this.board.getPiece(targetPosition);
-        return sourcePiece.isEnemy(targetPiece);
+        Optional<Piece> targetPiece = this.board.getPiece(targetPosition);
+        return targetPiece.map(sourcePiece::isEnemy).orElse(true);
     }
 
     private void updateBoard(Position sourcePosition, Position targetPosition) {
