@@ -1,11 +1,13 @@
-body {
-    margin: 40px;
-    background-color: #5d5d5d;
+.main {
+    background-image: url("image/dream.jpg");
+    margin:0 auto;
 }
+
 .wrapper {
     border: 49px solid #462921;
     width: 560px;
     margin: 0 auto;
+    margin-top: 193px;
     display: grid;
     grid-gap: 0;
     grid-template-columns: repeat(8, 70px);
@@ -25,10 +27,20 @@ body {
     background-color: #b5915f;
     text-align: center;
 }
+
 .box-inner{
     text-align: center;
     align-self: center;
 }
+
+.box:hover {
+    opacity: 0.8;
+}
+
+.box:active {
+    opacity: 0.5;
+}
+
 .top,
 .bottom{
     display: grid;
@@ -57,4 +69,8 @@ body {
 .box:nth-child(49) ~ div:nth-child(-2n+57),
 .box:nth-child(57) ~ div:nth-child(-2n+64){
     background-color: #773c1d;
+}
+
+.start {
+
 }

@@ -2,6 +2,7 @@ package chess.controller;
 
 import static spark.Spark.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.Status;
@@ -33,11 +34,21 @@ public class WebChessController implements ChessController {
 
 	@Override
 	public void start() {
-		get("/", this::renderBoard);
+		get("/", this::renderStart);
+		get("/chess", this::renderBoard);
+	}
+
+	private void handleException(IllegalArgumentException exception, Request request, Response response) {
+		response.status(400);
+		response.body(exception.getMessage());
+	}
+
+	private String renderStart(Request request, Response response) {
+		return render(new HashMap<>(), "index.html");
 	}
 
 	private String renderBoard(Request request, Response response) {
-		return render(BoardDTO.of(board).getBoard(), "index.html");
+		return render(BoardDTO.of(board).getBoard(), "chess.html");
 	}
 
 	private String render(Map<String, String> model, String templatePath) {
@@ -47,6 +58,7 @@ public class WebChessController implements ChessController {
 	@Override
 	public void playTurn() {
 		post("/api/move", this::updateBoard);
+		exception(IllegalArgumentException.class, this::handleException);
 		get("/status", this::toStatus);
 	}
 
@@ -61,15 +73,11 @@ public class WebChessController implements ChessController {
 		String from = element.getAsJsonObject().get("from").getAsString();
 		String to = element.getAsJsonObject().get("to").getAsString();
 
-		try {
-			if (board.isEnd()) {
-				throw new IllegalArgumentException("게임 끝");
-			}
-			service.move(MoveInfo.of(from, to), team);
-		} catch (Exception error) {
-			response.status(500);
-			return GSON.toJson(error.getMessage());
+		if (board.isEnd()) {
+			throw new IllegalArgumentException("게임 끝");
 		}
+
+		service.move(MoveInfo.of(from, to), team);
 
 		team = team.next();
 		return GSON.toJson(from + " " + to);
