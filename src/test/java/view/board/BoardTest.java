@@ -1,4 +1,4 @@
-package domain.board;
+package view.board;
 
 import org.junit.jupiter.api.Test;
 

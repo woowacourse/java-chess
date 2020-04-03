@@ -1,4 +1,4 @@
-package chess;
+package view;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class BoardToTable {
 					.append("class=")
 					.append(brightness.getBrightness())
 					.append(">")
-					.append(string)
+					.append(Images.getImageHtml(string))
 					.append("</td>");
 			brightness = brightness.makeSwitch();
 		}

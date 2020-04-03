@@ -1,4 +1,4 @@
-package domain.board;
+package view.board;
 
 import domain.point.Column;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class RowOfBoard {
-	private static final String EMPTY = " ";
+	public static final String EMPTY = " ";
 
 	private final List<String> rowOfBoard;
 

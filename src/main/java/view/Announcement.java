@@ -1,11 +1,11 @@
 package view;
 
-import domain.board.Board;
-import domain.board.RowOfBoard;
+import view.board.Board;
+import view.board.RowOfBoard;
 import domain.pieces.Pieces;
 import domain.team.Team;
 
-public class OutputView {
+public class Announcement {
 	private static final String NEW_LINE = System.lineSeparator();
 
 	public static void printStart() {

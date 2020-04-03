@@ -19,3 +19,8 @@ td {
 .dark {
     background: #CC723D;
 }
+
+img {
+    width: 50%;
+    height: 50%;
+}

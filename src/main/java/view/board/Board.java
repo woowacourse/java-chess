@@ -1,4 +1,4 @@
-package domain.board;
+package view.board;
 
 import domain.pieces.Piece;
 import domain.point.Row;

@@ -1,7 +1,7 @@
 package testAssistant;
 
-import domain.board.Board;
-import domain.board.RowOfBoard;
+import view.board.Board;
+import view.board.RowOfBoard;
 import domain.command.MoveCommandTokens;
 import domain.pieces.*;
 import domain.point.Direction;

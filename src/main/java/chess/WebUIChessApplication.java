@@ -1,6 +1,6 @@
 package chess;
 
-import domain.board.Board;
+import view.board.Board;
 import domain.state.Ended;
 import domain.state.State;
 import domain.pieces.Pieces;
@@ -8,8 +8,9 @@ import domain.pieces.StartPieces;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import view.BoardToTable;
 import view.InputView;
-import view.OutputView;
+import view.Announcement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,11 +34,18 @@ public class WebUIChessApplication {
             return render(map, "/chess.html");
         });
 
+        Spark.get("/chess/2", (request, response) -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("table", BoardToTable.of(Board.of(state.getSet()).getLists()).getBoardHtml());
+            map.put("announcement", announcement);
+            return render(map, "/chess.html");
+        });
+
         Spark.post("/chess", (request, response) -> {
             try {
                 state = state.pushCommend(request.queryParams("commend"));
                 if (state.isReported()) {
-                    announcement = OutputView.getStatusAnnouncement(state.getPieces());
+                    announcement = Announcement.getStatusAnnouncement(state.getPieces());
                 }
                 if (state.isPlaying()) {
                     announcement = "명령이 입력되었습니다.";
@@ -59,7 +67,7 @@ public class WebUIChessApplication {
     }
 
     public static void main2(String[] args) {
-        OutputView.printStart();
+        Announcement.printStart();
         Pieces startPieces = new Pieces(new StartPieces().getInstance());
         State state = new Ended(startPieces);
         while (true) {
@@ -71,13 +79,13 @@ public class WebUIChessApplication {
 
     private static void printIfPlaying(State state) {
         if (state.isPlaying()) {
-            OutputView.printBoard(Board.of(state.getSet()));
+            Announcement.printBoard(Board.of(state.getSet()));
         }
     }
 
     private static void printIfStatus(State state) {
         if (state.isReported()) {
-            OutputView.getStatusAnnouncement(state.getPieces());
+            Announcement.getStatusAnnouncement(state.getPieces());
         }
     }
 }
