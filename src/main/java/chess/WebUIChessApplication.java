@@ -48,8 +48,10 @@ public class WebUIChessApplication {
             }
 
             if (req.queryParams("command").equals("이동체크")) {
-                List<Position> movablePositions = board.findMovablePositions(Position.of(req.queryParams("start")));
+                Position start = Position.of(req.queryParams("start"));
+                List<Position> movablePositions = tryFindMovablePositions(start, board);
                 model = parseBoard(board, movablePositions);
+                model.put("start", req.queryParams("start"));
             }
 
             return render(model, "index.html");
@@ -60,8 +62,17 @@ public class WebUIChessApplication {
         try {
             board.move(start, end);
         } catch (InvalidInputException e) {
-            System.out.println("올바르지 않은 입력입니다.");
+            System.out.println(e.getMessage());
         }
+    }
+
+    private static List<Position> tryFindMovablePositions(Position start, Board board) throws SQLException {
+        try {
+            return board.findMovablePositions(start);
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+        }
+        return new ArrayList<>();
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

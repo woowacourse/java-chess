@@ -112,3 +112,7 @@ h1 {
     font-size: 12px;
     background-color: cornsilk;
 }
+
+.invisible {
+    visibility: hidden;
+}
