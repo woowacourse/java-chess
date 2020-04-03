@@ -30,23 +30,6 @@ public enum GameState {
         }
     }
 
-    public static boolean isStart(GameState gameState){
-        return gameState == START;
-    }
-
-    public static boolean isMove(GameState gameState){
-        return gameState == MOVE;
-    }
-
-    public static boolean isStatus(GameState gameState){
-        return gameState == STATUS;
-    }
-
-    public static boolean isEnd(GameState gameState) {
-        return gameState == END;
-    }
-
-
     public String getName() {
         return name;
     }

@@ -25,7 +25,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
         assertThat(chessBoard.canMove(Square.of("c5"), Square.of("c6"))).isFalse();
         //WhiteTurn
-        chessBoard.changeTurn();
+        chessBoard.getTurn().changeTurn();
         //Black
         assertThat(chessBoard.canMove(Square.of("a2"), Square.of("a3"))).isFalse();
         //Black
