@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.player.PlayerColor;
+
 public class Status {
 
     private static final int INIT_TURN = 0;
@@ -21,11 +23,11 @@ public class Status {
     }
 
     public boolean isWhiteTurn() {
-        return turn % 2 == 0;
+        return PlayerColor.playerOf(turn) == PlayerColor.WHITE;
     }
 
     public boolean isBlackTurn() {
-        return !isWhiteTurn();
+        return PlayerColor.playerOf(turn) == PlayerColor.BLACK;
     }
 
     public boolean isNotProcessing() {
@@ -42,6 +44,10 @@ public class Status {
 
     public Status finish() {
         return new Status(turn, StatusType.FINISHED);
+    }
+
+    public String getMessage() {
+        return String.format(statusType.getMessage(), getTurn(), PlayerColor.playerOf(turn).getName());
     }
 
     public int getTurn() {

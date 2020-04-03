@@ -137,4 +137,8 @@ public class Board {
     public Map<Position, GamePiece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
+
+    public Status getStatus() {
+        return status;
+    }
 }

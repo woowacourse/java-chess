@@ -25,8 +25,8 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            putBoard(model, service);
 
+            putBoard(model, service);
             return render(model, "index.html");
         });
 
