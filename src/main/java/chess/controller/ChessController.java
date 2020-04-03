@@ -14,11 +14,9 @@ import java.util.List;
 public class ChessController {
 
     public static void run() {
-        OutputView.printStartGame();
-        OutputView.printStartEndOption();
         ChessBoard chessBoard = new ChessBoard();
+        startGame(chessBoard);
 
-        start(chessBoard);
         String input;
         GameState gameState;
         boolean blackTurn = false;
@@ -73,7 +71,8 @@ public class ChessController {
         return false;
     }
 
-    private static void start(ChessBoard chessBoard) {
+    private static void startGame(ChessBoard chessBoard) {
+        OutputView.printBeginGame();
         GameState gameState = GameState.of(InputView.inputStart());
         if (gameState != GameState.START) {
             throw new IllegalArgumentException("게임을 시작해야 합니다");
