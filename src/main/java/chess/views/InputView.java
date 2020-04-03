@@ -1,7 +1,6 @@
 package chess.views;
 
 import chess.controller.dto.RequestDto;
-
 import java.util.Scanner;
 
 public class InputView {

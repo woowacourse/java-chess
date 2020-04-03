@@ -1,4 +1,4 @@
-import chess.Exception.NotMoveException;
+mport chess.Exception.NotMoveException;
 import chess.domain.chesspiece.King;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
@@ -20,6 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,6 +42,8 @@ public class ChessBoardTest {
     void moveSamePosition() {
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.create(PieceFactory.create());
+    void 같은_위치로_이동했을때() {
+        ChessBoard chessBoard = new ChessBoard();
         Position position = Positions.of("a1");
         assertThatThrownBy(() -> chessBoard.move(position, position))
                 .isInstanceOf(NotMoveException.class);

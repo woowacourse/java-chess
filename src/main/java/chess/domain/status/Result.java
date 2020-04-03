@@ -30,7 +30,7 @@ public class Result {
                 .map(Status::getPlayer)
                 .collect(Collectors.toList());
 
-        return winners;
+      return winners;
     }
 
     public List<Player> getWinners() {

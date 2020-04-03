@@ -29,7 +29,7 @@ public class OutputView {
 
         for (Column column : Column.values()) {
             for (Row row : Row.values()) {
-                String display = Optional.ofNullable(chessBoard.get(Positions.of(row, column)))
+               String display = Optional.ofNullable(chessBoard.get(Positions.of(row, column)))
                         .map(Piece::getDisplay)
                         .orElse(EMPTY);
                 stringBuilder.append(display);

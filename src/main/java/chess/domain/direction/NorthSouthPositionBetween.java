@@ -4,6 +4,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
