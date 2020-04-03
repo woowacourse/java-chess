@@ -56,84 +56,84 @@
 		.K {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteKing.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.k {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackKing.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.q {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackQueen.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.Q {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteQueen.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.b {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackBishop.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.B {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteBishop.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.n {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackKnight.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.N {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteKnight.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.r {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackRook.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.R {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteRook.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.p {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackPawn.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 
 		.P {
 			background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whitePawn.png?raw=true");
 			background-repeat: no-repeat;
-			background-size: 40%;
+			background-size: 60%;
 			background-position: center;
 		}
 	</style>
@@ -275,6 +275,10 @@
 
 	}
 
+	function notMovable() {
+		alert("해당말이 갈 수 없는 칸입니다.")
+	}
+
 	function movable(response) {
 		var sourcePosition = response.sourcePosition;
 		var targetPosition = response.targetPosition;
@@ -286,14 +290,18 @@
 		if (isAttack) {
 			document.getElementById(targetPosition).classList.remove(targetPieceType);
 			if (targetPieceType === "K" || targetPieceType === "k") {
-				alert("게임 종료되었습니다.");
+				printGameEndMessage(targetPieceType);
 			}
 		}
 		document.getElementById(targetPosition).classList.add(sourcePieceType);
 	}
 
-	function notMovable() {
-		alert("해당말이 갈 수 없는 칸입니다.");
+	function printGameEndMessage(targetPieceType) {
+		var winner = "블랙팀";
+		if (targetPieceType === "k") {
+			winner = "화이트팀"
+		}
+		alert("게임이 종료되었습니다. " + winner + " 승");
 	}
 
 	$(".reStart").click(function () {
