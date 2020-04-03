@@ -74,12 +74,11 @@ public class Board {
         return !this.board.containsKey(position);
     }
 
-    public Piece getPiece(final Position position) {
-        if (!this.board.containsKey(position)) {
-            throw new IllegalArgumentException("비어있는 위치를 선택하였습니다.");
+    public Optional<Piece> getPiece(final Position position) {
+        if (this.board.containsKey(position)) {
+            return Optional.of(this.board.get(position));
         }
-
-        return this.board.get(position);
+        return Optional.empty();
     }
 
     public Map<String, String> parse() {

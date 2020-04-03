@@ -13,13 +13,22 @@ public class ChessController {
     private static OutputView outputView = new ConsoleOutputView();
 
     public static void start() {
-        Command command = Command.of(inputView.askChessRun());
+        Command command = getCommand();
         if (command.isStart()) {
             ChessRunner chessRunner = new ChessRunner();
             GameController gameController = command.getGameController();
             gameController.execute(chessRunner, StringUtils.EMPTY);
 
             runChessGame(command, chessRunner);
+        }
+    }
+
+    private static Command getCommand() {
+        try {
+            return Command.of(inputView.askChessRun());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getCommand();
         }
     }
 

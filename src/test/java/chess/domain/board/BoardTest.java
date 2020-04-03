@@ -20,9 +20,9 @@ public class BoardTest {
         board.updateBoard(source, target);
 
         Assertions.assertThatThrownBy(() -> {
-            board.getPiece(source);
-        }).isInstanceOf(IllegalArgumentException.class);
-        Assertions.assertThat(board.getPiece(target)).isInstanceOf(Piece.class);
+            board.getPiece(source).get();
+        }).isInstanceOf(NoSuchElementException.class);
+        Assertions.assertThat(board.getPiece(target).get()).isInstanceOf(Piece.class);
     }
 
     @DisplayName("상대 편으로 말 이동")
@@ -39,10 +39,9 @@ public class BoardTest {
         board.updateBoard(source, target);
 
         Assertions.assertThatThrownBy(() -> {
-            board.getPiece(source);
-        }).isInstanceOf(IllegalArgumentException.class);
-        Assertions.assertThat(board.getPiece(target)).isNotNull();
-        Assertions.assertThat(board.getPiece(target)).isInstanceOf(Piece.class);
+            board.getPiece(source).get();
+        }).isInstanceOf(NoSuchElementException.class);
+        Assertions.assertThat(board.getPiece(target).get()).isInstanceOf(Piece.class);
     }
 
     @DisplayName("승자 팀을 판단")
@@ -84,10 +83,10 @@ public class BoardTest {
     void getPieceTest() {
         Board board = new Board();
 
-        Assertions.assertThat(board.getPiece(Position.of("a2"))).isInstanceOf(Piece.class);
+        Assertions.assertThat(board.getPiece(Position.of("a2")).get()).isInstanceOf(Piece.class);
         Assertions.assertThatThrownBy(() -> {
-            board.getPiece(Position.of("a3"));
-        }).isInstanceOf(IllegalArgumentException.class);
+            board.getPiece(Position.of("a3")).get();
+        }).isInstanceOf(NoSuchElementException.class);
     }
 
     @DisplayName("같은 세로줄에 폰이 없을 때 점수 계산")
