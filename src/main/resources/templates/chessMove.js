@@ -99,17 +99,21 @@ function postChessBoard(json) {
             alert(error.toString());
         },
         success: function (data) {
-            if (data == "CONTINUE") {
+            var jsonData = JSON.parse(data);
+            if (jsonData.progress == "CONTINUE") {
                 var nowImg = $('#' + json.now).html();
                 $('#' + json.des).html(nowImg);
                 $('#' + json.des).attr('chess', $('#' + json.now).chess);
                 $('#' + json.now).html('');
                 $('#' + json.now).attr('chess', 'null');
+
+                console.log(jsonData.chessGameScoresVO.whiteScore);
+                console.log(jsonData.chessGameScoresVO.blackScore);
             }
-            if (data == "ERROR") {
+            if (jsonData.progress == "ERROR") {
                 alert("움직일 수 없는 경우입니다.");
             }
-            if (data == "END") {
+            if (jsonData.progress == "END") {
                 getChessBoardResult();
             }
         }

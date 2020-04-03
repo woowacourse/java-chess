@@ -66,7 +66,7 @@ public class Location {
     }
 
     public boolean isSameRow(Row row) {
-        return row.is(row);
+        return row.is(this.row);
     }
 
     public boolean isSameRow(Location location) {

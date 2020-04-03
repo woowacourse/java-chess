@@ -11,6 +11,10 @@ import chess.result.Result;
 import chess.score.Score;
 import chess.team.Team;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static chess.location.LocationSubStringUtil.substring;
 import static chess.progress.Progress.*;
 import static chess.team.Team.BLACK;
@@ -96,6 +100,12 @@ public class ChessGame {
         return compareScore();
     }
 
+    public List<Score> calculateScores() {
+        return new ArrayList<>(
+                Arrays.asList(calculateScore(white), calculateScore(black))
+        );
+    }
+
     private ChessResult compareScore() {
         Score whiteScore = calculateScore(white);
         Score blackScore = calculateScore(black);
@@ -108,9 +118,10 @@ public class ChessGame {
         return new ChessResult(Result.DRAW, black.getTeamName());
     }
 
-    private Score calculateScore(Player player) {
+    public Score calculateScore(Player player) {
         Score scoreExceptPawnReduce = player.calculateScoreExceptPawnReduce();
         Score pawnReduceScore = chessBoard.calculateReducePawnScore(player.getTeam());
+        System.out.println(scoreExceptPawnReduce.minus(pawnReduceScore));
         return scoreExceptPawnReduce.minus(pawnReduceScore);
     }
 

@@ -3,22 +3,16 @@ import static spark.Spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.command.Command;
 import chess.progress.Progress;
-import chess.result.ChessResult;
-import data.BoardVO;
-import chess.board.ChessBoard;
+import data.*;
 import chess.game.ChessGame;
-import chess.location.Location;
-import chess.piece.type.Piece;
 import com.google.gson.Gson;
-import data.ChessResultVO;
-import data.LocationDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import view.OutputView;
 
 public class WebUIChessApplication {
+    private static final Gson GSON = new Gson();
+
     public static void main(String[] args) {
         staticFiles.location("templates");
         ChessGame chessGame = new ChessGame();
@@ -34,9 +28,9 @@ public class WebUIChessApplication {
         });
 
         get("/start/board", (req, res) -> {
-            Gson gson = new Gson();
+
             BoardVO boardVO = new BoardVO(chessGame.getChessBoard());
-            return gson.toJson(boardVO);
+            return GSON.toJson(boardVO);
         });
 
         post("/start/move", (req, res) -> {
@@ -52,7 +46,12 @@ public class WebUIChessApplication {
             if (Progress.CONTINUE == progress) {
                 chessGame.changeTurn();
             }
-            return progress;
+            // Score 확
+            ChessGameScoresVO chessGameScoresVO = new ChessGameScoresVO(chessGame.calculateScores());
+            System.out.println("blackscore = " + chessGameScoresVO.getBlackScore().getValue());
+            System.out.println("whitescore = " + chessGameScoresVO.getWhiteScore().getValue());
+            ChessMoveVO chessMoveVO = new ChessMoveVO(chessGameScoresVO, progress);
+            return GSON.toJson(chessMoveVO);
         });
 
         get("/start/winner", (req, res) -> {
