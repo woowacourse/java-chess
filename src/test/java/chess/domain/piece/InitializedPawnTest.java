@@ -35,8 +35,6 @@ class InitializedPawnTest {
     @DisplayName("#move() : should return Piece as to team and Position 'to'")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Team team, Position to) {
-
-        //todo: check convention
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, Position.of(1,2), team);
 
         Board board = RunningBoard.initiaize(userInterface);
@@ -49,7 +47,6 @@ class InitializedPawnTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to team and Position 'to'")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Team team, Position from, Position to) {
-        //todo: check convention, 타입캐스팅 해도 될 지
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);

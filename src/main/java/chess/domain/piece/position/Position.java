@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-//todo: add validation logic
 public class Position {
     private static final int MIN = 1;
     private static final int MAX = 8;

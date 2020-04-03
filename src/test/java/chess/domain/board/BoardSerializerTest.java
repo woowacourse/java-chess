@@ -15,7 +15,6 @@ class BoardSerializerTest {
         UserInterface userInterface = new Console();
         Board board = RunningBoard.initiaize(userInterface);
         Map<String, String> serialized = BoardSerializer.serialize(board);
-        System.out.println(serialized);
         assertThat(serialized.get("11")).isEqualTo("r");
     }
 }

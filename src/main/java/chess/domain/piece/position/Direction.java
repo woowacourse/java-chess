@@ -19,7 +19,6 @@ public enum Direction {
         this.vertical = vertical;
     }
 
-    //todo refac
     public static Direction calculate(Position from, Position to) {
         if (from.equals(to)) {
             return STAY;
@@ -60,7 +59,6 @@ public enum Direction {
         throw new IllegalArgumentException(String.format("%s에서 %s로의 방향을 알 수 없습니다.", from, to));
     }
 
-    //todo: refac logic - not allow oppoisite(etc: right,left) compose
     public Direction compose(Direction other) {
         int newHorizontal = horizontal + other.horizontal;
         int newVertical = vertical + other.vertical;
@@ -87,11 +85,6 @@ public enum Direction {
         return this == NORTH || this == SOUTH;
     }
 
-    private boolean isHorizontal() {
-        return this == EAST || this == WEST;
-    }
-
-
     public boolean isDiagonal() {
         return this == NORTH_WEST
                 || this == NORTH_EAST
@@ -99,13 +92,13 @@ public enum Direction {
                 || this == SOUTH_EAST;
     }
 
-    public static boolean isDiagonal(Position from, Position to) {
-        return (from.getX() != to.getX()) && (from.getY() != to.getY());
+    private boolean isHorizontal() {
+        return this == EAST || this == WEST;
     }
 
     private Direction valueOf(int horizontal, int vertical) {
         for (Direction direction : values()) {
-            if (direction.matchValues(horizontal, vertical)) {
+            if (direction.equals(horizontal, vertical)) {
                 return direction;
             }
         }
@@ -113,8 +106,8 @@ public enum Direction {
         throw new IllegalArgumentException("해당하는 Direction을 찾을 수 없습니다.");
     }
 
-    //todo: change method name
-    private boolean matchValues(int horizontal, int vertical) {
+
+    private boolean equals(int horizontal, int vertical) {
         return (this.horizontal == horizontal) && (this.vertical == vertical);
     }
 }

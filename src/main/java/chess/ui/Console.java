@@ -36,7 +36,6 @@ public class Console implements UserInterface {
     public Command inputStatus() {
         InputView.printResultRequest();
         String input = scanner.nextLine();
-        //todo: refac
         return Command.of(input);
     }
 

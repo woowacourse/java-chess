@@ -5,7 +5,6 @@ import java.util.Objects;
 public class Score {
     private final double value;
 
-    //todo: add validation logic
     public Score(double value) {
         this.value = value;
     }

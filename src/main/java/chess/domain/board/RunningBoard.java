@@ -19,10 +19,6 @@ public class RunningBoard extends StartedBoard {
     private static final int BLANK_START_INDEX = 3;
     private static final int BLANK_END_INDEX = 6;
 
-    //todo: 상속을 하려니 private 생성자를 쓸 수 없었습니다. 그래서 default 생성자로 만들었는데요.
-    //todo: 아예 정적 팩토리 메소드를 없애고 생성자만 둘까도 생각해봤지만, 생성 시 초기화하는 것이라는 의미를 주고 싶어
-    //todo: 정적팩토리 메소드를 사용하며 생성자를 default로 두었습니다. 정적팩토리 메서드 사용 시 생성자는 private으로 두는 게 원칙이라고 알고 있어,
-    //todo: 이 코드에 문제가 있는 것 같은데요. 조금 더 나은 방식을 가르쳐주시면 감사하겠습다!
     RunningBoard(Map<Position, Piece> pieces, UserInterface userInterface) {
         super(pieces, userInterface);
     }

@@ -26,7 +26,6 @@ class QueenTest {
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
-        //todo: check convention
         Queen queen = (Queen) PieceFactory.createInitializedPiece(Queen.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
@@ -38,7 +37,6 @@ class QueenTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
-        //todo: check convention, 타입캐스팅 해도 될 지
         Queen queen = (Queen) PieceFactory.createInitializedPiece(Queen.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
