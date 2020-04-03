@@ -15,7 +15,7 @@ class WhitePawnRuleTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"1,c4", "2,c5"})
+    @CsvSource(value = {"c4", "c5"})
     void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
         Position sourcePosition = Position.of("c3");
 
