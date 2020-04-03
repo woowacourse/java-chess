@@ -6,17 +6,17 @@ import chess.domain.game.Turn;
 import chess.domain.piece.Position;
 
 public interface State {
-	State start();
+    State start();
 
-	State end();
+    State end();
 
-	State move(Position source, Position target);
+    State move(Position source, Position target);
 
-	Board board();
+    Board board();
 
-	Turn turn();
+    Turn turn();
 
-	Status status();
+    Status status();
 
-	boolean isFinished();
+    boolean isFinished();
 }

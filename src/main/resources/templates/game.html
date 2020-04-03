@@ -217,7 +217,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            flex:1;
+            flex: 1;
         }
 
 
@@ -505,53 +505,57 @@
     </div>
 </div>
 <script>
-    const gameId = {{id}}
-    const templateQueen = color => `<div class="chess-piece queen ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
-    const templateKing = color => `<div class="chess-piece king ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
-    const templateBishop = color => `<div class="chess-piece bishop ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
-    const templateKnight = color => `<div class="chess-piece knight ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
-    const templateRook = color => `<div class="chess-piece rook ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
-    const templatePawn = color => `<div class="chess-piece pawn ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
-    const templateBlank = `<div class="chess-piece blank" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
-    const templateGame = id => `<a href="/game/${id}" class="chess-game"><div class="chess-game-title">체스 게임 ${id}</div></a>`
+    const gameId = {;
+    {
+        id
+    }
+    }
+    const templateQueen = color => `<div class="chess-piece queen ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`;
+    const templateKing = color => `<div class="chess-piece king ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`;
+    const templateBishop = color => `<div class="chess-piece bishop ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`;
+    const templateKnight = color => `<div class="chess-piece knight ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`;
+    const templateRook = color => `<div class="chess-piece rook ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`;
+    const templatePawn = color => `<div class="chess-piece pawn ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`;
+    const templateBlank = `<div class="chess-piece blank" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`;
+    const templateGame = id => `<a href="/game/${id}" class="chess-game"><div class="chess-game-title">체스 게임 ${id}</div></a>`;
 
-    const blackScoreElement = document.querySelector('#black-score')
-    const whiteScoreElement = document.querySelector('#white-score')
-    const chessAlertElement = document.querySelector('.chess-alert')
-    const chessAlertMessageElement = document.querySelector('.chess-alert-message')
+    const blackScoreElement = document.querySelector('#black-score');
+    const whiteScoreElement = document.querySelector('#white-score');
+    const chessAlertElement = document.querySelector('.chess-alert');
+    const chessAlertMessageElement = document.querySelector('.chess-alert-message');
 
-    const chessResultElement = document.querySelector('.chess-result')
-    const chessResultMessageElement = document.querySelector('.chess-result-message')
-    const chessResultRestartElement = document.querySelector('.chess-result-restart')
+    const chessResultElement = document.querySelector('.chess-result');
+    const chessResultMessageElement = document.querySelector('.chess-result-message');
+    const chessResultRestartElement = document.querySelector('.chess-result-restart');
 
-    const chessGamesElement = document.querySelector('.chess-games')
-    const chessCreateSubmitElement = document.querySelector('.chess-create-submit')
+    const chessGamesElement = document.querySelector('.chess-games');
+    const chessCreateSubmitElement = document.querySelector('.chess-create-submit');
 
     chessCreateSubmitElement.onclick = () => {
         fetch('/create', {
-           method: 'POST'
+            method: 'POST'
         }).then(response => response.json())
-        .then(data => {
-            if (data.statusCode == 1) {
-                location.replace('/game/' + data.dto)
-            }
-        })
-    }
+            .then(data => {
+                if (data.statusCode == 1) {
+                    location.replace('/game/' + data.dto)
+                }
+            })
+    };
 
     chessResultRestartElement.onclick = () => {
         fetch('/restart/' + gameId, {
-           method: 'POST'
+            method: 'POST'
         }).then(response => response.json())
-        .then(data => {
-            if (data.statusCode == 1) {
-                location.reload()
-            }
-        })
-    }
+            .then(data => {
+                if (data.statusCode == 1) {
+                    location.reload()
+                }
+            })
+    };
 
     function showAlert(message, delay) {
-        show(chessAlertElement)
-        chessAlertMessageElement.innerHTML = message
+        show(chessAlertElement);
+        chessAlertMessageElement.innerHTML = message;
 
         setTimeout(() => {
             hide(chessAlertElement)
@@ -559,12 +563,12 @@
     }
 
     function show(element) {
-        element.classList.remove('hide')
+        element.classList.remove('hide');
         element.classList.add('show')
     }
 
     function hide(element) {
-        element.classList.remove('show')
+        element.classList.remove('show');
         element.classList.add('hide')
     }
 
@@ -581,8 +585,8 @@
         R: templateRook('black'),
         B: templateBishop('black'),
         N: templateKnight('black'),
-    }
-    const findChessCell = (x, y) => document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
+    };
+    const findChessCell = (x, y) => document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
 
     fetch('http://localhost:4567/board/' + gameId)
         .then(response => response.json())
@@ -597,8 +601,8 @@
     }
 
     function drawChessGame({boardDto, turnDto, statusDto, isFinished}) {
-        drawBoard(boardDto.board)
-        drawStatus(statusDto)
+        drawBoard(boardDto.board);
+        drawStatus(statusDto);
         drawResult(statusDto, isFinished)
     }
 
@@ -606,7 +610,7 @@
         if (!isFinished) {
             return;
         }
-        show(chessResultElement)
+        show(chessResultElement);
         chessResultMessageElement.innerHTML = statusDto.winner + ' 승'
     }
 
@@ -614,7 +618,7 @@
         for (let i = 0; i < 64; i++) {
             const x = i % 8;
             const y = 7 - Math.floor(i / 8);
-            const key = board[i]
+            const key = board[i];
             findChessCell(x, y).innerHTML = key == '.' ? templateBlank : createTemplate[key]
         }
     }
@@ -625,7 +629,7 @@
     }
 
     function onDragStart(e) {
-        e.dataTransfer.setData('x', e.target.parentElement.dataset.x)
+        e.dataTransfer.setData('x', e.target.parentElement.dataset.x);
         e.dataTransfer.setData('y', e.target.parentElement.dataset.y)
     }
 
@@ -649,7 +653,8 @@
                     drawChessGame(data.dto);
                     return;
                 }
-                showAlert(data.dto, 1000)});
+                showAlert(data.dto, 1000)
+            });
     }
 
 </script>
