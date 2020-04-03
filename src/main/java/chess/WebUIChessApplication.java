@@ -1,5 +1,12 @@
 package chess;
 
+import domain.command.exceptions.CommandTypeException;
+import domain.command.exceptions.MoveCommandTokensException;
+import domain.pieces.exceptions.CanNotAttackException;
+import domain.pieces.exceptions.CanNotMoveException;
+import domain.pieces.exceptions.CanNotReachException;
+import domain.state.exceptions.StateException;
+import view.Announcement;
 import view.board.Board;
 import domain.state.Ended;
 import domain.state.State;
@@ -9,15 +16,13 @@ import spark.ModelAndView;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import view.BoardToTable;
-import view.InputView;
-import view.Announcement;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class WebUIChessApplication {
     private static State state;
-    private static String announcement;
+    private static Announcement announcement;
 
     public static void main(String[] args) {
         Spark.port(8080);
@@ -25,19 +30,12 @@ public class WebUIChessApplication {
 
         Pieces startPieces = new Pieces(new StartPieces().getInstance());
         state = new Ended(startPieces);
-        announcement = "게임을 시작하려면 start를 눌러주세요.";
+        announcement = Announcement.ofFirst();
 
         Spark.get("/chess", (request, response) -> {
             Map<String, Object> map = new HashMap<>();
             map.put("table", BoardToTable.of(Board.of(state.getSet()).getLists()).getBoardHtml());
-            map.put("announcement", announcement);
-            return render(map, "/chess.html");
-        });
-
-        Spark.get("/chess/2", (request, response) -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("table", BoardToTable.of(Board.of(state.getSet()).getLists()).getBoardHtml());
-            map.put("announcement", announcement);
+            map.put("announcement", announcement.getString());
             return render(map, "/chess.html");
         });
 
@@ -45,17 +43,22 @@ public class WebUIChessApplication {
             try {
                 state = state.pushCommend(request.queryParams("commend"));
                 if (state.isReported()) {
-                    announcement = Announcement.getStatusAnnouncement(state.getPieces());
+                    announcement = Announcement.ofStatus(state.getPieces());
                 }
                 if (state.isPlaying()) {
-                    announcement = "명령이 입력되었습니다.";
+                    announcement = Announcement.ofPlaying();
                 }
                 if (state.isEnded()) {
-                    announcement = "게임이 종료되었습니다. 정보를 확인하려면 status, 다시 시작하려면 start를 입력해주세요.";
+                    announcement = Announcement.ofEnd();
                 }
                 response.redirect("/chess");
-            } catch (Exception e) {
-                announcement = e.getMessage();
+            } catch (CommandTypeException
+                    | MoveCommandTokensException
+                    | CanNotMoveException
+                    | CanNotAttackException
+                    | CanNotReachException
+                    | StateException e) {
+                announcement = Announcement.of(e.getMessage());
                 response.redirect("/chess");
             }
             return "";
@@ -64,28 +67,5 @@ public class WebUIChessApplication {
 
     public static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    public static void main2(String[] args) {
-        Announcement.printStart();
-        Pieces startPieces = new Pieces(new StartPieces().getInstance());
-        State state = new Ended(startPieces);
-        while (true) {
-            state = state.pushCommend(InputView.inputGameCommend());
-            printIfPlaying(state);
-            printIfStatus(state);
-        }
-    }
-
-    private static void printIfPlaying(State state) {
-        if (state.isPlaying()) {
-            Announcement.printBoard(Board.of(state.getSet()));
-        }
-    }
-
-    private static void printIfStatus(State state) {
-        if (state.isReported()) {
-            Announcement.getStatusAnnouncement(state.getPieces());
-        }
     }
 }

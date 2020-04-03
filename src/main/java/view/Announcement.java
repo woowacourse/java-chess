@@ -1,59 +1,72 @@
 package view;
 
-import view.board.Board;
-import view.board.RowOfBoard;
 import domain.pieces.Pieces;
 import domain.team.Team;
 
 public class Announcement {
-	private static final String NEW_LINE = System.lineSeparator();
+	private static final String NEW_LINE = "<br/>";
 
-	public static void printStart() {
-		System.out.println("체스 게임을 시작합니다.");
-		System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+	private final String message;
+
+	private Announcement(final String message) {
+		this.message = message;
 	}
 
-	public static void printBoard(Board board) {
-		StringBuilder stringBuilder = new StringBuilder();
-		for (RowOfBoard row : board.getBoard()) {
-			stringBuilder.append(String.join("", row.getRowOfBoard()))
-					.append(NEW_LINE);
-		}
+	public static Announcement ofStatus(final Pieces pieces) {
+		final Team winner = pieces.computeWinner();
+		final Announcement whoWinAnnouncement = ofWinner(winner);
 
-		System.out.println(stringBuilder.toString());
-	}
-
-	public static String getStatusAnnouncement(Pieces pieces) {
 		if (pieces.isKingKilled()) {
-			return getWhoWinStringWhenKingKilled(pieces);
+			return whoWinAnnouncement;
 		}
 
+		return whoWinAnnouncement.joinWithBr(ofScores(pieces));
+	}
+
+	private static Announcement ofWinner(final Team team) {
+		if (Team.BLACK == team) {
+			return new Announcement("검은 팀의 승리입니다.");
+		}
+		if (Team.WHITE == team) {
+			return new Announcement("흰 팀의 승리입니다.");
+		}
+		return new Announcement("비겼습니다.");
+	}
+
+	private static Announcement ofScores(final Pieces pieces) {
 		double blackScore = pieces.sumTeamScore(Team.BLACK);
 		double whiteScore = pieces.sumTeamScore(Team.WHITE);
 
-		return getScoreStrings(blackScore, whiteScore)
-				+ getWhoWinStringWhenKingNotKilled(blackScore, whiteScore);
+		final String announcement = String.format("검은 팀의 점수는 %f 입니다."
+				+ NEW_LINE
+				+ "흰 팀의 점수는 %f 입니다.", blackScore, whiteScore);
+
+		return new Announcement(announcement);
 	}
 
-	private static String getWhoWinStringWhenKingKilled(Pieces pieces) {
-		if (pieces.isKingKilled(Team.BLACK)) {
-			return "흰 팀의 승리입니다.";
-		}
-		return "검은 팀의 승리입니다.";
+	private Announcement joinWithBr(final Announcement announcement) {
+		return new Announcement(this.message + NEW_LINE + announcement.message);
 	}
 
-	private static String getScoreStrings(double blackScore, double whiteScore) {
-		return String.format("검은색 팀의 점수는 %f 입니다." + NEW_LINE, blackScore)
-				+ String.format("흰색 팀의 점수는 %f 입니다." + NEW_LINE, whiteScore);
+	public static Announcement ofFirst() {
+		return new Announcement("게임을 시작하려면 start를 눌러주세요.");
 	}
 
-	private static String getWhoWinStringWhenKingNotKilled(double blackScore, double whiteScore) {
-		if (blackScore > whiteScore) {
-			return "검은색 팀의 승리입니다.";
-		}
-		if (blackScore < whiteScore) {
-			return "흰색 팀의 승리입니다.";
-		}
-		return "비겼습니다.";
+	public static Announcement ofPlaying() {
+		return new Announcement("게임 중 입니다...");
+	}
+
+	public static Announcement ofEnd() {
+		return new Announcement("게임이 종료되었습니다."
+				+ NEW_LINE
+				+ "정보를 확인하려면 status, 다시 시작하려면 start를 입력해주세요.");
+	}
+
+	public static Announcement of(String string) {
+		return new Announcement(string);
+	}
+
+	public String getString() {
+		return message;
 	}
 }

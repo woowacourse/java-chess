@@ -81,6 +81,34 @@ public class Pieces {
 		pieces.add(subject.move(target.getPoint()));
 	}
 
+	public Team computeWinner() {
+		if (isKingKilled()) {
+			return computeWinnerWhenKingKilled();
+		}
+
+		return computeWinnerWhenKingsAlive();
+	}
+
+	private Team computeWinnerWhenKingKilled() {
+		if (isKingKilled(Team.BLACK)) {
+			return Team.WHITE;
+		}
+		return Team.BLACK;
+	}
+
+	private Team computeWinnerWhenKingsAlive() {
+		double blackScore = sumTeamScore(Team.BLACK);
+		double whiteScore = sumTeamScore(Team.WHITE);
+
+		if (blackScore > whiteScore) {
+			return Team.BLACK;
+		}
+		if (blackScore < whiteScore) {
+			return Team.WHITE;
+		}
+		return Team.NONE;
+	}
+
 	public double sumTeamScore(Team team) {
 		double simpleSum = pieces.stream()
 				.filter(piece -> piece.isTeam(team))
