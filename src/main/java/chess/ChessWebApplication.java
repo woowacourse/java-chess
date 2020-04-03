@@ -25,6 +25,8 @@ public class ChessWebApplication {
 	private static ChessBoard chessBoard;
 
 	public static void main(String[] args) {
+		staticFileLocation("/templates");
+
 		get("/", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			return render(model, "index.html");
