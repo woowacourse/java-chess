@@ -45,7 +45,7 @@ public class Controller {
 
 	private static void init() {
 		game = new Game(new PiecesManager(WhitePiecesFactory.create(), BlackPiecesFactory.create()),
-			Board.getInstance());
+			new Board());
 		OutputView.printChessBoard(game.getBoard());
 	}
 
