@@ -3,76 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>chess game</title>
-    <style type="text/css">
-        .container {
-            margin: auto;
-            display: flex;
-        }
-
-        #chess_board {
-            font-size: 50px;
-            text-align: center;
-        }
-
-        #chess_board td {
-            width: 80px;
-            height: 80px;
-        }
-
-        #chess_board tr:nth-child(odd) .cell:nth-child(even) {
-            background-color: gray;
-        }
-
-        #chess_board tr:nth-child(even) .cell:nth-child(odd) {
-            background-color: gray;
-        }
-
-        #chess_board tr .coordinate {
-            font-size: 20px;
-        }
-
-        .game_info {
-            background-color: pink;
-        }
-
-        .command {
-            width: 500px;
-            height: 20px;
-        }
-
-        .score_board {
-            text-align: center;
-            display: flex;
-        }
-
-        .score_box {
-            border: thin solid black;
-            width: 200px;
-            height: 200px;
-            font-size: 30px;
-        }
-
-        .score {
-            font-size: 50px;
-        }
-    </style>
+    <link href="/css/chess_web.css" rel="stylesheet" type="text/css"/>
     <script
             crossorigin="anonymous"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            document.getElementById("startBtn").onclick = function () {
-                window.location.href = '/start';
-            };
-            // document.getElementById("startBtn").addEventListener("click", function() {
-            //
-            // });
-            if (window.location.pathname !== "/") {
-                document.getElementById("startBtn").innerHTML = ("재시작");
-            }
-        });
-    </script>
+    <script src="/js/chess_web.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="container">
