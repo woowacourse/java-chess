@@ -17,9 +17,7 @@ public interface GameState {
 
 	boolean isNotFinished();
 
-	default Board getBoard() {
-		throw new UnsupportedOperationException();
-	}
+	Board getBoard();
 
 	default Team getWinner() {
 		throw new UnsupportedOperationException();

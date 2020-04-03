@@ -42,7 +42,7 @@ public class BoardTest {
 		Position from = Position.of("a1");
 		Position to = Position.of("a2");
 		board.move(from, to);
-		assertThat(board.getPiece(to)).isEqualTo(rook);
+		assertThat(board.findPiece(to)).isEqualTo(rook);
 	}
 
 	@DisplayName("기물이 없는 빈칸을 출발점으로 설정한 move메서드를 실행시 예외 발생 확인")

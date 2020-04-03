@@ -14,7 +14,7 @@ public class ConsoleChessController {
 		GameState gameState = new Ready(board);
 		Game game = new Game(gameState);
 
-		while (game.isStillPlaying()) {
+		while (game.isNotEnd()) {
 			doCommand(game);
 		}
 	}

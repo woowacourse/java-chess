@@ -88,7 +88,7 @@ public class Board {
 		source.updateHasMoved();
 	}
 
-	private Piece findPiece(Position position) {
+	public Piece findPiece(Position position) {
 		return pieces.getOrDefault(Objects.requireNonNull(position), EMPTY);
 	}
 
@@ -111,11 +111,7 @@ public class Board {
 
 	public boolean isExistAnyPieceAt(List<Position> traces) {
 		return traces.stream()
-			.anyMatch(pieces::containsKey);
-	}
-
-	public Piece getPiece(Position position) {
-		return pieces.get(position);
+			.anyMatch(trace -> findPiece(trace).isNotBlank());
 	}
 
 	public Map<Position, Piece> getPieces() {
@@ -123,11 +119,10 @@ public class Board {
 	}
 
 	public boolean isNotSameTeamFromPosition(Position position, Team team) {
-		return !getPiece(position).isRightTeam(team);
+		return !findPiece(position).isRightTeam(team);
 	}
 
 	public boolean containsSingleKingWith(Team team) {
-
 		return containsSingleKing() && matchAllKings(team);
 	}
 

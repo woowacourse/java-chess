@@ -10,10 +10,6 @@ public abstract class Finish implements GameState {
 	protected final Board board;
 	protected Team turn;
 
-	public Finish(Board board) {
-		this(board, Team.WHITE);
-	}
-
 	public Finish(Board board, Team turn) {
 		this.board = board;
 		this.turn = turn;

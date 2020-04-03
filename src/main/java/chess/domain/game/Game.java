@@ -39,7 +39,7 @@ public class Game {
 		return state.getWinner();
 	}
 
-	public boolean isStillPlaying() {
+	public boolean isNotEnd() {
 		return state.isNotFinished();
 	}
 }
