@@ -16,11 +16,11 @@ import java.util.Map;
 public class PieceDao {
 	public Connection getConnection() {
 		Connection con = null;
-		String server = "localhost:3306"; // MySQL 서버 주소
+		String server = "localhost:13306"; // MySQL 서버 주소
 		String database = "chess"; // MySQL DATABASE 이름
 		String option = "?useSSL=false&serverTimezone=UTC";
-		String userName = "test"; //  MySQL 서버 아이디
-		String password = "1234"; // MySQL 서버 비밀번호
+		String userName = "root"; //  MySQL 서버 아이디
+		String password = "root"; // MySQL 서버 비밀번호
 
 		// 드라이버 로딩
 		try {
@@ -51,7 +51,7 @@ public class PieceDao {
 	}
 
 	public void addPiece(Piece piece) throws SQLException {
-		String query = "INSERT INTO PIECES(name,file,rank,team) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO pieces(name,file,rank,team) VALUES (?, ?, ?, ?)";
 		PreparedStatement pstmt = getConnection().prepareStatement(query);
 
 		pstmt.setString(1, piece.getPieceName());
