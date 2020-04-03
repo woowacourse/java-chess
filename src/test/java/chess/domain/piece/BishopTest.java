@@ -37,7 +37,7 @@ public class BishopTest {
         INITIALIZED_POSITIONS.set(54, Rook.createBlack(new Position(7, 7)));
         INITIALIZED_POSITIONS.set(0, Queen.createWhite(new Position(1, 1)));
         Board board = new Board(INITIALIZED_POSITIONS);
-        assertThat(moveStrategy.getPossiblePositions(board, piece)).isEqualTo(expectedToPositions);
+        assertThat(moveStrategy.possiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForBishopMoveByDirection() {

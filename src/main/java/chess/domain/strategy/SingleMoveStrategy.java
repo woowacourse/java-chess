@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class SingleMoveStrategy implements MoveStrategy {
     @Override
-    public List<Position> getPossiblePositions(final Board board, final Piece piece) {
+    public List<Position> possiblePositions(final Board board, final Piece piece) {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {

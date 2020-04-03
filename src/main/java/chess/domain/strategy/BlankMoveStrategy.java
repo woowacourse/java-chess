@@ -12,7 +12,7 @@ public class BlankMoveStrategy implements MoveStrategy {
     private static final String BLANK_MOVE_UNSUPPORTED_EXCEPTION_MESSAGE = "빈 칸은 움직일 수 없습니다.";
 
     @Override
-    public List<Position> getPossiblePositions(Board board, Piece piece) {
+    public List<Position> possiblePositions(Board board, Piece piece) {
         throw new PieceImpossibleMoveException(BLANK_MOVE_UNSUPPORTED_EXCEPTION_MESSAGE);
     }
 

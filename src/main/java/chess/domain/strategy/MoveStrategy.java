@@ -8,7 +8,7 @@ import chess.domain.util.Direction;
 import java.util.List;
 
 public interface MoveStrategy {
-    List<Position> getPossiblePositions(Board board, Piece piece);
+    List<Position> possiblePositions(Board board, Piece piece);
 
     List<Direction> getDirections();
 }

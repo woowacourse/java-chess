@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.strategy.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 public enum PieceType {
@@ -23,17 +22,13 @@ public enum PieceType {
     private final MoveStrategy moveStrategy;
     private final double score;
 
-    PieceType(MoveStrategy moveStrategy, double score) {
+    PieceType(final MoveStrategy moveStrategy, final double score) {
         this.moveStrategy = moveStrategy;
         this.score = score;
     }
 
-    public static boolean isPawn(final Piece piece) {
-        return Arrays.asList(FIRST_WHITE_PAWN, FIRST_BLACK_PAWN, WHITE_PAWN, BLACK_PAWN).contains(piece.pieceType);
-    }
-
-    public List<Position> getPossiblePositions(Board board, Piece piece) {
-        return moveStrategy.getPossiblePositions(board, piece);
+    public List<Position> possiblePositions(final Board board, final Piece piece) {
+        return moveStrategy.possiblePositions(board, piece);
     }
 
     public double score() {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class MultipleMoveStrategy implements MoveStrategy {
     @Override
-    public List<Position> getPossiblePositions(Board board, Piece piece) {
+    public List<Position> possiblePositions(Board board, Piece piece) {
         List<Position> possiblePositions = new ArrayList<>();
 
         for (Direction direction : getDirections()) {

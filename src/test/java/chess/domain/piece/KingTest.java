@@ -37,7 +37,7 @@ public class KingTest {
         INITIALIZED_POSITIONS.set(27, Rook.createWhite(new Position(4, 4)));
         INITIALIZED_POSITIONS.set(37, Bishop.createBlack(new Position(6, 5)));
         Board board = new Board(INITIALIZED_POSITIONS);
-        assertThat(moveStrategy.getPossiblePositions(board, piece)).isEqualTo(expectedToPositions);
+        assertThat(moveStrategy.possiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForKingMoveByDirection() {

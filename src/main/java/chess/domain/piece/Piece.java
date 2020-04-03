@@ -21,7 +21,7 @@ public abstract class Piece {
     }
 
     public boolean isMovable(final Board board,  final Piece toPiece) {
-        if (pieceType.getPossiblePositions(board, this).contains(toPiece.getPosition())) {
+        if (pieceType.possiblePositions(board, this).contains(toPiece.getPosition())) {
             return true;
         }
         throw new PieceImpossibleMoveException("해당 포지션으로 이동할 수 없습니다.");

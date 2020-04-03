@@ -35,7 +35,7 @@ public class RookTest {
     void rookMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
         INITIALIZED_POSITIONS.set(36, Rook.createWhite(new Position(5, 5)));
         Board board = new Board(INITIALIZED_POSITIONS);
-        assertThat(moveStrategy.getPossiblePositions(board, piece)).isEqualTo(expectedToPositions);
+        assertThat(moveStrategy.possiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForRookMoveByDirection() {
