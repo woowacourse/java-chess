@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.piece.state.move.MoveType;
 import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.team.Team;
 import chess.domain.piece.position.Position;
@@ -28,7 +27,7 @@ class RookTest {
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         //todo: check convention
-        Rook rook = (Rook) PieceFactory.createPiece(Rook.class, from, team);
+        Rook rook = (Rook) PieceFactory.createInitializedPiece(Rook.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
         Piece moved = rook.move(to, board);
@@ -40,7 +39,7 @@ class RookTest {
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
         //todo: check convention, 타입캐스팅 해도 될 지
-        Rook rook = (Rook) PieceFactory.createPiece(Rook.class, from, team);
+        Rook rook = (Rook) PieceFactory.createInitializedPiece(Rook.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
@@ -53,7 +52,7 @@ class RookTest {
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
-        Rook rook = (Rook) PieceFactory.createPiece(Rook.class, from, team);
+        Rook rook = (Rook) PieceFactory.createInitializedPiece(Rook.class, from, team);
         Board board = RunningBoard.initiaize(userInterface);
         boolean hasHindrance = rook.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
@@ -65,11 +64,15 @@ class RookTest {
                 Arguments.of(Position.of(1, 2),
                         Position.of(1, 6),
                         team,
-                        PieceFactory.createPiece(Rook.class, Position.of(1, 6), team)),
+                        PieceFactory.createMovedPiece(Rook.class, Position.of(1, 6), team, MoveType.MOVED)),
                 Arguments.of(Position.of(1, 3),
                         Position.of(8, 3),
                         team,
-                        PieceFactory.createPiece(Rook.class, Position.of(8, 3), team))
+                        PieceFactory.createMovedPiece(Rook.class, Position.of(8, 3), team, MoveType.MOVED)),
+                Arguments.of(Position.of(1, 3),
+                        Position.of(1, 7),
+                        team,
+                        PieceFactory.createMovedPiece(Rook.class, Position.of(1, 7), team, MoveType.ATTACKED_SUBORDINATE))
         );
     }
 

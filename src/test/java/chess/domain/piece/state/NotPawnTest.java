@@ -32,7 +32,7 @@ class NotPawnTest {
     void calculateScore(Class<? extends Piece> pieceType, Score expected) {
         //given
         //todo: check casting
-        Initialized piece = (Initialized) PieceFactory.createPiece(pieceType, Position.of(5, 5), Team.WHITE);
+        Initialized piece = (Initialized) PieceFactory.createInitializedPiece(pieceType, Position.of(5, 5), Team.WHITE);
         UserInterface userInterface = new Console();
         Board board = RunningBoard.initiaize(userInterface);
         //when

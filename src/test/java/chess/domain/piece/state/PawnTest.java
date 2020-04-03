@@ -27,7 +27,7 @@ class PawnTest {
     void calculateScore(Position position, Score expected) {
         //given
         //todo: check casting
-        Initialized pawn = (Initialized) PieceFactory.createPiece(InitializedPawn.class, position, Team.WHITE);
+        Initialized pawn = (Initialized) PieceFactory.createInitializedPiece(InitializedPawn.class, position, Team.WHITE);
         UserInterface userInterface = new Console();
         Board board = RunningBoard.initiaize(userInterface);
         //when

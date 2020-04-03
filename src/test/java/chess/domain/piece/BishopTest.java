@@ -1,13 +1,14 @@
 package chess.domain.piece;
 
-import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.team.Team;
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.score.Score;
+import chess.domain.piece.state.move.MoveType;
+import chess.domain.piece.team.Team;
+import chess.domain.ui.UserInterface;
 import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +28,7 @@ class BishopTest {
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         //todo: check convention
-        Bishop bishop = (Bishop) PieceFactory.createPiece(Bishop.class, from, team);
+        Bishop bishop = (Bishop) PieceFactory.createInitializedPiece(Bishop.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
         Piece moved = bishop.move(to, board);
@@ -39,7 +40,7 @@ class BishopTest {
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
         //todo: check convention, 타입캐스팅 해도 될 지
-        Bishop bishop = (Bishop) PieceFactory.createPiece(Bishop.class, from, team);
+        Bishop bishop = (Bishop) PieceFactory.createInitializedPiece(Bishop.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
@@ -51,7 +52,7 @@ class BishopTest {
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
-        Bishop bishop = (Bishop) PieceFactory.createPiece(Bishop.class, from, team);
+        Bishop bishop = (Bishop) PieceFactory.createInitializedPiece(Bishop.class, from, team);
         Board board = RunningBoard.initiaize(userInterface);
         boolean hasHindrance = bishop.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
@@ -63,15 +64,15 @@ class BishopTest {
                 Arguments.of(Position.of(2, 2),
                         Position.of(6, 6),
                         team,
-                        PieceFactory.createPiece(Bishop.class, Position.of(6, 6), team)),
+                        new Bishop("b", Position.of(6, 6), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3), MoveType.MOVED)),
                 Arguments.of(Position.of(2, 2),
                         Position.of(7, 7),
                         team,
-                        PieceFactory.createPiece(Bishop.class, Position.of(7, 7), team)),
+                        new Bishop("b", Position.of(7, 7), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3), MoveType.ATTACKED_SUBORDINATE)),
                 Arguments.of(Position.of(2, 2),
                         Position.of(1, 3),
                         team,
-                        PieceFactory.createPiece(Bishop.class, Position.of(1, 3), team))
+                        new Bishop("b", Position.of(1, 3), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3), MoveType.MOVED))
         );
     }
 

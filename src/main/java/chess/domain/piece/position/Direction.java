@@ -83,7 +83,7 @@ public enum Direction {
         return !isVertical() && !isHorizontal();
     }
 
-    private boolean isVertical() {
+    public boolean isVertical() {
         return this == NORTH || this == SOUTH;
     }
 

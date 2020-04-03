@@ -28,7 +28,7 @@ class IsStayedTest {
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
         //given
-        Initialized initialized = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, Team.BLACK);
+        Initialized initialized = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, from, Team.BLACK);
         Board board = RunningBoard.initiaize(userInterface);
 
         boolean canNotMove = isStayed.canNotMove(initialized, to, board);

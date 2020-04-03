@@ -31,4 +31,19 @@ public class Blank extends Started {
     public boolean isBlank() {
         return true;
     }
+
+    @Override
+    public boolean isEnemy(Piece piece) {
+        throw new IllegalStateException("체스 말이 아닙니다.");
+    }
+
+    @Override
+    public boolean isKing() {
+        throw new IllegalStateException("체스 말이 아닙니다.");
+    }
+
+    @Override
+    public boolean attackedKing() {
+        throw new IllegalStateException("체스 말이 아닙니다.");
+    }
 }

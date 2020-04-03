@@ -87,7 +87,7 @@ public class RunningBoard implements Board {
     private static void initializeEdge(Map<Position, Piece> pieces, Team team, int edgeRow) {
         for (int x = LINE_START_INDEX; x <= LINE_END_INDEX; x++) {
             Position position = Position.of(x, edgeRow);
-            Piece piece = PieceFactory.createPieceWithInitialColumn(x, position, team);
+            Piece piece = PieceFactory.createInitializedPieceWithInitialColumn(x, position, team);
             pieces.put(position, piece);
         }
     }
@@ -96,7 +96,7 @@ public class RunningBoard implements Board {
         for (int y = row; y <= row; y++) {
             for (int x = 1; x <= 8; x++) {
                 Position position = Position.of(x, y);
-                Piece initializedPawn = PieceFactory.createPiece(InitializedPawn.class, position, team);
+                Piece initializedPawn = PieceFactory.createInitializedPiece(InitializedPawn.class, position, team);
                 pieces.put(position, initializedPawn);
 
             }

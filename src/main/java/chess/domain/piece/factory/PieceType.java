@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-enum PieceType {
+public enum PieceType {
     INITIALIZED_PAWN("p",
             InitializedPawn.class,
             initializedPawnCanNotMoveStrategies(),
@@ -91,11 +91,11 @@ enum PieceType {
         throw new IllegalArgumentException(String.format("%d에 해당하는 체스 말을 찾을 수 없습니다.", initialColumn));
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    List<CanNotMoveStrategy> getCanNotMoveStrategies() {
+    public List<CanNotMoveStrategy> getCanNotMoveStrategies() {
         return canNotMoveStrategies;
     }
 
@@ -106,7 +106,8 @@ enum PieceType {
                 new CanNotReach(InitializedPawn.MAX_DISTANCE),
                 new HasHindrance(),
                 new IsAttackingSameTeam(),
-                new PawnIsDiagonalWithoutAttack()
+                new PawnIsDiagonalWithoutAttack(),
+                new PawnIsVerticalWithAttack()
         );
     }
 
@@ -145,8 +146,8 @@ enum PieceType {
                 new CanNotReach(MovedPawn.MAX_DISTANCE),
                 new HasHindrance(),
                 new IsAttackingSameTeam(),
-                new PawnIsDiagonalWithoutAttack()
-
+                new PawnIsDiagonalWithoutAttack(),
+                new PawnIsVerticalWithAttack()
         );
     }
 
@@ -162,7 +163,8 @@ enum PieceType {
         return Arrays.asList(
                 new IsStayed(),
                 new CanNotReach(Knight.MAX_DISTANCE),
-                new IsHeadingStraightDirection()
+                new IsHeadingStraightDirection(),
+                new IsAttackingSameTeam()
         );
     }
 

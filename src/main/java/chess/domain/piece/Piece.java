@@ -10,4 +10,7 @@ public interface Piece {
     Team getTeam();
     boolean isNotBlank();
     boolean isBlank();
+    boolean isEnemy(Piece piece);
+    boolean isKing();
+    boolean attackedKing();
 }

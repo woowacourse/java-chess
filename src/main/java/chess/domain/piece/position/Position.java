@@ -67,6 +67,11 @@ public class Position {
         return direction.isPerpendicular();
     }
 
+    public boolean isVerticalDirection(Position to) {
+        Direction direction = Direction.calculate(this, to);
+        return direction.isVertical();
+    }
+
 
     public boolean isDiagonalDirection(Position to) {
         Direction direction = Direction.calculate(this, to);

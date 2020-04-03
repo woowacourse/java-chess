@@ -25,7 +25,7 @@ class CanNotReachTest {
     @DisplayName("#canNotMove() : should return boolean measuring Position to against MAX_DISTANCE")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
-        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, Team.WHITE);
+        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, from, Team.WHITE);
         Board board = RunningBoard.initiaize(userInterface);
         boolean canNotMove = canNotReach.canNotMove(initializedPawn, to, board);
         assertThat(canNotMove).isEqualTo(expected);

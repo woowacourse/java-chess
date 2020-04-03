@@ -25,7 +25,7 @@ class InitializedPawnTest {
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
-        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, team);
+        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, from, team);
         Board board = RunningBoard.initiaize(userInterface);
         boolean hasHindrance = initializedPawn.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
@@ -37,7 +37,7 @@ class InitializedPawnTest {
     void moveSucceed(Team team, Position to) {
 
         //todo: check convention
-        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, Position.of(1,2), team);
+        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, Position.of(1,2), team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
@@ -50,7 +50,7 @@ class InitializedPawnTest {
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Team team, Position from, Position to) {
         //todo: check convention, 타입캐스팅 해도 될 지
-        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(InitializedPawn.class, from, team);
+        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
