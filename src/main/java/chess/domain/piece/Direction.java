@@ -18,6 +18,8 @@ public enum Direction {
 	WEST(-1, 0),
 	NORTHWEST(-1, 1),
 
+	NN(0, 2),
+	SS(0, -2),
 	NNE(1, 2),
 	NNW(-1, 2),
 	SSE(1, -2),
@@ -60,7 +62,7 @@ public enum Direction {
 	}
 
 	public static List<Direction> whitePawnGoDirection() {
-		return Arrays.asList(NORTH);
+		return Arrays.asList(NORTH, NN);
 	}
 
 	public static List<Direction> whitePawnCatchDirection() {
@@ -68,7 +70,7 @@ public enum Direction {
 	}
 
 	public static List<Direction> blackPawnGoDirection() {
-		return Arrays.asList(SOUTH);
+		return Arrays.asList(SOUTH, SS);
 	}
 
 	public static List<Direction> blackPawnCatchDirection() {

@@ -9,6 +9,8 @@ import java.util.Objects;
 import chess.domain.Color;
 
 public class Position {
+	public static final int MIN = 1;
+	public static final int MAX = 8;
 
 	private final Column column;
 	private final Row row;
@@ -24,7 +26,7 @@ public class Position {
 	}
 
 	public static Position of(int afterMoveOfX, int afterMoveOfY) {
-		String afterMovePosition = PositionCache.createKey(chess.domain.board.Column.of(afterMoveOfX),
+		String afterMovePosition = PositionCache.createKey(Column.of(afterMoveOfX),
 			Row.of(afterMoveOfY));
 		return Position.of(afterMovePosition);
 	}
