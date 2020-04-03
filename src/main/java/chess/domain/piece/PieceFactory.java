@@ -1,16 +1,13 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.domain.Pieces;
 import chess.domain.Position;
 
 public class PieceFactory {
-	private static PieceFactory instance;
 	private static List<String> team1PawnPositions = Arrays.asList("a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2");
 	private static List<String> team2PawnPositions = Arrays.asList("a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7");
 
@@ -21,15 +18,12 @@ public class PieceFactory {
 		initializeTeam2(Team.BLACK);
 	}
 
-	public static PieceFactory getInstance() {
-		if (instance == null) {
-			instance = new PieceFactory();
-		}
-		return instance;
+	public static PieceFactory create() {
+		return new PieceFactory();
 	}
 
-	public static Pieces getPieces() {
-		return new Pieces(getInstance().pieces);
+	public Map<Position, Piece> getPieces() {
+		return pieces;
 	}
 
 	private void initializeTeam1(Team team) {
