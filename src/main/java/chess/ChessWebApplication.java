@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.chessPiece.piece.Piece;
 import chess.domain.chessPiece.piece.PieceDao;
+import chess.domain.chessPiece.piece.PieceNameMatcher;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessboard.ChessBoard;
 import com.google.gson.Gson;
@@ -10,6 +11,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +21,8 @@ import static spark.Spark.*;
 
 public class ChessWebApplication {
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	private static final ChessBoard chessBoard = new ChessBoard();
 	private static final PieceDao pieceDao = new PieceDao();
+	private static ChessBoard chessBoard;
 
 	public static void main(String[] args) {
 		get("/", (req, res) -> {
@@ -30,8 +32,11 @@ public class ChessWebApplication {
 
 		get("/init", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			pieceDao.deleteAll();
+
+			chessBoard = new ChessBoard();
 			List<Piece> pieces = chessBoard.getPieces();
+
+			pieceDao.deleteAll();
 			for (Piece piece : pieces) {
 				pieceDao.addPiece(piece);
 				model.put(piece.getPosition().toString(), piece.getPieceName());
@@ -42,14 +47,20 @@ public class ChessWebApplication {
 		get("/continue", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			List<Map<String, Object>> pieces = pieceDao.readPieces();
+
+			List<Piece> piecesOfChessBoard = new ArrayList<>();
 			for (Map pieceMap : pieces) {
 				String file = String.valueOf(pieceMap.get("file"));
 				String rank = String.valueOf(pieceMap.get("rank"));
-				model.put(file + rank, pieceMap.get("name"));
+				String position = file + rank;
+				String pieceType = String.valueOf(pieceMap.get("name"));
+				Piece piece = PieceNameMatcher.create(pieceType, position);
+				piecesOfChessBoard.add(piece);
+				model.put(position, pieceType);
 			}
+			chessBoard = new ChessBoard(piecesOfChessBoard);
 			return gson.toJson(model);
 		});
-
 
 		post("/isMovable", (req, res) -> {
 			Position sourcePosition = Position.of(req.queryParams("sourcePosition"));

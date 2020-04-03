@@ -93,6 +93,7 @@ public class PieceDao {
 
 		PreparedStatement pstmt = getConnection().prepareStatement(query);
 		pstmt.executeUpdate();
+		pstmt.close();
 	}
 
 	public List<Map<String, Object>> readPieces() throws SQLException {
@@ -104,7 +105,7 @@ public class PieceDao {
 		List<Map<String, Object>> pieces = new ArrayList<>();
 		while (rs.next()) {
 			Map<String, Object> map = new HashMap<>();
-			for (int i = 1; i < metaData.getColumnCount(); ++i) {
+			for (int i = 1; i <= metaData.getColumnCount(); i++) {
 				map.put(metaData.getColumnName(i), rs.getObject(i));
 			}
 			pieces.add(map);
@@ -112,5 +113,13 @@ public class PieceDao {
 
 		pstmt.close();
 		return pieces;
+	}
+
+	public ResultSet getRs() throws SQLException {
+		String query = "SELECT * from pieces";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		ResultSet rs = pstmt.executeQuery();
+		ResultSetMetaData metaData = rs.getMetaData();
+		return rs;
 	}
 }

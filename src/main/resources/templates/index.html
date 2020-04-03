@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>체스</title>
-<!--	<link href="./style.css" rel="stylesheet" type="text/css">-->
+	<!--	<link href="./style.css" rel="stylesheet" type="text/css">-->
 	<script
 			crossorigin="anonymous"
 			integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -41,7 +41,8 @@
 		}
 
 		.reStart {
-			margin-right: 10px;
+			margin-top: 12px;
+			margin-right: 12px;
 		}
 
 		.selected {
@@ -296,14 +297,16 @@
 	}
 
 	$(".reStart").click(function () {
-		$.ajax({
-			type: 'get',
-			url: 'init',
-			dataType: 'json',
-			error: getPieceInfoError,
-			success: getPieceInfoSuccess
-		});
-		alert("새로운게임이 시작되었습니다. 새로고침하여 시작하세요.");
+		if (confirm("새로운 게임을 시작하겠습니까?")) {
+			$.ajax({
+				type: 'get',
+				url: 'init',
+				dataType: 'json',
+				error: getPieceInfoError,
+				success: getPieceInfoSuccess
+			});
+			setInterval('location.reload()', 300);
+		}
 	});
 
 	function getPieceInfoError() {
@@ -316,8 +319,6 @@
 			document.getElementById(position).classList.add(pieceName);
 		}
 	}
-
 </script>
-
 </body>
 </html>

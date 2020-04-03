@@ -5,6 +5,7 @@ import chess.domain.chessPiece.position.Position;
 import chess.domain.chessPiece.team.TeamStrategy;
 import chess.domain.movepattern.MovePattern;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public abstract class Piece implements PieceAbility {
@@ -79,6 +80,19 @@ public abstract class Piece implements PieceAbility {
 		return position.getRank();
 	}
 
-	;
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		final Piece piece = (Piece) o;
+		return Objects.equals(name, piece.name) &&
+				Objects.equals(position, piece.position) &&
+				Objects.equals(teamStrategy, piece.teamStrategy);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, position, teamStrategy);
+	}
 }
 

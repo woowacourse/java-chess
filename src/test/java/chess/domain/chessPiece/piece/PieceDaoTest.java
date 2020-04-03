@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,6 +66,17 @@ class PieceDaoTest {
 	void deleteAll() {
 		try {
 			pieceDao.deleteAll();
+		} catch (Exception e) {
+			System.out.println("error");
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void readPieces() {
+		try {
+			List<Map<String, Object>> pieces = pieceDao.readPieces();
+			System.out.println(pieces);
 		} catch (Exception e) {
 			System.out.println("error");
 			e.printStackTrace();
