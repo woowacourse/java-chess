@@ -15,17 +15,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WebUIChessApplication {
+    private static State state;
+
     public static void main(String[] args) {
         Spark.port(8080);
         Spark.staticFiles.location("/statics");
 
         Pieces startPieces = new Pieces(new StartPieces().getInstance());
-        State state = new Ended(startPieces);
+        state = new Ended(startPieces);
 
-        Spark.get("/chess", (req, res) -> {
+        Spark.get("/chess", (request, response) -> {
             Map<String, Object> map = new HashMap<>();
             map.put("table", BoardToTable.of(Board.of(state.getSet()).getLists()).getBoardHtml());
             return render(map, "/chess.html");
+        });
+
+        Spark.post("/chess", (request, response) -> {
+            state = state.pushCommend(request.queryParams("commend"));
+            response.redirect("/chess");
+            return "";
         });
     }
 
