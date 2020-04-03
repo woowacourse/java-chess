@@ -21,7 +21,7 @@ public class QueenTest {
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
 	void queenPathTest(Position start, Position destination, List<Position> trace) {
-		Queen queen = new Queen(BLACK);
+		Piece queen = new Queen(BLACK);
 		List<Position> actual = queen.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
@@ -47,7 +47,7 @@ public class QueenTest {
 	@DisplayName("허용되지 않은 출발위치와 도착위치인 경우 예외가 발생하는지 테스트")
 	@Test
 	void invalidMovementTest() {
-		Queen queen = new Queen(BLACK);
+		Piece queen = new Queen(BLACK);
 		assertThatThrownBy(() -> queen.findMoveModeTrace(Position.of("a1"), Position.of("c2")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");

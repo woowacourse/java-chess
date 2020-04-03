@@ -67,7 +67,7 @@ public class Position {
 				.map(rank -> Position.of(from.getFile(), rank))
 				.collect(Collectors.toList());
 		}
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 	}
 
 	public boolean isNotDiagonal(Position other) {
@@ -105,10 +105,6 @@ public class Position {
 
 	public Cell getFile() {
 		return col;
-	}
-
-	public int getFileNumber() {
-		return col.getNumber();
 	}
 
 	public Cell getRank() {

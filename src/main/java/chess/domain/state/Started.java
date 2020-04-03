@@ -32,7 +32,7 @@ public class Started implements GameState {
 			throw new IllegalArgumentException("움직일 수 없는 턴입니다.");
 		}
 		board.move(from, to);
-		if (board.isKing(to)) {
+		if (board.containsSingleKingWith(turn)) {
 			return new KingCatchFinish(board, turn);
 		}
 		this.turn = turn.getOppositeTeam();

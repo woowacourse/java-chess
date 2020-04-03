@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -23,20 +24,15 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 public class Board {
+	private static final int COUNT_OF_KING_TO_FINISH_GAME = 1;
 	private final Map<Position, Piece> pieces;
-	private Team turn;
-	private boolean finished;
 
 	public Board() {
 		this.pieces = new HashMap<>();
-		this.turn = Team.WHITE;
-		this.finished = false;
 	}
 
 	public Board(Map<Position, Piece> pieces) {
 		this.pieces = pieces;
-		this.turn = Team.WHITE;
-		this.finished = false;
 	}
 
 	public void start() {
@@ -73,8 +69,8 @@ public class Board {
 		for (int file = 1; file <= 8; file++) {
 			int finalFile = file;
 			Map<Team, Long> cnt = IntStream.rangeClosed(1, 8)
-				.mapToObj(rank -> pieces.getOrDefault(Position.of(finalFile, rank), EMPTY))
-				.filter(piece -> piece.isNotBlank() && piece.isPawn())
+				.mapToObj(rank -> findPiece(Position.of(finalFile, rank)))
+				.filter(Piece::isPawn)
 				.collect(groupingBy(Piece::getTeam, counting()));
 
 			cnt.keySet().stream()
@@ -87,11 +83,8 @@ public class Board {
 	public void move(Position from, Position to) {
 		Piece source = requireNonEmpty(findPiece(from));
 		Piece target = findPiece(to);
-		//validatePlayTurn(source);
 		validateSourceMovingRoute(from, to, source, target);
 		updatePiecePosition(from, to, source);
-		finishGameIfKingCaught(target);
-		switchPlayerTurn();
 		source.updateHasMoved();
 	}
 
@@ -106,12 +99,6 @@ public class Board {
 		return piece;
 	}
 
-	private void validatePlayTurn(Piece piece) {
-		if (!piece.isRightTeam(turn)) {
-			throw new IllegalArgumentException("현재 차례가 아닙니다.");
-		}
-	}
-
 	private void validateSourceMovingRoute(Position from, Position to, Piece source, Piece target) {
 		BoardOccupyState occupyState = BoardOccupyState.of(source, target);
 		occupyState.checkMovable(this, source, from, to);
@@ -120,16 +107,6 @@ public class Board {
 	private void updatePiecePosition(Position from, Position to, Piece source) {
 		pieces.put(from, EMPTY);
 		pieces.put(to, source);
-	}
-
-	private void finishGameIfKingCaught(Piece target) {
-		if (target.isKing()) {
-			setGameEnd();
-		}
-	}
-
-	private void switchPlayerTurn() {
-		this.turn = turn.getOppositeTeam();
 	}
 
 	public boolean isExistAnyPieceAt(List<Position> traces) {
@@ -145,19 +122,30 @@ public class Board {
 		return Collections.unmodifiableMap(this.pieces);
 	}
 
-	public boolean isFinished() {
-		return !this.finished;
-	}
-
-	public void setGameEnd() {
-		finished = true;
-	}
-
 	public boolean isNotSameTeamFromPosition(Position position, Team team) {
 		return !getPiece(position).isRightTeam(team);
 	}
 
-	public boolean isKing(Position position) {
-		return getPiece(position).isKing();
+	public boolean containsSingleKingWith(Team team) {
+
+		return containsSingleKing() && matchAllKings(team);
+	}
+
+	private boolean containsSingleKing() {
+		long countOfKing = getPieceStream().count();
+		return countOfKing == COUNT_OF_KING_TO_FINISH_GAME;
+	}
+
+	private boolean matchAllKings(Team team) {
+		return getPieceStream().allMatch(piece -> piece.isRightTeam(team));
+	}
+
+	private Stream<Piece> getPieceStream() {
+		return pieces.values().stream()
+			.filter(Piece::isKing);
+	}
+
+	public boolean containsNotSingleKingWith(Team team) {
+		return !containsSingleKingWith(team);
 	}
 }

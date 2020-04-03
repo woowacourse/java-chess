@@ -1,0 +1,28 @@
+#total-board {
+    display: flex;
+}
+
+#main-board #chess-title {
+    font-size: 25px;
+    text-align: center;
+    padding: 20px;
+}
+
+#chess-board {
+    border-spacing: 0;
+    border: 1px solid black;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    border: solid 1px black;
+}
+
+.black-cell {
+    background-color: burlywood;
+}
+
+.white-cell {
+    background-color: brown;
+}

@@ -21,7 +21,7 @@ public class KingTest {
 	@ParameterizedTest
 	@MethodSource("startDestinationTraceProvider")
 	void kingPathTest(Position start, Position destination, List<Position> trace) {
-		King king = new King(BLACK);
+		Piece king = new King(BLACK);
 		List<Position> actual = king.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
@@ -42,7 +42,7 @@ public class KingTest {
 	@DisplayName("허용되지 않은 출발위치와 도착위치인 경우 예외가 발생하는지 테스트")
 	@Test
 	void invalidMovementTest() {
-		King king = new King(BLACK);
+		Piece king = new King(BLACK);
 		assertThatThrownBy(() -> king.findMoveModeTrace(Position.of("a1"), Position.of("b3")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");

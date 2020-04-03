@@ -23,7 +23,7 @@ public class PawnTest {
 	@DisplayName("팀과 위치를 입력받아 Pawn객체 생성 테스트")
 	@Test
 	void pawnCreateTest() {
-		Pawn pawn = new Pawn(BLACK);
+		Piece pawn = new Pawn(BLACK);
 		assertThat(pawn).isInstanceOf(Pawn.class);
 	}
 
@@ -31,7 +31,7 @@ public class PawnTest {
 	@ParameterizedTest
 	@MethodSource("blackStartDestinationTraceProvider")
 	void blackPawnPathTest(Position start, Position destination, List<Position> trace) {
-		Pawn blackPawn = new Pawn(BLACK);
+		Piece blackPawn = new Pawn(BLACK);
 		List<Position> actual = blackPawn.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
@@ -47,7 +47,7 @@ public class PawnTest {
 	@ParameterizedTest
 	@MethodSource("whiteStartDestinationTraceProvider")
 	void whitePawnPathTest(Position start, Position destination, List<Position> trace) {
-		Pawn whitePawn = new Pawn(WHITE);
+		Piece whitePawn = new Pawn(WHITE);
 		List<Position> actual = whitePawn.findMoveModeTrace(start, destination);
 		assertThat(actual).isEqualTo(trace);
 	}
@@ -99,11 +99,20 @@ public class PawnTest {
 		);
 	}
 
-	@DisplayName("허용되지 않은 출발위치와 도착위치인 경우 예외가 발생하는지 테스트")
+	@DisplayName("기물 이동시, 허용되지 않은 출발위치와 도착위치인 경우 예외가 발생하는지 테스트")
 	@Test
 	void invalidMovementTest() {
-		Pawn pawn = new Pawn(BLACK);
+		Piece pawn = new Pawn(BLACK);
 		assertThatThrownBy(() -> pawn.findMoveModeTrace(Position.of("a4"), Position.of("b3")))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("해당 위치로 이동할 수 없습니다.");
+	}
+
+	@DisplayName("기물 공격 시, 허용되지 않은 출발위치와 도착위치인 경우 예외가 발생하는지 테스트")
+	@Test
+	void invalidCatchTest() {
+		Pawn pawn = new Pawn(BLACK);
+		assertThatThrownBy(() -> pawn.findCatchModeTrace(Position.of("a4"), Position.of("b4")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
 	}

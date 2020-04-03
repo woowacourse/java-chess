@@ -23,6 +23,7 @@ public class SuspendFinish extends Finish {
 		if (status.size() == 0) {
 			return NONE;
 		}
-		return status.get(BLACK) < status.get(WHITE) ? WHITE : !status.get(BLACK).equals(status.get(WHITE)) ? BLACK : NONE;
+		return status.get(BLACK) < status.get(WHITE) ? WHITE :
+			!status.get(BLACK).equals(status.get(WHITE)) ? BLACK : NONE;
 	}
 }

@@ -42,7 +42,7 @@ public class KnightTest {
 	@DisplayName("허용되지 않은 출발위치와 도착위치인 경우 예외가 발생하는지 테스트")
 	@Test
 	void invalidMovementTest() {
-		Knight knight = new Knight(BLACK);
+		Piece knight = new Knight(BLACK);
 		assertThatThrownBy(() -> knight.findMoveModeTrace(Position.of("a1"), Position.of("b1")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("해당 위치로 이동할 수 없습니다.");
