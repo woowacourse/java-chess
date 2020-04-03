@@ -72,7 +72,6 @@ public class PieceDao {
 
 		pstmt.executeUpdate();
 		pstmt.close();
-
 	}
 
 	public void updatePiece(Position sourcePosition, Position targetPosition) throws SQLException {
@@ -113,13 +112,5 @@ public class PieceDao {
 
 		pstmt.close();
 		return pieces;
-	}
-
-	public ResultSet getRs() throws SQLException {
-		String query = "SELECT * from pieces";
-		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		ResultSet rs = pstmt.executeQuery();
-		ResultSetMetaData metaData = rs.getMetaData();
-		return rs;
 	}
 }
