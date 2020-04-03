@@ -4,6 +4,7 @@ import static spark.Spark.*;
 
 import java.util.Map;
 
+import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.board.dto.BoardDTO;
 import chess.domain.piece.Team;
@@ -46,6 +47,11 @@ public class WebChessController implements ChessController {
 	@Override
 	public void playTurn() {
 		post("/api/move", this::updateBoard);
+		get("/status", this::toStatus);
+	}
+
+	private String toStatus(Request request, Response response) {
+		return render(StatusDTO.of(Status.of(board)).getStatus(), "status.html");
 	}
 
 	private String updateBoard(Request request, Response response) {
