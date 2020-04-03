@@ -64,13 +64,14 @@ public class Pawn extends GamePiece {
         List<Position> path = source.pathTo(moveDirection, moveCount);
         if (playerColor.reviseInitialPositions(originalPositions).contains(source)) {
             path = source.pathTo(moveDirection, FIRST_MOVE_COUNT);
+
         }
 
         if (!path.contains(target)) {
             throw new InvalidMovementException("이동할 수 없는 경로입니다.");
         }
 
-        path.stream()
+        pathFromSourceToTarget(target, path).stream()
                 .filter(position -> board.get(position) != EmptyPiece.getInstance())
                 .findFirst()
                 .ifPresent(position -> {

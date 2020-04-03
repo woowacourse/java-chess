@@ -76,7 +76,7 @@ public abstract class GamePiece {
                 });
     }
 
-    private List<Position> pathFromSourceToTarget(Position target, List<Position> path) {
+    protected List<Position> pathFromSourceToTarget(Position target, List<Position> path) {
         return path.subList(0, path.indexOf(target));
     }
 
