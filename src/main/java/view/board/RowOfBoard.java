@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class RowOfBoard {
-	public static final String EMPTY = " ";
+	private static final String EMPTY = " ";
 
 	private final List<String> rowOfBoard;
 

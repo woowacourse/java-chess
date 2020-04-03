@@ -1,7 +1,5 @@
 package view;
 
-import view.board.RowOfBoard;
-
 public enum Images {
 	R("rook_black.png"),
 	r("rook_white.png"),

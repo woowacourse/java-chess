@@ -10,10 +10,10 @@ public class BoardToTable {
 	}
 
 	public static BoardToTable of(List<List<String>> board) {
-		final StringBuilder stringBuilder = new StringBuilder("<table>");
-		stringBuilder.append(createTable(board));
-		stringBuilder.append("</table>");
-		return new BoardToTable(stringBuilder.toString());
+		final String stringBuilder = "<table>"
+				+ createTable(board)
+				+ "</table>";
+		return new BoardToTable(stringBuilder);
 	}
 
 	private static StringBuilder createTable(final List<List<String>> board) {
@@ -42,7 +42,7 @@ public class BoardToTable {
 		return stringBuilder;
 	}
 
-	public String getBoardHtml() {
+	public String getTableHtml() {
 		return boardHtml;
 	}
 }

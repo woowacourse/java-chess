@@ -2,6 +2,7 @@ package chess;
 
 import domain.command.exceptions.CommandTypeException;
 import domain.command.exceptions.MoveCommandTokensException;
+import domain.pieces.Piece;
 import domain.pieces.exceptions.CanNotAttackException;
 import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
@@ -18,7 +19,9 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import view.BoardToTable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class WebUIChessApplication {
 	private static State state;
@@ -33,7 +36,7 @@ public class WebUIChessApplication {
 
 		Spark.get("/chess", (request, response) -> {
 			Map<String, Object> map = new HashMap<>();
-			map.put("table", BoardToTable.of(Board.of(state.getSet()).getLists()).getBoardHtml());
+			map.put("table", createTableHtmlFromState());
 			map.put("announcement", announcement.getString());
 			return render(map, "/chess.html");
 		});
@@ -43,6 +46,7 @@ public class WebUIChessApplication {
 				state = state.pushCommend(request.queryParams("commend"));
 				announcement = createAnnouncement();
 				response.redirect("/chess");
+
 			} catch (CommandTypeException
 					| MoveCommandTokensException
 					| CanNotMoveException
@@ -56,7 +60,13 @@ public class WebUIChessApplication {
 		});
 	}
 
-    private static Ended initState() {
+	private static String createTableHtmlFromState() {
+		final Set<Piece> pieces = state.getSet();
+		final List<List<String>> board = Board.of(pieces).getLists();
+		return BoardToTable.of(board).getTableHtml();
+	}
+
+	private static Ended initState() {
         return new Ended(new Pieces(new StartPieces().getInstance()));
     }
 

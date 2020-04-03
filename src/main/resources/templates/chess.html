@@ -6,12 +6,22 @@
     <title>우와체스</title>
 </head>
 <body>
-{{{ table }}}
-<form method="post" action="/chess" id="commend_form">
-    <label for="commend">명령: </label>
-    <input type="text" name="commend" id="commend">
-    <button type="submit" form="commend_form">입력</button>
-</form>
-{{{ announcement }}}
+<div class="header_box">
+    <div class="title_box">
+        <strong>우와 체스</strong>
+        <img src="/images/logo.png" alt="우아한형제들 로고" id="logo">
+    </div>
+</div>
+<div class="content_box">
+    {{{ table }}}
+    <form method="post" action="/chess" id="commend_form">
+        <label for="commend">명령: </label>
+        <input type="text" name="commend" id="commend">
+        <button type="submit" form="commend_form">입력</button>
+    </form>
+    <p>
+        {{{ announcement }}}
+    </p>
+</div>
 </body>
 </html>
