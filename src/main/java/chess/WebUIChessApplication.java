@@ -22,7 +22,7 @@ public class WebUIChessApplication {
 	public static void main(String[] args) {
 		initialize();
 		start();
-		//running();
+		running();
 		//end();
 		//status();
 	}
@@ -37,6 +37,18 @@ public class WebUIChessApplication {
 	private static void start() {
 		get("/start", (req, res) -> {
 			model = new HashMap<>();
+			putBoardTo(model);
+			return render(model, "start.html");
+		});
+	}
+
+	private static void running() {
+		get("/move", (req, res) -> {
+			model = new HashMap<>();
+			movePiece(req.queryParams("source"), req.queryParams("target"));
+			if (isKingDie()) {
+				res.redirect("/end");
+			}
 			putBoardTo(model);
 			return render(model, "start.html");
 		});
