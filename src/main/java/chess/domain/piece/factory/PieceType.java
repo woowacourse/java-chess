@@ -1,15 +1,7 @@
 package chess.domain.piece.factory;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.Bishop;
-
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
+import chess.domain.piece.*;
 import chess.domain.piece.policy.move.*;
-import chess.domain.piece.InitializedPawn;
-import chess.domain.piece.MovedPawn;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 

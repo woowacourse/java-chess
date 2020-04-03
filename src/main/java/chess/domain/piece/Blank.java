@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
+import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.piece.Started;
 import chess.domain.piece.team.Team;
-import chess.domain.board.Board;
-import chess.domain.piece.position.Position;
 
 public class Blank extends Started {
 

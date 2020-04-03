@@ -24,15 +24,15 @@ public class Position {
     static Position of(String x, String y) {
         int convertedX = SmallLetterAsciiConverter.convert(x);
         int convertedY = Integer.parseInt(y);
-        return of(convertedX,convertedY);
+        return of(convertedX, convertedY);
     }
 
     public static Position of(String position) {
-        return of(position.substring(0,1), position.substring(1,2));
+        return of(position.substring(0, 1), position.substring(1, 2));
     }
 
     public static Position of(int x, int y) {
-        return new Position(x,y);
+        return new Position(x, y);
     }
 
     public Distance calculateDistance(Position to) {

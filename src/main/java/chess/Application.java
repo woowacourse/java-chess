@@ -1,32 +1,16 @@
 package chess;
 
-import chess.domain.board.BoardSerializer;
-import chess.domain.board.Result;
-import chess.ui.Command;
-import chess.domain.ui.UserInterface;
+import chess.controller.Game;
 import chess.domain.board.Board;
-import chess.domain.board.RunningBoard;
+import chess.domain.ui.UserInterface;
 import chess.ui.Console;
-import chess.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
         UserInterface userInterface = new Console();
-        //todo: refac start variable
-        Command start = userInterface.inputStart();
-        Board board = RunningBoard.initiaize(userInterface);
-        OutputView.printBoard(BoardSerializer.serialize(board));
-
-        while (board.isNotFinished()) {
-            board = board.movePiece();
-            OutputView.printBoard(BoardSerializer.serialize(board));
-        }
-
-        Command command = userInterface.inputStatus();
-        Result result = board.concludeResult();
-        OutputView.printResult(result.getWinner(), result.getLoser(), result.getWinnerScore(), result.getLoserScore());
-
-
-        OutputView.printEnd();
+        Game game = new Game(userInterface);
+        Board board = game.startGame();
+        board = game.play(board);
+        game.showResult(board);
     }
 }

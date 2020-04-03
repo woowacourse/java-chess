@@ -1,7 +1,7 @@
 package chess.ui;
 
-import chess.domain.ui.UserInterface;
 import chess.domain.piece.position.MovingFlow;
+import chess.domain.ui.UserInterface;
 import chess.view.InputView;
 
 import java.util.Scanner;
@@ -18,8 +18,10 @@ public class Console implements UserInterface {
         InputView.printMoveRequest();
         String input = scanner.nextLine();
         String[] words = input.split(DELIMETER);
-        //todo: refac
-        Command.of(words[MOVE_COMMAND_INDEX]);
+        Command command = Command.of(words[MOVE_COMMAND_INDEX]);
+        if (command.isNotMove()) {
+            throw new IllegalArgumentException("입력이 잘못되었습니다.");
+        }
         return MovingFlow.of(words[FROM_INDEX], words[TO_INDEX]);
     }
 
@@ -27,7 +29,6 @@ public class Console implements UserInterface {
     public Command inputStart() {
         InputView.printStart();
         String input = scanner.nextLine();
-        //todo: refac
         return Command.of(input);
     }
 

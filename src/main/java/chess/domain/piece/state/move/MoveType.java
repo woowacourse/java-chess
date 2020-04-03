@@ -2,7 +2,7 @@ package chess.domain.piece.state.move;
 
 import chess.domain.piece.Piece;
 
-public enum  MoveType {
+public enum MoveType {
     INITIALIZED,
     MOVED,
     ATTACKED_SUBORDINATE,

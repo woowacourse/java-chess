@@ -3,10 +3,10 @@ package chess.domain.piece.state.piece;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
+import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.team.Team;
-import chess.domain.piece.position.Position;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -41,6 +41,6 @@ public abstract class Pawn extends Initialized {
     }
 
     private Predicate<Piece> hasPeerOnSameCollumn() {
-        return piece ->  piece instanceof Pawn && !this.equals(piece) && this.isSameTeam(piece);
+        return piece -> piece instanceof Pawn && !this.equals(piece) && this.isSameTeam(piece);
     }
 }

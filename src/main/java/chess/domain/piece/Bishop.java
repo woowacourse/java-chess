@@ -2,11 +2,11 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
+import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.state.piece.NotPawn;
 import chess.domain.piece.team.Team;
-import chess.domain.piece.position.Position;
 
 import java.util.List;
 

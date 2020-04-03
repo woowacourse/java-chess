@@ -8,9 +8,6 @@ import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 import chess.domain.ui.UserInterface;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -52,8 +49,8 @@ public abstract class StartedBoard implements Board {
         return new RunningBoard(pieces, userInterface);
     }
 
-    @Override
-    public Score calculateScore(Team team) {
+
+    protected Score calculateScore(Team team) {
         double sum = pieces.values()
                 .stream()
                 .filter(Piece::isNotBlank)

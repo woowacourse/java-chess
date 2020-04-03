@@ -10,7 +10,7 @@ public class Result {
     private final Score loserScore;
 
 
-    public Result(Team winner, Score winnerScore, Team loser, Score loserScore) {
+    Result(Team winner, Score winnerScore, Team loser, Score loserScore) {
         this.winner = winner;
         this.winnerScore = winnerScore;
         this.loser = loser;
