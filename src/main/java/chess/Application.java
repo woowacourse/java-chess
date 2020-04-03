@@ -9,8 +9,14 @@ public class Application {
     public static void main(String[] args) {
         UserInterface userInterface = new Console();
         Game game = new Game(userInterface);
-        Board board = game.start();
-        board = game.play(board);
-        game.showResult(board);
+        try {
+            Board board = game.start();
+            board = game.play(board);
+            game.showResult(board);
+        } catch (RuntimeException e) {
+            System.out.println(String.format("다음과 같은 이유로 중단합니다 - %s", e.getMessage()));
+            System.exit(-1);
+        }
+
     }
 }
