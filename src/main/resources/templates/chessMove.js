@@ -125,7 +125,9 @@ function getChessBoardResult() {
         url: "/start/winner",
         type: "get",
         success: function (data) {
-            alert("승자는" + data.name + "입니다.")
+            var jason = JSON.parse(data);
+            console.log(jason.toString())
+            alert("승자는" + jason.name + "입니다.")
         },
         error: function (errorThrown) {
             alert(errorThrown);
