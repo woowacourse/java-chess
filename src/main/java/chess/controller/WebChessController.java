@@ -53,15 +53,15 @@ public class WebChessController implements ChessController {
 
         get("/save", (req, res) -> {
             ChessDAO chessDAO = new ChessDAO();
-            chessDAO.addPiece(board.getPieces().getAlivePieces());
-            chessDAO.addTurn(board.getTurn());
+            chessDAO.savePiece(board.getPieces().getAlivePieces());
+            chessDAO.saveTurn(board.getTurn());
             res.redirect("/");
             return null;
         });
 
         get("/load", (req, res) -> {
             ChessDAO chessDAO = new ChessDAO();
-            board = new Board(chessDAO.getPieces(), chessDAO.getTurn());
+            board = new Board(chessDAO.loadPieces(), chessDAO.loadTurn());
             res.redirect("/");
             return null;
         });

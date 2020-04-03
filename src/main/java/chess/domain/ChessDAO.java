@@ -44,7 +44,7 @@ public class ChessDAO {
         }
     }
 
-    public void addPiece(List<Piece> pieces) throws SQLException {
+    public void savePiece(List<Piece> pieces) throws SQLException {
         PreparedStatement cleanup = getConnection().prepareStatement("DELETE FROM Pieces");
         cleanup.executeUpdate();
         for (Piece piece : pieces) {
@@ -57,7 +57,7 @@ public class ChessDAO {
         }
     }
 
-    public void addTurn(Turn turn) throws SQLException {
+    public void saveTurn(Turn turn) throws SQLException {
         PreparedStatement cleanup = getConnection().prepareStatement("DELETE FROM Turn");
         cleanup.executeUpdate();
         String query = "INSERT INTO Turn (turn) VALUES (?)";
@@ -66,7 +66,7 @@ public class ChessDAO {
         pstmt.executeUpdate();
     }
 
-    public Pieces getPieces() throws SQLException {
+    public Pieces loadPieces() throws SQLException {
         String query = "SELECT * FROM Pieces";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
@@ -80,7 +80,7 @@ public class ChessDAO {
         return new Pieces(pieces);
     }
 
-    public Turn getTurn() throws SQLException {
+    public Turn loadTurn() throws SQLException {
         String query = "SELECT * FROM Turn";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
