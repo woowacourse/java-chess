@@ -17,6 +17,7 @@ public class ConsoleChessController {
 		while (game.isNotEnd()) {
 			doCommand(game);
 		}
+		OutputView.printWinner(game.findWinner());
 	}
 
 	private void doCommand(Game game) {

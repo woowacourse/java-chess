@@ -23,7 +23,6 @@ public enum Command {
 	}),
 	END("end", (game, command) -> {
 		game.end();
-		OutputView.printWinner(game.findWinner());
 	});
 
 	private static final String NOT_EXIST_COMMAND_EXCEPTION_MESSAGE = "존재하지 않는 명령어입니다.";

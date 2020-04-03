@@ -20,6 +20,6 @@ public interface GameState {
 	Board getBoard();
 
 	default Team getWinner() {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("게임이 끝났을때만 승자를 구할수 있어요.");
 	}
 }

@@ -19,7 +19,6 @@ public class Game {
 	}
 
 	public void move(Position from, Position to) {
-
 		this.state = state.move(from, to);
 	}
 
