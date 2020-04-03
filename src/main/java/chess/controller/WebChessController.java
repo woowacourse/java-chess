@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.controller.dto.BoardScoreDto;
+import chess.controller.dto.MoveResultDto;
 import chess.controller.dto.TeamDto;
 import chess.controller.dto.TileDto;
 import chess.domain.ChessRunner;
@@ -14,8 +15,14 @@ public class WebChessController {
         chessRunner = new ChessRunner();
     }
 
-    public void move(String source, String target) {
-        chessRunner.update(source, target);
+    public MoveResultDto move(String source, String target) {
+        try {
+            chessRunner.update(source, target);
+            String moveResult = source + " -> " + target;
+            return new MoveResultDto(moveResult);
+        } catch (IllegalArgumentException e) {
+            return new MoveResultDto(e.getMessage());
+        }
     }
 
     public BoardScoreDto status() {

@@ -2,6 +2,7 @@ package chess;
 
 import chess.controller.WebChessController;
 import chess.controller.dto.BoardScoreDto;
+import chess.controller.dto.MoveResultDto;
 import chess.controller.dto.TeamDto;
 import chess.controller.dto.TileDto;
 import spark.ModelAndView;
@@ -39,14 +40,15 @@ public class WebUIChessApplication {
         post("/move", (req, res) -> {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
-            webChessController.move(source, target);
 
+            MoveResultDto moveResultDto = webChessController.move(source, target);
             List<TileDto> tileDtos = webChessController.getTiles();
             TeamDto teamDto = webChessController.getCurrentTeam();
 
             Map<String, Object> model = new HashMap<>();
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
+            model.put("message", moveResultDto);
 
             return render(model, "game.html");
         });
