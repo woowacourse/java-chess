@@ -17,12 +17,12 @@ class BoardTest {
     @Test
     @DisplayName("board는 boardInitializer 타입의 객체를 받아서 생성")
     void initialize() {
-        Board board = Board.of(new EnumRepositoryBoardInitializer());
+        Board board = Board.of(new DefaultBoardInitializer());
     }
 
     @Test
     void move() {
-        Board board = Board.of(new EnumRepositoryBoardInitializer());
+        Board board = Board.of(new DefaultBoardInitializer());
         board.move(Position.of("B8"), Position.of("A6"), Turn.from(Player.BLACK));
         Map<Position, PieceState> piecePosition = board.getBoard();
 

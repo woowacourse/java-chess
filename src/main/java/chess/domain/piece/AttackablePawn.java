@@ -21,12 +21,20 @@ public abstract class AttackablePawn extends Pawn {
 
         PieceDto pieceDto = boardDto.get(target);
         if (ATTACK_DIRECTION_BY_PLAYER.get(player).contains(direction)) {
-            if (Objects.isNull(pieceDto)) {
-                throw new MovingDirectionException();
-            }
-            if (position.getRankDifference(target) != direction.getRankDirection()) {
-                throw new MovingDistanceException();
-            }
+            checkEnemyOnAttackDirection(pieceDto);
+            checkAttackDistance(target, direction);
+        }
+    }
+
+    private void checkAttackDistance(final Position target, final MovingDirection direction) {
+        if (position.getRankDifference(target) != direction.getRankDirection()) {
+            throw new MovingDistanceException();
+        }
+    }
+
+    private void checkEnemyOnAttackDirection(final PieceDto pieceDto) {
+        if (Objects.isNull(pieceDto)) {
+            throw new MovingDirectionException();
         }
     }
 }

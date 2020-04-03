@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.EnumRepositoryBoardInitializer;
+import chess.domain.board.DefaultBoardInitializer;
 import chess.domain.player.Player;
 import chess.domain.result.Status;
 import chess.domain.state.ReadyState;
@@ -12,7 +12,7 @@ public class ChessGame {
     private Turn turn = Turn.from(Player.WHITE);
 
     public ChessGame() {
-        this.state = new ReadyState(new EnumRepositoryBoardInitializer());
+        this.state = new ReadyState(new DefaultBoardInitializer());
     }
 
     public void start() {

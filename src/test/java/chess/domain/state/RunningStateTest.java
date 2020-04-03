@@ -3,7 +3,7 @@ package chess.domain.state;
 import chess.domain.MoveParameter;
 import chess.domain.Turn;
 import chess.domain.board.Board;
-import chess.domain.board.EnumRepositoryBoardInitializer;
+import chess.domain.board.DefaultBoardInitializer;
 import chess.domain.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +19,7 @@ class RunningStateTest {
 
     @BeforeEach
     void setUp() {
-        runningState = new RunningState(Board.of(new EnumRepositoryBoardInitializer()));
+        runningState = new RunningState(Board.of(new DefaultBoardInitializer()));
     }
 
     @Test

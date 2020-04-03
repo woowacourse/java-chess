@@ -24,13 +24,21 @@ public class MovedPawn extends AttackablePawn {
         MovingDirection movingDirection = MovingDirection.getDirection(position, target);
 
         if (MOVING_DIRECTION_BY_PLAYER.get(player).equals(movingDirection)) {
-            if (position.getRankDifference(target) != movingDirection.getRankDirection()) {
-                throw new MovingDistanceException();
-            }
-            PieceDto piece = boardDto.get(target);
-            if (!Objects.isNull(piece)) {
-                throw new ObstacleOnPathException();
-            }
+            checkMovingDistance(target, movingDirection);
+            checkObstacleOnPath(target, boardDto);
+        }
+    }
+
+    private void checkObstacleOnPath(final Position target, final Map<Position, PieceDto> boardDto) {
+        PieceDto piece = boardDto.get(target);
+        if (!Objects.isNull(piece)) {
+            throw new ObstacleOnPathException();
+        }
+    }
+
+    private void checkMovingDistance(final Position target, final MovingDirection movingDirection) {
+        if (position.getRankDifference(target) != movingDirection.getRankDirection()) {
+            throw new MovingDistanceException();
         }
     }
 
