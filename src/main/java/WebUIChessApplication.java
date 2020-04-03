@@ -5,12 +5,14 @@ import java.util.Map;
 
 import chess.command.Command;
 import chess.progress.Progress;
+import chess.result.ChessResult;
 import data.BoardVO;
 import chess.board.ChessBoard;
 import chess.game.ChessGame;
 import chess.location.Location;
 import chess.piece.type.Piece;
 import com.google.gson.Gson;
+import data.ChessResultVO;
 import data.LocationDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -38,6 +40,7 @@ public class WebUIChessApplication {
         });
 
         post("/start/move", (req, res) -> {
+
             String now = req.queryParams("now");
             String after = req.queryParams("des");
             String[] strings = parseRowAndCol(now);
@@ -49,8 +52,13 @@ public class WebUIChessApplication {
             if (Progress.CONTINUE == progress) {
                 chessGame.changeTurn();
             }
-
             return progress;
+        });
+
+        get("/start/winner", (req, res) -> {
+            Gson gson = new Gson();
+            ChessResultVO chessResultVO = new ChessResultVO(chessGame.findWinner());
+            return gson.toJson(chessResultVO);
         });
     }
 

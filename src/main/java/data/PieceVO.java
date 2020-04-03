@@ -16,16 +16,8 @@ public class PieceVO {
         return location;
     }
 
-    public String getPieceName() {
-        return pieceName;
-    }
-
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public void setPieceName(String pieceName) {
-        this.pieceName = pieceName;
     }
 
     @Override

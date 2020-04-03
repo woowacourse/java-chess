@@ -110,9 +110,22 @@ function postChessBoard(json) {
                 alert("움직일 수 없는 경우입니다.");
             }
             if (data == "END") {
-                alert("킹이 죽었으니 스코어를 출력하자.")
+                getChessBoardResult();
             }
         }
+    });
+}
+
+function getChessBoardResult() {
+    $.ajax({
+        url: "/start/winner",
+        type: "get",
+        success: function (data) {
+            alert("승자는" + data.name + "입니다.")
+        },
+        error: function (errorThrown) {
+            alert(errorThrown);
+        },
     });
 }
 
