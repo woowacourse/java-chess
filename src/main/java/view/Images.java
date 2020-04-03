@@ -27,12 +27,12 @@ public enum Images {
 	}
 
 	public static String getImageHtml(String initial) {
-		if (initial.equals(RowOfBoard.EMPTY)) {
+		try {
+			return "<img src=\"/images/"
+					+ getImageName(initial)
+					+ "\">";
+		} catch (IllegalArgumentException e) {
 			return "";
 		}
-
-		return "<img src=\"/images/"
-				+ getImageName(initial)
-				+ "\">";
 	}
 }

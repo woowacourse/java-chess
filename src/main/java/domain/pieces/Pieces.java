@@ -81,6 +81,7 @@ public class Pieces {
 		pieces.add(subject.move(target.getPoint()));
 	}
 
+	// TODO test
 	public Team computeWinner() {
 		if (isKingKilled()) {
 			return computeWinnerWhenKingKilled();
