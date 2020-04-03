@@ -43,7 +43,7 @@ public enum Direction {
 	public static final List<Direction> DIAGONAL_DIRECTION = diagonalDirection();
 	public static final List<Direction> EVERY_DIRECTION = everyDirection();
 	public static final List<Direction> KNIGHT_DIRECTION = knightDirection();
-	public static final Map<Team, List<Direction>> PAWN_INITIAL_DIRECTION = new HashMap<>() {
+	public static final Map<Team, List<Direction>> PAWN_INITIAL_DIRECTION = new HashMap<Team, List<Direction>>() {
 		{
 			put(Team.BLACK, pawnDirection(Team.BLACK));
 			put(Team.WHITE, pawnDirection(Team.WHITE));

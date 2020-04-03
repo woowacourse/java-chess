@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>로또</title>
+    <!-- 서버용 -->
     <link href="../css/style.css" rel="stylesheet">
+    <!-- 로컬용 -->
+    <link href="../public/css/style.css" rel="stylesheet">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
 
@@ -13,39 +16,22 @@
 <body>
 <div class="container text-center">
     <h2>홍토체스</h2>
-    {{board}}
-    {{state}}
-    <div class="container " id="table">
+    <div class="container " id="main">
         <div class="row">
-            <div class="col-1 border test">
-                1 of 2
+            <div class="container col-10" id="table">
+
             </div>
-            <div class="col-1 border test">
-                1 of 2
-            </div>
-            <div class="col-1 border test">
-                1 of 2
-            </div>
-            <div class="col-1 border test">
-                1 of 2
-            </div>
-            <div class="col-1 border test">
-                1 of 2
-            </div>
-            <div class="col-1 border test">
-                1 of 2
-            </div>
-            <div class="col-1 border test">
-                1 of 2
-            </div>
-            <div class="col-1 border test">
-                1 of 2
+            <div class="col-1" style="background-image: url('/img/bishop_black.png'); background-repeat:no-repeat;
+   background-size:contain;
+   height:200px;width:1200px;">
+                test
             </div>
         </div>
     </div>
     <button>Start</button>
     <button>Status</button>
     <button>Exit</button>
+
 
 
     <script crossorigin="anonymous"
@@ -57,7 +43,10 @@
     <script crossorigin="anonymous"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
     <script src="../js/init.js"></script>
+    <script src="../public/js/init.js"></script>
 </body>
 
 </html>

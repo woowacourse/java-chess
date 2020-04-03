@@ -12,7 +12,7 @@ public class King extends Piece {
 	private static final double score = 0;
 
 	private King(Team team) {
-		super(team, new KingMoveStrategy(team));
+		super(team, editName(name, team), new KingMoveStrategy(team));
 	}
 
 	public static King of(Team team) {
@@ -29,11 +29,6 @@ public class King extends Piece {
 	@Override
 	public boolean isNotJumper() {
 		return true;
-	}
-
-	@Override
-	protected char getName() {
-		return name;
 	}
 
 	private static class KingCache {

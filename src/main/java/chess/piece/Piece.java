@@ -8,18 +8,25 @@ import chess.team.Team;
 
 public abstract class Piece {
 	protected final Team team;
+	protected final char name;
 	protected final MoveStrategy moveStrategy;
 
-	public Piece(Team team, MoveStrategy moveStrategy) {
+	public Piece(Team team, char name, MoveStrategy moveStrategy) {
 		this.team = team;
+		this.name = name;
 		this.moveStrategy = moveStrategy;
+	}
+
+	protected static char editName(char c, Team team) {
+		if (Team.BLACK == team) {
+			return Character.toUpperCase(c);
+		}
+		return c;
 	}
 
 	public abstract double getScore();
 
 	public abstract boolean isNotJumper();
-
-	protected abstract char getName();
 
 	public boolean isSameTeam(Team team) {
 		return team == this.team;
@@ -46,11 +53,7 @@ public abstract class Piece {
 		return this instanceof King;
 	}
 
-	@Override
-	public String toString() {
-		if (team == Team.BLACK) {
-			return String.valueOf(Character.toUpperCase(getName()));
-		}
-		return String.valueOf(getName());
+	public char getName() {
+		return name;
 	}
 }

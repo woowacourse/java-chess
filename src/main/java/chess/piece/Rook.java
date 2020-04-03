@@ -12,7 +12,7 @@ public class Rook extends Piece {
 	private static final double score = 5;
 
 	private Rook(Team team) {
-		super(team, new RookMoveStrategy(team));
+		super(team, editName(name, team), new RookMoveStrategy(team));
 	}
 
 	public static Rook of(Team team) {
@@ -29,11 +29,6 @@ public class Rook extends Piece {
 	@Override
 	public boolean isNotJumper() {
 		return true;
-	}
-
-	@Override
-	protected char getName() {
-		return name;
 	}
 
 	private static class RookCache {

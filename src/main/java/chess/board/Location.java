@@ -130,10 +130,7 @@ public class Location {
 
 	@Override
 	public String toString() {
-		return "Location{" +
-			"column=" + column +
-			", row=" + row +
-			'}';
+		return column.toString() + row.toString();
 	}
 
 	private static class LocationCache {

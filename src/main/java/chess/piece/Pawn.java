@@ -12,7 +12,7 @@ public class Pawn extends Piece {
 	private static final double score = 1;
 
 	private Pawn(Team team) {
-		super(team, new PawnMoveStrategy(team));
+		super(team, editName(name, team), new PawnMoveStrategy(team));
 	}
 
 	public static Pawn of(Team team) {
@@ -29,11 +29,6 @@ public class Pawn extends Piece {
 	@Override
 	public boolean isNotJumper() {
 		return true;
-	}
-
-	@Override
-	protected char getName() {
-		return name;
 	}
 
 	private static class PawnCache {

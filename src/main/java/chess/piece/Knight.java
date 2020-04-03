@@ -12,7 +12,7 @@ public class Knight extends Piece {
 	private static final double score = 2.5;
 
 	private Knight(Team team) {
-		super(team, new KnightMoveStrategy(team));
+		super(team, editName(name, team), new KnightMoveStrategy(team));
 	}
 
 	public static Knight of(Team team) {
@@ -29,11 +29,6 @@ public class Knight extends Piece {
 	@Override
 	public boolean isNotJumper() {
 		return false;
-	}
-
-	@Override
-	protected char getName() {
-		return name;
 	}
 
 	private static class KnightCache {

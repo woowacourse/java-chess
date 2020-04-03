@@ -12,7 +12,7 @@ public class Queen extends Piece {
 	private static final double score = 9;
 
 	private Queen(Team team) {
-		super(team, new QueenMoveStrategy(team));
+		super(team, editName(name, team), new QueenMoveStrategy(team));
 	}
 
 	public static Queen of(Team team) {
@@ -29,11 +29,6 @@ public class Queen extends Piece {
 	@Override
 	public boolean isNotJumper() {
 		return true;
-	}
-
-	@Override
-	protected char getName() {
-		return name;
 	}
 
 	private static class QueenCache {
