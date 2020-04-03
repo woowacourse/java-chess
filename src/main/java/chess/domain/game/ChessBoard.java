@@ -14,20 +14,15 @@ import chess.domain.status.Status;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ChessBoard implements ChessBoardStrategy {
+public class ChessBoard {
     private final Map<Position, Piece> chessBoard = new HashMap<>();
     private boolean isKingTaken;
 
-    public ChessBoard() {
-        isKingTaken = false;
-    }
-
-    @Override
-    public Map<Position, Piece> create(Map<Piece, List<Position>> initPieces) {
+    public ChessBoard(Map<Piece, List<Position>> initPieces) {
         for (Map.Entry<Piece, List<Position>> entry : initPieces.entrySet()) {
             entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
         }
-        return chessBoard;
+        isKingTaken = false;
     }
 
     public boolean move(Position from, Position to) {

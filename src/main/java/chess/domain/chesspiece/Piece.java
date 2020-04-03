@@ -15,6 +15,7 @@ public abstract class Piece {
     private final Player player;
     protected final PieceInfo pieceInfo;
 
+
     protected List<Direction> directions = new ArrayList<>();
 
     public Piece(Player player, PieceInfo pieceInfo) {
@@ -45,6 +46,10 @@ public abstract class Piece {
 
     public List<Direction> getDirections() {
         return Collections.unmodifiableList(directions);
+    }
+
+    public PieceInfo getPieceInfo() {
+        return pieceInfo;
     }
 
     public Player getPlayer() {

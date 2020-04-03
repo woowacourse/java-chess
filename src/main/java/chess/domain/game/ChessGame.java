@@ -10,7 +10,6 @@ public class ChessGame {
 
     public ChessGame() {
         this.turn = Player.WHITE;
-        this.chessBoard = new ChessBoard();
     }
 
     public ResponseDto start(RequestDto requestDto) {
@@ -20,7 +19,7 @@ public class ChessGame {
             throw new NotStartPlayingException();
         }
 
-        chessBoard.create(PieceFactory.create());
+        chessBoard = new ChessBoard(PieceFactory.create());
 
         return new ResponseDto(chessBoard, chessBoard.createResult());
     }
