@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.player.PlayerColor;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import chess.domain.player.PlayerColor;
 
 public enum ChessPiece {
 

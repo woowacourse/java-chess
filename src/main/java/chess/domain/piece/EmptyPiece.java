@@ -1,18 +1,17 @@
 package chess.domain.piece;
 
-import java.util.Collections;
-import java.util.Map;
-
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.player.PlayerColor;
+
+import java.util.Collections;
 
 public class EmptyPiece extends GamePiece {
 
     private static final GamePiece instance = new EmptyPiece();
 
     private EmptyPiece() {
-        super("EMPTY", Collections.emptyList(), 0, PlayerColor.NONE);
+        super(".", Collections.emptyList(), 0, PlayerColor.NONE);
     }
 
     public static GamePiece getInstance() {

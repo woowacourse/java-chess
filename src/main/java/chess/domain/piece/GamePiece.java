@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import java.util.List;
-
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.player.PlayerColor;
+
+import java.util.List;
 
 public abstract class GamePiece {
 

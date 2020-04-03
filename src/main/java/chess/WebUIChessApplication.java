@@ -1,6 +1,5 @@
 package chess;
 
-import chess.domain.board.Board;
 import chess.domain.board.BoardDTO;
 import chess.domain.command.Command;
 import chess.domain.result.ChessResultDTO;
@@ -54,7 +53,7 @@ public class WebUIChessApplication {
 
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("result", new ChessResultDTO(service.calculateResult()));
+            model.put("result", ChessResultDTO.create(service.calculateResult()));
 
             putBoard(model, service);
             return render(model, "index.html");
@@ -62,7 +61,7 @@ public class WebUIChessApplication {
     }
 
     private static void putBoard(Map<String, Object> model, ChessService service) {
-        model.put("board", BoardDTO.from(service.getBoard()));
+        model.put("board", BoardDTO.create(service.getBoard()));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

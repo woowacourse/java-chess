@@ -1,9 +1,9 @@
 package chess.domain.command;
 
+import chess.domain.board.Position;
+
 import java.util.Collections;
 import java.util.List;
-
-import chess.domain.board.Position;
 
 public class Command {
 

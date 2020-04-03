@@ -1,14 +1,14 @@
 package chess.view;
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import chess.domain.board.Board;
 import chess.domain.board.Line;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
 import chess.domain.result.Score;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 

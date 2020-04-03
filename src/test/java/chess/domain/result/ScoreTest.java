@@ -1,15 +1,14 @@
 package chess.domain.result;
 
-import static chess.domain.piece.ChessPiece.*;
-import static org.assertj.core.api.Assertions.*;
+import chess.domain.piece.GamePiece;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import chess.domain.piece.GamePiece;
+import static chess.domain.piece.ChessPiece.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreTest {
 

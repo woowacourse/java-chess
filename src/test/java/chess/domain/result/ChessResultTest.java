@@ -1,21 +1,21 @@
 package chess.domain.result;
 
-import static chess.domain.piece.ChessPiece.*;
-import static chess.domain.player.PlayerColor.*;
-import static org.assertj.core.api.Assertions.*;
+import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.board.Status;
+import chess.domain.piece.GamePiece;
+import chess.domain.player.PlayerColor;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import chess.domain.board.Status;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.piece.GamePiece;
-import chess.domain.player.PlayerColor;
+import static chess.domain.piece.ChessPiece.WHITE_PAWN;
+import static chess.domain.player.PlayerColor.BLACK;
+import static chess.domain.player.PlayerColor.WHITE;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessResultTest {
 

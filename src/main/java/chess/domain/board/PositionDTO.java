@@ -6,11 +6,16 @@ public class PositionDTO {
 
     private final String position;
 
-    public PositionDTO(Position position) {
-        this.position = String.join(DELIMITER, position.getColumn().getName(), position.getRow().getName());
+    private PositionDTO(String position) {
+        this.position = position;
     }
 
     public String getPosition() {
         return position;
+    }
+
+    public static PositionDTO create(Position position) {
+        String name = String.join(DELIMITER, position.getColumn().getName(), position.getRow().getName());
+        return new PositionDTO(name);
     }
 }

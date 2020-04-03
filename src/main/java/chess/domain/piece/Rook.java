@@ -1,15 +1,15 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.Direction.*;
-
-import java.util.Arrays;
-import java.util.List;
-
 import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.player.PlayerColor;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static chess.domain.piece.Direction.*;
 
 public class Rook extends GamePiece {
 

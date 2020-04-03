@@ -1,14 +1,7 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Stream;
-
+import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.board.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,8 +9,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
+import java.util.*;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class BishopTest {
 

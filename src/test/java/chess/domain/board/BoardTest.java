@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
 import org.junit.jupiter.api.DisplayName;

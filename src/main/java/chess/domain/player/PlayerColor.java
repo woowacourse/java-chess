@@ -1,15 +1,15 @@
 package chess.domain.player;
 
+import chess.domain.board.Position;
+
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import chess.domain.board.Position;
-
 public enum PlayerColor {
 
-    BLACK("BLACK", name -> String.join("-", "BLACK", name), Position::horizontalFlip),
-    WHITE("WHITE", name -> String.join("-", "WHITE", name), Function.identity()),
+    BLACK("BLACK", String::toUpperCase, Position::horizontalFlip),
+    WHITE("WHITE", String::toLowerCase, Function.identity()),
     NONE("", Function.identity(), Function.identity());
 
     private final String name;
