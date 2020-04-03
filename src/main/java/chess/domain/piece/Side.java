@@ -16,10 +16,13 @@ public enum Side {
         return value;
     }
 
-    public Side changeTurn() {
+    public Side opposite() {
         if (this == BLACK) {
             return WHITE;
         }
-        return BLACK;
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return NONE;
     }
 }
