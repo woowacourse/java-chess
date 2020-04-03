@@ -1,7 +1,7 @@
 package chess.domain.chesspieces;
 
-import chess.domain.Player;
 import chess.domain.direction.Direction;
+import chess.domain.game.Player;
 import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
@@ -23,14 +23,14 @@ public class Pawn extends Piece {
         super(player, PieceInfo.valueOf(PAWN_NAME));
         this.initPosition = position;
 
-        if (player.equals(Player.BLACK)) {
+        if (player == Player.BLACK) {
             forwardDirection = Direction.SOUTH;
             attackDirections.addAll(Arrays.asList(Direction.SOUTH_WEST, Direction.SOUTH_EAST));
             directions.add(forwardDirection);
             directions.addAll(attackDirections);
         }
 
-        if (player.equals(Player.WHITE)) {
+        if (player == Player.WHITE) {
             forwardDirection = Direction.NORTH;
             attackDirections.addAll(Arrays.asList(Direction.NORTH_WEST, Direction.NORTH_EAST));
             directions.add(forwardDirection);

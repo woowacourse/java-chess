@@ -1,7 +1,7 @@
 package chess.domain.chesspieces;
 
-import chess.domain.Player;
 import chess.domain.direction.Direction;
+import chess.domain.game.Player;
 
 public class Rook extends Piece {
     private static final String ROOK_NAME = "ROOK";

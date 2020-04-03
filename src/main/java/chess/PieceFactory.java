@@ -1,7 +1,7 @@
 package chess;
 
-import chess.domain.Player;
 import chess.domain.chesspieces.*;
+import chess.domain.game.Player;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
