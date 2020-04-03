@@ -50,7 +50,6 @@ public class WebUIChessApplication {
                 announcement = e.getMessage();
                 response.redirect("/chess");
             }
-
             return "";
         });
     }
