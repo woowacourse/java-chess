@@ -39,7 +39,7 @@ public class Pawn extends Piece {
 	}
 
 	private List<Position> findTargetRoute(Position source) {
-		if (symbol.equals("p")) {
+		if (symbol.equals("♙")) {
 			if (state.isInitial()) {
 				return source.nextPosition(Direction.WHITE_PAWN_INITIAL_DIRECTION);
 			}
