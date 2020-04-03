@@ -46,6 +46,10 @@ table.board {
     padding: 20px 20px 60px;
 }
 
+td:hover {
+    background-color: deepskyblue;
+}
+
 tr td {
     border: 5px solid #000;
     text-align: center;
@@ -53,8 +57,8 @@ tr td {
     height: 6vmax;
 }
 
-table tr td.grey {
-    background-color: grey;
+.gray {
+    background-color: gray;
 }
 
 .nav {

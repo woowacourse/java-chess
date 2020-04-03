@@ -2,7 +2,15 @@
 
 @font-face {
     font-family: "BMHANNAProOTF";
-    src: url(../font/BMHANNAProOTF.otf) format("opentype")
+    src: url(../font/BMHANNAProOTF.otf) format("opentype");
+
+}
+
+
+input[type="submit"] {
+    font-family: 'Font Awesome 5 Free', serif;
+    font-weight: 900;
+    border-radius: 10px;
 }
 
 h1 {
@@ -33,7 +41,6 @@ body {
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    background-color: gray;
 }
 
 #rocket {
