@@ -28,10 +28,11 @@ public class Board {
 
         Piece sourcePiece = board.get(sourcePosition);
         if (sourcePiece.isNone()) {
-            throw new PieceNotFoundException("움직일 수 있는 체스말이 없습니다.");
+            throw new PieceNotFoundException(String.format("위치(sourcePosition) %s에 움직일 수 있는 체스말이 없습니다.",
+                                                           sourcePosition.getName()));
         }
         if (!sourcePiece.isSameColor(team)) {
-            throw new AnotherTeamPieceException("다른 색의 말을 움직일 수 없습니다.");
+            throw new AnotherTeamPieceException(String.format("위치(sourcePosition) %s의 말은 현재 차례인 %s의 말이 아니므로 움직일 수 없습니다.", sourcePosition.getName(), team.getName()));
         }
         return board.get(sourcePosition);
     }
@@ -43,10 +44,10 @@ public class Board {
         }
         List<Position> path = piece.getPathTo(targetPosition);
         if (havePieceBeforeTargetPosition(path)) {
-            throw new OtherPieceInPathException("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치로 이동할 수 없습니다.");
+            throw new OtherPieceInPathException(String.format("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치(targetPosition) %s(으)로 이동할 수 없습니다.", targetPosition.getName()));
         }
         if (cannotMoveToTargetPosition(piece, targetPosition)) {
-            throw new SameTeamPieceException("지정한 위치에 같은 색의 체스말이 있기 때문에 이동할 수 없습니다.");
+            throw new SameTeamPieceException(String.format("지정한 위치(targetPosition) %s에 같은 색의 체스말이 있기 때문에 이동할 수 없습니다.", targetPosition.getName()));
         }
     }
 
@@ -68,9 +69,9 @@ public class Board {
     private void checkPawnPath(Piece piece, Position targetPosition) {
         List<Position> path = piece.getPathTo(targetPosition);
         if ((piece.getDirection(targetPosition).isSouth() || piece.getDirection(targetPosition).isNorth()) && havePieceIn(path)) {
-            throw new OtherPieceInPathException("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치로 이동할 수 없습니다.");
+            throw new OtherPieceInPathException(String.format("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치(targetPosition) %s(으)로 이동할 수 없습니다.", targetPosition.getName()));
         } else if (!piece.getDirection(targetPosition).isSouth() && !piece.getDirection(targetPosition).isNorth() && cannotMovePawnToTargetPosition(piece, targetPosition)) {
-            throw new PawnNotAttackableException("지정한 위치에 다른 색의 체스말이 없기 때문에 이동할 수 없습니다.");
+            throw new PawnNotAttackableException(String.format("지정한 위치(targetPosition) %s에 다른 색의 체스말이 없기 때문에 이동할 수 없습니다.", targetPosition.getName()));
         }
     }
 
