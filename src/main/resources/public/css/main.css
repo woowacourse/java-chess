@@ -63,6 +63,11 @@ h1 {
     width: calc(100% / 8);
 }
 
+.movableMark {
+    position: absolute;
+    width: calc(100% / 25);
+}
+
 .row:nth-of-type(2n - 1) .position:nth-of-type(2n - 1),
 .row:nth-of-type(2n) .position:nth-of-type(2n) {
     color: #ffffff;

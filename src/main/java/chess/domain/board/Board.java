@@ -7,10 +7,7 @@ import chess.domain.piece.Type;
 import chess.exceptions.InvalidInputException;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.*;
@@ -18,10 +15,12 @@ import static java.util.stream.Collectors.*;
 public class Board {
     private static final int PAWN_OVERLAP_CONSTANT = 1;
 
-    private final BoardDAO boardDAO;
+    private BoardDAO boardDAO;
+    private Side turn;
 
     public Board(final BoardDAO boardDAO) {
         this.boardDAO = boardDAO;
+        this.turn = Side.WHITE;
     }
 
     public Optional<Piece> findPieceOn(final Position position) throws SQLException {
@@ -32,17 +31,44 @@ public class Board {
         Map<Position, Piece> allPieces = boardDAO.findAllPieces();
         return new Path(allPieces.keySet()
                 .stream()
-                .filter(position -> position.inBetween(start, end) || position == start || start == end)
+                .filter(position -> position.inBetween(start, end) || position == start || position == end)
                 .collect(toMap(Function.identity(), allPieces::get)), start, end);
     }
 
     public void move(final Position start, final Position end) throws SQLException {
+        if (start == null || end == null) {
+            throw new InvalidInputException();
+        }
+
         Piece startPiece = getPiece(boardDAO.findPieceOn(start));
+        if (!startPiece.is(turn)) {
+            return;
+        }
         Path path = generatePath(start, end);
 
         checkMovable(startPiece, path);
         boardDAO.placePieceOn(end, startPiece);
         boardDAO.removePieceOn(start);
+        turn = turn.negate();
+    }
+
+    public List<Position> findMovablePositions(final Position start) throws SQLException {
+        if (start == null) {
+            throw new InvalidInputException();
+        }
+
+        Piece startPiece = getPiece(boardDAO.findPieceOn(start));
+        if (!startPiece.is(turn)) {
+            return new ArrayList<>();
+        }
+
+        List<Position> movablePositions = new ArrayList<>();
+        for (Position position : Position.getAllPositions()) {
+            if (startPiece.isMovable(generatePath(start, position))) {
+                movablePositions.add(position);
+            }
+        }
+        return movablePositions;
     }
 
     private Piece getPiece(final Optional<Piece> piece) {

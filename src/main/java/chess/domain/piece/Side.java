@@ -9,4 +9,11 @@ public enum Side {
     Side(String value) {
         this.value = value;
     }
+
+    public Side negate() {
+        if (this == Side.WHITE) {
+            return Side.BLACK;
+        }
+        return Side.WHITE;
+    }
 }
