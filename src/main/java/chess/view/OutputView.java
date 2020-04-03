@@ -4,6 +4,7 @@ import java.util.Map;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 public class OutputView {
@@ -49,5 +50,19 @@ public class OutputView {
 
 	public static void printErrorMessage(String message) {
 		System.out.println(message);
+	}
+
+	public static void printWinner(Team winner) {
+		System.out.printf("승리 : %s\n", findWinner(winner));
+	}
+
+	private static String findWinner(Team winner) {
+		if (winner.isBlack()) {
+			return "흑팀";
+		}
+		if (winner.isWhite()) {
+			return "백팀";
+		}
+		return "없음";
 	}
 }

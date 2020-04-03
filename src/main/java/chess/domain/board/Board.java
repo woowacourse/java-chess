@@ -73,7 +73,7 @@ public class Board {
 		for (int file = 1; file <= 8; file++) {
 			int finalFile = file;
 			Map<Team, Long> cnt = IntStream.rangeClosed(1, 8)
-				.mapToObj(rank -> pieces.get(Position.of(finalFile, rank)))
+				.mapToObj(rank -> pieces.getOrDefault(Position.of(finalFile, rank), EMPTY))
 				.filter(piece -> piece.isNotBlank() && piece.isPawn())
 				.collect(groupingBy(Piece::getTeam, counting()));
 
@@ -87,7 +87,7 @@ public class Board {
 	public void move(Position from, Position to) {
 		Piece source = requireNonEmpty(findPiece(from));
 		Piece target = findPiece(to);
-		validatePlayTurn(source);
+		//validatePlayTurn(source);
 		validateSourceMovingRoute(from, to, source, target);
 		updatePiecePosition(from, to, source);
 		finishGameIfKingCaught(target);
@@ -151,5 +151,13 @@ public class Board {
 
 	public void setGameEnd() {
 		finished = true;
+	}
+
+	public boolean isNotSameTeamFromPosition(Position position, Team team) {
+		return !getPiece(position).isRightTeam(team);
+	}
+
+	public boolean isKing(Position position) {
+		return getPiece(position).isKing();
 	}
 }
