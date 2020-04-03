@@ -1,13 +1,15 @@
-import chess.Exceptions.NotMoveException;
-import chess.domain.status.Result;
-import chess.domain.status.Status;
-import chess.domain.ChessBoard;
-import chess.domain.Player;
-import chess.domain.chesspieces.*;
+mport chess.Exception.NotMoveException;
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.Piece;
+import chess.domain.chesspiece.Queen;
+import chess.domain.game.ChessBoard;
+import chess.domain.game.PieceFactory;
+import chess.domain.game.Player;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.position.component.Column;
-import chess.domain.position.component.Row;
+import chess.domain.status.Result;
+import chess.domain.status.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,6 +31,7 @@ public class ChessBoardTest {
     @Test
     void initChessBoard() {
         ChessBoard chessBoard = new ChessBoard();
+        chessBoard.create(PieceFactory.create());
         int actual = chessBoard.getChessBoard().size();
         int expected = 32;
         assertThat(actual).isEqualTo(expected);
@@ -36,6 +39,9 @@ public class ChessBoardTest {
 
     @DisplayName("(예외) 같은 위치로 이동")
     @Test
+    void moveSamePosition() {
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.create(PieceFactory.create());
     void 같은_위치로_이동했을때() {
         ChessBoard chessBoard = new ChessBoard();
         Position position = Positions.of("a1");
@@ -48,6 +54,7 @@ public class ChessBoardTest {
     @EnumSource(value = Player.class)
     void createStatusTest(Player player) {
         ChessBoard chessBoard = new ChessBoard();
+        chessBoard.create(PieceFactory.create());
         Status result = chessBoard.createStatus(player);
         double actual = result.getScore();
         double expected = 38;
@@ -57,7 +64,7 @@ public class ChessBoardTest {
     @DisplayName("ChessBoard 한 column에 같은 Player 소유의 Pawn 개수 확인")
     @ParameterizedTest
     @MethodSource("generatePositions3")
-    void 폰의점수를확인하는테스트(List<Piece> columnLine, Player player, int exptectd) {
+    void existPawnNumberTest(List<Piece> columnLine, Player player, int exptectd) {
         ChessBoard chessBoard = new ChessBoard();
         assertThat(chessBoard.getPawnCountPerStage(columnLine, player)).isEqualTo(exptectd);
     }

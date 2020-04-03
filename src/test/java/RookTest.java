@@ -1,5 +1,5 @@
-import chess.domain.Player;
-import chess.domain.chesspieces.Rook;
+import chess.domain.game.Player;
+import chess.domain.chesspiece.Rook;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;

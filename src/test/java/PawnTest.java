@@ -1,7 +1,7 @@
-import chess.domain.Player;
-import chess.domain.chesspieces.Knight;
-import chess.domain.chesspieces.Pawn;
-import chess.domain.chesspieces.Rook;
+import chess.domain.game.Player;
+import chess.domain.chesspiece.Knight;
+import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.Rook;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;

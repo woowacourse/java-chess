@@ -1,6 +1,6 @@
 package chess.domain.direction;
 
-import chess.Exceptions.IllegalDirectionException;
+import chess.Exception.IllegalDirectionException;
 import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;

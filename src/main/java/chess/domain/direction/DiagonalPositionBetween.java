@@ -22,10 +22,8 @@ public class DiagonalPositionBetween implements BiFunction<Position, Position, L
         Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
         Row biggerRow = Row.getBigger(from.getRow(), to.getRow());
 
-        List<Row> rows = Arrays.asList(Row.values())
-                .subList(smallerRow.ordinal() + 1, biggerRow.ordinal());
-        List<Column> columns = Arrays.asList(Column.values())
-                .subList(smallerColumn.ordinal() + 1, biggerColumn.ordinal());
+        List<Row> rows = smallerRow.between(biggerRow);
+        List<Column> columns = smallerColumn.between(biggerColumn);
         List<Position> positions = new ArrayList<>();
 
         for (int i = 0; i < rows.size(); i++) {
