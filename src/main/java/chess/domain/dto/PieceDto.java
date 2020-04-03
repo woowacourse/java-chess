@@ -1,8 +1,9 @@
-package chess.domain.piece;
+package chess.domain.dto;
 
 import java.util.Objects;
 
 import chess.domain.board.PieceFactory;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class PieceDto {

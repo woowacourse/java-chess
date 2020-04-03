@@ -8,16 +8,16 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 
-import chess.domain.board.BoardDao;
 import chess.domain.board.PieceFactory;
-import chess.domain.piece.PieceDto;
-import chess.domain.piece.PieceEditDto;
+import chess.domain.dto.PieceDto;
+import chess.domain.dto.PieceEditDto;
 import chess.domain.piece.Queen;
 
 class BoardDaoTest {
 	@Test
 	public void connectionTest() {
-		BoardDao boardDao = new BoardDao();
+		SQLConnector sqlConnector = new SQLConnector();
+		BoardDao boardDao = new BoardDao(sqlConnector);
 		Connection connection = boardDao.getConnection();
 
 		assertThat(connection).isNotNull();
@@ -25,7 +25,8 @@ class BoardDaoTest {
 
 	@Test
 	public void CRUDPieceTest() throws SQLException {
-		BoardDao boardDao = new BoardDao();
+		SQLConnector sqlConnector = new SQLConnector();
+		BoardDao boardDao = new BoardDao(sqlConnector);
 		PieceDto savedPiece = PieceDto.of(A1, PieceFactory.of("r"));
 
 		boardDao.addPiece(savedPiece);
@@ -42,7 +43,8 @@ class BoardDaoTest {
 
 	@Test
 	public void addAndFindPieceTest() throws SQLException {
-		BoardDao boardDao = new BoardDao();
+		SQLConnector sqlConnector = new SQLConnector();
+		BoardDao boardDao = new BoardDao(sqlConnector);
 		PieceDto savedPiece = PieceDto.of(A1, PieceFactory.of("r"));
 
 		boardDao.addPiece(savedPiece);
@@ -52,7 +54,8 @@ class BoardDaoTest {
 
 	@Test
 	public void editPieceTest() throws SQLException {
-		BoardDao boardDao = new BoardDao();
+		SQLConnector sqlConnector = new SQLConnector();
+		BoardDao boardDao = new BoardDao(sqlConnector);
 		boardDao.addPiece(PieceDto.of(A1, PieceFactory.of("r")));
 		PieceEditDto pieceEditDto = new PieceEditDto(A1, PieceFactory.of("Q"));
 
@@ -63,7 +66,8 @@ class BoardDaoTest {
 
 	@Test
 	public void deletePieceTest() throws SQLException {
-		BoardDao boardDao = new BoardDao();
+		SQLConnector sqlConnector = new SQLConnector();
+		BoardDao boardDao = new BoardDao(sqlConnector);
 		boardDao.addPiece(PieceDto.of(A1, PieceFactory.of("r")));
 
 		boardDao.deletePieceByPosition(A1);
@@ -73,7 +77,8 @@ class BoardDaoTest {
 
 	@Test
 	public void deleteAll() throws SQLException {
-		BoardDao boardDao = new BoardDao();
+		SQLConnector sqlConnector = new SQLConnector();
+		BoardDao boardDao = new BoardDao(sqlConnector);
 		boardDao.deleteAll();
 	}
 }

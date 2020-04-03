@@ -2,6 +2,7 @@ package chess;
 
 import static spark.Spark.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIApplication {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		Spark.staticFileLocation("static");
 		final GameManager gameManager = new GameManager();
 

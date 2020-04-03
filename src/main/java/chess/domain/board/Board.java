@@ -4,18 +4,20 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.domain.dao.BoardDao;
+import chess.domain.dao.SQLConnector;
+import chess.domain.dto.PieceDto;
+import chess.domain.dto.PieceEditDto;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceDto;
-import chess.domain.piece.PieceEditDto;
 import chess.domain.position.Position;
 
 public class Board {
 	private final BoardDao boardDao;
 
 	public Board(Map<Position, Piece> pieces) {
-		boardDao = new BoardDao();
+		boardDao = new BoardDao(new SQLConnector());
 		pieces.entrySet()
 			.stream()
 			.map(x -> PieceDto.of(x.getKey(), x.getValue()))

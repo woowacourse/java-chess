@@ -21,4 +21,9 @@ class GameManagerTest {
 		assertThat(eachColorScore.get(Color.BLACK)).isEqualTo(38);
 		assertThat(eachColorScore.get(Color.WHITE)).isEqualTo(38);
 	}
+
+	@Test
+	public void test() {
+		
+	}
 }

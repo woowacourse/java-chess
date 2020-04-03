@@ -1,5 +1,6 @@
-package chess.domain.piece;
+package chess.domain.dto;
 
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class PieceEditDto {
