@@ -21,7 +21,7 @@ class GameTest {
 	@Test
 	void movePieceFromTo() {
 		Game game = new Game(new PiecesManager(WhitePiecesFactory.create(), BlackPiecesFactory.create()),
-			Board.getInstance());
+			new Board());
 
 		assertThatThrownBy(() -> game.movePieceFromTo(Position.of("a1"), Position.of("a5")))
 			.isInstanceOf(UnsupportedOperationException.class)
@@ -32,7 +32,7 @@ class GameTest {
 	@Test
 	void isKingDie() {
 		Game game = new Game(new PiecesManager(WhitePiecesFactory.create(), BlackPiecesFactory.create()),
-			Board.getInstance());
+			new Board());
 
 		assertThat(game.isKingDie()).isFalse();
 	}

@@ -19,7 +19,7 @@ import chess.domain.piece.WhitePiecesFactory;
 public class Board {
 	private final Map<Position, Piece> board;
 
-	private Board() {
+	public Board() {
 		board = new HashMap<>();
 
 		for (Rank rank : Rank.values()) {
@@ -43,10 +43,6 @@ public class Board {
 				board.put(position, null);
 			}
 		}
-	}
-
-	public static Board getInstance() {
-		return BoardLazyHolder.INSTANCE;
 	}
 
 	public boolean canMoveBy(List<Position> trace) {
@@ -75,9 +71,5 @@ public class Board {
 
 	public Map<Position, Piece> getBoard() {
 		return board;
-	}
-
-	private static class BoardLazyHolder {
-		private final static Board INSTANCE = new Board();
 	}
 }

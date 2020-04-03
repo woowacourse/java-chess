@@ -17,16 +17,10 @@ import chess.domain.piece.Piece;
  *    @author AnHyungJu
  */
 class BoardTest {
-	@DisplayName("보드가 하나의 인스턴스만 생성하는지 확인")
-	@Test
-	void getInstance() {
-		assertThat(Board.getInstance()).isEqualTo(Board.getInstance());
-	}
-
 	@DisplayName("움직여야하는 경로가 주어졌을 때 보드가 다른 말로 막혀있지 않으면 true 반환하는지 확인")
 	@Test
 	void canMoveBy() {
-		Board board = Board.getInstance();
+		Board board = new Board();
 		List<Position> trace = new LinkedList<>();
 
 		trace.add(Position.of("a5"));
@@ -40,11 +34,11 @@ class BoardTest {
 	@DisplayName("Source와 Target 포지션이 주어졌을 떄 change가 올바르게 되는지 확인")
 	@Test
 	void change() {
-		Map<Position, Piece> board = Board.getInstance().getBoard();
+		Map<Position, Piece> board = new Board().getBoard();
 		Piece sourcePiece = board.get(Position.of("a5"));
 		Piece targetPiece = board.get(Position.of("b5"));
 
-		Board.getInstance().change(Position.of("a5"), Position.of("b5"));
+		new Board().change(Position.of("a5"), Position.of("b5"));
 
 		assertThat(board.get(Position.of("a5"))).isEqualTo(targetPiece);
 		assertThat(board.get(Position.of("b5"))).isEqualTo(sourcePiece);
