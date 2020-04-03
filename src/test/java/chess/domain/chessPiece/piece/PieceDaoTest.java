@@ -23,6 +23,7 @@ class PieceDaoTest {
 	void connection() {
 		Connection con = pieceDao.getConnection();
 		assertNotNull(con);
+		pieceDao.closeConnection(con);
 	}
 
 	@Test
