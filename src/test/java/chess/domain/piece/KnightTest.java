@@ -13,7 +13,6 @@ import chess.domain.Color;
 import chess.domain.GameManager;
 import chess.domain.PieceScore;
 import chess.domain.board.Position;
-import chess.domain.command.Command;
 
 class KnightTest {
 	Map<Position, Piece> originPiece;
@@ -41,7 +40,7 @@ class KnightTest {
 		Knight knight = new Knight(Color.WHITE, "n");
 		pieces.addPiece(Position.of("b2"), knight);
 
-		gameManager.moveFromTo(new Command("move b2 d3"));
+		gameManager.moveFromTo(Position.of("b2"), Position.of("d3"));
 
 		assertThat(pieces.getPieceByPosition(Position.of("d3"))).isEqualTo(knight);
 	}
@@ -53,7 +52,7 @@ class KnightTest {
 		pieces.addPiece(Position.of("b2"), knight);
 
 		assertThatThrownBy(() -> {
-			gameManager.moveFromTo(new Command("move b2 h2"));
+			gameManager.moveFromTo(Position.of("b2"), Position.of("h2"));
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
 }

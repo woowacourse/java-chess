@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.Color;
 import chess.domain.GameManager;
-import chess.domain.command.Command;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.BlankPieceFactory;
 import chess.domain.piece.King;
@@ -79,7 +78,7 @@ public class GameManagerTest {
 
 		gameManager = new GameManager(board);
 
-		gameManager.moveFromTo(new Command("move d4 e5"));
+		gameManager.moveFromTo(Position.of("d4"), Position.of("e5"));
 		assertThat(gameManager.getPiece("e5")).isEqualTo(whitePawn);
 		assertThat(gameManager.getPiece("d4").isBlank()).isTrue();
 	}
@@ -87,7 +86,7 @@ public class GameManagerTest {
 	@DisplayName("해당 위치에 있는 piece가 원하는 target으로 갈 수 있는 List를 반환하는 것을 테스트")
 	@Test
 	void moveFromToTest() {
-		gameManager.moveFromTo(new Command("move b1 a3"));
+		gameManager.moveFromTo(Position.of("b1"), Position.of("a3"));
 		assertThat(gameManager.getPiece("a3")).isInstanceOf(Knight.class);
 		assertThat(gameManager.getPiece("b1").isBlank()).isTrue();
 	}
@@ -96,7 +95,7 @@ public class GameManagerTest {
 	@Test
 	void validateEmptySourcePositionTest() {
 		assertThatThrownBy(() -> {
-			gameManager.moveFromTo(new Command("move b3 a4"));
+			gameManager.moveFromTo(Position.of("b3"), Position.of("a4"));
 		}).isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("빈 칸을 선택하셨습니다");
 	}
@@ -105,7 +104,7 @@ public class GameManagerTest {
 	@Test
 	void validateOtherPieceSourcePositionTest() {
 		assertThatThrownBy(() -> {
-			gameManager.moveFromTo(new Command("move b8 a4"));
+			gameManager.moveFromTo(Position.of("b8"), Position.of("a4"));
 		}).isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("상대방의 말을 선택하셨습니다");
 	}
@@ -114,7 +113,7 @@ public class GameManagerTest {
 	@Test
 	void validateSameColorTargetPositionTest() {
 		assertThatThrownBy(() -> {
-			gameManager.moveFromTo(new Command("move b1 d2"));
+			gameManager.moveFromTo(Position.of("b1"), Position.of("d2"));
 		}).isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("target에 자신의 말이 있습니다");
 	}
@@ -123,7 +122,7 @@ public class GameManagerTest {
 	@Test
 	void validateNotMovablePositionTest() {
 		assertThatThrownBy(() -> {
-			gameManager.moveFromTo(new Command("move b1 a4"));
+			gameManager.moveFromTo(Position.of("b1"), Position.of("a4"));
 		}).isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("갈 수 없는 곳을 선택하셨습니다");
 	}

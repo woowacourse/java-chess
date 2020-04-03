@@ -13,7 +13,6 @@ import chess.domain.Color;
 import chess.domain.GameManager;
 import chess.domain.PieceScore;
 import chess.domain.board.Position;
-import chess.domain.command.Command;
 
 class RookTest {
 	Map<Position, Piece> originPiece;
@@ -41,7 +40,7 @@ class RookTest {
 		Rook rook = new Rook(Color.WHITE, "n");
 		pieces.addPiece(Position.of("b2"), rook);
 
-		gameManager.moveFromTo(new Command("move b2 h2"));
+		gameManager.moveFromTo(Position.of("b2"), Position.of("h2"));
 
 		assertThat(pieces.getPieceByPosition(Position.of("h2"))).isEqualTo(rook);
 	}
@@ -53,7 +52,7 @@ class RookTest {
 		pieces.addPiece(Position.of("b2"), rook);
 
 		assertThatThrownBy(() -> {
-			gameManager.moveFromTo(new Command("move b2 h3"));
+			gameManager.moveFromTo(Position.of("b2"), Position.of("h3"));
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
 }

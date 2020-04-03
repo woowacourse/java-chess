@@ -50,7 +50,7 @@ public class Controller {
 
 	private static void move(Command command, GameManager gameManager) {
 		try {
-			gameManager.moveFromTo(command);
+			gameManager.moveFromTo(command.getSourceCommand(), command.getTargetCommand());
 		} catch (IllegalArgumentException e) {
 			OutputView.printException(e);
 		}

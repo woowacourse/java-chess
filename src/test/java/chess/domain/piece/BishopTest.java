@@ -13,7 +13,6 @@ import chess.domain.Color;
 import chess.domain.GameManager;
 import chess.domain.PieceScore;
 import chess.domain.board.Position;
-import chess.domain.command.Command;
 
 class BishopTest {
 	Map<Position, Piece> originPiece;
@@ -41,7 +40,7 @@ class BishopTest {
 		Bishop bishop = new Bishop(Color.WHITE, "b");
 		pieces.addPiece(Position.of("b2"), bishop);
 
-		gameManager.moveFromTo(new Command("move b2 h8"));
+		gameManager.moveFromTo(Position.of("b2"), Position.of("h8"));
 
 		assertThat(pieces.getPieceByPosition(Position.of("h8"))).isEqualTo(bishop);
 	}
@@ -53,7 +52,7 @@ class BishopTest {
 		pieces.addPiece(Position.of("b2"), bishop);
 
 		assertThatThrownBy(() -> {
-			gameManager.moveFromTo(new Command("move b2 h2"));
+			gameManager.moveFromTo(Position.of("b2"), Position.of("h2"));
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
 }

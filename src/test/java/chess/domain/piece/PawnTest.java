@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import chess.domain.Color;
 import chess.domain.GameManager;
 import chess.domain.board.Position;
-import chess.domain.command.Command;
 
 class PawnTest {
 	Map<Position, Piece> originPiece;
@@ -33,7 +32,7 @@ class PawnTest {
 		Pawn pawn = new Pawn(Color.WHITE, "p");
 		pieces.addPiece(Position.of("b2"), pawn);
 
-		gameManager.moveFromTo(new Command("move b2 b4"));
+		gameManager.moveFromTo(Position.of("b2"), Position.of("b4"));
 
 		assertThat(pieces.getPieceByPosition(Position.of("b4"))).isEqualTo(pawn);
 	}
@@ -44,7 +43,7 @@ class PawnTest {
 		Pawn pawn = new Pawn(Color.WHITE, "p");
 		pieces.addPiece(Position.of("b2"), pawn);
 
-		gameManager.moveFromTo(new Command("move b2 b3"));
+		gameManager.moveFromTo(Position.of("b2"), Position.of("b3"));
 
 		assertThat(pieces.getPieceByPosition(Position.of("b3"))).isEqualTo(pawn);
 	}
@@ -59,7 +58,7 @@ class PawnTest {
 		pieces.addPiece(Position.of("c3"), blackPawn);
 		pieces.addPiece(Position.of("d2"), blackPawn);
 
-		gameManager.moveFromTo(new Command("move b2 c3"));
+		gameManager.moveFromTo(Position.of("b2"), Position.of("c3"));
 		assertThat(pieces.getPieceByPosition(Position.of("c3"))).isEqualTo(whitePawn);
 	}
 
@@ -70,7 +69,7 @@ class PawnTest {
 		pieces.addPiece(Position.of("b2"), pawn);
 
 		assertThatThrownBy(() -> {
-			gameManager.moveFromTo(new Command("move b2 b5"));
+			gameManager.moveFromTo(Position.of("b2"), Position.of("b5"));
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
 }

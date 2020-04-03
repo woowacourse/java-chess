@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.board.Position;
-import chess.domain.command.Command;
 import chess.domain.piece.Path;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
@@ -15,10 +14,7 @@ public class GameManager {
 		this.currentColor = Color.WHITE;
 	}
 
-	public void moveFromTo(Command command) {
-		Position sourcePosition = command.getSourceCommand();
-		Position targetPosition = command.getTargetCommand();
-
+	public void moveFromTo(Position sourcePosition, Position targetPosition) {
 		validateEmptySourcePosition(sourcePosition);
 		validateOtherPieceSourcePosition(sourcePosition);
 		validateSameColorTargetPosition(targetPosition);
