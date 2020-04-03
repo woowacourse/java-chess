@@ -22,7 +22,7 @@ public enum PieceGenerator {
         this.function = function;
     }
 
-    public static Piece make(String representation, String team, String position) {
+    public static Piece generate(String representation, String team, String position) {
         return Arrays.stream(values())
                 .filter(p -> p.representation.equals(representation.toUpperCase()))
                 .findFirst()

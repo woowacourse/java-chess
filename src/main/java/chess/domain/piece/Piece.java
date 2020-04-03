@@ -42,10 +42,6 @@ public abstract class Piece {
         this.isAlive = false;
     }
 
-    public boolean isSamePosition(Position otherPosition) {
-        return this.position.equals(otherPosition);
-    }
-
     public boolean isSameTeam(Piece destinationPiece) {
         return this.team == destinationPiece.team;
     }

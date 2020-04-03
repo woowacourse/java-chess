@@ -75,7 +75,7 @@ public class ChessDAO {
 
 
         while (rs.next()) {
-            pieces.put(new Position(rs.getString("position")), PieceGenerator.make(rs.getString("representation"), rs.getString("team"), rs.getString("position")));
+            pieces.put(new Position(rs.getString("position")), PieceGenerator.generate(rs.getString("representation"), rs.getString("team"), rs.getString("position")));
         }
         return new Pieces(pieces);
     }
