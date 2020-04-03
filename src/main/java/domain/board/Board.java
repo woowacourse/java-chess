@@ -50,6 +50,15 @@ public class Board {
         return Collections.unmodifiableList(board);
     }
 
+    public List<List<String>> getLists() {
+        List<List<String>> lists = new ArrayList<>();
+        for (RowOfBoard rowOfBoard : getBoard()) {
+            lists.add(new ArrayList<>(rowOfBoard.getRowOfBoard()));
+        }
+
+        return lists;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

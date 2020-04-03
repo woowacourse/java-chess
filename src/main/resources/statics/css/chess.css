@@ -1,0 +1,21 @@
+table {
+    border: 1px solid #444444;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+td {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #444444;
+    text-align: center;
+    vertical-align: center;
+}
+
+.bright {
+    background: #FFCC97;
+}
+
+.dark {
+    background: #CC723D;
+}
