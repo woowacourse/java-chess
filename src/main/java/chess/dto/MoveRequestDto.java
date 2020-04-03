@@ -9,10 +9,6 @@ public class MoveRequestDto {
         this.to = to;
     }
 
-    public MoveRequestDto(final String from) {
-        this.from = from;
-    }
-
     public String getFrom() {
         return from;
     }
