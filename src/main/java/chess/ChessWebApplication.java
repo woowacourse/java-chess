@@ -1,8 +1,8 @@
 package chess;
 
 import chess.domain.chessPiece.piece.Piece;
+import chess.domain.chessPiece.piece.PieceCreator;
 import chess.domain.chessPiece.piece.PieceDao;
-import chess.domain.chessPiece.piece.PieceNameMatcher;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessboard.ChessBoard;
 import com.google.gson.Gson;
@@ -44,19 +44,7 @@ public class ChessWebApplication {
 
 		get("/continue", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			List<Map<String, Object>> pieces = pieceDao.readPieces();
-
-			List<Piece> piecesOfChessBoard = new ArrayList<>();
-			for (Map pieceMap : pieces) {
-				String file = String.valueOf(pieceMap.get("file"));
-				String rank = String.valueOf(pieceMap.get("rank"));
-				String position = file + rank;
-				String pieceType = String.valueOf(pieceMap.get("name"));
-				Piece piece = PieceNameMatcher.create(pieceType, position);
-				piecesOfChessBoard.add(piece);
-				model.put(position, pieceType);
-			}
-			chessBoard = new ChessBoard(piecesOfChessBoard);
+			updateChessBoardFromDatabase(model);
 			return gson.toJson(model);
 		});
 
@@ -64,19 +52,17 @@ public class ChessWebApplication {
 			Position sourcePosition = Position.of(req.queryParams("sourcePosition"));
 			Position targetPosition = Position.of(req.queryParams("targetPosition"));
 
-			String sourcePieceType = findPieceType(sourcePosition);
-			String targetPieceType = findPieceType(targetPosition);
 			boolean isAttack = chessBoard.findPieceByPosition(targetPosition).isPresent();
 
 			Map<String, Object> model = new HashMap<>();
 			model.put("sourcePosition", req.queryParams("sourcePosition"));
 			model.put("targetPosition", req.queryParams("targetPosition"));
-			model.put("sourcePieceType", sourcePieceType);
-			model.put("targetPieceType", targetPieceType);
+			model.put("sourcePieceType", findPieceType(sourcePosition));
+			model.put("targetPieceType", findPieceType(targetPosition));
 			model.put("isAttack", isAttack);
 
 			chessBoard.movePiece(sourcePosition, targetPosition);
-			updateDataBase(sourcePosition, targetPosition, isAttack);
+			updateDatabase(sourcePosition, targetPosition, isAttack);
 
 			return gson.toJson(model);
 		});
@@ -90,7 +76,20 @@ public class ChessWebApplication {
 		}
 	}
 
-	private static void updateDataBase(final Position sourcePosition, final Position targetPosition, final boolean isAttack) throws SQLException {
+	private static void updateChessBoardFromDatabase(final Map<String, Object> model) throws SQLException {
+		List<Map<String, Object>> pieceInfos = pieceDao.readPieces();
+		List<Piece> pieces = new ArrayList<>();
+		for (Map pieceInfo : pieceInfos) {
+			String position = String.valueOf(pieceInfo.get("file")) + pieceInfo.get("rank");
+			String pieceName = String.valueOf(pieceInfo.get("name"));
+			Piece piece = PieceCreator.create(pieceName, position);
+			pieces.add(piece);
+			model.put(position, pieceName);
+		}
+		chessBoard = new ChessBoard(pieces);
+	}
+
+	private static void updateDatabase(final Position sourcePosition, final Position targetPosition, final boolean isAttack) throws SQLException {
 		if (isAttack) {
 			pieceDao.deletePiece(targetPosition);
 		}

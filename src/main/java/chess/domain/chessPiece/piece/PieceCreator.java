@@ -7,7 +7,7 @@ import chess.domain.chessPiece.team.WhiteTeam;
 import java.util.Arrays;
 import java.util.function.Function;
 
-public enum PieceNameMatcher {
+public enum PieceCreator {
 	BLACK_PAWN("p", (String position) -> {
 		return new Pawn(Position.of(position), new BlackTeam());
 	}), BLACK_ROOK("r", (String position) -> {
@@ -37,13 +37,13 @@ public enum PieceNameMatcher {
 	private final String name;
 	private final Function<String, Piece> creator;
 
-	PieceNameMatcher(final String name, final Function<String, Piece> creator) {
+	PieceCreator(final String name, final Function<String, Piece> creator) {
 		this.name = name;
 		this.creator = creator;
 	}
 
 	public static Piece create(final String pieceType, final String position) {
-		return Arrays.stream(PieceNameMatcher.values())
+		return Arrays.stream(PieceCreator.values())
 				.filter(x -> x.name.equals(pieceType))
 				.map(x -> x.creator.apply(position))
 				.findFirst()
