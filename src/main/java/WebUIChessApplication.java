@@ -47,11 +47,12 @@ public class WebUIChessApplication {
                 chessGame.changeTurn();
             }
             // Score 확
-            ChessGameScoresVO chessGameScoresVO = new ChessGameScoresVO(chessGame.calculateScores());
-            System.out.println("blackscore = " + chessGameScoresVO.getBlackScore().getValue());
-            System.out.println("whitescore = " + chessGameScoresVO.getWhiteScore().getValue());
-            ChessMoveVO chessMoveVO = new ChessMoveVO(chessGameScoresVO, progress);
-            return GSON.toJson(chessMoveVO);
+//            ChessGameScoresVO chessGameScoresVO = new ChessGameScoresVO(chessGame.calculateScores());
+//            System.out.println("blackscore = " + chessGameScoresVO.getBlackScore().getValue());
+//            System.out.println("whitescore = " + chessGameScoresVO.getWhiteScore().getValue());
+//            ChessMoveVO chessMoveVO = new ChessMoveVO(chessGameScoresVO, progress);
+//            return GSON.toJson(chessMoveVO);
+            return null;
         });
 
         get("/start/winner", (req, res) -> {

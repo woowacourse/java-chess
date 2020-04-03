@@ -44,9 +44,6 @@ public class PawnPieceMovable implements PieceMovable {
     }
 
     private boolean canMoveInInitialPawnLocation(Map<Location, Piece> board, Location now, Location after, int value) {
-        System.out.println("isInitialPawnLocation : " + isInitialPawnLocation(now, team));
-        System.out.println("isInitialPawnForwardRange : " + isInitialPawnForwardRange(now, after, value));
-        System.out.println("hasNotObstacle : " + hasNotObstacle(board, now, after));
         return isInitialPawnLocation(now, team)
                 && isInitialPawnForwardRange(now, after, value)
                 && hasNotObstacle(board, now, after);
@@ -81,8 +78,6 @@ public class PawnPieceMovable implements PieceMovable {
         if (team.isBlack()) {
             return location.isSameRow(BLACK_PAWN_ROW);
         }
-        System.out.println("값은 " + location.isSameRow(WHITE_PAWN_ROW));
-        System.out.println(location.getRowValue());
         return location.isSameRow(WHITE_PAWN_ROW);
     }
 

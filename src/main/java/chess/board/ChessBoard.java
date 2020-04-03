@@ -1,17 +1,17 @@
 package chess.board;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import chess.location.Col;
 import chess.location.Location;
-import chess.location.Row;
 import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
 import chess.score.Score;
 import chess.team.Team;
+import data.PieceVO;
 
 import static chess.board.ChessBoardCreater.*;
 
@@ -68,17 +68,30 @@ public class ChessBoard {
     여기도 응집도를 높이고 결합도를 낮출 수 있을지 고민해보자.
     */
     public Score calculateReducePawnScore(Team team) {
-        int reducePawnScroe = 0;
-        for (int row = MINIMUM_LINE; row < LIMIT_LINE; row++) {
-            Row fixRow = Row.of(row);
-            int sameRowPawnSize = (int) board.keySet().stream()
-                    .filter(location -> location.isSameRow(fixRow))
-                    .filter(location -> board.get(location).isSameTeam(team))
-                    .filter(location -> board.get(location) instanceof Pawn)
-                    .count();
-            reducePawnScroe += sameRowPawnSize * PAWN_REDUCE_VALUE;
+        double reducePawnScroe = 0;
+        for (int col = COL_START; col <= COL_END; col++) {
+            Col fixCol = Col.of(col);
+
+            int sameColPawnSize = calculatePawnSameColSize(team, fixCol);
+            if(sameColPawnSize == 1) {
+                continue;
+            }
+            reducePawnScroe += (sameColPawnSize * PAWN_REDUCE_VALUE);
         }
         return new Score(reducePawnScroe);
+    }
+
+    private int calculatePawnSameColSize(Team team, Col fixCol) {
+        int count = 0;
+        for (Map.Entry<Location, Piece> element : board.entrySet()) {
+            if (element.getKey().isSame(fixCol)
+                    && element.getValue().isSameTeam(team)
+                    && element.getValue() instanceof Pawn
+            ) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public boolean isNotCorrectTeam(Location location, Team team) {

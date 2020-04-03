@@ -10,7 +10,8 @@ import java.util.Map;
 public class ChessBoardCreater {
     static final int MINIMUM_LINE = 0;
     static final int LIMIT_LINE = 8;
-    private static final char COL_START = 'a';
+    public static final char COL_START = 'a';
+    public static final char COL_END = 'h';
     private static final int WHITE_NOBLE_LINE = 1;
     private static final int WHITE_PAWN_LINE = 2;
     private static final int BLACK_PAWN_LINE = 7;

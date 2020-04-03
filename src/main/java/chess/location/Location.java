@@ -77,6 +77,10 @@ public class Location {
         return col.is(after.col);
     }
 
+    public boolean isSame(Col col) {
+        return this.col.is(col);
+    }
+
     public Location plusRowBy(int value) {
         return new Location(row.plus(value), col);
     }

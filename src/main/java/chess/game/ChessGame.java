@@ -7,8 +7,11 @@ import chess.location.Location;
 import chess.progress.Progress;
 import chess.player.Player;
 import chess.result.ChessResult;
+import chess.result.ChessScores;
 import chess.result.Result;
+import chess.score.Calculatable;
 import chess.score.Score;
+import chess.score.ScoreCalcultor;
 import chess.team.Team;
 
 import java.util.ArrayList;
@@ -25,12 +28,14 @@ public class ChessGame {
     private final Player white;
     private final Player black;
     private Team turn;
+    private Calculatable calculatable;
 
     public ChessGame() {
         chessBoard = ChessBoardCreater.create();
         white = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
         black = new Player(new ChessSet(chessBoard.giveMyPiece(BLACK)), BLACK);
         turn = Team.WHITE;
+        calculatable = new ScoreCalcultor();
     }
 
     public void changeTurn() {
@@ -100,15 +105,16 @@ public class ChessGame {
         return compareScore();
     }
 
-    public List<Score> calculateScores() {
-        return new ArrayList<>(
-                Arrays.asList(calculateScore(white), calculateScore(black))
+    public ChessScores calculateScores() {
+        return new ChessScores(
+                calculatable.calculate(chessBoard, white),
+                calculatable.calculate(chessBoard, black)
         );
     }
 
     private ChessResult compareScore() {
-        Score whiteScore = calculateScore(white);
-        Score blackScore = calculateScore(black);
+        Score whiteScore = calculatable.calculate(chessBoard, white);
+        Score blackScore = calculatable.calculate(chessBoard, black);
         if (whiteScore.isHigherThan(blackScore)) {
             return new ChessResult(Result.WIN, white.getTeamName());
         }
@@ -116,13 +122,6 @@ public class ChessGame {
             return new ChessResult(Result.WIN, black.getTeamName());
         }
         return new ChessResult(Result.DRAW, black.getTeamName());
-    }
-
-    public Score calculateScore(Player player) {
-        Score scoreExceptPawnReduce = player.calculateScoreExceptPawnReduce();
-        Score pawnReduceScore = chessBoard.calculateReducePawnScore(player.getTeam());
-        System.out.println(scoreExceptPawnReduce.minus(pawnReduceScore));
-        return scoreExceptPawnReduce.minus(pawnReduceScore);
     }
 
     public Team getTurn() {
