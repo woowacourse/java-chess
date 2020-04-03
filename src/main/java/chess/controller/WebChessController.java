@@ -55,9 +55,17 @@ public class WebChessController implements ChessController {
 		String from = element.getAsJsonObject().get("from").getAsString();
 		String to = element.getAsJsonObject().get("to").getAsString();
 
-		service.move(MoveInfo.of(from, to), team);
-		team = team.next();
+		try {
+			if (board.isEnd()) {
+				throw new IllegalArgumentException("게임 끝");
+			}
+			service.move(MoveInfo.of(from, to), team);
+		} catch (Exception error) {
+			response.status(500);
+			return GSON.toJson(error.getMessage());
+		}
 
+		team = team.next();
 		return GSON.toJson(from + " " + to);
 	}
 }

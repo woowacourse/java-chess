@@ -4,12 +4,18 @@ function move(moveInfo) {
         url: '/api/move',
         data: JSON.stringify(moveInfo),
         dataType: 'json',
-        contentType:'application/json; charset=utf-8',
-        success: onSuccess,
+        contentType: 'application/json; charset=utf-8',
+        success: renderPiece,
+        error: alertMessage
     });
 }
 
-function onSuccess(response) {
+function alertMessage(response) {
+    alert(response.responseText);
+}
+
+
+function renderPiece(response) {
     const fromTo = response.split(" ");
     const sourceNode = document.getElementById(fromTo[0]);
     const targetNode = document.getElementById(fromTo[1]);
@@ -17,24 +23,28 @@ function onSuccess(response) {
     targetNode.innerText = sourceNode.innerText;
     sourceNode.innerText = " ";
 }
-
-function init() {
+function boxClickHandler() {
     let isFrom = true;
     const moveInfo = {};
-    $(`.box`).on(`click`, (event) => {
-        console.log("click");
-        if (isFrom) {
+    return (event) => {
+        if (isFrom && event.target.innerText !== " ") {
             moveInfo.from = event.target.id;
-            console.log(moveInfo.from);
             isFrom = false;
-        }
-        else if (!isFrom) {
+        } else if (!isFrom) {
             moveInfo.to = event.target.id;
-            console.log(moveInfo.to);
             isFrom = true;
             move(moveInfo);
         }
-    })
+    };
+}
+
+
+function getMoveInfo() {
+    $(`.box`).on(`click`, boxClickHandler())
+}
+
+function init() {
+    getMoveInfo();
 }
 
 init();
