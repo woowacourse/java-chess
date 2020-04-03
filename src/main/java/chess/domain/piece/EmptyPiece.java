@@ -20,7 +20,7 @@ public class EmptyPiece extends GamePiece {
     }
 
     @Override
-    public boolean canMove(Board board, Position source, Position target) {
+    public boolean canMoveTo(Board board, Position source, Position target) {
         throw new UnsupportedOperationException("기물이 존재하지 않습니다.");
     }
 }

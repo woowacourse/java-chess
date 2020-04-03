@@ -30,7 +30,7 @@ public class Pawn extends GamePiece {
     }
 
     @Override
-    public boolean canMove(Board board, Position source, Position target) {
+    public boolean canMoveTo(Board board, Position source, Position target) {
         if (board.isNotEmpty(target)) {
             return canKill(source, target);
         }

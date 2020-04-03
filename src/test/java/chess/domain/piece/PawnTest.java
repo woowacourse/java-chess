@@ -32,7 +32,7 @@ class PawnTest {
         board.put(Position.from("e3"), ChessPiece.BLACK_KING.getGamePiece());
 
         assertThatCode(() -> {
-            gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target);
+            gamePiece.canMoveTo(Board.from(board, Status.initialStatus()), source, target);
         }).doesNotThrowAnyException();
 
     }
@@ -56,7 +56,7 @@ class PawnTest {
 
         board.put(source, piece);
 
-        assertThat(piece.canMove(Board.from(board, Status.initialStatus()), source, target)).isFalse();
+        assertThat(piece.canMoveTo(Board.from(board, Status.initialStatus()), source, target)).isFalse();
     }
 
     static Stream<Arguments> createInvalidTarget() {
@@ -100,7 +100,7 @@ class PawnTest {
         Position source = Position.from("d5");
         board.put(source, gamePiece);
 
-        assertThat(gamePiece.canMove(Board.from(board, Status.initialStatus()), source, Position.from("d3"))).isFalse();
+        assertThat(gamePiece.canMoveTo(Board.from(board, Status.initialStatus()), source, Position.from("d3"))).isFalse();
 
     }
 }

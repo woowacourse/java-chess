@@ -20,11 +20,7 @@ public abstract class GamePiece {
         this.playerColor = playerColor;
     }
 
-    public boolean canMoveTo(Board board, Position source, Position target) {
-        return canMove(board, source, target);
-    }
-
-    protected abstract boolean canMove(Board board, Position source, Position target);
+    public abstract boolean canMoveTo(Board board, Position source, Position target);
 
     public boolean is(PlayerColor playerColor) {
         return playerColor.equals(this.playerColor);

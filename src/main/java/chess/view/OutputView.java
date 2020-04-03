@@ -23,11 +23,15 @@ public class OutputView {
 
     public static void printBoard(Board board) {
         for (Line row : board.getRows()) {
-            System.out.println(row.getGamePieces()
-                    .stream()
-                    .map(GamePiece::getName)
-                    .collect(Collectors.joining("")));
+            System.out.println(getPiecesName(row));
         }
+    }
+
+    private static String getPiecesName(Line row) {
+        return row.getGamePieces()
+                .stream()
+                .map(GamePiece::getName)
+                .collect(Collectors.joining(""));
     }
 
     public static void printExceptionMessage(String message) {

@@ -16,7 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
 
 class KingTest {
 
@@ -30,7 +29,7 @@ class KingTest {
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
-            gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target);
+            gamePiece.canMoveTo(Board.from(board, Status.initialStatus()), source, target);
         }).doesNotThrowAnyException();
     }
 
@@ -56,7 +55,7 @@ class KingTest {
         GamePiece gamePiece = ChessPiece.WHITE_KING.getGamePiece();
         board.put(source, gamePiece);
 
-        assertThat(gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target)).isFalse();
+        assertThat(gamePiece.canMoveTo(Board.from(board, Status.initialStatus()), source, target)).isFalse();
     }
 
     static Stream<Arguments> createInvalidTarget() {

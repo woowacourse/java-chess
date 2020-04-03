@@ -26,7 +26,7 @@ public class Queen extends GamePiece {
     }
 
     @Override
-    public boolean canMove(Board board, Position source, Position target) {
+    public boolean canMoveTo(Board board, Position source, Position target) {
         return moveStrategy.canMove(board, source, target);
     }
 }
