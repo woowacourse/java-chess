@@ -1,11 +1,11 @@
 package chess;
 
-import chess.DTO.PieceDTO;
+import chess.dto.PieceDTO;
 import chess.controller.ChessGame;
 import spark.ModelAndView;
+import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,14 +18,7 @@ public class WebUIApplication {
 
         ChessGame chessGame = new ChessGame();
 
-        get("/", (req, res) -> {
-            List<PieceDTO> pieces = chessGame.run(req.queryParams("command"));
-            Map<String, Object> model = new LinkedHashMap<>();
-            model.put("pieces", pieces);
-            return render(model, "index.hbs");
-        });
-
-        post("/", (req, res) -> {
+        Route route = (req, res) -> {
             Map<String, Object> model = new LinkedHashMap<>();
             List<PieceDTO> pieces;
             try {
@@ -36,7 +29,11 @@ public class WebUIApplication {
             }
             model.put("pieces", pieces);
             return render(model, "index.hbs");
-        });
+        };
+
+        get("/", route);
+
+        post("/", route);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
