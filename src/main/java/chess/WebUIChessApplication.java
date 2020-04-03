@@ -36,7 +36,15 @@ public class WebUIChessApplication {
         Spark.post("/chess", (request, response) -> {
             try {
                 state = state.pushCommend(request.queryParams("commend"));
-                announcement = "명령이 입력되었습니다.";
+                if (state.isReported()) {
+                    announcement = OutputView.getStatusAnnouncement(state.getPieces());
+                }
+                if (state.isPlaying()) {
+                    announcement = "명령이 입력되었습니다.";
+                }
+                if (state.isEnded()) {
+                    announcement = "게임이 종료되었습니다. 정보를 확인하려면 status, 다시 시작하려면 start를 입력해주세요.";
+                }
                 response.redirect("/chess");
             } catch (Exception e) {
                 announcement = e.getMessage();
@@ -70,7 +78,7 @@ public class WebUIChessApplication {
 
     private static void printIfStatus(State state) {
         if (state.isReported()) {
-            OutputView.printStatus(state.getPieces());
+            OutputView.getStatusAnnouncement(state.getPieces());
         }
     }
 }

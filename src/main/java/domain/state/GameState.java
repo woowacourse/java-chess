@@ -52,6 +52,11 @@ public abstract class GameState implements State {
     }
 
     @Override
+    public boolean isEnded() {
+        return this instanceof Ended;
+    }
+
+    @Override
     public boolean isPlaying() {
         return this instanceof Playing;
     }
