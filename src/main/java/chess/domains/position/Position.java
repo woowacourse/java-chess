@@ -40,6 +40,9 @@ public class Position implements Comparable<Position> {
     }
 
     public static Position ofPositionName(String positionName) {
+        if (cachedPositions.get(positionName) == null) {
+            throw new IllegalArgumentException("말의 위치를 찾을 수 없습니다.");
+        }
         return cachedPositions.get(positionName);
     }
 
