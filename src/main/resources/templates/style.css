@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+@font-face{
+    font-family: 'BMHANNAPro';
+    src: url(BMHANNAPro.ttf) format('truetype');
+}
+
+h1{
+    text-align: center;
+    font-family: BMHANNAPro;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 710px;
+    margin: auto;
+}
+
+table{
+    margin:auto;
+    width: 700px;
+    height: 700px;
+}
+
+.dark-tile{
+    background-color: rgb(118, 150, 86);
+}
+
+.bright-tile{
+    background-color: rgb(238, 238, 210);
+}
+
+textarea{
+    display: block;
+    margin: auto;
+    width: 690px;
+    resize: none;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+}
+
+input{
+    display: block;
+    margin: auto;
+    width: 180px;
+    height: 50px;
+}
