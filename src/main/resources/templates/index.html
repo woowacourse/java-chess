@@ -2,9 +2,247 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <style>
+        .outer_box {
+            width: 600px;
+            height: 600px;
+            border: solid black 1px;
+            margin: 0 auto;
+        }
+
+        .inner_box {
+            width: 75px;
+            height: 75px;
+            float: left;
+            text-align: center;
+            display: table;
+        }
+
+        .inner_box > div {
+            vertical-align: middle;
+            display: table-cell;
+        }
+
+        .black {
+            background-color: saddlebrown;
+            color: white;
+        }
+
+        .white {
+            background-color: beige;
+            color: black;
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<div>
+    {{#ranks}}
+    <button>게임 시작</button>
+    <button>게임 종료</button>
+    <h1>보드판</h1>
+    <div class="outer_box">
+        <div class="inner_box black ">
+            <div>1</div>
+        </div>
+        <div class="inner_box white ">
+            <div>2</div>
+        </div>
+        <div class="inner_box black ">
+            <div>3</div>
+        </div>
+        <div class="inner_box white ">
+            <div>4</div>
+        </div>
+        <div class="inner_box black ">
+            <div>1</div>
+        </div>
+        <div class="inner_box white ">
+            <div>2</div>
+        </div>
+        <div class="inner_box black ">
+            <div>3</div>
+        </div>
+        <div class="inner_box white ">
+            <div>4</div>
+        </div>
+
+        <div class="inner_box white ">
+            <div>5</div>
+        </div>
+        <div class="inner_box black ">
+            <div>6</div>
+        </div>
+        <div class="inner_box white ">
+            <div>7</div>
+        </div>
+        <div class="inner_box black ">
+            <div>8</div>
+        </div>
+        <div class="inner_box white ">
+            <div>9</div>
+        </div>
+        <div class="inner_box black ">
+            <div>10</div>
+        </div>
+        <div class="inner_box white ">
+            <div>11</div>
+        </div>
+        <div class="inner_box black ">
+            <div>12</div>
+        </div>
+
+        <div class="inner_box black ">
+            <div>1</div>
+        </div>
+        <div class="inner_box white ">
+            <div>2</div>
+        </div>
+        <div class="inner_box black ">
+            <div>3</div>
+        </div>
+        <div class="inner_box white ">
+            <div>4</div>
+        </div>
+        <div class="inner_box black ">
+            <div>1</div>
+        </div>
+        <div class="inner_box white ">
+            <div>2</div>
+        </div>
+        <div class="inner_box black ">
+            <div>3</div>
+        </div>
+        <div class="inner_box white ">
+            <div>4</div>
+        </div>
+
+        <div class="inner_box white ">
+            <div>5</div>
+        </div>
+        <div class="inner_box black ">
+            <div>6</div>
+        </div>
+        <div class="inner_box white ">
+            <div>7</div>
+        </div>
+        <div class="inner_box black ">
+            <div>8</div>
+        </div>
+        <div class="inner_box white ">
+            <div>9</div>
+        </div>
+        <div class="inner_box black ">
+            <div>10</div>
+        </div>
+        <div class="inner_box white ">
+            <div>11</div>
+        </div>
+        <div class="inner_box black ">
+            <div>12</div>
+        </div>
+
+        <div class="inner_box black ">
+            <div>1</div>
+        </div>
+        <div class="inner_box white ">
+            <div>2</div>
+        </div>
+        <div class="inner_box black ">
+            <div>3</div>
+        </div>
+        <div class="inner_box white ">
+            <div>4</div>
+        </div>
+        <div class="inner_box black ">
+            <div>1</div>
+        </div>
+        <div class="inner_box white ">
+            <div>2</div>
+        </div>
+        <div class="inner_box black ">
+            <div>3</div>
+        </div>
+        <div class="inner_box white ">
+            <div>4</div>
+        </div>
+
+        <div class="inner_box white ">
+            <div>5</div>
+        </div>
+        <div class="inner_box black ">
+            <div>6</div>
+        </div>
+        <div class="inner_box white ">
+            <div>7</div>
+        </div>
+        <div class="inner_box black ">
+            <div>8</div>
+        </div>
+        <div class="inner_box white ">
+            <div>9</div>
+        </div>
+        <div class="inner_box black ">
+            <div>10</div>
+        </div>
+        <div class="inner_box white ">
+            <div>11</div>
+        </div>
+        <div class="inner_box black ">
+            <div>12</div>
+        </div>
+
+        <div class="inner_box black ">
+            <div>1</div>
+        </div>
+        <div class="inner_box white ">
+            <div>2</div>
+        </div>
+        <div class="inner_box black ">
+            <div>3</div>
+        </div>
+        <div class="inner_box white ">
+            <div>4</div>
+        </div>
+        <div class="inner_box black ">
+            <div>1</div>
+        </div>
+        <div class="inner_box white ">
+            <div>2</div>
+        </div>
+        <div class="inner_box black ">
+            <div>3</div>
+        </div>
+        <div class="inner_box white ">
+            <div>4</div>
+        </div>
+
+        <div class="inner_box white ">
+            <div>5</div>
+        </div>
+        <div class="inner_box black ">
+            <div>6</div>
+        </div>
+        <div class="inner_box white ">
+            <div>7</div>
+        </div>
+        <div class="inner_box black ">
+            <div>8</div>
+        </div>
+        <div class="inner_box white ">
+            <div>9</div>
+        </div>
+        <div class="inner_box black ">
+            <div>10</div>
+        </div>
+        <div class="inner_box white ">
+            <div>11</div>
+        </div>
+        <div class="inner_box black ">
+            <div>12</div>
+        </div>
+    </div>
+</div>
+{{/ranks}}
 </body>
 </html>
