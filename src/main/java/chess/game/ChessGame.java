@@ -54,6 +54,19 @@ public class ChessGame {
         return finishIfKingDie();
     }
 
+    public Progress webDoMoveCommand(Location now, Location destination) {
+        if (chessBoard.isNotExist(now)
+                || chessBoard.canNotMove(now, destination)
+                || chessBoard.isNotCorrectTeam(now, turn)) {
+            return Progress.ERROR;
+        }
+
+        deletePieceIfExistIn(destination, turn);
+        chessBoard.move(now, destination);
+
+        return finishIfKingDie();
+    }
+
     private void deletePieceIfExistIn(Location destination, Team turn) {
         Player counterplayer = white;
         if (black.isNotSame(turn)) {
