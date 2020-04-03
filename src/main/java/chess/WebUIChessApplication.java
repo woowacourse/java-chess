@@ -23,7 +23,7 @@ public class WebUIChessApplication {
 		initialize();
 		start();
 		running();
-		//end();
+		end();
 		//status();
 	}
 
@@ -51,6 +51,14 @@ public class WebUIChessApplication {
 			}
 			putBoardTo(model);
 			return render(model, "start.html");
+		});
+	}
+
+	private static void end() {
+		get("/end", (req, res) -> {
+			model = new HashMap<>();
+			init();
+			return render(model, "end.html");
 		});
 	}
 
