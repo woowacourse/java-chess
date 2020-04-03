@@ -38,11 +38,7 @@ public class ChessWebApplication {
 			chessBoard = new ChessBoard();
 			List<Piece> pieces = chessBoard.getPieces();
 
-			pieceDao.deleteAll();
-			for (Piece piece : pieces) {
-				pieceDao.addPiece(piece);
-				model.put(piece.getPosition().toString(), piece.getPieceName());
-			}
+			databaseInit(model, pieces);
 			return gson.toJson(model);
 		});
 
@@ -84,6 +80,14 @@ public class ChessWebApplication {
 
 			return gson.toJson(model);
 		});
+	}
+
+	private static void databaseInit(final Map<String, Object> model, final List<Piece> pieces) throws SQLException {
+		pieceDao.deleteAll();
+		for (Piece piece : pieces) {
+			pieceDao.addPiece(piece);
+			model.put(piece.getPosition().toString(), piece.getPieceName());
+		}
 	}
 
 	private static void updateDataBase(final Position sourcePosition, final Position targetPosition, final boolean isAttack) throws SQLException {

@@ -124,12 +124,12 @@
 		const sourcePosition = $("#sourcePositionRecord").val();
 
 		if (sourcePosition === initValueOfSourcePositionRecord) {
-			$("#sourcePositionRecord").val($(this).attr("id"));
+			$("#sourcePositionRecord").val(this.id);
 			$(this).addClass("selected");
 			return;
 		}
 
-		validateMovable(sourcePosition, $(this).attr("id"));
+		validateMovable(sourcePosition, this.id);
 	});
 
 	function validateMovable(sourcePosition, targetPosition) {
@@ -146,7 +146,6 @@
 			error: notMovable,
 			success: movable
 		});
-
 	}
 
 	function notMovable() {
