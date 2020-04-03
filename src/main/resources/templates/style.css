@@ -42,83 +42,83 @@
 .K {
 	background-image: url("./image/whiteKing.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .k {
 	background-image: url("./image/blackKing.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .q {
 	background-image: url("./image/blackQueen.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .Q {
 	background-image: url("./image/whiteQueen.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .b {
 	background-image: url("./image/blackBishop.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .B {
 	background-image: url("./image/whiteBishop.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .n {
 	background-image: url("./image/blackKnight.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .N {
 	background-image: url("./image/whiteKnight.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .r {
 	background-image: url("./image/blackRook.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .R {
 	background-image: url("./image/whiteRook.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .p {
 	background-image: url("./image/blackPawn.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
 
 .P {
 	background-image: url("./image/whitePawn.png");
 	background-repeat: no-repeat;
-	background-size: 40%;
+	background-size: 77%;
 	background-position: center;
 }
