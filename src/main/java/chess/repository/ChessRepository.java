@@ -1,11 +1,13 @@
 package chess.repository;
 
-import chess.manager.ChessManager;
+import chess.repository.entity.ChessEntity;
 
 import java.util.Optional;
 
 public interface ChessRepository {
-    Long save(ChessManager entity);
+    ChessEntity save(ChessEntity entity);
 
-    Optional<ChessManager> findById(Long id);
+    Optional<ChessEntity> findById(Long id);
+
+    Long update(ChessEntity entity);
 }

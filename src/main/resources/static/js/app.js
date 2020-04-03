@@ -1,22 +1,124 @@
 const App = function app() {
-    const newGameButton = document.querySelector("#new-game");
+    const sourceKey = document.getElementById("sourceKey");
+    const targetKey = document.getElementById("targetKey");
+
+    const startBtn = document.querySelector("#new-game");
+    const tiles = document.getElementsByClassName("tile");
 
     const gameId = document.getElementById("game-id");
-    const tiles = document.getElementsByClassName("tile");
     const turn = document.getElementById("now-turn");
     const blackScore = document.getElementById("black-score");
     const whiteScore = document.getElementById("white-score");
 
-    newGameButton.addEventListener('click', (evnet) => {
+    startBtn.addEventListener('click', (evnet) => {
         fetch("http://localhost:8080/chessboard", {method: "POST"})
             .then(res => res.json())
-            .then(res => {
-                loadChessBoard(res);
-            })
-            .catch(err => {
-                alert(err);
-            });
+            .then(loadChessBoard)
+            .catch(alert);
     });
+
+    for (let i = 0; i < tiles.length; i++) {
+        tiles[i].addEventListener("click", (event) => {
+            fillTileKey(i);
+
+            if (canNotMove()) {
+                return false;
+            }
+
+            const moveRequest = {};
+            moveRequest.sourceKey = sourceKey.value;
+            moveRequest.targetKey = targetKey.value;
+            moveRequest.id = parseInt(gameId.textContent);
+
+            fetch("http://localhost:8080/chessboard/move", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(moveRequest)
+            })
+                .then(resolver)
+                .then(res => moveSuccessRender(moveRequest.sourceKey, moveRequest.targetKey, res))
+                .catch(errorHandler)
+                .finally(clearMoveSource);
+        })
+    }
+
+    function fillTileKey(i) {
+        if (isNotGameStarted()) {
+            return false;
+        }
+        if (isEmpty(sourceKey.value)) {
+            sourceKey.value = tiles[i].id;
+        } else {
+            targetKey.value = tiles[i].id;
+        }
+
+        if (sourceKey.value === targetKey.value) {
+            clearMoveSource();
+        }
+    }
+
+    function resolver(response) {
+        return new Promise((resolve, reject) => {
+            let func;
+            response.status < 400 ? func = resolve : func = reject;
+            response.json().then(data => func({'status': response.status, 'body': data}));
+        });
+    }
+
+    function errorHandler(res) {
+        const data = res.body;
+        alert(data.message);
+    }
+
+    function canNotMove() {
+        if (isNotGameStarted() || isEmpty(sourceKey.value) || isEmpty(targetKey.value)) {
+            return true;
+        }
+    }
+
+    function moveSuccessRender(sourceKey, targetKey, res) {
+        const data = res.body.data;
+        const kingAlive = data.kingAlive;
+        const targetPiece = data.targetPiece;
+        const sourcePiece = data.sourcePiece;
+
+        replacePiece(sourceKey, sourcePiece);
+        replacePiece(targetKey, targetPiece);
+        changeTurn(data.nowTurn);
+        addDeadPiece(turn.innerText.toLowerCase() + "-dead", data.deadPiece);
+        updateScore(data.teamScoreDto);
+    }
+
+    function addDeadPiece(targetId, pieceName) {
+        if (pieceName === 'blank') {
+            return false;
+        }
+        const target = document.getElementById(targetId);
+        const img = document.createElement('img');
+        img.src = "/img/" + pieceName + ".png";
+        img.className = 'dead-piece';
+        target.appendChild(img);
+    }
+
+    function replacePiece(key, pieceName) {
+        const tile = document.getElementById(key);
+        const img = document.createElement('img');
+        img.src = '/img/' + pieceName + '.png';
+
+        if (tile.hasChildNodes()) {
+            tile.removeChild(tile.firstChild);
+        }
+        tile.appendChild(img);
+    }
+
+    function changeTurn(team) {
+        turn.innerHTML = team;
+    }
+
+    function updateScore(teamScoreDto) {
+        blackScore.innerHTML = teamScoreDto.blackScore;
+        whiteScore.innerHTML = teamScoreDto.whiteScore;
+    }
 
     function loadChessBoard(res) {
         let data = res.data;
@@ -24,8 +126,7 @@ const App = function app() {
         gameId.innerHTML = data.id;
         turn.innerHTML = data.turn;
         const teamScoreDto = data.teamScoreDto;
-        blackScore.innerHTML = teamScoreDto.blackScore;
-        whiteScore.innerHTML = teamScoreDto.whiteScore;
+        updateScore(teamScoreDto);
 
         replaceChessBoard(data.tilesDto.tiles);
     }
@@ -49,6 +150,20 @@ const App = function app() {
             }
         })
     }
+
+    function isNotGameStarted() {
+        return (!gameId.textContent || gameId.textContent === "");
+    }
+
+    function isEmpty(value) {
+        return !value || value === "";
+    }
+
+    function clearMoveSource() {
+        sourceKey.value = "";
+        targetKey.value = "";
+    }
+
 };
 
 

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ChessDao {
+public class MariaChessRepository {
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:3306"; // MySQL 서버 주소

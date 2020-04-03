@@ -1,4 +1,4 @@
-package chess.web.render;
+package chess.service;
 
 import chess.piece.AbstractPawn;
 import chess.piece.Bishop;
@@ -12,7 +12,7 @@ import chess.view.RenderStrategy;
 
 import java.util.Arrays;
 
-public enum WebPieceImageNames {
+public enum PieceNameConverter {
     KING(King.class, (piece) -> piece.isBlack() ? "king_black" : "king_white"),
     QUEEN(Queen.class, (piece) -> piece.isBlack() ? "queen_black" : "queen_white"),
     BISHOP(Bishop.class, (piece) -> piece.isBlack() ? "bishop_black" : "bishop_white"),
@@ -24,7 +24,7 @@ public enum WebPieceImageNames {
     private final Class<? extends Piece> pieceClass;
     private final RenderStrategy renderStrategy;
 
-    WebPieceImageNames(final Class<? extends Piece> pieceClass, final RenderStrategy renderStrategy) {
+    PieceNameConverter(final Class<? extends Piece> pieceClass, final RenderStrategy renderStrategy) {
         this.pieceClass = pieceClass;
         this.renderStrategy = renderStrategy;
     }

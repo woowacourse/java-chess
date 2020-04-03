@@ -58,14 +58,6 @@ public class Tile implements Comparable<Tile> {
     }
 
     @Override
-    public String toString() {
-        return "Tile{" +
-                "coordinate=" + coordinate +
-                ", piece=" + piece +
-                '}';
-    }
-
-    @Override
     public int compareTo(Tile o) {
         return this.coordinate.compareTo(o.coordinate);
     }

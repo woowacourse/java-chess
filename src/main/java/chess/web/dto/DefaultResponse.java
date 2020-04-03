@@ -3,37 +3,41 @@ package chess.web.dto;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class DefaultResponse<T> {
-    private HttpStatus.Code statusCode;
+    private int statusCode;
     private T data;
     private String message;
 
-    public DefaultResponse(int code, T data, String message) {
-        this.statusCode = HttpStatus.getCode(code);
+    public DefaultResponse(HttpStatus.Code code, T data, String message) {
+        this.statusCode = code.getCode();
         this.data = data;
         this.message = message;
     }
 
-    private DefaultResponse(int code, T data) {
+    private DefaultResponse(HttpStatus.Code code, T data) {
         this(code, data, "");
     }
 
     public static <T> DefaultResponse<T> OK(T data, String message) {
-        return new DefaultResponse<>(HttpStatus.OK_200, data, message);
+        return new DefaultResponse<>(HttpStatus.Code.OK, data, message);
+    }
+
+    public static <T> DefaultResponse<T> OK(T data) {
+        return new DefaultResponse<>(HttpStatus.Code.OK, data, null);
     }
 
     public static <T> DefaultResponse<T> CREATED(T data, String message) {
-        return new DefaultResponse<>(HttpStatus.CREATED_201, data, message);
+        return new DefaultResponse<>(HttpStatus.Code.CREATED, data, message);
     }
 
     public static <T> DefaultResponse<T> CREATED(T data) {
-        return new DefaultResponse<>(HttpStatus.CREATED_201, data, null);
+        return new DefaultResponse<>(HttpStatus.Code.CREATED, data, null);
     }
 
     public static <T> DefaultResponse<T> BADREQUEST(T data, String message) {
-        return new DefaultResponse<>(HttpStatus.BAD_REQUEST_400, data, message);
+        return new DefaultResponse<>(HttpStatus.Code.BAD_REQUEST, data, message);
     }
 
-    public HttpStatus.Code getStatusCode() {
+    public int getStatusCode() {
         return statusCode;
     }
 

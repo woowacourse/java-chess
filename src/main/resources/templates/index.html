@@ -6,6 +6,9 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<input id="sourceKey" type="text" value="">
+<input id="targetKey" type="text" value="">
+
 <div class="header-wrapper d-flex">
     <header><h1>우아한 체스 게임</h1></header>
 </div>
@@ -42,7 +45,7 @@
                 </div>
                 <div class="turn d-flex">
 
-                    이번 차례 : <span id="now-turn">{{#currentTeam}}{{currentTeam}} 팀{{/currentTeam}}</span>
+                    이번 차례 : <span id="now-turn">{{currentTeam}}</span>
 
                 </div>
             </div>
@@ -63,11 +66,12 @@
                         {{/teamScoreDto}}</span>
                 </div>
             </div>
-            <div class="catch-piece-wrapper d-flex flex-wrap">
-                <div class="black-catch-piece-wrapper d-flex">
+            <div class="catch-piece-wrapper d-flex flex-wrap fd-column">
+                <div class="black-catch-piece-wrapper d-flex" id="black-dead">
 
                 </div>
-                <div class="white-catch-piece-wrapper d-flex">
+                <br/>
+                <div class="white-catch-piece-wrapper d-flex" id="white-dead">
 
                 </div>
             </div>

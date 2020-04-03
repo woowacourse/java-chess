@@ -2,7 +2,7 @@ package chess.web.dto;
 
 import chess.board.Tile;
 import chess.coordinate.Coordinate;
-import chess.web.render.WebPieceImageNames;
+import chess.service.PieceNameConverter;
 
 public class TileDto {
     private final String coordinate;
@@ -11,7 +11,7 @@ public class TileDto {
     public TileDto(Tile tile) {
         Coordinate coordinate = tile.getCoordinate();
         this.coordinate = coordinate.getRawKey();
-        this.piece = WebPieceImageNames.findTokenByPiece(tile.getPiece());
+        this.piece = PieceNameConverter.findTokenByPiece(tile.getPiece());
     }
 
     public String getCoordinate() {

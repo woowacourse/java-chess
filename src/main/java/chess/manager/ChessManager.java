@@ -6,7 +6,10 @@ import chess.coordinate.Coordinate;
 import chess.observer.Observable;
 import chess.piece.Piece;
 import chess.piece.Team;
+import chess.repository.entity.Movement;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class ChessManager implements Observable {
@@ -19,11 +22,18 @@ public class ChessManager implements Observable {
         chessBoard.subscribe(this);
     }
 
-    public boolean move(String source, String target) {
+    public Piece move(String source, String target) {
         if (chessBoard.isNotSameTeam(source, currentTeam)) {
-            return false;
+            throw new IllegalArgumentException(String.format("적군의 체스말(%s)을 움직일 수 없습니다.", source));
         }
         return chessBoard.move(source, target);
+    }
+
+    public void moveAll(List<Movement> movements) {
+        Collections.sort(movements);
+        for (Movement movement : movements) {
+            this.move(movement.getSourceKey(), movement.getTargetKey());
+        }
     }
 
     public Map<Coordinate, Tile> getChessBoard() {
@@ -44,6 +54,10 @@ public class ChessManager implements Observable {
 
     public Team getCurrentTeam() {
         return currentTeam;
+    }
+
+    public Piece findByKey(String key) {
+        return chessBoard.findByKey(key);
     }
 
     @Override

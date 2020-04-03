@@ -64,4 +64,9 @@ public class ChessBoard {
         Tile tile = this.chessBoard.get(Coordinate.of(source));
         return tile.isNotSameTeam(currentTeam);
     }
+
+    public Piece findByKey(String key) {
+        Coordinate coordinate = Coordinate.of(key);
+        return chessBoard.get(coordinate).getPiece();
+    }
 }

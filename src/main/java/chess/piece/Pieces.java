@@ -33,6 +33,14 @@ public enum Pieces {
                 .piece;
     }
 
+    public static Piece findBy(Piece piece) {
+        return Arrays.stream(values())
+                .filter(aPiece -> aPiece.equals(piece))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new)
+                .piece;
+    }
+
     public Piece getPiece() {
         return piece;
     }

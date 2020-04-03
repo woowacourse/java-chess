@@ -38,7 +38,7 @@ public abstract class Piece {
     }
 
     public boolean isSameTeam(Team team) {
-        return this.team == team;
+        return this.team.equals(team);
     }
 
     public boolean canMove(Vector vector, Piece targetPiece) {
