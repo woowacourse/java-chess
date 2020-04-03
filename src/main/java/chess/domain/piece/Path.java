@@ -5,6 +5,7 @@ import java.util.Map;
 
 import chess.domain.board.Position;
 
+// todo : xy 값을 포지션 하나로 합치자.
 public class Path {
 	private final int INITIAL_MOVABLE_PAWN_DISTANCE = 2;
 
@@ -18,9 +19,14 @@ public class Path {
 
 	public void findPathManyTimesByDirections(List<Direction> directions, Map<Position, Piece> pieces) {
 		int locationOfX = sourcePosition.getColumn();
-		int locationOfY = sourcePosition.getRank();
+		int locationOfY = sourcePosition.getRow();
+
+		// Position currentPosition = Position.of(locationOfX, locationOfY);
 
 		for (Direction direction : directions) {
+
+			// Position nextPosition = nextPosition(currentPosition, direction);
+
 			int afterMoveOfX = locationOfX + direction.getX();
 			int afterMoveOfY = locationOfY + direction.getY();
 
@@ -36,6 +42,7 @@ public class Path {
 
 				positions.add(Position.of(afterMoveOfX, afterMoveOfY));
 
+				// Position nextPosition = nextPosition(currentPosition, direction);
 				afterMoveOfX += direction.getX();
 				afterMoveOfY += direction.getY();
 			}
@@ -43,10 +50,16 @@ public class Path {
 		}
 	}
 
+	private Position nextPosition(Position currentPosition, Direction direction) {
+		return Position.of(currentPosition.getColumn() + direction.getX(),
+			currentPosition.getRow() + direction.getY());
+	}
+
 	private boolean isNotSameColorSourceAndAfterMove(Map<Position, Piece> pieces, int afterMoveOfX, int afterMoveOfY) {
 		return !pieces.get(sourcePosition).isSameColor(pieces.get(Position.of(afterMoveOfX, afterMoveOfY)).getColor());
 	}
 
+	// todo : 경계값으로 계산
 	private boolean isOutOfBoundPosition(int afterMoveOfX, int afterMoveOfY) {
 		try {
 			Position.of(afterMoveOfX, afterMoveOfY);
@@ -62,7 +75,7 @@ public class Path {
 
 	public void findPathOneTimeByDirections(List<Direction> directions, Map<Position, Piece> pieces) {
 		int locationOfX = sourcePosition.getColumn();
-		int locationOfY = sourcePosition.getRank();
+		int locationOfY = sourcePosition.getRow();
 
 		for (Direction direction : directions) {
 			int afterMoveOfX = locationOfX + direction.getX();
@@ -83,7 +96,7 @@ public class Path {
 	public void findPathPawnByDirections(List<Direction> moveDirections, List<Direction> attackDirections,
 		Map<Position, Piece> pieces) {
 		int locationOfX = sourcePosition.getColumn();
-		int locationOfY = sourcePosition.getRank();
+		int locationOfY = sourcePosition.getRow();
 
 		if (sourcePosition.isInitialPawnPosition(pieces.get(sourcePosition).getColor())) {
 			for (int i = 1; i <= INITIAL_MOVABLE_PAWN_DISTANCE; i++) {
@@ -105,6 +118,7 @@ public class Path {
 			}
 		}
 
+		// TODO : 함수로 분리 가능할듯.
 		for (Direction direction : attackDirections) {
 			int afterMoveOfX = locationOfX + direction.getX();
 			int afterMoveOfY = locationOfY + direction.getY();

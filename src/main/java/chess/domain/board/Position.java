@@ -10,12 +10,12 @@ import chess.domain.Color;
 
 public class Position {
 
-	private final File file;
-	private final Rank rank;
+	private final Column column;
+	private final Row row;
 
-	private Position(final File file, final Rank rank) {
-		this.file = file;
-		this.rank = rank;
+	private Position(final Column column, final Row row) {
+		this.column = column;
+		this.row = row;
 	}
 
 	public static Position of(String position) {
@@ -24,12 +24,13 @@ public class Position {
 	}
 
 	public static Position of(int afterMoveOfX, int afterMoveOfY) {
-		String afterMovePosition = PositionCache.createKey(File.of(afterMoveOfX), Rank.of(afterMoveOfY));
+		String afterMovePosition = PositionCache.createKey(chess.domain.board.Column.of(afterMoveOfX),
+			Row.of(afterMoveOfY));
 		return Position.of(afterMovePosition);
 	}
 
-	public static Position of(File file, Rank rank) {
-		String position = PositionCache.createKey(file, rank);
+	public static Position of(Column column, Row row) {
+		String position = PositionCache.createKey(column, row);
 		return Position.of(position);
 	}
 
@@ -50,12 +51,12 @@ public class Position {
 		return false;
 	}
 
-	public int getRank() {
-		return rank.getRank();
+	public int getRow() {
+		return row.getRow();
 	}
 
 	public int getColumn() {
-		return file.getColumn();
+		return column.getNumber();
 	}
 
 	@Override
@@ -65,13 +66,13 @@ public class Position {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Position position = (Position)o;
-		return file == position.file &&
-			rank == position.rank;
+		return column == position.column &&
+			row == position.row;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(file, rank);
+		return Objects.hash(column, row);
 	}
 
 	private static class PositionCache {
@@ -89,31 +90,31 @@ public class Position {
 		}
 
 		private static void makeWhitePawnInitialPosition() {
-			for (File file : File.values()) {
-				WHITE_PAWN_INITIAL_POSITION.add(Position.of(file, Rank.TWO));
+			for (Column column : chess.domain.board.Column.values()) {
+				WHITE_PAWN_INITIAL_POSITION.add(Position.of(column, Row.TWO));
 			}
 		}
 
 		private static void makeBlackPawnInitialPosition() {
-			for (File file : File.values()) {
-				BLACK_PAWN_INITIAL_POSITION.add(Position.of(file, Rank.SEVEN));
+			for (Column column : chess.domain.board.Column.values()) {
+				BLACK_PAWN_INITIAL_POSITION.add(Position.of(column, Row.SEVEN));
 			}
 		}
 
 		private static void makeBoard() {
-			for (File file : File.values()) {
-				makeBoardBy(file);
+			for (Column column : chess.domain.board.Column.values()) {
+				makeBoardBy(column);
 			}
 		}
 
-		private static void makeBoardBy(File file) {
-			for (Rank rank : Rank.values()) {
-				BOARD.put(createKey(file, rank), new Position(file, rank));
+		private static void makeBoardBy(Column column) {
+			for (Row row : Row.values()) {
+				BOARD.put(createKey(column, row), new Position(column, row));
 			}
 		}
 
-		private static String createKey(File file, Rank rank) {
-			return file.getFile() + rank.getRank();
+		private static String createKey(Column column, Row row) {
+			return column.getColumn() + row.getRow();
 		}
 	}
 

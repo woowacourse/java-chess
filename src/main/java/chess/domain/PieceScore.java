@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import chess.domain.board.File;
+import chess.domain.board.Column;
 import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.Row;
 import chess.domain.piece.Piece;
 
 public enum PieceScore {
@@ -37,17 +37,17 @@ public enum PieceScore {
 	public static double calculateByColor(GameManager gameManager, Color color) {
 		double teamScore = 0;
 
-		for (File file : File.values()) {
-			teamScore += sumPieceScoreExceptPawn(color, file, gameManager);
-			teamScore += sumPawnScore(pawnsOfColumn(color, file, gameManager));
+		for (Column column : chess.domain.board.Column.values()) {
+			teamScore += sumPieceScoreExceptPawn(color, column, gameManager);
+			teamScore += sumPawnScore(pawnsOfColumn(color, column, gameManager));
 		}
 
 		return teamScore;
 	}
 
-	private static List<Piece> pawnsOfColumn(Color color, File file, GameManager gameManager) {
-		return Arrays.stream(Rank.values())
-			.map(rank -> gameManager.getPiece(Position.of(file, rank)))
+	private static List<Piece> pawnsOfColumn(Color color, Column column, GameManager gameManager) {
+		return Arrays.stream(Row.values())
+			.map(rank -> gameManager.getPiece(Position.of(column, rank)))
 			.filter(Objects::nonNull)
 			.filter(piece -> piece.isSameColor(color))
 			.filter(Piece::isPawn)
@@ -55,9 +55,9 @@ public enum PieceScore {
 
 	}
 
-	private static double sumPieceScoreExceptPawn(Color color, File file, GameManager gameManager) {
-		return Arrays.stream(Rank.values())
-			.map(rank -> gameManager.getPiece(Position.of(file, rank)))
+	private static double sumPieceScoreExceptPawn(Color color, Column column, GameManager gameManager) {
+		return Arrays.stream(Row.values())
+			.map(rank -> gameManager.getPiece(Position.of(column, rank)))
 			.filter(Objects::nonNull)
 			.filter(piece -> piece.isSameColor(color))
 			.filter(piece -> !piece.isPawn())

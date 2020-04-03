@@ -3,7 +3,7 @@ package chess.domain.piece;
 import java.util.Map;
 
 import chess.domain.Color;
-import chess.domain.board.File;
+import chess.domain.board.Column;
 import chess.domain.board.Position;
 
 public class BlackPiecesFactory {
@@ -40,8 +40,8 @@ public class BlackPiecesFactory {
 	}
 
 	private static void initPawn(Map<Position, Piece> pieces) {
-		for (File file : File.values()) {
-			pieces.put(Position.of(file.getFile() + "7"), new Pawn(Color.BLACK, "P"));
+		for (Column column : chess.domain.board.Column.values()) {
+			pieces.put(Position.of(column.getColumn() + "7"), new Pawn(Color.BLACK, "P"));
 		}
 	}
 }

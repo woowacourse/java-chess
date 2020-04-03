@@ -3,9 +3,9 @@ package chess.view;
 import chess.domain.Color;
 import chess.domain.GameManager;
 import chess.domain.PieceScore;
-import chess.domain.board.File;
+import chess.domain.board.Column;
 import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.Row;
 
 /**
  *
@@ -33,14 +33,14 @@ public class OutputView {
 	}
 
 	public static void printChessBoard(GameManager gameManager) {
-		for (Rank rank : Rank.values()) {
-			for (File file : File.values()) {
-				Position position = Position.of(file, rank);
-				if (gameManager.getPiece(file.getFile() + rank.getRank()).isBlank()) {
+		for (Row row : Row.values()) {
+			for (Column column : Column.values()) {
+				Position position = Position.of(column, row);
+				if (gameManager.getPiece(column.getColumn() + row.getRow()).isBlank()) {
 					System.out.print(BLANK_POSITION);
 					continue;
 				}
-				System.out.print(gameManager.getPiece(file.getFile() + rank.getRank()).getSymbol());
+				System.out.print(gameManager.getPiece(column.getColumn() + row.getRow()).getSymbol());
 			}
 			System.out.println();
 		}

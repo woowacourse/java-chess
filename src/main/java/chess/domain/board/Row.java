@@ -7,7 +7,8 @@ import java.util.Arrays;
  *
  *    @author AnHyungJu, LeeHoBin
  */
-public enum Rank {
+// row
+public enum Row {
 	EIGHT(8),
 	SEVEN(7),
 	SIX(6),
@@ -17,20 +18,20 @@ public enum Rank {
 	TWO(2),
 	ONE(1);
 
-	private int rank;
+	private int row;
 
-	Rank(int rank) {
-		this.rank = rank;
+	Row(int row) {
+		this.row = row;
 	}
 
-	public static Rank of(int row) {
-		return Arrays.stream(Rank.values())
-			.filter(rank -> rank.rank == row)
+	public static Row of(int row) {
+		return Arrays.stream(Row.values())
+			.filter(rank -> rank.row == row)
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("잘못입력하셨습니다!"));
 	}
 
-	public int getRank() {
-		return rank;
+	public int getRow() {
+		return row;
 	}
 }

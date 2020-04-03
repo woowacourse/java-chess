@@ -12,7 +12,7 @@ public class PositionTest {
 	@Test
 	void ofTest() {
 		assertThat(Position.of("a1")).isEqualTo(Position.of("a1"));
-		assertThat(Position.of(File.A, Rank.ONE)).isEqualTo(Position.of("a1"));
+		assertThat(Position.of(chess.domain.board.Column.A, Row.ONE)).isEqualTo(Position.of("a1"));
 		assertThat(Position.of(8, 1)).isEqualTo(Position.of("a1"));
 	}
 

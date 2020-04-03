@@ -7,7 +7,7 @@ import java.util.Arrays;
  *
  *    @author AnHyungJu, LeeHoBin
  */
-public enum File {
+public enum Column {
 	A("a", 8),
 	B("b", 7),
 	C("c", 6),
@@ -17,26 +17,26 @@ public enum File {
 	G("g", 2),
 	H("h", 1);
 
-	private String file;
-	private int column;
+	private String column;
+	private int number;
 
-	File(String file, int column) {
-		this.file = file;
+	Column(String column, int number) {
 		this.column = column;
+		this.number = number;
 	}
 
-	public static File of(int column) {
-		return Arrays.stream(File.values())
-			.filter(file -> column == file.column)
+	public static Column of(int column) {
+		return Arrays.stream(chess.domain.board.Column.values())
+			.filter(file -> column == file.number)
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("잘못입력하셨습니다!"));
 	}
 
-	public String getFile() {
-		return file;
+	public String getColumn() {
+		return column;
 	}
 
-	public int getColumn() {
-		return column;
+	public int getNumber() {
+		return number;
 	}
 }

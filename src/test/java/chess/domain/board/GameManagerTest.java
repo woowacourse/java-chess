@@ -44,8 +44,8 @@ public class GameManagerTest {
 		assertThat(gameManager.getPiece("a1")).isInstanceOf(Rook.class);
 		assertThat(gameManager.getPiece("h1")).isInstanceOf(Rook.class);
 
-		for (File file : File.values()) {
-			assertThat(gameManager.getPiece(file.getFile() + "2")).isInstanceOf(Pawn.class);
+		for (Column column : chess.domain.board.Column.values()) {
+			assertThat(gameManager.getPiece(column.getColumn() + "2")).isInstanceOf(Pawn.class);
 		}
 
 		assertThat(gameManager.getPiece("e8")).isInstanceOf(King.class);
@@ -57,8 +57,8 @@ public class GameManagerTest {
 		assertThat(gameManager.getPiece("a8")).isInstanceOf(Rook.class);
 		assertThat(gameManager.getPiece("h8")).isInstanceOf(Rook.class);
 
-		for (File file : File.values()) {
-			assertThat(gameManager.getPiece(file.getFile() + "7")).isInstanceOf(Pawn.class);
+		for (Column column : chess.domain.board.Column.values()) {
+			assertThat(gameManager.getPiece(column.getColumn() + "7")).isInstanceOf(Pawn.class);
 		}
 	}
 
