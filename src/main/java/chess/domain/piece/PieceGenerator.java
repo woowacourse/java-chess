@@ -5,11 +5,6 @@ import chess.domain.Position;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
-/**
- * class description
- *
- * @author hotheadfactory
- */
 public enum PieceGenerator {
     BISHOP("B", (position, team) -> new Bishop(new Position(position), Team.valueOf(team))),
     KING("K", (position, team) -> new King(new Position(position), Team.valueOf(team))),

@@ -12,11 +12,11 @@ import java.util.Map;
 public class ChessDAO {
     public Connection getConnection() {
         Connection con = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "chess"; // MySQL DATABASE 이름
+        String server = "localhost:13306";
+        String database = "chess";
         String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
+        String userName = "root";
+        String password = "root";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -35,7 +35,6 @@ public class ChessDAO {
         return con;
     }
 
-    // 드라이버 연결해제
     public void closeConnection(Connection con) {
         try {
             if (con != null)
@@ -49,11 +48,11 @@ public class ChessDAO {
         PreparedStatement cleanup = getConnection().prepareStatement("DELETE FROM Pieces");
         cleanup.executeUpdate();
         for (Piece piece : pieces) {
-            String query = "INSERT INTO Pieces (representation, team, position) VALUES (?, ?, ?)";
+            String query = "INSERT INTO Pieces (position, representation, team) VALUES (?, ?, ?)";
             PreparedStatement pstmt = getConnection().prepareStatement(query);
-            pstmt.setString(1, piece.toString());
-            pstmt.setString(2, piece.getTeam().toString());
-            pstmt.setString(3, piece.getPosition().toString());
+            pstmt.setString(1, piece.getPosition().toString());
+            pstmt.setString(2, piece.toString());
+            pstmt.setString(3, piece.getTeam().toString());
             pstmt.executeUpdate();
         }
     }
