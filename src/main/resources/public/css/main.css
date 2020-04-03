@@ -211,24 +211,21 @@ main {
 
 .room {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding-top: 10px;
   border-bottom: 1px solid white;
   padding-bottom: 10px;
+  color: gray;
 }
 
-/*.room:first-of-type {*/
-/*  padding-top: 0;*/
-/*}*/
-
 .room:hover {
-  /*font-weight: 700;*/
   color: gold;
   cursor: pointer;
 }
 
 .room-selected {
-  background-color: maroon;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
 }
 
 .room-selected:hover {
@@ -240,7 +237,7 @@ main {
   color: bisque;
   font-weight: 700;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding-top: 10px;
   border-bottom: 1px solid white;
   padding-bottom: 10px;
@@ -259,7 +256,6 @@ main {
 .players {
   width: 50%;
   display: flex;
-  /*justify-content: space-around;*/
 }
 
 .player {

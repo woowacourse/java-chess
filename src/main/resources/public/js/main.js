@@ -21,10 +21,10 @@ window.onload = function () {
         <div class="room room-${index}">
           <div class="room-number">${index}</div>
           <div class="players">
-            <div class="player">${room["백"]}</div>
-            <div class="player">${room["흑"]}</div>
+            <div class="player">${room["백"]["username"]}</div>
+            <div class="player">${room["흑"]["username"]}</div>
           </div>
-          <div class="room-status room-score">${whiteScore || 38}:${blackScore || 38}</div>
+          <div class="room-status room-score">${whiteScore || 38} : ${blackScore || 38}</div>
         </div>
     `
   }
@@ -45,7 +45,6 @@ window.onload = function () {
 
   async function getBoard() {
     const response = await fetch(`http://localhost:8080/boards/${roomId}`);
-    await checkTurn();
     return await response.json();
   }
 
@@ -130,16 +129,25 @@ window.onload = function () {
     element.style.backgroundColor = isError ? "rgba(255, 0, 0, 0.6)" : "";
   }
 
+  function appendMessage(message) {
+    let element = document.querySelector(".message");
+    element.innerText = element.innerText + " " + message;
+  }
+
   (async function () {
     const scores = await getScores();
-    Object.entries(await getBoards()).forEach(([key, value]) => {
+    const boards = await getBoards();
+    if (Object.keys(boards).length === 0) {
+      setMessage("새 게임을 추가해주세요.");
+      return;
+    }
+    Object.entries(boards).forEach(([key, value]) => {
       document.querySelector(".rooms").insertAdjacentHTML("beforeend", ROOM_TEMPLATE(value, key, scores[key]["백"], scores[key]["흑"]))
     });
     roomId = 1;
     const board = await getBoard();
     setBoard(board);
-    await checkTurn();
-    // setMessage("게임을 시작합니다. 백이 선공입니다.");
+    setMessage(`게임을 시작합니다. ${await checkTurn()}`);
     document.querySelectorAll(".room").forEach(element => {
       element.addEventListener("click", async function () {
         document.querySelectorAll(".room").forEach(element => element.classList.remove("room-selected"))
@@ -148,8 +156,7 @@ window.onload = function () {
         roomId = roomNumber;
         const board = await getBoard();
         setBoard(board);
-        await checkTurn();
-        setMessage(`${roomNumber}번 체스 게임에 입장하셨습니다.`)
+        setMessage(`${roomNumber}번 체스 게임에 입장하셨습니다. ${await checkTurn()}`)
       })
     });
     document.querySelector(".room").classList.add("room-selected");
@@ -181,7 +188,7 @@ window.onload = function () {
     document.querySelectorAll(".black.piece").forEach(element => {
       element.setAttribute("draggable", `${!turnOfWhite}`);
     });
-    setMessage(`${turnOfWhite ? "백" : "흑"}의 차례입니다.`);
+    return `${turnOfWhite ? "백" : "흑"}의 차례입니다.`;
   }
 
   async function appendPieceOnPosition(e, position, data) {
@@ -195,14 +202,14 @@ window.onload = function () {
       if (position.firstElementChild) {
         position.replaceChild(document.getElementById(data), position.firstElementChild);
         const score = await getScore(roomId);
-        document.querySelector(`.room-${roomId} .room-score`).innerText = `${score["백"]}:${score["흑"]}`;
+        document.querySelector(`.room-${roomId} .room-score`).innerText = `${score["백"]} :  ${score["흑"]}`;
         killSound.play();
       } else {
         position.appendChild(document.getElementById(data));
         dropSound.play();
       }
       e.stopPropagation();
-      await checkTurn();
+      setMessage(await checkTurn());
     }
   }
 
@@ -230,6 +237,9 @@ window.onload = function () {
   });
 
   document.querySelector(".button.restart").addEventListener("click", function () {
+    if (document.querySelector(".room-selected") === null) {
+      return;
+    }
     const isRestarting = confirm("다시 시작하시겠습니까?");
     if (isRestarting) {
       (async function () {
@@ -247,15 +257,14 @@ window.onload = function () {
     Object.entries(await addBoard()).forEach(([key, value]) => {
       rooms.insertAdjacentHTML("beforeend", ROOM_TEMPLATE(value, key))
     });
-    rooms.lastElementChild.addEventListener("click", async function () {
+    rooms.lastElementChild.addEventListener("click", async function (e) {
       document.querySelectorAll(".room").forEach(element => element.classList.remove("room-selected"))
-      rooms.lastElementChild.classList.add("room-selected");
-      let roomNumber = parseInt(rooms.lastElementChild.querySelector(".room-number").innerText);
+      this.classList.add("room-selected");
+      let roomNumber = parseInt(this.querySelector(".room-number").innerText);
       roomId = roomNumber;
       const board = await getBoard();
       setBoard(board);
-      await checkTurn();
-      setMessage(`${roomNumber}번 체스 게임에 입장하셨습니다.`)
+      setMessage(`${roomNumber}번 게임에 입장하셨습니다. ${await checkTurn()}`)
     })
   });
 };
