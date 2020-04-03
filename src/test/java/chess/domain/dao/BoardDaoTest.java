@@ -17,7 +17,7 @@ class BoardDaoTest {
 	@Test
 	public void connectionTest() {
 		SQLConnector sqlConnector = new SQLConnector();
-		BoardDao boardDao = new BoardDao(sqlConnector);
+		BoardDao boardDao = new BoardDao(sqlConnector.getConnection());
 		Connection connection = boardDao.getConnection();
 
 		assertThat(connection).isNotNull();
@@ -26,7 +26,7 @@ class BoardDaoTest {
 	@Test
 	public void CRUDPieceTest() throws SQLException {
 		SQLConnector sqlConnector = new SQLConnector();
-		BoardDao boardDao = new BoardDao(sqlConnector);
+		BoardDao boardDao = new BoardDao(sqlConnector.getConnection());
 		PieceDto savedPiece = PieceDto.of(A1, PieceFactory.of("r"));
 
 		boardDao.addPiece(savedPiece);
@@ -44,7 +44,7 @@ class BoardDaoTest {
 	@Test
 	public void addAndFindPieceTest() throws SQLException {
 		SQLConnector sqlConnector = new SQLConnector();
-		BoardDao boardDao = new BoardDao(sqlConnector);
+		BoardDao boardDao = new BoardDao(sqlConnector.getConnection());
 		PieceDto savedPiece = PieceDto.of(A1, PieceFactory.of("r"));
 
 		boardDao.addPiece(savedPiece);
@@ -55,7 +55,7 @@ class BoardDaoTest {
 	@Test
 	public void editPieceTest() throws SQLException {
 		SQLConnector sqlConnector = new SQLConnector();
-		BoardDao boardDao = new BoardDao(sqlConnector);
+		BoardDao boardDao = new BoardDao(sqlConnector.getConnection());
 		boardDao.addPiece(PieceDto.of(A1, PieceFactory.of("r")));
 		PieceEditDto pieceEditDto = new PieceEditDto(A1, PieceFactory.of("Q"));
 
@@ -67,7 +67,7 @@ class BoardDaoTest {
 	@Test
 	public void deletePieceTest() throws SQLException {
 		SQLConnector sqlConnector = new SQLConnector();
-		BoardDao boardDao = new BoardDao(sqlConnector);
+		BoardDao boardDao = new BoardDao(sqlConnector.getConnection());
 		boardDao.addPiece(PieceDto.of(A1, PieceFactory.of("r")));
 
 		boardDao.deletePieceByPosition(A1);
@@ -78,7 +78,7 @@ class BoardDaoTest {
 	@Test
 	public void deleteAll() throws SQLException {
 		SQLConnector sqlConnector = new SQLConnector();
-		BoardDao boardDao = new BoardDao(sqlConnector);
+		BoardDao boardDao = new BoardDao(sqlConnector.getConnection());
 		boardDao.deleteAll();
 	}
 }

@@ -17,7 +17,7 @@ public class Board {
 	private final BoardDao boardDao;
 
 	public Board(Map<Position, Piece> pieces) {
-		boardDao = new BoardDao(new SQLConnector());
+		boardDao = new BoardDao(new SQLConnector().getConnection());
 		pieces.entrySet()
 			.stream()
 			.map(x -> PieceDto.of(x.getKey(), x.getValue()))

@@ -50,6 +50,10 @@ public class Command {
 		return commandType == STATUS;
 	}
 
+	public boolean isResume() {
+		return commandType == RESUME;
+	}
+
 	public Position getTargetPosition() {
 		return targetPosition;
 	}

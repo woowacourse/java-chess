@@ -23,7 +23,6 @@ public class SQLConnector {
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName,
 				password);
-			System.out.println("정상적으로 연결되었습니다.");
 		} catch (SQLException e) {
 			System.err.println("연결 오류:" + e.getMessage());
 			e.printStackTrace();
@@ -31,4 +30,5 @@ public class SQLConnector {
 
 		return connection;
 	}
+
 }

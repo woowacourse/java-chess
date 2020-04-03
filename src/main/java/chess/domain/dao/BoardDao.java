@@ -12,19 +12,19 @@ import chess.domain.dto.PieceEditDto;
 import chess.domain.position.Position;
 
 public class BoardDao {
-	private SQLConnector sqlConnector;
+	private Connection connection;
 
-	public BoardDao(SQLConnector sqlConnector) {
-		this.sqlConnector = sqlConnector;
+	public BoardDao(Connection connection) {
+		this.connection = connection;
 	}
 
 	public Connection getConnection() {
-		return sqlConnector.getConnection();
+		return connection;
 	}
 
 	public void addPiece(PieceDto pieceDto) throws SQLException {
 		String query = "INSERT INTO piece VALUES (?, ?)";
-		PreparedStatement statement = sqlConnector.getConnection().prepareStatement(query);
+		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setString(1, pieceDto.getPositionValue());
 		statement.setString(2, pieceDto.getPieceName());
 		statement.executeUpdate();
@@ -32,7 +32,7 @@ public class BoardDao {
 
 	public PieceDto findPiece(Position position) throws SQLException {
 		String query = "SELECT * FROM piece WHERE position = ?";
-		PreparedStatement statement = sqlConnector.getConnection().prepareStatement(query);
+		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setString(1, position.getValue());
 		ResultSet result = statement.executeQuery();
 
@@ -49,7 +49,7 @@ public class BoardDao {
 	public List<PieceDto> findAllPieces() throws SQLException {
 		List<PieceDto> results = new ArrayList<>();
 		String query = "SELECT * FROM piece";
-		PreparedStatement statement = sqlConnector.getConnection().prepareStatement(query);
+		PreparedStatement statement = connection.prepareStatement(query);
 		ResultSet result = statement.executeQuery();
 
 		while (result.next()) {
@@ -62,7 +62,7 @@ public class BoardDao {
 
 	public void editPieceByPosition(PieceEditDto pieceEditDto) throws SQLException {
 		String query = "INSERT INTO piece VALUE (?, ?) ON DUPLICATE KEY UPDATE name = ?";
-		PreparedStatement statement = sqlConnector.getConnection().prepareStatement(query);
+		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setString(1, pieceEditDto.getTargetPositionValue());
 		statement.setString(2, pieceEditDto.getWantPieceName());
 		statement.setString(3, pieceEditDto.getWantPieceName());
@@ -71,14 +71,14 @@ public class BoardDao {
 
 	public void deletePieceByPosition(Position position) throws SQLException {
 		String query = "DELETE FROM piece WHERE position = ?";
-		PreparedStatement statement = sqlConnector.getConnection().prepareStatement(query);
+		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setString(1, position.getValue());
 		statement.executeUpdate();
 	}
 
 	public void deleteAll() throws SQLException {
 		String query = "DELETE FROM piece";
-		PreparedStatement statement = sqlConnector.getConnection().prepareStatement(query);
+		PreparedStatement statement = connection.prepareStatement(query);
 		statement.executeUpdate();
 	}
 }

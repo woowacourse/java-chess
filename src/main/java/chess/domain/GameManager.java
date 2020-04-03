@@ -25,13 +25,13 @@ public class GameManager {
 
 	public GameManager(Board board) throws SQLException {
 		this.board = board;
-		this.currentTurn = new TurnDao(new SQLConnector());
+		this.currentTurn = new TurnDao(new SQLConnector().getConnection());
 		this.currentTurn.editTurn(TurnDto.of(WHITE));
 	}
 
 	public GameManager() throws SQLException {
 		this.board = new Board(new HashMap<>());
-		this.currentTurn = new TurnDao(new SQLConnector());
+		this.currentTurn = new TurnDao(new SQLConnector().getConnection());
 		this.currentTurn.findTurn();
 	}
 

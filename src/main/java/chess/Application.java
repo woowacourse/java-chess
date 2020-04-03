@@ -5,8 +5,6 @@ import static chess.view.OutputView.*;
 import java.sql.SQLException;
 
 import chess.domain.GameManager;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -18,6 +16,9 @@ public class Application {
 		if (command.isStart()) {
 			startGame();
 		}
+		if(command.isResume()) {
+			resumeGame(new GameManager());
+		}
 	}
 
 	public static Command inputCommand() {
@@ -26,8 +27,8 @@ public class Application {
 	}
 
 	public static void startGame() throws SQLException {
-		Board board = BoardFactory.create();
-		GameManager gameManager = new GameManager(board);
+		GameManager gameManager = new GameManager();
+		gameManager.resetGame();
 
 		resumeGame(gameManager);
 	}
