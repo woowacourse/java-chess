@@ -75,6 +75,10 @@ public class Position {
         return PositionFactory.of(changedXPoint, changedYPoint);
     }
 
+    public String getName() {
+        return this.xPoint.getName() + this.yPoint.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
