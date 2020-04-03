@@ -16,7 +16,7 @@ public class Game {
     }
 
 
-    public Board startGame() {
+    public Board start() {
         Command command = userInterface.inputStart();
         if (command.isNotStart() && command.isNotEnd()) {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");

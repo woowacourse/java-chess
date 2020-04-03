@@ -30,8 +30,4 @@ public class Score {
     public String toString() {
         return String.valueOf(value);
     }
-
-    public boolean isBiggerThan(Score other) {
-        return other.value < value;
-    }
 }

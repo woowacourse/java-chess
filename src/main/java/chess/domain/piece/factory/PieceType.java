@@ -92,6 +92,10 @@ public enum PieceType {
         return canNotMoveStrategies;
     }
 
+    public Score getScore() {
+        return score;
+    }
+
     private static List<CanNotMoveStrategy> initializedPawnCanNotMoveStrategies() {
         return Arrays.asList(
                 new IsStayed(),
@@ -159,10 +163,6 @@ public enum PieceType {
                 new IsHeadingStraightDirection(),
                 new IsAttackingSameTeam()
         );
-    }
-
-    public Score getScore() {
-        return score;
     }
 
     private static class NullList extends ArrayList {

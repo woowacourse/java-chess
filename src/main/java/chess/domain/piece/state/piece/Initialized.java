@@ -53,11 +53,6 @@ public abstract class Initialized extends Started {
         return false;
     }
 
-
-    public boolean isSameTeam(Piece piece) {
-        return team.isSame(piece.getTeam());
-    }
-
     @Override
     public boolean isSameTeam(Team team) {
         return this.team.isSame(team);
@@ -76,6 +71,10 @@ public abstract class Initialized extends Started {
     @Override
     public boolean attackedKing() {
         return moveType == MoveType.ATTACKED_KING;
+    }
+
+    public boolean isSameTeam(Piece piece) {
+        return team.isSame(piece.getTeam());
     }
 
     public boolean isHeadingNotForward(Position to) {
@@ -98,18 +97,16 @@ public abstract class Initialized extends Started {
         return position.isNotStraightDiagonalDirection(to);
     }
 
-    ;
-
-    public boolean isHeadingPerpendicular(Position to) {
-        return position.isPerpendicularDirection(to);
-    }
-
     public boolean isHeadingVertical(Position to) {
         return position.isVerticalDirection(to);
     }
 
     public boolean isNotHeadingStraight(Position to) {
         return position.isNotStraightDirection(to);
+    }
+
+    public boolean isHeadingStraight(Position to) {
+        return position.isStraightDirection(to);
     }
 
     protected boolean canNotMove(Position to, Board board) {
@@ -163,9 +160,5 @@ public abstract class Initialized extends Started {
     @Override
     public int hashCode() {
         return Objects.hash(canNotMoveStrategies, position, score, moveType);
-    }
-
-    public boolean isHeadingStraight(Position to) {
-        return position.isStraightDirection(to);
     }
 }

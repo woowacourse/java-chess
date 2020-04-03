@@ -36,6 +36,17 @@ public abstract class StartedBoard implements Board {
         return pieces;
     }
 
+    protected Score calculateScore(Team team) {
+        double sum = pieces.values()
+                .stream()
+                .filter(Piece::isNotBlank)
+                .filter(piece -> piece.isSameTeam(team))
+                .map(piece -> piece.calculateScore(this))
+                .mapToDouble(Score::getValue)
+                .sum();
+        return new Score(sum);
+    }
+
     private Board movePiece(Position from, Position to, Board board) {
         Map<Position, Piece> pieces = clonePieces(this.pieces);
         Piece piece = board.getPiece(from);
@@ -47,18 +58,6 @@ public abstract class StartedBoard implements Board {
         }
 
         return new RunningBoard(pieces, userInterface);
-    }
-
-
-    protected Score calculateScore(Team team) {
-        double sum = pieces.values()
-                .stream()
-                .filter(Piece::isNotBlank)
-                .filter(piece -> piece.isSameTeam(team))
-                .map(piece -> piece.calculateScore(this))
-                .mapToDouble(Score::getValue)
-                .sum();
-        return new Score(sum);
     }
 
     private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {

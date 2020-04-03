@@ -9,7 +9,7 @@ public class Application {
     public static void main(String[] args) {
         UserInterface userInterface = new Console();
         Game game = new Game(userInterface);
-        Board board = game.startGame();
+        Board board = game.start();
         board = game.play(board);
         game.showResult(board);
     }

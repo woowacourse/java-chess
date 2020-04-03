@@ -20,7 +20,7 @@ public class Position {
         this.y = y;
     }
 
-    static Position of(String x, String y) {
+    private static Position of(String x, String y) {
         int convertedX = SmallLetterAsciiConverter.convert(x);
         int convertedY = Integer.parseInt(y);
         return of(convertedX, convertedY);
@@ -46,19 +46,8 @@ public class Position {
         return isPerpendicularDirection(to) || isStraightDiagonalDirection(to);
     }
 
-    private boolean isStraightDiagonalDirection(Position to) {
-        Distance verticalDistance = Distance.calculateVertical(this, to);
-        Distance horizontalDistance = Distance.calculateHorizontal(this, to);
-        return isDiagonalDirection(to) && verticalDistance.equals(horizontalDistance);
-    }
-
     public boolean isNotStraightDirection(Position to) {
         return isNotPerpendicularDirection(to) && isNotStraightDiagonalDirection(to);
-    }
-
-    private boolean isNotPerpendicularDirection(Position to) {
-        Direction direction = Direction.calculate(this, to);
-        return direction.isNotPerpendicular();
     }
 
     public boolean isPerpendicularDirection(Position to) {
@@ -94,12 +83,22 @@ public class Position {
         return Position.of(newX, newY);
     }
 
+    public boolean isNotForward(Position from, Direction teamForwardDirection) {
+        int standard = (y - from.y) * teamForwardDirection.getVertical();
+        return standard <= 0;
+    }
+
     public int getX() {
         return x;
     }
 
-    public int getY() {
+    int getY() {
         return y;
+    }
+
+    private boolean isNotPerpendicularDirection(Position to) {
+        Direction direction = Direction.calculate(this, to);
+        return direction.isNotPerpendicular();
     }
 
     private static void validateInRange(int x, int y) {
@@ -111,17 +110,10 @@ public class Position {
         }
     }
 
-    public List<Position> getForwardDiagonals(Direction teamForwardDirection) {
-        Direction eastForward = Direction.EAST.compose(teamForwardDirection);
-        Direction westForward = Direction.WEST.compose(teamForwardDirection);
-        Position eastDiagonal = this.go(eastForward);
-        Position westDiagonal = this.go(westForward);
-        return Arrays.asList(eastDiagonal, westDiagonal);
-    }
-
-    public boolean isNotForward(Position from, Direction teamForwardDirection) {
-        int standard = (y - from.y) * teamForwardDirection.getVertical();
-        return standard <= 0;
+    private boolean isStraightDiagonalDirection(Position to) {
+        Distance verticalDistance = Distance.calculateVertical(this, to);
+        Distance horizontalDistance = Distance.calculateHorizontal(this, to);
+        return isDiagonalDirection(to) && verticalDistance.equals(horizontalDistance);
     }
 
     @Override

@@ -14,10 +14,6 @@ public class Distance {
         return new Distance(value);
     }
 
-    static Distance of(double xDifference, double yDifference) {
-        return new Distance(Math.sqrt(Math.pow(xDifference, 2) + Math.pow(yDifference, 2)));
-    }
-
     static Distance calculate(Position from, Position to) {
         int xDifference = from.getX() - to.getX();
         int yDifference = from.getY() - to.getY();
@@ -33,6 +29,10 @@ public class Distance {
     static Distance calculateHorizontal(Position from, Position to) {
         int calculated = Math.abs(from.getX() - to.getX());
         return new Distance(calculated);
+    }
+
+    public boolean isBiggerThan(double value) {
+        return value < this.value;
     }
 
     public double getValue() {
@@ -51,9 +51,5 @@ public class Distance {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    public boolean isBiggerThan(double value) {
-        return value < this.value;
     }
 }

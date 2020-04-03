@@ -43,14 +43,6 @@ public enum Team {
         return name;
     }
 
-    private boolean isBlack() {
-        return this == BLACK;
-    }
-
-    private boolean isWhite() {
-        return this == WHITE;
-    }
-
     public Team getOpposite() {
         if (this == WHITE) {
             return BLACK;
@@ -61,6 +53,14 @@ public enum Team {
         }
 
         return NOT_ASSIGNED;
+    }
+
+    private boolean isBlack() {
+        return this == BLACK;
+    }
+
+    private boolean isWhite() {
+        return this == WHITE;
     }
 
     private interface OppositeIdentifier {
