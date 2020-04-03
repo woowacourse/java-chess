@@ -44,7 +44,8 @@ public class ChessController {
             return true;
         }
         if (GameState.STATUS == GameState.of(inputState)) {
-            showResult();
+            OutputView.printStatus(TeamScore.calculateTeamScore(chessBoard.getChessBoard()));
+            OutputView.printWinner(Winner.getWinners(chessBoard.getChessBoard()));
             return true;
         }
         if (GameState.END == GameState.of(inputState)) {
