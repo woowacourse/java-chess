@@ -19,9 +19,9 @@ public class Pieces {
 	public static Map<Position, Piece> initPieces() {
 		Map<Position, Piece> pieces = new HashMap<>();
 
-		BlankPieceFactory.create(pieces);
-		WhitePiecesFactory.create(pieces);
-		BlackPiecesFactory.create(pieces);
+		PiecesFactory.createBlankPieces(pieces);
+		PiecesFactory.createWhitePieces(Color.WHITE, pieces);
+		PiecesFactory.createBlackPieces(Color.BLACK, pieces);
 
 		return pieces;
 	}

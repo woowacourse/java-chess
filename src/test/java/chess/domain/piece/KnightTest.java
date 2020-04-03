@@ -22,7 +22,7 @@ class KnightTest {
 	@BeforeEach
 	void setUp() {
 		originPiece = new HashMap<>();
-		BlankPieceFactory.create(originPiece);
+		PiecesFactory.createBlankPieces(originPiece);
 		pieces = new Pieces(originPiece);
 		gameManager = new GameManager(pieces);
 	}

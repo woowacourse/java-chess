@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 import chess.domain.Color;
 import chess.domain.GameManager;
 import chess.domain.piece.Bishop;
-import chess.domain.piece.BlankPieceFactory;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
+import chess.domain.piece.PiecesFactory;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 
@@ -67,7 +67,7 @@ public class GameManagerTest {
 	void pawnCatchDiagonalTest() {
 		GameManager gameManager;
 		Map<Position, Piece> pieces = new HashMap<>();
-		BlankPieceFactory.create(pieces);
+		PiecesFactory.createBlankPieces(pieces);
 		Pieces board = new Pieces(pieces);
 
 		Pawn whitePawn = new Pawn(Color.WHITE, "p");
