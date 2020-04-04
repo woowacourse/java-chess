@@ -2,9 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>:: 체스 게임 ::</title>
+
+    <link href="./images/cool-lime.ico" rel="shortcut icon" type="image/x-icon"/>
+
+    <style>
+        @font-face {
+            font-family: 'BMHANNAPro';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'BMHANNAAir';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+
+    <link href="css/indexStyle.css" rel="stylesheet" type="text/css"/>
+
 </head>
+
 <body>
-Hello World!!
+<div id="title">
+    :: 체 스 게 임 ::
+</div>
+<div id="btnBox">
+    <a href="/chessGame"><input class="btn" type="button" value="시작하기"></a>
+</div>
+
+<div>
+    <div id="background">
+        <div id="chessBoardBackground">
+            <div id="chessBoard" style="background: url(./images/board.png); background-size: contain">
+            </div>
+        </div>
+        <div id="panelBackground">
+
+            <div id="teamNotice">
+                <p class="subTitle" style="margin-bottom: 0px"> - 현재 차례 - </p> <br>
+            </div>
+
+            <div id="helpBox">
+                <p class="subTitle"> - 도움말 - </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
