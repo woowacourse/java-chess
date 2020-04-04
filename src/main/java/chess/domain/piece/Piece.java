@@ -34,7 +34,7 @@ public class Piece {
         Objects.requireNonNull(movable, INVALID_INPUT_EXCEPTION_MESSAGE);
     }
 
-    public Positions createMovablePositions(List<Piece> pieces) {
+    public Positions findMovablePositions(List<Piece> pieces) {
         return movable.findMovablePositions(position, pieces, color);
     }
 
@@ -84,5 +84,9 @@ public class Piece {
 
     public double getScore() {
         return pieceType.getScore();
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

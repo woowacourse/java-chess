@@ -24,7 +24,7 @@ public class KingTest {
 		Position position = PositionFactory.of("b2");
 		Piece king = TestPieceFactory.createKing(position, Color.WHITE);
 
-		Positions positions = king.createMovablePositions(Collections.emptyList());
+		Positions positions = king.findMovablePositions(Collections.emptyList());
 		assertThat(positions.getPositions()).contains(PositionFactory.of(input));
 	}
 
@@ -35,7 +35,7 @@ public class KingTest {
 		Position position = PositionFactory.of("a1");
 		Piece king = TestPieceFactory.createKing(position, Color.WHITE);
 
-		assertThat(king.createMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(king.findMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position의 개수 반환 테스트")
@@ -49,7 +49,7 @@ public class KingTest {
 				PositionFactory.of("c1")
 		));
 
-		assertThat(king.createMovablePositions(pieces.getPieces()).getPositions().size()).isEqualTo(6);
+		assertThat(king.findMovablePositions(pieces.getPieces()).getPositions().size()).isEqualTo(6);
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position 반환 테스트")
@@ -64,6 +64,6 @@ public class KingTest {
 				PositionFactory.of("c1")
 		));
 
-		assertThat(king.createMovablePositions(pieces.getPieces()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(king.findMovablePositions(pieces.getPieces()).getPositions()).contains(PositionFactory.of(input));
 	}
 }

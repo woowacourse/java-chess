@@ -22,7 +22,7 @@ public class BishopTest {
 		Position position = PositionFactory.of("d4");
 		Piece bishop = TestPieceFactory.createBishop(position, Color.WHITE);
 
-		assertThat(bishop.createMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(bishop.findMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
 	}
 
 	@DisplayName("move 코너 유효한 position입력시 정상 동작")
@@ -32,7 +32,7 @@ public class BishopTest {
 		Position position = PositionFactory.of("a1");
 		Piece bishop = TestPieceFactory.createBishop(position, Color.WHITE);
 
-		assertThat(bishop.createMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(bishop.findMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position의 개수 반환 테스트")
@@ -46,7 +46,7 @@ public class BishopTest {
 				PositionFactory.of("c5")
 		));
 
-		assertThat(bishop.createMovablePositions(pieces.getPieces()).getPositions()).size().isEqualTo(9);
+		assertThat(bishop.findMovablePositions(pieces.getPieces()).getPositions()).size().isEqualTo(9);
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position 반환 테스트")
@@ -61,6 +61,6 @@ public class BishopTest {
 				PositionFactory.of("c5")
 		));
 
-		assertThat(bishop.createMovablePositions(pieces.getPieces()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(bishop.findMovablePositions(pieces.getPieces()).getPositions()).contains(PositionFactory.of(input));
 	}
 }

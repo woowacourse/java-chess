@@ -3,12 +3,11 @@ package chess.domain.game.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.position.Column;
+import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
 import chess.domain.position.Row;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Rows {
@@ -28,8 +27,11 @@ public class Rows {
         return Collections.unmodifiableList(resources);
     }
 
-    public List<Piece> getPieces(){
-        // TODO: 2020/03/31 웹에서 사용할 수 있어서 일단 구현해 뒀음!! 포지션 정보도 필요할까 싶어... 
-        return Collections.unmodifiableList(pieces);
+    public Map<Position, Piece> getPiecesForTransfer(){
+        Map<Position, Piece> result = new HashMap<>();
+        for(Piece piece : pieces) {
+            result.put(piece.getPosition(), piece);
+        }
+        return Collections.unmodifiableMap(result);
     }
 }

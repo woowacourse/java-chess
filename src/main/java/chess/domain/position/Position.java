@@ -68,4 +68,9 @@ public class Position {
     public Row getRow() {
         return row;
     }
+
+    @Override
+    public String toString() {
+        return row.getName()+column.getValue();
+    }
 }

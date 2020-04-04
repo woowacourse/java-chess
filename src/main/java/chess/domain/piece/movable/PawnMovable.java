@@ -79,7 +79,8 @@ public class PawnMovable implements Movable {
         return moveDirections.getDirections()
                 .stream()
                 .map(position::getMovedPositionBy)
-                .filter(movablePosition -> position.isDifferentRow(movablePosition) && isPossessedByDifferentColor(movablePosition, pieces, color))
+                .filter(position::isDifferentRow)
+                .filter(movablePosition -> isPossessedByDifferentColor(movablePosition, pieces, color))
                 .collect(Collectors.collectingAndThen(Collectors.toSet(), Positions::new));
     }
 
