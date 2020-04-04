@@ -22,8 +22,8 @@ public class ChessBoardAdapter implements Publishable {
     }
 
     @Override
-    public void push(final Object object) {
-        observable.update(object);
+    public void push(final Piece piece) {
+        observable.update(piece);
     }
 
     public boolean isNotSameTeam(final String source, final Team currentTeam) {

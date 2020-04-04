@@ -10,36 +10,43 @@ const App = function app() {
     const blackScore = document.getElementById("black-score");
     const whiteScore = document.getElementById("white-score");
 
+    const blackDeadPieces = document.getElementById("black-dead");
+    const whiteDeadPieces = document.getElementById("white-dead");
+
     startBtn.addEventListener('click', (evnet) => {
+        clearDeadPieces();
         fetch("http://localhost:8080/chessboard", {method: "POST"})
             .then(res => res.json())
             .then(loadChessBoard)
-            .catch(alert);
+            .catch(alert)
+        ;
     });
 
     for (let i = 0; i < tiles.length; i++) {
-        tiles[i].addEventListener("click", (event) => {
-            fillTileKey(i);
+        tiles[i].addEventListener("click", (event) => clickMoveEvent(i));
+    }
 
-            if (canNotMove()) {
-                return false;
-            }
+    function clickMoveEvent(i) {
+        fillTileKey(i);
 
-            const moveRequest = {};
-            moveRequest.sourceKey = sourceKey.value;
-            moveRequest.targetKey = targetKey.value;
-            moveRequest.id = parseInt(gameId.textContent);
+        if (canNotMove()) {
+            return false;
+        }
 
-            fetch("http://localhost:8080/chessboard/move", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(moveRequest)
-            })
-                .then(resolver)
-                .then(res => moveSuccessRender(moveRequest.sourceKey, moveRequest.targetKey, res))
-                .catch(errorHandler)
-                .finally(clearMoveSource);
+        const moveRequest = {};
+        moveRequest.sourceKey = sourceKey.value;
+        moveRequest.targetKey = targetKey.value;
+        moveRequest.id = parseInt(gameId.textContent);
+
+        fetch("http://localhost:8080/chessboard/move", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(moveRequest)
         })
+            .then(resolver)
+            .then(res => moveSuccessHandler(moveRequest.sourceKey, moveRequest.targetKey, res))
+            .catch(errorHandler)
+            .finally(clearMoveSource);
     }
 
     function fillTileKey(i) {
@@ -76,17 +83,22 @@ const App = function app() {
         }
     }
 
-    function moveSuccessRender(sourceKey, targetKey, res) {
+    function moveSuccessHandler(sourceKey, targetKey, res) {
         const data = res.body.data;
         const kingAlive = data.kingAlive;
+        const nowTeam = data.nowTurn;
         const targetPiece = data.targetPiece;
         const sourcePiece = data.sourcePiece;
+        const deadPiece = data.deadPiece;
 
+        changeTurn(nowTeam);
         replacePiece(sourceKey, sourcePiece);
         replacePiece(targetKey, targetPiece);
-        changeTurn(data.nowTurn);
-        addDeadPiece(turn.innerText.toLowerCase() + "-dead", data.deadPiece);
+        addDeadPiece(turn.innerText.toLowerCase() + "-dead", deadPiece);
         updateScore(data.teamScoreDto);
+        if (!kingAlive) {
+            alert(nowTeam + "팀 승리");
+        }
     }
 
     function addDeadPiece(targetId, pieceName) {
@@ -96,7 +108,7 @@ const App = function app() {
         const target = document.getElementById(targetId);
         const img = document.createElement('img');
         img.src = "/img/" + pieceName + ".png";
-        img.className = 'dead-piece';
+        img.className = 'dead-piece d-flex';
         target.appendChild(img);
     }
 
@@ -162,6 +174,22 @@ const App = function app() {
     function clearMoveSource() {
         sourceKey.value = "";
         targetKey.value = "";
+    }
+
+    function clearDeadPieces() {
+        let blackDeadChilds = blackDeadPieces.childNodes;
+        blackDeadChilds.forEach(function (child) {
+            if (blackDeadPieces.hasChildNodes()) {
+                blackDeadPieces.removeChild(child);
+            }
+        });
+
+        let whiteDeadChilds = whiteDeadPieces.childNodes;
+        whiteDeadChilds.forEach(function (child) {
+            if (whiteDeadPieces.hasChildNodes()) {
+                whiteDeadPieces.removeChild(child);
+            }
+        });
     }
 
 };

@@ -3,6 +3,7 @@ package chess.manager;
 import chess.board.ChessBoardAdapter;
 import chess.board.Tile;
 import chess.coordinate.Coordinate;
+import chess.handler.exception.AlreadyEndGameException;
 import chess.observer.Observable;
 import chess.piece.Piece;
 import chess.piece.Team;
@@ -23,8 +24,11 @@ public class ChessManager implements Observable {
     }
 
     public Piece move(String source, String target) {
+        if (!isKingAlive) {
+            throw new AlreadyEndGameException(String.format("%s의 승리로 끝난 게임입니다.", currentTeam.name()));
+        }
         if (chessBoard.isNotSameTeam(source, currentTeam)) {
-            throw new IllegalArgumentException(String.format("적군의 체스말(%s)을 움직일 수 없습니다.", source));
+            throw new IllegalArgumentException(String.format("%s팀의 말을 움직여 주세요.", currentTeam.name()));
         }
         return chessBoard.move(source, target);
     }
@@ -61,10 +65,7 @@ public class ChessManager implements Observable {
     }
 
     @Override
-    public void update(final Object object) {
-        Piece.checkInstance(object);
-
-        Piece piece = (Piece) object;
+    public void update(final Piece piece) {
         if (piece.isKing()) {
             isKingAlive = false;
             return;

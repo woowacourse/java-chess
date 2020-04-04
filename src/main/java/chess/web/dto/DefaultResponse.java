@@ -37,6 +37,10 @@ public class DefaultResponse<T> {
         return new DefaultResponse<>(HttpStatus.Code.BAD_REQUEST, data, message);
     }
 
+    public static <T> DefaultResponse<T> BADREQUEST(T data) {
+        return new DefaultResponse<>(HttpStatus.Code.BAD_REQUEST, data, null);
+    }
+
     public int getStatusCode() {
         return statusCode;
     }

@@ -15,12 +15,6 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public static void checkInstance(Object o) {
-        if (!(o instanceof Piece)) {
-            throw new IllegalArgumentException(String.format("%s : Piece의 인스턴스가 아닙니다.", o.toString()));
-        }
-    }
-
     public boolean isBlack() {
         return team.equals(Team.BLACK);
     }
