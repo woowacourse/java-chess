@@ -48,6 +48,6 @@ public class Ready implements GameState {
 
 	@Override
 	public GameState end() {
-		return new SuspendFinish(board, turn);
+		return new SuspendFinished(board, turn);
 	}
 }

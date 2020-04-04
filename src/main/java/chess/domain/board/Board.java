@@ -25,6 +25,7 @@ import chess.domain.position.Position;
 
 public class Board {
 	private static final int COUNT_OF_KING_TO_FINISH_GAME = 1;
+
 	private final Map<Position, Piece> pieces;
 
 	public Board() {
@@ -37,30 +38,33 @@ public class Board {
 
 	public void start() {
 		pieces.clear();
-		initAllBoardEmpty();
 		initChessBoard(8, BLACK, 7);
 		initChessBoard(1, WHITE, 2);
 	}
 
-	private void initAllBoardEmpty() {
-		Position.values().forEach(position -> pieces.put(position, EMPTY));
+	private void initChessBoard(int othersRow, Team team, int pawnsRow) {
+		initOthers(othersRow, team);
+		initAllPawns(team, pawnsRow);
 	}
 
-	private void initChessBoard(int othersRank, Team teamColor, int pawnRank) {
-		pieces.put(Position.of("a" + othersRank), new Rook(teamColor));
-		pieces.put(Position.of("b" + othersRank), new Knight(teamColor));
-		pieces.put(Position.of("c" + othersRank), new Bishop(teamColor));
-		pieces.put(Position.of("d" + othersRank), new Queen(teamColor));
-		pieces.put(Position.of("e" + othersRank), new King(teamColor));
-		pieces.put(Position.of("f" + othersRank), new Bishop(teamColor));
-		pieces.put(Position.of("g" + othersRank), new Knight(teamColor));
-		pieces.put(Position.of("h" + othersRank), new Rook(teamColor));
+	private void initOthers(int othersRow, Team team) {
+		pieces.put(Position.of("a" + othersRow), new Rook(team));
+		pieces.put(Position.of("b" + othersRow), new Knight(team));
+		pieces.put(Position.of("c" + othersRow), new Bishop(team));
+		pieces.put(Position.of("d" + othersRow), new Queen(team));
+		pieces.put(Position.of("e" + othersRow), new King(team));
+		pieces.put(Position.of("f" + othersRow), new Bishop(team));
+		pieces.put(Position.of("g" + othersRow), new Knight(team));
+		pieces.put(Position.of("h" + othersRow), new Rook(team));
+	}
 
+	private void initAllPawns(Team team, int pawnsRow) {
 		for (int i = 0; i < MAXIMUM_POSITION_NUMBER; i++) {
-			pieces.put(Position.of((char)('a' + i) + String.valueOf(pawnRank)), new Pawn(teamColor));
+			pieces.put(Position.of((char)('a' + i) + String.valueOf(pawnsRow)), new Pawn(team));
 		}
 	}
 
+	// TODO: 2020/04/04 해당 기능 Result 클래스로 이동
 	public Map<Team, Double> status() {
 		HashMap<Team, Double> collect = pieces.values().stream()
 			.filter(Piece::isNotBlank)
@@ -88,15 +92,15 @@ public class Board {
 		source.updateHasMoved();
 	}
 
-	public Piece findPiece(Position position) {
-		return pieces.getOrDefault(Objects.requireNonNull(position), EMPTY);
-	}
-
 	private Piece requireNonEmpty(Piece piece) {
 		if (piece.isBlank()) {
 			throw new IllegalArgumentException("빈칸은 선택할 수 없습니다.");
 		}
 		return piece;
+	}
+
+	public Piece findPiece(Position position) {
+		return pieces.getOrDefault(Objects.requireNonNull(position), EMPTY);
 	}
 
 	private void validateSourceMovingRoute(Position from, Position to, Piece source, Piece target) {
@@ -105,7 +109,7 @@ public class Board {
 	}
 
 	private void updatePiecePosition(Position from, Position to, Piece source) {
-		pieces.put(from, EMPTY);
+		pieces.remove(from);
 		pieces.put(to, source);
 	}
 
@@ -114,12 +118,12 @@ public class Board {
 			.anyMatch(trace -> findPiece(trace).isNotBlank());
 	}
 
-	public Map<Position, Piece> getPieces() {
-		return Collections.unmodifiableMap(this.pieces);
-	}
-
 	public boolean isNotSameTeamFromPosition(Position position, Team team) {
 		return !findPiece(position).isRightTeam(team);
+	}
+
+	public boolean containsNotSingleKingWith(Team team) {
+		return !containsSingleKingWith(team);
 	}
 
 	public boolean containsSingleKingWith(Team team) {
@@ -127,20 +131,20 @@ public class Board {
 	}
 
 	private boolean containsSingleKing() {
-		long countOfKing = getPieceStream().count();
+		long countOfKing = getPiecesStreamContainsOnlyKing().count();
 		return countOfKing == COUNT_OF_KING_TO_FINISH_GAME;
 	}
 
 	private boolean matchAllKings(Team team) {
-		return getPieceStream().allMatch(piece -> piece.isRightTeam(team));
+		return getPiecesStreamContainsOnlyKing().allMatch(piece -> piece.isRightTeam(team));
 	}
 
-	private Stream<Piece> getPieceStream() {
+	private Stream<Piece> getPiecesStreamContainsOnlyKing() {
 		return pieces.values().stream()
 			.filter(Piece::isKing);
 	}
 
-	public boolean containsNotSingleKingWith(Team team) {
-		return !containsSingleKingWith(team);
+	public Map<Position, Piece> getPieces() {
+		return Collections.unmodifiableMap(this.pieces);
 	}
 }

@@ -6,11 +6,11 @@ import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-public abstract class Finish implements GameState {
+public abstract class Finished implements GameState {
 	protected final Board board;
 	protected Team turn;
 
-	public Finish(Board board, Team turn) {
+	public Finished(Board board, Team turn) {
 		this.board = board;
 		this.turn = turn;
 	}

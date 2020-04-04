@@ -58,7 +58,7 @@ class ReadyTest {
 	@Test
 	void endTest() {
 		assertThat(state.end())
-			.isInstanceOf(SuspendFinish.class);
+			.isInstanceOf(SuspendFinished.class);
 	}
 
 	@DisplayName("게임 시작전 객체에게 게임이 안끝났는지 물어볼때 true 반환")

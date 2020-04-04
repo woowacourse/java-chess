@@ -3,18 +3,15 @@ package chess.domain.state;
 import static chess.domain.piece.Team.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-class FinishTest {
+class FinishedTest {
 	private GameState state;
 	private Board board;
 	private Team turn;
@@ -24,7 +21,7 @@ class FinishTest {
 		board = new Board();
 		board.start();
 		turn = BLACK;
-		state = new SuspendFinish(board, turn);
+		state = new SuspendFinished(board, turn);
 	}
 
 	@DisplayName("종료된 게임 상태 객체에서 start 실행시 게임중 상태 객체 반환 테스트")

@@ -64,7 +64,7 @@ class StartedTest {
 
 		state = new Started(board, turn);
 		state = state.move(Position.of("a2"), Position.of("a8"));
-		assertThat(state).isInstanceOf(KingCatchFinish.class);
+		assertThat(state).isInstanceOf(KingCatchFinished.class);
 	}
 
 	@DisplayName("게임 중, 현재 차례가 아닌 말을 움직이려 하 경우 IllegalArgument 예외 발생")
@@ -114,7 +114,7 @@ class StartedTest {
 	@Test
 	void endTest() {
 		assertThat(state.end())
-			.isInstanceOf(SuspendFinish.class);
+			.isInstanceOf(SuspendFinished.class);
 	}
 
 	@DisplayName("게임 시작전 객체에게 게임이 안끝났는지 물어볼때 true 반환")

@@ -7,8 +7,8 @@ import java.util.Map;
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 
-public class SuspendFinish extends Finish {
-	public SuspendFinish(Board board, Team turn) {
+public class SuspendFinished extends Finished {
+	public SuspendFinished(Board board, Team turn) {
 		super(board, turn);
 	}
 

@@ -3,8 +3,8 @@ package chess.domain.state;
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 
-public class KingCatchFinish extends Finish {
-	public KingCatchFinish(Board board, Team turn) {
+public class KingCatchFinished extends Finished {
+	public KingCatchFinished(Board board, Team turn) {
 		super(board, turn);
 		validCountOfKing(board);
 	}

@@ -14,6 +14,10 @@ public class Position {
 	private static final Map<String, Position> CACHE = new HashMap<>();
 
 	static {
+		initPositionCache();
+	}
+
+	private static void initPositionCache() {
 		for (int col = MINIMUM_POSITION_NUMBER; col <= MAXIMUM_POSITION_NUMBER; col++) {
 			for (int row = MINIMUM_POSITION_NUMBER; row <= MAXIMUM_POSITION_NUMBER; row++) {
 				CACHE.put(getKey(col, row), new Position(new Cell(col), new Cell(row)));
@@ -74,7 +78,7 @@ public class Position {
 		return !isDiagonal(other);
 	}
 
-	private boolean isDiagonal(Position other) {
+	public boolean isDiagonal(Position other) {
 		return col.calculateAbsolute(other.col) == row.calculateAbsolute(other.row);
 	}
 
