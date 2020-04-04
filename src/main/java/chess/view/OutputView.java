@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.game.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.PositionFactory;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -33,7 +34,8 @@ public class OutputView {
 
 		for (Row row : Row.values()) {
 			Position position = PositionFactory.of(row, column);
-			rowLineStringBuilder.append(board.getPieceBy(position).getResource());
+			Piece piece = board.getPieceBy(position);
+			rowLineStringBuilder.append(piece.getResource());
 		}
 		return rowLineStringBuilder.toString();
 	}
