@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class BoardDAO {
 
+    private static final int NOT_FOUND = 0;
+
     private final Connection connection;
     private final PositionDAO positionDAO;
     private final GamePieceDAO gamePieceDAO;
@@ -33,13 +35,13 @@ public class BoardDAO {
         if (generatedKeys.next()) {
             return generatedKeys.getInt(1);
         }
-        return 0;
+        return NOT_FOUND;
     }
 
     public int findIdByUserNames(String name1, String name2) throws SQLException {
         ResultSet rs = selectAllByUserNames(name1, name2);
 
-        if (!rs.next()) return 0;
+        if (!rs.next()) return NOT_FOUND;
 
         return rs.getInt("id");
     }
@@ -47,7 +49,7 @@ public class BoardDAO {
     public int findTurnByUserNames(String name1, String name2) throws SQLException {
         ResultSet rs = selectAllByUserNames(name1, name2);
 
-        if (!rs.next()) return 0;
+        if (!rs.next()) return NOT_FOUND;
 
         return rs.getInt("turn");
     }
@@ -62,6 +64,7 @@ public class BoardDAO {
     }
 
     // Board - Position - Piece는 CASCADE
+
     public boolean deleteByUserNames(String name1, String name2) throws SQLException {
         String query = "DELETE FROM board WHERE user1 = ? AND user2 = ?";
         PreparedStatement pstmt = connection.prepareStatement(query);
@@ -69,7 +72,7 @@ public class BoardDAO {
         pstmt.setString(2, name2);
         int affectedRowCount = pstmt.executeUpdate();
 
-        return affectedRowCount > 0;
+        return affectedRowCount > NOT_FOUND;
     }
 
     public void saveBoard(Board board, User user1, User user2) throws SQLException {
@@ -84,10 +87,19 @@ public class BoardDAO {
     public void updateBoard(Board board, User user1, User user2) throws SQLException {
         int boardId = findIdByUserNames(user1.getName(), user2.getName());
 
+        updateTurnByBoardId(boardId, board.getStatus().getTurn());
         for (Map.Entry<Position, GamePiece> entry : board.getBoard().entrySet()) {
             int positionId = positionDAO.findIdByPositionName(boardId, entry.getKey().getName());
             gamePieceDAO.updatePieceNameByPositionId(positionId, entry.getValue().getName());
         }
+    }
+
+    private void updateTurnByBoardId(int boardId, int turn) throws SQLException {
+        String query = "UPDATE board SET turn = ? WHERE id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setString(1, Integer.toString(turn));
+        pstmt.setString(2, Integer.toString(boardId));
+        pstmt.executeUpdate();
     }
 
     public Board findByUsers(User user1, User user2) throws SQLException {
@@ -97,5 +109,9 @@ public class BoardDAO {
         Map<Position, GamePiece> board = positionDAO.findBoardContentByBoardId(boardId);
 
         return Board.from(board, status);
+    }
+
+    public boolean isBoardExist(User user1, User user2) throws SQLException {
+        return findIdByUserNames(user1.getName(), user2.getName()) != NOT_FOUND;
     }
 }

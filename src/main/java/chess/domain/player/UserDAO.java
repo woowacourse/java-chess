@@ -16,6 +16,9 @@ public class UserDAO {
     }
 
     public void addUser(User user) throws SQLException {
+        if (findByUserName(user.getName()) != null) {
+            return;
+        }
         String query = "INSERT INTO user VALUES (?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, user.getName());

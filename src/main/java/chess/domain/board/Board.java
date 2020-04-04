@@ -99,6 +99,10 @@ public class Board {
         return status.isNotFinished();
     }
 
+    public boolean isFinished() {
+        return !status.isNotFinished();
+    }
+
     public boolean isNotEmpty(Position position) {
         return !board.get(position).equals(EmptyPiece.getInstance());
     }

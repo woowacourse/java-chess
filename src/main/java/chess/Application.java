@@ -2,30 +2,29 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.domain.command.Command;
-import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Application {
 
     public static void main(String[] args) {
-        ChessService service = new ChessService();
-        OutputView.printBoard(service.getBoard());
+        Board board = Board.createEmpty();
+        OutputView.printBoard(board);
         Command command;
 
         OutputView.printStart();
         do {
             command = receiveCommand();
             if (command.isStart()) {
-                OutputView.printBoard(service.placeInitialPieces());
+                OutputView.printBoard(board.placeInitialPieces());
             }
             if (command.isMove()) {
-                executeMovement(service, command);
+                executeMovement(board, command);
             }
             if (command.isStatus()) {
-                OutputView.printScore(service.calculateResult());
+                OutputView.printScore(board.calculateResult());
             }
-        } while (command.isNotEnd() && service.checkGameNotFinished());
+        } while (command.isNotEnd() && board.isNotFinished());
     }
 
     private static Command receiveCommand() {
@@ -37,9 +36,9 @@ public class Application {
         }
     }
 
-    private static void executeMovement(ChessService service, Command command) {
+    private static void executeMovement(Board board, Command command) {
         try {
-            Board board = service.move(command.getSource(), command.getTarget());
+            board = board.move(command.getSource(), command.getTarget());
             OutputView.printBoard(board);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());

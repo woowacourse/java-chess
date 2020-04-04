@@ -1,6 +1,7 @@
 package chess.domain.command;
 
 import chess.domain.board.Position;
+import chess.domain.player.User;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,9 +10,10 @@ public class Command {
 
     private static final int COMMAND_TYPE_INDEX = 0;
     private static final int FLAG_START_INDEX = 1;
-    private static final int SOURCE_INDEX = 0;
-    private static final int TARGET_INDEX = 1;
-    private static final int MOVE_COMMAND_SIZE = 3;
+    private static final int FIRST_USER_INDEX = 0;
+    private static final int SECOND_USER_INDEX = 1;
+    private static final int SOURCE_INDEX = 2;
+    private static final int TARGET_INDEX = 3;
 
     private final CommandType command;
     private final List<String> flags;
@@ -23,17 +25,11 @@ public class Command {
 
     public static Command from(List<String> input) {
         CommandType commandType = CommandType.from(input.get(COMMAND_TYPE_INDEX));
+        commandType.validateCommandSize(input.size());
 
-        validateMoveCommandSize(input, commandType);
         List<String> flags = input.subList(FLAG_START_INDEX, input.size());
 
         return new Command(commandType, flags);
-    }
-
-    private static void validateMoveCommandSize(List<String> input, CommandType commandType) {
-        if (CommandType.MOVE.equals(commandType) && input.size() != MOVE_COMMAND_SIZE) {
-            throw new IllegalArgumentException("move 커맨드의 인자는 2개여야 합니다.");
-        }
     }
 
     public boolean isStart() {
@@ -66,6 +62,14 @@ public class Command {
         if (command != CommandType.MOVE) {
             throw new UnsupportedOperationException("move 명령만 사용할 수 있습니다.");
         }
+    }
+
+    public User getFirstUser() {
+        return new User(flags.get(FIRST_USER_INDEX));
+    }
+
+    public User getSecondUser() {
+        return new User(flags.get(SECOND_USER_INDEX));
     }
 
     public List<String> getFlags() {

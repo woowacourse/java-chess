@@ -20,23 +20,25 @@
         {{/board}}
     </div>
     <div class="commands">
-        <form class="command" action="/start" method="post">
-            <button>START</button>
-        </form>
-        <form class="command" action="/status" method="get">
-            <button>RESULT</button>
+        <div class="command">
+            <input id="user1" value="{{user1}}"/>
+            <input id="user2" value="{{user2}}"/>
+            <button id="start-button">START</button>
+        </div>
+        <div class="command">
+            <button id="result">RESULT</button>
+            {{#result}}
+            {{#scores}}
             <div id="result-view">
-                {{#result}}
-                {{#scores}}
                 BLACK: {{BLACK}} <br/>
                 WHITE: {{WHITE}}
-                {{/scores}}
-                {{/result}}
             </div>
-            <div>
-                {{board.status.message}}
-            </div>
-        </form>
+            {{/scores}}
+            {{/result}}
+        </div>
+        <div>
+            {{board.status.message}}
+        </div>
     </div>
 </main>
 </body>
@@ -99,9 +101,11 @@
 
     .commands {
         flex-direction: column;
+        margin-left: 20px;
     }
 
     .command {
+        height: 100px;
         width: 100%;
     }
 </style>
@@ -116,6 +120,32 @@
         }
         $(".cell:eq(" + i + ")").addClass(cell);
     }
+
+    // 시작 버튼
+    $("#start-button").click(function () {
+        $.ajax({
+            url: "/start",
+            data: {user1: $("#user1").val(), user2: $("#user2").val()},
+            method: "POST",
+            dataType: "html"
+        })
+            .done(function (html) {
+                $("html").html(html);
+            });
+    });
+
+    // 결과 버튼
+    $("#result").click(function () {
+        $.ajax({
+            url: "/status",
+            data: {user1: $("#user1").val(), user2: $("#user2").val()},
+            method: "GET",
+            dataType: "html"
+        })
+            .done(function (html) {
+                $("html").html(html);
+            });
+    });
 
     // move 클릭으로 구현
     let source;
@@ -145,7 +175,7 @@
         // 두번째 클릭이라면 이동
         $.ajax({
             url: "/move",
-            data: {source: source, target: cellPosition},
+            data: {source: source, target: cellPosition, user1: $("#user1").val(), user2: $("#user2").val()},
             method: "POST",
             dataType: "html"
         })
