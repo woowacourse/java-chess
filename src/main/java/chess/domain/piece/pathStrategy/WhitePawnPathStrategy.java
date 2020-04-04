@@ -12,9 +12,9 @@ import static chess.domain.piece.direction.Direction.*;
 import static chess.util.NullValidator.validateNull;
 
 public class WhitePawnPathStrategy implements PathStrategy {
-    private static final int WHITE_PAWN_FORWARD_MIN_DISTANCE = 1;
-    private static final int WHITE_PAWN_FORWARD_MAX_DISTANCE = 2;
     private static final int NO_DISTANCE = 0;
+    private static final int FORWARD_MIN_DISTANCE = 1;
+    private static final int FORWARD_MAX_DISTANCE = 2;
     private static final int RIGHT_MAX_DISTANCE = 1;
     private static final int LEFT_MAX_DISTANCE = -1;
     private static final List<Direction> WHITE_PAWN_DIRECTIONS = Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
@@ -25,16 +25,24 @@ public class WhitePawnPathStrategy implements PathStrategy {
         int yPointGap = sourcePosition.getYPointGap(targetPosition);
 
         if (sourcePosition.isYPointEqualsTwo()) {
-            if (isInvalidXPointGap(xPointGap) || !(yPointGap == WHITE_PAWN_FORWARD_MIN_DISTANCE || yPointGap == WHITE_PAWN_FORWARD_MAX_DISTANCE)) {
+            if (isInvalidForwardPosition(xPointGap, yPointGap) && isInvalidDiagonalPosition(xPointGap, yPointGap)) {
                 throw new NotMovableException(String.format("지정한 위치 %s는 하얀색 폰이 이동할 수 없는 곳입니다.",
                                                             targetPosition.getName()));
             }
         } else {
-            if (isInvalidXPointGap(xPointGap) || yPointGap != WHITE_PAWN_FORWARD_MIN_DISTANCE) {
+            if (isInvalidXPointGap(xPointGap) || yPointGap != FORWARD_MIN_DISTANCE) {
                 throw new NotMovableException(String.format("지정한 위치 %s는 하얀색 폰이 이동할 수 없는 곳입니다.",
                                                             targetPosition.getName()));
             }
         }
+    }
+
+    private boolean isInvalidForwardPosition(int xPointGap, int yPointGap) {
+        return !(xPointGap == NO_DISTANCE && (yPointGap == FORWARD_MIN_DISTANCE || yPointGap == FORWARD_MAX_DISTANCE));
+    }
+
+    private boolean isInvalidDiagonalPosition(int xPointGap, int yPointGap) {
+        return !((xPointGap == RIGHT_MAX_DISTANCE || xPointGap == LEFT_MAX_DISTANCE) && yPointGap == FORWARD_MIN_DISTANCE);
     }
 
     private boolean isInvalidXPointGap(int xPointGap) {
