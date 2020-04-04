@@ -11,7 +11,7 @@ class PiecesTest {
 	@DisplayName("isKingDead 모든 킹이 살아있다면 false 반환")
 	@Test
 	void isKingDead_all_king_alive_return_false() {
-		Pieces pieces = PiecesFactory.of();
+		Pieces pieces = PiecesInitializer.operate();
 		assertThat(pieces.isKingDead()).isFalse();
 	}
 

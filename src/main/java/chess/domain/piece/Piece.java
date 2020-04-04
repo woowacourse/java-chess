@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.pieces.PieceInitializer;
 import chess.domain.position.Position;
 import chess.domain.position.positions.Positions;
 
@@ -18,10 +17,6 @@ public class Piece {
 		this.position = position;
 		this.pieceType = pieceType;
 		this.color = color;
-	}
-
-	public Piece(PieceInitializer pieceInitializer) {
-		this(pieceInitializer.getPosition(), pieceInitializer.getPieceType(), pieceInitializer.getColor());
 	}
 
 	public Positions createMovablePositions(List<Piece> pieces) {

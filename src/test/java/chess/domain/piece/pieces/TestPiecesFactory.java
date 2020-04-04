@@ -6,7 +6,6 @@ import chess.domain.piece.TestPieceFactory;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,11 +34,10 @@ public class TestPiecesFactory {
 	}
 
 	public static Pieces createOnlyWhite() {
-		List<Piece> pieces = Arrays.stream(PieceInitializer.values())
-				.filter(pieceInitializer -> pieceInitializer.getColor().isWhite())
-				.map(Piece::new)
+		List<Piece> pieces = PiecesInitializer.operate().getPieces().stream()
+				.filter(piece -> piece.getColor().isWhite())
 				.collect(Collectors.toList());
-	
+
 		return new Pieces(pieces);
 	}
 }

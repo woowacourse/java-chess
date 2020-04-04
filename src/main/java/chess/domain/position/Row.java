@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.PieceType;
+
 import java.util.Arrays;
 
 public enum Row {
@@ -38,6 +40,50 @@ public enum Row {
 
 	public boolean isSame(Row row) {
 		return this.equals(row);
+	}
+
+	public PieceType getPieceType() {
+		if (isRookInitial()) {
+			return PieceType.ROOK;
+		}
+
+		if (isKnightInitial()) {
+			return PieceType.KNIGHT;
+		}
+
+		if (isBishopInitial()) {
+			return PieceType.BISHOP;
+		}
+
+		if (isQueenInitial()) {
+			return PieceType.QUEEN;
+		}
+
+		if (isKingInitial()) {
+			return PieceType.KING;
+		}
+
+		return PieceType.BLANK;
+	}
+
+	private boolean isRookInitial() {
+		return this.equals(FIRST) || this.equals(EIGHTH);
+	}
+
+	private boolean isKnightInitial() {
+		return this.equals(SECOND) || this.equals(SEVENTH);
+	}
+
+	private boolean isBishopInitial() {
+		return this.equals(THIRD) || this.equals(SIXTH);
+	}
+
+	private boolean isQueenInitial() {
+		return this.equals(FIFTH);
+	}
+
+	private boolean isKingInitial() {
+		return this.equals(FOURTH);
 	}
 
 	public String getName() {
