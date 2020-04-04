@@ -61,6 +61,7 @@ public class ChessController {
         try {
             chessService.end(parameter);
         } catch (SQLException se) {
+            System.out.println(se.getMessage());
         }
     }
 

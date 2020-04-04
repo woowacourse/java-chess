@@ -90,6 +90,7 @@ public class ChessDAO {
         PreparedStatement deletePstmt = getConnection().prepareStatement(deleteQuery);
         deletePstmt.setLong(1, chessGameId);
         deletePstmt.executeUpdate();
+        Connection connection = getConnection();
 
         String query = "INSERT INTO boardTable values ((select id from positionTable where position = ?)," +
                 " (select id from pieceTable where piece = ?), (select id from teamTable where team = ?), ?);";
@@ -98,7 +99,7 @@ public class ChessDAO {
             String position = entry.getKey().getName();
             String piece = entry.getValue().getPieceType().toString();
             String team = entry.getValue().getTeam().toString();
-            pstmt = getConnection().prepareStatement(query);
+            pstmt = connection.prepareStatement(query);
             pstmt.setString(1, position);
             pstmt.setString(2, piece);
             pstmt.setString(3, team);
