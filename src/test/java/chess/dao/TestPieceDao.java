@@ -70,4 +70,9 @@ public class TestPieceDao implements PieceDao {
         Map<Position, Piece> saved = testDB.get(user_id);
         saved.remove(position);
     }
+
+    @Override
+    public void deleteSaved(String user_id) {
+        testDB.remove(user_id);
+    }
 }

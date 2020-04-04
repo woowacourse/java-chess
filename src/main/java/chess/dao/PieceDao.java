@@ -15,4 +15,6 @@ public interface PieceDao {
     void updatePiece(String user_id, Position position, Piece piece) throws SQLException;
 
     void deletePiece(String user_id, Position position) throws SQLException;
+
+    void deleteSaved(String user_id) throws SQLException;
 }

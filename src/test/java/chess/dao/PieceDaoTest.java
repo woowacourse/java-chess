@@ -77,4 +77,17 @@ class PieceDaoTest {
         String pieceName = dao.findPieceNameByPosition("guest", Position.ofPositionName("a2"));
         assertThat(pieceName).isNull();
     }
+
+    @DisplayName("saved 테이블에서 saved 기록 전체 삭제")
+    @Test
+    void name5() throws SQLException {
+        Map<Position, Piece> saved = new HashMap<>();
+        saved.put(Position.ofPositionName("a2"), new Pawn(PieceColor.WHITE));
+        PieceDao dao = new TestPieceDao("guest", saved);
+
+        dao.deleteSaved("guest");
+
+        int savedInfo = dao.countSavedInfo("guest");
+        assertThat(savedInfo).isEqualTo(0);
+    }
 }
