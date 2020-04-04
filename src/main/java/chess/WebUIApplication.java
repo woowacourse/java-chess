@@ -1,7 +1,7 @@
 package chess;
 
-import chess.dto.PieceDTO;
 import chess.controller.ChessGame;
+import chess.dto.PieceDTO;
 import spark.ModelAndView;
 import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;

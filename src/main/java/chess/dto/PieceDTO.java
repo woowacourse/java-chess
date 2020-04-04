@@ -1,4 +1,4 @@
-package chess.DTO;
+package chess.dto;
 
 import chess.domain.Team;
 import chess.domain.piece.PieceType;

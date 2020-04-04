@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.dao.PieceDAO;
 import chess.domain.Team;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -8,7 +9,9 @@ import chess.domain.piece.Placeable;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import chess.dto.PieceDTO;
 
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -26,7 +29,31 @@ public class BoardFactory {
     }
 
     public static Board createInitially() {
+        Map<Position, Placeable> positionAndPiece;
+
+        try {
+            positionAndPiece = createBoardSource();
+            PieceDAO pieceDAO = PieceDAO.getInstance();
+
+            for (Position position : positionAndPiece.keySet()) {
+                Placeable piece = positionAndPiece.get(position);
+
+                PieceDTO pieceDTO = new PieceDTO();
+                pieceDTO.setPosition(position);
+                pieceDTO.setPieceType(piece.getPieceType());
+                pieceDTO.setTeam(piece.getTeam());
+
+                pieceDAO.addPiece(pieceDTO);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("SQL 오류 : " + e.getErrorCode());
+            throw new RuntimeException("SQL 오류가 발생하였습니다.");
+        }
+
         return new Board(createBoardSource());
+
+
     }
 
     private static Map<Position, Placeable> createBoardSource() {

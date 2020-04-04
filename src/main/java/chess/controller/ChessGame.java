@@ -1,11 +1,11 @@
 package chess.controller;
 
-import chess.DTO.PieceDTO;
 import chess.controller.command.Command;
 import chess.controller.command.CommandReader;
 import chess.domain.board.Board;
 import chess.domain.gamestate.GameState;
 import chess.domain.gamestate.NothingHappened;
+import chess.dto.PieceDTO;
 import utils.CollectionUtil;
 
 import java.util.List;
