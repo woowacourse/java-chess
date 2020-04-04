@@ -1,6 +1,7 @@
 package chess;
 
-import chess.dao.FakeBoardDAO;
+import chess.dao.BoardDAO;
+import chess.dao.SQLBoardDAO;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.judge.Judge;
@@ -22,7 +23,8 @@ import static spark.Spark.*;
 // 2. addEventLister()안에서 submit()으로 form post하기
 // 3. form 안보이게 css로 숨기기
 public class WebUIChessApplication {
-    private static FakeBoardDAO boardDao = FakeBoardDAO.initialFakeBoardDAO();
+    private static BoardDAO boardDao = new SQLBoardDAO();
+    //private static BoardDAO boardDao = FakeBoardDAO.initialFakeBoardDAO();
     private static Board board = new Board(boardDao);
 
     public static void main(String[] args) {
@@ -38,7 +40,8 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
 
             if (req.queryParams("command").equals("새 게임")) {
-                boardDao = FakeBoardDAO.initialFakeBoardDAO();
+                placeInitialPieces();
+                //boardDao = FakeBoardDAO.initialFakeBoardDAO();
                 board = new Board(boardDao);
                 model = parseBoard(board);
             }
@@ -146,5 +149,17 @@ public class WebUIChessApplication {
             return "movable";
         }
         return "blank";
+    }
+
+    private static void placeInitialPieces() throws SQLException {
+        for (Position position : Position.getAllPositions()) {
+            boardDao.removePieceOn(position);
+        }
+
+        for (Piece piece : Piece.getPieces()) {
+            for (Position position : piece.initialPositions()) {
+                boardDao.placePieceOn(position, piece);
+            }
+        }
     }
 }

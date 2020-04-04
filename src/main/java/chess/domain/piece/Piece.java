@@ -22,7 +22,7 @@ public class Piece {
     }
 
     public static Piece of(final String pieceString) {
-        return PieceCache.pieces.get(pieceString);
+        return PieceCache.findPieceByString(pieceString);
     }
 
     public boolean is(final Type type) {
@@ -79,6 +79,14 @@ public class Piece {
 
         private static String key(final Type type, final Side side) {
             return side.name() + type.getName();
+        }
+
+        private static Piece findPieceByString(String pieceString) {
+            return pieces.values()
+                    .stream()
+                    .filter(piece -> piece.toString().equals(pieceString))
+                    .findAny()
+                    .get();
         }
     }
 }
