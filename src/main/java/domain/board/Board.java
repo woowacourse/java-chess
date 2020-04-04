@@ -106,7 +106,7 @@ public class Board {
 			.anyMatch(piece -> piece.isSameTeam(Team.WHITE));
 	}
 
-	public List<String> allPieces() {
+	public List<String> showAllPieces() {
 		List<String> pieces = new ArrayList<>();
 		for (int i = 0; i < 8; i++) {
 			pieces.addAll(ranks.get(i).getRankPieces());

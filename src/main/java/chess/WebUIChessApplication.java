@@ -25,22 +25,27 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("blackTeamScore", 0);
+            model.put("whiteTeamScore", 0);
+            model.put("turn", "게임 시작을 눌러주세요!");
             return render(model, "index.html");
         });
 
         get("/start", (req, res) -> {
-            List<String> pieces = board.allPieces();
+            List<String> pieces = board.showAllPieces();
             Map<String, Object> model = new HashMap<>();
             model.put("pieces", pieces);
             model.put("blackTeamScore", board.calculateTeamScore(Team.BLACK));
             model.put("whiteTeamScore", board.calculateTeamScore(Team.WHITE));
-            model.put("turn", webService.getTurn());
+            model.put("turn", webService.getTurn() + "팀의 차례입니다!");
             model.put("errorMessage", errorMessage);
 
             return render(model, "index.html");
         });
 
         post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
@@ -50,8 +55,13 @@ public class WebUIChessApplication {
                 errorMessage.add(new ErrorMessage(e.getMessage()));
             }
 
-            List<String> pieces = board.allPieces();
-            Map<String, Object> model = new HashMap<>();
+            if (board.isKingDead()) {
+                model.put("winner", webService.findWinner(board));
+                return render(model, "result.html");
+            }
+
+            List<String> pieces = board.showAllPieces();
+
             model.put("pieces", pieces);
             model.put("blackTeamScore", board.calculateTeamScore(Team.BLACK));
             model.put("whiteTeamScore", board.calculateTeamScore(Team.WHITE));

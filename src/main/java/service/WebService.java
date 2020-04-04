@@ -19,4 +19,9 @@ public class WebService {
 	public String getTurn() {
 		return team.getName();
 	}
+
+	public String findWinner(Board board) {
+		Team winner = board.findWinner();
+		return winner.getName();
+	}
 }
