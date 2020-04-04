@@ -1,5 +1,6 @@
 package chess;
 
+import chess.dao.BoardDAO;
 import chess.dao.FakeBoardDAO;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -52,7 +53,9 @@ public class Application {
     }
 
     public static void initialize() throws SQLException {
-        board = new Board(FakeBoardDAO.initialFakeBoardDAO());
+        BoardDAO dao = new FakeBoardDAO();
+        dao.placeInitialPieces();
+        board = new Board(dao);
         judge = new WoowaJudge(board);
         OutputView.showBoard(board);
     }

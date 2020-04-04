@@ -10,23 +10,23 @@ import java.util.Optional;
 public class FakeBoardDAO implements BoardDAO {
     private Map<Position, Piece> board = new HashMap<>();
 
-    public static FakeBoardDAO initialFakeBoardDAO() {
-        FakeBoardDAO fakeBoardDAO = new FakeBoardDAO();
-        for (Piece piece : Piece.getPieces()) {
-            placeInitial(fakeBoardDAO, piece);
-        }
-        return fakeBoardDAO;
-    }
-
-    private static void placeInitial(FakeBoardDAO fakeBoardDAO, Piece piece) {
-        for (Position position : piece.initialPositions()) {
-            fakeBoardDAO.placePieceOn(position, piece);
-        }
-    }
-
     @Override
     public void placePieceOn(Position position, Piece piece) {
         board.put(position, piece);
+    }
+
+    @Override
+    public void placeInitialPieces() {
+        board.clear();
+        for (Piece piece : Piece.getPieces()) {
+            placeInitialPiece(piece);
+        }
+    }
+
+    private void placeInitialPiece(Piece piece) {
+        for (Position position : piece.initialPositions()) {
+            placePieceOn(position, piece);
+        }
     }
 
     @Override

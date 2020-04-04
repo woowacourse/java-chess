@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface BoardDAO {
     void placePieceOn(Position position, Piece piece) throws SQLException;
 
+    void placeInitialPieces() throws SQLException;
+
     Optional<Piece> findPieceOn(Position position) throws SQLException;
 
     Map<Position, Piece> findAllPieces() throws SQLException;

@@ -40,7 +40,7 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
 
             if (req.queryParams("command").equals("새 게임")) {
-                placeInitialPieces();
+                boardDao.placeInitialPieces();
                 //boardDao = FakeBoardDAO.initialFakeBoardDAO();
                 board = new Board(boardDao);
                 model = parseBoard(board);
@@ -149,17 +149,5 @@ public class WebUIChessApplication {
             return "movable";
         }
         return "blank";
-    }
-
-    private static void placeInitialPieces() throws SQLException {
-        for (Position position : Position.getAllPositions()) {
-            boardDao.removePieceOn(position);
-        }
-
-        for (Piece piece : Piece.getPieces()) {
-            for (Position position : piece.initialPositions()) {
-                boardDao.placePieceOn(position, piece);
-            }
-        }
     }
 }
