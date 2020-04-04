@@ -8,12 +8,13 @@ import java.util.Map;
 
 import domain.board.Board;
 import domain.board.BoardFactory;
+import domain.piece.team.Team;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        staticFiles.location("/templates");
+        staticFiles.location("/public");
         Board board = BoardFactory.create();
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -24,6 +25,9 @@ public class WebUIChessApplication {
             List<String> pieces = board.allPieces();
             Map<String, Object> model = new HashMap<>();
             model.put("pieces", pieces);
+            model.put("blackTeamScore", board.calculateTeamScore(Team.BLACK));
+            model.put("whiteTeamScore", board.calculateTeamScore(Team.WHITE));
+
             return render(model, "index.html");
         });
     }
