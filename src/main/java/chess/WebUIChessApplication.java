@@ -3,7 +3,10 @@ package chess;
 import chess.dao.FakeBoardDAO;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.judge.Judge;
+import chess.domain.judge.WoowaJudge;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
 import chess.exceptions.InvalidInputException;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -38,6 +41,13 @@ public class WebUIChessApplication {
                 boardDao = FakeBoardDAO.initialFakeBoardDAO();
                 board = new Board(boardDao);
                 model = parseBoard(board);
+            }
+
+            if (req.queryParams("command").equals("현재점수")) {
+                Judge judge = new WoowaJudge(board);
+                model = parseBoard(board);
+                model.put("player1_info", "사용자1" + "(White) : " + judge.calculateScore(Side.WHITE));
+                model.put("player2_info", "사용자2" + "(Black) : " + judge.calculateScore(Side.BLACK));
             }
 
             if (req.queryParams("command").equals("이동")) {

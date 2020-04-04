@@ -98,6 +98,9 @@ public class Board {
                 .map(position -> position.getColumn())
                 .collect(toSet());
 
+        if (pawnColumns.size() == pawnPositions.size()) {
+            return 0;
+        }
         return pawnPositions.size() - pawnColumns.size() + PAWN_OVERLAP_CONSTANT;
     }
 
