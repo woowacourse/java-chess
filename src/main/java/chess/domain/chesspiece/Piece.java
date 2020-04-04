@@ -15,7 +15,6 @@ public abstract class Piece {
     private final Player player;
     protected final PieceInfo pieceInfo;
 
-
     protected List<Direction> directions = new ArrayList<>();
 
     public Piece(Player player, PieceInfo pieceInfo) {
