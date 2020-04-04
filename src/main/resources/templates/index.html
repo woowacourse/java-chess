@@ -252,9 +252,10 @@
         </form>
     </div>
 
-    <form action="/" class="invisibl" id="moveForm" method="post">
+    <form action="/" class="invisible" id="moveForm" method="post">
         <input id="moveStart" name="start" type="text" value={{start}}>
-        <input name="end" type="text">
+        <input id="moveEnd" name="end" type="text" value="{{end}}">
+        <input id="moveCommand" name="command" type="text">
         <input class="menuButton" name="command" type="submit" value="이동">
     </form>
 

@@ -51,7 +51,9 @@ public class WebUIChessApplication {
                 Position start = Position.of(req.queryParams("start"));
                 List<Position> movablePositions = tryFindMovablePositions(start, board);
                 model = parseBoard(board, movablePositions);
-                model.put("start", req.queryParams("start"));
+                if (movablePositions.size() != 0) {
+                    model.put("start", req.queryParams("start"));
+                }
             }
 
             return render(model, "index.html");
