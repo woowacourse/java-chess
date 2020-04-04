@@ -43,6 +43,10 @@ public class OutputView {
         System.out.println();
     }
 
+    public static void printAlreadyStarted() {
+        System.out.println("이미 시작하였습니다, 다른 명령어를 입력해주세요");
+    }
+
     public static void printCanNotMove() {
         System.out.println("움직일 수 없습니다");
     }

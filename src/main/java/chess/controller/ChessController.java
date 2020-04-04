@@ -4,11 +4,10 @@ import chess.domain.ChessBoard;
 import chess.domain.GameState;
 import chess.domain.piece.Color;
 import chess.domain.square.Square;
+import chess.utils.InputParser;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ChessController {
@@ -16,25 +15,40 @@ public class ChessController {
     public static void run() {
         ChessBoard chessBoard = new ChessBoard();
         startGame(chessBoard);
+        proceedGame(chessBoard);
+    }
 
-        String input;
+    private static void startGame(ChessBoard chessBoard) {
+        OutputView.printBeginGame();
+        GameState gameState = InputParser.parseState(InputView.inputCommand());
+        if (gameState != GameState.START) {
+            throw new IllegalArgumentException("먼저 게임을 시작해야 합니다");
+        }
+        OutputView.printChessBoard(chessBoard);
+    }
+
+    private static void proceedGame(ChessBoard chessBoard) {
         GameState gameState;
         boolean blackTurn = false;
+        List<Square> moveSourceDestination;
+        String input;
         while (true) {
-            input = InputView.inputStart();
-            List<Square> squares = new ArrayList<>();
-            if (input.length() == 10) {
-                List<String> inputs = Arrays.asList(input.split(" "));
-                input = inputs.get(0);
-                squares.add(Square.of(inputs.get(1)));
-                squares.add(Square.of(inputs.get(2)));
-            }
-            gameState = GameState.of(input);
+            input = InputView.inputCommand();
+            gameState = InputParser.parseState(input);
             if (gameState == GameState.START) {
-                throw new IllegalArgumentException("이미 시작하였습니다");
+                OutputView.printAlreadyStarted();
+                continue;
+            }
+            if (gameState == GameState.END) {
+                printScoreAndWinners(chessBoard);
+                break;
+            }
+            if (gameState == GameState.STATUS) {
+                printScoreAndWinners(chessBoard);
             }
             if (gameState == GameState.MOVE) {
-                if (proceed(chessBoard, squares, blackTurn)) {
+                moveSourceDestination = InputParser.parseMoveSourceDestination(input);
+                if (isMoved(chessBoard, moveSourceDestination, blackTurn)) {
                     blackTurn = !blackTurn;
                 }
             }
@@ -46,13 +60,6 @@ public class ChessController {
                 OutputView.printWinner(Color.BLACK);
                 break;
             }
-            if (gameState == GameState.END) {
-                printScoreAndWinners(chessBoard);
-                break;
-            }
-            if (gameState == GameState.STATUS) {
-                printScoreAndWinners(chessBoard);
-            }
         }
     }
 
@@ -61,7 +68,7 @@ public class ChessController {
         OutputView.printWinners(chessBoard.getWinners());
     }
 
-    private static boolean proceed(ChessBoard chessBoard, List<Square> squares, boolean blackTurn) {
+    private static boolean isMoved(ChessBoard chessBoard, List<Square> squares, boolean blackTurn) {
         if (chessBoard.canMove(squares, blackTurn)) {
             chessBoard.movePiece(squares);
             OutputView.printChessBoard(chessBoard);
@@ -69,14 +76,5 @@ public class ChessController {
         }
         OutputView.printCanNotMove();
         return false;
-    }
-
-    private static void startGame(ChessBoard chessBoard) {
-        OutputView.printBeginGame();
-        GameState gameState = GameState.of(InputView.inputStart());
-        if (gameState != GameState.START) {
-            throw new IllegalArgumentException("게임을 시작해야 합니다");
-        }
-        OutputView.printChessBoard(chessBoard);
     }
 }
