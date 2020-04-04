@@ -111,6 +111,10 @@ public class ChessBoard {
     }
 
     public Status createStatus(Player player) {
+        if (checkKingTaken(player)) {
+            return new Status(player, 0);
+        }
+
         double score = getPlayerPieces(player)
                 .stream()
                 .mapToDouble(Piece::getScore)
@@ -119,6 +123,13 @@ public class ChessBoard {
         return new Status(player, score);
     }
 
+    public boolean checkKingTaken(Player player) {
+        int kingCount = (int) getPlayerPieces(player)
+                .stream()
+                .filter(piece -> piece instanceof  King)
+                .count();
+        return kingCount > 0;
+    }
     public Result createResult() {
         List<Status> statuses = Arrays.asList(createStatus(Player.WHITE), createStatus(Player.BLACK));
         return new Result(statuses);
