@@ -3,6 +3,8 @@ package board;
 import chess.domain.board.Board;
 import chess.domain.board.PositionFactory;
 import chess.domain.piece.*;
+import chess.exception.AnotherTeamPieceException;
+import chess.exception.PieceNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -48,7 +50,7 @@ public class BoardTest {
             "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"})
     void inputNoPiecePositionThenThrowException(String input) {
         Assertions.assertThatThrownBy(() -> board.findPiece(PositionFactory.of(input), PieceColor.NONE))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(PieceNotFoundException.class)
                 .hasMessage(String.format("위치(sourcePosition) %s에 움직일 수 있는 체스말이 없습니다.", input));
     }
 
@@ -58,7 +60,7 @@ public class BoardTest {
             "h7"})
     void findDifferentPieceColorPositionThenThrowException(String input) {
         Assertions.assertThatThrownBy(() -> board.findPiece(PositionFactory.of(input), PieceColor.WHITE))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(AnotherTeamPieceException.class)
                 .hasMessage(String.format("위치(sourcePosition) %s의 말은 현재 차례인 %s의 말이 아니므로 움직일 수 없습니다.", input,
                                           this.board.getTeam().getName()));
     }
