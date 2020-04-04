@@ -24,7 +24,6 @@ public class WebUIChessApplication {
 		});
 
 		get("/move", ((request, response) -> {
-			System.out.println("떳냐");
 			String now = request.queryParams("now");
 			String destination = request.queryParams("destination");
 			gameManager.movePiece(Location.of(now), Location.of(destination));

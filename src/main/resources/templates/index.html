@@ -25,18 +25,25 @@
    background-size:contain;
    height:200px;width:1200px;">
                 test
+
+                <form id="move-form" name="move-form">
+                    <input id="now" name="now" onkeyup="enterKey()" type="text" value="홍길동"/>
+                    <input id="dest" name="destination" onkeyup="enterKey()" type="text" value="1234567"/>
+                </form>
+
+
+                <button>Start</button>
+                <button>Status</button>
+                <button>Exit</button>
             </div>
         </div>
     </div>
-    <button>Start</button>
-    <button>Status</button>
-    <button>Exit</button>
 
 
-
-    <script crossorigin="anonymous"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script
+            crossorigin="anonymous"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script crossorigin="anonymous"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
