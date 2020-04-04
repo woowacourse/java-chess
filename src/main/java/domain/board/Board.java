@@ -1,5 +1,6 @@
 package domain.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -103,5 +104,13 @@ public class Board {
 			.flatMap(rank -> rank.getPieces().stream())
 			.filter(piece -> piece instanceof King)
 			.anyMatch(piece -> piece.isSameTeam(Team.WHITE));
+	}
+
+	public List<String> allPieces() {
+		List<String> pieces = new ArrayList<>();
+		for (int i = 0; i < 8; i++) {
+			pieces.addAll(ranks.get(i).getRankPieces());
+		}
+		return pieces;
 	}
 }

@@ -3,6 +3,7 @@ package chess;
 import static spark.Spark.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import domain.board.Board;
@@ -12,17 +13,17 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        staticFiles.location("/static");
-        // get("/", (req, res) -> {
-        //     Map<String, Object> model = new HashMap<>();
-        //     return render(model, "index.html");
-        // });
-
-        post("/users", (req, res) -> {
-            Board board = BoardFactory.create();
-
+        staticFiles.location("/templates");
+        Board board = BoardFactory.create();
+        get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("ranks", board.getRanks());
+            return render(model, "index.html");
+        });
+
+        get("/start", (req, res) -> {
+            List<String> pieces = board.allPieces();
+            Map<String, Object> model = new HashMap<>();
+            model.put("pieces", pieces);
             return render(model, "index.html");
         });
     }
