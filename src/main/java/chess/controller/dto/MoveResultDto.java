@@ -1,13 +1,19 @@
 package chess.controller.dto;
 
 public class MoveResultDto {
-    private final String result;
+    private final String message;
+    private final String style;
 
-    public MoveResultDto(String result) {
-        this.result = result;
+    public MoveResultDto(String message, String style) {
+        this.message = message;
+        this.style = style;
     }
 
-    public String getResult() {
-        return result;
+    public String getMessage() {
+        return message;
+    }
+
+    public String getStyle() {
+        return this.style;
     }
 }

@@ -1,13 +1,13 @@
 package chess.controller.dto;
 
 public class StatusDto {
-    private final String status;
+    private final String message;
 
-    public StatusDto(String status) {
-        this.status = status;
+    public StatusDto(String message) {
+        this.message = message;
     }
 
-    public String getStatus() {
-        return this.status;
+    public String getMessage() {
+        return this.message;
     }
 }

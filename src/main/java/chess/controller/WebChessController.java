@@ -12,21 +12,24 @@ public class WebChessController {
     private ChessRunner chessRunner;
 
     public void start() {
-        chessRunner = new ChessRunner();
+        this.chessRunner = new ChessRunner();
     }
 
-    public MoveResultDto move(String source, String target) {
+    public MoveResultDto move(final String source, final String target) {
         try {
-            chessRunner.update(source, target);
-            String moveResult = source + " -> " + target;
-            return new MoveResultDto(moveResult);
+            this.chessRunner.update(source, target);
+            String moveResult = moveResult(this.chessRunner, source, target);
+            return new MoveResultDto(moveResult, "color:black;");
         } catch (IllegalArgumentException e) {
-            return new MoveResultDto(e.getMessage());
+            return new MoveResultDto(e.getMessage(), "color:red;");
         }
     }
 
-    public BoardScoreDto status() {
-        return new BoardScoreDto(chessRunner.calculateScore());
+    private String moveResult(final ChessRunner chessRunner, final String source, final String target) {
+        if (!chessRunner.isEndChess()) {
+            return source + " -> " + target;
+        }
+        return chessRunner.getWinner() + " 가 이겼습니다.";
     }
 
     public TeamDto getCurrentTeam() {

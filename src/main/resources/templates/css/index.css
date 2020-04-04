@@ -1,8 +1,8 @@
 @charset "utf-8";
 
 @font-face {
-  font-family: "BMHANNAPro";
-  src: url(../ttf/BMHANNAPro.ttf);
+    font-family: "BMHANNAPro";
+    src: url(../ttf/BMHANNAPro.ttf);
 }
 
 #chess-board {

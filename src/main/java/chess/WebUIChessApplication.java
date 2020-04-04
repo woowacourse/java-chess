@@ -48,7 +48,8 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
-            model.put("message", moveResultDto);
+            model.put("message", moveResultDto.getMessage());
+            model.put("style", moveResultDto.getStyle());
 
             return render(model, "game.html");
         });
