@@ -1,12 +1,7 @@
 package chess.domain.board.initializer;
 
 import chess.domain.piece.PieceState;
-import chess.domain.piece.implementation.piece.Bishop;
-import chess.domain.piece.implementation.piece.King;
-import chess.domain.piece.implementation.piece.Knight;
-import chess.domain.piece.implementation.piece.Pawn;
-import chess.domain.piece.implementation.piece.Queen;
-import chess.domain.piece.implementation.piece.Rook;
+import chess.domain.piece.implementation.piece.*;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 
@@ -14,7 +9,7 @@ import java.util.function.BiFunction;
 
 public enum InitialPieceRepository {
 
-    BLACK_PAWN_1(Pawn::of, Team.BLACK, Position.of("A7")),
+    BLACK_PAWN_1(Pawn::of, Team.BLACK, Position.of("A5")),
     BLACK_PAWN_2(Pawn::of, Team.BLACK, Position.of("B7")),
     BLACK_PAWN_3(Pawn::of, Team.BLACK, Position.of("C7")),
     BLACK_PAWN_4(Pawn::of, Team.BLACK, Position.of("D7")),

@@ -21,4 +21,8 @@ public class Turn {
     public boolean isSameTeam(Team team) {
         return turn.equals(team);
     }
+
+    public Team getTurn() {
+        return turn;
+    }
 }

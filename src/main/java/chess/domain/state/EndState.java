@@ -3,25 +3,32 @@ package chess.domain.state;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
 import chess.domain.board.initializer.EnumRepositoryBoardInitializer;
+import chess.domain.game.ChessGame;
 import chess.domain.game.Turn;
+import chess.domain.piece.PieceState;
 import chess.domain.player.Team;
+import chess.domain.position.Position;
+
+import java.util.List;
+import java.util.Map;
 
 public class EndState implements State {
 
-    private final Board board;
+    private final ChessGame chessGame;
     private final Team winner;
 
-    public EndState(Board board, Team winner) {
-        this.board = board;
+    public EndState(ChessGame chessGame, Team winner) {
+        this.chessGame = chessGame;
         this.winner = winner;
     }
 
     @Override
-    public State start(String param) {
-        if ("new".equals(param)) {
-            return new RunningState(Board.of(new EnumRepositoryBoardInitializer()), Turn.from(Team.WHITE));
+    public State start(List<String> parameters) {
+        if ("new".equals(parameters.get(0))) {
+            ChessGame chessGame = new ChessGame(Board.of(new EnumRepositoryBoardInitializer()), Turn.from(Team.WHITE));
+            return new RunningState(chessGame);
         }
-        if ("load".equals(param)) {
+        if ("load".equals(parameters.get(0))) {
             // 게임 불러오기
         }
         throw new IllegalArgumentException("잘못된 시작입니다.");
@@ -33,18 +40,23 @@ public class EndState implements State {
     }
 
     @Override
-    public State end(String param) {
+    public State end(List<String> parameters) {
         throw new UnsupportedOperationException("이미 종료 되었습니다.");
     }
 
     @Override
-    public Board getBoard() {
-        return board;
+    public Map<Position, PieceState> getBoard() {
+        return chessGame.getBoard();
     }
 
     @Override
-    public double getPoints(Team team) {
-        return board.getScores(team);
+    public Map<Team, Double> getStatus() {
+        return chessGame.getStatus();
+    }
+
+    @Override
+    public ChessGame getChessGame() {
+        return chessGame;
     }
 
     @Override

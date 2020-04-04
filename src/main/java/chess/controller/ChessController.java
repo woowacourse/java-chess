@@ -8,6 +8,7 @@ import chess.domain.player.Team;
 import chess.domain.position.Position;
 import chess.service.ChessService;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,6 @@ public class ChessController {
         runner.put(Command.START, this::start);
         runner.put(Command.END, this::end);
         runner.put(Command.MOVE, this::move);
-        runner.put(Command.STATUS, this::status);
         runner.put(Command.UNKNOWN, this::unknown);
     }
 
@@ -50,19 +50,22 @@ public class ChessController {
     }
 
     private void start(List<String> parameter) {
-        chessService.start(parameter);
+        try {
+            chessService.start(parameter);
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+        }
     }
 
     private void end(List<String> parameter) {
-        chessService.end(parameter);
+        try {
+            chessService.end(parameter);
+        } catch (SQLException se) {
+        }
     }
 
     private void move(List<String> parameter) {
         chessService.move(parameter);
-    }
-
-    private void status(List<String> parameter) {
-        chessService.status(parameter);
     }
 
     public ResponseDto getResponseDto() {

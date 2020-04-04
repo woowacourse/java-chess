@@ -2,8 +2,9 @@ package chess.domain.game;
 
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
+import chess.domain.piece.PieceState;
 import chess.domain.player.Team;
-import chess.domain.state.State;
+import chess.domain.position.Position;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -11,37 +12,40 @@ import java.util.stream.Collectors;
 
 public class ChessGame {
 
-    private State state;
+    private Board board;
+    private Turn turn;
 
-    public void start(String param) {
-        state = state.start(param);
-    }
-
-    public void move(MoveParameter moveParameter) {
-        state = state.move(moveParameter);
-    }
-
-    public void end(String param) {
-        state = state.end(param);
-    }
-
-    public Board getBoard() {
-        return state.getBoard();
+    public ChessGame(final Board board, final Turn turn) {
+        this.board = board;
+        this.turn = turn;
     }
 
     public boolean isEnd() {
-        return state.isEnd();
+        return board.isEnd();
+    }
+
+    public void move(MoveParameter moveParameter) {
+        board.move(moveParameter.getSource(), moveParameter.getTarget(), turn);
+        turn.switchTurn();
+    }
+
+    public Map<Position, PieceState> getBoard() {
+        return board.getBoard();
     }
 
     public Map<Team, Double> getStatus() {
         return Arrays.stream(Team.values())
                 .collect(Collectors.toMap(
                         value -> value,
-                        value -> state.getPoints(value)
+                        value -> board.getScores(value)
                 ));
     }
 
-    public Team getWinner() {
-        return state.getWinner();
+    public double getScores(Team team) {
+        return board.getScores(team);
+    }
+
+    public Team getTurn() {
+        return turn.getTurn();
     }
 }

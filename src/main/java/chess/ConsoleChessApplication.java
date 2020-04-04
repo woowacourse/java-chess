@@ -13,7 +13,7 @@ public class ConsoleChessApplication {
         ChessController chessController = new ChessController();
 
         consoleOutputView.printInitialMessage();
-        while (!chessController.isEnd()) {
+        while (true) {
             RequestDto requestDto = consoleInputView.inputRequest();
             ResponseDto responseDto = chessController.run(requestDto);
             consoleOutputView.printResponse(responseDto);
