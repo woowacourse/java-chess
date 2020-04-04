@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import java.util.Objects;
+
 public class Status {
 
     private static final int INIT_TURN = 0;
@@ -18,6 +20,10 @@ public class Status {
 
     public static Status initialStatus() {
         return new Status(INIT_TURN, StatusType.PROCESSING);
+    }
+
+    public static Status from(int turn) {
+        return new Status(turn, StatusType.PROCESSING);
     }
 
     public boolean isWhiteTurn() {
@@ -50,5 +56,21 @@ public class Status {
 
     public StatusType getStatusType() {
         return statusType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Status))
+            return false;
+        Status status = (Status)o;
+        return turn == status.turn &&
+                statusType == status.statusType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(turn, statusType);
     }
 }

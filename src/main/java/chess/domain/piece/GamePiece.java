@@ -3,6 +3,7 @@ package chess.domain.piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
@@ -16,31 +17,13 @@ public abstract class GamePiece {
     protected final List<Direction> directions;
     protected final int moveCount;
 
-    public GamePiece(String name, double score, PlayerColor playerColor,
+    protected GamePiece(String name, double score, PlayerColor playerColor,
             List<Direction> directions, int moveCount) {
         this.directions = directions;
         this.moveCount = moveCount;
         this.name = playerColor.decideName(name);
         this.score = score;
         this.playerColor = playerColor;
-    }
-
-    public static List<GamePiece> createGamePieces() {
-        List<GamePiece> gamePieces = new ArrayList<>();
-        gamePieces.add(new King(PlayerColor.BLACK));
-        gamePieces.add(new Queen(PlayerColor.BLACK));
-        gamePieces.add(new Bishop(PlayerColor.BLACK));
-        gamePieces.add(new Knight(PlayerColor.BLACK));
-        gamePieces.add(new Rook(PlayerColor.BLACK));
-        gamePieces.add(new Pawn(PlayerColor.BLACK));
-        gamePieces.add(new King(PlayerColor.WHITE));
-        gamePieces.add(new Queen(PlayerColor.WHITE));
-        gamePieces.add(new Bishop(PlayerColor.WHITE));
-        gamePieces.add(new Knight(PlayerColor.WHITE));
-        gamePieces.add(new Rook(PlayerColor.WHITE));
-        gamePieces.add(new Pawn(PlayerColor.WHITE));
-
-        return gamePieces;
     }
 
     public void validateMoveTo(Map<Position, GamePiece> board, Position source, Position target) {
@@ -104,5 +87,20 @@ public abstract class GamePiece {
 
     public PlayerColor getPlayerColor() {
         return playerColor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof GamePiece))
+            return false;
+        GamePiece gamePiece = (GamePiece)o;
+        return Objects.equals(name, gamePiece.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

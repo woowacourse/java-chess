@@ -108,4 +108,20 @@ public class Position implements Comparable<Position> {
         }
         return -row.compareTo(position.row);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Position))
+            return false;
+        Position position = (Position)o;
+        return column == position.column &&
+                row == position.row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
+    }
 }

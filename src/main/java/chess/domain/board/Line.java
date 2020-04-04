@@ -24,9 +24,10 @@ public class Line {
     public static List<LineDto> listByRow(Map<Position, GamePiece> gamePieces) {
         Map<Row, LineDto> rows = gamePieces.entrySet()
                 .stream()
-                .collect(groupingBy(entry -> entry.getKey().getRow(),       // key(row)
+                .collect(groupingBy(entry -> entry.getKey().getRow(),    // key(row)
                         () -> new TreeMap<>(Collections.reverseOrder()),    // 리턴타입은 reversed TreeMap
-                        mapping(entry -> new GamePieceDto(entry.getValue().getName(), entry.getValue().getPlayerColor(), entry.getKey()), collectingAndThen(toList(), LineDto::new)))); // value(Line)
+                        mapping(entry -> new GamePieceDto(entry.getValue().getName(), entry.getValue().getPlayerColor(), entry.getKey()),
+                                collectingAndThen(toList(), LineDto::new)))); // value(Line)
         return new ArrayList<>(rows.values());
     }
 
@@ -40,7 +41,7 @@ public class Line {
     }
 
     public int countPawnOf(PlayerColor playerColor) {
-        return (int) line.stream()
+        return (int)line.stream()
                 .filter(piece -> piece.is(playerColor))
                 .filter(GamePiece::isPawn)
                 .count();

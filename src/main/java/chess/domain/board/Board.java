@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import chess.domain.exception.InvalidMovementException;
@@ -23,14 +24,12 @@ public class Board {
         this.status = status;
     }
 
-    static Board from(Map<Position, GamePiece> board, Status status) {
+    static Board of(Map<Position, GamePiece> board, Status status) {
         return new Board(board, status);
     }
 
     public Board move(String sourceInput, String targetInput) {
-        if (status.isNotProcessing()) {
-            throw new UnsupportedOperationException("먼저 게임을 실행해야합니다.");
-        }
+        validateAll(sourceInput, targetInput);
 
         Map<Position, GamePiece> board = new HashMap<>(this.board);
         Position source = Position.from(sourceInput);
@@ -38,18 +37,28 @@ public class Board {
         GamePiece sourcePiece = board.get(source);
         GamePiece targetPiece = board.get(target);
 
-        validateSourcePiece(sourcePiece);
-        sourcePiece.validateMoveTo(board, source, target);
-
         board.put(target, sourcePiece);
         board.put(source, EmptyPiece.getInstance());
-
         Status nextStatus = status.nextTurn();
 
         if (targetPiece.isKing()) {
             return new Board(board, nextStatus.finish());
         }
         return new Board(board, nextStatus);
+    }
+
+    private void validateAll(String sourceInput, String targetInput) {
+        validateStatus();
+        GamePiece sourcePiece = board.get(Position.from(sourceInput));
+        validateSourcePiece(sourcePiece);
+
+        sourcePiece.validateMoveTo(board, Position.from(sourceInput), Position.from(targetInput));
+    }
+
+    private void validateStatus() {
+        if (status.isNotProcessing()) {
+            throw new UnsupportedOperationException("먼저 게임을 실행해야합니다.");
+        }
     }
 
     private void validateSourcePiece(GamePiece sourcePiece) {
@@ -78,5 +87,25 @@ public class Board {
 
     public Map<Position, GamePiece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public int getTurn() {
+        return status.getTurn();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Board))
+            return false;
+        Board board1 = (Board)o;
+        return Objects.equals(board, board1.board) &&
+                Objects.equals(status, board1.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, status);
     }
 }

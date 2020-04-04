@@ -21,12 +21,6 @@ import chess.domain.exception.InvalidMovementException;
 
 class GamePieceTest {
 
-    @Test
-    @DisplayName("플레이어별 game piece 생성")
-    void getGamePieces() {
-        assertThat(GamePiece.createGamePieces()).hasSize(12);
-    }
-
     @ParameterizedTest
     @DisplayName("gamepiece가 pawn인지 확인")
     @MethodSource("createPieces")

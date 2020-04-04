@@ -40,7 +40,7 @@ class BoardTest {
     void move(GamePiece piece, String source, String target, int turn) {
         Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard().getBoard());
         map.put(Position.from(source), piece);
-        Board board = Board.from(map, new Status(turn, StatusType.PROCESSING));
+        Board board = Board.of(map, new Status(turn, StatusType.PROCESSING));
         board = board.move(source, target);
 
         assertThat(board.getBoard().get(Position.from(source))).isEqualTo(EmptyPiece.getInstance());
@@ -61,7 +61,7 @@ class BoardTest {
     void moveWithImpossiblePawnMovement() {
         Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard().getBoard());
         map.put(Position.from("d5"), new Pawn(BLACK));
-        Board board = Board.from(map, new Status(1, StatusType.PROCESSING));
+        Board board = Board.of(map, new Status(1, StatusType.PROCESSING));
 
         assertThatThrownBy(() -> {
             board.move("d5", "d6");
@@ -84,7 +84,7 @@ class BoardTest {
     void moveWhenInvalidTurn(int turn, GamePiece gamePiece) {
         Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard().getBoard());
         map.put(Position.from("d5"), gamePiece);
-        Board board = Board.from(map, new Status(turn, StatusType.PROCESSING));
+        Board board = Board.of(map, new Status(turn, StatusType.PROCESSING));
 
         assertThatThrownBy(() -> {
             board.move("d5", "g8");
@@ -106,7 +106,7 @@ class BoardTest {
         Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard().getBoard());
         map.put(Position.from(source), gamePiece);
         map.put(Position.from("e3"), new Bishop(BLACK));
-        Board board = Board.from(map, new Status(0, StatusType.PROCESSING));
+        Board board = Board.of(map, new Status(0, StatusType.PROCESSING));
 
         assertThatThrownBy(() -> {
             board.move(source, target);
@@ -130,7 +130,7 @@ class BoardTest {
         Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard().getBoard());
         map.put(Position.from("c5"), new King(WHITE));
         map.put(Position.from("d6"), new Pawn(BLACK));
-        Board board = Board.from(map, new Status(1, StatusType.PROCESSING));
+        Board board = Board.of(map, new Status(1, StatusType.PROCESSING));
         board = board.move(source, target);
 
         assertThat(board.isNotFinished()).isEqualTo(expected);
