@@ -7,14 +7,14 @@ import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
 
 public enum PieceInitializer {
-    A1(PieceType.ROOK, PositionFactory.of("a1"), new BlockedMovable(Directions.LINEAR)),
-    B1(PieceType.KNIGHT, PositionFactory.of("b1"), new UnblockedMovable(Directions.KNIGHT)),
-    C1(PieceType.BISHOP, PositionFactory.of("c1"), new BlockedMovable(Directions.DIAGONAL)),
-    D1(PieceType.KING, PositionFactory.of("d1"), new UnblockedMovable(Directions.EVERY)),
-    E1(PieceType.QUEEN, PositionFactory.of("e1"), new BlockedMovable(Directions.EVERY)),
-    F1(PieceType.BISHOP, PositionFactory.of("f1"), new BlockedMovable(Directions.DIAGONAL)),
-    G1(PieceType.KNIGHT, PositionFactory.of("g1"), new UnblockedMovable(Directions.KNIGHT)),
-    H1(PieceType.ROOK, PositionFactory.of("h1"), new BlockedMovable(Directions.LINEAR)),
+    A1(PieceType.ROOK, PositionFactory.of("a1"), new BlockedMovable(MovableDirections.LINEAR)),
+    B1(PieceType.KNIGHT, PositionFactory.of("b1"), new UnblockedMovable(MovableDirections.KNIGHT)),
+    C1(PieceType.BISHOP, PositionFactory.of("c1"), new BlockedMovable(MovableDirections.DIAGONAL)),
+    D1(PieceType.KING, PositionFactory.of("d1"), new UnblockedMovable(MovableDirections.EVERY)),
+    E1(PieceType.QUEEN, PositionFactory.of("e1"), new BlockedMovable(MovableDirections.EVERY)),
+    F1(PieceType.BISHOP, PositionFactory.of("f1"), new BlockedMovable(MovableDirections.DIAGONAL)),
+    G1(PieceType.KNIGHT, PositionFactory.of("g1"), new UnblockedMovable(MovableDirections.KNIGHT)),
+    H1(PieceType.ROOK, PositionFactory.of("h1"), new BlockedMovable(MovableDirections.LINEAR)),
     A2(PositionFactory.of("a2")),
     B2(PositionFactory.of("b2")),
     C2(PositionFactory.of("c2")),
@@ -31,14 +31,14 @@ public enum PieceInitializer {
     F7(PositionFactory.of("f7")),
     G7(PositionFactory.of("g7")),
     H7(PositionFactory.of("h7")),
-    A8(PieceType.ROOK, PositionFactory.of("a8"), new BlockedMovable(Directions.LINEAR)),
-    B8(PieceType.KNIGHT, PositionFactory.of("b8"), new UnblockedMovable(Directions.KNIGHT)),
-    C8(PieceType.BISHOP, PositionFactory.of("c8"), new BlockedMovable(Directions.DIAGONAL)),
-    D8(PieceType.KING, PositionFactory.of("d8"), new UnblockedMovable(Directions.EVERY)),
-    E8(PieceType.QUEEN, PositionFactory.of("e8"), new BlockedMovable(Directions.EVERY)),
-    F8(PieceType.BISHOP, PositionFactory.of("f8"), new BlockedMovable(Directions.DIAGONAL)),
-    G8(PieceType.KNIGHT, PositionFactory.of("g8"), new UnblockedMovable(Directions.KNIGHT)),
-    H8(PieceType.ROOK, PositionFactory.of("h8"), new BlockedMovable(Directions.LINEAR));
+    A8(PieceType.ROOK, PositionFactory.of("a8"), new BlockedMovable(MovableDirections.LINEAR)),
+    B8(PieceType.KNIGHT, PositionFactory.of("b8"), new UnblockedMovable(MovableDirections.KNIGHT)),
+    C8(PieceType.BISHOP, PositionFactory.of("c8"), new BlockedMovable(MovableDirections.DIAGONAL)),
+    D8(PieceType.KING, PositionFactory.of("d8"), new UnblockedMovable(MovableDirections.EVERY)),
+    E8(PieceType.QUEEN, PositionFactory.of("e8"), new BlockedMovable(MovableDirections.EVERY)),
+    F8(PieceType.BISHOP, PositionFactory.of("f8"), new BlockedMovable(MovableDirections.DIAGONAL)),
+    G8(PieceType.KNIGHT, PositionFactory.of("g8"), new UnblockedMovable(MovableDirections.KNIGHT)),
+    H8(PieceType.ROOK, PositionFactory.of("h8"), new BlockedMovable(MovableDirections.LINEAR));
 
     private final PieceType pieceType;
     private final Position position;
@@ -62,11 +62,11 @@ public enum PieceInitializer {
         this.position = position;
         if (position.isHalfBottom()) {
             this.color = Color.WHITE;
-            this.movable = new PawnMovable(Directions.WHITE_PAWN);
+            this.movable = new PawnMovable(MovableDirections.WHITE_PAWN);
             return;
         }
         this.color = Color.BLACK;
-        this.movable = new PawnMovable(Directions.BLACK_PAWN);
+        this.movable = new PawnMovable(MovableDirections.BLACK_PAWN);
     }
 
     public PieceType getPieceType() {

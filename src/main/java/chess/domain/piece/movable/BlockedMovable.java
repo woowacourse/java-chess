@@ -16,15 +16,15 @@ public class BlockedMovable implements Movable {
 	/**
 	 * moveDirections는 Pawn이 움직일 수 있는 방향들을 저장한다.
 	 */
-	private final Directions moveDirections;
+	private final MovableDirections movableDirections;
 
 	/**
 	 * Constructor는 방향을 주입받아 이를 저장한다.
 	 *
-	 * @param moveDirections 움직일 수 있는 방향의 목록이다.일반적으로 전진 및 대각선 전진(왼쪽방향, 오른쪽 방향)의 세 가지 방향을 포함한다.
+	 * @param movableDirections 움직일 수 있는 방향의 목록이다.일반적으로 전진 및 대각선 전진(왼쪽방향, 오른쪽 방향)의 세 가지 방향을 포함한다.
 	 */
-	public BlockedMovable(Directions moveDirections) {
-		this.moveDirections = moveDirections;
+	public BlockedMovable(MovableDirections movableDirections) {
+		this.movableDirections = movableDirections;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class BlockedMovable implements Movable {
 	@Override
 	public Positions findMovablePositions(Position position, List<Piece> pieces, Color color) {
 		Positions movablePositions = Positions.create();
-		for (Direction direction : moveDirections.getDirections()) {
+		for (Direction direction : movableDirections.getDirections()) {
 			Positions positions = createMovablePositionsByDirection(position, direction, pieces, color);
 			movablePositions.addAll(positions);
 		}

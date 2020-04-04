@@ -20,15 +20,15 @@ public class PawnMovable implements Movable {
 	/**
 	 * moveDirections는 Pawn이 움직일 수 있는 방향들을 저장한다.
 	 */
-	private final Directions moveDirections;
+	private final MovableDirections movableDirections;
 
 	/**
 	 * Constructor는 방향을 주입받아 이를 저장한다.
 	 *
-	 * @param moveDirections 움직일 수 있는 방향의 목록이다. 일반적으로 전진 및 대각선 전진(왼쪽방향, 오른쪽 방향)의 세 가지 방향을 포함한다.
+	 * @param movableDirections 움직일 수 있는 방향의 목록이다. 일반적으로 전진 및 대각선 전진(왼쪽방향, 오른쪽 방향)의 세 가지 방향을 포함한다.
 	 */
-	public PawnMovable(Directions moveDirections) {
-		this.moveDirections = moveDirections;
+	public PawnMovable(MovableDirections movableDirections) {
+		this.movableDirections = movableDirections;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class PawnMovable implements Movable {
 	 * @return 대각선으로 이동 가능한 위치들을 모아 Positions 객체를 생성한 후 이를 반환한다.
 	 */
 	private Positions getMovableDiagonalPositions(Position position, List<Piece> pieces, Color color) {
-		return moveDirections.getDirections()
+		return movableDirections.getDirections()
 				.stream()
 				.map(position::getMovedPositionBy)
 				.filter(movablePosition -> position.isDifferentRow(movablePosition) && isPossessedByDifferentColor(movablePosition, pieces, color))
@@ -107,7 +107,7 @@ public class PawnMovable implements Movable {
 	 * @return 전진하는 Direction 값을 찾아 반환한다. 없을 경우 Direction.NONE을 반환한다.
 	 */
 	private Direction getForwardDirection() {
-		return moveDirections.getDirections()
+		return movableDirections.getDirections()
 				.stream()
 				.filter(Direction::canOnlyMoveVertical)
 				.findFirst()

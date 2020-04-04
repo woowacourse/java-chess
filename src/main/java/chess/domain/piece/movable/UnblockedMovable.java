@@ -18,15 +18,15 @@ public class UnblockedMovable implements Movable {
 	/**
 	 * moveDirections는 Pawn이 움직일 수 있는 방향들을 저장한다.
 	 */
-	private final Directions moveDirections;
+	private final MovableDirections movableDirections;
 
 	/**
 	 * Constructor는 방향을 주입받아 이를 저장한다.
 	 *
-	 * @param moveDirections 움직일 수 있는 방향의 목록이다. 각 말의 설정에 따라 다른 값이 들어온다.
+	 * @param movableDirections 움직일 수 있는 방향의 목록이다. 각 말의 설정에 따라 다른 값이 들어온다.
 	 */
-	public UnblockedMovable(Directions moveDirections) {
-		this.moveDirections = moveDirections;
+	public UnblockedMovable(MovableDirections movableDirections) {
+		this.movableDirections = movableDirections;
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class UnblockedMovable implements Movable {
 	 */
 	@Override
 	public Positions findMovablePositions(Position position, List<Piece> pieces, Color color) {
-		return moveDirections.getDirections().stream()
+		return movableDirections.getDirections().stream()
 				.map(position::getMovedPositionBy)
 				.filter(movablePosition -> checkMovable(movablePosition, pieces, color))
 				.collect(Collectors.collectingAndThen(Collectors.toSet(), Positions::new));

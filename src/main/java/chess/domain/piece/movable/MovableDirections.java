@@ -6,7 +6,7 @@ import java.util.List;
 
 import static chess.domain.piece.movable.Direction.*;
 
-public enum Directions {
+public enum MovableDirections {
 	LINEAR(Arrays.asList(NORTH, EAST, SOUTH, WEST)),
 	DIAGONAL(Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)),
 	EVERY(Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)),
@@ -17,7 +17,7 @@ public enum Directions {
 
 	private List<Direction> directions;
 
-	Directions(List<Direction> directions) {
+	MovableDirections(List<Direction> directions) {
 		this.directions = directions;
 	}
 
