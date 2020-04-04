@@ -41,7 +41,11 @@ public class WebUIChessApplication {
 
             if (req.queryParams("command").equals("새 게임")) {
                 boardDao.placeInitialPieces();
-                //boardDao = FakeBoardDAO.initialFakeBoardDAO();
+                board = new Board(boardDao);
+                model = parseBoard(board);
+            }
+
+            if (req.queryParams("command").equals("불러오기")) {
                 board = new Board(boardDao);
                 model = parseBoard(board);
             }
