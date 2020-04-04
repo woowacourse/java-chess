@@ -71,9 +71,13 @@ public class ChessBoard {
         Piece target = chessBoard.get(to);
         Direction direction = Direction.getDirection(from, to);
 
+        if (source.needValidateObstacle()) {
+            return source.validateTileSize(from, to)
+                    && source.validateDirection(direction, target)
+                    && validateObstacles(getRoutes(from, to));
+        }
         return source.validateTileSize(from, to)
-                && source.validateDirection(direction, target)
-                && validateObstacles(getRoutes(from, to));
+                && source.validateDirection(direction, target);
     }
 
     public boolean isGameOver() {

@@ -12,4 +12,9 @@ public class Queen extends Piece {
         super(player, pieceInfo);
         directions.addAll(Direction.everyDirection());
     }
+
+    @Override
+    public boolean needValidateObstacle() {
+        return true;
+    }
 }

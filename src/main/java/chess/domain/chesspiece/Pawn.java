@@ -59,6 +59,11 @@ public class Pawn extends Piece {
                 && (validateMoveAttack(direction, target) || validateMoveForward(direction, target));
     }
 
+    @Override
+    public boolean needValidateObstacle() {
+        return true;
+    }
+
     public boolean validateMoveAttack(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
         boolean isNotEmpty = Objects.nonNull(target);

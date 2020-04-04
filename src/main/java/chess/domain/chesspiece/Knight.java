@@ -15,6 +15,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public boolean needValidateObstacle() {
+        return false;
+    }
+
+    @Override
     public boolean movable(Position from, Position to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);

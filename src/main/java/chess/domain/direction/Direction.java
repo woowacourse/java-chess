@@ -12,6 +12,14 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
 public enum Direction {
+    NORTH_NORTH_EAST((rowDiff, columnDiff) -> rowDiff == 1 && columnDiff == 2, new KnightPositionBetween()),
+    NORTH_NORTH_WEST((rowDiff, columnDiff) -> rowDiff == -1 && columnDiff == 2, new KnightPositionBetween()),
+    EAST_EAST_NORTH((rowDiff, columnDiff) -> rowDiff == 2 && columnDiff == 1, new KnightPositionBetween()),
+    EAST_EAST_SOUTH((rowDiff, columnDiff) -> rowDiff == 2 && columnDiff == -1, new KnightPositionBetween()),
+    SOUTH_SOUTH_EAST((rowDiff, columnDiff) -> rowDiff == 1 && columnDiff == -2, new KnightPositionBetween()),
+    SOUTH_SOUTH_WEST((rowDiff, columnDiff) -> rowDiff == -1 && columnDiff == -2, new KnightPositionBetween()),
+    WEST_WEST_SOUTH((rowDiff, columnDiff) -> rowDiff == -2 && columnDiff == -1, new KnightPositionBetween()),
+    WEST_WEST_NORTH((rowDiff, columnDiff) -> rowDiff == -2 && columnDiff == 1, new KnightPositionBetween()),
     WEST((rowDiff, columnDiff) -> isPositive(rowDiff) && isZero(columnDiff),
             new EastWestPositionBetween()),
     EAST((rowDiff, columnDiff) -> isNegative(rowDiff) && isZero(columnDiff),
@@ -27,15 +35,7 @@ public enum Direction {
     SOUTH_WEST((rowDiff, columnDiff) -> isPositive(rowDiff) && isPositive(columnDiff),
             new DiagonalPositionBetween()),
     SOUTH_EAST((rowDiff, columnDiff) -> isNegative(rowDiff) && isPositive(columnDiff),
-            new DiagonalPositionBetween()),
-    NORTH_NORTH_EAST((rowDiff, columnDiff) -> rowDiff == 1 && columnDiff == 2, new KnightPositionBetween()),
-    NORTH_NORTH_WEST((rowDiff, columnDiff) -> rowDiff == -1 && columnDiff == 2, new KnightPositionBetween()),
-    EAST_EAST_NORTH((rowDiff, columnDiff) -> rowDiff == 2 && columnDiff == 1, new KnightPositionBetween()),
-    EAST_EAST_SOUTH((rowDiff, columnDiff) -> rowDiff == 2 && columnDiff == -1, new KnightPositionBetween()),
-    SOUTH_SOUTH_EAST((rowDiff, columnDiff) -> rowDiff == 1 && columnDiff == -2, new KnightPositionBetween()),
-    SOUTH_SOUTH_WEST((rowDiff, columnDiff) -> rowDiff == -1 && columnDiff == -2, new KnightPositionBetween()),
-    WEST_WEST_SOUTH((rowDiff, columnDiff) -> rowDiff == -2 && columnDiff == -1, new KnightPositionBetween()),
-    WEST_WEST_NORTH((rowDiff, columnDiff) -> rowDiff == -2 && columnDiff == 1, new KnightPositionBetween());
+            new DiagonalPositionBetween());
 
     private final BiPredicate<Integer, Integer> judge;
     private final BiFunction<Position, Position, List<Position>> positionsBetween;
@@ -63,7 +63,8 @@ public enum Direction {
 
         int rowDiff = Row.getDiff(from.getRow(), to.getRow());
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
-
+        System.out.println("row diff: "+rowDiff);
+        System.out.println("column diff: "+columnDiff);
         return judge.test(rowDiff, columnDiff);
     }
 

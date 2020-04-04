@@ -36,8 +36,10 @@ public abstract class Piece {
     }
 
     public boolean validateDirection(Direction direction, Piece target) {
+        System.out.println("direction: "+direction);
         return hasDirection(direction);
     }
+
 
     protected final boolean hasDirection(Direction direction) {
         return directions.contains(direction);
@@ -46,6 +48,8 @@ public abstract class Piece {
     public List<Direction> getDirections() {
         return Collections.unmodifiableList(directions);
     }
+
+    public abstract boolean needValidateObstacle();
 
     public PieceInfo getPieceInfo() {
         return pieceInfo;
@@ -77,6 +81,7 @@ public abstract class Piece {
         }
         return player == target.getPlayer();
     }
+
 
     public String getDisplay() {
         return pieceInfo.getName(player);

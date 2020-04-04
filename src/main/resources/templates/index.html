@@ -206,6 +206,7 @@
             event.preventDefault();
         }).on("drop", function (event) {
             console.log("drop");
+            console.dir(event);
             event.preventDefault();
             let from = event.originalEvent.dataTransfer.getData("from");
             let to = event.currentTarget.id;

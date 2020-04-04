@@ -12,4 +12,9 @@ public class Rook extends Piece {
         super(player, pieceInfo);
         directions.addAll(Direction.diagonalDirection());
     }
+
+    @Override
+    public boolean needValidateObstacle() {
+        return true;
+    }
 }
