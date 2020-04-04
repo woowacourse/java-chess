@@ -2,16 +2,12 @@ package data;
 
 import chess.result.ChessResult;
 
-public class ChessResultVO {
+public class ChessResultDTO {
     private final String result;
     private final String name;
 
-    public ChessResultVO(ChessResult chessResult) {
+    public ChessResultDTO(ChessResult chessResult) {
         this.result = "승리";
         this.name = chessResult.getName();
-    }
-
-    public String getName() {
-        return name;
     }
 }

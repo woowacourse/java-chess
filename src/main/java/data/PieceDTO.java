@@ -3,11 +3,11 @@ package data;
 import chess.location.Location;
 import chess.piece.type.Piece;
 
-public class PieceVO {
+public class PieceDTO {
     private String location;
     private String pieceName;
 
-    public PieceVO(Location location, Piece piece) {
+    public PieceDTO(Location location, Piece piece) {
         this.location = location.toString();
         this.pieceName = String.valueOf(piece.getName());
     }
@@ -22,7 +22,7 @@ public class PieceVO {
 
     @Override
     public String toString() {
-        return "PieceVO{" +
+        return "PieceDTO{" +
                 "location='" + location +
                 ", pieceName='" + pieceName +
                 '}';

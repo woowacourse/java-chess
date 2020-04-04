@@ -3,20 +3,12 @@ package data;
 import chess.result.ChessScores;
 import chess.score.Score;
 
-public class ChessGameScoresVO {
+public class ChessGameScoresDTO {
     private final Score whiteScore;
     private final Score blackScore;
 
-    public ChessGameScoresVO(ChessScores chessScores) {
+    public ChessGameScoresDTO(ChessScores chessScores) {
         whiteScore = chessScores.getWhiteScore();
         blackScore = chessScores.getBlackScore();
-    }
-
-    public Score getWhiteScore() {
-        return whiteScore;
-    }
-
-    public Score getBlackScore() {
-        return blackScore;
     }
 }

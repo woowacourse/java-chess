@@ -8,19 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BoardVO {
-    private List<PieceVO> boardValue;
+public class BoardDTO {
+    private List<PieceDTO> boardValue;
 
-    public BoardVO(ChessBoard chessBoard) {
+    public BoardDTO(ChessBoard chessBoard) {
         boardValue = new ArrayList();
         Map<Location, Piece> board = chessBoard.getBoard();
         for (Map.Entry<Location, Piece> elem : board.entrySet()) {
-            PieceVO pieceVO = new PieceVO(elem.getKey(), elem.getValue());
-            boardValue.add(pieceVO);
+            PieceDTO pieceDTO = new PieceDTO(elem.getKey(), elem.getValue());
+            boardValue.add(pieceDTO);
         }
-    }
-
-    public List<PieceVO> getBoardValue() {
-        return boardValue;
     }
 }

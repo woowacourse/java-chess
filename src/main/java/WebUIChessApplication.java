@@ -29,35 +29,30 @@ public class WebUIChessApplication {
 
         get("/start/board", (req, res) -> {
 
-            BoardVO boardVO = new BoardVO(chessGame.getChessBoard());
-            return GSON.toJson(boardVO);
+            BoardDTO boardDTO = new BoardDTO(chessGame.getChessBoard());
+            return GSON.toJson(boardDTO);
         });
 
         post("/start/move", (req, res) -> {
+            String[] nowLocation = parseRowAndCol(req.queryParams("now"));
+            String[] destination = parseRowAndCol(req.queryParams("des"));
+            LocationDTO nowDTO = new LocationDTO(nowLocation[1], nowLocation[0]);
+            LocationDTO afterDTO = new LocationDTO(destination[1], destination[0]);
 
-            String now = req.queryParams("now");
-            String after = req.queryParams("des");
-            String[] strings = parseRowAndCol(now);
-            String[] afterStrings = parseRowAndCol(after);
-            LocationDTO nowDTO = new LocationDTO(strings[1], strings[0]);
-            LocationDTO afterDTO = new LocationDTO(afterStrings[1], afterStrings[0]);
-            // END 혹은 CONTINUE 혹은 ERROR 출력
             Progress progress = chessGame.webDoMoveCommand(nowDTO.getLocation(), afterDTO.getLocation());
             if (Progress.CONTINUE == progress) {
                 chessGame.changeTurn();
             }
-            // Score 확
-            ChessGameScoresVO chessGameScoresVO = new ChessGameScoresVO(chessGame.calculateScores());
-            System.out.println("blackscore = " + chessGameScoresVO.getBlackScore().getValue());
-            System.out.println("whitescore = " + chessGameScoresVO.getWhiteScore().getValue());
-            ChessMoveVO chessMoveVO = new ChessMoveVO(chessGameScoresVO, progress);
-            return GSON.toJson(chessMoveVO);
+
+            ChessGameScoresDTO chessGameScoresDTO = new ChessGameScoresDTO(chessGame.calculateScores());
+            ChessMoveDTO chessMoveDTO = new ChessMoveDTO(chessGameScoresDTO, progress, chessGame.getTurn());
+            return GSON.toJson(chessMoveDTO);
         });
 
         get("/start/winner", (req, res) -> {
             Gson gson = new Gson();
-            ChessResultVO chessResultVO = new ChessResultVO(chessGame.findWinner());
-            return gson.toJson(chessResultVO);
+            ChessResultDTO chessResultDTO = new ChessResultDTO(chessGame.findWinner());
+            return gson.toJson(chessResultDTO);
         });
     }
 

@@ -1,6 +1,3 @@
-var start;
-var end;
-
 var main = {
     variables: {
         pieces: {
@@ -107,8 +104,10 @@ function postChessBoard(json) {
                 $('#' + json.now).html('');
                 $('#' + json.now).attr('chess', 'null');
 
-                $('#whiteScore').html("whiteScore : " + jsonData.chessGameScoresVO.whiteScore.value);
-                $('#blackScore').html("blackScore : " + jsonData.chessGameScoresVO.blackScore.value);
+                $('#whiteScore').html("whiteScore : " + jsonData.chessGameScoresDTO.whiteScore.value);
+                $('#blackScore').html("blackScore : " + jsonData.chessGameScoresDTO.blackScore.value);
+
+                $('#turn').html("It's " + jsonData.turn + " Turn!");
             }
             if (jsonData.progress == "ERROR") {
                 alert("움직일 수 없는 경우입니다.");
@@ -126,7 +125,6 @@ function getChessBoardResult() {
         type: "get",
         success: function (data) {
             var jason = JSON.parse(data);
-            console.log(jason.toString())
             alert("승자는" + jason.name + "입니다.")
         },
         error: function (errorThrown) {
