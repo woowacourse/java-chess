@@ -5,6 +5,19 @@ $(document).ready(function(){
     var targetX;
     var targetY;
 
+    $continue = function(){
+        jQuery.ajax({
+            type:"POST",
+            url:"/continue_game",
+            dataType: "json",
+            success : function(data) {
+                $setPieces(data);
+            }
+        });
+    }
+
+    $continue();
+
     $('.start_new_game').on('click',function(){
         jQuery.ajax({
             type:"POST",

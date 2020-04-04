@@ -110,7 +110,7 @@ public class BoardDAO {
         }
         if (piece_name.toLowerCase().equals("p")) {
             Pawn pawn = new Pawn(Team.of(team));
-            if ((Team.BLACK.getTeamName().equals("Black Team") && x_position == 7) || (Team.BLACK.getTeamName().equals("White Team") && x_position == 2)) {
+            if (!((Team.BLACK.getTeamName().equals(team) && x_position == 7) || (Team.WHITE.getTeamName().equals(team) && x_position == 2))) {
                 pawn.firstMoveComplete();
             }
             return pawn;
