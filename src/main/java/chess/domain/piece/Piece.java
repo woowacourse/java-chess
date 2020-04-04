@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.movable.Movable;
 import chess.domain.piece.pieces.PieceInitializer;
 import chess.domain.position.Position;
 import chess.domain.position.positions.Positions;
@@ -12,30 +11,21 @@ public class Piece {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "말을 생성할 수 없습니다.";
 
 	private Position position;
-	private final Movable movable;
-	private final Color color;
 	private final PieceType pieceType;
+	private final Color color;
 
-
-	public Piece(Position position, PieceType pieceType, Movable movable, Color color) {
-		validate(position, movable);
+	public Piece(Position position, PieceType pieceType, Color color) {
 		this.position = position;
 		this.pieceType = pieceType;
-		this.movable = movable;
 		this.color = color;
 	}
 
 	public Piece(PieceInitializer pieceInitializer) {
-		this(pieceInitializer.getPosition(), pieceInitializer.getPieceType(), pieceInitializer.getMovable(), pieceInitializer.getColor());
-	}
-
-	private void validate(Position position, Movable movable) {
-		Objects.requireNonNull(position, INVALID_INPUT_EXCEPTION_MESSAGE);
-		Objects.requireNonNull(movable, INVALID_INPUT_EXCEPTION_MESSAGE);
+		this(pieceInitializer.getPosition(), pieceInitializer.getPieceType(), pieceInitializer.getColor());
 	}
 
 	public Positions createMovablePositions(List<Piece> pieces) {
-		return movable.findMovablePositions(position, pieces, color);
+		return pieceType.findMovablePositions(position, pieces, color);
 	}
 
 	public void move(Position position) {
@@ -80,7 +70,7 @@ public class Piece {
 	}
 
 	public String getResource() {
-		if(color.isWhite()) {
+		if (color.isWhite()) {
 			return pieceType.getResource().toLowerCase();
 		}
 		return pieceType.getResource();
