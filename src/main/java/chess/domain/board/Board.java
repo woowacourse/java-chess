@@ -5,6 +5,7 @@ import chess.domain.command.MoveCommand;
 import chess.domain.piece.*;
 import chess.exception.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,10 @@ import static chess.domain.piece.Pawn.PAWN_SCORE;
 import static chess.util.NullValidator.validateNull;
 
 public class Board {
+    private static final char MIN_Y_POINT = '1';
+    private static final char MAX_Y_POINT = '8';
+    private static final char MIN_X_POINT = 'a';
+    private static final char MAX_X_POINT = 'h';
     public static final int ONLY_ONE_PAWN_IN_XPOINT = 1;
 
     public PieceColor team = PieceColor.WHITE;
@@ -177,5 +182,47 @@ public class Board {
 
     public Map<Position, Piece> get() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public List<Cell> getCells() {
+        List<Cell> cells = new ArrayList<>();
+
+        for (char yPoint = MAX_Y_POINT; yPoint >= MIN_Y_POINT; yPoint--) {
+            for (char xPoint = MIN_X_POINT; xPoint <= MAX_X_POINT; xPoint++) {
+                Piece piece = this.board.get(PositionFactory.of(xPoint, yPoint));
+
+                Cell cell = new Cell();
+                cell.setTileColor(getTileColor(xPoint, yPoint));
+                cell.setPosition(String.valueOf(xPoint) + (yPoint));
+                cell.setPieceColor(getPieceColor(piece));
+                cell.setPiece(piece.getName());
+                cells.add(cell);
+            }
+        }
+
+        return cells;
+    }
+
+    private String getTileColor(char xPoint, char yPoint) {
+        int x = xPoint - MIN_X_POINT;
+        int y = yPoint - MIN_Y_POINT;
+
+        if ((x + y) % 2 == 0) {
+            return "BLACK";
+        }
+        if ((x + y) % 2 != 0) {
+            return "WHITE";
+        }
+        return "NONE";
+    }
+
+    private String getPieceColor(Piece piece) {
+        if (piece.isBlack()) {
+            return "Black";
+        }
+        if (piece.isWhite()) {
+            return "White";
+        }
+        return "None";
     }
 }
