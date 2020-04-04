@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.Board;
 import chess.Command;
-import chess.CommandException;
+import chess.exception.CommandException;
 import chess.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -19,23 +19,19 @@ public class ChessGame {
 
     private void start() {
         OutputView.printGameIntro();
-        requestCommand();
+        if (requestCommand().isEnd()) {
+            board.finishGame();
+            return;
+        }
         OutputView.printBoard(board.getPieces());
     }
 
-    private void requestCommand() {
+    private Command requestCommand() {
         try {
-            Command command = Command.beforeGameCommandOf(InputView.requestCommand());
-            terminateIfCommandIsEnd(command);
+            return Command.beforeGameCommandOf(InputView.requestCommand());
         } catch (CommandException e) {
             OutputView.printExceptionMessage(e.getMessage());
-            requestCommand();
-        }
-    }
-
-    private void terminateIfCommandIsEnd(Command command) {
-        if (command.isEnd()) {
-            System.exit(0);
+            return requestCommand();
         }
     }
 

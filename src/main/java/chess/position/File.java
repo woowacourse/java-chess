@@ -2,7 +2,6 @@ package chess.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,7 +50,8 @@ public enum File {
         int bigger = Math.max(start.getNumber(), end.getNumber());
         int smaller = Math.min(start.getNumber(), end.getNumber());
         return Arrays.stream(values())
-                .filter(file -> file.getNumber() > smaller && file.getNumber() < bigger)
+                .filter(file -> file.getNumber() > smaller)
+                .filter(file -> file.getNumber() < bigger)
                 .collect(Collectors.toList());
     }
 
@@ -63,8 +63,8 @@ public enum File {
         return Math.abs(this.getNumber() - other.getNumber());
     }
 
-    public File getFileUsingIncreaseAmount(int increaseAmountOfFile) {
-        return of(number + increaseAmountOfFile);
+    public File addFile(int number) {
+        return of(this.number + number);
     }
 
     public boolean isNone() {

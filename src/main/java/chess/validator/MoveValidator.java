@@ -6,15 +6,6 @@ import chess.position.Position;
 import java.util.List;
 
 public abstract class MoveValidator {
-    public boolean isMovable(Board board, Position source, Position target) {
-        try {
-            throwExceptionIfNotMovable(board, source, target);
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-        return true;
-    }
-
     public void throwExceptionIfNotMovable(Board board, Position source, Position target) {
         throwExceptionIfNotMovableWithoutConsideringKingCouldBeKilledNextTurn(board, source, target);
         if (isKingKilledIfMoves(board, source, target)) {

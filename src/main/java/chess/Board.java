@@ -103,7 +103,8 @@ public class Board {
 
     private List<Position> positionsOf(Team team) {
         return pieces.keySet().stream()
-                .filter(position -> isExistAt(position) && pieces.get(position).isSameTeam(turn))
+                .filter(this::isExistAt)
+                .filter(position -> pieces.get(position).isSameTeam(team))
                 .collect(Collectors.toList());
     }
 
@@ -256,6 +257,10 @@ public class Board {
 
     private boolean isWhite(Position position) {
         return pieces.get(position).isWhite();
+    }
+
+    public void finishGame() {
+        this.isFinished = true;
     }
 
     public Map<Position, Piece> getPieces() {

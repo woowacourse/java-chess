@@ -50,7 +50,8 @@ public enum Rank {
         int bigger = Math.max(start.getNumber(), end.getNumber());
         int smaller = Math.min(start.getNumber(), end.getNumber());
         return Arrays.stream(values())
-                .filter(rank -> rank.getNumber() > smaller && rank.getNumber() < bigger)
+                .filter(rank -> rank.getNumber() > smaller)
+                .filter(rank -> rank.getNumber() < bigger)
                 .collect(Collectors.toList());
     }
 
@@ -58,7 +59,8 @@ public enum Rank {
         int bigger = Math.max(start.getNumber(), end.getNumber());
         int smaller = Math.min(start.getNumber(), end.getNumber());
         return Arrays.stream(values())
-                .filter(rank -> rank.getNumber() >= smaller && rank.getNumber() <= bigger)
+                .filter(rank -> rank.getNumber() >= smaller)
+                .filter(rank -> rank.getNumber() <= bigger)
                 .collect(Collectors.toList());
     }
 
@@ -70,8 +72,8 @@ public enum Rank {
         return Math.abs(this.getNumber() - other.getNumber());
     }
 
-    public Rank getRankUsingIncreaseAmount(int increaseAmountOfRank) {
-        return of(number + increaseAmountOfRank);
+    public Rank addRank(int number) {
+        return of(this.number + number);
     }
 
     public boolean isNone() {

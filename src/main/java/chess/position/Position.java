@@ -1,5 +1,7 @@
 package chess.position;
 
+import chess.exception.InvalidPositionException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,7 @@ public class Position {
     private final File file;
 
     private final Rank rank;
+
     private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
@@ -45,7 +48,7 @@ public class Position {
 
     private static void validate(String key) {
         if (CACHE.get(key) == null) {
-            throw new IllegalArgumentException("위치 입력값이 올바르지 않습니다.");
+            throw new InvalidPositionException(key);
         }
     }
 
@@ -70,6 +73,10 @@ public class Position {
         return this.file == other.file || this.rank == other.rank;
     }
 
+    public boolean isNotStraight(Position other) {
+        return !isStraight(other);
+    }
+
     public boolean isDiagonal(Position other) {
         return isSameSum(other) || isSameDifference(other);
     }
@@ -88,10 +95,6 @@ public class Position {
 
     public boolean isNotDiagonal(Position other) {
         return !isDiagonal(other);
-    }
-
-    public boolean isNotStraight(Position other) {
-        return !isStraight(other);
     }
 
     public boolean isSameRank(Position other) {
@@ -132,8 +135,8 @@ public class Position {
     }
 
     public Position at(Direction direction) {
-        File file = this.file.getFileUsingIncreaseAmount(direction.getIncreaseAmountOfFile());
-        Rank rank = this.rank.getRankUsingIncreaseAmount(direction.getIncreaseAmountOfRank());
+        File file = this.file.addFile(direction.getIncreaseAmountOfFile());
+        Rank rank = this.rank.addRank(direction.getIncreaseAmountOfRank());
         return Position.of(file, rank);
     }
 

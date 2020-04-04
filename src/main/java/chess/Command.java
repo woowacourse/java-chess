@@ -1,5 +1,7 @@
 package chess;
 
+import chess.exception.CommandException;
+
 import java.util.Arrays;
 
 public enum Command {
