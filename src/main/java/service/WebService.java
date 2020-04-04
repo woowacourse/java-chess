@@ -17,7 +17,7 @@ public class WebService {
 	}
 
 	public String getTurn() {
-		return team.getName();
+		return team.getName() + "팀의 차례입니다!";
 	}
 
 	public String findWinner(Board board) {

@@ -35,9 +35,9 @@
         }
 
         .errorMessage {
-            text-align: center;
+            margin: 0 auto;
             overflow: auto;
-            width: 350px;
+            width: 450px;
             height: 200px;
         }
 
@@ -74,7 +74,7 @@
     </div>
     <br/>
 
-    <div style="text-align: center">
+    <div class="errorMessage">
         {{#errorMessage}}
         <p>{{this.message}}</p>
         {{/errorMessage}}

@@ -37,7 +37,7 @@ public class WebUIChessApplication {
             model.put("pieces", pieces);
             model.put("blackTeamScore", board.calculateTeamScore(Team.BLACK));
             model.put("whiteTeamScore", board.calculateTeamScore(Team.WHITE));
-            model.put("turn", webService.getTurn() + "팀의 차례입니다!");
+            model.put("turn", webService.getTurn());
             model.put("errorMessage", errorMessage);
 
             return render(model, "index.html");
