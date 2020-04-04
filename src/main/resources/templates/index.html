@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>CHESS_GAME</title>
+    <link rel="stylesheet" href="./css/index.css"/>
 </head>
 <body>
-Hello World!!
+<div id="total-board">
+    <div id="main-board">
+        <div id="chess-title">
+            우 아 한 체 스 코 스
+        </div>
+        <div>
+            <table id="chess-board">
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <div>
+            <div>점수</div>
+            <div>
+                <label>흑팀 :</label>
+                <span class="black-team score">10</span>
+                <label>백팀 :</label>
+                <span class="white-team score">10</span>
+            </div>
+        </div>
+        <button id="new-game">새게임</button>
+    </div>
+</div>
 </body>
+<script src="./js/index.js"></script>
 </html>
