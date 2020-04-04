@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
-import chess.domain.strategy.BishopMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
+import chess.domain.strategy.MultipleMoveStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,7 +42,7 @@ public class BishopTest {
 
     private static Stream<Arguments> getCasesForBishopMoveByDirection() {
         return Stream.of(
-                Arguments.of(new BishopMoveStrategy(), Bishop.createWhite(new Position(5, 5)),
+                Arguments.of(new MultipleMoveStrategy(), Bishop.createWhite(new Position(5, 5)),
                         Arrays.asList(
                                 new Position(6, 6), new Position(7, 7),
                                 new Position(6, 4), new Position(7, 3),

@@ -8,12 +8,12 @@ import chess.domain.util.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SingleMoveStrategy implements MoveStrategy {
+public class SingleMoveStrategy implements MoveStrategy {
     @Override
     public List<Position> possiblePositions(final Board board, final Piece piece) {
         List<Position> possiblePositions = new ArrayList<>();
 
-        for (Direction direction : getDirections()) {
+        for (Direction direction : piece.directions()) {
 
             if (piece.isNextPositionValid(direction)) {
                 Position nextPosition = piece.getPosition().moveBy(direction);

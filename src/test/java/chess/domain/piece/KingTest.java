@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
-import chess.domain.strategy.KingMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
+import chess.domain.strategy.SingleMoveStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,7 +42,7 @@ public class KingTest {
 
     private static Stream<Arguments> getCasesForKingMoveByDirection() {
         return Stream.of(
-                Arguments.of(new KingMoveStrategy(), King.createWhite(new Position(5, 5)),
+                Arguments.of(new SingleMoveStrategy(), King.createWhite(new Position(5, 5)),
                         Arrays.asList(
                                 new Position(5, 6),
                                 new Position(6, 6),

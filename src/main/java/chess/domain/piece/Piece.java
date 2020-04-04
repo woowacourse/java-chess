@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 import chess.domain.util.Direction;
 import chess.exception.PieceImpossibleMoveException;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -62,6 +63,10 @@ public abstract class Piece {
 
     public PieceType getPieceType() {
         return pieceType;
+    }
+
+    public List<Direction> directions() {
+        return pieceType.directions();
     }
 
     public double score() {

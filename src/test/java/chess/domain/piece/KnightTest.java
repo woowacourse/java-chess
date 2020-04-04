@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
-import chess.domain.strategy.KnightMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
+import chess.domain.strategy.SingleMoveStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,7 +40,7 @@ public class KnightTest {
 
     private static Stream<Arguments> getCasesForKnightMoveByDirection() {
         return Stream.of(
-                Arguments.of(new KnightMoveStrategy(), Knight.createWhite(new Position(5, 5)),
+                Arguments.of(new SingleMoveStrategy(), Knight.createWhite(new Position(5, 5)),
                         Arrays.asList(
                                 new Position(6, 7), new Position(7, 6),
                                 new Position(7, 4), new Position(6, 3),
