@@ -39,15 +39,17 @@ public class Board {
             checkPawnPath(piece, targetPosition);
             return;
         }
-        if (piece instanceof Knight) {
-            checkKnightPath(piece, targetPosition);
-            return;
-        }
+
         List<Position> path = piece.getPathTo(targetPosition);
-        if (havePieceBeforeTargetPosition(path)) {
-            throw new OtherPieceInPathException(String.format("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치(targetPosition) %s(으)로 " +
-                                                                      "이동할 수 없습니다.", targetPosition.getName()));
+
+        if (piece instanceof Bishop || piece instanceof Queen || piece instanceof Rook) {
+            if (havePieceBeforeTargetPosition(path)) {
+                throw new OtherPieceInPathException(String.format("이동 경로 중에 다른 체스말이 있기 때문에 지정한 위치(targetPosition) %s" +
+                                                                          "(으)로 이동할 수 없습니다.",
+                                                                  targetPosition.getName()));
+            }
         }
+
         if (cannotMoveToTargetPosition(piece, targetPosition)) {
             throw new SameTeamPieceException(String.format("지정한 위치(targetPosition) %s에 같은 색의 체스말이 있기 때문에 이동할 수 없습니다."
                     , targetPosition.getName()));
@@ -55,6 +57,10 @@ public class Board {
     }
 
     private boolean havePieceBeforeTargetPosition(List<Position> path) {
+        if (path.size() == 1) {
+            return false;
+        }
+
         path.remove(path.size() - 1);
         return path.stream()
                 .map(board::get)
@@ -91,14 +97,6 @@ public class Board {
             return true;
         }
         return piece.isSameColor(targetPiece);
-    }
-
-    private void checkKnightPath(Piece piece, Position targetPosition) {
-        piece.getPathTo(targetPosition);
-        if (cannotMoveToTargetPosition(piece, targetPosition)) {
-            throw new SameTeamPieceException(String.format("지정한 위치(targetPosition) %s에 같은 색의 체스말이 있기 때문에 이동할 수 " +
-                                                                   "없습니다.", targetPosition.getName()));
-        }
     }
 
     public void move(MoveCommand moveCommand) {
