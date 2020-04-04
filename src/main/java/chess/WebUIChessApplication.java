@@ -11,7 +11,6 @@ import chess.domain.board.Position;
 import chess.domain.piece.BlackPiecesFactory;
 import chess.domain.piece.PiecesManager;
 import chess.domain.piece.WhitePiecesFactory;
-import chess.view.OutputView;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -24,7 +23,7 @@ public class WebUIChessApplication {
 		start();
 		running();
 		end();
-		//status();
+		status();
 	}
 
 	private static void initialize() {
@@ -46,7 +45,7 @@ public class WebUIChessApplication {
 		get("/move", (req, res) -> {
 			model = new HashMap<>();
 			movePiece(req.queryParams("source"), req.queryParams("target"));
-			if (isKingDie()) {
+			if (game.isKingDie()) {
 				res.redirect("/end");
 			}
 			putBoardTo(model);
@@ -59,6 +58,15 @@ public class WebUIChessApplication {
 			model = new HashMap<>();
 			init();
 			return render(model, "end.html");
+		});
+	}
+
+	private static void status() {
+		get("/status", (req, res) -> {
+			model = new HashMap<>();
+			model.put("whiteStatus", String.valueOf(game.status()[0]));
+			model.put("blackStatus", String.valueOf(game.status()[1]));
+			return render(model, "status.html");
 		});
 	}
 
@@ -83,14 +91,6 @@ public class WebUIChessApplication {
 		} catch (IllegalArgumentException | UnsupportedOperationException e) {
 			model.put("error", e.getMessage());
 		}
-	}
-
-	private static boolean isKingDie() {
-		if (game.isKingDie()) {
-			OutputView.printKingDie();
-			return true;
-		}
-		return false;
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
