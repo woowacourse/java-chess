@@ -33,14 +33,6 @@ public class Board {
 			));
 	}
 
-	public Map<Position, String> getDto() {
-		return board.entrySet().stream()
-			.collect(Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> entry.getValue().toString()
-			));
-	}
-
 	public boolean isKingDead() {
 		return kingDead.entrySet()
 			.stream()

@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 
 public class Playing extends Ready {
 	protected final Board board;
-	private final Turn turn;
+	private Turn turn;
 
 	public Playing(Board board, Turn turn) {
 		this.board = board;
@@ -30,7 +30,7 @@ public class Playing extends Ready {
 		if (board.isKingDead()) {
 			return new Finish(board);
 		}
-		turn.switchTurn();
+		turn = turn.switchTurn();
 		return this;
 	}
 
@@ -47,5 +47,10 @@ public class Playing extends Ready {
 	@Override
 	public Score score(Team team) {
 		return Score.calculate(board.findPiecesByTeam(team));
+	}
+
+	@Override
+	public Turn turn() {
+		return turn;
 	}
 }

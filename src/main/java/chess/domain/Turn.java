@@ -7,8 +7,9 @@ public class Turn {
 		this.team = team;
 	}
 
-	public void switchTurn() {
+	public Turn switchTurn() {
 		team = team.switchTeam();
+		return new Turn(team);
 	}
 
 	public Team getTeam() {

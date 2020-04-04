@@ -35,4 +35,9 @@ public class Ready implements ChessGameState {
 	public Score score(Team team) {
 		throw new UnsupportedOperationException("게임이 아직 준비중입니다.");
 	}
+
+	@Override
+	public Turn turn() {
+		throw new UnsupportedOperationException();
+	}
 }

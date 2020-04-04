@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import chess.domain.Board;
 import chess.domain.Team;
+import chess.domain.Turn;
 import chess.domain.position.Position;
 
 public interface ChessGameState {
@@ -17,4 +18,6 @@ public interface ChessGameState {
 	Board board();
 
 	Score score(Team team);
+
+	Turn turn();
 }

@@ -1,5 +1,7 @@
 package chess.view;
 
+import java.util.Map;
+
 import chess.domain.Board;
 import chess.domain.Status;
 import chess.domain.piece.Piece;
@@ -16,12 +18,23 @@ public class OutputView {
 	}
 
 	public static void printResponse(Board board) {
-		board.getBoard()
-			.forEach(OutputView::printPiece);
+		Map<Position, Piece> gameBoard = board.getBoard();
+		int count = 0;
+		for (Piece value : gameBoard.values()) {
+			if (count >= 16 && count <= 48) {
+				System.out.print("[ ]");
+			} else {
+				System.out.print(value.toString() + " ");
+			}
+			count++;
+			if (count % 8 == 0) {
+				System.out.println();
+			}
+		}
 	}
 
 	private static void printPiece(Position position, Piece piece) {
-		System.out.print(piece.toString());
+		System.out.print(piece.toString() + " ");
 		if (position.equalsX(8)) {
 			System.out.println();
 		}

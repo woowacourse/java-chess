@@ -3,18 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>우아한 체스게임</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .entire_div {
+            background-image: url("background.jpg");
+            height: 100%;
+            display: flex;
+        }
+
+        .new_game, .on_games {
+            height: 30%;
+        }
+
+        input {
+            background-image: url("background.jpg");
+            font-size: 50px;
+            font-family: ".SF NS Mono";
+        }
+    </style>
 </head>
 <body>
-<!--게임 시작 : 새로운 보드를 출력한다.-->
-<div>
-    <form action="/init" method="get">
-        <input type="submit" value="새 게임 시작!" class="new_game">
-    </form>
-</div>
-<!--기존 게임보기-->
-<div>
-    <input type="button" value="기존게임보기!" class="on_games">
+<div class="entire_div">
+    <!--게임 시작 : 새로운 보드를 출력한다.-->
+    <div class="new_game">
+        <form action="/init" method="get">
+            <input type="submit" value="새 게임 시작!" autofocus>
+        </form>
+    </div>
+    <!--기존 게임보기-->
+    <div class="on_games">
+        <form action="/init" method="get">
+            <input type="button" value="기존게임보기!">
+        </form>
+    </div>
 </div>
 </body>
 </html>
-\

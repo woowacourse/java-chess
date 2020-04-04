@@ -3,6 +3,7 @@ package chess;
 import chess.domain.Board;
 import chess.domain.Status;
 import chess.domain.Team;
+import chess.domain.Turn;
 import chess.domain.position.Position;
 import chess.domain.state.ChessGameState;
 import chess.domain.state.Score;
@@ -32,6 +33,10 @@ public class ChessGame {
 
 	public boolean isEnd() {
 		return state.isEnd();
+	}
+
+	public Turn turn() {
+		return state.turn();
 	}
 
 	public Status status() {

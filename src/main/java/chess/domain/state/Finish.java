@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import chess.domain.Board;
 import chess.domain.Team;
+import chess.domain.Turn;
 import chess.domain.position.Position;
 
 public class Finish implements ChessGameState {
@@ -39,5 +40,10 @@ public class Finish implements ChessGameState {
 	@Override
 	public Score score(Team team) {
 		return Score.calculate(board.findPiecesByTeam(team));
+	}
+
+	@Override
+	public Turn turn() {
+		throw new UnsupportedOperationException();
 	}
 }

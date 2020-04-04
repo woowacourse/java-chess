@@ -41,7 +41,7 @@ public class PawnStrategy extends MovingStrategy {
 	}
 
 	private void checkPawnRange(Position source, Position target, Direction direction) {
-		if (source.getRow() == Row.SIX || source.getRow() == Row.TWO) {
+		if (source.getRow() == Row.SEVEN || source.getRow() == Row.TWO) {
 			checkNotMovedRange(source, direction, target);
 		} else {
 			Position pathPosition = source.plusDirection(direction);
