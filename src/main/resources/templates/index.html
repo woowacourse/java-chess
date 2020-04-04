@@ -5,35 +5,35 @@
     <title>체스</title>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <script type="text/javascript">
-      function initialBoard() {
-        var files = ["A", "B", "C", "D", "E", "F", "G", "H"];
-        var ranks = [
-          "EIGHT",
-          "SEVEN",
-          "SIX",
-          "FIVE",
-          "FOUR",
-          "THREE",
-          "TWO",
-          "ONE"
-        ];
+        function initialBoard() {
+            var files = ["A", "B", "C", "D", "E", "F", "G", "H"];
+            var ranks = [
+                "EIGHT",
+                "SEVEN",
+                "SIX",
+                "FIVE",
+                "FOUR",
+                "THREE",
+                "TWO",
+                "ONE"
+            ];
 
-        for (var i = 0; i < 8; i++) {
-          for (var j = 0; j < 8; j++) {
-            var div = document.createElement("div");
-            var divId = files[j] + ranks[i];
-            div.id = divId;
+            for (var i = 0; i < 8; i++) {
+                for (var j = 0; j < 8; j++) {
+                    var div = document.createElement("div");
+                    var divId = files[j] + ranks[i];
+                    div.id = divId;
 
-            if ((i + j) % 2 === 0) {
-              div.className = "white";
-            } else {
-              div.className = "black";
+                    if ((i + j) % 2 === 0) {
+                        div.className = "white";
+                    } else {
+                        div.className = "black";
+                    }
+
+                    document.getElementById("chess-board").appendChild(div);
+                }
             }
-
-            document.getElementById("chess-board").appendChild(div);
-          }
         }
-      }
 
 
     </script>
