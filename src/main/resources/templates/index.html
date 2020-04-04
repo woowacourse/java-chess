@@ -37,13 +37,19 @@
 </head>
 <body>
 <div>
-    <form action="start">
+    <form action="/start">
         <button>게임 시작</button>
     </form>
     <button>게임 종료</button>
-    <h1>보드판</h1>
-    <div>Black Team Score : {{blackTeamScore}}</div>
-    <div>White Team Score : {{whiteTeamScore}}</div>
+    <h1>체스게임</h1>
+    <h4 style="text-align: center">Black Team Score : {{blackTeamScore}}</h4>
+    <h4 style="text-align: center">White Team Score : {{whiteTeamScore}}</h4>
+    <br/><br/><br/>
+    <form action="/move" method="post">
+        <input name="source" placeholder="source Positon 입력하세요." type="text">
+        <input name="target" placeholder="target Positon을 입력하세요" type="text">
+        <input type="submit" value="move!">
+    </form>
     <div class="outer_box">
         <div class="inner_box black ">
             <div>{{pieces.63}}</div>
