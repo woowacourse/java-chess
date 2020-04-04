@@ -1,0 +1,77 @@
+@import "reset.css";
+
+@font-face {
+    font-family: "BMHANNAProOTF";
+    src: url(../font/BMHANNAProOTF.otf) format("opentype");
+
+}
+
+
+input[type="submit"] {
+    font-family: 'Font Awesome 5 Free', serif;
+    font-weight: 900;
+    border-radius: 10px;
+}
+
+h1 {
+    font-family: BMHANNAProOTF, serif;
+    position: absolute;
+    font-size: 4rem;
+    top: 30%;
+    left: 50%;
+    width: max-content;
+    height: max-content;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+body {
+    height: 100vh;
+    background-image: url(../background/background1.jpeg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+#box {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+#rocket {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#start {
+    position: absolute;
+    top: 68%;
+    left: 50%;
+    width: max-content;
+    height: max-content;
+    transform: translate(-50%, -50%);
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    line-height: 60px;
+    background: grey;
+}
+
+#wrapper {
+    font-family: BMHANNAProOTF, serif;
+    position: relative;
+    min-height: 100%;
+}
