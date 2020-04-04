@@ -4,12 +4,13 @@ import chess.domain.GameState;
 import chess.domain.square.Square;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class InputParser {
     public static GameState parseState(String input) {
-        String[] commands = input.split(" ");
-        int count = commands.length;
+        List<String> commands = Arrays.asList(input.split(" "));
+        int count = commands.size();
         if (count == 1) {
             GameState gameState = GameState.of(input);
             if (!(gameState == GameState.START || gameState == GameState.END || gameState == GameState.STATUS)) {
@@ -18,7 +19,7 @@ public class InputParser {
             return GameState.of(input);
         }
         if (count == 3) {
-            if (GameState.of(commands[0]) != GameState.MOVE) {
+            if (GameState.of(commands.get(0)) != GameState.MOVE) {
                 throw new IllegalArgumentException("잘못된 입력입니다: 3개이면 move여야 합니다");
             }
             return GameState.MOVE;
@@ -27,14 +28,13 @@ public class InputParser {
     }
 
     public static List<Square> parseMoveSourceDestination(String input) {
-        String[] moveInput = input.split(" ");
-        if (GameState.of(moveInput[0]) != GameState.MOVE) {
+        List<String> moveInput = Arrays.asList(input.split(" "));
+        if (GameState.of(moveInput.get(0)) != GameState.MOVE) {
             throw new IllegalArgumentException("move여야 합니다");
         }
         List<Square> moveSourceDestination = new ArrayList<>();
-        moveSourceDestination.add(Square.of(moveInput[1]));
-        moveSourceDestination.add(Square.of(moveInput[2]));
+        moveSourceDestination.add(Square.of(moveInput.get(1)));
+        moveSourceDestination.add(Square.of(moveInput.get(2)));
         return moveSourceDestination;
     }
-
 }

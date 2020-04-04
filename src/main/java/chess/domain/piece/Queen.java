@@ -16,6 +16,10 @@ public class Queen extends Piece {
     private final static String NAME_WHITE = "q";
     private final static double SCORE = 9;
 
+    private Queen(Color color, String name, double score) {
+        super(color, name, score);
+    }
+
     static {
         Stream.of(Color.values())
                 .forEach(Queen::putIntoCache);
@@ -43,10 +47,6 @@ public class Queen extends Piece {
         if (Objects.isNull(color)) {
             throw new IllegalArgumentException("잘못된 입력입니다");
         }
-    }
-
-    private Queen(Color color, String name, double score) {
-        super(color, name, score);
     }
 
     @Override

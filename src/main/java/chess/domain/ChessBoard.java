@@ -78,7 +78,6 @@ public class ChessBoard {
         return teamScore;
     }
 
-
     private double calculatePawnScore(Color color) {
         int count;
         List<Square> squares = chessBoard.keySet().stream()

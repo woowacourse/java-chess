@@ -16,6 +16,10 @@ public class Bishop extends Piece {
     private final static String NAME_WHITE = "b";
     private final static double SCORE = 3;
 
+    private Bishop(Color color, String name, double score) {
+        super(color, name, score);
+    }
+
     static {
         Stream.of(Color.values())
                 .forEach(Bishop::putIntoCache);
@@ -43,10 +47,6 @@ public class Bishop extends Piece {
         if (Objects.isNull(color)) {
             throw new IllegalArgumentException("잘못된 입력입니다");
         }
-    }
-
-    private Bishop(Color color, String name, double score) {
-        super(color, name, score);
     }
 
     @Override

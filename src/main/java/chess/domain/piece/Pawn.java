@@ -15,6 +15,10 @@ public class Pawn extends Piece {
     private final static String NAME_WHITE = "p";
     private final static double SCORE = 1;
 
+    private Pawn(Color color, String name, double score) {
+        super(color, name, score);
+    }
+
     static {
         Stream.of(Color.values())
                 .forEach(Pawn::putIntoCache);
@@ -42,10 +46,6 @@ public class Pawn extends Piece {
         if (Objects.isNull(color)) {
             throw new IllegalArgumentException("잘못된 입력입니다");
         }
-    }
-
-    private Pawn(Color color, String name, double score) {
-        super(color, name, score);
     }
 
     @Override

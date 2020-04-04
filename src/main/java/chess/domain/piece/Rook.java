@@ -16,6 +16,10 @@ public class Rook extends Piece {
     private final static String NAME_WHITE = "r";
     private final static double SCORE = 5;
 
+    private Rook(Color color, String name, double score) {
+        super(color, name, score);
+    }
+
     static {
         Stream.of(Color.values())
                 .forEach(Rook::putIntoCache);
@@ -43,10 +47,6 @@ public class Rook extends Piece {
         if (Objects.isNull(color)) {
             throw new IllegalArgumentException("잘못된 입력입니다");
         }
-    }
-
-    private Rook(Color color, String name, double score) {
-        super(color, name, score);
     }
 
     @Override

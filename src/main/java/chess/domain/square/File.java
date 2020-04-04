@@ -10,6 +10,14 @@ import static chess.domain.square.Square.MIN_NUM;
 public class File {
     private static Map<Integer, File> CACHE = new HashMap<>();
 
+    private int number;
+    private String name;
+
+    public File(int number, char name) {
+        this.number = number;
+        this.name = Character.toString(name);
+    }
+
     static {
         IntStream.rangeClosed(1, 8)
                 .forEach(i -> CACHE.putIfAbsent(i, new File(i, (char) ('a' + i - 1))));
@@ -24,14 +32,6 @@ public class File {
             throw new IllegalArgumentException("잘못된 File의 입력입니다");
         }
         return CACHE.get(number);
-    }
-
-    private int number;
-    private String name;
-
-    public File(int number, char name) {
-        this.number = number;
-        this.name = Character.toString(name);
     }
 
     public String getName() {

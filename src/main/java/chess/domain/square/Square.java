@@ -12,6 +12,16 @@ public class Square {
     public static int MIN_NUM = 1;
     public static int MAX_NUM = 8;
 
+    private final File file;
+    private final Rank rank;
+    private final String name;
+
+    private Square(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
+        this.name = file.getName() + rank.getName();
+    }
+
     static {
         IntStream.rangeClosed(1, 8)
                 .forEach(fileIndex -> IntStream.rangeClosed(1, 8).forEach(rankIndex -> putCACHE(fileIndex, rankIndex)));
@@ -42,16 +52,6 @@ public class Square {
         if (!CACHE.containsKey(name)) {
             throw new IllegalArgumentException("잘못된 square의 입력입니다");
         }
-    }
-
-    private final File file;
-    private final Rank rank;
-    private final String name;
-
-    private Square(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
-        this.name = file.getName() + rank.getName();
     }
 
     public Square movedSquareInBoundary(int fileIncrementBy, int rankIncrementBy) {

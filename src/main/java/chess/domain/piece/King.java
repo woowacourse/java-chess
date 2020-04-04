@@ -16,6 +16,10 @@ public class King extends Piece {
     private final static String NAME_WHITE = "k";
     private final static double SCORE = 0;
 
+    private King(Color color, String name, double score) {
+        super(color, name, score);
+    }
+
     static {
         Stream.of(Color.values())
                 .forEach(King::putIntoCache);
@@ -43,10 +47,6 @@ public class King extends Piece {
         if (Objects.isNull(color)) {
             throw new IllegalArgumentException("잘못된 입력입니다");
         }
-    }
-
-    private King(Color color, String name, double score) {
-        super(color, name, score);
     }
 
     @Override

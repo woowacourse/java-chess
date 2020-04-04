@@ -16,6 +16,10 @@ public class Knight extends Piece {
     private final static String NAME_WHITE = "n";
     private final static double SCORE = 2.5;
 
+    private Knight(Color color, String name, double score) {
+        super(color, name, score);
+    }
+
     static {
         Stream.of(Color.values())
                 .forEach(Knight::putIntoCache);
@@ -38,10 +42,6 @@ public class Knight extends Piece {
         if (Objects.isNull(color)) {
             throw new IllegalArgumentException("잘못된 입력입니다");
         }
-    }
-
-    private Knight(Color color, String name, double score) {
-        super(color, name, score);
     }
 
     @Override

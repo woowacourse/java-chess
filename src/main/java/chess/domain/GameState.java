@@ -11,6 +11,7 @@ public enum GameState {
     STATUS("status");
 
     private static Map<String, GameState> CACHE = new HashMap<>();
+
     private final String name;
 
     GameState(String name) {
