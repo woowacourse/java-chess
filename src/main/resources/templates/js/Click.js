@@ -11,6 +11,21 @@ function sourcePosition(value) {
 }
 
 
+function resetSourcePosition() {
+    if (document.getElementsByClassName('sourcePosition')[0].innerHTML) {
+        document.getElementsByClassName('sourcePosition')[0].innerHTML = "";
+    }
+    document.getElementsByClassName('sourcePosition')[0].classList.remove('sourcePosition');
+}
+
+function movePiece(value) {
+    document.getElementById(value).innerHTML =
+        document.getElementsByClassName('sourcePosition')[0].innerHTML;
+    console.log(document.getElementsByClassName('sourcePosition')[0].id);
+
+    resetSourcePosition();
+}
+
 function selectDestinationPiece(value) {
     $.ajax({
         type: "get",
@@ -27,15 +42,10 @@ function selectDestinationPiece(value) {
                 alert(data);
                 return;
             }
-            document.getElementById(value).innerHTML =
-                document.getElementsByClassName('sourcePosition')[0].innerHTML;
-            console.log(document.getElementsByClassName('sourcePosition')[0].id);
-
-            document.getElementsByClassName('sourcePosition')[0].innerHTML = "";
-            document.getElementsByClassName('sourcePosition')[0].classList.remove('sourcePosition');
+            movePiece(value);
         },
         error: function (jqXHR) {
-            document.getElementsByClassName('sourcePosition')[0].classList.remove('sourcePosition');
+            resetSourcePosition();
             console.log('error');
             alert(jqXHR.responseText);
         }
