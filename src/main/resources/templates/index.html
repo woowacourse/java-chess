@@ -229,9 +229,9 @@
                 type: 'get',
                 url: '/move',
                 dataType: 'json',
-                data: "from="+from+"&to="+to,
+                data: "from=" + from + "&to=" + to,
                 error: function (res) {
-                    alert(res);
+                    alert(res.responseText);
                 },
                 success: printChessBoardAndStatus
             });
@@ -265,6 +265,9 @@
                 $("#black-score").text(item.score);
             }
         });
+
+        let turn = response["turn"];
+        $("#turn-btn").text(turn);
     }
 </script>
 <div id="background">

@@ -1,5 +1,5 @@
 package chess.views;
-import chess.Exceptions.IllegalInputException;
+import chess.Exception.IllegalInputException;
 import chess.controller.Command;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;

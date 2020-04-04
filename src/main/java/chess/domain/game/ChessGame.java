@@ -25,6 +25,10 @@ public class ChessGame {
     }
 
     public ResponseDto move(RequestDto requestDto) {
+        if (!chessBoard.validateTrun(requestDto.getFrom(), turn)) {
+            throw  new IllegalArgumentException("차례가 아닙니다.");
+        }
+
         chessBoard.move(requestDto.getFrom(), requestDto.getTo());
         this.turn = Player.reversePlayer(turn);
         return new ResponseDto(chessBoard, chessBoard.createResult(), turn);

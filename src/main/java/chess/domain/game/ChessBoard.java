@@ -89,6 +89,14 @@ public class ChessBoard {
         return true;
     }
 
+    public boolean validateTrun(Position position, Player player) {
+        Piece piece = chessBoard.get(position);
+        if (Objects.isNull(piece)) {
+            return false;
+        }
+        return piece.isSamePlayer(player);
+    }
+
     public Map<Position, Piece> getChessBoard() {
         return Collections.unmodifiableMap(chessBoard);
     }

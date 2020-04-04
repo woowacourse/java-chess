@@ -22,4 +22,8 @@ public class ResponseDto {
     public Result getResult() {
         return result;
     }
+
+    public Player getTurn() {
+        return turn;
+    }
 }

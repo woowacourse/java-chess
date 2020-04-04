@@ -31,13 +31,20 @@ public class WebUIChessApplication {
         });
 
         get("/init", (req, res) -> {
+            res.status(200);
             return gson.toJson(chessController.start(new RequestDto(Command.START)));
         });
 
         get("/move", (req, res) -> {
-            RequestDto requestDto = new RequestDto(Command.MOVE, req);
-            ResponseDto responseDto = chessController.move(requestDto);
-            return gson.toJson(responseDto);
+            try {
+                RequestDto requestDto = new RequestDto(Command.MOVE, req);
+                ResponseDto responseDto = chessController.move(requestDto);
+                res.status(200);
+                return gson.toJson(responseDto);
+            } catch (IllegalArgumentException e) {
+                res.status(400);
+                return gson.toJson(e.getMessage());
+            }
         });
     }
 

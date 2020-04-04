@@ -67,6 +67,10 @@ public abstract class Piece {
                 && validateTileSize(from, to);
     }
 
+    public boolean isSamePlayer(Player player) {
+        return this.player == player;
+    }
+
     public boolean isSamePlayer(Piece target) {
         if (Objects.isNull(target)) {
             return false;
