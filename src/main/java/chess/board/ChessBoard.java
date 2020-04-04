@@ -1,6 +1,6 @@
 package chess.board;
 
-import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -11,7 +11,6 @@ import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
 import chess.score.Score;
 import chess.team.Team;
-import data.PieceVO;
 
 import static chess.board.ChessBoardCreater.*;
 
@@ -46,14 +45,10 @@ public class ChessBoard {
     }
 
     // 팀별 위치, 체스 정보를 가져온다.
-    public Map<Location, Piece> giveMyPiece(Team team) {
-        return board.keySet().stream()
-                .filter(location -> board.get(location).isSameTeam(team))
-                .collect(Collectors.toMap(location -> location, board::get));
-    }
-
-    public Map<Location, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
+    public List<Piece> giveMyPiece(Team team) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameTeam(team))
+                .collect(Collectors.toList());
     }
 
     public void move(Location now, Location destination) {
@@ -73,7 +68,7 @@ public class ChessBoard {
             Col fixCol = Col.of(col);
 
             int sameColPawnSize = calculatePawnSameColSize(team, fixCol);
-            if(sameColPawnSize == 1) {
+            if (sameColPawnSize == 1) {
                 continue;
             }
             reducePawnScroe += (sameColPawnSize * PAWN_REDUCE_VALUE);
@@ -100,5 +95,17 @@ public class ChessBoard {
 
     public boolean isNotExist(Location now) {
         return Objects.isNull(board.get(now));
+    }
+
+    public Map<Location, Piece> getBoard() {
+        return board;
+    }
+
+    public boolean isExistPieceIn(Location location) {
+        return board.containsKey(location);
+    }
+
+    public Piece getPieceIn(Location location) {
+        return board.get(location);
     }
 }

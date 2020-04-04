@@ -2,7 +2,6 @@ package chess.result;
 
 import chess.score.Score;
 
-import java.util.List;
 import java.util.Objects;
 
 public class ChessScores {

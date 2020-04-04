@@ -107,8 +107,8 @@ function postChessBoard(json) {
                 $('#' + json.now).html('');
                 $('#' + json.now).attr('chess', 'null');
 
-                console.log(jsonData.chessGameScoresVO.whiteScore);
-                console.log(jsonData.chessGameScoresVO.blackScore);
+                $('#whiteScore').html("whiteScore : " + jsonData.chessGameScoresVO.whiteScore.value);
+                $('#blackScore').html("blackScore : " + jsonData.chessGameScoresVO.blackScore.value);
             }
             if (jsonData.progress == "ERROR") {
                 alert("움직일 수 없는 경우입니다.");

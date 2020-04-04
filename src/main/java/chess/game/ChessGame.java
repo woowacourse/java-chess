@@ -4,6 +4,7 @@ import chess.board.ChessBoardCreater;
 import chess.command.Command;
 import chess.board.ChessBoard;
 import chess.location.Location;
+import chess.piece.type.Piece;
 import chess.progress.Progress;
 import chess.player.Player;
 import chess.result.ChessResult;
@@ -13,10 +14,6 @@ import chess.score.Calculatable;
 import chess.score.Score;
 import chess.score.ScoreCalcultor;
 import chess.team.Team;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static chess.location.LocationSubStringUtil.substring;
 import static chess.progress.Progress.*;
@@ -76,12 +73,20 @@ public class ChessGame {
         return finishIfKingDie();
     }
 
-    private void deletePieceIfExistIn(Location destination, Team turn) {
+    private void deletePieceIfExistIn(Location location, Team turn) {
+        Player counterplayer = getCounterTurnPlayer(turn);
+        if (chessBoard.isExistPieceIn(location)) {
+            Piece toBeRemovedPiece = chessBoard.getPieceIn(location);
+            counterplayer.deletePieceIfExistIn(toBeRemovedPiece);
+        }
+    }
+
+    private Player getCounterTurnPlayer(Team turn) {
         Player counterplayer = white;
         if (black.isNotSame(turn)) {
             counterplayer = black;
         }
-        counterplayer.deletePieceIfExistIn(destination);
+        return counterplayer;
     }
 
     private Progress finishIfKingDie() {
