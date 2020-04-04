@@ -9,11 +9,8 @@ public class Position {
 	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 좌표 입력입니다.";
 	private static final int MIN_BOUND = 1;
 	private static final int MAX_BOUND = 8;
-	private static final int BLACK_PAWN_INITIAL_COLUMN = 7;
-	private static final int WHITE_PAWN_INITIAL_COLUMN = 2;
 	private static final int ROW_START_INDEX = 0;
 	private static final int COLUMN_START_INDEX = 1;
-	private static final double BOTTOM_ZONE_END_POINT = 4;
 
 	private final Row row;
 	private final Column column;
@@ -23,6 +20,11 @@ public class Position {
 		validate(position);
 		this.row = Row.of(position.substring(ROW_START_INDEX, ROW_START_INDEX + 1));
 		this.column = Column.of(position.substring(COLUMN_START_INDEX, COLUMN_START_INDEX + 1));
+	}
+
+	Position(Row row, Column column) {
+		this.row = row;
+		this.column = column;
 	}
 
 	private void validate(String position) {
@@ -48,14 +50,14 @@ public class Position {
 	}
 
 	public boolean isPawnInitial(Color color) {
-		if (column.getValue() == WHITE_PAWN_INITIAL_COLUMN && color.isWhite()) {
+		if (column.isWhitePawnInitial() && color.isWhite()) {
 			return true;
 		}
-		return column.getValue() == BLACK_PAWN_INITIAL_COLUMN && color.isBlack();
+		return column.isBlackPawnInitial()&& color.isBlack();
 	}
 
 	public boolean isHalfBottom() {
-		return column.getValue() <= BOTTOM_ZONE_END_POINT;
+		return column.isOnHalfBottom();
 	}
 
 	public boolean isDifferentRow(Position position) {

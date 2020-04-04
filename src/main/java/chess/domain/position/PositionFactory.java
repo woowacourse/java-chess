@@ -19,7 +19,7 @@ public class PositionFactory {
 	private static void createPositionBy(Row row) {
 		for (Column column : Column.values()) {
 			String name = row.getName() + column.getName();
-			positionCache.put(name, new Position(name));
+			positionCache.put(name, new Position(row, column));
 		}
 	}
 

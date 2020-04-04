@@ -12,7 +12,10 @@ public enum Column {
 	SECOND("2", 2),
 	FIRST("1", 1);
 
-	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 column 값 입력입니다.";
+	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 좌표 입력입니다.";
+	private static final int BLACK_PAWN_INITIAL_COLUMN = 7;
+	private static final int WHITE_PAWN_INITIAL_COLUMN = 2;
+	private static final double BOTTOM_ZONE_END_POINT = 4;
 
 	private final String name;
 	private final int value;
@@ -34,6 +37,18 @@ public enum Column {
 				.filter(column -> column.value == this.value + value)
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException((INVALID_INPUT_EXCEPTION_MESSAGE)));
+	}
+
+	public boolean isWhitePawnInitial() {
+		return value == WHITE_PAWN_INITIAL_COLUMN;
+	}
+
+	public boolean isBlackPawnInitial() {
+		return value == BLACK_PAWN_INITIAL_COLUMN;
+	}
+
+	public boolean isOnHalfBottom() {
+		return value <= BOTTOM_ZONE_END_POINT;
 	}
 
 	public String getName() {
