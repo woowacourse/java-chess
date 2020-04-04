@@ -1,6 +1,9 @@
 package chess.domain.gamestatus;
 
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.domain.score.Score;
+import java.util.Map;
 
 public interface GameStatus {
 
@@ -8,9 +11,12 @@ public interface GameStatus {
 
     GameStatus move(String fromPosition, String toPosition);
 
-    String getBoardString();
-
     Score scoring();
 
     GameStatus finish();
+
+    Map<Position, Piece> getBoard();
+
+    String getBoardString();
+
 }

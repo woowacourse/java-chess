@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: white;
+  align-content: center;
+  background-image: url("../image/leaves-pattern-clipart-silhouette.jpg");
+  background-size: 300px;
+}
+
+#title {
+  font-size: 50px;
+  text-align: center;
+  margin: 70px 0 70px 0;
+}
+
+#main {
+}
+
+#board {
+  width: 720px;
+  margin: 30px auto 30px auto;
+  font-size: 0;
+}
+
+.square {
+  width: 90px;
+  height: 90px;
+  display: inline-block;
+  margin: 0;
+  text-align: center;
+  overflow: hidden;
+}
+
+.row:nth-of-type(2n - 1) .square:nth-of-type(2n - 1),
+.row:nth-of-type(2n) .square:nth-of-type(2n) {
+  background-color: #04D4A7;
+}
+
+.row:nth-of-type(2n - 1) .square:nth-of-type(2n),
+.row:nth-of-type(2n) .square:nth-of-type(2n - 1) {
+  background-color: #AAFFED;
+}
+
+img.piece {
+  width: 80px;
+  height: 90px;
+}

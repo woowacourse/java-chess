@@ -2,7 +2,10 @@ package chess.domain.gamestatus;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.domain.score.Score;
+import java.util.Map;
 
 public abstract class Started implements GameStatus {
 
@@ -17,12 +20,17 @@ public abstract class Started implements GameStatus {
     }
 
     @Override
+    public Score scoring() {
+        return board.calculateScore();
+    }
+
+    @Override
     public String getBoardString() {
         return board.toString();
     }
 
     @Override
-    public Score scoring() {
-        return board.calculateScore();
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
     }
 }
