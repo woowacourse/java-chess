@@ -41,12 +41,11 @@ public class RequestDto {
     public RequestDto(Command command, Request request) {
         this.command = command;
         if (command == Command.MOVE) {
-            System.out.println("from: "+request.queryParams("from")+", to: "+request.queryParams("to"));
             this.from = Positions.of(request.queryParams("from"));
             this.to = Positions.of(request.queryParams("to"));
-            System.out.println("from: "+from+", to: "+to);
         }
     }
+
     public Command getCommand() {
         return command;
     }

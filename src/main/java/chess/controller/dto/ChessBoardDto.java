@@ -11,7 +11,8 @@ public class ChessBoardDto {
     private final List<Tile> tiles = new ArrayList<>();
 
     public ChessBoardDto(Map<Position, Piece> chessBoard) {
-        for (Map.Entry<Position, Piece> entry :chessBoard.entrySet()) {
+        for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
+            System.out.println("@@@@@@@@@@ tiles add");
             tiles.add(new Tile(entry.getKey(), entry.getValue()));
         }
     }

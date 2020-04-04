@@ -254,7 +254,17 @@
             piece.id = item.piece;
             piece.className = "piece";
             $("#" + item.position).append(piece);
-        })
+        });
+
+        let scores = response["result"]["statuses"];
+        scores.forEach(function (item, index, array) {
+            if (item.player == "WHITE") {
+                $("#white-score").text(item.score);
+            }
+            if (item.player == "BLACK") {
+                $("#black-score").text(item.score);
+            }
+        });
     }
 </script>
 <div id="background">

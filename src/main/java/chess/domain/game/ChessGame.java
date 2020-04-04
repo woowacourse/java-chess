@@ -21,20 +21,20 @@ public class ChessGame {
 
         chessBoard = new ChessBoard(PieceFactory.create());
 
-        return new ResponseDto(chessBoard, chessBoard.createResult());
+        return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
     }
 
     public ResponseDto move(RequestDto requestDto) {
         chessBoard.move(requestDto.getFrom(), requestDto.getTo());
         this.turn = Player.reversePlayer(turn);
-        return new ResponseDto(chessBoard, chessBoard.createResult());
+        return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
     }
 
     public ResponseDto status(RequestDto requestDto){
-        return new ResponseDto(chessBoard, chessBoard.createResult());
+        return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
     }
 
     public ResponseDto end(RequestDto requestDto) {
-        return new ResponseDto(chessBoard, chessBoard.createResult());
+        return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
     }
 }
