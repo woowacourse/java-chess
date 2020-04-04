@@ -29,9 +29,6 @@ public class ChessBoard {
 	}
 
 	private void validateLocation(Location now, Location destination) {
-		if (!board.containsKey(now)) {
-			throw new IllegalArgumentException("출발지가 빈칸입니다.");
-		}
 		Piece piece = board.get(now);
 
 		checkLocationSameTeam(piece, destination);
@@ -113,6 +110,10 @@ public class ChessBoard {
 			.count();
 
 		return kingCount == 2;
+	}
+
+	public boolean isNotPiece(Location now) {
+		return !board.containsKey(now);
 	}
 
 	public boolean isNotSameTeam(GameState gameState, Location now) {

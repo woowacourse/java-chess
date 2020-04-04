@@ -4,14 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.GameManager;
-import chess.board.Location;
 import chess.piece.PieceFactory;
 import com.google.gson.Gson;
+import service.GameManagerService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
 	private Gson gson = new Gson();
+	private GameManagerService gameManagerService = new GameManagerService();
 	private GameManager gameManager = new GameManager(new PieceFactory().createPieces());
 
 	public void run() {
@@ -26,8 +27,7 @@ public class WebUIChessApplication {
 		get("/move", ((request, response) -> {
 			String now = request.queryParams("now");
 			String destination = request.queryParams("destination");
-			gameManager.movePiece(Location.of(now), Location.of(destination));
-			return gameManager;
+			return gameManagerService.move(gameManager, now, destination);
 		}), gson::toJson);
 
 		get("/board", (request, response) -> gameManager, gson::toJson);

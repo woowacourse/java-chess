@@ -51,7 +51,7 @@ public class ConsoleController {
 	private void move(String nowLocation, String destinationLocation) {
 		try {
 			gameManage.movePiece(Location.of(nowLocation), Location.of(destinationLocation));
-		} catch (Exception e) {
+		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 			running();
 			return;

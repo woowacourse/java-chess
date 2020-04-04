@@ -8,7 +8,12 @@ img {
 }
 
 .test {
-    background-image: url("../img/bishop_black.png");
+    background-image: url('../img/bishop_black.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    /*height: 200px;*/
+    width: 1200px;
 }
 
 .test:before {

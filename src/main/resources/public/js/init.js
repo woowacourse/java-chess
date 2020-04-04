@@ -11,9 +11,14 @@ $(document).ready(function () {
 function enterKey() {
     if (window.event.keyCode === 13) {
         let move_action = async () => {
-            let pieces = await move();
-            await addPieces(pieces);
+            let response = await move();
+            if (response["error"]) {
+                alert(response["error"]);
+                return;
+            }
+            await addPieces(response);
         }
+
         move_action();
     }
 }

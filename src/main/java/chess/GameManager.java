@@ -29,9 +29,16 @@ public class GameManager {
 	}
 
 	public void movePiece(Location now, Location destination) {
+		checkStarting(now);
 		checkTurn(now);
 		chessBoard.move(now, destination);
 		gameState = gameState.of(chessBoard.hasTwoKings());
+	}
+
+	private void checkStarting(Location now) {
+		if (chessBoard.isNotPiece(now)) {
+			throw new IllegalArgumentException("출발지가 빈칸입니다.");
+		}
 	}
 
 	private void checkTurn(Location now) {
