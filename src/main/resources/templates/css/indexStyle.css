@@ -88,8 +88,31 @@
     text-shadow: -0.5px 0 white, 0 0.5px white, 0.5px 0 white, 0 -0.5px white;
 }
 
+#whiteTeam {
+    color: white;
+    text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+    font-size: 30px;
+}
+
+#blackTeam {
+    color: black;
+    text-shadow: -0.5px 0 white, 0 0.5px white, 0.5px 0 white, 0 -0.5px white;
+    font-size: 30px;
+}
+
 #helpBox {
     font-family: "BMHANNAPro", sans-serif;
     font-size: 25px;
     text-align: center;
+}
+
+#errorMessage {
+    width: 85%;
+    margin: -14px auto;
+    padding: 10px;
+    text-align: justify;
+    background-color: rgba(144, 238, 195, 1);
+    color: indianred;
+    font-family: "BMHANNAAir", sans-serif;
+    font-size: 20px;
 }

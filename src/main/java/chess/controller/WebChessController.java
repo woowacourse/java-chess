@@ -31,6 +31,8 @@ public class WebChessController {
 
             Map<String, Object> model = new HashMap<>();
             model.put("cells", this.board.getCells());
+            model.put("currentTeam", this.board.getTeam().getName());
+            model.put("error", null);
             return render(model, "index.html");
         });
     }

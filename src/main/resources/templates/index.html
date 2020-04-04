@@ -49,15 +49,33 @@
 
             <div id="teamNotice">
                 <p class="subTitle" style="margin-bottom: 0px"> - 현재 차례 - </p> <br>
+                <div id="team">{{currentTeam}}</div>
             </div>
 
             <div id="helpBox">
                 <p class="subTitle"> - 도움말 - </p>
+                <div id="errorMessage">
+                    {{error}}
+                </div>
             </div>
 
         </div>
     </div>
 </div>
+
+<script>
+    function teamChangeEvent() {
+        let team = document.getElementById("team").innerText;
+        if (team === "White") {
+            document.getElementById("team").innerHTML = "<div id=\"whiteTeam\"> WHITE </div>";
+        }
+        if (team === "Black") {
+            document.getElementById("team").innerHTML = "<div id=\"blackTeam\"> BLACK </div>";
+        }
+    }
+
+    teamChangeEvent();
+</script>
 
 </body>
 </html>
