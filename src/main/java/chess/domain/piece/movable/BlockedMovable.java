@@ -73,7 +73,7 @@ public class BlockedMovable implements Movable {
 	 *                  아군 말이 막는 경우(그 칸부터 바로 전진 불가, 순회 종료)를 구분할 수 있다.
 	 * @return 입력된 방향으로 전진하여 갈 수 있는 모든 Position을 Positions로 묶어 반환한다.
 	 */
-	Positions createMovablePositionsByDirection(Position position, Direction direction, List<Piece> pieces, Color color) {
+	private Positions createMovablePositionsByDirection(Position position, Direction direction, List<Piece> pieces, Color color) {
 		Positions movablePositions = Positions.create();
 		Position movablePosition = position;
 		while (isOpen(movablePosition, direction, pieces, color)) {
