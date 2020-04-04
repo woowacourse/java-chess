@@ -62,6 +62,10 @@ public class Pawn extends Piece {
     public boolean validateMoveAttack(Direction direction, Piece target) {
         Objects.requireNonNull(direction);
         boolean isNotEmpty = Objects.nonNull(target);
+        System.out.println("validateMoveAttack");
+        System.out.println("attackDirections.contains(direction) "+attackDirections.contains(direction));
+        System.out.println("isNotEmpty "+isNotEmpty);
+        System.out.println("!(this.isSamePlayer(target) "+!(this.isSamePlayer(target)));
         return attackDirections.contains(direction)
                 && isNotEmpty
                 && !(this.isSamePlayer(target));

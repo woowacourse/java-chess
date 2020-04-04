@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.Exception.NotMoveException;
+import chess.Exception.IllegalMoveException;
 import chess.domain.chesspiece.King;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
@@ -50,19 +50,19 @@ public class ChessBoard {
         Objects.requireNonNull(to);
 
         if (from == to) {
-            throw new NotMoveException("같은 위치로 이동할 수 없습니다.");
+            throw new IllegalMoveException("같은 위치로 이동할 수 없습니다.");
         }
     }
 
     private void validateSource(Piece source) {
         if (Objects.isNull(source)) {
-            throw new NotMoveException("empty에서는 이동할 수 없습니다.");
+            throw new IllegalMoveException("empty에서는 이동할 수 없습니다.");
         }
     }
 
     private void validateIsPlayer(Piece source, Piece target) {
         if (Objects.nonNull(target) && source.isSamePlayer(target)) {
-            throw new NotMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
+            throw new IllegalMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
         }
     }
 
@@ -89,12 +89,12 @@ public class ChessBoard {
         return true;
     }
 
-    public boolean validateTrun(Position position, Player player) {
+    public boolean validateTurn(Position position, Player player) {
         Piece piece = chessBoard.get(position);
         if (Objects.isNull(piece)) {
             return false;
         }
-        return piece.isSamePlayer(player);
+        return piece.isPlayer(player);
     }
 
     public Map<Position, Piece> getChessBoard() {

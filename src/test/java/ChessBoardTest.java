@@ -1,4 +1,4 @@
-import chess.Exception.NotMoveException;
+import chess.Exception.IllegalMoveException;
 import chess.domain.chesspiece.King;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
@@ -41,7 +41,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(PieceFactory.create());
         Position position = Positions.of("a1");
         assertThatThrownBy(() -> chessBoard.move(position, position))
-                .isInstanceOf(NotMoveException.class);
+                .isInstanceOf(IllegalMoveException.class);
     }
 
     @DisplayName("점수 계산")

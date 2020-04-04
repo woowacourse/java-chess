@@ -1,6 +1,6 @@
 package chess.Exception;
 
-public class IllegalInputException extends RuntimeException {
+public class IllegalInputException extends IllegalArgumentException {
     public IllegalInputException(String message) {
         super(message);
     }

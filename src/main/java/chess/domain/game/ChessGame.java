@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.Exception.NotStartPlayingException;
+import chess.Exception.IllegalGameStateException;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 
@@ -16,7 +16,7 @@ public class ChessGame {
         Command command = requestDto.getCommand();
 
         if (command != Command.START) {
-            throw new NotStartPlayingException();
+            throw new IllegalGameStateException();
         }
 
         chessBoard = new ChessBoard(PieceFactory.create());
@@ -25,7 +25,7 @@ public class ChessGame {
     }
 
     public ResponseDto move(RequestDto requestDto) {
-        if (!chessBoard.validateTrun(requestDto.getFrom(), turn)) {
+        if (!chessBoard.validateTurn(requestDto.getFrom(), turn)) {
             throw  new IllegalArgumentException("차례가 아닙니다.");
         }
 

@@ -1,5 +1,7 @@
 package chess;
 
+import chess.Exception.ChessGameExceptions;
+import chess.Exception.IllegalDirectionException;
 import chess.controller.ChessController;
 import chess.controller.dto.ChessBoardDto;
 import chess.controller.dto.RequestDto;
@@ -41,7 +43,7 @@ public class WebUIChessApplication {
                 ResponseDto responseDto = chessController.move(requestDto);
                 res.status(200);
                 return gson.toJson(responseDto);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalDirectionException e) {
                 res.status(400);
                 return gson.toJson(e.getMessage());
             }
