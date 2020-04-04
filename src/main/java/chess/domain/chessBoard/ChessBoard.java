@@ -32,7 +32,7 @@ public class ChessBoard {
         checkLeapablePiece(sourceChessPiece, sourcePosition, targetPosition);
         checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
         moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
-        chessBoardState.playerTurnChange();
+        playerTurnChange();
     }
 
     private ChessPiece findSourceChessPieceFrom(Position sourcePosition) {
@@ -120,5 +120,11 @@ public class ChessBoard {
 
     public boolean isCaughtKing() {
         return chessBoardState.isCaughtKing();
+    }
+
+    private void playerTurnChange() {
+        if (!chessBoardState.isCaughtKing()) {
+            chessBoardState.playerTurnChange();
+        }
     }
 }

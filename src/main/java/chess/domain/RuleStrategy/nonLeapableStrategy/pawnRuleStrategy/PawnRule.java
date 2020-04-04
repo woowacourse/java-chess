@@ -38,7 +38,7 @@ public abstract class PawnRule extends NonLeapable {
         int chessFileGap = Math.abs(sourcePosition.calculateChessFileGapTo(targetPosition));
         int chessRankGap = Math.abs(sourcePosition.calculateChessRankGapTo(targetPosition));
 
-        return (chessFileGap == 1) && (chessRankGap == 1);
+        return isCaughtRule(chessFileGap, chessRankGap);
     }
 
     @Override
@@ -47,9 +47,24 @@ public abstract class PawnRule extends NonLeapable {
         int chessRankGap = Math.abs(sourcePosition.calculateChessRankGapTo(targetPosition));
 
         if (!pawnState.isPawnMovedState()) {
-            pawnState = PawnState.switchedPawnMovedState();
-            return (chessFileGap == 0) && (chessRankGap <= 2);
+            return isInitialStateRule(chessFileGap, chessRankGap);
         }
+        return isMovedStateRule(chessFileGap, chessRankGap);
+    }
+
+    private boolean isCaughtRule(int chessFileGap, int chessRankGap) {
+        return (chessFileGap == 1) && (chessRankGap == 1);
+    }
+
+    private boolean isMovedStateRule(int chessFileGap, int chessRankGap) {
         return (chessFileGap == 0) && (chessRankGap == 1);
+    }
+
+    private boolean isInitialStateRule(int chessFileGap, int chessRankGap) {
+        if ((chessFileGap == 0) && (chessRankGap <= 2)) {
+            pawnState = PawnState.switchedPawnMovedState();
+            return true;
+        }
+        return false;
     }
 }
