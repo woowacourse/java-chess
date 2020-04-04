@@ -61,4 +61,12 @@ public class OutputView {
 			);
 		}
 	}
+
+	public static void printMessage(Exception e) {
+		System.out.println(e.getMessage());
+	}
+
+	public static void printWinner(GameManager gameManager) {
+		System.out.println(String.format("승자는 %s입니다!", gameManager.findWinner()));
+	}
 }

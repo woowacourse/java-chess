@@ -17,4 +17,18 @@ public class GameManagerService {
 			return message;
 		}
 	}
+
+	public Object status(GameManager gameManager) {
+		return gameManager.createStatistics();
+	}
+
+	public Object findWinner(GameManager gameManager) {
+		Map<String, Object> model = new HashMap<>();
+		try {
+			model.put("winner", gameManager.findWinner());
+		} catch (IllegalArgumentException | NullPointerException e) {
+			model.put("error", e.getMessage());
+		}
+		return model;
+	}
 }

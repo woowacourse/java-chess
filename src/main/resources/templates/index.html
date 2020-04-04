@@ -14,25 +14,39 @@
 </head>
 
 <body>
-<div class="container text-center">
+<div class="container">
     <h2>홍토체스</h2>
     <div class="container " id="main">
-        <div class="row">
-            <div class="container col-10" id="table">
-
+        <div class="container" id="table">
+        </div>
+        <div class="row" style="">
+            <div class="col">
+                <h1 id="guide">현재 턴</h1>
+                <div class="white-color" id="turn" style="width: 100px; height: 100px;"></div>
             </div>
-            <div class="col-1" style="">
-                test
+            <div class="col">
+                <button class="btn btn-success" id="start">Start</button>
+                <button class="btn btn-success" id="status" onclick="status()">Status</button>
+                <button class="btn btn-success" id="exit">Exit</button>
+            </div>
+        </div>
+    </div>
 
-                <form id="move-form" name="move-form">
-                    <input id="now" name="now" onkeyup="enterKey()" type="text" value="홍길동"/>
-                    <input id="dest" name="destination" onkeyup="enterKey()" type="text" value="1234567"/>
-                </form>
-
-
-                <button>Start</button>
-                <button>Status</button>
-                <button>Exit</button>
+    <div class="modal" id="statusModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">체스 점수 통계</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button aria-label="Close" class="btn btn-primary" data-dismiss="modal" type="button">확인</button>
+                </div>
             </div>
         </div>
     </div>
@@ -51,6 +65,7 @@
 
 
     <script src="../js/init.js"></script>
+    <script src="../js/status.js"></script>
     <script src="../public/js/init.js"></script>
 </body>
 

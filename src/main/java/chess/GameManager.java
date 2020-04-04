@@ -29,6 +29,9 @@ public class GameManager {
 	}
 
 	public void movePiece(Location now, Location destination) {
+		if (!isRunning()) {
+			throw new IllegalArgumentException("게임이 종료되었습니다.");
+		}
 		checkStarting(now);
 		checkTurn(now);
 		chessBoard.move(now, destination);
@@ -57,6 +60,10 @@ public class GameManager {
 		gameStatistics.add(
 			new GameStatistic(Team.BLACK, blackTeamScore, GameResult.findResult(blackTeamScore, whiteTeamScore)));
 		return gameStatistics;
+	}
+
+	public Team findWinner() {
+		return chessBoard.findWinner();
 	}
 
 	public Map<Location, Piece> getBoard() {

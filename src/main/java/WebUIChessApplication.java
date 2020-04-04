@@ -24,13 +24,17 @@ public class WebUIChessApplication {
 			return render(model, "index.html");
 		});
 
-		get("/move", ((request, response) -> {
+		post("/move", ((request, response) -> {
 			String now = request.queryParams("now");
 			String destination = request.queryParams("destination");
 			return gameManagerService.move(gameManager, now, destination);
 		}), gson::toJson);
 
 		get("/board", (request, response) -> gameManager, gson::toJson);
+
+		get("/status", (request, response) -> gameManagerService.status(gameManager), gson::toJson);
+
+		get("/winner", (request, response) -> gameManagerService.findWinner(gameManager), gson::toJson);
 	}
 
 	private String render(Map<String, Object> model, String templatePath) {

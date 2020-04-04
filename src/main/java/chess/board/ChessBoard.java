@@ -14,6 +14,7 @@ import chess.team.Team;
 public class ChessBoard {
 	public static final int ROW_LENGTH = 8;
 	public static final int COLUMN_LENGTH = 8;
+	private static final int TEAM_LENGTH = 2;
 
 	private final Map<Location, Piece> board;
 
@@ -123,5 +124,20 @@ public class ChessBoard {
 
 	public Map<Location, Piece> getBoard() {
 		return board;
+	}
+
+	public Team findWinner() {
+		List<Piece> kings = board.values().stream()
+			.filter(Piece::isKing)
+			.collect(Collectors.toList());
+
+		if (kings.size() == TEAM_LENGTH) {
+			throw new IllegalArgumentException("게임이 종료되지 않았습니다.");
+		}
+
+		if (kings.get(0).isSameTeam(Team.BLACK)) {
+			return Team.BLACK;
+		}
+		return Team.WHITE;
 	}
 }

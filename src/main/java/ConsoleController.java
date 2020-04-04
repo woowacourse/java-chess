@@ -7,7 +7,7 @@ import view.InputView;
 import view.OutputView;
 
 public class ConsoleController {
-	public final GameManager gameManage = new GameManager(new PieceFactory().createPieces());
+	public final GameManager gameManager = new GameManager(new PieceFactory().createPieces());
 
 	public void run() {
 		start();
@@ -23,14 +23,14 @@ public class ConsoleController {
 			end();
 		}
 
-		OutputView.printBoard(gameManage);
+		OutputView.printBoard(gameManager);
 	}
 
 	private FirstCommand readFirstCommand() {
 		try {
 			return FirstCommand.of(InputView.inputCommand());
 		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
+			OutputView.printMessage(e);
 			return readFirstCommand();
 		}
 	}
@@ -45,29 +45,30 @@ public class ConsoleController {
 			if (runningCommand.isStatus()) {
 				status();
 			}
-		} while (gameManage.isRunning() && runningCommand.isNotEnd());
+		} while (gameManager.isRunning() && runningCommand.isNotEnd());
+		OutputView.printWinner(gameManager);
 	}
 
 	private void move(String nowLocation, String destinationLocation) {
 		try {
-			gameManage.movePiece(Location.of(nowLocation), Location.of(destinationLocation));
+			gameManager.movePiece(Location.of(nowLocation), Location.of(destinationLocation));
 		} catch (IllegalArgumentException | NullPointerException e) {
-			System.out.println(e.getMessage());
+			OutputView.printMessage(e);
 			running();
 			return;
 		}
-		OutputView.printBoard(gameManage);
+		OutputView.printBoard(gameManager);
 	}
 
 	private void status() {
-		OutputView.printStatus(gameManage.createStatistics());
+		OutputView.printStatus(gameManager.createStatistics());
 	}
 
 	private RunningCommand readRunningCommand() {
 		try {
 			return RunningCommand.from(InputView.inputCommand());
 		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
+			OutputView.printMessage(e);
 			return readRunningCommand();
 		}
 	}
