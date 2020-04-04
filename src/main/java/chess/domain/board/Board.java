@@ -49,7 +49,10 @@ public class Board {
 		Position source = trace.remove(0);
 		Position target = trace.remove(trace.size() - 1);
 
-		if (canPawnAttack(source, target) || trace.size() == 0) {
+		if (board.get(source).isPawn()) {
+			return canPawnAttack(source, target) || canPawnMove(source, target);
+		}
+		if (trace.size() == 0) {
 			return true;
 		}
 		return trace.stream()
@@ -57,9 +60,14 @@ public class Board {
 	}
 
 	private boolean canPawnAttack(Position source, Position target) {
-		return Objects.nonNull(board.get(source))
-			&& board.get(source).isPawn()
+		return Objects.nonNull(board.get(target))
 			&& source.nextPosition(Direction.DIAGONAL_DIRECTION).stream()
+			.anyMatch(position -> position.equals(target));
+	}
+
+	private boolean canPawnMove(Position source, Position target) {
+		return Objects.isNull(board.get(target))
+			&& source.nextPosition(Direction.PAWN_MOVE_DIRECTION).stream()
 			.anyMatch(position -> position.equals(target));
 	}
 

@@ -23,7 +23,7 @@ class BoardTest {
 		Board board = new Board();
 		List<Position> trace = new LinkedList<>();
 
-		trace.add(Position.of("a5"));
+		trace.add(Position.of("b1"));
 		trace.add(Position.of("b5"));
 		trace.add(Position.of("c5"));
 		trace.add(Position.of("d5"));

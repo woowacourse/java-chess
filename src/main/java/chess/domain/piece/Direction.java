@@ -38,13 +38,19 @@ public enum Direction {
 	public static final List<Direction> BLACK_PAWN_DIRECTION = blackPawnDirection();
 	public static final List<Direction> WHITE_PAWN_INITIAL_DIRECTION = whitePawnInitialDirection();
 	public static final List<Direction> BLACK_PAWN_INITIAL_DIRECTION = blackPawnInitialDirection();
+	public static final List<Direction> PAWN_MOVE_DIRECTION = pawnMoveDirection();
 
 	private int x;
+
 	private int y;
 
 	Direction(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	private static List<Direction> pawnMoveDirection() {
+		return Arrays.asList(NORTH, NORTH_NORTH, SOUTH, SOUTH_SOUTH);
 	}
 
 	private static List<Direction> linearDirection() {
