@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.ChessBoard;
+import chess.domain.TeamScore;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.square.File;
@@ -55,9 +56,10 @@ public class OutputView {
         System.out.println(color.getName() + "가 이겼습니다");
     }
 
-    public static void printScore(Map<Color, Double> teamScore) {
-        teamScore.keySet()
-                .forEach(color -> System.out.println(color.getName() + "의 점수는 " + teamScore.get(color) + "입니다"));
+    public static void printScore(TeamScore teamScore) {
+        Map<Color, Double> currentScore = teamScore.getTeamScore();
+        currentScore.keySet()
+                .forEach(color -> System.out.println(color.getName() + "의 점수는 " + currentScore.get(color) + "입니다"));
     }
 
     public static void printWinners(List<Color> winners) {

@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.ChessBoard;
 import chess.domain.GameState;
+import chess.domain.TeamScore;
 import chess.domain.piece.Color;
 import chess.domain.square.Square;
 import chess.utils.InputParser;
@@ -29,6 +30,7 @@ public class ChessController {
 
     private static void proceedGame(ChessBoard chessBoard) {
         GameState gameState;
+        TeamScore teamScore = new TeamScore();
         boolean blackTurn = false;
         List<Square> moveSourceDestination;
         String input;
@@ -40,11 +42,11 @@ public class ChessController {
                 continue;
             }
             if (gameState == GameState.END) {
-                printScoreAndWinners(chessBoard);
+                printScoreAndWinners(chessBoard, teamScore);
                 break;
             }
             if (gameState == GameState.STATUS) {
-                printScoreAndWinners(chessBoard);
+                printScoreAndWinners(chessBoard, teamScore);
             }
             if (gameState == GameState.MOVE) {
                 moveSourceDestination = InputParser.parseMoveSourceDestination(input);
@@ -63,9 +65,9 @@ public class ChessController {
         }
     }
 
-    private static void printScoreAndWinners(ChessBoard chessBoard) {
-        OutputView.printScore(chessBoard.getTeamScore());
-        OutputView.printWinners(chessBoard.getWinners());
+    private static void printScoreAndWinners(ChessBoard chessBoard, TeamScore teamScore) {
+        OutputView.printScore(teamScore.updateTeamScore(chessBoard));
+        OutputView.printWinners(teamScore.getWinners());
     }
 
     private static boolean isMoved(ChessBoard chessBoard, List<Square> squares, boolean blackTurn) {
