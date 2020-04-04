@@ -1,9 +1,10 @@
 package chess;
 
+import chess.dao.ChessPieceDao;
 import chess.domains.board.Board;
 import chess.domains.piece.Piece;
 import chess.domains.piece.PieceColor;
-import chess.service.WebService;
+import chess.service.ChessWebService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -17,10 +18,16 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/");
+
+        ChessWebService webService = new ChessWebService(new ChessPieceDao());
         Board board = new Board();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+
+            boolean canContinue = webService.canContinue("guest");
+
+            model.put("canContinue", canContinue);
             return render(model, "index.html");
         });
 
@@ -30,9 +37,9 @@ public class WebUIChessApplication {
             List<Piece> pieces = board.showBoard();
             List<String> pieceCodes = convertView(pieces);
             model.put("pieces", pieceCodes);
-            model.put("turn", printTurn(WebService.turn(board)));
-            model.put("white_score", WebService.calculateScore(board, PieceColor.WHITE));
-            model.put("black_score", WebService.calculateScore(board, PieceColor.BLACK));
+            model.put("turn", printTurn(webService.turn(board)));
+            model.put("white_score", webService.calculateScore(board, PieceColor.WHITE));
+            model.put("black_score", webService.calculateScore(board, PieceColor.BLACK));
             return render(model, "index.html");
         });
 
@@ -40,21 +47,20 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             String source = req.queryParams("source");
             String target = req.queryParams("target");
-            WebService.move(board, source, target);
+            webService.move(board, source, target);
             List<Piece> pieces = board.showBoard();
-            model.put("turn", printTurn(WebService.turn(board)));
+            model.put("turn", printTurn(webService.turn(board)));
             List<String> pieceCodes = convertView(pieces);
             model.put("pieces", pieceCodes);
-            model.put("white_score", WebService.calculateScore(board, PieceColor.WHITE));
-            model.put("black_score", WebService.calculateScore(board, PieceColor.BLACK));
+            model.put("white_score", webService.calculateScore(board, PieceColor.WHITE));
+            model.put("black_score", webService.calculateScore(board, PieceColor.BLACK));
             return render(model, "index.html");
         });
     }
 
     private static List<String> convertView(List<Piece> pieces) {
         List<String> pieceCodes = new ArrayList<>();
-        for
-        (Piece piece : pieces) {
+        for (Piece piece : pieces) {
             switch (piece.name()) {
                 case "r":
                     pieceCodes.add("♖");
