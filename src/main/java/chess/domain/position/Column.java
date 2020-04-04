@@ -12,7 +12,7 @@ public enum Column {
 	SECOND("2", 2),
 	FIRST("1", 1);
 
-	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 좌표 입력입니다.";
+	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 column 값 입력입니다.";
 
 	private final String name;
 	private final int value;
@@ -23,12 +23,10 @@ public enum Column {
 	}
 
 	public static Column of(String name) {
-		for (Column column : Column.values()) {
-			if (column.name.equals(name)) {
-				return column;
-			}
-		}
-		throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
+		return Arrays.stream(Column.values())
+				.filter(column -> column.name.equals(name))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE));
 	}
 
 	public Column calculate(int value) {
