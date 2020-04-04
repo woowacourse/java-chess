@@ -42,14 +42,6 @@
     text-align: center;
 }
 
-#panelBackground {
-    width: 35%;
-    height: 100%;
-    background: rgba(144, 238, 144, 0.7);
-    display: inline-block;
-    float: left;
-}
-
 #chessBoard {
     width: 480px;
     height: 480px;
@@ -57,6 +49,32 @@
     display: inline-block;
     margin: 26px;
     padding: 10px;
+}
+
+.WHITE {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    background-color: white;
+    display: inline-block;
+    float: left;
+}
+
+.BLACK {
+    background-color: #cc7e1c;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+}
+
+#panelBackground {
+    width: 35%;
+    height: 100%;
+    background: rgba(144, 238, 144, 0.7);
+    display: inline-block;
+    float: left;
 }
 
 #teamNotice {

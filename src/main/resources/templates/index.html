@@ -38,6 +38,11 @@
     <div id="background">
         <div id="chessBoardBackground">
             <div id="chessBoard" style="background: url(./images/board.png); background-size: contain">
+                {{#cells}}
+                <div class="{{tileColor}}" id="{{position}}">
+                    <img src="./images/{{pieceColor}}{{piece}}.png" style="width: 100%">
+                </div>
+                {{/cells}}
             </div>
         </div>
         <div id="panelBackground">

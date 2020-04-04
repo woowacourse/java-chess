@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.board.Board;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -9,6 +10,7 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebChessController {
+    private Board board;
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
@@ -20,6 +22,15 @@ public class WebChessController {
 
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("cells", null);
+            return render(model, "index.html");
+        });
+
+        get("/chessGame", (req, res) -> {
+            this.board = new Board();
+
+            Map<String, Object> model = new HashMap<>();
+            model.put("cells", this.board.getCells());
             return render(model, "index.html");
         });
     }
