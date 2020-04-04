@@ -32,6 +32,7 @@ public class ChessBoard {
         validateSource(source);
         validateIsPlayer(source, target);
 
+
         if (movable(from, to)) {
             chessBoard.put(to, source);
             chessBoard.remove(from);
@@ -39,7 +40,6 @@ public class ChessBoard {
             if (target instanceof King) {
                 this.isKingTaken = true;
             }
-
             return true;
         }
         return false;
@@ -81,7 +81,12 @@ public class ChessBoard {
     }
 
     private boolean validateObstacles(List<Position> routes) {
-        return routes.isEmpty();
+        for (Position  position : routes) {
+            if (Objects.nonNull(chessBoard.get(position))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Map<Position, Piece> getChessBoard() {

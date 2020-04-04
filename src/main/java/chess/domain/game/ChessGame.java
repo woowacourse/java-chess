@@ -13,7 +13,7 @@ public class ChessGame {
     }
 
     public ResponseDto start(RequestDto requestDto) {
-        Command command = requestDto.getCommend();
+        Command command = requestDto.getCommand();
 
         if (command != Command.START) {
             throw new NotStartPlayingException();

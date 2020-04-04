@@ -4,16 +4,16 @@ import chess.domain.game.ChessBoard;
 import chess.domain.status.Result;
 
 public class ResponseDto {
-    private ChessBoard chessBoard;
-    private Result result;
+    private final ChessBoardDto chessBoardDto;
+    private final Result result;
 
     public ResponseDto(ChessBoard chessBoard, Result result) {
-        this.chessBoard = chessBoard;
+        this.chessBoardDto = new ChessBoardDto(chessBoard.getChessBoard());
         this.result = result;
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public ChessBoardDto getChessBoardDto() {
+        return chessBoardDto;
     }
 
     public Result getResult() {

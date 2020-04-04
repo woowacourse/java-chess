@@ -1,5 +1,6 @@
 package chess.views;
 
+import chess.controller.dto.ChessBoardDto;
 import chess.domain.chesspiece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
@@ -23,20 +24,20 @@ public class OutputView {
         System.out.println("> 게임 상황 : status");
     }
 
-    public static void printChessBoard(Map<Position, Piece> chessBoard) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(NEW_LINE);
-
-        for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-               String display = Optional.ofNullable(chessBoard.get(Positions.of(row, column)))
-                        .map(Piece::getDisplay)
-                        .orElse(EMPTY);
-                stringBuilder.append(display);
-            }
-            stringBuilder.append(NEW_LINE);
-        }
-        System.out.println(stringBuilder.toString());
+    public static void printChessBoard(ChessBoardDto chessBoardDto) {
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append(NEW_LINE);
+//
+//        for (Column column : Column.values()) {
+//            for (Row row : Row.values()) {
+//               String display = Optional.ofNullable(chessBoard.get(Positions.of(row, column)))
+//                        .map(Piece::getDisplay)
+//                        .orElse(EMPTY);
+//                stringBuilder.append(display);
+//            }
+//            stringBuilder.append(NEW_LINE);
+//        }
+//        System.out.println(stringBuilder.toString());
     }
 
     public static void printStatus(Result result) {

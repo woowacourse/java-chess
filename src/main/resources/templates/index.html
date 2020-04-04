@@ -7,7 +7,12 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
     <style>
-        * {margin: 0; padding: 0; font-family: "Krabby Patty", serif;}
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Krabby Patty", serif;
+        }
+
         body {
             min-width: 1200px;
         }
@@ -30,14 +35,23 @@
             height: 100%;
         }
 
-        #wrap #end-container #end-btn {width: 90px; height: 110px; background: transparent url('image/end_button.png') no-repeat; background-size: contain; border: transparent;}
+        #wrap #end-container #end-btn {
+            width: 90px;
+            height: 110px;
+            background: transparent url('image/end_button.png') no-repeat;
+            background-size: contain;
+            border: transparent;
+        }
+
         #wrap .btn-container {
             position: absolute;
         }
+
         #end-container {
             right: 10px;
             top: 10px;
         }
+
         #board-container {
             width: 640px;
             height: 560px;
@@ -49,21 +63,59 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;}
-        #board-container .row {flex: 1; display: inline-flex; width: 100%}
-        #board-container .row div {width: 80px; height: 80px;}
-        #board-container .row span {flex-direction: column;}
-        #board-container .row:nth-child(odd) .square:nth-child(even) {background-color: #3ab6c2}
-        #board-container .row:nth-child(odd) .square:nth-child(odd) {background-color: #ffffff}
-        #board-container .row:nth-child(even) .square:nth-child(odd) {background-color: #3ab6c2}
-        #board-container .row:nth-child(even) .square:nth-child(even) {background-color: #ffffff}
+            justify-content: center;
+        }
+
+        #board-container .row {
+            flex: 1;
+            display: inline-flex;
+            width: 100%
+        }
+
+        #board-container .row div {
+            width: 80px;
+            height: 80px;
+        }
+
+        #board-container .row span {
+            flex-direction: column;
+        }
+
+        #board-container .row:nth-child(odd) .square:nth-child(even) {
+            background-color: #3ab6c2
+        }
+
+        #board-container .row:nth-child(odd) .square:nth-child(odd) {
+            background-color: #ffffff
+        }
+
+        #board-container .row:nth-child(even) .square:nth-child(odd) {
+            background-color: #3ab6c2
+        }
+
+        #board-container .row:nth-child(even) .square:nth-child(even) {
+            background-color: #ffffff
+        }
+
         #turn-container {
             bottom: 10px;
             left: 50px;
         }
-        #wrap #turn-container #turn-btn {width: 300px; height: 200px; background: transparent url('image/turn_button.png') no-repeat; background-size: contain; border: transparent;}
-        #wrap #white-score {}
-        #wrap #black-score {}
+
+        #wrap #turn-container #turn-btn {
+            width: 300px;
+            height: 200px;
+            background: transparent url('image/turn_button.png') no-repeat;
+            background-size: contain;
+            border: transparent;
+        }
+
+        #wrap #white-score {
+        }
+
+        #wrap #black-score {
+        }
+
         #wrap .score-container {
             width: 300px;
             height: 140px;
@@ -76,9 +128,11 @@
             padding-top: 50px;
             display: inline-grid;
         }
+
         .white-score-container {
             left: 5%;
         }
+
         .black-score-container {
             right: 5%;
         }
@@ -88,9 +142,23 @@
             height: 90%;
         }
 
-        #wrap .score {color: #ffffff; font-size: 40px; font-weight: bold}
-        #wrap #white-score {height: 100px; color: rgb(237, 125, 49); font-size: 50px;}
-        #wrap #black-score {height: 100px; color: rgb(237, 125, 49); font-size: 50px;}
+        #wrap .score {
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: bold
+        }
+
+        #wrap #white-score {
+            height: 100px;
+            color: rgb(237, 125, 49);
+            font-size: 50px;
+        }
+
+        #wrap #black-score {
+            height: 100px;
+            color: rgb(237, 125, 49);
+            font-size: 50px;
+        }
     </style>
     <title>체스게임!</title>
 </head>
@@ -122,25 +190,52 @@
         // piece 이미지 초기화
         $.ajax({
             type: 'get',
-            url: '/test',
+            url: '/init',
             dataType: 'json',
             error: initError,
-            success: initSuccess
+            success: printChessBoardAndStatus
         });
 
         // drag and drop event 추가
         $('.square').on("dragstart", function (event) {
-            event.originalEvent.dataTransfer.setData("pieceId", event["target"].id);
+            console.log("drag start");
             event.originalEvent.dataTransfer.setData("from", event.currentTarget.id);
         });
 
         $('.square').on("dragover", function (event) {
             event.preventDefault();
         }).on("drop", function (event) {
+            console.log("drop");
             event.preventDefault();
             let from = event.originalEvent.dataTransfer.getData("from");
-            event.target.innerHTML = document.getElementById(from).innerHTML;
-            document.getElementById(from).innerHTML = null;
+            let to = event.target.id;
+            // let target = event.target.
+
+            // console.log("event: "+event);
+            // console.log("event.currentTarget: "+event.currentTarget);
+            // console.log("event currentTarget.children: "+event.currentTarget.children[0]);
+            // console.log(event.currentTarget.children);
+            // var children = event.currentTarget.children;
+            // console.log(children );
+            // console.log(children[0]);
+            // console.log(event.currentTarget.childElementCount );
+            // console.log(event.currentTarget.children.length);
+            // console.log(event.target.childNodes);
+            // console.log(event.target.childNodes.length);
+            // console.log(event.target.childNodes[0]);
+            // console.log(event.target.firstElementChild);
+
+            $.ajax({
+                type: 'get',
+                url: '/move',
+                dataType: 'json',
+                data: "from="+from+"&to="+to,
+                error: function (res) {
+                    alert(res);
+                },
+                success: printChessBoardAndStatus
+            });
+
         });
     });
 
@@ -149,15 +244,17 @@
     }
 
     // 체스 기물 초기화
-    function initSuccess(response) {
-        response['tiles'].forEach(function (item, index, array) {
+    function printChessBoardAndStatus(response) {
+        let chessBoardDto = response["chessBoardDto"];
+        $(".piece").remove();
+
+        chessBoardDto['tiles'].forEach(function (item, index, array) {
             var piece = document.createElement("img");
-            piece.src = "./image/piece/"+item.piece+".png";
+            piece.src = "./image/piece/" + item.piece + ".png";
             piece.id = item.piece;
             piece.className = "piece";
-
-            $("#"+item.position).append(piece);
-    })
+            $("#" + item.position).append(piece);
+        })
     }
 </script>
 <div id="background">
