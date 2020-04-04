@@ -2,8 +2,6 @@ package chess.domain.board;
 
 public class PositionDTO {
 
-    private static final String DELIMITER = "";
-
     private final String position;
 
     private PositionDTO(String position) {
@@ -15,7 +13,7 @@ public class PositionDTO {
     }
 
     public static PositionDTO create(Position position) {
-        String name = String.join(DELIMITER, position.getColumn().getName(), position.getRow().getName());
+        String name = position.getName();
         return new PositionDTO(name);
     }
 }

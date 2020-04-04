@@ -5,6 +5,7 @@ import chess.domain.player.PlayerColor;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum ChessPiece {
 
@@ -39,6 +40,14 @@ public enum ChessPiece {
 
     public static boolean isPawn(GamePiece gamePiece) {
         return WHITE_PAWN.gamePiece.equals(gamePiece) || BLACK_PAWN.gamePiece.equals(gamePiece);
+    }
+
+    public static GamePiece findGamePieceBy(String name) {
+        return Stream.of(values())
+                .map(piece -> piece.gamePiece)
+                .filter(gamePiece -> gamePiece.isName(name))
+                .findFirst()
+                .orElse(EmptyPiece.getInstance());
     }
 
     public GamePiece getGamePiece() {

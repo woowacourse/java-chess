@@ -6,6 +6,7 @@ import java.util.*;
 
 public class Position implements Comparable<Position> {
 
+    private static final String DELIMITER = "";
     private static final Map<String, Position> positions;
 
     static {
@@ -92,6 +93,10 @@ public class Position implements Comparable<Position> {
 
     public Column getColumn() {
         return column;
+    }
+
+    public String getName() {
+        return String.join(DELIMITER, column.getName(), row.getName());
     }
 
     @Override

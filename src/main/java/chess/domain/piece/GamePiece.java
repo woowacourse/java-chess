@@ -34,6 +34,10 @@ public abstract class GamePiece {
         return originalPositions;
     }
 
+    public boolean isName(String name) {
+        return this.name.equals(name);
+    }
+
     public String getName() {
         return name;
     }

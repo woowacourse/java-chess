@@ -2,6 +2,8 @@ package chess.domain.board;
 
 import chess.domain.player.PlayerColor;
 
+import java.util.Objects;
+
 public class Status {
 
     private static final int INIT_TURN = 0;
@@ -56,5 +58,19 @@ public class Status {
 
     public StatusType getStatusType() {
         return statusType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Status status = (Status) o;
+        return turn == status.turn &&
+                statusType == status.statusType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(turn, statusType);
     }
 }

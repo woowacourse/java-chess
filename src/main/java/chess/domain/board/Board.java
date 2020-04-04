@@ -141,4 +141,18 @@ public class Board {
     public Status getStatus() {
         return status;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board1 = (Board) o;
+        return Objects.equals(board, board1.board) &&
+                Objects.equals(status, board1.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, status);
+    }
 }
