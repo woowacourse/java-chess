@@ -15,4 +15,8 @@ public class WebService {
 		board.move(source, target, team);
 		team = Team.changeTurn(team);
 	}
+
+	public String getTurn() {
+		return team.getName();
+	}
 }
