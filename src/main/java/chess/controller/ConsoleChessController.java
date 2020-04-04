@@ -1,4 +1,4 @@
-package chess;
+package chess.controller;
 
 import chess.domain.GameResult;
 import chess.domain.board.Board;
@@ -7,8 +7,8 @@ import chess.domain.command.MoveCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
-    private static Board board;
+public class ConsoleChessController {
+    private Board board;
 
     private static Command resolveCommand() {
         try {
@@ -19,12 +19,7 @@ public class ChessController {
         }
     }
 
-    private static void spreadBoard() {
-        board = new Board();
-        OutputView.printBoard(board);
-    }
-
-    public static void runGame() {
+    public static void runGame(Board board) {
         while (!board.isGameOver()) {
             OutputView.printTurn(board.getTeam());
 
@@ -38,6 +33,11 @@ public class ChessController {
         }
     }
 
+    private void spreadBoard() {
+        this.board = new Board();
+        OutputView.printBoard(this.board);
+    }
+
     public void run() {
         OutputView.printGameCommand();
 
@@ -48,7 +48,7 @@ public class ChessController {
 
         if (runCommand.isStart()) {
             spreadBoard();
-            runGame();
+            runGame(this.board);
 
             OutputView.printStatusMessage();
             Command statusCommand;
@@ -57,7 +57,7 @@ public class ChessController {
             } while (statusCommand.isError());
 
             if (statusCommand.isStatus()) {
-                GameResult gameResult = board.createGameResult();
+                GameResult gameResult = this.board.createGameResult();
                 OutputView.printResult(gameResult);
             }
         }
