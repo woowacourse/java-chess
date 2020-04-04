@@ -188,7 +188,7 @@ public class Board {
         board.set(indexOfX, row);
     }
 
-    private void setPosition(ChessPiece chessPiece, Position targetPosition) {
+    public void setPosition(ChessPiece chessPiece, Position targetPosition) {
         int indexOfX = targetPosition.getX() - INDEX_CORRECTION_NUMBER;
         int indexOfY = targetPosition.getY() - INDEX_CORRECTION_NUMBER;
         Row row = board.get(indexOfX);

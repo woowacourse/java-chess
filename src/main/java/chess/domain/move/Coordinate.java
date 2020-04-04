@@ -9,6 +9,10 @@ public class Coordinate {
         this.coordinate = coordinate;
     }
 
+    public static Coordinate of(String coordinate) {
+        return of(Integer.parseInt(coordinate));
+    }
+
     public static Coordinate of(int coordinate) {
         return new Coordinate(coordinate);
     }

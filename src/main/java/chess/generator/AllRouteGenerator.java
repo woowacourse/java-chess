@@ -49,7 +49,8 @@ public class AllRouteGenerator {
 
     private static void makeRoutes(ChessPiece chessPiece, List<Route> routes, Position initialPosition) {
         Direction[] directions = chessPiece.getMoveDirections();
-        List<Position> positions;
+        List<Position> positions = new ArrayList<>();
+
         for (Direction direction : directions) {
             positions = new ArrayList<>();
 
@@ -59,7 +60,7 @@ public class AllRouteGenerator {
     }
 
     private static List<Route> makeKnightRoute(Position initialPosition) {
-        List<Position> positions;
+        List<Position> positions = new ArrayList<>();
         List<Route> routes = new ArrayList<>();
 
         for (int i = KNIGHT_DIRECTION_MIN; i < KNIGHT_DIRECTION_MAX; i++) {

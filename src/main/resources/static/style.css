@@ -1,0 +1,52 @@
+body{
+	background-image : url(images/background.jpg);
+}
+
+main {
+	margin : auto;
+	float : center;
+	width: 940px;
+	height: 740px;
+}
+
+section{
+	float : left;
+}
+
+aside{
+	width: 185px;
+	height: 550px;
+	padding-top: 150px;
+	padding-left: 15px;
+	float : right;
+}
+
+.score{
+	width: 150px;
+    background-color: white;
+}
+
+.chessboard {
+    width: 640px;
+    height: 640px;
+    margin: 20px;
+    border: 25px solid #333;
+}
+
+.cell{
+    float: left;
+    width: 80px;
+    height: 80px;
+    font-size:50px;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}
+
+.gray {
+    background-color: #999;
+}
+
+.white {
+    background-color: #fff;
+}
