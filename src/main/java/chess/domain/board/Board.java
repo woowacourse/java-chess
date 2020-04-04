@@ -34,7 +34,9 @@ public class Board {
                                                            sourcePosition.getName()));
         }
         if (!sourcePiece.isSameColor(team)) {
-            throw new AnotherTeamPieceException(String.format("위치(sourcePosition) %s의 말은 현재 차례인 %s의 말이 아니므로 움직일 수 없습니다.", sourcePosition.getName(), team.getName()));
+            throw new AnotherTeamPieceException(String.format("위치(sourcePosition) %s의 말은 현재 차례인 %s의 말이 아니므로 움직일 수 " +
+                                                                      "없습니다.", sourcePosition.getName(),
+                                                              team.getName()));
         }
         return board.get(sourcePosition);
     }
@@ -194,7 +196,7 @@ public class Board {
                 Cell cell = new Cell();
                 cell.setTileColor(getTileColor(xPoint, yPoint));
                 cell.setPosition(String.valueOf(xPoint) + (yPoint));
-                cell.setPieceColor(getPieceColor(piece));
+                cell.setPieceColor(piece.getPieceColorName());
                 cell.setPiece(piece.getName());
                 cells.add(cell);
             }
@@ -214,15 +216,5 @@ public class Board {
             return "WHITE";
         }
         return "NONE";
-    }
-
-    private String getPieceColor(Piece piece) {
-        if (piece.isBlack()) {
-            return "Black";
-        }
-        if (piece.isWhite()) {
-            return "White";
-        }
-        return "None";
     }
 }

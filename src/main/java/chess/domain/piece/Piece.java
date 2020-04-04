@@ -29,8 +29,8 @@ public abstract class Piece {
         return pieceColor.isNoneColor();
     }
 
-    public boolean isBlack() {
-        return pieceColor.isBlack();
+    public String getPieceColorName() {
+        return this.pieceColor.getName();
     }
 
     public boolean isSameColor(Piece piece) {
