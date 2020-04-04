@@ -100,6 +100,26 @@
     font-size: 30px;
 }
 
+#moveForms {
+    font-family: BMHANNAPro, sans-serif;
+    margin-top: 30px;
+}
+
+.moveForm {
+    font-family: "BMHANNAAir", sans-serif;
+    font-size: 16px;
+    width: 160px;
+    height: 30px;
+    border: 0;
+    border-radius: 10px;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: rgba(75, 0, 130, 0.8);
+}
+
 #helpBox {
     font-family: "BMHANNAPro", sans-serif;
     font-size: 25px;
