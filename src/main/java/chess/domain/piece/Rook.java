@@ -12,7 +12,8 @@ import chess.domain.player.PlayerColor;
 
 public class Rook extends GamePiece {
 
-    private static List<Position> originalPositions = Arrays.asList(Position.of(Column.A, Row.ONE), Position.of(Column.H, Row.ONE));
+    private static List<Position> originalPositions = Arrays.asList(Position.of(Column.A, Row.ONE),
+            Position.of(Column.H, Row.ONE));
 
     public Rook(PlayerColor playerColor) {
         super("r", 5, playerColor, Arrays.asList(N, E, W, S), 8);

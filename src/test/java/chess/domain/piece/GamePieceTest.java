@@ -71,6 +71,4 @@ class GamePieceTest {
                 Arguments.of(new Rook(WHITE), true)
         );
     }
-
-
 }

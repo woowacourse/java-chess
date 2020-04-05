@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.dao.BoardDAO;
 import chess.domain.board.Board;
 import chess.domain.player.User;
 import chess.dto.LineDto;
@@ -37,13 +36,12 @@ public class WebUIChessApplication {
             String secondUserName = req.queryParams("user2");
             User first = new User(firstUserName);
             User second = new User(secondUserName);
-            Board board = chessService.findByUserName(first, second);
 
+            Board board = chessService.findByUserName(first, second);
             List<LineDto> rows = board.getRows();
             model.put("firstUser", firstUserName);
             model.put("secondUser", secondUserName);
             model.put("rows", rows);
-
             return render(model, "board.html");
         });
 

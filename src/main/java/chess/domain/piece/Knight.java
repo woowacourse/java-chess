@@ -12,7 +12,8 @@ import chess.domain.player.PlayerColor;
 
 public class Knight extends GamePiece {
 
-    private static List<Position> originalPositions = Arrays.asList(Position.of(Column.B, Row.ONE), Position.of(Column.G, Row.ONE));
+    private static List<Position> originalPositions = Arrays.asList(Position.of(Column.B, Row.ONE),
+            Position.of(Column.G, Row.ONE));
 
     public Knight(PlayerColor playerColor) {
         super("n", 2.5, playerColor, Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW), 1);

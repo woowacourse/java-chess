@@ -126,7 +126,6 @@ class BoardTest {
         map.put(Position.from(source), gamePiece);
         map.put(Position.from("e3"), new Bishop(BLACK));
         Board board = Board.of(map, new Status(0, StatusType.PROCESSING), User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
-
         assertThatThrownBy(() -> {
             board.move(source, target);
         }).isInstanceOf(InvalidMovementException.class)
