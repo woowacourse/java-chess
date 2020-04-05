@@ -59,7 +59,7 @@ public class ChessController {
         }
         return command;
     }
-
+  
     private static Command executeByCommand(Command command, ChessRunner chessRunner) {
         String input = inputView.askGameCommand();
         Optional<Command> inputCommand = Command.of(input);

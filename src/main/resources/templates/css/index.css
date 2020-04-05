@@ -1,0 +1,48 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: "BMHANNAPro";
+    src: url(../ttf/BMHANNAPro.ttf);
+}
+
+#chess-board {
+    width: 600px;
+}
+
+#chess-board div {
+    margin: 0;
+    padding: 0;
+    width: 70px;
+    height: 70px;
+    float: left;
+    border: 1px solid;
+}
+
+.black {
+    background-color: #D08B48;
+}
+
+.white {
+    background-color: #FECE9E;
+}
+
+#start {
+    position: relative;
+    width: 80%;
+    height: 100%;
+    left: 30px;
+}
+
+#start-button {
+    width: 80px;
+    height: 50px;
+    font-family: BMHANNAPro;
+    border: solid 1px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+#start-button:hover {
+    background-color: black;
+    color: white;
+}

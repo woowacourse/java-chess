@@ -1,16 +1,20 @@
 package chess.domain;
 
+import chess.controller.dto.TileDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
+import chess.domain.board.Tile;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.strategy.direction.Direction;
-import org.apache.commons.lang3.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 public class ChessRunner {
     private Board board;
@@ -114,5 +118,31 @@ public class ChessRunner {
     public String getWinner() {
         Optional<Team> winner = this.board.getWinner();
         return winner.map(Enum::name).orElse(StringUtils.EMPTY);
+    }
+
+    public List<TileDto> tileDtos() {
+        List<TileDto> tileDtos = Position.getPositions().stream()
+                .map(TileDto::new)
+                .collect(Collectors.toList());
+
+        List<Integer> indexes = Position.getPositionsIndex();
+        for (int i = 0; i < indexes.size(); i++) {
+            if (indexes.get(i) % 2 == 0) {
+                tileDtos.get(i).setTeam("white");
+            } else {
+                tileDtos.get(i).setTeam("black");
+            }
+        }
+
+        List<Tile> tiles = this.board.tiles();
+        for (Tile tile : tiles) {
+            TileDto tileDto = tileDtos.stream()
+                    .filter(td -> td.getPosition().equals(tile.position()))
+                    .findFirst()
+                    .orElseThrow(IllegalArgumentException::new);
+            tileDto.setPieceImageUrl(tile.pieceImageUrl());
+        }
+
+        return Collections.unmodifiableList(tileDtos);
     }
 }

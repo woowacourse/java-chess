@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: "BMHANNAPro";
+    src: url(../ttf/BMHANNAPro.ttf);
+}
+
+#chess-board {
+    width: 600px;
+}
+
+#chess-board div {
+    margin: 0;
+    padding: 0;
+    width: 70px;
+    height: 70px;
+    float: left;
+    border: 1px solid;
+    text-align: center;
+}
+
+.black {
+    background-color: #d08b48;
+}
+
+.white {
+    background-color: #fece9e;
+}
+
+#content {
+    position: relative;
+    width: 80%;
+    height: 100%;
+    left: 30px;
+}
+
+#status-button,
+#end-button,
+#move-button {
+    width: 80px;
+    height: 50px;
+    font-family: BMHANNAPro;
+    border: solid 1px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+#status-button:hover,
+#end-button:hover,
+#move-button:hover {
+    background-color: black;
+    color: white;
+}
+
+img {
+    width: 50px;
+}
+
+#source-label,
+#target-label {
+    font-family: BMHANNAPro;
+    font-size: 30px;
+}
+
+#source,
+#target {
+    font-family: BMHANNAPro;
+    size: 50;
+}
+
+#currentTeam {
+    font-family: BMHANNAPro;
+    font-size: 30px;
+}
+
+#message {
+    width: 500px;
+    height: 40px;
+    resize: none;
+    font-family: BMHANNAPro;
+    font-size: 30px;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <title>체스</title>
+    <link rel="stylesheet" type="text/css" href="css/game.css"/>
+</head>
+
+<body>
+<div id="chess-board">
+    {{#tiles}}
+    <div id="{{position}}" class="{{team}}">
+        {{#if pieceImageUrl}}
+        <img src="image/piece/{{pieceImageUrl}}.png"/>
+        {{/if}}
+    </div>
+    {{/tiles}}
+</div>
+
+<div id="content">
+    <p id="currentTeam">현재 차례는 {{currentTeam.teamName}} 입니다</p>
+    <br/>
+    <form action="/move" method="post">
+        <p>
+            <label id="source-label" for="source">Source</label>
+            <input type="text" id="source" name="source"/>
+        </p>
+        <p>
+            <label id="target-label" for="target">Target</label>
+            <input type="text" id="target" name="target"/>
+        </p>
+        <button id="move-button" value="move">Move</button>
+    </form>
+    <br/>
+    <textarea id="message" readonly style="{{style}}">{{message}}</textarea>
+    <br/>
+    <form action="/status" method="post">
+        <button id="status-button" value="stauts">Status</button>
+    </form>
+    <br/>
+    <form action="/end" method="post">
+        <button id="end-button" value="end">End</button>
+    </form>
+</div>
+</body>
+</html>

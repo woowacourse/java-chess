@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+    <meta charset="utf-8"/>
+    <title>체스</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <script type="text/javascript">
+        function initialBoard() {
+            var files = ["A", "B", "C", "D", "E", "F", "G", "H"];
+            var ranks = [
+                "EIGHT",
+                "SEVEN",
+                "SIX",
+                "FIVE",
+                "FOUR",
+                "THREE",
+                "TWO",
+                "ONE"
+            ];
+
+            for (var i = 0; i < 8; i++) {
+                for (var j = 0; j < 8; j++) {
+                    var div = document.createElement("div");
+                    var divId = files[j] + ranks[i];
+                    div.id = divId;
+
+                    if ((i + j) % 2 === 0) {
+                        div.className = "white";
+                    } else {
+                        div.className = "black";
+                    }
+
+                    document.getElementById("chess-board").appendChild(div);
+                }
+            }
+        }
+
+
+    </script>
 </head>
-<body>
-Hello World!!
+
+<body onload="initialBoard()">
+<div id="chess-board"></div>
+<div id="start">
+    <form action="/game" method="post">
+        <button id="start-button" value="start">Start</button>
+    </form>
+</div>
 </body>
 </html>
