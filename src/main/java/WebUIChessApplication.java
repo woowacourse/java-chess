@@ -57,9 +57,13 @@ public class WebUIChessApplication {
         });
 
         get("/start/winner", (req, res) -> {
-            Gson gson = new Gson();
             ChessResultDTO chessResultDTO = new ChessResultDTO(chessGame.findWinner());
-            return gson.toJson(chessResultDTO);
+            return GSON.toJson(chessResultDTO);
+        });
+
+        get("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "start.html");
         });
     }
 

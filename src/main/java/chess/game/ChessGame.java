@@ -27,7 +27,6 @@ public class ChessGame {
     private final Calculatable calculatable;
     private Team turn;
 
-
     public ChessGame() {
         chessBoard = ChessBoardCreater.create();
         white = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
