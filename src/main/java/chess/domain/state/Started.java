@@ -23,7 +23,7 @@ public class Started implements GameState {
 	@Override
 	public GameState start() {
 		board.start();
-		return this;
+		return new Started(board);
 	}
 
 	@Override
