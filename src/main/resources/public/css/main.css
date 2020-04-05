@@ -43,7 +43,7 @@ main {
 
 .message {
   margin-bottom: 25px;
-  width: 300px;
+  width: 500px;
   text-align: center;
   color: #ffffff;
   display: flex;
@@ -212,6 +212,7 @@ main {
 .room {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding-top: 10px;
   border-bottom: 1px solid white;
   padding-bottom: 10px;
@@ -248,17 +249,21 @@ main {
   text-align: center;
 }
 
-.room-status {
-  text-align: center;
-  width: 20%;
-}
-
 .players {
-  width: 50%;
+  width: 45%;
   display: flex;
 }
 
 .player {
   width: 50%;
   text-align: center;
+}
+
+.player-record {
+  font-size: 12px;
+}
+
+.room-status {
+  text-align: center;
+  width: 25%;
 }
