@@ -16,7 +16,8 @@ public class Rook extends Piece {
 
 	@Override
 	protected void validateDirection(Direction direction) {
-		if (direction.isNotContain(Direction.linearDirection())) {
+		boolean isWrongDirection = !Direction.isLinearDirection(direction);
+		if (isWrongDirection) {
 			throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 		}
 	}

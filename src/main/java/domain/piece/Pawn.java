@@ -29,7 +29,7 @@ public class Pawn extends Piece {
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		Direction direction = Direction.findDirection(this.position, targetPosition);
 		Optional<Piece> piece = board.findPiece(targetPosition);
-		if (Direction.diagonalDirection().contains(direction) && rowGap == MIN_STEP_SIZE_OF_DIAGONAL) {
+		if (Direction.isDiagonalDirection(direction) && rowGap == MIN_STEP_SIZE_OF_DIAGONAL) {
 			piece.ifPresent(targetPiece -> {
 				if (targetPiece.team.equals(this.team)) {
 					throw new InvalidPositionException(HAS_OUR_TEAM_AT_TARGET_POSITION);
@@ -37,7 +37,7 @@ public class Pawn extends Piece {
 				capture(targetPiece, board);
 			});
 		}
-		if (Direction.linearDirection().contains(direction) && piece.isPresent()) {
+		if (Direction.isLinearDirection(direction) && piece.isPresent()) {
 			throw new InvalidPositionException(HAS_PIECE_AT_TARGET_POSITION);
 		}
 		this.changePosition(targetPosition, board);
@@ -46,11 +46,13 @@ public class Pawn extends Piece {
 
 	@Override
 	protected void validateDirection(Direction direction) {
-		if (Team.WHITE.equals(this.team)) {
-			if (direction.isNotContain(Direction.whitePawnDirection())) {
-				throw new InvalidPositionException(INVALID_DIRECTION);
-			}
-		} else if (direction.isNotContain(Direction.blackPawnDirection())) {
+		boolean isWrongDirection;
+		if (Team.isWhite(team)) {
+			isWrongDirection = !Direction.isWhitePawnDirection(direction);
+		} else {
+			isWrongDirection = !Direction.isBlackPawnDirection(direction);
+		}
+		if (isWrongDirection) {
 			throw new InvalidPositionException(INVALID_DIRECTION);
 		}
 	}

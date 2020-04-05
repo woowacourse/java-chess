@@ -16,7 +16,8 @@ public class Bishop extends Piece {
 
 	@Override
 	protected void validateDirection(Direction direction) {
-		if (direction.isNotContain(Direction.diagonalDirection())) {
+		boolean isWrongDirection = !Direction.isDiagonalDirection(direction);
+		if (isWrongDirection) {
 			throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 		}
 	}

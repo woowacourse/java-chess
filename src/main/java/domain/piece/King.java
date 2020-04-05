@@ -17,7 +17,8 @@ public class King extends Piece {
 
 	@Override
 	protected void validateDirection(Direction direction) {
-		if (direction.isNotContain(Direction.everyDirection())) {
+		boolean isWrongDirection = !Direction.isEveryDirection(direction);
+		if (isWrongDirection) {
 			throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 		}
 	}

@@ -16,7 +16,8 @@ public class Knight extends Piece {
 
 	@Override
 	protected void validateDirection(Direction direction) {
-		if (direction.isNotContain(Direction.knightDirection())) {
+		boolean isWrongDirection = !Direction.isKnightDirection(direction);
+		if (isWrongDirection) {
 			throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 		}
 	}

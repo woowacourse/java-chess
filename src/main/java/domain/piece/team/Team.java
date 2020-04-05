@@ -9,4 +9,8 @@ public enum Team {
 		}
 		return WHITE;
 	}
+
+	public static boolean isWhite(Team team){
+		return WHITE.equals(team);
+	}
 }

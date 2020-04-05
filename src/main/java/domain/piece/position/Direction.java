@@ -78,27 +78,27 @@ public enum Direction {
 		return Math.max(columnGap, rowGap);
 	}
 
-	public static List<Direction> everyDirection() {
-		return Arrays.asList(N, S, E, W, NE, NW, SE, SW);
+	public static boolean isEveryDirection(Direction direction) {
+		return Arrays.asList(N, S, E, W, NE, NW, SE, SW).contains(direction);
 	}
 
-	public static List<Direction> linearDirection() {
-		return Arrays.asList(N, S, E, W);
+	public static boolean isLinearDirection(Direction direction) {
+		return Arrays.asList(N, S, E, W).contains(direction);
 	}
 
-	public static List<Direction> diagonalDirection() {
-		return Arrays.asList(NE, NW, SE, SW);
+	public static boolean isDiagonalDirection(Direction direction) {
+		return Arrays.asList(NE, NW, SE, SW).contains(direction);
 	}
 
-	public static List<Direction> knightDirection() {
-		return Arrays.asList(NNE, NNW, SSE, SSW, NEE, NWW, SEE, SWW);
+	public static boolean isKnightDirection(Direction direction) {
+		return Arrays.asList(NNE, NNW, SSE, SSW, NEE, NWW, SEE, SWW).contains(direction);
 	}
 
-	public static List<Direction> whitePawnDirection() {
-		return Arrays.asList(N, NE, NW);
+	public static boolean isWhitePawnDirection(Direction direction) {
+		return Arrays.asList(N, NE, NW).contains(direction);
 	}
 
-	public static List<Direction> blackPawnDirection() {
-		return Arrays.asList(S, SE, SW);
+	public static boolean isBlackPawnDirection(Direction direction) {
+		return Arrays.asList(S, SE, SW).contains(direction);
 	}
 }

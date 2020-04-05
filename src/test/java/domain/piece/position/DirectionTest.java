@@ -1,54 +1,51 @@
 package domain.piece.position;
 
-import static domain.piece.position.Direction.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-public class DirectionTest {
+class DirectionTest {
 	@DisplayName("모든 방향 리스트 반환")
-	@Test
-	void everyDirection() {
-		List<Direction> expected = Arrays.asList(N, S, E, W, NE, NW, SE, SW);
-		assertThat(Direction.everyDirection()).isEqualTo(expected);
+	@ParameterizedTest
+	@CsvSource({"N", "S", "E", "W", "NE", "NW", "SE", "SW"})
+	void isEveryDirection_EveryDirection_ReturnTrue(Direction direction) {
+		assertThat(Direction.isEveryDirection(direction)).isTrue();
 	}
 
 	@DisplayName("직선 방향 리스트 반환")
-	@Test
-	void linearDirection() {
-		List<Direction> expected = Arrays.asList(N, S, E, W);
-		assertThat(Direction.linearDirection()).isEqualTo(expected);
+	@ParameterizedTest
+	@CsvSource({"N", "S", "E", "W"})
+	void isLinearDirection_LinearDirection_ReturnTrue(Direction direction) {
+		assertThat(Direction.isLinearDirection(direction)).isTrue();
 	}
 
 	@DisplayName("대각선 방향 리스트 반환")
-	@Test
-	void diagonalDirection() {
-		List<Direction> expected = Arrays.asList(NE, NW, SE, SW);
-		assertThat(Direction.diagonalDirection()).isEqualTo(expected);
+	@ParameterizedTest
+	@CsvSource({"NE", "SE", "NW", "SW"})
+	void isDiagonalDirection_DiagonalDirection_ReturnTrue(Direction direction) {
+		assertThat(Direction.isDiagonalDirection(direction)).isTrue();
 	}
 
 	@DisplayName("Knight 방향 리스트 반환")
-	@Test
-	void knightDirection() {
-		List<Direction> expected = Arrays.asList(NNE, NNW, SSE, SSW, NEE, NWW, SEE, SWW);
-		assertThat(Direction.knightDirection()).isEqualTo(expected);
+	@ParameterizedTest
+	@CsvSource({"NNE", "NNW", "SSE", "SSW", "NEE", "NWW", "SEE", "SWW"})
+	void isKnightDirection_KnightDirection_ReturnTrue(Direction direction) {
+		assertThat(Direction.isKnightDirection(direction)).isTrue();
 	}
 
 	@DisplayName("White Pawn 방향 리스트 반환")
-	@Test
-	void whitePawnDirection() {
-		List<Direction> expected = Arrays.asList(N, NE, NW);
-		assertThat(Direction.whitePawnDirection()).isEqualTo(expected);
+	@ParameterizedTest
+	@CsvSource({"N", "NE", "NW"})
+	void isWhitePawnDirection_WhitePawnDirection_ReturnTrue(Direction direction) {
+		assertThat(Direction.isWhitePawnDirection(direction)).isTrue();
 	}
 
 	@DisplayName("Black Pawn 방향 리스트 반환")
-	@Test
-	void blackPawnDirection() {
-		List<Direction> expected = Arrays.asList(S, SE, SW);
-		assertThat(Direction.blackPawnDirection()).isEqualTo(expected);
+	@ParameterizedTest
+	@CsvSource({"S", "SE", "SW"})
+	void isBlackPawnDirection_BlackPawnDirection_ReturnTrue(Direction direction) {
+		assertThat(Direction.isBlackPawnDirection(direction)).isTrue();
 	}
 }

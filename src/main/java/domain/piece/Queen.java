@@ -16,8 +16,9 @@ public class Queen extends Piece {
 
 	@Override
 	protected void validateDirection(Direction direction) {
-		if (direction.isNotContain(Direction.diagonalDirection())
-			&& direction.isNotContain(Direction.linearDirection())) {
+		boolean isWrongDirection = !Direction.isDiagonalDirection(direction)
+			&& !Direction.isLinearDirection(direction);
+		if (isWrongDirection) {
 			throw new InvalidPositionException(InvalidPositionException.INVALID_DIRECTION);
 		}
 	}
