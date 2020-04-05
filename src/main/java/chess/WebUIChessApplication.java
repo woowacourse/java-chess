@@ -85,6 +85,20 @@ public class WebUIChessApplication {
 			model.put("errorMessage", errorMessage);
             return render(model, "index.html");
         });
+
+		post("/load", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			webService.loadGame();
+
+			List<String> pieces = webService.showAllPieces();
+
+			model.put("pieces", pieces);
+			model.put("blackTeamScore", webService.calculateTeamScore(Team.BLACK));
+			model.put("whiteTeamScore", webService.calculateTeamScore(Team.WHITE));
+			model.put("turn", webService.getTurn());
+			model.put("errorMessage", errorMessage);
+			return render(model, "index.html");
+		});
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {

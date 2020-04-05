@@ -14,9 +14,15 @@ import domain.piece.team.Team;
  *   @author ParkDooWon
  */
 public class WebService {
-	Board board = BoardFactory.create();
-	private Team team = Team.WHITE;
-	private BoardDao boardDao = new BoardDao();
+	private Board board;
+	private Team team;
+	private BoardDao boardDao;
+
+	public WebService() {
+		board = BoardFactory.create();
+		team = Team.WHITE;
+		boardDao = new BoardDao();
+	}
 
 	public List<String> showAllPieces() {
 		return board.showAllPieces();
@@ -50,5 +56,9 @@ public class WebService {
 
 	public boolean isKingDead() {
 		return board.isKingDead();
+	}
+
+	public void loadGame() throws SQLException {
+		board = boardDao.loadBoard();
 	}
 }

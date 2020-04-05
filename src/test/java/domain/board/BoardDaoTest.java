@@ -42,6 +42,13 @@ public class BoardDaoTest {
 		boardDao.saveBoard(board);
 	}
 
+	@DisplayName("Board에 데이터 불러오기")
+	@Test
+	public void loadTest() throws SQLException {
+		Board board = boardDao.loadBoard();
+		assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(10);
+	}
+
 	@DisplayName("Board에 데이터 삭제")
 	@Test
 	public void deleteTest() throws SQLException {
