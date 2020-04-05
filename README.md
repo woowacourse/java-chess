@@ -142,8 +142,6 @@ abcdefgh
 
 - 콘솔 UI와 더불어 웹으로 체스 게임이 가능해야 한다.
 
-![](C:\Users\이건희\Documents\java-chess\sample_image.png)
-
 기능 구현
 
 - [x] HTML 및 CSS 구현
