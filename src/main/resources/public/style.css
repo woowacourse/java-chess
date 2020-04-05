@@ -46,7 +46,7 @@ header > h1 {
 }
 
 table.chessboard {
-    margin: 5rem auto;
+    margin: 5rem auto 2rem auto;
     border: 30px solid #333;
     background-color: #999;
     border-collapse: collapse;
@@ -67,4 +67,29 @@ tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
 img.chessboard {
     width: 100%;
     height: 100%;
+}
+
+article.input__command {
+    text-align: center;
+    line-height: 1.6;
+    font-size: 1.2rem;
+}
+
+div.input__example {
+    color: #999;
+}
+
+#input__command__area {
+    display: inline-block;
+    padding: 1rem;
+    margin: 2rem auto;
+    width: 15rem;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 3px solid #999;
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
 }
