@@ -18,9 +18,9 @@ public class WinnerTest {
         ChessBoard chessBoard = new ChessBoard();
         assertThat(Winner.getWinners(chessBoard.getChessBoard()).size()).isEqualTo(2);
 
-        chessBoard.movePiece(Arrays.asList(Square.of("b1"), Square.of("c3")));
-        chessBoard.movePiece(Arrays.asList(Square.of("d7"), Square.of("d5")));
-        chessBoard.movePiece(Arrays.asList(Square.of("c3"), Square.of("d5")));
+        chessBoard.movePiece(Square.of("b1"), Square.of("c3"));
+        chessBoard.movePiece(Square.of("d7"), Square.of("d5"));
+        chessBoard.movePiece(Square.of("c3"), Square.of("d5"));
         assertThat(Winner.getWinners(chessBoard.getChessBoard()).size()).isEqualTo(1);
         assertThat(Winner.getWinners(chessBoard.getChessBoard()).get(0)).isEqualTo(Color.WHITE);
     }

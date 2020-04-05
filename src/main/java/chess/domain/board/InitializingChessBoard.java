@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class InitializingChessBoard {
 
-    static void initPiecesLocation(File file, Map<Square, Piece> chessBoard) {
+    public static void initPiecesLocation(File file, Map<Square, Piece> chessBoard) {
         initPawnLocation(file, chessBoard);
         initRookLocation(file, chessBoard);
         initKnightLocation(file, chessBoard);

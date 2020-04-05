@@ -8,10 +8,15 @@ import chess.domain.board.ChessBoard;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public class ConsoleChessController implements Controller{
 
-    ChessBoard chessBoard = new ChessBoard();
+    ChessBoard chessBoard;
 
+    public ConsoleChessController(){
+        chessBoard = new ChessBoard();
+    }
+
+    @Override
     public void run() {
         OutputView.printGameInformation();
         init();

@@ -28,22 +28,20 @@ public class ChessBoard {
     boolean canMove(Square beforeSquare, Square afterSquare) {
         Piece beforePiece = chessBoard.get(beforeSquare);
         if (!chessBoard.containsKey(beforeSquare)) {
-            return false;
+            throw new UnsupportedOperationException("말이 없는 칸을 선택했습니다.");
         }
         if (!beforePiece.getColor().equals(turn.getTurn())) {
-            return false;
+            throw new UnsupportedOperationException("차례가 아닙니다.");
         }
         if (!beforePiece.getMovableSquares(beforeSquare, chessBoard).contains(afterSquare)) {
-            return false;
+            throw new UnsupportedOperationException("이동할 수 없는 칸입니다.");
         }
         turn.changeTurn();
         return true;
     }
 
 
-    public boolean movePiece(List<Square> squares) {
-        Square beforeSquare = squares.get(0);
-        Square afterSquare = squares.get(1);
+    public boolean movePiece(Square beforeSquare, Square afterSquare) {
         if (!canMove(beforeSquare, afterSquare)) {
             return false;
         }
@@ -59,7 +57,7 @@ public class ChessBoard {
                 .toArray().length != FIRST_KINGS_NUMBER;
     }
 
-    Turn getTurn() {
+    public Turn getTurn() {
         return turn;
     }
 }

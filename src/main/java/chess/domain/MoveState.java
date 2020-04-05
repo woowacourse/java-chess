@@ -34,7 +34,7 @@ public class MoveState {
             List<Square> moveSquare = new ArrayList<>();
             moveSquare.add(Square.of(Arrays.asList(inputState.split(BLANK)).get(1)));
             moveSquare.add(Square.of(Arrays.asList(inputState.split(BLANK)).get(2)));
-            if (!chessBoard.movePiece(moveSquare)) {
+            if (!chessBoard.movePiece(moveSquare.get(0),moveSquare.get(1))) {
                 OutputView.printCanNotMoveMessage();
             }
         } catch (Exception e) {
