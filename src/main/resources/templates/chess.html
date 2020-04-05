@@ -19,6 +19,20 @@
         {{/board.boardDto}}
     </div>
     <div class="side">
+        <form method="post" action="/chess">
+            <label>출발 좌표</label>
+            <input type="text" name="source">
+            <br/>
+            <label>도착 좌표</label>
+            <input type="text" name="target">
+            <br/>
+            <input type="submit" value="이동">
+        </form>
+        <br/>
+        {{#error}}
+        <label>{{.}}</label>
+        {{/error}}
+        <br/>
         <button type="button">재시작</button>
         <button type="button">종료</button>
     </div>
