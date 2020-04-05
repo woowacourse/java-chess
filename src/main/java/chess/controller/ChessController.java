@@ -9,6 +9,7 @@ import chess.domain.position.Position;
 import chess.service.ChessService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,17 @@ public class ChessController {
         return chessService.isEnd();
     }
 
+    public ResponseDto run() {
+        String message = null;
+        List<Long> roomId = new ArrayList<>();
+        try {
+            roomId.addAll(chessService.getRoomId());
+        } catch (SQLException e) {
+            message = e.getMessage();
+        }
+        return new ResponseDto(roomId, message);
+    }
+
     public ResponseDto run(RequestDto requestDto) {
         String message = null;
         try {
@@ -43,6 +55,9 @@ public class ChessController {
         } catch (IllegalArgumentException | UnsupportedOperationException e) {
             message = e.getMessage();
         } finally {
+            if (chessService.isReady()) {
+                return null;
+            }
             Map<Position, PieceDto> boardDto = chessService.createBoardDto();
             Map<Team, Double> scoreDto = chessService.createScoreDto();
             return new ResponseDto(boardDto, scoreDto, message);

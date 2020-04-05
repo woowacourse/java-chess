@@ -258,11 +258,30 @@
                 <form action="/chessGame" method="post">
                     <input hidden="hidden" name="command" type="text" value="start">
                     <input hidden="hidden" name="parameter" type="text" value="load">
+                    <input name="saveId" type="text">
                     <input type="submit" value="불러오기"/>
                 </form>
             </div>
         </div>
     </div>
+    <div class="room-container" id="room-container">
+    </div>
 </div>
 </body>
 </html>
+<script id="room-list" type="text/x-mustache">
+    {{#roomId}}
+        document.getElementById("room-container").innerHTML = '<div class="room">{{value}}</div>'
+    {{/roomId}}
+    {{#if message}}
+        alert("{{message}}");
+    {{/if }}
+
+
+
+
+</script>
+<script>
+    let x = document.getElementById("room-list");
+    eval(x.innerText);
+</script>

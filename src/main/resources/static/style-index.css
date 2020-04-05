@@ -14,12 +14,19 @@ html, body {
 }
 
 .game-container {
-    width: 100%;
+    width: 80%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-image: url('img/game-background.jpg');
+}
+
+.room-container {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .title-container {
@@ -43,8 +50,8 @@ html, body {
     justify-content: center;
 }
 
-.start-button {
-    height: 15%;
+.buttons {
+    display: flex;
 }
 
 .board {

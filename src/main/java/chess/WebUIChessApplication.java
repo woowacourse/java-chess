@@ -8,10 +8,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static spark.Spark.*;
@@ -22,6 +19,16 @@ public class WebUIChessApplication {
         ChessController chessController = new ChessController();
 
         get("/", (req, res) -> {
+            ResponseDto responseDto = chessController.run();
+            List<WebDto> roomDto = getRoomDto(responseDto.getRoomId());
+            Map<String, Object> model = new HashMap<>();
+            model.put("roomId", roomDto);
+            return render(model, "index.html");
+        });
+
+        post("/", (req, res) -> {
+            RequestDto requestDto = getRequestDtoFrom(req);
+            chessController.run(requestDto);
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
@@ -50,9 +57,23 @@ public class WebUIChessApplication {
 
     }
 
+    private static List<WebDto> getRoomDto(final List<Long> roomId) {
+        return roomId.stream()
+                .map(room -> {
+                    String key = String.valueOf(room);
+                    String value = String.valueOf(room);
+                    return new WebDto(key, value);
+                })
+                .collect(Collectors.toList());
+    }
+
     private static RequestDto getRequestDtoFrom(final Request req) {
         Command command = Command.of(req.queryParams("command"));
-        List<String> parameters = Arrays.asList(req.queryParams("parameter").split("_"));
+        List<String> parameters = new ArrayList<>(Arrays.asList(req.queryParams("parameter").split("_")));
+        if (parameters.contains("load")) {
+            String saveId = req.queryParams("saveId");
+            parameters.add(saveId);
+        }
         return new RequestDto(command, parameters);
     }
 

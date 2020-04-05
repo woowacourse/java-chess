@@ -9,7 +9,7 @@ import java.util.function.BiFunction;
 
 public enum InitialPieceRepository {
 
-    BLACK_PAWN_1(Pawn::of, Team.BLACK, Position.of("A5")),
+    BLACK_PAWN_1(Pawn::of, Team.BLACK, Position.of("A7")),
     BLACK_PAWN_2(Pawn::of, Team.BLACK, Position.of("B7")),
     BLACK_PAWN_3(Pawn::of, Team.BLACK, Position.of("C7")),
     BLACK_PAWN_4(Pawn::of, Team.BLACK, Position.of("D7")),

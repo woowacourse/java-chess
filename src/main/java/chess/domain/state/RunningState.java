@@ -17,7 +17,7 @@ public class RunningState implements State {
 
     private ChessGame chessGame;
 
-    public RunningState(ChessGame chessGame) {
+    public RunningState(final ChessGame chessGame) {
         this.chessGame = chessGame;
     }
 

@@ -125,15 +125,15 @@
             <div class="restart-button">
                 <form action="/chessGame" method="post">
                     <input hidden="hidden" name="command" type="text" value="start">
-                    <input hidden="hidden" name="parameter" type="text" value="">
-                    <input type="submit" value="재시작"/>
+                    <input hidden="hidden" name="parameter" type="text" value="new">
+                    <input type="submit" value="새 게임"/>
                 </form>
             </div>
             <div class="end-button">
-                <form action="/chessGame" method="post">
+                <form action="/" method="post">
                     <input hidden="hidden" name="command" type="text" value="end">
-                    <input hidden="hidden" name="parameter" type="text" value="">
-                    <input type="submit" value="게임 종료"/>
+                    <input hidden="hidden" name="parameter" type="text" value="save">
+                    <input type="submit" value="게임 저장"/>
                 </form>
             </div>
         </div>
@@ -169,8 +169,6 @@
     {{#score}}
         document.getElementById("{{key}}-SCORE").innerText = {{value}}
     {{/score}}
-
-
 
 
 

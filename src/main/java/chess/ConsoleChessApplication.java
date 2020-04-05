@@ -6,6 +6,8 @@ import chess.controller.dto.ResponseDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.Objects;
+
 public class ConsoleChessApplication {
     public static void main(String[] args) {
         InputView consoleInputView = new InputView();
@@ -16,7 +18,11 @@ public class ConsoleChessApplication {
         while (true) {
             RequestDto requestDto = consoleInputView.inputRequest();
             ResponseDto responseDto = chessController.run(requestDto);
-            consoleOutputView.printResponse(responseDto);
+            if (Objects.isNull(responseDto)) {
+                consoleOutputView.printInitialMessage();
+            } else {
+                consoleOutputView.printResponse(responseDto);
+            }
         }
     }
 }

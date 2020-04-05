@@ -3,13 +3,20 @@ package chess.controller.dto;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 
+import java.util.List;
 import java.util.Map;
 
 public class ResponseDto {
 
+    private List<Long> roomId;
     private Map<Position, PieceDto> board;
     private Map<Team, Double> scores;
     private String message;
+
+    public ResponseDto(final List<Long> roomId, final String message) {
+        this.roomId = roomId;
+        this.message = message;
+    }
 
     public ResponseDto(Map<Position, PieceDto> board, Map<Team, Double> scores) {
         this.board = board;
@@ -20,6 +27,10 @@ public class ResponseDto {
         this.board = board;
         this.scores = scores;
         this.message = message;
+    }
+
+    public List<Long> getRoomId() {
+        return roomId;
     }
 
     public Map<Position, PieceDto> getBoard() {

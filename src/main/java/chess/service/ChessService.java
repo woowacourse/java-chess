@@ -5,11 +5,11 @@ import chess.dao.ChessDAO;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
 import chess.domain.board.initializer.AutomatedBoardInitializer;
-import chess.domain.board.initializer.EnumRepositoryBoardInitializer;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Turn;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
+import chess.domain.state.ReadyState;
 import chess.domain.state.RunningState;
 import chess.domain.state.State;
 
@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 public class ChessService {
 
     private ChessDAO chessDAO = new ChessDAO();
-    private State state = new RunningState(new ChessGame(Board.of(new EnumRepositoryBoardInitializer()), Turn.from(Team.WHITE)));
+    private State state = new ReadyState();
+    private long id;
 
     public boolean isEnd() {
         return state.isEnd();
@@ -30,17 +31,19 @@ public class ChessService {
     public void start(List<String> parameters) throws SQLException {
         if ("new".equals(parameters.get(0))) {
             ChessGame chessGame = new ChessGame(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
-            Long id = chessDAO.createChessGame(chessGame);
+            this.id = chessDAO.createChessGame(chessGame);
+            System.out.println(id + "번 방입니다.");
             state = new RunningState(chessGame);
         }
         if ("load".equals(parameters.get(0))) {
-            ChessGame chessGame = chessDAO.findGameById(1L);
+            this.id = Long.valueOf(parameters.get(1));
+            ChessGame chessGame = chessDAO.findGameById(this.id);
             state = new RunningState(chessGame);
         }
     }
 
     public void end(List<String> parameters) throws SQLException {
-        chessDAO.addBoard(1L, state.getBoard());
+        chessDAO.addBoard(id, state.getChessGame());
         state = state.end(parameters);
     }
 
@@ -65,4 +68,14 @@ public class ChessService {
     public Team getWinner() {
         return state.getWinner();
     }
+
+    public boolean isReady() {
+        return state instanceof ReadyState;
+    }
+
+    public List<Long> getRoomId() throws SQLException {
+        return chessDAO.getRoomId();
+
+    }
+
 }
