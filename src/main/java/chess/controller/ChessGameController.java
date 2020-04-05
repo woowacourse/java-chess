@@ -26,14 +26,14 @@ public class ChessGameController {
         return render(model, "index.html");
     }
 
-    public static Object newGame(Request request, Response response) throws SQLException {
+    public static String newGame(Request request, Response response) throws SQLException {
         boardDAO.initialize();
         board = BoardFactory.createBoard();
         boardDAO.updateDB(board);
         return JSONGenerator.generateJSON(board);
     }
 
-    public static Object move(Request request, Response response) throws SQLException {
+    public static String move(Request request, Response response) throws SQLException {
         MovingInfo movingInfo = MovingInfo.of(request);
 
         try {

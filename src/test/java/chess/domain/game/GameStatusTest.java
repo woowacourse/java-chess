@@ -18,12 +18,12 @@ public class GameStatusTest {
         Board board = BoardFactory.createBoard();
         GameStatus gameStatus = board.getGameStatus();
 
-        board.move(new MovingInfo(Position.of(Coordinate.of(2), Coordinate.of(6)), Position.of(Coordinate.of(3), Coordinate.of(6))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(7), Coordinate.of(5)), Position.of(Coordinate.of(6), Coordinate.of(5))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(1), Coordinate.of(5)), Position.of(Coordinate.of(2), Coordinate.of(6))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(8), Coordinate.of(4)), Position.of(Coordinate.of(4), Coordinate.of(8))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(2), Coordinate.of(6)), Position.of(Coordinate.of(3), Coordinate.of(7))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(4), Coordinate.of(8)), Position.of(Coordinate.of(3), Coordinate.of(7))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(2), Coordinate.of(6)), Position.of(Coordinate.of(3), Coordinate.of(6))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(7), Coordinate.of(5)), Position.of(Coordinate.of(6), Coordinate.of(5))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(1), Coordinate.of(5)), Position.of(Coordinate.of(2), Coordinate.of(6))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(8), Coordinate.of(4)), Position.of(Coordinate.of(4), Coordinate.of(8))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(2), Coordinate.of(6)), Position.of(Coordinate.of(3), Coordinate.of(7))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(4), Coordinate.of(8)), Position.of(Coordinate.of(3), Coordinate.of(7))));
         assertThat(gameStatus.isGameEnd()).isTrue();
     }
 
@@ -33,11 +33,11 @@ public class GameStatusTest {
         Board board = BoardFactory.createBoard();
         GameStatus gameStatus = board.getGameStatus();
 
-        board.move(new MovingInfo(Position.of(Coordinate.of(2), Coordinate.of(6)), Position.of(Coordinate.of(3), Coordinate.of(6))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(7), Coordinate.of(5)), Position.of(Coordinate.of(6), Coordinate.of(5))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(1), Coordinate.of(5)), Position.of(Coordinate.of(2), Coordinate.of(6))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(8), Coordinate.of(4)), Position.of(Coordinate.of(4), Coordinate.of(8))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(2), Coordinate.of(6)), Position.of(Coordinate.of(3), Coordinate.of(7))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(2), Coordinate.of(6)), Position.of(Coordinate.of(3), Coordinate.of(6))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(7), Coordinate.of(5)), Position.of(Coordinate.of(6), Coordinate.of(5))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(1), Coordinate.of(5)), Position.of(Coordinate.of(2), Coordinate.of(6))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(8), Coordinate.of(4)), Position.of(Coordinate.of(4), Coordinate.of(8))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(2), Coordinate.of(6)), Position.of(Coordinate.of(3), Coordinate.of(7))));
         assertThat(gameStatus.isGameEnd()).isFalse();
     }
 
@@ -57,9 +57,9 @@ public class GameStatusTest {
         Board board = BoardFactory.createBoard();
         GameStatus gameStatus = board.getGameStatus();
 
-        board.move(new MovingInfo(Position.of(Coordinate.of(2), Coordinate.of(4)), Position.of(Coordinate.of(4), Coordinate.of(4))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(7), Coordinate.of(5)), Position.of(Coordinate.of(5), Coordinate.of(5))));
-        board.move(new MovingInfo(Position.of(Coordinate.of(4), Coordinate.of(4)), Position.of(Coordinate.of(5), Coordinate.of(5))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(2), Coordinate.of(4)), Position.of(Coordinate.of(4), Coordinate.of(4))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(7), Coordinate.of(5)), Position.of(Coordinate.of(5), Coordinate.of(5))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(4), Coordinate.of(4)), Position.of(Coordinate.of(5), Coordinate.of(5))));
         assertThat(gameStatus.getTotalScore(board)).isEqualTo(37);
     }
 
@@ -69,7 +69,7 @@ public class GameStatusTest {
         Board board = BoardFactory.createBoard();
         GameStatus gameStatus = board.getGameStatus();
 
-        board.move(new MovingInfo(Position.of(Coordinate.of(2), Coordinate.of(4)), Position.of(Coordinate.of(4), Coordinate.of(4))));
+        board.move(MovingInfo.of(Position.of(Coordinate.of(2), Coordinate.of(4)), Position.of(Coordinate.of(4), Coordinate.of(4))));
         assertThat(gameStatus.getNowPlayingTeam()).isEqualTo(BLACK);
     }
 
