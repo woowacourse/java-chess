@@ -46,9 +46,13 @@ public class ChessService {
             chessDAO.addBoard(id, state.getChessGame());
         }
         if ("".equals(parameters.get(0))) {
-            chessDAO.deleteGame(id);
+            deleteGame();
         }
         state = state.end(parameters);
+    }
+
+    public void deleteGame() throws SQLException {
+        chessDAO.deleteGame(id);
     }
 
     public void move(List<String> parameters) {

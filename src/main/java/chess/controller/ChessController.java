@@ -9,7 +9,6 @@ import chess.domain.position.Position;
 import chess.service.ChessService;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,14 +32,13 @@ public class ChessController {
     }
 
     public ResponseDto run() {
-        String message = null;
-        List<Long> roomId = new ArrayList<>();
+        ResponseDto responseDto = new ResponseDto();
         try {
-            roomId.addAll(chessService.getRoomId());
+            responseDto.setRoomId(chessService.getRoomId());
         } catch (SQLException e) {
-            message = e.getMessage();
+            responseDto.setMessage(e.getMessage());
         }
-        return new ResponseDto(roomId, message);
+        return responseDto;
     }
 
     public ResponseDto run(RequestDto requestDto) {
@@ -54,6 +52,7 @@ public class ChessController {
                 responseDto.setWinner(winner);
                 responseDto.setMessage(winner.toString() + "가 승리했습니다.");
                 responseDto.setRoomId(chessService.getRoomId());
+                chessService.deleteGame();
             }
         } catch (IllegalArgumentException | UnsupportedOperationException | SQLException e) {
             responseDto.setMessage(e.getMessage());
