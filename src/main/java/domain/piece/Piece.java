@@ -56,13 +56,13 @@ public abstract class Piece {
 		if (team.isOurTeam(target.team)) {
 			throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 		}
-		board.remove(target);
+		board.remove(getRankIndex(), target);
 	}
 
 	protected void changePosition(Position targetPosition, Board board) {
-		board.remove(this);
+		board.remove(getRankIndex(), this);
 		this.position = targetPosition;
-		board.add(this, targetPosition);
+		board.add(targetPosition.getRankIndex(), this);
 	}
 
 	public boolean isTeam(Team team) {
@@ -78,6 +78,10 @@ public abstract class Piece {
 
 	public Position getPosition() {
 		return position;
+	}
+
+	public int getRankIndex() {
+		return position.getRankIndex();
 	}
 
 	protected abstract void validateDirection(Direction direction);

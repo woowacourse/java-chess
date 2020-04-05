@@ -11,7 +11,7 @@ public class PositionCacheTest {
 	void of_ValidPosition_ReturnPosition() {
 		Position b3 = PositionCache.of("b3");
 		assertThat(b3.getColumn()).isEqualTo(Column.B);
-		assertThat(b3.getRow().getNumber()).isEqualTo(3);
+		assertThat(b3.getRowNumber()).isEqualTo(3);
 	}
 
 	@DisplayName("잘못된 위치를 입력하면 예외 발생")

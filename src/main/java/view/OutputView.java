@@ -56,6 +56,6 @@ public class OutputView {
 	}
 
 	private static boolean equalsColumn(final int columnNumber, Piece piece) {
-		return columnNumber == piece.getPosition().getColumn().getNumber();
+		return columnNumber == piece.getPosition().getColumnNumber();
 	}
 }

@@ -44,13 +44,13 @@ public class Board {
 			.map(pawn::addAll)
 			.close();
 
-		if (isSameColumn(pawn)) {
+		if (hasSameColumnPawn(pawn)) {
 			sum += pawn.size() * Pawn.PAWN_SCORE_WHEN_HAS_SAME_COLUMN;
 		}
 		return sum;
 	}
 
-	private boolean isSameColumn(List<Piece> pawns) {
+	private boolean hasSameColumnPawn(List<Piece> pawns) {
 		int distinctCount = (int)pawns.stream()
 			.map(pawn -> pawn.getPosition().getColumn())
 			.distinct()
@@ -67,16 +67,14 @@ public class Board {
 		return INITIAL_KING_COUNT == kingCount;
 	}
 
-	private Rank calculateRank(Position position) {
-		return ranks.get(position.getRow().getRankIndex());
+	public void remove(int rankIndex, Piece piece) {
+		Rank pieceRank = ranks.get(rankIndex);
+		pieceRank.remove(piece);
 	}
 
-	public void remove(Piece piece) {
-		calculateRank(piece.getPosition()).getPieces().remove(piece);
-	}
-
-	public void add(Piece piece, Position targetPosition) {
-		calculateRank(targetPosition).getPieces().add(piece);
+	public void add(int rankIndex, Piece piece) {
+		Rank pieceRank = ranks.get(rankIndex);
+		pieceRank.add(piece);
 	}
 
 	public List<Rank> getRanks() {

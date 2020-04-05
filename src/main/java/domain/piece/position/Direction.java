@@ -54,8 +54,8 @@ public enum Direction {
 
 	public boolean hasPieceInRoute(Position position, Position targetPosition, Board board) {
 		int loopCount = calculateLoopCount(position, targetPosition) - 1;
-		int routeRow = position.getRow().getNumber();
-		int routeColumn = position.getColumn().getNumber();
+		int routeRow = position.getRowNumber();
+		int routeColumn = position.getColumnNumber();
 		for (int i = 0; i < loopCount; i++) {
 			routeRow += this.rowGap;
 			routeColumn += this.columnGap;

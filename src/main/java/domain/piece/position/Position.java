@@ -23,12 +23,12 @@ public class Position {
 		Column column = Arrays.stream(Column.values())
 			.filter(value -> value.getNumber() == inputColumn)
 			.findFirst()
-			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_POSITON));
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_POSITION));
 
 		Row row = Arrays.stream(Row.values())
 			.filter(value -> value.getNumber() == inputRow)
 			.findFirst()
-			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_POSITON));
+			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_POSITION));
 
 		return of(column, row);
 	}
@@ -49,7 +49,15 @@ public class Position {
 		return column;
 	}
 
-	public Row getRow() {
-		return row;
+	public int getColumnNumber() {
+		return column.getNumber();
+	}
+
+	public int getRowNumber() {
+		return row.getNumber();
+	}
+
+	public int getRankIndex() {
+		return row.getRankIndex();
 	}
 }

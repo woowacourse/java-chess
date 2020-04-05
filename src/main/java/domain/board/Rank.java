@@ -44,6 +44,14 @@ public class Rank {
 			.reduce(0.0, Double::sum);
 	}
 
+	public void remove(Piece piece) {
+		pieces.remove(piece);
+	}
+
+	public void add(Piece piece) {
+		pieces.add(piece);
+	}
+
 	public List<Piece> getPieces() {
 		return pieces;
 	}
