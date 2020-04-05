@@ -54,7 +54,16 @@ class PieceDAOTest {
 		pieceDAO.deleteAll();
 	}
 
+	@DisplayName("피스의 Location 변경 확인 후 삭제")
 	@Test
-	void updateLocation() {
+	void updateLocation() throws SQLException {
+		PieceDAO pieceDAO = new PieceDAO();
+		pieceDAO.addPiece(Location.of(Column.A, Row.ONE), King.of(Team.BLACK));
+		pieceDAO.updateLocation(Location.of(Column.A, Row.ONE), Location.of(Column.A, Row.TWO));
+
+		Piece actual = pieceDAO.findPiece(Location.of(Column.A, Row.TWO));
+		assertThat(actual).isEqualTo(King.of(Team.BLACK));
+
+		pieceDAO.deletePiece(Location.of(Column.A, Row.TWO));
 	}
 }

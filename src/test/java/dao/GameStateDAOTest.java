@@ -23,4 +23,22 @@ class GameStateDAOTest {
 
 		gameStateDAO.deleteGameState(GameState.RUNNING_WHITE_TURN);
 	}
+
+	@DisplayName("GameState delete all 테스트")
+	@Test
+	void deleteAll() {
+	}
+
+	@DisplayName("GameState 탐색 테스트")
+	@Test
+	void findGameState() throws SQLException {
+		GameStateDAO gameStateDAO = new GameStateDAO();
+
+		gameStateDAO.addGameState(GameState.RUNNING_WHITE_TURN);
+		GameState actual = gameStateDAO.findGameState();
+
+		assertThat(actual).isEqualTo(GameState.RUNNING_WHITE_TURN);
+
+		gameStateDAO.deleteAll();
+	}
 }

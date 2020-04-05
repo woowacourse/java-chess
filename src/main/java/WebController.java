@@ -53,6 +53,8 @@ public class WebController {
 	}
 
 	public Object move(Request request, GameManager gameManager) throws SQLException {
+		PieceDAO pieceDAO = new PieceDAO();
+		GameStateDAO gameStateDAO = new GameStateDAO();
 		String now = request.queryParams("now");
 		String destination = request.queryParams("destination");
 
@@ -64,9 +66,12 @@ public class WebController {
 			return message;
 		}
 
-		PieceDAO pieceDAO = new PieceDAO();
 		pieceDAO.deletePiece(Location.of(destination));
 		pieceDAO.updateLocation(Location.of(now), Location.of(destination));
+
+		GameState gameState = gameStateDAO.findGameState();
+		gameStateDAO.updateMessage(gameState, gameState.findOpposingTeam());
+
 		return gameManager;
 	}
 }

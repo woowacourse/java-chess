@@ -50,13 +50,16 @@ public class PieceDAO {
 		pstmt.setString(1, location.toString());
 		ResultSet rs = pstmt.executeQuery();
 
+		if (!rs.next()) {
+			return null;
+		}
+
 		String name = rs.getString("name");
 		Team team = Team.of(rs.getString("team"));
 
 		return createOnePiece(name, team);
 	}
 
-	// todo : 테스트
 	public Map<Location, Piece> findAll() throws SQLException {
 		String query = "SELECT * FROM piece";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
@@ -75,7 +78,6 @@ public class PieceDAO {
 		return result;
 	}
 
-	// todo : 테스트
 	public void updateLocation(Location now, Location destination) throws SQLException {
 		String query = "UPDATE piece SET location = ? WHERE location = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);

@@ -38,4 +38,14 @@ public class GameStateDAO {
 
 		return GameState.of(resultSet.getString("message"));
 	}
+
+	public void updateMessage(GameState gameState, GameState opposingTeam) throws SQLException {
+		String query = "UPDATE gamestate SET message = ? WHERE message = ?";
+		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
+
+		pstmt.setString(1, opposingTeam.toString());
+		pstmt.setString(2, gameState.toString());
+
+		pstmt.executeUpdate();
+	}
 }
