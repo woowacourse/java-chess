@@ -28,7 +28,7 @@
 
 #background {
     width: 1000px;
-    height: 550px;
+    height: 570px;
     text-align: center;
     margin: 0 auto;
 }
@@ -39,6 +39,35 @@
     background-color: rgba(252, 255, 163, 0.55);
     display: inline-block;
     float: left;
+    text-align: center;
+}
+
+.rank {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.rankElement {
+    font-family: "BMHANNAAir", sans-serif;
+    font-style: italic;
+    font-size: 20px;
+    display: inline-block;
+    width: 55px;
+    text-align: center;
+}
+
+.file {
+    width: 55px;
+    display: inline-block;
+    float: left;
+    margin: 20px -60px;
+}
+
+.fileElement {
+    font-family: "BMHANNAAir", sans-serif;
+    font-style: italic;
+    font-size: 20px;
+    height: 60px;
     text-align: center;
 }
 
@@ -83,7 +112,7 @@
 }
 
 .subTitle {
-    font-size: 36px;
+    font-size: 40px;
     color: indigo;
     text-shadow: -0.5px 0 white, 0 0.5px white, 0.5px 0 white, 0 -0.5px white;
 }
@@ -91,13 +120,13 @@
 #whiteTeam {
     color: white;
     text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
-    font-size: 30px;
+    font-size: 50px;
 }
 
 #blackTeam {
     color: black;
     text-shadow: -0.5px 0 white, 0 0.5px white, 0.5px 0 white, 0 -0.5px white;
-    font-size: 30px;
+    font-size: 50px;
 }
 
 #moveForms {
@@ -107,7 +136,7 @@
 
 .moveForm {
     font-family: "BMHANNAAir", sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     width: 160px;
     height: 30px;
     border: 0;
