@@ -50,14 +50,32 @@ public class ChessBoardDAO {
         closeConnection(con);
     }
 
-    public ChessBoard findRecentChessBoard() throws SQLException{
+    public ChessBoard findRecentChessBoard() throws SQLException {
         String query = "SELECT * FROM chessBoard ORDER BY chessBoardId DESC limit 1";
         Connection con = getConnection();
         PreparedStatement pstmt = con.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) return null;
+        if (!rs.next()) {
+            closeConnection(con);
+            return null;
+        }
 
-        return new ChessBoard(rs.getInt("chessBoardId"));
+        ChessBoard chessBoard = new ChessBoard(rs.getInt("chessBoardId"));
+        closeConnection(con);
+        return chessBoard;
+    }
+
+    public void deleteChessBoard(ChessBoard chessBoard) throws SQLException {
+        if (chessBoard == null) {
+            return;
+        }
+
+        String query = "DELETE FROM chessBoard WHERE chessBoardId = ?";
+        Connection con = getConnection();
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setInt(1, chessBoard.getChessBoardId());
+        pstmt.executeUpdate();
+        closeConnection(con);
     }
 }
