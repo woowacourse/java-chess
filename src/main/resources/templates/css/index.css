@@ -14,9 +14,11 @@
 }
 
 .cell {
+    border: solid 1px black;
+}
+.cell-size {
     width: 50px;
     height: 50px;
-    border: solid 1px black;
 }
 
 .black-cell {
@@ -27,6 +29,6 @@
     background-color: brown;
 }
 
-.clicked-cell {
+.clicked {
     background-color: cornsilk;
 }

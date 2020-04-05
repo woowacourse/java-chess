@@ -1,3 +1,22 @@
+const white_bishop = img_create("../chess-img/bishop_white.png");
+const white_rook = img_create("../chess-img/rook_white.png");
+const white_knight = img_create("../chess-img/knight_white.png");
+const white_queen = img_create("../chess-img/queen_white.png");
+const white_king = img_create("../chess-img/king_white.png");
+const white_pawn = img_create("../chess-img/pawn_white.png");
+const black_bishop = img_create("../chess-img/bishop_black.png");
+const black_rook = img_create("../chess-img/rook_black.png");
+const black_knight = img_create("../chess-img/knight_black.png");
+const black_queen = img_create("../chess-img/queen_black.png");
+const black_king = img_create("../chess-img/king_black.png");
+const black_pawn = img_create("../chess-img/pawn_black.png");
+
+function img_create(src) {
+    const img = document.createElement('IMG');
+    img.src = src;
+    img.classList.add("cell-size");
+    return img;
+}
 const chessBoard = document.querySelector("#chess-board tbody");
 
 for (let i = 8; i > 0; i--) {
@@ -6,7 +25,7 @@ for (let i = 8; i > 0; i--) {
     for (let j = 1; j <= 8; j++) {
         const tableColumn = document.createElement("TD");
         tableColumn.setAttribute("id", String.fromCharCode(j + 'a'.charCodeAt(0) - 1) + i);
-        tableColumn.classList.add("cell", colorCell(i, j));
+        tableColumn.classList.add("cell-size", "cell", colorCell(i, j));
         tableRow.appendChild(tableColumn);
     }
     chessBoard.appendChild(tableRow);
@@ -16,8 +35,7 @@ function colorCell(i, j) {
     return (i + j) % 2 === 0 ? "white-cell" : "black-cell";
 }
 
-//새 게임 클릭 시 초기화 이벤트 관련 =>  모든 초기화 말 json 데이터 가져오도록 한다.
-//document.querySelectorAll(".cell").forEach(node => node.addEventListener('click', e => console.log(e.target)));
+
 const cells = document.querySelectorAll("td.cell");
 cells.forEach(node => node.addEventListener('click', e => {
     toggleCell(e.target);
@@ -63,11 +81,15 @@ function httpPostRequest(data) {
     xhttp.send(data);
 }
 
-
 const newGameButton = document.getElementById("new-game");
 newGameButton.addEventListener('click', requestNewGame);
 
+function cleanBoard() {
+    cells.forEach(cell => cell.innerHTML = '');
+}
+
 function requestNewGame() {
+    cleanBoard();
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -99,7 +121,36 @@ function movePiece(piecesToUpdate) {
     const symbol = piecesToUpdate["symbol"];
     const team = piecesToUpdate["team"];
     const element = document.querySelector("#" + position);
-    element.innerText = position + symbol + team;
+    renderPiece(element, symbol, team);
+}
+
+function renderPiece(element, symbol, team) {
+    let img;
+    element.innerHTML = '';
+    if (team === 'none') {
+        return;
+    }
+    if (team === 'black') {
+        switch (symbol) {
+            case 'p': img = black_pawn.cloneNode(true); break;
+            case 'b': img = black_bishop.cloneNode(true); break;
+            case 'r': img = black_rook.cloneNode(true); break;
+            case 'n': img = black_knight.cloneNode(true); break;
+            case 'q': img = black_queen.cloneNode(true); break;
+            case 'k': img = black_king.cloneNode(true);
+        }
+    } else {
+        switch (symbol) {
+            case 'p': img = white_pawn.cloneNode(true); break;
+            case 'b': img = white_bishop.cloneNode(true); break;
+            case 'r': img = white_rook.cloneNode(true); break;
+            case 'n': img = white_knight.cloneNode(true); break;
+            case 'q': img = white_queen.cloneNode(true); break;
+            case 'k': img = white_king.cloneNode(true);
+        }
+    }
+    element.appendChild(img);
+    //element.innerText =  symbol + team;
 }
 
 function requestRecord() {
