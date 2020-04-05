@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.GameResult;
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.*;
+import chess.dto.BoardDTO;
 import chess.exception.*;
 
 import java.util.ArrayList;
@@ -213,5 +214,29 @@ public class Board {
             return "WHITE";
         }
         return "NONE";
+    }
+
+    public BoardDTO createBoardDTO() {
+        BoardDTO boardDTO = new BoardDTO();
+
+        boardDTO.setLines(getBoardLines());
+        boardDTO.setCurrentTeam(this.team.getName());
+
+        return boardDTO;
+    }
+
+    private List<String> getBoardLines() {
+        List<String> lines = new ArrayList<>();
+
+        for (char yPoint = MIN_Y_POINT; yPoint <= MAX_Y_POINT; yPoint++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (char xPoint = MIN_X_POINT; xPoint <= MAX_X_POINT; xPoint++) {
+                Piece piece = this.board.get(PositionFactory.of(xPoint, yPoint));
+                stringBuilder.append(piece.getName());
+            }
+            lines.add(stringBuilder.toString());
+        }
+
+        return lines;
     }
 }
