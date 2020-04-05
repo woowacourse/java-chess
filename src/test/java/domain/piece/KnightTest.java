@@ -36,10 +36,10 @@ public class KnightTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"move b1 b1, WHITE", "move c3 c3, BLACK"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
+	void validateMovement_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		Knight knight = new Knight(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> knight.canMove(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> knight.validateMovement(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -62,7 +62,7 @@ public class KnightTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 c3");
 		Knight knight = new Knight(moveCommand.getSourcePosition(), Team.WHITE);
 
-		knight.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		knight.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		assertThat(knight.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -74,7 +74,7 @@ public class KnightTest {
 
 		Knight knight = new Knight(moveCommand.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> knight.move(moveCommand.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> knight.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -85,7 +85,7 @@ public class KnightTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 c3");
 		Knight knight = new Knight(moveCommand.getSourcePosition(), Team.WHITE);
 
-		knight.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		knight.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(knight);

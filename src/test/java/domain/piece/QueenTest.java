@@ -36,10 +36,10 @@ public class QueenTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"move e1 e1, WHITE", "move c7 c7, BLACK"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
+	void validateMovement_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		Queen queen = new Queen(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> queen.canMove(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> queen.validateMovement(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -61,7 +61,7 @@ public class QueenTest {
 		MoveCommand moveCommand = new MoveCommand("move e1 e4");
 		Queen queen = new Queen(moveCommand.getSourcePosition(), Team.WHITE);
 
-		queen.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		queen.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		assertThat(queen.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -73,7 +73,7 @@ public class QueenTest {
 
 		Queen queen = new Queen(moveCommand.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> queen.move(moveCommand.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> queen.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -84,7 +84,7 @@ public class QueenTest {
 		MoveCommand moveCommand = new MoveCommand("move e1 e5");
 		Queen queen = new Queen(moveCommand.getSourcePosition(), Team.WHITE);
 
-		queen.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		queen.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(queen);

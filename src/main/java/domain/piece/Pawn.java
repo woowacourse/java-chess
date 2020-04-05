@@ -11,8 +11,8 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public class Pawn extends Piece {
-	private static final int MIN_STEP_SIZE_OF_DIAGONAL = 1;
 	public static final double PAWN_SCORE_WHEN_HAS_SAME_COLUMN = -0.5;
+	private static final int MIN_STEP_SIZE_OF_DIAGONAL = 1;
 	private static final double SCORE = 1;
 	private static final String SYMBOL = "p";
 
@@ -21,6 +21,27 @@ public class Pawn extends Piece {
 	public Pawn(Position position, Team team) {
 		super(position, team);
 		state = State.START;
+	}
+
+	@Override
+	public void move(Position targetPosition, Team turn, Board board) {
+		validateMovement(targetPosition, turn, board);
+		int rowGap = this.position.calculateRowGap(targetPosition);
+		Direction direction = Direction.findDirection(this.position, targetPosition);
+		Optional<Piece> piece = board.findPiece(targetPosition);
+		if (Direction.diagonalDirection().contains(direction) && rowGap == MIN_STEP_SIZE_OF_DIAGONAL) {
+			piece.ifPresent(targetPiece -> {
+				if (targetPiece.team.equals(this.team)) {
+					throw new InvalidPositionException(HAS_OUR_TEAM_AT_TARGET_POSITION);
+				}
+				capture(targetPiece, board);
+			});
+		}
+		if (Direction.linearDirection().contains(direction) && piece.isPresent()) {
+			throw new InvalidPositionException(HAS_PIECE_AT_TARGET_POSITION);
+		}
+		this.changePosition(targetPosition, board);
+		this.state = State.RUN;
 	}
 
 	@Override
@@ -52,26 +73,6 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void move(Position targetPosition, Board board) {
-		int rowGap = this.position.calculateRowGap(targetPosition);
-		Direction direction = Direction.findDirection(this.position, targetPosition);
-		Optional<Piece> piece = board.findPiece(targetPosition);
-		if (Direction.diagonalDirection().contains(direction) && rowGap == MIN_STEP_SIZE_OF_DIAGONAL) {
-			piece.ifPresent(targetPiece -> {
-				if (targetPiece.team.equals(this.team)) {
-					throw new InvalidPositionException(HAS_OUR_TEAM_AT_TARGET_POSITION);
-				}
-				capture(targetPiece, board);
-			});
-		}
-		if (Direction.linearDirection().contains(direction) && piece.isPresent()) {
-			throw new InvalidPositionException(HAS_PIECE_AT_TARGET_POSITION);
-		}
-		this.changePosition(targetPosition, board);
-		this.state = State.RUN;
-	}
-
-	@Override
 	protected String getSymbol() {
 		return SYMBOL;
 	}
@@ -80,5 +81,4 @@ public class Pawn extends Piece {
 	public double getScore() {
 		return SCORE;
 	}
-
 }

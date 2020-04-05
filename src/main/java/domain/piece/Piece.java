@@ -10,7 +10,7 @@ import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public abstract class Piece implements Movable {
+public abstract class Piece{
 	protected Position position;
 	protected Team team;
 
@@ -19,19 +19,51 @@ public abstract class Piece implements Movable {
 		this.team = team;
 	}
 
+	public void move(Position targetPosition, Team turn, Board board) {
+		validateMovement(targetPosition, turn, board);
+
+		Optional<Piece> targetPiece = board.findPiece(targetPosition);
+		targetPiece.ifPresent(target -> {
+			boolean isOurTeam = target.team.equals(this.team);
+			if (isOurTeam) {
+				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
+			}
+			capture(target, board);
+		});
+
+		this.changePosition(targetPosition, board);
+	}
+
+	protected void validateMovement(Position targetPosition, Team turn, Board board) {
+		validateTurn(turn);
+		validateIsInPlace(targetPosition);
+		Direction direction = Direction.findDirection(this.position, targetPosition);
+		validateDirection(direction);
+		validateStepSize(this.position, targetPosition);
+		validateRoute(direction, targetPosition, board);
+	}
+
 	private void validateTurn(Team nowTurn) {
-		if (this.team != nowTurn) {
+		boolean isNotThisTurn = !this.team.equals(nowTurn);
+
+		if (isNotThisTurn) {
 			throw new InvalidTurnException(InvalidTurnException.INVALID_TURN);
 		}
 	}
 
-	public boolean isTeam(Team team) {
-		return this.team.equals(team);
+	private void validateIsInPlace(Position targetPosition) {
+		boolean isInPlace = this.position.equals(targetPosition);
+
+		if (isInPlace) {
+			throw new InvalidPositionException(InvalidPositionException.IS_IN_PLACE);
+		}
 	}
 
-	private boolean isInPlace(Position sourcePosition, Position targetPosition) {
-		return sourcePosition.equals(targetPosition);
-	}
+	protected abstract void validateDirection(Direction direction);
+
+	protected abstract void validateStepSize(Position sourcePosition, Position targetPosition);
+
+	protected abstract void validateRoute(Direction direction, Position targetPosition, Board ranks);
 
 	protected void capture(Piece targetPiece, Board board) {
 		board.remove(targetPiece);
@@ -43,8 +75,14 @@ public abstract class Piece implements Movable {
 		board.add(this, targetPosition);
 	}
 
+	public boolean isTeam(Team team) {
+		return this.team.equals(team);
+	}
+
 	public String showSymbol() {
-		if (this.team == Team.WHITE) {
+		boolean isWhitePiece = Team.WHITE.equals(this.team);
+
+		if (isWhitePiece) {
 			return getSymbol();
 		}
 		return getSymbol().toUpperCase();
@@ -54,29 +92,13 @@ public abstract class Piece implements Movable {
 		return position;
 	}
 
-	@Override
-	public void canMove(Position targetPosition, Team turn, Board board) {
-		validateTurn(turn);
-		if (isInPlace(this.position, targetPosition)) {
-			throw new InvalidPositionException(InvalidPositionException.IS_IN_PLACE);
-		}
+	public abstract double getScore();
 
-		Direction direction = Direction.findDirection(this.position, targetPosition);
-		validateDirection(direction);
-		validateStepSize(this.position, targetPosition);
-		validateRoute(direction, targetPosition, board);
-	}
+	protected abstract String getSymbol();
 
 	@Override
-	public void move(Position targetPosition, Board board) {
-		Optional<Piece> piece = board.findPiece(targetPosition);
-		piece.ifPresent(targetPiece -> {
-			if (targetPiece.team.equals(this.team)) {
-				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
-			}
-			capture(targetPiece, board);
-		});
-		this.changePosition(targetPosition, board);
+	public int hashCode() {
+		return Objects.hash(position, team);
 	}
 
 	@Override
@@ -89,19 +111,4 @@ public abstract class Piece implements Movable {
 		return Objects.equals(position, piece.position) &&
 			team == piece.team;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(position, team);
-	}
-
-	protected abstract void validateDirection(Direction direction);
-
-	protected abstract void validateStepSize(Position sourcePosition, Position targetPosition);
-
-	protected abstract void validateRoute(Direction direction, Position targetPosition, Board ranks);
-
-	public abstract double getScore();
-
-	protected abstract String getSymbol();
 }

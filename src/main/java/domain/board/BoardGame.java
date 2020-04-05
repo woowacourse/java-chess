@@ -26,8 +26,7 @@ public class BoardGame {
 
 		Piece piece = board.findPiece(sourcePosition)
 			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
-		piece.canMove(targetPosition, turn, board);
-		piece.move(targetPosition, board);
+		piece.move(targetPosition, turn, board);
 	}
 
 	public Map<Team, Double> calculateScore() {

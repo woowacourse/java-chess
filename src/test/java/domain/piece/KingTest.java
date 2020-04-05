@@ -36,10 +36,10 @@ public class KingTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"move b1 b1, WHITE", "move b2 b2, BLACK"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
+	void validateMovement_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		King king = new King(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> king.canMove(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> king.validateMovement(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -61,7 +61,8 @@ public class KingTest {
 	void validateStepSize_InvalidStepSize_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		King king = new King(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> king.validateStepSize(moveCommand.getSourcePosition(), moveCommand.getTargetPosition()))
+		assertThatThrownBy(
+			() -> king.validateStepSize(moveCommand.getSourcePosition(), moveCommand.getTargetPosition()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_STEP_SIZE);
 	}
@@ -72,7 +73,7 @@ public class KingTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 c1");
 		King king = new King(moveCommand.getSourcePosition(), Team.WHITE);
 
-		king.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		king.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		assertThat(king.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -84,7 +85,7 @@ public class KingTest {
 
 		King king = new King(moveCommand.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> king.move(moveCommand.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> king.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -95,7 +96,7 @@ public class KingTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 b2");
 		King king = new King(moveCommand.getSourcePosition(), Team.WHITE);
 
-		king.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		king.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(king);

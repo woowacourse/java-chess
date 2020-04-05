@@ -36,10 +36,10 @@ public class BishopTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"move b1 b1, WHITE", "move c2 c2, BLACK"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
+	void validateMovement_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		Bishop bishop = new Bishop(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> bishop.canMove(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> bishop.validateMovement(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -72,7 +72,7 @@ public class BishopTest {
 		MoveCommand moveCommand = new MoveCommand("move d2 f4");
 		Bishop bishop = new Bishop(moveCommand.getSourcePosition(), Team.WHITE);
 
-		bishop.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		bishop.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		assertThat(bishop.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -84,7 +84,7 @@ public class BishopTest {
 
 		Bishop bishop = new Bishop(moveCommand.getSourcePosition(), Team.BLACK);
 
-		assertThatThrownBy(() -> bishop.move(moveCommand.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> bishop.move(moveCommand.getTargetPosition(), Team.BLACK, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -95,7 +95,7 @@ public class BishopTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 c2");
 		Bishop bishop = new Bishop(moveCommand.getSourcePosition(), Team.WHITE);
 
-		bishop.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		bishop.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(bishop);

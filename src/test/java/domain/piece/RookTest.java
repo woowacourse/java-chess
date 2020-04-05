@@ -36,10 +36,10 @@ public class RookTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"move a1 a1, WHITE", "move a8 a8, BLACK"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
+	void validateMovement_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		Rook rook = new Rook(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> rook.canMove(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> rook.validateMovement(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -58,7 +58,8 @@ public class RookTest {
 	@DisplayName("목적지로 가는 경로에 기물이 있다면 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"N, move a1 a4, WHITE", "S, move a8 a2, BLACK"})
-	void validateRoutecanMove_InvalidTargetPosition_ExceptionThrown(Direction direction, MoveCommand moveCommand, Team team) {
+	void validateRoutecanMove_InvalidTargetPosition_ExceptionThrown(Direction direction, MoveCommand moveCommand,
+		Team team) {
 		Rook rook = new Rook(moveCommand.getSourcePosition(), team);
 
 		assertThatThrownBy(() -> rook.validateRoute(direction, moveCommand.getTargetPosition(), chessGame.getBoard()))
@@ -72,7 +73,7 @@ public class RookTest {
 		MoveCommand moveCommand = new MoveCommand("move a1 a2");
 		Rook rook = new Rook(moveCommand.getSourcePosition(), Team.WHITE);
 
-		rook.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		rook.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		assertThat(rook.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -84,7 +85,7 @@ public class RookTest {
 
 		Rook rook = new Rook(moveCommand.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> rook.move(moveCommand.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> rook.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -95,7 +96,7 @@ public class RookTest {
 		MoveCommand moveCommand = new MoveCommand("move a3 a8");
 		Queen queen = new Queen(moveCommand.getSourcePosition(), Team.WHITE);
 
-		queen.move(moveCommand.getTargetPosition(), chessGame.getBoard());
+		queen.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
 
 		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(queen);
