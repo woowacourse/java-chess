@@ -65,6 +65,10 @@ public class ChessService {
         return state.getStatus();
     }
 
+    public Team createTurnDto() {
+        return state.getChessGame().getTurn();
+    }
+
     public Team getWinner() {
         return state.getWinner();
     }
@@ -77,5 +81,4 @@ public class ChessService {
         return chessDAO.getRoomId();
 
     }
-
 }

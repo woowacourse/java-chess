@@ -11,7 +11,9 @@ public class ResponseDto {
     private List<Long> roomId;
     private Map<Position, PieceDto> board;
     private Map<Team, Double> scores;
+    private Team turn;
     private String message;
+
 
     public ResponseDto(final List<Long> roomId, final String message) {
         this.roomId = roomId;
@@ -23,9 +25,11 @@ public class ResponseDto {
         this.scores = scores;
     }
 
-    public ResponseDto(final Map<Position, PieceDto> board, final Map<Team, Double> scores, final String message) {
+    public ResponseDto(final Map<Position, PieceDto> board, final Map<Team, Double> scores, final Team turn,
+                       final String message) {
         this.board = board;
         this.scores = scores;
+        this.turn = turn;
         this.message = message;
     }
 
@@ -43,5 +47,9 @@ public class ResponseDto {
 
     public Map<Team, Double> getScores() {
         return scores;
+    }
+
+    public Team getTurn() {
+        return turn;
     }
 }

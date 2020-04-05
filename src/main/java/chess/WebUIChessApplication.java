@@ -51,13 +51,21 @@ public class WebUIChessApplication {
             ResponseDto responseDto = chessController.run(requestDto);
             List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
             List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
+            WebDto turnDto = getTurnDto(responseDto.getTurn());
             Map<String, Object> model = new HashMap<>();
             model.put("board", boardDto);
             model.put("score", scoreDto);
+            model.put("turn", turnDto);
             model.put("message", responseDto.getMessage());
             return render(model, "chessGame.html");
         });
 
+    }
+
+    private static WebDto getTurnDto(final Team turn) {
+        String key = turn.toString();
+        String value = turn.toString();
+        return new WebDto(key, value);
     }
 
     private static List<WebDto> getRoomDto(final List<Long> roomId) {

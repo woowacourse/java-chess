@@ -73,10 +73,12 @@ a {
 
 .white-score-board {
     background-image: url("img/white-scoreboard.jpeg");
+    color: black;
 }
 
 .black-score-board {
     background-image: url("img/black-scoreboard.jpg");
+    color: white;
 }
 
 .player-name {

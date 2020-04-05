@@ -60,7 +60,8 @@ public class ChessController {
             }
             Map<Position, PieceDto> boardDto = chessService.createBoardDto();
             Map<Team, Double> scoreDto = chessService.createScoreDto();
-            return new ResponseDto(boardDto, scoreDto, message);
+            Team turnDto = chessService.createTurnDto();
+            return new ResponseDto(boardDto, scoreDto, turnDto, message);
         }
     }
 

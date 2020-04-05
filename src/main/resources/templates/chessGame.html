@@ -144,6 +144,7 @@
             <div class="player-image black-player-image">
                 <img class="doo" src="img/doo.jpg">
             </div>
+            <div class="player-turn" id="BLACK-player-turn"></div>
             <div class="player-score black-player-score" id="BLACK-SCORE">
             </div>
         </div>
@@ -153,6 +154,7 @@
             <div class="player-image white-player-image">
                 <img class="doo" src="img/doo.jpg">
             </div>
+            <div class="player-turn" id="WHITE-player-turn"></div>
             <div class="player-score white-player-score" id="WHITE-SCORE">
             </div>
         </div>
@@ -169,6 +171,13 @@
     {{#score}}
         document.getElementById("{{key}}-SCORE").innerText = {{value}}
     {{/score}}
+    document.getElementById("{{turn.key}}-player-turn").innerText = '현재 턴'
+
+
+
+
+
+
 
 
 
