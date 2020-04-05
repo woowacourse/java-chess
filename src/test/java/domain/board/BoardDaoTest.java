@@ -32,23 +32,17 @@ public class BoardDaoTest {
 		assertNotNull(con);
 	}
 
-	@DisplayName("Board에 데이터 추가")
-	@Test
-	public void saveBoardTest() throws SQLException {
-		Board board = new RookBoard().create();
-		boardDao.saveBoard(board);
-	}
-
-	@DisplayName("Board에 데이터 불러오기")
+	@DisplayName("Board 저장, 불러오기, 삭제 테스트")
 	@Test
 	public void loadBoardTest() throws SQLException {
-		Board board = boardDao.loadBoard();
-		assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(10);
-	}
+		boardDao.clearBoardDb();
 
-	@DisplayName("게임 저장 버튼을 누르면 Board의 데이터 삭제")
-	@Test
-	public void deleteBoardTest() throws SQLException {
+		Board board = new RookBoard().create();
+		boardDao.saveBoard(board);
+
+		Board newBoard = boardDao.loadBoard();
+		assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(10);
+
 		boardDao.clearBoardDb();
 	}
 
