@@ -7,10 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import chess.game.ChessSet;
 import chess.location.Col;
 import chess.location.Location;
 import chess.location.Row;
 import chess.piece.type.*;
+import chess.player.Player;
 import chess.score.Score;
 import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +36,7 @@ class ChessBoardTest {
         putNoble(actual);
         putPawns(actual);
 
-        for (Piece piece: actual) {
+        for (Piece piece : actual) {
             assertThat(givenPieces).contains(piece);
         }
         assertThat(givenPieces).hasSameSizeAs(actual);
@@ -61,7 +63,8 @@ class ChessBoardTest {
     @Test
     void calculateReducePawnScore1() {
         ChessBoard chessBoard = ChessBoardCreater.create();
-        assertThat(chessBoard.calculateReducePawnScore(Team.WHITE).getValue())
+        Player player = new Player(new ChessSet(chessBoard.giveMyPiece(Team.WHITE)), Team.WHITE);
+        assertThat(chessBoard.calculateReducePawnScore(player).getValue())
                 .isEqualTo(new Score(0).getValue());
     }
 
@@ -69,10 +72,12 @@ class ChessBoardTest {
     @Test
     void calculateReducePawnScore2() {
         ChessBoard chessBoard = ChessBoardCreater.create();
+        Player player = new Player(new ChessSet(chessBoard.giveMyPiece(Team.WHITE)), Team.WHITE);
+
         Location now = new Location(Row.of(2), Col.of('a'));
         Location after = new Location(Row.of(3), Col.of('b'));
         chessBoard.move(now, after);
-        assertThat(chessBoard.calculateReducePawnScore(Team.WHITE).getValue())
+        assertThat(chessBoard.calculateReducePawnScore(player).getValue())
                 .isEqualTo(new Score(1).getValue());
     }
 
@@ -93,7 +98,9 @@ class ChessBoardTest {
         chessBoard.move(now1, after1);
         chessBoard.move(now2, after2);
 
-        assertThat(chessBoard.calculateReducePawnScore(Team.WHITE).getValue())
+        Player player = new Player(new ChessSet(chessBoard.giveMyPiece(Team.WHITE)), Team.WHITE);
+
+        assertThat(chessBoard.calculateReducePawnScore(player).getValue())
                 .isEqualTo(new Score(1.5).getValue());
     }
 }

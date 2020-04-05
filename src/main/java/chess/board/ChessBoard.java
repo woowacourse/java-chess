@@ -5,17 +5,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import chess.location.Col;
 import chess.location.Location;
-import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
+import chess.player.Player;
+import chess.score.Calculatable;
+import chess.score.PawnReduceScoreCalculable;
 import chess.score.Score;
 import chess.team.Team;
 
-import static chess.board.ChessBoardCreater.*;
-
 public class ChessBoard {
-    private static final double PAWN_REDUCE_VALUE = 0.5;
+    private static final Calculatable pawnScoreCalculatable = new PawnReduceScoreCalculable();
 
     private final Map<Location, Piece> board;
 
@@ -57,36 +56,8 @@ public class ChessBoard {
         board.put(destination, piece);
     }
 
-    /*
-    TODO : 여기에서 PAWN을 가지고 있는 것이 옳은가 ? 매개변수로 어떤 Piece인지 입력 받고
-    같은 라인의 Piece의 수만을 반환받는 것이 더 투명한 ChessBoard를 만드는 것이 아닌가 ?
-    여기도 응집도를 높이고 결합도를 낮출 수 있을지 고민해보자.
-    */
-    public Score calculateReducePawnScore(Team team) {
-        double reducePawnScroe = 0;
-        for (int col = COL_START; col <= COL_END; col++) {
-            Col fixCol = Col.of(col);
-
-            int sameColPawnSize = calculatePawnSameColSize(team, fixCol);
-            if (sameColPawnSize == 1) {
-                continue;
-            }
-            reducePawnScroe += (sameColPawnSize * PAWN_REDUCE_VALUE);
-        }
-        return new Score(reducePawnScroe);
-    }
-
-    private int calculatePawnSameColSize(Team team, Col fixCol) {
-        int count = 0;
-        for (Map.Entry<Location, Piece> element : board.entrySet()) {
-            if (element.getKey().isSame(fixCol)
-                    && element.getValue().isSameTeam(team)
-                    && element.getValue() instanceof Pawn
-            ) {
-                count++;
-            }
-        }
-        return count;
+    public Score calculateReducePawnScore(Player player) {
+        return pawnScoreCalculatable.calculate(this, player);
     }
 
     public boolean isNotCorrectTeam(Location location, Team team) {

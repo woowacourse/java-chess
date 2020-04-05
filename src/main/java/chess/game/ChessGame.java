@@ -12,13 +12,14 @@ import chess.result.ChessScores;
 import chess.result.Result;
 import chess.score.Calculatable;
 import chess.score.Score;
-import chess.score.ScoreCalcultor;
+import chess.score.ScoreCalculator;
 import chess.team.Team;
 
 import static chess.progress.Progress.*;
 import static chess.team.Team.BLACK;
 import static chess.team.Team.WHITE;
 
+// TODO : 이제 갱신되는 Player들의 Set가 존재한다 -> 그러니 ChessGame들의 책임들을 옮길 수 있다.
 public class ChessGame {
     private final ChessBoard chessBoard;
     private final Player white;
@@ -31,7 +32,7 @@ public class ChessGame {
         chessBoard = ChessBoardCreater.create();
         white = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
         black = new Player(new ChessSet(chessBoard.giveMyPiece(BLACK)), BLACK);
-        calculatable = new ScoreCalcultor();
+        calculatable = new ScoreCalculator();
         turn = Team.WHITE;
     }
 
