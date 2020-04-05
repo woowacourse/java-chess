@@ -39,16 +39,14 @@ public abstract class GamePiece {
 
     private void finaMovablePositions(Board board, List<String> paths, List<Position> positions) {
         for (Position position : positions) {
-            if (!board.isNotEmpty(position)) {
-                paths.add(position.getName());
-            }
-            if (board.isSameColor(this, position)) {
+            if (board.isNotEmpty(position) && board.isSameColor(this, position)) {
                 break;
             }
-            if (!board.isSameColor(this, position)) {
+            if (board.isNotEmpty(position) && !board.isSameColor(this, position)) {
                 paths.add(position.getName());
                 break;
             }
+            paths.add(position.getName());
         }
     }
 

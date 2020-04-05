@@ -29,6 +29,8 @@ public class ChessService {
             userDAO.addUser(first);
             userDAO.addUser(second);
             boardDAO.addBoard(BoardFactory.createInitialBoard(first, second), first, second);
+            board = BoardFactory.createInitialBoard(first, second);
+            return board;
         }
         board = boardDAO.findByUserName(first, second).orElse(BoardFactory.createInitialBoard(first, second));
         return board;

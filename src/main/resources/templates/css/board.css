@@ -89,7 +89,7 @@ body {
     margin: 0 auto;
 }
 
-.user > p {
+.user-name {
     font-size: 50px;
     font-family: fantasy;
     flex: 2;

@@ -18,7 +18,7 @@ public class CellDAO {
     public void addCells(Board board, int board_id) throws SQLException {
         String query = "INSERT INTO cell (board_id, position, piece) VALUES ";
         StringBuilder str = new StringBuilder();
-        for (Map.Entry<Position, GamePiece> entry :board.getBoard().entrySet()) {
+        for (Map.Entry<Position, GamePiece> entry : board.getBoard().entrySet()) {
             str.append("(");
             str.append(board_id);
             str.append(", '");
