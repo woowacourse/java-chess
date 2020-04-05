@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.BoardSquare;
 import chess.domain.board.CastlingSetting;
-import chess.domain.board.Game;
+import chess.domain.board.ChessGame;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class Pawn extends OneTimeMovePiece {
     private Set<BoardSquare> getFrontCheatSheet(BoardSquare boardSquare,
         Map<BoardSquare, Piece> board, BoardSquare oneMore) {
         Set<BoardSquare> frontCheatSheet = new HashSet<>();
-        boolean initialPoint = Game.isInitialPoint(boardSquare, this);
+        boolean initialPoint = ChessGame.isInitialPoint(boardSquare, this);
         boolean containsOneMore = !board.containsKey(oneMore);
         if (initialPoint && containsOneMore) {
             frontCheatSheet.add(oneMore);

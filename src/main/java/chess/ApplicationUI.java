@@ -3,11 +3,11 @@ package chess;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.domain.board.Game;
+import chess.domain.board.ChessGame;
 import chess.domain.piece.Type;
 import chess.domain.state.MoveSquare;
 import chess.domain.state.MoveState;
-import chess.dto.ChessBoardDto;
+import chess.dto.ChessGameDto;
 import chess.dto.MoveSquareDto;
 import chess.dto.PromotionTypeDto;
 import chess.dto.ResultDto;
@@ -20,7 +20,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class ApplicationUI {
 
     public static void main(String[] args) {
-        Game game = new Game();
+        ChessGame chessGame = new ChessGame();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -29,7 +29,7 @@ public class ApplicationUI {
 
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            game.initialize();
+            chessGame.initialize();
             return render(model, "/game.html");
         });
 
@@ -38,32 +38,32 @@ public class ApplicationUI {
             MoveSquareDto moveSquareDto = gson.fromJson(req.body(), MoveSquareDto.class);
             MoveSquare moveSquare = new MoveSquare(moveSquareDto.getSource(),
                 moveSquareDto.getTarget());
-            MoveState moveState = game.movePieceWhenCanMove(moveSquare);
-            ChessBoardDto chessBoardDto = new ChessBoardDto(game, moveState);
+            MoveState moveState = chessGame.movePieceWhenCanMove(moveSquare);
+            ChessGameDto chessGameDto = new ChessGameDto(chessGame, moveState);
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             if (moveState == MoveState.KING_CAPTURED) {
-                chessBoardDto.clearPiece();
+                chessGameDto.clearPiece();
             }
-            return new Gson().toJson(chessBoardDto);
+            return new Gson().toJson(chessGameDto);
         });
 
         post("/promotion", (req, res) -> {
             Gson gson = new Gson();
             PromotionTypeDto promotionTypeDto = gson.fromJson(req.body(), PromotionTypeDto.class);
             Type type = Type.of(promotionTypeDto.getPromotionType());
-            MoveState moveState = game.promotion(type);
-            ChessBoardDto chessBoardDto = new ChessBoardDto(game, moveState);
-            return new Gson().toJson(chessBoardDto);
+            MoveState moveState = chessGame.promotion(type);
+            ChessGameDto chessGameDto = new ChessGameDto(chessGame, moveState);
+            return new Gson().toJson(chessGameDto);
         });
 
         get("/board", (req, res) -> {
-            ChessBoardDto chessBoardDto = new ChessBoardDto(game);
-            return new Gson().toJson(chessBoardDto);
+            ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+            return new Gson().toJson(chessGameDto);
         });
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            ResultDto resultDto = new ResultDto(game.getTeamScore());
+            ResultDto resultDto = new ResultDto(chessGame.getTeamScore());
             model.put("winner", resultDto.getWinner());
             model.put("blackScore", resultDto.getBlackScore());
             model.put("whiteScore", resultDto.getWhiteScore());

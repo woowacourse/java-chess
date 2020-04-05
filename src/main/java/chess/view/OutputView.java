@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.board.BoardSquare;
-import chess.domain.board.Game;
+import chess.domain.board.ChessGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
@@ -20,8 +20,8 @@ public class OutputView {
         System.out.println("> 현재 점수 및 고득점자 확인 : status");
     }
 
-    public static void printChessBoard(Game game) {
-        Map<BoardSquare, Piece> gameBoard = game.getChessBoard();
+    public static void printChessBoard(ChessGame chessGame) {
+        Map<BoardSquare, Piece> gameBoard = chessGame.getChessBoard();
         for (int rank = 8; rank >= 1; rank--) {
             printRankRaw(gameBoard, rank);
         }

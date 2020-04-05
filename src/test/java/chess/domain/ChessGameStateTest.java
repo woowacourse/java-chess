@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 
-public class GameStateTest {
+public class ChessGameStateTest {
 
     @Test
     @DisplayName("Null이 of에 들어갔을 때 예외 발생")

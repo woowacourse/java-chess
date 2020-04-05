@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import util.NullChecker;
 
-public class Game {
+public class ChessGame {
 
     private static final MoveStateChecker BEFORE_MOVE_CHECKER
         = new MoveStateChecker(new MoveStateBefore());
@@ -33,11 +33,11 @@ public class Game {
     private Set<CastlingSetting> castlingElements;
     private Color gameTurn;
 
-    public Game() {
+    public ChessGame() {
         this(new BoardInitialDefault(), Color.WHITE, CastlingSetting.getCastlingElements());
     }
 
-    public Game(BoardInitialization chessBoard, Color gameTurn,
+    public ChessGame(BoardInitialization chessBoard, Color gameTurn,
         Set<CastlingSetting> castlingElements) {
         NullChecker.validateNotNull(chessBoard, gameTurn, castlingElements);
         this.chessBoard = chessBoard.getInitialize();

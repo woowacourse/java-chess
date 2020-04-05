@@ -1,7 +1,7 @@
 package chess.dto;
 
 import chess.domain.board.BoardSquare;
-import chess.domain.board.Game;
+import chess.domain.board.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.state.MoveState;
 import java.util.ArrayList;
@@ -9,25 +9,25 @@ import java.util.List;
 import java.util.Map;
 import util.NullChecker;
 
-public class ChessBoardDto {
+public class ChessGameDto {
 
     private final List<String> pieces;
     private final String turn;
     private final String state;
 
-    public ChessBoardDto(Game game) {
-        this(game, MoveState.EMPTY);
+    public ChessGameDto(ChessGame chessGame) {
+        this(chessGame, MoveState.EMPTY);
     }
 
-    public ChessBoardDto(Game game, MoveState moveState) {
-        NullChecker.validateNotNull(game, moveState);
-        Map<BoardSquare, Piece> board = game.getChessBoard();
+    public ChessGameDto(ChessGame chessGame, MoveState moveState) {
+        NullChecker.validateNotNull(chessGame, moveState);
+        Map<BoardSquare, Piece> board = chessGame.getChessBoard();
         List<String> pieces = new ArrayList<>();
         for (int rank = 8; rank >= 1; rank--) {
             printRankRaw(pieces, board, rank);
         }
         this.pieces = pieces;
-        this.turn = game.getGameTurn().getName();
+        this.turn = chessGame.getGameTurn().getName();
         this.state = moveState.getMessage();
     }
 

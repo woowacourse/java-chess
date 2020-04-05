@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class GameStateAndMoveSquareTest {
+class ChessGameStateAndMoveSquareTest {
 
     @DisplayName("생성자 Null 체크")
     @Test

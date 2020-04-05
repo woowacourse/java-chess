@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.board.Game;
+import chess.domain.board.ChessGame;
 import chess.domain.board.TeamScore;
 import chess.domain.state.GameState;
 import chess.domain.state.GameStateAndMoveSquare;
@@ -12,62 +12,62 @@ import chess.view.OutputView;
 public class ChessController {
 
     public static void run() {
-        Game game = new Game();
-        start(game);
-        proceed(game);
+        ChessGame chessGame = new ChessGame();
+        start(chessGame);
+        proceed(chessGame);
     }
 
-    private static void start(Game game) {
+    private static void start(ChessGame chessGame) {
         OutputView.printStartInfo();
         GameState gameState = GameState.of(InputView.inputGameState());
         if (gameState != GameState.START) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
-        OutputView.printChessBoard(game);
+        OutputView.printChessBoard(chessGame);
     }
 
-    private static void proceed(Game game) {
+    private static void proceed(ChessGame chessGame) {
         GameState gameState;
         do {
             GameStateAndMoveSquare gameStateAndMoveSquare
                 = new GameStateAndMoveSquare(InputView.inputGameState());
-            proceedByGameState(game, gameStateAndMoveSquare);
-            gameState = getGameStateByKingCaptured(game, gameStateAndMoveSquare);
+            proceedByGameState(chessGame, gameStateAndMoveSquare);
+            gameState = getGameStateByKingCaptured(chessGame, gameStateAndMoveSquare);
         } while (gameState.isContinue());
     }
 
-    private static void proceedByGameState(Game game,
+    private static void proceedByGameState(ChessGame chessGame,
         GameStateAndMoveSquare gameStateAndMoveSquare) {
         if (gameStateAndMoveSquare.isSameState(GameState.START)) {
             OutputView.printCanNotStart();
         }
         if (gameStateAndMoveSquare.isSameState(GameState.MOVE)) {
-            move(game, gameStateAndMoveSquare);
+            move(chessGame, gameStateAndMoveSquare);
         }
         if (gameStateAndMoveSquare.isSameState(GameState.STATUS)
             || gameStateAndMoveSquare.isSameState(GameState.END)) {
-            printScoreAndWinners(game);
+            printScoreAndWinners(chessGame);
         }
     }
 
-    private static GameState getGameStateByKingCaptured(Game game,
+    private static GameState getGameStateByKingCaptured(ChessGame chessGame,
         GameStateAndMoveSquare gameStateAndMoveSquare) {
-        if (game.isKingCaptured()) {
+        if (chessGame.isKingCaptured()) {
             return GameState.END;
         }
         return gameStateAndMoveSquare.getGameState();
     }
 
-    private static void move(Game game, GameStateAndMoveSquare gameStateAndMoveSquare) {
+    private static void move(ChessGame chessGame, GameStateAndMoveSquare gameStateAndMoveSquare) {
         MoveSquare moveSquare = gameStateAndMoveSquare.getMoveSquare();
-        MoveState moveState = game.movePieceWhenCanMove(moveSquare);
+        MoveState moveState = chessGame.movePieceWhenCanMove(moveSquare);
         if (moveState == MoveState.SUCCESS) {
-            OutputView.printChessBoard(game);
+            OutputView.printChessBoard(chessGame);
             return;
         }
         if (moveState == MoveState.SUCCESS_BUT_PAWN_PROMOTION
             || moveState == MoveState.FAIL_MUST_PAWN_PROMOTION) {
-            changePawn(game);
+            changePawn(chessGame);
             return;
         }
         if (moveState == MoveState.FAIL_NO_PIECE) {
@@ -75,27 +75,27 @@ public class ChessController {
             return;
         }
         if (moveState == MoveState.FAIL_NOT_ORDER) {
-            OutputView.printNotMyTurn(game.getGameTurn());
+            OutputView.printNotMyTurn(chessGame.getGameTurn());
             return;
         }
         if (moveState == MoveState.KING_CAPTURED) {
-            OutputView.printWinner(game.getWinnerTurn());
+            OutputView.printWinner(chessGame.getWinnerTurn());
             return;
         }
         OutputView.printCanNotMove();
     }
 
-    private static void changePawn(Game game) {
+    private static void changePawn(ChessGame chessGame) {
         MoveState moveState;
         do {
             OutputView.print("폰 재입력 요망");
-            moveState = game.promotion(InputView.inputChangeType());
-            OutputView.printChessBoard(game);
+            moveState = chessGame.promotion(InputView.inputChangeType());
+            OutputView.printChessBoard(chessGame);
         } while (moveState != MoveState.SUCCESS);
     }
 
-    private static void printScoreAndWinners(Game game) {
-        TeamScore teamScore = game.getTeamScore();
+    private static void printScoreAndWinners(ChessGame chessGame) {
+        TeamScore teamScore = chessGame.getTeamScore();
         OutputView.printScore(teamScore.getTeamScore());
         OutputView.printWinners(teamScore.getWinners());
     }
