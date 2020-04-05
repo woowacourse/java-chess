@@ -22,6 +22,13 @@ public enum GameState {
 		this.team = Team.BLACK;
 	}
 
+	public static GameState of(String message) {
+		return Arrays.stream(values())
+			.filter(gameState -> gameState.name().equals(message))
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException("해당 상태를 찾을 수 없습니다."));
+	}
+
 	public GameState of(boolean hasTwoKings) {
 
 		return Arrays.stream(GameState.values())

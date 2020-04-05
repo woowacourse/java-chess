@@ -7,24 +7,32 @@ img {
     height: auto;
 }
 
+#main {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.test-row {
+    height: 70px;
+    width: 100%;
+}
+
+.btn {
+    margin-left: 10px;
+}
+
 .test {
     /*background-image: url('../img/bishop_black.png');*/
     background-repeat: no-repeat;
     background-size: contain;
+    width: 12.5%;
     background-position: center;
     /*height: 200px;*/
-    width: 1200px;
+    /* width: 1200px; */
 }
-
-.test:before {
-    content: "";
-    display: block;
-    padding-top: 100%; /* initial ratio of 1:1*/
-}
-
 
 .black {
-    background-color: gray;
+    background-color: red;
 }
 
 .white-color {
@@ -36,50 +44,53 @@ img {
 }
 
 .p {
-    background-image: url('../img/pawn_white.png');
+    background-image: url("../img/pawn_white.png");
 }
 
 .P {
-    background-image: url('../img/pawn_black.png');
+    background-image: url("../img/pawn_black.png");
 }
 
 .k {
-    background-image: url('../img/king_white.png');
+    background-image: url("../img/king_white.png");
 }
 
 .K {
-    background-image: url('../img/king_black.png');
+    background-image: url("../img/king_black.png");
 }
 
-
 .n {
-    background-image: url('../img/knight_white.png');
+    background-image: url("../img/knight_white.png");
 }
 
 .N {
-    background-image: url('../img/knight_black.png');
+    background-image: url("../img/knight_black.png");
 }
 
 .b {
-    background-image: url('../img/bishop_white.png');
+    background-image: url("../img/bishop_white.png");
 }
 
 .B {
-    background-image: url('../img/bishop_black.png');
+    background-image: url("../img/bishop_black.png");
 }
 
 .r {
-    background-image: url('../img/rook_white.png');
+    background-image: url("../img/rook_white.png");
 }
 
 .R {
-    background-image: url('../img/rook_black.png');
+    background-image: url("../img/rook_black.png");
 }
 
 .q {
-    background-image: url('../img/queen_white.png');
+    background-image: url("../img/queen_white.png");
 }
 
 .Q {
-    background-image: url('../img/queen_black.png');
+    background-image: url("../img/queen_black.png");
+}
+
+.border-3 {
+    border: 3px solid blue !important;
 }

@@ -11,7 +11,7 @@ public class King extends Piece {
 	private static final char name = 'k';
 	private static final double score = 0;
 
-	private King(Team team) {
+	public King(Team team) {
 		super(team, editName(name, team), new KingMoveStrategy(team));
 	}
 

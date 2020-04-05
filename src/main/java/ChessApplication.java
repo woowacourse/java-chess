@@ -1,6 +1,5 @@
 public class ChessApplication {
-	public static void main(String[] args) {
-		// new ConsoleController().run();
-		new WebUIChessApplication().run();
-	}
+	// public static void main(String[] args) {
+	// 	// new ConsoleController().run();
+	// }
 }

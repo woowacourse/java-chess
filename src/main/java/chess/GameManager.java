@@ -18,10 +18,10 @@ public class GameManager {
 	private final ChessBoard chessBoard;
 	private GameState gameState;
 
-	public GameManager(Map<Location, Piece> pieces) {
+	public GameManager(Map<Location, Piece> pieces, GameState gameState) {
 		Objects.requireNonNull(pieces, "pieces의 정보가 없습니다.");
 		this.chessBoard = new ChessBoard(pieces);
-		this.gameState = GameState.RUNNING_WHITE_TURN;
+		this.gameState = gameState;
 	}
 
 	public boolean isRunning() {

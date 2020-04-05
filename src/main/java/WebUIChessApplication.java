@@ -4,18 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.GameManager;
-import chess.piece.PieceFactory;
 import com.google.gson.Gson;
-import service.GameManagerService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
-	private Gson gson = new Gson();
-	private GameManagerService gameManagerService = new GameManagerService();
-	private GameManager gameManager = new GameManager(new PieceFactory().createPieces());
+	private static GameManager gameManager;
+	private static Gson gson = new Gson();
+	private static WebController webController = new WebController();
 
-	public void run() {
+	public static void main(String[] args) {
+
 		port(8080);
 		staticFileLocation("/public");
 
@@ -24,20 +23,23 @@ public class WebUIChessApplication {
 			return render(model, "index.html");
 		});
 
-		post("/move", ((request, response) -> {
-			String now = request.queryParams("now");
-			String destination = request.queryParams("destination");
-			return gameManagerService.move(gameManager, now, destination);
-		}), gson::toJson);
+		post("/move", (request, response) -> webController.move(request, gameManager), gson::toJson);
 
-		get("/board", (request, response) -> gameManager, gson::toJson);
+		get("/start", (request, response) -> {
+			gameManager = webController.start();
+			return gameManager;
+		}, gson::toJson);
 
-		get("/status", (request, response) -> gameManagerService.status(gameManager), gson::toJson);
+		get("/resume", (request, response) -> {
+			gameManager = webController.resume();
+			return gameManager;
+		}, gson::toJson);
 
-		get("/winner", (request, response) -> gameManagerService.findWinner(gameManager), gson::toJson);
+		get("/status", (request, response) -> webController.status(gameManager), gson::toJson);
+		get("/winner", (request, response) -> webController.winner(gameManager), gson::toJson);
 	}
 
-	private String render(Map<String, Object> model, String templatePath) {
+	private static String render(Map<String, Object> model, String templatePath) {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 }

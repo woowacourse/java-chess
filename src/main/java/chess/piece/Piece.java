@@ -56,4 +56,25 @@ public abstract class Piece {
 	public char getName() {
 		return name;
 	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Piece piece = (Piece)o;
+		return name == piece.name &&
+			team == piece.team &&
+			Objects.equals(moveStrategy, piece.moveStrategy);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(team, name, moveStrategy);
+	}
 }

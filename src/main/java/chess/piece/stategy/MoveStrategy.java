@@ -1,5 +1,7 @@
 package chess.piece.stategy;
 
+import java.util.Objects;
+
 import chess.board.Location;
 import chess.team.Team;
 
@@ -19,4 +21,19 @@ public abstract class MoveStrategy {
 
 	abstract void checkStrategy(Location now, Location destination,
 		boolean destinationHasEnemy);
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		MoveStrategy that = (MoveStrategy)o;
+		return team == that.team;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(team);
+	}
 }

@@ -1,5 +1,6 @@
 import chess.GameManager;
 import chess.board.Location;
+import chess.gamestate.GameState;
 import chess.piece.PieceFactory;
 import command.FirstCommand;
 import command.RunningCommand;
@@ -7,7 +8,8 @@ import view.InputView;
 import view.OutputView;
 
 public class ConsoleController {
-	public final GameManager gameManager = new GameManager(new PieceFactory().createPieces());
+	public final GameManager gameManager = new GameManager(new PieceFactory().createPieces(),
+		GameState.RUNNING_WHITE_TURN);
 
 	public void run() {
 		start();
@@ -50,6 +52,8 @@ public class ConsoleController {
 	}
 
 	private void move(String nowLocation, String destinationLocation) {
+		System.out.println(nowLocation);
+		System.out.println(destinationLocation);
 		try {
 			gameManager.movePiece(Location.of(nowLocation), Location.of(destinationLocation));
 		} catch (IllegalArgumentException | NullPointerException e) {
