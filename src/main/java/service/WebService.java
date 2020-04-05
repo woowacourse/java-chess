@@ -1,6 +1,9 @@
 package service;
 
+import java.sql.SQLException;
+
 import domain.board.Board;
+import domain.board.BoardDao;
 import domain.piece.team.Team;
 
 /**
@@ -10,6 +13,7 @@ import domain.piece.team.Team;
  */
 public class WebService {
 	private Team team = Team.WHITE;
+	private BoardDao boardDao = new BoardDao();
 
 	public void move(Board board, String source, String target) {
 		board.move(source, target, team);
@@ -23,5 +27,9 @@ public class WebService {
 	public String findWinner(Board board) {
 		Team winner = board.findWinner();
 		return winner.getName();
+	}
+
+	public void saveGame(Board board) throws SQLException {
+		boardDao.saveBoard(board);
 	}
 }
