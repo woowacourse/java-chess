@@ -50,6 +50,11 @@ public class ChessGame {
 		isEnd = true;
 	}
 
+	public void restart() {
+		board = ChessBoardFactory.create();
+		turn = Side.WHITE;
+	}
+
 	public ChessBoard getBoard() {
 		return board;
 	}

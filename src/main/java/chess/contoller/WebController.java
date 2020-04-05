@@ -22,6 +22,16 @@ public class WebController {
 		mainRendering();
 		initGameRendering(chessGame);
 		moveRendering(chessGame);
+		restartRendering(chessGame);
+	}
+
+	private void restartRendering(ChessGame chessGame) {
+		post("/restart", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			chessGame.restart();
+			transfer(chessGame, model);
+			return render(model, "chess.html");
+		});
 	}
 
 	private void moveRendering(ChessGame chessGame) {

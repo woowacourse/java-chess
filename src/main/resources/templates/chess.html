@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Chess</title>
     <link rel="stylesheet" type="text/css" href="/chess.css">
+    <script src="/chess.js"></script>
 </head>
 <body>
 <div class="container">
@@ -34,13 +35,18 @@
         {{/error}}
         <br/>
         {{#status}}
+        <br/>
         <label>흰색 점수 : {{whiteScore}}</label>
         <br/>
         <label>검은색 점수 : {{blackScore}}</label>
         {{/status}}
         <br/>
-        <button type="button">재시작</button>
-        <button type="button">종료</button>
+        <form method="post" action="/restart">
+            <input type="submit" value="재시작">
+        </form>
+        <form method="get" action="/">
+            <input type="submit" onclick="end()" value="종료">
+        </form>
     </div>
 </div>
 </body>
