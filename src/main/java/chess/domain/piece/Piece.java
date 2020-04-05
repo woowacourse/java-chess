@@ -38,4 +38,8 @@ public abstract class Piece {
 	public String getSymbol() {
 		return symbol;
 	}
+
+	public State getState() {
+		return state;
+	}
 }

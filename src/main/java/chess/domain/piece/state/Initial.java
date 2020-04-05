@@ -10,4 +10,9 @@ public class Initial extends Initialized {
 	public boolean isInitial() {
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Initial";
+	}
 }
