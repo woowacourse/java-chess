@@ -5,6 +5,7 @@
     <title>:: 체스 게임 ::</title>
 
     <link href="./images/cool-lime.ico" rel="shortcut icon" type="image/x-icon"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <style>
         @font-face {
@@ -84,6 +85,18 @@
     }
 
     teamChangeEvent();
+
+    $(document).ready(function () {
+        $('.WHITE, .BLACK').click(function () {
+            let selectCellName = $(this).attr('id');
+            if ($("input[name='source']").val() !== "") {
+                $("input[name='target']").attr('value', selectCellName);
+            } else {
+                $("input[name='source']").attr('value', selectCellName);
+            }
+        });
+    });
+
 </script>
 
 </body>

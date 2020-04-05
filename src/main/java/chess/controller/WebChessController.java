@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.Board;
+import chess.domain.command.MoveCommand;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -43,5 +44,23 @@ public class WebChessController {
             model.put("error", null);
             return render(model, "index.html");
         });
+
+        post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            try {
+                String source = req.queryParams("source");
+                String target = req.queryParams("target");
+
+                this.board.move(new MoveCommand(String.format("move %s %s", source, target)));
+            } catch (Exception e) {
+                model.put("error", e.getMessage());
+            }
+            model.put("cells", this.board.getCells());
+            model.put("currentTeam", this.board.getTeam().getName());
+
+            return render(model, "index.html");
+        });
+
     }
 }
