@@ -8,7 +8,7 @@ import chess.domain.position.Row;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public class ConsoleController {
 	public void run() {
 		OutputView.printInitMessage();
 		ChessGame chessGame = ChessGame.start();

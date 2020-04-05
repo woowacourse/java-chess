@@ -13,23 +13,18 @@ import chess.domain.position.Position;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class ChessWebController {
+public class WebController {
 
 	public void run() {
 		staticFiles.location("/public");
 		ChessGame chessGame = ChessGame.start();
 
-		get("/", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			return render(model, "index.html");
-		});
+		mainRendering();
+		initGameRendering(chessGame);
+		moveRendering(chessGame);
+	}
 
-		get("/chess", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			transfer(chessGame, model);
-			return render(model, "chess.html");
-		});
-
+	private void moveRendering(ChessGame chessGame) {
 		post("/chess", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			try {
@@ -42,6 +37,20 @@ public class ChessWebController {
 
 			transfer(chessGame, model);
 			return render(model, "chess.html");
+		});
+	}
+
+	private void initGameRendering(ChessGame chessGame) {
+		get("/chess", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			transfer(chessGame, model);
+			return render(model, "chess.html");
+		});
+	}
+
+	private void mainRendering() {
+		get("/", (req, res) -> {
+			return render(new HashMap<>(), "index.html");
 		});
 	}
 
