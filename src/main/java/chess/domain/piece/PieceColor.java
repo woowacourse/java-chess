@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.exception.ColorNotFoundException;
 
+import java.util.Arrays;
 import java.util.function.UnaryOperator;
 
 import static chess.util.NullValidator.validateNull;
@@ -17,6 +18,13 @@ public enum PieceColor {
     PieceColor(String name, UnaryOperator<String> operator) {
         this.name = name;
         this.operator = operator;
+    }
+
+    public static PieceColor of(String name) {
+        return Arrays.stream(values())
+                .filter(value -> value.name.equals(name))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public String getPieceName(String pieceName) {
