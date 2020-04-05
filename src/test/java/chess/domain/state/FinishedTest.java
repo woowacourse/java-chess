@@ -50,7 +50,8 @@ class FinishedTest {
 	@DisplayName("게임 종료 상태 객체에서 status를 호출해도 예외가 발생하지 않는다.")
 	@Test
 	void statusTest() {
-		assertThatCode(() -> state.status()).doesNotThrowAnyException();;
+		assertThatCode(() -> state.status()).doesNotThrowAnyException();
+		;
 	}
 
 	@DisplayName("게임 종료 상태 객체에서 end 호출시 USO 예외 발생한다.")
