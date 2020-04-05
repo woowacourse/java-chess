@@ -2,7 +2,6 @@ package chess.domain.web;
 
 import chess.domain.game.ScoreResult;
 import chess.domain.game.Turn;
-import chess.domain.game.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.PiecesFactory;

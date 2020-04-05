@@ -30,7 +30,6 @@ public class OutputView {
 
     private static void printRows(Rows rows) {
         for(String path : rows.getResources()) {
-            // TODO: 2020/03/31 나중에 웹으로 이식할 시에도, 패스를 넣는 식으로 구현가능...!!
             System.out.print(path);
         }
         printEmptyLine();
