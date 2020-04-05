@@ -1,6 +1,7 @@
 package chess.controller;
 
 import static spark.Spark.get;
+import static spark.Spark.internalServerError;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
@@ -36,6 +37,8 @@ public class WebUIController {
         get("/", (request, response) -> initAndRender());
 
         post("/", WebUIController::moveAndRedirect);
+
+        internalServerError(renderErrorPage());
     }
 
     private static String initAndRender() {
@@ -67,6 +70,10 @@ public class WebUIController {
         model.put("empty-image", "image/peace/empty.png");
 
         return render(model, "chess.html");
+    }
+
+    private static String renderErrorPage() {
+        return render(new HashMap<>(), "error.html");
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
