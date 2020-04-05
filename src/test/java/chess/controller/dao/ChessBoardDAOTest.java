@@ -6,23 +6,12 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-
 public class ChessBoardDAOTest {
     private ChessBoardDAO chessBoardDAO;
 
-    @Disabled
     @BeforeEach
     private void setUp() {
         chessBoardDAO = new ChessBoardDAO();
-    }
-
-    @Disabled
-    @DisplayName("데이터베이스 연결 테스트")
-    @Test
-    void connectionTest() {
-        Connection con = chessBoardDAO.getConnection();
-        Assertions.assertThat(con).isNotNull();
     }
 
     @Disabled

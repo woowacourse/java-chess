@@ -15,10 +15,14 @@ public class ChessBoard {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ChessBoard user = (ChessBoard) o;
-        return Objects.equals(chessBoardId, user.chessBoardId);
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessBoard chessBoard = (ChessBoard) o;
+        return Objects.equals(chessBoardId, chessBoard.chessBoardId);
     }
 
     @Override
