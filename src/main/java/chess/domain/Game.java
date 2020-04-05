@@ -85,8 +85,20 @@ public class Game {
         return players;
     }
 
+    public int getPlayerId(Side side) {
+        return players.get(side).getId();
+    }
+
     public double getScoreOf(final Side side) {
         return judge.calculateScore(side);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
     }
 
     @Override

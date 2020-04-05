@@ -1,26 +1,36 @@
 package chess.domain.player;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class Player {
     private int id;
     private String username;
     private String password;
-    private Map<Result, Integer> record = new HashMap<>();
+    private Record record;
 
     public Player(final String username, final String password) {
         this.username = username;
         this.password = password;
-        record.put(Result.WIN, 0);
-        record.put(Result.LOSE, 0);
-        record.put(Result.DRAW, 0);
+        this.record = new Record();
+    }
+
+    public Player(final String username, final String password, final Record record) {
+        this.username = username;
+        this.password = password;
+        this.record = record;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void finishAgainst(Player other, Result result) {
-        record.put(result, record.get(result) + 1);
-        other.record.put(result.getOpposite(), other.record.get(result.getOpposite()) + 1);
+        record.add(result);
+        other.record.add(result.getOpposite());
     }
 
     public int getId() {
@@ -50,5 +60,9 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(id, username, password);
+    }
+
+    public void setRecord(final Record record) {
+        this.record = record;
     }
 }
