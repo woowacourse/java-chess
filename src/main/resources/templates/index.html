@@ -1,10 +1,251 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>ChessGame!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <style type="text/css">
+        .chessboard {
+            float: left;
+            width: 640px;
+            height: 640px;
+            margin: 20px;
+            border: 25px solid #333;
+        }
+
+        .screen {
+            width: 1000px;
+            height: 640px;
+        }
+
+        .scoreBoard {
+            margin-left: 700px;
+            width: 400px;
+            height: 200px;
+        }
+
+        .black {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #999;
+            font-size: 50px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .white {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            font-size: 50px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .selector {
+            width: 200px;
+            height: 200px;
+            margin-left: 780px;
+
+
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<div class="screen">
+    <div class="chessboard">
+        <!-- 8th -->
+        <button id="a8" class="white" onclick="pick('a8')">&#9820;</button>
+        <button id="b8" class="black" onclick="pick('b8')">&#9822;</button>
+        <button id="c8" class="white" onclick="pick('c8')">&#9821;</button>
+        <button id="d8" class="black" onclick="pick('d8')">&#9819;</button>
+        <button id="e8" class="white" onclick="pick('e8')">&#9818;</button>
+        <button id="f8" class="black" onclick="pick('f8')">&#9821;</button>
+        <button id="g8" class="white" onclick="pick('g8')">&#9822;</button>
+        <button id="h8" class="black" onclick="pick('h8')">&#9820;</button>
+        <!-- 7th -->
+        <button id="a7" class="black" onclick="pick('a7')">&#9823;</button>
+        <button id="b7" class="white" onclick="pick('b7')">&#9823;</button>
+        <button id="c7" class="black" onclick="pick('c7')">&#9823;</button>
+        <button id="d7" class="white" onclick="pick('d7')">&#9823;</button>
+        <button id="e7" class="black" onclick="pick('e7')">&#9823;</button>
+        <button id="f7" class="white" onclick="pick('f7')">&#9823;</button>
+        <button id="g7" class="black" onclick="pick('g7')">&#9823;</button>
+        <button id="h7" class="white" onclick="pick('h7')">&#9823;</button>
+        <!-- 6th -->
+        <button id="a6" class="white" onclick="pick('a6')"></button>
+        <button id="b6" class="black" onclick="pick('b6')"></button>
+        <button id="c6" class="white" onclick="pick('c6')"></button>
+        <button id="d6" class="black" onclick="pick('d6')"></button>
+        <button id="e6" class="white" onclick="pick('e6')"></button>
+        <button id="f6" class="black" onclick="pick('f6')"></button>
+        <button id="g6" class="white" onclick="pick('g6')"></button>
+        <button id="h6" class="black" onclick="pick('h6')"></button>
+        <!-- 5th -->
+        <button id="a5" class="black" onclick="pick('a5')"></button>
+        <button id="b5" class="white" onclick="pick('b5')"></button>
+        <button id="c5" class="black" onclick="pick('c5')"></button>
+        <button id="d5" class="white" onclick="pick('d5')"></button>
+        <button id="e5" class="black" onclick="pick('e5')"></button>
+        <button id="f5" class="white" onclick="pick('f5')"></button>
+        <button id="g5" class="black" onclick="pick('g5')"></button>
+        <button id="h5" class="white" onclick="pick('h5')"></button>
+        <!-- 4th -->
+        <button id="a4" class="white" onclick="pick('a4')"></button>
+        <button id="b4" class="black" onclick="pick('b4')"></button>
+        <button id="c4" class="white" onclick="pick('c4')"></button>
+        <button id="d4" class="black" onclick="pick('d4')"></button>
+        <button id="e4" class="white" onclick="pick('e4')"></button>
+        <button id="f4" class="black" onclick="pick('f4')"></button>
+        <button id="g4" class="white" onclick="pick('g4')"></button>
+        <button id="h4" class="black" onclick="pick('h4')"></button>
+        <!-- 3rd -->
+        <button id="a3" class="black" onclick="pick('a3')"></button>
+        <button id="b3" class="white" onclick="pick('b3')"></button>
+        <button id="c3" class="black" onclick="pick('c3')"></button>
+        <button id="d3" class="white" onclick="pick('d3')"></button>
+        <button id="e3" class="black" onclick="pick('e3')"></button>
+        <button id="f3" class="white" onclick="pick('f3')"></button>
+        <button id="g3" class="black" onclick="pick('g3')"></button>
+        <button id="h3" class="white" onclick="pick('h3')"></button>
+        <!-- 2nd -->
+        <button id="a2" class="white" onclick="pick('a2')">&#9817;</button>
+        <button id="b2" class="black" onclick="pick('b2')">&#9817;</button>
+        <button id="c2" class="white" onclick="pick('c2')">&#9817;</button>
+        <button id="d2" class="black" onclick="pick('d2')">&#9817;</button>
+        <button id="e2" class="white" onclick="pick('e2')">&#9817;</button>
+        <button id="f2" class="black" onclick="pick('f2')">&#9817;</button>
+        <button id="g2" class="white" onclick="pick('g2')">&#9817;</button>
+        <button id="h2" class="black" onclick="pick('h2')">&#9817;</button>
+        <!-- 1st -->
+        <button id="a1" class="black" onclick="pick('a1')">&#9814;</button>
+        <button id="b1" class="white" onclick="pick('b1')">&#9816;</button>
+        <button id="c1" class="black" onclick="pick('c1')">&#9815;</button>
+        <button id="d1" class="white" onclick="pick('d1')">&#9813;</button>
+        <button id="e1" class="black" onclick="pick('e1')">&#9812;</button>
+        <button id="f1" class="white" onclick="pick('f1')">&#9815;</button>
+        <button id="g1" class="black" onclick="pick('g1')">&#9816;</button>
+        <button id="h1" class="white" onclick="pick('h1')">&#9814;</button>
+    </div>
+    <div class="scoreBoard">
+        <br><br>
+        BLACK 의 점수는 : <label id="blackScore">38</label><br>
+        WHITE 점수는 : <label id="whiteScore">38</label><br>
+        우승자 : <label id="winner">BLACK WHITE</label>
+    </div>
+    <div class=selector>
+        <a href="/refresh"><button id="start">다시 시작하기</button></a>
+        <a href="/refresh"><button id="end" onclick="endGame()">끝내기</button></a>
+    </div>
+</div>
+
+<script>
+
+    function endGame() {
+        const winner = document.getElementById("winner");
+        alert(winner.innerText + "가 우승했습니다. " + " 게임을 다시 시작합니다.");
+    }
+
+    function pick(value) {
+        if (document.querySelector('.before')) {
+            pickAfter(value);
+        } else {
+            pickBefore(value);
+        }
+    }
+
+    function pickBefore(beforeValue) {
+        document.getElementById(beforeValue).classList.add('before');
+    }
+
+    async function pickAfter(afterValue) {
+        await document.getElementById(afterValue).classList.add('after');
+        await move();
+
+    }
+
+    function clear() {
+        let before = document.querySelector('.before');
+        let after = document.querySelector('.after');
+        if (before) {
+            before.classList.remove('before');
+        }
+        if (after) {
+            after.classList.remove('after');
+        }
+    }
+
+    function setScore(response) {
+        const scores = response.split(" ");
+        const black = document.getElementById("blackScore");
+        const white = document.getElementById("whiteScore");
+        const winner = document.getElementById("winner");
+        black.innerText = scores[0];
+        white.innerText = scores[1];
+        winner.innerText = String(scores.slice(2,)).replace(",", " ").replace(",", " ");
+    }
+
+    function setStatus() {
+        $.ajax({
+            type: 'GET',
+            async: true,
+            url: '/status',
+            dataType: 'text',
+            error: alertMessage,
+            success: setScore,
+            complete: clear(),
+        });
+    }
+
+    function setPiece(response) {
+        const moveSquares = response.split(" ");
+        const before = document.getElementById(moveSquares[0]);
+        const after = document.getElementById(moveSquares[1]);
+
+        after.innerText = before.innerText;
+        before.innerText = " ";
+        setStatus();
+    }
+
+    function alertMessage(response) {
+        alert(response.responseText);
+    }
+
+    async function move() {
+        await $.ajax({
+            type: 'POST',
+            async: true,
+            url: '/move',
+            data: {
+                before: document.querySelector('.before').id,
+                after: document.querySelector('.after').id
+            },
+            dataType: 'text',
+            error: alertMessage,
+            success: setPiece,
+            complete: clear(),
+        });
+    }
+
+    function doNotReload() {
+        if ((event.ctrlKey === true && (event.keyCode === 78 || event.keyCode === 82))
+            || (event.keyCode === 116)) {
+            reset();
+        }
+    }
+    document.onkeydown = doNotReload;
+
+    function reset() {
+        $.ajax({
+            type: 'GET',
+            url: '/refresh'
+        });
+    }
+    window.onbeforeunload = reset;
+
+</script>
 </body>
 </html>
