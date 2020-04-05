@@ -27,4 +27,13 @@ public class ChessBoardDAOTest {
     void addChessBoardTest() throws Exception {
         chessBoardDAO.addChessBoard();
     }
+
+    @DisplayName("가장 최근에 추가된 체스 보드 찾기")
+    @Test
+    void findRecentChessBoardTest() throws Exception {
+        ChessBoard chessBoard = chessBoardDAO.findRecentChessBoard();
+
+        Assertions.assertThat(chessBoard).isNotNull();
+        Assertions.assertThat(chessBoard).isInstanceOf(ChessBoard.class);
+    }
 }

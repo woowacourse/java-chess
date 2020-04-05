@@ -1,9 +1,6 @@
 package chess.controller.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ChessBoardDAO {
     public Connection getConnection() {
@@ -51,5 +48,16 @@ public class ChessBoardDAO {
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.executeUpdate();
         closeConnection(con);
+    }
+
+    public ChessBoard findRecentChessBoard() throws SQLException{
+        String query = "SELECT * FROM chessBoard ORDER BY chessBoardId DESC limit 1";
+        Connection con = getConnection();
+        PreparedStatement pstmt = con.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) return null;
+
+        return new ChessBoard(rs.getInt("chessBoardId"));
     }
 }
