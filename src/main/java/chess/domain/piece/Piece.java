@@ -36,7 +36,7 @@ public abstract class Piece implements MoveStrategy {
     public String teamName() {
         return this.team.name();
     }
-
+  
     public Team getTeam() {
         return this.team;
     }

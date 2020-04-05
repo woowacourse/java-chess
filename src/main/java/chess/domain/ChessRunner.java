@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 public class ChessRunner {
     private Board board;
@@ -116,7 +117,7 @@ public class ChessRunner {
 
     public String getWinner() {
         Optional<Team> winner = this.board.getWinner();
-        return winner.map(Enum::name).orElseThrow(AssertionError::new);
+        return winner.map(Enum::name).orElse(StringUtils.EMPTY);
     }
 
     public List<TileDto> tileDtos() {

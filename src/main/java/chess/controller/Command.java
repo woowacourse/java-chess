@@ -1,6 +1,9 @@
 package chess.controller;
 
+import chess.domain.ChessRunner;
+
 import java.util.Arrays;
+import java.util.Optional;
 
 public enum Command {
     START("start", new StartController()),
@@ -15,12 +18,11 @@ public enum Command {
         this.command = command;
         this.gameController = gameController;
     }
-
-    public static Command of(final String command) {
+       
+    public static Optional<Command> of(final String command) {
         return Arrays.stream(values())
                 .filter(c -> command.contains(c.command))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어를 입력하였습니다."));
+                .findFirst();
     }
 
     public boolean isStart() {
@@ -33,5 +35,9 @@ public enum Command {
 
     public boolean isEnd() {
         return this == END;
+    }
+
+    public void execute(ChessRunner chessRunner, String commands) {
+        this.gameController.execute(chessRunner, commands);
     }
 }

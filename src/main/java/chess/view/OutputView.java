@@ -9,4 +9,6 @@ public interface OutputView {
     void printStatus(double calculateScore, String teamName);
 
     void printWinner(String teamName);
+
+    void printGameRule();
 }
