@@ -1,16 +1,16 @@
-$(document).ready(function(){
+$(document).ready(function() {
     var checkCount = 0;
     var startX;
     var startY;
     var targetX;
     var targetY;
 
-    $continue = function(){
+    $continue = function() {
         jQuery.ajax({
-            type:"POST",
-            url:"/continue_game",
+            type: "POST",
+            url: "/continue_game",
             dataType: "json",
-            success : function(data) {
+            success: function(data) {
                 $setPieces(data);
             }
         });
@@ -18,112 +18,111 @@ $(document).ready(function(){
 
     $continue();
 
-    $('.start_new_game').on('click',function(){
+    $('.start_new_game').on('click', function() {
         jQuery.ajax({
-            type:"POST",
-            url:"/new_game",
+            type: "POST",
+            url: "/new_game",
             dataType: "json",
-            success : function(data) {
+            success: function(data) {
                 $setPieces(data);
             }
         });
     });
 
-    $('.continue').on('click',function(){
-        jQuery.ajax({
-            type:"POST",
-            url:"/continue_game",
-            dataType: "json",
-            success : function(data) {
-                $setPieces(data);
-            }
-        });
-    });
-
-    $('.cell').on('click',function(){
+    $('.cell').on('click', function() {
+        if (checkCount == 0 && $(this).text() == "") {
+            return;
+        }
         $(this).css("box-shadow", "0 0 0 3px red inset");
         checkCount = checkCount + 1;
-        if(checkCount == 2){
-            checkCount = 0;
-            $('.cell').css("box-shadow", "");
-            targetX = $(this).attr('row');
-            targetY = $(this).attr('column');
-            $postMovingInfo();
+        if (checkCount == 2) {
+            $targetClicked(this);
+            return;
         }
-        else{
-            startX = $(this).attr('row');
-            startY = $(this).attr('column');
-        }
+        startX = $(this).attr('row');
+        startY = $(this).attr('column');
     });
 
+    $targetClicked = function(cell) {
+        checkCount = 0;
+        $('.cell').css("box-shadow", "");
+        targetX = $(cell).attr('row');
+        targetY = $(cell).attr('column');
+        $postMovingInfo();
+    }
+
     $postMovingInfo = function() {
-        var allData = {"startX": startX, "startY": startY, "targetX": targetX, "targetY": targetY};
+        var allData = {
+            "startX": startX,
+            "startY": startY,
+            "targetX": targetX,
+            "targetY": targetY
+        };
         jQuery.ajax({
-            type:"POST",
-            url:"/move",
+            type: "POST",
+            url: "/move",
             dataType: "json",
             data: allData,
-            success : function(data) {
+            success: function(data) {
                 $setPieces(data);
-            }
+            },
+            error : function(request){
+                alert(request.responseText);
+            },
         });
     }
 
-    $setPieces = function(data){
+    $setPieces = function(data) {
         $clearBoard();
-        for(var i in data.chessPieces){
+        for (var i in data.chessPieces) {
             $setPiece(data.chessPieces[i]);
         }
     }
 
     $setPiece = function(chessPiece) {
-        $('.cell[row='+chessPiece.x+'][column='+chessPiece.y+']').text($translateToEmoji(chessPiece.name));
+        $('.cell[row=' + chessPiece.x + '][column=' + chessPiece.y + ']').text($translateToEmoji(chessPiece.name));
     }
 
-    $clearBoard = function(){
-        for(var i = 1; i <= 8; i++){
-            for(var j = 1; j <= 8 ;j++){
-                $('.cell[row='+i+'][column='+j+']').text("");
-            }
-        }
+    $clearBoard = function() {
+        $('.cell').text("");
     }
 
-    $translateToEmoji = function(letter){
-        if(letter == "p"){
+    $translateToEmoji = function(letter) {
+        if (letter == "p") {
             return "♙";
         }
-        if(letter == "r"){
+        if (letter == "r") {
             return "♖";
         }
-        if(letter == "n"){
+        if (letter == "n") {
             return "♘";
         }
-        if(letter == "b"){
+        if (letter == "b") {
             return "♗";
         }
-        if(letter == "q"){
-            return "♔";
-        }
-        if(letter == "k"){
+        if (letter == "q") {
             return "♕";
         }
-        if(letter == "P"){
+        if (letter == "k") {
+            return "♔";
+        }
+        if (letter == "P") {
             return "♟";
         }
-        if(letter == "R"){
+        if (letter == "R") {
             return "♜";
         }
-        if(letter == "N"){
+        if (letter == "N") {
             return "♞";
         }
-        if(letter == "B"){
+        if (letter == "B") {
             return "♝";
         }
-        if(letter == "Q"){
-            return "♚";
-        }
-        if(letter == "K"){
+        if (letter == "Q") {
             return "♛";
+        }
+        if (letter == "K") {
+            return "♚";
         }
     }
 });

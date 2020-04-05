@@ -11,6 +11,5 @@ public class WebUIChessApplication {
         post("/new_game", ChessGameController::newGame);
         post("/continue_game", ChessGameController::continueGame);
         post("/move", ChessGameController::move);
-
     }
 }

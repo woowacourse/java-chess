@@ -10,6 +10,7 @@ import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
 import chess.domain.move.Route;
 import chess.generator.AllRouteGenerator;
+import com.mysql.cj.exceptions.OperationCancelledException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,12 +41,19 @@ public class Board {
     public void move(MovingInfo movingInfo) {
         ChessPiece chessPiece = getChessPiece(movingInfo.getStartPosition());
 
+        checkGameEnd();
         checkNowPlayingTeam(chessPiece);
         if (gameStatus.getNowPlayingTeam() == BLACK) {
             reverseMove(chessPiece, movingInfo);
             return;
         }
         moveOperation(chessPiece, movingInfo);
+    }
+
+    private void checkGameEnd() {
+        if(gameStatus.isGameEnd() == true){
+            throw new IllegalArgumentException("King이 죽어서 게임이 종료되었습니다.");
+        }
     }
 
     private void reverseMove(ChessPiece chessPiece, MovingInfo movingInfo) {
@@ -155,7 +163,7 @@ public class Board {
         int dy = targetPosition.getY() - startPosition.getY();
 
         if (isDiagonalMovement(dy) && isBlank(targetPosition)) {
-            throw new IllegalArgumentException("대각선으로는 공격할 때만 움직 수 있습니다.");
+            throw new IllegalArgumentException("대각선으로는 공격할 때만 움직일 수 있습니다.");
         }
         if (!isDiagonalMovement(dy) && !isBlank(targetPosition)) {
             throw new IllegalArgumentException("상대의 말이 있어 움직일 수 없습니다.");
@@ -193,12 +201,12 @@ public class Board {
         int indexOfY = targetPosition.getY() - INDEX_CORRECTION_NUMBER;
         Row row = board.get(indexOfX);
 
-        checkGameEnd(row, targetPosition);
+        updateGameEnd(row, targetPosition);
         row.modifyRow(indexOfY, chessPiece);
         board.set(indexOfX, row);
     }
 
-    private void checkGameEnd(Row row, Position targetPosition) {
+    private void updateGameEnd(Row row, Position targetPosition) {
         int indexOfY = targetPosition.getY() - INDEX_CORRECTION_NUMBER;
         ChessPiece targetChessPiece = row.get(indexOfY);
         String chessPieceName = targetChessPiece.getName();

@@ -30,23 +30,16 @@ public class ChessGameController {
 
     public static String index(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
+        model.put("blackScore", 38);
+        model.put("whiteScore", 38);
 
         return render(model, "index.html");
     }
 
     public static Object newGame(Request request, Response response) throws SQLException {
-        Map<String, Object> model = new HashMap<>();
         boardDAO.initialize();
-//        BoardFactory.createBoardIntoDB(boardDAO);
         board = BoardFactory.createBoard();
         boardDAO.updateDB(board);
-
-        model.put("startX", "");
-        model.put("startY", "");
-        model.put("targetX", "");
-        model.put("targetY", "");
-//        putScore(model);
-
         return generateJSON(board);
     }
 
@@ -90,47 +83,19 @@ public class ChessGameController {
 
         try {
             board.move(movingInfo);
-        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            return null;
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException error) {
+            return error.getMessage();
         }
         boardDAO.updateDB(board);
-//        OutputView.printBoard(ChessGameController.board);
-
-        model.put("startX", startX);
-        model.put("startY", startY);
-        model.put("targetX", targetX);
-        model.put("targetY", targetY);
-//        putScore(model);
-
         return generateJSON(board);
     }
 
     public static String continueGame(Request request, Response response) throws SQLException {
-        Map<String, Object> model = new HashMap<>();
-
         board = BoardFactory.createContinueBoard(boardDAO);
-//        OutputView.printBoard(ChessGameController.board);
-
-//        putScore(model);
         return generateJSON(board);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    private static void putScore(Map<String, Object> model) {
-        GameStatus gameStatus = board.getGameStatus();
-        if (gameStatus.getNowPlayingTeam() == Team.BLACK) {
-            model.put("blackScore", gameStatus.getTotalScore(board));
-            gameStatus.changePlayingTeam();
-            model.put("whiteScore", gameStatus.getTotalScore(board));
-            gameStatus.changePlayingTeam();
-            return;
-        }
-        model.put("whiteScore", gameStatus.getTotalScore(board));
-        gameStatus.changePlayingTeam();
-        model.put("blackScore", gameStatus.getTotalScore(board));
-        gameStatus.changePlayingTeam();
     }
 }
