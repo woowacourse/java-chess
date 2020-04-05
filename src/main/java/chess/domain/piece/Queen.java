@@ -5,9 +5,10 @@ import chess.domain.Team;
 public class Queen extends Piece {
 
     private static final String EXPRESSION = "q";
+    private static final double SCORE = 9.0;
 
     public Queen(Team team) {
-        super(team, EXPRESSION, 9.0);
+        super(team, EXPRESSION, SCORE);
     }
 
     @Override

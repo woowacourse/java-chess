@@ -5,9 +5,10 @@ import chess.domain.Team;
 public class Knight extends Piece {
 
     private static final String EXPRESSION = "n";
+    private static final double SCORE = 2.5;
 
     public Knight(Team team) {
-        super(team, EXPRESSION, 2.5);
+        super(team, EXPRESSION, SCORE);
     }
 
     @Override

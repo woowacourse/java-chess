@@ -5,6 +5,7 @@ import chess.domain.Team;
 public class Bishop extends Piece {
 
     private static final String EXPRESSION = "b";
+    private static final double SCORE = 3.0;
 
     public Bishop(Team team) {
         super(team, EXPRESSION, 3.0);
