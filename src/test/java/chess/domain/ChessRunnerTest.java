@@ -1,5 +1,6 @@
 package chess.domain;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -67,11 +68,9 @@ class ChessRunnerTest {
         assertThat(chessRunner.isEndChess()).isFalse();
     }
 
-    @DisplayName("게임이 종료되지 않았을 때 승자를 출력 시 예외 출력")
+    @DisplayName("게임이 종료되지 않았을 때 승자를 출력 시 빈 문자열 출력")
     @Test
     void getWinnerTest() {
-        assertThatThrownBy(() -> {
-            chessRunner.getWinner();
-        }).isInstanceOf(AssertionError.class);
+        assertThat(chessRunner.getWinner()).isEqualTo(StringUtils.EMPTY);
     }
 }

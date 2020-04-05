@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.strategy.direction.Direction;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -112,6 +113,6 @@ public class ChessRunner {
 
     public String getWinner() {
         Optional<Team> winner = this.board.getWinner();
-        return winner.map(Enum::name).orElseThrow(AssertionError::new);
+        return winner.map(Enum::name).orElse(StringUtils.EMPTY);
     }
 }
