@@ -23,6 +23,10 @@ public class Board {
         this.turn = Side.WHITE;
     }
 
+    public void initialize() throws SQLException {
+        boardDAO.placeInitialPieces();
+    }
+
     public Optional<Piece> findPieceOn(final Position position) throws SQLException {
         return boardDAO.findPieceOn(position);
     }

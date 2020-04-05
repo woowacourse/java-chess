@@ -6,9 +6,9 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.judge.Judge;
 import chess.domain.judge.WoowaJudge;
-import chess.domain.view.InputView;
-import chess.domain.view.OutputView;
 import chess.exceptions.InvalidInputException;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 import java.sql.SQLException;
 

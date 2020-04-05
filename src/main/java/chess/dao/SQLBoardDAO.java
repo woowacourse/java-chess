@@ -53,7 +53,6 @@ public class SQLBoardDAO implements BoardDAO {
         }
     }
 
-    //INSERT ON DUPLICATE KEY UPDATE로 개선하기
     @Override
     public void placePieceOn(Position position, Piece piece) throws SQLException {
         String query = "INSERT INTO board (position, piece) VALUES (?, ?) ON DUPLICATE KEY UPDATE position=?, piece=?";
