@@ -2,13 +2,16 @@ package chess.controller;
 
 import chess.Board;
 import chess.Command;
+import chess.Scores;
 import chess.exception.CommandException;
+import chess.exception.InvalidMovementException;
 import chess.position.Position;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.strategy.NormalInitStrategy;
+import chess.view.ConsoleInputView;
+import chess.view.ConsoleOutputView;
 
 public class ChessGame {
-    private final Board board = Board.createInitialBoard();
+    private final Board board = new Board(new NormalInitStrategy());
 
     public void run() {
         start();
@@ -18,46 +21,46 @@ public class ChessGame {
     }
 
     private void start() {
-        OutputView.printGameIntro();
+        ConsoleOutputView.printGameIntro();
         if (requestCommand().isEnd()) {
             board.finishGame();
             return;
         }
-        OutputView.printBoard(board.getPieces());
+        ConsoleOutputView.printBoard(board.getPieces());
     }
 
     private Command requestCommand() {
         try {
-            return Command.beforeGameCommandOf(InputView.requestCommand());
+            return Command.beforeGameCommandOf(ConsoleInputView.requestCommand());
         } catch (CommandException e) {
-            OutputView.printExceptionMessage(e.getMessage());
+            ConsoleOutputView.printExceptionMessage(e.getMessage());
             return requestCommand();
         }
     }
 
     private void play() {
         try {
-            Command command = Command.inGameCommandOf(InputView.requestCommand());
+            Command command = Command.inGameCommandOf(ConsoleInputView.requestCommand());
             proceedIfCommandIsMove(command);
             printScoresIfCommandIsStatus(command);
-        } catch (CommandException | IllegalArgumentException e) {
-            OutputView.printExceptionMessage(e.getMessage());
+        } catch (CommandException | InvalidMovementException e) {
+            ConsoleOutputView.printExceptionMessage(e.getMessage());
             play();
         }
     }
 
     private void proceedIfCommandIsMove(Command command) {
         if (command.isMove()) {
-            Position source = Position.of(InputView.requestPosition());
-            Position target = Position.of(InputView.requestPosition());
+            Position source = Position.of(ConsoleInputView.requestPosition());
+            Position target = Position.of(ConsoleInputView.requestPosition());
             board.moveIfPossible(source, target);
-            OutputView.printBoard(board.getPieces());
+            ConsoleOutputView.printBoard(board.getPieces());
         }
     }
 
     private void printScoresIfCommandIsStatus(Command command) {
         if (command.isStatus()) {
-            OutputView.printScores(board.calculateScores());
+            ConsoleOutputView.printScores(Scores.calculateScores(board));
         }
     }
 }

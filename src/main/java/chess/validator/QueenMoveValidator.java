@@ -1,6 +1,7 @@
 package chess.validator;
 
 import chess.Board;
+import chess.exception.InvalidMovementException;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
@@ -21,7 +22,7 @@ public class QueenMoveValidator extends MoveValidator {
     @Override
     protected List<Position> movePathExceptSourceAndTarget(Position source, Position target) {
         if (source.isNotStraight(target) && source.isNotDiagonal(target)) {
-            throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+            throw new InvalidMovementException("해당 위치로 이동할 수 없습니다.");
         }
         if (source.isSameRank(target)) {
             List<File> files = File.valuesBetween(source.getFile(), target.getFile());

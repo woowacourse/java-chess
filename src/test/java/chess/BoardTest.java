@@ -1,5 +1,6 @@
 package chess;
 
+import chess.exception.InvalidPositionException;
 import chess.piece.Piece;
 import chess.piece.Rook;
 import chess.piece.Team;
@@ -45,7 +46,7 @@ public class BoardTest {
     @ValueSource(strings = {"a9", "i3"})
     void invalidPositionInputTest(String input) {
         assertThatThrownBy(() -> Position.of(input))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidPositionException.class)
                 .hasMessage("위치 입력값이 올바르지 않습니다.");
     }
 

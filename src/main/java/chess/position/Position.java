@@ -10,7 +10,6 @@ import java.util.Map;
 public class Position {
 
     private static final Map<String, Position> CACHE = new HashMap<>();
-    private static final int KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE = 2;
 
     static {
         for (File file : File.values()) {
@@ -44,6 +43,10 @@ public class Position {
 
     private static String getKey(File file, Rank rank) {
         return file.getName() + rank.getName();
+    }
+
+    public String getKey() {
+        return this.file.getName() + this.rank.getName();
     }
 
     private static void validate(String key) {
@@ -117,13 +120,8 @@ public class Position {
         return this.rank.isNear(other.rank) && this.file.isNear(other.file);
     }
 
-    public boolean isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(Position other) {
-        return !isMultiplicationOfDifferenceBetweenFileAndRankIsTwo(other);
-    }
-
-    private boolean isMultiplicationOfDifferenceBetweenFileAndRankIsTwo(Position other) {
-        return this.file.findDifference(other.file) * this.rank.findDifference(other.rank)
-                == KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE;
+    public int multiplicationOfDifferenceBetweenFileAndRank(Position other) {
+        return this.file.findDifference(other.file) * this.rank.findDifference(other.rank);
     }
 
     public int increaseAmountOfRank(Position other) {
