@@ -1,8 +1,11 @@
 package chess.controller;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.controller.command.Command;
+import chess.controller.command.CommandReader;
 import chess.domain.gamestatus.GameStatus;
 import chess.domain.gamestatus.NothingHappened;
 import chess.domain.piece.Piece;
@@ -17,7 +20,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIController {
 
-    private static GameStatus gameStatus = new NothingHappened();
+    private static GameStatus gameStatus;
 
     public static void run() {
         try {
@@ -30,12 +33,30 @@ public class WebUIController {
     public static void runWithoutException() {
         staticFiles.location("/static");
 
-        gameStatus = gameStatus.start();
+        get("/", (request, response) -> initAndRender());
 
-        get("/", WebUIController::renderInitialUI);
+        post("/", WebUIController::moveAndRedirect);
     }
 
-    private static String renderInitialUI(Request request, Response response) {
+    private static String initAndRender() {
+        gameStatus = new NothingHappened();
+        gameStatus = gameStatus.start();
+        return renderRefreshedChessBoard();
+    }
+
+    private static String moveAndRedirect(Request request, Response response) {
+        String requestCommand = "move "
+            + request.queryParams("from-position")
+            + " "
+            + request.queryParams("to-position");
+
+        Command command = CommandReader.of(requestCommand);
+        gameStatus = command.execute(gameStatus);
+
+        return renderRefreshedChessBoard();
+    }
+
+    private static String renderRefreshedChessBoard() {
 
         Map<Position, Piece> board = gameStatus.getBoard();
         Map<String, Object> model = new HashMap<>();
