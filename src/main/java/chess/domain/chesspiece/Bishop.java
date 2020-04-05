@@ -6,10 +6,8 @@ import chess.domain.game.Player;
 public class Bishop extends Piece {
     private static final String BISHOP_NAME = "BISHOP";
 
-    private static PieceInfo pieceInfo = PieceInfo.valueOf(BISHOP_NAME);
-
     public Bishop(Player player) {
-        super(player, pieceInfo);
+        super(player, PieceInfo.valueOf(BISHOP_NAME));
         directions.addAll(Direction.diagonalDirection());
     }
 

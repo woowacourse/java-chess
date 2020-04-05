@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import chess.Exception.IllegalMoveException;
 import chess.domain.chesspiece.King;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
@@ -47,19 +46,19 @@ public class ChessBoard {
         Objects.requireNonNull(to);
 
         if (from == to) {
-            throw new IllegalMoveException("같은 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("같은 위치로 이동할 수 없습니다.");
         }
     }
 
     private void validateSource(Piece source) {
         if (Objects.isNull(source)) {
-            throw new IllegalMoveException("empty에서는 이동할 수 없습니다.");
+            throw new IllegalArgumentException("empty에서는 이동할 수 없습니다.");
         }
     }
 
     private void validateIsPlayer(Piece source, Piece target) {
         if (Objects.nonNull(target) && source.isSamePlayer(target)) {
-            throw new IllegalMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
+            throw new IllegalArgumentException("같은 Player의 기물로는 이동할 수 없습니다.");
         }
     }
 
@@ -82,7 +81,7 @@ public class ChessBoard {
     }
 
     private boolean validateObstacles(List<Position> routes) {
-        for (Position  position : routes) {
+        for (Position position : routes) {
             if (Objects.nonNull(chessBoard.get(position))) {
                 return false;
             }
@@ -123,10 +122,11 @@ public class ChessBoard {
     public boolean checkKingTaken(Player player) {
         int kingCount = (int) getPlayerPieces(player)
                 .stream()
-                .filter(piece -> piece instanceof  King)
+                .filter(piece -> piece instanceof King)
                 .count();
         return kingCount == 0;
     }
+
     public Result createResult() {
         List<Status> statuses = Arrays.asList(createStatus(Player.WHITE), createStatus(Player.BLACK));
         return new Result(statuses);

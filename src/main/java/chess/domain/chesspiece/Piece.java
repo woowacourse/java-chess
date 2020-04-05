@@ -36,7 +36,7 @@ public abstract class Piece {
     }
 
     public boolean validateDirection(Direction direction, Piece target) {
-        System.out.println("direction: "+direction);
+        System.out.println("direction: " + direction);
         return hasDirection(direction);
     }
 

@@ -23,8 +23,7 @@ import java.util.Map;
 public class ChessBoardDao {
     private Connection connection = new ConnectionDao().getConnection();
 
-    // 초기 게임 만드는 메서드
-    public void createInitGame(ResponseDto responseDto) throws SQLException {
+    public void saveInitGame(ResponseDto responseDto) throws SQLException {
         String query = "INSERT INTO game(turn, white_score, black_score, state) VALUES (?,?,?,?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, responseDto.getTurn().name());
@@ -36,7 +35,7 @@ public class ChessBoardDao {
         saveChessBoard(connection, responseDto);
     }
 
-    public void saveChessBoard(Connection connection, ResponseDto responseDto) throws SQLException {
+    private void saveChessBoard(Connection connection, ResponseDto responseDto) throws SQLException {
         String query = "INSERT INTO chessboard VALUES ((SELECT MAX(game_id) FROM game),?,?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
@@ -47,19 +46,19 @@ public class ChessBoardDao {
         }
     }
 
-    public void pieceMove(ResponseDto responseDto) throws SQLException {
-        updateGameWithMove(responseDto);
-        deleteChessBoardWithMove();
+    public void saveGameAfterPieceMove(ResponseDto responseDto) throws SQLException {
+        updateGameAfterMove(responseDto);
+        deleteChessBoardAfterMove();
         saveChessBoard(connection, responseDto);
     }
 
-    private void deleteChessBoardWithMove() throws SQLException {
+    private void deleteChessBoardAfterMove() throws SQLException {
         String query = "DELETE FROM chessboard WHERE room = (SELECT MAX(game_id) FROM game )";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.executeUpdate();
     }
 
-    private void updateGameWithMove(ResponseDto responseDto) throws SQLException {
+    private void updateGameAfterMove(ResponseDto responseDto) throws SQLException {
         String query = "UPDATE game SET turn = ?, white_score = ?, black_score = ? WHERE game_id = ( select MAX(game_id) from (select game_id from game) as t)";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, responseDto.getTurn().name());
@@ -87,9 +86,7 @@ public class ChessBoardDao {
                     ChessPieceFactory.of(rs.getString("piece")));
         }
 
-        ResponseDto responseDto = new ResponseDto(new ChessBoard(chessBoard), result, turn);
-
-        return responseDto;
+        return new ResponseDto(new ChessBoard(chessBoard), result, turn);
     }
 
     private Result getResult(ResultSet rs) throws SQLException {

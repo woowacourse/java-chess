@@ -36,7 +36,7 @@ public class WebUIChessApplication {
                 responseDto = chessBoardDao.loadGamePlaying();
             } else if (state.equals("end")) {
                 responseDto = chessController.start(new RequestDto(Command.START));
-                chessBoardDao.createInitGame(responseDto);
+                chessBoardDao.saveInitGame(responseDto);
             }
             return gson.toJson(responseDto);
         });
@@ -46,7 +46,7 @@ public class WebUIChessApplication {
                 RequestDto requestDto = new RequestDto(Command.MOVE, req);
                 ResponseDto responseDto = chessController.move(requestDto);
                 res.status(200);
-                chessBoardDao.pieceMove(responseDto);
+                chessBoardDao.saveGameAfterPieceMove(responseDto);
                 return gson.toJson(responseDto);
             } catch (IllegalArgumentException e) {
                 res.status(400);

@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import chess.Exception.IllegalGameStateException;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 
@@ -16,7 +15,7 @@ public class ChessGame {
         Command command = requestDto.getCommand();
 
         if (command != Command.START) {
-            throw new IllegalGameStateException();
+            throw new IllegalStateException("게임을 진행하기 위해서는 start(시작) 명령어를 먼저 입력해야 합니다.");
         }
 
         chessBoard = new ChessBoard(PieceFactory.create());

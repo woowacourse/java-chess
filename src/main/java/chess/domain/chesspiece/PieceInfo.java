@@ -1,6 +1,5 @@
 package chess.domain.chesspiece;
 
-import chess.Exception.IllegalPlayerException;
 import chess.domain.game.Player;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
@@ -38,7 +37,7 @@ public enum PieceInfo {
         if (player == Player.BLACK) {
             return name.toUpperCase();
         }
-        throw new IllegalPlayerException();
+        throw new IllegalArgumentException("없는 사용자 입니다.");
     }
 
     public double getScore() {

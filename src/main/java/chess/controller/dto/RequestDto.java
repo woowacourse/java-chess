@@ -1,6 +1,5 @@
 package chess.controller.dto;
 
-import chess.Exception.IllegalInputException;
 import chess.domain.game.Command;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
@@ -25,7 +24,7 @@ public class RequestDto {
         this.command = Command.of(inputs[COMMEND_INDEX]);
 
         if (!validateSize()) {
-            throw new IllegalInputException("잘못된 입력입니다. ");
+            throw new IllegalArgumentException("잘못된 입력입니다. ");
         }
 
         if (command == Command.MOVE) {

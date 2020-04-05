@@ -1,7 +1,5 @@
 package chess.domain.game;
 
-import chess.Exception.IllegalCommandException;
-
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -22,6 +20,6 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(command -> command.commandValue.equals(commandInput))
                 .findFirst()
-                .orElseThrow(IllegalCommandException::new);
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어 입니다."));
     }
 }

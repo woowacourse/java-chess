@@ -1,6 +1,5 @@
 package chess.domain.direction;
 
-import chess.Exception.IllegalDirectionException;
 import chess.domain.position.Position;
 import chess.domain.position.component.Column;
 import chess.domain.position.component.Row;
@@ -80,7 +79,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
                 .filter(x -> x.getJudge(from, to))
                 .findFirst()
-                .orElseThrow(IllegalDirectionException::new);
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 이동입니다."));
     }
 
     public static List<Direction> linearDirection() {
