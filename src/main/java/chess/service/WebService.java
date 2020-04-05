@@ -16,6 +16,10 @@ public class WebService {
         board.move(sourcePosition, targetPosition);
     }
 
+//    public static void move(BoardDAO boardDAO, String source, String target) {
+//        boardDAO
+//    }
+
     public static double calculateScore(Board board, PieceColor pieceColor) {
         return board.calculateScore(pieceColor);
     }

@@ -4,6 +4,7 @@ import chess.controller.WebController;
 import chess.dao.BoardDAO;
 import chess.domains.Record;
 import chess.domains.board.Board;
+import chess.service.WebService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -12,8 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.staticFileLocation;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
@@ -41,25 +41,33 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-//        post("/move", (req, res) -> {
-//            String source = req.queryParams("source");
-//            String target = req.queryParams("target");
-//
-//            Record move = new Record("move " + source + ", " + target, "");
-//            try {
-//                WebService.move(board, source, target);
-//            } catch (Exception e) {
-//                move.setErrorMsg(e.getMessage());
-//            }
-//            records.add(move);
-//
-//            List<Piece> pieces = board.showBoard();
-//            List<String> pieceCodes = WebController.convertView(pieces);
-//
-//            Map<String, Object> model = WebController.makeModel(board, records, pieceCodes);
-//
-//            return render(model, "index.html");
-//        });
+        get("/resume", (req, res) -> {
+            Map<String, String> pieceCodes = WebController.convertView(boardDAO.showPieces());
+            Map<String, Object> model = WebController.makeModel(board, records, pieceCodes);
+
+            return render(model, "index.html");
+        });
+
+        post("/move", (req, res) -> {
+            String source = req.queryParams("source");
+            String target = req.queryParams("target");
+
+            Record move = new Record("move " + source + ", " + target, "");
+            try {
+                WebService.move(board, source, target);
+            } catch (Exception e) {
+                move.setErrorMsg(e.getMessage());
+            }
+            records.add(move);
+
+            boardDAO.deleteBoard();
+            boardDAO.addBoard(board.getBoard());
+
+            Map<String, String> pieceCodes = WebController.convertView(boardDAO.showPieces());
+            Map<String, Object> model = WebController.makeModel(board, records, pieceCodes);
+
+            return render(model, "index.html");
+        });
     }
 
 

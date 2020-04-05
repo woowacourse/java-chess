@@ -27,17 +27,17 @@ class BoardDAOTest {
         assertNotNull(con);
     }
 
-    @DisplayName("레코드 추가 테스트")
-    @Test
-    public void addRecord() throws Exception {
-        Position position = Position.ofPositionName("a8");
-        Piece piece = new Rook(PieceColor.BLACK);
-        boardDao.addPiece(position, piece);
-    }
-
-    @DisplayName("레코드 추가 테스트")
+    @DisplayName("보드 전체 삭제 테스트")
     @Test
     public void deleteBoard() throws Exception {
         boardDao.deleteBoard();
+    }
+
+    @DisplayName("Piece 추가 테스트")
+    @Test
+    public void addPiece() throws Exception {
+        Position position = Position.ofPositionName("a8");
+        Piece piece = new Rook(PieceColor.BLACK);
+        boardDao.addPiece(position, piece);
     }
 }
