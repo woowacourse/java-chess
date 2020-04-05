@@ -72,7 +72,9 @@ public class Pawn extends Piece {
         Square squareToAdd = Square.moveTo(
                 direction.getFileDegree(), direction.getRankDegree(), centerSquare
         );
-        availableSquares.add(squareToAdd);
+        if(!chessBoard.containsKey(squareToAdd)){
+            availableSquares.add(squareToAdd);
+        }
         if (!centerSquare.equals(squareToAdd)) {
             removeSameColorSquare(chessBoard, availableSquares, squareToAdd);
         }
