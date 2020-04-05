@@ -31,6 +31,14 @@ public class BoardFactory {
         return new Board(board, gameStatus);
     }
 
+    public static Board createBlankBoard(GameStatus gameStatus) {
+        List<Row> board = new ArrayList<>();
+        for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
+            addBlankRow(board);
+        }
+        return new Board(board, gameStatus);
+    }
+
     private static void addWhiteTeamRow(List<Row> board) {
         addMainPieces(board, WHITE);
         addPawn(board, WHITE);

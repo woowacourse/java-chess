@@ -23,6 +23,11 @@ public class GameStatus {
         isGameEnd = false;
     }
 
+    public GameStatus(Team team, Boolean isGameEnd) {
+        nowPlayingTeam = team;
+        GameStatus.isGameEnd = isGameEnd;
+    }
+
     public double getTotalScore(Board board) {
         Score score = Score.DEFAULT;
 
