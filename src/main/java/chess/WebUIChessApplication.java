@@ -36,39 +36,45 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        get("/chessGame", (req, res) -> {
-            ResponseDto responseDto = chessController.getResponseDto();
-            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
-            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
-            Map<String, Object> model = new HashMap<>();
-            model.put("board", boardDto);
-            model.put("score", scoreDto);
-            return render(model, "chessGame.html");
-        });
+//        get("/chessGame", (req, res) -> {
+//            ResponseDto responseDto = chessController.getResponseDto();
+//            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
+//            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
+//            Map<String, Object> model = new HashMap<>();
+//            model.put("board", boardDto);
+//            model.put("score", scoreDto);
+//            return render(model, "chessGame.html");
+//        });
 
         post("/chessGame", (req, res) -> {
             RequestDto requestDto = getRequestDtoFrom(req);
             ResponseDto responseDto = chessController.run(requestDto);
             List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
             List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
+            WebDto winnerDto = getTurnDto(responseDto.getWinner());
             WebDto turnDto = getTurnDto(responseDto.getTurn());
             Map<String, Object> model = new HashMap<>();
             model.put("board", boardDto);
             model.put("score", scoreDto);
             model.put("turn", turnDto);
             model.put("message", responseDto.getMessage());
+            model.put("winner", winnerDto);
             return render(model, "chessGame.html");
         });
 
     }
 
     private static WebDto getTurnDto(final Team turn) {
-        String key = turn.toString();
-        String value = turn.toString();
-        return new WebDto(key, value);
+        if (Objects.isNull(turn)) {
+            return null;
+        }
+        return new WebDto(turn.toString(), turn.toString());
     }
 
     private static List<WebDto> getRoomDto(final List<Long> roomId) {
+        if (Objects.isNull(roomId)) {
+            return null;
+        }
         return roomId.stream()
                 .map(room -> {
                     String key = String.valueOf(room);

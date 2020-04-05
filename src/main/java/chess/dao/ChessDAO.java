@@ -88,6 +88,7 @@ public class ChessDAO {
 
     public void deleteGame(final long chessGameId) throws SQLException {
         Connection connection = getConnection();
+        deleteBoard(chessGameId, connection);
         String deleteGameQuery = "DELETE FROM chessGameTable WHERE id = (?);";
         PreparedStatement deleteGamePstmt = connection.prepareStatement(deleteGameQuery);
         deleteGamePstmt.setLong(1, chessGameId);

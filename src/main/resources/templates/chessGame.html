@@ -147,6 +147,7 @@
     </div>
     <div class="score-board-container">
         <div class="score-board black-score-board">
+            <div class="winner" id="BLACK-winner"></div>
             <div class="player-name black-player-name">BLACK</div>
             <div class="player-image black-player-image">
                 <img class="doo" src="img/doo.jpg">
@@ -157,6 +158,7 @@
         </div>
         <div class="score-board-boarder"></div>
         <div class="score-board white-score-board">
+            <div class="winner" id="WHITE-winner"></div>
             <div class="player-name white-player-name">WHITE</div>
             <div class="player-image white-player-image">
                 <img class="doo" src="img/doo.jpg">
@@ -178,7 +180,13 @@
     {{#score}}
         document.getElementById("{{key}}-SCORE").innerText = {{value}}
     {{/score}}
+    {{#if winner}}
+        document.getElementById("{{winner.key}}-winner").innerText = '우승'
+    {{/if}}
     document.getElementById("{{turn.key}}-player-turn").innerText = '현재 턴'
+
+
+
 
 
 

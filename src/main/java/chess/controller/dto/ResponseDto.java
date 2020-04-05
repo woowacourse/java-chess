@@ -12,8 +12,12 @@ public class ResponseDto {
     private Map<Position, PieceDto> board;
     private Map<Team, Double> scores;
     private Team turn;
+    private Team winner;
     private String message;
 
+
+    public ResponseDto() {
+    }
 
     public ResponseDto(final List<Long> roomId, final String message) {
         this.roomId = roomId;
@@ -37,19 +41,47 @@ public class ResponseDto {
         return roomId;
     }
 
+    public void setRoomId(final List<Long> roomId) {
+        this.roomId = roomId;
+    }
+
     public Map<Position, PieceDto> getBoard() {
         return board;
+    }
+
+    public void setBoard(final Map<Position, PieceDto> board) {
+        this.board = board;
     }
 
     public String getMessage() {
         return message;
     }
 
+    public void setMessage(final String message) {
+        this.message = message;
+    }
+
     public Map<Team, Double> getScores() {
         return scores;
     }
 
+    public void setScores(final Map<Team, Double> scores) {
+        this.scores = scores;
+    }
+
     public Team getTurn() {
         return turn;
+    }
+
+    public void setTurn(final Team turn) {
+        this.turn = turn;
+    }
+
+    public Team getWinner() {
+        return winner;
+    }
+
+    public void setWinner(final Team winner) {
+        this.winner = winner;
     }
 }

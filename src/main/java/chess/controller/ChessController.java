@@ -45,23 +45,26 @@ public class ChessController {
 
     public ResponseDto run(RequestDto requestDto) {
         String message = null;
+        ResponseDto responseDto = new ResponseDto();
         try {
             Command command = requestDto.getCommand();
             runner.get(command).accept(requestDto.getParameter());
             if (chessService.isEnd()) {
-                Team team = chessService.getWinner();
-                message = team.toString() + "가 승리했습니다.";
+                Team winner = chessService.getWinner();
+                responseDto.setWinner(winner);
+                responseDto.setMessage(winner.toString() + "가 승리했습니다.");
+                responseDto.setRoomId(chessService.getRoomId());
             }
-        } catch (IllegalArgumentException | UnsupportedOperationException e) {
-            message = e.getMessage();
+        } catch (IllegalArgumentException | UnsupportedOperationException | SQLException e) {
+            responseDto.setMessage(e.getMessage());
         } finally {
             if (chessService.isReady()) {
                 return run();
             }
-            Map<Position, PieceDto> boardDto = chessService.createBoardDto();
-            Map<Team, Double> scoreDto = chessService.createScoreDto();
-            Team turnDto = chessService.createTurnDto();
-            return new ResponseDto(boardDto, scoreDto, turnDto, message);
+            responseDto.setBoard(chessService.createBoardDto());
+            responseDto.setScores(chessService.createScoreDto());
+            responseDto.setTurn(chessService.createTurnDto());
+            return responseDto;
         }
     }
 
