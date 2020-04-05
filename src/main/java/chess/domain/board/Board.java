@@ -69,9 +69,7 @@ public class Board {
         }
 
         path.remove(path.size() - 1);
-        return path.stream()
-                .map(board::get)
-                .noneMatch(Piece::isNone);
+        return havePieceIn(path);
     }
 
     private boolean cannotMoveToTargetPosition(Piece piece, Position targetPosition) {
