@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./chess.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Chess Game</title>
 </head>
 <body>
 <div>
+    <div id="score-white">
+        <h1>WHITE</h1>
+        <div id="WHITE">
+
+        </div>
+    </div>
     <table>
         <tr>
             <th></th>
@@ -23,98 +30,98 @@
         </tr>
         <tr id="row 8">
             <th>8</th>
-            <td id="a8">{{ a8 }}</td>
-            <td id="b8">{{ b8 }}</td>
-            <td id="c8">{{ c8 }}</td>
-            <td id="d8">{{ d8 }}</td>
-            <td id="e8">{{ e8 }}</td>
-            <td id="f8">{{ f8 }}</td>
-            <td id="g8">{{ g8 }}</td>
-            <td id="h8">{{ h8 }}</td>
+            <td id="a8"></td>
+            <td id="b8"></td>
+            <td id="c8"></td>
+            <td id="d8"></td>
+            <td id="e8"></td>
+            <td id="f8"></td>
+            <td id="g8"></td>
+            <td id="h8"></td>
             <th>8</th>
         </tr>
         <tr id="row 7">
             <th>7</th>
-            <td id="a7">{{ a7 }}</td>
-            <td id="b7">{{ b7 }}</td>
-            <td id="c7">{{ c7 }}</td>
-            <td id="d7">{{ d7 }}</td>
-            <td id="e7">{{ e7 }}</td>
-            <td id="f7">{{ f7 }}</td>
-            <td id="g7">{{ g7 }}</td>
-            <td id="h7">{{ h7 }}</td>
+            <td id="a7"></td>
+            <td id="b7"></td>
+            <td id="c7"></td>
+            <td id="d7"></td>
+            <td id="e7"></td>
+            <td id="f7"></td>
+            <td id="g7"></td>
+            <td id="h7"></td>
             <th>7</th>
         </tr>
         <tr id="row 6">
             <th>6</th>
-            <td id="a6">{{ a6 }}</td>
-            <td id="b6">{{ b6 }}</td>
-            <td id="c6">{{ c6 }}</td>
-            <td id="d6">{{ d6 }}</td>
-            <td id="e6">{{ e6 }}</td>
-            <td id="f6">{{ f6 }}</td>
-            <td id="g6">{{ g6 }}</td>
-            <td id="h6">{{ h6 }}</td>
+            <td id="a6"></td>
+            <td id="b6"></td>
+            <td id="c6"></td>
+            <td id="d6"></td>
+            <td id="e6"></td>
+            <td id="f6"></td>
+            <td id="g6"></td>
+            <td id="h6"></td>
             <th>6</th>
         </tr>
         <tr id="row 5">
             <th>5</th>
-            <td id="a5">{{ a5 }}</td>
-            <td id="b5">{{ b5 }}</td>
-            <td id="c5">{{ c5 }}</td>
-            <td id="d5">{{ d5 }}</td>
-            <td id="e5">{{ e5 }}</td>
-            <td id="f5">{{ f5 }}</td>
-            <td id="g5">{{ g5 }}</td>
-            <td id="h5">{{ h5 }}</td>
+            <td id="a5"></td>
+            <td id="b5"></td>
+            <td id="c5"></td>
+            <td id="d5"></td>
+            <td id="e5"></td>
+            <td id="f5"></td>
+            <td id="g5"></td>
+            <td id="h5"></td>
             <th>5</th>
         </tr>
         <tr id="row 4">
             <th>4</th>
-            <td id="a4">{{ a4 }}</td>
-            <td id="b4">{{ b4 }}</td>
-            <td id="c4">{{ c4 }}</td>
-            <td id="d4">{{ d4 }}</td>
-            <td id="e4">{{ e4 }}</td>
-            <td id="f4">{{ f4 }}</td>
-            <td id="g4">{{ g4 }}</td>
-            <td id="h4">{{ h4 }}</td>
+            <td id="a4"></td>
+            <td id="b4"></td>
+            <td id="c4"></td>
+            <td id="d4"></td>
+            <td id="e4"></td>
+            <td id="f4"></td>
+            <td id="g4"></td>
+            <td id="h4"></td>
             <th>4</th>
         </tr>
         <tr id="row 3">
             <th>3</th>
-            <td id="a3">{{ a3 }}</td>
-            <td id="b3">{{ b3 }}</td>
-            <td id="c3">{{ c3 }}</td>
-            <td id="d3">{{ d3 }}</td>
-            <td id="e3">{{ e3 }}</td>
-            <td id="f3">{{ f3 }}</td>
-            <td id="g3">{{ g3 }}</td>
-            <td id="h3">{{ h3 }}</td>
+            <td id="a3"></td>
+            <td id="b3"></td>
+            <td id="c3"></td>
+            <td id="d3"></td>
+            <td id="e3"></td>
+            <td id="f3"></td>
+            <td id="g3"></td>
+            <td id="h3"></td>
             <th>3</th>
         </tr>
         <tr id="row 2">
             <th>2</th>
-            <td id="a2">{{ a2 }}</td>
-            <td id="b2">{{ b2 }}</td>
-            <td id="c2">{{ c2 }}</td>
-            <td id="d2">{{ d2 }}</td>
-            <td id="e2">{{ e2 }}</td>
-            <td id="f2">{{ f2 }}</td>
-            <td id="g2">{{ g2 }}</td>
-            <td id="h2">{{ h2 }}</td>
+            <td id="a2"></td>
+            <td id="b2"></td>
+            <td id="c2"></td>
+            <td id="d2"></td>
+            <td id="e2"></td>
+            <td id="f2"></td>
+            <td id="g2"></td>
+            <td id="h2"></td>
             <th>2</th>
         </tr>
         <tr id="row 1">
             <th>1</th>
-            <td id="a1">{{ a1 }}</td>
-            <td id="b1">{{ b1 }}</td>
-            <td id="c1">{{ c1 }}</td>
-            <td id="d1">{{ d1 }}</td>
-            <td id="e1">{{ e1 }}</td>
-            <td id="f1">{{ f1 }}</td>
-            <td id="g1">{{ g1 }}</td>
-            <td id="h1">{{ h1 }}</td>
+            <td id="a1"></td>
+            <td id="b1"></td>
+            <td id="c1"></td>
+            <td id="d1"></td>
+            <td id="e1"></td>
+            <td id="f1"></td>
+            <td id="g1"></td>
+            <td id="h1"></td>
             <th>1</th>
         </tr>
         <tr>
@@ -130,12 +137,28 @@
             <th></th>
         </tr>
     </table>
-    <form action="/move" method="post">
-        <input type="text" name="move">
-        <input type="submit" value="입력">
-    </form>
+    <div id="score-black">
+        <h1>BLACK</h1>
+        <div id="BLACK">
+
+        </div>
+    </div>
 </div>
 
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <label class="input-group-text">Commend</label>
+    </div>
+    <select class="custom-select" id="commends">
+        <option selected>Choose...</option>
+        <option value="move">move</option>
+        <option value="status">status</option>
+    </select>
+    <input id="input-commend" type="text" name="move" class="form-control" placeholder="MOVE 좌표 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+    <div class="input-group-append">
+        <button class="btn btn-outline-success" type="button" id="button-addon2" onclick="commend()">MOVE</button>
+    </div>
+</div>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/d413397c3e.js"></script>

@@ -34,7 +34,7 @@ public class Roles {
             row += direction.getRow();
             column += direction.getColumn();
         }
-        return true;
+        return isNotObstacle;
     }
 
     private static boolean isNotObstaclePoint(Map<Point, Piece> pieces, int row, int column) {

@@ -42,6 +42,6 @@ public class MovePoint {
     }
 
     public boolean canMovePoint(int row, int column) {
-        return row < to.getRowIndex() && column < to.getColumnIndex();
+        return row != to.getRowIndex() && column != to.getColumnIndex();
     }
 }
