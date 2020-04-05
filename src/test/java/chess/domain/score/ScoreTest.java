@@ -50,7 +50,7 @@ public class ScoreTest {
     }
 
     @Test
-    void 폰의_특수한_점수계산() {
+    void 같은팀_폰이_같은_File_에_있을_때를_고려한_점수계산() {
         Map<Position, Piece> board = new HashMap<>();
         board.put(Position.of("a1"), new Pawn(Team.WHITE));
         board.put(Position.of("a2"), new Pawn(Team.WHITE));
@@ -66,7 +66,5 @@ public class ScoreTest {
 
         Score score = ScoreCalculator.calculate(board);
         assertThat(score.getScores()).isEqualTo(expected);
-//        assertThat(score.getScores().get(Team.WHITE.toString())).isEqualTo(1.0);
-//        assertThat(score.getScores().get(Team.BLACK.toString())).isEqualTo(2.0);
     }
 }
