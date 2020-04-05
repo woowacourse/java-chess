@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import domain.board.Board;
-import domain.board.BoardDao;
-import domain.board.BoardFactory;
 import domain.board.InvalidTurnException;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.team.Team;
@@ -32,13 +29,8 @@ public class WebUIChessApplication {
 		});
 
 		get("/start", (req, res) -> {
-			List<String> pieces = webService.showAllPieces();
 			Map<String, Object> model = new HashMap<>();
-			model.put("pieces", pieces);
-			model.put("blackTeamScore", webService.calculateTeamScore(Team.BLACK));
-			model.put("whiteTeamScore", webService.calculateTeamScore(Team.WHITE));
-			model.put("turn", webService.getTurn());
-			model.put("errorMessage", errorMessage);
+			insertIntoModel(webService, errorMessage, model);
 
 			return render(model, "index.html");
 		});
@@ -60,45 +52,38 @@ public class WebUIChessApplication {
 				return render(model, "result.html");
 			}
 
-			List<String> pieces = webService.showAllPieces();
-
-			model.put("pieces", pieces);
-			model.put("blackTeamScore", webService.calculateTeamScore(Team.BLACK));
-			model.put("whiteTeamScore", webService.calculateTeamScore(Team.WHITE));
-			model.put("turn", webService.getTurn());
-			model.put("errorMessage", errorMessage);
+			insertIntoModel(webService, errorMessage, model);
 
 			return render(model, "index.html");
 		});
 
-        post("/save", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            webService.clearBoardDb();
-            webService.saveGame();
+		post("/save", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			webService.clearBoardDb();
+			webService.saveGame();
 
-			List<String> pieces = webService.showAllPieces();
-
-			model.put("pieces", pieces);
-			model.put("blackTeamScore", webService.calculateTeamScore(Team.BLACK));
-			model.put("whiteTeamScore", webService.calculateTeamScore(Team.WHITE));
-			model.put("turn", webService.getTurn());
-			model.put("errorMessage", errorMessage);
-            return render(model, "index.html");
-        });
+			insertIntoModel(webService, errorMessage, model);
+			return render(model, "index.html");
+		});
 
 		post("/load", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			webService.loadGame();
 
-			List<String> pieces = webService.showAllPieces();
-
-			model.put("pieces", pieces);
-			model.put("blackTeamScore", webService.calculateTeamScore(Team.BLACK));
-			model.put("whiteTeamScore", webService.calculateTeamScore(Team.WHITE));
-			model.put("turn", webService.getTurn());
-			model.put("errorMessage", errorMessage);
+			insertIntoModel(webService, errorMessage, model);
 			return render(model, "index.html");
 		});
+	}
+
+	private static void insertIntoModel(WebService webService, List<ErrorMessage> errorMessage,
+		Map<String, Object> model) {
+		List<String> pieces = webService.showAllPieces();
+
+		model.put("pieces", pieces);
+		model.put("blackTeamScore", webService.calculateTeamScore(Team.BLACK));
+		model.put("whiteTeamScore", webService.calculateTeamScore(Team.WHITE));
+		model.put("turn", webService.getTurn());
+		model.put("errorMessage", errorMessage);
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
