@@ -1,0 +1,13 @@
+h1 {
+    color: blue;
+    font-size: 48px;
+    text-align: center;
+}
+​
+#start {
+    text-align: center;
+}
+​
+#start a {
+    font-size: 32px;
+}
