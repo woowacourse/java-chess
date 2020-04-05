@@ -103,10 +103,6 @@ public class Position {
 			!= KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE;
 	}
 
-	public static Collection<Position> values() {
-		return CACHE.values();
-	}
-
 	public Cell getFile() {
 		return col;
 	}
@@ -121,9 +117,6 @@ public class Position {
 
 	@Override
 	public String toString() {
-		return "Position{" +
-			"file=" + col +
-			", rank=" + row +
-			'}';
+		return String.valueOf((char)('a' + col.getNumber() - 1)) + row.getNumber();
 	}
 }
