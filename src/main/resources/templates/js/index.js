@@ -2,11 +2,11 @@ const chessBoard = document.querySelector("#chess-board tbody");
 
 for (let i = 8; i > 0; i--) {
     const tableRow = document.createElement("TR");
-    tableRow.setAttribute("id", "row" + i);
 
     for (let j = 1; j <= 8; j++) {
         const tableColumn = document.createElement("TD");
-        tableColumn.classList.add("col" + j, "cell", colorCell(i, j));
+        tableColumn.setAttribute("id", String.fromCharCode(j + 'a'.charCodeAt(0) - 1) + i);
+        tableColumn.classList.add("cell", colorCell(i, j));
         tableRow.appendChild(tableColumn);
     }
     chessBoard.appendChild(tableRow);
@@ -49,11 +49,10 @@ function moveAllPieces(piecesToUpdate) {
 function movePiece(piecesToUpdate) {
     //position : {row: 3, col:3}, piece: {symbol:p, team: black}
     const position = piecesToUpdate["position"];
-    const piece = piecesToUpdate["piece"];
-    const row = position["row"];
-    const col = position["col"];
-    const element = document.querySelector("#row" + row + " .col" + col);
-    element.innerText = piece["symbol"];
+    const symbol = piecesToUpdate["symbol"];
+    const team = piecesToUpdate["team"];
+    const element = document.querySelector("#" + position);
+    element.innerText = position + symbol + team;
 }
 
 function requestRecord() {
