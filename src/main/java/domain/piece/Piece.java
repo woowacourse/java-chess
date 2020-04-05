@@ -69,6 +69,10 @@ public abstract class Piece {
 		return this.team.equals(team);
 	}
 
+	public boolean equalsColumn(int columnNumber) {
+		return position.getColumnNumber() == columnNumber;
+	}
+
 	public String showSymbol() {
 		if (Team.isWhite(team)) {
 			return getSymbol();

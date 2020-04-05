@@ -5,7 +5,6 @@ import static domain.board.Board.*;
 import java.util.List;
 import java.util.Map;
 
-import domain.board.Board;
 import domain.board.BoardGame;
 import domain.board.Rank;
 import domain.piece.Piece;
@@ -40,7 +39,7 @@ public class OutputView {
 		for (int columnIndex = MIN_COLUMN_COUNT; columnIndex <= MAX_COLUMN_COUNT; columnIndex++) {
 			final int columnNumber = columnIndex;
 			String pieceSymbol = rank.stream()
-				.filter(p -> equalsColumn(columnNumber, p))
+				.filter(p -> p.equalsColumn(columnNumber))
 				.map(Piece::showSymbol)
 				.findFirst()
 				.orElse(EMPTY_CELL_SYMBOL);
@@ -55,7 +54,4 @@ public class OutputView {
 		}
 	}
 
-	private static boolean equalsColumn(final int columnNumber, Piece piece) {
-		return columnNumber == piece.getPosition().getColumnNumber();
-	}
 }
