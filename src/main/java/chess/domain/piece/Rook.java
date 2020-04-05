@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Team;
 
-public class Rook extends PieceNotPawn {
+public class Rook extends Piece {
 
     private static final String EXPRESSION = "r";
 
@@ -15,5 +15,15 @@ public class Rook extends PieceNotPawn {
         return !moveInformation.isSameTeamPlacedOnEnd()
             && moveInformation.isEndOnStraightLineOfStart()
             && !moveInformation.doAnyPieceExistInBetween();
+    }
+
+    @Override
+    public double getScore() {
+        return this.score;
+    }
+
+    @Override
+    public double getScore(boolean mustPawnScoreChangeToHalf) {
+        throw new UnsupportedOperationException("폰만 사용할 수 있는 메서드입니다.");
     }
 }
