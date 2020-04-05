@@ -46,9 +46,9 @@ header > h1 {
 }
 
 table.chessboard {
-    margin: 5rem auto 2rem auto;
+    margin: 2rem auto 2rem auto;
     border: 30px solid #333;
-    background-color: #999;
+    background-color: #777;
     border-collapse: collapse;
 }
 
@@ -61,7 +61,7 @@ td.chessboard {
 
 tr.chessboard:nth-child(odd) td.chessboard:nth-child(even),
 tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
-    background: white;
+    background: rgb(235, 235, 235);
 }
 
 img.chessboard {
@@ -69,27 +69,95 @@ img.chessboard {
     height: 100%;
 }
 
+article.chessgame__turn {
+    text-align: center;
+    line-height: 1.6;
+    font-size: 2rem;
+    margin: 0;
+}
+
+#chessgame__turn__area {
+    width: 40rem;
+    display: inline-block;
+    text-align: center;
+    border: 3px solid #333;
+    background-color: #777;
+    color: #fff;
+}
+
+article.chess__status {
+    text-align: center;
+    line-height: 1.6;
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+#chess__status__area {
+    width: 40rem;
+    display: inline-block;
+    text-align: center;
+    border: 3px solid #333;
+    background-color: #777;
+    color: #fff;
+}
+
 article.input__command {
     text-align: center;
     line-height: 1.6;
-    font-size: 1.2rem;
+    font-size: 2rem;
 }
 
-div.input__example {
-    color: #999;
-}
-
-#input__command__area {
+.input__command__area {
     display: inline-block;
-    padding: 1rem;
-    margin: 2rem auto;
-    width: 15rem;
+    padding: 0.8rem;
+    margin: 0.5rem auto;
+    width: 5rem;
     text-align: center;
-    font-size: 1.2rem;
-    border: 3px solid #999;
-    background-color: #333;
+    font-size: 2rem;
+    border: 3px solid #333;
+    background-color: #777;
     color: #fff;
     border-radius: 10px;
     text-decoration: none;
     cursor: pointer;
+}
+
+.input__command__area::placeholder {
+    color: #999;
+}
+
+.move__command__submit {
+    display: inline-block;
+    padding: 0.8rem;
+    margin: 0.5rem auto;
+    width: 6rem;
+    text-align: center;
+    font-size: 2rem;
+    border: 3px solid #333;
+    background-color: #777;
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.end__command__submit {
+    display: inline-block;
+    padding: 0.8rem;
+    margin: 3rem auto;
+    width: 10rem;
+    text-align: center;
+    font-size: 2rem;
+    border: 3px solid #333;
+    background-color: #777;
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+article.king__caught {
+    text-align: center;
+    line-height: 1.6;
+    font-size: 2.5rem;
 }

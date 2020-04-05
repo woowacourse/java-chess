@@ -1,9 +1,13 @@
 package chess.domain.chessGame;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessBoard.dto.ChessBoardDto;
+import chess.domain.chessGame.dto.ChessStatusDto;
 import chess.domain.chessGame.gameState.ChessEndState;
 import chess.domain.chessGame.gameState.GameState;
 import chess.domain.chessGame.gameState.KingCaughtState;
@@ -11,7 +15,6 @@ import chess.domain.chessGame.gameState.WhiteTurnState;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 import chess.util.ChessBoardRenderer;
-import chess.web.ChessBoardDto;
 
 public class ChessGame {
 
@@ -63,7 +66,7 @@ public class ChessGame {
 	}
 
 	private void checkLeapable(Position sourcePosition, Position targetPosition) {
-		if (chessBoard.isLeapableChessPieceOn(sourcePosition)) {
+		if (!chessBoard.isLeapableChessPieceOn(sourcePosition)) {
 			chessBoard.checkChessPieceExistInRoute(sourcePosition, targetPosition);
 		}
 	}
@@ -86,7 +89,7 @@ public class ChessGame {
 
 	public double status(ChessCommand chessCommand) {
 		Objects.requireNonNull(chessCommand, "체스 명령이 null입니다.");
-		ChessStatus chessStatus = chessBoard.calculateScoreOf();
+		ChessStatus chessStatus = chessBoard.calculateStatus();
 		return chessStatus.getStatusOf(chessCommand.getStatusPieceColor());
 	}
 
@@ -112,6 +115,14 @@ public class ChessGame {
 
 	public ChessBoardDto getChessBoardDto() {
 		return chessBoard.getChessBoardDto();
+	}
+
+	public List<ChessStatusDto> getChessStatusDtos() {
+		ChessStatus chessStatus = chessBoard.calculateStatus();
+
+		return Arrays.stream(PieceColor.values())
+			.map(pieceColor -> ChessStatusDto.of(pieceColor, chessStatus.getStatusOf(pieceColor)))
+			.collect(Collectors.toList());
 	}
 
 }

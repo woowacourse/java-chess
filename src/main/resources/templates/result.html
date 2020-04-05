@@ -8,13 +8,8 @@
 </head>
 <body>
 <header>
-    <h1>Chess Game</h1>
+    <h1>Game End!!!</h1>
 </header>
-<article class="chessgame__turn">
-    <div id="chessgame__turn__area">
-        {{#turn}} {{color}}턴입니다. {{/turn}}
-    </div>
-</article>
 <article class="chessboard">
     <table class="chessboard">
         <tr class="chessboard">
@@ -99,26 +94,15 @@
         </tr>
     </table>
 </article>
+<article class="king__caught">
+    {{#is_king_caught}} {{color}}가 왕을 잡았습니다!!! {{/is_king_caught}}
+</article>
 <article class="chess__status">
     <div id="chess__status__area">
         {{#statuses}} {{color}}의 점수 : {{score}}
         <br/>
         {{/statuses}}
     </div>
-</article>
-<article class="input__command">
-    <form action="/chessMove" method="POST">
-        이동시킬 피스 :&nbsp;
-        <input class="input__command__area" name="sourcePosition" placeholder="b1" type="text"/>
-        <br/>
-        이동시킬 위치 :&nbsp;
-        <input class="input__command__area" name="targetPosition" placeholder="b2" type="text"/>
-        <br/>
-        <input class="move__command__submit" type="submit" value="이동"/>
-    </form>
-    <form action="/chessEnd" method="POST">
-        <input class="end__command__submit" type="submit" value="게임종료"/>
-    </form>
 </article>
 </body>
 </html>

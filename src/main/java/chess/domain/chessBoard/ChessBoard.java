@@ -1,19 +1,16 @@
 package chess.domain.chessBoard;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.domain.chessBoard.dto.ChessBoardDto;
 import chess.domain.chessGame.ChessStatus;
 import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
-import chess.web.ChessBoardDto;
-import chess.web.WebChessPiece;
 
 public class ChessBoard {
 
@@ -108,7 +105,7 @@ public class ChessBoard {
 		chessBoard.remove(sourcePosition);
 	}
 
-	public ChessStatus calculateScoreOf() {
+	public ChessStatus calculateStatus() {
 		return ChessStatus.of(chessBoard);
 	}
 
@@ -117,12 +114,7 @@ public class ChessBoard {
 	}
 
 	public ChessBoardDto getChessBoardDto() {
-		return chessBoard.entrySet().stream()
-			.collect(collectingAndThen(
-				toMap(
-					entry -> entry.getKey().key(),
-					entry -> WebChessPiece.of(entry.getValue().getName()).getImageUrl()
-				), ChessBoardDto::new));
+		return ChessBoardDto.of(chessBoard);
 	}
 
 	@Override
@@ -141,4 +133,5 @@ public class ChessBoard {
 	public int hashCode() {
 		return Objects.hash(chessBoard);
 	}
+
 }
