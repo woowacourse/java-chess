@@ -2,7 +2,7 @@ package domain.pieces;
 
 import domain.pieces.exceptions.CanNotMoveException;
 import domain.point.Direction;
-import domain.point.Point;
+import domain.point.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,10 +21,10 @@ public class BishopTest {
 
 	@Test
 	void move() {
-		Point point = createPoint("a2");
+		Coordinate coordinate = createPoint("a2");
 		Bishop expect = createBishop("white", "a2");
 
-		assertThat(bishop.move(point)).isEqualTo(expect);
+		assertThat(bishop.move(coordinate)).isEqualTo(expect);
 	}
 
 	@Test

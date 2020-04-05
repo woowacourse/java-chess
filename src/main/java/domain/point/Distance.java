@@ -14,7 +14,7 @@ public enum Distance {
 		this.biPredicate = biPredicate;
 	}
 
-	public static Distance of(Point from, Point to) {
+	public static Distance of(Coordinate from, Coordinate to) {
 		int rowDifference = Math.abs(to.getRowIndex() - from.getRowIndex());
 		int columnDifference = Math.abs(to.getColumnIndex() - from.getColumnIndex());
 

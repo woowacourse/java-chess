@@ -4,7 +4,7 @@ import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
 import domain.point.Direction;
 import domain.point.Distance;
-import domain.point.Point;
+import domain.point.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +22,10 @@ class KingTest {
 
 	@Test
 	void move() {
-		Point point = createPoint("a2");
+		Coordinate coordinate = createPoint("a2");
 		King expect = createKing("black", "a2");
 
-		assertThat(king.move(point)).isEqualTo(expect);
+		assertThat(king.move(coordinate)).isEqualTo(expect);
 	}
 
 	@Test

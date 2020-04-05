@@ -6,7 +6,7 @@ import domain.command.MoveCommandTokens;
 import domain.pieces.*;
 import domain.point.Direction;
 import domain.point.Distance;
-import domain.point.Point;
+import domain.point.Coordinate;
 import domain.state.Ended;
 import domain.state.Moved;
 import domain.state.Started;
@@ -21,8 +21,8 @@ public class creationAssistant {
 		return Team.valueOf(string.toUpperCase());
 	}
 
-	public static Point createPoint(String point) {
-		return Point.of(point);
+	public static Coordinate createPoint(String point) {
+		return Coordinate.of(point);
 	}
 
 	public static Direction createDirection(String direction) {

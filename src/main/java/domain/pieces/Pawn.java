@@ -5,7 +5,7 @@ import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
 import domain.point.Direction;
 import domain.point.Distance;
-import domain.point.Point;
+import domain.point.Coordinate;
 import domain.team.Team;
 
 import java.util.Objects;
@@ -13,18 +13,18 @@ import java.util.Objects;
 public class Pawn extends Piece {
 	private final boolean canMoveTwoDistance;
 
-	public Pawn(Team team, Point point) {
-		this(team, point, true);
+	public Pawn(Team team, Coordinate coordinate) {
+		this(team, coordinate, true);
 	}
 
-	public Pawn(Team team, Point point, boolean canMoveTwoDistance) {
-		super(PieceType.PAWN, team, point);
+	public Pawn(Team team, Coordinate coordinate, boolean canMoveTwoDistance) {
+		super(PieceType.PAWN, team, coordinate);
 		this.canMoveTwoDistance = canMoveTwoDistance;
 	}
 
 	@Override
-	public Piece move(Point afterPoint) {
-		return new Pawn(getTeam(), afterPoint, false);
+	public Piece move(Coordinate afterCoordinate) {
+		return new Pawn(getTeam(), afterCoordinate, false);
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package domain.state;
 
 import domain.pieces.Pieces;
-import domain.point.Point;
+import domain.point.Coordinate;
 import domain.state.exceptions.StateException;
 
 public abstract class Playing extends GameState {
@@ -21,7 +21,7 @@ public abstract class Playing extends GameState {
 
 	@Override
 	protected State move(String from, String to) {
-		pieces.move(Point.of(from), Point.of(to));
+		pieces.move(Coordinate.of(from), Coordinate.of(to));
 		if (pieces.isKingKilled()) {
 			return new Ended(pieces);
 		}

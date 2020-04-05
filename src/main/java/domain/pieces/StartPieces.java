@@ -16,7 +16,7 @@ import static domain.team.Team.BLACK;
 import static domain.team.Team.WHITE;
 
 import domain.point.Column;
-import domain.point.Point;
+import domain.point.Coordinate;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -27,26 +27,26 @@ public class StartPieces {
 
     static {
         pieces = new HashSet<>();
-        pieces.add(new King(BLACK, new Point(EIGHT, E)));
-        pieces.add(new King(WHITE, new Point(ONE, E)));
-        pieces.add(new Queen(BLACK, new Point(EIGHT, D)));
-        pieces.add(new Queen(WHITE, new Point(ONE, D)));
-        pieces.add(new Bishop(BLACK, new Point(EIGHT, C)));
-        pieces.add(new Bishop(BLACK, new Point(EIGHT, F)));
-        pieces.add(new Bishop(WHITE, new Point(ONE, C)));
-        pieces.add(new Bishop(WHITE, new Point(ONE, F)));
-        pieces.add(new Knight(BLACK, new Point(EIGHT, B)));
-        pieces.add(new Knight(BLACK, new Point(EIGHT, G)));
-        pieces.add(new Knight(WHITE, new Point(ONE, B)));
-        pieces.add(new Knight(WHITE, new Point(ONE, G)));
-        pieces.add(new Rook(BLACK, new Point(EIGHT, A)));
-        pieces.add(new Rook(BLACK, new Point(EIGHT, H)));
-        pieces.add(new Rook(WHITE, new Point(ONE, A)));
-        pieces.add(new Rook(WHITE, new Point(ONE, H)));
+        pieces.add(new King(BLACK, new Coordinate(EIGHT, E)));
+        pieces.add(new King(WHITE, new Coordinate(ONE, E)));
+        pieces.add(new Queen(BLACK, new Coordinate(EIGHT, D)));
+        pieces.add(new Queen(WHITE, new Coordinate(ONE, D)));
+        pieces.add(new Bishop(BLACK, new Coordinate(EIGHT, C)));
+        pieces.add(new Bishop(BLACK, new Coordinate(EIGHT, F)));
+        pieces.add(new Bishop(WHITE, new Coordinate(ONE, C)));
+        pieces.add(new Bishop(WHITE, new Coordinate(ONE, F)));
+        pieces.add(new Knight(BLACK, new Coordinate(EIGHT, B)));
+        pieces.add(new Knight(BLACK, new Coordinate(EIGHT, G)));
+        pieces.add(new Knight(WHITE, new Coordinate(ONE, B)));
+        pieces.add(new Knight(WHITE, new Coordinate(ONE, G)));
+        pieces.add(new Rook(BLACK, new Coordinate(EIGHT, A)));
+        pieces.add(new Rook(BLACK, new Coordinate(EIGHT, H)));
+        pieces.add(new Rook(WHITE, new Coordinate(ONE, A)));
+        pieces.add(new Rook(WHITE, new Coordinate(ONE, H)));
 
         for (Column column: Column.values()) {
-            pieces.add(new Pawn(BLACK, new Point(SEVEN, column)));
-            pieces.add(new Pawn(WHITE, new Point(TWO, column)));
+            pieces.add(new Pawn(BLACK, new Coordinate(SEVEN, column)));
+            pieces.add(new Pawn(WHITE, new Coordinate(TWO, column)));
         }
     }
 

@@ -5,7 +5,7 @@ import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
 import domain.point.Direction;
 import domain.point.Distance;
-import domain.point.Point;
+import domain.point.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,10 +25,10 @@ class PawnTest {
 
 	@Test
 	void move() {
-		Point point = createPoint("a2");
+		Coordinate coordinate = createPoint("a2");
 		Pawn expect = createPawnOnceMoved("black", "a2");
 
-		assertThat(pawn.move(point)).isEqualTo(expect);
+		assertThat(pawn.move(coordinate)).isEqualTo(expect);
 	}
 
 	@Test

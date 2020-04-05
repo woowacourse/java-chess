@@ -25,7 +25,7 @@ public enum Direction {
 		this.biPredicate = biPredicate;
 	}
 
-	public static Direction of(Point from, Point to) {
+	public static Direction of(Coordinate from, Coordinate to) {
 		int rowDifference = getRowDifference(from, to);
 		int columnDifference = getColumnDifference(from, to);
 
@@ -35,11 +35,11 @@ public enum Direction {
 				.orElseThrow(RuntimeException::new);
 	}
 
-	private static int getRowDifference(Point from, Point to) {
+	private static int getRowDifference(Coordinate from, Coordinate to) {
 		return to.getRowIndex() - from.getRowIndex();
 	}
 
-	private static int getColumnDifference(Point from, Point to) {
+	private static int getColumnDifference(Coordinate from, Coordinate to) {
 		return to.getColumnIndex() - from.getColumnIndex();
 	}
 

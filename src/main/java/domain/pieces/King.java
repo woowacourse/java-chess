@@ -4,18 +4,18 @@ import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
 import domain.point.Direction;
 import domain.point.Distance;
-import domain.point.Point;
+import domain.point.Coordinate;
 import domain.team.Team;
 
 public class King extends Piece {
 
-    public King(Team team, Point point) {
-        super(PieceType.KING, team, point);
+    public King(Team team, Coordinate coordinate) {
+        super(PieceType.KING, team, coordinate);
     }
 
     @Override
-    public Piece move(Point afterPoint) {
-        return new King(getTeam(), afterPoint);
+    public Piece move(Coordinate afterCoordinate) {
+        return new King(getTeam(), afterCoordinate);
     }
 
     @Override

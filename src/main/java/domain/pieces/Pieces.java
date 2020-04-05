@@ -4,7 +4,7 @@ import domain.pieces.exceptions.CanNotMoveException;
 import domain.point.Column;
 import domain.point.Direction;
 import domain.point.Distance;
-import domain.point.Point;
+import domain.point.Coordinate;
 import domain.team.Team;
 
 import java.util.Collections;
@@ -22,7 +22,7 @@ public class Pieces {
 		this.pieces = new HashSet<>(pieces);
 	}
 
-	public void move(Point from, Point to) {
+	public void move(Coordinate from, Coordinate to) {
 		Piece subject = find(from);
 
 		Distance distance = Distance.of(from, to);
@@ -41,8 +41,8 @@ public class Pieces {
 		}
 	}
 
-	private Piece moveProgressivelyBeforeTo(Point from, Point to, Piece subject, Direction direction) {
-		Point next = from.add(direction.getRowIndex(), direction.getColumnIndex());
+	private Piece moveProgressivelyBeforeTo(Coordinate from, Coordinate to, Piece subject, Direction direction) {
+		Coordinate next = from.add(direction.getRowIndex(), direction.getColumnIndex());
 		while (!next.equals(to)) {
 			subject = moveOnly(subject, next, direction);
 			next = next.add(direction.getRowIndex(), direction.getColumnIndex());
@@ -50,14 +50,14 @@ public class Pieces {
 		return subject;
 	}
 
-	private Piece find(Point point) {
+	private Piece find(Coordinate coordinate) {
 		return pieces.stream()
-				.filter(piece -> piece.matchPoint(point))
+				.filter(piece -> piece.matchPoint(coordinate))
 				.findFirst()
 				.orElseThrow(() -> new CanNotMoveException("대상이 없습니다."));
 	}
 
-	private Piece moveOnly(Piece subject, Point to, Direction direction) {
+	private Piece moveOnly(Piece subject, Coordinate to, Direction direction) {
 		if (isNotEmptyPoint(to)) {
 			throw new CanNotMoveException("움직이려는 곳에 대상이 있습니다.");
 		}
@@ -69,16 +69,16 @@ public class Pieces {
 		return moved;
 	}
 
-	private boolean isNotEmptyPoint(Point point) {
+	private boolean isNotEmptyPoint(Coordinate coordinate) {
 		return pieces.stream()
-				.anyMatch(piece -> piece.matchPoint(point));
+				.anyMatch(piece -> piece.matchPoint(coordinate));
 	}
 
 	private void attack(Piece subject, Piece target, Direction direction) {
 		subject.validateAttack(direction, target);
 		pieces.remove(subject);
 		pieces.remove(target);
-		pieces.add(subject.move(target.getPoint()));
+		pieces.add(subject.move(target.getCoordinate()));
 	}
 
 	// TODO test

@@ -2,18 +2,18 @@ package domain.pieces;
 
 import domain.pieces.exceptions.CanNotMoveException;
 import domain.point.Direction;
-import domain.point.Point;
+import domain.point.Coordinate;
 import domain.team.Team;
 
 public class Queen extends Piece {
 
-    public Queen(Team team, Point point) {
-        super(PieceType.QUEEN, team, point);
+    public Queen(Team team, Coordinate coordinate) {
+        super(PieceType.QUEEN, team, coordinate);
     }
 
     @Override
-    public Piece move(Point afterPoint) {
-        return new Queen(getTeam(), afterPoint);
+    public Piece move(Coordinate afterCoordinate) {
+        return new Queen(getTeam(), afterCoordinate);
     }
 
     @Override
