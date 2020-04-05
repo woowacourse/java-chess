@@ -26,3 +26,7 @@
 .white-cell {
     background-color: brown;
 }
+
+.clicked-cell {
+    background-color: cornsilk;
+}

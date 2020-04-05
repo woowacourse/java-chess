@@ -17,6 +17,53 @@ function colorCell(i, j) {
 }
 
 //새 게임 클릭 시 초기화 이벤트 관련 =>  모든 초기화 말 json 데이터 가져오도록 한다.
+//document.querySelectorAll(".cell").forEach(node => node.addEventListener('click', e => console.log(e.target)));
+const cells = document.querySelectorAll("td.cell");
+cells.forEach(node => node.addEventListener('click', e => {
+    toggleCell(e.target);
+    const count = findCountOfToggled(cells);
+    if (count === 0) {
+        localStorage.clear();
+    } else if (count === 1) {
+        localStorage.setItem('from', e.target.id);
+    } else if (count === 2) {
+        const obj = {'from': localStorage.getItem('from'), 'to': e.target.id}
+        localStorage.clear();
+        removeAllClickedToggle(cells);
+        httpPostRequest(JSON.stringify(obj));
+    }
+}));
+
+function toggleCell(node) {
+    if (node.classList.contains("clicked")) {
+        node.classList.remove("clicked");
+    } else {
+        node.classList.add("clicked");
+    }
+}
+
+function findCountOfToggled(nodes) {
+    return Array.from(nodes).filter(node => node.classList.contains("clicked"))
+        .length
+}
+
+function removeAllClickedToggle(nodes) {
+    nodes.forEach(node => node.classList.remove("clicked"));
+}
+
+function httpPostRequest(data) {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            updatePieceOnBoard(xhttp);
+            requestRecord();
+        }
+    };
+    xhttp.open("POST", "/chess/move", true);
+    xhttp.send(data);
+}
+
+
 const newGameButton = document.getElementById("new-game");
 newGameButton.addEventListener('click', requestNewGame);
 
