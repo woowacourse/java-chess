@@ -11,7 +11,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 /**
- *    class description
+ *    Console용 컨트롤러입니다.
  *
  *    @author AnHyungJu, LeeHoBin
  */
