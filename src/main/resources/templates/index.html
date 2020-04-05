@@ -97,17 +97,21 @@
             background-color: #ffffff
         }
 
-        #turn-container {
+        #turn-btn {
             bottom: 10px;
             left: 50px;
-        }
-
-        #wrap #turn-container #turn-btn {
             width: 300px;
             height: 200px;
-            background: transparent url('image/turn_button.png') no-repeat;
+            background: transparent url('image/turn-button.png') no-repeat;
             background-size: contain;
             border: transparent;
+        }
+
+        #turn {
+            font-size: xx-large;
+            /*text-align: center;*/
+            top: 40px;
+            left: 30px;
         }
 
         #wrap #white-score {
@@ -135,6 +139,14 @@
 
         .black-score-container {
             right: 5%;
+        }
+
+        .white-score-container .score {
+            color: white;
+        }
+
+        .black-score-container .score {
+            color: black;
         }
 
         .piece {
@@ -268,7 +280,7 @@
         });
 
         let turn = response["turn"];
-        $("#turn-btn").text(turn);
+        $("#turn").text("turn: "+turn);
     }
 </script>
 <div id="background">
@@ -278,16 +290,16 @@
     <div id="end-container" class="btn-container">
         <button id="end-btn"></button>
     </div>
-    <div id="turn-container" class="btn-container">
-        <button id="turn-btn"></button>
-    </div>
+    <button id="turn-btn" class="btn-container">
+        <span id="turn"> </span>
+    </button>
     <div class="white-score-container score-container">
-        <span class="score">Score</span>
-        <span id="white-score">26</span>
+        <span class="score" style="color: white">White Score</span>
+        <span id="white-score"></span>
     </div>
     <div class="black-score-container score-container">
-        <span class="score">Score</span>
-        <span id="black-score">26</span>
+        <span class="score" style="color: black"> Black Score</span>
+        <span id="black-score"></span>
     </div>
 </div>
 ​
