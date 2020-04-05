@@ -77,5 +77,5 @@ public class Piece {
 
 	public PieceType getPieceType() {
 		return pieceType;
-	} // TODO: 2020/04/05 제거?
+	}
 }

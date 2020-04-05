@@ -126,8 +126,6 @@ window.onload = function () {
         form.setAttribute("method", "post");
         form.setAttribute("action", path);
         for (let key in params) {
-            console.log("키" + key + "\n");
-            console.log("파람 : " + params[key] + "\n");
             let hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", key);

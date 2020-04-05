@@ -38,8 +38,4 @@ public class Board {
 		}
 		return new Blank();
 	}
-
-	public Map<Position, Piece> getBoard() { // TODO: 2020/04/05 제거?
-		return board;
-	}
 }

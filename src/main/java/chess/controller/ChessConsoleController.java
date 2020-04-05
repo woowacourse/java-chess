@@ -8,7 +8,7 @@ import chess.view.OutputView;
 
 import static chess.view.InputView.inputOperation;
 
-public class ChessController {
+public class ChessConsoleController {
 	public void run() {
 		OutputView.printOperationsFormat();
 
