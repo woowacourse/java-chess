@@ -125,7 +125,7 @@ public class ChessBoard {
                 .stream()
                 .filter(piece -> piece instanceof  King)
                 .count();
-        return kingCount > 0;
+        return kingCount == 0;
     }
     public Result createResult() {
         List<Status> statuses = Arrays.asList(createStatus(Player.WHITE), createStatus(Player.BLACK));
