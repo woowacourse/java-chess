@@ -4,7 +4,7 @@ import chess.Board;
 import chess.position.Position;
 import chess.validator.MoveValidator;
 
-public abstract class Piece {
+public class Piece {
     protected final Team team;
     protected final String symbol;
     protected boolean hasMoved;
@@ -20,11 +20,11 @@ public abstract class Piece {
     }
 
     public void throwExceptionIfNotMovable(Board board, Position source, Position target) {
-        this.moveValidator.throwExceptionIfNotMovable(board, source, target);
+        this.moveValidator.validate(board, source, target);
     }
 
-    public void throwExceptionIfNotMovableWithoutConsideringKingCouldBeKilledNextTurn(Board board, Position source, Position target) {
-        this.moveValidator.throwExceptionIfNotMovableWithoutConsideringKingCouldBeKilledNextTurn(board, source, target);
+    public void throwExceptionIfNotMovableWithoutConsideringNextTurn(Board board, Position source, Position target) {
+        this.moveValidator.validateThisTurn(board, source, target);
     }
 
     public void updateHasMoved() {
@@ -53,6 +53,11 @@ public abstract class Piece {
 
     public boolean isEmpty() {
         return this instanceof EmptyPiece;
+    }
+
+    //TODO
+    public Piece of(String symbol, boolean hasMoved) {
+        return null;
     }
 
     public Team getTeam() {

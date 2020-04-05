@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public class ConsoleOutputView {
 
     private static final String GAME_INTRO_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String START_COMMAND_INFORMATION_MESSAGE = "> 게임 시작 : start";

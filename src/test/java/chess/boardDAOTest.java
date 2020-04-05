@@ -2,16 +2,13 @@ package chess;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 class boardDAOTest {
@@ -19,13 +16,7 @@ class boardDAOTest {
 
     @BeforeEach
     public void setUp() {
-        boardDAO = new BoardDAO();
-    }
-
-    @Test
-    public void connection() {
-        Connection con = boardDAO.getConnection();
-        assertNotNull(con);
+        boardDAO = new BoardDAO(DBConnector.getConnection());
     }
 
     @DisplayName("위치를 나타내는 심볼로 피스를 나타내는 심볼을 가져올 수 있는지 테스트")

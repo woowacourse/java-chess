@@ -1,69 +1,37 @@
 package chess;
 
-import chess.piece.*;
+import chess.exception.EmptySourceException;
+import chess.exception.InvalidMovementException;
+import chess.piece.EmptyPiece;
+import chess.piece.King;
+import chess.piece.Piece;
+import chess.piece.Team;
 import chess.position.Direction;
-import chess.position.File;
 import chess.position.Position;
-import chess.position.Rank;
+import chess.strategy.PiecesInitStrategy;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static chess.piece.Team.BLACK;
 import static chess.piece.Team.WHITE;
-import static chess.position.File.*;
-import static chess.position.Rank.*;
 
 public class Board {
-    private static final int MINIMUM_COUNT_OF_LOWER_SCORE_PAWN = 2;
     private final Map<Position, Piece> pieces;
-    private Team turn;
-    private boolean isFinished;
+    private Team turn = WHITE;
+    private boolean isFinished = false;
 
     public Board(Map<Position, Piece> pieces) {
         this.pieces = pieces;
-        this.turn = Team.WHITE;
-        this.isFinished = false;
     }
 
-    public static Board createInitialBoard() {
-        return new Board(getInitialPieces());
-    }
-
-    private static Map<Position, Piece> getInitialPieces() {
-        Map<Position, Piece> pieces = new HashMap<>();
-
-        pieces.put(Position.of(A, EIGHT), new Rook(BLACK));
-        pieces.put(Position.of(B, EIGHT), new Knight(BLACK));
-        pieces.put(Position.of(C, EIGHT), new Bishop(BLACK));
-        pieces.put(Position.of(D, EIGHT), new Queen(BLACK));
-        pieces.put(Position.of(E, EIGHT), new King(BLACK));
-        pieces.put(Position.of(F, EIGHT), new Bishop(BLACK));
-        pieces.put(Position.of(G, EIGHT), new Knight(BLACK));
-        pieces.put(Position.of(H, EIGHT), new Rook(BLACK));
-
-        pieces.put(Position.of(A, ONE), new Rook(WHITE));
-        pieces.put(Position.of(B, ONE), new Knight(WHITE));
-        pieces.put(Position.of(C, ONE), new Bishop(WHITE));
-        pieces.put(Position.of(D, ONE), new Queen(WHITE));
-        pieces.put(Position.of(E, ONE), new King(WHITE));
-        pieces.put(Position.of(F, ONE), new Bishop(WHITE));
-        pieces.put(Position.of(G, ONE), new Knight(WHITE));
-        pieces.put(Position.of(H, ONE), new Rook(WHITE));
-
-        for (File file : File.valuesExceptNone()) {
-            pieces.put(Position.of(file, SEVEN), new Pawn(BLACK));
-            pieces.put(Position.of(file, TWO), new Pawn(WHITE));
-            Rank.valuesRangeClosed(THREE, SIX)
-                    .forEach(rank -> pieces.put(Position.of(file, rank), new EmptyPiece()));
-        }
-        return pieces;
+    public Board(PiecesInitStrategy piecesInitStrategy) {
+        this.pieces = piecesInitStrategy.init();
     }
 
     public void moveIfPossible(Position source, Position target) {
         Piece pieceToBeMoved = pieces.get(source);
         if (pieceToBeMoved.isEmpty()) {
-            throw new IllegalArgumentException("이동시키고자 하는 말이 존재하지 않습니다.");
+            throw new EmptySourceException(source.getKey());
         }
         pieceToBeMoved.throwExceptionIfNotMovable(this, source, target);
         finishIfKilledEnemyKing(target);
@@ -72,13 +40,18 @@ public class Board {
         this.turn = turn.getOppositeTeam();
     }
 
-    private boolean isMovableWithoutConsideringKingCouldBeKilledNextTurn(Position source, Position target) {
-        try {
-            pieces.get(source).throwExceptionIfNotMovableWithoutConsideringKingCouldBeKilledNextTurn(this, source, target);
-        } catch (IllegalArgumentException e) {
-            return false;
+    private void finishIfKilledEnemyKing(Position target) {
+        if (isExistAt(target) && isEnemyKing(target)) {
+            this.isFinished = true;
         }
-        return true;
+    }
+
+    public boolean isExistAt(Position position) {
+        return !pieces.get(position).isEmpty();
+    }
+
+    private boolean isEnemyKing(Position position) {
+        return getTeamOf(position).isNotSame(this.turn) && pieces.get(position) instanceof King;
     }
 
     public boolean isKilledIfMoves(Position source, Position target) {
@@ -110,24 +83,19 @@ public class Board {
 
     private List<Position> getMovablePositionsOf(Position position) {
         return pieces.keySet().stream()
-                .filter(target -> isMovableWithoutConsideringKingCouldBeKilledNextTurn(position, target))
+                .filter(target -> isMovableWithoutConsideringNextTurn(position, target))
                 .collect(Collectors.toList());
     }
 
-    private void finishIfKilledEnemyKing(Position target) {
-        if (isExistAt(target) && isEnemyKing(target)) {
-            this.isFinished = true;
+    private boolean isMovableWithoutConsideringNextTurn(Position source, Position target) {
+        try {
+            pieces.get(source).throwExceptionIfNotMovableWithoutConsideringNextTurn(this, source, target);
+        } catch (InvalidMovementException e) {
+            return false;
         }
+        return true;
     }
 
-    private boolean isEnemyKing(Position position) {
-        return getTeamOf(position).isNotSame(this.turn) && pieces.get(position) instanceof King;
-    }
-
-
-    public boolean isExistAt(Position position) {
-        return !pieces.get(position).isEmpty();
-    }
 
     public boolean isExistAnyPieceAt(List<Position> traces) {
         return traces.stream()
@@ -140,19 +108,20 @@ public class Board {
         return copiedBoard.allMovablePositionsOf(turn.getOppositeTeam()).contains(findPositionOfKing(turn));
     }
 
-    private Position findPositionOfKing(Team turn) {
-        return pieces.keySet().stream()
-                .filter(position -> pieces.get(position) instanceof King && pieces.get(position).isSameTeam(turn))
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new);
-    }
-
     public Board copy() {
         Map<Position, Piece> copiedPieces = new HashMap<>();
         for (Position position : pieces.keySet()) {
             copiedPieces.put(position, pieces.get(position));
         }
         return new Board(copiedPieces);
+    }
+
+    private Position findPositionOfKing(Team turn) {
+        return pieces.keySet().stream()
+                .filter(position -> pieces.get(position) instanceof King)
+                .filter(position -> pieces.get(position).isSameTeam(turn))
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
     }
 
     public int forwardMoveAmountOfRank(Position source, Position target) {
@@ -182,36 +151,6 @@ public class Board {
         return position.at(Direction.SOUTH_WEST);
     }
 
-    public Scores calculateScores() {
-        return new Scores(this);
-    }
-
-    public double calculateScoreOf(Team team) {
-        return Arrays.stream(File.valuesExceptNone())
-                .mapToDouble(file -> scoreOfFile(file, team))
-                .sum();
-    }
-
-    private double scoreOfFile(File file, Team team) {
-        List<Piece> sameTeamPiecesInSameFile = Arrays.stream(Rank.valuesExceptNone())
-                .map(rank -> getPiece(Position.of(file, rank)))
-                .filter(piece -> isSameTeamBetween(team, piece))
-                .collect(Collectors.toList());
-
-        int countOfPawn = (int) sameTeamPiecesInSameFile.stream()
-                .filter(Piece::isPawn)
-                .count();
-
-        double rawScoreOfFile = sameTeamPiecesInSameFile.stream()
-                .mapToDouble(Piece::getScore)
-                .sum();
-
-        double scoreOfFile = rawScoreOfFile;
-        if (countOfPawn >= MINIMUM_COUNT_OF_LOWER_SCORE_PAWN) {
-            scoreOfFile = rawScoreOfFile - Pawn.getLowerScore() * countOfPawn;
-        }
-        return scoreOfFile;
-    }
 
     public boolean hasMoved(Position position) {
         return pieces.get(position).getHasMoved();
@@ -269,5 +208,9 @@ public class Board {
 
     public Piece getPiece(Position position) {
         return pieces.get(position);
+    }
+
+    public Team getTurn() {
+        return this.turn;
     }
 }
