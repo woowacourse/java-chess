@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import domain.board.BoardGame;
+import domain.board.Board;
 import domain.board.fixture.KnightBoard;
 import domain.command.MoveCommand;
 import domain.piece.position.Direction;
@@ -19,12 +19,12 @@ import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public class KnightTest {
-	private BoardGame chessGame;
+class KnightTest {
+	private Board board;
 
 	@BeforeEach
 	void setUp() {
-		chessGame = new BoardGame(new KnightBoard().create());
+		board = new KnightBoard().create();
 	}
 
 	@DisplayName("나이트 생성")
@@ -39,7 +39,7 @@ public class KnightTest {
 	void validateMovement_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		Knight knight = new Knight(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> knight.validateMovement(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> knight.validateMovement(moveCommand.getTargetPosition(), team, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -62,7 +62,7 @@ public class KnightTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 c3");
 		Knight knight = new Knight(moveCommand.getSourcePosition(), Team.WHITE);
 
-		knight.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		knight.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
 		assertThat(knight.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -74,7 +74,7 @@ public class KnightTest {
 
 		Knight knight = new Knight(moveCommand.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> knight.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard()))
+		assertThatThrownBy(() -> knight.move(moveCommand.getTargetPosition(), Team.WHITE, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -85,9 +85,9 @@ public class KnightTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 c3");
 		Knight knight = new Knight(moveCommand.getSourcePosition(), Team.WHITE);
 
-		knight.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		knight.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
-		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
+		Optional<Piece> targetPiece = board.findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(knight);
 	}
 }

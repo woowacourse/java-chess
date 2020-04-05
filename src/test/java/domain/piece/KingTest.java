@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import domain.board.BoardGame;
+import domain.board.Board;
 import domain.board.fixture.KingBoard;
 import domain.command.MoveCommand;
 import domain.piece.position.Direction;
@@ -19,12 +19,12 @@ import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public class KingTest {
-	private BoardGame chessGame;
+class KingTest {
+	private Board board;
 
 	@BeforeEach
 	void setUp() {
-		chessGame = new BoardGame(new KingBoard().create());
+		board = new KingBoard().create();
 	}
 
 	@DisplayName("퀸 생성")
@@ -39,7 +39,7 @@ public class KingTest {
 	void validateMovement_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		King king = new King(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> king.validateMovement(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> king.validateMovement(moveCommand.getTargetPosition(), team, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -73,7 +73,7 @@ public class KingTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 c1");
 		King king = new King(moveCommand.getSourcePosition(), Team.WHITE);
 
-		king.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		king.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
 		assertThat(king.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -85,7 +85,7 @@ public class KingTest {
 
 		King king = new King(moveCommand.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> king.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard()))
+		assertThatThrownBy(() -> king.move(moveCommand.getTargetPosition(), Team.WHITE, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -96,9 +96,9 @@ public class KingTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 b2");
 		King king = new King(moveCommand.getSourcePosition(), Team.WHITE);
 
-		king.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		king.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
-		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
+		Optional<Piece> targetPiece = board.findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(king);
 	}
 }

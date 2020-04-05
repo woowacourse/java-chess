@@ -24,8 +24,7 @@ public class RankTest {
 	@ParameterizedTest
 	@CsvSource({"0,0,WHITE","1,8,WHITE","6,8,BLACK","7,0,BLACK"})
 	void findPawn_InitialBoard_ReturnPawns(int index, int count, Team team) {
-		Board board = new BoardGame().getBoard();
-		List<Piece> pawn =  board.getRanks().get(index).findPawn(team);
+		List<Piece> pawn =  new BoardGame().getRanks().get(index).findPawn(team);
 		assertThat(pawn.size()).isEqualTo(count);
 	}
 }

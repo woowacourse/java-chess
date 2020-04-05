@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import domain.board.BoardGame;
+import domain.board.Board;
 import domain.board.fixture.PawnBoard;
 import domain.command.MoveCommand;
 import domain.piece.position.Direction;
@@ -19,12 +19,12 @@ import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public class PawnTest {
-	private BoardGame chessGame;
+class PawnTest {
+	private Board board;
 
 	@BeforeEach
 	void setUp() {
-		chessGame = new BoardGame(new PawnBoard().create());
+		board = new PawnBoard().create();
 	}
 
 	@DisplayName("폰 생성")
@@ -39,7 +39,7 @@ public class PawnTest {
 	void validateMovement_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> pawn.validateMovement(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> pawn.validateMovement(moveCommand.getTargetPosition(), team, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -74,7 +74,7 @@ public class PawnTest {
 	void validateRoute_InvalidTargetPosition_ExceptionThrown(Direction direction, MoveCommand moveCommand, Team team) {
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> pawn.validateRoute(direction, moveCommand.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> pawn.validateRoute(direction, moveCommand.getTargetPosition(), board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_PIECE_IN_ROUTE);
 	}
@@ -85,7 +85,7 @@ public class PawnTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 b3");
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), Team.WHITE);
 
-		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
 		assertThat(pawn.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -97,9 +97,9 @@ public class PawnTest {
 		MoveCommand invalidInfo = new MoveCommand("move b3 b5");
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), Team.WHITE);
 
-		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
-		assertThatThrownBy(() -> pawn.move(invalidInfo.getTargetPosition(), Team.WHITE, chessGame.getBoard()))
+		assertThatThrownBy(() -> pawn.move(invalidInfo.getTargetPosition(), Team.WHITE, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_STEP_SIZE);
 	}
@@ -110,7 +110,7 @@ public class PawnTest {
 		MoveCommand moveCommand = new MoveCommand("move a1 a2");
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), Team.WHITE);
 
-		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
 		assertThat(pawn.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -121,7 +121,7 @@ public class PawnTest {
 		MoveCommand moveCommand = new MoveCommand("move e2 e1");
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), Team.BLACK);
 
-		assertThatThrownBy(() -> pawn.move(moveCommand.getTargetPosition(), Team.BLACK, chessGame.getBoard()))
+		assertThatThrownBy(() -> pawn.move(moveCommand.getTargetPosition(), Team.BLACK, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_PIECE_AT_TARGET_POSITION);
 	}
@@ -132,9 +132,9 @@ public class PawnTest {
 		MoveCommand moveCommand = new MoveCommand("move d1 e2");
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), Team.WHITE);
 
-		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
-		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
+		Optional<Piece> targetPiece = board.findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(pawn);
 	}
 
@@ -144,7 +144,7 @@ public class PawnTest {
 		MoveCommand moveCommand = new MoveCommand("move e1 f2");
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> pawn.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard()))
+		assertThatThrownBy(() -> pawn.move(moveCommand.getTargetPosition(), Team.WHITE, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}

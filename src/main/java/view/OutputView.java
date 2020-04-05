@@ -29,7 +29,7 @@ public class OutputView {
 	}
 
 	public static void printChessBoard(BoardGame board) {
-		List<Rank> ranks = board.getBoard().getRanks();
+		List<Rank> ranks = board.getRanks();
 		for (int rankIndex = ranks.size() - 1; rankIndex >= 0; rankIndex--) {
 			List<Piece> pieces = ranks.get(rankIndex).getPieces();
 			printRank(pieces);

@@ -1,6 +1,7 @@
 package domain.board;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import domain.command.MoveCommand;
@@ -40,7 +41,7 @@ public class BoardGame {
 		return board.isKingAlive();
 	}
 
-	public Board getBoard() {
-		return board;
+	public List<Rank> getRanks() {
+		return board.getRanks();
 	}
 }

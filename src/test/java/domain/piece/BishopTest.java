@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import domain.board.BoardGame;
+import domain.board.Board;
 import domain.board.fixture.BishopBoard;
 import domain.command.MoveCommand;
 import domain.piece.position.Direction;
@@ -19,12 +19,12 @@ import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public class BishopTest {
-	private BoardGame chessGame;
+class BishopTest {
+	private Board board;
 
 	@BeforeEach
 	void setUp() {
-		chessGame = new BoardGame(new BishopBoard().create());
+		board = new BishopBoard().create();
 	}
 
 	@DisplayName("비숍 생성")
@@ -39,7 +39,7 @@ public class BishopTest {
 	void validateMovement_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
 		Bishop bishop = new Bishop(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> bishop.validateMovement(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> bishop.validateMovement(moveCommand.getTargetPosition(), team, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -61,7 +61,7 @@ public class BishopTest {
 	void validateRoute_InvalidTargetPosition_ExceptionThrown(Direction direction, MoveCommand moveCommand, Team team) {
 		Bishop bishop = new Bishop(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> bishop.validateRoute(direction, moveCommand.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> bishop.validateRoute(direction, moveCommand.getTargetPosition(), board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_PIECE_IN_ROUTE);
 	}
@@ -72,7 +72,7 @@ public class BishopTest {
 		MoveCommand moveCommand = new MoveCommand("move d2 f4");
 		Bishop bishop = new Bishop(moveCommand.getSourcePosition(), Team.WHITE);
 
-		bishop.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		bishop.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
 		assertThat(bishop.position).isEqualTo(moveCommand.getTargetPosition());
 	}
@@ -84,7 +84,7 @@ public class BishopTest {
 
 		Bishop bishop = new Bishop(moveCommand.getSourcePosition(), Team.BLACK);
 
-		assertThatThrownBy(() -> bishop.move(moveCommand.getTargetPosition(), Team.BLACK, chessGame.getBoard()))
+		assertThatThrownBy(() -> bishop.move(moveCommand.getTargetPosition(), Team.BLACK, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -95,9 +95,9 @@ public class BishopTest {
 		MoveCommand moveCommand = new MoveCommand("move b1 c2");
 		Bishop bishop = new Bishop(moveCommand.getSourcePosition(), Team.WHITE);
 
-		bishop.move(moveCommand.getTargetPosition(), Team.WHITE, chessGame.getBoard());
+		bishop.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
-		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
+		Optional<Piece> targetPiece = board.findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(bishop);
 	}
 }
