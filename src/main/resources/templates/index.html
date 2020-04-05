@@ -43,34 +43,61 @@
 
     function requestMove(startPosition, targetPosition) {
         $.ajax({
-            type: 'get',
-            url: '/move/' + startPosition + " " + targetPosition,
+            type: 'post',
+            url: '/move',
+            data: {startPosition : startPosition, targetPosition : targetPosition},
             dataType: 'json',
-            error: function () {
-                alert("initError");
+            error: function (response) {
+                alert(response.responseText);
             },
             success: function (response) {
-                if (response == true) {
-                    swap(startPosition, targetPosition)
-                } else {
-                    alert("이동 실패")
-                }
+                move({startPosition, targetPosition}, response);
             }
-        });
+        })
     }
 
-    function swap(startPosition, targetPosition) {
-        let v1 = document.getElementById(startPosition).className;
-        let className = v1.substring(v1.lastIndexOf("cell") + 5, v1.length);
-        document.getElementById(startPosition).classList.remove(className);
-        console.log(className);
+    function move(position, response) {
+        let startPositionClassName = getChessPieceClassName(position.startPosition);
+        let targetPositionClassName = getChessPieceClassName(position.targetPosition);
 
-        let v2 = document.getElementById(targetPosition).className;
-        let className2 = v2.substring(v2.lastIndexOf("cell") + 5, v2.length);
-        console.log(className2);
-        // document.getElementById(targetPosition).classList.remove(className2);
-    document.getElementById(targetPosition).classList.add(className);
+        if (targetPositionClassName != '') {
+            getClassList(position.targetPosition).remove(targetPositionClassName);
+        }
+        getClassList(position.startPosition).remove(startPositionClassName);
+        getClassList(position.targetPosition).add(startPositionClassName);
+        checkKingDie(response);
     }
+
+    function getChessPieceClassName(position) {
+        let className = document.getElementById(position).className;
+        return className.substring(className.lastIndexOf("cell") + 5, className.length);
+    }
+
+    function getClassList(position) {
+        return document.getElementById(position).classList
+    }
+
+    function checkKingDie(response) {
+        let isLiveBlackTeamKing = false;
+        let isLiveWhiteTeamKing = false;
+
+        for (position in response) {
+            const pieceName = response[position].name;
+            if (pieceName == 'k') {
+                isLiveWhiteTeamKing = true;
+            }
+            if (pieceName == 'K') {
+                isLiveBlackTeamKing = true;
+            }
+        }
+        if (!isLiveBlackTeamKing) {
+            alert("화이트팀 승리")
+        }
+        if (!isLiveWhiteTeamKing) {
+            alert("블랙팀 승리")
+        }
+    }
+
 </script>
 
 <div class="chessboard">
@@ -154,7 +181,6 @@
         <button id="g1" class="cell"></button>
         <button id="h1" class="black cell"></button>
     </div>
-
 </div>
 </body>
 </html>

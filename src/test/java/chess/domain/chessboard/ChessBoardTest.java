@@ -47,4 +47,9 @@ public class ChessBoardTest {
 		assertThat(chessBoard.findByPosition(targetPosition)).isEqualTo(new Pawn(targetPosition, Team.WHITE));
 
 	}
+
+	@Test
+	void toStringTest() {
+		System.out.println(chessBoard);
+	}
 }
