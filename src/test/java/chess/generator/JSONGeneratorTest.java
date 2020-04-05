@@ -1,7 +1,7 @@
 package chess.generator;
 
 import chess.domain.board.Board;
-import chess.factory.BoardFactory;
+import chess.domain.board.BoardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,5 @@
-package chess.factory;
+package chess.domain.board;
 
-import chess.domain.board.Board;
-import chess.domain.board.Row;
 import chess.domain.chesspiece.*;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Team;
@@ -9,8 +7,8 @@ import chess.domain.game.Team;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.domain.board.BoardInfo.BOARD_MAX_INDEX;
-import static chess.domain.board.BoardInfo.BOARD_MIN_INDEX;
+import static chess.domain.board.Board.BOARD_MAX_INDEX;
+import static chess.domain.board.Board.BOARD_MIN_INDEX;
 import static chess.domain.game.Team.BLACK;
 import static chess.domain.game.Team.WHITE;
 

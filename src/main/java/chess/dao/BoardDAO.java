@@ -1,13 +1,13 @@
 package chess.dao;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Row;
 import chess.domain.chesspiece.*;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Team;
 import chess.domain.move.Coordinate;
 import chess.domain.move.Position;
-import chess.factory.BoardFactory;
 
 import java.sql.*;
 import java.util.List;

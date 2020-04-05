@@ -2,8 +2,8 @@ package chess.controller;
 
 import chess.dao.BoardDAO;
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.move.MovingInfo;
-import chess.factory.BoardFactory;
 import chess.generator.JSONGenerator;
 import spark.ModelAndView;
 import spark.Request;

@@ -9,8 +9,8 @@ import chess.domain.move.Route;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.domain.board.BoardInfo.BOARD_MAX_INDEX;
-import static chess.domain.board.BoardInfo.BOARD_MIN_INDEX;
+import static chess.domain.board.Board.BOARD_MAX_INDEX;
+import static chess.domain.board.Board.BOARD_MIN_INDEX;
 
 public class AllRouteGenerator {
     private static final int[][] KNIGHT_DIRECTION = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
