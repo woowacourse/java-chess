@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import domain.piece.Bishop;
@@ -84,12 +83,26 @@ public class BoardDao {
 		for (Piece piece : rank.getPieces()) {
 			String query = "INSERT INTO board VALUES (?, ?)";
 			PreparedStatement pstmt = connection.prepareStatement(query);
-			String position = piece.getPosition().getColumn().getColumnName() + String.valueOf(piece.getPosition().getRow());
+			String position =
+				piece.getPosition().getColumn().getColumnName() + String.valueOf(piece.getPosition().getRow());
 
 			pstmt.setString(1, position);
 			pstmt.setString(2, piece.showSymbol());
 			pstmt.executeUpdate();
 		}
+	}
+
+	public void clearTurn() throws SQLException {
+		String query = "DELETE FROM TURN";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		pstmt.executeUpdate();
+	}
+
+	public void saveTurn(Team turn) throws SQLException {
+		String query = "INSERT INTO turn VALUES (?)";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		pstmt.setString(1, turn.getName());
+		pstmt.executeUpdate();
 	}
 
 	public Board loadBoard() throws SQLException {

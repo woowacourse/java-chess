@@ -10,10 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.board.fixture.KingBoard;
 import domain.board.fixture.RookBoard;
-import domain.piece.Rook;
-import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 /**
@@ -37,21 +34,33 @@ public class BoardDaoTest {
 
 	@DisplayName("Board에 데이터 추가")
 	@Test
-	public void insertTest() throws SQLException {
+	public void saveBoardTest() throws SQLException {
 		Board board = new RookBoard().create();
 		boardDao.saveBoard(board);
 	}
 
 	@DisplayName("Board에 데이터 불러오기")
 	@Test
-	public void loadTest() throws SQLException {
+	public void loadBoardTest() throws SQLException {
 		Board board = boardDao.loadBoard();
 		assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(10);
 	}
 
-	@DisplayName("Board에 데이터 삭제")
+	@DisplayName("게임 저장 버튼을 누르면 Board의 데이터 삭제")
 	@Test
-	public void deleteTest() throws SQLException {
+	public void deleteBoardTest() throws SQLException {
 		boardDao.clearBoardDb();
+	}
+
+	@DisplayName("현재의 공격 순서 저장")
+	@Test
+	public void saveTurnTest() throws SQLException {
+		boardDao.saveTurn(Team.BLACK);
+	}
+
+	@DisplayName("게임 저장 버튼을 누르면 Turn의 데이터 삭제")
+	@Test
+	void clearTurnTest() throws SQLException {
+		boardDao.clearTurn();
 	}
 }

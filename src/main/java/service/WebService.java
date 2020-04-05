@@ -15,12 +15,12 @@ import domain.piece.team.Team;
  */
 public class WebService {
 	private Board board;
-	private Team team;
+	private Team turn;
 	private BoardDao boardDao;
 
 	public WebService() {
 		board = BoardFactory.create();
-		team = Team.WHITE;
+		turn = Team.WHITE;
 		boardDao = new BoardDao();
 	}
 
@@ -33,12 +33,12 @@ public class WebService {
 	}
 
 	public void move(String source, String target) {
-		board.move(source, target, team);
-		team = Team.changeTurn(team);
+		board.move(source, target, turn);
+		turn = Team.changeTurn(turn);
 	}
 
 	public String getTurn() {
-		return team.getName() + "팀의 차례입니다!";
+		return turn.getName() + "팀의 차례입니다!";
 	}
 
 	public String findWinner() {
@@ -46,12 +46,14 @@ public class WebService {
 		return winner.getName();
 	}
 
-	public void clearBoardDb() throws SQLException {
+	public void clearDb() throws SQLException {
 		boardDao.clearBoardDb();
+		boardDao.clearTurn();
 	}
 
 	public void saveGame() throws SQLException {
 		boardDao.saveBoard(board);
+		boardDao.saveTurn(turn);
 	}
 
 	public boolean isKingDead() {

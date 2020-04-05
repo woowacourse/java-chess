@@ -59,7 +59,7 @@ public class WebUIChessApplication {
 
 		post("/save", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			webService.clearBoardDb();
+			webService.clearDb();
 			webService.saveGame();
 
 			insertIntoModel(webService, errorMessage, model);
