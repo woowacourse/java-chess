@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Chess</title>
+    <link rel="stylesheet" type="text/css" href="/chess.css">
 </head>
 <body>
-<div>
-    <div>
-        Hi
+<div class="container">
+    <div class="board">
+        {{#board.boardDto}}
+        <div class="rows">
+            {{#.}}
+            <div class="cell">
+                <img class="piece-image" src="/img/{{.}}.png">
+            </div>
+            {{/.}}
+        </div>
+        {{/board.boardDto}}
+    </div>
+    <div class="side">
+        <button type="button">재시작</button>
+        <button type="button">종료</button>
     </div>
 </div>
 </body>

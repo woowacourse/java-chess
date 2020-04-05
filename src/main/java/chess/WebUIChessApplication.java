@@ -7,5 +7,4 @@ public class WebUIChessApplication {
 		ChessWebController chessWebController = new ChessWebController();
 		chessWebController.run();
 	}
-
 }

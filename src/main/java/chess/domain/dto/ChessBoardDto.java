@@ -22,8 +22,13 @@ public class ChessBoardDto {
 	private static void deployPiece(List<Piece> board, List<List<String>> initBoard) {
 		for (Piece piece : board) {
 			initBoard.get(8 - piece.getPosition().getRow().getSymbol())
-					.set(piece.getPosition().getCol().getValue() - 1, piece.getName());
+					.set(piece.getPosition().getCol().getValue() - 1, makeName(piece));
 		}
+	}
+
+	private static String makeName(Piece piece) {
+		String name = piece.getName() + "_" + piece.getSide();
+		return name.toLowerCase();
 	}
 
 	private static List<List<String>> initBoard() {
@@ -31,7 +36,7 @@ public class ChessBoardDto {
 		for (int i = 0; i < 8; i++) {
 			List<String> emptyRow = new ArrayList<>();
 			for (int j = 0; j < 8; j++) {
-				emptyRow.add(".");
+				emptyRow.add("blank");
 			}
 			board.add(emptyRow);
 		}

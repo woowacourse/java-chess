@@ -108,5 +108,9 @@ public abstract class Piece implements Movable {
 		return score;
 	}
 
+	public Side getSide() {
+		return side;
+	}
+
 	public abstract boolean isInPath(Position targetPosition);
 }
