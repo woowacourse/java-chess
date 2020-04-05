@@ -30,6 +30,7 @@ public class WebUIChessApplication {
 
 		get("/start", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
+			webService.initialize();
 			insertIntoModel(webService, errorMessage, model);
 
 			return render(model, "index.html");

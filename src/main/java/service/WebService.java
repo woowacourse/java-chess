@@ -24,6 +24,12 @@ public class WebService {
 		boardDao = new BoardDao();
 	}
 
+	public void initialize() {
+		board = BoardFactory.create();
+		turn = Team.BLACK;
+		boardDao = new BoardDao();
+	}
+
 	public List<String> showAllPieces() {
 		return board.showAllPieces();
 	}
