@@ -28,7 +28,7 @@ public class PieceFactory {
                 .map(row -> Positions.of(row, pawnColumn))
                 .collect(Collectors.toList());
         for (Position position : pawnPositions) {
-            pieces.put(new Pawn(player, position), Arrays.asList(position));
+            pieces.put(new Pawn(player), Arrays.asList(position));
         }
     }
 

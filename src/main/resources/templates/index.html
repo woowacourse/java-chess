@@ -38,7 +38,7 @@
         #wrap #end-container #end-btn {
             width: 90px;
             height: 110px;
-            background: transparent url('image/end_button.png') no-repeat;
+            background: transparent url('./img/end_button.png') no-repeat;
             background-size: contain;
             border: transparent;
         }
@@ -102,7 +102,7 @@
             left: 50px;
             width: 300px;
             height: 200px;
-            background: transparent url('image/turn-button.png') no-repeat;
+            background: transparent url('./img/turn_button.png') no-repeat;
             background-size: contain;
             border: transparent;
         }
@@ -123,7 +123,7 @@
         #wrap .score-container {
             width: 300px;
             height: 140px;
-            background: url('image/score.png') no-repeat center center;
+            background: url('./img/score.png') no-repeat center center;
             -webkit-background-size: 100%;
             background-size: 100%;
             text-align: center;
@@ -263,7 +263,7 @@
 
         chessBoardDto['tiles'].forEach(function (item, index, array) {
             var piece = document.createElement("img");
-            piece.src = "./image/piece/" + item.piece + ".png";
+            piece.src = "./img/piece/" + item.piece + ".png";
             piece.id = item.piece;
             piece.className = "piece";
             $("#" + item.position).append(piece);
@@ -284,11 +284,11 @@
     }
 </script>
 <div id="background">
-    <img src="./image/full_background.png">
+    <img src="./img/full_background.png">
 </div>
 <div id="wrap">
     <div id="end-container" class="btn-container">
-        <button id="end-btn"></button>
+        <button onclick="location.href='/end'" id="end-btn" ></button>
     </div>
     <button id="turn-btn" class="btn-container">
         <span id="turn"> </span>

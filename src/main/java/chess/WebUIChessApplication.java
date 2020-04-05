@@ -21,7 +21,7 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         port(8081);
-        staticFiles.location("templates");
+        staticFiles.location("public");
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -30,9 +30,14 @@ public class WebUIChessApplication {
 
         get("/init", (req, res) -> {
             res.status(200);
-//            ResponseDto responseDto = chessController.start(new RequestDto(Command.START));
-            ResponseDto responseDto = chessBoardDao.loadGamePlaying();
-            chessBoardDao.createInitGame(responseDto);
+            ResponseDto responseDto = null;
+            String state = chessBoardDao.loadState();
+            if (state.equals("playing")) {
+                responseDto = chessBoardDao.loadGamePlaying();
+            } else if (state.equals("end")) {
+                responseDto = chessController.start(new RequestDto(Command.START));
+                chessBoardDao.createInitGame(responseDto);
+            }
             return gson.toJson(responseDto);
         });
 
@@ -47,6 +52,12 @@ public class WebUIChessApplication {
                 res.status(400);
                 return gson.toJson(e.getMessage());
             }
+        });
+
+        get("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            chessBoardDao.updateEndState();
+            return render(model, "end.html");
         });
     }
 

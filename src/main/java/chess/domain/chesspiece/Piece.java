@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-    private final Player player;
+    protected final Player player;
     protected final PieceInfo pieceInfo;
 
     protected List<Direction> directions = new ArrayList<>();
@@ -80,10 +80,5 @@ public abstract class Piece {
             return false;
         }
         return player == target.getPlayer();
-    }
-
-
-    public String getDisplay() {
-        return pieceInfo.getName(player);
     }
 }

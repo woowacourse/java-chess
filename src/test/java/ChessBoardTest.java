@@ -64,15 +64,15 @@ public class ChessBoardTest {
     }
 
     static Stream<Arguments> generatePositions3() {
-        List<Piece> whitePawnWhiteKing = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
+        List<Piece> whitePawnWhiteKing = Arrays.asList(new Pawn(Player.WHITE),
                 new King(Player.WHITE));
-        List<Piece> whitePawn3 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
-                new Pawn(Player.WHITE, Positions.of("a2")),
-                new Pawn(Player.WHITE, Positions.of("a3"))
+        List<Piece> whitePawn3 = Arrays.asList(new Pawn(Player.WHITE),
+                new Pawn(Player.WHITE),
+                new Pawn(Player.WHITE)
         );
-        List<Piece> whitePawn1BlackPawn2 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
-                new Pawn(Player.BLACK, Positions.of("a2")),
-                new Pawn(Player.BLACK, Positions.of("a3")));
+        List<Piece> whitePawn1BlackPawn2 = Arrays.asList(new Pawn(Player.WHITE),
+                new Pawn(Player.BLACK),
+                new Pawn(Player.BLACK));
         List<Piece> whiteKingBlackQueen = Arrays.asList(new King(Player.WHITE), new Queen(Player.BLACK));
 
         return Stream.of(Arguments.of(whitePawnWhiteKing, Player.WHITE, 1),
