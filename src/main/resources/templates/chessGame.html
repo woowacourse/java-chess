@@ -10,7 +10,7 @@
 <div class="container">
     <div class="game-container">
         <div class="title-container">
-            <div class="title"><h1>체스체스체스체스</h1></div>
+            <div class="title"><h1><a href="/" id="main-title">체스체스체스체스</a></h1></div>
         </div>
         <div class="chess-board-container">
             <div class="board" id="board">
@@ -172,6 +172,9 @@
 
 
 
+
+
+
 </script>
 
 <script>
@@ -196,20 +199,6 @@
                 params += "_";
             } else {
                 params += pieceCell.item(i).getAttribute("id");
-                //     $.ajax({
-                //         type: "POST"
-                //         , url: "/chessGame"
-                //         , data: {command: 'move', parameter: params}
-                //         , success: function (data) {
-                //             alert("성공");
-                //             params = "";
-                //         }
-                //         , error: function (data) {
-                //             alert("error");
-                //             params = "";
-                //         }
-                //     });
-                // }
                 let method = "post";
                 let path = "/chessGame";
                 let form = document.createElement("form");

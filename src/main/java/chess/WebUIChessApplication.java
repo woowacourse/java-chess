@@ -27,9 +27,12 @@ public class WebUIChessApplication {
         });
 
         post("/", (req, res) -> {
-            RequestDto requestDto = getRequestDtoFrom(req);
-            chessController.run(requestDto);
             Map<String, Object> model = new HashMap<>();
+            RequestDto requestDto = getRequestDtoFrom(req);
+            ResponseDto responseDto = chessController.run();
+            chessController.run(requestDto);
+            List<WebDto> roomDto = getRoomDto(responseDto.getRoomId());
+            model.put("roomId", roomDto);
             return render(model, "index.html");
         });
 
