@@ -15,13 +15,11 @@ public class Pawn extends Piece {
     private static final String PAWN_NAME = "PAWN";
 
     private final List<Direction> attackDirections = new ArrayList<>();
-    private final Position initPosition;
 
     private Direction forwardDirection;
 
     public Pawn(Player player, Position position) {
         super(player, PieceInfo.valueOf(PAWN_NAME));
-        this.initPosition = position;
 
         if (player.equals(Player.BLACK)) {
             forwardDirection = Direction.SOUTH;
@@ -47,7 +45,7 @@ public class Pawn extends Piece {
         int columnDiff = Column.getDiff(from.getColumn(), to.getColumn());
 
         int movableColumnDiff = pieceInfo.getMovableColumnDiff();
-        if (initPosition == from) {
+        if (isInitPosition(from)) {
             movableColumnDiff = PieceInfo.PAWN_INIT_MOVABLE_COLUMN_DIFF;
         }
         return Math.abs(rowDiff) <= pieceInfo.getMovableRowDiff() && Math.abs(columnDiff) <= movableColumnDiff;
@@ -80,5 +78,15 @@ public class Pawn extends Piece {
         Objects.requireNonNull(direction);
         boolean isEmpty = target == null;
         return direction == forwardDirection && isEmpty;
+    }
+
+    private boolean isInitPosition(Position from){
+        if(from.getColumn() == Column.TWO && player == Player.WHITE){
+            return true;
+        }else if(from.getColumn() == Column.SEVEN && player == Player.BLACK){
+            return true;
+        }
+
+        return false;
     }
 }

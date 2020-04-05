@@ -25,12 +25,13 @@ public class ChessBoardDao {
 
     // 초기 게임 만드는 메서드
     public void createInitGame(ResponseDto responseDto) throws SQLException {
-        String query = "INSERT INTO game(turn, white_score, black_score) VALUES (?,?,?)";
+        String query = "INSERT INTO game(turn, white_score, black_score, state) VALUES (?,?,?,?)";
         Connection connection = CONNECTION;
         PreparedStatement pstmt = CONNECTION.prepareStatement(query);
         pstmt.setString(1, responseDto.getTurn().name());
         pstmt.setDouble(2, responseDto.getResult().getStatuses().get(0).getScore());
         pstmt.setDouble(3, responseDto.getResult().getStatuses().get(1).getScore());
+        pstmt.setString(4, "playing");
         pstmt.executeUpdate();
 
         saveChessBoard(connection, responseDto);
@@ -70,7 +71,6 @@ public class ChessBoardDao {
     }
 
     public ResponseDto loadGamePlaying() throws SQLException {
-
         String query = "SELECT a.game_id, a.black_score, a.turn, a.white_score, b.position, b.piece FROM game a INNER JOIN chessboard b ON b.room = (SELECT MAX(game_id) FROM game) AND a.game_id = (SELECT MAX(game_id) FROM game)";
 
         Connection connection = CONNECTION;
@@ -78,9 +78,9 @@ public class ChessBoardDao {
         ResultSet rs = pstmt.executeQuery();
         Map<Position, Piece> chessBoard = new HashMap<>();
 
-        if (!rs.next()) return null;
         Result result = null;
         Player turn = null;
+
         while (rs.next()) {
             if (turn == null & result == null) {
                 turn = Player.valueOf(rs.getString("turn"));
@@ -90,9 +90,7 @@ public class ChessBoardDao {
                     ChessPieceFactory.of(rs.getString("piece")));
         }
 
-        ChessBoard chessBoard1 = new ChessBoard(chessBoard);
-
-        ResponseDto responseDto = new ResponseDto(chessBoard1, result, turn);
+        ResponseDto responseDto = new ResponseDto(new ChessBoard(chessBoard), result, turn);
 
         return responseDto;
     }
@@ -104,5 +102,15 @@ public class ChessBoardDao {
         statuses.add(whiteStatus);
         statuses.add(blackStatus);
         return new Result(statuses);
+    }
+
+    public String loadState() throws SQLException {
+        String query = "SELECT state FROM game WHERE game_id=(SELECT MAX(game_id) FROM game)";
+        Connection connection = CONNECTION;
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+        if (!rs.next()) return null;
+
+        return rs.getString("state");
     }
 }
