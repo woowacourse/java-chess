@@ -7,11 +7,14 @@ import static spark.Spark.staticFiles;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandReader;
+import chess.dao.CommandLogDao;
 import chess.domain.gamestatus.GameStatus;
 import chess.domain.gamestatus.NothingHappened;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import spark.ModelAndView;
@@ -22,6 +25,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIController {
 
     private static GameStatus gameStatus;
+    private static CommandLogDao commandLogDao = new CommandLogDao();
 
     public static void run() {
         try {
@@ -34,28 +38,40 @@ public class WebUIController {
     public static void runWithoutException() {
         staticFiles.location("/static");
 
-        get("/", (request, response) -> initAndRender());
+        get("/", (request, response) -> loadRecords());
 
-        post("/", WebUIController::moveAndRedirect);
+        post("/", WebUIController::moveAndRender);
 
         internalServerError(renderErrorPage());
     }
 
-    private static String initAndRender() {
+    private static String loadRecords() throws SQLException {
         gameStatus = new NothingHappened();
         gameStatus = gameStatus.start();
+
+        executePastRequests();
+
         return renderRefreshedChessBoard();
     }
 
-    private static String moveAndRedirect(Request request, Response response) {
+    private static void executePastRequests() throws SQLException {
+        List<String> commandLogs = commandLogDao.getAllByOldOneFirst();
+
+        for (String commandLog : commandLogs) {
+            Command command = CommandReader.of(commandLog);
+            gameStatus = command.execute(gameStatus);
+        }
+    }
+
+    private static String moveAndRender(Request request, Response response) throws SQLException {
         String requestCommand = "move "
-            + request.queryParams("from-position")
-            + " "
+            + request.queryParams("from-position") + " "
             + request.queryParams("to-position");
 
         Command command = CommandReader.of(requestCommand);
         gameStatus = command.execute(gameStatus);
 
+        commandLogDao.add(requestCommand);
         return renderRefreshedChessBoard();
     }
 

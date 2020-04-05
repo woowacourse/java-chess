@@ -23,3 +23,12 @@
 - start (=from) : 기물을 A 위치에서 B 위치로 이동시킬 때, A 위치
 - end (=to, target) : 기물을 A 위치에서 B 위치로 이동시킬 때, B 위치
 - acronym : 번역하면 "두문자어". 예를들면 WHITE 팀 Pawn 의 acronym 은 p 이고, BLACK 팀 BISHOP 은 B 이다.
+
+## 데이터베이스 정보
+- Database 이름 : chess
+- DB 권한 user 이름 : chess
+- DB 권한 user 패스워드 : chess
+- 테이블
+    - 테이블 명 : log
+    - 테이블 생성문 : 
+    - create table commandlog (execute_order int primary key, command varchar(60) not null);
