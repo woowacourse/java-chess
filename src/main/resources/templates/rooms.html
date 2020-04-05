@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/rooms.css">
+    <title>우아체스 - 방 목록</title>
+</head>
+<body>
+<div class="content_box_wrapper">
+    <div class="content_box">
+        <ul>
+            {{#rooms}}
+            <li>{{roomName}}</li>
+            {{/rooms}}
+        </ul>
+        <form id="room_form" action="">
+            <label for="room_name">방</label>
+            <input type="text" name="room_name" id="room_name">
+            <button form="room_form">선택</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

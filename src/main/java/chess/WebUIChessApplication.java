@@ -1,5 +1,7 @@
 package chess;
 
+import dao.Room;
+import dao.RoomDao;
 import domain.command.exceptions.CommandTypeException;
 import domain.command.exceptions.MoveCommandTokensException;
 import domain.pieces.Piece;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class WebUIChessApplication {
 	private static State state;
@@ -34,8 +37,16 @@ public class WebUIChessApplication {
 		state = initState();
 		announcement = Announcement.ofFirst();
 
+		Spark.get("/rooms", (request, response) -> {
+			final RoomDao roomDao = new RoomDao();
+			final List<Room> rooms = roomDao.findAllRooms();
+			final Map<String, Object> map = new HashMap<>();
+			map.put("rooms", rooms);
+			return render(map, "/rooms.html");
+		});
+
 		Spark.get("/chess", (request, response) -> {
-			Map<String, Object> map = new HashMap<>();
+			final Map<String, Object> map = new HashMap<>();
 			map.put("table", createTableHtmlFromState());
 			map.put("announcement", announcement.getString());
 			return render(map, "/chess.html");
