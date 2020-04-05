@@ -1,0 +1,21 @@
+h1 {
+    color: blue;
+    font-size: 48px;
+    text-align: center;
+}
+
+#new {
+    text-align: center;
+}
+
+#new a {
+    font-size: 32px;
+}
+
+#loading {
+    text-align: center;
+}
+
+#loading a {
+    font-size: 32px;
+}
