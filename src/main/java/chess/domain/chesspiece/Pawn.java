@@ -10,7 +10,6 @@ import chess.domain.MoveManager;
 import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.utils.NameUtils;
 
 public class Pawn extends ChessPiece {
 	private static final String NAME = "p";
@@ -18,13 +17,8 @@ public class Pawn extends ChessPiece {
 	private boolean isMoved;
 
 	public Pawn(Position position, Team team) {
-		super(position, team);
+		super(position, team, NAME);
 		isMoved = false;
-	}
-
-	@Override
-	public String getName() {
-		return NameUtils.parseName(NAME, team);
 	}
 
 	@Override

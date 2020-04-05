@@ -1,0 +1,76 @@
+.chessboard {
+    margin-top: 30px;
+}
+
+.row {
+    width: 670px;
+    height: 83px;
+}
+
+.row > button {
+    border: 1px solid black;
+    width: 80px;
+    height: 80px;
+    margin-right: -3px;
+    margin-left: 1px;
+    margin-bottom: 2px;
+}
+
+.cell {
+    background-color: #E6E6E6;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+}
+
+.black {
+    background-color: #848484;
+}
+
+.k {
+    background-image: url("images/king_white.png");
+}
+
+.K {
+    background-image: url("images/king_black.png");
+}
+
+.b {
+    background-image: url("images/bishop_white.png");
+}
+
+.B {
+    background-image: url("images/bishop_black.png");
+}
+
+.n {
+    background-image: url("images/knight_white.png");
+}
+
+.N {
+    background-image: url("images/knight_black.png");
+}
+
+.p {
+    background-image: url("images/pawn_white.png");
+}
+
+.P {
+    background-image: url("images/pawn_black.png");
+}
+
+.q {
+    background-image: url("images/queen_white.png");
+}
+
+.Q {
+    background-image: url("images/queen_black.png");
+}
+
+.r {
+    background-image: url("images/rook_white.png");
+}
+
+.R {
+    background-image: url("images/rook_black.png");
+}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import chess.domain.Status;
 import chess.domain.Team;
@@ -30,9 +31,15 @@ public class ChessBoard {
 		return isLiveKing(Team.BLACK) && isLiveKing(Team.WHITE);
 	}
 
-	private boolean isLiveKing(Team team) {
+	public boolean isLiveKing(Team team) {
 		return findByTeam(team).stream()
 			.anyMatch(chessPiece -> chessPiece.getClass() == King.class);
+	}
+
+	public List<ChessPiece> findAll() {
+		List<ChessPiece> chessPieces = findByTeam(Team.WHITE);
+		chessPieces.addAll(findByTeam(Team.BLACK));
+		return chessPieces;
 	}
 
 	private List<ChessPiece> findByTeam(Team team) {
@@ -99,5 +106,17 @@ public class ChessBoard {
 
 	public List<Row> getRows() {
 		return Collections.unmodifiableList(rows);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		for (Row row : rows) {
+			IntStream.range(0, rows.size())
+				.mapToObj(index -> row.get(index).getName())
+				.forEach(name -> builder.append(name));
+			builder.append(System.lineSeparator());
+		}
+		return builder.toString();
 	}
 }

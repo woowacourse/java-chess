@@ -20,12 +20,7 @@ public class Bishop extends ValuablePiece {
 	}
 
 	public Bishop(Position position, Team team) {
-		super(position, team);
-	}
-
-	@Override
-	public String getName() {
-		return NameUtils.parseName(NAME, team);
+		super(position, team, NAME);
 	}
 
 	@Override
