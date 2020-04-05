@@ -47,6 +47,7 @@ a {
 .room-table-head {
     width: 100%;
     display: flex;
+    justify-content: center;
     background-color: beige;
     opacity: 0.7;
     border: #4b2305 1px solid;
