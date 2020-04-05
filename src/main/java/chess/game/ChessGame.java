@@ -23,15 +23,16 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private final Player white;
     private final Player black;
+    private final Calculatable calculatable;
     private Team turn;
-    private Calculatable calculatable;
+
 
     public ChessGame() {
         chessBoard = ChessBoardCreater.create();
         white = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
         black = new Player(new ChessSet(chessBoard.giveMyPiece(BLACK)), BLACK);
-        turn = Team.WHITE;
         calculatable = new ScoreCalcultor();
+        turn = Team.WHITE;
     }
 
     public void changeTurn() {
@@ -89,13 +90,15 @@ public class ChessGame {
     private ChessResult compareScore() {
         Score whiteScore = calculatable.calculate(chessBoard, white);
         Score blackScore = calculatable.calculate(chessBoard, black);
+
         if (whiteScore.isHigherThan(blackScore)) {
             return new ChessResult(Result.WIN, white.getTeamName());
         }
         if (blackScore.isHigherThan(whiteScore)) {
             return new ChessResult(Result.WIN, black.getTeamName());
         }
-        return new ChessResult(Result.DRAW, black.getTeamName());
+
+        return new ChessResult(Result.DRAW);
     }
 
     public Team getTurn() {
