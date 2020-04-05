@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -114,6 +115,11 @@ public class PositionTest {
 		assertThatThrownBy(() -> Position.of("c3").isSame(chessFile))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("체스 파일이 null입니다.");
+	}
+
+	@Test
+	void key_ThisChesFileAndChessRank_ReturnKeyValue() {
+		assertThat(Position.of("b1").key()).isEqualTo("b1");
 	}
 
 }

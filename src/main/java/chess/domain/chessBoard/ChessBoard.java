@@ -1,5 +1,7 @@
 package chess.domain.chessBoard;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
@@ -10,6 +12,8 @@ import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
+import chess.web.ChessBoardDto;
+import chess.web.WebChessPiece;
 
 public class ChessBoard {
 
@@ -110,6 +114,15 @@ public class ChessBoard {
 
 	public String getChessPieceNameOn(Position position) {
 		return chessBoard.get(position).getName();
+	}
+
+	public ChessBoardDto getChessBoardDto() {
+		return chessBoard.entrySet().stream()
+			.collect(collectingAndThen(
+				toMap(
+					entry -> entry.getKey().key(),
+					entry -> WebChessPiece.of(entry.getValue().getName()).getImageUrl()
+				), ChessBoardDto::new));
 	}
 
 	@Override

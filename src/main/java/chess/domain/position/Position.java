@@ -80,4 +80,7 @@ public class Position {
 		return this.chessFile.equals(chessFile);
 	}
 
+	public String key() {
+		return key(this.chessFile, this.chessRank);
+	}
 }

@@ -11,6 +11,7 @@ import chess.domain.chessGame.gameState.WhiteTurnState;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 import chess.util.ChessBoardRenderer;
+import chess.web.ChessBoardDto;
 
 public class ChessGame {
 
@@ -107,6 +108,10 @@ public class ChessGame {
 
 	public List<String> getRenderedChessBoard() {
 		return ChessBoardRenderer.render(chessBoard);
+	}
+
+	public ChessBoardDto getChessBoardDto() {
+		return chessBoard.getChessBoardDto();
 	}
 
 }
