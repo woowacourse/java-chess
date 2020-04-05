@@ -8,7 +8,15 @@ import java.util.Map;
 import java.util.Optional;
 
 public class FakeBoardDAO implements BoardDAO {
-    private Map<Position, Piece> board = new HashMap<>();
+    private Map<Position, Piece> board;
+
+    public FakeBoardDAO() {
+        this.board = new HashMap<>();
+    }
+
+    public FakeBoardDAO(Map<Position, Piece> board) {
+        this.board = board;
+    }
 
     @Override
     public void placePieceOn(Position position, Piece piece) {

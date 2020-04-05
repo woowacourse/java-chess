@@ -25,6 +25,7 @@ public class Board {
 
     public void initialize() throws SQLException {
         boardDAO.placeInitialPieces();
+        turn = Side.WHITE;
     }
 
     public Optional<Piece> findPieceOn(final Position position) throws SQLException {
