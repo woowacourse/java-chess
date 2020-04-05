@@ -4,27 +4,16 @@ body{
 main {
 	margin: auto;
 	float: center;
-	width: 940px;
+	width: 690px;
 	height: 740px;
 }
-section{
-	float: left;
-}
-aside{
-	width: 185px;
-	height: 550px;
-	padding-top: 150px;
-	padding-left: 15px;
-	float: right;
-}
-.score{
-	width: 150px;
-	background-color: white;
+.start_new_game{
+    float: right;
 }
 .chessboard {
+    margin-top: 50px;
 	width: 640px;
 	height: 640px;
-	margin: 20px;
 	border: 25px solid #333;
 }
 .cell{

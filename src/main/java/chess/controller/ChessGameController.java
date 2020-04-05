@@ -20,8 +20,6 @@ public class ChessGameController {
 
     public static String index(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
-        model.put("blackScore", 38);
-        model.put("whiteScore", 38);
 
         return render(model, "index.html");
     }
