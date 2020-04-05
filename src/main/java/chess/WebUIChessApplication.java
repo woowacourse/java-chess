@@ -1,5 +1,7 @@
 package chess;
 
+import chess.domain.web.FakeLogDao;
+import chess.domain.web.Log;
 import chess.domain.web.WebChessGame;
 import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
@@ -21,8 +23,11 @@ public class WebUIChessApplication {
 
     private static void playGame() {
         WebChessGame chessGame = new WebChessGame();
+        FakeLogDao fakeLogDao = new FakeLogDao();
+
         staticFiles.location("/public");
         get("/", (req, res) -> {
+            chessGame.reset();
             Map<String, Object> model = new HashMap<>();
             model.put("status", true);
             return render(model, "index.html");
@@ -30,6 +35,9 @@ public class WebUIChessApplication {
 
         get("/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            chessGame.reset();
+            fakeLogDao.clear();
+
             model.put("status", true);
             return render(model, "chess.html");
         });
@@ -37,7 +45,15 @@ public class WebUIChessApplication {
         get("/loading", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("status", true);
-            chessGame.move(PositionFactory.of("a2"), PositionFactory.of("a4")); // todo chessGame에게 로그를 돌도록 시켜라.
+
+            chessGame.reset();
+
+            Map<Integer, Log> fakeLog = fakeLogDao.selectAll();
+            // TODO: 2020/04/03 DB가 비어있을 경우 처리
+
+            for(Log log : fakeLog.values()) {
+                chessGame.move(PositionFactory.of(log.getStart()), PositionFactory.of(log.getEnd()));
+            }
             return render(model, "chess.html");
         });
 
@@ -59,9 +75,11 @@ public class WebUIChessApplication {
 
             try {
                 chessGame.move(PositionFactory.of(req.queryParams("start")), PositionFactory.of(req.queryParams("end")));
+                fakeLogDao.insert(req.queryParams("start"), req.queryParams("end"));
                 model.put("status", true);
                 if (chessGame.isKingDead()) {
                     model.put("winner", chessGame.getAliveKingColor());
+                    fakeLogDao.clear();
                     chessGame.reset();
                     return render(model, "result.html");
                 }
@@ -75,8 +93,9 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             try {
                 model.put("status", true);
+                // TODO: 2020/04/02 필요없는 코드 수행 방지!! 엔드일때도 이걸 다 수행해야 됨 지금 로직상
                 List<String> movablePositionNames = chessGame
-                        .findMovablePositions(PositionFactory.of(req.queryParams("start"))) // TODO: 2020/04/05 이것도 Pieces에게 넘기기
+                        .findMovablePositions(PositionFactory.of(req.queryParams("start")))
                         .getPositions()
                         .stream()
                         .map(Position::toString)

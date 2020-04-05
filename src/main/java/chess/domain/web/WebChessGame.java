@@ -1,6 +1,5 @@
 package chess.domain.web;
 
-import chess.domain.game.Board;
 import chess.domain.game.ScoreResult;
 import chess.domain.game.Turn;
 import chess.domain.piece.Color;
@@ -20,7 +19,7 @@ public class WebChessGame {
 	}
 
 	public void reset() {
-		pieces = PiecesInitializer.operate();
+		pieces = PiecesInitializer.reset();
 		turn = new Turn(Color.WHITE);
 	}
 
@@ -41,8 +40,8 @@ public class WebChessGame {
 		return pieces.getAliveKingColor();
 	}
 
-	public Board createBoard() { // TODO: 2020/04/05 웹보드로 수정
-		return new Board(pieces);
+	public WebBoard createBoard() {
+		return new WebBoard(pieces);
 	}
 
 	public Positions findMovablePositions(Position position) {
@@ -52,5 +51,9 @@ public class WebChessGame {
 
 	public Turn getTurn() {
 		return turn;
+	}
+
+	public Pieces getPieces() {
+		return pieces;
 	}
 }

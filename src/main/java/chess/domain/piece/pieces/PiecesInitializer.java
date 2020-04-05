@@ -14,6 +14,10 @@ public class PiecesInitializer {
 	private static List<Piece> pieces = new ArrayList<>();
 
 	static {
+		makeInitialPieces();
+	}
+
+	private static void makeInitialPieces() {
 		for (Column column : Column.getInitialColumns()) {
 			addPieceBy(column);
 		}
@@ -34,6 +38,12 @@ public class PiecesInitializer {
 		}
 
 		return new Piece(position, row.getPieceType(), color);
+	}
+
+	public static Pieces reset() {
+		pieces = new ArrayList<>();
+		makeInitialPieces();
+		return new Pieces(pieces);
 	}
 
 	public static Pieces operate() {

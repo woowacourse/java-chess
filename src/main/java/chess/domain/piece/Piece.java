@@ -74,4 +74,8 @@ public class Piece {
 	public double getScore() {
 		return pieceType.getScore();
 	}
+
+	public PieceType getPieceType() {
+		return pieceType;
+	} // TODO: 2020/04/05 제거?
 }
